@@ -137,45 +137,6 @@ file = /etc/radicale/rights
 ==== Importar archivos ====
 Si estás usando un archivo de contactos exportado desde otro servicio o aplicación hay que copiarlo a:  /var/lib/radicale/collections/<usuario>/<nombre_del_archivo_de_contactos>'.vcf.
 
-=== Migrar desde Radicale versión 1.x a versión 2.x ===
-
-En Febrero de 2019 se actualizó Radicale en las versiones "en pruebas" (testing) de Debian desde la versión 1.x a la 2.x. La versión 2.x es mejor pero incompatible con los datos y la configuración empleados en la 1.x. El mecanismo automático de actualización de !FreedomBox que emplean las actualizaciones desatendidas no actualiza automaticamente la version 2.x de Radicale debido a cambios en los archivos de configuración. No obstante la version 19.1 de !FreedomBox, disponible en en las versiones "en pruebas" (testing) desde el 23 de Febrero de 2019, realizará la migración de los datos y la configuración a la versión 2.x de Radicale. No se requiere ninguna acción por parte de los usuarios típicos. Ocurrirá automáticamente.
-
-Si por algún motivo necesitas ejecutar a mano `apt dist-upgrade` en tu máquina Radicale se actualizará a 2.x y entonces tu !FreedomBox no podrá ejecutar esta actualización (ya que el proyecto de origen decidió eliminar las herramientas de migración de la versión 2.x de Radicale). Para evitar esta situación se recomienda el siguiente procedimiento para actualizar.
-
-{{{
-sudo su -
-apt hold radicale
-apt dist-upgrade
-apt unhold radicale
-}}}
-
-En cualquier caso, si ya has actualizado a Radicale 2.x sin ayuda de !FreedomBox necesitas realizar la migración de los datos y la configuración por tí mismo. Sigue este procedimiento:
-
-{{{
-sudo su -
-tar -cvzf /root/radicale_backup.tgz /var/lib/radicale/ /etc/radicale/ /etc/default/radicale
-apt install -y python-radicale
-python -m radicale --export-storage=/root/radicale-migration
-cp -dpR /root/radicale-migration/collection-root /var/lib/radicale/collections/collection-root/
-(elimina este directorio si ya existe. O mezcla los contenidos.)
-chown -R radicale:radicale /var/lib/radicale/collections/collection-root/
-apt remove -y python-radicale
-if [ -f /etc/radicale/config.dpkg-dist ] ; then cp /etc/radicale/config.dpkg-dist /etc/radicale/config ; fi
-if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-dist /etc/default/radicale ; fi
-(Cuando FreedomBox 19.1 está disponble ve al interfaz web de FreedomBox y vuelve a configurar tu preferencia de compartición de calendario si no se muestra bien porque se habrá perdido durante la operación.)
-}}}
-
-Notas:
- * `python-radicale` es un paquete antigüo de la versión 1.x de Radicale que sigue disponible en las versiones "en pruebas" (testing) de Debian. Esto es un ''hack'' alternativo para emplear la funcionalidad `--export-storage` que es responsable de la migración de datos. Por desgracia esta funcionalidad ya no está disponible en Radicale 2.x.
- * Los ficheros que acaban en `.dpkg-dist` solo existirán si has elegido "Conservar tu versión actualmente instalada" cuando se te preguntó durante la actualización a Radicale 2.x. El procedimiento anterior sobrescribirá la configuración antigüa con una nueva. No se necesitan cambios a los 2 ficheros de configuración salvo que hayas cambiado la preferencia de compartición de calendario.
- * Nota: Durante la migración tus datos permanecen a salvo en el directorio `/var/lib/radicale/collections`. Los datos nuevos se crearán y usarán en el directorio `/var/lib/radicale/collections/collections-root/`.
- * El comando `tar` hace una copia de seguridad de tu configuración y tus datos en `/root/radicale_backup.tgz` por si haces o algo va mal y quieres deshacer los cambios.
-
-=== Resolución de Problemas ===
-
-1. Si estás usando !FreedomBox Pioneer Edition o instalando !FreedomBox sobre Debian Buster Radicale podría no estar operativo inmediatamente después de la instalación. Esto se debe a un defecto ya corregido posteriormente. Para superar el problema actualiza !FreedomBox haciendo clic en 'Actualización Manual' desde la app 'Actualizaciones'. Otra opción es simplemente esperar un par de días y dejar que !FreedomBox se actualice solo. Después instala Radicale. Si Radicale ya está instalado deshabilitalo y rehabilitalo después de que se complete la actualización. Esto arreglará el problema y dejará a Radicale trabajando correctamente.
-
 
 === Enlaces externos ===
 

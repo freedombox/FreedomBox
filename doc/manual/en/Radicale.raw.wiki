@@ -139,46 +139,6 @@ file = /etc/radicale/rights
 ==== Importing files ====
 If you are using a contacts file exported from another service or application, it should be copied to:  /var/lib/radicale/collections/''user''/''contact file name''.vcf.
 
-=== Migrating from Radicale Version 1.x to Version 2.x ===
-
-During the month of February 2019, radicale in Debian testing was upgraded from version 1.x to version 2.x. Version 2.x is a better version but is incompatible with data and configuration used with 1.x. Automatic upgrade mechanism in !FreedomBox, handled by unattended-upgrades does not automatically upgrade radicale to version 2.x due to changes in configuration files. However, !FreedomBox version 19.1, which is available on February 23rd, 2019 in testing will perform data and configuration migration to radicale version 2.x. Typical users require no action, this will happen automatically.
-
-If for some reason, you need to manually run `apt dist-upgrade` on your machine, then radicale will be upgraded to 2.x and then !FreedomBox will not be able to perform its upgrade (due to upstream project deciding to remove migration tools in radicale 2.x version). To avoid this situation, the following process is recommended if you wish to perform an upgrade.
-
-{{{
-sudo su -
-apt hold radicale
-apt dist-upgrade
-apt unhold radicale
-}}}
-
-However, if you already happen to perform an upgrade to radicale 2.x without help from !FreedomBox, you need to perform data and configuration migration yourself. Follow this procedure:
-
-{{{
-sudo su -
-tar -cvzf /root/radicale_backup.tgz /var/lib/radicale/ /etc/radicale/ /etc/default/radicale
-apt install -y python-radicale
-python -m radicale --export-storage=/root/radicale-migration
-cp -dpR /root/radicale-migration/collection-root /var/lib/radicale/collections/collection-root/
-(remove this directory if it already exists. Or perhaps merge the contents.)
-chown -R radicale:radicale /var/lib/radicale/collections/collection-root/
-apt remove -y python-radicale
-if [ -f /etc/radicale/config.dpkg-dist ] ; then cp /etc/radicale/config.dpkg-dist /etc/radicale/config ; fi
-if [ -f /etc/default/radicale.dpkg-dist ] ; then cp /etc/default/radicale.dpkg-dist /etc/default/radicale ; fi
-(After FreedomBox 19.1 is available, goto FreedomBox web interface and set your preference for calendar sharing again, if it is not the default option, as it will have been lost.)
-}}}
-
-Notes:
- * python-radicale is an old package from radicale 1.x version that is still available in testing. This is a hack to use the `--export-storage` feature that is responsible for data migration. This feature is not available in radicale 2.x unfortunately.
- * Files ending with .dpkg-dist will exist only if you have chosen 'Keep your currently-installed version' when prompted for configuration file override during radicale 2.x upgrade. The above process will overwrite the old configuration with new fresh configuration. No changes are necessary to the two configuration files unless you have changed the setting for sharing calendars.
- * Note that during the migration, your data is safe in /var/lib/radicale/collections directory. New data will be created and used in /var/lib/radicale/collections/collections-root/ directory.
- * The tar command takes a backup your configuration and data in /root/radicale_backup.tgz in case you do something goes wrong and you want to undo the changes.
-
-=== Troubleshooting ===
-
-1. If you are using !FreedomBox Pioneer Edition or installing !FreedomBox on Debian Buster, then radicale may not be usable immediately after installation. This is due to a bug which has been fixed later. To overcome the problem, upgrade !FreedomBox by clicking on 'Manual Update' from 'Updates' app. Otherwise, simply wait a day or two and let !FreedomBox upgrade itself. After that install radicale. If radicale is already installed, disable and re-enable it after the update is completed. This will fix the problem and get radicale working properly.
-
-
 === External links ===
 
  * Website: https://radicale.org/3.0.html
