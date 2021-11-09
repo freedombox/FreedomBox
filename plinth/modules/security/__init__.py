@@ -155,6 +155,11 @@ def get_apps_report():
         if services:
             apps[module_name]['sandboxed'] = False
             for service in services:
+                # If an app lists a timer, work on the associated service
+                # instead
+                if service.rpartition('.')[-1] == 'timer':
+                    service = service.rpartition('.')[0]
+
                 if _get_service_is_sandboxed(service):
                     apps[module_name]['sandboxed'] = True
                     apps[module_name][
@@ -183,18 +188,18 @@ def _get_service_is_sandboxed(service):
         '--property=PrivateMounts',
     ]).decode().strip().split('\n')
     pairs = [line.partition('=')[::2] for line in lines]
-    properties = {name: value for name, value in pairs}
-    if properties['ProtectSystem'] in ['yes', 'full', 'strict']:
+    properties = dict(pairs)
+    if properties.get('ProtectSystem') in ['yes', 'full', 'strict']:
         return True
 
-    if properties['ProtectHome'] in ['yes', 'read-only', 'tmpfs']:
+    if properties.get('ProtectHome') in ['yes', 'read-only', 'tmpfs']:
         return True
 
     for name in [
             'PrivateTmp', 'PrivateDevices', 'PrivateNetwork', 'PrivateUsers',
             'PrivateMounts'
     ]:
-        if properties[name] == 'yes':
+        if properties.get(name) == 'yes':
             return True
 
     return False
