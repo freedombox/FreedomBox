@@ -10,68 +10,49 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.bepasty]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'bepasty')
-    yield
-    functional.app_disable(session_browser, 'bepasty')
+class TestBepastyApp(functional.BaseAppTests):
+    app_name = 'bepasty'
+    has_service = False
+    has_web = True
 
+    def test_set_default_permissions_list_and_read_all(self, session_browser):
+        functional.app_enable(session_browser, 'bepasty')
+        _logout(session_browser)
+        _set_default_permissions(session_browser, 'read list')
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'bepasty')
+        assert _can_list_all(session_browser)
 
-    functional.app_enable(session_browser, 'bepasty')
-    assert functional.is_available(session_browser, 'bepasty')
+    def test_set_default_permissions_read_files(self, session_browser):
+        functional.app_enable(session_browser, 'bepasty')
+        _logout(session_browser)
+        _set_default_permissions(session_browser, 'read')
 
-    functional.app_disable(session_browser, 'bepasty')
-    assert not functional.is_available(session_browser, 'bepasty')
+        assert _cannot_list_all(session_browser)
 
+    def test_add_password(self, session_browser):
+        functional.app_enable(session_browser, 'bepasty')
+        password_added = _add_and_save_password(session_browser)
 
-def test_set_default_permissions_list_and_read_all(session_browser):
-    functional.app_enable(session_browser, 'bepasty')
-    _logout(session_browser)
-    _set_default_permissions(session_browser, 'read list')
+        assert _can_login(session_browser, password_added)
 
-    assert _can_list_all(session_browser)
+    def test_remove_password(self, session_browser):
+        functional.app_enable(session_browser, 'bepasty')
+        password_added = _add_and_save_password(session_browser)
+        _remove_all_passwords(session_browser)
 
+        assert not _can_login(session_browser, password_added)
 
-def test_set_default_permissions_read_files(session_browser):
-    functional.app_enable(session_browser, 'bepasty')
-    _logout(session_browser)
-    _set_default_permissions(session_browser, 'read')
+    @pytest.mark.backups
+    def test_backup_and_restore(self, session_browser):
+        functional.app_enable(session_browser, 'bepasty')
+        password_added = _add_and_save_password(session_browser)
+        functional.backup_create(session_browser, 'bepasty', 'test_bepasty')
 
-    assert _cannot_list_all(session_browser)
+        _remove_all_passwords(session_browser)
+        functional.backup_restore(session_browser, 'bepasty', 'test_bepasty')
 
-
-def test_add_password(session_browser):
-    functional.app_enable(session_browser, 'bepasty')
-    password_added = _add_and_save_password(session_browser)
-
-    assert _can_login(session_browser, password_added)
-
-
-def test_remove_password(session_browser):
-    functional.app_enable(session_browser, 'bepasty')
-    password_added = _add_and_save_password(session_browser)
-    _remove_all_passwords(session_browser)
-
-    assert not _can_login(session_browser, password_added)
-
-
-@pytest.mark.backups
-def test_backup_and_restore(session_browser):
-    functional.app_enable(session_browser, 'bepasty')
-    password_added = _add_and_save_password(session_browser)
-    functional.backup_create(session_browser, 'bepasty', 'test_bepasty')
-
-    _remove_all_passwords(session_browser)
-    functional.backup_restore(session_browser, 'bepasty', 'test_bepasty')
-
-    assert functional.is_available(session_browser, 'bepasty')
-    assert _can_login(session_browser, password_added)
+        assert functional.is_available(session_browser, 'bepasty')
+        assert _can_login(session_browser, password_added)
 
 
 def _add_and_save_password(session_browser):

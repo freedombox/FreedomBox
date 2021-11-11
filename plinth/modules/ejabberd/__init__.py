@@ -21,6 +21,7 @@ from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
@@ -67,6 +68,7 @@ class EjabberdApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('ejabberd'), icon_filename='ejabberd',
                                short_description=_('Chat Server'),
@@ -87,6 +89,9 @@ class EjabberdApp(app_module.App):
             configure_url=reverse_lazy('ejabberd:index'), clients=info.clients,
             login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-ejabberd', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-ejabberd', info.name,
                             ports=['xmpp-client', 'xmpp-server',

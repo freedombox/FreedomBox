@@ -13,6 +13,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.package import Packages
 from plinth.utils import Version, format_lazy, import_from_gi
 
 from . import manifest
@@ -62,6 +63,7 @@ class FirewallApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, name=_('Firewall'),
                                icon='fa-shield', description=_description,
@@ -71,6 +73,9 @@ class FirewallApp(app_module.App):
         menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,
                               'firewall:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-firewall', managed_packages)
+        self.add(packages)
 
         daemon = Daemon('daemon-firewall', managed_services[0])
         self.add(daemon)
@@ -129,8 +134,8 @@ def ignore_dbus_error(dbus_error=None, service_error=None):
         if parts[0] != 'GDBus.Error':
             raise
 
-        if (dbus_error and parts[1].strip() == 'org.freedesktop.DBus.Error.' +
-                dbus_error):
+        if (dbus_error and parts[1].strip()
+                == 'org.freedesktop.DBus.Error.' + dbus_error):
             logger.error('Firewalld is not running.')
             pass
         elif (service_error and parts[2].strip() == service_error):

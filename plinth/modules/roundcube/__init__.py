@@ -11,6 +11,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import Version
 
 from . import manifest
@@ -51,6 +52,7 @@ class RoundcubeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Roundcube'), icon_filename='roundcube',
                                short_description=_('Email Client'),
@@ -70,6 +72,9 @@ class RoundcubeApp(app_module.App):
                                       url='/roundcube/', clients=info.clients,
                                       login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-roundcube', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-roundcube', info.name,
                             ports=['http', 'https'], is_external=True)

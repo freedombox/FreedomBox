@@ -112,6 +112,36 @@ the daemon. The final argument is the list of ports that this daemon listens on.
 This information is used to check if the daemon is listening on the expected
 ports when the user requests diagnostic tests on the app.
 
+Package management
+^^^^^^^^^^^^^^^^^^
+
+Transmission server is installed through a set of packages fetched from Debian
+package repositories. The packages required for this are passed on to a
+:class:`~plinth.package.Packages` component which takes care of installing,
+upgrading and uninstalling the Debian packages. An app might require one or more
+Debian packages to be installed.
+
+.. code-block:: python3
+  :caption: ``__init__.py``
+
+  from plinth.package import Packages
+
+  managed_packages = ['transmission-daemon']
+
+  class TransmissionApp(app_module.App):
+      ...
+
+      def __init__(self):
+        ...
+
+        packages = Packages('packages-transmission', managed_packages)
+        self.add(packages)
+
+The first argument uniquely identifies this instance of the `Packages`
+component. Choose an appropriate unique identifier if your app has multiple
+`Packages` components. The second argument is a list of Debian packages that
+this component is responsible for.
+
 Managing web server configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

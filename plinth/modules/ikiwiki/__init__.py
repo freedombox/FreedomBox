@@ -13,6 +13,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -63,6 +64,9 @@ class IkiwikiApp(app_module.App):
         self.add(menu_item)
 
         self.refresh_sites()
+
+        packages = Packages('packages-ikiwiki', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-ikiwiki', info.name,
                             ports=['http', 'https'], is_external=True)

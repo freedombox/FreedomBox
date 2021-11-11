@@ -13,6 +13,7 @@ from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.package import Packages
 
 from .components import UsersAndGroups
 
@@ -60,6 +61,7 @@ class UsersApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential,
                                name=_('Users and Groups'), icon='fa-users',
@@ -69,6 +71,9 @@ class UsersApp(app_module.App):
         menu_item = menu.Menu('menu-users', info.name, None, info.icon,
                               'users:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-users', managed_packages)
+        self.add(packages)
 
         daemon = Daemon('daemon-users', managed_services[0],
                         listen_ports=[(389, 'tcp4'), (389, 'tcp6')])

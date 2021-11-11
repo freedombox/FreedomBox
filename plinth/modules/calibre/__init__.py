@@ -16,6 +16,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -77,6 +78,9 @@ class CalibreApp(app_module.App):
                                       login_required=True,
                                       allowed_groups=list(groups))
         self.add(shortcut)
+
+        packages = Packages('packages-calibre', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-calibre', info.name,
                             ports=['http', 'https'], is_external=True)

@@ -10,62 +10,20 @@
 
 !FreedomBox includes the ability to backup and restore data, preferences, configuration and secrets from most of the applications. The Backups feature is built using Borg backup software. Borg is a deduplicating and compressing backup program. It is designed for efficient and secure backups. This backups feature can be used to selectively backup and restore data on an app-by-app basis. Backed up data can be stored on the !FreedomBox machine itself or on a remote server. Any remote server providing SSH access can be used as a backup storage repository for !FreedomBox backups. Data stored remotely may be encrypted and in such cases remote server cannot access your decrypted data.
 
+=== Notes for Specific App Backups ===
 
-=== Status of Backups Feature ===
+Unless otherwise noted here, backup of an app's data will include its configuration, secrets and other data.
 
-|| '''App/Feature''' || '''Support in Version''' || '''Notes''' ||
-|| Avahi || - || no backup needed ||
-|| Backups || - || no backup needed ||
-|| bepasty || 20.14 || ||
-|| Bind || 0.41 || ||
-|| calibre || 20.15 || ||
-|| Cockpit || - || no backup needed ||
-|| Coturn || 20.8 || ||
-|| Datetime || 0.41 || ||
-|| Deluge || 0.41 || does not include downloaded/seeding files ||
-|| Diagnostics || - || no backup needed ||
-|| Dynamic DNS || 0.39 || ||
-|| ejabberd || 0.39 || includes all data and configuration ||
-|| Firewall || - || no backup needed ||
-|| Gitweb || 19.19 || ||
-|| I2P || 19.6 || ||
-|| ikiwiki || 0.39 || includes all wikis/blogs and their content ||
-|| infinoted || 0.39 || includes all data and keys ||
-|| JSXC || - || no backup needed ||
-|| Let's Encrypt || 0.42 || ||
-|| Matrix Synapse || 0.39 || includes media and uploads ||
-|| !MediaWiki || 0.39 || includes wiki pages and uploaded files ||
-|| Minetest || 0.39 || ||
-|| MiniDLNA || 19.23 || ||
-|| MLDonkey || 19.0 || ||
-|| Monkeysphere || 0.42 || ||
-|| Mumble || 0.40 || ||
-|| Names || - || no backup needed ||
-|| Networks || No || No plans currently to implement backup ||
-|| OpenVPN || 0.48 || includes all user and server keys ||
-|| Pagekite || 0.40 || ||
-|| Power || - || no backup needed ||
-|| Privoxy || - || no backup needed ||
-|| Quassel || 0.40 || includes users and logs ||
-|| Radicale || 0.39 || includes calendar and cards data for all users ||
-|| Roundcube || - || no backup needed ||
-|| Samba || 19.22 || does not include the data in the shared folders ||
-|| SearX || - || no backup needed ||
-|| Secure Shell (SSH) Server || 0.41 || includes host keys ||
-|| Security || 0.41 || ||
-|| Shadowsocks || 0.40 || only secrets ||
-|| Sharing || 0.40 || does not include the data in the shared folders ||
-|| Snapshot || 0.41 || only configuration, does not include snapshot data ||
-|| Storage || - || no backup needed ||
-|| Syncthing || 0.48 || does not include data in the shared folders ||
-|| Tahoe-LAFS || 0.42 || includes all data and configuration ||
-|| Tiny Tiny RSS || 19.2 || includes database containing feeds, stories, etc. ||
-|| Tor || 0.42 || includes configuration and secrets such as onion service keys ||
-|| Transmission || 0.40 || does not include downloaded/seeding files ||
-|| Upgrades || 0.42 || ||
-|| Users || No || No plans currently to implement backup ||
-|| Wordpress || 21.8 || ||
-|| Zoph || 21.3 || ||
+|| '''App/Feature''' || '''Notes''' ||
+|| [[FreedomBox/Manual/Deluge|Deluge]]             || Does not include downloaded/seeding files ||
+|| [[FreedomBox/Manual/MiniDLNA|MiniDLNA]]         || Does not include the data in the shared folders ||
+|| [[FreedomBox/Manual/Networks|Networks]]         || No plans currently to implement backup ||
+|| [[FreedomBox/Manual/Samba|Samba]]               || Does not include the data in the shared folders ||
+|| [[FreedomBox/Manual/Sharing|Sharing]]           || Does not include the data in the shared folders ||
+|| Snapshot                                        || Only configuration, does not include snapshot data ||
+|| [[FreedomBox/Manual/Syncthing|Syncthing]]       || Does not include data in the shared folders ||
+|| [[FreedomBox/Manual/Transmission|Transmission]] || Does not include downloaded/seeding files ||
+|| [[FreedomBox/Manual/Users|Users]]               || Backup of user accounts is [[https://salsa.debian.org/freedombox-team/freedombox/-/issues/2051|planned]] ||
 
 === How to install and use Backups ===
 

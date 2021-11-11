@@ -14,6 +14,7 @@ from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -58,6 +59,7 @@ class ZophApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Zoph'), icon_filename='zoph',
                                short_description=_('Photo Organizer'),
@@ -76,6 +78,9 @@ class ZophApp(app_module.App):
                                       clients=info.clients,
                                       login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-zoph', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-zoph', info.name,
                             ports=['http', 'https'], is_external=True)

@@ -12,69 +12,50 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.deluge]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'deluge')
-    yield
-    functional.app_disable(session_browser, 'deluge')
+class TestDelugeApp(functional.BaseAppTests):
+    app_name = 'deluge'
+    has_service = True
+    has_web = True
 
+    def test_bittorrent_group(self, session_browser):
+        """Test if only users in bit-torrent group can access Deluge."""
+        functional.app_enable(session_browser, 'deluge')
+        if not functional.user_exists(session_browser, 'delugeuser'):
+            functional.create_user(session_browser, 'delugeuser',
+                                   groups=['bit-torrent'])
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'deluge')
+        if not functional.user_exists(session_browser, 'nogroupuser'):
+            functional.create_user(session_browser, 'nogroupuser')
 
-    functional.app_enable(session_browser, 'deluge')
-    assert functional.service_is_running(session_browser, 'deluge')
-    assert functional.is_available(session_browser, 'deluge')
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'delugeuser')
+        assert functional.is_available(session_browser, 'deluge')
 
-    functional.app_disable(session_browser, 'deluge')
-    assert functional.service_is_not_running(session_browser, 'deluge')
-    assert not functional.is_available(session_browser, 'deluge')
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'nogroupuser')
+        assert not functional.is_available(session_browser, 'deluge')
 
+        functional.login(session_browser)
 
-def test_bittorrent_group(session_browser):
-    """Test if only users in bit-torrent group can access Deluge."""
-    functional.app_enable(session_browser, 'deluge')
-    if not functional.user_exists(session_browser, 'delugeuser'):
-        functional.create_user(session_browser, 'delugeuser',
-                               groups=['bit-torrent'])
+    def test_upload_torrent(self, session_browser):
+        """Test uploading a torrent."""
+        functional.app_enable(session_browser, 'deluge')
+        _remove_all_torrents(session_browser)
+        _upload_sample_torrent(session_browser)
+        assert _get_number_of_torrents(session_browser) == 1
 
-    if not functional.user_exists(session_browser, 'nogroupuser'):
-        functional.create_user(session_browser, 'nogroupuser')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore."""
+        functional.app_enable(session_browser, 'deluge')
+        _remove_all_torrents(session_browser)
+        _upload_sample_torrent(session_browser)
+        functional.backup_create(session_browser, 'deluge', 'test_deluge')
 
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'delugeuser')
-    assert functional.is_available(session_browser, 'deluge')
-
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'nogroupuser')
-    assert not functional.is_available(session_browser, 'deluge')
-
-    functional.login(session_browser)
-
-
-def test_upload_torrent(session_browser):
-    """Test uploading a torrent."""
-    functional.app_enable(session_browser, 'deluge')
-    _remove_all_torrents(session_browser)
-    _upload_sample_torrent(session_browser)
-    assert _get_number_of_torrents(session_browser) == 1
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore."""
-    functional.app_enable(session_browser, 'deluge')
-    _remove_all_torrents(session_browser)
-    _upload_sample_torrent(session_browser)
-    functional.backup_create(session_browser, 'deluge', 'test_deluge')
-
-    _remove_all_torrents(session_browser)
-    functional.backup_restore(session_browser, 'deluge', 'test_deluge')
-    assert functional.service_is_running(session_browser, 'deluge')
-    assert _get_number_of_torrents(session_browser) == 1
+        _remove_all_torrents(session_browser)
+        functional.backup_restore(session_browser, 'deluge', 'test_deluge')
+        assert functional.service_is_running(session_browser, 'deluge')
+        assert _get_number_of_torrents(session_browser) == 1
 
 
 def _get_active_window_title(browser):

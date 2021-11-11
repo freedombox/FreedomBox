@@ -109,6 +109,9 @@ def main():
     if arguments.list_dependencies is not False:
         log.default_level = 'ERROR'
         web_framework.init(read_only=True)
+        module_loader.include_urls()
+        menu.init()
+        module_loader.load_modules()
         list_dependencies(arguments.list_dependencies)
 
     log.init()

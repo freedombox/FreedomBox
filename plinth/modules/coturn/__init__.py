@@ -20,6 +20,7 @@ from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -68,6 +69,9 @@ class CoturnApp(app_module.App):
                               info.icon_filename, 'coturn:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        packages = Packages('packages-coturn', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-coturn', info.name,
                             ports=['coturn-freedombox'], is_external=True)

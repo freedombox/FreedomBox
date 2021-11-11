@@ -17,121 +17,101 @@ pytestmark = [pytest.mark.apps, pytest.mark.gitweb]
 _default_url = functional.config['DEFAULT']['url']
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'gitweb')
-    functional.app_enable(session_browser, 'gitweb')
-    yield
-    functional.login(session_browser)
-    functional.app_disable(session_browser, 'gitweb')
+class TestGitwebApp(functional.BaseAppTests):
+    app_name = 'gitweb'
+    has_service = False
+    has_web = True
 
+    def test_all_repos_private(self, session_browser):
+        """Test repo accessability when all repos are private."""
+        _create_repo(session_browser, 'Test-repo', 'private',
+                     ok_if_exists=True)
+        _set_all_repos_private(session_browser)
+        if not functional.user_exists(session_browser, 'gitweb_user'):
+            functional.create_user(session_browser, 'gitweb_user',
+                                   groups=['git-access'])
+        if not functional.user_exists(session_browser, 'nogroupuser'):
+            functional.create_user(session_browser, 'nogroupuser', groups=[])
 
-@pytest.fixture(autouse=True)
-def fixture_login(session_browser):
-    """Login fixture."""
-    functional.login(session_browser)
-    functional.app_enable(session_browser, 'gitweb')
-    yield
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'gitweb_user')
+        assert functional.is_available(session_browser, 'gitweb')
+        assert len(functional.find_on_front_page(session_browser,
+                                                 'gitweb')) == 1
 
+        functional.login_with_account(session_browser, functional.base_url,
+                                      'nogroupuser')
+        assert not functional.is_available(session_browser, 'gitweb')
+        assert len(functional.find_on_front_page(session_browser,
+                                                 'gitweb')) == 0
 
-def test_all_repos_private(session_browser):
-    """Test repo accessability when all repos are private."""
-    _create_repo(session_browser, 'Test-repo', 'private', ok_if_exists=True)
-    _set_all_repos_private(session_browser)
-    if not functional.user_exists(session_browser, 'gitweb_user'):
-        functional.create_user(session_browser, 'gitweb_user',
-                               groups=['git-access'])
-    if not functional.user_exists(session_browser, 'nogroupuser'):
-        functional.create_user(session_browser, 'nogroupuser', groups=[])
+        functional.logout(session_browser)
+        functional.access_url(session_browser, 'gitweb')
+        assert functional.is_login_prompt(session_browser)
+        assert len(functional.find_on_front_page(session_browser,
+                                                 'gitweb')) == 0
 
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'gitweb_user')
-    assert functional.is_available(session_browser, 'gitweb')
-    assert len(functional.find_on_front_page(session_browser, 'gitweb')) == 1
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backing up and restoring."""
+        _create_repo(session_browser, 'Test-repo', ok_if_exists=True)
+        functional.backup_create(session_browser, 'gitweb', 'test_gitweb')
+        _delete_repo(session_browser, 'Test-repo')
+        functional.backup_restore(session_browser, 'gitweb', 'test_gitweb')
+        assert _repo_exists(session_browser, 'Test-repo')
+        assert functional.is_available(session_browser, 'gitweb')
 
-    functional.login_with_account(session_browser, functional.base_url,
-                                  'nogroupuser')
-    assert not functional.is_available(session_browser, 'gitweb')
-    assert len(functional.find_on_front_page(session_browser, 'gitweb')) == 0
+    @pytest.mark.parametrize('access', ['public', 'private'])
+    @pytest.mark.parametrize('repo_name', ['Test-repo', 'Test-repo.git'])
+    def test_create_delete_repo(self, session_browser, access, repo_name):
+        """Test creating and deleting a repo and accessing with a git
+        client."""
+        _delete_repo(session_browser, repo_name, ignore_missing=True)
+        _create_repo(session_browser, repo_name, access)
 
-    functional.logout(session_browser)
-    functional.access_url(session_browser, 'gitweb')
-    assert functional.is_login_prompt(session_browser)
-    assert len(functional.find_on_front_page(session_browser, 'gitweb')) == 0
+        assert _repo_exists(session_browser, repo_name, access)
+        assert _site_repo_exists(session_browser, repo_name)
 
+        if access == "public":
+            assert _repo_is_readable(repo_name)
+        else:
+            assert not _repo_is_readable(repo_name)
 
-@pytest.mark.backups
-def test_backup(session_browser):
-    """Test backing up and restoring."""
-    _create_repo(session_browser, 'Test-repo', ok_if_exists=True)
-    functional.backup_create(session_browser, 'gitweb', 'test_gitweb')
-    _delete_repo(session_browser, 'Test-repo')
-    functional.backup_restore(session_browser, 'gitweb', 'test_gitweb')
-    assert _repo_exists(session_browser, 'Test-repo')
-    assert functional.is_available(session_browser, 'gitweb')
+        assert not _repo_is_writable(repo_name)
+        assert _repo_is_readable(repo_name, with_auth=True)
+        assert _repo_is_writable(repo_name, with_auth=True)
 
+        _delete_repo(session_browser, repo_name)
+        assert not _repo_exists(session_browser, repo_name)
 
-@pytest.mark.parametrize('access', ['public', 'private'])
-@pytest.mark.parametrize('repo_name', ['Test-repo', 'Test-repo.git'])
-def test_create_delete_repo(session_browser, access, repo_name):
-    """Test creating and deleting a repo and accessing with a git client."""
-    _delete_repo(session_browser, repo_name, ignore_missing=True)
-    _create_repo(session_browser, repo_name, access)
+    def test_both_private_and_public_repo_exist(self, session_browser):
+        """Tests when both private and public repo exist."""
+        _create_repo(session_browser, 'Test-repo', 'public', True)
+        _create_repo(session_browser, 'Test-repo-private', 'private', True)
 
-    assert _repo_exists(session_browser, repo_name, access)
-    assert _site_repo_exists(session_browser, repo_name)
+        functional.logout(session_browser)
+        assert _site_repo_exists(session_browser, 'Test-repo')
+        assert not _site_repo_exists(session_browser, 'Test-repo-private')
 
-    if access == "public":
-        assert _repo_is_readable(repo_name)
-    else:
-        assert not _repo_is_readable(repo_name)
+    def test_edit_repo_metadata(self, session_browser):
+        """Test edit repo metadata."""
+        _create_repo(session_browser, 'Test-repo2', 'public',
+                     ok_if_exists=True)
+        _delete_repo(session_browser, 'Test-repo', ignore_missing=True)
+        repo_metadata = {
+            'name': 'Test-repo',
+            'description': 'Test Description',
+            'owner': 'Test Owner',
+            'access': 'private',
+        }
+        _edit_repo_metadata(session_browser, 'Test-repo2', repo_metadata)
+        assert _get_repo_metadata(session_browser,
+                                  "Test-repo") == repo_metadata
 
-    assert not _repo_is_writable(repo_name)
-    assert _repo_is_readable(repo_name, with_auth=True)
-    assert _repo_is_writable(repo_name, with_auth=True)
-
-    _delete_repo(session_browser, repo_name)
-    assert not _repo_exists(session_browser, repo_name)
-
-
-def test_both_private_and_public_repo_exist(session_browser):
-    """Tests when both private and public repo exist."""
-    _create_repo(session_browser, 'Test-repo', 'public', True)
-    _create_repo(session_browser, 'Test-repo-private', 'private', True)
-
-    functional.logout(session_browser)
-    assert _site_repo_exists(session_browser, 'Test-repo')
-    assert not _site_repo_exists(session_browser, 'Test-repo-private')
-
-
-def test_edit_repo_metadata(session_browser):
-    """Test edit repo metadata."""
-    _create_repo(session_browser, 'Test-repo2', 'public', ok_if_exists=True)
-    _delete_repo(session_browser, 'Test-repo', ignore_missing=True)
-    repo_metadata = {
-        'name': 'Test-repo',
-        'description': 'Test Description',
-        'owner': 'Test Owner',
-        'access': 'private',
-    }
-    _edit_repo_metadata(session_browser, 'Test-repo2', repo_metadata)
-    assert _get_repo_metadata(session_browser, "Test-repo") == repo_metadata
-
-    _create_branch('Test-repo', 'branch1')
-    _set_default_branch(session_browser, 'Test-repo', 'branch1')
-    assert _get_gitweb_site_default_repo_branch(session_browser,
-                                                'Test-repo') == 'branch1'
-
-
-def test_enable_disable(session_browser):
-    """Test enabling and disabling the app."""
-    functional.app_disable(session_browser, 'gitweb')
-    assert not functional.is_available(session_browser, 'gitweb')
-
-    functional.app_enable(session_browser, 'gitweb')
-    assert functional.is_available(session_browser, 'gitweb')
+        _create_branch('Test-repo', 'branch1')
+        _set_default_branch(session_browser, 'Test-repo', 'branch1')
+        assert _get_gitweb_site_default_repo_branch(session_browser,
+                                                    'Test-repo') == 'branch1'
 
 
 def _create_local_repo(path):

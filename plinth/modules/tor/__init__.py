@@ -17,6 +17,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
 
 from . import manifest, utils
@@ -51,6 +52,7 @@ class TorApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
@@ -63,6 +65,9 @@ class TorApp(app_module.App):
                               info.icon_filename, 'tor:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        packages = Packages('packages-tor', managed_packages)
+        self.add(packages)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
                                  'tor:index', can_have_certificate=False)

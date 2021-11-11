@@ -13,7 +13,7 @@ from collections import defaultdict
 import apt
 
 import plinth
-from plinth.package import packages_installed
+from plinth.package import Packages, packages_installed
 from plinth.signals import post_setup
 
 from . import package
@@ -161,6 +161,7 @@ class Helper(object):
 
     def has_unavailable_packages(self):
         """Find if any of the packages managed by the module are not available.
+
         Returns True if one or more of the packages is not available in the
         user's Debian distribution or False otherwise.
         Returns None if it cannot be reliably determined whether the
@@ -173,8 +174,15 @@ class Helper(object):
         ])
         if num_files < 2:  # not counting the lock file
             return None
+
+        pkg_components = list(self.module.app.get_components_of_type(Packages))
+        if not pkg_components:  # This app has no packages to install
+            return False
+
+        # List of all packages from all Package components
+        managed_pkgs = (package for component in pkg_components
+                        for package in component.packages)
         cache = apt.Cache()
-        managed_pkgs = _get_module_managed_packages(self.module)
         unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
                             if pkg_name not in cache)
         return any(unavailable_pkgs)
@@ -231,8 +239,9 @@ def list_dependencies(module_list=None, essential=False):
            '*' not in module_list:
             continue
 
-        for package_name in _get_module_managed_packages(module):
-            print(package_name)
+        for component in module.app.get_components_of_type(Packages):
+            for package_name in component.packages:
+                print(package_name)
 
 
 def run_setup_in_background():
@@ -312,11 +321,6 @@ def _get_module_package_conflicts(module):
     """Return list of packages that conflict with packages of a module."""
     return (getattr(module, 'package_conflicts',
                     None), getattr(module, 'package_conflicts_action', None))
-
-
-def _get_module_managed_packages(module):
-    """Return list of packages managed by a module."""
-    return getattr(module, 'managed_packages', [])
 
 
 def _module_state_matches(module, state):
@@ -582,11 +586,11 @@ class ForceUpgrader():
                 # Or needs an update, let it update first.
                 continue
 
-            managed_packages = _get_module_managed_packages(module)
-            upgradable_packages.update(managed_packages)
+            for component in module.app.get_components_of_type(Packages):
+                upgradable_packages.update(component.packages)
 
-            for managed_package in managed_packages:
-                package_apps_map[managed_package].add(module)
+                for managed_package in component.packages:
+                    package_apps_map[managed_package].add(module)
 
         return upgradable_packages.intersection(
             set(packages)), package_apps_map

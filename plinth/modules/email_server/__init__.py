@@ -3,7 +3,6 @@
 
 import logging
 
-from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import plinth.app
@@ -30,6 +29,7 @@ package_conflicts_action = 'ignore'
 
 packages = [
     'postfix-ldap',
+    'postfix-sqlite',
     'dovecot-pop3d',
     'dovecot-imapd',
     'dovecot-ldap',
@@ -111,13 +111,6 @@ class EmailServerApp(plinth.app.App):
             parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = plinth.frontpage.Shortcut(
-            'shortcut_' + self.app_id, name=info.name,
-            short_description=info.short_description, icon='roundcube',
-            url=reverse_lazy('email_server:my_mail'), clients=manifest.clients,
-            login_required=True)
-        self.add(shortcut)
-
     def _add_daemons(self):
         for srvname in managed_services:
             # Construct `listen_ports` parameter for the daemon
@@ -169,6 +162,7 @@ def setup(helper, old_version=None):
     helper.install(packages_bloat, skip_recommends=True)
 
     # Setup
+    helper.call('post', audit.home.repair)
     helper.call('post', audit.domain.repair)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)

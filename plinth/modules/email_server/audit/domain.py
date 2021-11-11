@@ -4,12 +4,12 @@
 import io
 import json
 import os
+import pathlib
 import re
 import select
 import subprocess
 import sys
 import time
-from types import SimpleNamespace
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -42,14 +42,14 @@ def get():
 
 
 def repair():
-    superuser_run('email_server', ['-i', 'domain', 'set_up'])
+    superuser_run('email_server', ['domain', 'set_up'])
 
 
 def repair_component(action_name):
     allowed_actions = {'set_up': ['postfix']}
     if action_name not in allowed_actions:
         return
-    superuser_run('email_server', ['-i', 'domain', action_name])
+    superuser_run('email_server', ['domain', action_name])
     return allowed_actions[action_name]
 
 
@@ -181,22 +181,11 @@ def _apply_domain_changes(conf_dict):
 
 
 def get_domain_config():
-    fields = []
-
-    # Special keys
-    mailname = SimpleNamespace(key='_mailname', name='/etc/mailname')
-    with open('/etc/mailname', 'r') as fd:
-        mailname.value = fd.readline().strip()
-    fields.append(mailname)
-
-    # Postconf keys
-    postconf_keys = [k for k in managed_keys if not k.startswith('_')]
-    result_dict = postconf.get_many(postconf_keys)
-    for key, value in result_dict.items():
-        field = SimpleNamespace(key=key, value=value, name='$' + key)
-        fields.append(field)
-
-    return fields
+    """Return the current domain configuration."""
+    postconf_keys = [key for key in managed_keys if not key.startswith('_')]
+    config = postconf.get_many(postconf_keys)
+    config['_mailname'] = pathlib.Path('/etc/mailname').read_text().strip()
+    return config
 
 
 def set_keys(raw):
@@ -210,7 +199,7 @@ def set_keys(raw):
         raise ClientError('POST data exceeds max line length')
 
     try:
-        superuser_run('email_server', ['-i', 'domain', 'set_keys'], input=ipc)
+        superuser_run('email_server', ['domain', 'set_keys'], input=ipc)
     except ActionError as e:
         stdout = e.args[1]
         if not stdout.startswith('ClientError:'):

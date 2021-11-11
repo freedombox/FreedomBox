@@ -17,6 +17,7 @@ from django.utils.translation import gettext_noop
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu
+from plinth.package import Packages
 
 from . import api
 
@@ -49,6 +50,7 @@ class BackupsApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, depends=depends,
             name=_('Backups'), icon='fa-files-o', description=_description,
@@ -59,6 +61,9 @@ class BackupsApp(app_module.App):
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-backups', managed_packages)
+        self.add(packages)
 
         # Check every hour (every 3 minutes in debug mode) to perform scheduled
         # backups.

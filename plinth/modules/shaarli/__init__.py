@@ -9,6 +9,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 
 from . import manifest
 
@@ -33,6 +34,7 @@ class ShaarliApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Shaarli'), icon_filename='shaarli',
                                short_description=_('Bookmarks'),
@@ -51,6 +53,9 @@ class ShaarliApp(app_module.App):
                                       clients=info.clients,
                                       login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-shaarli', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-shaarli', info.name,
                             ports=['http', 'https'], is_external=True)

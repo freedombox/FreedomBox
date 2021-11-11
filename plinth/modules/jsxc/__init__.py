@@ -12,6 +12,7 @@ from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.web_server import StaticFiles
 
 from . import manifest
@@ -40,6 +41,7 @@ class JSXCApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('JSXC'), icon_filename='jsxc',
                                short_description=_('Chat Client'),
@@ -58,6 +60,9 @@ class JSXCApp(app_module.App):
                                       url=reverse_lazy('jsxc:jsxc'),
                                       clients=info.clients)
         self.add(shortcut)
+
+        packages = Packages('packages-jsxc', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-jsxc', info.name,
                             ports=['http', 'https'], is_external=True)
