@@ -68,6 +68,9 @@ class StorageApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         # Check every hour for low disk space, every 3 minutes in debug mode
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, warn_about_low_disk_space)
