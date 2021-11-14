@@ -92,6 +92,8 @@ class UpgradesApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         self._show_new_release_notification()
 
         # Check every day (every 3 minutes in debug mode):
