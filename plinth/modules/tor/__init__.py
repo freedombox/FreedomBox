@@ -95,6 +95,8 @@ class TorApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-tor', **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         # Register hidden service name with Name Services module.
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup' and \
