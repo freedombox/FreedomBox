@@ -80,6 +80,9 @@ class DynamicDNSApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         current_status = get_status()
         if current_status['enabled']:
             domain_added.send_robust(sender='dynamicdns',
