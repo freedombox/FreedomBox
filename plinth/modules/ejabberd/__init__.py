@@ -128,6 +128,9 @@ class EjabberdApp(app_module.App):
         turn = EjabberdTurnConsumer('turn-ejabberd')
         self.add(turn)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         pre_hostname_change.connect(on_pre_hostname_change)
         post_hostname_change.connect(on_post_hostname_change)
         domain_added.connect(on_domain_added)
