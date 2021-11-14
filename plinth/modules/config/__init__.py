@@ -68,6 +68,9 @@ class ConfigApp(app_module.App):
                                  'config:index', can_have_certificate=True)
         self.add(domain_type)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         # Register domain with Name Services module.
         domainname = get_domainname()
         if domainname:
