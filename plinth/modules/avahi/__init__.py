@@ -85,6 +85,8 @@ class AvahiApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         if self.is_enabled():
             domain_added.send_robust(sender='avahi',
                                      domain_type='domain-type-local',
