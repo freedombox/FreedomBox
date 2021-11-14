@@ -56,6 +56,9 @@ class NamesApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
