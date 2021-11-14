@@ -66,14 +66,8 @@ def load_modules():
         except KeyError:
             logger.error('Unsatified dependency for module - %s', module_name)
 
-    logger.info('Initializing apps - %s', ', '.join(ordered_modules))
-
     for module_name in ordered_modules:
-        _initialize_module(module_name, modules[module_name])
         loaded_modules[module_name] = modules[module_name]
-
-    logger.debug('App initialization completed.')
-    post_module_loading.send_robust(sender="module_loader")
 
 
 def _insert_modules(module_name, module, remaining_modules, ordered_modules):
@@ -118,6 +112,13 @@ def _include_module_urls(module_import_path, module_name):
             raise
 
 
+def apps_init():
+    """Create apps by constructing them with components."""
+    logger.info('Initializing apps - %s', ', '.join(loaded_modules))
+    for module_name, module in loaded_modules.items():
+        _initialize_module(module_name, module)
+
+
 def _initialize_module(module_name, module):
     """Perform module initialization"""
 
@@ -131,15 +132,32 @@ def _initialize_module(module_name, module):
         ]
         if module_classes and app_class:
             module.app = app_class[0][1]()
-
-            if module.setup_helper.get_state(
-            ) != 'needs-setup' and module.app.is_enabled():
-                module.app.set_enabled(True)
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s', module,
                          exception)
         if cfg.develop:
             raise
+
+
+def apps_post_init():
+    """Run post initialization on each app."""
+    for module in loaded_modules.values():
+        if not hasattr(module, 'app') or not module.app:
+            continue
+
+        try:
+            module.app.post_init()
+            if module.setup_helper.get_state(
+            ) != 'needs-setup' and module.app.is_enabled():
+                module.app.set_enabled(True)
+        except Exception as exception:
+            logger.exception('Exception while running post init for %s: %s',
+                             module, exception)
+            if cfg.develop:
+                raise
+
+    logger.debug('App initialization completed.')
+    post_module_loading.send_robust(sender="module_loader")
 
 
 def get_modules_to_load():
