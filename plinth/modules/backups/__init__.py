@@ -65,6 +65,9 @@ class BackupsApp(app_module.App):
         packages = Packages('packages-backups', managed_packages)
         self.add(packages)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         # Check every hour (every 3 minutes in debug mode) to perform scheduled
         # backups.
         interval = 180 if cfg.develop else 3600
