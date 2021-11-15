@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 from plinth import app
 
@@ -8,7 +8,7 @@ from plinth import app
 class Menu(app.FollowerComponent):
     """Component to manage a single menu item."""
 
-    _all_menus = {}
+    _all_menus = set()
 
     def __init__(self, component_id, name=None, short_description=None,
                  icon=None, url_name=None, url_args=None, url_kwargs=None,
@@ -57,21 +57,22 @@ class Menu(app.FollowerComponent):
         self.url = url
         self.order = order
         self.advanced = advanced
-        self.items = []
 
-        # Add self to parent menu item
-        if parent_url_name:
-            parent_menu = self.get(parent_url_name)
-            parent_menu.items.append(self)
+        self.url_name = url_name
+        self.url_args = url_args
+        self.url_kwargs = url_kwargs
+        self.parent_url_name = parent_url_name
 
-        # Add self to global list of menu items
-        self._all_menus[url] = self
+        # Add self to global list of menu items.
+        self._all_menus.add(self)
 
-    @classmethod
-    def get(cls, urlname, url_args=None, url_kwargs=None):
-        """Return a menu item with given URL name."""
-        url = reverse(urlname, args=url_args, kwargs=url_kwargs)
-        return cls._all_menus[url]
+    @property
+    def items(self):
+        """Return the list of children for this menu item."""
+        return [
+            item for item in self._all_menus
+            if item.parent_url_name == self.url_name
+        ]
 
     def sorted_items(self):
         """Return menu items in sorted order according to current locale."""
