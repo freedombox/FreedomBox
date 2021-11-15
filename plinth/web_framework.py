@@ -20,7 +20,7 @@ from . import cfg, glib, log, module_loader, settings
 logger = logging.getLogger(__name__)
 
 
-def init(read_only=False):
+def init():
     """Setup Django configuration in the absence of .settings file"""
     # Workaround for django-simple-captcha 0.5.6 not being compatible with
     # Django 3.2. 0.5.14 is almost there in Debian. Workaround only until then.
@@ -40,7 +40,7 @@ def init(read_only=False):
     settings.LANGUAGES = get_languages()
     settings.LOGGING = log.get_configuration()
     settings.MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
-    settings.SECRET_KEY = _get_secret_key(read_only)
+    settings.SECRET_KEY = _get_secret_key()
     settings.SESSION_FILE_PATH = os.path.join(cfg.data_dir, 'sessions')
     settings.STATIC_URL = '/'.join([cfg.server_dir,
                                     'static/']).replace('//', '/')
@@ -69,16 +69,13 @@ def post_init():
     glib.schedule(24 * 3600, _cleanup_expired_sessions, in_thread=True)
 
 
-def _get_secret_key(read_only=False):
+def _get_secret_key():
     """Retrieve or create a new Django secret key."""
     secret_key_file = pathlib.Path(cfg.data_dir) / 'django-secret.key'
     if secret_key_file.exists():
         secret_key = secret_key_file.read_text()
         if len(secret_key) >= 128:
             return secret_key
-
-    if read_only:
-        return ''
 
     secret_key = _generate_secret_key()
     # File should be created with permission 0o700
