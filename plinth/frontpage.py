@@ -70,7 +70,7 @@ class Shortcut(app.FollowerComponent):
         """
         super().__init__(component_id)
 
-        if not url:
+        if url is None:
             url = '?selected={id}'.format(id=component_id)
 
         self.name = name
