@@ -39,8 +39,6 @@ _description = [
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
 
-manual_page = 'Roundcube'
-
 app = None
 
 

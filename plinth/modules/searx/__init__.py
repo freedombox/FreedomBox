@@ -29,8 +29,6 @@ _description = [
       'It stores no cookies by default.')
 ]
 
-manual_page = 'Searx'
-
 app = None
 
 
