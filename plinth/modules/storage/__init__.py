@@ -23,8 +23,6 @@ from . import manifest, udisks2
 
 version = 4
 
-managed_packages = ['parted', 'udisks2', 'gir1.2-udisks-2.0']
-
 _description = [
     format_lazy(
         _('This module allows you to manage storage media attached to your '
@@ -61,7 +59,9 @@ class StorageApp(app_module.App):
                               'storage:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-storage', managed_packages)
+        packages = Packages('packages-storage',
+                            ['parted', 'udisks2', 'gir1.2-udisks-2.0'],
+                            skip_recommends=True)
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-storage',
@@ -279,7 +279,7 @@ def get_error_message(error):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages, skip_recommends=True)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'storage', ['setup'])
     helper.call('post', app.enable)
     disks = get_disks()

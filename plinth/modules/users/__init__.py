@@ -21,11 +21,6 @@ version = 3
 
 is_essential = True
 
-managed_packages = [
-    'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nscd',
-    'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
-]
-
 managed_services = ['slapd']
 
 first_boot_steps = [
@@ -72,7 +67,10 @@ class UsersApp(app_module.App):
                               'users:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-users', managed_packages)
+        packages = Packages('packages-users', [
+            'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd',
+            'nscd', 'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
+        ])
         self.add(packages)
 
         daemon = Daemon('daemon-users', managed_services[0],
@@ -98,7 +96,7 @@ class UsersApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', actions.superuser_run, 'users', ['first-setup'])
     helper.call('post', actions.superuser_run, 'users', ['setup'])

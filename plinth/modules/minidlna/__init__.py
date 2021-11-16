@@ -18,8 +18,6 @@ from . import manifest
 
 version = 2
 
-managed_packages = ['minidlna']
-
 managed_services = ['minidlna']
 
 _description = [
@@ -72,7 +70,7 @@ class MiniDLNAApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-minidlna', managed_packages)
+        packages = Packages('packages-minidlna', ['minidlna'])
         self.add(packages)
 
         firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
@@ -97,7 +95,7 @@ class MiniDLNAApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the package"""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
     if not old_version:
         helper.call('post', app.enable)

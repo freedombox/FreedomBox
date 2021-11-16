@@ -23,8 +23,6 @@ version = 2
 
 managed_services = ['mldonkey-server']
 
-managed_packages = ['mldonkey-server']
-
 _description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
@@ -74,7 +72,7 @@ class MLDonkeyApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcuts)
 
-        packages = Packages('packages-mldonkey', managed_packages)
+        packages = Packages('packages-mldonkey', ['mldonkey-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-mldonkey', info.name,
@@ -102,7 +100,7 @@ class MLDonkeyApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'mldonkey', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', app.enable)
 

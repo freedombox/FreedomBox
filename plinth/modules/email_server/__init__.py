@@ -14,7 +14,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import packages_installed, remove
+from plinth.package import Packages, packages_installed, remove
 
 from . import audit, manifest
 
@@ -27,18 +27,6 @@ version = 1
 package_conflicts = ('exim4-base', 'exim4-config', 'exim4-daemon-light')
 package_conflicts_action = 'ignore'
 
-packages = [
-    'postfix-ldap',
-    'postfix-sqlite',
-    'dovecot-pop3d',
-    'dovecot-imapd',
-    'dovecot-ldap',
-    'dovecot-lmtpd',
-    'dovecot-managesieved',
-]
-
-packages_bloat = ['rspamd']
-
 clamav_packages = ['clamav', 'clamav-daemon']
 clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
 
@@ -48,8 +36,6 @@ port_info = {
 }
 
 managed_services = ['postfix', 'dovecot', 'rspamd']
-
-managed_packages = packages + packages_bloat
 
 _description = [
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
@@ -71,6 +57,17 @@ class EmailServerApp(plinth.app.App):
         """The app's constructor"""
         super().__init__()
         self._add_ui_components()
+
+        packages = Packages('packages-email-server', [
+            'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d', 'dovecot-imapd',
+            'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved'
+        ])
+        self.add(packages)
+
+        packages = Packages('packages-email-server-skip-rec', ['rspamd'],
+                            skip_recommends=True)
+        self.add(packages)
+
         self._add_daemons()
         self._add_firewall_ports()
 
@@ -160,8 +157,7 @@ def setup(helper, old_version=None):
 
     # Install
     helper.call('pre', _clear_conflicts)
-    helper.install(packages)
-    helper.install(packages_bloat, skip_recommends=True)
+    app.setup(old_version)
 
     # Setup
     helper.call('post', audit.home.repair)

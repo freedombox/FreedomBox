@@ -25,8 +25,6 @@ is_essential = False
 
 managed_services = ['privoxy']
 
-managed_packages = ['privoxy']
-
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '
@@ -73,7 +71,7 @@ class PrivoxyApp(app_module.App):
             configure_url=reverse_lazy('privoxy:index'), login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-privoxy', managed_packages)
+        packages = Packages('packages-privoxy', ['privoxy'])
         self.add(packages)
 
         firewall = Firewall('firewall-privoxy', info.name, ports=['privoxy'],
@@ -103,7 +101,7 @@ class PrivoxyApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

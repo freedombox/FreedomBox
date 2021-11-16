@@ -29,8 +29,6 @@ depends = ['names']
 
 managed_services = ['avahi-daemon']
 
-managed_packages = ['avahi-daemon', 'avahi-utils']
-
 _description = [
     format_lazy(
         _('Service discovery allows other devices on the network to '
@@ -64,7 +62,7 @@ class AvahiApp(app_module.App):
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-avahi', managed_packages)
+        packages = Packages('packages-avahi', ['avahi-daemon', 'avahi-utils'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-local',
@@ -96,7 +94,7 @@ class AvahiApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     # Reload avahi-daemon now that first-run does not reboot. After performing
     # FreedomBox Service (Plinth) package installation, new Avahi files will be
     # available and require restart.

@@ -29,8 +29,6 @@ version = 1
 
 managed_services = ['coturn']
 
-managed_packages = ['coturn']
-
 managed_paths = [pathlib.Path('/etc/coturn/')]
 
 _description = [
@@ -70,7 +68,7 @@ class CoturnApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-coturn', managed_packages)
+        packages = Packages('packages-coturn', ['coturn'])
         self.add(packages)
 
         firewall = Firewall('firewall-coturn', info.name,
@@ -107,7 +105,7 @@ class CoturnApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'coturn', ['setup'])
     helper.call('post', app.enable)
     app.get_component('letsencrypt-coturn').setup_certificates()

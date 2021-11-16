@@ -22,8 +22,6 @@ version = 6
 
 managed_services = ['deluged', 'deluge-web']
 
-managed_packages = ['deluged', 'deluge-web']
-
 _description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
     _('The default password is \'deluge\', but you should log in and '
@@ -70,7 +68,7 @@ class DelugeApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-deluge', managed_packages)
+        packages = Packages('packages-deluge', ['deluged', 'deluge-web'])
         self.add(packages)
 
         firewall = Firewall('firewall-deluge', info.name,
@@ -101,7 +99,7 @@ class DelugeApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     add_user_to_share_group(SYSTEM_USER)
     helper.call('post', actions.superuser_run, 'deluge', ['setup'])
     helper.call('post', app.enable)

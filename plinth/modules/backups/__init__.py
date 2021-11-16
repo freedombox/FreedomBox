@@ -27,8 +27,6 @@ version = 3
 
 is_essential = True
 
-managed_packages = ['borgbackup', 'sshfs']
-
 depends = ['storage']
 
 _description = [
@@ -62,7 +60,7 @@ class BackupsApp(app_module.App):
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-backups', managed_packages)
+        packages = Packages('packages-backups', ['borgbackup', 'sshfs'])
         self.add(packages)
 
     @staticmethod
@@ -76,7 +74,7 @@ class BackupsApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     from . import repository
     helper.call('post', actions.superuser_run, 'backups',
                 ['setup', '--path', repository.RootBorgRepository.PATH])

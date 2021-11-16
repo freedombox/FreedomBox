@@ -40,8 +40,6 @@ version = 1
 
 managed_services = ['diaspora']
 
-managed_packages = ['diaspora']
-
 _description = [
     _('diaspora* is a decentralized social network where you can store '
       'and control your own data.'),
@@ -84,7 +82,7 @@ class DiasporaApp(app_module.App):
                             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-diaspora', managed_packages)
+        packages = Packages('packages-diaspora', ['diaspora'])
         self.add(packages)
 
         firewall = Firewall('firewall-diaspora', info.name,
@@ -127,7 +125,7 @@ class Shortcut(frontpage.Shortcut):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
 

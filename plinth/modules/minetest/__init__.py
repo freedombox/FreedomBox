@@ -22,7 +22,7 @@ version = 2
 
 managed_services = ['minetest-server']
 
-mods = [
+_mods = [
     'minetest-mod-character-creator', 'minetest-mod-craftguide',
     'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
     'minetest-mod-maidroid', 'minetest-mod-mesecons',
@@ -32,8 +32,6 @@ mods = [
     'minetest-mod-throwing', 'minetest-mod-unified-inventory',
     'minetest-mod-unifieddyes', 'minetest-mod-worldedit'
 ]
-
-managed_packages = ['minetest-server'] + mods
 
 _description = [
     format_lazy(
@@ -80,7 +78,7 @@ class MinetestApp(app_module.App):
             login_required=False)
         self.add(shortcut)
 
-        packages = Packages('packages-minetest', managed_packages)
+        packages = Packages('packages-minetest', ['minetest-server'] + _mods)
         self.add(packages)
 
         firewall = Firewall('firewall-minetest', info.name,
@@ -103,7 +101,7 @@ class MinetestApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

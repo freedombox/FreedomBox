@@ -18,8 +18,6 @@ from . import manifest
 
 version = 1
 
-managed_packages = ['sqlite3', 'roundcube', 'roundcube-sqlite3']
-
 _description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
       'client with an application-like user interface. It provides '
@@ -71,7 +69,8 @@ class RoundcubeApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-roundcube', managed_packages)
+        packages = Packages('packages-roundcube',
+                            ['sqlite3', 'roundcube', 'roundcube-sqlite3'])
         self.add(packages)
 
         firewall = Firewall('firewall-roundcube', info.name,
@@ -90,7 +89,7 @@ class RoundcubeApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
     helper.call('post', app.enable)
 

@@ -26,8 +26,6 @@ version = 1
 
 managed_services = ['quasselcore']
 
-managed_packages = ['quassel-core']
-
 managed_paths = [pathlib.Path('/var/lib/quassel/')]
 
 _description = [
@@ -78,7 +76,7 @@ class QuasselApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-quassel', managed_packages)
+        packages = Packages('packages-quassel', ['quassel-core'])
         self.add(packages)
 
         firewall = Firewall('firewall-quassel', info.name,
@@ -109,7 +107,7 @@ class QuasselApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
     app.get_component('letsencrypt-quassel').setup_certificates()
 

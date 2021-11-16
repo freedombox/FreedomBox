@@ -18,8 +18,6 @@ version = 1
 
 is_essential = True
 
-managed_packages = ['network-manager', 'batctl']
-
 first_boot_steps = [
     {
         'id': 'network_topology_wizard',
@@ -69,7 +67,7 @@ class NetworksApp(app_module.App):
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-networks', managed_packages)
+        packages = Packages('packages-networks', ['network-manager', 'batctl'])
         self.add(packages)
 
     def diagnose(self):
@@ -91,7 +89,7 @@ class NetworksApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run('networks')
     helper.call('post', app.enable)
 

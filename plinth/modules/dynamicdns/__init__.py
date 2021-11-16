@@ -23,8 +23,6 @@ is_essential = True
 
 depends = ['names']
 
-managed_packages = ['ez-ipupdate']
-
 _description = [
     format_lazy(
         _('If your Internet provider changes your IP address periodically '
@@ -64,7 +62,7 @@ class DynamicDNSApp(app_module.App):
                               'dynamicdns:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-dynamicdns', managed_packages)
+        packages = Packages('packages-dynamicdns', ['ez-ipupdate'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-dynamic',
@@ -101,7 +99,7 @@ class DynamicDNSApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
 
 def get_status():

@@ -25,8 +25,6 @@ version = 2
 
 managed_services = ['bind9', 'named']
 
-managed_packages = ['bind9']
-
 _description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
@@ -87,7 +85,7 @@ class BindApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-bind', managed_packages)
+        packages = Packages('packages-bind', ['bind9'])
         self.add(packages)
 
         firewall = Firewall('firewall-bind', info.name, ports=['dns'],
@@ -109,7 +107,7 @@ class BindApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call(
         'post', actions.superuser_run, 'bind',
         ['setup', '--old-version', str(old_version)])
@@ -118,7 +116,7 @@ def setup(helper, old_version=None):
 
 def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
-    helper.install(managed_packages, force_configuration='old')
+    helper.install(['bind9'], force_configuration='old')
     return True
 
 

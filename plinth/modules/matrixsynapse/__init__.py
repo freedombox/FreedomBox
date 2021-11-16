@@ -30,8 +30,6 @@ version = 7
 
 managed_services = ['matrix-synapse']
 
-managed_packages = ['matrix-synapse', 'matrix-synapse-ldap3']
-
 managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 _description = [
@@ -94,7 +92,8 @@ class MatrixSynapseApp(app_module.App):
             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-matrixsynapse', managed_packages)
+        packages = Packages('packages-matrixsynapse',
+                            ['matrix-synapse', 'matrix-synapse-ldap3'])
         self.add(packages)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
@@ -137,7 +136,7 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if old_version and old_version < 6:
         helper.call('post', upgrade, helper)
     else:

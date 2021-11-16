@@ -25,8 +25,6 @@ version = 9
 
 is_essential = True
 
-managed_packages = ['unattended-upgrades', 'needrestart']
-
 managed_services = ['freedombox-dist-upgrade']
 
 first_boot_steps = [
@@ -85,7 +83,8 @@ class UpgradesApp(app_module.App):
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-upgrades', managed_packages)
+        packages = Packages('packages-upgrades',
+                            ['unattended-upgrades', 'needrestart'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-upgrades',
@@ -139,7 +138,7 @@ class UpgradesApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     # Enable automatic upgrades but only on first install
     if not old_version and not cfg.develop:

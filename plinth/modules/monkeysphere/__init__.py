@@ -15,8 +15,6 @@ from . import manifest
 
 version = 1
 
-managed_packages = ['monkeysphere']
-
 _description = [
     _('With Monkeysphere, an OpenPGP key can be generated for each configured '
       'domain serving SSH. The OpenPGP public key can then be uploaded to the '
@@ -59,7 +57,7 @@ class MonkeysphereApp(app_module.App):
                               advanced=True)
         self.add(menu_item)
 
-        packages = Packages('packages-monkeysphere', managed_packages)
+        packages = Packages('packages-monkeysphere', ['monkeysphere'])
         self.add(packages)
 
         users_and_groups = UsersAndGroups('users-and-groups-monkeysphere',
@@ -73,4 +71,4 @@ class MonkeysphereApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)

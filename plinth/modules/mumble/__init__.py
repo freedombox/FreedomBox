@@ -26,8 +26,6 @@ version = 2
 
 managed_services = ['mumble-server']
 
-managed_packages = ['mumble-server']
-
 managed_paths = [pathlib.Path('/var/lib/mumble-server')]
 
 _description = [
@@ -69,7 +67,7 @@ class MumbleApp(app_module.App):
             configure_url=reverse_lazy('mumble:index'), clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-mumble', managed_packages)
+        packages = Packages('packages-mumble', ['mumble-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-mumble', info.name,
@@ -102,7 +100,7 @@ class MumbleApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'mumble', ['setup'])
     if not old_version:
         helper.call('post', app.enable)

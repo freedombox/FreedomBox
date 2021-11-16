@@ -23,8 +23,6 @@ version = 5
 
 managed_services = ['syncthing@syncthing']
 
-managed_packages = ['syncthing']
-
 _description = [
     _('Syncthing is an application to synchronize files across multiple '
       'devices, e.g. your desktop computer and mobile phone.  Creation, '
@@ -81,7 +79,7 @@ class SyncthingApp(app_module.App):
                                       allowed_groups=list(self.groups))
         self.add(shortcut)
 
-        packages = Packages('packages-syncthing', managed_packages)
+        packages = Packages('packages-syncthing', ['syncthing'])
         self.add(packages)
 
         firewall = Firewall('firewall-syncthing-web', info.name,
@@ -110,7 +108,7 @@ class SyncthingApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
     add_user_to_share_group(SYSTEM_USER, managed_services[0])
 

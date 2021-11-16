@@ -20,11 +20,6 @@ from . import manifest
 
 version = 1
 
-managed_packages = [
-    'ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl', 'xapian-omega',
-    'libsearch-xapian-perl', 'libimage-magick-perl'
-]
-
 _description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
       'several lightweight markup languages, including Markdown, and '
@@ -65,7 +60,10 @@ class IkiwikiApp(app_module.App):
 
         self.refresh_sites()
 
-        packages = Packages('packages-ikiwiki', managed_packages)
+        packages = Packages('packages-ikiwiki', [
+            'ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
+            'xapian-omega', 'libsearch-xapian-perl', 'libimage-magick-perl'
+        ])
         self.add(packages)
 
         firewall = Firewall('firewall-ikiwiki', info.name,
@@ -113,6 +111,6 @@ class IkiwikiApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
     helper.call('post', app.enable)

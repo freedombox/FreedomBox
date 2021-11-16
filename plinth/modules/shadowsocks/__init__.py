@@ -21,8 +21,6 @@ version = 3
 
 managed_services = ['shadowsocks-libev-local@freedombox']
 
-managed_packages = ['shadowsocks-libev']
-
 _description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
@@ -70,7 +68,7 @@ class ShadowsocksApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-shadowsocks', managed_packages)
+        packages = Packages('packages-shadowsocks', ['shadowsocks-libev'])
         self.add(packages)
 
         firewall = Firewall('firewall-shadowsocks', info.name,
@@ -89,6 +87,6 @@ class ShadowsocksApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    helper.install(['shadowsocks-libev'])
     helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
     helper.call('post', app.enable)

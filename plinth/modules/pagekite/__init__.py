@@ -22,8 +22,6 @@ depends = ['names']
 
 managed_services = ['pagekite']
 
-managed_packages = ['pagekite']
-
 _description = [
     format_lazy(
         _('PageKite is a system for exposing {box_name} services when '
@@ -75,7 +73,7 @@ class PagekiteApp(app_module.App):
                               'pagekite:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-pagekite', managed_packages)
+        packages = Packages('packages-pagekite', ['pagekite'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),
@@ -109,7 +107,7 @@ class PagekiteApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', app.enable)
 

@@ -20,8 +20,6 @@ from . import manifest
 
 version = 4
 
-managed_packages = ['searx']
-
 _description = [
     _('Searx is a privacy-respecting Internet metasearch engine. '
       'It aggregrates and displays results from multiple search engines.'),
@@ -64,7 +62,7 @@ class SearxApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-searx', managed_packages)
+        packages = Packages('packages-searx', ['searx'])
         self.add(packages)
 
         firewall = Firewall('firewall-searx', info.name,
@@ -112,7 +110,7 @@ class SearxWebserverAuth(Webserver):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'searx', ['setup'])
     if not old_version or old_version < 3:
         helper.call('post', actions.superuser_run, 'searx',

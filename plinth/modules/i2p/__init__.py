@@ -24,8 +24,6 @@ service_name = 'i2p'
 
 managed_services = [service_name]
 
-managed_packages = ['i2p']
-
 _description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
       'to protect communication from censorship and surveillance. I2P '
@@ -78,7 +76,7 @@ class I2PApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-i2p', managed_packages)
+        packages = Packages('packages-i2p', ['i2p'])
         self.add(packages)
 
         firewall = Firewall('firewall-i2p-web', info.name,
@@ -108,7 +106,7 @@ class I2PApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     helper.call('post', app.disable)
     # Add favorites to the configuration

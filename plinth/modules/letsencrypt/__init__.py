@@ -29,8 +29,6 @@ is_essential = True
 
 depends = ['names']
 
-managed_packages = ['certbot']
-
 _description = [
     format_lazy(
         _('A digital certificate allows users of a web service to verify the '
@@ -76,7 +74,7 @@ class LetsEncryptApp(app_module.App):
                               'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-letsencrypt', managed_packages)
+        packages = Packages('packages-letsencrypt', ['certbot'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-letsencrypt',
@@ -108,7 +106,7 @@ class LetsEncryptApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run(
         'letsencrypt',
         ['setup', '--old-version', str(old_version)])

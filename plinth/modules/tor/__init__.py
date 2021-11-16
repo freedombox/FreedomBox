@@ -26,10 +26,6 @@ version = 5
 
 depends = ['names']
 
-managed_packages = [
-    'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
-]
-
 managed_services = ['tor@plinth']
 
 _description = [
@@ -66,7 +62,9 @@ class TorApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-tor', managed_packages)
+        packages = Packages('packages-tor', [
+            'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
+        ])
         self.add(packages)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
@@ -160,7 +158,7 @@ class TorApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call(
         'post', actions.superuser_run, 'tor',
         ['setup', '--old-version', str(old_version)])

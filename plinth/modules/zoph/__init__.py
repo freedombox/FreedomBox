@@ -23,12 +23,6 @@ logger = logging.getLogger(__name__)
 
 version = 1
 
-# XXX: This implementation of Zoph does not work with version 0.9.9 in Buster.
-# As an easy hack to make the app only available in Bullseye, php7.4 dependency
-# has been added. After making the last release for Buster, this can be removed
-# to allow compatibility with newer versions of PHP that become available.
-managed_packages = ['zoph', 'php7.4']
-
 _description = [
     format_lazy(
         _('Zoph manages your photo collection. Photos are stored on your '
@@ -79,7 +73,7 @@ class ZophApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-zoph', managed_packages)
+        packages = Packages('packages-zoph', ['zoph'])
         self.add(packages)
 
         firewall = Firewall('firewall-zoph', info.name,
@@ -98,7 +92,7 @@ class ZophApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'zoph', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'zoph', ['setup'])
     helper.call('post', app.enable)
 

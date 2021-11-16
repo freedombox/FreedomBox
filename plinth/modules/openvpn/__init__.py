@@ -24,8 +24,6 @@ version = 4
 
 managed_services = ['openvpn-server@freedombox']
 
-managed_packages = ['openvpn', 'easy-rsa']
-
 _description = [
     format_lazy(
         _('Virtual Private Network (VPN) is a technique for securely '
@@ -82,7 +80,7 @@ class OpenVPNApp(app_module.App):
             allowed_groups=['vpn'])
         self.add(shortcut)
 
-        packages = Packages('packages-openvpn', managed_packages)
+        packages = Packages('packages-openvpn', ['openvpn', 'easy-rsa'])
         self.add(packages)
 
         firewall = Firewall('firewall-openvpn', info.name, ports=['openvpn'],
@@ -112,7 +110,7 @@ class OpenVPNApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'openvpn', ['setup'])
     helper.call('post', app.enable)
 

@@ -32,8 +32,6 @@ version = 4
 
 managed_services = ['ejabberd']
 
-managed_packages = ['ejabberd']
-
 managed_paths = [pathlib.Path('/etc/ejabberd/')]
 
 _description = [
@@ -90,7 +88,7 @@ class EjabberdApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-ejabberd', managed_packages)
+        packages = Packages('packages-ejabberd', ['ejabberd'])
         self.add(packages)
 
         firewall = Firewall('firewall-ejabberd', info.name,
@@ -152,7 +150,7 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'ejabberd',
                 ['pre-install', '--domainname', domainname])
     # XXX: Configure all other domain names
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post',
                 app.get_component('letsencrypt-ejabberd').setup_certificates,
                 [domainname])

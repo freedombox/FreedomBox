@@ -19,8 +19,6 @@ from . import manifest
 
 version = 2
 
-managed_packages = ['bepasty']
-
 _description = [
     _('bepasty is a web application that allows large files to be uploaded '
       'and shared. Text and code snippets can also be pasted and shared. '
@@ -80,7 +78,7 @@ class BepastyApp(app_module.App):
                                       clients=manifest.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-bepasty', managed_packages)
+        packages = Packages('packages-bepasty', ['bepasty'])
         self.add(packages)
 
         firewall = Firewall('firewall-bepasty', info.name,
@@ -101,7 +99,7 @@ class BepastyApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'bepasty',
                 ['setup', '--domain-name', 'freedombox.local'])
     helper.call('post', app.enable)

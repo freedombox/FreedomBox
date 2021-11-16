@@ -21,8 +21,6 @@ from . import manifest
 
 version = 10
 
-managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
-
 managed_services = ['mediawiki-jobrunner']
 
 _description = [
@@ -75,7 +73,8 @@ class MediaWikiApp(app_module.App):
                             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-mediawiki', managed_packages)
+        packages = Packages('packages-mediawiki',
+                            ['mediawiki', 'imagemagick', 'php-sqlite3'])
         self.add(packages)
 
         firewall = Firewall('firewall-mediawiki', info.name,
@@ -109,7 +108,7 @@ class Shortcut(frontpage.Shortcut):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'mediawiki', ['setup'])
     helper.call('post', actions.superuser_run, 'mediawiki', ['update'])
     helper.call('post', app.enable)

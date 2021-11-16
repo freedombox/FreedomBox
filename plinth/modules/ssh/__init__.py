@@ -25,8 +25,6 @@ is_essential = True
 
 managed_services = ['ssh']
 
-managed_packages = ['openssh-server']
-
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
       'connections from remote computers. An authorized remote computer '
@@ -56,7 +54,7 @@ class SSHApp(app_module.App):
                               'ssh:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-ssh', managed_packages)
+        packages = Packages('packages-ssh', ['openssh-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-ssh', info.name, ports=['ssh'],
@@ -72,6 +70,7 @@ class SSHApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Configure the module."""
+    app.setup(old_version)
     actions.superuser_run('ssh', ['setup'])
     helper.call('post', app.enable)
 

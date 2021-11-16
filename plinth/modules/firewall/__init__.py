@@ -25,8 +25,6 @@ version = 2
 
 is_essential = True
 
-managed_packages = ['firewalld', 'nftables']
-
 managed_services = ['firewalld']
 
 _description = [
@@ -74,7 +72,7 @@ class FirewallApp(app_module.App):
                               'firewall:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-firewall', managed_packages)
+        packages = Packages('packages-firewall', ['firewalld', 'nftables'])
         self.add(packages)
 
         daemon = Daemon('daemon-firewall', managed_services[0])
@@ -98,7 +96,7 @@ def _run_setup():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     _run_setup()
 
 

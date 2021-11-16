@@ -18,8 +18,6 @@ nm = import_from_gi('NM', '1.0')
 
 version = 1
 
-managed_packages = ['wireguard']
-
 _description = [
     _('WireGuard is a fast, modern, secure VPN tunnel.'),
     format_lazy(
@@ -69,7 +67,7 @@ class WireguardApp(app_module.App):
             clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-wireguard', managed_packages)
+        packages = Packages('packages-wireguard', ['wireguard'])
         self.add(packages)
 
         firewall = Firewall('firewall-wireguard', info.name,
@@ -99,5 +97,5 @@ class WireguardApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)

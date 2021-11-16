@@ -21,8 +21,6 @@ managed_services = [
     'pmcd.service', 'pmie.service', 'pmlogger.service', 'pmproxy.service'
 ]
 
-managed_packages = ['cockpit-pcp']
-
 _description = [
     _('Performance app allows you to collect, store and view information '
       'about utilization of the hardware. This can give you basic insights '
@@ -57,7 +55,7 @@ class PerformanceApp(app_module.App):
                               'performance:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-performance', managed_packages)
+        packages = Packages('packages-performance', ['cockpit-pcp'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-performance',
@@ -83,5 +81,5 @@ class PerformanceApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)

@@ -24,8 +24,6 @@ version = 4
 
 managed_services = ['transmission-daemon']
 
-managed_packages = ['transmission-daemon']
-
 _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -72,7 +70,7 @@ class TransmissionApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-transmission', managed_packages)
+        packages = Packages('packages-transmission', ['transmission-daemon'])
         self.add(packages)
 
         firewall = Firewall('firewall-transmission', info.name,
@@ -105,7 +103,7 @@ class TransmissionApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     if old_version and old_version <= 3 and app.is_enabled():
         app.get_component('firewall-transmission').enable()

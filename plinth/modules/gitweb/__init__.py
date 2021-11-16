@@ -24,8 +24,6 @@ from .manifest import GIT_REPO_PATH
 
 version = 1
 
-managed_packages = ['gitweb', 'highlight']
-
 _description = [
     _('Git is a distributed version-control system for tracking changes in '
       'source code during software development. Gitweb provides a web '
@@ -74,7 +72,7 @@ class GitwebApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-gitweb', managed_packages)
+        packages = Packages('packages-gitweb', ['gitweb', 'highlight'])
         self.add(packages)
 
         firewall = Firewall('firewall-gitweb', info.name,
@@ -161,7 +159,7 @@ class GitwebBackupRestore(BackupRestore):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
     helper.call('post', app.enable)
 

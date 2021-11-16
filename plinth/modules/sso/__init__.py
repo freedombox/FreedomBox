@@ -15,12 +15,7 @@ is_essential = True
 
 depends = ['security', 'apache']
 
-managed_packages = [
-    'libapache2-mod-auth-pubtkt',
-    'openssl',
-    'python3-openssl',
-    'flite',
-]
+app = None
 
 
 class SSOApp(app_module.App):
@@ -36,11 +31,16 @@ class SSOApp(app_module.App):
                                name=_('Single Sign On'))
         self.add(info)
 
-        packages = Packages('packages-sso', managed_packages)
+        packages = Packages('packages-sso', [
+            'libapache2-mod-auth-pubtkt',
+            'openssl',
+            'python3-openssl',
+            'flite',
+        ])
         self.add(packages)
 
 
 def setup(helper, old_version=None):
     """Install the required packages"""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run('auth-pubtkt', ['create-key-pair'])

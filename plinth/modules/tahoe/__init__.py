@@ -26,8 +26,6 @@ version = 1
 
 managed_services = ['tahoe-lafs']
 
-managed_packages = ['tahoe-lafs']
-
 _description = [
     _('Tahoe-LAFS is a decentralized secure file storage system. '
       'It uses provider independent security to store files over a '
@@ -80,7 +78,7 @@ class TahoeApp(app_module.App):
             configure_url=reverse_lazy('tahoe:index'), login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-tahoe', managed_packages)
+        packages = Packages('packages-tahoe', ['tahoe-lafs'])
         self.add(packages)
 
         firewall = Firewall('firewall-tahoe', info.name,
@@ -146,7 +144,7 @@ def get_configured_domain_name():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
 
 def post_setup(configured_domain_name):

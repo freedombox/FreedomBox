@@ -19,8 +19,6 @@ from . import manifest
 
 version = 1
 
-managed_packages = ['libjs-jsxc']
-
 _description = [
     _('JSXC is a web client for XMPP. Typically it is used with an XMPP '
       'server running locally.'),
@@ -61,7 +59,7 @@ class JSXCApp(app_module.App):
                                       clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-jsxc', managed_packages)
+        packages = Packages('packages-jsxc', ['libjs-jsxc'])
         self.add(packages)
 
         firewall = Firewall('firewall-jsxc', info.name,
@@ -85,5 +83,5 @@ class JSXCApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)

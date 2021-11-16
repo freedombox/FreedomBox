@@ -26,8 +26,6 @@ is_essential = True
 
 managed_services = ['cockpit.socket']
 
-managed_packages = ['cockpit']
-
 _description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
@@ -83,7 +81,7 @@ class CockpitApp(app_module.App):
                                       allowed_groups=['admin'])
         self.add(shortcut)
 
-        packages = Packages('packages-cockpit', managed_packages)
+        packages = Packages('packages-cockpit', ['cockpit'])
         self.add(packages)
 
         firewall = Firewall('firewall-cockpit', info.name,
@@ -110,7 +108,7 @@ class CockpitApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     domains = names.components.DomainName.list_names('https')
     helper.call('post', actions.superuser_run, 'cockpit',
                 ['setup'] + list(domains))

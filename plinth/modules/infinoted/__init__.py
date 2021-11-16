@@ -21,8 +21,6 @@ version = 3
 
 managed_services = ['infinoted']
 
-managed_packages = ['infinoted']
-
 _description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
     format_lazy(
@@ -65,7 +63,7 @@ class InfinotedApp(app_module.App):
             clients=info.clients, login_required=False)
         self.add(shortcut)
 
-        packages = Packages('packages-infinoted', managed_packages)
+        packages = Packages('packages-infinoted', ['infinoted'])
         self.add(packages)
 
         firewall = Firewall('firewall-infinoted', info.name,
@@ -83,6 +81,6 @@ class InfinotedApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'infinoted', ['setup'])
     helper.call('post', app.enable)

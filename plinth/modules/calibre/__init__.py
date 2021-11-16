@@ -25,8 +25,6 @@ version = 1
 
 managed_services = ['calibre-server-freedombox']
 
-managed_packages = ['calibre']
-
 _description = [
     format_lazy(
         _('calibre server provides online access to your e-book collection. '
@@ -79,7 +77,7 @@ class CalibreApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-calibre', managed_packages)
+        packages = Packages('packages-calibre', ['calibre'])
         self.add(packages)
 
         firewall = Firewall('firewall-calibre', info.name,
@@ -106,7 +104,7 @@ class CalibreApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

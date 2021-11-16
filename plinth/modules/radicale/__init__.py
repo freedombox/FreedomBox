@@ -22,8 +22,6 @@ from . import manifest
 
 version = 2
 
-managed_packages = ['radicale']
-
 _description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
@@ -73,7 +71,7 @@ class RadicaleApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-radicale', managed_packages)
+        packages = Packages('packages-radicale', ['radicale'])
         self.add(packages)
 
         firewall = Firewall('firewall-radicale', info.name,
@@ -103,7 +101,7 @@ class RadicaleApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

@@ -23,10 +23,6 @@ version = 3
 
 managed_services = ['tt-rss']
 
-managed_packages = [
-    'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql', 'python3-psycopg2'
-]
-
 _description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
@@ -75,7 +71,10 @@ class TTRSSApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-ttrss', managed_packages)
+        packages = Packages('packages-ttrss', [
+            'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql',
+            'python3-psycopg2'
+        ])
         self.add(packages)
 
         firewall = Firewall('firewall-ttrss', info.name,
@@ -125,7 +124,7 @@ class TTRSSBackupRestore(BackupRestore):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     helper.call('post', app.enable)
 

@@ -31,8 +31,6 @@ _description = [
 
 depends = ['apache', 'firewall', 'names']
 
-managed_packages = ['zram-tools']
-
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
 APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
@@ -65,7 +63,7 @@ class ConfigApp(app_module.App):
                               'config:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-config', managed_packages)
+        packages = Packages('packages-config', ['zram-tools'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
@@ -192,7 +190,7 @@ def set_advanced_mode(advanced_mode):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     _migrate_home_page_config()
 
     # systemd-journald is socket activated, it may not be running and it does

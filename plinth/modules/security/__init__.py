@@ -21,8 +21,6 @@ version = 7
 
 is_essential = True
 
-managed_packages = ['fail2ban', 'debsecan']
-
 managed_services = ['fail2ban']
 
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
@@ -52,7 +50,7 @@ class SecurityApp(app_module.App):
                               'security:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-security', managed_packages)
+        packages = Packages('packages-security', ['fail2ban', 'debsecan'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-security',
@@ -62,7 +60,7 @@ class SecurityApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install the required packages"""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         enable_fail2ban()
 

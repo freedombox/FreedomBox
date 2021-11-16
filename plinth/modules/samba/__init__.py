@@ -27,8 +27,6 @@ version = 2
 
 managed_services = ['smbd', 'nmbd']
 
-managed_packages = ['samba', 'acl']
-
 _description = [
     _('Samba allows to share files and folders between FreedomBox and '
       'other computers in your local network.'),
@@ -80,7 +78,7 @@ class SambaApp(app_module.App):
             login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-samba', managed_packages)
+        packages = Packages('packages-samba', ['samba', 'acl'])
         self.add(packages)
 
         firewall = Firewall('firewall-samba', info.name, ports=['samba'])
@@ -122,7 +120,7 @@ class SambaBackupRestore(BackupRestore):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
 

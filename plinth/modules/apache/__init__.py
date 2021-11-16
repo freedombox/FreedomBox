@@ -21,10 +21,6 @@ is_essential = True
 
 managed_services = ['apache2', 'uwsgi']
 
-managed_packages = [
-    'apache2', 'php-fpm', 'ssl-cert', 'uwsgi', 'uwsgi-plugin-python3'
-]
-
 app = None
 
 
@@ -42,7 +38,9 @@ class ApacheApp(app_module.App):
                                name=_('Apache HTTP Server'))
         self.add(info)
 
-        packages = Packages('packages-apache', managed_packages)
+        packages = Packages('packages-apache', [
+            'apache2', 'php-fpm', 'ssl-cert', 'uwsgi', 'uwsgi-plugin-python3'
+        ])
         self.add(packages)
 
         web_server_ports = Firewall('firewall-web', _('Web Server'),
@@ -66,7 +64,7 @@ class ApacheApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run(
         'apache',
         ['setup', '--old-version', str(old_version)])
