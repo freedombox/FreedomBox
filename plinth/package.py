@@ -6,6 +6,7 @@ Framework for installing and updating distribution packages
 import json
 import logging
 import subprocess
+import sys
 import threading
 from typing import Union
 
@@ -49,6 +50,14 @@ class Packages(app.FollowerComponent):
     def packages(self) -> list[str]:
         """Return the list of packages managed by this component."""
         return self._packages
+
+    def setup(self, old_version):
+        """Install the packages."""
+        # TODO: Drop the need for setup helper.
+        module_name = self.app.__module__
+        module = sys.modules[module_name]
+        helper = module.setup_helper
+        helper.install(self.packages, skip_recommends=self.skip_recommends)
 
 
 class PackageException(Exception):
