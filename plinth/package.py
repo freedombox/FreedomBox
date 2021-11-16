@@ -27,18 +27,23 @@ class Packages(app.FollowerComponent):
     of packages required by an app.
     """
 
-    def __init__(self, component_id: str, packages: list[str]):
+    def __init__(self, component_id: str, packages: list[str],
+                 skip_recommends=False):
         """Initialize a new packages component.
 
         'component_id' should be a unique ID across all components of an app
         and across all components.
 
         'packages' is the list of Debian packages managed by this component.
+
+        'skip_recommends' is a boolean specifying whether recommended packages
+        should be installed along with the listed packages.
         """
         super().__init__(component_id)
 
         self.component_id = component_id
         self._packages = packages
+        self.skip_recommends = skip_recommends
 
     @property
     def packages(self) -> list[str]:

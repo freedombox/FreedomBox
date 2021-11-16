@@ -5,8 +5,25 @@ Test module for package module.
 
 from unittest.mock import call, patch
 
+import pytest
+
 from plinth.errors import ActionError
-from plinth.package import packages_installed, remove
+from plinth.package import Packages, packages_installed, remove
+
+
+def test_packages_init():
+    """Test initialization of packages component."""
+    component = Packages('test-component', ['foo', 'bar'])
+    assert component.component_id == 'test-component'
+    assert component.packages == ['foo', 'bar']
+    assert not component.skip_recommends
+
+    with pytest.raises(ValueError):
+        Packages(None, [])
+
+    component = Packages('test-component', [], skip_recommends=True)
+    assert component.packages == []
+    assert component.skip_recommends
 
 
 def test_packages_installed():
