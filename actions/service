@@ -6,9 +6,10 @@ Wrapper to list and handle system services
 
 import argparse
 import os
-from importlib import import_module
 
-from plinth import action_utils, cfg
+from plinth import action_utils, cfg, module_loader
+from plinth.app import App
+from plinth.daemon import Daemon, RelatedDaemon
 
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
@@ -85,34 +86,21 @@ def subcommand_is_running(arguments):
     print(action_utils.service_is_running(arguments.service))
 
 
-def _get_managed_services_of_module(modulepath):
-    """Import a module and return content of its 'managed_services' variable"""
-    try:
-        module = import_module(modulepath)
-    except ImportError:
-        return []
-    else:
-        return getattr(module, 'managed_services', [])
-
-
 def _get_managed_services():
-    """
-    Get a set of all services managed by FreedomBox.
-
-    This collects all service-names inside the 'managed_services' variable of
-    modules inside 'module_config_path'
-    """
+    """Get a set of all services managed by FreedomBox."""
     services = set()
-    for filename in os.listdir(module_config_path):
-        # Omit hidden files
-        if filename.startswith('.'):
-            continue
+    module_loader.load_modules()
+    module_loader.apps_init()
+    for app in App.list():
+        components = app.get_components_of_type(Daemon)
+        for component in components:
+            services.add(component.unit)
+            if component.alias:
+                services.add(component.alias)
 
-        filepath = os.path.join(module_config_path, filename)
-        if os.path.isfile(filepath):
-            with open(filepath, 'r') as f:
-                modulepath = f.read().strip()
-                services.update(_get_managed_services_of_module(modulepath))
+        components = app.get_components_of_type(RelatedDaemon)
+        for component in components:
+            services.add(component.unit)
 
     return services
 
