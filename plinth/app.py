@@ -113,6 +113,11 @@ class App:
         """
         return self.get_component(self.app_id + '-info')
 
+    def setup(self, old_version):
+        """Install and configure the app and its components."""
+        for component in self.components.values():
+            component.setup(old_version=old_version)
+
     def enable(self):
         """Enable all the components of the app."""
         for component in self.components.values():
@@ -220,6 +225,9 @@ class Component:
 
         """
         return App.get(self.app_id)
+
+    def setup(self, old_version):
+        """Run operations to install and configure the component."""
 
     def enable(self):
         """Run operations to enable the component."""

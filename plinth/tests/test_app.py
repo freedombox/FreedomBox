@@ -4,7 +4,7 @@ Test module for App, base class for all applications.
 """
 
 import collections
-from unittest.mock import patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 
@@ -114,6 +114,16 @@ def test_get_components_of_type(app_with_components):
     assert list(components) == leader_components
 
 
+def test_app_setup(app_with_components):
+    """Test that running setup on an app run setup on components."""
+    for component in app_with_components.components.values():
+        component.setup = Mock()
+
+    app_with_components.setup(old_version=2)
+    for component in app_with_components.components.values():
+        component.setup.assert_has_calls([call(old_version=2)])
+
+
 def test_app_enable(app_with_components):
     """Test that enabling an app enables components."""
     app_with_components.disable()
@@ -220,6 +230,24 @@ def test_component_app_property():
     app = AppTest()
     app.add(component)
     assert component.app == app
+
+
+def test_component_setup():
+    """Test running setup on component."""
+    component = Component('test-component')
+    assert component.setup(old_version=1) is None
+
+
+def test_component_enable():
+    """Test running enable on component."""
+    component = Component('test-component')
+    assert component.enable() is None
+
+
+def test_component_disable():
+    """Test running disable on component."""
+    component = Component('test-component')
+    assert component.disable() is None
 
 
 def test_component_diagnose():
