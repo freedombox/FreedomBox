@@ -131,9 +131,12 @@ def get_apps_report():
         }
     }
     for module_name, module in module_loader.loaded_modules.items():
-        try:
-            packages = module.managed_packages
-        except AttributeError:
+        components = module.app.get_components_of_type(Packages)
+        packages = []
+        for component in components:
+            packages += component.packages
+
+        if not packages:
             continue  # app has no managed packages
 
         try:
