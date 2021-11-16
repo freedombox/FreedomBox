@@ -126,7 +126,6 @@ Debian packages to be installed.
 
   from plinth.package import Packages
 
-  managed_packages = ['transmission-daemon']
 
   class TransmissionApp(app_module.App):
       ...
@@ -134,7 +133,7 @@ Debian packages to be installed.
       def __init__(self):
         ...
 
-        packages = Packages('packages-transmission', managed_packages)
+        packages = Packages('packages-transmission', ['transmission-daemon'])
         self.add(packages)
 
 The first argument uniquely identifies this instance of the `Packages`
