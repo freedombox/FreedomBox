@@ -5,6 +5,7 @@ Wrapper to handle package installation with apt-get.
 """
 
 import argparse
+import inspect
 import json
 import logging
 import os
@@ -17,9 +18,11 @@ import apt.cache
 import apt_inst
 import apt_pkg
 
+from plinth import app as app_module
 from plinth import cfg
 from plinth.action_utils import (apt_hold_freedombox, is_package_manager_busy,
                                  run_apt_command)
+from plinth.package import Packages
 
 logger = logging.getLogger(__name__)
 
@@ -119,8 +122,19 @@ def _assert_managed_packages(module, packages):
         module_path = file_handle.read().strip()
 
     module = import_module(module_path)
+    module_classes = inspect.getmembers(module, inspect.isclass)
+    app_classes = [
+        cls[1] for cls in module_classes if issubclass(cls[1], app_module.App)
+    ]
+    managed_packages = []
+    for cls in app_classes:
+        app = cls()
+        components = app.get_components_of_type(Packages)
+        for component in components:
+            managed_packages += component.packages
+
     for package in packages:
-        assert package in module.managed_packages
+        assert package in managed_packages
 
 
 def subcommand_is_package_manager_busy(_):
