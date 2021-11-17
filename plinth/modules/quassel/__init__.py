@@ -24,8 +24,6 @@ from . import manifest
 
 version = 1
 
-managed_paths = [pathlib.Path('/var/lib/quassel/')]
-
 _description = [
     format_lazy(
         _('Quassel is an IRC application that is split into two parts, a '

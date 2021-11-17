@@ -5,7 +5,6 @@ FreedomBox app to configure matrix-synapse server.
 
 import logging
 import os
-import pathlib
 from typing import List
 
 from django.urls import reverse_lazy
@@ -27,8 +26,6 @@ from plinth.utils import format_lazy, is_non_empty_file
 from . import manifest
 
 version = 7
-
-managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 _description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '

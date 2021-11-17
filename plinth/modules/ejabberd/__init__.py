@@ -30,8 +30,6 @@ from . import manifest
 
 version = 4
 
-managed_paths = [pathlib.Path('/etc/ejabberd/')]
-
 _description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),

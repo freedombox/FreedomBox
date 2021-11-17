@@ -24,8 +24,6 @@ from . import manifest
 
 version = 2
 
-managed_paths = [pathlib.Path('/var/lib/mumble-server')]
-
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),

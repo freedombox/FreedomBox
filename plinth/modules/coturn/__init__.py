@@ -27,8 +27,6 @@ from . import manifest
 
 version = 1
 
-managed_paths = [pathlib.Path('/etc/coturn/')]
-
 _description = [
     _('Coturn is a server to facilitate audio/video calls and conferences by '
       'providing an implementation of TURN and STUN protocols. WebRTC, SIP '
