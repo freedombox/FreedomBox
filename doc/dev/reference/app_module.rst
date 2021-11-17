@@ -31,11 +31,3 @@ Required. Version number of an app. Increasing the version number of an app
 triggers the setup() logic allowing the app to run upgrade scripts. This
 attribute is part of the :class:`~plinth.app.Info` component. Need for this
 attribute at the module level will be removed in the future.
-
-<app-module>.managed_paths
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Optional. This must contain the list of all file system paths that this app
-deals with. This is mostly used by the
-:class:`~plinth.modules.letsencrypt.components.LetsEncrypt` component to enforce
-better security. This requirement may be removed in the future.
