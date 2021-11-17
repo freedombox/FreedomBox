@@ -32,14 +32,6 @@ triggers the setup() logic allowing the app to run upgrade scripts. This
 attribute is part of the :class:`~plinth.app.Info` component. Need for this
 attribute at the module level will be removed in the future.
 
-<app-module>.managed_services
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Optional. This must contain the list of all services that this app deals with.
-This is mostly needed to enforce better security. This information is part of
-the :class:`~plinth.daemon.Daemon` component. Need for this attribute at the
-module level will be removed in the future.
-
 <app-module>.managed_paths
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

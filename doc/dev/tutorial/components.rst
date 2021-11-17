@@ -92,15 +92,13 @@ our app's class.
 
   from plinth.daemon import Daemon
 
-  managed_services = ['transmission-daemon']
-
   class TransmissionApp(app_module.App):
       ...
 
       def __init__(self):
         ...
 
-        daemon = Daemon('daemon-transmission', managed_services[0],
+        daemon = Daemon('daemon-transmission', 'transmission-daemon',
                         listen_ports=[(9091, 'tcp4')])
         self.add(daemon)
 
