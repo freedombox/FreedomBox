@@ -8,6 +8,7 @@ import argparse
 import filecmp
 import glob
 import importlib
+import inspect
 import json
 import os
 import pathlib
@@ -18,8 +19,11 @@ import sys
 
 import configobj
 
-from plinth import action_utils, cfg
+from plinth import action_utils
+from plinth import app as app_module
+from plinth import cfg
 from plinth.modules import letsencrypt as le
+from plinth.modules.letsencrypt.components import LetsEncrypt
 
 TEST_MODE = False
 LE_DIRECTORY = '/etc/letsencrypt/'
@@ -372,6 +376,14 @@ def _assert_source_directory(path):
             or str(path).startswith(ETC_SSL_DIRECTORY))
 
 
+def _get_managed_path(path):
+    """Return the managed path given a certificate path."""
+    if '{domain}' in path:
+        return pathlib.Path(path.partition('{domain}')[0])
+
+    return pathlib.Path(path).parent
+
+
 def _assert_managed_path(module, path):
     """Check that path is in fact managed by module."""
     cfg.read()
@@ -379,7 +391,24 @@ def _assert_managed_path(module, path):
     module_path = module_file.read_text().strip()
 
     module = importlib.import_module(module_path)
-    assert set(path.parents).intersection(set(module.managed_paths))
+    module_classes = inspect.getmembers(module, inspect.isclass)
+    app_classes = [
+        cls[1] for cls in module_classes if issubclass(cls[1], app_module.App)
+    ]
+
+    managed_paths = []
+    for cls in app_classes:
+        app = cls()
+        components = app.get_components_of_type(LetsEncrypt)
+        for component in components:
+            if component.private_key_path:
+                managed_paths.append(
+                    _get_managed_path(component.private_key_path))
+            if component.certificate_path:
+                managed_paths.append(
+                    _get_managed_path(component.certificate_path))
+
+    assert set(path.parents).intersection(set(managed_paths))
 
 
 def subcommand_run_pre_hooks(_):
