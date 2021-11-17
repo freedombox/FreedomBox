@@ -24,8 +24,6 @@ version = 1
 
 is_essential = True
 
-managed_services = ['cockpit.socket']
-
 _description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
@@ -55,6 +53,8 @@ class CockpitApp(app_module.App):
     """FreedomBox app for Cockpit."""
 
     app_id = 'cockpit'
+
+    DAEMON = 'cockpit.socket'
 
     def __init__(self):
         """Create components for the app."""
@@ -92,7 +92,7 @@ class CockpitApp(app_module.App):
                               urls=['https://{host}/_cockpit/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-cockpit', managed_services[0])
+        daemon = Daemon('daemon-cockpit', self.DAEMON)
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-cockpit',
@@ -123,7 +123,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
         if name not in utils.get_domains():
             actions.superuser_run('cockpit', ['add-domain', name])
             actions.superuser_run('service',
-                                  ['try-restart', managed_services[0]])
+                                  ['try-restart', CockpitApp.DAEMON])
 
 
 def on_domain_removed(sender, domain_type, name, **kwargs):
@@ -133,4 +133,4 @@ def on_domain_removed(sender, domain_type, name, **kwargs):
         if name in utils.get_domains():
             actions.superuser_run('cockpit', ['remove-domain', name])
             actions.superuser_run('service',
-                                  ['try-restart', managed_services[0]])
+                                  ['try-restart', CockpitApp.DAEMON])

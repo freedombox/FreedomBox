@@ -16,6 +16,7 @@ import plinth
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
+from plinth.daemon import RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -24,8 +25,6 @@ from . import manifest
 version = 9
 
 is_essential = True
-
-managed_services = ['freedombox-dist-upgrade']
 
 first_boot_steps = [
     {
@@ -86,6 +85,10 @@ class UpgradesApp(app_module.App):
         packages = Packages('packages-upgrades',
                             ['unattended-upgrades', 'needrestart'])
         self.add(packages)
+
+        daemon = RelatedDaemon('related-daemon-upgrades',
+                               'freedombox-dist-upgrade')
+        self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-upgrades',
                                        **manifest.backup)

@@ -28,8 +28,6 @@ from . import manifest
 
 version = 7
 
-managed_services = ['matrix-synapse']
-
 managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
 
 _description = [
@@ -107,14 +105,14 @@ class MatrixSynapseApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-matrixsynapse', domains=get_domains,
-            daemons=[managed_services[0]], should_copy_certificates=True,
+            daemons=['matrix-synapse'], should_copy_certificates=True,
             private_key_path='/etc/matrix-synapse/homeserver.tls.key',
             certificate_path='/etc/matrix-synapse/homeserver.tls.crt',
             user_owner='matrix-synapse', group_owner='nogroup',
             managing_app='matrixsynapse')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-matrixsynapse', managed_services[0],
+        daemon = Daemon('daemon-matrixsynapse', 'matrix-synapse',
                         listen_ports=[(8008, 'tcp4'), (8448, 'tcp4')])
         self.add(daemon)
 

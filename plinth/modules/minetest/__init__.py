@@ -20,8 +20,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['minetest-server']
-
 _mods = [
     'minetest-mod-character-creator', 'minetest-mod-craftguide',
     'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
@@ -85,7 +83,7 @@ class MinetestApp(app_module.App):
                             ports=['minetest-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-minetest', managed_services[0],
+        daemon = Daemon('daemon-minetest', 'minetest-server',
                         listen_ports=[(30000, 'udp4')])
         self.add(daemon)
 

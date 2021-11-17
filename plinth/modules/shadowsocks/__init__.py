@@ -19,8 +19,6 @@ from . import manifest
 
 version = 3
 
-managed_services = ['shadowsocks-libev-local@freedombox']
-
 _description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
@@ -42,6 +40,8 @@ class ShadowsocksApp(app_module.App):
     """FreedomBox app for Shadowsocks."""
 
     app_id = 'shadowsocks'
+
+    DAEMON = 'shadowsocks-libev-local@freedombox'
 
     def __init__(self):
         """Create components for the app."""
@@ -76,7 +76,7 @@ class ShadowsocksApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-shadowsocks', managed_services[0],
+        daemon = Daemon('daemon-shadowsocks', self.DAEMON,
                         listen_ports=[(1080, 'tcp4'), (1080, 'tcp6')])
         self.add(daemon)
 

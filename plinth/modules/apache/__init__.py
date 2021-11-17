@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
@@ -18,8 +18,6 @@ from plinth.utils import format_lazy, is_valid_user_name
 version = 9
 
 is_essential = True
-
-managed_services = ['apache2', 'uwsgi']
 
 app = None
 
@@ -55,10 +53,13 @@ class ApacheApp(app_module.App):
         self.add(freedombox_ports)
 
         letsencrypt = LetsEncrypt('letsencrypt-apache', domains='*',
-                                  daemons=[managed_services[0]])
+                                  daemons=['apache2'])
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-apache', managed_services[0])
+        daemon = Daemon('daemon-apache', 'apache2')
+        self.add(daemon)
+
+        daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
         self.add(daemon)
 
 

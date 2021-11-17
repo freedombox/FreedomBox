@@ -35,8 +35,6 @@ port_info = {
     'dovecot': ('imaps', 993, 'pop3s', 995),
 }
 
-managed_services = ['postfix', 'dovecot', 'rspamd']
-
 _description = [
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
       'interface for users to access email.'),
@@ -105,7 +103,7 @@ class EmailServerApp(plinth.app.App):
         self.add(menu_item)
 
     def _add_daemons(self):
-        for srvname in managed_services:
+        for srvname in ['postfix', 'dovecot', 'rspamd']:
             # Construct `listen_ports` parameter for the daemon
             mixed = port_info.get(srvname, ())
             port_numbers = [v for v in mixed if isinstance(v, int)]
@@ -168,8 +166,9 @@ def setup(helper, old_version=None):
     helper.call('post', audit.rcube.repair)
 
     # Reload
-    for srvname in managed_services:
-        actions.superuser_run('service', ['reload', srvname])
+    actions.superuser_run('service', ['reload', 'postfix'])
+    actions.superuser_run('service', ['reload', 'dovecot'])
+    actions.superuser_run('service', ['reload', 'rspamd'])
 
     # Expose to public internet
     helper.call('post', app.enable)

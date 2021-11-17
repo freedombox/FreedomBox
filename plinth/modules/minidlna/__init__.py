@@ -18,8 +18,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['minidlna']
-
 _description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
       'fully compliant with DLNA/UPnP-AV clients. '
@@ -81,7 +79,7 @@ class MiniDLNAApp(app_module.App):
                               urls=['http://localhost:8200/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-minidlna', managed_services[0])
+        daemon = Daemon('daemon-minidlna', 'minidlna')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-minidlna',

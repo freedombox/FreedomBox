@@ -24,8 +24,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['mumble-server']
-
 managed_paths = [pathlib.Path('/var/lib/mumble-server')]
 
 _description = [
@@ -76,7 +74,7 @@ class MumbleApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-mumble', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            daemons=['mumble-server'], should_copy_certificates=True,
             private_key_path='/var/lib/mumble-server/privkey.pem',
             certificate_path='/var/lib/mumble-server/fullchain.pem',
             user_owner='mumble-server', group_owner='mumble-server',
@@ -84,9 +82,10 @@ class MumbleApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-mumble', managed_services[0],
-            listen_ports=[(64738, 'tcp4'), (64738, 'tcp6'), (64738, 'udp4'),
-                          (64738, 'udp6')])
+            'daemon-mumble', 'mumble-server', listen_ports=[(64738, 'tcp4'),
+                                                            (64738, 'tcp6'),
+                                                            (64738, 'udp4'),
+                                                            (64738, 'udp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-mumble',

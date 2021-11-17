@@ -21,8 +21,6 @@ version = 3
 
 is_essential = True
 
-managed_services = ['slapd']
-
 first_boot_steps = [
     {
         'id': 'users_firstboot',
@@ -73,8 +71,8 @@ class UsersApp(app_module.App):
         ])
         self.add(packages)
 
-        daemon = Daemon('daemon-users', managed_services[0],
-                        listen_ports=[(389, 'tcp4'), (389, 'tcp6')])
+        daemon = Daemon('daemon-users', 'slapd', listen_ports=[(389, 'tcp4'),
+                                                               (389, 'tcp6')])
         self.add(daemon)
 
         # Add the admin group

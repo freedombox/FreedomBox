@@ -24,8 +24,6 @@ from .errors import TahoeConfigurationError
 
 version = 1
 
-managed_services = ['tahoe-lafs']
-
 _description = [
     _('Tahoe-LAFS is a decentralized secure file storage system. '
       'It uses provider independent security to store files over a '
@@ -88,7 +86,7 @@ class TahoeApp(app_module.App):
         webserver = Webserver('webserver-tahoe', 'tahoe-plinth')
         self.add(webserver)
 
-        daemon = Daemon('daemon-tahoe', managed_services[0])
+        daemon = Daemon('daemon-tahoe', 'tahoe-lafs')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-tahoe',

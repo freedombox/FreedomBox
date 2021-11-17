@@ -22,8 +22,6 @@ from . import manifest
 
 version = 4
 
-managed_services = ['transmission-daemon']
-
 _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -40,6 +38,8 @@ class TransmissionApp(app_module.App):
     """FreedomBox app for Transmission."""
 
     app_id = 'transmission'
+
+    DAEMON = 'transmission-daemon'
 
     def __init__(self):
         """Create components for the app."""
@@ -83,7 +83,7 @@ class TransmissionApp(app_module.App):
         self.add(webserver)
 
         daemon = Daemon(
-            'daemon-transmission', managed_services[0], listen_ports=[
+            'daemon-transmission', self.DAEMON, listen_ports=[
                 (9091, 'tcp4'),
                 (51413, 'tcp4'),
                 (51413, 'tcp6'),
@@ -115,5 +115,5 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'transmission',
                 ['merge-configuration'],
                 input=json.dumps(new_configuration).encode())
-    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+    add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
     helper.call('post', app.enable)

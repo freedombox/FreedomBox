@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.daemon import RelatedDaemon
 from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
                                    uws_url_of_user)
 from plinth.modules.names.components import DomainType
@@ -21,8 +22,6 @@ from plinth.signals import domain_added
 version = 3
 
 is_essential = True
-
-managed_services = ['systemd-journald', 'rsyslog']
 
 _description = [
     _('Here you can set some general configuration options '
@@ -65,6 +64,12 @@ class ConfigApp(app_module.App):
 
         packages = Packages('packages-config', ['zram-tools'])
         self.add(packages)
+
+        daemon1 = RelatedDaemon('related-daemon-config1', 'systemd-journald')
+        self.add(daemon1)
+
+        daemon2 = RelatedDaemon('related-daemon-config2', 'rsyslog')
+        self.add(daemon2)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
                                  'config:index', can_have_certificate=True)

@@ -25,8 +25,6 @@ version = 2
 
 is_essential = True
 
-managed_services = ['firewalld']
-
 _description = [
     format_lazy(
         _('Firewall is a security system that controls the incoming and '
@@ -75,7 +73,7 @@ class FirewallApp(app_module.App):
         packages = Packages('packages-firewall', ['firewalld', 'nftables'])
         self.add(packages)
 
-        daemon = Daemon('daemon-firewall', managed_services[0])
+        daemon = Daemon('daemon-firewall', 'firewalld')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-firewall',

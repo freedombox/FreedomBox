@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu, module_loader
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -21,8 +21,6 @@ from . import manifest
 version = 7
 
 is_essential = True
-
-managed_services = ['fail2ban']
 
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
@@ -53,6 +51,9 @@ class SecurityApp(app_module.App):
 
         packages = Packages('packages-security', ['fail2ban', 'debsecan'])
         self.add(packages)
+
+        daemon = RelatedDaemon('related-daemon-fail2ban', 'fail2ban')
+        self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-security',
                                        **manifest.backup)

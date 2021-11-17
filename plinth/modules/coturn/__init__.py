@@ -27,8 +27,6 @@ from . import manifest
 
 version = 1
 
-managed_services = ['coturn']
-
 managed_paths = [pathlib.Path('/etc/coturn/')]
 
 _description = [
@@ -76,8 +74,8 @@ class CoturnApp(app_module.App):
         self.add(firewall)
 
         letsencrypt = LetsEncrypt(
-            'letsencrypt-coturn', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            'letsencrypt-coturn', domains=get_domains, daemons=['coturn'],
+            should_copy_certificates=True,
             private_key_path='/etc/coturn/certs/pkey.pem',
             certificate_path='/etc/coturn/certs/cert.pem',
             user_owner='turnserver', group_owner='turnserver',
@@ -85,13 +83,22 @@ class CoturnApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-coturn', managed_services[0],
-            listen_ports=[(3478, 'udp4'), (3478, 'udp6'), (3478, 'tcp4'),
-                          (3478, 'tcp6'), (3479, 'udp4'), (3479, 'udp6'),
-                          (3479, 'tcp4'), (3479, 'tcp6'), (5349, 'udp4'),
-                          (5349, 'udp6'), (5349, 'tcp4'), (5349, 'tcp6'),
-                          (5350, 'udp4'), (5350, 'udp6'), (5350, 'tcp4'),
-                          (5350, 'tcp6')])
+            'daemon-coturn', 'coturn', listen_ports=[(3478, 'udp4'),
+                                                     (3478, 'udp6'),
+                                                     (3478, 'tcp4'),
+                                                     (3478, 'tcp6'),
+                                                     (3479, 'udp4'),
+                                                     (3479, 'udp6'),
+                                                     (3479, 'tcp4'),
+                                                     (3479, 'tcp6'),
+                                                     (5349, 'udp4'),
+                                                     (5349, 'udp6'),
+                                                     (5349, 'tcp4'),
+                                                     (5349, 'tcp6'),
+                                                     (5350, 'udp4'),
+                                                     (5350, 'udp6'),
+                                                     (5350, 'tcp4'),
+                                                     (5350, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-coturn',

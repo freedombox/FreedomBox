@@ -18,8 +18,6 @@ version = 2
 
 is_essential = True
 
-managed_services = ['systemd-timesyncd']
-
 _description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
@@ -76,7 +74,7 @@ class DateTimeApp(app_module.App):
         self.add(menu_item)
 
         if self._is_time_managed():
-            daemon = Daemon('daemon-datetime', managed_services[0])
+            daemon = Daemon('daemon-datetime', 'systemd-timesyncd')
             self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-datetime',

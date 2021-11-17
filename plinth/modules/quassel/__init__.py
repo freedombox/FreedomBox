@@ -24,8 +24,6 @@ from . import manifest
 
 version = 1
 
-managed_services = ['quasselcore']
-
 managed_paths = [pathlib.Path('/var/lib/quassel/')]
 
 _description = [
@@ -85,14 +83,14 @@ class QuasselApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-quassel', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            daemons=['quasselcore'], should_copy_certificates=True,
             private_key_path='/var/lib/quassel/quasselCert.pem',
             certificate_path='/var/lib/quassel/quasselCert.pem',
             user_owner='quasselcore', group_owner='quassel',
             managing_app='quassel')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-quassel', managed_services[0],
+        daemon = Daemon('daemon-quassel', 'quasselcore',
                         listen_ports=[(4242, 'tcp4'), (4242, 'tcp6')])
         self.add(daemon)
 

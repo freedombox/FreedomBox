@@ -23,8 +23,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['named']
-
 _description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
@@ -93,10 +91,8 @@ class BindApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-bind', managed_services[0], listen_ports=[(53, 'tcp6'),
-                                                              (53, 'udp6'),
-                                                              (53, 'tcp4'),
-                                                              (53, 'udp4')])
+            'daemon-bind', 'named', listen_ports=[(53, 'tcp6'), (53, 'udp6'),
+                                                  (53, 'tcp4'), (53, 'udp4')])
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-bind',

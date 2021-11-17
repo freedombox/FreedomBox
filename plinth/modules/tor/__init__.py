@@ -26,8 +26,6 @@ version = 5
 
 depends = ['names']
 
-managed_services = ['tor@plinth']
-
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
       'about it from the <a href="https://www.torproject.org/">Tor '
@@ -81,7 +79,7 @@ class TorApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-tor', managed_services[0], strict_check=True,
+            'daemon-tor', 'tor@plinth', strict_check=True,
             listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
                           (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)

@@ -23,8 +23,6 @@ version = 1
 
 is_essential = True
 
-managed_services = ['ssh']
-
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
       'connections from remote computers. An authorized remote computer '
@@ -61,7 +59,7 @@ class SSHApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-ssh', managed_services[0])
+        daemon = Daemon('daemon-ssh', 'ssh')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-ssh', **manifest.backup)

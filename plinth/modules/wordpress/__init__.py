@@ -21,8 +21,6 @@ PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
 
 version = 1
 
-managed_services = ['wordpress-freedombox.timer']
-
 _description = [
     _('WordPress is a popular way to create and manage websites and blogs. '
       'Content can be managed using a visual interface. Layout and '
@@ -102,7 +100,7 @@ class WordPressApp(app_module.App):
                               urls=['https://{host}/wordpress/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-wordpress', managed_services[0])
+        daemon = Daemon('daemon-wordpress', 'wordpress-freedombox.timer')
         self.add(daemon)
 
         backup_restore = WordPressBackupRestore('backup-restore-wordpress',

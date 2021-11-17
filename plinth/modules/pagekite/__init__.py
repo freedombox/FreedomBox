@@ -20,8 +20,6 @@ version = 2
 
 depends = ['names']
 
-managed_services = ['pagekite']
-
 _description = [
     format_lazy(
         _('PageKite is a system for exposing {box_name} services when '
@@ -56,6 +54,8 @@ class PagekiteApp(app_module.App):
 
     app_id = 'pagekite'
 
+    DAEMON = 'pagekite'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -80,7 +80,7 @@ class PagekiteApp(app_module.App):
                                  'pagekite:index', can_have_certificate=True)
         self.add(domain_type)
 
-        daemon = Daemon('daemon-pagekite', managed_services[0])
+        daemon = Daemon('daemon-pagekite', self.DAEMON)
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-pagekite',
@@ -112,4 +112,4 @@ def setup(helper, old_version=None):
         helper.call('post', app.enable)
 
     if old_version == 1:
-        actions.superuser_run('service', ['try-restart', managed_services[0]])
+        actions.superuser_run('service', ['try-restart', PagekiteApp.DAEMON])

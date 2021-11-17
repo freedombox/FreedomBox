@@ -21,8 +21,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['mldonkey-server']
-
 _description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
@@ -45,6 +43,8 @@ class MLDonkeyApp(app_module.App):
     """FreedomBox app for MLDonkey."""
 
     app_id = 'mldonkey'
+
+    DAEMON = 'mldonkey-server'
 
     def __init__(self):
         """Create components for the app."""
@@ -83,7 +83,7 @@ class MLDonkeyApp(app_module.App):
                               urls=['https://{host}/mldonkey/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-mldonkey', managed_services[0],
+        daemon = Daemon('daemon-mldonkey', self.DAEMON,
                         listen_ports=[(4080, 'tcp4')])
         self.add(daemon)
 
@@ -104,4 +104,4 @@ def setup(helper, old_version=None):
     if not old_version:
         helper.call('post', app.enable)
 
-    add_user_to_share_group(_SYSTEM_USER, managed_services[0])
+    add_user_to_share_group(_SYSTEM_USER, MLDonkeyApp.DAEMON)

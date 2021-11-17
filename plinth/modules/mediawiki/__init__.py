@@ -21,8 +21,6 @@ from . import manifest
 
 version = 10
 
-managed_services = ['mediawiki-jobrunner']
-
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
       'projects. A wiki engine is a program for creating a collaboratively '
@@ -89,7 +87,7 @@ class MediaWikiApp(app_module.App):
                               'mediawiki-freedombox')
         self.add(webserver)
 
-        daemon = Daemon('daemon-mediawiki', managed_services[0])
+        daemon = Daemon('daemon-mediawiki', 'mediawiki-jobrunner')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-mediawiki',

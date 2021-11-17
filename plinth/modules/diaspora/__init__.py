@@ -38,8 +38,6 @@ def get_configured_domain_name():
 
 version = 1
 
-managed_services = ['diaspora']
-
 _description = [
     _('diaspora* is a decentralized social network where you can store '
       'and control your own data.'),
@@ -92,7 +90,7 @@ class DiasporaApp(app_module.App):
         webserver = Webserver('webserver-diaspora', 'diaspora-plinth')
         self.add(webserver)
 
-        daemon = Daemon('daemon-diaspora', managed_services[0])
+        daemon = Daemon('daemon-diaspora', 'diaspora')
         self.add(daemon)
 
     def diagnose(self):

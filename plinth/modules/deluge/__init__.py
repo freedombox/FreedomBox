@@ -20,8 +20,6 @@ from . import manifest
 
 version = 6
 
-managed_services = ['deluged', 'deluge-web']
-
 _description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
     _('The default password is \'deluge\', but you should log in and '
@@ -79,11 +77,11 @@ class DelugeApp(app_module.App):
                               urls=['https://{host}/deluge'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-deluged', managed_services[0],
+        daemon = Daemon('daemon-deluged', 'deluged',
                         listen_ports=[(58846, 'tcp4')])
         self.add(daemon)
 
-        daemon_web = Daemon('daemon-deluge-web', managed_services[1],
+        daemon_web = Daemon('daemon-deluge-web', 'deluge-web',
                             listen_ports=[(8112, 'tcp4')])
         self.add(daemon_web)
 

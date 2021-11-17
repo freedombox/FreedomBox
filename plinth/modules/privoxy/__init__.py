@@ -23,8 +23,6 @@ version = 1
 
 is_essential = False
 
-managed_services = ['privoxy']
-
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '
@@ -78,7 +76,7 @@ class PrivoxyApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-privoxy', managed_services[0],
+        daemon = Daemon('daemon-privoxy', 'privoxy',
                         listen_ports=[(8118, 'tcp4'), (8118, 'tcp6')])
         self.add(daemon)
 

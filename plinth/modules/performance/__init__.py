@@ -17,10 +17,6 @@ version = 1
 
 name = _('Performance')
 
-managed_services = [
-    'pmcd.service', 'pmie.service', 'pmlogger.service', 'pmproxy.service'
-]
-
 _description = [
     _('Performance app allows you to collect, store and view information '
       'about utilization of the hardware. This can give you basic insights '
@@ -62,19 +58,19 @@ class PerformanceApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-        daemon_0 = Daemon('daemon-performance-0', managed_services[0],
+        daemon_0 = Daemon('daemon-performance-0', 'pmcd.service',
                           listen_ports=None)
         self.add(daemon_0)
 
-        daemon_1 = Daemon('daemon-performance-1', managed_services[1],
+        daemon_1 = Daemon('daemon-performance-1', 'pmie.service',
                           listen_ports=None)
         self.add(daemon_1)
 
-        daemon_2 = Daemon('daemon-performance-2', managed_services[2],
+        daemon_2 = Daemon('daemon-performance-2', 'pmlogger.service',
                           listen_ports=None)
         self.add(daemon_2)
 
-        daemon_3 = Daemon('daemon-performance-3', managed_services[3],
+        daemon_3 = Daemon('daemon-performance-3', 'pmproxy.service',
                           listen_ports=None)
         self.add(daemon_3)
 

@@ -27,8 +27,6 @@ is_essential = True
 
 depends = ['names']
 
-managed_services = ['avahi-daemon']
-
 _description = [
     format_lazy(
         _('Service discovery allows other devices on the network to '
@@ -74,7 +72,7 @@ class AvahiApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-avahi', managed_services[0])
+        daemon = Daemon('daemon-avahi', 'avahi-daemon')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-avahi',

@@ -23,8 +23,6 @@ from . import manifest
 
 version = 1
 
-managed_services = ['calibre-server-freedombox']
-
 _description = [
     format_lazy(
         _('calibre server provides online access to your e-book collection. '
@@ -49,6 +47,8 @@ class CalibreApp(app_module.App):
     """FreedomBox app for calibre."""
 
     app_id = 'calibre'
+
+    DAEMON = 'calibre-server-freedombox'
 
     def __init__(self):
         """Create components for the app."""
@@ -88,7 +88,7 @@ class CalibreApp(app_module.App):
                               urls=['https://{host}/calibre'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-calibre', managed_services[0],
+        daemon = Daemon('daemon-calibre', self.DAEMON,
                         listen_ports=[(8844, 'tcp4')])
         self.add(daemon)
 
@@ -123,10 +123,10 @@ def list_libraries():
 def create_library(name):
     """Create an empty library."""
     actions.superuser_run('calibre', ['create-library', name])
-    actions.superuser_run('service', ['try-restart', managed_services[0]])
+    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])
 
 
 def delete_library(name):
     """Delete a library and its contents."""
     actions.superuser_run('calibre', ['delete-library', name])
-    actions.superuser_run('service', ['try-restart', managed_services[0]])
+    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])

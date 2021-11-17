@@ -25,8 +25,6 @@ from . import manifest
 
 version = 2
 
-managed_services = ['smbd', 'nmbd']
-
 _description = [
     _('Samba allows to share files and folders between FreedomBox and '
       'other computers in your local network.'),
@@ -85,13 +83,12 @@ class SambaApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-samba', managed_services[0], listen_ports=[(139, 'tcp4'),
-                                                               (139, 'tcp6'),
-                                                               (445, 'tcp4'),
-                                                               (445, 'tcp6')])
+            'daemon-samba', 'smbd', listen_ports=[(139, 'tcp4'), (139, 'tcp6'),
+                                                  (445, 'tcp4'),
+                                                  (445, 'tcp6')])
         self.add(daemon)
 
-        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1],
+        daemon_nmbd = Daemon('daemon-samba-nmbd', 'nmbd',
                              listen_ports=[(137, 'udp4'), (138, 'udp4')])
 
         self.add(daemon_nmbd)

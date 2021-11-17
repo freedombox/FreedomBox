@@ -30,8 +30,6 @@ from . import manifest
 
 version = 4
 
-managed_services = ['ejabberd']
-
 managed_paths = [pathlib.Path('/etc/ejabberd/')]
 
 _description = [
@@ -110,9 +108,12 @@ class EjabberdApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-ejabberd', managed_services[0],
-            listen_ports=[(5222, 'tcp4'), (5222, 'tcp6'), (5269, 'tcp4'),
-                          (5269, 'tcp6'), (5443, 'tcp4'), (5443, 'tcp6')])
+            'daemon-ejabberd', 'ejabberd', listen_ports=[(5222, 'tcp4'),
+                                                         (5222, 'tcp6'),
+                                                         (5269, 'tcp4'),
+                                                         (5269, 'tcp6'),
+                                                         (5443, 'tcp4'),
+                                                         (5443, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-ejabberd',

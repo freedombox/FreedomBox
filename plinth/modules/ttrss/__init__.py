@@ -21,8 +21,6 @@ from . import manifest
 
 version = 3
 
-managed_services = ['tt-rss']
-
 _description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
@@ -85,7 +83,7 @@ class TTRSSApp(app_module.App):
                               urls=['https://{host}/tt-rss'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-ttrss', managed_services[0])
+        daemon = Daemon('daemon-ttrss', 'tt-rss')
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-ttrss',

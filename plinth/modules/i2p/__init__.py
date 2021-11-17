@@ -20,10 +20,6 @@ from . import manifest
 
 version = 1
 
-service_name = 'i2p'
-
-managed_services = [service_name]
-
 _description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
       'to protect communication from censorship and surveillance. I2P '
@@ -92,8 +88,7 @@ class I2PApp(app_module.App):
                               urls=['https://{host}/i2p/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-i2p', managed_services[0],
-                        listen_ports=[(7657, 'tcp6')])
+        daemon = Daemon('daemon-i2p', 'i2p', listen_ports=[(7657, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-i2p',

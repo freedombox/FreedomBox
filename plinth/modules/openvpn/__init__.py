@@ -22,8 +22,6 @@ from . import manifest
 
 version = 4
 
-managed_services = ['openvpn-server@freedombox']
-
 _description = [
     format_lazy(
         _('Virtual Private Network (VPN) is a technique for securely '
@@ -87,7 +85,7 @@ class OpenVPNApp(app_module.App):
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-openvpn', managed_services[0],
+        daemon = Daemon('daemon-openvpn', 'openvpn-server@freedombox',
                         listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
 

@@ -19,8 +19,6 @@ from . import manifest
 
 version = 3
 
-managed_services = ['infinoted']
-
 _description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
     format_lazy(
@@ -70,7 +68,7 @@ class InfinotedApp(app_module.App):
                             ports=['infinoted-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-infinoted', managed_services[0],
+        daemon = Daemon('daemon-infinoted', 'infinoted',
                         listen_ports=[(6523, 'tcp4'), (6523, 'tcp6')])
         self.add(daemon)
 
