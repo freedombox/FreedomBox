@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import menu, module_loader
+from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -137,10 +138,10 @@ def get_apps_report():
         if not packages:
             continue  # app has no managed packages
 
-        try:
-            services = module.managed_services
-        except AttributeError:
-            services = None
+        components = module.app.get_components_of_type(Daemon)
+        services = []
+        for component in components:
+            services.append(component.unit)
 
         # filter out apps not setup yet
         if module.setup_helper.get_state() == 'needs-setup':
