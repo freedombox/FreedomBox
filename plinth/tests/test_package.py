@@ -20,13 +20,19 @@ def test_packages_init():
     assert component.component_id == 'test-component'
     assert component.packages == ['foo', 'bar']
     assert not component.skip_recommends
+    assert component.conflicts is None
+    assert component.conflicts_action is None
 
     with pytest.raises(ValueError):
         Packages(None, [])
 
-    component = Packages('test-component', [], skip_recommends=True)
+    component = Packages('test-component', [], skip_recommends=True,
+                         conflicts=['conflict1', 'conflict2'],
+                         conflicts_action=Packages.ConflictsAction.IGNORE)
     assert component.packages == []
     assert component.skip_recommends
+    assert component.conflicts == ['conflict1', 'conflict2']
+    assert component.conflicts_action == Packages.ConflictsAction.IGNORE
 
 
 def test_packages_setup():
@@ -52,6 +58,26 @@ def test_packages_setup():
     app.setup(old_version=3)
     setup_helper.install.assert_has_calls(
         [call(['foo2', 'bar2'], skip_recommends=True)])
+
+
+@patch('plinth.package.packages_installed')
+def test_packages_find_conflicts(packages_installed_):
+    """Test finding conflicts."""
+    packages_installed_.return_value = []
+    component = Packages('test-component', ['package3', 'package4'])
+    assert component.find_conflicts() is None
+
+    packages_installed_.return_value = []
+    component = Packages('test-component', ['package3', 'package4'],
+                         conflicts=['package5', 'package6'],
+                         conflicts_action=Packages.ConflictsAction.IGNORE)
+    assert component.find_conflicts() == []
+
+    packages_installed_.return_value = ['package1', 'package2']
+    component = Packages('test-component', ['package3', 'package4'],
+                         conflicts=['package1', 'package2'],
+                         conflicts_action=Packages.ConflictsAction.IGNORE)
+    assert component.find_conflicts() == ['package1', 'package2']
 
 
 def test_packages_installed():

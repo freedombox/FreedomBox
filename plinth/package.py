@@ -3,12 +3,13 @@
 Framework for installing and updating distribution packages
 """
 
+import enum
 import json
 import logging
 import subprocess
 import sys
 import threading
-from typing import Union
+from typing import Optional, Union
 
 import apt.cache
 from django.utils.translation import gettext as _
@@ -28,8 +29,15 @@ class Packages(app.FollowerComponent):
     of packages required by an app.
     """
 
+    class ConflictsAction(enum.Enum):
+        """Action to take when a conflicting package is installed."""
+        IGNORE = 'ignore'  # Proceed as if there are no conflicts
+        REMOVE = 'remove'  # Remove the packages before installing the app
+
     def __init__(self, component_id: str, packages: list[str],
-                 skip_recommends=False):
+                 skip_recommends: bool = False,
+                 conflicts: Optional[list[str]] = None,
+                 conflicts_action: Optional[ConflictsAction] = None):
         """Initialize a new packages component.
 
         'component_id' should be a unique ID across all components of an app
@@ -39,12 +47,22 @@ class Packages(app.FollowerComponent):
 
         'skip_recommends' is a boolean specifying whether recommended packages
         should be installed along with the listed packages.
+
+        'conflicts' is the list of Debian packages that can't simultaneously be
+        installed with packages listed here. None if there are no known
+        conflicting packages.
+
+        'conflicts_action' is a string representing the action to take when it
+        is found that conflicting Debian packages are installed on the system.
+        None if there are no known conflicting packages.
         """
         super().__init__(component_id)
 
         self.component_id = component_id
         self._packages = packages
         self.skip_recommends = skip_recommends
+        self.conflicts = conflicts
+        self.conflicts_action = conflicts_action
 
     @property
     def packages(self) -> list[str]:
@@ -58,6 +76,13 @@ class Packages(app.FollowerComponent):
         module = sys.modules[module_name]
         helper = module.setup_helper
         helper.install(self.packages, skip_recommends=self.skip_recommends)
+
+    def find_conflicts(self) -> Optional[list[str]]:
+        """Return list of conflicting packages installed on the system."""
+        if not self.conflicts:
+            return None
+
+        return packages_installed(self.conflicts)
 
 
 class PackageException(Exception):
