@@ -4,6 +4,8 @@ Base class for all Freedombox applications.
 """
 
 import collections
+import enum
+import sys
 
 from . import clients as clients_module
 
@@ -39,6 +41,12 @@ class App:
     # XXX: Lockdown the application UI by implementing a middleware
 
     _all_apps = collections.OrderedDict()
+
+    class SetupState(enum.Enum):
+        """Various states of app being setup."""
+        NEEDS_SETUP = 'needs-setup'
+        NEEDS_UPDATE = 'needs-update'
+        UP_TO_DATE = 'up-to-date'
 
     def __init__(self):
         """Build the app by adding components.
@@ -117,6 +125,51 @@ class App:
         """Install and configure the app and its components."""
         for component in self.components.values():
             component.setup(old_version=old_version)
+
+    def get_setup_state(self) -> SetupState:
+        """Return whether the app is not setup or needs upgrade."""
+        current_version = self.get_setup_version()
+        if current_version and self.info.version <= current_version:
+            return self.SetupState.UP_TO_DATE
+
+        # If an app needs installing/updating but no setup method is available,
+        # then automatically set version.
+        #
+        # Minor violation of 'get' only discipline for convenience.
+        module = sys.modules[self.__module__]
+        if not hasattr(module, 'setup'):
+            self.set_setup_version(self.info.version)
+            return self.SetupState.UP_TO_DATE
+
+        if not current_version:
+            return self.SetupState.NEEDS_SETUP
+
+        return self.SetupState.NEEDS_UPDATE
+
+    def get_setup_version(self) -> int:
+        """Return the setup version of the app."""
+        # XXX: Optimize version gets
+        from . import models
+
+        try:
+            app_entry = models.Module.objects.get(pk=self.app_id)
+            return app_entry.setup_version
+        except models.Module.DoesNotExist:
+            return 0
+
+    def needs_setup(self) -> bool:
+        """Return whether the app needs to be setup.
+
+        A simple shortcut for get_setup_state() == NEEDS_SETUP
+        """
+        return self.get_setup_state() == self.SetupState.NEEDS_SETUP
+
+    def set_setup_version(self, version: int) -> None:
+        """Set the app's setup version."""
+        from . import models
+
+        models.Module.objects.update_or_create(
+            pk=self.app_id, defaults={'setup_version': version})
 
     def enable(self):
         """Enable all the components of the app."""

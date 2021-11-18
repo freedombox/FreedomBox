@@ -4,6 +4,7 @@ Test module for App, base class for all applications.
 """
 
 import collections
+import sys
 from unittest.mock import Mock, call, patch
 
 import pytest
@@ -16,6 +17,16 @@ from plinth.app import App, Component, FollowerComponent, Info, LeaderComponent
 class AppTest(App):
     """Sample App for testing."""
     app_id = 'test-app'
+
+
+class AppSetupTest(App):
+    """Sample App for testing setup operations."""
+    app_id = 'test-app-setup'
+
+    def __init__(self):
+        super().__init__()
+        info = Info('test-app-setup', 3)
+        self.add(info)
 
 
 class LeaderTest(FollowerComponent):
@@ -122,6 +133,52 @@ def test_app_setup(app_with_components):
     app_with_components.setup(old_version=2)
     for component in app_with_components.components.values():
         component.setup.assert_has_calls([call(old_version=2)])
+
+
+@pytest.mark.django_db
+def test_setup_state():
+    """Test retrieving the current setup state of the app."""
+    app = AppSetupTest()
+    app.info.version = 3
+    module = sys.modules[__name__]
+
+    app.set_setup_version(3)
+    assert app.get_setup_state() == App.SetupState.UP_TO_DATE
+    assert not app.needs_setup()
+
+    app.set_setup_version(0)
+    try:
+        delattr(module, 'setup')
+    except AttributeError:
+        pass
+    assert app.get_setup_state() == App.SetupState.UP_TO_DATE
+    assert not app.needs_setup()
+    assert app.get_setup_version() == 3
+
+    setattr(module, 'setup', True)
+    app.set_setup_version(0)
+    assert app.get_setup_state() == App.SetupState.NEEDS_SETUP
+    assert app.needs_setup()
+
+    app.set_setup_version(2)
+    assert app.get_setup_state() == App.SetupState.NEEDS_UPDATE
+    assert not app.needs_setup()
+
+
+@pytest.mark.django_db
+def test_get_set_setup_version():
+    """Setting and getting the setup version of the app."""
+    app = AppSetupTest()
+
+    from plinth import models
+    try:
+        models.Module.objects.get(pk=app.app_id).delete()
+    except models.Module.DoesNotExist:
+        pass
+    assert app.get_setup_version() == 0
+
+    app.set_setup_version(5)
+    assert app.get_setup_version() == 5
 
 
 def test_app_enable(app_with_components):
