@@ -123,43 +123,6 @@ class Helper(object):
         self.current_operation = {'step': step}
         return method(*args, **kwargs)
 
-    def get_state(self):
-        """Return whether the module is not setup or needs upgrade."""
-        current_version = self.get_setup_version()
-        if current_version and self.module.version <= current_version:
-            return 'up-to-date'
-
-        # If a module need installing/updating but no setup method is
-        # available, then automatically set version.
-        #
-        # Minor violation of 'get' only discipline for convenience.
-        if not hasattr(self.module, 'setup'):
-            self.set_setup_version(self.module.version)
-            return 'up-to-date'
-
-        if not current_version:
-            return 'needs-setup'
-
-        return 'needs-update'
-
-    def get_setup_version(self):
-        """Return the setup version of a module."""
-        # XXX: Optimize version gets
-        from . import models
-
-        try:
-            module_entry = models.Module.objects.get(pk=self.module_name)
-            return module_entry.setup_version
-        except models.Module.DoesNotExist:
-            return 0
-
-    def set_setup_version(self, version):
-        """Set a module's setup version."""
-        from . import models
-
-        models.Module.objects.update_or_create(
-            pk=self.module_name, defaults={'setup_version': version})
-
 
 def init(module_name, module):
     """Create a setup helper for a module for later use."""
@@ -280,11 +243,6 @@ def _get_modules_for_regular_setup():
 def _is_module_essential(module):
     """Return if a module is an essential module."""
     return getattr(module, 'is_essential', False)
-
-
-def _module_state_matches(module, state):
-    """Return if the current setup state of a module matches given state."""
-    return module.setup_helper.get_state() == state
 
 
 def _set_is_first_setup():
