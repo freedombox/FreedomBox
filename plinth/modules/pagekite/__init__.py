@@ -90,8 +90,7 @@ class PagekiteApp(app_module.App):
     def post_init(self):
         """Perform post initialization operations."""
         # Register kite name with Name Services module.
-        setup_helper = globals()['setup_helper']
-        if setup_helper.get_state() != 'needs-setup' and self.is_enabled():
+        if not self.needs_setup() and self.is_enabled():
             utils.update_names_module(is_enabled=True)
 
     def enable(self):

@@ -12,6 +12,7 @@ from collections import defaultdict
 import apt
 
 import plinth
+from plinth import app as app_module
 from plinth.package import Packages
 from plinth.signals import post_setup
 
@@ -64,8 +65,9 @@ class Helper(object):
         if self.current_operation:
             return
 
-        current_version = self.get_setup_version()
-        if current_version >= self.module.version:
+        app = self.module.app
+        current_version = app.get_setup_version()
+        if current_version >= app.info.version:
             return
 
         self.allow_install = allow_install
@@ -83,7 +85,7 @@ class Helper(object):
             logger.exception('Error running setup - %s', exception)
             raise exception
         else:
-            self.set_setup_version(self.module.version)
+            app.set_setup_version(app.info.version)
             post_setup.send_robust(sender=self.__class__,
                                    module_name=self.module_name)
         finally:
@@ -262,11 +264,12 @@ def _get_modules_for_regular_setup():
         1. essential modules that are not up-to-date
         2. non-essential modules that are installed and need updates
         """
-        if _is_module_essential(module) and \
-           not _module_state_matches(module, 'up-to-date'):
+        if (_is_module_essential(module) and module.app.get_setup_state() !=
+                app_module.App.SetupState.UP_TO_DATE):
             return True
 
-        if _module_state_matches(module, 'needs-update'):
+        if (module.app.get_setup_state() ==
+                app_module.App.SetupState.NEEDS_UPDATE):
             return True
 
         return False
@@ -288,9 +291,9 @@ def _set_is_first_setup():
     """Set whether all essential modules have been setup at least once."""
     global _is_first_setup
     modules = plinth.module_loader.loaded_modules.values()
-    _is_first_setup = any((module for module in modules
-                           if _is_module_essential(module)
-                           and _module_state_matches(module, 'needs-setup')))
+    _is_first_setup = any(
+        (module for module in modules
+         if _is_module_essential(module) and module.app.needs_setup()))
 
 
 def run_setup_on_modules(module_list, allow_install=True):
@@ -537,7 +540,8 @@ class ForceUpgrader():
                 # App does not implement force upgrade
                 continue
 
-            if not _module_state_matches(module, 'up-to-date'):
+            if (module.app.get_setup_state() !=
+                    app_module.App.SetupState.UP_TO_DATE):
                 # App is not installed.
                 # Or needs an update, let it update first.
                 continue

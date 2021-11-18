@@ -226,8 +226,7 @@ def get_certificate_status():
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update the STUN/TURN server configuration."""
-    setup_helper = globals()['setup_helper']
-    if not force and setup_helper.get_state() == 'needs-setup':
+    if not force and app.needs_setup():
         return
 
     params = ['configure-turn']

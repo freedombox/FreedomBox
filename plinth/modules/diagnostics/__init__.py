@@ -4,7 +4,6 @@ FreedomBox app for system diagnostics.
 """
 
 import collections
-import importlib
 import logging
 import pathlib
 import threading
@@ -115,8 +114,7 @@ def run_on_all_enabled_modules():
         for app in app_module.App.list():
             # Don't run diagnostics on apps have not been setup yet.
             # However, run on apps that need an upgrade.
-            module = importlib.import_module(app.__class__.__module__)
-            if module.setup_helper.get_state() == 'needs-setup':
+            if app.needs_setup():
                 continue
 
             if not app.is_enabled():

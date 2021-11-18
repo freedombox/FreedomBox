@@ -32,10 +32,7 @@ class SSOApp(app_module.App):
         self.add(info)
 
         packages = Packages('packages-sso', [
-            'libapache2-mod-auth-pubtkt',
-            'openssl',
-            'python3-openssl',
-            'flite',
+            'libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl', 'flite'
         ])
         self.add(packages)
 

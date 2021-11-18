@@ -3,7 +3,7 @@
 Test module for Matrix Synapse STUN/TURN configuration.
 """
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -45,15 +45,14 @@ def fixture_test_configuration(call_action, managed_turn_conf_file,
     Overrides TURN configuration files and patches actions.superuser_run
     with the fixture call_action
     """
-    with patch('plinth.modules.matrixsynapse.TURN_CONF_PATH',
-               managed_turn_conf_file), \
-        patch('plinth.modules.matrixsynapse.OVERRIDDEN_TURN_CONF_PATH',
-              overridden_turn_conf_file), \
-        patch('plinth.modules.matrixsynapse.is_setup', return_value=True), \
-            patch('plinth.actions.superuser_run', call_action):
-        helper = MagicMock()
-        helper.get_state.return_value = 'up-to-date'
-        matrixsynapse.setup_helper = helper
+    with (patch('plinth.modules.matrixsynapse.TURN_CONF_PATH',
+                managed_turn_conf_file),
+          patch('plinth.modules.matrixsynapse.OVERRIDDEN_TURN_CONF_PATH',
+                overridden_turn_conf_file),
+          patch('plinth.modules.matrixsynapse.is_setup', return_value=True),
+          patch('plinth.actions.superuser_run', call_action),
+          patch('plinth.modules.matrixsynapse.app') as app):
+        app.needs_setup.return_value = False
         yield
 
 

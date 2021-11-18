@@ -147,8 +147,7 @@ def apps_post_init():
 
         try:
             module.app.post_init()
-            if module.setup_helper.get_state(
-            ) != 'needs-setup' and module.app.is_enabled():
+            if not module.app.needs_setup() and module.app.is_enabled():
                 module.app.set_enabled(True)
         except Exception as exception:
             logger.exception('Exception while running post init for %s: %s',

@@ -87,6 +87,6 @@ class ShadowsocksApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(['shadowsocks-libev'])
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
     helper.call('post', app.enable)

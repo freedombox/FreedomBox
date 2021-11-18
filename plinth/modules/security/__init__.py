@@ -145,7 +145,7 @@ def get_apps_report():
             services.append(component.unit)
 
         # filter out apps not setup yet
-        if module.setup_helper.get_state() == 'needs-setup':
+        if module.app.needs_setup():
             continue
 
         apps[module_name] = {

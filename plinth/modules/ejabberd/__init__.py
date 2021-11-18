@@ -168,8 +168,7 @@ def get_domains():
     XXX: Retrieve the list from ejabberd configuration.
 
     """
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return []
 
     domain_name = config.get_domainname()
@@ -185,8 +184,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     del sender  # Unused
     del kwargs  # Unused
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     actions.superuser_run('ejabberd', [
@@ -199,8 +197,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     actions.superuser_run('ejabberd', [
@@ -212,8 +209,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Update ejabberd config after domain name change."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     conf = actions.superuser_run('ejabberd', ['get-configuration'])
@@ -226,8 +222,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update ejabberd's STUN/TURN server configuration."""
-    setup_helper = globals()['setup_helper']
-    if not force and setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     params = ['configure-turn']

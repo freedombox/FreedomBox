@@ -97,8 +97,7 @@ class GitwebApp(app_module.App):
 
     def post_init(self):
         """Perform post initialization operations."""
-        setup_helper = globals()['setup_helper']
-        if setup_helper.get_state() != 'needs-setup':
+        if not self.needs_setup():
             self.update_service_access()
 
     def set_shortcut_login_required(self, login_required):

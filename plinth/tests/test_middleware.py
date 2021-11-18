@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.test.client import RequestFactory
 from stronghold.decorators import public
 
+from plinth import app as app_module
 from plinth.middleware import AdminRequiredMiddleware, SetupMiddleware
 
 
@@ -60,7 +61,8 @@ class TestSetupMiddleware:
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
         module.setup_helper.is_finished = None
-        module.setup_helper.get_state.return_value = 'up-to-date'
+        module.app.get_setup_state.return_value = \
+            app_module.App.SetupState.UP_TO_DATE
         loaded_modules.__getitem__.return_value = module
 
         request = RequestFactory().get('/plinth/mockapp')
@@ -130,7 +132,8 @@ class TestSetupMiddleware:
         module.is_essential = False
         module.setup_helper.is_finished = True
         module.setup_helper.collect_result.return_value = None
-        module.setup_helper.get_state.return_value = 'up-to-date'
+        module.app.get_setup_state.return_value = \
+            app_module.App.SetupState.UP_TO_DATE
         loaded_modules.__getitem__.return_value = module
 
         # Admin user can't collect result

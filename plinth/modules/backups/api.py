@@ -10,7 +10,6 @@ TODO:
 - Implement unit tests.
 """
 
-import importlib
 import logging
 
 from plinth import action_utils, actions
@@ -176,8 +175,9 @@ def _install_apps_before_restore(components):
     """
     modules_to_setup = []
     for component in components:
-        module = importlib.import_module(component.app.__class__.__module__)
-        if module.setup_helper.get_state() in ('needs-setup', 'needs-update'):
+        if component.app.get_setup_state() in (
+                app_module.App.SetupState.NEEDS_SETUP,
+                app_module.App.SetupState.NEEDS_UPDATE):
             modules_to_setup.append(component.app.app_id)
 
     setup.run_setup_on_modules(modules_to_setup)
@@ -198,8 +198,7 @@ def get_all_components_for_backup():
 
     for app_ in app_module.App.list():
         try:
-            module = importlib.import_module(app_.__class__.__module__)
-            if module.setup_helper.get_state() != 'needs-setup':
+            if not app_.needs_setup():
                 components.append(_get_backup_restore_component(app_))
         except TypeError:  # Application not available for backup/restore
             pass

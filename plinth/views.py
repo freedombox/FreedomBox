@@ -281,7 +281,7 @@ class SetupView(TemplateView):
         context['package_conflicts_action'] = package_conflicts_action
 
         # Reuse the value of setup_state throughout the view for consistency.
-        context['setup_state'] = setup_helper.get_state()
+        context['setup_state'] = setup_helper.module.app.get_setup_state()
         context['setup_current_operation'] = setup_helper.current_operation
 
         # Perform expensive operation only if needed.
@@ -293,7 +293,7 @@ class SetupView(TemplateView):
                     setup_helper.module.app)
 
         context['refresh_page_sec'] = None
-        if context['setup_state'] == 'up-to-date':
+        if context['setup_state'] == app.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
         elif context['setup_current_operation']:
             context['refresh_page_sec'] = 3

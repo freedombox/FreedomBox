@@ -16,6 +16,7 @@ from django.utils.translation import gettext_lazy as _
 from stronghold.utils import is_view_func_public
 
 import plinth
+from plinth import app as app_module
 from plinth import setup
 from plinth.package import PackageException
 from plinth.utils import is_user_admin
@@ -80,7 +81,8 @@ class SetupMiddleware(MiddlewareMixin):
             _collect_setup_result(request, module)
 
         # Check if application is up-to-date
-        if module.setup_helper.get_state() == 'up-to-date':
+        if module.app.get_setup_state() == \
+           app_module.App.SetupState.UP_TO_DATE:
             return
 
         if not is_admin:

@@ -95,23 +95,23 @@ class TestBackupProcesses:
 
     @staticmethod
     @patch('plinth.modules.backups.api._install_apps_before_restore')
-    @patch('plinth.module_loader.loaded_modules.items')
-    def test_restore_apps(mock_install, modules):
+    def test_restore_apps(mock_install):
         """Test that restore_handler is called."""
-        modules.return_value = [('a', MagicMock())]
         restore_handler = MagicMock()
         api.restore_apps(restore_handler)
         restore_handler.assert_called_once()
 
     @staticmethod
-    @patch('importlib.import_module')
+    @patch('plinth.app.App.get_setup_state')
     @patch('plinth.app.App.list')
-    def test_get_all_components_for_backup(apps_list, import_module):
+    def test_get_all_components_for_backup(apps_list, get_setup_state):
         """Test listing components supporting backup and needing backup."""
-        modules = [MagicMock(), MagicMock(), MagicMock()]
-        import_module.side_effect = modules
+        get_setup_state.side_effect = [
+            App.SetupState.UP_TO_DATE,
+            App.SetupState.NEEDS_SETUP,
+            App.SetupState.UP_TO_DATE,
+        ]
         apps = [_get_test_app('a'), _get_test_app('b'), _get_test_app('c')]
-        modules[1].setup_helper.get_state.side_effect = ['needs-setup']
         apps_list.return_value = apps
 
         returned_components = api.get_all_components_for_backup()

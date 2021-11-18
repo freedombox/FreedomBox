@@ -10,14 +10,15 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions, module_loader
+from plinth import actions
+from plinth import app as app_module
 from plinth.modules import storage
 
 
 def get_available_samba_shares():
     """Get available samba shares."""
     available_shares = []
-    if is_module_enabled('samba'):
+    if _is_app_enabled('samba'):
         samba_shares = json.loads(
             actions.superuser_run('samba', ['get-shares']))
         if samba_shares:
@@ -30,13 +31,11 @@ def get_available_samba_shares():
     return available_shares
 
 
-def is_module_enabled(name):
+def _is_app_enabled(app_id):
     """Check whether a module is enabled."""
-    if name in module_loader.loaded_modules:
-        module = module_loader.loaded_modules['samba']
-        if module.setup_helper.get_state(
-        ) != 'needs-setup' and module.app.is_enabled():
-            return True
+    app = app_module.App.get(app_id)
+    if not app.needs_setup() and app.is_enabled():
+        return True
 
     return False
 
