@@ -6,6 +6,7 @@ Framework for installing and updating distribution packages
 import enum
 import json
 import logging
+import pathlib
 import subprocess
 import sys
 import threading
@@ -83,6 +84,25 @@ class Packages(app.FollowerComponent):
             return None
 
         return packages_installed(self.conflicts)
+
+    def has_unavailable_packages(self):
+        """Return whether any of the packages are not available.
+
+        Returns True if one or more of the packages is not available in the
+        user's Debian distribution or False otherwise. Returns None if it
+        cannot be reliably determined whether the packages are available or
+        not.
+        """
+        apt_lists_dir = pathlib.Path('/var/lib/apt/lists/')
+        num_files = len(
+            [child for child in apt_lists_dir.iterdir() if child.is_file()])
+        if num_files < 2:  # not counting the lock file
+            return None
+
+        # List of all packages from all Package components
+        cache = apt.Cache()
+        return any(package for package in self.packages
+                   if package not in cache)
 
 
 class PackageException(Exception):

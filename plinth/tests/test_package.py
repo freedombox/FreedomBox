@@ -80,6 +80,25 @@ def test_packages_find_conflicts(packages_installed_):
     assert component.find_conflicts() == ['package1', 'package2']
 
 
+@patch('apt.Cache')
+@patch('pathlib.Path')
+def test_packages_has_unavailable_packages(path_class, cache):
+    """Test checking for unavailable packages."""
+    path = Mock()
+    path_class.return_value = path
+    path.iterdir.return_value = [Mock()]
+
+    component = Packages('test-component', ['package1', 'package2'])
+    assert component.has_unavailable_packages() is None
+
+    path.iterdir.return_value = [Mock(), Mock()]
+    cache.return_value = ['package1', 'package2']
+    assert not component.has_unavailable_packages()
+
+    cache.return_value = ['package1']
+    assert component.has_unavailable_packages()
+
+
 def test_packages_installed():
     """Test packages_installed()."""
     # list as input

@@ -41,7 +41,7 @@
             Please wait for a few moments before trying again.
           {% endblocktrans %}
         </div>
-      {% elif setup_helper.has_unavailable_packages %}
+      {% elif has_unavailable_packages %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             This application is currently not available in your distribution.
@@ -64,7 +64,7 @@
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary" name="install"
-             {% if package_manager_is_busy or setup_helper.has_unavailable_packages %}
+             {% if package_manager_is_busy or has_unavailable_packages %}
              disabled="disabled"
              {% endif %}
              {% if setup_state == 'needs-setup' %}

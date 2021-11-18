@@ -288,6 +288,9 @@ class SetupView(TemplateView):
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
+            context[
+                'has_unavailable_packages'] = self._has_unavailable_packages(
+                    setup_helper.module.app)
 
         context['refresh_page_sec'] = None
         if context['setup_state'] == 'up-to-date':
@@ -334,6 +337,13 @@ class SetupView(TemplateView):
                     conflicts_action = component.conflicts_action
 
         return conflicts, conflicts_action
+
+    @staticmethod
+    def _has_unavailable_packages(app_):
+        """Return whether the app has unavailable packages."""
+        components = app_.get_components_of_type(Packages)
+        return any(component for component in components
+                   if component.has_unavailable_packages())
 
 
 def notification_dismiss(request, id):

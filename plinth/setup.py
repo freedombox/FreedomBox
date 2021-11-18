@@ -5,7 +5,6 @@ Utilities for performing application setup operations.
 
 import importlib
 import logging
-import os
 import threading
 import time
 from collections import defaultdict
@@ -158,34 +157,6 @@ class Helper(object):
 
         models.Module.objects.update_or_create(
             pk=self.module_name, defaults={'setup_version': version})
-
-    def has_unavailable_packages(self):
-        """Find if any of the packages managed by the module are not available.
-
-        Returns True if one or more of the packages is not available in the
-        user's Debian distribution or False otherwise.
-        Returns None if it cannot be reliably determined whether the
-        packages are available or not.
-        """
-        APT_LISTS_DIR = '/var/lib/apt/lists/'
-        num_files = len([
-            name for name in os.listdir(APT_LISTS_DIR)
-            if os.path.isfile(os.path.join(APT_LISTS_DIR, name))
-        ])
-        if num_files < 2:  # not counting the lock file
-            return None
-
-        pkg_components = list(self.module.app.get_components_of_type(Packages))
-        if not pkg_components:  # This app has no packages to install
-            return False
-
-        # List of all packages from all Package components
-        managed_pkgs = (package for component in pkg_components
-                        for package in component.packages)
-        cache = apt.Cache()
-        unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
-                            if pkg_name not in cache)
-        return any(unavailable_pkgs)
 
 
 def init(module_name, module):
