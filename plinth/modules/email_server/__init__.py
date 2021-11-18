@@ -14,18 +14,11 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages, packages_installed, remove
+from plinth.package import Packages, remove
 
 from . import audit, manifest
 
 version = 1
-
-# Other likely install conflicts have been discarded:
-# - msmtp, nullmailer, sendmail don't cause install faults.
-# - qmail and smail are missing in Bullseye (Not tested,
-#   but less likely due to that).
-package_conflicts = ('exim4-base', 'exim4-config', 'exim4-daemon-light')
-package_conflicts_action = 'ignore'
 
 clamav_packages = ['clamav', 'clamav-daemon']
 clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
@@ -56,10 +49,17 @@ class EmailServerApp(plinth.app.App):
         super().__init__()
         self._add_ui_components()
 
-        packages = Packages('packages-email-server', [
-            'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d', 'dovecot-imapd',
-            'dovecot-ldap', 'dovecot-lmtpd', 'dovecot-managesieved'
-        ])
+        # Other likely install conflicts have been discarded:
+        # - msmtp, nullmailer, sendmail don't cause install faults.
+        # - qmail and smail are missing in Bullseye (Not tested,
+        #   but less likely due to that).
+        packages = Packages(
+            'packages-email-server', [
+                'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
+                'dovecot-imapd', 'dovecot-ldap', 'dovecot-lmtpd',
+                'dovecot-managesieved'
+            ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
+            conflicts_action=Packages.ConflictsAction.IGNORE)
         self.add(packages)
 
         packages = Packages('packages-email-server-skip-rec', ['rspamd'],
@@ -147,7 +147,8 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
 
     def _clear_conflicts():
-        packages_to_remove = packages_installed(package_conflicts)
+        component = app.get_component('packages-email-server')
+        packages_to_remove = component.find_conflicts()
         if packages_to_remove:
             logger.info('Removing conflicting packages: %s',
                         packages_to_remove)

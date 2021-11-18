@@ -50,7 +50,7 @@
             <span class="fa fa-refresh"></span> {% trans "Check again" %}
           </button>
         </div>
-      {% elif package_conflicts and package_conflicts_action != 'ignore' %}
+      {% elif package_conflicts and package_conflicts_action.value != 'ignore' %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             <strong>Conflicting Packages:</strong> Some packages installed on

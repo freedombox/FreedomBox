@@ -13,7 +13,7 @@ from collections import defaultdict
 import apt
 
 import plinth
-from plinth.package import Packages, packages_installed
+from plinth.package import Packages
 from plinth.signals import post_setup
 
 from . import package
@@ -187,15 +187,6 @@ class Helper(object):
                             if pkg_name not in cache)
         return any(unavailable_pkgs)
 
-    def get_package_conflicts(self):
-        """Report list of conflicting packages for the user."""
-        package_conflicts, package_conflicts_action = \
-            _get_module_package_conflicts(self.module)
-        if package_conflicts:
-            package_conflicts = packages_installed(package_conflicts)
-
-        return package_conflicts, package_conflicts_action
-
 
 def init(module_name, module):
     """Create a setup helper for a module for later use."""
@@ -315,12 +306,6 @@ def _get_modules_for_regular_setup():
 def _is_module_essential(module):
     """Return if a module is an essential module."""
     return getattr(module, 'is_essential', False)
-
-
-def _get_module_package_conflicts(module):
-    """Return list of packages that conflict with packages of a module."""
-    return (getattr(module, 'package_conflicts',
-                    None), getattr(module, 'package_conflicts_action', None))
 
 
 def _module_state_matches(module, state):

@@ -20,6 +20,7 @@ from plinth import app, package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.modules.firewall.components import get_port_forwarding_info
+from plinth.package import Packages
 from plinth.translation import get_language_from_request, set_language
 
 from . import forms, frontpage
@@ -275,7 +276,7 @@ class SetupView(TemplateView):
 
         # Report any installed conflicting packages that will be removed.
         package_conflicts, package_conflicts_action = \
-            setup_helper.get_package_conflicts()
+            self._get_app_package_conflicts(setup_helper.module.app)
         context['package_conflicts'] = package_conflicts
         context['package_conflicts_action'] = package_conflicts_action
 
@@ -318,6 +319,21 @@ class SetupView(TemplateView):
                 return self.render_to_response(self.get_context_data())
 
         return super(SetupView, self).dispatch(request, *args, **kwargs)
+
+    @staticmethod
+    def _get_app_package_conflicts(app_):
+        """Return packages that may conflict with packages of an app."""
+        components = app_.get_components_of_type(Packages)
+        conflicts = []
+        conflicts_action = None
+        for component in components:
+            component_conflicts = component.find_conflicts()
+            if component_conflicts:
+                conflicts += component_conflicts
+                if conflicts_action in (None, Packages.ConflictsAction.IGNORE):
+                    conflicts_action = component.conflicts_action
+
+        return conflicts, conflicts_action
 
 
 def notification_dismiss(request, id):
