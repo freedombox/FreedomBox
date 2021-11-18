@@ -54,7 +54,7 @@ class DateTimeApp(app_module.App):
                     '--value', 'systemd-timesyncd'
                 ])
                 self._time_managed = 'yes' in output.decode()
-            except subprocess.CalledProcessError:
+            except (FileNotFoundError, subprocess.CalledProcessError):
                 # When systemd is not running.
                 self._time_managed = False
 
