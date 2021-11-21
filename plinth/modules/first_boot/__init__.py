@@ -13,8 +13,6 @@ from plinth.signals import post_setup
 
 version = 1
 
-is_essential = True
-
 first_boot_steps = [
     {
         'id': 'firstboot_welcome',
@@ -42,6 +40,12 @@ class FirstBootApp(app.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        info = app.Info(app_id=self.app_id, version=version, is_essential=True)
+        self.add(info)
+
+    def post_init(self):
+        """Perform post initialization operations."""
         post_setup.connect(_clear_first_boot_steps)
 
 

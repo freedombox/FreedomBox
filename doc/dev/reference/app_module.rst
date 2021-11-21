@@ -16,14 +16,6 @@ are part of the :class:`~plinth.app.Info` component. Need for this attribute at
 the module level will be removed in the future.
 
 
-<app-module>.is_essential
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Optional. If an app must be installed and configured by FreedomBox without user
-intervention, this attribute must be set to True. This attribute is part of the
-:class:`~plinth.app.Info` component. Need for this attribute at the module level
-will be removed in the future.
-
 <app-module>.version
 ^^^^^^^^^^^^^^^^^^^^
 

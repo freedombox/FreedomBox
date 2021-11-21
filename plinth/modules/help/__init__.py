@@ -13,7 +13,6 @@ from plinth import cfg, menu, web_server
 
 version = 1
 
-is_essential = True
 app = None
 
 
@@ -27,7 +26,7 @@ class HelpApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential)
+                               is_essential=True)
         self.add(info)
 
         menu_item = menu.Menu('menu-help', _('Documentation'), None, 'fa-book',

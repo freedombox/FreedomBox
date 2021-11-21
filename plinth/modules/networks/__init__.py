@@ -16,8 +16,6 @@ from plinth.package import Packages
 
 version = 1
 
-is_essential = True
-
 first_boot_steps = [
     {
         'id': 'network_topology_wizard',
@@ -58,7 +56,7 @@ class NetworksApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Networks'),
+                               is_essential=True, name=_('Networks'),
                                icon='fa-signal', description=_description,
                                manual_page='Networks')
         self.add(info)

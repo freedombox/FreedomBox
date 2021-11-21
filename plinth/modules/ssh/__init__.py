@@ -21,8 +21,6 @@ from . import manifest
 
 version = 1
 
-is_essential = True
-
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
       'connections from remote computers. An authorized remote computer '
@@ -43,7 +41,7 @@ class SSHApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
+                               is_essential=True,
                                name=_('Secure Shell (SSH) Server'),
                                icon='fa-terminal', description=_description)
         self.add(info)

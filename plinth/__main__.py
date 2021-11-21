@@ -72,10 +72,10 @@ def list_dependencies(module_list):
 def list_modules(modules_type):
     """List all/essential/optional modules and exit."""
     for module_name, module in module_loader.loaded_modules.items():
-        module_is_essential = getattr(module, 'is_essential', False)
-        if 'essential' in modules_type and not module_is_essential:
+        is_essential = module.app.info.is_essential
+        if 'essential' in modules_type and not is_essential:
             continue
-        elif 'optional' in modules_type and module_is_essential:
+        elif 'optional' in modules_type and is_essential:
             continue
         print('{module_name}'.format(module_name=module_name))
     sys.exit()

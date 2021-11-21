@@ -11,8 +11,6 @@ from plinth.package import Packages
 
 version = 1
 
-is_essential = True
-
 depends = ['security', 'apache']
 
 app = None
@@ -27,7 +25,7 @@ class SSOApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, depends=depends,
+                               is_essential=True, depends=depends,
                                name=_('Single Sign On'))
         self.add(info)
 

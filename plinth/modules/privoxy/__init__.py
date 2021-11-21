@@ -21,8 +21,6 @@ from . import manifest
 
 version = 1
 
-is_essential = False
-
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '

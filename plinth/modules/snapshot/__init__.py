@@ -20,8 +20,6 @@ from . import manifest
 
 version = 4
 
-is_essential = True
-
 _description = [
     _('Snapshots allows creating and managing btrfs file system snapshots. '
       'These can be used to roll back the system to a previously known '
@@ -53,8 +51,8 @@ class SnapshotApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Storage Snapshots'), icon='fa-film',
-                               description=_description,
+                               is_essential=True, name=_('Storage Snapshots'),
+                               icon='fa-film', description=_description,
                                manual_page='Snapshots')
         self.add(info)
 

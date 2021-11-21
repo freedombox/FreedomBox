@@ -22,8 +22,6 @@ from . import manifest, utils
 
 version = 1
 
-is_essential = True
-
 _description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
@@ -61,7 +59,7 @@ class CockpitApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Cockpit'),
+                               is_essential=True, name=_('Cockpit'),
                                icon='fa-wrench', icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',

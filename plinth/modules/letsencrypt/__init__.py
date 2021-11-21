@@ -25,8 +25,6 @@ from . import components, manifest
 
 version = 3
 
-is_essential = True
-
 depends = ['names']
 
 _description = [
@@ -61,7 +59,7 @@ class LetsEncryptApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, depends=depends,
+                               is_essential=True, depends=depends,
                                name=_('Let\'s Encrypt'), icon='fa-lock',
                                short_description=_('Certificates'),
                                description=_description,

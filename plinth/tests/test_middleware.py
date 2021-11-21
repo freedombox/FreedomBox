@@ -129,7 +129,6 @@ class TestSetupMiddleware:
         """Test that module installation result is collected properly."""
         resolve.return_value.namespaces = ['mockapp']
         module = Mock()
-        module.is_essential = False
         module.setup_helper.is_finished = True
         module.setup_helper.collect_result.return_value = None
         module.app.get_setup_state.return_value = \

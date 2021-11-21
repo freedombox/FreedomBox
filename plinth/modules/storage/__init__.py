@@ -33,8 +33,6 @@ _description = [
 
 logger = logging.getLogger(__name__)
 
-is_essential = True
-
 app = None
 
 
@@ -50,7 +48,7 @@ class StorageApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Storage'),
+                               is_essential=True, name=_('Storage'),
                                icon='fa-hdd-o', description=_description,
                                manual_page='Storage')
         self.add(info)

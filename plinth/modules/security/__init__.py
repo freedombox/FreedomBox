@@ -20,8 +20,6 @@ from . import manifest
 
 version = 7
 
-is_essential = True
-
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
@@ -41,7 +39,7 @@ class SecurityApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Security'),
+                               is_essential=True, name=_('Security'),
                                icon='fa-lock', manual_page='Security')
         self.add(info)
 

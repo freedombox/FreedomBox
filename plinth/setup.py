@@ -145,7 +145,7 @@ def setup_modules(module_list=None, essential=False, allow_install=True):
         'Running setup for modules, essential - %s, '
         'selected modules - %s', essential, module_list)
     for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not _is_module_essential(module):
+        if essential and not module.app.info.is_essential:
             continue
 
         if module_list and module_name not in module_list:
@@ -159,7 +159,7 @@ def list_dependencies(module_list=None, essential=False):
     for module_import_path in plinth.module_loader.get_modules_to_load():
         module_name = module_import_path.split('.')[-1]
         module = importlib.import_module(module_import_path)
-        if essential and not _is_module_essential(module):
+        if essential and not module.app.info.is_essential:
             continue
 
         if module_list and module_name not in module_list and \
@@ -227,7 +227,7 @@ def _get_modules_for_regular_setup():
         1. essential modules that are not up-to-date
         2. non-essential modules that are installed and need updates
         """
-        if (_is_module_essential(module) and module.app.get_setup_state() !=
+        if (module.app.info.is_essential and module.app.get_setup_state() !=
                 app_module.App.SetupState.UP_TO_DATE):
             return True
 
@@ -240,18 +240,13 @@ def _get_modules_for_regular_setup():
     return [name for name, module in all_modules if is_setup_required(module)]
 
 
-def _is_module_essential(module):
-    """Return if a module is an essential module."""
-    return getattr(module, 'is_essential', False)
-
-
 def _set_is_first_setup():
     """Set whether all essential modules have been setup at least once."""
     global _is_first_setup
     modules = plinth.module_loader.loaded_modules.values()
     _is_first_setup = any(
         (module for module in modules
-         if _is_module_essential(module) and module.app.needs_setup()))
+         if module.app.info.is_essential and module.app.needs_setup()))
 
 
 def run_setup_on_modules(module_list, allow_install=True):

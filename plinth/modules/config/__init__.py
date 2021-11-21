@@ -21,8 +21,6 @@ from plinth.signals import domain_added
 
 version = 3
 
-is_essential = True
-
 _description = [
     _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
@@ -52,7 +50,7 @@ class ConfigApp(app_module.App):
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, depends=depends,
+                               is_essential=True, depends=depends,
                                name=_('General Configuration'), icon='fa-cog',
                                description=_description,
                                manual_page='Configure')

@@ -23,8 +23,6 @@ glib = import_from_gi('GLib', '2.0')
 
 version = 2
 
-is_essential = True
-
 _description = [
     format_lazy(
         _('Firewall is a security system that controls the incoming and '
@@ -61,7 +59,7 @@ class FirewallApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Firewall'),
+                               is_essential=True, name=_('Firewall'),
                                icon='fa-shield', description=_description,
                                manual_page='Firewall')
         self.add(info)

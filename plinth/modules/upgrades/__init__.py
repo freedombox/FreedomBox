@@ -24,8 +24,6 @@ from . import manifest
 
 version = 9
 
-is_essential = True
-
 first_boot_steps = [
     {
         'id': 'backports_wizard',
@@ -73,7 +71,7 @@ class UpgradesApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Update'),
+                               is_essential=True, name=_('Update'),
                                icon='fa-refresh', description=_description,
                                manual_page='Upgrades')
         self.add(info)

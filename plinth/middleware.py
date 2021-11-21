@@ -33,7 +33,7 @@ def _collect_setup_result(request, module):
 
     exception = module.setup_helper.collect_result()
     if not exception:
-        if not setup._is_module_essential(module):
+        if not module.setup_helper.app.info.is_essential:
             messages.success(request, _('Application installed.'))
     else:
         if isinstance(exception, PackageException):

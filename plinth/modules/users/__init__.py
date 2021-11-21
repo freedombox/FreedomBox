@@ -19,8 +19,6 @@ from .components import UsersAndGroups
 
 version = 3
 
-is_essential = True
-
 first_boot_steps = [
     {
         'id': 'users_firstboot',
@@ -56,9 +54,9 @@ class UsersApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Users and Groups'), icon='fa-users',
-                               description=_description, manual_page='Users')
+                               is_essential=True, name=_('Users and Groups'),
+                               icon='fa-users', description=_description,
+                               manual_page='Users')
         self.add(info)
 
         menu_item = menu.Menu('menu-users', info.name, None, info.icon,

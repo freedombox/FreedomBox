@@ -23,8 +23,6 @@ from . import manifest
 
 version = 1
 
-is_essential = True
-
 depends = ['names']
 
 _description = [
@@ -51,8 +49,8 @@ class AvahiApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Service Discovery'), icon='fa-compass',
-                               description=_description,
+                               is_essential=True, name=_('Service Discovery'),
+                               icon='fa-compass', description=_description,
                                manual_page='ServiceDiscovery')
         self.add(info)
 

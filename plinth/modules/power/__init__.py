@@ -12,8 +12,6 @@ from . import manifest
 
 version = 1
 
-is_essential = True
-
 _description = [_('Restart or shut down the system.')]
 
 app = None
@@ -29,7 +27,7 @@ class PowerApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Power'),
+                               is_essential=True, name=_('Power'),
                                description=_description, manual_page='Power')
         self.add(info)
 

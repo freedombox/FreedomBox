@@ -16,8 +16,6 @@ from . import manifest
 
 version = 2
 
-is_essential = True
-
 _description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
@@ -63,9 +61,8 @@ class DateTimeApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Date & Time'), icon='fa-clock-o',
-                               description=_description,
+                               is_essential=True, name=_('Date & Time'),
+                               icon='fa-clock-o', description=_description,
                                manual_page='DateTime')
         self.add(info)
 

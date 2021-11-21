@@ -17,8 +17,6 @@ from . import components, manifest
 
 version = 1
 
-is_essential = True
-
 logger = logging.getLogger(__name__)
 
 _description = [
@@ -42,9 +40,8 @@ class NamesApp(app_module.App):
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Name Services'), icon='fa-tags',
-                               description=_description,
+                               is_essential=True, name=_('Name Services'),
+                               icon='fa-tags', description=_description,
                                manual_page='NameServices')
         self.add(info)
 

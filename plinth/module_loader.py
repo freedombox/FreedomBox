@@ -28,11 +28,6 @@ def include_urls():
         _include_module_urls(module_import_path, module_name)
 
 
-def _is_module_essential(module):
-    """Return if a module is an essential module."""
-    return getattr(module, 'is_essential', False)
-
-
 def load_modules():
     """
     Read names of enabled modules in modules/enabled directory and
@@ -54,7 +49,7 @@ def load_modules():
     remaining_modules = dict(modules)  # Make a copy
     # Place all essential modules ahead of others in module load order
     sorted_modules = sorted(
-        modules, key=lambda module: not _is_module_essential(modules[module]))
+        modules, key=lambda module: not modules[module].app.info.is_essential)
     for module_name in sorted_modules:
         if module_name not in remaining_modules:
             continue

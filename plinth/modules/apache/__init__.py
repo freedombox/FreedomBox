@@ -17,8 +17,6 @@ from plinth.utils import format_lazy, is_valid_user_name
 
 version = 9
 
-is_essential = True
-
 app = None
 
 
@@ -32,8 +30,7 @@ class ApacheApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Apache HTTP Server'))
+                               is_essential=True, name=_('Apache HTTP Server'))
         self.add(info)
 
         packages = Packages('packages-apache', [

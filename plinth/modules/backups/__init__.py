@@ -25,8 +25,6 @@ logger = logging.getLogger(__name__)
 
 version = 3
 
-is_essential = True
-
 depends = ['storage']
 
 _description = [
@@ -50,9 +48,9 @@ class BackupsApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, depends=depends,
-            name=_('Backups'), icon='fa-files-o', description=_description,
-            manual_page='Backups',
+            app_id=self.app_id, version=version, is_essential=True,
+            depends=depends, name=_('Backups'), icon='fa-files-o',
+            description=_description, manual_page='Backups',
             donation_url='https://www.borgbackup.org/support/fund.html')
         self.add(info)
 
