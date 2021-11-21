@@ -17,8 +17,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 3
-
 _description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
@@ -41,13 +39,15 @@ class ShadowsocksApp(app_module.App):
 
     app_id = 'shadowsocks'
 
+    _version = 3
+
     DAEMON = 'shadowsocks-libev-local@freedombox'
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Shadowsocks'),
                                icon_filename='shadowsocks',
                                short_description=_('Socks5 Proxy'),

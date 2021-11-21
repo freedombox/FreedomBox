@@ -19,8 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
@@ -44,6 +42,8 @@ class MLDonkeyApp(app_module.App):
 
     app_id = 'mldonkey'
 
+    _version = 2
+
     DAEMON = 'mldonkey-server'
 
     def __init__(self):
@@ -53,7 +53,7 @@ class MLDonkeyApp(app_module.App):
         groups = {'ed2k': _('Download files using eDonkey applications')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('MLDonkey'),
+            app_id=self.app_id, version=self._version, name=_('MLDonkey'),
             icon_filename='mldonkey',
             short_description=_('Peer-to-peer File Sharing'),
             description=_description, manual_page='MLDonkey',

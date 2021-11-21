@@ -21,8 +21,6 @@ from . import manifest
 
 logger = logging.getLogger(__name__)
 
-version = 1
-
 _description = [
     format_lazy(
         _('Zoph manages your photo collection. Photos are stored on your '
@@ -50,11 +48,13 @@ class ZophApp(app_module.App):
 
     app_id = 'zoph'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Zoph'), icon_filename='zoph',
                                short_description=_('Photo Organizer'),
                                description=_description, manual_page='Zoph',

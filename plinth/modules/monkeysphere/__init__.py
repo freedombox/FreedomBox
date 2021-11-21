@@ -13,8 +13,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('With Monkeysphere, an OpenPGP key can be generated for each configured '
       'domain serving SSH. The OpenPGP public key can then be uploaded to the '
@@ -42,11 +40,13 @@ class MonkeysphereApp(app_module.App):
 
     app_id = 'monkeysphere'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Monkeysphere'), icon='fa-certificate',
                                description=_description,
                                manual_page='Monkeysphere')

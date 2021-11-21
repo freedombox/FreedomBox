@@ -16,8 +16,6 @@ from plinth.utils import Version
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
       'fully compliant with DLNA/UPnP-AV clients. '
@@ -36,13 +34,15 @@ class MiniDLNAApp(app_module.App):
     """Freedombox app managing miniDlna"""
     app_id = 'minidlna'
 
+    _version = 2
+
     def __init__(self):
         """Initialize the app components"""
         super().__init__()
 
         groups = {'minidlna': _('Media streaming server')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MiniDLNA'), icon_filename='minidlna',
                                short_description=_('Simple Media Server'),
                                description=_description,

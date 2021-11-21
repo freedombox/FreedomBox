@@ -11,8 +11,6 @@ from django.utils.translation import pgettext_lazy
 from plinth import app as app_module
 from plinth import cfg, menu, web_server
 
-version = 1
-
 app = None
 
 
@@ -21,11 +19,13 @@ class HelpApp(app_module.App):
 
     app_id = 'help'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True)
         self.add(info)
 

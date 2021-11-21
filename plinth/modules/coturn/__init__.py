@@ -25,8 +25,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('Coturn is a server to facilitate audio/video calls and conferences by '
       'providing an implementation of TURN and STUN protocols. WebRTC, SIP '
@@ -49,11 +47,13 @@ class CoturnApp(app_module.App):
 
     app_id = 'coturn'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Coturn'), icon_filename='coturn',
                                short_description=_('VoIP Helper'),
                                description=_description, manual_page='Coturn')

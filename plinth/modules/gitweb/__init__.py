@@ -22,8 +22,6 @@ from . import manifest
 from .forms import is_repo_url
 from .manifest import GIT_REPO_PATH
 
-version = 1
-
 _description = [
     _('Git is a distributed version-control system for tracking changes in '
       'source code during software development. Gitweb provides a web '
@@ -44,6 +42,8 @@ class GitwebApp(app_module.App):
 
     app_id = 'gitweb'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -52,7 +52,7 @@ class GitwebApp(app_module.App):
 
         self.repos = []
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Gitweb'), icon_filename='gitweb',
                                short_description=_('Simple Git Hosting'),
                                description=_description, manual_page='GitWeb',

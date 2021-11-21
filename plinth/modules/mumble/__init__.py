@@ -22,8 +22,6 @@ from plinth.utils import Version
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),
@@ -40,12 +38,14 @@ class MumbleApp(app_module.App):
 
     app_id = 'mumble'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Mumble'),
+            app_id=self.app_id, version=self._version, name=_('Mumble'),
             icon_filename='mumble', short_description=_('Voice Chat'),
             description=_description, manual_page='Mumble',
             clients=manifest.clients,

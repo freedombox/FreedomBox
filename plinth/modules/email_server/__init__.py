@@ -18,8 +18,6 @@ from plinth.package import Packages, remove
 
 from . import audit, manifest
 
-version = 1
-
 clamav_packages = ['clamav', 'clamav-daemon']
 clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
 
@@ -43,6 +41,8 @@ class EmailServerApp(plinth.app.App):
     """FreedomBox email server app"""
     app_id = 'email_server'
     app_name = _('Email Server')
+
+    _version = 1
 
     def __init__(self):
         """The app's constructor"""
@@ -86,7 +86,7 @@ class EmailServerApp(plinth.app.App):
 
     def _add_ui_components(self):
         info = plinth.app.Info(
-            app_id=self.app_id, version=version, name=self.app_name,
+            app_id=self.app_id, version=self._version, name=self.app_name,
             short_description=_('Powered by Postfix, Dovecot & Rspamd'),
             description=_description, manual_page='EmailServer',
             clients=manifest.clients,

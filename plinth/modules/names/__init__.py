@@ -15,8 +15,6 @@ from plinth.utils import format_lazy
 
 from . import components, manifest
 
-version = 1
-
 logger = logging.getLogger(__name__)
 
 _description = [
@@ -36,10 +34,12 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Name Services'),
                                icon='fa-tags', description=_description,
                                manual_page='NameServices')

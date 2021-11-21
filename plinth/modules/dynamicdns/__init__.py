@@ -17,8 +17,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 depends = ['names']
 
 _description = [
@@ -45,11 +43,13 @@ class DynamicDNSApp(app_module.App):
 
     app_id = 'dynamicdns'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, depends=depends,
                                name=_('Dynamic DNS Client'), icon='fa-refresh',
                                description=_description,

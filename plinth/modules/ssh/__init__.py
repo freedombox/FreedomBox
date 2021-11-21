@@ -19,8 +19,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
       'connections from remote computers. An authorized remote computer '
@@ -36,11 +34,13 @@ class SSHApp(app_module.App):
 
     app_id = 'ssh'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True,
                                name=_('Secure Shell (SSH) Server'),
                                icon='fa-terminal', description=_description)

@@ -19,8 +19,6 @@ from . import manifest
 
 PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
 
-version = 1
-
 _description = [
     _('WordPress is a popular way to create and manage websites and blogs. '
       'Content can be managed using a visual interface. Layout and '
@@ -50,12 +48,14 @@ class WordPressApp(app_module.App):
 
     app_id = 'wordpress'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('WordPress'),
+            app_id=self.app_id, version=self._version, name=_('WordPress'),
             icon_filename='wordpress', short_description=_('Website and Blog'),
             description=_description, manual_page='WordPress',
             clients=manifest.clients,

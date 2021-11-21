@@ -18,8 +18,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
 _mods = [
     'minetest-mod-character-creator', 'minetest-mod-craftguide',
     'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
@@ -51,12 +49,14 @@ class MinetestApp(app_module.App):
 
     app_id = 'minetest'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Minetest'),
+            app_id=self.app_id, version=self._version, name=_('Minetest'),
             icon_filename='minetest', short_description=_('Block Sandbox'),
             description=_description, manual_page='Minetest',
             clients=manifest.clients,

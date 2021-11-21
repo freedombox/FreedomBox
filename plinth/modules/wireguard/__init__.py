@@ -16,8 +16,6 @@ from . import manifest, utils
 
 nm = import_from_gi('NM', '1.0')
 
-version = 1
-
 _description = [
     _('WireGuard is a fast, modern, secure VPN tunnel.'),
     format_lazy(
@@ -41,12 +39,14 @@ class WireguardApp(app_module.App):
 
     app_id = 'wireguard'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('WireGuard'),
+            app_id=self.app_id, version=self._version, name=_('WireGuard'),
             icon_filename='wireguard',
             short_description=_('Virtual Private Network'),
             description=_description, manual_page='WireGuard',

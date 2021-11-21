@@ -20,8 +20,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 4
-
 _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -39,6 +37,8 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
+    _version = 4
+
     DAEMON = 'transmission-daemon'
 
     def __init__(self):
@@ -50,7 +50,7 @@ class TransmissionApp(app_module.App):
         }
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Transmission'),
+            app_id=self.app_id, version=self._version, name=_('Transmission'),
             icon_filename='transmission',
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Transmission',

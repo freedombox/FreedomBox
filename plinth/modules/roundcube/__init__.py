@@ -16,8 +16,6 @@ from plinth.utils import Version
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
       'client with an application-like user interface. It provides '
@@ -45,11 +43,13 @@ class RoundcubeApp(app_module.App):
 
     app_id = 'roundcube'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Roundcube'), icon_filename='roundcube',
                                short_description=_('Email Client'),
                                description=_description,

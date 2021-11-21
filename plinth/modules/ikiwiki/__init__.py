@@ -18,8 +18,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
       'several lightweight markup languages, including Markdown, and '
@@ -41,11 +39,13 @@ class IkiwikiApp(app_module.App):
 
     app_id = 'ikiwiki'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('ikiwiki'), icon_filename='ikiwiki',
                                short_description=_('Wiki and Blog'),
                                description=_description, manual_page='Ikiwiki',

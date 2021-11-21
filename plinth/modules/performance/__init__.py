@@ -13,8 +13,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 name = _('Performance')
 
 _description = [
@@ -34,11 +32,13 @@ class PerformanceApp(app_module.App):
 
     app_id = 'performance'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Performance'), icon='fa-bar-chart',
                                short_description=_('System Monitoring'),
                                description=_description,

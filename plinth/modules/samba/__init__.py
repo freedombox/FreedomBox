@@ -23,8 +23,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('Samba allows to share files and folders between FreedomBox and '
       'other computers in your local network.'),
@@ -49,6 +47,8 @@ class SambaApp(app_module.App):
 
     app_id = 'samba'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -56,7 +56,7 @@ class SambaApp(app_module.App):
         groups = {'freedombox-share': _('Access to the private shares')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Samba'),
+            app_id=self.app_id, version=self._version, name=_('Samba'),
             icon_filename='samba', short_description=_('Network File Storage'),
             manual_page='Samba', description=_description,
             clients=manifest.clients,

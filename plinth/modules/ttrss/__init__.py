@@ -19,8 +19,6 @@ from plinth.utils import Version, format_lazy
 
 from . import manifest
 
-version = 3
-
 _description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
@@ -42,13 +40,15 @@ class TTRSSApp(app_module.App):
 
     app_id = 'ttrss'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         groups = {'feed-reader': _('Read and subscribe to news feeds')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tiny Tiny RSS'), icon_filename='ttrss',
                                short_description=_('News Feed Reader'),
                                description=_description,

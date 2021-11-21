@@ -17,8 +17,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('bepasty is a web application that allows large files to be uploaded '
       'and shared. Text and code snippets can also be pasted and shared. '
@@ -56,11 +54,13 @@ class BepastyApp(app_module.App):
 
     app_id = 'bepasty'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(self.app_id, version, name=_('bepasty'),
+        info = app_module.Info(self.app_id, self._version, name=_('bepasty'),
                                icon_filename='bepasty',
                                short_description=_('File & Snippet Sharing'),
                                description=_description, manual_page='bepasty',

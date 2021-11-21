@@ -28,8 +28,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 4
-
 _description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
@@ -59,11 +57,13 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
+    _version = 4
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('ejabberd'), icon_filename='ejabberd',
                                short_description=_('Chat Server'),
                                description=_description,

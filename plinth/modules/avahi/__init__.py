@@ -21,8 +21,6 @@ from . import manifest
 
 # pylint: disable=C0103
 
-version = 1
-
 depends = ['names']
 
 _description = [
@@ -44,11 +42,13 @@ class AvahiApp(app_module.App):
 
     app_id = 'avahi'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Service Discovery'),
                                icon='fa-compass', description=_description,
                                manual_page='ServiceDiscovery')

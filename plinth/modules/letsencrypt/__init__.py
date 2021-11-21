@@ -23,8 +23,6 @@ from plinth.utils import format_lazy
 
 from . import components, manifest
 
-version = 3
-
 depends = ['names']
 
 _description = [
@@ -54,11 +52,13 @@ class LetsEncryptApp(app_module.App):
 
     app_id = 'letsencrypt'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, depends=depends,
                                name=_('Let\'s Encrypt'), icon='fa-lock',
                                short_description=_('Certificates'),

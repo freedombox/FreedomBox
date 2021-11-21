@@ -22,8 +22,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 9
-
 first_boot_steps = [
     {
         'id': 'backports_wizard',
@@ -64,13 +62,15 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
+    _version = 9
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Update'),
                                icon='fa-refresh', description=_description,
                                manual_page='Upgrades')

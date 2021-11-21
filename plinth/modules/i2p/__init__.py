@@ -18,8 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
       'to protect communication from censorship and surveillance. I2P '
@@ -45,6 +43,8 @@ class I2PApp(app_module.App):
 
     app_id = 'i2p'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -52,7 +52,7 @@ class I2PApp(app_module.App):
         groups = {'i2p': _('Manage I2P application')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('I2P'),
+            app_id=self.app_id, version=self._version, name=_('I2P'),
             icon_filename='i2p', short_description=_('Anonymity Network'),
             description=_description, manual_page='I2P',
             clients=manifest.clients,

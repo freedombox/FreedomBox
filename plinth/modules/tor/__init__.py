@@ -22,8 +22,6 @@ from plinth.signals import domain_added, domain_removed
 
 from . import manifest, utils
 
-version = 5
-
 depends = ['names']
 
 _description = [
@@ -43,11 +41,13 @@ class TorApp(app_module.App):
 
     app_id = 'tor'
 
+    _version = 5
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',

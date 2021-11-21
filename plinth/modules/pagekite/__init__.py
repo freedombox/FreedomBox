@@ -16,8 +16,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, utils
 
-version = 2
-
 depends = ['names']
 
 _description = [
@@ -56,12 +54,14 @@ class PagekiteApp(app_module.App):
 
     DAEMON = 'pagekite'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, depends=depends,
+            app_id=self.app_id, version=self._version, depends=depends,
             name=_('PageKite'), icon='fa-flag',
             short_description=_('Public Visibility'), description=_description,
             manual_page='PageKite',

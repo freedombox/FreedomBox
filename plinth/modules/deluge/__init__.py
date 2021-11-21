@@ -18,8 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 6
-
 _description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
     _('The default password is \'deluge\', but you should log in and '
@@ -36,6 +34,8 @@ class DelugeApp(app_module.App):
 
     app_id = 'deluge'
 
+    _version = 6
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -45,7 +45,7 @@ class DelugeApp(app_module.App):
         }
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Deluge'),
+            app_id=self.app_id, version=self._version, name=_('Deluge'),
             icon_filename='deluge',
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Deluge',

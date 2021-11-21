@@ -14,8 +14,6 @@ from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
@@ -28,6 +26,8 @@ class DateTimeApp(app_module.App):
     """FreedomBox app for date and time if time syncronization is unmanaged."""
 
     app_id = 'datetime'
+
+    _version = 2
 
     _time_managed = None
 
@@ -60,7 +60,7 @@ class DateTimeApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Date & Time'),
                                icon='fa-clock-o', description=_description,
                                manual_page='DateTime')

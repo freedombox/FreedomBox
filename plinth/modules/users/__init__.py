@@ -17,8 +17,6 @@ from plinth.package import Packages
 
 from .components import UsersAndGroups
 
-version = 3
-
 first_boot_steps = [
     {
         'id': 'users_firstboot',
@@ -47,13 +45,15 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
+    _version = 3
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Users and Groups'),
                                icon='fa-users', description=_description,
                                manual_page='Users')

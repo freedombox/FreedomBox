@@ -21,8 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     format_lazy(
         _('calibre server provides online access to your e-book collection. '
@@ -48,6 +46,8 @@ class CalibreApp(app_module.App):
 
     app_id = 'calibre'
 
+    _version = 1
+
     DAEMON = 'calibre-server-freedombox'
 
     def __init__(self):
@@ -56,7 +56,7 @@ class CalibreApp(app_module.App):
 
         groups = {'calibre': _('Use calibre e-book libraries')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='Calibre',

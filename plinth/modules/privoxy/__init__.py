@@ -19,8 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '
@@ -44,12 +42,14 @@ class PrivoxyApp(app_module.App):
 
     app_id = 'privoxy'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Privoxy'),
+            app_id=self.app_id, version=self._version, name=_('Privoxy'),
             icon_filename='privoxy', short_description=_('Web Proxy'),
             description=_description, manual_page='Privoxy',
             donation_url='https://www.privoxy.org/faq/general.html#DONATE')

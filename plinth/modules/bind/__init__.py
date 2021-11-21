@@ -21,8 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
 _description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
@@ -68,11 +66,13 @@ class BindApp(app_module.App):
 
     app_id = 'bind'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('BIND'), icon='fa-globe-w',
                                short_description=_('Domain Name Server'),
                                description=_description)

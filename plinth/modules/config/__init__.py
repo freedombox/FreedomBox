@@ -19,8 +19,6 @@ from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.signals import domain_added
 
-version = 3
-
 _description = [
     _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
@@ -44,12 +42,14 @@ class ConfigApp(app_module.App):
 
     app_id = 'config'
 
+    _version = 3
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, depends=depends,
                                name=_('General Configuration'), icon='fa-cog',
                                description=_description,

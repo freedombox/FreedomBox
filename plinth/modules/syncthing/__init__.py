@@ -19,8 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 5
-
 _description = [
     _('Syncthing is an application to synchronize files across multiple '
       'devices, e.g. your desktop computer and mobile phone.  Creation, '
@@ -47,6 +45,8 @@ class SyncthingApp(app_module.App):
 
     app_id = 'syncthing'
 
+    _version = 5
+
     DAEMON = 'syncthing@syncthing'
 
     def __init__(self):
@@ -57,7 +57,7 @@ class SyncthingApp(app_module.App):
             'syncthing-access': _('Administer Syncthing application')
         }
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Syncthing'), icon_filename='syncthing',
                                short_description=_('File Synchronization'),
                                description=_description,

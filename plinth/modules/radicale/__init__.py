@@ -20,8 +20,6 @@ from plinth.utils import Version, format_lazy
 
 from . import manifest
 
-version = 2
-
 _description = [
     format_lazy(
         _('Radicale is a CalDAV and CardDAV server. It allows synchronization '
@@ -47,11 +45,13 @@ class RadicaleApp(app_module.App):
 
     app_id = 'radicale'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Radicale'), icon_filename='radicale',
                                short_description=_('Calendar and Addressbook'),
                                description=_description,

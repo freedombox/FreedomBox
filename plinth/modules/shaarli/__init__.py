@@ -13,8 +13,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('Shaarli allows you to save and share bookmarks.'),
     _('Note that Shaarli only supports a single user account, which you will '
@@ -29,11 +27,13 @@ class ShaarliApp(app_module.App):
 
     app_id = 'shaarli'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Shaarli'), icon_filename='shaarli',
                                short_description=_('Bookmarks'),
                                description=_description, manual_page='Shaarli',

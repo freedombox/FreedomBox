@@ -21,8 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, udisks2
 
-version = 4
-
 _description = [
     format_lazy(
         _('This module allows you to manage storage media attached to your '
@@ -41,13 +39,15 @@ class StorageApp(app_module.App):
 
     app_id = 'storage'
 
+    _version = 4
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Storage'),
                                icon='fa-hdd-o', description=_description,
                                manual_page='Storage')

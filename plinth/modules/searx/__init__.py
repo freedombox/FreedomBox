@@ -18,8 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 4
-
 _description = [
     _('Searx is a privacy-respecting Internet metasearch engine. '
       'It aggregrates and displays results from multiple search engines.'),
@@ -35,6 +33,8 @@ class SearxApp(app_module.App):
 
     app_id = 'searx'
 
+    _version = 4
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -42,7 +42,7 @@ class SearxApp(app_module.App):
         groups = {'web-search': _('Search the web')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Searx'),
+            app_id=self.app_id, version=self._version, name=_('Searx'),
             icon_filename='searx', short_description=_('Web Search'),
             description=_description, manual_page='Searx',
             clients=manifest.clients,

@@ -36,8 +36,6 @@ def get_configured_domain_name():
         return lazy_domain_name
 
 
-version = 1
-
 _description = [
     _('diaspora* is a decentralized social network where you can store '
       'and control your own data.'),
@@ -57,12 +55,14 @@ class DiasporaApp(app_module.App):
 
     app_id = 'diaspora'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
         from . import manifest
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('diaspora*'), icon_filename='diaspora',
                                short_description=_('Federated Social Network'),
                                description=_description,

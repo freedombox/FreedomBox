@@ -15,8 +15,6 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.utils import format_lazy, is_valid_user_name
 
-version = 9
-
 app = None
 
 
@@ -25,11 +23,13 @@ class ApacheApp(app_module.App):
 
     app_id = 'apache'
 
+    _version = 9
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Apache HTTP Server'))
         self.add(info)
 

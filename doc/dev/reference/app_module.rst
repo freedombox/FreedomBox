@@ -14,12 +14,3 @@ application depends on. The application is specified as string which is the
 final part of the full module load path. For example, ``names``. Dependencies
 are part of the :class:`~plinth.app.Info` component. Need for this attribute at
 the module level will be removed in the future.
-
-
-<app-module>.version
-^^^^^^^^^^^^^^^^^^^^
-
-Required. Version number of an app. Increasing the version number of an app
-triggers the setup() logic allowing the app to run upgrade scripts. This
-attribute is part of the :class:`~plinth.app.Info` component. Need for this
-attribute at the module level will be removed in the future.

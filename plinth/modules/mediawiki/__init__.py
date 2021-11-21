@@ -19,8 +19,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 10
-
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
       'projects. A wiki engine is a program for creating a collaboratively '
@@ -47,12 +45,14 @@ class MediaWikiApp(app_module.App):
 
     app_id = 'mediawiki'
 
+    _version = 10
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
         self._private_mode = True
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MediaWiki'), icon_filename='mediawiki',
                                short_description=_('Wiki'),
                                description=_description,

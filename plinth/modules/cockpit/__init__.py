@@ -20,8 +20,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, utils
 
-version = 1
-
 _description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
@@ -52,13 +50,15 @@ class CockpitApp(app_module.App):
 
     app_id = 'cockpit'
 
+    _version = 1
+
     DAEMON = 'cockpit.socket'
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Cockpit'),
                                icon='fa-wrench', icon_filename='cockpit',
                                short_description=_('Server Administration'),

@@ -22,8 +22,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     format_lazy(
         _('Quassel is an IRC application that is split into two parts, a '
@@ -48,11 +46,13 @@ class QuasselApp(app_module.App):
 
     app_id = 'quassel'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Quassel'), icon_filename='quassel',
                                short_description=_('IRC Client'),
                                description=_description, manual_page='Quassel',

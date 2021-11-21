@@ -17,8 +17,6 @@ from plinth.web_server import StaticFiles
 
 from . import manifest
 
-version = 1
-
 _description = [
     _('JSXC is a web client for XMPP. Typically it is used with an XMPP '
       'server running locally.'),
@@ -34,13 +32,15 @@ class JSXCApp(app_module.App):
 
     app_id = 'jsxc'
 
+    _version = 1
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('JSXC'), icon_filename='jsxc',
                                short_description=_('Chat Client'),
                                description=_description, manual_page='JSXC',

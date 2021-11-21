@@ -11,8 +11,6 @@ from django.urls import reverse
 from plinth import app, cfg, module_loader
 from plinth.signals import post_setup
 
-version = 1
-
 first_boot_steps = [
     {
         'id': 'firstboot_welcome',
@@ -37,11 +35,14 @@ class FirstBootApp(app.App):
 
     app_id = 'first_boot'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app.Info(app_id=self.app_id, version=version, is_essential=True)
+        info = app.Info(app_id=self.app_id, version=self._version,
+                        is_essential=True)
         self.add(info)
 
     def post_init(self):

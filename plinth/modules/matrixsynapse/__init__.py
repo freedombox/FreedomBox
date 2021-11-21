@@ -25,8 +25,6 @@ from plinth.utils import format_lazy, is_non_empty_file
 
 from . import manifest
 
-version = 7
-
 _description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
       'ecosystem for open, federated instant messaging and VoIP. Synapse is a '
@@ -63,15 +61,17 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
+    _version = 7
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Matrix Synapse'),
-            icon_filename='matrixsynapse', short_description=_('Chat Server'),
-            description=_description, manual_page='MatrixSynapse',
-            clients=manifest.clients)
+            app_id=self.app_id, version=self._version,
+            name=_('Matrix Synapse'), icon_filename='matrixsynapse',
+            short_description=_('Chat Server'), description=_description,
+            manual_page='MatrixSynapse', clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-matrixsynapse', info.name,

@@ -22,8 +22,6 @@ from plinth.utils import format_lazy
 from . import manifest
 from .errors import TahoeConfigurationError
 
-version = 1
-
 _description = [
     _('Tahoe-LAFS is a decentralized secure file storage system. '
       'It uses provider independent security to store files over a '
@@ -52,11 +50,13 @@ class TahoeApp(app_module.App):
 
     app_id = 'tahoe'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tahoe-LAFS'),
                                icon_filename='tahoe-lafs',
                                short_description=_('Distributed File Storage'),

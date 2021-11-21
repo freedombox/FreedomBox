@@ -10,8 +10,6 @@ from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
-version = 1
-
 _description = [_('Restart or shut down the system.')]
 
 app = None
@@ -22,11 +20,13 @@ class PowerApp(app_module.App):
 
     app_id = 'power'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Power'),
                                description=_description, manual_page='Power')
         self.add(info)

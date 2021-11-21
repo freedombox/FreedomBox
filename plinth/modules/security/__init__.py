@@ -18,8 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 7
-
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
 ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
@@ -34,11 +32,13 @@ class SecurityApp(app_module.App):
 
     app_id = 'security'
 
+    _version = 7
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Security'),
                                icon='fa-lock', manual_page='Security')
         self.add(info)

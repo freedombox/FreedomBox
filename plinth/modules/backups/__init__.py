@@ -23,8 +23,6 @@ from . import api
 
 logger = logging.getLogger(__name__)
 
-version = 3
-
 depends = ['storage']
 
 _description = [
@@ -43,12 +41,14 @@ class BackupsApp(app_module.App):
 
     app_id = 'backups'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, is_essential=True,
+            app_id=self.app_id, version=self._version, is_essential=True,
             depends=depends, name=_('Backups'), icon='fa-files-o',
             description=_description, manual_page='Backups',
             donation_url='https://www.borgbackup.org/support/fund.html')
