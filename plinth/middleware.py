@@ -4,6 +4,7 @@ Common Django middleware.
 """
 
 import logging
+import sys
 
 from django import urls
 from django.conf import settings
@@ -15,7 +16,6 @@ from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import gettext_lazy as _
 from stronghold.utils import is_view_func_public
 
-import plinth
 from plinth import app as app_module
 from plinth import setup
 from plinth.package import PackageException
@@ -26,14 +26,15 @@ from . import views
 logger = logging.getLogger(__name__)
 
 
-def _collect_setup_result(request, module):
+def _collect_setup_result(request, app):
     """Show success/fail message from previous install operation."""
-    if not module.setup_helper.is_finished:
+    setup_helper = sys.modules[app.__module__].setup_helper
+    if not setup_helper.is_finished:
         return
 
-    exception = module.setup_helper.collect_result()
+    exception = setup_helper.collect_result()
     if not exception:
-        if not module.setup_helper.app.info.is_essential:
+        if not app.info.is_essential:
             messages.success(request, _('Application installed.'))
     else:
         if isinstance(exception, PackageException):
@@ -72,16 +73,16 @@ class SetupMiddleware(MiddlewareMixin):
             # Requested URL does not belong to any application
             return
 
-        module_name = resolver_match.namespaces[0]
-        module = plinth.module_loader.loaded_modules[module_name]
+        app_id = resolver_match.namespaces[0]
+        app = app_module.App.get(app_id)
 
         is_admin = is_user_admin(request)
         # Collect and show setup operation result to admins
         if is_admin:
-            _collect_setup_result(request, module)
+            _collect_setup_result(request, app)
 
         # Check if application is up-to-date
-        if module.app.get_setup_state() == \
+        if app.get_setup_state() == \
            app_module.App.SetupState.UP_TO_DATE:
             return
 
@@ -90,7 +91,7 @@ class SetupMiddleware(MiddlewareMixin):
 
         # Only allow logged-in users to access any setup page
         view = login_required(views.SetupView.as_view())
-        return view(request, setup_helper=module.setup_helper)
+        return view(request, app_id=app_id)
 
 
 class AdminRequiredMiddleware(MiddlewareMixin):
