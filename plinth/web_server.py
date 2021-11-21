@@ -5,11 +5,13 @@ Setup CherryPy web server.
 
 import logging
 import os
+import sys
 import warnings
 
 import cherrypy
 
-from . import app, cfg, log, module_loader, web_framework
+from . import app as app_module
+from . import cfg, log, web_framework
 
 logger = logging.getLogger(__name__)
 
@@ -57,13 +59,14 @@ def init():
 
     _mount_static_directory('/usr/share/javascript', '/javascript')
 
-    for module_name, module in module_loader.loaded_modules.items():
+    for app in app_module.App.list():
+        module = sys.modules[app.__module__]
         module_path = os.path.dirname(module.__file__)
         static_dir = os.path.join(module_path, 'static')
         if not os.path.isdir(static_dir):
             continue
 
-        urlprefix = "%s%s" % (web_framework.get_static_url(), module_name)
+        urlprefix = "%s%s" % (web_framework.get_static_url(), app.app_id)
         _mount_static_directory(static_dir, urlprefix)
 
     for component in StaticFiles.list():
@@ -88,7 +91,7 @@ def run(on_web_server_stop):
     cherrypy.engine.block()
 
 
-class StaticFiles(app.FollowerComponent):
+class StaticFiles(app_module.FollowerComponent):
     """Component to serve static files shipped with an app.
 
     Any files in <app>/static directory will be automatically served on
