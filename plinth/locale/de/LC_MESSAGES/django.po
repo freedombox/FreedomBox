@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 21:01-0500\n"
+"POT-Creation-Date: 2021-11-22 18:17-0500\n"
 "PO-Revision-Date: 2021-11-02 13:36+0000\n"
 "Last-Translator: Johannes Keyser <joke@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -66,15 +66,29 @@ msgstr ""
 "Warnung! Die Anwendung könnte fehlerhaft laufen, falls der Domainname "
 "nachträglich geändert wird."
 
-#: plinth/forms.py:46
+#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/modules/mumble/forms.py:21
+msgid "TLS domain"
+msgstr "TLS Domain"
+
+#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/modules/mumble/forms.py:23
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"Wähle Sie eine Domain zur Nutzung mit TLS aus. Wenn diese Liste leer ist, "
+"konfigurieren Sie bitte mindestens eine Domain mit Zertifikaten."
+
+#: plinth/forms.py:64
 msgid "Language"
 msgstr "Sprache"
 
-#: plinth/forms.py:47
+#: plinth/forms.py:65
 msgid "Language to use for presenting this web interface"
 msgstr "Sprache für die Darstellung dieser Weboberfläche"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:72
 msgid "Use the language preference set in the browser"
 msgstr "Die im Browser festgelegte Sprache verwenden"
 
@@ -146,12 +160,12 @@ msgstr "Lokale Netzwerkdomäne"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Erstellen und Verwalten von Sicherungs-Archiven."
 
-#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:205
-#: plinth/modules/backups/__init__.py:250
+#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:253
 msgid "Backups"
 msgstr "Sicherungen"
 
-#: plinth/modules/backups/__init__.py:202
+#: plinth/modules/backups/__init__.py:205
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -160,18 +174,18 @@ msgstr ""
 "Bevorzugen Sie einen verschlüsselten Remote-Backup-Speicherort oder einen "
 "zusätzlich angeschlossenen Datenträger."
 
-#: plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:211
 msgid "Enable a Backup Schedule"
 msgstr "Aktivieren eines Sicherungszeitplans"
 
-#: plinth/modules/backups/__init__.py:212
-#: plinth/modules/backups/__init__.py:259
-#: plinth/modules/storage/__init__.py:328
+#: plinth/modules/backups/__init__.py:215
+#: plinth/modules/backups/__init__.py:262
+#: plinth/modules/storage/__init__.py:331
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gehe zu {app_name}"
 
-#: plinth/modules/backups/__init__.py:247
+#: plinth/modules/backups/__init__.py:250
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -181,7 +195,7 @@ msgstr ""
 "Versuche zur Sicherung waren nicht erfolgreich. Der letzte Fehler ist: "
 "{error_message}"
 
-#: plinth/modules/backups/__init__.py:255
+#: plinth/modules/backups/__init__.py:258
 msgid "Error During Backup"
 msgstr "Fehler beim Sichern"
 
@@ -1020,9 +1034,10 @@ msgstr "IP-Adresse und Domänen aktualisieren"
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:214
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:37
+#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "Konfiguration aktualisiert"
 
@@ -1395,20 +1410,6 @@ msgstr "VoIP-Helfer"
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Ungültige Liste von STUN/TURN-Server-URIs"
 
-#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
-#: plinth/modules/quassel/forms.py:22
-msgid "TLS domain"
-msgstr "TLS Domain"
-
-#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"Wähle Sie eine Domain zur Nutzung mit TLS aus. Wenn diese Liste leer ist, "
-"konfigurieren Sie bitte mindestens eine Domain mit Zertifikaten."
-
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
@@ -1503,53 +1504,53 @@ msgstr ""
 "um zu überprüfen, ob alle Anwendungen und Dienste funktionieren."
 
 #: plinth/modules/diagnostics/__init__.py:54
-#: plinth/modules/diagnostics/__init__.py:238
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "Diagnose"
 
-#: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/diagnostics/__init__.py:101
 #: plinth/modules/email_server/templates/email_server.html:41
 msgid "passed"
 msgstr "bestanden"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:102
 #: plinth/modules/email_server/templates/email_server.html:39
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "gescheitert"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:103
 #: plinth/modules/email_server/templates/email_server.html:37
 msgid "error"
 msgstr "Fehler"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "warning"
 msgstr "Warnung"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:216
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Sie sollten einige Anwendungen deaktivieren, um den Speicherverbrauch zu "
 "reduzieren."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr "Sie sollten auf diesem System keine neuen Anwendungen installieren."
 
-#: plinth/modules/diagnostics/__init__.py:233
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1558,7 +1559,7 @@ msgstr ""
 "Das System hat wenig Speicherplatz: {percent_used}% verwendet, "
 "{memory_available}·{memory_available_unit}frei. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:235
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr "Wenig Speicher"
 
@@ -2128,7 +2129,7 @@ msgstr ""
 msgid "Email Server"
 msgstr "E-Mail Server"
 
-#: plinth/modules/email_server/__init__.py:99
+#: plinth/modules/email_server/__init__.py:95
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Betrieben mit Postfix, Dovecot und Rspamd"
 
@@ -3212,7 +3213,7 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Zertifikate"
 
-#: plinth/modules/letsencrypt/__init__.py:101
+#: plinth/modules/letsencrypt/__init__.py:104
 msgid "Cannot test: No domains are configured."
 msgstr "Kann nicht testen: Es sind keine Domains konfiguriert."
 
@@ -6779,109 +6780,109 @@ msgstr ""
 "Speichermedien einsehen, Wechselmedien einbinden und aushängen, die Root-"
 "Partition erweitern usw."
 
-#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:321
-#: plinth/modules/storage/__init__.py:352
+#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:324
+#: plinth/modules/storage/__init__.py:355
 msgid "Storage"
 msgstr "Speicher"
 
-#: plinth/modules/storage/__init__.py:215
+#: plinth/modules/storage/__init__.py:218
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} Bytes"
 
-#: plinth/modules/storage/__init__.py:219
+#: plinth/modules/storage/__init__.py:222
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:223
+#: plinth/modules/storage/__init__.py:226
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:230
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:230
+#: plinth/modules/storage/__init__.py:233
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation failed."
 msgstr "Der Vorgang schlug fehl."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:247
 msgid "The operation was cancelled."
 msgstr "Der Vorgang wurde abgebrochen."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:249
 msgid "The device is already unmounting."
 msgstr "Das Gerät wird bereits ausgehängt."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Der Vorgang ist wegen fehlender Treiber-/Werkzeugunterstützung nicht möglich."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:254
 msgid "The operation timed out."
 msgstr "Der Vorgang beendet wegen Zeitüberschreitung."
 
-#: plinth/modules/storage/__init__.py:253
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "Dieser Vorgang würde ein Gerät aufwecken, welches sich in einem Tiefschlaf-"
 "Zustand befindet."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:259
 msgid "Attempting to unmount a device that is busy."
 msgstr "Es wird versucht, ein Gerät auszuhängen, das beschäftigt ist."
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:261
 msgid "The operation has already been cancelled."
 msgstr "Dieser Vorgang wurde bereits abgebrochen."
 
-#: plinth/modules/storage/__init__.py:260
-#: plinth/modules/storage/__init__.py:262
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:267
 msgid "Not authorized to perform the requested operation."
 msgstr "Nicht autorisiert, um den gewünschten Vorgang auszuführen."
 
-#: plinth/modules/storage/__init__.py:266
+#: plinth/modules/storage/__init__.py:269
 msgid "The device is already mounted."
 msgstr "Dieses Gerät ist bereits eingebunden."
 
-#: plinth/modules/storage/__init__.py:268
+#: plinth/modules/storage/__init__.py:271
 msgid "The device is not mounted."
 msgstr "Das Gerät ist nicht eingebunden."
 
-#: plinth/modules/storage/__init__.py:270
+#: plinth/modules/storage/__init__.py:273
 msgid "Not permitted to use the requested option."
 msgstr "Die gewünschte Option ist nicht gestattet."
 
-#: plinth/modules/storage/__init__.py:272
+#: plinth/modules/storage/__init__.py:275
 msgid "The device is mounted by another user."
 msgstr "Das Gerät ist von einem anderen Benutzer eingebunden."
 
-#: plinth/modules/storage/__init__.py:316
+#: plinth/modules/storage/__init__.py:319
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Geringer Speicherplatz auf der Systempartition: {percent_used}% belegt, "
 "{free_space} verfügbar."
 
-#: plinth/modules/storage/__init__.py:318
+#: plinth/modules/storage/__init__.py:321
 msgid "Low disk space"
 msgstr "Wenig Plattenspeicherplatz"
 
-#: plinth/modules/storage/__init__.py:346
+#: plinth/modules/storage/__init__.py:349
 msgid "Disk failure imminent"
 msgstr "Festplattenfehler unmittelbar bevorstehend"
 
-#: plinth/modules/storage/__init__.py:348
+#: plinth/modules/storage/__init__.py:351
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7151,24 +7152,24 @@ msgstr "Tor-Socks-Proxy"
 msgid "Tor Bridge Relay"
 msgstr "Tor-Bridge-Relay"
 
-#: plinth/modules/tor/__init__.py:121
+#: plinth/modules/tor/__init__.py:123
 msgid "Tor relay port available"
 msgstr "Tor-Relay-Port ist verfügbar"
 
-#: plinth/modules/tor/__init__.py:131
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Zugangs-URL {url} auf TCP{kind} über Tor"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:223
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tor-Nutzung auf {url} über TCP{kind} bestätigen"
@@ -7414,19 +7415,19 @@ msgstr ""
 msgid "Update"
 msgstr "Aktualisieren"
 
-#: plinth/modules/upgrades/__init__.py:127
+#: plinth/modules/upgrades/__init__.py:129
 msgid "Updates"
 msgstr "Aktualisierungen"
 
-#: plinth/modules/upgrades/__init__.py:130
+#: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualisiert"
 
-#: plinth/modules/upgrades/__init__.py:215
+#: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
 msgstr "Distributions-Update konnte nicht gestartet werden"
 
-#: plinth/modules/upgrades/__init__.py:217
+#: plinth/modules/upgrades/__init__.py:219
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7437,11 +7438,11 @@ msgstr ""
 "mindestens 5 GB frei sind. Das Distributions-Update wird nach 24 Stunden "
 "erneut versucht, falls aktiviert."
 
-#: plinth/modules/upgrades/__init__.py:228
+#: plinth/modules/upgrades/__init__.py:230
 msgid "Distribution update started"
 msgstr "Distributions-Upgrade gestartet"
 
-#: plinth/modules/upgrades/__init__.py:230
+#: plinth/modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -8804,7 +8805,7 @@ msgstr "%(package_names)s wird installiert: %(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% abgeschlossen"
 
-#: plinth/web_framework.py:117
+#: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
 

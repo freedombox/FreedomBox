@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 21:01-0500\n"
+"POT-Creation-Date: 2021-11-22 18:17-0500\n"
 "PO-Revision-Date: 2021-05-17 18:31+0000\n"
 "Last-Translator: chilumula vamshi krishna <kannakrishna1625@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -64,15 +64,31 @@ msgid ""
 "later."
 msgstr "హెచ్చరిక! డొమైన్ పేరును తరువాత మార్చినచో ఈ అనువర్తనం పనిచేయకపోవచ్చు."
 
-#: plinth/forms.py:46
+#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/modules/mumble/forms.py:21
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "ఉప డోమైన్ పేరు"
+
+#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/modules/mumble/forms.py:23
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"TLS ఉపయోగించడం కొరకు ఒక డొమైన్ ఎంచుకోండి. ఒకవేళ జాబితా ఖాళీగా ఉన్నట్లయితే, దయచేసి సర్టిఫికేట్ లతో కనీసం "
+"ఒక డొమైన్ ని కాన్ఫిగర్ చేయండి."
+
+#: plinth/forms.py:64
 msgid "Language"
 msgstr "భాష"
 
-#: plinth/forms.py:47
+#: plinth/forms.py:65
 msgid "Language to use for presenting this web interface"
 msgstr "ఈ జాల అంతరవర్తి కోసం వాడాల్సిన భాష"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:72
 msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్లో ఉన్న భాషాప్రాధాన్యతనే ఉపయోగించు"
 
@@ -142,36 +158,36 @@ msgstr "స్థానిక నెట్‌వర్క్ డొమైన్"
 msgid "Backups allows creating and managing backup archives."
 msgstr "బ్యాకప్స్ అనేది బ్యాకప్ భాండాగారాలను సృష్టించడానికి మరియి నిర్వహించడానికి ఉపయోగపడుతుంది."
 
-#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:205
-#: plinth/modules/backups/__init__.py:250
+#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:253
 msgid "Backups"
 msgstr "బ్యాకప్స్"
 
-#: plinth/modules/backups/__init__.py:202
+#: plinth/modules/backups/__init__.py:205
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:211
 msgid "Enable a Backup Schedule"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:212
-#: plinth/modules/backups/__init__.py:259
-#: plinth/modules/storage/__init__.py:328
+#: plinth/modules/backups/__init__.py:215
+#: plinth/modules/backups/__init__.py:262
+#: plinth/modules/storage/__init__.py:331
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "{app_name} కు వెళ్ళండి"
 
-#: plinth/modules/backups/__init__.py:247
+#: plinth/modules/backups/__init__.py:250
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:255
+#: plinth/modules/backups/__init__.py:258
 #, fuzzy
 #| msgid "Existing Backups"
 msgid "Error During Backup"
@@ -998,9 +1014,10 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:214
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:37
+#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
@@ -1356,22 +1373,6 @@ msgstr ""
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr ""
 
-#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
-#: plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
-msgid "TLS domain"
-msgstr "ఉప డోమైన్ పేరు"
-
-#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"TLS ఉపయోగించడం కొరకు ఒక డొమైన్ ఎంచుకోండి. ఒకవేళ జాబితా ఖాళీగా ఉన్నట్లయితే, దయచేసి సర్టిఫికేట్ లతో కనీసం "
-"ఒక డొమైన్ ని కాన్ఫిగర్ చేయండి."
-
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
@@ -1472,18 +1473,18 @@ msgstr ""
 "చేస్తున్నాయో లేదో ధృవీకరించడం కోసం అనేక తనిఖీలు చేస్తుంది."
 
 #: plinth/modules/diagnostics/__init__.py:54
-#: plinth/modules/diagnostics/__init__.py:238
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "లక్షణాలు"
 
-#: plinth/modules/diagnostics/__init__.py:98
+#: plinth/modules/diagnostics/__init__.py:101
 #: plinth/modules/email_server/templates/email_server.html:41
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "క్వాసెల్"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:102
 #: plinth/modules/email_server/templates/email_server.html:39
 #: plinth/modules/networks/views.py:49
 #, fuzzy
@@ -1491,45 +1492,45 @@ msgstr "క్వాసెల్"
 msgid "failed"
 msgstr "అమరక విఫలమైంది."
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:103
 #: plinth/modules/email_server/templates/email_server.html:37
 msgid "error"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:212
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "గిట్"
 
-#: plinth/modules/diagnostics/__init__.py:216
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:233
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:235
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr ""
 
@@ -2075,7 +2076,7 @@ msgstr ""
 msgid "Email Server"
 msgstr "కబుర్ల సేవిక"
 
-#: plinth/modules/email_server/__init__.py:99
+#: plinth/modules/email_server/__init__.py:95
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -3161,7 +3162,7 @@ msgstr "లెట్స్ ఎన్క్రిప్ట్"
 msgid "Certificates"
 msgstr "యోగ్యతాపత్రాలు"
 
-#: plinth/modules/letsencrypt/__init__.py:101
+#: plinth/modules/letsencrypt/__init__.py:104
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -6595,111 +6596,111 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:321
-#: plinth/modules/storage/__init__.py:352
+#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:324
+#: plinth/modules/storage/__init__.py:355
 #, fuzzy
 msgid "Storage"
 msgstr "అన్హొస్టెడ్ స్టోరేజ్  ని (పునరుద్ధరించండి)"
 
-#: plinth/modules/storage/__init__.py:215
+#: plinth/modules/storage/__init__.py:218
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} బైట్లు"
 
-#: plinth/modules/storage/__init__.py:219
+#: plinth/modules/storage/__init__.py:222
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} కిలోబైట్లు"
 
-#: plinth/modules/storage/__init__.py:223
+#: plinth/modules/storage/__init__.py:226
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} మెగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:227
+#: plinth/modules/storage/__init__.py:230
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} గిగాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:230
+#: plinth/modules/storage/__init__.py:233
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f}  టెరాబైట్లు"
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation failed."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:247
 msgid "The operation was cancelled."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:249
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "The device is already unmounting."
 msgstr "మంబ్లు సేవిక నడుస్తుంది"
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:254
 msgid "The operation timed out."
 msgstr "ఆపరేషన్ టైమవుట్ అయింది."
 
-#: plinth/modules/storage/__init__.py:253
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "ఈ ఆపరేషన్ గాఢ నిద్రలో ఉన్న ఒక డిస్క్ ను మేల్కొలుపుతుంది."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:259
 #, fuzzy
 msgid "Attempting to unmount a device that is busy."
 msgstr "బిజీగా ఉన్న పరికరాన్ని అన్ మౌంట్ చేయడానికి ప్రయత్నిస్తోంది."
 
-#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:261
 msgid "The operation has already been cancelled."
 msgstr "ఆపరేషన్ ఇప్పటికే రద్దు చేయబడింది."
 
-#: plinth/modules/storage/__init__.py:260
-#: plinth/modules/storage/__init__.py:262
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:267
 msgid "Not authorized to perform the requested operation."
 msgstr "అభ్యర్థించిన ఆపరేషన్ చేయడానికి అధికారం లేదు."
 
-#: plinth/modules/storage/__init__.py:266
+#: plinth/modules/storage/__init__.py:269
 #, fuzzy
 msgid "The device is already mounted."
 msgstr "ఈ సేవ ఇప్పటికే ఉంది"
 
-#: plinth/modules/storage/__init__.py:268
+#: plinth/modules/storage/__init__.py:271
 #, fuzzy
 #| msgid "Mumble server is not running"
 msgid "The device is not mounted."
 msgstr "మంబ్లు సేవిక నడవంలేదు"
 
-#: plinth/modules/storage/__init__.py:270
+#: plinth/modules/storage/__init__.py:273
 msgid "Not permitted to use the requested option."
 msgstr "అభ్యర్థించిన ఎంపికను ఉపయోగించడానికి అనుమతి లేదు."
 
-#: plinth/modules/storage/__init__.py:272
+#: plinth/modules/storage/__init__.py:275
 msgid "The device is mounted by another user."
 msgstr "పరికరం మరొక వినియోగదారుచే మౌంట్ చేయబడింది."
 
-#: plinth/modules/storage/__init__.py:316
+#: plinth/modules/storage/__init__.py:319
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:318
+#: plinth/modules/storage/__init__.py:321
 msgid "Low disk space"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:346
+#: plinth/modules/storage/__init__.py:349
 msgid "Disk failure imminent"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:348
+#: plinth/modules/storage/__init__.py:351
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6961,24 +6962,24 @@ msgstr "సాక్స్5 ప్రాక్సీ"
 msgid "Tor Bridge Relay"
 msgstr "టార్ బ్రిడ్జ్ రిలే"
 
-#: plinth/modules/tor/__init__.py:121
+#: plinth/modules/tor/__init__.py:123
 msgid "Tor relay port available"
 msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
 
-#: plinth/modules/tor/__init__.py:131
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "టార్ ద్వారా {kind} లో {url} ను ఆక్సెస్ చెయ్యండి"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:223
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "టోర్ వాడుకను నిర్ధారించండి{url} టీ సి పి పై{kind}"
@@ -7226,36 +7227,36 @@ msgstr ""
 msgid "Update"
 msgstr "నవీకరణ"
 
-#: plinth/modules/upgrades/__init__.py:127
+#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
 #| msgid "Update"
 msgid "Updates"
 msgstr "నవీకరణ యూ.ఆర్.ఎల్"
 
-#: plinth/modules/upgrades/__init__.py:130
+#: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
 #| msgid "FreedomBox Manual"
 msgid "FreedomBox Updated"
 msgstr "ఫ్రీడమ్ బాక్స్ నిర్దేశిక"
 
-#: plinth/modules/upgrades/__init__.py:215
+#: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:217
+#: plinth/modules/upgrades/__init__.py:219
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:228
+#: plinth/modules/upgrades/__init__.py:230
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "స్వయంచాలక నవీకరణలు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/upgrades/__init__.py:230
+#: plinth/modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -8569,7 +8570,7 @@ msgstr "%(package_names)s నిక్షిప్తం అవుతోంద�
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% పూర్తి"
 
-#: plinth/web_framework.py:117
+#: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "గుజరాతీ"
 
