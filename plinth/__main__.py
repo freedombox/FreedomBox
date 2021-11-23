@@ -5,8 +5,10 @@ import argparse
 import logging
 import sys
 
-from . import (__version__, cfg, frontpage, glib, log, menu, module_loader,
-               setup, utils, web_framework, web_server)
+from . import __version__
+from . import app as app_module
+from . import (cfg, frontpage, glib, log, menu, module_loader, setup, utils,
+               web_framework, web_server)
 
 if utils.is_axes_old():
     import axes
@@ -37,8 +39,8 @@ def parse_arguments():
         help='run setup tasks without installing packages and exit')
     parser.add_argument('--list-dependencies', default=False, nargs='*',
                         help='list package dependencies for essential modules')
-    parser.add_argument('--list-modules', default=False, nargs='*',
-                        help='list modules')
+    parser.add_argument('--list-apps', default=False, nargs='*',
+                        help='list apps')
 
     return parser.parse_args()
 
@@ -69,15 +71,18 @@ def list_dependencies(module_list):
     sys.exit(error_code)
 
 
-def list_modules(modules_type):
-    """List all/essential/optional modules and exit."""
-    for module_name, module in module_loader.loaded_modules.items():
-        is_essential = module.app.info.is_essential
-        if 'essential' in modules_type and not is_essential:
+def list_apps(apps_type):
+    """List all/essential/optional apps and exit."""
+    for app in app_module.App.list():
+        is_essential = app.info.is_essential
+        if 'essential' in apps_type and not is_essential:
             continue
-        elif 'optional' in modules_type and is_essential:
+
+        if 'optional' in apps_type and is_essential:
             continue
-        print('{module_name}'.format(module_name=module_name))
+
+        print(f'{app.app_id}')
+
     sys.exit()
 
 
@@ -112,6 +117,12 @@ def main():
         module_loader.apps_init()
         list_dependencies(arguments.list_dependencies)
 
+    if arguments.list_apps is not False:
+        log.default_level = 'ERROR'
+        module_loader.load_modules()
+        app_module.apps_init()
+        list_apps(arguments.list_apps)
+
     log.init()
 
     web_framework.init()
@@ -136,9 +147,6 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
-
-    if arguments.list_modules is not False:
-        list_modules(arguments.list_modules)
 
     setup.run_setup_in_background()
 
