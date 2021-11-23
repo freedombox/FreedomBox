@@ -6,6 +6,7 @@ Functional, browser based tests for dynamicdns app.
 import time
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [
@@ -55,7 +56,7 @@ def _configure(browser):
     browser.find_by_id('id_dynamicdns_user').fill('tester')
     browser.find_by_id('id_dynamicdns_secret').fill('testingtesting')
     browser.find_by_id('id_dynamicdns_ipurl').fill(
-        'http://myip.datasystems24.de')
+        'https://ddns.freedombox.org/ip/')
     functional.submit(browser)
 
     # After a domain name change, Let's Encrypt will restart the web
@@ -76,7 +77,7 @@ def _has_original_config(browser):
     ipurl = browser.find_by_id('id_dynamicdns_ipurl').value
     if enabled and service_type == 'GnuDIP' and server == 'example.com' \
        and domain == 'freedombox.example.com' and user == 'tester' \
-       and ipurl == 'http://myip.datasystems24.de':
+       and ipurl == 'https://ddns.freedombox.org/ip/':
         return True
     else:
         return False
@@ -93,7 +94,7 @@ def _change_config(browser):
     browser.find_by_id('id_dynamicdns_user').fill('tester2')
     browser.find_by_id('id_dynamicdns_secret').fill('testingtesting2')
     browser.find_by_id('id_dynamicdns_ipurl').fill(
-        'http://myip2.datasystems24.de')
+        'https://ddns2.freedombox.org/ip/')
     functional.submit(browser)
 
     # After a domain name change, Let's Encrypt will restart the web

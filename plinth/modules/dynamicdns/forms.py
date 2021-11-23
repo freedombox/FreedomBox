@@ -56,7 +56,7 @@ class ConfigureForm(forms.Form):
                      'router) this URL is used to determine the real '
                      'IP address. The URL should simply return the IP where '
                      'the client comes from (example: '
-                     'http://myip.datasystems24.de).'),
+                     'https://ddns.freedombox.org/ip/).'),
         box_name=gettext_lazy(cfg.box_name))
     help_user = \
         gettext_lazy('The username that was used when the account was '
