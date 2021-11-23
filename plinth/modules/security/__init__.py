@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import menu, module_loader
+from plinth import menu
 from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
@@ -128,8 +128,8 @@ def get_apps_report():
             'vulns': 0,
         }
     }
-    for module_name, module in module_loader.loaded_modules.items():
-        components = module.app.get_components_of_type(Packages)
+    for app_ in app_module.App.list():
+        components = app_.get_components_of_type(Packages)
         packages = []
         for component in components:
             packages += component.packages
@@ -137,24 +137,24 @@ def get_apps_report():
         if not packages:
             continue  # app has no managed packages
 
-        components = module.app.get_components_of_type(Daemon)
+        components = app_.get_components_of_type(Daemon)
         services = []
         for component in components:
             services.append(component.unit)
 
         # filter out apps not setup yet
-        if module.app.needs_setup():
+        if app_.needs_setup():
             continue
 
-        apps[module_name] = {
-            'name': module_name,
+        apps[app_.app_id] = {
+            'name': app_.app_id,
             'packages': set(packages),
             'vulns': 0,
             'sandboxed': None,
         }
 
         if services:
-            apps[module_name]['sandboxed'] = False
+            apps[app_.app_id]['sandboxed'] = False
             for service in services:
                 # If an app lists a timer, work on the associated service
                 # instead
@@ -162,8 +162,8 @@ def get_apps_report():
                     service = service.rpartition('.')[0]
 
                 if _get_service_is_sandboxed(service):
-                    apps[module_name]['sandboxed'] = True
-                    apps[module_name][
+                    apps[app_.app_id]['sandboxed'] = True
+                    apps[app_.app_id][
                         'sandbox_coverage'] = sandbox_coverage.get(service)
 
     for cve_packages in cves.values():
