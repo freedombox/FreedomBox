@@ -240,12 +240,10 @@ def _get_apps_for_regular_setup():
 
 
 def _set_is_first_setup():
-    """Set whether all essential modules have been setup at least once."""
+    """Set whether all essential apps have been setup at least once."""
     global _is_first_setup
-    modules = plinth.module_loader.loaded_modules.values()
-    _is_first_setup = any(
-        (module for module in modules
-         if module.app.info.is_essential and module.app.needs_setup()))
+    _is_first_setup = any((app for app in app_module.App.list()
+                           if app.info.is_essential and app.needs_setup()))
 
 
 def run_setup_on_apps(app_ids, allow_install=True):
