@@ -421,19 +421,22 @@ class ForceUpgrader():
 
         apps = self._get_list_of_apps_to_force_upgrade()
         logger.info(
-            'Apps needing conffile upgrades: %s',
-            ', '.join([str(app.app.info.name) for app in apps]) or 'None')
+            'Apps needing conffile upgrades: %s', ', '.join(
+                [str(app_module.App.get(app_id).info.name) for app_id in apps])
+            or 'None')
 
         need_retry = False
-        for app, packages in apps.items():
+        for app_id, packages in apps.items():
+            app = app_module.App.get(app_id)
+            module = sys.modules[app.__module__]
             try:
-                logger.info('Force upgrading app: %s', app.app.info.name)
-                if app.force_upgrade(app.setup_helper, packages):
+                logger.info('Force upgrading app: %s', app.info.name)
+                if module.force_upgrade(module.setup_helper, packages):
                     logger.info('Successfully force upgraded app: %s',
-                                app.app.info.name)
+                                app.info.name)
                 else:
                     logger.info('Ignored force upgrade for app: %s',
-                                app.app.info.name)
+                                app.info.name)
             except Exception as exception:
                 logger.exception('Error running force upgrade: %s', exception)
                 need_retry = True
@@ -443,7 +446,7 @@ class ForceUpgrader():
             raise self.TemporaryFailure('Some apps failed to force upgrade.')
 
     def _get_list_of_apps_to_force_upgrade(self):
-        """Return a list of app modules on which to run force upgrade."""
+        """Return a list of app on which to run force upgrade."""
         packages = self._get_list_of_upgradable_packages()
         if not packages:  # No packages to upgrade
             return {}
@@ -464,8 +467,8 @@ class ForceUpgrader():
 
         apps = defaultdict(dict)
         for package_name in conffile_packages:
-            for app in package_apps_map[package_name]:
-                apps[app][package_name] = conffile_packages[package_name]
+            for app_id in package_apps_map[package_name]:
+                apps[app_id][package_name] = conffile_packages[package_name]
 
         return apps
 
@@ -485,22 +488,22 @@ class ForceUpgrader():
         """
         package_apps_map = defaultdict(set)
         upgradable_packages = set()
-        for module in plinth.module_loader.loaded_modules.values():
+        for app in app_module.App.list():
+            module = sys.modules[app.__module__]
             if not getattr(module, 'force_upgrade', None):
                 # App does not implement force upgrade
                 continue
 
-            if (module.app.get_setup_state() !=
-                    app_module.App.SetupState.UP_TO_DATE):
+            if (app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
                 # App is not installed.
                 # Or needs an update, let it update first.
                 continue
 
-            for component in module.app.get_components_of_type(Packages):
+            for component in app.get_components_of_type(Packages):
                 upgradable_packages.update(component.packages)
 
                 for managed_package in component.packages:
-                    package_apps_map[managed_package].add(module)
+                    package_apps_map[managed_package].add(app.app_id)
 
         return upgradable_packages.intersection(
             set(packages)), package_apps_map
