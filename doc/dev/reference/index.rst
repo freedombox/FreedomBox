@@ -14,7 +14,6 @@ and are updated when the API is updated.
 
    app
    components/index
-   app_module
    actions
    action_utils
    views
