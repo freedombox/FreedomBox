@@ -5,6 +5,7 @@ Utilities for performing application setup operations.
 
 import importlib
 import logging
+import sys
 import threading
 import time
 from collections import defaultdict
@@ -139,18 +140,19 @@ def stop():
         _force_upgrader.shutdown()
 
 
-def setup_modules(module_list=None, essential=False, allow_install=True):
-    """Run setup on selected or essential modules."""
+def setup_apps(app_ids=None, essential=False, allow_install=True):
+    """Run setup on selected or essential apps."""
     logger.info(
-        'Running setup for modules, essential - %s, '
-        'selected modules - %s', essential, module_list)
-    for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not module.app.info.is_essential:
+        'Running setup for apps, essential - %s, '
+        'selected apps - %s', essential, app_ids)
+    for app in app_module.App.list():
+        if essential and not app.info.is_essential:
             continue
 
-        if module_list and module_name not in module_list:
+        if app_ids and app.app_id not in app_ids:
             continue
 
+        module = sys.modules[app.__module__]
         module.setup_helper.run(allow_install=allow_install)
 
 
@@ -201,43 +203,43 @@ def _run_setup():
 
 
 def _run_first_setup():
-    """Run setup on essential modules on first setup."""
+    """Run setup on essential apps on first setup."""
     global is_first_setup_running
     is_first_setup_running = True
     # TODO When it errors out, show error in the UI
-    run_setup_on_modules(None, allow_install=False)
+    run_setup_on_apps(None, allow_install=False)
     is_first_setup_running = False
 
 
 def _run_regular_setup():
-    """Run setup on all modules also installing required packages."""
+    """Run setup on all apps also installing required packages."""
     # TODO show notification that upgrades are running
     if package.is_package_manager_busy():
         raise Exception('Package manager is busy.')
 
-    all_modules = _get_modules_for_regular_setup()
-    run_setup_on_modules(all_modules, allow_install=True)
+    app_ids = _get_apps_for_regular_setup()
+    run_setup_on_apps(app_ids, allow_install=True)
 
 
-def _get_modules_for_regular_setup():
-    all_modules = plinth.module_loader.loaded_modules.items()
+def _get_apps_for_regular_setup():
 
-    def is_setup_required(module):
+    def is_setup_required(app):
         """Setup is required for:
-        1. essential modules that are not up-to-date
-        2. non-essential modules that are installed and need updates
+        1. essential apps that are not up-to-date
+        2. non-essential app that are installed and need updates
         """
-        if (module.app.info.is_essential and module.app.get_setup_state() !=
-                app_module.App.SetupState.UP_TO_DATE):
+        if (app.info.is_essential and
+                app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
             return True
 
-        if (module.app.get_setup_state() ==
-                app_module.App.SetupState.NEEDS_UPDATE):
+        if app.get_setup_state() == app_module.App.SetupState.NEEDS_UPDATE:
             return True
 
         return False
 
-    return [name for name, module in all_modules if is_setup_required(module)]
+    return [
+        app.app_id for app in app_module.App.list() if is_setup_required(app)
+    ]
 
 
 def _set_is_first_setup():
@@ -249,22 +251,22 @@ def _set_is_first_setup():
          if module.app.info.is_essential and module.app.needs_setup()))
 
 
-def run_setup_on_modules(module_list, allow_install=True):
-    """Run setup on the given list of modules.
+def run_setup_on_apps(app_ids, allow_install=True):
+    """Run setup on the given list of apps.
 
-    module_list is the list of modules to run setup on. If None is given, run
-    setup on all essential modules only.
+    apps is the list of apps to run setup on. If None is given, run setup on
+    all essential apps only.
 
     allow_install with or without package installation. When setting up
-    essential modules, installing packages is not required as FreedomBox
-    (Plinth) itself has dependencies on all essential modules.
+    essential apps, installing packages is not required as FreedomBox
+    (Plinth) itself has dependencies on all essential apps.
 
     """
     try:
-        if not module_list:
-            setup_modules(essential=True, allow_install=allow_install)
+        if not app_ids:
+            setup_apps(essential=True, allow_install=allow_install)
         else:
-            setup_modules(module_list, allow_install=allow_install)
+            setup_apps(app_ids, allow_install=allow_install)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         raise

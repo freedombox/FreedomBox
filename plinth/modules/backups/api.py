@@ -173,14 +173,14 @@ def _install_apps_before_restore(components):
     data getting backed up into older version of the app.
 
     """
-    modules_to_setup = []
+    apps_to_setup = []
     for component in components:
         if component.app.get_setup_state() in (
                 app_module.App.SetupState.NEEDS_SETUP,
                 app_module.App.SetupState.NEEDS_UPDATE):
-            modules_to_setup.append(component.app.app_id)
+            apps_to_setup.append(component.app.app_id)
 
-    setup.run_setup_on_modules(modules_to_setup)
+    setup.run_setup_on_apps(apps_to_setup)
 
 
 def _get_backup_restore_component(app):

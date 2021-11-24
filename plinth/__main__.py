@@ -31,9 +31,8 @@ def parse_arguments():
         '--develop', action='store_true', default=None,
         help=('run Plinth *insecurely* from current folder; '
               'enable auto-reloading and debugging options'))
-    parser.add_argument(
-        '--setup', default=False, nargs='*',
-        help='run setup tasks on all essential modules and exit')
+    parser.add_argument('--setup', default=False, nargs='*',
+                        help='run setup tasks on all essential apps and exit')
     parser.add_argument(
         '--setup-no-install', default=False, nargs='*',
         help='run setup tasks without installing packages and exit')
@@ -45,11 +44,11 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def run_setup_and_exit(module_list, allow_install=True):
-    """Run setup on all essential modules and exit."""
+def run_setup_and_exit(app_ids, allow_install=True):
+    """Run setup on all essential apps and exit."""
     error_code = 0
     try:
-        setup.run_setup_on_modules(module_list, allow_install)
+        setup.run_setup_on_apps(app_ids, allow_install)
     except Exception:
         error_code = 1
 
