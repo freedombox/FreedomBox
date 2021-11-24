@@ -55,12 +55,12 @@ def run_setup_and_exit(app_ids, allow_install=True):
     sys.exit(error_code)
 
 
-def list_dependencies(module_list):
-    """List dependencies for all essential modules and exit."""
+def list_dependencies(app_ids):
+    """List dependencies for all essential apps and exit."""
     error_code = 0
     try:
-        if module_list:
-            setup.list_dependencies(module_list=module_list)
+        if app_ids:
+            setup.list_dependencies(app_ids=app_ids)
         else:
             setup.list_dependencies(essential=True)
     except Exception as exception:

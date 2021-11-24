@@ -3,7 +3,6 @@
 Utilities for performing application setup operations.
 """
 
-import importlib
 import logging
 import sys
 import threading
@@ -156,19 +155,17 @@ def setup_apps(app_ids=None, essential=False, allow_install=True):
         module.setup_helper.run(allow_install=allow_install)
 
 
-def list_dependencies(module_list=None, essential=False):
-    """Print list of packages required by selected or essential modules."""
-    for module_import_path in plinth.module_loader.get_modules_to_load():
-        module_name = module_import_path.split('.')[-1]
-        module = importlib.import_module(module_import_path)
-        if essential and not module.app.info.is_essential:
+def list_dependencies(app_ids=None, essential=False):
+    """Print list of packages required by selected or essential apps."""
+    for app in app_module.App.list():
+        if essential and not app.info.is_essential:
             continue
 
-        if module_list and module_name not in module_list and \
-           '*' not in module_list:
+        if app_ids and app.app_id not in app_ids and \
+           '*' not in app_ids:
             continue
 
-        for component in module.app.get_components_of_type(Packages):
+        for component in app.get_components_of_type(Packages):
             for package_name in component.packages:
                 print(package_name)
 
