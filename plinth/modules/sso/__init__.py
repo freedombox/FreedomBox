@@ -9,8 +9,6 @@ from plinth import actions
 from plinth import app as app_module
 from plinth.package import Packages
 
-depends = ['security', 'apache']
-
 app = None
 
 
@@ -25,8 +23,9 @@ class SSOApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, depends=depends,
-                               name=_('Single Sign On'))
+                               is_essential=True,
+                               depends=['security',
+                                        'apache'], name=_('Single Sign On'))
         self.add(info)
 
         packages = Packages('packages-sso', [

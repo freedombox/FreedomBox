@@ -16,8 +16,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, utils
 
-depends = ['names']
-
 _description = [
     format_lazy(
         _('PageKite is a system for exposing {box_name} services when '
@@ -61,7 +59,7 @@ class PagekiteApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=self._version, depends=depends,
+            app_id=self.app_id, version=self._version, depends=['names'],
             name=_('PageKite'), icon='fa-flag',
             short_description=_('Public Visibility'), description=_description,
             manual_page='PageKite',

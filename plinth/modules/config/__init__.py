@@ -24,8 +24,6 @@ _description = [
       'like hostname, domain name, webserver home page etc.')
 ]
 
-depends = ['apache', 'firewall', 'names']
-
 APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
 APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
@@ -50,9 +48,10 @@ class ConfigApp(app_module.App):
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, depends=depends,
-                               name=_('General Configuration'), icon='fa-cog',
-                               description=_description,
+                               is_essential=True,
+                               depends=['apache', 'firewall', 'names'
+                                        ], name=_('General Configuration'),
+                               icon='fa-cog', description=_description,
                                manual_page='Configure')
         self.add(info)
 

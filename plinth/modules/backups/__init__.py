@@ -23,8 +23,6 @@ from . import api
 
 logger = logging.getLogger(__name__)
 
-depends = ['storage']
-
 _description = [
     _('Backups allows creating and managing backup archives.'),
 ]
@@ -49,7 +47,7 @@ class BackupsApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, is_essential=True,
-            depends=depends, name=_('Backups'), icon='fa-files-o',
+            depends=['storage'], name=_('Backups'), icon='fa-files-o',
             description=_description, manual_page='Backups',
             donation_url='https://www.borgbackup.org/support/fund.html')
         self.add(info)

@@ -39,8 +39,6 @@ _description = [
           'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
 
-depends = ['coturn']
-
 logger = logging.getLogger(__name__)
 
 CONF_DIR = "/etc/matrix-synapse/conf.d/"
@@ -68,7 +66,7 @@ class MatrixSynapseApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=self._version,
+            app_id=self.app_id, version=self._version, depends=['coturn'],
             name=_('Matrix Synapse'), icon_filename='matrixsynapse',
             short_description=_('Chat Server'), description=_description,
             manual_page='MatrixSynapse', clients=manifest.clients)

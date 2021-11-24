@@ -5,7 +5,6 @@ FreedomBox app to configure ejabberd server.
 
 import json
 import logging
-import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -45,8 +44,6 @@ _description = [
           'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
 
-depends = ['coturn']
-
 logger = logging.getLogger(__name__)
 
 app = None
@@ -63,12 +60,11 @@ class EjabberdApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=self._version,
-                               name=_('ejabberd'), icon_filename='ejabberd',
-                               short_description=_('Chat Server'),
-                               description=_description,
-                               manual_page='ejabberd',
-                               clients=manifest.clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=self._version, depends=['coturn'],
+            name=_('ejabberd'), icon_filename='ejabberd',
+            short_description=_('Chat Server'), description=_description,
+            manual_page='ejabberd', clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-ejabberd', info.name,

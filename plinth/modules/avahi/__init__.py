@@ -21,8 +21,6 @@ from . import manifest
 
 # pylint: disable=C0103
 
-depends = ['names']
-
 _description = [
     format_lazy(
         _('Service discovery allows other devices on the network to '
@@ -49,8 +47,9 @@ class AvahiApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, name=_('Service Discovery'),
-                               icon='fa-compass', description=_description,
+                               is_essential=True, depends=['names'],
+                               name=_('Service Discovery'), icon='fa-compass',
+                               description=_description,
                                manual_page='ServiceDiscovery')
         self.add(info)
 

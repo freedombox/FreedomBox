@@ -17,8 +17,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-depends = ['names']
-
 _description = [
     format_lazy(
         _('If your Internet provider changes your IP address periodically '
@@ -50,7 +48,7 @@ class DynamicDNSApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, depends=depends,
+                               is_essential=True, depends=['names'],
                                name=_('Dynamic DNS Client'), icon='fa-refresh',
                                description=_description,
                                manual_page='DynamicDNS')

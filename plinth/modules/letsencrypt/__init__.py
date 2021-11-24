@@ -23,8 +23,6 @@ from plinth.utils import format_lazy
 
 from . import components, manifest
 
-depends = ['names']
-
 _description = [
     format_lazy(
         _('A digital certificate allows users of a web service to verify the '
@@ -59,7 +57,7 @@ class LetsEncryptApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, depends=depends,
+                               is_essential=True, depends=['names'],
                                name=_('Let\'s Encrypt'), icon='fa-lock',
                                short_description=_('Certificates'),
                                description=_description,

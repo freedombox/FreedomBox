@@ -22,8 +22,6 @@ from plinth.signals import domain_added, domain_removed
 
 from . import manifest, utils
 
-depends = ['names']
-
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
       'about it from the <a href="https://www.torproject.org/">Tor '
@@ -48,7 +46,8 @@ class TorApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               name=_('Tor'), icon_filename='tor',
+                               depends=['names'
+                                        ], name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',
                                clients=manifest.clients,
