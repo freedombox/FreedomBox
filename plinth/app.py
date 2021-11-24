@@ -5,9 +5,16 @@ Base class for all Freedombox applications.
 
 import collections
 import enum
+import inspect
+import logging
 import sys
 
+from plinth import cfg
+from plinth.signals import post_app_loading
+
 from . import clients as clients_module
+
+logger = logging.getLogger(__name__)
 
 
 class App:
@@ -454,3 +461,98 @@ class Info(FollowerComponent):
         self.donation_url = donation_url
         if clients:
             clients_module.validate(clients)
+
+
+def apps_init():
+    """Create apps by constructing them with components."""
+    from . import module_loader  # noqa  # Avoid circular import
+    for module_name, module in module_loader.loaded_modules.items():
+        _initialize_module(module_name, module)
+
+    _sort_apps()
+
+    logger.info('Initialized apps - %s', ', '.join(
+        (app.app_id for app in App.list())))
+
+
+def _sort_apps():
+    """Sort apps list according to their essential/dependency order."""
+    apps = App._all_apps
+    ordered_modules = []
+    remaining_apps = dict(apps)  # Make a copy
+    # Place all essential modules ahead of others in module load order
+    sorted_apps = sorted(
+        apps, key=lambda app_id: not App.get(app_id).info.is_essential)
+    for app_id in sorted_apps:
+        if app_id not in remaining_apps:
+            continue
+
+        app = remaining_apps.pop(app_id)
+        try:
+            _insert_apps(app_id, app, remaining_apps, ordered_modules)
+        except KeyError:
+            logger.error('Unsatified dependency for app - %s', app_id)
+
+    new_all_apps = collections.OrderedDict()
+    for app_id in ordered_modules:
+        new_all_apps[app_id] = apps[app_id]
+
+    App._all_apps = new_all_apps
+
+
+def _insert_apps(app_id, app, remaining_apps, ordered_apps):
+    """Insert apps into a list based on dependency order."""
+    if app_id in ordered_apps:
+        return
+
+    for dependency in app.info.depends:
+        if dependency in ordered_apps:
+            continue
+
+        try:
+            app = remaining_apps.pop(dependency)
+        except KeyError:
+            logger.error('Not found or circular dependency - %s, %s', app_id,
+                         dependency)
+            raise
+
+        _insert_apps(dependency, app, remaining_apps, ordered_apps)
+
+    ordered_apps.append(app_id)
+
+
+def _initialize_module(module_name, module):
+    """Perform initialization on all apps in a module."""
+    # Perform setup related initialization on the module
+    from . import setup  # noqa  # Avoid circular import
+    setup.init(module_name, module)
+
+    try:
+        module_classes = inspect.getmembers(module, inspect.isclass)
+        app_classes = [
+            cls for _, cls in module_classes if issubclass(cls, App)
+        ]
+        for app_class in app_classes:
+            module.app = app_class()
+    except Exception as exception:
+        logger.exception('Exception while running init for %s: %s', module,
+                         exception)
+        if cfg.develop:
+            raise
+
+
+def apps_post_init():
+    """Run post initialization on each app."""
+    for app in App.list():
+        try:
+            app.post_init()
+            if not app.needs_setup() and app.is_enabled():
+                app.set_enabled(True)
+        except Exception as exception:
+            logger.exception('Exception while running post init for %s: %s',
+                             app.app_id, exception)
+            if cfg.develop:
+                raise
+
+    logger.debug('App initialization completed.')
+    post_app_loading.send_robust(sender="app")

@@ -9,7 +9,8 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.app import App, Component, FollowerComponent, Info, LeaderComponent
+from plinth.app import (App, Component, FollowerComponent, Info,
+                        LeaderComponent, apps_init)
 
 # pylint: disable=protected-access
 
@@ -424,3 +425,82 @@ def test_info_clients_validation():
         }]
     }]
     Info('test-app', 3, clients=clients)
+
+
+class ModuleTest1:
+    """A test module with an app."""
+
+    class App1(App):
+        """A non-essential app that depends on another."""
+        app_id = 'app1'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app1', version=1, depends=['app3']))
+
+
+class ModuleTest2:
+    """A test module with multiple apps."""
+
+    class App2(App):
+        """An essential app."""
+        app_id = 'app2'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app2', version=1, is_essential=True))
+
+    class App3(App):
+        """An non-essential app that is depended on by another."""
+        app_id = 'app3'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app3', version=1))
+
+
+@patch('plinth.module_loader.loaded_modules')
+def test_apps_init(loaded_modules):
+    """Test that initializing all apps works."""
+    loaded_modules.items.return_value = [('test1', ModuleTest1()),
+                                         ('test2', ModuleTest2())]
+
+    apps_init()
+    assert list(App._all_apps.keys()) == ['app2', 'app3', 'app1']
+
+
+class ModuleCircularTest:
+    """A test module with apps depending on each other."""
+
+    class App1(App):
+        """An app depending on app2."""
+        app_id = 'app1'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app1', version=1, depends=['app2']))
+
+    class App2(App):
+        """An app depending on app1."""
+        app_id = 'app2'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app2', version=1, depends=['app1']))
+
+    class App3(App):
+        """An app without dependencies."""
+        app_id = 'app3'
+
+        def __init__(self):
+            super().__init__()
+            self.add(Info('app3', version=1))
+
+
+@patch('plinth.module_loader.loaded_modules')
+def test_apps_init_circular_depends(loaded_modules):
+    """Test initializing apps with circular dependencies."""
+    loaded_modules.items.return_value = [('test', ModuleCircularTest())]
+
+    apps_init()
+    assert list(App._all_apps.keys()) == ['app3']

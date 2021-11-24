@@ -7,8 +7,9 @@ Wrapper to list and handle system services
 import argparse
 import os
 
-from plinth import action_utils, cfg, module_loader
-from plinth.app import App
+from plinth import action_utils
+from plinth import app as app_module
+from plinth import cfg, module_loader
 from plinth.daemon import Daemon, RelatedDaemon
 
 cfg.read()
@@ -90,8 +91,8 @@ def _get_managed_services():
     """Get a set of all services managed by FreedomBox."""
     services = set()
     module_loader.load_modules()
-    module_loader.apps_init()
-    for app in App.list():
+    app_module.apps_init()
+    for app in app_module.App.list():
         components = app.get_components_of_type(Daemon)
         for component in components:
             services.add(component.unit)

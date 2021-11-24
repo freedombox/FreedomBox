@@ -18,7 +18,7 @@ from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
-from plinth.signals import domain_added, domain_removed, post_module_loading
+from plinth.signals import domain_added, domain_removed, post_app_loading
 from plinth.utils import format_lazy
 
 from . import components, manifest
@@ -85,7 +85,7 @@ class LetsEncryptApp(app_module.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
-        post_module_loading.connect(_certificate_handle_modified)
+        post_app_loading.connect(_certificate_handle_modified)
 
     def diagnose(self):
         """Run diagnostics and return the results."""

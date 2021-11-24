@@ -113,7 +113,7 @@ def main():
     if arguments.list_dependencies is not False:
         log.default_level = 'ERROR'
         module_loader.load_modules()
-        module_loader.apps_init()
+        app_module.apps_init()
         list_dependencies(arguments.list_dependencies)
 
     if arguments.list_apps is not False:
@@ -137,8 +137,8 @@ def main():
     menu.init()
 
     module_loader.load_modules()
-    module_loader.apps_init()
-    module_loader.apps_post_init()
+    app_module.apps_init()
+    app_module.apps_post_init()
     frontpage.add_custom_shortcuts()
 
     if arguments.setup is not False:
