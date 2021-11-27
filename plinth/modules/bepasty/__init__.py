@@ -13,6 +13,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 
 from . import manifest
 
@@ -78,6 +79,9 @@ class BepastyApp(app_module.App):
                                       info.icon_filename, '/bepasty',
                                       clients=manifest.clients)
         self.add(shortcut)
+
+        packages = Packages('packages-bepasty', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-bepasty', info.name,
                             ports=['http', 'https'], is_external=True)

@@ -10,6 +10,42 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 21.14 (2021-11-22) ==
+
+=== Highlights ===
+
+ * tt-rss: Allow selection of a domain name
+
+=== Other Changes ===
+
+ * *: Split app initialization from app construction
+ * app: Introduce separate method for post initialization operations
+ * datetime: Avoid error when systemctl is not available
+ * debian: Fail build if no module dependencies found
+ * locale: Update translations for Swedish, Turkish, Ukrainian
+ * main: Drop initializing Django when listing dependencies
+
+== FreedomBox 21.13 (2021-11-08) ==
+
+=== Highlights ===
+
+ * avahi, samba: Use systemd sandboxing
+ * components: Introduce new component - Packages
+ * security: Properly handle sandbox analysis of timer units
+
+=== Other Changes ===
+
+ * email_server (not enabled yet):
+   * Add buttons for managing aliases, domains, spam
+   * Authenticate using PAM instead of LDAP
+   * Delivery mail to /var/mail instead of home directory
+   * Don't use user IDs when performing lookups
+   * Drop hash DB and use sqlite3 directly
+   * Use Django forms and views
+ * locale: Update translations for German, Swedish, Turkish, Ukrainian
+ * tests: Use !BaseAppTests for functional tests of most apps
+ * utils: Fix ruamel.yaml deprecation warnings
+
 == FreedomBox 21.12 (2021-10-25) ==
 
  * locale: Update translations for Bulgarian, Czech, French, German, Turkish, Ukrainian

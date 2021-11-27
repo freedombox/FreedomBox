@@ -41,7 +41,15 @@ class App:
     _all_apps = collections.OrderedDict()
 
     def __init__(self):
-        """Initialize the app object."""
+        """Build the app by adding components.
+
+        App may be built just for the purpose for querying. For example, when
+        querying the list of package dependencies of essential apps, an app is
+        minimally constructed under a read-only environment for querying from a
+        specific component. So, this operation should have no side-effects such
+        connecting to signals, running configuration corrections and scheduling
+        operations.
+        """
         if not self.app_id:
             raise ValueError('Invalid app ID configured')
 
@@ -49,6 +57,14 @@ class App:
 
         # Add self to global list of apps
         self._all_apps[self.app_id] = self
+
+    def post_init(self):
+        """Perform post initialization operations.
+
+        Additional initialization operations such as connecting to signals,
+        running configuration corrections and scheduling operations should be
+        done in this method rather than in __init__().
+        """
 
     @classmethod
     def get(cls, app_id):

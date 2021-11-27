@@ -14,6 +14,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 
 from . import manifest
 
@@ -64,6 +65,9 @@ class SearxApp(app_module.App):
             login_required=(not is_public_access_enabled()),
             allowed_groups=list(groups))
         self.add(shortcut)
+
+        packages = Packages('packages-searx', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-searx', info.name,
                             ports=['http', 'https'], is_external=True)

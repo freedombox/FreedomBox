@@ -11,6 +11,7 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest, utils
@@ -60,6 +61,7 @@ class PagekiteApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, depends=depends,
             name=_('PageKite'), icon='fa-flag',
@@ -73,6 +75,9 @@ class PagekiteApp(app_module.App):
                               'pagekite:index', parent_url_name='system')
         self.add(menu_item)
 
+        packages = Packages('packages-pagekite', managed_packages)
+        self.add(packages)
+
         domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),
                                  'pagekite:index', can_have_certificate=True)
         self.add(domain_type)
@@ -84,6 +89,8 @@ class PagekiteApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         # Register kite name with Name Services module.
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup' and self.is_enabled():

@@ -9,36 +9,22 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.ikiwiki]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'ikiwiki')
-    yield
-    functional.app_disable(session_browser, 'ikiwiki')
+class TestIkiwikiApp(functional.BaseAppTests):
+    app_name = 'ikiwiki'
+    has_service = False
+    has_web = True
 
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        functional.app_enable(session_browser, 'ikiwiki')
+        _create_wiki_if_needed(session_browser)
+        functional.backup_create(session_browser, 'ikiwiki', 'test_ikiwiki')
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'ikiwiki')
+        _delete_wiki(session_browser)
+        functional.backup_restore(session_browser, 'ikiwiki', 'test_ikiwiki')
 
-    functional.app_enable(session_browser, 'ikiwiki')
-    assert functional.is_available(session_browser, 'ikiwiki')
-
-    functional.app_disable(session_browser, 'ikiwiki')
-    assert not functional.is_available(session_browser, 'ikiwiki')
-
-
-@pytest.mark.backups
-def test_backup_and_restore(session_browser):
-    functional.app_enable(session_browser, 'ikiwiki')
-    _create_wiki_if_needed(session_browser)
-    functional.backup_create(session_browser, 'ikiwiki', 'test_ikiwiki')
-
-    _delete_wiki(session_browser)
-    functional.backup_restore(session_browser, 'ikiwiki', 'test_ikiwiki')
-
-    assert _wiki_exists(session_browser)
+        assert _wiki_exists(session_browser)
 
 
 def _create_wiki_if_needed(browser):

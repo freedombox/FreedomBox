@@ -12,6 +12,7 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -84,6 +85,9 @@ class WordPressApp(app_module.App):
                                       icon=info.icon_filename,
                                       url='/wordpress/', clients=info.clients)
         self.add(shortcut)
+
+        packages = Packages('packages-wordpress', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-wordpress', info.name,
                             ports=['http', 'https'], is_external=True)

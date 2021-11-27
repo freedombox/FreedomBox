@@ -17,6 +17,7 @@ from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
+from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed, post_module_loading
 from plinth.utils import format_lazy
 
@@ -60,6 +61,7 @@ class LetsEncryptApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, depends=depends,
                                name=_('Let\'s Encrypt'), icon='fa-lock',
@@ -74,10 +76,16 @@ class LetsEncryptApp(app_module.App):
                               'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
 
+        packages = Packages('packages-letsencrypt', managed_packages)
+        self.add(packages)
+
         backup_restore = BackupRestore('backup-restore-letsencrypt',
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 

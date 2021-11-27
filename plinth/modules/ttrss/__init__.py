@@ -14,6 +14,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import Version, format_lazy
 
 from . import manifest
@@ -74,6 +75,9 @@ class TTRSSApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
+        packages = Packages('packages-ttrss', managed_packages)
+        self.add(packages)
+
         firewall = Firewall('firewall-ttrss', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
@@ -97,6 +101,13 @@ class TTRSSApp(app_module.App):
         """Enable components and API access."""
         super().enable()
         actions.superuser_run('ttrss', ['enable-api-access'])
+
+        # Try to set the domain to one of the available TLS domains
+        domain = get_domain()
+        if not domain or domain == 'localhost':
+            from plinth.modules import names
+            domain = next(names.get_available_tls_domains(), None)
+            set_domain(domain)
 
 
 class TTRSSBackupRestore(BackupRestore):
@@ -132,3 +143,14 @@ def force_upgrade(helper, packages):
     helper.install(['tt-rss'], force_configuration='new')
     actions.superuser_run('ttrss', ['setup'])
     return True
+
+
+def get_domain():
+    """Read TLS domain from tt-rss config file."""
+    return actions.superuser_run('ttrss', ['get-domain']).strip()
+
+
+def set_domain(domain):
+    """Set the TLS domain in tt-rss configuration file."""
+    if domain:
+        actions.superuser_run('ttrss', ['set-domain', domain])

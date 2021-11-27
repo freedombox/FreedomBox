@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy, import_from_gi
 
 from . import manifest, utils
@@ -45,6 +46,7 @@ class WireguardApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('WireGuard'),
             icon_filename='wireguard',
@@ -66,6 +68,9 @@ class WireguardApp(app_module.App):
             configure_url=reverse_lazy('wireguard:index'), login_required=True,
             clients=info.clients)
         self.add(shortcut)
+
+        packages = Packages('packages-wireguard', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-wireguard', info.name,
                             ports=['wireguard-freedombox'], is_external=True)

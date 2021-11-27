@@ -16,6 +16,7 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -58,6 +59,7 @@ class TahoeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Tahoe-LAFS'),
                                icon_filename='tahoe-lafs',
@@ -77,6 +79,9 @@ class TahoeApp(app_module.App):
             description=info.description, url=None,
             configure_url=reverse_lazy('tahoe:index'), login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-tahoe', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-tahoe', info.name,
                             ports=['tahoe-plinth'], is_external=True)

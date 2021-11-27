@@ -14,6 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 
 from . import manifest
 
@@ -68,6 +69,9 @@ class DelugeApp(app_module.App):
                                       login_required=True,
                                       allowed_groups=list(groups))
         self.add(shortcut)
+
+        packages = Packages('packages-deluge', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-deluge', info.name,
                             ports=['http', 'https'], is_external=True)

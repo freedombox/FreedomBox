@@ -11,61 +11,19 @@
 !FreedomBox incluye la posibilidad de copiar y restaurar datos, preferencias, configuración y secretos de la mayoría de las aplicaciones. La funcionalidad de ''Backups'' se resuelve con el software de ''backup'' ''Borg''. ''Borg'' es un programa de ''backup'' con deduplicación y compresión. Está diseñado para hacer ''backups'' eficientes y seguros. Esta funcionalidad de ''backups'' se puede emplear para respaldar y recuperar datos aplicación por aplicación. Las copias de respaldado se pueden almacenar en la propia máquina !FreedomBox o en un servidor remoto. Cualquier servidor remoto con acceso por SSH se puede emplear como almacenamiento para los ''backups'' de la !FreedomBox. Las copias remotas se pueden cifrar para que el servidor remoto no pueda leer los datos que alberga.
 
 
-=== Estados de la Funcionalidad de Backups ===
+=== Notas para respaldos específicos ===
+Salvo que aquí se diga lo contrario, el respaldo de los datos de una aplicación incluirá su configuración, secretos y otros datos.
 
-|| '''App/Funcionalidad''' || '''Soporte en Versión''' || '''Notas''' ||
-|| Avahi || - || no precisa ''backup'' ||
-|| Backups || - || no precisa ''backup'' ||
-|| bepasty || 20.14 || ||
-|| Bind || 0.41 || ||
-|| calibre || 20.15 || ||
-|| Cockpit || - || no precisa ''backup'' ||
-|| Coturn || 20.8 || ||
-|| Datetime || 0.41 || ||
-|| Deluge || 0.41 || '''no''' incluye archivos descargados ni semillas ||
-|| Diagnostics || - || no precisa ''backup'' ||
-|| Dynamic DNS || 0.39 || ||
-|| ejabberd || 0.39 || incluye todos los datos y configuración ||
-|| Firewall || - || no precisa ''backup'' ||
-|| Gitweb || 19.19 || ||
-|| I2P || 19.6 || ||
-|| ikiwiki || 0.39 || incluye todos los wikis/blogs y sus contenidos ||
-|| infinoted || 0.39 || incluye todos los datos y claves ||
-|| JSXC || - || no precisa ''backup'' ||
-|| Let's Encrypt || 0.42 || ||
-|| Matrix Synapse || 0.39 || incluye media y cargas ||
-|| !MediaWiki || 0.39 || incluye páginas de wiki y archivos adjuntos ||
-|| Minetest || 0.39 || ||
-|| MiniDLNA || 19.23 || ||
-|| MLDonkey || 19.0 || ||
-|| Monkeysphere || 0.42 || ||
-|| Mumble || 0.40 || ||
-|| Names || - || no precisa ''backup'' ||
-|| Networks || No || sin planes para implementar ''backup'', de momento ||
-|| OpenVPN || 0.48 || incluye a todos los usuarios y claves de servidor ||
-|| Pagekite || 0.40 || ||
-|| Power || - || no precisa ''backup'' ||
-|| Privoxy || - || no precisa ''backup'' ||
-|| Quassel || 0.40 || incluye usuarios y registros de ejeución (''logs'') ||
-|| Radicale || 0.39 || incluye calendario y datos de tarjetas de todos los usuarios ||
-|| Roundcube || - || no precisa ''backup'' ||
-|| Samba || 19.22 || ''no''' incluye datos de las carpetas compartidas ||
-|| SearX || - || no precisa ''backup'' ||
-|| Secure Shell (SSH) Server || 0.41 || incluye las claves del servidor ||
-|| Security || 0.41 || ||
-|| Shadowsocks || 0.40 || solo secretos ||
-|| Sharing || 0.40 || '''no''' incluye datos de las carpetas compartidas ||
-|| Snapshot || 0.41 || solo configuración, '''no''' incluye datos de capturas (snapshots) ||
-|| Storage || - || no precisa ''backup'' ||
-|| Syncthing || 0.48 || '''no''' incluye datos de las carpetas compartidas ||
-|| Tahoe-LAFS || 0.42 || incluye todos los datos y configuración ||
-|| Tiny Tiny RSS || 19.2 || incluye base de datos con ''feeds'', historias, etc. ||
-|| Tor || 0.42 || includes configuración y secretos como las claves de servicios Tor Onion ||
-|| Transmission || 0.40 || '''no''' incluye archivos descargados ni semillas ||
-|| Upgrades || 0.42 || ||
-|| Users || No || sin planes para implementar ''backup'', de momento  ||
-|| Wordpress || 21.8 || ||
-|| Zoph || 21.3 || ||
+|| '''App/Funcionalidad''' || '''Notas''' ||
+|| [[es/FreedomBox/Manual/Deluge|Deluge]]             || No incluye archivos descargados/sembrados ||
+|| [[es/FreedomBox/Manual/MiniDLNA|MinDLNA]]          || No incluye los datos en carpetas compartidas ||
+|| [[es/FreedomBox/Manual/Networks|Redes]]            || Actualmente no hay planes para implementar respaldos ||
+|| [[es/FreedomBox/Manual/Samba|Samba]]               || No incluye los datos en carpetas compartidas ||
+|| [[es/FreedomBox/Manual/Sharing|Sharing]]           || No incluye los datos en carpetas compartidas ||
+|| Instantáneas                                       || Solo configuración, no incluye datos de instantánea ||
+|| [[es/FreedomBox/Manual/Syncthing|Syncthing]]       || No incluye los datos en carpetas compartidas ||
+|| [[es/FreedomBox/Manual/Transmission|Transmission]] || No incluye archivos descargados/sembrados ||
+|| [[es/FreedomBox/Manual/Users|Usuarios]]            || El respaldo de cuentas de usuario está [[https://salsa.debian.org/freedombox-team/freedombox/-/issues/2051|planificado]] ||
 
 === Cómo instalar y usar Backups ===
 

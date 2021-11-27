@@ -599,6 +599,7 @@ class BaseAppTests:
     has_service = False
     has_web = True
     check_diagnostics = True
+    diagnostics_delay = 0
 
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
@@ -616,30 +617,30 @@ class BaseAppTests:
         if self.has_web:
             assert not is_available(session_browser, self.app_name)
 
-    @pytest.fixture(scope='class', autouse=True)
+    @pytest.fixture(autouse=True)
     def fixture_background(self, session_browser):
-        """Login and install the app."""
+        """Login, install, and enable the app."""
         login(session_browser)
         install(session_browser, self.app_name)
+        app_enable(session_browser, self.app_name)
         yield
+        login(session_browser)
         app_disable(session_browser, self.app_name)
 
     def test_enable_disable(self, session_browser):
         """Test enabling and disabling the app."""
         app_disable(session_browser, self.app_name)
+        self.assert_app_not_running(session_browser)
 
         app_enable(session_browser, self.app_name)
         self.assert_app_running(session_browser)
-
-        app_disable(session_browser, self.app_name)
-        self.assert_app_not_running(session_browser)
 
     def test_run_diagnostics(self, session_browser):
         """Test that all app diagnostics are passing."""
         if not self.check_diagnostics:
             pytest.skip(f'Skipping diagnostics check for ${self.app_name}.')
 
-        app_enable(session_browser, self.app_name)
+        time.sleep(self.diagnostics_delay)
         session_browser.find_by_id('id_extra_actions_button').click()
         submit(session_browser, form_class='form-diagnostics-button')
 
@@ -654,7 +655,6 @@ class BaseAppTests:
     @pytest.mark.backups
     def test_backup_restore(self, session_browser):
         """Test that backup and restore operations work on the app."""
-        app_enable(session_browser, self.app_name)
         backup_create(session_browser, self.app_name, 'test_' + self.app_name)
         backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
         self.assert_app_running(session_browser)

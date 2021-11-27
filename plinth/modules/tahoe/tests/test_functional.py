@@ -13,67 +13,55 @@ pytestmark = [pytest.mark.apps, pytest.mark.tahoe, pytest.mark.skip]
 # this is fixed.
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.set_advanced_mode(session_browser, True)
-    functional.set_domain_name(session_browser, 'mydomain.example')
-    functional.install(session_browser, 'tahoe')
-    functional.app_select_domain_name(session_browser, 'tahoe',
-                                      'mydomain.example')
-    yield
-    functional.app_disable(session_browser, 'tahoe')
+class TestTahoeApp(functional.BaseAppTests):
+    app_name = 'tahoe'
+    has_service = True
+    has_web = True
 
+    @pytest.fixture(scope='class', autouse=True)
+    def fixture_setup(self, session_browser):
+        """Setup the app."""
+        functional.login(session_browser)
+        functional.set_advanced_mode(session_browser, True)
+        functional.set_domain_name(session_browser, 'mydomain.example')
+        functional.install(session_browser, self.app_name)
+        functional.app_select_domain_name(session_browser, self.app_name,
+                                          'mydomain.example')
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'tahoe')
-
-    functional.app_enable(session_browser, 'tahoe')
-    assert functional.service_is_running(session_browser, 'tahoe')
-
-    functional.app_disable(session_browser, 'tahoe')
-    assert functional.service_is_not_running(session_browser, 'tahoe')
-
-
-def test_default_introducers(session_browser):
-    """Test default introducers."""
-    functional.app_enable(session_browser, 'tahoe')
-    assert _get_introducer(session_browser, 'mydomain.example', 'local')
-    assert _get_introducer(session_browser, 'mydomain.example', 'connected')
-
-
-def test_add_remove_introducers(session_browser):
-    """Test add and remove introducers."""
-    functional.app_enable(session_browser, 'tahoe')
-    if _get_introducer(session_browser, 'anotherdomain.example', 'connected'):
-        _remove_introducer(session_browser, 'anotherdomain.example')
-
-    _add_introducer(session_browser, 'anotherdomain.example')
-    assert _get_introducer(session_browser, 'anotherdomain.example',
-                           'connected')
-
-    _remove_introducer(session_browser, 'anotherdomain.example')
-    assert not _get_introducer(session_browser, 'anotherdomain.example',
+    def test_default_introducers(self, session_browser):
+        """Test default introducers."""
+        assert _get_introducer(session_browser, 'mydomain.example', 'local')
+        assert _get_introducer(session_browser, 'mydomain.example',
                                'connected')
 
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of app data."""
-    functional.app_enable(session_browser, 'tahoe')
-    if not _get_introducer(session_browser, 'backupdomain.example',
+    def test_add_remove_introducers(self, session_browser):
+        """Test add and remove introducers."""
+        if _get_introducer(session_browser, 'anotherdomain.example',
                            'connected'):
-        _add_introducer(session_browser, 'backupdomain.example')
-    functional.backup_create(session_browser, 'tahoe', 'test_tahoe')
+            _remove_introducer(session_browser, 'anotherdomain.example')
 
-    _remove_introducer(session_browser, 'backupdomain.example')
-    functional.backup_restore(session_browser, 'tahoe', 'test_tahoe')
+        _add_introducer(session_browser, 'anotherdomain.example')
+        assert _get_introducer(session_browser, 'anotherdomain.example',
+                               'connected')
 
-    assert functional.service_is_running(session_browser, 'tahoe')
-    assert _get_introducer(session_browser, 'backupdomain.example',
-                           'connected')
+        _remove_introducer(session_browser, 'anotherdomain.example')
+        assert not _get_introducer(session_browser, 'anotherdomain.example',
+                                   'connected')
+
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        if not _get_introducer(session_browser, 'backupdomain.example',
+                               'connected'):
+            _add_introducer(session_browser, 'backupdomain.example')
+        functional.backup_create(session_browser, self.app_name, 'test_tahoe')
+
+        _remove_introducer(session_browser, 'backupdomain.example')
+        functional.backup_restore(session_browser, self.app_name, 'test_tahoe')
+
+        assert functional.service_is_running(session_browser, self.app_name)
+        assert _get_introducer(session_browser, 'backupdomain.example',
+                               'connected')
 
 
 def _get_introducer(browser, domain, introducer_type):

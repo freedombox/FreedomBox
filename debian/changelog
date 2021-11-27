@@ -1,3 +1,146 @@
+freedombox (21.14.1) unstable; urgency=high
+
+  [ Sunil Mohan Adapa ]
+  * config: Add packages component to a re-add zram-tools dependency
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Wed, 24 Nov 2021 10:36:25 -0500
+
+freedombox (21.14) unstable; urgency=high
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ Michael Breidenbach ]
+  * Translated using Weblate (Swedish)
+
+  [ Sunil Mohan Adapa ]
+  * app: Introduce separate method for post initialization operations
+  * module_loader: Split app initialization into separate steps
+  * avahi: Split app initialization
+  * backups: Split app initialization
+  * cockpit: Split app initialization
+  * diagnostics: Split app initialization
+  * dynamicdns: Split app initialization
+  * email_server: Don't get domain name during initialization
+  * config: Split app configuration
+  * letencrypt: Split app initialization
+  * names: Split app initialization
+  * pagekite: Split app initialization
+  * storage: Split app initialization
+  * tor: Split app initialziation
+  * upgrades: Split app initialziation
+  * ejabberd: Split app initialziation
+  * gitweb: Split app initialization
+  * frontpage: Avoid URL reverse during Shortcut component construction
+  * menu: Avoid reversing URL during Menu component construction
+  * main: Drop initializing Django when listing dependencies (Closes: #999484)
+
+  [ Andrij Mizyk ]
+  * Translated using Weblate (Ukrainian)
+
+  [ Joseph Nuthalapati ]
+  * names: Create a generic TLS domain selection form
+  * tt-rss: Allow selection of a domain name
+
+  [ James Valleroy ]
+  * debian: Fail build if no module dependencies found
+  * datetime: Avoid error when systemctl is not available
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 22 Nov 2021 18:45:33 -0500
+
+freedombox (21.13) unstable; urgency=medium
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ Andrij Mizyk ]
+  * Translated using Weblate (Ukrainian)
+
+  [ Michael Breidenbach ]
+  * Translated using Weblate (Swedish)
+  * Translated using Weblate (Swedish)
+
+  [ Joseph Nuthalapati ]
+  * utils: Fix ruamel.yaml deprecation warnings
+  * components: Introduce new component - Packages
+  * setup: Use packages from Packages component
+  * components: Add docstrings & tutorial for Packages
+
+  [ Sunil Mohan Adapa ]
+  * email_server: Refactor the home directory page
+  * email_server: Add button for setting up home directory
+  * email_server: Turn home view into a simple page rather than a tab
+  * email_server: Add button for managing aliases
+  * email_server: Remove aliases view from tabs list
+  * email_server: Add heading for manage aliases page
+  * email_server: Reduce the size of headings for aliases/homedir pages
+  * email_server: aliases: Add method for checking of an alias is taken
+  * email_server: aliases: Using Django forms instead of custom forms
+  * email_server: aliases: Drop validation already done by form
+  * email_server: aliases: Move sanitizing to form
+  * email_server: aliases: Drop unnecessary sanitizing
+  * email_server: aliases: Drop unused sanitizing method
+  * email_server: aliases: Drop unused regex
+  * email_server: yapf formatting
+  * email_server: aliases: Drop hash DB and use sqlite3 directly
+  * email_server: aliases: Minor refactoring
+  * email_server: aliases: Minor refactoring to DB schema
+  * email_server: aliases: Minor refactor to list view
+  * email_server: aliases: Fix showing empty alias list message
+  * email_server: aliases: Refactor for simpler organization
+  * email_server: tls: Drop unimplemented TLS forms/view
+  * email_server: rspamd: Turn spam management link to a button
+  * email_server: domains: Add button for domain management form
+  * email_server: Remove tabs from the interface
+  * email_server: homedir: Fix styling to not show everything as header
+  * email_server: Minor refactor of license statement in templates
+  * email_server: domains: Use Django forms and views
+  * email_server: domains: Add validation to form
+  * email_server: action: Refactor for simplicity
+  * email_server: yapf formatting
+  * log, email_server: Don't use syslog instead of journald
+  * email_server: action: Add argument type checking for extra safety
+  * email_server: Don't use user IDs when performing lookups
+  * email_server: Lookup LDAP local recipients via PAM
+  * email_server: dovecot: Authenticate using PAM instead of LDAP
+  * email_server: dovecot: Don't deliver mail to home directory
+  * email_server: Setup /var/mail, drop home setup view
+  * email_server: Use rollback journal for aliases sqlite DB
+  * security: Properly handle sandbox analysis of timer units
+
+  [ Johannes Keyser ]
+  * Translated using Weblate (German)
+
+  [ James Valleroy ]
+  * tests: Use background fixture for each test
+  * bepasty: Use BaseAppTests for functional tests
+  * bind: Use BaseAppTests for functional tests
+  * calibre: Use BaseAppTests for functional tests
+  * deluge: Use BaseAppTests for functional tests
+  * ejabberd: Use BaseAppTests for functional tests
+  * gitweb: Use BaseAppTests for functional tests
+  * ikiwiki: Use BaseAppTests for functional tests
+  * mediawiki: Use BaseAppTests for functional tests
+  * mldonkey: Use BaseAppTests for functional tests
+  * openvpn: Use BaseAppTests for functional tests
+  * pagekite: Use BaseAppTests for functional tests
+  * radicale: Use BaseAppTests for functional tests
+  * samba: Use BaseAppTests for functional tests
+  * shadowsocks, syncthing: Use BaseAppTests for functional tests
+  * transmission: Use BaseAppTests for functional tests
+  * tahoe: Use BaseAppTests for functional tests
+  * tor: Use BaseAppTests for functional tests
+  * tests: functional: Add diagnostics delay parameter
+  * avahi: Use systemd sandboxing
+  * samba: Use systemd sandboxing for smbd/nmbd
+  * debian: Add python3-openssl to autopkgtest depends
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 08 Nov 2021 21:34:27 -0500
+
 freedombox (21.12~bpo11+1) bullseye-backports; urgency=medium
 
   * Rebuild for bullseye-backports.

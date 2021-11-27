@@ -12,47 +12,31 @@ pytestmark = [pytest.mark.apps, pytest.mark.ejabberd]
 # TODO Check domain name display
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'ejabberd')
-    yield
-    functional.app_disable(session_browser, 'ejabberd')
+class TestEjabberdApp(functional.BaseAppTests):
+    app_name = 'ejabberd'
+    has_service = True
+    has_web = False
 
+    def test_message_archive_management(self, session_browser):
+        """Test enabling message archive management."""
+        functional.app_enable(session_browser, 'ejabberd')
+        _enable_message_archive_management(session_browser)
+        assert functional.service_is_running(session_browser, 'ejabberd')
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'ejabberd')
+        _disable_message_archive_management(session_browser)
+        assert functional.service_is_running(session_browser, 'ejabberd')
 
-    functional.app_enable(session_browser, 'ejabberd')
-    assert functional.service_is_running(session_browser, 'ejabberd')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        functional.app_enable(session_browser, 'ejabberd')
+        _jsxc_add_contact(session_browser)
+        functional.backup_create(session_browser, 'ejabberd', 'test_ejabberd')
 
-    functional.app_disable(session_browser, 'ejabberd')
-    assert functional.service_is_not_running(session_browser, 'ejabberd')
+        _jsxc_delete_contact(session_browser)
+        functional.backup_restore(session_browser, 'ejabberd', 'test_ejabberd')
 
-
-def test_message_archive_management(session_browser):
-    """Test enabling message archive management."""
-    functional.app_enable(session_browser, 'ejabberd')
-    _enable_message_archive_management(session_browser)
-    assert functional.service_is_running(session_browser, 'ejabberd')
-
-    _disable_message_archive_management(session_browser)
-    assert functional.service_is_running(session_browser, 'ejabberd')
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of app data."""
-    functional.app_enable(session_browser, 'ejabberd')
-    _jsxc_add_contact(session_browser)
-    functional.backup_create(session_browser, 'ejabberd', 'test_ejabberd')
-
-    _jsxc_delete_contact(session_browser)
-    functional.backup_restore(session_browser, 'ejabberd', 'test_ejabberd')
-
-    _jsxc_assert_has_contact(session_browser)
+        _jsxc_assert_has_contact(session_browser)
 
 
 def _enable_message_archive_management(browser):

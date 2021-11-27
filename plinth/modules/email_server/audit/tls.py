@@ -90,20 +90,20 @@ def _get_superuser_results(results):
     translation = {
         'cert_availability': _('Has a TLS certificate'),
     }
-    dump = actions.superuser_run('email_server', ['-i', 'tls', 'check'])
+    dump = actions.superuser_run('email_server', ['tls', 'check'])
     for jmap in json.loads(dump):
         results.append(models.Diagnosis.from_json(jmap, translation.get))
 
 
 def repair():
-    actions.superuser_run('email_server', ['-i', 'tls', 'set_up'])
+    actions.superuser_run('email_server', ['tls', 'set_up'])
 
 
 def repair_component(action):
     action_to_services = {'set_cert': ['dovecot', 'postfix']}
     if action not in action_to_services:  # action not allowed
         return
-    actions.superuser_run('email_server', ['-i', 'tls', action])
+    actions.superuser_run('email_server', ['tls', action])
     return action_to_services[action]
 
 
@@ -168,8 +168,8 @@ def write_dovecot_cert_config(cert, key):
 def check_postfix_cert_usage(title=''):
     prefix = '/etc/letsencrypt/live/'
     diagnosis = models.Diagnosis(title, action='set_cert')
-    conf = postconf.get_many_unsafe(['smtpd_tls_cert_file',
-                                     'smtpd_tls_key_file'])
+    conf = postconf.get_many_unsafe(
+        ['smtpd_tls_cert_file', 'smtpd_tls_key_file'])
     if not conf['smtpd_tls_cert_file'].startswith(prefix):
         diagnosis.error("Cert file not in Let's Encrypt directory")
     if not conf['smtpd_tls_key_file'].startswith(prefix):
@@ -197,7 +197,7 @@ def action_set_cert():
 
 
 def action_check():
-    checks = ('cert_availability',)
+    checks = ('cert_availability', )
     results = []
     for check_name in checks:
         check_function = globals()['su_check_' + check_name]

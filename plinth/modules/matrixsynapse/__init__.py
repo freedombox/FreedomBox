@@ -21,6 +21,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.package import Packages
 from plinth.utils import format_lazy, is_non_empty_file
 
 from . import manifest
@@ -72,6 +73,7 @@ class MatrixSynapseApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Matrix Synapse'),
             icon_filename='matrixsynapse', short_description=_('Chat Server'),
@@ -91,6 +93,9 @@ class MatrixSynapseApp(app_module.App):
             configure_url=reverse_lazy('matrixsynapse:index'),
             clients=info.clients, login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-matrixsynapse', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
                             ports=['matrix-synapse-plinth'], is_external=True)

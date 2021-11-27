@@ -8,6 +8,7 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 import ruamel.yaml
+from ruamel.yaml.compat import StringIO
 from django.test.client import RequestFactory
 
 from plinth.utils import YAMLFile, is_user_admin, is_valid_user_name
@@ -90,6 +91,9 @@ class TestYAMLFileUtil:
 
     kv_pair = {'key': 'value'}
 
+    yaml = ruamel.yaml.YAML()
+    yaml.preserve_quotes = True
+
     def test_update_empty_yaml_file(self):
         """
         Update an empty YAML file with content.
@@ -102,7 +106,9 @@ class TestYAMLFileUtil:
                 file_conf[key] = conf[key]
 
         with open(test_file.name, 'r') as retrieved_conf:
-            assert retrieved_conf.read() == ruamel.yaml.round_trip_dump(conf)
+            buffer = StringIO()
+            self.yaml.dump(conf, buffer)
+            assert retrieved_conf.read() == buffer.getvalue()
 
     def test_update_non_empty_yaml_file(self):
         """
@@ -111,14 +117,13 @@ class TestYAMLFileUtil:
         test_file = tempfile.NamedTemporaryFile()
 
         with open(test_file.name, 'w') as conf_file:
-            conf_file.write(
-                ruamel.yaml.round_trip_dump({'property1': self.kv_pair}))
+            self.yaml.dump({'property1': self.kv_pair}, conf_file)
 
         with YAMLFile(test_file.name) as file_conf:
             file_conf['property2'] = self.kv_pair
 
         with open(test_file.name, 'r') as retrieved_conf:
-            file_conf = ruamel.yaml.round_trip_load(retrieved_conf)
+            file_conf = self.yaml.load(retrieved_conf)
             assert file_conf == {
                 'property1': self.kv_pair,
                 'property2': self.kv_pair

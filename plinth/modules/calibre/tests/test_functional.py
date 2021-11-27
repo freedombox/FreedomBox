@@ -13,63 +13,45 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.sso, pytest.mark.calibre]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'calibre')
-    yield
-    functional.app_disable(session_browser, 'calibre')
+class TestCalibreApp(functional.BaseAppTests):
+    app_name = 'calibre'
+    has_service = True
+    has_web = True
 
+    def test_add_delete_library(self, session_browser):
+        """Test adding/deleting a new library."""
+        functional.app_enable(session_browser, 'calibre')
+        _delete_library(session_browser, 'FunctionalTest', True)
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'calibre')
+        _add_library(session_browser, 'FunctionalTest')
+        assert _is_library_available(session_browser, 'FunctionalTest')
 
-    functional.app_enable(session_browser, 'calibre')
-    assert functional.service_is_running(session_browser, 'calibre')
-    assert functional.is_available(session_browser, 'calibre')
+        _delete_library(session_browser, 'FunctionalTest')
+        assert not _is_library_available(session_browser, 'FunctionalTest')
 
-    functional.app_disable(session_browser, 'calibre')
-    assert not functional.service_is_running(session_browser, 'calibre')
-    assert not functional.is_available(session_browser, 'calibre')
+    def test_add_delete_book(self, session_browser):
+        """Test adding/delete book in the library."""
+        functional.app_enable(session_browser, 'calibre')
+        _add_library(session_browser, 'FunctionalTest')
+        _delete_book(session_browser, 'FunctionalTest', 'sample.txt', True)
 
-
-def test_add_delete_library(session_browser):
-    """Test adding/deleting a new library."""
-    functional.app_enable(session_browser, 'calibre')
-    _delete_library(session_browser, 'FunctionalTest', True)
-
-    _add_library(session_browser, 'FunctionalTest')
-    assert _is_library_available(session_browser, 'FunctionalTest')
-
-    _delete_library(session_browser, 'FunctionalTest')
-    assert not _is_library_available(session_browser, 'FunctionalTest')
-
-
-def test_add_delete_book(session_browser):
-    """Test adding/delete book in the library."""
-    functional.app_enable(session_browser, 'calibre')
-    _add_library(session_browser, 'FunctionalTest')
-    _delete_book(session_browser, 'FunctionalTest', 'sample.txt', True)
-
-    _add_book(session_browser, 'FunctionalTest', 'sample.txt')
-    assert _is_book_available(session_browser, 'FunctionalTest', 'sample.txt')
-
-    _delete_book(session_browser, 'FunctionalTest', 'sample.txt')
-    assert not _is_book_available(session_browser, 'FunctionalTest',
+        _add_book(session_browser, 'FunctionalTest', 'sample.txt')
+        assert _is_book_available(session_browser, 'FunctionalTest',
                                   'sample.txt')
 
+        _delete_book(session_browser, 'FunctionalTest', 'sample.txt')
+        assert not _is_book_available(session_browser, 'FunctionalTest',
+                                      'sample.txt')
 
-@pytest.mark.backups
-def test_backup(session_browser):
-    """Test backing up and restoring."""
-    functional.app_enable(session_browser, 'calibre')
-    _add_library(session_browser, 'FunctionalTest')
-    functional.backup_create(session_browser, 'calibre', 'test_calibre')
-    _delete_library(session_browser, 'FunctionalTest')
-    functional.backup_restore(session_browser, 'calibre', 'test_calibre')
-    assert _is_library_available(session_browser, 'FunctionalTest')
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backing up and restoring."""
+        functional.app_enable(session_browser, 'calibre')
+        _add_library(session_browser, 'FunctionalTest')
+        functional.backup_create(session_browser, 'calibre', 'test_calibre')
+        _delete_library(session_browser, 'FunctionalTest')
+        functional.backup_restore(session_browser, 'calibre', 'test_calibre')
+        assert _is_library_available(session_browser, 'FunctionalTest')
 
 
 def _add_library(browser, name):

@@ -16,6 +16,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 
 from . import manifest
 from .forms import is_repo_url
@@ -73,6 +74,9 @@ class GitwebApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
+        packages = Packages('packages-gitweb', managed_packages)
+        self.add(packages)
+
         firewall = Firewall('firewall-gitweb', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
@@ -93,6 +97,8 @@ class GitwebApp(app_module.App):
                                              **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup':
             self.update_service_access()

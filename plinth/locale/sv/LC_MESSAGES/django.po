@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 18:50-0400\n"
-"PO-Revision-Date: 2021-09-21 20:38+0000\n"
+"POT-Creation-Date: 2021-11-22 18:17-0500\n"
+"PO-Revision-Date: 2021-11-13 03:49+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "Sid källa"
 
-#: plinth/context_processors.py:23 plinth/views.py:83
+#: plinth/context_processors.py:23 plinth/views.py:81
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -64,15 +64,29 @@ msgstr ""
 "Varning! Programmet kanske inte fungerar korrekt om domännamnet ändras "
 "senare."
 
-#: plinth/forms.py:46
+#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/modules/mumble/forms.py:21
+msgid "TLS domain"
+msgstr "TLS Domän"
+
+#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/modules/mumble/forms.py:23
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+"Välj en domän att använda TLS med. Om listan är tom konfigurerar du minst en "
+"domän med certifikat."
+
+#: plinth/forms.py:64
 msgid "Language"
 msgstr "Språkval"
 
-#: plinth/forms.py:47
+#: plinth/forms.py:65
 msgid "Language to use for presenting this web interface"
 msgstr "Språk att använda för att presentera detta webbgränssnitt"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:72
 msgid "Use the language preference set in the browser"
 msgstr "Använd språkinställningen i webbläsaren"
 
@@ -90,17 +104,17 @@ msgstr "Installation misslyckades: {string} {details}"
 msgid "Error installing application: {error}"
 msgstr "Installationen misslyckades: {error}"
 
-#: plinth/modules/apache/__init__.py:41
+#: plinth/modules/apache/__init__.py:42
 msgid "Apache HTTP Server"
 msgstr "Apache HTTP-server"
 
-#: plinth/modules/apache/__init__.py:44
+#: plinth/modules/apache/__init__.py:48
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:49
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
 msgstr "Webbserver"
 
-#: plinth/modules/apache/__init__.py:50
+#: plinth/modules/apache/__init__.py:54
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Webbgränssnitt (Plinth)"
@@ -115,7 +129,7 @@ msgstr "Ansluter till adress {url} on tcp{kind}"
 msgid "Access URL {url}"
 msgstr "Ansluter till adress {url}"
 
-#: plinth/modules/avahi/__init__.py:35
+#: plinth/modules/avahi/__init__.py:36
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -132,24 +146,24 @@ msgstr ""
 "nätverk. Du kan låta den vara inaktiverad för att förbättra din säkerhet, "
 "särskilt om du ansluter till ett osäkert lokalt nätverk."
 
-#: plinth/modules/avahi/__init__.py:59
+#: plinth/modules/avahi/__init__.py:60
 msgid "Service Discovery"
 msgstr "Identifiera tjänster"
 
-#: plinth/modules/avahi/__init__.py:69
+#: plinth/modules/avahi/__init__.py:73
 msgid "Local Network Domain"
 msgstr "Lokalt nätverksdomän"
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr "Säkerhetskopior gör det möjligt att skapa och hantera säkerhetsarkiv."
 
-#: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
-#: plinth/modules/backups/__init__.py:245
+#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:253
 msgid "Backups"
 msgstr "Säkerhetskopiering"
 
-#: plinth/modules/backups/__init__.py:197
+#: plinth/modules/backups/__init__.py:205
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -157,18 +171,18 @@ msgstr ""
 "Aktivera ett automatiskt reservschema för datasäkerhet. Föredra en krypterad "
 "plats för fjärrbackup eller en extra ansluten disk."
 
-#: plinth/modules/backups/__init__.py:203
+#: plinth/modules/backups/__init__.py:211
 msgid "Enable a Backup Schedule"
 msgstr "Aktivera ett schema för säkerhetskopiering"
 
-#: plinth/modules/backups/__init__.py:207
-#: plinth/modules/backups/__init__.py:254
-#: plinth/modules/storage/__init__.py:323
+#: plinth/modules/backups/__init__.py:215
+#: plinth/modules/backups/__init__.py:262
+#: plinth/modules/storage/__init__.py:331
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gå till {app_name}"
 
-#: plinth/modules/backups/__init__.py:242
+#: plinth/modules/backups/__init__.py:250
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -177,7 +191,7 @@ msgstr ""
 "En schemalagd säkerhetskopiering misslyckades. Tidigare {error_count} försök "
 "för säkerhetskopiering lyckades inte. Det senaste felet är: {error_message}"
 
-#: plinth/modules/backups/__init__.py:250
+#: plinth/modules/backups/__init__.py:258
 msgid "Error During Backup"
 msgstr "Fel under säkerhetskopiering"
 
@@ -738,7 +752,7 @@ msgstr "Avmontering misslyckas!"
 msgid "Mounting failed"
 msgstr "Avmontering misslyckades"
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -750,7 +764,7 @@ msgstr ""
 "ljud, video och PDF-dokument kan förhandsgranskas i webbläsaren. Delade "
 "filer kan ställas in för att löpa ut efter en tidsperiod."
 
-#: plinth/modules/bepasty/__init__.py:28
+#: plinth/modules/bepasty/__init__.py:29
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -762,7 +776,7 @@ msgstr ""
 "har skapat ett lösenord kan du dela det med de användare som ska ha "
 "tillhörande behörigheter."
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -774,39 +788,39 @@ msgstr ""
 "återkalla åtkomst för en enda person eller grupp, genom att ta bort deras "
 "lösenord från listan."
 
-#: plinth/modules/bepasty/__init__.py:41 plinth/modules/bepasty/__init__.py:50
+#: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
 msgid "Read a file, if a web link to the file is available"
 msgstr "Läs en fil om en webblänk till filen är tillgänglig"
 
-#: plinth/modules/bepasty/__init__.py:42
+#: plinth/modules/bepasty/__init__.py:43
 msgid "Create or upload files"
 msgstr "Skapa eller ladda upp filer"
 
-#: plinth/modules/bepasty/__init__.py:43
+#: plinth/modules/bepasty/__init__.py:44
 msgid "List all files and their web links"
 msgstr "Lista alla filer och deras webblänkar"
 
-#: plinth/modules/bepasty/__init__.py:44
+#: plinth/modules/bepasty/__init__.py:45
 msgid "Delete files"
 msgstr "Ta bort filer"
 
-#: plinth/modules/bepasty/__init__.py:45
+#: plinth/modules/bepasty/__init__.py:46
 msgid "Administer files: lock/unlock files"
 msgstr "Administrera filer: låsa/låsa upp filer"
 
-#: plinth/modules/bepasty/__init__.py:49
+#: plinth/modules/bepasty/__init__.py:50
 msgid "None, password is always required"
 msgstr "Inget, lösenord krävs alltid"
 
-#: plinth/modules/bepasty/__init__.py:51
+#: plinth/modules/bepasty/__init__.py:52
 msgid "List and read all files"
 msgstr "Lista och läsa alla filer"
 
-#: plinth/modules/bepasty/__init__.py:64 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:65 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:66
+#: plinth/modules/bepasty/__init__.py:67
 msgid "File & Snippet Sharing"
 msgstr "Fil &amp; Snippet Sharing"
 
@@ -887,6 +901,7 @@ msgid "List"
 msgstr "Lista"
 
 #: plinth/modules/bepasty/views.py:52
+#: plinth/modules/email_server/templates/email_alias.html:28
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -925,7 +940,7 @@ msgstr "Lägg till lösenord"
 msgid "Password deleted."
 msgstr "Lösenord raderat."
 
-#: plinth/modules/bind/__init__.py:30
+#: plinth/modules/bind/__init__.py:31
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
@@ -933,7 +948,7 @@ msgstr ""
 "Med BIND kan du publicera din Domain Name System (DNS) -information på "
 "Internet och lösa DNS sökfrågor för dina användarenheter i ditt nätverk."
 
-#: plinth/modules/bind/__init__.py:34
+#: plinth/modules/bind/__init__.py:35
 #, python-brace-format
 msgid ""
 "Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
@@ -944,11 +959,11 @@ msgstr ""
 "andra maskiner i det lokala nätverket. Det är också oförenligt med att dela "
 "Internet-anslutning från {box_name}."
 
-#: plinth/modules/bind/__init__.py:78
+#: plinth/modules/bind/__init__.py:80
 msgid "BIND"
 msgstr "BIND"
 
-#: plinth/modules/bind/__init__.py:79
+#: plinth/modules/bind/__init__.py:81
 msgid "Domain Name Server"
 msgstr "Domän Namn Server"
 
@@ -1003,15 +1018,16 @@ msgstr "Uppdatera IP-adress och domäner"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:214
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:37
+#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "Konfiguration uppdaterad"
 
-#: plinth/modules/calibre/__init__.py:31
+#: plinth/modules/calibre/__init__.py:32
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -1021,7 +1037,7 @@ msgstr ""
 "calibre server ger online tillgång till din e-bok samling. Du kan lagra dina "
 "e-böcker på din {box_name}, läsa dem online eller från någon av dina enheter."
 
-#: plinth/modules/calibre/__init__.py:34
+#: plinth/modules/calibre/__init__.py:35
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -1036,7 +1052,7 @@ msgstr ""
 "lästa plats, bokmärken och markerad text. Innehållsdistribution med OPDS "
 "stöds för närvarande inte."
 
-#: plinth/modules/calibre/__init__.py:40
+#: plinth/modules/calibre/__init__.py:41
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
@@ -1044,15 +1060,15 @@ msgstr ""
 "Endast användare som tillhör <em>calibre </em> -gruppen kan komma åt appen. "
 "Alla användare med åtkomst kan använda alla bibliotek."
 
-#: plinth/modules/calibre/__init__.py:58
+#: plinth/modules/calibre/__init__.py:59
 msgid "Use calibre e-book libraries"
 msgstr "Använd calibre e-bokbibliotek"
 
-#: plinth/modules/calibre/__init__.py:61 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:62 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:62
+#: plinth/modules/calibre/__init__.py:63
 msgid "E-book Library"
 msgstr "E-bok Bibliotek"
 
@@ -1126,7 +1142,7 @@ msgstr "{name} borttagen."
 msgid "Could not delete {name}: {error}"
 msgstr "Kunde inte ta bort {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:32
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1139,7 +1155,7 @@ msgstr ""
 "tillgängliga för många avancerade funktioner som vanligtvis inte krävs. En "
 "webbaserad terminal för konsoloperationer är också tillgänglig."
 
-#: plinth/modules/cockpit/__init__.py:38
+#: plinth/modules/cockpit/__init__.py:39
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1151,7 +1167,7 @@ msgstr ""
 "anpassade brandväggsportar och avancerade nätverk som bindning, bryggning "
 "och VLAN-hantering."
 
-#: plinth/modules/cockpit/__init__.py:43
+#: plinth/modules/cockpit/__init__.py:44
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1160,7 +1176,7 @@ msgstr ""
 "Den kan nås genom att <a href=\"{users_url}\">alla användar</a> på "
 "{box_name} som hör till administratörsgruppen."
 
-#: plinth/modules/cockpit/__init__.py:47
+#: plinth/modules/cockpit/__init__.py:48
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
@@ -1168,12 +1184,12 @@ msgstr ""
 "Cockpit kräver att du öppnar den via ett domännamn. Det kommer inte att "
 "fungera när de nås med en IP-adress som en del av webbadressen."
 
-#: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:66 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:66
+#: plinth/modules/cockpit/__init__.py:68
 msgid "Server Administration"
 msgstr "Server administrering"
 
@@ -1335,7 +1351,7 @@ msgstr "Visar avancerade appar och funktioner"
 msgid "Hiding advanced apps and features"
 msgstr "Dölja avancerade appar och funktioner"
 
-#: plinth/modules/coturn/__init__.py:36
+#: plinth/modules/coturn/__init__.py:37
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1347,7 +1363,7 @@ msgstr ""
 "WebRTC, SIP och andra kommunikationsservrar kan använda den för att upprätta "
 "ett samtal mellan parter som annars inte kan ansluta till varandra."
 
-#: plinth/modules/coturn/__init__.py:41
+#: plinth/modules/coturn/__init__.py:42
 #, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
@@ -1358,31 +1374,17 @@ msgstr ""
 "\"{ms_url}\">Matrix Synapse</a> eller <a href=\"{e_url}\">ejabberd</a> måste "
 "konfigureras med de uppgifter som tillhandahålls här."
 
-#: plinth/modules/coturn/__init__.py:62
+#: plinth/modules/coturn/__init__.py:63
 msgid "Coturn"
 msgstr "Coturn"
 
-#: plinth/modules/coturn/__init__.py:63
+#: plinth/modules/coturn/__init__.py:64
 msgid "VoIP Helper"
 msgstr "VoIP-hjälpare"
 
 #: plinth/modules/coturn/forms.py:22
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Ogiltig lista för URI:er för STUN/TURN-servrar"
-
-#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
-#: plinth/modules/quassel/forms.py:22
-msgid "TLS domain"
-msgstr "TLS Domän"
-
-#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
-msgstr ""
-"Välj en domän att använda TLS med. Om listan är tom konfigurerar du minst en "
-"domän med certifikat."
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
@@ -1393,7 +1395,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Använd följande delade autentiseringshemligheter:"
 
-#: plinth/modules/datetime/__init__.py:26
+#: plinth/modules/datetime/__init__.py:24
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1401,11 +1403,11 @@ msgstr ""
 "Network time server är ett program som upprätthåller synkronisering av "
 "systemtiden med servrar på Internet."
 
-#: plinth/modules/datetime/__init__.py:70
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
-msgstr "Datum & Tid"
+msgstr "Datum och Tid"
 
-#: plinth/modules/datetime/__init__.py:116
+#: plinth/modules/datetime/__init__.py:115
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkroniserad till NTP-server"
 
@@ -1434,13 +1436,13 @@ msgstr "Fel i inställning av tidszon: {exception}"
 msgid "Time zone set"
 msgstr "Tidszon inställd"
 
-#: plinth/modules/deluge/__init__.py:27
+#: plinth/modules/deluge/__init__.py:28
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr ""
 "Deluge är en BitTorrentklient som inkluderar ett Webbaserat "
 "användargränssnitt."
 
-#: plinth/modules/deluge/__init__.py:28
+#: plinth/modules/deluge/__init__.py:29
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
@@ -1448,17 +1450,17 @@ msgstr ""
 "Standardlösenordet är \"deluge\", men du bör logga in och ändra det "
 "omedelbart efter att du har aktiverat den här tjänsten."
 
-#: plinth/modules/deluge/__init__.py:47
-#: plinth/modules/transmission/__init__.py:50
+#: plinth/modules/deluge/__init__.py:48
+#: plinth/modules/transmission/__init__.py:51
 msgid "Download files using BitTorrent applications"
 msgstr "Ladda ner filer med BitTorrent-applikationer"
 
-#: plinth/modules/deluge/__init__.py:51 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:52 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:53
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/deluge/__init__.py:54
+#: plinth/modules/transmission/__init__.py:57
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Webbklient"
 
@@ -1479,51 +1481,51 @@ msgstr ""
 "bekräfta att program och tjänster fungerar som de ska."
 
 #: plinth/modules/diagnostics/__init__.py:54
-#: plinth/modules/diagnostics/__init__.py:238
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
-#: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:29
+#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/email_server/templates/email_server.html:41
 msgid "passed"
 msgstr "passerade"
 
-#: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:27
+#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/email_server/templates/email_server.html:39
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "misslyckades"
 
-#: plinth/modules/diagnostics/__init__.py:100
-#: plinth/modules/email_server/templates/email_server.html:25
+#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/email_server/templates/email_server.html:37
 msgid "error"
 msgstr "fel"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "warning"
 msgstr "varning"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:216
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bör inaktivera vissa appar för att minska minnesanvändningen."
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr "Du bör inte installera några nya appar på det här systemet."
 
-#: plinth/modules/diagnostics/__init__.py:233
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1532,7 +1534,7 @@ msgstr ""
 "Systemet är ont om minne: {percent_used}% används, {memory_available}"
 "·{memory_available_unit} ledig. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:235
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr "Låg minne"
 
@@ -1585,7 +1587,7 @@ msgstr "Resultat"
 msgid "Diagnostic Test"
 msgstr "Diagnostiktest"
 
-#: plinth/modules/diaspora/__init__.py:45
+#: plinth/modules/diaspora/__init__.py:46
 msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
@@ -1593,12 +1595,12 @@ msgstr ""
 "diaspora * är ett decentraliserat socialt nätverk där du kan lagra och "
 "kontrollera dina egna data."
 
-#: plinth/modules/diaspora/__init__.py:68
+#: plinth/modules/diaspora/__init__.py:70
 #: plinth/modules/diaspora/manifest.py:23
 msgid "diaspora*"
 msgstr "diaspora*"
 
-#: plinth/modules/diaspora/__init__.py:69
+#: plinth/modules/diaspora/__init__.py:71
 msgid "Federated Social Network"
 msgstr "Federerat Social Network"
 
@@ -1659,7 +1661,7 @@ msgstr "Användarregistreringar aktiverade"
 msgid "User registrations disabled"
 msgstr "Användarregistreringar avaktiveras"
 
-#: plinth/modules/dynamicdns/__init__.py:29
+#: plinth/modules/dynamicdns/__init__.py:30
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1670,7 +1672,7 @@ msgstr ""
 "kan det vara svårt för andra att hitta dig på nätet. Detta förhindrar andra "
 "att nå de tjänster som tillhandahålls av denna {box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:33
+#: plinth/modules/dynamicdns/__init__.py:34
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1687,11 +1689,11 @@ msgstr ""
 "servern ditt DNS-namn till din nya IP, och om någon från Internet ber om "
 "ditt DNS-namn, kommer hen att få din aktuella IP som svar."
 
-#: plinth/modules/dynamicdns/__init__.py:56
+#: plinth/modules/dynamicdns/__init__.py:58
 msgid "Dynamic DNS Client"
 msgstr "Klient för Dynamisk DNS"
 
-#: plinth/modules/dynamicdns/__init__.py:66
+#: plinth/modules/dynamicdns/__init__.py:71
 msgid "Dynamic Domain Name"
 msgstr "Dynamiskt Domännamn"
 
@@ -1927,7 +1929,7 @@ msgstr "Konfigurera Dynamisk DNS"
 msgid "Dynamic DNS Status"
 msgstr "Dynamisk DNS (Domän Namns Server) status"
 
-#: plinth/modules/ejabberd/__init__.py:39
+#: plinth/modules/ejabberd/__init__.py:40
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1935,7 +1937,7 @@ msgstr ""
 "XMPP är en öppen och standardiserad kommunikationsprotokoll. Här kan du köra "
 "din XMPP-server (kallad ejabberd)."
 
-#: plinth/modules/ejabberd/__init__.py:42
+#: plinth/modules/ejabberd/__init__.py:43
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1949,7 +1951,7 @@ msgstr ""
 "nås av alla <a href=\"{users_url}\"> användare med en {box_name} inloggning</"
 "a>."
 
-#: plinth/modules/ejabberd/__init__.py:50
+#: plinth/modules/ejabberd/__init__.py:51
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1958,12 +1960,12 @@ msgstr ""
 "ejabberd behöver en STUN/TURN-server för ljud-/videosamtal. Installera appen "
 "<a href=\"{coturn_url}\">Coturn</a> eller konfigurera en extern server."
 
-#: plinth/modules/ejabberd/__init__.py:71
+#: plinth/modules/ejabberd/__init__.py:73
 msgid "ejabberd"
 msgstr "ejabbert"
 
-#: plinth/modules/ejabberd/__init__.py:72
-#: plinth/modules/matrixsynapse/__init__.py:77
+#: plinth/modules/ejabberd/__init__.py:74
+#: plinth/modules/matrixsynapse/__init__.py:79
 msgid "Chat Server"
 msgstr "Chat-Server"
 
@@ -2076,62 +2078,35 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> ger användarna "
+"webbgränssnitt för att komma åt e-post."
 
 #: plinth/modules/email_server/__init__.py:57
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Under installationen avinstalleras alla andra e-postservrar i systemet."
 
 #: plinth/modules/email_server/__init__.py:68
 msgid "Email Server"
 msgstr "E-postserver"
 
-#: plinth/modules/email_server/__init__.py:99
+#: plinth/modules/email_server/__init__.py:95
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Drivs av Postfix, Dovecot och Rspamd"
-
-#: plinth/modules/email_server/aliases/__init__.py:67
-#: plinth/modules/email_server/aliases/__init__.py:74
-msgid "The alias was taken"
-msgstr "Aliasnamnet togs"
-
-#: plinth/modules/email_server/aliases/models.py:13
-msgid "Must be at least 2 characters long"
-msgstr "Måste vara minst 2 tecken lång"
-
-#: plinth/modules/email_server/aliases/models.py:15
-msgid "Contains illegal characters"
-msgstr "Innehåller otillåtna tecken"
-
-#: plinth/modules/email_server/aliases/models.py:17
-msgid "Must start and end with a-z or 0-9"
-msgstr "Måste börja och sluta med a-z eller 0-9"
-
-#: plinth/modules/email_server/aliases/models.py:19
-msgid "Cannot be a number"
-msgstr "Kan inte vara ett nummer"
 
 #: plinth/modules/email_server/audit/domain.py:35
 msgid "Postfix domain name config"
 msgstr "Konfiguration av Postfix domännamn"
 
-#: plinth/modules/email_server/audit/home.py:23
-#: plinth/modules/email_server/audit/home.py:32
-msgid "User does not exist"
-msgstr "Användaren finns inte"
-
-#: plinth/modules/email_server/audit/ldap.py:66
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix-Dovecot SASL integration"
 msgstr "Integrering av Postfix-Dovecot SASL"
 
-#: plinth/modules/email_server/audit/ldap.py:67
+#: plinth/modules/email_server/audit/ldap.py:70
 msgid "Postfix alias maps"
 msgstr "Postfix alias kartor"
-
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix local recipient maps"
-msgstr "Postfix lokala mottagarkartor"
 
 #: plinth/modules/email_server/audit/rcube.py:31
 msgid "RoundCube availability"
@@ -2157,16 +2132,55 @@ msgstr "Postfix använder ett TLS -certifikat"
 msgid "Has a TLS certificate"
 msgstr "Har ett TLS-certifikat"
 
-#: plinth/modules/email_server/forms.py:7
+#: plinth/modules/email_server/forms.py:15
+msgid "Enter a valid domain"
+msgstr "Ange ett giltigt domän"
+
+#: plinth/modules/email_server/forms.py:18
+msgid "Enter a valid destination"
+msgstr "Ange ett giltigt  destination"
+
+#: plinth/modules/email_server/forms.py:22
 msgid "domain"
 msgstr "domain"
 
-#: plinth/modules/email_server/forms.py:14
+#: plinth/modules/email_server/forms.py:53
 msgid "New alias (without @domain)"
 msgstr "Nytt alias (utan @domän)"
 
+#: plinth/modules/email_server/forms.py:60
+msgid "Contains illegal characters"
+msgstr "Innehåller otillåtna tecken"
+
+#: plinth/modules/email_server/forms.py:63
+msgid "Must start and end with a-z or 0-9"
+msgstr "Måste börja och sluta med a-z eller 0-9"
+
+#: plinth/modules/email_server/forms.py:66
+msgid "Cannot be a number"
+msgstr "Kan inte vara ett nummer"
+
+#: plinth/modules/email_server/forms.py:76
+msgid "Aliases"
+msgstr "Aliasnamn"
+
+#: plinth/modules/email_server/forms.py:88
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+msgid "Enabled"
+msgstr "Aktiverad"
+
+#: plinth/modules/email_server/forms.py:91
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "Inaktiverad"
+
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:57
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2183,161 +2197,69 @@ msgstr "K-9 Mail"
 msgid "FairEmail"
 msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:11
-#, fuzzy
-#| msgid "My Aliases"
+#: plinth/modules/email_server/templates/email_alias.html:13
+#: plinth/modules/email_server/templates/email_server.html:24
 msgid "Manage Aliases"
-msgstr "Mina alias"
+msgstr "Hantera alias"
 
-#: plinth/modules/email_server/templates/email_alias.html:14
+#: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
 msgstr "Du har inga e-postalias."
 
-#: plinth/modules/email_server/templates/email_alias.html:23
-msgid "Disable selected"
-msgstr "Inaktivera markerad"
+#: plinth/modules/email_server/templates/email_alias.html:24
+msgid "Disable"
+msgstr "Avaktivera"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
-msgid "Enable selected"
-msgstr "Aktivera markerad"
+msgid "Enable"
+msgstr "Aktivera"
 
-#: plinth/modules/email_server/templates/email_alias.html:29
-msgid "Delete selected"
-msgstr "Tabort valda"
-
-#: plinth/modules/email_server/templates/email_alias.html:33
+#: plinth/modules/email_server/templates/email_alias.html:32
 msgid "Create a new email alias"
 msgstr "Skapa ett nytt e -postalias"
 
-#: plinth/modules/email_server/templates/email_alias.html:40
+#: plinth/modules/email_server/templates/email_alias.html:38
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Lägg till"
 
-#: plinth/modules/email_server/templates/email_domains.html:19
-msgid "New value"
-msgstr "Nytt värde"
-
-#: plinth/modules/email_server/templates/email_domains.html:31
-#: plinth/modules/email_server/templates/email_security.html:23
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Uppdatera"
-
-#: plinth/modules/email_server/templates/email_form_base.html:12
-msgid "There was a problem with your request. Please try again."
-msgstr "Ett problem uppstod med din begäran. Var god försök igen."
-
-#: plinth/modules/email_server/templates/email_security.html:13
-msgid "Postfix TLS"
-msgstr "Postfix TLS"
-
-#: plinth/modules/email_server/templates/email_security.html:18
-msgid "Dovecot TLS"
-msgstr "Dovecot TLS"
-
-#: plinth/modules/email_server/templates/email_server.html:14
-msgid "Visit Rspamd administration interface"
-msgstr "Besök Rspamd administrationsgränssnitt"
-
-#: plinth/modules/email_server/templates/email_server.html:18
-msgid "Service Alert"
-msgstr "Servicevarning"
-
-#: plinth/modules/email_server/templates/email_server.html:38
-msgid "Repair"
-msgstr "Reparera"
-
-#: plinth/modules/email_server/templates/my_mail.html:15
-msgid "You do not have a home directory."
-msgstr "Du har ingen arbetskatalog."
-
-#: plinth/modules/email_server/templates/my_mail.html:17
-msgid "Create one to begin receiving emails."
-msgstr "Skapa en för att börja ta emot e-post."
-
-#: plinth/modules/email_server/templates/my_mail.html:22
-msgid "Create home directory"
-msgstr "Skapa arbetskatalog"
-
-#: plinth/modules/email_server/templates/my_mail.html:27
-msgid "Your home directory is ready to receive emails."
-msgstr ""
-
-#: plinth/modules/email_server/templates/tls_form.html:10
-msgid "Keep current settings"
-msgstr "Behåll nuvarande inställningar"
-
-#: plinth/modules/email_server/templates/tls_form.html:19
-msgid "Use Let's Encrypt"
-msgstr "Använd Let's Encrypt"
-
-#: plinth/modules/email_server/templates/tls_form.html:24
-msgid "Common name"
-msgstr "Vanligt namn"
-
-#: plinth/modules/email_server/templates/tls_form.html:38
-msgid "Use custom values"
-msgstr "Använd anpassade värden"
-
-#: plinth/modules/email_server/templates/tls_form.html:43
-msgid "Certificate path"
-msgstr "Sökväg för certifikat"
-
-#: plinth/modules/email_server/templates/tls_form.html:53
-msgid "Private key path"
-msgstr "Sökväg för den privata nyckeln"
-
-#: plinth/modules/email_server/templates/tls_form.html:67
-msgid "Use system default"
-msgstr "Använd systemstandard"
-
-#: plinth/modules/email_server/views.py:22
-#: plinth/modules/email_server/views.py:30 plinth/templates/base.html:110
-msgid "Home"
-msgstr "Hem"
-
-#: plinth/modules/email_server/views.py:23
-msgid "My Mail"
-msgstr "Min e-post"
-
-#: plinth/modules/email_server/views.py:24
-#: plinth/modules/email_server/views.py:31
-msgid "My Aliases"
-msgstr "Mina alias"
-
-#: plinth/modules/email_server/views.py:25
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:45
-msgid "Security"
-msgstr "Säkerhet"
-
-#: plinth/modules/email_server/views.py:26
+#: plinth/modules/email_server/templates/email_server.html:16
+#: plinth/modules/email_server/views.py:199
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:37
 msgid "Domains"
 msgstr "Domäner"
 
-#: plinth/modules/email_server/views.py:102
+#: plinth/modules/email_server/templates/email_server.html:19
+msgid "Manage Spam"
+msgstr "Hantera skräppost"
+
+#: plinth/modules/email_server/templates/email_server.html:30
+msgid "Service Alert"
+msgstr "Servicevarning"
+
+#: plinth/modules/email_server/templates/email_server.html:50
+msgid "Repair"
+msgstr "Reparera"
+
+#: plinth/modules/email_server/views.py:64
 #, python-brace-format
 msgid "Internal error in {0}"
 msgstr "Internt fel i {0}"
 
-#: plinth/modules/email_server/views.py:105
+#: plinth/modules/email_server/views.py:67
 msgid "Check syslog for more information"
 msgstr "Kontrollera syslog för mer information"
 
-#: plinth/modules/email_server/views.py:180
-msgid "Enabled aliases"
-msgstr "Aktiverade alias"
+#: plinth/modules/email_server/views.py:217
+msgid "Error updating configuration"
+msgstr "Fel vid uppdatering av konfiguration"
 
-#: plinth/modules/email_server/views.py:181
-msgid "Disabled aliases"
-msgstr "Inaktiverade alias"
+#: plinth/modules/email_server/views.py:219 plinth/modules/tor/views.py:137
+#: plinth/views.py:219
+msgid "Setting unchanged"
+msgstr "Instänllningar oförändrade"
 
-#: plinth/modules/firewall/__init__.py:33
+#: plinth/modules/firewall/__init__.py:34
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2348,7 +2270,7 @@ msgstr ""
 "nätverkstrafiken på din {box_name}. Att ha en brandvägg aktiverad och "
 "korrekt konfigurerad minskar risken för säkerhetshot från Internet."
 
-#: plinth/modules/firewall/__init__.py:66
+#: plinth/modules/firewall/__init__.py:68
 msgid "Firewall"
 msgstr "Brandvägg"
 
@@ -2383,19 +2305,6 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "Service/Port"
-
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
-msgid "Enabled"
-msgstr "Aktiverad"
-
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "Inaktiverad"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -2482,7 +2391,7 @@ msgstr "Starta installationsprogrammet"
 msgid "Setup Complete"
 msgstr "Installationen Klar"
 
-#: plinth/modules/gitweb/__init__.py:29
+#: plinth/modules/gitweb/__init__.py:30
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2500,7 +2409,7 @@ msgstr ""
 "Git-klient eller med flera tillgängliga grafiska klienter. Och du kan dela "
 "din kod med människor runt om i världen."
 
-#: plinth/modules/gitweb/__init__.py:36
+#: plinth/modules/gitweb/__init__.py:37
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -2508,15 +2417,15 @@ msgstr ""
 "För att lära dig mer om hur du använder Git besök<a href=\"https://git-scm."
 "com/docs/gittutorial\">Git handledning</a>."
 
-#: plinth/modules/gitweb/__init__.py:52
+#: plinth/modules/gitweb/__init__.py:53
 msgid "Read-write access to Git repositories"
 msgstr "Läs-skrivåtkomst till Git-respositories"
 
-#: plinth/modules/gitweb/__init__.py:57 plinth/modules/gitweb/manifest.py:10
+#: plinth/modules/gitweb/__init__.py:58 plinth/modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:58
+#: plinth/modules/gitweb/__init__.py:59
 msgid "Simple Git Hosting"
 msgstr "Enkelt Git hosting"
 
@@ -2946,7 +2855,7 @@ msgstr "Om {box_name}"
 msgid "{box_name} Manual"
 msgstr "{box_name} Manual"
 
-#: plinth/modules/i2p/__init__.py:29
+#: plinth/modules/i2p/__init__.py:30
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -2958,7 +2867,7 @@ msgstr ""
 "anonymitet genom att skicka krypterad trafik via ett volontärstyrt nätverk "
 "distribuerat över hela världen."
 
-#: plinth/modules/i2p/__init__.py:33
+#: plinth/modules/i2p/__init__.py:34
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p.net"
 "\" target=\"_blank\">homepage</a>."
@@ -2966,7 +2875,7 @@ msgstr ""
 "För att hitta mer information om I2P på deras projekt<a href=\"https://"
 "geti2p.net\" target=\"_blank\">hemsida</a>."
 
-#: plinth/modules/i2p/__init__.py:35
+#: plinth/modules/i2p/__init__.py:36
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
@@ -2974,19 +2883,19 @@ msgstr ""
 "Det första besöket i det medföljande webbgränssnittet kommer att initiera "
 "konfigurationsprocessen."
 
-#: plinth/modules/i2p/__init__.py:57
+#: plinth/modules/i2p/__init__.py:58
 msgid "Manage I2P application"
 msgstr "Hantera I2P appen"
 
-#: plinth/modules/i2p/__init__.py:60 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:61 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:61 plinth/modules/tor/__init__.py:56
+#: plinth/modules/i2p/__init__.py:62 plinth/modules/tor/__init__.py:58
 msgid "Anonymity Network"
 msgstr "Anonymitetsnätverk"
 
-#: plinth/modules/i2p/__init__.py:84
+#: plinth/modules/i2p/__init__.py:88
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
@@ -3031,7 +2940,7 @@ msgstr ""
 "to-peer-nätverk. Ladda ner filer genom att lägga till torrenter eller skapa "
 "en ny torrent för att dela en fil."
 
-#: plinth/modules/ikiwiki/__init__.py:28
+#: plinth/modules/ikiwiki/__init__.py:29
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -3041,7 +2950,7 @@ msgstr ""
 "lightweight pålägg språken, inklusive markdown, och gemensam blogging "
 "funktionellitet sådan som kommentarerna och RSS feeds."
 
-#: plinth/modules/ikiwiki/__init__.py:32
+#: plinth/modules/ikiwiki/__init__.py:33
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -3054,15 +2963,15 @@ msgstr ""
 "<i>redigera</i> befindliga. I <a href=\"{users_url}\">Användarkonfiguration</"
 "a> kan du ändra dessa behörigheter eller lägga till nya användare."
 
-#: plinth/modules/ikiwiki/__init__.py:53 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:54 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "Ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:54
+#: plinth/modules/ikiwiki/__init__.py:55
 msgid "Wiki and Blog"
 msgstr "Wiki och Blogg"
 
-#: plinth/modules/ikiwiki/__init__.py:75
+#: plinth/modules/ikiwiki/__init__.py:79
 msgid "View and edit wiki applications"
 msgstr "Visa och redigera wiki-applikationer"
 
@@ -3141,11 +3050,11 @@ msgstr "{title} borttagen."
 msgid "Could not delete {title}: {error}"
 msgstr "Kunde inte ta bort {title}: {error}"
 
-#: plinth/modules/infinoted/__init__.py:26
+#: plinth/modules/infinoted/__init__.py:27
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "infinoted är en server för Gobby, en kollaborativ textredigerare."
 
-#: plinth/modules/infinoted/__init__.py:28
+#: plinth/modules/infinoted/__init__.py:29
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -3156,11 +3065,11 @@ msgstr ""
 "</a>, desktop client och installera det. Starta sedan Gobby och välj "
 "\"Anslut till server\" och ange ditt {box_name} domännamn."
 
-#: plinth/modules/infinoted/__init__.py:46
+#: plinth/modules/infinoted/__init__.py:48
 msgid "infinoted"
 msgstr "Infinoted"
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 msgid "Gobby Server"
 msgstr "Gobby-Server"
 
@@ -3181,7 +3090,7 @@ msgstr ""
 "Starta Gobby och välj \"Anslut till server\" och ange ditt {box_name} "
 "domännamn."
 
-#: plinth/modules/jsxc/__init__.py:24
+#: plinth/modules/jsxc/__init__.py:25
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3189,11 +3098,11 @@ msgstr ""
 "JSXC är en webbklient för XMPP. Vanligtvis används den med en XMPP-server "
 "som körs lokalt."
 
-#: plinth/modules/jsxc/__init__.py:44 plinth/modules/jsxc/manifest.py:7
+#: plinth/modules/jsxc/__init__.py:46 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:45
+#: plinth/modules/jsxc/__init__.py:47
 msgid "Chat Client"
 msgstr "Chat klient"
 
@@ -3202,7 +3111,7 @@ msgstr "Chat klient"
 msgid "JavaScript license information"
 msgstr "JavaScript-licensinformation"
 
-#: plinth/modules/letsencrypt/__init__.py:35
+#: plinth/modules/letsencrypt/__init__.py:36
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -3217,7 +3126,7 @@ msgstr ""
 "domän.  Detta sker genom att den bevisar sig vara ägare till en domän för "
 "Let's Encrypt, en auktoriserad certifikatutfärdare ."
 
-#: plinth/modules/letsencrypt/__init__.py:41
+#: plinth/modules/letsencrypt/__init__.py:42
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -3229,15 +3138,15 @@ msgstr ""
 "Läs igenom och acceptera <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt användaravtal</a> innan du använder denna tjänst."
 
-#: plinth/modules/letsencrypt/__init__.py:65
+#: plinth/modules/letsencrypt/__init__.py:67
 msgid "Let's Encrypt"
 msgstr "Låt oss kryptera"
 
-#: plinth/modules/letsencrypt/__init__.py:66
+#: plinth/modules/letsencrypt/__init__.py:68
 msgid "Certificates"
 msgstr "Certifikaterna"
 
-#: plinth/modules/letsencrypt/__init__.py:96
+#: plinth/modules/letsencrypt/__init__.py:104
 msgid "Cannot test: No domains are configured."
 msgstr "Kan inte testa: Inga domäner är konfigurerade."
 
@@ -3342,7 +3251,7 @@ msgstr "Certifikatet framgångsrikt återkallat för domänen {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Det gick inte att ta bort certifikatet för domänen {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:37
+#: plinth/modules/matrixsynapse/__init__.py:38
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3359,7 +3268,7 @@ msgstr ""
 "fungera. Användare på en given Matrix-server kan samtala med användare på "
 "alla andra Matrix-servrar via federation."
 
-#: plinth/modules/matrixsynapse/__init__.py:45
+#: plinth/modules/matrixsynapse/__init__.py:46
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
@@ -3368,7 +3277,7 @@ msgstr ""
 "Matrix Synapse behöver en STUN/TURN-server för ljud-/videosamtal. Installera "
 "<a href=\"{coturn_url}\">Coturn</a>-appen eller konfigurera en extern server."
 
-#: plinth/modules/matrixsynapse/__init__.py:76
+#: plinth/modules/matrixsynapse/__init__.py:78
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3463,7 +3372,7 @@ msgstr ""
 "certifikat. Gå till <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> för "
 "att få en sådan."
 
-#: plinth/modules/mediawiki/__init__.py:28
+#: plinth/modules/mediawiki/__init__.py:29
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3475,7 +3384,7 @@ msgstr ""
 "kan använda Media att vara värd för en wiki-liknande webbplats, göra "
 "anteckningar eller samarbeta med vänner på projekt."
 
-#: plinth/modules/mediawiki/__init__.py:32
+#: plinth/modules/mediawiki/__init__.py:33
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3489,7 +3398,7 @@ msgstr ""
 "fler användarkonton från MediaWiki själv genom att gå till <a href=\"/"
 "mediawiki/index.php/Special:CreateAccount\">Special: Skapa konto</a> sida."
 
-#: plinth/modules/mediawiki/__init__.py:38
+#: plinth/modules/mediawiki/__init__.py:39
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3497,12 +3406,12 @@ msgstr ""
 "Alla som har en länk till denna wiki kan läsa den. Endast användare som är "
 "inloggade kan göra ändringar i innehållet."
 
-#: plinth/modules/mediawiki/__init__.py:59
+#: plinth/modules/mediawiki/__init__.py:60
 #: plinth/modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:60 plinth/templates/index.html:132
+#: plinth/modules/mediawiki/__init__.py:61 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -3595,7 +3504,7 @@ msgstr "Standardskal ändrat"
 msgid "Server URL updated"
 msgstr "Serverns URL har uppdaterats"
 
-#: plinth/modules/minetest/__init__.py:39
+#: plinth/modules/minetest/__init__.py:40
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -3608,11 +3517,11 @@ msgstr ""
 "(30000). För att ansluta till servern, en <a href=\"http://www.minetest.net/"
 "downloads/\">Minetest klient</a> behövs."
 
-#: plinth/modules/minetest/__init__.py:61 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:63 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
 msgstr "Minetest"
 
-#: plinth/modules/minetest/__init__.py:62
+#: plinth/modules/minetest/__init__.py:64
 msgid "Block Sandbox"
 msgstr "Block sandbox"
 
@@ -3683,7 +3592,7 @@ msgstr "PVP-konfiguration uppdaterad"
 msgid "Damage configuration updated"
 msgstr "Skadekonfiguration uppdaterad"
 
-#: plinth/modules/minidlna/__init__.py:25
+#: plinth/modules/minidlna/__init__.py:26
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3700,15 +3609,15 @@ msgstr ""
 "certifiering som bärbara mediaspelare, smartphones, TV-apparater och "
 "spelsystem (såsom PS3 och Xbox 360) eller applikationer som totem och Kodi."
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "Media streaming server"
 msgstr "Media Streaming Server"
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:50
+#: plinth/modules/minidlna/__init__.py:51
 msgid "Simple Media Server"
 msgstr "Enkel mediaserver"
 
@@ -3753,7 +3662,7 @@ msgstr "Den angivna katalogen finns inte."
 msgid "Updated media directory"
 msgstr "Uppdaterad mediekatalog"
 
-#: plinth/modules/mldonkey/__init__.py:28
+#: plinth/modules/mldonkey/__init__.py:29
 msgid ""
 "MLDonkey is a peer-to-peer file sharing application used to exchange large "
 "files. It can participate in multiple peer-to-peer networks including "
@@ -3763,7 +3672,7 @@ msgstr ""
 "stora filer. Det kan delta i flera peer-to-peer-nätverk, inklusive eDonkey, "
 "Kademlia, Overnet, BitTorrent och DirectConnect."
 
-#: plinth/modules/mldonkey/__init__.py:31
+#: plinth/modules/mldonkey/__init__.py:32
 msgid ""
 "Users belonging to admin and ed2k group can control it through the web "
 "interface. Users in the admin group can also control it through any of the "
@@ -3774,23 +3683,23 @@ msgstr ""
 "någon av de separata mobil-eller skrivbords frontend-ändarna eller ett "
 "Telnet-gränssnitt. Se manualen."
 
-#: plinth/modules/mldonkey/__init__.py:36
+#: plinth/modules/mldonkey/__init__.py:37
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
 msgstr ""
 "På {box_name}, kan nedladdade filer hittas i /var/lib/mldonkey/ mappen."
 
-#: plinth/modules/mldonkey/__init__.py:54
+#: plinth/modules/mldonkey/__init__.py:55
 msgid "Download files using eDonkey applications"
 msgstr "Ladda ner filer med eDonkey program"
 
-#: plinth/modules/mldonkey/__init__.py:57
+#: plinth/modules/mldonkey/__init__.py:58
 #: plinth/modules/mldonkey/manifest.py:11
 msgid "MLDonkey"
 msgstr "Mldonkey"
 
-#: plinth/modules/mldonkey/__init__.py:59
+#: plinth/modules/mldonkey/__init__.py:60
 msgid "Peer-to-peer File Sharing"
 msgstr "Peer-to-peer fildelning"
 
@@ -3802,7 +3711,7 @@ msgstr "KML Donkey"
 msgid "AMLDonkey"
 msgstr "AMLDonkey"
 
-#: plinth/modules/monkeysphere/__init__.py:20
+#: plinth/modules/monkeysphere/__init__.py:21
 msgid ""
 "With Monkeysphere, an OpenPGP key can be generated for each configured "
 "domain serving SSH. The OpenPGP public key can then be uploaded to the "
@@ -3822,7 +3731,7 @@ msgstr ""
 "Se <a href=\"http://web.monkeysphere.info/getting-started-ssh/\"> "
 "Monkeysphere SSH dokumentation</a> för mer information."
 
-#: plinth/modules/monkeysphere/__init__.py:28
+#: plinth/modules/monkeysphere/__init__.py:29
 msgid ""
 "Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
 "(HTTPS) certificate installed on this machine. The OpenPGP public key can "
@@ -3840,7 +3749,7 @@ msgstr ""
 "program som finns på <a href=\"https://web.monkeysphere.info/download/"
 "\">Monkeyshere webbsida</a>."
 
-#: plinth/modules/monkeysphere/__init__.py:50
+#: plinth/modules/monkeysphere/__init__.py:52
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
 msgid "Monkeysphere"
 msgstr "Monkeysphere"
@@ -3964,7 +3873,7 @@ msgstr "Publicerade nyckeln till nyckelserver."
 msgid "Error occurred while publishing key."
 msgstr "Fel uppstod när nyckeln publicerades."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3972,7 +3881,7 @@ msgstr ""
 "Mumble är ett program för röstchatt med öppen källkod, låg latens, "
 "kryptering och hög ljudkvalitet."
 
-#: plinth/modules/mumble/__init__.py:35
+#: plinth/modules/mumble/__init__.py:36
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3982,11 +3891,11 @@ msgstr ""
 "\"http://mumble.info\"> Appar</a> finns för att ansluta till Mumble från din "
 "dator- och Android-enheter."
 
-#: plinth/modules/mumble/__init__.py:52 plinth/modules/mumble/manifest.py:9
+#: plinth/modules/mumble/__init__.py:54 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:53
+#: plinth/modules/mumble/__init__.py:55
 msgid "Voice Chat"
 msgstr "Röstchatt"
 
@@ -4044,7 +3953,7 @@ msgstr "Alla webbappar"
 msgid "Services"
 msgstr "Tjänster"
 
-#: plinth/modules/networks/__init__.py:41
+#: plinth/modules/networks/__init__.py:42
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4052,7 +3961,7 @@ msgstr ""
 "Konfigurera nätverksenheter. Anslut till Internet via Ethernet, Wi-Fi eller "
 "PPPoE. Dela den anslutningen med andra enheter i nätverket."
 
-#: plinth/modules/networks/__init__.py:43
+#: plinth/modules/networks/__init__.py:44
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4060,11 +3969,11 @@ msgstr ""
 "Enheter som administreras via andra metoder kanske inte är tillgängliga för "
 "konfiguration här."
 
-#: plinth/modules/networks/__init__.py:61
+#: plinth/modules/networks/__init__.py:63
 msgid "Networks"
 msgstr "Nätverk"
 
-#: plinth/modules/networks/__init__.py:179
+#: plinth/modules/networks/__init__.py:184
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "Använder DNSSEC på IPv{kind}"
@@ -4631,6 +4540,11 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Den här anslutningen är inte aktiv."
 
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:47
+msgid "Security"
+msgstr "Säkerhet"
+
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
 #: plinth/modules/networks/templates/connection_show.html:303
@@ -5115,7 +5029,7 @@ msgstr "generisk"
 msgid "TUN or TAP interface"
 msgstr "TUN- eller TAP-gränssnitt"
 
-#: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:49
+#: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:51
 #: plinth/modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
@@ -5206,7 +5120,7 @@ msgstr "Anslutning {name} borttagen."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Det gick inte att ta bort anslutning: Anslutning hittades inte."
 
-#: plinth/modules/openvpn/__init__.py:30
+#: plinth/modules/openvpn/__init__.py:31
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -5223,20 +5137,20 @@ msgstr ""
 "tillhandahålls av {box_name}. Du kan också komma åt resten av Internet via "
 "{box_name} för ökad säkerhet och anonymitet."
 
-#: plinth/modules/openvpn/__init__.py:58
+#: plinth/modules/openvpn/__init__.py:59
 msgid "Connect to VPN services"
 msgstr "Ansluta till VPN-tjänster"
 
-#: plinth/modules/openvpn/__init__.py:61 plinth/modules/openvpn/manifest.py:17
+#: plinth/modules/openvpn/__init__.py:62 plinth/modules/openvpn/manifest.py:17
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:62
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/openvpn/__init__.py:63
+#: plinth/modules/wireguard/__init__.py:53
 msgid "Virtual Private Network"
 msgstr "Virtuellt privat nätverk"
 
-#: plinth/modules/openvpn/__init__.py:73
+#: plinth/modules/openvpn/__init__.py:74
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5317,7 +5231,7 @@ msgstr ""
 msgid "Download my profile"
 msgstr "Ladda ner min profil"
 
-#: plinth/modules/pagekite/__init__.py:28
+#: plinth/modules/pagekite/__init__.py:29
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -5330,18 +5244,18 @@ msgstr ""
 "tjänster inte kan nås från resten av Internet. Detta inkluderar följande "
 "situationer:"
 
-#: plinth/modules/pagekite/__init__.py:33
+#: plinth/modules/pagekite/__init__.py:34
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} är bakom en begränsad brandvägg."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
 "{box_name} är anslutet till en (trådlös) router som du inte kontrollerar."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -5349,7 +5263,7 @@ msgstr ""
 "Din ISP ger dig inte en extern IP-adress och ger istället Internet "
 "uppkoppling via NAT."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -5357,11 +5271,11 @@ msgstr ""
 "Din ISP ger dig inte en statisk IP-adress och din IP-adress ändras varje "
 "gång du ansluter till Internet."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 msgid "Your ISP limits incoming connections."
 msgstr "Din ISP begränsar inkommande anslutningar."
 
-#: plinth/modules/pagekite/__init__.py:44
+#: plinth/modules/pagekite/__init__.py:45
 #, python-brace-format
 msgid ""
 "PageKite works around NAT, firewalls and IP address limitations by using a "
@@ -5375,15 +5289,15 @@ msgstr ""
 "pagekite. net </a>. I framtiden kan det vara möjligt att använda din kompis "
 "{box_name} för detta."
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:67
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:66
+#: plinth/modules/pagekite/__init__.py:68
 msgid "Public Visibility"
 msgstr "Offentlig Synlighet"
 
-#: plinth/modules/pagekite/__init__.py:76
+#: plinth/modules/pagekite/__init__.py:81
 msgid "PageKite Domain"
 msgstr "PageKite domän"
 
@@ -5530,12 +5444,12 @@ msgstr ""
 "Se SSH-klientinstallation <a href =\"https://pagekite.net/wiki/Howto/"
 "SshoverPageKite/\">instruktioner</a>"
 
-#: plinth/modules/performance/__init__.py:17
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:18
+#: plinth/modules/performance/__init__.py:48
 msgid "Performance"
 msgstr "Prestanda"
 
-#: plinth/modules/performance/__init__.py:26
+#: plinth/modules/performance/__init__.py:27
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
@@ -5546,7 +5460,7 @@ msgstr ""
 "användningsmönster och om hårdvaran är överbelastad av användare och "
 "tjänster."
 
-#: plinth/modules/performance/__init__.py:30
+#: plinth/modules/performance/__init__.py:31
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
@@ -5554,7 +5468,7 @@ msgstr ""
 "Prestandamätvärden samlas in av Performance Co-Pilot och kan visas med "
 "Cockpit-appen."
 
-#: plinth/modules/performance/__init__.py:47
+#: plinth/modules/performance/__init__.py:49
 msgid "System Monitoring"
 msgstr "Systemövervakning"
 
@@ -5625,7 +5539,7 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Stäng av nu"
 
-#: plinth/modules/privoxy/__init__.py:30
+#: plinth/modules/privoxy/__init__.py:31
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -5635,7 +5549,7 @@ msgstr ""
 "för att förbättra sekretessen, ändra webbsidan data och HTTP-huvuden, "
 "kontrollera åtkomst och ta bort annonser och andra avskyvärda Internet Junk. "
 
-#: plinth/modules/privoxy/__init__.py:35
+#: plinth/modules/privoxy/__init__.py:36
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -5650,20 +5564,20 @@ msgstr ""
 "\"http://config.privoxy.org\">http://config.privoxy.org/</a> eller <a href="
 "\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:56
+#: plinth/modules/privoxy/__init__.py:58
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:57
+#: plinth/modules/privoxy/__init__.py:59
 msgid "Web Proxy"
 msgstr "Webbproxy"
 
-#: plinth/modules/privoxy/__init__.py:115
+#: plinth/modules/privoxy/__init__.py:120
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Åtkomst till {url} med proxy {proxy} på TCP {kind}"
 
-#: plinth/modules/quassel/__init__.py:34
+#: plinth/modules/quassel/__init__.py:35
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -5680,7 +5594,7 @@ msgstr ""
 "quassel-klienter från ett skrivbord eller en mobil kan användas för att "
 "ansluta och koppla från den."
 
-#: plinth/modules/quassel/__init__.py:41
+#: plinth/modules/quassel/__init__.py:42
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -5692,11 +5606,11 @@ msgstr ""
 "downloads\" >Desktop</a> och <a href=\"http://quasseldroid.iskrembilen.com/"
 "\">mobila</a>-enheter är tillgängliga."
 
-#: plinth/modules/quassel/__init__.py:60 plinth/modules/quassel/manifest.py:9
+#: plinth/modules/quassel/__init__.py:62 plinth/modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:61
+#: plinth/modules/quassel/__init__.py:63
 msgid "IRC Client"
 msgstr "IRC-klient"
 
@@ -5704,7 +5618,7 @@ msgstr "IRC-klient"
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:28
+#: plinth/modules/radicale/__init__.py:29
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5719,7 +5633,7 @@ msgstr ""
 "clients\">stöds klientprogram</a>. Radicale kan nås av alla användare med en "
 "{box_name} inloggning."
 
-#: plinth/modules/radicale/__init__.py:34
+#: plinth/modules/radicale/__init__.py:35
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -5729,12 +5643,12 @@ msgstr ""
 "skapandet av nya kalendrar och adressböcker. Det stöder inte att lägga till "
 "händelser eller kontakter, som måste göras med hjälp av en separat klient."
 
-#: plinth/modules/radicale/__init__.py:55
+#: plinth/modules/radicale/__init__.py:57
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:56
+#: plinth/modules/radicale/__init__.py:58
 msgid "Calendar and Addressbook"
 msgstr "Kalender och adressbok"
 
@@ -5815,7 +5729,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Konfiguration av åtkomsträttigheter uppdaterad"
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5827,7 +5741,7 @@ msgstr ""
 "förväntar dig från en e-postklient, inklusive MIME-stöd, adressbok, "
 "mappmanipulering, meddelande sökning och stavningskontroll."
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5841,7 +5755,7 @@ msgstr ""
 "kryptering (rekommenderas), fyll server fält som <code>imaps://imap.exempel."
 "kom</code>."
 
-#: plinth/modules/roundcube/__init__.py:33
+#: plinth/modules/roundcube/__init__.py:34
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5857,11 +5771,11 @@ msgstr ""
 "security/lesssecureapps\" >https://www.Google.com/settings/Security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:56
+#: plinth/modules/roundcube/__init__.py:58
 msgid "Email Client"
 msgstr "E-postklient"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:33
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
@@ -5869,7 +5783,7 @@ msgstr ""
 "Samba gör det möjligt att dela filer och mappar mellan FreedomBox och andra "
 "datorer i ditt lokala nätverk."
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:36
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5882,11 +5796,11 @@ msgstr ""
 "\\{hostname} (på Windows) eller SMB://{hostname}. local (på Linux och Mac). "
 "Det finns tre typer av shares som du kan välja mellan: "
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:41
 msgid "Open share - accessible to everyone in your local network."
 msgstr "Öppen delning - tillgänglig för alla i ditt lokala nätverk."
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
@@ -5894,7 +5808,7 @@ msgstr ""
 "Gruppdelning - endast tillgänglig för FreedomBox-användare som ingår i "
 "freedombox-delningsgruppen."
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:44
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
@@ -5902,15 +5816,15 @@ msgstr ""
 "Hemdelning - varje användare i gruppen freedombox-share kan ha sitt eget "
 "privata utrymme."
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:60
 msgid "Access to the private shares"
 msgstr "Tillgång till de privata shares"
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:63
 msgid "Samba"
 msgstr "Samba"
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:64
 msgid "Network File Storage"
 msgstr "Nätverk För Fillagring"
 
@@ -6026,7 +5940,7 @@ msgstr "Share resurs inaktiverat."
 msgid "Error disabling share: {error_message}"
 msgstr "Fel vid inaktivering av resurs: {error_message}"
 
-#: plinth/modules/searx/__init__.py:25
+#: plinth/modules/searx/__init__.py:26
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -6034,7 +5948,7 @@ msgstr ""
 "Searx är en sekretess-respektera Internet metasökning motor. Det aggregrates "
 "och visar resultat från flera sökmotorer."
 
-#: plinth/modules/searx/__init__.py:27
+#: plinth/modules/searx/__init__.py:28
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -6042,15 +5956,15 @@ msgstr ""
 "Searx kan användas för att undvika spårning och profilering av sökmotorer. "
 "Den lagrar inga cookies som standard."
 
-#: plinth/modules/searx/__init__.py:45
+#: plinth/modules/searx/__init__.py:46
 msgid "Search the web"
 msgstr "Sök på webben"
 
-#: plinth/modules/searx/__init__.py:48 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:49 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:50
 msgid "Web Search"
 msgstr "Webbsökning"
 
@@ -6230,11 +6144,11 @@ msgstr "Fel vid inställning av begränsad åtkomst: {exception}"
 msgid "Updated security configuration"
 msgstr "Uppdaterad säkerhetskonfiguration"
 
-#: plinth/modules/shaarli/__init__.py:20
+#: plinth/modules/shaarli/__init__.py:21
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli kan du spara och dela bokmärken."
 
-#: plinth/modules/shaarli/__init__.py:21
+#: plinth/modules/shaarli/__init__.py:22
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
@@ -6242,15 +6156,15 @@ msgstr ""
 "Observera att Shaarli endast stöd för ett enskilt användarkonto, som du "
 "behöver för att ställa den första besök."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:39 plinth/modules/shaarli/manifest.py:6
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:40
 msgid "Bookmarks"
 msgstr "Bokmärken"
 
-#: plinth/modules/shadowsocks/__init__.py:26
+#: plinth/modules/shadowsocks/__init__.py:27
 msgid ""
 "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
 "your Internet traffic. It can be used to bypass Internet filtering and "
@@ -6260,7 +6174,7 @@ msgstr ""
 "Internet-trafik. Det kan användas för att kringgå Internetfiltrering och "
 "censur."
 
-#: plinth/modules/shadowsocks/__init__.py:30
+#: plinth/modules/shadowsocks/__init__.py:31
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -6273,7 +6187,7 @@ msgstr ""
 "enheter kan ansluta till denna proxy och deras data kommer att krypteras och "
 "proxied via Shadowsocks-servern."
 
-#: plinth/modules/shadowsocks/__init__.py:35
+#: plinth/modules/shadowsocks/__init__.py:36
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -6281,11 +6195,11 @@ msgstr ""
 "Till använda Shadowsocks efter setup, sätta den SOCKS5 genom fullmakt URL i "
 "din anordning, beter eller applicering till http://freedombox_address: 1080/"
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:53
 msgid "Shadowsocks"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:53
+#: plinth/modules/shadowsocks/__init__.py:55
 msgid "Socks5 Proxy"
 msgstr "Socks5 proxy"
 
@@ -6421,7 +6335,7 @@ msgstr "Redigera share"
 msgid "Share deleted."
 msgstr "Share borttagen."
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:28
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6431,7 +6345,7 @@ msgstr ""
 "Dessa kan användas för att återställa systemet till ett tidigare känt skick "
 "i händelse av oönskade ändringar i systemet."
 
-#: plinth/modules/snapshot/__init__.py:31
+#: plinth/modules/snapshot/__init__.py:32
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6442,7 +6356,7 @@ msgstr ""
 "även före och efter en programvaruinstallation. Äldre ögonblicksbilder "
 "kommer att rensas automatiskt enligt inställningarna nedan."
 
-#: plinth/modules/snapshot/__init__.py:34
+#: plinth/modules/snapshot/__init__.py:35
 msgid ""
 "Snapshots currently work on btrfs file systems only and on the root "
 "partition only. Snapshots are not a replacement for <a href=\"/plinth/sys/"
@@ -6453,7 +6367,7 @@ msgstr ""
 "\"/plinth/sys/backups\">säkerhetskopior</a> eftersom de bara kan lagras på "
 "samma partition. "
 
-#: plinth/modules/snapshot/__init__.py:56
+#: plinth/modules/snapshot/__init__.py:58
 msgid "Storage Snapshots"
 msgstr "Ögonblicksbilder av lagring"
 
@@ -6658,7 +6572,7 @@ msgstr "Systemet måste startas om för att slutföra återställningen."
 msgid "Rollback to Snapshot"
 msgstr "Återställning till ögonblicksbild"
 
-#: plinth/modules/ssh/__init__.py:30
+#: plinth/modules/ssh/__init__.py:31
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -6670,7 +6584,7 @@ msgstr ""
 "administrativa uppgifter, kopiera filer eller köra andra tjänster med sådana "
 "anslutningar."
 
-#: plinth/modules/ssh/__init__.py:49
+#: plinth/modules/ssh/__init__.py:51
 msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell-Server (SSH)"
 
@@ -6716,7 +6630,7 @@ msgstr "SSH-autentisering med lösenord inaktiverat."
 msgid "SSH authentication with password enabled."
 msgstr "SSH-autentisering med lösenord aktiverat."
 
-#: plinth/modules/sso/__init__.py:34
+#: plinth/modules/sso/__init__.py:36
 msgid "Single Sign On"
 msgstr "Enkel inloggning på"
 
@@ -6724,7 +6638,7 @@ msgstr "Enkel inloggning på"
 msgid "Login"
 msgstr "Logga in"
 
-#: plinth/modules/storage/__init__.py:29
+#: plinth/modules/storage/__init__.py:30
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -6735,106 +6649,106 @@ msgstr ""
 "{box_name}. Du kan visa lagringsmedia som för närvarande används, montera "
 "och demontera flyttbara media, expandera rotpartitionen etc."
 
-#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:316
-#: plinth/modules/storage/__init__.py:347
+#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:324
+#: plinth/modules/storage/__init__.py:355
 msgid "Storage"
 msgstr "Lagring"
 
-#: plinth/modules/storage/__init__.py:210
+#: plinth/modules/storage/__init__.py:218
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:222
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} Kib"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:226
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Mib"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:230
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Gib"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:233
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Tib"
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation failed."
 msgstr "Åtgärden misslyckades."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:247
 msgid "The operation was cancelled."
 msgstr "Operationen avbröts."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:249
 msgid "The device is already unmounting."
 msgstr "Enheten lossnar redan."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "Åtgärden stöds inte på grund av saknade drivrutiner/verktygsstöd."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:254
 msgid "The operation timed out."
 msgstr "Åtgärden orsakade timeout."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Åtgärden skulle väcka en disk som är i ett djupviloläge."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:259
 msgid "Attempting to unmount a device that is busy."
 msgstr "Försöker avmontera en enhet som är upptagen."
 
-#: plinth/modules/storage/__init__.py:253
+#: plinth/modules/storage/__init__.py:261
 msgid "The operation has already been cancelled."
 msgstr "Operationen har redan avbrutits."
 
-#: plinth/modules/storage/__init__.py:255
-#: plinth/modules/storage/__init__.py:257
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:267
 msgid "Not authorized to perform the requested operation."
 msgstr "Inte behörig att utföra den begärda åtgärden."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:269
 msgid "The device is already mounted."
 msgstr "Enheten är redan monterad."
 
-#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:271
 msgid "The device is not mounted."
 msgstr "Enheten är inte monterad."
 
-#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:273
 msgid "Not permitted to use the requested option."
 msgstr "Inte tillåtet att använda det begärda alternativet."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:275
 msgid "The device is mounted by another user."
 msgstr "Enheten monteras av en annan användare."
 
-#: plinth/modules/storage/__init__.py:311
+#: plinth/modules/storage/__init__.py:319
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Lågt utrymme på systempartitionen: {percent_used}% används, {free_space} "
 "fritt."
 
-#: plinth/modules/storage/__init__.py:313
+#: plinth/modules/storage/__init__.py:321
 msgid "Low disk space"
 msgstr "Lågt diskutrymme"
 
-#: plinth/modules/storage/__init__.py:341
+#: plinth/modules/storage/__init__.py:349
 msgid "Disk failure imminent"
 msgstr "Diskfel förestående"
 
-#: plinth/modules/storage/__init__.py:343
+#: plinth/modules/storage/__init__.py:351
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6958,7 +6872,7 @@ msgstr "Enheten kan kopplas ur på ett säkert sätt."
 msgid "Error ejecting device: {error_message}"
 msgstr "Fel mata ut enhet: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:28
+#: plinth/modules/syncthing/__init__.py:29
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -6970,7 +6884,7 @@ msgstr ""
 "filer på en enhet kommer att replikeras automatiskt på alla andra enheter "
 "som också kör Syncthing."
 
-#: plinth/modules/syncthing/__init__.py:33
+#: plinth/modules/syncthing/__init__.py:34
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -6989,20 +6903,20 @@ msgstr ""
 "{box_name} är endast tillgängligt för användare som tillhör gruppen \"admin"
 "\" eller \"syncthing-access\"."
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 msgid "Administer Syncthing application"
 msgstr "Administrera Syncthing-program"
 
-#: plinth/modules/syncthing/__init__.py:62
+#: plinth/modules/syncthing/__init__.py:63
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:63
+#: plinth/modules/syncthing/__init__.py:64
 msgid "File Synchronization"
 msgstr "Filsynkronisering"
 
-#: plinth/modules/tahoe/__init__.py:31
+#: plinth/modules/tahoe/__init__.py:32
 msgid ""
 "Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
 "independent security to store files over a distributed network of storage "
@@ -7014,7 +6928,7 @@ msgstr ""
 "av lagringsnoder. Även om vissa noder misslyckas, kan dina filer hämtas från "
 "de återstående noderna."
 
-#: plinth/modules/tahoe/__init__.py:36
+#: plinth/modules/tahoe/__init__.py:37
 #, python-brace-format
 msgid ""
 "This {box_name} hosts a storage node and an introducer by default. "
@@ -7025,11 +6939,11 @@ msgstr ""
 "standard. Ytterligare introducerare kan läggas till, vilket kommer att "
 "introducera den här noden till andra lagringsnoder."
 
-#: plinth/modules/tahoe/__init__.py:62
+#: plinth/modules/tahoe/__init__.py:64
 msgid "Tahoe-LAFS"
 msgstr "Tahoe-LAFS"
 
-#: plinth/modules/tahoe/__init__.py:64
+#: plinth/modules/tahoe/__init__.py:66
 msgid "Distributed File Storage"
 msgstr "Distribuerad fillagring"
 
@@ -7068,7 +6982,7 @@ msgstr "Anslutna introducerare"
 msgid "Remove"
 msgstr "Ta bort"
 
-#: plinth/modules/tor/__init__.py:35
+#: plinth/modules/tor/__init__.py:36
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7082,40 +6996,40 @@ msgstr ""
 "använder <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">TOR Browser</a>."
 
-#: plinth/modules/tor/__init__.py:55
+#: plinth/modules/tor/__init__.py:57
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:67
+#: plinth/modules/tor/__init__.py:72
 msgid "Tor Onion Service"
 msgstr "Tor Onion service"
 
-#: plinth/modules/tor/__init__.py:71
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "Tor SOCKS-proxy"
 
-#: plinth/modules/tor/__init__.py:75
+#: plinth/modules/tor/__init__.py:80
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: plinth/modules/tor/__init__.py:116
+#: plinth/modules/tor/__init__.py:123
 msgid "Tor relay port available"
 msgstr "Tor relä port tillgänglig"
 
-#: plinth/modules/tor/__init__.py:126
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport registrerad"
 
-#: plinth/modules/tor/__init__.py:136
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registrerad"
 
-#: plinth/modules/tor/__init__.py:205
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tillgång URL {url} på TCP {kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:216
+#: plinth/modules/tor/__init__.py:223
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekräfta Tor-användning vid {url} på TCP {kind}"
@@ -7265,17 +7179,13 @@ msgstr "SOCKS"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "En Tor SOCKS-port finns på din %(box_name)s på TCP-port 9050."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:221
-msgid "Setting unchanged"
-msgstr "Instänllningar oförändrade"
-
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr ""
 "Transmission är en BitTorrentklient som inkluderar ett Webbaserat "
 "användargränssnitt."
 
-#: plinth/modules/transmission/__init__.py:30
+#: plinth/modules/transmission/__init__.py:31
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -7283,16 +7193,16 @@ msgstr ""
 "BitTorrent är ett peer-to-peer-fildelningsprotokoll. Observera att "
 "BitTorrent inte är anonym."
 
-#: plinth/modules/transmission/__init__.py:32
+#: plinth/modules/transmission/__init__.py:33
 msgid "Please do not change the default port of the transmission daemon."
 msgstr "Vänligen ändra inte standardporten för transmissionsdemonen."
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:55
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
 
-#: plinth/modules/ttrss/__init__.py:30
+#: plinth/modules/ttrss/__init__.py:31
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -7302,7 +7212,7 @@ msgstr ""
 "utformats för att läsa nyheter från vilken plats som helst, samtidigt som du "
 "känner dig så nära en riktig stationär applikation som möjligt."
 
-#: plinth/modules/ttrss/__init__.py:34
+#: plinth/modules/ttrss/__init__.py:35
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
@@ -7311,7 +7221,7 @@ msgstr ""
 "När den är aktiverad, kan Tiny Tiny RSS nås av alla <a href="
 "\"{users_url}\">användare med en {box_name} login</a>."
 
-#: plinth/modules/ttrss/__init__.py:38
+#: plinth/modules/ttrss/__init__.py:39
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -7319,15 +7229,15 @@ msgstr ""
 "När du använder en mobil eller stationär applikation för Tiny Tiny RSS, "
 "Använd URL<a href=\"/tt-rss-app/\">/tt-rss-app/\"</a> för att ansluta."
 
-#: plinth/modules/ttrss/__init__.py:54
+#: plinth/modules/ttrss/__init__.py:55
 msgid "Read and subscribe to news feeds"
 msgstr "Läsa och prenumerera på nyhetsflöden"
 
-#: plinth/modules/ttrss/__init__.py:57 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:58 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:58
+#: plinth/modules/ttrss/__init__.py:59
 msgid "News Feed Reader"
 msgstr "Läsare för nyhetsflödet"
 
@@ -7335,13 +7245,13 @@ msgstr "Läsare för nyhetsflödet"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "Tiny Tiny RSS (Fork)"
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Sök efter och installera de senaste program-och säkerhetsuppdateringarna."
 
-#: plinth/modules/upgrades/__init__.py:46
+#: plinth/modules/upgrades/__init__.py:47
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7354,19 +7264,26 @@ msgstr ""
 "systemet bedöms vara nödvändigt, det sker automatiskt vid 02:00 orsakar alla "
 "apps för att vara tillgängligt en kort stund."
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:79
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Uppdatera"
+
+#: plinth/modules/upgrades/__init__.py:129
 msgid "Updates"
 msgstr "Uppdateringar"
 
-#: plinth/modules/upgrades/__init__.py:125
+#: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
 msgstr "FreedomBox uppdaterad"
 
-#: plinth/modules/upgrades/__init__.py:210
+#: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
 msgstr "Det gick inte att starta distributionsuppdatering"
 
-#: plinth/modules/upgrades/__init__.py:212
+#: plinth/modules/upgrades/__init__.py:219
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7377,11 +7294,11 @@ msgstr ""
 "Distributionsuppdateringen kommer att göras ett nytt behov efter 24 timmar, "
 "om det är aktiverat."
 
-#: plinth/modules/upgrades/__init__.py:223
+#: plinth/modules/upgrades/__init__.py:230
 msgid "Distribution update started"
 msgstr "Distributionsuppdateringen har startats"
 
-#: plinth/modules/upgrades/__init__.py:225
+#: plinth/modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7574,7 +7491,7 @@ msgstr "Det gick inte att starta uppgraderingen."
 msgid "Frequent feature updates activated."
 msgstr "Frekventa funktionsuppdateringar aktiverade."
 
-#: plinth/modules/users/__init__.py:39
+#: plinth/modules/users/__init__.py:40
 msgid ""
 "Create and managed user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7585,7 +7502,7 @@ msgstr ""
 "ett användarkonto för att vara en del av en grupp för att auktorisera "
 "användaren att komma åt appen."
 
-#: plinth/modules/users/__init__.py:44
+#: plinth/modules/users/__init__.py:45
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7596,15 +7513,15 @@ msgstr ""
 "över appar som är relevanta för dem på startsidan. Endast användare av "
 "gruppen <em>admin</em> kan dock ändra appar eller Systeminställningar."
 
-#: plinth/modules/users/__init__.py:65
+#: plinth/modules/users/__init__.py:67
 msgid "Users and Groups"
 msgstr "Användare och grupper"
 
-#: plinth/modules/users/__init__.py:78
+#: plinth/modules/users/__init__.py:83
 msgid "Access to all services and system settings"
 msgstr "Tillgång till alla tjänster och Systeminställningar"
 
-#: plinth/modules/users/__init__.py:114
+#: plinth/modules/users/__init__.py:119
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Kontrollera LDAP-posten \"{search_item}\""
@@ -7851,11 +7768,11 @@ msgstr "Ändra lösenord"
 msgid "Password changed successfully."
 msgstr "Lösenordet har ändrats."
 
-#: plinth/modules/wireguard/__init__.py:23
+#: plinth/modules/wireguard/__init__.py:24
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
 msgstr "WireGuard är en snabb, modern, säker VPN-tunnel."
 
-#: plinth/modules/wireguard/__init__.py:25
+#: plinth/modules/wireguard/__init__.py:26
 #, python-brace-format
 msgid ""
 "It can be used to connect to a VPN provider which supports WireGuard, and to "
@@ -7864,7 +7781,7 @@ msgstr ""
 "Den kan användas för att ansluta till en VPN-leverantör som stöder WireGuard "
 "och för att dirigera all utgående trafik från {box_name} via VPN."
 
-#: plinth/modules/wireguard/__init__.py:29
+#: plinth/modules/wireguard/__init__.py:30
 #, python-brace-format
 msgid ""
 "A second use case is to connect a mobile device to {box_name} while "
@@ -8184,7 +8101,7 @@ msgstr "Ta bort anslutning till server"
 msgid "Server deleted."
 msgstr "Servern har tagits bort."
 
-#: plinth/modules/wordpress/__init__.py:37
+#: plinth/modules/wordpress/__init__.py:38
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -8198,7 +8115,7 @@ msgstr ""
 "med hjälp av teman. Administrationsgränssnittet och producerade webbsidor är "
 "lämpliga för mobila enheter."
 
-#: plinth/modules/wordpress/__init__.py:43
+#: plinth/modules/wordpress/__init__.py:44
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -8212,7 +8129,7 @@ msgstr ""
 "administratörsgränssnittet för bättre webbadresser till dina sidor och "
 "inlägg."
 
-#: plinth/modules/wordpress/__init__.py:48
+#: plinth/modules/wordpress/__init__.py:49
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
@@ -8223,7 +8140,7 @@ msgstr ""
 "sidan</a> som ett bokmärke för att nå administrationsgränssnittet i "
 "framtiden."
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
@@ -8233,12 +8150,12 @@ msgstr ""
 "databasuppgradering från administratörsgränssnittet. Ytterligare plugins "
 "eller teman kan installeras och uppgraderas på egen risk."
 
-#: plinth/modules/wordpress/__init__.py:70
+#: plinth/modules/wordpress/__init__.py:71
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:71
+#: plinth/modules/wordpress/__init__.py:72
 msgid "Website and Blog"
 msgstr "Webbplats och blogg"
 
@@ -8255,7 +8172,7 @@ msgstr ""
 "WordPress-webbplatsen eller bloggen. Aktivera endast efter den första "
 "installationen av WordPress."
 
-#: plinth/modules/zoph/__init__.py:33
+#: plinth/modules/zoph/__init__.py:34
 #, python-brace-format
 msgid ""
 "Zoph manages your photo collection. Photos are stored on your {box_name}, "
@@ -8276,7 +8193,7 @@ msgstr ""
 "på en plats med hjälp av sök-, kart- och kalendervyer. Enskilda foton kan "
 "delas med andra genom att skicka en direktlänk."
 
-#: plinth/modules/zoph/__init__.py:44
+#: plinth/modules/zoph/__init__.py:45
 #, python-brace-format
 msgid ""
 "The {box_name} user who setup Zoph will also become the administrator in "
@@ -8287,11 +8204,11 @@ msgstr ""
 "i Zoph. För ytterligare användare måste konton skapas både i {box_name} och "
 "i Zoph med samma användarnamn."
 
-#: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
+#: plinth/modules/zoph/__init__.py:64 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
 
-#: plinth/modules/zoph/__init__.py:63
+#: plinth/modules/zoph/__init__.py:65
 msgid "Photo Organizer"
 msgstr "Foto Organizer"
 
@@ -8329,23 +8246,23 @@ msgstr "Pppoe"
 msgid "Generic"
 msgstr "Generiska"
 
-#: plinth/package.py:139
+#: plinth/package.py:165
 msgid "Error during installation"
 msgstr "Fel vid installation"
 
-#: plinth/package.py:161
+#: plinth/package.py:187
 msgid "installing"
 msgstr "Installera"
 
-#: plinth/package.py:163
+#: plinth/package.py:189
 msgid "downloading"
 msgstr "ladda ner"
 
-#: plinth/package.py:165
+#: plinth/package.py:191
 msgid "media change"
 msgstr "Mediabyte"
 
-#: plinth/package.py:167
+#: plinth/package.py:193
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurationsfil: {file}"
@@ -8413,6 +8330,10 @@ msgstr "Kärnfunktioner och webbgränssnitt för %(box_name)s"
 #: plinth/templates/base.html:107
 msgid " Home"
 msgstr " Hem"
+
+#: plinth/templates/base.html:110
+msgid "Home"
+msgstr "Hem"
 
 #: plinth/templates/base.html:115
 msgid " Apps"
@@ -8687,6 +8608,9 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Konflikterande paket:</strong> Vissa paket som är installerade på "
+"systemet är i konflikt med installationen av den här appen. Följande paket "
+"tas bort om du fortsätter:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
@@ -8710,9 +8634,87 @@ msgstr "Installerar %(package_names)s:%(status)s"
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s %% färdigt"
 
-#: plinth/web_framework.py:117
+#: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "The alias was taken"
+#~ msgstr "Aliasnamnet togs"
+
+#~ msgid "Must be at least 2 characters long"
+#~ msgstr "Måste vara minst 2 tecken lång"
+
+#~ msgid "User does not exist"
+#~ msgstr "Användaren finns inte"
+
+#~ msgid "Postfix local recipient maps"
+#~ msgstr "Postfix lokala mottagarkartor"
+
+#~ msgid "Disable selected"
+#~ msgstr "Inaktivera markerad"
+
+#~ msgid "Enable selected"
+#~ msgstr "Aktivera markerad"
+
+#~ msgid "Delete selected"
+#~ msgstr "Tabort valda"
+
+#~ msgid "New value"
+#~ msgstr "Nytt värde"
+
+#~ msgid "There was a problem with your request. Please try again."
+#~ msgstr "Ett problem uppstod med din begäran. Var god försök igen."
+
+#~ msgid "Postfix TLS"
+#~ msgstr "Postfix TLS"
+
+#~ msgid "Dovecot TLS"
+#~ msgstr "Dovecot TLS"
+
+#~ msgid "Visit Rspamd administration interface"
+#~ msgstr "Besök Rspamd administrationsgränssnitt"
+
+#~ msgid "You do not have a home directory."
+#~ msgstr "Du har ingen arbetskatalog."
+
+#~ msgid "Create one to begin receiving emails."
+#~ msgstr "Skapa en för att börja ta emot e-post."
+
+#~ msgid "Create home directory"
+#~ msgstr "Skapa arbetskatalog"
+
+#~ msgid "Your home directory is ready to receive emails."
+#~ msgstr "Din hemkatalog är redo att ta emot e-post."
+
+#~ msgid "Keep current settings"
+#~ msgstr "Behåll nuvarande inställningar"
+
+#~ msgid "Use Let's Encrypt"
+#~ msgstr "Använd Let's Encrypt"
+
+#~ msgid "Common name"
+#~ msgstr "Vanligt namn"
+
+#~ msgid "Use custom values"
+#~ msgstr "Använd anpassade värden"
+
+#~ msgid "Certificate path"
+#~ msgstr "Sökväg för certifikat"
+
+#~ msgid "Private key path"
+#~ msgstr "Sökväg för den privata nyckeln"
+
+#~ msgid "Use system default"
+#~ msgstr "Använd systemstandard"
+
+#~ msgid "My Mail"
+#~ msgstr "Min e-post"
+
+#~ msgid "Enabled aliases"
+#~ msgstr "Aktiverade alias"
+
+#~ msgid "Disabled aliases"
+#~ msgstr "Inaktiverade alias"
 
 #~ msgid "Cannot delete the only administrator in the system."
 #~ msgstr "Det går inte att ta bort den enda administratören i systemet."

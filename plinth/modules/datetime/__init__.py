@@ -20,8 +20,6 @@ is_essential = True
 
 managed_services = ['systemd-timesyncd']
 
-managed_packages = []
-
 _description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
@@ -56,7 +54,7 @@ class DateTimeApp(app_module.App):
                     '--value', 'systemd-timesyncd'
                 ])
                 self._time_managed = 'yes' in output.decode()
-            except subprocess.CalledProcessError:
+            except (FileNotFoundError, subprocess.CalledProcessError):
                 # When systemd is not running.
                 self._time_managed = False
 
@@ -65,6 +63,7 @@ class DateTimeApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential,
                                name=_('Date & Time'), icon='fa-clock-o',

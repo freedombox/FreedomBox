@@ -14,3 +14,4 @@ class TestI2pApp(BaseAppTests):
     app_name = 'i2p'
     has_service = True
     has_web = True
+    diagnostics_delay = 1

@@ -32,7 +32,7 @@ def get():
         'rc_config_header': _('RoundCube configured for FreedomBox email'),
     }
 
-    output = actions.superuser_run('email_server', ['-i', 'rcube', 'check'])
+    output = actions.superuser_run('email_server', ['rcube', 'check'])
     results = json.loads(output)
     for i in range(0, len(results)):
         results[i] = models.Diagnosis.from_json(results[i], translation.get)
@@ -41,14 +41,14 @@ def get():
 
 
 def repair():
-    actions.superuser_run('email_server', ['-i', 'rcube', 'set_up'])
+    actions.superuser_run('email_server', ['rcube', 'set_up'])
 
 
 def repair_component(action):
     action_to_services = {'set_up': []}
     if action not in action_to_services:
         return
-    actions.superuser_run('email_server', ['-i', 'rcube', action])
+    actions.superuser_run('email_server', ['rcube', action])
     return action_to_services[action]
 
 

@@ -9,48 +9,30 @@ from plinth.tests import functional
 pytestmark = [pytest.mark.apps, pytest.mark.mldonkey, pytest.mark.sso]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, 'mldonkey')
-    yield
-    functional.app_disable(session_browser, 'mldonkey')
+class TestMldonkeyApp(functional.BaseAppTests):
+    app_name = 'mldonkey'
+    has_service = True
+    has_web = True
 
+    def test_upload(self, session_browser):
+        """Test uploading an ed2k file to mldonkey."""
+        functional.app_enable(session_browser, 'mldonkey')
+        _remove_all_ed2k_files(session_browser)
+        _upload_sample_ed2k_file(session_browser)
+        assert _get_number_of_ed2k_files(session_browser) == 1
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, 'mldonkey')
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of ed2k files."""
+        functional.app_enable(session_browser, 'mldonkey')
+        _remove_all_ed2k_files(session_browser)
+        _upload_sample_ed2k_file(session_browser)
+        functional.backup_create(session_browser, 'mldonkey', 'test_mldonkey')
 
-    functional.app_enable(session_browser, 'mldonkey')
-    assert functional.service_is_running(session_browser, 'mldonkey')
-    assert functional.is_available(session_browser, 'mldonkey')
+        _remove_all_ed2k_files(session_browser)
+        functional.backup_restore(session_browser, 'mldonkey', 'test_mldonkey')
 
-    functional.app_disable(session_browser, 'mldonkey')
-    assert functional.service_is_not_running(session_browser, 'mldonkey')
-    assert not functional.is_available(session_browser, 'mldonkey')
-
-
-def test_upload(session_browser):
-    """Test uploading an ed2k file to mldonkey."""
-    functional.app_enable(session_browser, 'mldonkey')
-    _remove_all_ed2k_files(session_browser)
-    _upload_sample_ed2k_file(session_browser)
-    assert _get_number_of_ed2k_files(session_browser) == 1
-
-
-def test_backup_restore(session_browser):
-    """Test backup and restore of ed2k files."""
-    functional.app_enable(session_browser, 'mldonkey')
-    _remove_all_ed2k_files(session_browser)
-    _upload_sample_ed2k_file(session_browser)
-    functional.backup_create(session_browser, 'mldonkey', 'test_mldonkey')
-
-    _remove_all_ed2k_files(session_browser)
-    functional.backup_restore(session_browser, 'mldonkey', 'test_mldonkey')
-
-    assert functional.service_is_running(session_browser, 'mldonkey')
-    assert _get_number_of_ed2k_files(session_browser) == 1
+        assert functional.service_is_running(session_browser, 'mldonkey')
+        assert _get_number_of_ed2k_files(session_browser) == 1
 
 
 def _submit_command(browser, command):

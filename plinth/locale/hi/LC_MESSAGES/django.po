@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 18:50-0400\n"
+"POT-Creation-Date: 2021-11-22 18:17-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:83
+#: plinth/context_processors.py:23 plinth/views.py:81
 msgid "FreedomBox"
 msgstr "फ्रीडमबोएक्स"
 
@@ -64,15 +64,29 @@ msgid ""
 msgstr ""
 "वर्णइंग! अगर डोमेन का नाम बाद में बदल गया, एप्लिकेशन शायद ठीक से नहीं कर सकता है."
 
-#: plinth/forms.py:46
+#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/modules/mumble/forms.py:21
+#, fuzzy
+#| msgid "Subdomain"
+msgid "TLS domain"
+msgstr "सबडोमेन"
+
+#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/modules/mumble/forms.py:23
+msgid ""
+"Select a domain to use TLS with. If the list is empty, please configure at "
+"least one domain with certificates."
+msgstr ""
+
+#: plinth/forms.py:64
 msgid "Language"
 msgstr "भाषा"
 
-#: plinth/forms.py:47
+#: plinth/forms.py:65
 msgid "Language to use for presenting this web interface"
 msgstr "इस वेब इंटरफेस में इसतेमाल कि जाने वाली भाषा"
 
-#: plinth/forms.py:54
+#: plinth/forms.py:72
 msgid "Use the language preference set in the browser"
 msgstr "जो भाषा ब्राउज़र में हैं, वो भाषा उपयोग करें"
 
@@ -90,19 +104,19 @@ msgstr "एप्लिकेशन नहीं इंस्टॉल जा �
 msgid "Error installing application: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: plinth/modules/apache/__init__.py:41
+#: plinth/modules/apache/__init__.py:42
 #, fuzzy
 #| msgid "Chat Server"
 msgid "Apache HTTP Server"
 msgstr "चाट सर्वर"
 
-#: plinth/modules/apache/__init__.py:44
+#: plinth/modules/apache/__init__.py:48
 #: plinth/modules/monkeysphere/templates/monkeysphere.html:49
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
 msgstr "वेब सर्वर"
 
-#: plinth/modules/apache/__init__.py:50
+#: plinth/modules/apache/__init__.py:54
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} वेब इंटरफेस (प्लिंथ)"
@@ -117,7 +131,7 @@ msgstr "इस यूआरएल का अपयोग करें {url} ट�
 msgid "Access URL {url}"
 msgstr "इस यूआरएल का अपयोग करें {url}"
 
-#: plinth/modules/avahi/__init__.py:35
+#: plinth/modules/avahi/__init__.py:36
 #, python-brace-format
 msgid ""
 "Service discovery allows other devices on the network to discover your "
@@ -133,49 +147,49 @@ msgstr ""
 "सुरक्षा के लिये, ख़ास तौर पर एक अनजान नेटवर्क से जोड़ करके समय, सर्विस डिस्कोवरि बंद कर "
 "सकते हैं."
 
-#: plinth/modules/avahi/__init__.py:59
+#: plinth/modules/avahi/__init__.py:60
 msgid "Service Discovery"
 msgstr "सर्विस डिस्कोवरि"
 
-#: plinth/modules/avahi/__init__.py:69
+#: plinth/modules/avahi/__init__.py:73
 msgid "Local Network Domain"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:34
+#: plinth/modules/backups/__init__.py:35
 msgid "Backups allows creating and managing backup archives."
 msgstr "बैकअपस पुरालेखागार बनाने और  प्रबंधित करने की अनुमति देता है."
 
-#: plinth/modules/backups/__init__.py:54 plinth/modules/backups/__init__.py:200
-#: plinth/modules/backups/__init__.py:245
+#: plinth/modules/backups/__init__.py:56 plinth/modules/backups/__init__.py:208
+#: plinth/modules/backups/__init__.py:253
 msgid "Backups"
 msgstr "बैकअप"
 
-#: plinth/modules/backups/__init__.py:197
+#: plinth/modules/backups/__init__.py:205
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:203
+#: plinth/modules/backups/__init__.py:211
 msgid "Enable a Backup Schedule"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:207
-#: plinth/modules/backups/__init__.py:254
-#: plinth/modules/storage/__init__.py:323
+#: plinth/modules/backups/__init__.py:215
+#: plinth/modules/backups/__init__.py:262
+#: plinth/modules/storage/__init__.py:331
 #, fuzzy, python-brace-format
 #| msgid "About {box_name}"
 msgid "Go to {app_name}"
 msgstr "{box_name} के बारे में"
 
-#: plinth/modules/backups/__init__.py:242
+#: plinth/modules/backups/__init__.py:250
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
 
-#: plinth/modules/backups/__init__.py:250
+#: plinth/modules/backups/__init__.py:258
 #, fuzzy
 #| msgid "Existing custom services"
 msgid "Error During Backup"
@@ -763,7 +777,7 @@ msgstr ""
 msgid "Mounting failed"
 msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -771,7 +785,7 @@ msgid ""
 "can be set to expire after a time period."
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:28
+#: plinth/modules/bepasty/__init__.py:29
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -779,7 +793,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -787,43 +801,43 @@ msgid ""
 "the list."
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:41 plinth/modules/bepasty/__init__.py:50
+#: plinth/modules/bepasty/__init__.py:42 plinth/modules/bepasty/__init__.py:51
 msgid "Read a file, if a web link to the file is available"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:42
+#: plinth/modules/bepasty/__init__.py:43
 #, fuzzy
 #| msgid "Download my profile"
 msgid "Create or upload files"
 msgstr "मेरी प्रोफ़ाइल डाउनलोड करें"
 
-#: plinth/modules/bepasty/__init__.py:43
+#: plinth/modules/bepasty/__init__.py:44
 msgid "List all files and their web links"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:44
+#: plinth/modules/bepasty/__init__.py:45
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete files"
 msgstr "यूसर हटाइये"
 
-#: plinth/modules/bepasty/__init__.py:45
+#: plinth/modules/bepasty/__init__.py:46
 msgid "Administer files: lock/unlock files"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:49
+#: plinth/modules/bepasty/__init__.py:50
 msgid "None, password is always required"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:51
+#: plinth/modules/bepasty/__init__.py:52
 msgid "List and read all files"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:64 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:65 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr ""
 
-#: plinth/modules/bepasty/__init__.py:66
+#: plinth/modules/bepasty/__init__.py:67
 #, fuzzy
 #| msgid "File Sharing"
 msgid "File & Snippet Sharing"
@@ -909,6 +923,7 @@ msgid "List"
 msgstr ""
 
 #: plinth/modules/bepasty/views.py:52
+#: plinth/modules/email_server/templates/email_alias.html:28
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -953,7 +968,7 @@ msgstr "पासवर्ड"
 msgid "Password deleted."
 msgstr "पासवर्ड अपडेट"
 
-#: plinth/modules/bind/__init__.py:30
+#: plinth/modules/bind/__init__.py:31
 msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
@@ -961,7 +976,7 @@ msgstr ""
 "बाइंड सक्षम कर अाप अपने डॉमेन नैम सिस्टम (डीएनएस) इंटरनेट पर प्रकाशित कर सकते हैं, ओर "
 "अपने नेटवर्क पर चलते हुए यूसर डिवाइससॅ में  डीएनएस सवालो कि जवाब मिल सकते हैं."
 
-#: plinth/modules/bind/__init__.py:34
+#: plinth/modules/bind/__init__.py:35
 #, python-brace-format
 msgid ""
 "Currently, on {box_name}, BIND is only used to resolve DNS queries for other "
@@ -972,11 +987,11 @@ msgstr ""
 "सवालों कि जवाब खोजने के लिए इस्तेमाल किया जा रहा है. यह {box_name} से इंटरनेट शेयरइं के "
 "सात भी नहीं असंगत है."
 
-#: plinth/modules/bind/__init__.py:78
+#: plinth/modules/bind/__init__.py:80
 msgid "BIND"
 msgstr "बाइंड"
 
-#: plinth/modules/bind/__init__.py:79
+#: plinth/modules/bind/__init__.py:81
 msgid "Domain Name Server"
 msgstr "डोमेन नाम"
 
@@ -1037,15 +1052,16 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:214
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
-#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/wordpress/views.py:37
+#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "कॉन्फ़िगरेशन अपडेट करें"
 
-#: plinth/modules/calibre/__init__.py:31
+#: plinth/modules/calibre/__init__.py:32
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -1053,7 +1069,7 @@ msgid ""
 "devices."
 msgstr ""
 
-#: plinth/modules/calibre/__init__.py:34
+#: plinth/modules/calibre/__init__.py:35
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -1062,21 +1078,21 @@ msgid ""
 "highlighted text. Content distribution using OPDS is currently not supported."
 msgstr ""
 
-#: plinth/modules/calibre/__init__.py:40
+#: plinth/modules/calibre/__init__.py:41
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
 msgstr ""
 
-#: plinth/modules/calibre/__init__.py:58
+#: plinth/modules/calibre/__init__.py:59
 msgid "Use calibre e-book libraries"
 msgstr ""
 
-#: plinth/modules/calibre/__init__.py:61 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:62 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr ""
 
-#: plinth/modules/calibre/__init__.py:62
+#: plinth/modules/calibre/__init__.py:63
 msgid "E-book Library"
 msgstr ""
 
@@ -1164,7 +1180,7 @@ msgstr "{name} हटा गया है."
 msgid "Could not delete {name}: {error}"
 msgstr "{name} नहीं हटा गया है: {error}"
 
-#: plinth/modules/cockpit/__init__.py:32
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1176,7 +1192,7 @@ msgstr ""
 "प्रशासित कर सकते है. {box_name} पर बहुत उन्नत फ़ंक्शन के नियंत्रण है लेकिन यह सब आमताैर पर "
 "ज़रूरत नहीं है. कंट्रोल संचालन के लिये वेब आधारित कंसोल भी माैजूद है."
 
-#: plinth/modules/cockpit/__init__.py:38
+#: plinth/modules/cockpit/__init__.py:39
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1184,7 +1200,7 @@ msgid ""
 "management."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:43
+#: plinth/modules/cockpit/__init__.py:44
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
@@ -1200,18 +1216,18 @@ msgstr ""
 "माैजूद होते है. यह <a href=\"{users_url}\"> कोई से </a> एक {box_name} के सात पहुंच "
 "सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्थापक लोग के पास है."
 
-#: plinth/modules/cockpit/__init__.py:47
+#: plinth/modules/cockpit/__init__.py:48
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
 
-#: plinth/modules/cockpit/__init__.py:64 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:66 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "कॉकपिट"
 
-#: plinth/modules/cockpit/__init__.py:66
+#: plinth/modules/cockpit/__init__.py:68
 msgid "Server Administration"
 msgstr "सर्वर एडमिनिस्ट्रेशन"
 
@@ -1383,7 +1399,7 @@ msgstr ""
 msgid "Hiding advanced apps and features"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:36
+#: plinth/modules/coturn/__init__.py:37
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1391,7 +1407,7 @@ msgid ""
 "who are otherwise unable connect to each other."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:41
+#: plinth/modules/coturn/__init__.py:42
 #, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
@@ -1399,30 +1415,16 @@ msgid ""
 "be configured with the details provided here."
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:62
+#: plinth/modules/coturn/__init__.py:63
 msgid "Coturn"
 msgstr ""
 
-#: plinth/modules/coturn/__init__.py:63
+#: plinth/modules/coturn/__init__.py:64
 msgid "VoIP Helper"
 msgstr ""
 
 #: plinth/modules/coturn/forms.py:22
 msgid "Invalid list of STUN/TURN Server URIs"
-msgstr ""
-
-#: plinth/modules/coturn/forms.py:30 plinth/modules/mumble/forms.py:21
-#: plinth/modules/quassel/forms.py:22
-#, fuzzy
-#| msgid "Subdomain"
-msgid "TLS domain"
-msgstr "सबडोमेन"
-
-#: plinth/modules/coturn/forms.py:32 plinth/modules/mumble/forms.py:23
-#: plinth/modules/quassel/forms.py:24
-msgid ""
-"Select a domain to use TLS with. If the list is empty, please configure at "
-"least one domain with certificates."
 msgstr ""
 
 #: plinth/modules/coturn/templates/coturn.html:15
@@ -1435,18 +1437,18 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "निम्नलिखित डिस्कस उपयोग में है:"
 
-#: plinth/modules/datetime/__init__.py:26
+#: plinth/modules/datetime/__init__.py:24
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
 msgstr ""
 "नेटवर्क समय सर्वर एक प्रोग्रम है कि सिस्टम समय इंटरनेट सर्वरसॅ के सात में बनाए रखता है."
 
-#: plinth/modules/datetime/__init__.py:70
+#: plinth/modules/datetime/__init__.py:69
 msgid "Date & Time"
 msgstr "तारीख और समय"
 
-#: plinth/modules/datetime/__init__.py:116
+#: plinth/modules/datetime/__init__.py:115
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -1474,11 +1476,11 @@ msgstr "समय क्षेत्र सेट करने में एर�
 msgid "Time zone set"
 msgstr "समय क्षेत्र सेट"
 
-#: plinth/modules/deluge/__init__.py:27
+#: plinth/modules/deluge/__init__.py:28
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "डेलूज एक बिटटोरेंट ग्राहक है जिसमे वेब युआई है."
 
-#: plinth/modules/deluge/__init__.py:28
+#: plinth/modules/deluge/__init__.py:29
 #, fuzzy
 #| msgid ""
 #| "When enabled, the Deluge web client will be available from <a href=\"/"
@@ -1493,17 +1495,17 @@ msgstr ""
 "डिफ़ॉल्ट पासवर्ड 'डेलूज' है लेकिन आप डेलूज से सक्षम करके आपको लॉग ऑन करना चाहिये आैर इसको "
 "बदलना चाहिये."
 
-#: plinth/modules/deluge/__init__.py:47
-#: plinth/modules/transmission/__init__.py:50
+#: plinth/modules/deluge/__init__.py:48
+#: plinth/modules/transmission/__init__.py:51
 msgid "Download files using BitTorrent applications"
 msgstr "बिटटोरेंट एप्लिकेशन उपयोग कर फ़ाइल डाउनलोड करें"
 
-#: plinth/modules/deluge/__init__.py:51 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:52 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "डेलूज"
 
-#: plinth/modules/deluge/__init__.py:53
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/deluge/__init__.py:54
+#: plinth/modules/transmission/__init__.py:57
 msgid "BitTorrent Web Client"
 msgstr "बिटटोरेंट वेब ग्राहक"
 
@@ -1524,62 +1526,62 @@ msgstr ""
 "चेकों करोगे."
 
 #: plinth/modules/diagnostics/__init__.py:54
-#: plinth/modules/diagnostics/__init__.py:238
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "निदानिकी"
 
-#: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:29
+#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/email_server/templates/email_server.html:41
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "क्वासेल"
 
-#: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:27
+#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/email_server/templates/email_server.html:39
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "सेटअप विफल."
 
-#: plinth/modules/diagnostics/__init__.py:100
-#: plinth/modules/email_server/templates/email_server.html:25
+#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/email_server/templates/email_server.html:37
 msgid "error"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:204
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:209
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:216
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:221
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:233
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:235
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr ""
 
@@ -1631,19 +1633,19 @@ msgstr "परिणाम"
 msgid "Diagnostic Test"
 msgstr "निदान परिक्षा"
 
-#: plinth/modules/diaspora/__init__.py:45
+#: plinth/modules/diaspora/__init__.py:46
 msgid ""
 "diaspora* is a decentralized social network where you can store and control "
 "your own data."
 msgstr ""
 "डायसपोरा एक विकेन्द्रीकृत सामाजिक नेटवर्क जब अाप अपना डेटा स्टोर आैर नियंत्रण कर सकते है."
 
-#: plinth/modules/diaspora/__init__.py:68
+#: plinth/modules/diaspora/__init__.py:70
 #: plinth/modules/diaspora/manifest.py:23
 msgid "diaspora*"
 msgstr "डायसपोरा*"
 
-#: plinth/modules/diaspora/__init__.py:69
+#: plinth/modules/diaspora/__init__.py:71
 msgid "Federated Social Network"
 msgstr "फ़ेडरेटेड सामाजिक नेटवर्क"
 
@@ -1702,7 +1704,7 @@ msgstr "यूसर पंजीकरण सक्षम किया"
 msgid "User registrations disabled"
 msgstr "यूसर पंजीकरण अक्षम किया"
 
-#: plinth/modules/dynamicdns/__init__.py:29
+#: plinth/modules/dynamicdns/__init__.py:30
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1712,7 +1714,7 @@ msgstr ""
 "अगर अापका इंटरनेट प्रदाता अक्सर अपना आईपी एड्रसॅ  बदलता है (i.e. हर चौबीस) दूसरे लोग "
 "अपसे मिलकर मुश्किल हेगा. यह दूसरे को यह {box_name} से प्रदान वाले सेवाएं खोजने से रोक देगे."
 
-#: plinth/modules/dynamicdns/__init__.py:33
+#: plinth/modules/dynamicdns/__init__.py:34
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1729,11 +1731,11 @@ msgstr ""
 "डिएनएस नाम नया आईपी पर आवंटित करेगा और अगर इंटरनेट से कोई अपना  डिएनएस नाम पूछता "
 "है, अपना वर्तमान एड्रसॅ से जवाब मिलेगा."
 
-#: plinth/modules/dynamicdns/__init__.py:56
+#: plinth/modules/dynamicdns/__init__.py:58
 msgid "Dynamic DNS Client"
 msgstr "डायनेमिक डिएनएस ग्राहक"
 
-#: plinth/modules/dynamicdns/__init__.py:66
+#: plinth/modules/dynamicdns/__init__.py:71
 #, fuzzy
 #| msgid "Domain Name"
 msgid "Dynamic Domain Name"
@@ -1967,7 +1969,7 @@ msgstr "डायनामिक DNS कॉन्फ़िगर करें"
 msgid "Dynamic DNS Status"
 msgstr "डायनामिक DNS स्थिति"
 
-#: plinth/modules/ejabberd/__init__.py:39
+#: plinth/modules/ejabberd/__init__.py:40
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1975,7 +1977,7 @@ msgstr ""
 "एक्सएमरपिपि एक खुला और मानकीकृत संचार प्रोटोकॉल है. यहां आप आपना एक्सएमरपिपि सर्वर "
 "कॉंफ़िगर आैर चल सकते हैं, सर्वर का नाम एजाबेरड है."
 
-#: plinth/modules/ejabberd/__init__.py:42
+#: plinth/modules/ejabberd/__init__.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "To actually communicate, you can use the <a href=\"{jsxc_url}\">web "
@@ -1993,19 +1995,19 @@ msgstr ""
 "ग्राहक</a>. सक्षम होने पर एजाबेरड कोई <a href=\"{users_url}\"> यूसर एक {box_name} "
 "लोगिन</a> से उपयोग कर सकते हैं."
 
-#: plinth/modules/ejabberd/__init__.py:50
+#: plinth/modules/ejabberd/__init__.py:51
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:71
+#: plinth/modules/ejabberd/__init__.py:73
 msgid "ejabberd"
 msgstr "एजाबेरड"
 
-#: plinth/modules/ejabberd/__init__.py:72
-#: plinth/modules/matrixsynapse/__init__.py:77
+#: plinth/modules/ejabberd/__init__.py:74
+#: plinth/modules/matrixsynapse/__init__.py:79
 msgid "Chat Server"
 msgstr "चाट सर्वर"
 
@@ -2127,29 +2129,8 @@ msgstr ""
 msgid "Email Server"
 msgstr "चाट सर्वर"
 
-#: plinth/modules/email_server/__init__.py:99
+#: plinth/modules/email_server/__init__.py:95
 msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
-
-#: plinth/modules/email_server/aliases/__init__.py:67
-#: plinth/modules/email_server/aliases/__init__.py:74
-msgid "The alias was taken"
-msgstr ""
-
-#: plinth/modules/email_server/aliases/models.py:13
-msgid "Must be at least 2 characters long"
-msgstr ""
-
-#: plinth/modules/email_server/aliases/models.py:15
-msgid "Contains illegal characters"
-msgstr ""
-
-#: plinth/modules/email_server/aliases/models.py:17
-msgid "Must start and end with a-z or 0-9"
-msgstr ""
-
-#: plinth/modules/email_server/aliases/models.py:19
-msgid "Cannot be a number"
 msgstr ""
 
 #: plinth/modules/email_server/audit/domain.py:35
@@ -2158,21 +2139,12 @@ msgstr ""
 msgid "Postfix domain name config"
 msgstr "{exception}: डोमेन नाम सेट करने में एरर"
 
-#: plinth/modules/email_server/audit/home.py:23
-#: plinth/modules/email_server/audit/home.py:32
-msgid "User does not exist"
-msgstr ""
-
-#: plinth/modules/email_server/audit/ldap.py:66
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix-Dovecot SASL integration"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:67
+#: plinth/modules/email_server/audit/ldap.py:70
 msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix local recipient maps"
 msgstr ""
 
 #: plinth/modules/email_server/audit/rcube.py:31
@@ -2203,18 +2175,63 @@ msgstr ""
 msgid "Has a TLS certificate"
 msgstr "कोई प्रमाणपत्र नहीं"
 
-#: plinth/modules/email_server/forms.py:7
+#: plinth/modules/email_server/forms.py:15
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Enter a valid domain"
+msgstr "सर्वर नाम अमान्य है"
+
+#: plinth/modules/email_server/forms.py:18
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Enter a valid destination"
+msgstr "सर्वर नाम अमान्य है"
+
+#: plinth/modules/email_server/forms.py:22
 #, fuzzy
 #| msgid "Domain"
 msgid "domain"
 msgstr "डोमेन"
 
-#: plinth/modules/email_server/forms.py:14
+#: plinth/modules/email_server/forms.py:53
 msgid "New alias (without @domain)"
 msgstr ""
 
+#: plinth/modules/email_server/forms.py:60
+msgid "Contains illegal characters"
+msgstr ""
+
+#: plinth/modules/email_server/forms.py:63
+msgid "Must start and end with a-z or 0-9"
+msgstr ""
+
+#: plinth/modules/email_server/forms.py:66
+msgid "Cannot be a number"
+msgstr ""
+
+#: plinth/modules/email_server/forms.py:76
+#, fuzzy
+#| msgid "Create User"
+msgid "Aliases"
+msgstr "यूसर बनाये"
+
+#: plinth/modules/email_server/forms.py:88
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+msgid "Enabled"
+msgstr "सक्षम किया गया है"
+
+#: plinth/modules/email_server/forms.py:91
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "अक्षम किया गया है"
+
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:57
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "राउंडक्यूब"
@@ -2233,191 +2250,83 @@ msgstr ""
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:11
+#: plinth/modules/email_server/templates/email_alias.html:13
+#: plinth/modules/email_server/templates/email_server.html:24
 #, fuzzy
 #| msgid "Create User"
 msgid "Manage Aliases"
 msgstr "यूसर बनाये"
 
-#: plinth/modules/email_server/templates/email_alias.html:14
+#: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:23
+#: plinth/modules/email_server/templates/email_alias.html:24
 #, fuzzy
 #| msgid "Disabled"
-msgid "Disable selected"
+msgid "Disable"
 msgstr "अक्षम किया गया है"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
 #, fuzzy
-#| msgid "cable is connected"
-msgid "Enable selected"
-msgstr "केबल कनेक्ट हो गया"
+#| msgid "Enabled"
+msgid "Enable"
+msgstr "सक्षम किया गया है"
 
-#: plinth/modules/email_server/templates/email_alias.html:29
-#, fuzzy
-#| msgid "Delete all the snapshots"
-msgid "Delete selected"
-msgstr "सब स्नैपशॉटस हटाएँ"
-
-#: plinth/modules/email_server/templates/email_alias.html:33
+#: plinth/modules/email_server/templates/email_alias.html:32
 #, fuzzy
 #| msgid "Create Account"
 msgid "Create a new email alias"
 msgstr "अकाउंट बनाएँ"
 
-#: plinth/modules/email_server/templates/email_alias.html:40
+#: plinth/modules/email_server/templates/email_alias.html:38
 #: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "जोड़ें"
 
-#: plinth/modules/email_server/templates/email_domains.html:19
+#: plinth/modules/email_server/templates/email_server.html:16
+#: plinth/modules/email_server/views.py:199
+#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
+msgid "Domains"
+msgstr "डोमेन्स"
+
+#: plinth/modules/email_server/templates/email_server.html:19
 #, fuzzy
-#| msgid "Backups"
-msgid "New value"
-msgstr "बैकअप"
+#| msgid "Manage Snapshots"
+msgid "Manage Spam"
+msgstr "स्नैपशॉटस प्रबंधित करें"
 
-#: plinth/modules/email_server/templates/email_domains.html:31
-#: plinth/modules/email_server/templates/email_security.html:23
-#: plinth/modules/upgrades/__init__.py:77
-#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
-#: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "अपडेट"
-
-#: plinth/modules/email_server/templates/email_form_base.html:12
-msgid "There was a problem with your request. Please try again."
-msgstr ""
-
-#: plinth/modules/email_server/templates/email_security.html:13
-msgid "Postfix TLS"
-msgstr ""
-
-#: plinth/modules/email_server/templates/email_security.html:18
-msgid "Dovecot TLS"
-msgstr ""
-
-#: plinth/modules/email_server/templates/email_server.html:14
-msgid "Visit Rspamd administration interface"
-msgstr ""
-
-#: plinth/modules/email_server/templates/email_server.html:18
+#: plinth/modules/email_server/templates/email_server.html:30
 #, fuzzy
 #| msgid "Service Type"
 msgid "Service Alert"
 msgstr "सेवा टाइप"
 
-#: plinth/modules/email_server/templates/email_server.html:38
+#: plinth/modules/email_server/templates/email_server.html:50
 msgid "Repair"
 msgstr ""
 
-#: plinth/modules/email_server/templates/my_mail.html:15
-#, fuzzy
-#| msgid "Download directory"
-msgid "You do not have a home directory."
-msgstr "डायरेक्टरी डाउनलोड करें"
-
-#: plinth/modules/email_server/templates/my_mail.html:17
-msgid "Create one to begin receiving emails."
-msgstr ""
-
-#: plinth/modules/email_server/templates/my_mail.html:22
-#, fuzzy
-#| msgid "Create User"
-msgid "Create home directory"
-msgstr "यूसर बनाये"
-
-#: plinth/modules/email_server/templates/my_mail.html:27
-msgid "Your home directory is ready to receive emails."
-msgstr ""
-
-#: plinth/modules/email_server/templates/tls_form.html:10
-#, fuzzy
-#| msgid "Current status:"
-msgid "Keep current settings"
-msgstr "वर्तमान स्थिति:"
-
-#: plinth/modules/email_server/templates/tls_form.html:19
-#, fuzzy
-#| msgid "Let's Encrypt"
-msgid "Use Let's Encrypt"
-msgstr "लेटस एंक्रिप्ट"
-
-#: plinth/modules/email_server/templates/tls_form.html:24
-#, fuzzy
-#| msgid "Domain name set"
-msgid "Common name"
-msgstr "डोमेन नाम सेट हो गया है"
-
-#: plinth/modules/email_server/templates/tls_form.html:38
-msgid "Use custom values"
-msgstr ""
-
-#: plinth/modules/email_server/templates/tls_form.html:43
-#, fuzzy
-#| msgid "Certificate Status"
-msgid "Certificate path"
-msgstr "प्रमाणपत्र स्थिति"
-
-#: plinth/modules/email_server/templates/tls_form.html:53
-#, fuzzy
-#| msgid "Create User"
-msgid "Private key path"
-msgstr "यूसर बनाये"
-
-#: plinth/modules/email_server/templates/tls_form.html:67
-msgid "Use system default"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:22
-#: plinth/modules/email_server/views.py:30 plinth/templates/base.html:110
-msgid "Home"
-msgstr "होम"
-
-#: plinth/modules/email_server/views.py:23
-msgid "My Mail"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:24
-#: plinth/modules/email_server/views.py:31
-msgid "My Aliases"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:25
-#: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:45
-msgid "Security"
-msgstr "सुरक्षा"
-
-#: plinth/modules/email_server/views.py:26
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "डोमेन्स"
-
-#: plinth/modules/email_server/views.py:102
+#: plinth/modules/email_server/views.py:64
 #, python-brace-format
 msgid "Internal error in {0}"
 msgstr ""
 
-#: plinth/modules/email_server/views.py:105
+#: plinth/modules/email_server/views.py:67
 msgid "Check syslog for more information"
 msgstr ""
 
-#: plinth/modules/email_server/views.py:180
+#: plinth/modules/email_server/views.py:217
 #, fuzzy
-#| msgid "Enable damage"
-msgid "Enabled aliases"
-msgstr "क्षति को सक्षम करें"
+#| msgid "An error occurred during configuration."
+msgid "Error updating configuration"
+msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
 
-#: plinth/modules/email_server/views.py:181
-#, fuzzy
-#| msgid "Disabled"
-msgid "Disabled aliases"
-msgstr "अक्षम किया गया है"
+#: plinth/modules/email_server/views.py:219 plinth/modules/tor/views.py:137
+#: plinth/views.py:219
+msgid "Setting unchanged"
+msgstr "सेटिंग स्थिर है"
 
-#: plinth/modules/firewall/__init__.py:33
+#: plinth/modules/firewall/__init__.py:34
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2428,7 +2337,7 @@ msgstr ""
 "को नियंत्रित करता है. फ़ायरवॉल सक्षम और ठीक से कॉंफ़िगर रखते हुए इंटरनेट से सुरक्षा खतरे का "
 "जोखिम कम कर देता है."
 
-#: plinth/modules/firewall/__init__.py:66
+#: plinth/modules/firewall/__init__.py:68
 msgid "Firewall"
 msgstr "फ़ायरवॉल"
 
@@ -2465,19 +2374,6 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "सर्विस/पोर्ट"
-
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
-msgid "Enabled"
-msgstr "सक्षम किया गया है"
-
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "अक्षम किया गया है"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -2563,7 +2459,7 @@ msgstr "सटअप शुरु करें"
 msgid "Setup Complete"
 msgstr "सेटअप पूरा हो गया"
 
-#: plinth/modules/gitweb/__init__.py:29
+#: plinth/modules/gitweb/__init__.py:30
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2574,21 +2470,21 @@ msgid ""
 "the world."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:36
+#: plinth/modules/gitweb/__init__.py:37
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:52
+#: plinth/modules/gitweb/__init__.py:53
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:57 plinth/modules/gitweb/manifest.py:10
+#: plinth/modules/gitweb/__init__.py:58 plinth/modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:58
+#: plinth/modules/gitweb/__init__.py:59
 msgid "Simple Git Hosting"
 msgstr ""
 
@@ -3021,7 +2917,7 @@ msgstr "{box_name} के बारे में"
 msgid "{box_name} Manual"
 msgstr "{box_name} मैनुअल"
 
-#: plinth/modules/i2p/__init__.py:29
+#: plinth/modules/i2p/__init__.py:30
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -3029,7 +2925,7 @@ msgid ""
 "distributed around the world."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:33
+#: plinth/modules/i2p/__init__.py:34
 #, fuzzy
 #| msgid ""
 #| "For more information about the %(box_name)s project, see the <a href="
@@ -3041,27 +2937,27 @@ msgstr ""
 "%(box_name)s के बारे में और सिखने के लिये यह देखिये <a href=\"https://wiki.debian.org/"
 "FreedomBox\">%(box_name)s Wiki</a>."
 
-#: plinth/modules/i2p/__init__.py:35
+#: plinth/modules/i2p/__init__.py:36
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:57
+#: plinth/modules/i2p/__init__.py:58
 #, fuzzy
 #| msgid "Enable application"
 msgid "Manage I2P application"
 msgstr "एप्लिकेशन सक्षम करें"
 
-#: plinth/modules/i2p/__init__.py:60 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:61 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:61 plinth/modules/tor/__init__.py:56
+#: plinth/modules/i2p/__init__.py:62 plinth/modules/tor/__init__.py:58
 msgid "Anonymity Network"
 msgstr "गुमनामी नेटवर्क"
 
-#: plinth/modules/i2p/__init__.py:84
+#: plinth/modules/i2p/__init__.py:88
 #, fuzzy
 #| msgid "Web Proxy"
 msgid "I2P Proxy"
@@ -3100,7 +2996,7 @@ msgid ""
 "a file."
 msgstr ""
 
-#: plinth/modules/ikiwiki/__init__.py:28
+#: plinth/modules/ikiwiki/__init__.py:29
 #, fuzzy
 #| msgid ""
 #| "ikiwiki is a simple wiki and blog application. It supports several "
@@ -3118,7 +3014,7 @@ msgstr ""
 "होने पर, ब्लॉग्स और विकि <a href=\"/ikiwiki\">/इकिविकि/</a> (एक बार बनाए गए) पर "
 "उपलब्ध होंगे."
 
-#: plinth/modules/ikiwiki/__init__.py:32
+#: plinth/modules/ikiwiki/__init__.py:33
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -3131,15 +3027,15 @@ msgstr ""
 "विकी <i>संपादित</i>कर सकते है. वह <a href=\"{users_url}\">युज़र कॉन्फ़िगरेशन</a> पर "
 "आपको यह अनुमति बदल सकता और नया युज़रसॅ को जोडं सकता है."
 
-#: plinth/modules/ikiwiki/__init__.py:53 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:54 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "इकिविकि"
 
-#: plinth/modules/ikiwiki/__init__.py:54
+#: plinth/modules/ikiwiki/__init__.py:55
 msgid "Wiki and Blog"
 msgstr "विकि और ब्लॉग"
 
-#: plinth/modules/ikiwiki/__init__.py:75
+#: plinth/modules/ikiwiki/__init__.py:79
 msgid "View and edit wiki applications"
 msgstr "विकी एप्लिकेशन को देखें और संपादित करें"
 
@@ -3220,11 +3116,11 @@ msgstr "{name} हटा गया है."
 msgid "Could not delete {title}: {error}"
 msgstr "{name} नहीं हटा गया है: {error}"
 
-#: plinth/modules/infinoted/__init__.py:26
+#: plinth/modules/infinoted/__init__.py:27
 msgid "infinoted is a server for Gobby, a collaborative text editor."
 msgstr "इन्फिनोटेड़ गोबी के एक सर्वर है, एक सहयोगी टेक्स्ट संपादक."
 
-#: plinth/modules/infinoted/__init__.py:28
+#: plinth/modules/infinoted/__init__.py:29
 #, python-brace-format
 msgid ""
 "To use it, <a href=\"https://gobby.github.io/\">download Gobby</a>, desktop "
@@ -3235,11 +3131,11 @@ msgstr ""
 "डाउनलोड </a> और इंस्टॉल करें. फिर गोबी शुरु करें, \"सर्वर से कनेक्ट\" चुनें और {box_name} "
 "कर डोमेन नाम दर्ज करें."
 
-#: plinth/modules/infinoted/__init__.py:46
+#: plinth/modules/infinoted/__init__.py:48
 msgid "infinoted"
 msgstr "इन्फिनोटेड़"
 
-#: plinth/modules/infinoted/__init__.py:47
+#: plinth/modules/infinoted/__init__.py:49
 msgid "Gobby Server"
 msgstr "गोबी सर्वर"
 
@@ -3258,7 +3154,7 @@ msgid ""
 "domain name."
 msgstr "गोबी शुरू करें और \"सर्वर से कनेक्ट\" चुनिये और {box_name} का डोमेन नाम दर्ज करें."
 
-#: plinth/modules/jsxc/__init__.py:24
+#: plinth/modules/jsxc/__init__.py:25
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3266,11 +3162,11 @@ msgstr ""
 "जेएसएक्ससि, एक्सएमपिपि को एक वेब क्लाइंट है. अाम तौर पर यह एक्सएमपिपि के सात उपयोग "
 "किया जाता है."
 
-#: plinth/modules/jsxc/__init__.py:44 plinth/modules/jsxc/manifest.py:7
+#: plinth/modules/jsxc/__init__.py:46 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "जेएसएक्ससि"
 
-#: plinth/modules/jsxc/__init__.py:45
+#: plinth/modules/jsxc/__init__.py:47
 msgid "Chat Client"
 msgstr "चैट क्लाइंट"
 
@@ -3279,7 +3175,7 @@ msgstr "चैट क्लाइंट"
 msgid "JavaScript license information"
 msgstr "जावास्क्रिप्ट लाइसेंस जानकारी"
 
-#: plinth/modules/letsencrypt/__init__.py:35
+#: plinth/modules/letsencrypt/__init__.py:36
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -3293,7 +3189,7 @@ msgstr ""
 "प्रमाणपत्र सेटअप प्राप्त कर सकता है. {box_name} यह लेटस एंक्रिप्ट का डोमेन का एकमात्र "
 "मालिक सताबित करके एेसा करता है."
 
-#: plinth/modules/letsencrypt/__init__.py:41
+#: plinth/modules/letsencrypt/__init__.py:42
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -3305,15 +3201,15 @@ msgstr ""
 "\"https://letsencrypt.org/repository/\"> लेटस एंक्रिप्ट ग्राहक समझौते</a> इस "
 "सिरविस उपयोग करने से पहले."
 
-#: plinth/modules/letsencrypt/__init__.py:65
+#: plinth/modules/letsencrypt/__init__.py:67
 msgid "Let's Encrypt"
 msgstr "लेटस एंक्रिप्ट"
 
-#: plinth/modules/letsencrypt/__init__.py:66
+#: plinth/modules/letsencrypt/__init__.py:68
 msgid "Certificates"
 msgstr "प्रमाण पत्र"
 
-#: plinth/modules/letsencrypt/__init__.py:96
+#: plinth/modules/letsencrypt/__init__.py:104
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -3421,7 +3317,7 @@ msgstr "डोमेन के लिए प्रमाणपत्र का�
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "डोमेन के लिए प्रमाणपत्र नहीं हटाया गया {domain}:{error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:37
+#: plinth/modules/matrixsynapse/__init__.py:38
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3436,14 +3332,14 @@ msgstr ""
 "मल्टीपल डिवाइस सिंक्रनाइज़इज़ाशिन और काम करने के लिए फोन नंबर की ज़रुरत नहीं है. मैट्रिक्स "
 "सर्वर पर यूसरसॅ सारे मैट्रिक्स सर्वर के लेग से बात कर सकते है फ़ेडरेशिन उपयोग कर."
 
-#: plinth/modules/matrixsynapse/__init__.py:45
+#: plinth/modules/matrixsynapse/__init__.py:46
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:76
+#: plinth/modules/matrixsynapse/__init__.py:78
 msgid "Matrix Synapse"
 msgstr "मैट्रिक्स सिनापसॅ"
 
@@ -3529,7 +3425,7 @@ msgid ""
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:28
+#: plinth/modules/mediawiki/__init__.py:29
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3541,7 +3437,7 @@ msgstr ""
 "से-तरह वेबसाइट होस्ट करने के लिये, नोट्स लेने के लिये या दोस्तों के साथ प्रोजेक्ट्स पर कास कर "
 "सकते है."
 
-#: plinth/modules/mediawiki/__init__.py:32
+#: plinth/modules/mediawiki/__init__.py:33
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3554,7 +3450,7 @@ msgstr ""
 "उपयोग करके. फिर और यूसर अकाउंट मीडियाविकी खुद ही से बना सकते है यहां जा कर <a href="
 "\"/mediawiki/index.php/Special:CreateAccount\">Special:CreateAccount</a>पेज."
 
-#: plinth/modules/mediawiki/__init__.py:38
+#: plinth/modules/mediawiki/__init__.py:39
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3562,12 +3458,12 @@ msgstr ""
 "किसी के साथ लिंक है, वह इस विकी पढ़ सकते हैं. सिर्फ लॉगइन किए गए यूसरसॅ ही सामग्री में "
 "परिवर्तन कर सकते हैं."
 
-#: plinth/modules/mediawiki/__init__.py:59
+#: plinth/modules/mediawiki/__init__.py:60
 #: plinth/modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "मीडियाविकी"
 
-#: plinth/modules/mediawiki/__init__.py:60 plinth/templates/index.html:132
+#: plinth/modules/mediawiki/__init__.py:61 plinth/templates/index.html:132
 msgid "Wiki"
 msgstr "विकी"
 
@@ -3661,7 +3557,7 @@ msgstr "सेटिंग स्थिर है"
 msgid "Server URL updated"
 msgstr "शेयर हटाया गया."
 
-#: plinth/modules/minetest/__init__.py:39
+#: plinth/modules/minetest/__init__.py:40
 #, python-brace-format
 msgid ""
 "Minetest is a multiplayer infinite-world block sandbox. This module enables "
@@ -3673,11 +3569,11 @@ msgstr ""
 "{box_name} पर चल सकवाते है, डिफ़ॉल्ट पोर्ट (३००००) पर. सर्वर से कनेक्ट करने के लिए, एक "
 "<a href=\"http://www.minetest.net/downloads/\">मैइनटेस्ट क्लायंट</a>की आवश्यकता है."
 
-#: plinth/modules/minetest/__init__.py:61 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:63 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
 msgstr "मैइनटेस्ट"
 
-#: plinth/modules/minetest/__init__.py:62
+#: plinth/modules/minetest/__init__.py:64
 msgid "Block Sandbox"
 msgstr "ब्लॉक सेंडबोक्स"
 
@@ -3745,7 +3641,7 @@ msgstr "पिवीपि कॉन्फ़िगरेशन अपडेट 
 msgid "Damage configuration updated"
 msgstr "क्षति कॉन्फ़िगरेशन अपडेट किया गया"
 
-#: plinth/modules/minidlna/__init__.py:25
+#: plinth/modules/minidlna/__init__.py:26
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3756,15 +3652,15 @@ msgid ""
 "Kodi."
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "Media streaming server"
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:49
+#: plinth/modules/minidlna/__init__.py:50
 msgid "MiniDLNA"
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:50
+#: plinth/modules/minidlna/__init__.py:51
 msgid "Simple Media Server"
 msgstr ""
 
@@ -3804,40 +3700,40 @@ msgstr ""
 msgid "Updated media directory"
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:28
+#: plinth/modules/mldonkey/__init__.py:29
 msgid ""
 "MLDonkey is a peer-to-peer file sharing application used to exchange large "
 "files. It can participate in multiple peer-to-peer networks including "
 "eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:31
+#: plinth/modules/mldonkey/__init__.py:32
 msgid ""
 "Users belonging to admin and ed2k group can control it through the web "
 "interface. Users in the admin group can also control it through any of the "
 "separate mobile or desktop front-ends or a telnet interface. See manual."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:36
+#: plinth/modules/mldonkey/__init__.py:37
 #, python-brace-format
 msgid ""
 "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:54
+#: plinth/modules/mldonkey/__init__.py:55
 #, fuzzy
 #| msgid "Download files using BitTorrent applications"
 msgid "Download files using eDonkey applications"
 msgstr "बिटटोरेंट एप्लिकेशन उपयोग कर फ़ाइल डाउनलोड करें"
 
-#: plinth/modules/mldonkey/__init__.py:57
+#: plinth/modules/mldonkey/__init__.py:58
 #: plinth/modules/mldonkey/manifest.py:11
 #, fuzzy
 #| msgid "Monkeysphere"
 msgid "MLDonkey"
 msgstr "मंकीसफीर"
 
-#: plinth/modules/mldonkey/__init__.py:59
+#: plinth/modules/mldonkey/__init__.py:60
 #, fuzzy
 #| msgid "File Sharing"
 msgid "Peer-to-peer File Sharing"
@@ -3855,7 +3751,7 @@ msgstr "मंकीसफीर"
 msgid "AMLDonkey"
 msgstr "मंकीसफीर"
 
-#: plinth/modules/monkeysphere/__init__.py:20
+#: plinth/modules/monkeysphere/__init__.py:21
 msgid ""
 "With Monkeysphere, an OpenPGP key can be generated for each configured "
 "domain serving SSH. The OpenPGP public key can then be uploaded to the "
@@ -3874,7 +3770,7 @@ msgstr ""
 "है. <a href=\"http://web.monkeysphere.info/getting-started-ssh/"
 "\">Monkeysphere SSH documentation</a> देखिये और जानकारी के लिये."
 
-#: plinth/modules/monkeysphere/__init__.py:28
+#: plinth/modules/monkeysphere/__init__.py:29
 msgid ""
 "Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
 "(HTTPS) certificate installed on this machine. The OpenPGP public key can "
@@ -3891,7 +3787,7 @@ msgstr ""
 "जो <a href=\"https://web.monkeysphere.info/download/\">Monkeysphere website</"
 "a> पर उपलब्ध है."
 
-#: plinth/modules/monkeysphere/__init__.py:50
+#: plinth/modules/monkeysphere/__init__.py:52
 #: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
 msgid "Monkeysphere"
 msgstr "मंकीसफीर"
@@ -4015,13 +3911,13 @@ msgstr "चाबी किसर्वर पर प्रकाशित क�
 msgid "Error occurred while publishing key."
 msgstr "चाबी प्रकाशित करते समय एरर हो गया."
 
-#: plinth/modules/mumble/__init__.py:33
+#: plinth/modules/mumble/__init__.py:34
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr "ममबल एक खुला सोरस, कम विलंबता, एन्क्रिप्टेड अच्छा गुणवत्ता आवाज चैट सॉफ्टवेयर है."
 
-#: plinth/modules/mumble/__init__.py:35
+#: plinth/modules/mumble/__init__.py:36
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -4031,11 +3927,11 @@ msgstr ""
 "mumble.info\">Clients</a> अापके डेस्कटॉप और एंड्रॉयड डिवाइस से ममबल से कनेक्ट होने के "
 "लिए उपलब्ध हैं."
 
-#: plinth/modules/mumble/__init__.py:52 plinth/modules/mumble/manifest.py:9
+#: plinth/modules/mumble/__init__.py:54 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "ममबल"
 
-#: plinth/modules/mumble/__init__.py:53
+#: plinth/modules/mumble/__init__.py:55
 msgid "Voice Chat"
 msgstr "वॉयस चैट"
 
@@ -4092,23 +3988,23 @@ msgstr ""
 msgid "Services"
 msgstr "सर्विस"
 
-#: plinth/modules/networks/__init__.py:41
+#: plinth/modules/networks/__init__.py:42
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:43
+#: plinth/modules/networks/__init__.py:44
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:61
+#: plinth/modules/networks/__init__.py:63
 msgid "Networks"
 msgstr "नेटवर्क्‍स"
 
-#: plinth/modules/networks/__init__.py:179
+#: plinth/modules/networks/__init__.py:184
 #, python-brace-format
 msgid "Using DNSSEC on IPv{kind}"
 msgstr "DNSSEC आईपीवी पर उपयोग कर रहा है{kind}"
@@ -4611,6 +4507,11 @@ msgstr "आईपीवी6"
 msgid "This connection is not active."
 msgstr "यह कनेक्शन सक्रिय नहीं है."
 
+#: plinth/modules/networks/templates/connection_show.html:259
+#: plinth/modules/security/__init__.py:47
+msgid "Security"
+msgstr "सुरक्षा"
+
 #: plinth/modules/networks/templates/connection_show.html:264
 #: plinth/modules/networks/templates/connection_show.html:284
 #: plinth/modules/networks/templates/connection_show.html:303
@@ -5108,7 +5009,7 @@ msgstr "जेनेरिक"
 msgid "TUN or TAP interface"
 msgstr "इंटरफ़ेस"
 
-#: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:49
+#: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:51
 #: plinth/modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr ""
@@ -5205,7 +5106,7 @@ msgstr "कनेक्शन {name} हटाया गया."
 msgid "Failed to delete connection: Connection not found."
 msgstr "कनेक्शन हटाने में विफल: कनेक्शन नहीं मिला."
 
-#: plinth/modules/openvpn/__init__.py:30
+#: plinth/modules/openvpn/__init__.py:31
 #, python-brace-format
 msgid ""
 "Virtual Private Network (VPN) is a technique for securely connecting two "
@@ -5221,22 +5122,22 @@ msgstr ""
 "आंतरिक सर्विसस उपयोग करने के लिये. आप बाकी सब इंटरनेट {box_name} के जरिए उपयोग कर "
 "सकते हैं अगर अापको और सुरक्षा और गुमनामी चाहिये."
 
-#: plinth/modules/openvpn/__init__.py:58
+#: plinth/modules/openvpn/__init__.py:59
 #, fuzzy
 #| msgid "Connection Type"
 msgid "Connect to VPN services"
 msgstr "कनेक्शन टाइप"
 
-#: plinth/modules/openvpn/__init__.py:61 plinth/modules/openvpn/manifest.py:17
+#: plinth/modules/openvpn/__init__.py:62 plinth/modules/openvpn/manifest.py:17
 msgid "OpenVPN"
 msgstr "ओपन वीपीएन"
 
-#: plinth/modules/openvpn/__init__.py:62
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/openvpn/__init__.py:63
+#: plinth/modules/wireguard/__init__.py:53
 msgid "Virtual Private Network"
 msgstr "वर्चुअल प्राइवेट नेटवर्क"
 
-#: plinth/modules/openvpn/__init__.py:73
+#: plinth/modules/openvpn/__init__.py:74
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5315,7 +5216,7 @@ msgstr "प्रोफ़ाइल हर %(box_name)s यूसर के ल�
 msgid "Download my profile"
 msgstr "मेरी प्रोफ़ाइल डाउनलोड करें"
 
-#: plinth/modules/pagekite/__init__.py:28
+#: plinth/modules/pagekite/__init__.py:29
 #, python-brace-format
 msgid ""
 "PageKite is a system for exposing {box_name} services when you don't have a "
@@ -5327,17 +5228,17 @@ msgstr ""
 "सीधा कनेक्शन नहीं है. इसके जरूरत है सिर्फ आपके {box_name} के सर्विसस बाकी इंटरनेट से पहुँच "
 "योग्य नहीं. इसमें इन स्थितियों को शामिल किया गया है:"
 
-#: plinth/modules/pagekite/__init__.py:33
+#: plinth/modules/pagekite/__init__.py:34
 #, python-brace-format
 msgid "{box_name} is behind a restricted firewall."
 msgstr "{box_name} एक प्रतिबंधित फ़ायरवॉल के पीछे है."
 
-#: plinth/modules/pagekite/__init__.py:36
+#: plinth/modules/pagekite/__init__.py:37
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr "{box_name} एक (वायरलेस) रूटर से कनेक्टेड है जिसे आप नियंत्रित नहीं करते हैं."
 
-#: plinth/modules/pagekite/__init__.py:38
+#: plinth/modules/pagekite/__init__.py:39
 msgid ""
 "Your ISP does not provide you an external IP address and instead provides "
 "Internet connection through NAT."
@@ -5345,7 +5246,7 @@ msgstr ""
 "आपका ISP आपको एक बाहरी IP एड्रेस नहीं दता लेकिन NAT के माध्यम से  इंटरनेट कनेक्शन प्रदान "
 "करता है."
 
-#: plinth/modules/pagekite/__init__.py:40
+#: plinth/modules/pagekite/__init__.py:41
 msgid ""
 "Your ISP does not provide you a static IP address and your IP address "
 "changes every time you connect to Internet."
@@ -5353,11 +5254,11 @@ msgstr ""
 "आपके ISP आपको एक स्थिर IP एड्रेस प्रदान नहीं करता है और आपके IP एड्रेस बदलाएग जब आप "
 "इंटरनेट से कनेक्ट होते हैं."
 
-#: plinth/modules/pagekite/__init__.py:42
+#: plinth/modules/pagekite/__init__.py:43
 msgid "Your ISP limits incoming connections."
 msgstr "आपके ISP आने वाले कनेक्शंसस को सीमित करता है."
 
-#: plinth/modules/pagekite/__init__.py:44
+#: plinth/modules/pagekite/__init__.py:45
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "PageKite works around NAT, firewalls and IP-address limitations by using "
@@ -5376,15 +5277,15 @@ msgstr ""
 "<a href=\"https://pagekite.net\">pagekite.net</a>. भविष्य में अापका दोस्त का "
 "{box_name} इसके लिये उपयोग कर सकते हैं."
 
-#: plinth/modules/pagekite/__init__.py:65
+#: plinth/modules/pagekite/__init__.py:67
 msgid "PageKite"
 msgstr "पेजकइट"
 
-#: plinth/modules/pagekite/__init__.py:66
+#: plinth/modules/pagekite/__init__.py:68
 msgid "Public Visibility"
 msgstr "सार्वजनिक विसिबिलिटी"
 
-#: plinth/modules/pagekite/__init__.py:76
+#: plinth/modules/pagekite/__init__.py:81
 #, fuzzy
 #| msgid "PageKite Account"
 msgid "PageKite Domain"
@@ -5538,25 +5439,25 @@ msgstr ""
 "SSH ग्राहक सेटअप देखें <a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/"
 "\">instructions</a>"
 
-#: plinth/modules/performance/__init__.py:17
-#: plinth/modules/performance/__init__.py:46
+#: plinth/modules/performance/__init__.py:18
+#: plinth/modules/performance/__init__.py:48
 msgid "Performance"
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:26
+#: plinth/modules/performance/__init__.py:27
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
 "patterns and whether the hardware is overloaded by users and services."
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:30
+#: plinth/modules/performance/__init__.py:31
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
 msgstr ""
 
-#: plinth/modules/performance/__init__.py:47
+#: plinth/modules/performance/__init__.py:49
 msgid "System Monitoring"
 msgstr ""
 
@@ -5628,7 +5529,7 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "अब शट डाउन करें"
 
-#: plinth/modules/privoxy/__init__.py:30
+#: plinth/modules/privoxy/__init__.py:31
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -5638,7 +5539,7 @@ msgstr ""
 "लिए, वेब पेज डेटा और HTTP हेडर को मोडिफाई करने के लिए, ऐकसेस को नियंत्रित करने के लिए "
 "और एड या दुसरा इंटरनेट का जंक हटाने के लिए. "
 
-#: plinth/modules/privoxy/__init__.py:35
+#: plinth/modules/privoxy/__init__.py:36
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
@@ -5652,20 +5553,20 @@ msgstr ""
 "कॉन्फ़िगरेशन विवरण और प्रलेखन यहां देख सकते हैं <a href=\"http://config.privoxy.org"
 "\">http://config.privoxy.org/</a> या <a href=\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:56
+#: plinth/modules/privoxy/__init__.py:58
 msgid "Privoxy"
 msgstr "प्रिवोक्सी"
 
-#: plinth/modules/privoxy/__init__.py:57
+#: plinth/modules/privoxy/__init__.py:59
 msgid "Web Proxy"
 msgstr "वेब प्रॉक्सी"
 
-#: plinth/modules/privoxy/__init__.py:115
+#: plinth/modules/privoxy/__init__.py:120
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "{url} ऐकसेस करें प्रॉक्सी लेकर {proxy} टीसीपी पर{kind}"
 
-#: plinth/modules/quassel/__init__.py:34
+#: plinth/modules/quassel/__init__.py:35
 #, python-brace-format
 msgid ""
 "Quassel is an IRC application that is split into two parts, a \"core\" and a "
@@ -5681,7 +5582,7 @@ msgstr ""
 "ताकि आप हमेशा  ऑनलाइन रखते हुए और एक या अधिक क्वासेल क्लाइंट डेस्कटॉप या मोबाइल से इसेसे "
 "कनेक्ट और डिस्कनेक्ट करने के लिए उपयोग किया जा सकता है."
 
-#: plinth/modules/quassel/__init__.py:41
+#: plinth/modules/quassel/__init__.py:42
 msgid ""
 "You can connect to your Quassel core on the default Quassel port 4242.  "
 "Clients to connect to Quassel from your <a href=\"http://quassel-irc.org/"
@@ -5693,11 +5594,11 @@ msgstr ""
 "quasseldroid.iskrembilen.com/\"> मोबाइल</a> से कनेक्ट होने के लिए   क्लाइंट्स उपलब्ध "
 "हैं."
 
-#: plinth/modules/quassel/__init__.py:60 plinth/modules/quassel/manifest.py:9
+#: plinth/modules/quassel/__init__.py:62 plinth/modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "क्वासेल"
 
-#: plinth/modules/quassel/__init__.py:61
+#: plinth/modules/quassel/__init__.py:63
 msgid "IRC Client"
 msgstr "आईआरसी क्लाइंट"
 
@@ -5705,7 +5606,7 @@ msgstr "आईआरसी क्लाइंट"
 msgid "Quasseldroid"
 msgstr "क्वासेलड्रोइड"
 
-#: plinth/modules/radicale/__init__.py:28
+#: plinth/modules/radicale/__init__.py:29
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5724,19 +5625,19 @@ msgstr ""
 "org/clients/\">समर्थित क्लाइंट एप्लिकेशन</a> कि जरुरत है. राडिकैल किसी {box_name} "
 "यूसर पहुंचा जा सकता है एक लॉगिन के साथ."
 
-#: plinth/modules/radicale/__init__.py:34
+#: plinth/modules/radicale/__init__.py:35
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:55
+#: plinth/modules/radicale/__init__.py:57
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "राडिकैल"
 
-#: plinth/modules/radicale/__init__.py:56
+#: plinth/modules/radicale/__init__.py:58
 msgid "Calendar and Addressbook"
 msgstr "कैलेंडर और पता पुस्तिका"
 
@@ -5826,7 +5727,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "ऐकसेस अधिकार कॉंफ़िगरेशन अपडेट किया गया"
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5837,7 +5738,7 @@ msgstr ""
 "साथ. यह पूरा कार्यक्षमता देता है, सहित MIME समर्थन, पता पुस्तिका, फ़ोल्डर हेरफेर, संदेश "
 "खोज और स्पेल जाँच."
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 #, fuzzy
 #| msgid ""
 #| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
@@ -5858,7 +5759,7 @@ msgstr ""
 "SSL पर IMAP के लिए (अनुशंसित), <code>imaps://imap.example.com</code> जैसे सर्वर "
 "फ़ील्ड भरें."
 
-#: plinth/modules/roundcube/__init__.py:33
+#: plinth/modules/roundcube/__init__.py:34
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5873,17 +5774,17 @@ msgstr ""
 "security/lesssecureapps\">https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:56
+#: plinth/modules/roundcube/__init__.py:58
 msgid "Email Client"
 msgstr "ईमेल क्लाइंट"
 
-#: plinth/modules/samba/__init__.py:32
+#: plinth/modules/samba/__init__.py:33
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
 "computers in your local network."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:35
+#: plinth/modules/samba/__init__.py:36
 #, python-brace-format
 msgid ""
 "After installation, you can choose which disks to use for sharing. Enabled "
@@ -5892,31 +5793,31 @@ msgid ""
 "There are three types of shares you can choose from: "
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:40
+#: plinth/modules/samba/__init__.py:41
 msgid "Open share - accessible to everyone in your local network."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:41
+#: plinth/modules/samba/__init__.py:42
 msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:43
+#: plinth/modules/samba/__init__.py:44
 msgid ""
 "Home share - every user in the freedombox-share group can have their own "
 "private space."
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:60
 msgid "Access to the private shares"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:62
+#: plinth/modules/samba/__init__.py:63
 msgid "Samba"
 msgstr ""
 
-#: plinth/modules/samba/__init__.py:63
+#: plinth/modules/samba/__init__.py:64
 #, fuzzy
 #| msgid "Distributed File Storage"
 msgid "Network File Storage"
@@ -6052,7 +5953,7 @@ msgstr "शेयर संपादित किया गया."
 msgid "Error disabling share: {error_message}"
 msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
 
-#: plinth/modules/searx/__init__.py:25
+#: plinth/modules/searx/__init__.py:26
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -6060,7 +5961,7 @@ msgstr ""
 "सिरएक्स एक गोपनीयता संमान इंटरनेट मेटा खोज  इंजन है. यह विभिन्न खोज यन्त्र से परिणाम "
 "इकट्ठा और प्रदर्शन करता है."
 
-#: plinth/modules/searx/__init__.py:27
+#: plinth/modules/searx/__init__.py:28
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -6068,15 +5969,15 @@ msgstr ""
 "सिरएक्स खोज इंजन द्वारा ट्रैकिंग और प्रोफाइलिंग से बचने के लिए इस्तेमाल किया जा सकता है. "
 "यह डिफ़ॉल्ट से कोई कुकीज़ स्टोर नहीं करता है."
 
-#: plinth/modules/searx/__init__.py:45
+#: plinth/modules/searx/__init__.py:46
 msgid "Search the web"
 msgstr "वेब सरच किजिये"
 
-#: plinth/modules/searx/__init__.py:48 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:49 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "सिरएक्स"
 
-#: plinth/modules/searx/__init__.py:49
+#: plinth/modules/searx/__init__.py:50
 msgid "Web Search"
 msgstr "वेब खोज"
 
@@ -6251,11 +6152,11 @@ msgstr "त्रुटि सेटिंग एक्सेस प्रति
 msgid "Updated security configuration"
 msgstr "सुरक्षा कॉंफ़िगरेशन अपडेट किया गया"
 
-#: plinth/modules/shaarli/__init__.py:20
+#: plinth/modules/shaarli/__init__.py:21
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "शारली आप को बुकमार्क्स बचाने और साझा करने के लिए अनुमति देता है."
 
-#: plinth/modules/shaarli/__init__.py:21
+#: plinth/modules/shaarli/__init__.py:22
 #, fuzzy
 #| msgid ""
 #| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
@@ -6269,15 +6170,15 @@ msgstr ""
 "होगा. नोट करिये शारली सिर्फ एकल यूसर अकाउंट का समर्थन करता है  जो आपको प्रारंभिक "
 "यात्रा पर सेटअप करने की जरुरत होगा."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:39 plinth/modules/shaarli/manifest.py:6
 msgid "Shaarli"
 msgstr "शारली"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:40
 msgid "Bookmarks"
 msgstr "बुकमार्क्स"
 
-#: plinth/modules/shadowsocks/__init__.py:26
+#: plinth/modules/shadowsocks/__init__.py:27
 msgid ""
 "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
 "your Internet traffic. It can be used to bypass Internet filtering and "
@@ -6286,7 +6187,7 @@ msgstr ""
 "शैडोवॉक्स एक हल्के और सुरक्षित सॉक्स 5 प्रॉक्सी है, आपके इंटरनेट यातायात रक्षा करने के लिये. "
 "यह इंटरनेट फ़िल्टरिंग और सेंसरशिप बाईपास करने के लिए इस्तेमाल किया जा सकता है."
 
-#: plinth/modules/shadowsocks/__init__.py:30
+#: plinth/modules/shadowsocks/__init__.py:31
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -6298,7 +6199,7 @@ msgstr ""
 "है. यह एक सॉक्स 5 प्रॉक्सी भी चला जाएगा.  स्थानीय डिवाइसस इस प्रॉक्सी से कनेक्ट कर सकते "
 "हैं, और उनके डेटा एंक्रिप्टेड और शैडोवॉक्स सर्वर के माध्यम से प्रॉक्सी हो जाएगा."
 
-#: plinth/modules/shadowsocks/__init__.py:35
+#: plinth/modules/shadowsocks/__init__.py:36
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -6306,11 +6207,11 @@ msgstr ""
 "सेटअप के बाद शैडोवॉक्स का उपयोग करने के लिए,अपने डिवाइस, ब्राउज़र या एप्लिकेशन में सॉक्स5 "
 "प्रॉक्सी यूआरएल पर सेट करें http://freedombox_address:1080/"
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:53
 msgid "Shadowsocks"
 msgstr "शाडोसोक्स"
 
-#: plinth/modules/shadowsocks/__init__.py:53
+#: plinth/modules/shadowsocks/__init__.py:55
 msgid "Socks5 Proxy"
 msgstr "सोक्स5 प्रॉक्सी"
 
@@ -6452,7 +6353,7 @@ msgstr "शेयर संपादित करें"
 msgid "Share deleted."
 msgstr "शेयर हटाया गया."
 
-#: plinth/modules/snapshot/__init__.py:27
+#: plinth/modules/snapshot/__init__.py:28
 msgid ""
 "Snapshots allows creating and managing btrfs file system snapshots. These "
 "can be used to roll back the system to a previously known good state in case "
@@ -6462,7 +6363,7 @@ msgstr ""
 "को वापस रोल करने के लिए इस्तेमाल किया जा सकता है, एक पहले अच्छी स्थिति ज्ञात है अगर "
 "सिस्टम पर अवांछित बदलाव किया गया."
 
-#: plinth/modules/snapshot/__init__.py:31
+#: plinth/modules/snapshot/__init__.py:32
 #, no-python-format
 msgid ""
 "Snapshots are taken periodically (called timeline snapshots) and also before "
@@ -6470,7 +6371,7 @@ msgid ""
 "cleaned up according to the settings below."
 msgstr ""
 
-#: plinth/modules/snapshot/__init__.py:34
+#: plinth/modules/snapshot/__init__.py:35
 #, fuzzy
 #| msgid ""
 #| "Snapshots work on btrfs file systems only and on the root partition only. "
@@ -6484,7 +6385,7 @@ msgstr ""
 "स्नैपशॉट्स सिर्फ btrfs फाइल सिस्टम और रूट पार्टीशन पर काम करते हैं. स्नैपशॉट बैकअप के लिए "
 "प्रतिस्थापन नहीं है क्योंकि वे उसी पार्टीशन पर संग्रहित होते हैं. "
 
-#: plinth/modules/snapshot/__init__.py:56
+#: plinth/modules/snapshot/__init__.py:58
 msgid "Storage Snapshots"
 msgstr "स्टोरेज स्नैपशॉटस"
 
@@ -6683,7 +6584,7 @@ msgstr "रोलबैक शुरु करने के लिए सिस�
 msgid "Rollback to Snapshot"
 msgstr "स्नैपशॉट को रोलबैक करें"
 
-#: plinth/modules/ssh/__init__.py:30
+#: plinth/modules/ssh/__init__.py:31
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -6694,7 +6595,7 @@ msgstr ""
 "स्वीकार करने के लिये. एक अधिकार दिया गया रिमोट कंप्यूटर प्रशासन कार्य निष्पादित कर "
 "सकता है, फ़ाइलों की कॉपी कर सकता है या ऐसे कनेक्शंस का उपयोग करके अंय सर्विसस चलाएे."
 
-#: plinth/modules/ssh/__init__.py:49
+#: plinth/modules/ssh/__init__.py:51
 msgid "Secure Shell (SSH) Server"
 msgstr "सुरक्षित शैल (SSH) सर्वर"
 
@@ -6741,7 +6642,7 @@ msgstr ""
 msgid "SSH authentication with password enabled."
 msgstr ""
 
-#: plinth/modules/sso/__init__.py:34
+#: plinth/modules/sso/__init__.py:36
 msgid "Single Sign On"
 msgstr "एकल साइन-ऑन"
 
@@ -6749,7 +6650,7 @@ msgstr "एकल साइन-ऑन"
 msgid "Login"
 msgstr "लॉगिन"
 
-#: plinth/modules/storage/__init__.py:29
+#: plinth/modules/storage/__init__.py:30
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -6757,91 +6658,91 @@ msgid ""
 "media, expand the root partition etc."
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:53 plinth/modules/storage/__init__.py:316
-#: plinth/modules/storage/__init__.py:347
+#: plinth/modules/storage/__init__.py:55 plinth/modules/storage/__init__.py:324
+#: plinth/modules/storage/__init__.py:355
 msgid "Storage"
 msgstr "स्टोरेज"
 
-#: plinth/modules/storage/__init__.py:210
+#: plinth/modules/storage/__init__.py:218
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} बाइट्स"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:222
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} किब"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:226
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} मेब"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:230
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} जिब"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:233
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} टीब"
 
-#: plinth/modules/storage/__init__.py:237
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation failed."
 msgstr "ऑपरेशन अनुत्तीर्ण हो गया."
 
-#: plinth/modules/storage/__init__.py:239
+#: plinth/modules/storage/__init__.py:247
 msgid "The operation was cancelled."
 msgstr "ऑपरेशन रद्द किया गया."
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:249
 msgid "The device is already unmounting."
 msgstr "यह डिवाइस पहले से अनमाउट किया जा रहा है."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "यह ऑपरेशन अनुपलब्ध है क्यैकि ड्राइवर/उपकरण टूल समर्थित नहीं है."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:254
 msgid "The operation timed out."
 msgstr "ऑपरेशन टाइम आउट हो गया."
 
-#: plinth/modules/storage/__init__.py:248
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "यह ऑपरेशन गहरी नींद की स्थिति का डिस्क को जाग जाएगा."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:259
 msgid "Attempting to unmount a device that is busy."
 msgstr "व्यस्त डिवाइस को अनमाउंट करने का प्रयास कर रहा है."
 
-#: plinth/modules/storage/__init__.py:253
+#: plinth/modules/storage/__init__.py:261
 msgid "The operation has already been cancelled."
 msgstr "ऑपरेशन पहले से रद्द किया गया."
 
-#: plinth/modules/storage/__init__.py:255
-#: plinth/modules/storage/__init__.py:257
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:267
 msgid "Not authorized to perform the requested operation."
 msgstr "अनुरोधित ऑपरेशन करने के लिए अधिकृत नहीं है."
 
-#: plinth/modules/storage/__init__.py:261
+#: plinth/modules/storage/__init__.py:269
 msgid "The device is already mounted."
 msgstr "यह डिवाइस पहले से माउंट किया गया."
 
-#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:271
 msgid "The device is not mounted."
 msgstr "यह डिवाइस नहीं माउंट किया गया."
 
-#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:273
 msgid "Not permitted to use the requested option."
 msgstr "अनुरोधित विकल्प का उपयोग करने की अनुमति नहीं है."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:275
 msgid "The device is mounted by another user."
 msgstr "किसी और यूसर ने डिवाइस माउंट किया गया है."
 
-#: plinth/modules/storage/__init__.py:311
+#: plinth/modules/storage/__init__.py:319
 #, fuzzy, no-python-format, python-brace-format
 #| msgid ""
 #| "Warning: Low space on system partition ({percent_used}% used, "
@@ -6851,15 +6752,15 @@ msgstr ""
 "वार्निंग: सिस्टम पार्टीशन पर कम जगह ({percent_used}% उपयोग किया गया, "
 "{free_space} free)."
 
-#: plinth/modules/storage/__init__.py:313
+#: plinth/modules/storage/__init__.py:321
 msgid "Low disk space"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:341
+#: plinth/modules/storage/__init__.py:349
 msgid "Disk failure imminent"
 msgstr ""
 
-#: plinth/modules/storage/__init__.py:343
+#: plinth/modules/storage/__init__.py:351
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6990,7 +6891,7 @@ msgstr "डिवाइस सुरक्षित रूप से अनप�
 msgid "Error ejecting device: {error_message}"
 msgstr "एेरर इजेक्टिग्न डिवाइस: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:28
+#: plinth/modules/syncthing/__init__.py:29
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -7001,7 +6902,7 @@ msgstr ""
 "सिंक्रनाइज़ करने के लिए एक एप्लिकेशन है. सिंकतिन्ग चलते हए डिवाइसस पर किसी एक डिवाइस में "
 "फ़ाइलों का निर्माण, संशोधन, या हटाना ऑटोमेटिक दोहरा किया गया."
 
-#: plinth/modules/syncthing/__init__.py:33
+#: plinth/modules/syncthing/__init__.py:34
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Running Syncthing on {box_name} provides an extra synchronization point "
@@ -7025,20 +6926,20 @@ msgstr ""
 "सेट एक फ़ोल्डर्स का एक अलग सेट का उपयोग करके सिंक्रनाइज़ किया जा सकता है. {box_name} "
 "पर वेब इंटरफेस सिर्फ \"एडमिन\" समूह के यूसकस के लिए उपलब्ध है."
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 msgid "Administer Syncthing application"
 msgstr "सिंकतिन्ग एप्लिकेशन का प्रशासन करें"
 
-#: plinth/modules/syncthing/__init__.py:62
+#: plinth/modules/syncthing/__init__.py:63
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "सिंकतिन्ग"
 
-#: plinth/modules/syncthing/__init__.py:63
+#: plinth/modules/syncthing/__init__.py:64
 msgid "File Synchronization"
 msgstr "फ़ाइल सिंक्रनाइज़ेशन"
 
-#: plinth/modules/tahoe/__init__.py:31
+#: plinth/modules/tahoe/__init__.py:32
 msgid ""
 "Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
 "independent security to store files over a distributed network of storage "
@@ -7049,7 +6950,7 @@ msgstr ""
 "नेटवर्क पर फ़ाइलें स्टोर करने के लिये स्वतंत्र सुरक्षा का उपयोग करता है. अगर कुछ नोड्स विफल "
 "होगा, आपकी फ़ाइलें शेष नोड्स से पुनर्प्राप्त किया जा सकता है."
 
-#: plinth/modules/tahoe/__init__.py:36
+#: plinth/modules/tahoe/__init__.py:37
 #, python-brace-format
 msgid ""
 "This {box_name} hosts a storage node and an introducer by default. "
@@ -7059,11 +6960,11 @@ msgstr ""
 "यह {box_name} एक स्टोरेज नोड आैर इंट्रोड्यूसर डिफ़ॉल्ट से होस्ट करता है. अतिरिक्त "
 "इंट्रोड्यूसरस जोड़ा जा सकता है, जो इस नोड को अन्य स्टोरेज नोड्स में पेश करेगा."
 
-#: plinth/modules/tahoe/__init__.py:62
+#: plinth/modules/tahoe/__init__.py:64
 msgid "Tahoe-LAFS"
 msgstr "टाहो-एलएएफएस"
 
-#: plinth/modules/tahoe/__init__.py:64
+#: plinth/modules/tahoe/__init__.py:66
 msgid "Distributed File Storage"
 msgstr "फ़ाइल स्टोरेज वितरित"
 
@@ -7102,7 +7003,7 @@ msgstr "कनेक्टेड इंट्रोड्यूसरस"
 msgid "Remove"
 msgstr "निकालें"
 
-#: plinth/modules/tor/__init__.py:35
+#: plinth/modules/tor/__init__.py:36
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7115,42 +7016,42 @@ msgstr ""
 "टो प्रोजेक्ट सिफारिश की है कि आप <a href=\"https://www.torproject.org/download/"
 "download-easy.html.en\">टो ब्राउज़र </a> उपयोग करें."
 
-#: plinth/modules/tor/__init__.py:55
+#: plinth/modules/tor/__init__.py:57
 msgid "Tor"
 msgstr "टोर"
 
-#: plinth/modules/tor/__init__.py:67
+#: plinth/modules/tor/__init__.py:72
 #, fuzzy
 #| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
 msgstr "टोर हिडन सर्विस"
 
-#: plinth/modules/tor/__init__.py:71
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Socks Proxy"
 msgstr "टोर सोक्स प्रॉक्सी"
 
-#: plinth/modules/tor/__init__.py:75
+#: plinth/modules/tor/__init__.py:80
 msgid "Tor Bridge Relay"
 msgstr "टो ब्रिज रीले"
 
-#: plinth/modules/tor/__init__.py:116
+#: plinth/modules/tor/__init__.py:123
 msgid "Tor relay port available"
 msgstr "टोर रीले पोर्ट उपलब्ध है"
 
-#: plinth/modules/tor/__init__.py:126
+#: plinth/modules/tor/__init__.py:133
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:136
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:205
+#: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "यूआरएल एक्सेस करें {url} टीसीपी पर {kind} टोर के माध्यम से"
 
-#: plinth/modules/tor/__init__.py:216
+#: plinth/modules/tor/__init__.py:223
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "टोर उपयोग की पुष्टि करें {url} पर टीसीपी पर {kind}"
@@ -7303,17 +7204,13 @@ msgstr "सॉक्स"
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr "एक टोर सॉक्स पोर्ट आपका %(box_name)s र उपलब्ध है, TCP पोर्ट ९०५० पर."
 
-#: plinth/modules/tor/views.py:137 plinth/views.py:221
-msgid "Setting unchanged"
-msgstr "सेटिंग स्थिर है"
-
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 #, fuzzy
 #| msgid "Deluge is a BitTorrent client that features a Web UI."
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "डेलूज एक बिटटोरेंट ग्राहक है जिसमे वेब युआई है."
 
-#: plinth/modules/transmission/__init__.py:30
+#: plinth/modules/transmission/__init__.py:31
 #, fuzzy
 #| msgid ""
 #| "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
@@ -7325,16 +7222,16 @@ msgstr ""
 "बिटटोरेंट एक पीअर-टू-पीअर फ़ाइल साझा प्रोटोकॉल है. ट्रांसमिशन डेमॉन बिटटोरेंट फ़ाइल साझा "
 "संभालती है. नोट-बिटटोरेंट अनाम नहीं है."
 
-#: plinth/modules/transmission/__init__.py:32
+#: plinth/modules/transmission/__init__.py:33
 msgid "Please do not change the default port of the transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:55
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "हस्तांतरण"
 
-#: plinth/modules/ttrss/__init__.py:30
+#: plinth/modules/ttrss/__init__.py:31
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -7344,7 +7241,7 @@ msgstr ""
 "से समाचार पढ़ने की अनुमति देने के लिए डिज़ाइन किया गया है, एक असली डेस्कटॉप एप्लिकेशन के "
 "जैसे."
 
-#: plinth/modules/ttrss/__init__.py:34
+#: plinth/modules/ttrss/__init__.py:35
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS will be available from <a href=\"/tt-rss\">/"
@@ -7358,7 +7255,7 @@ msgstr ""
 "माैजूद होते है. यह <a href=\"{users_url}\">किसी </a> एक {box_name} के सात लॉग इन "
 "कर सकता है."
 
-#: plinth/modules/ttrss/__init__.py:38
+#: plinth/modules/ttrss/__init__.py:39
 #, fuzzy
 #| msgid ""
 #| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
@@ -7370,15 +7267,15 @@ msgstr ""
 "टैनी टैनी आरएसएस का मोबाइल या डेस्कटॉप एप्लिकेशन उपयोग करते समय, यह यूआरएल<a href=\"/"
 "tt-rss-app/\">/tt-rss-app</a> कनेक्ट करने के लिए उपयोग करें."
 
-#: plinth/modules/ttrss/__init__.py:54
+#: plinth/modules/ttrss/__init__.py:55
 msgid "Read and subscribe to news feeds"
 msgstr "समाचार फ़ीड्स पढ़ें और सब्सक्राइब करें"
 
-#: plinth/modules/ttrss/__init__.py:57 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:58 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "टिनी टिनी आरएसएस"
 
-#: plinth/modules/ttrss/__init__.py:58
+#: plinth/modules/ttrss/__init__.py:59
 msgid "News Feed Reader"
 msgstr "समाचार फ़ीड रीडर"
 
@@ -7386,12 +7283,12 @@ msgstr "समाचार फ़ीड रीडर"
 msgid "Tiny Tiny RSS (Fork)"
 msgstr "टैनी टैनी आरएसएस (फोर्क)"
 
-#: plinth/modules/upgrades/__init__.py:45
+#: plinth/modules/upgrades/__init__.py:46
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:46
+#: plinth/modules/upgrades/__init__.py:47
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7399,36 +7296,43 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:79
+#: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
+#: plinth/modules/upgrades/templates/update-firstboot.html:11
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "अपडेट"
+
+#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
 #| msgid "Update"
 msgid "Updates"
 msgstr "अपडेट"
 
-#: plinth/modules/upgrades/__init__.py:125
+#: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
 msgstr "फ्रीडमबाक्स फाउंडेशन"
 
-#: plinth/modules/upgrades/__init__.py:210
+#: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:212
+#: plinth/modules/upgrades/__init__.py:219
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:223
+#: plinth/modules/upgrades/__init__.py:230
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/__init__.py:225
+#: plinth/modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7630,14 +7534,14 @@ msgstr "अपग्रेड प्रारंभ करना विफल �
 msgid "Frequent feature updates activated."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:39
+#: plinth/modules/users/__init__.py:40
 msgid ""
 "Create and managed user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:44
+#: plinth/modules/users/__init__.py:45
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7645,15 +7549,15 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:65
+#: plinth/modules/users/__init__.py:67
 msgid "Users and Groups"
 msgstr "यूसरस और समूह"
 
-#: plinth/modules/users/__init__.py:78
+#: plinth/modules/users/__init__.py:83
 msgid "Access to all services and system settings"
 msgstr "सब सर्विसस और सिस्टम सेटिंग्स तक पहुंच"
 
-#: plinth/modules/users/__init__.py:114
+#: plinth/modules/users/__init__.py:119
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "एलडीएपी प्रविष्टि चेक करें \"{search_item}\""
@@ -7915,18 +7819,18 @@ msgstr "पासवर्ड बदलिये"
 msgid "Password changed successfully."
 msgstr "पासवर्ड सफलतापूर्वक बदल गया."
 
-#: plinth/modules/wireguard/__init__.py:23
+#: plinth/modules/wireguard/__init__.py:24
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
 msgstr ""
 
-#: plinth/modules/wireguard/__init__.py:25
+#: plinth/modules/wireguard/__init__.py:26
 #, python-brace-format
 msgid ""
 "It can be used to connect to a VPN provider which supports WireGuard, and to "
 "route all outgoing traffic from {box_name} through the VPN."
 msgstr ""
 
-#: plinth/modules/wireguard/__init__.py:29
+#: plinth/modules/wireguard/__init__.py:30
 #, python-brace-format
 msgid ""
 "A second use case is to connect a mobile device to {box_name} while "
@@ -8279,7 +8183,7 @@ msgstr "कनेक्शन हटाएँ"
 msgid "Server deleted."
 msgstr "शेयर हटाया गया."
 
-#: plinth/modules/wordpress/__init__.py:37
+#: plinth/modules/wordpress/__init__.py:38
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -8288,7 +8192,7 @@ msgid ""
 "devices."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:43
+#: plinth/modules/wordpress/__init__.py:44
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -8297,28 +8201,28 @@ msgid ""
 "better URLs to your pages and posts."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:48
+#: plinth/modules/wordpress/__init__.py:49
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:70
+#: plinth/modules/wordpress/__init__.py:71
 #: plinth/modules/wordpress/manifest.py:6
 #, fuzzy
 #| msgid "Address"
 msgid "WordPress"
 msgstr "ऍड्रेस"
 
-#: plinth/modules/wordpress/__init__.py:71
+#: plinth/modules/wordpress/__init__.py:72
 #, fuzzy
 #| msgid "Wiki and Blog"
 msgid "Website and Blog"
@@ -8336,7 +8240,7 @@ msgid ""
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:33
+#: plinth/modules/zoph/__init__.py:34
 #, python-brace-format
 msgid ""
 "Zoph manages your photo collection. Photos are stored on your {box_name}, "
@@ -8349,7 +8253,7 @@ msgid ""
 "shared with others by sending a direct link."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:44
+#: plinth/modules/zoph/__init__.py:45
 #, python-brace-format
 msgid ""
 "The {box_name} user who setup Zoph will also become the administrator in "
@@ -8357,11 +8261,11 @@ msgid ""
 "in Zoph with the same user name."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:62 plinth/modules/zoph/manifest.py:6
+#: plinth/modules/zoph/__init__.py:64 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:63
+#: plinth/modules/zoph/__init__.py:65
 msgid "Photo Organizer"
 msgstr ""
 
@@ -8397,23 +8301,23 @@ msgstr "पीपीपीअोइ"
 msgid "Generic"
 msgstr "जेनेरिक"
 
-#: plinth/package.py:139
+#: plinth/package.py:165
 msgid "Error during installation"
 msgstr "इंस्टालेशन करते समय पर त्रुटि"
 
-#: plinth/package.py:161
+#: plinth/package.py:187
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: plinth/package.py:163
+#: plinth/package.py:189
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: plinth/package.py:165
+#: plinth/package.py:191
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: plinth/package.py:167
+#: plinth/package.py:193
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
@@ -8493,6 +8397,10 @@ msgstr "%(box_name)s के लिए कोर फंक्शनलिटी �
 #: plinth/templates/base.html:107
 msgid " Home"
 msgstr " होम"
+
+#: plinth/templates/base.html:110
+msgid "Home"
+msgstr "होम"
 
 #: plinth/templates/base.html:115
 msgid " Apps"
@@ -8782,9 +8690,74 @@ msgstr "%(package_names)s:%(status)s इंस्टॉलेशन किया
 msgid "%(percentage)s%% complete"
 msgstr "%(percentage)s%% पूर्ण"
 
-#: plinth/web_framework.py:117
+#: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Disabled"
+#~ msgid "Disable selected"
+#~ msgstr "अक्षम किया गया है"
+
+#, fuzzy
+#~| msgid "cable is connected"
+#~ msgid "Enable selected"
+#~ msgstr "केबल कनेक्ट हो गया"
+
+#, fuzzy
+#~| msgid "Delete all the snapshots"
+#~ msgid "Delete selected"
+#~ msgstr "सब स्नैपशॉटस हटाएँ"
+
+#, fuzzy
+#~| msgid "Backups"
+#~ msgid "New value"
+#~ msgstr "बैकअप"
+
+#, fuzzy
+#~| msgid "Download directory"
+#~ msgid "You do not have a home directory."
+#~ msgstr "डायरेक्टरी डाउनलोड करें"
+
+#, fuzzy
+#~| msgid "Create User"
+#~ msgid "Create home directory"
+#~ msgstr "यूसर बनाये"
+
+#, fuzzy
+#~| msgid "Current status:"
+#~ msgid "Keep current settings"
+#~ msgstr "वर्तमान स्थिति:"
+
+#, fuzzy
+#~| msgid "Let's Encrypt"
+#~ msgid "Use Let's Encrypt"
+#~ msgstr "लेटस एंक्रिप्ट"
+
+#, fuzzy
+#~| msgid "Domain name set"
+#~ msgid "Common name"
+#~ msgstr "डोमेन नाम सेट हो गया है"
+
+#, fuzzy
+#~| msgid "Certificate Status"
+#~ msgid "Certificate path"
+#~ msgstr "प्रमाणपत्र स्थिति"
+
+#, fuzzy
+#~| msgid "Create User"
+#~ msgid "Private key path"
+#~ msgstr "यूसर बनाये"
+
+#, fuzzy
+#~| msgid "Enable damage"
+#~ msgid "Enabled aliases"
+#~ msgstr "क्षति को सक्षम करें"
+
+#, fuzzy
+#~| msgid "Disabled"
+#~ msgid "Disabled aliases"
+#~ msgstr "अक्षम किया गया है"
 
 #~ msgid "Cannot delete the only administrator in the system."
 #~ msgstr "सिस्टम में केवल व्यवस्थापक को नहीं हटा सकता."

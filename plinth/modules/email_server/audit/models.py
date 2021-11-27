@@ -1,9 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Models of the audit module"""
 
-import dataclasses
 import logging
-import typing
 
 logger = logging.getLogger(__name__)
 
@@ -207,14 +205,3 @@ class MainCfDiagnosis(Diagnosis):
         contains an unresolved issue (i.e. an uncorrected key)"""
         if None in self.advice.values():
             raise UnresolvedIssueError('Assertion failed')
-
-
-@dataclasses.dataclass(init=False)
-class AliasMapsAnalysis:
-    parsed = typing.List[str]
-    ibefore = int
-    isystem = int
-    iafter = int
-
-    def __init__(self):
-        pass

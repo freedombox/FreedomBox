@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
+from plinth.package import Packages
 
 version = 1
 
@@ -29,10 +30,14 @@ class SSOApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, depends=depends,
                                name=_('Single Sign On'))
         self.add(info)
+
+        packages = Packages('packages-sso', managed_packages)
+        self.add(packages)
 
 
 def setup(helper, old_version=None):

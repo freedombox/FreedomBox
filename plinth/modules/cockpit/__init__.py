@@ -14,6 +14,7 @@ from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -60,6 +61,7 @@ class CockpitApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                is_essential=is_essential, name=_('Cockpit'),
                                icon='fa-wrench', icon_filename='cockpit',
@@ -81,6 +83,9 @@ class CockpitApp(app_module.App):
                                       allowed_groups=['admin'])
         self.add(shortcut)
 
+        packages = Packages('packages-cockpit', managed_packages)
+        self.add(packages)
+
         firewall = Firewall('firewall-cockpit', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
@@ -96,6 +101,9 @@ class CockpitApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 

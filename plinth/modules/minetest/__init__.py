@@ -13,6 +13,7 @@ from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -57,6 +58,7 @@ class MinetestApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(
             app_id=self.app_id, version=version, name=_('Minetest'),
             icon_filename='minetest', short_description=_('Block Sandbox'),
@@ -77,6 +79,9 @@ class MinetestApp(app_module.App):
             configure_url=reverse_lazy('minetest:index'), clients=info.clients,
             login_required=False)
         self.add(shortcut)
+
+        packages = Packages('packages-minetest', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-minetest', info.name,
                             ports=['minetest-plinth'], is_external=True)

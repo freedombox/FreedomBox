@@ -11,6 +11,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import Version
 
 from . import manifest
@@ -61,27 +62,33 @@ class MiniDLNAApp(app_module.App):
             parent_url_name='apps',
             icon=info.icon_filename,
         )
-        firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
-                            is_external=False)
-        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
-                              urls=['http://localhost:8200/'])
+        self.add(menu_item)
+
         shortcut = frontpage.Shortcut('shortcut-minidlna', info.name,
                                       short_description=info.short_description,
                                       description=info.description,
                                       icon=info.icon_filename,
                                       url='/_minidlna/', login_required=True,
                                       allowed_groups=list(groups))
+        self.add(shortcut)
+
+        packages = Packages('packages-minidlna', managed_packages)
+        self.add(packages)
+
+        firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
+                            is_external=False)
+        self.add(firewall)
+
+        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
+                              urls=['http://localhost:8200/'])
+        self.add(webserver)
+
         daemon = Daemon('daemon-minidlna', managed_services[0])
+        self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-minidlna',
                                        **manifest.backup)
         self.add(backup_restore)
-
-        self.add(menu_item)
-        self.add(webserver)
-        self.add(firewall)
-        self.add(shortcut)
-        self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-minidlna',
                                           groups=groups)

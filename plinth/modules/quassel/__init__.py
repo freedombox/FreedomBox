@@ -17,6 +17,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
+from plinth.package import Packages
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -56,6 +57,7 @@ class QuasselApp(app_module.App):
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
         info = app_module.Info(app_id=self.app_id, version=version,
                                name=_('Quassel'), icon_filename='quassel',
                                short_description=_('IRC Client'),
@@ -75,6 +77,9 @@ class QuasselApp(app_module.App):
             configure_url=reverse_lazy('quassel:index'), clients=info.clients,
             login_required=True)
         self.add(shortcut)
+
+        packages = Packages('packages-quassel', managed_packages)
+        self.add(packages)
 
         firewall = Firewall('firewall-quassel', info.name,
                             ports=['quassel-plinth'], is_external=True)
@@ -109,12 +114,6 @@ def setup(helper, old_version=None):
     app.get_component('letsencrypt-quassel').setup_certificates()
 
 
-def get_available_domains():
-    """Return an iterator with all domains able to have a certificate."""
-    return (domain.name for domain in names.components.DomainName.list()
-            if domain.domain_type.can_have_certificate)
-
-
 def set_domain(domain):
     """Set the TLS domain by writing a file to data directory."""
     if domain:
@@ -131,7 +130,7 @@ def get_domain():
         pass
 
     if not domain:
-        domain = next(get_available_domains(), None)
+        domain = next(names.get_available_tls_domains(), None)
         set_domain(domain)
 
     return domain

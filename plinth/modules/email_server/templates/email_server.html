@@ -1,5 +1,7 @@
-{# SPDX-License-Identifier: AGPL-3.0-or-later #}
 {% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
 
 {% load i18n %}
 
@@ -8,12 +10,22 @@
   {{ block.super }}
 {% endblock %}
 
+{% block subsubmenu %}
+  <a class="btn btn-default" role="button"
+     href="{% url 'email_server:domains' %}">
+    {% trans "Domains" %}
+  </a>
+  <a class="btn btn-default" role="button" href="/rspamd/">
+    {% trans "Manage Spam" %}
+    <span class="fa fa-external-link"></span>
+  </a>
+  <a class="btn btn-default" role="button"
+     href="{% url 'email_server:aliases' %}">
+    {% trans "Manage Aliases" %}
+  </a>
+{% endblock %}
+
 {% block extra_content %}
-  <p>
-    <a href="/rspamd/">
-      {% trans "Visit Rspamd administration interface" %}
-    </a>
-  </p>
   {% if related_diagnostics %}
     <h3>{% trans "Service Alert" %}</h3>
     <ul class="list-group">
