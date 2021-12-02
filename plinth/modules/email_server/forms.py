@@ -9,6 +9,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
+from plinth.modules.names.components import DomainName
+
 from . import aliases as aliases_module
 
 domain_validator = RegexValidator(r'^[A-Za-z0-9-\.]+$',
@@ -25,27 +27,20 @@ class EmailServerForm(forms.Form):
         super().__init__(*args, **kwargs)
 
 
-class DomainsForm(forms.Form):
-    _mailname = forms.CharField(required=True, strip=True,
-                                validators=[domain_validator])
-    mydomain = forms.CharField(required=True, strip=True,
-                               validators=[domain_validator])
-    myhostname = forms.CharField(required=True, strip=True,
-                                 validators=[domain_validator])
-    mydestination = forms.CharField(required=True, strip=True,
-                                    validators=[destination_validator])
+def _get_domain_choices():
+    """Double domain entries for inclusion in the choice field."""
+    return ((domain.name, domain.name) for domain in DomainName.list())
 
-    def clean(self):
-        """Convert values to lower case."""
-        data = self.cleaned_data
-        if '_mailname' in data:
-            data['_mailname'] = data['_mailname'].lower()
 
-        if 'myhostname' in data:
-            data['myhostname'] = data['myhostname'].lower()
-
-        if 'mydestination' in data:
-            data['mydestination'] = data['mydestination'].lower()
+class DomainForm(forms.Form):
+    primary_domain = forms.ChoiceField(
+        choices=_get_domain_choices,
+        label=_('Primary domain'),
+        help_text=_(
+            'Mails are received for all domains configured in the system. '
+            'Among these, select the most important one.'),
+        required=True,
+    )
 
 
 class AliasCreateForm(forms.Form):

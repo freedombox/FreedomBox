@@ -45,7 +45,7 @@ class EmailServerView(ExceptionsMixin, AppView):
     """Server configuration page"""
     app_id = 'email_server'
     template_name = 'email_server.html'
-    audit_modules = ('domain', 'tls', 'rcube')
+    audit_modules = ('tls', 'rcube')
 
     def get_context_data(self, *args, **kwargs):
         dlist = []
@@ -183,14 +183,15 @@ class AliasView(FormView):
 class DomainsView(FormView):
     """View to allow editing domain related settings."""
     template_name = 'form.html'
-    form_class = forms.DomainsForm
+    form_class = forms.DomainForm
     prefix = 'domain'
     success_url = reverse_lazy('email_server:domains')
 
     def get_initial(self):
         """Return the initial values to populate in the form."""
         initial = super().get_initial()
-        initial.update(audit.domain.get_domain_config())
+        domains = audit.domain.get_domains()
+        initial['primary_domain'] = domains['primary_domain']
         return initial
 
     def get_context_data(self, **kwargs):
@@ -203,18 +204,13 @@ class DomainsView(FormView):
         """Update the settings for changed domain values."""
         old_data = form.initial
         new_data = form.cleaned_data
-        config = {}
-        for key in form.initial:
-            if old_data[key] != new_data[key]:
-                config[key] = new_data[key]
-
-        if config:
+        if old_data['primary_domain'] != new_data['primary_domain']:
             try:
-                audit.domain.set_keys(config)
+                audit.domain.set_domains(new_data['primary_domain'])
                 messages.success(self.request, _('Configuration updated'))
             except Exception:
                 messages.success(self.request,
-                                 _('Error updating configuration'))
+                                 _('An error occurred during configuration.'))
         else:
             messages.info(self.request, _('Setting unchanged'))
 

@@ -15,6 +15,7 @@ from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, remove
+from plinth.signals import domain_added, domain_removed
 
 from . import audit, manifest
 
@@ -126,10 +127,15 @@ class EmailServerApp(plinth.app.App):
                             ports=all_port_names, is_external=True)
         self.add(firewall)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
+        domain_added.connect(on_domain_added)
+        domain_removed.connect(on_domain_removed)
+
     def diagnose(self):
         """Run diagnostics and return the results"""
         results = super().diagnose()
-        results.extend([r.summarize() for r in audit.domain.get()])
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
         results.extend([r.summarize() for r in audit.tls.get()])
@@ -160,7 +166,7 @@ def setup(helper, old_version=None):
 
     # Setup
     helper.call('post', audit.home.repair)
-    helper.call('post', audit.domain.repair)
+    helper.call('post', audit.domain.set_domains)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
     helper.call('post', audit.tls.repair)
@@ -173,3 +179,20 @@ def setup(helper, old_version=None):
 
     # Expose to public internet
     helper.call('post', app.enable)
+
+
+def on_domain_added(sender, domain_type, name, description='', services=None,
+                    **kwargs):
+    """Handle addition of a new domain."""
+    if app.needs_setup():
+        return
+
+    audit.domain.set_domains()
+
+
+def on_domain_removed(sender, domain_type, name, **kwargs):
+    """Handle removal of a domain."""
+    if app.needs_setup():
+        return
+
+    audit.domain.set_domains()
