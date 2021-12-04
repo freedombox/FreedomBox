@@ -113,19 +113,19 @@ def setup(helper, old_version=None):
     helper.call('post', app.enable)
 
 
-def on_domain_added(sender, domain_type, name, description='', services=None,
-                    **kwargs):
+def on_domain_added(sender, domain_type, name='', description='',
+                    services=None, **kwargs):
     """Handle addition of a new domain."""
-    if not app.needs_setup():
+    if name and not app.needs_setup():
         if name not in utils.get_domains():
             actions.superuser_run('cockpit', ['add-domain', name])
             actions.superuser_run('service',
                                   ['try-restart', CockpitApp.DAEMON])
 
 
-def on_domain_removed(sender, domain_type, name, **kwargs):
+def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Handle removal of a domain."""
-    if not app.needs_setup():
+    if name and not app.needs_setup():
         if name in utils.get_domains():
             actions.superuser_run('cockpit', ['remove-domain', name])
             actions.superuser_run('service',
