@@ -7,7 +7,10 @@ import pytest
 
 from plinth.tests.functional import BaseAppTests
 
-pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.avahi]
+pytestmark = [
+    pytest.mark.system, pytest.mark.essential, pytest.mark.domain,
+    pytest.mark.avahi
+]
 
 
 class TestAvahiApp(BaseAppTests):

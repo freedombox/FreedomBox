@@ -10,7 +10,8 @@ import pytest
 from plinth.tests import functional
 
 pytestmark = [
-    pytest.mark.system, pytest.mark.essential, pytest.mark.dynamicdns
+    pytest.mark.system, pytest.mark.essential, pytest.mark.domain,
+    pytest.mark.dynamicdns
 ]
 
 
