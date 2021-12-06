@@ -128,9 +128,19 @@ def certificate_reobtain(domain):
     actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
 
 
-def certificate_revoke(domain):
-    """Revoke a certificate for a domain and notify handlers."""
-    actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+def certificate_revoke(domain, really_revoke=True):
+    """Revoke a certificate for a domain and notify handlers.
+
+    Revoke a certificate unless really requested to. Otherwise, simply trigger
+    actions as if the certificate has been revoked. On actions such as domain
+    removed, behave as if certificate has been revoked but don't actually
+    revoke the certificate. Domains could be re-added later and certificates
+    could be reused. Certificates are precious (due to a rate limit for
+    obtaining certificates on the Let's Encrypt servers).
+    """
+    if really_revoke:
+        actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+
     components.on_certificate_event('revoked', [domain], None)
 
 
@@ -170,7 +180,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     try:
         if name:
             logger.info('Revoking certificate for %s', name)
-            certificate_revoke(name)
+            certificate_revoke(name, really_revoke=False)
         return True
     except ActionError as exception:
         logger.warning('Failed to revoke certificate for %s: %s', name,
