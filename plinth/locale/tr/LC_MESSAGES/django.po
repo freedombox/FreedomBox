@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-06 18:35-0500\n"
-"PO-Revision-Date: 2021-11-10 04:52+0000\n"
+"PO-Revision-Date: 2021-12-07 20:13+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1745,12 +1745,7 @@ msgid "Leave this field empty if you want to keep your current password."
 msgstr "Şu anki parolanızı korumak istiyorsanız bu alanı boş bırakın."
 
 #: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
@@ -1760,7 +1755,7 @@ msgstr ""
 "İsteğe Bağlı Değer. Eğer {box_name} cihazınız doğrudan İnternet'e bağlı "
 "değilse (yani bir NAT yönlendiricisine bağlıysa), bu URL gerçek IP adresini "
 "belirlemek için kullanılır. URL, istemcinin geldiği IP'yi döndürmelidir "
-"(örnek: http://myip.datasystems24.de)."
+"(örnek: https://ddns.freedombox.org/ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1836,13 +1831,6 @@ msgid "Please provide a password"
 msgstr "Lütfen bir parola girin"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1850,10 +1838,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Eğer ücretsiz bir değişken DNS hesabı arıyorsanız, ücretsiz bir GnuDIP "
-"hizmetini <a href='https://gnudip.datasystems24.net' target='_blank'>gnudip."
-"datasystems24.net</a> adresinde veya ücretsiz URL güncelleme tabanlı "
-"hizmetleri <a href='https://freedns.afraid.org/' target='_blank'>freedns."
-"afraid.org</a> adresinde bulabilirsiniz."
+"hizmetini <a href=\"https://ddns.freedombox.org\" target=\"_blank\">ddns."
+"freedombox.org</a> adresinde veya ücretsiz URL güncelleme tabanlı hizmetleri "
+"<a href=\"https://freedns.afraid.org/\" target=\"_blank\">freedns.afraid."
+"org</a> adresinde bulabilirsiniz."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -2155,16 +2143,16 @@ msgid "domain"
 msgstr "etki alanı"
 
 #: plinth/modules/email_server/forms.py:38
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Birincil bağlantı"
+msgstr "Birincil etki alanı"
 
 #: plinth/modules/email_server/forms.py:40
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Postalar sistemde yapılandırılan tüm etki alanları için alınır. Bunlar "
+"arasından en önemli olanı seçin."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
