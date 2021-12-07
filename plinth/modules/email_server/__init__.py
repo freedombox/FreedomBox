@@ -78,11 +78,20 @@ class EmailServerApp(plinth.app.App):
         self.add(webserver)
 
         # Let's Encrypt event hook
-        letsencrypt = LetsEncrypt('letsencrypt-email-server',
-                                  domains=get_domains,
-                                  daemons=['postfix', 'dovecot'],
-                                  should_copy_certificates=False,
-                                  managing_app='email_server')
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-email-server-postfix', domains='*',
+            daemons=['postfix'], should_copy_certificates=True,
+            private_key_path='/etc/postfix/letsencrypt/{domain}/chain.pem',
+            certificate_path='/etc/postfix/letsencrypt/{domain}/chain.pem',
+            user_owner='root', group_owner='root', managing_app='email_server')
+        self.add(letsencrypt)
+
+        letsencrypt = LetsEncrypt(
+            'letsencrypt-email-server-dovecot', domains='*',
+            daemons=['dovecot'], should_copy_certificates=True,
+            private_key_path='/etc/dovecot/letsencrypt/{domain}/privkey.pem',
+            certificate_path='/etc/dovecot/letsencrypt/{domain}/cert.pem',
+            user_owner='root', group_owner='root', managing_app='email_server')
         self.add(letsencrypt)
 
     def _add_ui_components(self):
@@ -138,7 +147,6 @@ class EmailServerApp(plinth.app.App):
         results = super().diagnose()
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
-        results.extend([r.summarize() for r in audit.tls.get()])
         results.extend([r.summarize() for r in audit.rcube.get()])
         return results
 
@@ -166,10 +174,11 @@ def setup(helper, old_version=None):
 
     # Setup
     helper.call('post', audit.home.repair)
+    app.get_component('letsencrypt-email-server-postfix').setup_certificates()
+    app.get_component('letsencrypt-email-server-dovecot').setup_certificates()
     helper.call('post', audit.domain.set_domains)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
-    helper.call('post', audit.tls.repair)
     helper.call('post', audit.rcube.repair)
 
     # Reload
