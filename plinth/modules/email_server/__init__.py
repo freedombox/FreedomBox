@@ -190,7 +190,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     audit.domain.set_domains()
 
 
-def on_domain_removed(sender, domain_type, name, **kwargs):
+def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Handle removal of a domain."""
     if app.needs_setup():
         return
