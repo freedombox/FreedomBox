@@ -9,6 +9,7 @@ import pathlib
 import threading
 
 from plinth import actions, app
+from plinth.modules.names.components import DomainName
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +151,12 @@ class LetsEncrypt(app.FollowerComponent):
         """
         if not app_domains:
             app_domains = self.domains
+
+        if app_domains == '*':
+            # Setup for all domains and not just ones that LE can obtain
+            # certificate for. This allows the domains that can't have LE
+            # certificate to work with self-signed certificates.
+            app_domains = DomainName.list_names()
 
         domains, status = self._get_letsencrypt_domains()
 

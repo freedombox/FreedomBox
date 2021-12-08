@@ -9,6 +9,7 @@ from unittest.mock import call, patch
 import pytest
 
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.modules.names.components import DomainName, DomainType
 
 
 @pytest.fixture(name='empty_letsencrypt_list', autouse=True)
@@ -44,6 +45,24 @@ def fixture_get_status():
             }
         }
         yield get_status
+
+
+@pytest.fixture(name='domain_list')
+def fixture_domain_list():
+    """Return patch DomainName.list() method."""
+    method = 'plinth.modules.names.components.DomainName.list'
+    with patch(method) as domain_list:
+        DomainType._all = {}
+        DomainType('domain-type-1', 'type-1', 'url1', False)
+        DomainType('domain-type-2', 'type-2', 'url1', True)
+        domain1 = DomainName('domain-name-1', 'invalid1.example',
+                             'domain-type-1', '__all__')
+        domain2 = DomainName('domain-name-2', 'valid.example', 'domain-type-2',
+                             '__all__')
+        domain3 = DomainName('domain-name-3', 'invalid2.example',
+                             'domain-type-2', '__all__')
+        domain_list.return_value = [domain1, domain2, domain3]
+        yield domain_list
 
 
 @pytest.fixture(name='superuser_run')
@@ -193,6 +212,20 @@ def test_setup_certificates_with_app_domains(superuser_run, get_status,
         'valid.example': 'valid',
         'invalid.example': 'invalid'
     })
+    _assert_restarted_daemons(component.daemons, superuser_run)
+
+
+def test_setup_certificates_with_all_domains(domain_list, superuser_run,
+                                             get_status, component):
+    """Test that initial copying for certs works when app domains is '*'."""
+    component._domains = '*'
+    component.setup_certificates()
+    _assert_copy_certificate_called(
+        component, superuser_run, {
+            'valid.example': 'valid',
+            'invalid1.example': 'invalid',
+            'invalid2.example': 'invalid'
+        })
     _assert_restarted_daemons(component.daemons, superuser_run)
 
 
