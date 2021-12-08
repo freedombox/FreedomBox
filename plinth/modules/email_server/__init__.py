@@ -56,7 +56,7 @@ class EmailServerApp(plinth.app.App):
         #   but less likely due to that).
         packages = Packages(
             'packages-email-server', [
-                'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
+                'postfix', 'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
                 'dovecot-imapd', 'dovecot-ldap', 'dovecot-lmtpd',
                 'dovecot-managesieved'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
