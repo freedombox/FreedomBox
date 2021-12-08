@@ -14,23 +14,15 @@ _tls_medium_cipherlist = [
 ]
 
 _postfix_config = {
-    # Enable TLS
-    'smtpd_tls_security_level': 'may',
-
     # Allow unencrypted auth on port 25, needed by Roundcube
     'smtpd_tls_auth_only': 'no',
 
-    # Debugging information
-    'smtpd_tls_received_header': 'yes',
-
-    # Use a strong hashing algorithm
-    'smtp_tls_fingerprint_digest': 'sha256',
-    'smtpd_tls_fingerprint_digest': 'sha256',
-
     # Mozilla Intermediate Configuration
+    'smtpd_tls_security_level': 'may',
     'smtpd_tls_mandatory_protocols': '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1',
     'smtpd_tls_protocols': '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1',
     'smtpd_tls_mandatory_ciphers': 'medium',
+    'smtpd_tls_ciphers': 'medium',
     'tls_medium_cipherlist': ':'.join(_tls_medium_cipherlist),
     'tls_preempt_cipherlist': 'no',
 
@@ -38,15 +30,12 @@ _postfix_config = {
     'smtp_tls_mandatory_protocols': '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1',
     'smtp_tls_protocols': '!SSLv2, !SSLv3, !TLSv1, !TLSv1.1',
     'smtp_tls_mandatory_ciphers': 'medium',
+    'smtp_tls_ciphers': 'medium',
 
     # Use DNSSEC to validate TLS certificates
     'smtp_host_lookup': 'dns',
     'smtp_dns_support_level': 'dnssec',
     'smtp_tls_security_level': 'dane',  # Opportunistic DANE TLS
-
-    # Maintain 1 cipherlist and keep it the most secure
-    'tls_low_cipherlist': '$tls_medium_cipherlist',
-    'tls_high_cipherlist': '$tls_medium_cipherlist',
 }
 
 
