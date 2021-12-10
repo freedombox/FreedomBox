@@ -19,14 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
-is_essential = False
-
-managed_services = ['privoxy']
-
-managed_packages = ['privoxy']
-
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
       'capabilities for enhancing privacy, modifying web page data and '
@@ -50,12 +42,14 @@ class PrivoxyApp(app_module.App):
 
     app_id = 'privoxy'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Privoxy'),
+            app_id=self.app_id, version=self._version, name=_('Privoxy'),
             icon_filename='privoxy', short_description=_('Web Proxy'),
             description=_description, manual_page='Privoxy',
             donation_url='https://www.privoxy.org/faq/general.html#DONATE')
@@ -73,14 +67,14 @@ class PrivoxyApp(app_module.App):
             configure_url=reverse_lazy('privoxy:index'), login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-privoxy', managed_packages)
+        packages = Packages('packages-privoxy', ['privoxy'])
         self.add(packages)
 
         firewall = Firewall('firewall-privoxy', info.name, ports=['privoxy'],
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-privoxy', managed_services[0],
+        daemon = Daemon('daemon-privoxy', 'privoxy',
                         listen_ports=[(8118, 'tcp4'), (8118, 'tcp6')])
         self.add(daemon)
 
@@ -103,7 +97,7 @@ class PrivoxyApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

@@ -20,12 +20,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 4
-
-managed_services = ['transmission-daemon']
-
-managed_packages = ['transmission-daemon']
-
 _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
@@ -43,6 +37,10 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
+    _version = 4
+
+    DAEMON = 'transmission-daemon'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -52,7 +50,7 @@ class TransmissionApp(app_module.App):
         }
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Transmission'),
+            app_id=self.app_id, version=self._version, name=_('Transmission'),
             icon_filename='transmission',
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Transmission',
@@ -72,7 +70,7 @@ class TransmissionApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-transmission', managed_packages)
+        packages = Packages('packages-transmission', ['transmission-daemon'])
         self.add(packages)
 
         firewall = Firewall('firewall-transmission', info.name,
@@ -85,7 +83,7 @@ class TransmissionApp(app_module.App):
         self.add(webserver)
 
         daemon = Daemon(
-            'daemon-transmission', managed_services[0], listen_ports=[
+            'daemon-transmission', self.DAEMON, listen_ports=[
                 (9091, 'tcp4'),
                 (51413, 'tcp4'),
                 (51413, 'tcp6'),
@@ -105,7 +103,7 @@ class TransmissionApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     if old_version and old_version <= 3 and app.is_enabled():
         app.get_component('firewall-transmission').enable()
@@ -117,5 +115,5 @@ def setup(helper, old_version=None):
     helper.call('post', actions.superuser_run, 'transmission',
                 ['merge-configuration'],
                 input=json.dumps(new_configuration).encode())
-    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+    add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
     helper.call('post', app.enable)

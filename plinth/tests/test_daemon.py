@@ -9,8 +9,8 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App, FollowerComponent
-from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
-                           diagnose_port_listening)
+from plinth.daemon import (Daemon, RelatedDaemon, app_is_running,
+                           diagnose_netcat, diagnose_port_listening)
 
 
 @pytest.fixture(name='daemon')
@@ -228,3 +228,13 @@ def test_diagnose_netcat(popen):
     result = diagnose_netcat('test-host', 3300, input='test-input',
                              negate=True)
     assert result == ['Cannot connect to test-host:3300', 'passed']
+
+
+def test_related_daemon_initialization():
+    """Test that initializing related daemon works."""
+    component = RelatedDaemon('test-component', 'test-daemon')
+    assert component.component_id == 'test-component'
+    assert component.unit == 'test-daemon'
+
+    with pytest.raises(ValueError):
+        RelatedDaemon(None, 'test-daemon')

@@ -20,14 +20,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, utils
 
-version = 1
-
-is_essential = True
-
-managed_services = ['cockpit.socket']
-
-managed_packages = ['cockpit']
-
 _description = [
     format_lazy(
         _('Cockpit is a server manager that makes it easy to administer '
@@ -58,12 +50,16 @@ class CockpitApp(app_module.App):
 
     app_id = 'cockpit'
 
+    _version = 1
+
+    DAEMON = 'cockpit.socket'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Cockpit'),
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Cockpit'),
                                icon='fa-wrench', icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
@@ -83,7 +79,7 @@ class CockpitApp(app_module.App):
                                       allowed_groups=['admin'])
         self.add(shortcut)
 
-        packages = Packages('packages-cockpit', managed_packages)
+        packages = Packages('packages-cockpit', ['cockpit'])
         self.add(packages)
 
         firewall = Firewall('firewall-cockpit', info.name,
@@ -94,7 +90,7 @@ class CockpitApp(app_module.App):
                               urls=['https://{host}/_cockpit/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-cockpit', managed_services[0])
+        daemon = Daemon('daemon-cockpit', self.DAEMON)
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-cockpit',
@@ -110,7 +106,7 @@ class CockpitApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     domains = names.components.DomainName.list_names('https')
     helper.call('post', actions.superuser_run, 'cockpit',
                 ['setup'] + list(domains))
@@ -120,19 +116,17 @@ def setup(helper, old_version=None):
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Handle addition of a new domain."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
+    if not app.needs_setup():
         if name not in utils.get_domains():
             actions.superuser_run('cockpit', ['add-domain', name])
             actions.superuser_run('service',
-                                  ['try-restart', managed_services[0]])
+                                  ['try-restart', CockpitApp.DAEMON])
 
 
 def on_domain_removed(sender, domain_type, name, **kwargs):
     """Handle removal of a domain."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() != 'needs-setup':
+    if not app.needs_setup():
         if name in utils.get_domains():
             actions.superuser_run('cockpit', ['remove-domain', name])
             actions.superuser_run('service',
-                                  ['try-restart', managed_services[0]])
+                                  ['try-restart', CockpitApp.DAEMON])

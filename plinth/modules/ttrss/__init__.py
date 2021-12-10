@@ -19,14 +19,6 @@ from plinth.utils import Version, format_lazy
 
 from . import manifest
 
-version = 3
-
-managed_services = ['tt-rss']
-
-managed_packages = [
-    'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql', 'python3-psycopg2'
-]
-
 _description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
       'designed to allow reading news from any location, while feeling as '
@@ -48,13 +40,15 @@ class TTRSSApp(app_module.App):
 
     app_id = 'ttrss'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         groups = {'feed-reader': _('Read and subscribe to news feeds')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tiny Tiny RSS'), icon_filename='ttrss',
                                short_description=_('News Feed Reader'),
                                description=_description,
@@ -75,7 +69,10 @@ class TTRSSApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-ttrss', managed_packages)
+        packages = Packages('packages-ttrss', [
+            'tt-rss', 'postgresql', 'dbconfig-pgsql', 'php-pgsql',
+            'python3-psycopg2'
+        ])
         self.add(packages)
 
         firewall = Firewall('firewall-ttrss', info.name,
@@ -86,7 +83,7 @@ class TTRSSApp(app_module.App):
                               urls=['https://{host}/tt-rss'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-ttrss', managed_services[0])
+        daemon = Daemon('daemon-ttrss', 'tt-rss')
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-ttrss',
@@ -125,7 +122,7 @@ class TTRSSBackupRestore(BackupRestore):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
     helper.call('post', app.enable)
 

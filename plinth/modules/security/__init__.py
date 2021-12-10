@@ -11,19 +11,12 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import menu, module_loader
+from plinth import menu
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
 from . import manifest
-
-version = 7
-
-is_essential = True
-
-managed_packages = ['fail2ban', 'debsecan']
-
-managed_services = ['fail2ban']
 
 ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
 ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
@@ -39,12 +32,14 @@ class SecurityApp(app_module.App):
 
     app_id = 'security'
 
+    _version = 7
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Security'),
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Security'),
                                icon='fa-lock', manual_page='Security')
         self.add(info)
 
@@ -52,8 +47,11 @@ class SecurityApp(app_module.App):
                               'security:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-security', managed_packages)
+        packages = Packages('packages-security', ['fail2ban', 'debsecan'])
         self.add(packages)
+
+        daemon = RelatedDaemon('related-daemon-fail2ban', 'fail2ban')
+        self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-security',
                                        **manifest.backup)
@@ -62,7 +60,7 @@ class SecurityApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install the required packages"""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         enable_fail2ban()
 
@@ -130,30 +128,33 @@ def get_apps_report():
             'vulns': 0,
         }
     }
-    for module_name, module in module_loader.loaded_modules.items():
-        try:
-            packages = module.managed_packages
-        except AttributeError:
+    for app_ in app_module.App.list():
+        components = app_.get_components_of_type(Packages)
+        packages = []
+        for component in components:
+            packages += component.packages
+
+        if not packages:
             continue  # app has no managed packages
 
-        try:
-            services = module.managed_services
-        except AttributeError:
-            services = None
+        components = app_.get_components_of_type(Daemon)
+        services = []
+        for component in components:
+            services.append(component.unit)
 
         # filter out apps not setup yet
-        if module.setup_helper.get_state() == 'needs-setup':
+        if app_.needs_setup():
             continue
 
-        apps[module_name] = {
-            'name': module_name,
+        apps[app_.app_id] = {
+            'name': app_.app_id,
             'packages': set(packages),
             'vulns': 0,
             'sandboxed': None,
         }
 
         if services:
-            apps[module_name]['sandboxed'] = False
+            apps[app_.app_id]['sandboxed'] = False
             for service in services:
                 # If an app lists a timer, work on the associated service
                 # instead
@@ -161,8 +162,8 @@ def get_apps_report():
                     service = service.rpartition('.')[0]
 
                 if _get_service_is_sandboxed(service):
-                    apps[module_name]['sandboxed'] = True
-                    apps[module_name][
+                    apps[app_.app_id]['sandboxed'] = True
+                    apps[app_.app_id][
                         'sandbox_coverage'] = sandbox_coverage.get(service)
 
     for cve_packages in cves.values():

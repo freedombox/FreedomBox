@@ -5,7 +5,6 @@ FreedomBox app to configure matrix-synapse server.
 
 import logging
 import os
-import pathlib
 from typing import List
 
 from django.urls import reverse_lazy
@@ -26,14 +25,6 @@ from plinth.utils import format_lazy, is_non_empty_file
 
 from . import manifest
 
-version = 7
-
-managed_services = ['matrix-synapse']
-
-managed_packages = ['matrix-synapse', 'matrix-synapse-ldap3']
-
-managed_paths = [pathlib.Path('/etc/matrix-synapse/')]
-
 _description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
       'ecosystem for open, federated instant messaging and VoIP. Synapse is a '
@@ -47,8 +38,6 @@ _description = [
           'Install the <a href={coturn_url}>Coturn</a> app or configure '
           'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
-
-depends = ['coturn']
 
 logger = logging.getLogger(__name__)
 
@@ -70,15 +59,17 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
+    _version = 7
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Matrix Synapse'),
-            icon_filename='matrixsynapse', short_description=_('Chat Server'),
-            description=_description, manual_page='MatrixSynapse',
-            clients=manifest.clients)
+            app_id=self.app_id, version=self._version, depends=['coturn'],
+            name=_('Matrix Synapse'), icon_filename='matrixsynapse',
+            short_description=_('Chat Server'), description=_description,
+            manual_page='MatrixSynapse', clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-matrixsynapse', info.name,
@@ -94,7 +85,8 @@ class MatrixSynapseApp(app_module.App):
             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-matrixsynapse', managed_packages)
+        packages = Packages('packages-matrixsynapse',
+                            ['matrix-synapse', 'matrix-synapse-ldap3'])
         self.add(packages)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
@@ -108,14 +100,14 @@ class MatrixSynapseApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-matrixsynapse', domains=get_domains,
-            daemons=[managed_services[0]], should_copy_certificates=True,
+            daemons=['matrix-synapse'], should_copy_certificates=True,
             private_key_path='/etc/matrix-synapse/homeserver.tls.key',
             certificate_path='/etc/matrix-synapse/homeserver.tls.crt',
             user_owner='matrix-synapse', group_owner='nogroup',
             managing_app='matrixsynapse')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-matrixsynapse', managed_services[0],
+        daemon = Daemon('daemon-matrixsynapse', 'matrix-synapse',
                         listen_ports=[(8008, 'tcp4'), (8448, 'tcp4')])
         self.add(daemon)
 
@@ -137,7 +129,7 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if old_version and old_version < 6:
         helper.call('post', upgrade, helper)
     else:
@@ -232,8 +224,7 @@ def get_certificate_status():
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update the STUN/TURN server configuration."""
-    setup_helper = globals()['setup_helper']
-    if not force and setup_helper.get_state() == 'needs-setup':
+    if not force and app.needs_setup():
         return
 
     params = ['configure-turn']

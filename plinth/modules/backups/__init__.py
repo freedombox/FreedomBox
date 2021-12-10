@@ -23,14 +23,6 @@ from . import api
 
 logger = logging.getLogger(__name__)
 
-version = 3
-
-is_essential = True
-
-managed_packages = ['borgbackup', 'sshfs']
-
-depends = ['storage']
-
 _description = [
     _('Backups allows creating and managing backup archives.'),
 ]
@@ -47,14 +39,16 @@ class BackupsApp(app_module.App):
 
     app_id = 'backups'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, depends=depends,
-            name=_('Backups'), icon='fa-files-o', description=_description,
-            manual_page='Backups',
+            app_id=self.app_id, version=self._version, is_essential=True,
+            depends=['storage'], name=_('Backups'), icon='fa-files-o',
+            description=_description, manual_page='Backups',
             donation_url='https://www.borgbackup.org/support/fund.html')
         self.add(info)
 
@@ -62,7 +56,7 @@ class BackupsApp(app_module.App):
                               'backups:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-backups', managed_packages)
+        packages = Packages('packages-backups', ['borgbackup', 'sshfs'])
         self.add(packages)
 
     @staticmethod
@@ -76,7 +70,7 @@ class BackupsApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     from . import repository
     helper.call('post', actions.superuser_run, 'backups',
                 ['setup', '--path', repository.RootBorgRepository.PATH])

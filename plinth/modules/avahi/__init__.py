@@ -21,16 +21,6 @@ from . import manifest
 
 # pylint: disable=C0103
 
-version = 1
-
-is_essential = True
-
-depends = ['names']
-
-managed_services = ['avahi-daemon']
-
-managed_packages = ['avahi-daemon', 'avahi-utils']
-
 _description = [
     format_lazy(
         _('Service discovery allows other devices on the network to '
@@ -42,8 +32,6 @@ _description = [
           'hostile local network.'), box_name=_(cfg.box_name))
 ]
 
-manual_page = 'ServiceDiscovery'
-
 app = None
 
 
@@ -52,11 +40,14 @@ class AvahiApp(app_module.App):
 
     app_id = 'avahi'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, depends=['names'],
                                name=_('Service Discovery'), icon='fa-compass',
                                description=_description,
                                manual_page='ServiceDiscovery')
@@ -66,7 +57,7 @@ class AvahiApp(app_module.App):
                               'avahi:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-avahi', managed_packages)
+        packages = Packages('packages-avahi', ['avahi-daemon', 'avahi-utils'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-local',
@@ -78,7 +69,7 @@ class AvahiApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-avahi', managed_services[0])
+        daemon = Daemon('daemon-avahi', 'avahi-daemon')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-avahi',
@@ -98,7 +89,7 @@ class AvahiApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     # Reload avahi-daemon now that first-run does not reboot. After performing
     # FreedomBox Service (Plinth) package installation, new Avahi files will be
     # available and require restart.

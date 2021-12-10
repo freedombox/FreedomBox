@@ -4,7 +4,6 @@ FreedomBox app for system diagnostics.
 """
 
 import collections
-import importlib
 import logging
 import pathlib
 import threading
@@ -19,10 +18,6 @@ from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-
-version = 1
-
-is_essential = True
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -46,13 +41,14 @@ class DiagnosticsApp(app_module.App):
 
     app_id = 'diagnostics'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Diagnostics'), icon='fa-heartbeat',
-                               description=_description,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Diagnostics'),
+                               icon='fa-heartbeat', description=_description,
                                manual_page='Diagnostics')
         self.add(info)
 
@@ -115,8 +111,7 @@ def run_on_all_enabled_modules():
         for app in app_module.App.list():
             # Don't run diagnostics on apps have not been setup yet.
             # However, run on apps that need an upgrade.
-            module = importlib.import_module(app.__class__.__module__)
-            if module.setup_helper.get_state() == 'needs-setup':
+            if app.needs_setup():
                 continue
 
             if not app.is_enabled():

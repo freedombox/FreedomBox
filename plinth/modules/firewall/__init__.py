@@ -21,14 +21,6 @@ from . import manifest
 gio = import_from_gi('Gio', '2.0')
 glib = import_from_gi('GLib', '2.0')
 
-version = 2
-
-is_essential = True
-
-managed_packages = ['firewalld', 'nftables']
-
-managed_services = ['firewalld']
-
 _description = [
     format_lazy(
         _('Firewall is a security system that controls the incoming and '
@@ -58,14 +50,16 @@ class FirewallApp(app_module.App):
 
     app_id = 'firewall'
 
+    _version = 2
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Firewall'),
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Firewall'),
                                icon='fa-shield', description=_description,
                                manual_page='Firewall')
         self.add(info)
@@ -74,10 +68,10 @@ class FirewallApp(app_module.App):
                               'firewall:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-firewall', managed_packages)
+        packages = Packages('packages-firewall', ['firewalld', 'nftables'])
         self.add(packages)
 
-        daemon = Daemon('daemon-firewall', managed_services[0])
+        daemon = Daemon('daemon-firewall', 'firewalld')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-firewall',
@@ -98,7 +92,7 @@ def _run_setup():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     _run_setup()
 
 
@@ -107,9 +101,9 @@ def force_upgrade(helper, packages):
     if 'firewalld' not in packages:
         return False
 
-    # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x
+    # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x, 0.9.x -> 1.0.x
     package = packages['firewalld']
-    if Version(package['current_version']) >= Version('0.9') or \
+    if Version(package['current_version']) >= Version('1.0') or \
        Version(package['new_version']) < Version('0.7'):
         return False
 

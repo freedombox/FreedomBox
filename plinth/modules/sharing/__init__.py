@@ -15,8 +15,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
 _description = [
     format_lazy(
         _('Sharing allows you to share files and folders on your {box_name} '
@@ -32,10 +30,12 @@ class SharingApp(app_module.App):
 
     app_id = 'sharing'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Sharing'), icon_filename='sharing',
                                manual_page='Sharing', description=_description)
         self.add(info)

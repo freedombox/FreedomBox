@@ -18,14 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
-service_name = 'i2p'
-
-managed_services = [service_name]
-
-managed_packages = ['i2p']
-
 _description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
       'to protect communication from censorship and surveillance. I2P '
@@ -51,6 +43,8 @@ class I2PApp(app_module.App):
 
     app_id = 'i2p'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -58,7 +52,7 @@ class I2PApp(app_module.App):
         groups = {'i2p': _('Manage I2P application')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('I2P'),
+            app_id=self.app_id, version=self._version, name=_('I2P'),
             icon_filename='i2p', short_description=_('Anonymity Network'),
             description=_description, manual_page='I2P',
             clients=manifest.clients,
@@ -78,7 +72,7 @@ class I2PApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-i2p', managed_packages)
+        packages = Packages('packages-i2p', ['i2p'])
         self.add(packages)
 
         firewall = Firewall('firewall-i2p-web', info.name,
@@ -94,8 +88,7 @@ class I2PApp(app_module.App):
                               urls=['https://{host}/i2p/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-i2p', managed_services[0],
-                        listen_ports=[(7657, 'tcp6')])
+        daemon = Daemon('daemon-i2p', 'i2p', listen_ports=[(7657, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-i2p',
@@ -108,7 +101,7 @@ class I2PApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     helper.call('post', app.disable)
     # Add favorites to the configuration

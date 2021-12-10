@@ -9,7 +9,7 @@ from django.dispatch import Signal
 pre_module_loading = Signal()
 
 # Arguments: -
-post_module_loading = Signal()
+post_app_loading = Signal()
 
 # Arguments: module_name
 post_setup = Signal()

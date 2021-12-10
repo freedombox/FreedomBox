@@ -14,7 +14,7 @@ import sys
 from shutil import move
 
 from plinth import action_utils
-from plinth.modules import shadowsocks
+from plinth.modules.shadowsocks import ShadowsocksApp
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/freedombox.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
@@ -76,8 +76,8 @@ def subcommand_setup(_):
     if not wrong_state_dir.is_symlink() and wrong_state_dir.is_dir():
         wrong_state_dir.rmdir()
 
-    if action_utils.service_is_enabled(shadowsocks.managed_services[0]):
-        action_utils.service_restart(shadowsocks.managed_services[0])
+    if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
+        action_utils.service_restart(ShadowsocksApp.DAEMON)
 
 
 def subcommand_get_config(_):
@@ -110,8 +110,8 @@ def subcommand_merge_config(_):
 
     # Don't try_restart because initial configuration may not be valid so
     # shadowsocks will not be running even when enabled.
-    if action_utils.service_is_enabled(shadowsocks.managed_services[0]):
-        action_utils.service_restart(shadowsocks.managed_services[0])
+    if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
+        action_utils.service_restart(ShadowsocksApp.DAEMON)
 
 
 def main():

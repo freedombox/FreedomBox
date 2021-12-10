@@ -16,11 +16,9 @@ installation:
 .. code-block:: python3
   :caption: ``__init__.py``
 
-  managed_packages = ['transmission-daemon']
-
   def setup(helper, old_version=None):
       """Install and configure the module."""
-      helper.install(managed_packages)
+      app.setup(old_version)
 
       new_configuration = {
           'rpc-whitelist-enabled': False,

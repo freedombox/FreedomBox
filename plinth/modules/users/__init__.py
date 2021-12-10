@@ -17,17 +17,6 @@ from plinth.package import Packages
 
 from .components import UsersAndGroups
 
-version = 3
-
-is_essential = True
-
-managed_packages = [
-    'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd', 'nscd',
-    'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
-]
-
-managed_services = ['slapd']
-
 first_boot_steps = [
     {
         'id': 'users_firstboot',
@@ -56,27 +45,32 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
+    _version = 3
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Users and Groups'), icon='fa-users',
-                               description=_description, manual_page='Users')
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Users and Groups'),
+                               icon='fa-users', description=_description,
+                               manual_page='Users')
         self.add(info)
 
         menu_item = menu.Menu('menu-users', info.name, None, info.icon,
                               'users:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-users', managed_packages)
+        packages = Packages('packages-users', [
+            'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd',
+            'nscd', 'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
+        ])
         self.add(packages)
 
-        daemon = Daemon('daemon-users', managed_services[0],
-                        listen_ports=[(389, 'tcp4'), (389, 'tcp6')])
+        daemon = Daemon('daemon-users', 'slapd', listen_ports=[(389, 'tcp4'),
+                                                               (389, 'tcp6')])
         self.add(daemon)
 
         # Add the admin group
@@ -98,7 +92,7 @@ class UsersApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', actions.superuser_run, 'users', ['first-setup'])
     helper.call('post', actions.superuser_run, 'users', ['setup'])

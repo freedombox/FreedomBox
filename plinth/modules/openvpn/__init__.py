@@ -20,12 +20,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 4
-
-managed_services = ['openvpn-server@freedombox']
-
-managed_packages = ['openvpn', 'easy-rsa']
-
 _description = [
     format_lazy(
         _('Virtual Private Network (VPN) is a technique for securely '
@@ -47,6 +41,8 @@ class OpenVPNApp(app_module.App):
 
     app_id = 'openvpn'
 
+    _version = 4
+
     @property
     def can_be_disabled(self):
         """Return whether the app can be disabled."""
@@ -58,7 +54,7 @@ class OpenVPNApp(app_module.App):
 
         self.groups = {'vpn': _('Connect to VPN services')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('OpenVPN'), icon_filename='openvpn',
                                short_description=_('Virtual Private Network'),
                                description=_description, manual_page='OpenVPN',
@@ -82,14 +78,14 @@ class OpenVPNApp(app_module.App):
             allowed_groups=['vpn'])
         self.add(shortcut)
 
-        packages = Packages('packages-openvpn', managed_packages)
+        packages = Packages('packages-openvpn', ['openvpn', 'easy-rsa'])
         self.add(packages)
 
         firewall = Firewall('firewall-openvpn', info.name, ports=['openvpn'],
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-openvpn', managed_services[0],
+        daemon = Daemon('daemon-openvpn', 'openvpn-server@freedombox',
                         listen_ports=[(1194, 'udp4'), (1194, 'udp6')])
         self.add(daemon)
 
@@ -112,7 +108,7 @@ class OpenVPNApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'openvpn', ['setup'])
     helper.call('post', app.enable)
 

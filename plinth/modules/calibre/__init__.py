@@ -21,12 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
-managed_services = ['calibre-server-freedombox']
-
-managed_packages = ['calibre']
-
 _description = [
     format_lazy(
         _('calibre server provides online access to your e-book collection. '
@@ -52,13 +46,17 @@ class CalibreApp(app_module.App):
 
     app_id = 'calibre'
 
+    _version = 1
+
+    DAEMON = 'calibre-server-freedombox'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         groups = {'calibre': _('Use calibre e-book libraries')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='Calibre',
@@ -79,7 +77,7 @@ class CalibreApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-calibre', managed_packages)
+        packages = Packages('packages-calibre', ['calibre'])
         self.add(packages)
 
         firewall = Firewall('firewall-calibre', info.name,
@@ -90,7 +88,7 @@ class CalibreApp(app_module.App):
                               urls=['https://{host}/calibre'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-calibre', managed_services[0],
+        daemon = Daemon('daemon-calibre', self.DAEMON,
                         listen_ports=[(8844, 'tcp4')])
         self.add(daemon)
 
@@ -106,7 +104,7 @@ class CalibreApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 
@@ -125,10 +123,10 @@ def list_libraries():
 def create_library(name):
     """Create an empty library."""
     actions.superuser_run('calibre', ['create-library', name])
-    actions.superuser_run('service', ['try-restart', managed_services[0]])
+    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])
 
 
 def delete_library(name):
     """Delete a library and its contents."""
     actions.superuser_run('calibre', ['delete-library', name])
-    actions.superuser_run('service', ['try-restart', managed_services[0]])
+    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])

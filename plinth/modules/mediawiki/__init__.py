@@ -19,12 +19,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 10
-
-managed_packages = ['mediawiki', 'imagemagick', 'php-sqlite3']
-
-managed_services = ['mediawiki-jobrunner']
-
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
       'projects. A wiki engine is a program for creating a collaboratively '
@@ -51,12 +45,14 @@ class MediaWikiApp(app_module.App):
 
     app_id = 'mediawiki'
 
+    _version = 10
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
         self._private_mode = True
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MediaWiki'), icon_filename='mediawiki',
                                short_description=_('Wiki'),
                                description=_description,
@@ -75,7 +71,8 @@ class MediaWikiApp(app_module.App):
                             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-mediawiki', managed_packages)
+        packages = Packages('packages-mediawiki',
+                            ['mediawiki', 'imagemagick', 'php-sqlite3'])
         self.add(packages)
 
         firewall = Firewall('firewall-mediawiki', info.name,
@@ -90,7 +87,7 @@ class MediaWikiApp(app_module.App):
                               'mediawiki-freedombox')
         self.add(webserver)
 
-        daemon = Daemon('daemon-mediawiki', managed_services[0])
+        daemon = Daemon('daemon-mediawiki', 'mediawiki-jobrunner')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-mediawiki',
@@ -109,7 +106,7 @@ class Shortcut(frontpage.Shortcut):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'mediawiki', ['setup'])
     helper.call('post', actions.superuser_run, 'mediawiki', ['update'])
     helper.call('post', app.enable)

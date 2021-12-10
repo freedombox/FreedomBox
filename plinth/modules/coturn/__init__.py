@@ -25,14 +25,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
-managed_services = ['coturn']
-
-managed_packages = ['coturn']
-
-managed_paths = [pathlib.Path('/etc/coturn/')]
-
 _description = [
     _('Coturn is a server to facilitate audio/video calls and conferences by '
       'providing an implementation of TURN and STUN protocols. WebRTC, SIP '
@@ -55,11 +47,13 @@ class CoturnApp(app_module.App):
 
     app_id = 'coturn'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Coturn'), icon_filename='coturn',
                                short_description=_('VoIP Helper'),
                                description=_description, manual_page='Coturn')
@@ -70,7 +64,7 @@ class CoturnApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-coturn', managed_packages)
+        packages = Packages('packages-coturn', ['coturn'])
         self.add(packages)
 
         firewall = Firewall('firewall-coturn', info.name,
@@ -78,8 +72,8 @@ class CoturnApp(app_module.App):
         self.add(firewall)
 
         letsencrypt = LetsEncrypt(
-            'letsencrypt-coturn', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            'letsencrypt-coturn', domains=get_domains, daemons=['coturn'],
+            should_copy_certificates=True,
             private_key_path='/etc/coturn/certs/pkey.pem',
             certificate_path='/etc/coturn/certs/cert.pem',
             user_owner='turnserver', group_owner='turnserver',
@@ -87,13 +81,22 @@ class CoturnApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-coturn', managed_services[0],
-            listen_ports=[(3478, 'udp4'), (3478, 'udp6'), (3478, 'tcp4'),
-                          (3478, 'tcp6'), (3479, 'udp4'), (3479, 'udp6'),
-                          (3479, 'tcp4'), (3479, 'tcp6'), (5349, 'udp4'),
-                          (5349, 'udp6'), (5349, 'tcp4'), (5349, 'tcp6'),
-                          (5350, 'udp4'), (5350, 'udp6'), (5350, 'tcp4'),
-                          (5350, 'tcp6')])
+            'daemon-coturn', 'coturn', listen_ports=[(3478, 'udp4'),
+                                                     (3478, 'udp6'),
+                                                     (3478, 'tcp4'),
+                                                     (3478, 'tcp6'),
+                                                     (3479, 'udp4'),
+                                                     (3479, 'udp6'),
+                                                     (3479, 'tcp4'),
+                                                     (3479, 'tcp6'),
+                                                     (5349, 'udp4'),
+                                                     (5349, 'udp6'),
+                                                     (5349, 'tcp4'),
+                                                     (5349, 'tcp6'),
+                                                     (5350, 'udp4'),
+                                                     (5350, 'udp6'),
+                                                     (5350, 'tcp4'),
+                                                     (5350, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-coturn',
@@ -107,7 +110,7 @@ class CoturnApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'coturn', ['setup'])
     helper.call('post', app.enable)
     app.get_component('letsencrypt-coturn').setup_certificates()

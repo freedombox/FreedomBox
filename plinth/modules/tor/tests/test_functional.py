@@ -14,7 +14,7 @@ _TOR_FEATURE_TO_ELEMENT = {
     'software': 'tor-apt_transport_tor_enabled'
 }
 
-pytestmark = [pytest.mark.apps, pytest.mark.tor]
+pytestmark = [pytest.mark.apps, pytest.mark.domain, pytest.mark.tor]
 
 
 class TestTorApp(functional.BaseAppTests):

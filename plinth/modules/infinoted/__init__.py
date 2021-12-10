@@ -17,12 +17,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 3
-
-managed_services = ['infinoted']
-
-managed_packages = ['infinoted']
-
 _description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
     format_lazy(
@@ -40,11 +34,13 @@ class InfinotedApp(app_module.App):
 
     app_id = 'infinoted'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('infinoted'), icon_filename='infinoted',
                                short_description=_('Gobby Server'),
                                description=_description,
@@ -65,14 +61,14 @@ class InfinotedApp(app_module.App):
             clients=info.clients, login_required=False)
         self.add(shortcut)
 
-        packages = Packages('packages-infinoted', managed_packages)
+        packages = Packages('packages-infinoted', ['infinoted'])
         self.add(packages)
 
         firewall = Firewall('firewall-infinoted', info.name,
                             ports=['infinoted-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-infinoted', managed_services[0],
+        daemon = Daemon('daemon-infinoted', 'infinoted',
                         listen_ports=[(6523, 'tcp4'), (6523, 'tcp6')])
         self.add(daemon)
 
@@ -83,6 +79,6 @@ class InfinotedApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'infinoted', ['setup'])
     helper.call('post', app.enable)

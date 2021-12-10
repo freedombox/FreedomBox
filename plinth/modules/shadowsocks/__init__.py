@@ -17,12 +17,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 3
-
-managed_services = ['shadowsocks-libev-local@freedombox']
-
-managed_packages = ['shadowsocks-libev']
-
 _description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
       'protect your Internet traffic. It can be used to bypass Internet '
@@ -45,11 +39,15 @@ class ShadowsocksApp(app_module.App):
 
     app_id = 'shadowsocks'
 
+    _version = 3
+
+    DAEMON = 'shadowsocks-libev-local@freedombox'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Shadowsocks'),
                                icon_filename='shadowsocks',
                                short_description=_('Socks5 Proxy'),
@@ -70,7 +68,7 @@ class ShadowsocksApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-shadowsocks', managed_packages)
+        packages = Packages('packages-shadowsocks', ['shadowsocks-libev'])
         self.add(packages)
 
         firewall = Firewall('firewall-shadowsocks', info.name,
@@ -78,7 +76,7 @@ class ShadowsocksApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        daemon = Daemon('daemon-shadowsocks', managed_services[0],
+        daemon = Daemon('daemon-shadowsocks', self.DAEMON,
                         listen_ports=[(1080, 'tcp4'), (1080, 'tcp6')])
         self.add(daemon)
 
@@ -89,6 +87,6 @@ class ShadowsocksApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
     helper.call('post', app.enable)

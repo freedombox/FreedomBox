@@ -5,7 +5,6 @@ FreedomBox app to configure ejabberd server.
 
 import json
 import logging
-import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -28,14 +27,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 4
-
-managed_services = ['ejabberd']
-
-managed_packages = ['ejabberd']
-
-managed_paths = [pathlib.Path('/etc/ejabberd/')]
-
 _description = [
     _('XMPP is an open and standardized communication protocol. Here '
       'you can run and configure your XMPP server, called ejabberd.'),
@@ -53,8 +44,6 @@ _description = [
           'an external server.'), coturn_url=reverse_lazy('coturn:index'))
 ]
 
-depends = ['coturn']
-
 logger = logging.getLogger(__name__)
 
 app = None
@@ -65,16 +54,17 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
+    _version = 4
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('ejabberd'), icon_filename='ejabberd',
-                               short_description=_('Chat Server'),
-                               description=_description,
-                               manual_page='ejabberd',
-                               clients=manifest.clients)
+        info = app_module.Info(
+            app_id=self.app_id, version=self._version, depends=['coturn'],
+            name=_('ejabberd'), icon_filename='ejabberd',
+            short_description=_('Chat Server'), description=_description,
+            manual_page='ejabberd', clients=manifest.clients)
         self.add(info)
 
         menu_item = menu.Menu('menu-ejabberd', info.name,
@@ -90,7 +80,7 @@ class EjabberdApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-ejabberd', managed_packages)
+        packages = Packages('packages-ejabberd', ['ejabberd'])
         self.add(packages)
 
         firewall = Firewall('firewall-ejabberd', info.name,
@@ -112,9 +102,12 @@ class EjabberdApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-ejabberd', managed_services[0],
-            listen_ports=[(5222, 'tcp4'), (5222, 'tcp6'), (5269, 'tcp4'),
-                          (5269, 'tcp6'), (5443, 'tcp4'), (5443, 'tcp6')])
+            'daemon-ejabberd', 'ejabberd', listen_ports=[(5222, 'tcp4'),
+                                                         (5222, 'tcp6'),
+                                                         (5269, 'tcp4'),
+                                                         (5269, 'tcp6'),
+                                                         (5443, 'tcp4'),
+                                                         (5443, 'tcp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-ejabberd',
@@ -152,7 +145,7 @@ def setup(helper, old_version=None):
     helper.call('pre', actions.superuser_run, 'ejabberd',
                 ['pre-install', '--domainname', domainname])
     # XXX: Configure all other domain names
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post',
                 app.get_component('letsencrypt-ejabberd').setup_certificates,
                 [domainname])
@@ -171,8 +164,7 @@ def get_domains():
     XXX: Retrieve the list from ejabberd configuration.
 
     """
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return []
 
     domain_name = config.get_domainname()
@@ -188,8 +180,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     del sender  # Unused
     del kwargs  # Unused
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     actions.superuser_run('ejabberd', [
@@ -202,8 +193,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     actions.superuser_run('ejabberd', [
@@ -215,8 +205,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Update ejabberd config after domain name change."""
-    setup_helper = globals()['setup_helper']
-    if setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     conf = actions.superuser_run('ejabberd', ['get-configuration'])
@@ -229,8 +218,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update ejabberd's STUN/TURN server configuration."""
-    setup_helper = globals()['setup_helper']
-    if not force and setup_helper.get_state() == 'needs-setup':
+    if app.needs_setup():
         return
 
     params = ['configure-turn']

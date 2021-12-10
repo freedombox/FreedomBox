@@ -5,8 +5,10 @@ import argparse
 import logging
 import sys
 
-from . import (__version__, cfg, frontpage, glib, log, menu, module_loader,
-               setup, utils, web_framework, web_server)
+from . import __version__
+from . import app as app_module
+from . import (cfg, frontpage, glib, log, menu, module_loader, setup, utils,
+               web_framework, web_server)
 
 if utils.is_axes_old():
     import axes
@@ -29,37 +31,36 @@ def parse_arguments():
         '--develop', action='store_true', default=None,
         help=('run Plinth *insecurely* from current folder; '
               'enable auto-reloading and debugging options'))
-    parser.add_argument(
-        '--setup', default=False, nargs='*',
-        help='run setup tasks on all essential modules and exit')
+    parser.add_argument('--setup', default=False, nargs='*',
+                        help='run setup tasks on all essential apps and exit')
     parser.add_argument(
         '--setup-no-install', default=False, nargs='*',
         help='run setup tasks without installing packages and exit')
     parser.add_argument('--list-dependencies', default=False, nargs='*',
                         help='list package dependencies for essential modules')
-    parser.add_argument('--list-modules', default=False, nargs='*',
-                        help='list modules')
+    parser.add_argument('--list-apps', default=False, nargs='*',
+                        help='list apps')
 
     return parser.parse_args()
 
 
-def run_setup_and_exit(module_list, allow_install=True):
-    """Run setup on all essential modules and exit."""
+def run_setup_and_exit(app_ids, allow_install=True):
+    """Run setup on all essential apps and exit."""
     error_code = 0
     try:
-        setup.run_setup_on_modules(module_list, allow_install)
+        setup.run_setup_on_apps(app_ids, allow_install)
     except Exception:
         error_code = 1
 
     sys.exit(error_code)
 
 
-def list_dependencies(module_list):
-    """List dependencies for all essential modules and exit."""
+def list_dependencies(app_ids):
+    """List dependencies for all essential apps and exit."""
     error_code = 0
     try:
-        if module_list:
-            setup.list_dependencies(module_list=module_list)
+        if app_ids:
+            setup.list_dependencies(app_ids=app_ids)
         else:
             setup.list_dependencies(essential=True)
     except Exception as exception:
@@ -69,15 +70,18 @@ def list_dependencies(module_list):
     sys.exit(error_code)
 
 
-def list_modules(modules_type):
-    """List all/essential/optional modules and exit."""
-    for module_name, module in module_loader.loaded_modules.items():
-        module_is_essential = getattr(module, 'is_essential', False)
-        if 'essential' in modules_type and not module_is_essential:
+def list_apps(apps_type):
+    """List all/essential/optional apps and exit."""
+    for app in app_module.App.list():
+        is_essential = app.info.is_essential
+        if 'essential' in apps_type and not is_essential:
             continue
-        elif 'optional' in modules_type and module_is_essential:
+
+        if 'optional' in apps_type and is_essential:
             continue
-        print('{module_name}'.format(module_name=module_name))
+
+        print(f'{app.app_id}')
+
     sys.exit()
 
 
@@ -109,8 +113,14 @@ def main():
     if arguments.list_dependencies is not False:
         log.default_level = 'ERROR'
         module_loader.load_modules()
-        module_loader.apps_init()
+        app_module.apps_init()
         list_dependencies(arguments.list_dependencies)
+
+    if arguments.list_apps is not False:
+        log.default_level = 'ERROR'
+        module_loader.load_modules()
+        app_module.apps_init()
+        list_apps(arguments.list_apps)
 
     log.init()
 
@@ -127,8 +137,8 @@ def main():
     menu.init()
 
     module_loader.load_modules()
-    module_loader.apps_init()
-    module_loader.apps_post_init()
+    app_module.apps_init()
+    app_module.apps_post_init()
     frontpage.add_custom_shortcuts()
 
     if arguments.setup is not False:
@@ -136,9 +146,6 @@ def main():
 
     if arguments.setup_no_install is not False:
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
-
-    if arguments.list_modules is not False:
-        list_modules(arguments.list_modules)
 
     setup.run_setup_in_background()
 

@@ -19,14 +19,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
-is_essential = True
-
-managed_services = ['ssh']
-
-managed_packages = ['openssh-server']
-
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
       'connections from remote computers. An authorized remote computer '
@@ -42,12 +34,14 @@ class SSHApp(app_module.App):
 
     app_id = 'ssh'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True,
                                name=_('Secure Shell (SSH) Server'),
                                icon='fa-terminal', description=_description)
         self.add(info)
@@ -56,14 +50,14 @@ class SSHApp(app_module.App):
                               'ssh:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-ssh', managed_packages)
+        packages = Packages('packages-ssh', ['openssh-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-ssh', info.name, ports=['ssh'],
                             is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-ssh', managed_services[0])
+        daemon = Daemon('daemon-ssh', 'ssh')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-ssh', **manifest.backup)
@@ -72,6 +66,7 @@ class SSHApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Configure the module."""
+    app.setup(old_version)
     actions.superuser_run('ssh', ['setup'])
     helper.call('post', app.enable)
 

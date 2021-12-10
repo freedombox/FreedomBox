@@ -39,14 +39,14 @@ def subcommand_setup(arguments):
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
 
-    action_utils.service_restart('bind9')
+    action_utils.service_restart('named')
 
 
 def subcommand_configure(arguments):
     """Configure BIND."""
     set_forwarders(arguments.forwarders)
     set_dnssec(arguments.dnssec)
-    action_utils.service_restart('bind9')
+    action_utils.service_restart('named')
 
 
 def main():

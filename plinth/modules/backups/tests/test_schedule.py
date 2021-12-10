@@ -15,8 +15,6 @@ from plinth.app import App
 from ..components import BackupRestore
 from ..schedule import Schedule
 
-setup_helper = MagicMock()
-
 
 class AppTest(App):
     """Sample App for testing."""
@@ -426,11 +424,12 @@ cases = [
 
 @pytest.mark.parametrize(
     'schedule_params,archives_data,test_now,run_periods,cleanups', cases)
+@patch('plinth.app.App.get_setup_state')
 @patch('plinth.modules.backups.repository.get_instance')
-def test_run_schedule(get_instance, schedule_params, archives_data, test_now,
-                      run_periods, cleanups):
+def test_run_schedule(get_instance, get_setup_state, schedule_params,
+                      archives_data, test_now, run_periods, cleanups):
     """Test that backups are run at expected time."""
-    setup_helper.get_state.return_value = 'up-to-date'
+    get_setup_state.return_value = App.SetupState.UP_TO_DATE
 
     repository = MagicMock()
     repository.list_archives.side_effect = \

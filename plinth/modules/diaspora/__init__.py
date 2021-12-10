@@ -36,12 +36,6 @@ def get_configured_domain_name():
         return lazy_domain_name
 
 
-version = 1
-
-managed_services = ['diaspora']
-
-managed_packages = ['diaspora']
-
 _description = [
     _('diaspora* is a decentralized social network where you can store '
       'and control your own data.'),
@@ -61,12 +55,14 @@ class DiasporaApp(app_module.App):
 
     app_id = 'diaspora'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
         from . import manifest
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('diaspora*'), icon_filename='diaspora',
                                short_description=_('Federated Social Network'),
                                description=_description,
@@ -84,7 +80,7 @@ class DiasporaApp(app_module.App):
                             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-diaspora', managed_packages)
+        packages = Packages('packages-diaspora', ['diaspora'])
         self.add(packages)
 
         firewall = Firewall('firewall-diaspora', info.name,
@@ -94,7 +90,7 @@ class DiasporaApp(app_module.App):
         webserver = Webserver('webserver-diaspora', 'diaspora-plinth')
         self.add(webserver)
 
-        daemon = Daemon('daemon-diaspora', managed_services[0])
+        daemon = Daemon('daemon-diaspora', 'diaspora')
         self.add(daemon)
 
     def diagnose(self):
@@ -127,7 +123,7 @@ class Shortcut(frontpage.Shortcut):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'diaspora', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('custom_config', actions.superuser_run, 'diaspora',
                 ['disable-ssl'])
 

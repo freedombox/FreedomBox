@@ -14,12 +14,6 @@ from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
 from plinth.package import Packages
 
-version = 1
-
-is_essential = True
-
-managed_packages = ['network-manager', 'batctl']
-
 first_boot_steps = [
     {
         'id': 'network_topology_wizard',
@@ -55,12 +49,14 @@ class NetworksApp(app_module.App):
 
     app_id = 'networks'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Networks'),
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Networks'),
                                icon='fa-signal', description=_description,
                                manual_page='Networks')
         self.add(info)
@@ -69,7 +65,7 @@ class NetworksApp(app_module.App):
                               'networks:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-networks', managed_packages)
+        packages = Packages('packages-networks', ['network-manager', 'batctl'])
         self.add(packages)
 
     def diagnose(self):
@@ -91,7 +87,7 @@ class NetworksApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run('networks')
     helper.call('post', app.enable)
 

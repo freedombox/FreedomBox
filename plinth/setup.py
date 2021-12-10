@@ -3,9 +3,8 @@
 Utilities for performing application setup operations.
 """
 
-import importlib
 import logging
-import os
+import sys
 import threading
 import time
 from collections import defaultdict
@@ -13,7 +12,8 @@ from collections import defaultdict
 import apt
 
 import plinth
-from plinth.package import Packages, packages_installed
+from plinth import app as app_module
+from plinth.package import Packages
 from plinth.signals import post_setup
 
 from . import package
@@ -65,8 +65,9 @@ class Helper(object):
         if self.current_operation:
             return
 
-        current_version = self.get_setup_version()
-        if current_version >= self.module.version:
+        app = self.module.app
+        current_version = app.get_setup_version()
+        if current_version >= app.info.version:
             return
 
         self.allow_install = allow_install
@@ -84,7 +85,7 @@ class Helper(object):
             logger.exception('Error running setup - %s', exception)
             raise exception
         else:
-            self.set_setup_version(self.module.version)
+            app.set_setup_version(app.info.version)
             post_setup.send_robust(sender=self.__class__,
                                    module_name=self.module_name)
         finally:
@@ -122,80 +123,6 @@ class Helper(object):
         self.current_operation = {'step': step}
         return method(*args, **kwargs)
 
-    def get_state(self):
-        """Return whether the module is not setup or needs upgrade."""
-        current_version = self.get_setup_version()
-        if current_version and self.module.version <= current_version:
-            return 'up-to-date'
-
-        # If a module need installing/updating but no setup method is
-        # available, then automatically set version.
-        #
-        # Minor violation of 'get' only discipline for convenience.
-        if not hasattr(self.module, 'setup'):
-            self.set_setup_version(self.module.version)
-            return 'up-to-date'
-
-        if not current_version:
-            return 'needs-setup'
-
-        return 'needs-update'
-
-    def get_setup_version(self):
-        """Return the setup version of a module."""
-        # XXX: Optimize version gets
-        from . import models
-
-        try:
-            module_entry = models.Module.objects.get(pk=self.module_name)
-            return module_entry.setup_version
-        except models.Module.DoesNotExist:
-            return 0
-
-    def set_setup_version(self, version):
-        """Set a module's setup version."""
-        from . import models
-
-        models.Module.objects.update_or_create(
-            pk=self.module_name, defaults={'setup_version': version})
-
-    def has_unavailable_packages(self):
-        """Find if any of the packages managed by the module are not available.
-
-        Returns True if one or more of the packages is not available in the
-        user's Debian distribution or False otherwise.
-        Returns None if it cannot be reliably determined whether the
-        packages are available or not.
-        """
-        APT_LISTS_DIR = '/var/lib/apt/lists/'
-        num_files = len([
-            name for name in os.listdir(APT_LISTS_DIR)
-            if os.path.isfile(os.path.join(APT_LISTS_DIR, name))
-        ])
-        if num_files < 2:  # not counting the lock file
-            return None
-
-        pkg_components = list(self.module.app.get_components_of_type(Packages))
-        if not pkg_components:  # This app has no packages to install
-            return False
-
-        # List of all packages from all Package components
-        managed_pkgs = (package for component in pkg_components
-                        for package in component.packages)
-        cache = apt.Cache()
-        unavailable_pkgs = (pkg_name for pkg_name in managed_pkgs
-                            if pkg_name not in cache)
-        return any(unavailable_pkgs)
-
-    def get_package_conflicts(self):
-        """Report list of conflicting packages for the user."""
-        package_conflicts, package_conflicts_action = \
-            _get_module_package_conflicts(self.module)
-        if package_conflicts:
-            package_conflicts = packages_installed(package_conflicts)
-
-        return package_conflicts, package_conflicts_action
-
 
 def init(module_name, module):
     """Create a setup helper for a module for later use."""
@@ -212,34 +139,33 @@ def stop():
         _force_upgrader.shutdown()
 
 
-def setup_modules(module_list=None, essential=False, allow_install=True):
-    """Run setup on selected or essential modules."""
+def setup_apps(app_ids=None, essential=False, allow_install=True):
+    """Run setup on selected or essential apps."""
     logger.info(
-        'Running setup for modules, essential - %s, '
-        'selected modules - %s', essential, module_list)
-    for module_name, module in plinth.module_loader.loaded_modules.items():
-        if essential and not _is_module_essential(module):
+        'Running setup for apps, essential - %s, '
+        'selected apps - %s', essential, app_ids)
+    for app in app_module.App.list():
+        if essential and not app.info.is_essential:
             continue
 
-        if module_list and module_name not in module_list:
+        if app_ids and app.app_id not in app_ids:
             continue
 
+        module = sys.modules[app.__module__]
         module.setup_helper.run(allow_install=allow_install)
 
 
-def list_dependencies(module_list=None, essential=False):
-    """Print list of packages required by selected or essential modules."""
-    for module_import_path in plinth.module_loader.get_modules_to_load():
-        module_name = module_import_path.split('.')[-1]
-        module = importlib.import_module(module_import_path)
-        if essential and not _is_module_essential(module):
+def list_dependencies(app_ids=None, essential=False):
+    """Print list of packages required by selected or essential apps."""
+    for app in app_module.App.list():
+        if essential and not app.info.is_essential:
             continue
 
-        if module_list and module_name not in module_list and \
-           '*' not in module_list:
+        if app_ids and app.app_id not in app_ids and \
+           '*' not in app_ids:
             continue
 
-        for component in module.app.get_components_of_type(Packages):
+        for component in app.get_components_of_type(Packages):
             for package_name in component.packages:
                 print(package_name)
 
@@ -274,85 +200,68 @@ def _run_setup():
 
 
 def _run_first_setup():
-    """Run setup on essential modules on first setup."""
+    """Run setup on essential apps on first setup."""
     global is_first_setup_running
     is_first_setup_running = True
     # TODO When it errors out, show error in the UI
-    run_setup_on_modules(None, allow_install=False)
+    run_setup_on_apps(None, allow_install=False)
     is_first_setup_running = False
 
 
 def _run_regular_setup():
-    """Run setup on all modules also installing required packages."""
+    """Run setup on all apps also installing required packages."""
     # TODO show notification that upgrades are running
     if package.is_package_manager_busy():
         raise Exception('Package manager is busy.')
 
-    all_modules = _get_modules_for_regular_setup()
-    run_setup_on_modules(all_modules, allow_install=True)
+    app_ids = _get_apps_for_regular_setup()
+    run_setup_on_apps(app_ids, allow_install=True)
 
 
-def _get_modules_for_regular_setup():
-    all_modules = plinth.module_loader.loaded_modules.items()
+def _get_apps_for_regular_setup():
 
-    def is_setup_required(module):
+    def is_setup_required(app):
         """Setup is required for:
-        1. essential modules that are not up-to-date
-        2. non-essential modules that are installed and need updates
+        1. essential apps that are not up-to-date
+        2. non-essential app that are installed and need updates
         """
-        if _is_module_essential(module) and \
-           not _module_state_matches(module, 'up-to-date'):
+        if (app.info.is_essential and
+                app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
             return True
 
-        if _module_state_matches(module, 'needs-update'):
+        if app.get_setup_state() == app_module.App.SetupState.NEEDS_UPDATE:
             return True
 
         return False
 
-    return [name for name, module in all_modules if is_setup_required(module)]
-
-
-def _is_module_essential(module):
-    """Return if a module is an essential module."""
-    return getattr(module, 'is_essential', False)
-
-
-def _get_module_package_conflicts(module):
-    """Return list of packages that conflict with packages of a module."""
-    return (getattr(module, 'package_conflicts',
-                    None), getattr(module, 'package_conflicts_action', None))
-
-
-def _module_state_matches(module, state):
-    """Return if the current setup state of a module matches given state."""
-    return module.setup_helper.get_state() == state
+    return [
+        app.app_id for app in app_module.App.list() if is_setup_required(app)
+    ]
 
 
 def _set_is_first_setup():
-    """Set whether all essential modules have been setup at least once."""
+    """Set whether all essential apps have been setup at least once."""
     global _is_first_setup
-    modules = plinth.module_loader.loaded_modules.values()
-    _is_first_setup = any((module for module in modules
-                           if _is_module_essential(module)
-                           and _module_state_matches(module, 'needs-setup')))
+    _is_first_setup = any((app for app in app_module.App.list()
+                           if app.info.is_essential and app.needs_setup()))
 
 
-def run_setup_on_modules(module_list, allow_install=True):
-    """Run setup on the given list of modules.
+def run_setup_on_apps(app_ids, allow_install=True):
+    """Run setup on the given list of apps.
 
-    module_list is the list of modules to run setup on. If None is given, run
-    setup on all essential modules only.
+    apps is the list of apps to run setup on. If None is given, run setup on
+    all essential apps only.
 
     allow_install with or without package installation. When setting up
-    essential modules, installing packages is not required as FreedomBox
-    (Plinth) itself has dependencies on all essential modules.
+    essential apps, installing packages is not required as FreedomBox
+    (Plinth) itself has dependencies on all essential apps.
 
     """
     try:
-        if not module_list:
-            setup_modules(essential=True, allow_install=allow_install)
+        if not app_ids:
+            setup_apps(essential=True, allow_install=allow_install)
         else:
-            setup_modules(module_list, allow_install=allow_install)
+            setup_apps(app_ids, allow_install=allow_install)
     except Exception as exception:
         logger.error('Error running setup - %s', exception)
         raise
@@ -512,19 +421,22 @@ class ForceUpgrader():
 
         apps = self._get_list_of_apps_to_force_upgrade()
         logger.info(
-            'Apps needing conffile upgrades: %s',
-            ', '.join([str(app.app.info.name) for app in apps]) or 'None')
+            'Apps needing conffile upgrades: %s', ', '.join(
+                [str(app_module.App.get(app_id).info.name) for app_id in apps])
+            or 'None')
 
         need_retry = False
-        for app, packages in apps.items():
+        for app_id, packages in apps.items():
+            app = app_module.App.get(app_id)
+            module = sys.modules[app.__module__]
             try:
-                logger.info('Force upgrading app: %s', app.app.info.name)
-                if app.force_upgrade(app.setup_helper, packages):
+                logger.info('Force upgrading app: %s', app.info.name)
+                if module.force_upgrade(module.setup_helper, packages):
                     logger.info('Successfully force upgraded app: %s',
-                                app.app.info.name)
+                                app.info.name)
                 else:
                     logger.info('Ignored force upgrade for app: %s',
-                                app.app.info.name)
+                                app.info.name)
             except Exception as exception:
                 logger.exception('Error running force upgrade: %s', exception)
                 need_retry = True
@@ -534,7 +446,7 @@ class ForceUpgrader():
             raise self.TemporaryFailure('Some apps failed to force upgrade.')
 
     def _get_list_of_apps_to_force_upgrade(self):
-        """Return a list of app modules on which to run force upgrade."""
+        """Return a list of app on which to run force upgrade."""
         packages = self._get_list_of_upgradable_packages()
         if not packages:  # No packages to upgrade
             return {}
@@ -555,8 +467,8 @@ class ForceUpgrader():
 
         apps = defaultdict(dict)
         for package_name in conffile_packages:
-            for app in package_apps_map[package_name]:
-                apps[app][package_name] = conffile_packages[package_name]
+            for app_id in package_apps_map[package_name]:
+                apps[app_id][package_name] = conffile_packages[package_name]
 
         return apps
 
@@ -576,21 +488,22 @@ class ForceUpgrader():
         """
         package_apps_map = defaultdict(set)
         upgradable_packages = set()
-        for module in plinth.module_loader.loaded_modules.values():
+        for app in app_module.App.list():
+            module = sys.modules[app.__module__]
             if not getattr(module, 'force_upgrade', None):
                 # App does not implement force upgrade
                 continue
 
-            if not _module_state_matches(module, 'up-to-date'):
+            if (app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
                 # App is not installed.
                 # Or needs an update, let it update first.
                 continue
 
-            for component in module.app.get_components_of_type(Packages):
+            for component in app.get_components_of_type(Packages):
                 upgradable_packages.update(component.packages)
 
                 for managed_package in component.packages:
-                    package_apps_map[managed_package].add(module)
+                    package_apps_map[managed_package].add(app.app_id)
 
         return upgradable_packages.intersection(
             set(packages)), package_apps_map

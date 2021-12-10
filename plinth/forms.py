@@ -39,16 +39,16 @@ class DomainSelectionForm(forms.Form):
             'changed later.'), choices=[])
 
 
+def _get_domain_choices():
+    """Double domain entries for inclusion in the choice field."""
+    from plinth.modules.names import get_available_tls_domains
+    return ((domain, domain) for domain in get_available_tls_domains())
+
+
 class TLSDomainForm(forms.Form):
     """Form to select a TLS domain for an app."""
-
-    def get_domain_choices():
-        """Double domain entries for inclusion in the choice field."""
-        from plinth.modules.names import get_available_tls_domains
-        return ((domain, domain) for domain in get_available_tls_domains())
-
     domain = forms.ChoiceField(
-        choices=get_domain_choices(),
+        choices=_get_domain_choices,
         label=_('TLS domain'),
         help_text=_(
             'Select a domain to use TLS with. If the list is empty, please '

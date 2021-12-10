@@ -19,21 +19,6 @@ from . import manifest
 
 PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
 
-version = 1
-
-managed_services = ['wordpress-freedombox.timer']
-
-# Add php to avoid wordpress package bringing in lib-apache2-mod-php.
-# WordPress only supports MySQL/MariaDB as database server.
-managed_packages = [
-    'wordpress',
-    'php',  # Avoid WordPress package bringing in libapache2-mod-php
-    'php-imagick',  # Optional, for performance
-    'php-ssh2',  # Optional, to upload plugins/themes using SSH connection
-    'php-zip',  # Optional, for performance
-    'default-mysql-server',  # WordPress only supports MySQL/MariaDB as DB
-]
-
 _description = [
     _('WordPress is a popular way to create and manage websites and blogs. '
       'Content can be managed using a visual interface. Layout and '
@@ -63,12 +48,14 @@ class WordPressApp(app_module.App):
 
     app_id = 'wordpress'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('WordPress'),
+            app_id=self.app_id, version=self._version, name=_('WordPress'),
             icon_filename='wordpress', short_description=_('Website and Blog'),
             description=_description, manual_page='WordPress',
             clients=manifest.clients,
@@ -86,7 +73,23 @@ class WordPressApp(app_module.App):
                                       url='/wordpress/', clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-wordpress', managed_packages)
+        # Add php to avoid wordpress package bringing in lib-apache2-mod-php.
+        # WordPress only supports MySQL/MariaDB as database server.
+        packages = Packages(
+            'packages-wordpress',
+            [
+                'wordpress',
+                # Avoid WordPress package bringing in libapache2-mod-php
+                'php',
+                # Optional, for performance
+                'php-imagick',
+                # Optional, to upload plugins/themes using SSH connection
+                'php-ssh2',
+                # Optional, for performance
+                'php-zip',
+                # WordPress only supports MySQL/MariaDB as DB
+                'default-mysql-server',
+            ])
         self.add(packages)
 
         firewall = Firewall('firewall-wordpress', info.name,
@@ -97,7 +100,7 @@ class WordPressApp(app_module.App):
                               urls=['https://{host}/wordpress/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-wordpress', managed_services[0])
+        daemon = Daemon('daemon-wordpress', 'wordpress-freedombox.timer')
         self.add(daemon)
 
         backup_restore = WordPressBackupRestore('backup-restore-wordpress',
@@ -119,6 +122,6 @@ class WordPressBackupRestore(BackupRestore):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'wordpress', ['setup'])
     helper.call('post', app.enable)

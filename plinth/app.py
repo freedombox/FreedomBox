@@ -4,8 +4,17 @@ Base class for all Freedombox applications.
 """
 
 import collections
+import enum
+import inspect
+import logging
+import sys
+
+from plinth import cfg
+from plinth.signals import post_app_loading
 
 from . import clients as clients_module
+
+logger = logging.getLogger(__name__)
 
 
 class App:
@@ -39,6 +48,12 @@ class App:
     # XXX: Lockdown the application UI by implementing a middleware
 
     _all_apps = collections.OrderedDict()
+
+    class SetupState(enum.Enum):
+        """Various states of app being setup."""
+        NEEDS_SETUP = 'needs-setup'
+        NEEDS_UPDATE = 'needs-update'
+        UP_TO_DATE = 'up-to-date'
 
     def __init__(self):
         """Build the app by adding components.
@@ -112,6 +127,56 @@ class App:
 
         """
         return self.get_component(self.app_id + '-info')
+
+    def setup(self, old_version):
+        """Install and configure the app and its components."""
+        for component in self.components.values():
+            component.setup(old_version=old_version)
+
+    def get_setup_state(self) -> SetupState:
+        """Return whether the app is not setup or needs upgrade."""
+        current_version = self.get_setup_version()
+        if current_version and self.info.version <= current_version:
+            return self.SetupState.UP_TO_DATE
+
+        # If an app needs installing/updating but no setup method is available,
+        # then automatically set version.
+        #
+        # Minor violation of 'get' only discipline for convenience.
+        module = sys.modules[self.__module__]
+        if not hasattr(module, 'setup'):
+            self.set_setup_version(self.info.version)
+            return self.SetupState.UP_TO_DATE
+
+        if not current_version:
+            return self.SetupState.NEEDS_SETUP
+
+        return self.SetupState.NEEDS_UPDATE
+
+    def get_setup_version(self) -> int:
+        """Return the setup version of the app."""
+        # XXX: Optimize version gets
+        from . import models
+
+        try:
+            app_entry = models.Module.objects.get(pk=self.app_id)
+            return app_entry.setup_version
+        except models.Module.DoesNotExist:
+            return 0
+
+    def needs_setup(self) -> bool:
+        """Return whether the app needs to be setup.
+
+        A simple shortcut for get_setup_state() == NEEDS_SETUP
+        """
+        return self.get_setup_state() == self.SetupState.NEEDS_SETUP
+
+    def set_setup_version(self, version: int) -> None:
+        """Set the app's setup version."""
+        from . import models
+
+        models.Module.objects.update_or_create(
+            pk=self.app_id, defaults={'setup_version': version})
 
     def enable(self):
         """Enable all the components of the app."""
@@ -220,6 +285,9 @@ class Component:
 
         """
         return App.get(self.app_id)
+
+    def setup(self, old_version):
+        """Run operations to install and configure the component."""
 
     def enable(self):
         """Run operations to enable the component."""
@@ -393,3 +461,98 @@ class Info(FollowerComponent):
         self.donation_url = donation_url
         if clients:
             clients_module.validate(clients)
+
+
+def apps_init():
+    """Create apps by constructing them with components."""
+    from . import module_loader  # noqa  # Avoid circular import
+    for module_name, module in module_loader.loaded_modules.items():
+        _initialize_module(module_name, module)
+
+    _sort_apps()
+
+    logger.info('Initialized apps - %s', ', '.join(
+        (app.app_id for app in App.list())))
+
+
+def _sort_apps():
+    """Sort apps list according to their essential/dependency order."""
+    apps = App._all_apps
+    ordered_modules = []
+    remaining_apps = dict(apps)  # Make a copy
+    # Place all essential modules ahead of others in module load order
+    sorted_apps = sorted(
+        apps, key=lambda app_id: not App.get(app_id).info.is_essential)
+    for app_id in sorted_apps:
+        if app_id not in remaining_apps:
+            continue
+
+        app = remaining_apps.pop(app_id)
+        try:
+            _insert_apps(app_id, app, remaining_apps, ordered_modules)
+        except KeyError:
+            logger.error('Unsatified dependency for app - %s', app_id)
+
+    new_all_apps = collections.OrderedDict()
+    for app_id in ordered_modules:
+        new_all_apps[app_id] = apps[app_id]
+
+    App._all_apps = new_all_apps
+
+
+def _insert_apps(app_id, app, remaining_apps, ordered_apps):
+    """Insert apps into a list based on dependency order."""
+    if app_id in ordered_apps:
+        return
+
+    for dependency in app.info.depends:
+        if dependency in ordered_apps:
+            continue
+
+        try:
+            app = remaining_apps.pop(dependency)
+        except KeyError:
+            logger.error('Not found or circular dependency - %s, %s', app_id,
+                         dependency)
+            raise
+
+        _insert_apps(dependency, app, remaining_apps, ordered_apps)
+
+    ordered_apps.append(app_id)
+
+
+def _initialize_module(module_name, module):
+    """Perform initialization on all apps in a module."""
+    # Perform setup related initialization on the module
+    from . import setup  # noqa  # Avoid circular import
+    setup.init(module_name, module)
+
+    try:
+        module_classes = inspect.getmembers(module, inspect.isclass)
+        app_classes = [
+            cls for _, cls in module_classes if issubclass(cls, App)
+        ]
+        for app_class in app_classes:
+            module.app = app_class()
+    except Exception as exception:
+        logger.exception('Exception while running init for %s: %s', module,
+                         exception)
+        if cfg.develop:
+            raise
+
+
+def apps_post_init():
+    """Run post initialization on each app."""
+    for app in App.list():
+        try:
+            app.post_init()
+            if not app.needs_setup() and app.is_enabled():
+                app.set_enabled(True)
+        except Exception as exception:
+            logger.exception('Exception while running post init for %s: %s',
+                             app.app_id, exception)
+            if cfg.develop:
+                raise
+
+    logger.debug('App initialization completed.')
+    post_app_loading.send_robust(sender="app")

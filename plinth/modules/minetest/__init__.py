@@ -18,11 +18,7 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
-managed_services = ['minetest-server']
-
-mods = [
+_mods = [
     'minetest-mod-character-creator', 'minetest-mod-craftguide',
     'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
     'minetest-mod-maidroid', 'minetest-mod-mesecons',
@@ -32,8 +28,6 @@ mods = [
     'minetest-mod-throwing', 'minetest-mod-unified-inventory',
     'minetest-mod-unifieddyes', 'minetest-mod-worldedit'
 ]
-
-managed_packages = ['minetest-server'] + mods
 
 _description = [
     format_lazy(
@@ -55,12 +49,14 @@ class MinetestApp(app_module.App):
 
     app_id = 'minetest'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Minetest'),
+            app_id=self.app_id, version=self._version, name=_('Minetest'),
             icon_filename='minetest', short_description=_('Block Sandbox'),
             description=_description, manual_page='Minetest',
             clients=manifest.clients,
@@ -80,14 +76,14 @@ class MinetestApp(app_module.App):
             login_required=False)
         self.add(shortcut)
 
-        packages = Packages('packages-minetest', managed_packages)
+        packages = Packages('packages-minetest', ['minetest-server'] + _mods)
         self.add(packages)
 
         firewall = Firewall('firewall-minetest', info.name,
                             ports=['minetest-plinth'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-minetest', managed_services[0],
+        daemon = Daemon('daemon-minetest', 'minetest-server',
                         listen_ports=[(30000, 'udp4')])
         self.add(daemon)
 
@@ -103,7 +99,7 @@ class MinetestApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
 
 

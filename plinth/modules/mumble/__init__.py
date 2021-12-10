@@ -22,14 +22,6 @@ from plinth.utils import Version
 
 from . import manifest
 
-version = 2
-
-managed_services = ['mumble-server']
-
-managed_packages = ['mumble-server']
-
-managed_paths = [pathlib.Path('/var/lib/mumble-server')]
-
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
       'voice chat software.'),
@@ -46,12 +38,14 @@ class MumbleApp(app_module.App):
 
     app_id = 'mumble'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Mumble'),
+            app_id=self.app_id, version=self._version, name=_('Mumble'),
             icon_filename='mumble', short_description=_('Voice Chat'),
             description=_description, manual_page='Mumble',
             clients=manifest.clients,
@@ -69,7 +63,7 @@ class MumbleApp(app_module.App):
             configure_url=reverse_lazy('mumble:index'), clients=info.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-mumble', managed_packages)
+        packages = Packages('packages-mumble', ['mumble-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-mumble', info.name,
@@ -78,7 +72,7 @@ class MumbleApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-mumble', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            daemons=['mumble-server'], should_copy_certificates=True,
             private_key_path='/var/lib/mumble-server/privkey.pem',
             certificate_path='/var/lib/mumble-server/fullchain.pem',
             user_owner='mumble-server', group_owner='mumble-server',
@@ -86,9 +80,10 @@ class MumbleApp(app_module.App):
         self.add(letsencrypt)
 
         daemon = Daemon(
-            'daemon-mumble', managed_services[0],
-            listen_ports=[(64738, 'tcp4'), (64738, 'tcp6'), (64738, 'udp4'),
-                          (64738, 'udp6')])
+            'daemon-mumble', 'mumble-server', listen_ports=[(64738, 'tcp4'),
+                                                            (64738, 'tcp6'),
+                                                            (64738, 'udp4'),
+                                                            (64738, 'udp6')])
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-mumble',
@@ -102,7 +97,7 @@ class MumbleApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'mumble', ['setup'])
     if not old_version:
         helper.call('post', app.enable)

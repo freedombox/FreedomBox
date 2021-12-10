@@ -14,12 +14,6 @@ from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
 
-version = 2
-
-is_essential = True
-
-managed_services = ['systemd-timesyncd']
-
 _description = [
     _('Network time server is a program that maintains the system time '
       'in synchronization with servers on the Internet.')
@@ -32,6 +26,8 @@ class DateTimeApp(app_module.App):
     """FreedomBox app for date and time if time syncronization is unmanaged."""
 
     app_id = 'datetime'
+
+    _version = 2
 
     _time_managed = None
 
@@ -64,10 +60,9 @@ class DateTimeApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential,
-                               name=_('Date & Time'), icon='fa-clock-o',
-                               description=_description,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Date & Time'),
+                               icon='fa-clock-o', description=_description,
                                manual_page='DateTime')
         self.add(info)
 
@@ -76,7 +71,7 @@ class DateTimeApp(app_module.App):
         self.add(menu_item)
 
         if self._is_time_managed():
-            daemon = Daemon('daemon-datetime', managed_services[0])
+            daemon = Daemon('daemon-datetime', 'systemd-timesyncd')
             self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-datetime',

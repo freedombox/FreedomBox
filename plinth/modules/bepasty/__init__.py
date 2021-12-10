@@ -17,10 +17,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 2
-
-managed_packages = ['bepasty']
-
 _description = [
     _('bepasty is a web application that allows large files to be uploaded '
       'and shared. Text and code snippets can also be pasted and shared. '
@@ -58,11 +54,13 @@ class BepastyApp(app_module.App):
 
     app_id = 'bepasty'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(self.app_id, version, name=_('bepasty'),
+        info = app_module.Info(self.app_id, self._version, name=_('bepasty'),
                                icon_filename='bepasty',
                                short_description=_('File & Snippet Sharing'),
                                description=_description, manual_page='bepasty',
@@ -80,7 +78,7 @@ class BepastyApp(app_module.App):
                                       clients=manifest.clients)
         self.add(shortcut)
 
-        packages = Packages('packages-bepasty', managed_packages)
+        packages = Packages('packages-bepasty', ['bepasty'])
         self.add(packages)
 
         firewall = Firewall('firewall-bepasty', info.name,
@@ -101,7 +99,7 @@ class BepastyApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'bepasty',
                 ['setup', '--domain-name', 'freedombox.local'])
     helper.call('post', app.enable)

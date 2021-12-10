@@ -16,12 +16,6 @@ from plinth.utils import Version
 
 from . import manifest
 
-version = 2
-
-managed_packages = ['minidlna']
-
-managed_services = ['minidlna']
-
 _description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
       'fully compliant with DLNA/UPnP-AV clients. '
@@ -40,13 +34,15 @@ class MiniDLNAApp(app_module.App):
     """Freedombox app managing miniDlna"""
     app_id = 'minidlna'
 
+    _version = 2
+
     def __init__(self):
         """Initialize the app components"""
         super().__init__()
 
         groups = {'minidlna': _('Media streaming server')}
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MiniDLNA'), icon_filename='minidlna',
                                short_description=_('Simple Media Server'),
                                description=_description,
@@ -72,7 +68,7 @@ class MiniDLNAApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-minidlna', managed_packages)
+        packages = Packages('packages-minidlna', ['minidlna'])
         self.add(packages)
 
         firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
@@ -83,7 +79,7 @@ class MiniDLNAApp(app_module.App):
                               urls=['http://localhost:8200/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-minidlna', managed_services[0])
+        daemon = Daemon('daemon-minidlna', 'minidlna')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-minidlna',
@@ -97,7 +93,7 @@ class MiniDLNAApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the package"""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
     if not old_version:
         helper.call('post', app.enable)

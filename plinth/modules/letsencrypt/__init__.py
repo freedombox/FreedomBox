@@ -18,18 +18,10 @@ from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
-from plinth.signals import domain_added, domain_removed, post_module_loading
+from plinth.signals import domain_added, domain_removed, post_app_loading
 from plinth.utils import format_lazy
 
 from . import components, manifest
-
-version = 3
-
-is_essential = True
-
-depends = ['names']
-
-managed_packages = ['certbot']
 
 _description = [
     format_lazy(
@@ -58,12 +50,14 @@ class LetsEncryptApp(app_module.App):
 
     app_id = 'letsencrypt'
 
+    _version = 3
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, depends=depends,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, depends=['names'],
                                name=_('Let\'s Encrypt'), icon='fa-lock',
                                short_description=_('Certificates'),
                                description=_description,
@@ -76,7 +70,7 @@ class LetsEncryptApp(app_module.App):
                               'letsencrypt:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-letsencrypt', managed_packages)
+        packages = Packages('packages-letsencrypt', ['certbot'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-letsencrypt',
@@ -89,7 +83,7 @@ class LetsEncryptApp(app_module.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
-        post_module_loading.connect(_certificate_handle_modified)
+        post_app_loading.connect(_certificate_handle_modified)
 
     def diagnose(self):
         """Run diagnostics and return the results."""
@@ -108,7 +102,7 @@ class LetsEncryptApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     actions.superuser_run(
         'letsencrypt',
         ['setup', '--old-version', str(old_version)])
@@ -134,9 +128,19 @@ def certificate_reobtain(domain):
     actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
 
 
-def certificate_revoke(domain):
-    """Revoke a certificate for a domain and notify handlers."""
-    actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+def certificate_revoke(domain, really_revoke=True):
+    """Revoke a certificate for a domain and notify handlers.
+
+    Revoke a certificate unless really requested to. Otherwise, simply trigger
+    actions as if the certificate has been revoked. On actions such as domain
+    removed, behave as if certificate has been revoked but don't actually
+    revoke the certificate. Domains could be re-added later and certificates
+    could be reused. Certificates are precious (due to a rate limit for
+    obtaining certificates on the Let's Encrypt servers).
+    """
+    if really_revoke:
+        actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+
     components.on_certificate_event('revoked', [domain], None)
 
 
@@ -176,7 +180,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     try:
         if name:
             logger.info('Revoking certificate for %s', name)
-            certificate_revoke(name)
+            certificate_revoke(name, really_revoke=False)
         return True
     except ActionError as exception:
         logger.warning('Failed to revoke certificate for %s: %s', name,

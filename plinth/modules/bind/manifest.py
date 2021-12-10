@@ -7,5 +7,5 @@ backup = {
     'config': {
         'files': ['/etc/bind/named.conf.options']
     },
-    'services': ['bind9']
+    'services': ['named']
 }

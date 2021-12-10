@@ -18,12 +18,6 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 4
-
-is_essential = True
-
-managed_packages = ['snapper']
-
 _description = [
     _('Snapshots allows creating and managing btrfs file system snapshots. '
       'These can be used to roll back the system to a previously known '
@@ -50,13 +44,15 @@ class SnapshotApp(app_module.App):
 
     app_id = 'snapshot'
 
+    _version = 4
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Storage Snapshots'), icon='fa-film',
-                               description=_description,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Storage Snapshots'),
+                               icon='fa-film', description=_description,
                                manual_page='Snapshots')
         self.add(info)
 
@@ -64,7 +60,7 @@ class SnapshotApp(app_module.App):
                               'snapshot:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-snapshot', managed_packages)
+        packages = Packages('packages-snapshot', ['snapper'])
         self.add(packages)
 
         backup_restore = SnapshotBackupRestore('backup-restore-snapshot',
@@ -92,7 +88,7 @@ def is_supported():
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if is_supported():
         helper.call('post', actions.superuser_run, 'snapshot',
                     ['setup', '--old-version',

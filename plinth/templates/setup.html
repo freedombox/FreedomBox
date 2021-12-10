@@ -13,18 +13,18 @@
 
   {% include "toolbar.html" %}
 
-  {% if setup_state == 'up-to-date' %}
+  {% if setup_state.value == 'up-to-date' %}
 
      {% trans "Application installed." %}
 
   {% elif not setup_current_operation %}
 
     <p>
-      {% if setup_state == 'needs-setup' %}
+      {% if setup_state.value == 'needs-setup' %}
         {% blocktrans trimmed %}
           Install this application?
         {% endblocktrans %}
-      {% elif setup_state == 'needs-update' %}
+      {% elif setup_state.value == 'needs-update' %}
         {% blocktrans trimmed %}
           This application needs an update. Update now?
         {% endblocktrans %}
@@ -41,7 +41,7 @@
             Please wait for a few moments before trying again.
           {% endblocktrans %}
         </div>
-      {% elif setup_helper.has_unavailable_packages %}
+      {% elif has_unavailable_packages %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             This application is currently not available in your distribution.
@@ -50,7 +50,7 @@
             <span class="fa fa-refresh"></span> {% trans "Check again" %}
           </button>
         </div>
-      {% elif package_conflicts and package_conflicts_action != 'ignore' %}
+      {% elif package_conflicts and package_conflicts_action.value != 'ignore' %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             <strong>Conflicting Packages:</strong> Some packages installed on
@@ -64,12 +64,12 @@
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary" name="install"
-             {% if package_manager_is_busy or setup_helper.has_unavailable_packages %}
+             {% if package_manager_is_busy or has_unavailable_packages %}
              disabled="disabled"
              {% endif %}
-             {% if setup_state == 'needs-setup' %}
+             {% if setup_state.value == 'needs-setup' %}
              value="{% trans "Install" %}"
-             {% elif setup_state == 'needs-update' %}
+             {% elif setup_state.value == 'needs-update' %}
              value="{% trans "Update" %}"
              {% endif %} />
 

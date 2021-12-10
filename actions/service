@@ -5,12 +5,12 @@ Wrapper to list and handle system services
 """
 
 import argparse
-import json
 import os
-import subprocess
-from importlib import import_module
 
-from plinth import action_utils, cfg
+from plinth import action_utils
+from plinth import app as app_module
+from plinth import cfg, module_loader
+from plinth.daemon import Daemon, RelatedDaemon
 
 cfg.read()
 module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
@@ -38,8 +38,6 @@ def parse_arguments():
     add_service_action(subparsers, 'is-enabled', 'status a service')
     add_service_action(subparsers, 'mask', 'unmask a service')
     add_service_action(subparsers, 'unmask', 'unmask a service')
-
-    subparsers.add_parser('list', help='List of running system services')
 
     subparsers.required = True
     return parser.parse_args()
@@ -89,64 +87,21 @@ def subcommand_is_running(arguments):
     print(action_utils.service_is_running(arguments.service))
 
 
-def subcommand_list(_):
-    """Get list of plinth-managed services with their status.
-
-    Status may be either running or not.
-
-    """
-    managed_services = _get_managed_services()
-    services = dict.fromkeys(managed_services, {'running': False})
-
-    output = subprocess.check_output(['systemctl', 'list-units'])
-    for line in output.decode().strip().split('\n'):
-        if line.startswith('UNIT'):
-            continue
-        # Stop parsing on empty line after the service list
-        if not len(line):
-            break
-
-        try:
-            unit, load, active, sub = line.split()[:4]
-        except ValueError:
-            continue
-        suffix = '.service'
-        if unit.endswith(suffix):
-            name = unit[:-len(suffix)]
-            if name in services:
-                services[name] = {'running': (sub == 'running')}
-
-    print(json.dumps(services))
-
-
-def _get_managed_services_of_module(modulepath):
-    """Import a module and return content of its 'managed_services' variable"""
-    try:
-        module = import_module(modulepath)
-    except ImportError:
-        return []
-    else:
-        return getattr(module, 'managed_services', [])
-
-
 def _get_managed_services():
-    """
-    Get a set of all services managed by FreedomBox.
-
-    This collects all service-names inside the 'managed_services' variable of
-    modules inside 'module_config_path'
-    """
+    """Get a set of all services managed by FreedomBox."""
     services = set()
-    for filename in os.listdir(module_config_path):
-        # Omit hidden files
-        if filename.startswith('.'):
-            continue
+    module_loader.load_modules()
+    app_module.apps_init()
+    for app in app_module.App.list():
+        components = app.get_components_of_type(Daemon)
+        for component in components:
+            services.add(component.unit)
+            if component.alias:
+                services.add(component.alias)
 
-        filepath = os.path.join(module_config_path, filename)
-        if os.path.isfile(filepath):
-            with open(filepath, 'r') as f:
-                modulepath = f.read().strip()
-                services.update(_get_managed_services_of_module(modulepath))
+        components = app.get_components_of_type(RelatedDaemon)
+        for component in components:
+            services.add(component.unit)
 
     return services
 

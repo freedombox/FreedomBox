@@ -21,12 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
-managed_services = ['bind9', 'named']
-
-managed_packages = ['bind9']
-
 _description = [
     _('BIND enables you to publish your Domain Name System (DNS) information '
       'on the Internet, and to resolve DNS queries for your user devices on '
@@ -72,11 +66,13 @@ class BindApp(app_module.App):
 
     app_id = 'bind'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('BIND'), icon='fa-globe-w',
                                short_description=_('Domain Name Server'),
                                description=_description)
@@ -87,7 +83,7 @@ class BindApp(app_module.App):
                               parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-bind', managed_packages)
+        packages = Packages('packages-bind', ['bind9'])
         self.add(packages)
 
         firewall = Firewall('firewall-bind', info.name, ports=['dns'],
@@ -95,11 +91,8 @@ class BindApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-bind', managed_services[0], listen_ports=[(53, 'tcp6'),
-                                                              (53, 'udp6'),
-                                                              (53, 'tcp4'),
-                                                              (53, 'udp4')],
-            alias=managed_services[1])
+            'daemon-bind', 'named', listen_ports=[(53, 'tcp6'), (53, 'udp6'),
+                                                  (53, 'tcp4'), (53, 'udp4')])
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-bind',
@@ -109,7 +102,7 @@ class BindApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call(
         'post', actions.superuser_run, 'bind',
         ['setup', '--old-version', str(old_version)])
@@ -118,7 +111,7 @@ def setup(helper, old_version=None):
 
 def force_upgrade(helper, _packages):
     """Force upgrade the managed packages to resolve conffile prompt."""
-    helper.install(managed_packages, force_configuration='old')
+    helper.install(['bind9'], force_configuration='old')
     return True
 
 

@@ -88,20 +88,4 @@ class later.
           super().__init__()
 
 As soon as FreedomBox Service (Plinth) starts, it will load all the enabled
-modules. After this, it gives a chance to each of the modules to initialize
-itself by calling the ``init()`` method if there is such a method available as
-``<module>.init()``. The app class must be instantiated here.
-
-.. code-block:: python3
-  :caption: ``__init__.py``
-
-  app = None
-
-  def init():
-      """Initialize the Transmission module."""
-      global app
-      app = TransmissionApp()
-
-      setup_helper = globals()['setup_helper']
-      if setup_helper.get_state() != 'needs-setup' and app.is_enabled():
-          app.set_enabled(True)
+modules and create app instances for App classes in the module.

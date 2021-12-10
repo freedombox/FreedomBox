@@ -19,12 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
-managed_services = ['mldonkey-server']
-
-managed_packages = ['mldonkey-server']
-
 _description = [
     _('MLDonkey is a peer-to-peer file sharing application used to exchange '
       'large files. It can participate in multiple peer-to-peer networks '
@@ -48,6 +42,10 @@ class MLDonkeyApp(app_module.App):
 
     app_id = 'mldonkey'
 
+    _version = 2
+
+    DAEMON = 'mldonkey-server'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -55,7 +53,7 @@ class MLDonkeyApp(app_module.App):
         groups = {'ed2k': _('Download files using eDonkey applications')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('MLDonkey'),
+            app_id=self.app_id, version=self._version, name=_('MLDonkey'),
             icon_filename='mldonkey',
             short_description=_('Peer-to-peer File Sharing'),
             description=_description, manual_page='MLDonkey',
@@ -74,7 +72,7 @@ class MLDonkeyApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcuts)
 
-        packages = Packages('packages-mldonkey', managed_packages)
+        packages = Packages('packages-mldonkey', ['mldonkey-server'])
         self.add(packages)
 
         firewall = Firewall('firewall-mldonkey', info.name,
@@ -85,7 +83,7 @@ class MLDonkeyApp(app_module.App):
                               urls=['https://{host}/mldonkey/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-mldonkey', managed_services[0],
+        daemon = Daemon('daemon-mldonkey', self.DAEMON,
                         listen_ports=[(4080, 'tcp4')])
         self.add(daemon)
 
@@ -102,8 +100,8 @@ class MLDonkeyApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'mldonkey', ['pre-install'])
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', app.enable)
 
-    add_user_to_share_group(_SYSTEM_USER, managed_services[0])
+    add_user_to_share_group(_SYSTEM_USER, MLDonkeyApp.DAEMON)

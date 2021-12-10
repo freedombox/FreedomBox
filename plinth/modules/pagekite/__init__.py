@@ -16,14 +16,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, utils
 
-version = 2
-
-depends = ['names']
-
-managed_services = ['pagekite']
-
-managed_packages = ['pagekite']
-
 _description = [
     format_lazy(
         _('PageKite is a system for exposing {box_name} services when '
@@ -58,12 +50,16 @@ class PagekiteApp(app_module.App):
 
     app_id = 'pagekite'
 
+    DAEMON = 'pagekite'
+
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, depends=depends,
+            app_id=self.app_id, version=self._version, depends=['names'],
             name=_('PageKite'), icon='fa-flag',
             short_description=_('Public Visibility'), description=_description,
             manual_page='PageKite',
@@ -75,14 +71,14 @@ class PagekiteApp(app_module.App):
                               'pagekite:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-pagekite', managed_packages)
+        packages = Packages('packages-pagekite', ['pagekite'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),
                                  'pagekite:index', can_have_certificate=True)
         self.add(domain_type)
 
-        daemon = Daemon('daemon-pagekite', managed_services[0])
+        daemon = Daemon('daemon-pagekite', self.DAEMON)
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-pagekite',
@@ -92,8 +88,7 @@ class PagekiteApp(app_module.App):
     def post_init(self):
         """Perform post initialization operations."""
         # Register kite name with Name Services module.
-        setup_helper = globals()['setup_helper']
-        if setup_helper.get_state() != 'needs-setup' and self.is_enabled():
+        if not self.needs_setup() and self.is_enabled():
             utils.update_names_module(is_enabled=True)
 
     def enable(self):
@@ -109,9 +104,9 @@ class PagekiteApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     if not old_version:
         helper.call('post', app.enable)
 
     if old_version == 1:
-        actions.superuser_run('service', ['try-restart', managed_services[0]])
+        actions.superuser_run('service', ['try-restart', PagekiteApp.DAEMON])

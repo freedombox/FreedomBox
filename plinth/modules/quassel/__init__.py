@@ -22,14 +22,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 1
-
-managed_services = ['quasselcore']
-
-managed_packages = ['quassel-core']
-
-managed_paths = [pathlib.Path('/var/lib/quassel/')]
-
 _description = [
     format_lazy(
         _('Quassel is an IRC application that is split into two parts, a '
@@ -54,11 +46,13 @@ class QuasselApp(app_module.App):
 
     app_id = 'quassel'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Quassel'), icon_filename='quassel',
                                short_description=_('IRC Client'),
                                description=_description, manual_page='Quassel',
@@ -78,7 +72,7 @@ class QuasselApp(app_module.App):
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-quassel', managed_packages)
+        packages = Packages('packages-quassel', ['quassel-core'])
         self.add(packages)
 
         firewall = Firewall('firewall-quassel', info.name,
@@ -87,14 +81,14 @@ class QuasselApp(app_module.App):
 
         letsencrypt = LetsEncrypt(
             'letsencrypt-quassel', domains=get_domains,
-            daemons=managed_services, should_copy_certificates=True,
+            daemons=['quasselcore'], should_copy_certificates=True,
             private_key_path='/var/lib/quassel/quasselCert.pem',
             certificate_path='/var/lib/quassel/quasselCert.pem',
             user_owner='quasselcore', group_owner='quassel',
             managing_app='quassel')
         self.add(letsencrypt)
 
-        daemon = Daemon('daemon-quassel', managed_services[0],
+        daemon = Daemon('daemon-quassel', 'quasselcore',
                         listen_ports=[(4242, 'tcp4'), (4242, 'tcp6')])
         self.add(daemon)
 
@@ -109,7 +103,7 @@ class QuasselApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)
     app.get_component('letsencrypt-quassel').setup_certificates()
 

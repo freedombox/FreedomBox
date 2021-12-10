@@ -107,6 +107,33 @@ class Daemon(app.LeaderComponent):
         return [testname, result]
 
 
+class RelatedDaemon(app.FollowerComponent):
+    """Component to hold information about additional systemd units handled.
+
+    Unlike a daemon described by the Daemon component which is enabled/disabled
+    when the app is enabled/disabled, the daemon described by this component is
+    unaffected by the app's enabled/disabled status. The app only has an
+    indirect interest in this daemon.
+
+    This component primarily holds information about such daemon and does
+    nothing else. This information is used to check if the app is allowed to
+    perform operations on the daemon.
+    """
+
+    def __init__(self, component_id, unit):
+        """Initialize a new related daemon component.
+
+        'component_id' must be a unique string across all apps and components
+        of a app. Conventionally starts with 'related-daemon-'.
+
+        'unit' must the name of systemd unit.
+
+        """
+        super().__init__(component_id)
+
+        self.unit = unit
+
+
 def app_is_running(app_):
     """Return whether all the daemons in the app are running."""
     for component in app_.components.values():

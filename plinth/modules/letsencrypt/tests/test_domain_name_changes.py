@@ -69,6 +69,7 @@ def test_remove_domain(certificate_revoke, domain, revoke, result):
     """Test removing a domain that can certificates."""
     assert result == on_domain_removed('test', 'domain-type-test', domain)
     if revoke:
-        certificate_revoke.assert_has_calls([call(domain)])
+        certificate_revoke.assert_has_calls(
+            [call(domain, really_revoke=False)])
     else:
         certificate_revoke.assert_not_called()

@@ -14,30 +14,10 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import packages_installed, remove
+from plinth.package import Packages, remove
+from plinth.signals import domain_added, domain_removed
 
 from . import audit, manifest
-
-version = 1
-
-# Other likely install conflicts have been discarded:
-# - msmtp, nullmailer, sendmail don't cause install faults.
-# - qmail and smail are missing in Bullseye (Not tested,
-#   but less likely due to that).
-package_conflicts = ('exim4-base', 'exim4-config', 'exim4-daemon-light')
-package_conflicts_action = 'ignore'
-
-packages = [
-    'postfix-ldap',
-    'postfix-sqlite',
-    'dovecot-pop3d',
-    'dovecot-imapd',
-    'dovecot-ldap',
-    'dovecot-lmtpd',
-    'dovecot-managesieved',
-]
-
-packages_bloat = ['rspamd']
 
 clamav_packages = ['clamav', 'clamav-daemon']
 clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
@@ -46,10 +26,6 @@ port_info = {
     'postfix': ('smtp', 25, 'smtps', 465, 'smtp-submission', 587),
     'dovecot': ('imaps', 993, 'pop3s', 995),
 }
-
-managed_services = ['postfix', 'dovecot', 'rspamd']
-
-managed_packages = packages + packages_bloat
 
 _description = [
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
@@ -67,10 +43,30 @@ class EmailServerApp(plinth.app.App):
     app_id = 'email_server'
     app_name = _('Email Server')
 
+    _version = 1
+
     def __init__(self):
         """The app's constructor"""
         super().__init__()
         self._add_ui_components()
+
+        # Other likely install conflicts have been discarded:
+        # - msmtp, nullmailer, sendmail don't cause install faults.
+        # - qmail and smail are missing in Bullseye (Not tested,
+        #   but less likely due to that).
+        packages = Packages(
+            'packages-email-server', [
+                'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
+                'dovecot-imapd', 'dovecot-ldap', 'dovecot-lmtpd',
+                'dovecot-managesieved'
+            ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
+            conflicts_action=Packages.ConflictsAction.IGNORE)
+        self.add(packages)
+
+        packages = Packages('packages-email-server-skip-rec', ['rspamd'],
+                            skip_recommends=True)
+        self.add(packages)
+
         self._add_daemons()
         self._add_firewall_ports()
 
@@ -91,7 +87,7 @@ class EmailServerApp(plinth.app.App):
 
     def _add_ui_components(self):
         info = plinth.app.Info(
-            app_id=self.app_id, version=version, name=self.app_name,
+            app_id=self.app_id, version=self._version, name=self.app_name,
             short_description=_('Powered by Postfix, Dovecot & Rspamd'),
             description=_description, manual_page='EmailServer',
             clients=manifest.clients,
@@ -108,7 +104,7 @@ class EmailServerApp(plinth.app.App):
         self.add(menu_item)
 
     def _add_daemons(self):
-        for srvname in managed_services:
+        for srvname in ['postfix', 'dovecot', 'rspamd']:
             # Construct `listen_ports` parameter for the daemon
             mixed = port_info.get(srvname, ())
             port_numbers = [v for v in mixed if isinstance(v, int)]
@@ -131,10 +127,15 @@ class EmailServerApp(plinth.app.App):
                             ports=all_port_names, is_external=True)
         self.add(firewall)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
+        domain_added.connect(on_domain_added)
+        domain_removed.connect(on_domain_removed)
+
     def diagnose(self):
         """Run diagnostics and return the results"""
         results = super().diagnose()
-        results.extend([r.summarize() for r in audit.domain.get()])
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
         results.extend([r.summarize() for r in audit.tls.get()])
@@ -152,7 +153,8 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
 
     def _clear_conflicts():
-        packages_to_remove = packages_installed(package_conflicts)
+        component = app.get_component('packages-email-server')
+        packages_to_remove = component.find_conflicts()
         if packages_to_remove:
             logger.info('Removing conflicting packages: %s',
                         packages_to_remove)
@@ -160,20 +162,37 @@ def setup(helper, old_version=None):
 
     # Install
     helper.call('pre', _clear_conflicts)
-    helper.install(packages)
-    helper.install(packages_bloat, skip_recommends=True)
+    app.setup(old_version)
 
     # Setup
     helper.call('post', audit.home.repair)
-    helper.call('post', audit.domain.repair)
+    helper.call('post', audit.domain.set_domains)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
     helper.call('post', audit.tls.repair)
     helper.call('post', audit.rcube.repair)
 
     # Reload
-    for srvname in managed_services:
-        actions.superuser_run('service', ['reload', srvname])
+    actions.superuser_run('service', ['reload', 'postfix'])
+    actions.superuser_run('service', ['reload', 'dovecot'])
+    actions.superuser_run('service', ['reload', 'rspamd'])
 
     # Expose to public internet
     helper.call('post', app.enable)
+
+
+def on_domain_added(sender, domain_type, name, description='', services=None,
+                    **kwargs):
+    """Handle addition of a new domain."""
+    if app.needs_setup():
+        return
+
+    audit.domain.set_domains()
+
+
+def on_domain_removed(sender, domain_type, name, **kwargs):
+    """Handle removal of a domain."""
+    if app.needs_setup():
+        return
+
+    audit.domain.set_domains()

@@ -22,16 +22,6 @@ from plinth.signals import domain_added, domain_removed
 
 from . import manifest, utils
 
-version = 5
-
-depends = ['names']
-
-managed_packages = [
-    'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
-]
-
-managed_services = ['tor@plinth']
-
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
       'about it from the <a href="https://www.torproject.org/">Tor '
@@ -49,12 +39,15 @@ class TorApp(app_module.App):
 
     app_id = 'tor'
 
+    _version = 5
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               name=_('Tor'), icon_filename='tor',
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               depends=['names'
+                                        ], name=_('Tor'), icon_filename='tor',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',
                                clients=manifest.clients,
@@ -66,7 +59,9 @@ class TorApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-tor', managed_packages)
+        packages = Packages('packages-tor', [
+            'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
+        ])
         self.add(packages)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
@@ -83,7 +78,7 @@ class TorApp(app_module.App):
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-tor', managed_services[0], strict_check=True,
+            'daemon-tor', 'tor@plinth', strict_check=True,
             listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
                           (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)
@@ -98,9 +93,8 @@ class TorApp(app_module.App):
     def post_init(self):
         """Perform post initialization operations."""
         # Register hidden service name with Name Services module.
-        setup_helper = globals()['setup_helper']
-        if setup_helper.get_state() != 'needs-setup' and \
-           self.is_enabled() and app_is_running(self):
+        if (not app.needs_setup() and self.is_enabled()
+                and app_is_running(self)):
             status = utils.get_status(initialized=False)
             hostname = status['hs_hostname']
             services = [int(port['virtport']) for port in status['hs_ports']]
@@ -160,7 +154,7 @@ class TorApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call(
         'post', actions.superuser_run, 'tor',
         ['setup', '--old-version', str(old_version)])

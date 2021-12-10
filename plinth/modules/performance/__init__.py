@@ -13,15 +13,7 @@ from plinth.package import Packages
 
 from . import manifest
 
-version = 1
-
 name = _('Performance')
-
-managed_services = [
-    'pmcd.service', 'pmie.service', 'pmlogger.service', 'pmproxy.service'
-]
-
-managed_packages = ['cockpit-pcp']
 
 _description = [
     _('Performance app allows you to collect, store and view information '
@@ -40,11 +32,13 @@ class PerformanceApp(app_module.App):
 
     app_id = 'performance'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Performance'), icon='fa-bar-chart',
                                short_description=_('System Monitoring'),
                                description=_description,
@@ -57,31 +51,31 @@ class PerformanceApp(app_module.App):
                               'performance:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-performance', managed_packages)
+        packages = Packages('packages-performance', ['cockpit-pcp'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-performance',
                                        **manifest.backup)
         self.add(backup_restore)
 
-        daemon_0 = Daemon('daemon-performance-0', managed_services[0],
+        daemon_0 = Daemon('daemon-performance-0', 'pmcd.service',
                           listen_ports=None)
         self.add(daemon_0)
 
-        daemon_1 = Daemon('daemon-performance-1', managed_services[1],
+        daemon_1 = Daemon('daemon-performance-1', 'pmie.service',
                           listen_ports=None)
         self.add(daemon_1)
 
-        daemon_2 = Daemon('daemon-performance-2', managed_services[2],
+        daemon_2 = Daemon('daemon-performance-2', 'pmlogger.service',
                           listen_ports=None)
         self.add(daemon_2)
 
-        daemon_3 = Daemon('daemon-performance-3', managed_services[3],
+        daemon_3 = Daemon('daemon-performance-3', 'pmproxy.service',
                           listen_ports=None)
         self.add(daemon_3)
 
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', app.enable)

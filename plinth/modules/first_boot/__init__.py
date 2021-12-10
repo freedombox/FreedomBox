@@ -5,15 +5,13 @@ FreedomBox app for first boot wizard.
 
 import operator
 import os
+import sys
 
 from django.urls import reverse
 
-from plinth import app, cfg, module_loader
+from plinth import app as app_module
+from plinth import cfg
 from plinth.signals import post_setup
-
-version = 1
-
-is_essential = True
 
 first_boot_steps = [
     {
@@ -34,14 +32,23 @@ _all_first_boot_steps = None
 _is_completed = None
 
 
-class FirstBootApp(app.App):
+class FirstBootApp(app_module.App):
     """FreedomBox app for First Boot."""
 
     app_id = 'first_boot'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
+
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True)
+        self.add(info)
+
+    def post_init(self):
+        """Perform post initialization operations."""
         post_setup.connect(_clear_first_boot_steps)
 
 
@@ -71,11 +78,11 @@ def _get_steps():
         return _all_first_boot_steps
 
     steps = []
-    modules = module_loader.loaded_modules
-    for module_object in modules.values():
-        if getattr(module_object, 'first_boot_steps', None):
-            if module_object.setup_helper.get_state() != 'needs-setup':
-                steps.extend(module_object.first_boot_steps)
+    for app in app_module.App.list():
+        module = sys.modules[app.__module__]
+        if getattr(module, 'first_boot_steps', None):
+            if not app.needs_setup():
+                steps.extend(module.first_boot_steps)
 
     _all_first_boot_steps = sorted(steps, key=operator.itemgetter('order'))
     return _all_first_boot_steps

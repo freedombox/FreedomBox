@@ -3,4 +3,20 @@
 FreedomBox app for api for android app.
 """
 
-version = 1
+from plinth import app as app_module
+
+
+class ApiApp(app_module.App):
+    """FreedomBox app for API for Android app."""
+
+    app_id = 'api'
+
+    _version = 1
+
+    def __init__(self):
+        """Create components for the app."""
+        super().__init__()
+
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True)
+        self.add(info)

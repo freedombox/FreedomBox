@@ -23,12 +23,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 2
-
-managed_services = ['smbd', 'nmbd']
-
-managed_packages = ['samba', 'acl']
-
 _description = [
     _('Samba allows to share files and folders between FreedomBox and '
       'other computers in your local network.'),
@@ -53,6 +47,8 @@ class SambaApp(app_module.App):
 
     app_id = 'samba'
 
+    _version = 2
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -60,7 +56,7 @@ class SambaApp(app_module.App):
         groups = {'freedombox-share': _('Access to the private shares')}
 
         info = app_module.Info(
-            app_id=self.app_id, version=version, name=_('Samba'),
+            app_id=self.app_id, version=self._version, name=_('Samba'),
             icon_filename='samba', short_description=_('Network File Storage'),
             manual_page='Samba', description=_description,
             clients=manifest.clients,
@@ -80,20 +76,19 @@ class SambaApp(app_module.App):
             login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-samba', managed_packages)
+        packages = Packages('packages-samba', ['samba', 'acl'])
         self.add(packages)
 
         firewall = Firewall('firewall-samba', info.name, ports=['samba'])
         self.add(firewall)
 
         daemon = Daemon(
-            'daemon-samba', managed_services[0], listen_ports=[(139, 'tcp4'),
-                                                               (139, 'tcp6'),
-                                                               (445, 'tcp4'),
-                                                               (445, 'tcp6')])
+            'daemon-samba', 'smbd', listen_ports=[(139, 'tcp4'), (139, 'tcp6'),
+                                                  (445, 'tcp4'),
+                                                  (445, 'tcp6')])
         self.add(daemon)
 
-        daemon_nmbd = Daemon('daemon-samba-nmbd', managed_services[1],
+        daemon_nmbd = Daemon('daemon-samba-nmbd', 'nmbd',
                              listen_ports=[(137, 'udp4'), (138, 'udp4')])
 
         self.add(daemon_nmbd)
@@ -122,7 +117,7 @@ class SambaBackupRestore(BackupRestore):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'samba', ['setup'])
     helper.call('post', app.enable)
 

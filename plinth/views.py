@@ -3,6 +3,7 @@
 Main FreedomBox views.
 """
 
+import sys
 import time
 import urllib.parse
 
@@ -16,10 +17,12 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
-from plinth import app, package
+from plinth import app as app_module
+from plinth import package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.modules.firewall.components import get_port_forwarding_info
+from plinth.package import Packages
 from plinth.translation import get_language_from_request, set_language
 
 from . import forms, frontpage
@@ -181,7 +184,7 @@ class AppView(FormView):
         if not self.app_id:
             raise ImproperlyConfigured('Missing attribute: app_id')
 
-        return app.App.get(self.app_id)
+        return app_module.App.get(self.app_id)
 
     def get_form(self, *args, **kwargs):
         """Return an instance of this view's form.
@@ -268,28 +271,33 @@ class SetupView(TemplateView):
 
     def get_context_data(self, **kwargs):
         """Return the context data rendering the template."""
-        context = super(SetupView, self).get_context_data(**kwargs)
-        setup_helper = self.kwargs['setup_helper']
-        context['setup_helper'] = setup_helper
-        context['app_info'] = setup_helper.module.app.info
+        context = super().get_context_data(**kwargs)
+        app_id = self.kwargs['app_id']
+        app = app_module.App.get(app_id)
+
+        context['app_info'] = app.info
 
         # Report any installed conflicting packages that will be removed.
         package_conflicts, package_conflicts_action = \
-            setup_helper.get_package_conflicts()
+            self._get_app_package_conflicts(app)
         context['package_conflicts'] = package_conflicts
         context['package_conflicts_action'] = package_conflicts_action
 
         # Reuse the value of setup_state throughout the view for consistency.
-        context['setup_state'] = setup_helper.get_state()
+        context['setup_state'] = app.get_setup_state()
+        setup_helper = sys.modules[app.__module__].setup_helper
         context['setup_current_operation'] = setup_helper.current_operation
 
         # Perform expensive operation only if needed.
         if not context['setup_current_operation']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
+            context[
+                'has_unavailable_packages'] = self._has_unavailable_packages(
+                    app)
 
         context['refresh_page_sec'] = None
-        if context['setup_state'] == 'up-to-date':
+        if context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
         elif context['setup_current_operation']:
             context['refresh_page_sec'] = 3
@@ -302,7 +310,9 @@ class SetupView(TemplateView):
                 # Handle installing/upgrading applications.
                 # Start the application setup, and refresh the page every few
                 # seconds to keep displaying the status.
-                self.kwargs['setup_helper'].run_in_thread()
+                app = app_module.App.get(self.kwargs['app_id'])
+                setup_helper = sys.modules[app.__module__].setup_helper
+                setup_helper.run_in_thread()
 
                 # Give a moment for the setup process to start and show
                 # meaningful status.
@@ -317,7 +327,29 @@ class SetupView(TemplateView):
                 package.refresh_package_lists()
                 return self.render_to_response(self.get_context_data())
 
-        return super(SetupView, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
+
+    @staticmethod
+    def _get_app_package_conflicts(app_):
+        """Return packages that may conflict with packages of an app."""
+        components = app_.get_components_of_type(Packages)
+        conflicts = []
+        conflicts_action = None
+        for component in components:
+            component_conflicts = component.find_conflicts()
+            if component_conflicts:
+                conflicts += component_conflicts
+                if conflicts_action in (None, Packages.ConflictsAction.IGNORE):
+                    conflicts_action = component.conflicts_action
+
+        return conflicts, conflicts_action
+
+    @staticmethod
+    def _has_unavailable_packages(app_):
+        """Return whether the app has unavailable packages."""
+        components = app_.get_components_of_type(Packages)
+        return any(component for component in components
+                   if component.has_unavailable_packages())
 
 
 def notification_dismiss(request, id):

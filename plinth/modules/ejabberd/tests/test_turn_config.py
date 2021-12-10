@@ -5,7 +5,7 @@ Test module for ejabberd STUN/TURN configuration.
 
 import pathlib
 import shutil
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -58,10 +58,9 @@ def fixture_test_configuration(call_action, conf_file):
     Patches actions.superuser_run with the fixture call_action.
     The module state is patched to be 'up-to-date'.
     """
-    with patch('plinth.actions.superuser_run', call_action):
-        helper = MagicMock()
-        helper.get_state.return_value = 'up-to-date'
-        ejabberd.setup_helper = helper
+    with patch('plinth.actions.superuser_run',
+               call_action), patch('plinth.modules.ejabberd.app') as app:
+        app.needs_setup.return_value = False
         yield
 
 

@@ -19,12 +19,6 @@ from plinth.utils import format_lazy
 
 from . import manifest
 
-version = 5
-
-managed_services = ['syncthing@syncthing']
-
-managed_packages = ['syncthing']
-
 _description = [
     _('Syncthing is an application to synchronize files across multiple '
       'devices, e.g. your desktop computer and mobile phone.  Creation, '
@@ -51,6 +45,10 @@ class SyncthingApp(app_module.App):
 
     app_id = 'syncthing'
 
+    _version = 5
+
+    DAEMON = 'syncthing@syncthing'
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -59,7 +57,7 @@ class SyncthingApp(app_module.App):
             'syncthing-access': _('Administer Syncthing application')
         }
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Syncthing'), icon_filename='syncthing',
                                short_description=_('File Synchronization'),
                                description=_description,
@@ -81,7 +79,7 @@ class SyncthingApp(app_module.App):
                                       allowed_groups=list(self.groups))
         self.add(shortcut)
 
-        packages = Packages('packages-syncthing', managed_packages)
+        packages = Packages('packages-syncthing', ['syncthing'])
         self.add(packages)
 
         firewall = Firewall('firewall-syncthing-web', info.name,
@@ -96,7 +94,7 @@ class SyncthingApp(app_module.App):
                               urls=['https://{host}/syncthing/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-syncthing', managed_services[0])
+        daemon = Daemon('daemon-syncthing', self.DAEMON)
         self.add(daemon)
 
         users_and_groups = UsersAndGroups('users-and-groups-syncthing',
@@ -110,9 +108,9 @@ class SyncthingApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
-    add_user_to_share_group(SYSTEM_USER, managed_services[0])
+    add_user_to_share_group(SYSTEM_USER, SyncthingApp.DAEMON)
 
     if not old_version:
         helper.call('post', app.enable)

@@ -16,18 +16,11 @@ import plinth
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
+from plinth.daemon import RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
 from . import manifest
-
-version = 9
-
-is_essential = True
-
-managed_packages = ['unattended-upgrades', 'needrestart']
-
-managed_services = ['freedombox-dist-upgrade']
 
 first_boot_steps = [
     {
@@ -69,14 +62,16 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
+    _version = 9
+
     can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=version,
-                               is_essential=is_essential, name=_('Update'),
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               is_essential=True, name=_('Update'),
                                icon='fa-refresh', description=_description,
                                manual_page='Upgrades')
         self.add(info)
@@ -85,8 +80,13 @@ class UpgradesApp(app_module.App):
                               'upgrades:index', parent_url_name='system')
         self.add(menu_item)
 
-        packages = Packages('packages-upgrades', managed_packages)
+        packages = Packages('packages-upgrades',
+                            ['unattended-upgrades', 'needrestart'])
         self.add(packages)
+
+        daemon = RelatedDaemon('related-daemon-upgrades',
+                               'freedombox-dist-upgrade')
+        self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-upgrades',
                                        **manifest.backup)
@@ -139,7 +139,7 @@ class UpgradesApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
 
     # Enable automatic upgrades but only on first install
     if not old_version and not cfg.develop:

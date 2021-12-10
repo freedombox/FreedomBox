@@ -22,10 +22,6 @@ from . import manifest
 from .forms import is_repo_url
 from .manifest import GIT_REPO_PATH
 
-version = 1
-
-managed_packages = ['gitweb', 'highlight']
-
 _description = [
     _('Git is a distributed version-control system for tracking changes in '
       'source code during software development. Gitweb provides a web '
@@ -46,6 +42,8 @@ class GitwebApp(app_module.App):
 
     app_id = 'gitweb'
 
+    _version = 1
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -54,7 +52,7 @@ class GitwebApp(app_module.App):
 
         self.repos = []
 
-        info = app_module.Info(app_id=self.app_id, version=version,
+        info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Gitweb'), icon_filename='gitweb',
                                short_description=_('Simple Git Hosting'),
                                description=_description, manual_page='GitWeb',
@@ -74,7 +72,7 @@ class GitwebApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-gitweb', managed_packages)
+        packages = Packages('packages-gitweb', ['gitweb', 'highlight'])
         self.add(packages)
 
         firewall = Firewall('firewall-gitweb', info.name,
@@ -99,8 +97,7 @@ class GitwebApp(app_module.App):
 
     def post_init(self):
         """Perform post initialization operations."""
-        setup_helper = globals()['setup_helper']
-        if setup_helper.get_state() != 'needs-setup':
+        if not self.needs_setup():
             self.update_service_access()
 
     def set_shortcut_login_required(self, login_required):
@@ -161,7 +158,7 @@ class GitwebBackupRestore(BackupRestore):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.install(managed_packages)
+    app.setup(old_version)
     helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
     helper.call('post', app.enable)
 
