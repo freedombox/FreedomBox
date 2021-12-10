@@ -202,10 +202,10 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     ], run_in_background=True)
 
 
-def on_domain_added(sender, domain_type, name, description='', services=None,
-                    **kwargs):
+def on_domain_added(sender, domain_type, name='', description='',
+                    services=None, **kwargs):
     """Update ejabberd config after domain name change."""
-    if app.needs_setup():
+    if not name or app.needs_setup():
         return
 
     conf = actions.superuser_run('ejabberd', ['get-configuration'])
