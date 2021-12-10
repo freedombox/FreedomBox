@@ -47,20 +47,20 @@ def build_menu(size=5):
 @pytest.fixture(name='empty_menus', autouse=True)
 def fixture_empty_menus():
     """Remove all menu entries before starting a test."""
-    Menu._all_menus = {}
+    Menu._all_menus = set()
 
 
-def test_init():
+def test_init(rf):
     """Verify that main_menu and essential items are created."""
     menu_module.init()
     main_menu = menu_module.main_menu
     assert isinstance(main_menu, Menu)
 
-    apps_menu = main_menu.get('apps')
+    apps_menu = main_menu.active_item(rf.get('/apps/foo/'))
     assert apps_menu.icon == 'fa-download'
     assert str(apps_menu.url) == '/apps/'
 
-    system_menu = main_menu.get('system')
+    system_menu = main_menu.active_item(rf.get('/sys/bar/'))
     assert system_menu.icon == 'fa-cog'
     assert str(system_menu.url) == '/sys/'
 
@@ -95,6 +95,7 @@ def test_menu_creation_with_arguments():
                 expected_icon, url_name, url_kwargs=url_kwargs,
                 parent_url_name='index', order=expected_order, advanced=True)
 
+    assert menu.parent_url_name == 'index'
     assert len(parent_menu.items) == 1
     assert parent_menu.items[0] == menu
     assert expected_name == menu.name
@@ -103,44 +104,10 @@ def test_menu_creation_with_arguments():
     assert expected_url == menu.url
     assert expected_order == menu.order
     assert menu.advanced
+    assert url_name == menu.url_name
+    assert menu.url_args is None
+    assert url_kwargs == menu.url_kwargs
     assert not menu.items
-
-
-def test_get():
-    """Verify that a menu item can be correctly retrieved."""
-    expected_name = 'Name2'
-    expected_short_description = 'ShortDescription2'
-    expected_icon = 'Icon2'
-    expected_url = 'index'
-    url_name = 'index'
-    reversed_url = reverse(url_name)
-    expected_order = 2
-    menu = Menu('menu-test', expected_name, expected_short_description,
-                expected_icon, url_name, order=expected_order, advanced=True)
-    actual_item = menu.get(expected_url)
-
-    assert actual_item is not None
-    assert expected_name == actual_item.name
-    assert expected_short_description == actual_item.short_description
-    assert expected_icon == actual_item.icon
-    assert reversed_url == actual_item.url
-    assert expected_order == actual_item.order
-    assert actual_item.advanced
-    assert not actual_item.items
-
-
-def test_get_with_item_not_found():
-    """Verify that a KeyError is raised if a menu item is not found."""
-    expected_name = 'Name3'
-    expected_short_description = 'ShortDescription3'
-    expected_icon = 'Icon3'
-    url_name = 'index'
-    expected_order = 3
-    menu = Menu('menu-test', expected_name, expected_short_description,
-                expected_icon, url_name, order=expected_order)
-
-    with pytest.raises(KeyError):
-        menu.get('apps')
 
 
 def test_sort_items():

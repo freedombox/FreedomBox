@@ -89,6 +89,8 @@ class PagekiteApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         # Register kite name with Name Services module.
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup' and self.is_enabled():

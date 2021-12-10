@@ -108,10 +108,8 @@ def main():
 
     if arguments.list_dependencies is not False:
         log.default_level = 'ERROR'
-        web_framework.init(read_only=True)
-        module_loader.include_urls()
-        menu.init()
         module_loader.load_modules()
+        module_loader.apps_init()
         list_dependencies(arguments.list_dependencies)
 
     log.init()
@@ -129,6 +127,8 @@ def main():
     menu.init()
 
     module_loader.load_modules()
+    module_loader.apps_init()
+    module_loader.apps_post_init()
     frontpage.add_custom_shortcuts()
 
     if arguments.setup is not False:

@@ -82,16 +82,12 @@ class EmailServerApp(plinth.app.App):
         self.add(webserver)
 
         # Let's Encrypt event hook
-        default_domain = get_domainname()
-        domains = [default_domain] if default_domain else []
-        letsencrypt = LetsEncrypt('letsencrypt-email-server', domains=domains,
+        letsencrypt = LetsEncrypt('letsencrypt-email-server',
+                                  domains=get_domains,
                                   daemons=['postfix', 'dovecot'],
                                   should_copy_certificates=False,
                                   managing_app='email_server')
         self.add(letsencrypt)
-
-        if not domains:
-            logger.warning('Could not fetch the FreedomBox domain name!')
 
     def _add_ui_components(self):
         info = plinth.app.Info(
@@ -144,6 +140,12 @@ class EmailServerApp(plinth.app.App):
         results.extend([r.summarize() for r in audit.tls.get()])
         results.extend([r.summarize() for r in audit.rcube.get()])
         return results
+
+
+def get_domains():
+    """Return the list of domains configured."""
+    default_domain = get_domainname()
+    return [default_domain] if default_domain else []
 
 
 def setup(helper, old_version=None):

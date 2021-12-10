@@ -15,6 +15,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
                                    uws_url_of_user)
 from plinth.modules.names.components import DomainType
+from plinth.package import Packages
 from plinth.signals import domain_added
 
 version = 3
@@ -64,10 +65,16 @@ class ConfigApp(app_module.App):
                               'config:index', parent_url_name='system')
         self.add(menu_item)
 
+        packages = Packages('packages-config', managed_packages)
+        self.add(packages)
+
         domain_type = DomainType('domain-type-static', _('Domain Name'),
                                  'config:index', can_have_certificate=True)
         self.add(domain_type)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         # Register domain with Name Services module.
         domainname = get_domainname()
         if domainname:

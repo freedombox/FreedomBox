@@ -97,6 +97,8 @@ class GitwebApp(app_module.App):
                                              **manifest.backup)
         self.add(backup_restore)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         setup_helper = globals()['setup_helper']
         if setup_helper.get_state() != 'needs-setup':
             self.update_service_access()

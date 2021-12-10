@@ -10,6 +10,8 @@ override_dh_auto_install-indep:
 	dh_auto_install
 	./run --develop --list-dependencies | sort | tr '\n' ', ' | \
 		sed -e 's/^/freedombox:Depends=/' >> debian/freedombox.substvars
+	# Ensure the list of dependencies is not empty.
+	test -s debian/freedombox.substvars || exit 1
 
 # pybuild can run pytest. However, when the top level directory is included in
 # the path (done using manage.py), it results in import problems.

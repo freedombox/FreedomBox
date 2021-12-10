@@ -64,6 +64,9 @@ class DiagnosticsApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
         # Check periodically for low RAM space
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, _warn_about_low_ram_space)

@@ -114,12 +114,6 @@ def setup(helper, old_version=None):
     app.get_component('letsencrypt-quassel').setup_certificates()
 
 
-def get_available_domains():
-    """Return an iterator with all domains able to have a certificate."""
-    return (domain.name for domain in names.components.DomainName.list()
-            if domain.domain_type.can_have_certificate)
-
-
 def set_domain(domain):
     """Set the TLS domain by writing a file to data directory."""
     if domain:
@@ -136,7 +130,7 @@ def get_domain():
         pass
 
     if not domain:
-        domain = next(get_available_domains(), None)
+        domain = next(names.get_available_tls_domains(), None)
         set_domain(domain)
 
     return domain
