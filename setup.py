@@ -39,6 +39,7 @@ DISABLED_APPS_TO_REMOVE = [
     'apps',
     'coquelicot',
     'diaspora',
+    'monkeysphere',
     'owncloud',
     'system',
     'xmpp',
