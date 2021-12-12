@@ -89,23 +89,15 @@ Pin: release a=buster-backports
 Pin-Priority: 500
 '''
 
-DIST_UPGRADE_OBSOLETE_PACKAGES = ['libgcc1']
+DIST_UPGRADE_OBSOLETE_PACKAGES = []
 
 DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
-    'firewalld', 'mumble-server', 'radicale', 'roundcube-core'
+    'firewalld', 'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
 ]
 
-# These are packages that may not be available in the next stable release.
-DIST_UPGRADE_OPTIONAL_PACKAGES_WITH_PROMPTS = ['tt-rss']
+DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
 
-DIST_UPGRADE_PRE_INSTALL_PACKAGES = [
-    'base-files', 'python3-systemd', 'unattended-upgrades'
-]
-
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS = [
-    # Tell grub-pc to continue without installing grub again.
-    'grub-pc grub-pc/install_devices_empty boolean true'
-]
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS = []
 
 DIST_UPGRADE_REQUIRED_FREE_SPACE = 5000000
 
@@ -517,10 +509,11 @@ def _perform_dist_upgrade():
 
         # Pre-set debconf selections if they are required during the
         # dist upgrade.
-        print(
-            f'Setting debconf selections: '
-            f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
-        debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
+        if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
+            print(
+                f'Setting debconf selections: '
+                f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
+            debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
         # This will upgrade most of the packages.
         print('Running unattended-upgrade...', flush=True)
@@ -528,25 +521,23 @@ def _perform_dist_upgrade():
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
-        print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
-              flush=True)
-        run_apt_command(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
+        if DIST_UPGRADE_OBSOLETE_PACKAGES:
+            print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
+                  flush=True)
+            run_apt_command(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
 
         # Hold packages known to have conffile prompts. FreedomBox service
         # will handle their upgrade later.
         print(
             'Holding packages with conffile prompts: ' +
             ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
+        # XXX: If any of these packages have been removed from the
+        # next stable release, they will causes the hold command to
+        # fail for all packages. So it would be safer to just hold one
+        # package at a time.
         with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
-            # TODO: Support holding more than 1 package here.
-            print(
-                f'Holding packages if available: '
-                f'{DIST_UPGRADE_OPTIONAL_PACKAGES_WITH_PROMPTS[0]}...',
-                flush=True)
-            with apt_hold([DIST_UPGRADE_OPTIONAL_PACKAGES_WITH_PROMPTS[0]],
-                          ignore_errors=True):
-                print('Running apt full-upgrade...', flush=True)
-                run_apt_command(['full-upgrade'])
+            print('Running apt full-upgrade...', flush=True)
+            run_apt_command(['full-upgrade'])
 
         _update_searx(reenable_searx)
 
