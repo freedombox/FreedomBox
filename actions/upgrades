@@ -13,6 +13,7 @@ import re
 import subprocess
 import sys
 import time
+from typing import List, Tuple
 
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
@@ -89,7 +90,7 @@ Pin: release a=buster-backports
 Pin-Priority: 500
 '''
 
-DIST_UPGRADE_OBSOLETE_PACKAGES = []
+DIST_UPGRADE_OBSOLETE_PACKAGES: List[str] = []
 
 DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
     'firewalld', 'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
@@ -97,7 +98,7 @@ DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
 
 DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
 
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS = []
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = []
 
 DIST_UPGRADE_REQUIRED_FREE_SPACE = 5000000
 
@@ -181,7 +182,7 @@ def subcommand_run(_):
         sys.exit(3)
 
 
-def _check_auto():
+def _check_auto() -> bool:
     """Check if automatic upgrades are enabled."""
     arguments = [
         'apt-config', 'shell', 'UpdateInterval',
@@ -236,7 +237,7 @@ def subcommand_get_log(_):
         pass
 
 
-def _get_protocol():
+def _get_protocol() -> str:
     """Return the protocol to use for newly added repository sources."""
     try:
         from plinth.modules.tor import utils
@@ -248,7 +249,8 @@ def _get_protocol():
     return 'http'
 
 
-def _is_release_file_available(protocol, dist, backports=False):
+def _is_release_file_available(protocol: str, dist: str,
+                               backports=False) -> bool:
     """Return whether the release for dist[-backports] is available."""
     wrapper = None
     if protocol == 'tor+http':
@@ -261,7 +263,7 @@ def _is_release_file_available(protocol, dist, backports=False):
     return result == 'passed'
 
 
-def _add_backports_sources(sources_list, protocol, dist):
+def _add_backports_sources(sources_list: str, protocol: str, dist: str):
     """Add backports sources to freedombox repositories list."""
     sources = '''# This file is managed by FreedomBox, do not edit.
 # Allow carefully selected updates to 'freedombox' from backports.
@@ -341,14 +343,14 @@ def _add_apt_preferences():
             file_handle.write(APT_PREFERENCES_APPS)
 
 
-def _is_sufficient_free_space():
+def _is_sufficient_free_space() -> bool:
     """Return whether there is sufficient free space for dist upgrade."""
     output = subprocess.check_output(['df', '--output=avail', '/'])
     free_space = int(output.decode().split('\n')[1])
     return free_space >= DIST_UPGRADE_REQUIRED_FREE_SPACE
 
 
-def _check_dist_upgrade(test_upgrade=False):
+def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
     """Check for new stable release, if updates are enabled, and if there is
     enough free space for the dist upgrade.
 
@@ -425,7 +427,7 @@ def _check_dist_upgrade(test_upgrade=False):
     return (True, 'started-dist-upgrade')
 
 
-def _take_snapshot_and_disable():
+def _take_snapshot_and_disable() -> bool:
     """Take a snapshot if supported and enabled, then disable snapshots.
 
     Return whether snapshots shall be re-enabled at the end."""
@@ -450,7 +452,7 @@ def _take_snapshot_and_disable():
     return False
 
 
-def _restore_snapshots_config(reenable):
+def _restore_snapshots_config(reenable=False):
     """Restore original snapshots configuration."""
     if reenable:
         print('Re-enable apt snapshots...', flush=True)
@@ -459,7 +461,7 @@ def _restore_snapshots_config(reenable):
         ], check=True)
 
 
-def _disable_searx():
+def _disable_searx() -> bool:
     """If searx is enabled, disable it until we can upgrade it properly.
 
     Return whether searx was originally enabled."""
@@ -475,7 +477,7 @@ def _disable_searx():
     return searx_is_enabled
 
 
-def _update_searx(reenable):
+def _update_searx(reenable=False):
     """If searx is installed, update search engines list.
     Re-enable if previously enabled."""
     if pathlib.Path('/etc/searx/settings.yml').exists():
