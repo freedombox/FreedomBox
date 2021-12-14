@@ -5,11 +5,8 @@ Configuration helper for Roundcube server.
 """
 
 import argparse
-import re
 
 from plinth import action_utils
-
-APACHE_CONF = '/etc/apache2/conf-available/roundcube.conf'
 
 
 def parse_arguments():
@@ -19,8 +16,6 @@ def parse_arguments():
 
     subparsers.add_parser('pre-install',
                           help='Perform Roundcube pre-install configuration')
-    subparsers.add_parser('setup',
-                          help='Perform Roundcube configuration setup')
 
     subparsers.required = True
     return parser.parse_args()
@@ -32,22 +27,6 @@ def subcommand_pre_install(_):
         'roundcube-core roundcube/dbconfig-install boolean true',
         'roundcube-core roundcube/database-type string sqlite3'
     ])
-
-
-def subcommand_setup(_):
-    """Setup Roundcube Apache configuration."""
-    with open(APACHE_CONF, 'r') as conffile:
-        lines = conffile.readlines()
-
-    with open(APACHE_CONF, 'w') as conffile:
-        for line in lines:
-            match = re.match(r'#\s*(Alias /roundcube.*)', line)
-            if match:
-                conffile.write(match.group(1) + '\n')
-            else:
-                conffile.write(line)
-
-    action_utils.service_reload('apache2')
 
 
 def main():

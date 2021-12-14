@@ -12,7 +12,6 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
-from plinth.utils import Version
 
 from . import manifest
 
@@ -69,15 +68,20 @@ class RoundcubeApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-roundcube',
-                            ['sqlite3', 'roundcube', 'roundcube-sqlite3'])
+        packages = Packages(
+            'packages-roundcube',
+            ['sqlite3', 'roundcube', 'roundcube-core', 'roundcube-sqlite3'])
         self.add(packages)
 
         firewall = Firewall('firewall-roundcube', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
-        webserver = Webserver('webserver-roundcube', 'roundcube',
+        webserver = Webserver('webserver-roundcube', 'roundcube')
+        self.add(webserver)
+
+        webserver = Webserver('webserver-roundcube-freedombox',
+                              'roundcube-freedombox',
                               urls=['https://{host}/roundcube'])
         self.add(webserver)
 
@@ -90,7 +94,6 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
     app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
     helper.call('post', app.enable)
 
 
@@ -99,11 +102,10 @@ def force_upgrade(helper, packages):
     if 'roundcube-core' not in packages:
         return False
 
-    # Allow roundcube any lower version to upgrade to 1.4.*
-    package = packages['roundcube-core']
-    if Version(package['new_version']) > Version('1.5~'):
-        return False
-
+    # Allow roundcube any version to upgrade to any version. This is okay
+    # because there will no longer be conflicting file changes.
     helper.install(['roundcube-core'], force_configuration='new')
-    actions.superuser_run('roundcube', ['setup'])
+    if app.get_component('webserver-roundcube').is_enabled():
+        app.get_component('webserver-roundcube-freedombox').enable()
+
     return True
