@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-06 18:35-0500\n"
-"PO-Revision-Date: 2021-10-22 22:43+0000\n"
+"PO-Revision-Date: 2021-12-18 21:57+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1027,7 +1027,7 @@ msgstr "Adresses IP"
 #: plinth/modules/bind/templates/bind.html:37
 #: plinth/modules/bind/templates/bind.html:39
 msgid "Refresh IP address and domains"
-msgstr "Rafraîchir l’adresse IP et les domaines"
+msgstr "Actualiser l’adresse IP et les domaines"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
@@ -1788,12 +1788,7 @@ msgid "Leave this field empty if you want to keep your current password."
 msgstr "Laissez ce champ vide pour conserver le mot de passe précédent."
 
 #: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
@@ -1801,9 +1796,9 @@ msgid ""
 "(example: https://ddns.freedombox.org/ip/)."
 msgstr ""
 "Paramètre optionnel. Entrer l’URL d’un service qui détecte automatiquement "
-"votre adresse IP publique réelle et la retourne en réponse (par exemple : "
-"http://myip.datasystems24.de). Cette URL sera utilisée si votre {box_name} "
-"n’est pas connectée directement à Internet (par exemple lorsqu’elle est "
+"votre adresse IP publique réelle et la retourne en réponse (par exemple : "
+"https://ddns.freedombox.org/ip/). Cette URL sera utilisée si votre {box_name}"
+" n’est pas connectée directement à Internet (par exemple lorsqu’elle est "
 "connectée à un routeur à translation d’adresse réseau « NAT »)."
 
 #: plinth/modules/dynamicdns/forms.py:62
@@ -1882,13 +1877,6 @@ msgid "Please provide a password"
 msgstr "Veuillez saisir un mot de passe"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1896,10 +1884,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Si vous cherchez un compte DNS dynamique gratuit, vous pourrez sans doute "
-"trouver un service compatible GnuDIP sur <a href='http://gnudip."
-"datasystems24.net' target='_blank'>gnudip.datasystems24.net</a> ou un "
-"service à base d’URL d’actualisation sur <a href='http://freedns.afraid."
-"org/' target='_blank'> freedns.afraid.org</a>."
+"trouver un service compatible GnuDIP sur <a href=\"https://ddns.freedombox."
+"org\" target=\"_blank\">ddns.freedombox.org</a> ou un service à base d’URL d’"
+"actualisation sur <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
+"freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -2139,6 +2127,8 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">L’appli Roundcube</a> propose une "
+"interface Web pour accéder à vos courriels."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
@@ -2189,32 +2179,28 @@ msgid "Has a TLS certificate"
 msgstr "A un certificat TLS"
 
 #: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid domain"
-msgstr "Entrez un nom d’utilisateur valide."
+msgstr "Entrez un nom de domaine valide"
 
 #: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid destination"
-msgstr "Entrez un nom d’utilisateur valide."
+msgstr "Entrez une destination valide"
 
 #: plinth/modules/email_server/forms.py:24
 msgid "domain"
 msgstr "domaine"
 
 #: plinth/modules/email_server/forms.py:38
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Connexion principale"
+msgstr "Domaine principal"
 
 #: plinth/modules/email_server/forms.py:40
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Les courriels sont reçus pour tous les domaines configurés sur ce système. "
+"Parmi ces domaines, choisissez le domaine par défaut."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
@@ -2233,10 +2219,8 @@ msgid "Cannot be a number"
 msgstr "Ne peut être un nombre"
 
 #: plinth/modules/email_server/forms.py:71
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Aliases"
-msgstr "Mes alias"
+msgstr "Liste d’alias"
 
 #: plinth/modules/email_server/forms.py:83
 #: plinth/modules/firewall/templates/firewall.html:54
@@ -2273,26 +2257,20 @@ msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:20
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Manage Aliases"
-msgstr "Mes alias"
+msgstr "Configurer des alias"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
 msgstr "Aucun alias de courriel configuré."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disable"
-msgstr "Désactivé"
+msgstr "Désactiver"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
-#, fuzzy
-#| msgid "Enabled"
 msgid "Enable"
-msgstr "Activé"
+msgstr "Activer"
 
 #: plinth/modules/email_server/templates/email_alias.html:32
 msgid "Create a new email alias"
@@ -2304,10 +2282,8 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: plinth/modules/email_server/templates/email_server.html:15
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage Spam"
-msgstr "Gestion des instantanés"
+msgstr "Configurer le filtrage des pourriels"
 
 #: plinth/modules/email_server/templates/email_server.html:26
 msgid "Service Alert"
@@ -7574,7 +7550,7 @@ msgid ""
 msgstr ""
 "<strong>Cette opération peut prendre du temps</strong>. Pendant la durée de "
 "la mise à jour, cette interface web risque d’être temporairement "
-"indisponible ou d’afficher une erreur. Si cela se produit, rafraîchissez la "
+"indisponible ou d’afficher une erreur. Si cela se produit, actualisez la "
 "page pour continuer."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
@@ -7665,7 +7641,7 @@ msgstr ""
 "<strong>Cette opération peut prendre du temps</strong>. Pendant la durée de "
 "la mise à jour, vous ne pourrez pas installer d’autre appli. Cette interface "
 "web risque aussi d’être temporairement indisponible ou d’afficher une "
-"erreur. Si cela se produit, rafraîchissez la page pour continuer."
+"erreur. Si cela se produit, actualisez la page pour continuer."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
