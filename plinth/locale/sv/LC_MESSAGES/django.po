@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-06 18:35-0500\n"
-"PO-Revision-Date: 2021-11-13 03:49+0000\n"
+"PO-Revision-Date: 2021-12-20 13:51+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 4.10\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1750,12 +1750,7 @@ msgid "Leave this field empty if you want to keep your current password."
 msgstr "Lämna fältet tomt om du vill behålla ditt nuvarande lösenord."
 
 #: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
@@ -1765,7 +1760,7 @@ msgstr ""
 "Tillval. Om din {box_name} inte är direkt ansluten till Internet (dvs "
 "anslutna via en NAT-router) används denna webbadress för att hitta din "
 "verkliga IP. Webbadressen ska helt enkelt returnera det IP som klienten "
-"kommer från. (exempel: http://myip.datasystems24.de)."
+"kommer från. (example: https://ddns.freedombox.org/ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1841,24 +1836,16 @@ msgid "Please provide a password"
 msgstr "Ange ett lösenord"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
 "freedombox.org</a> or you may find free update URL based services at <a "
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
-"Om du önskar ett gratis konto för dynamiskt DNS, kan du hitta en gratis "
-"GnuDIP-tjänst på <a href='http://gnudip.datasystems24.net' target='_blank'> "
-"gnudip.datasystems24.net</a> eller så kan du hitta tjänster baserade på "
-"gratis uppdateringsadress på <a href='http://freedns.afraid.org/' "
-"target='_blank'> freedns.afraid.org</a>."
+"Om du letar efter ett gratis dynamiskt DNS-konto kan du hitta en gratis "
+"GnuDIP-tjänst på <a target=\"_blank\">ddns.freedombox.org</a> eller så kan "
+"du hitta gratis uppdaterings-URL-baserade tjänster på <a href=\"http"
+"://freedns.afraid.org/\" target=\"_blank\"> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -2153,16 +2140,17 @@ msgid "domain"
 msgstr "domain"
 
 #: plinth/modules/email_server/forms.py:38
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Primär anslutning"
+msgstr "Primär domän"
 
 #: plinth/modules/email_server/forms.py:40
+#, fuzzy
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"E-post tas emot för alla domäner som konfigurerats i systemet. Välj den "
+"viktigaste av dessa."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
