@@ -47,6 +47,7 @@ DISABLED_APPS_TO_REMOVE = [
     'udiskie',
     'restore',
     'repro',
+    'tahoe',
 ]
 
 REMOVED_FILES = [
