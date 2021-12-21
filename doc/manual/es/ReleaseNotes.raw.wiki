@@ -10,6 +10,31 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 21.16 (2021-12-20) ==
+
+=== Highlights ===
+
+ * datetime: Fix checking when timesyncd will run on a system
+
+=== Other Changes ===
+
+ * cockpit, ejabberd: Make 'name' optional in Signal handlers
+ * diaspora: Drop app that was never finished
+ * email_server:
+   * Adjust TLS configuration parameters
+   * Fix issue with handling domain removal
+   * Include postfix package in packages list
+   * Re-implement TLS configuration
+   * Rename dovecot TLS configuration file for consistency
+ * letsencrypt: Handle cert setup when an app wants all domains
+ * locale: Update translations for Chinese (Simplified), Chinese (Traditional), Czech, French, German, Swedish, Turkish
+ * monkeysphere, tahoe-lafs: Drop unused apps
+ * roundcube: Allow upgrades by avoiding configuration file change
+ * tests: Fix app name in pytest.skip statement
+ * tests: functional: Skip MLDonkey app
+ * upgrades: Cleanup dist upgrade steps specific to bullseye release
+ * upgrades: Refactor dist upgrade process
+
 == FreedomBox 21.15 (2021-12-06) ==
 
 === Highlights ===
