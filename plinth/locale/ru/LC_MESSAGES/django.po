@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-06 18:35-0500\n"
+"POT-Creation-Date: 2021-12-20 20:43-0500\n"
 "PO-Revision-Date: 2021-09-10 07:34+0000\n"
 "Last-Translator: Artem <Localizer_in_Russian@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -110,8 +110,6 @@ msgid "Apache HTTP Server"
 msgstr "Apache HTTP-сервер"
 
 #: plinth/modules/apache/__init__.py:41
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:49
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
 msgstr "Веб-сервер"
 
@@ -1220,9 +1218,7 @@ msgstr "Общие настройки"
 #: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
-#: plinth/templates/index.html:46
+#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
 msgid "Configure"
 msgstr "Настроить"
 
@@ -1412,11 +1408,11 @@ msgstr ""
 "Сервер сетевого времени это программа позволяющая системе синхронизировать "
 "время с серверами в Интернете."
 
-#: plinth/modules/datetime/__init__.py:64
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Дата и Время"
 
-#: plinth/modules/datetime/__init__.py:110
+#: plinth/modules/datetime/__init__.py:113
 msgid "Time synchronized to NTP server"
 msgstr "Время синхронизируется с NTP сервером"
 
@@ -1595,79 +1591,6 @@ msgstr "Результат"
 #: plinth/modules/diagnostics/views.py:57
 msgid "Diagnostic Test"
 msgstr "Диагностический тест"
-
-#: plinth/modules/diaspora/__init__.py:40
-msgid ""
-"diaspora* is a decentralized social network where you can store and control "
-"your own data."
-msgstr ""
-"diaspora* это децентрализованная социальная сеть, где вы можете держать и "
-"контролировать ваши данные."
-
-#: plinth/modules/diaspora/__init__.py:66
-#: plinth/modules/diaspora/manifest.py:23
-msgid "diaspora*"
-msgstr "diasporа*"
-
-#: plinth/modules/diaspora/__init__.py:67
-msgid "Federated Social Network"
-msgstr "Federated Social Netwоrk"
-
-#: plinth/modules/diaspora/forms.py:13
-msgid "Enable new user registrations"
-msgstr "Включение регистрации нового пользователя"
-
-#: plinth/modules/diaspora/manifest.py:11
-msgid "dandelion*"
-msgstr "dandelion*"
-
-#: plinth/modules/diaspora/manifest.py:13
-msgid ""
-"It is an unofficial webview based client for the community-run, distributed "
-"social network diaspora*"
-msgstr ""
-"Это неофициальный webview клиент для распределенной социальной сети diaspora*"
-
-#: plinth/modules/diaspora/templates/diaspora-post-setup.html:16
-#, python-format
-msgid ""
-"The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
-"look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
-"domain name is changed, all data of the users registered with the previous "
-"podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
-"href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
-msgstr ""
-"Имя под-домена diaspora* присваивается к <b>%(domain_name)s</b>. "
-"Идентификатор пользователя будет выглядеть <i>username@diaspora."
-"%(domain_name)s</i><br/>. Если доменное имя FreedomBox изменилось, все "
-"данные пользователя с предыдущим именем будут недоступны. <br/> Вы можете "
-"получить к под diaspora* на <a href=\"https://diaspora.%(domain_name)s"
-"\">diaspora.%(domain_name)s</a>"
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:36
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
-msgid "Configuration"
-msgstr "Конфигурация"
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Обновить настройки"
-
-#: plinth/modules/diaspora/views.py:74
-msgid "User registrations enabled"
-msgstr "Регистрации пользователя включена"
-
-#: plinth/modules/diaspora/views.py:78
-msgid "User registrations disabled"
-msgstr "Приложение отключено"
 
 #: plinth/modules/dynamicdns/__init__.py:22
 #, python-brace-format
@@ -1887,6 +1810,14 @@ msgstr ""
 "вспомогательные функции могут не работать (но основные функции должны "
 "работать)."
 
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Обновить настройки"
+
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
 msgid "NAT type"
 msgstr "Тип NAT"
@@ -2105,7 +2036,7 @@ msgstr ""
 msgid "Email Server"
 msgstr "Чат-сервер"
 
-#: plinth/modules/email_server/__init__.py:91
+#: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2130,20 +2061,6 @@ msgstr ""
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:81
-msgid "Postfix TLS parameters"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:82
-msgid "Postfix uses a TLS certificate"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:91
-#, fuzzy
-#| msgid "No certificate"
-msgid "Has a TLS certificate"
-msgstr "Не сертификата"
 
 #: plinth/modules/email_server/forms.py:17
 #, fuzzy
@@ -2213,7 +2130,7 @@ msgid "Disabled"
 msgstr "Выключено"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:52
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2262,7 +2179,6 @@ msgid "Create a new email alias"
 msgstr "Создать новую резервную копию"
 
 #: plinth/modules/email_server/templates/email_alias.html:38
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Добавить"
 
@@ -3341,6 +3257,12 @@ msgstr ""
 msgid "Element"
 msgstr "Element"
 
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: plinth/modules/snapshot/templates/snapshot.html:12
+#: plinth/templates/app.html:46
+msgid "Configuration"
+msgstr "Конфигурация"
+
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
@@ -3751,171 +3673,6 @@ msgstr "KMLDonkey"
 msgid "AMLDonkey"
 msgstr "AMLDonkey"
 
-#: plinth/modules/monkeysphere/__init__.py:17
-msgid ""
-"With Monkeysphere, an OpenPGP key can be generated for each configured "
-"domain serving SSH. The OpenPGP public key can then be uploaded to the "
-"OpenPGP keyservers. Users connecting to this machine through SSH can verify "
-"that they are connecting to the correct host.  For users to trust the key, "
-"at least one person (usually the machine owner) must sign the key using the "
-"regular OpenPGP key signing process.  See the <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</a> "
-"for more details."
-msgstr ""
-"С Monkeysphere OpenPGP ключ может быть создан для каждого настроенного "
-"домена, доступного по SSH. Открытый ключ OpenPGP затем может быть загружен "
-"на сервер ключей OpenPGP. Пользователи, которые подключаются к этой машине "
-"через SSH могуу проверить, что они подключаются к правильному хосту. Для "
-"использования, ключ должен быть подписан. Смотрите <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\">Monkeysphere SSH documentation</a> "
-"для подробностей."
-
-#: plinth/modules/monkeysphere/__init__.py:25
-msgid ""
-"Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
-"(HTTPS) certificate installed on this machine. The OpenPGP public key can "
-"then be uploaded to the OpenPGP keyservers. Users accessing the web server "
-"through HTTPS can verify that they are connecting to the correct host. To "
-"validate the certificate, the user will need to install some software that "
-"is available on the <a href=\"https://web.monkeysphere.info/download/\"> "
-"Monkeysphere website</a>."
-msgstr ""
-"Monkeysphere так же может генерировать ключ OpenPGP для каждого сертификата "
-"безопасного веб сервера (HTTPS), установленных на этом компьютере. Открытый "
-"ключ OpenPGP может быть загружен на сервер ключей OpenPGP. Пользователи, "
-"подключающиеся к веб-серверу через HTTPS могут проверить, что они "
-"подключаются к правильному хосту. Для проверки сертификата, пользователю "
-"может потребоваться программное обеспечение, которое доступно на сайте <a "
-"href=\"https://web.monkeysphere.info/download/\">Monkeysphere </a>."
-
-#: plinth/modules/monkeysphere/__init__.py:50
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
-msgid "Monkeysphere"
-msgstr "MonkeySphere"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:20
-msgid "Publishing key to keyserver..."
-msgstr "Публикация ключа на сервер ключей..."
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:27
-msgid "Cancel"
-msgstr "Отмена"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:36
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:41
-#: plinth/modules/tor/templates/tor.html:71
-msgid "Service"
-msgstr "Служба"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "Домены"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:38
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
-msgid "OpenPGP Fingerprint"
-msgstr "OpenPGP отпечаток"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:44
-#: plinth/modules/names/components.py:24
-msgid "Secure Shell"
-msgstr "Sеcure Shell"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:51
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:48
-msgid "Other"
-msgstr "Другое"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:88
-#, python-format
-msgid "Show details for key %(fingerprint)s"
-msgstr "Показать детали для ключа %(fingerprint)s"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:94
-msgid "-"
-msgstr "-"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:105
-msgid "Import Key"
-msgstr "Импортировать ключ"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:115
-msgid "Publish Key"
-msgstr "Опубликовать ключ"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:125
-msgid "Add Domains"
-msgstr "Добавить домен"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:21
-msgid "OpenPGP User IDs"
-msgstr "Идентификаторы пользователя OpenPGP"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:25
-msgid "Key Import Date"
-msgstr "Дата импорта ключа"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:29
-msgid "SSH Key Type"
-msgstr "Тип ключа SSH"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:33
-msgid "SSH Key Size"
-msgstr "Размер ключа SSH"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:37
-msgid "SSH Fingerprint"
-msgstr "SSH отпечаток"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:53
-msgid "Key File"
-msgstr "Файл ключа"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:57
-msgid "Available Domains"
-msgstr "Доступные Домены"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:61
-msgid "Added Domains"
-msgstr "Добавленные домены"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:69
-msgid ""
-"After this key is published to the keyservers, it can be signed using <a "
-"href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
-msgstr ""
-"После публикации ключа на сервер, он может быть подписан с помощью <a href="
-"\"https://www.gnupg.org/\"> GnuPG</a> следующими командами:"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
-msgid "Download the key"
-msgstr "Скачать ключ"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:78
-msgid "Sign the key"
-msgstr "Подписать ключ"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:81
-msgid "Send the key back to the keyservers"
-msgstr "Отправить ключ на сервер ключей"
-
-#: plinth/modules/monkeysphere/views.py:44
-msgid "Imported key."
-msgstr "Импортированный ключ."
-
-#: plinth/modules/monkeysphere/views.py:80
-msgid "Cancelled key publishing."
-msgstr "Отменена публикация ключа."
-
-#: plinth/modules/monkeysphere/views.py:131
-msgid "Published key to keyserver."
-msgstr "Опубликованый ключ на сервере ключей."
-
-#: plinth/modules/monkeysphere/views.py:133
-msgid "Error occurred while publishing key."
-msgstr "Произошла ошибка при публикации ключа."
-
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
@@ -3990,6 +3747,10 @@ msgstr "Все"
 #: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
 msgid "All web apps"
 msgstr "Все веб-приложения"
+
+#: plinth/modules/names/components.py:24
+msgid "Secure Shell"
+msgstr "Sеcure Shell"
 
 #: plinth/modules/names/templates/names.html:17
 msgid "Services"
@@ -5812,7 +5573,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Конфигурация прав доступа обновлена"
 
-#: plinth/modules/roundcube/__init__.py:20
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5824,7 +5585,7 @@ msgstr ""
 "которую вы ожидаете от почтового клиента, включая поддержку MIME, адресную "
 "книгу, управление папками, поиск сообщений и проверку орфографии."
 
-#: plinth/modules/roundcube/__init__.py:25
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5838,7 +5599,7 @@ msgstr ""
 "example.com</code>. Для IMAP через SSL (рекомендуется) заполните поле "
 "сервера, например <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:30
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5854,7 +5615,7 @@ msgstr ""
 "security/lesssecureapps\" >https://www.google.com/settings/security/"
 "lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:53
 msgid "Email Client"
 msgstr "Почтовый клиент"
 
@@ -7011,72 +6772,6 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Синхронизация файлов"
 
-#: plinth/modules/tahoe/__init__.py:26
-msgid ""
-"Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
-"independent security to store files over a distributed network of storage "
-"nodes. Even if some of the nodes fail, your files can be retrieved from the "
-"remaining nodes."
-msgstr ""
-"Tahoe-LAFS это децентрализованная безопасная файловая система для хранения "
-"файлов. Она использует независимую от провайдера защиту хранения файлов в "
-"распределенной сети узлов хранения файлов. Если некоторые узлы будут "
-"недоступны, вы можете получить ваши файлы от оставшихся узлов."
-
-#: plinth/modules/tahoe/__init__.py:31
-#, python-brace-format
-msgid ""
-"This {box_name} hosts a storage node and an introducer by default. "
-"Additional introducers can be added, which will introduce this node to the "
-"other storage nodes."
-msgstr ""
-"Этот {box_name} размещает узел хранения и посредничество по умолчанию. Могут "
-"быть добавлены дополнительные посредники, которые вводят этот узел в другие "
-"узлы хранения."
-
-#: plinth/modules/tahoe/__init__.py:60
-msgid "Tahoe-LAFS"
-msgstr "Tahoe-LAFS"
-
-#: plinth/modules/tahoe/__init__.py:62
-msgid "Distributed File Storage"
-msgstr "Распределенное Хранилище Файлов"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:17
-#, python-format
-msgid ""
-"The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing the "
-"FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL LOSE "
-"DATA. You can access Tahoe-LAFS at <a href=\"https://"
-"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
-msgstr ""
-"Сервер Tahoe-LAFS доступен на <b>%(domain_name)s</b>. Изменение доменного "
-"имени FreedomBox потребует переустановки Tahoe-LAFS и ВЫ МОЖЕТЕ ПОТЕРЯТЬ ВСЕ "
-"ВАШИ ДАННЫЕ. Вы получить доступ к Tahoe-LAFS на <a href=\"https://"
-"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:29
-msgid "Local introducer"
-msgstr "Локальный посредник"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:34
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:69
-msgid "Pet Name"
-msgstr "Имя питомца"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:48
-msgid "Add new introducer"
-msgstr "Добавить нового посредника"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
-msgid "Connected introducers"
-msgstr "Подключенные посредники"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
-msgid "Remove"
-msgstr "Удалить"
-
 #: plinth/modules/tor/__init__.py:26
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
@@ -7263,6 +6958,10 @@ msgstr ""
 "Если ваш %(box_name)s находится за маршрутизатором или брандмауэром, вы "
 "должны убедиться, что следующие порты являются открытыми и проброшены, если "
 "необходимо:"
+
+#: plinth/modules/tor/templates/tor.html:71
+msgid "Service"
+msgstr "Служба"
 
 #: plinth/modules/tor/templates/tor.html:87
 msgid "SOCKS"
@@ -8715,6 +8414,235 @@ msgstr "%(percentage)s%% завершено"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid ""
+#~ "diaspora* is a decentralized social network where you can store and "
+#~ "control your own data."
+#~ msgstr ""
+#~ "diaspora* это децентрализованная социальная сеть, где вы можете держать и "
+#~ "контролировать ваши данные."
+
+#~ msgid "diaspora*"
+#~ msgstr "diasporа*"
+
+#~ msgid "Federated Social Network"
+#~ msgstr "Federated Social Netwоrk"
+
+#~ msgid "Enable new user registrations"
+#~ msgstr "Включение регистрации нового пользователя"
+
+#~ msgid "dandelion*"
+#~ msgstr "dandelion*"
+
+#~ msgid ""
+#~ "It is an unofficial webview based client for the community-run, "
+#~ "distributed social network diaspora*"
+#~ msgstr ""
+#~ "Это неофициальный webview клиент для распределенной социальной сети "
+#~ "diaspora*"
+
+#, python-format
+#~ msgid ""
+#~ "The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
+#~ "look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
+#~ "domain name is changed, all data of the users registered with the "
+#~ "previous podname wouldn't be accessible. <br/> You can access the "
+#~ "diaspora* pod at <a href=\"https://diaspora.%(domain_name)s\"> diaspora."
+#~ "%(domain_name)s </a>"
+#~ msgstr ""
+#~ "Имя под-домена diaspora* присваивается к <b>%(domain_name)s</b>. "
+#~ "Идентификатор пользователя будет выглядеть <i>username@diaspora."
+#~ "%(domain_name)s</i><br/>. Если доменное имя FreedomBox изменилось, все "
+#~ "данные пользователя с предыдущим именем будут недоступны. <br/> Вы можете "
+#~ "получить к под diaspora* на <a href=\"https://diaspora.%(domain_name)s"
+#~ "\">diaspora.%(domain_name)s</a>"
+
+#~ msgid "User registrations enabled"
+#~ msgstr "Регистрации пользователя включена"
+
+#~ msgid "User registrations disabled"
+#~ msgstr "Приложение отключено"
+
+#, fuzzy
+#~| msgid "No certificate"
+#~ msgid "Has a TLS certificate"
+#~ msgstr "Не сертификата"
+
+#~ msgid ""
+#~ "With Monkeysphere, an OpenPGP key can be generated for each configured "
+#~ "domain serving SSH. The OpenPGP public key can then be uploaded to the "
+#~ "OpenPGP keyservers. Users connecting to this machine through SSH can "
+#~ "verify that they are connecting to the correct host.  For users to trust "
+#~ "the key, at least one person (usually the machine owner) must sign the "
+#~ "key using the regular OpenPGP key signing process.  See the <a href="
+#~ "\"http://web.monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~ "documentation</a> for more details."
+#~ msgstr ""
+#~ "С Monkeysphere OpenPGP ключ может быть создан для каждого настроенного "
+#~ "домена, доступного по SSH. Открытый ключ OpenPGP затем может быть "
+#~ "загружен на сервер ключей OpenPGP. Пользователи, которые подключаются к "
+#~ "этой машине через SSH могуу проверить, что они подключаются к правильному "
+#~ "хосту. Для использования, ключ должен быть подписан. Смотрите <a href="
+#~ "\"http://web.monkeysphere.info/getting-started-ssh/\">Monkeysphere SSH "
+#~ "documentation</a> для подробностей."
+
+#~ msgid ""
+#~ "Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
+#~ "(HTTPS) certificate installed on this machine. The OpenPGP public key can "
+#~ "then be uploaded to the OpenPGP keyservers. Users accessing the web "
+#~ "server through HTTPS can verify that they are connecting to the correct "
+#~ "host. To validate the certificate, the user will need to install some "
+#~ "software that is available on the <a href=\"https://web.monkeysphere.info/"
+#~ "download/\"> Monkeysphere website</a>."
+#~ msgstr ""
+#~ "Monkeysphere так же может генерировать ключ OpenPGP для каждого "
+#~ "сертификата безопасного веб сервера (HTTPS), установленных на этом "
+#~ "компьютере. Открытый ключ OpenPGP может быть загружен на сервер ключей "
+#~ "OpenPGP. Пользователи, подключающиеся к веб-серверу через HTTPS могут "
+#~ "проверить, что они подключаются к правильному хосту. Для проверки "
+#~ "сертификата, пользователю может потребоваться программное обеспечение, "
+#~ "которое доступно на сайте <a href=\"https://web.monkeysphere.info/"
+#~ "download/\">Monkeysphere </a>."
+
+#~ msgid "Monkeysphere"
+#~ msgstr "MonkeySphere"
+
+#~ msgid "Publishing key to keyserver..."
+#~ msgstr "Публикация ключа на сервер ключей..."
+
+#~ msgid "Cancel"
+#~ msgstr "Отмена"
+
+#~ msgid "Domains"
+#~ msgstr "Домены"
+
+#~ msgid "OpenPGP Fingerprint"
+#~ msgstr "OpenPGP отпечаток"
+
+#~ msgid "Other"
+#~ msgstr "Другое"
+
+#, python-format
+#~ msgid "Show details for key %(fingerprint)s"
+#~ msgstr "Показать детали для ключа %(fingerprint)s"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Import Key"
+#~ msgstr "Импортировать ключ"
+
+#~ msgid "Publish Key"
+#~ msgstr "Опубликовать ключ"
+
+#~ msgid "Add Domains"
+#~ msgstr "Добавить домен"
+
+#~ msgid "OpenPGP User IDs"
+#~ msgstr "Идентификаторы пользователя OpenPGP"
+
+#~ msgid "Key Import Date"
+#~ msgstr "Дата импорта ключа"
+
+#~ msgid "SSH Key Type"
+#~ msgstr "Тип ключа SSH"
+
+#~ msgid "SSH Key Size"
+#~ msgstr "Размер ключа SSH"
+
+#~ msgid "SSH Fingerprint"
+#~ msgstr "SSH отпечаток"
+
+#~ msgid "Key File"
+#~ msgstr "Файл ключа"
+
+#~ msgid "Available Domains"
+#~ msgstr "Доступные Домены"
+
+#~ msgid "Added Domains"
+#~ msgstr "Добавленные домены"
+
+#~ msgid ""
+#~ "After this key is published to the keyservers, it can be signed using <a "
+#~ "href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
+#~ msgstr ""
+#~ "После публикации ключа на сервер, он может быть подписан с помощью <a "
+#~ "href=\"https://www.gnupg.org/\"> GnuPG</a> следующими командами:"
+
+#~ msgid "Download the key"
+#~ msgstr "Скачать ключ"
+
+#~ msgid "Sign the key"
+#~ msgstr "Подписать ключ"
+
+#~ msgid "Send the key back to the keyservers"
+#~ msgstr "Отправить ключ на сервер ключей"
+
+#~ msgid "Imported key."
+#~ msgstr "Импортированный ключ."
+
+#~ msgid "Cancelled key publishing."
+#~ msgstr "Отменена публикация ключа."
+
+#~ msgid "Published key to keyserver."
+#~ msgstr "Опубликованый ключ на сервере ключей."
+
+#~ msgid "Error occurred while publishing key."
+#~ msgstr "Произошла ошибка при публикации ключа."
+
+#~ msgid ""
+#~ "Tahoe-LAFS is a decentralized secure file storage system. It uses "
+#~ "provider independent security to store files over a distributed network "
+#~ "of storage nodes. Even if some of the nodes fail, your files can be "
+#~ "retrieved from the remaining nodes."
+#~ msgstr ""
+#~ "Tahoe-LAFS это децентрализованная безопасная файловая система для "
+#~ "хранения файлов. Она использует независимую от провайдера защиту хранения "
+#~ "файлов в распределенной сети узлов хранения файлов. Если некоторые узлы "
+#~ "будут недоступны, вы можете получить ваши файлы от оставшихся узлов."
+
+#, python-brace-format
+#~ msgid ""
+#~ "This {box_name} hosts a storage node and an introducer by default. "
+#~ "Additional introducers can be added, which will introduce this node to "
+#~ "the other storage nodes."
+#~ msgstr ""
+#~ "Этот {box_name} размещает узел хранения и посредничество по умолчанию. "
+#~ "Могут быть добавлены дополнительные посредники, которые вводят этот узел "
+#~ "в другие узлы хранения."
+
+#~ msgid "Tahoe-LAFS"
+#~ msgstr "Tahoe-LAFS"
+
+#~ msgid "Distributed File Storage"
+#~ msgstr "Распределенное Хранилище Файлов"
+
+#, python-format
+#~ msgid ""
+#~ "The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing "
+#~ "the FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL "
+#~ "LOSE DATA. You can access Tahoe-LAFS at <a href=\"https://"
+#~ "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+#~ msgstr ""
+#~ "Сервер Tahoe-LAFS доступен на <b>%(domain_name)s</b>. Изменение доменного "
+#~ "имени FreedomBox потребует переустановки Tahoe-LAFS и ВЫ МОЖЕТЕ ПОТЕРЯТЬ "
+#~ "ВСЕ ВАШИ ДАННЫЕ. Вы получить доступ к Tahoe-LAFS на <a href=\"https://"
+#~ "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+
+#~ msgid "Local introducer"
+#~ msgstr "Локальный посредник"
+
+#~ msgid "Pet Name"
+#~ msgstr "Имя питомца"
+
+#~ msgid "Add new introducer"
+#~ msgstr "Добавить нового посредника"
+
+#~ msgid "Connected introducers"
+#~ msgstr "Подключенные посредники"
+
+#~ msgid "Remove"
+#~ msgstr "Удалить"
 
 #, fuzzy
 #~| msgid "Error setting domain name: {exception}"
