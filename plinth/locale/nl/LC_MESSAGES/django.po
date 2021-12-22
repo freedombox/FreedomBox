@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-20 20:43-0500\n"
-"PO-Revision-Date: 2021-09-18 13:33+0000\n"
+"PO-Revision-Date: 2021-12-23 12:50+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -1682,22 +1682,17 @@ msgid "Leave this field empty if you want to keep your current password."
 msgstr "Laat dit veld leeg om het huidige wachtwoord te behouden."
 
 #: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
 "address. The URL should simply return the IP where the client comes from "
 "(example: https://ddns.freedombox.org/ip/)."
 msgstr ""
-"Optionele waarde. Als {box_name} niet direct is verbonden met het internet "
-"(maar verbonden met een NAT router), wordt deze URL gebruikt om het echte "
+"Optionele waarde. Als {box_name} niet direct is verbonden met het internet ("
+"maar verbonden met een NAT router), wordt deze URL gebruikt om het echte "
 "Internet IP adres te bepalen. Het antwoord op het aanroepen van deze URL zou "
-"het IP adres moeten zijn (Voorbeeld: http://myip.datasystems24.de)."
+"het IP adres moeten zijn (Voorbeeld: https://ddns.freedombox.org/ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1773,13 +1768,6 @@ msgid "Please provide a password"
 msgstr "Voer een wachtwoord in"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1787,10 +1775,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Wie op zoek is naar een gratis dynamic DNS account, kan misschien een gratis "
-"GnuDIP service vinden bij <a href='http://gnudip.datasystems24.net' "
-"target='_blank'>gnudip.datasystems24.net</a> of gratis free update URL "
-"gebaseerde diensten van <a href='http://freedns.afraid.org/' "
-"target='_blank'> freedns.afraid.org</a>."
+"GnuDIP service vinden bij <a href=\"https://ddns.freedombox.org\" target="
+"\"_blank\">ddns.freedombox.org</a> of gratis free update URL gebaseerde "
+"diensten van <a href=\"https://freedns.afraid.org/\" target=\"_blank\"> "
+"freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -2032,12 +2020,16 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> biedt gebruikers een "
+"webinterface om toegang te krijgen tot e-mail."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Tijdens de installatie worden alle andere e-mailservers in het systeem "
+"verwijderd."
 
 #: plinth/modules/email_server/__init__.py:44
 msgid "Email Server"
@@ -2068,26 +2060,20 @@ msgid "Inbound and outbound mail filters"
 msgstr "Filters voor inkomende en uitgaande e-mail"
 
 #: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid domain"
-msgstr "Voer een geldige gebruikersnaam in."
+msgstr "Voer een geldig domein in"
 
 #: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid destination"
-msgstr "Voer een geldige gebruikersnaam in."
+msgstr "Voer een geldige bestemming in"
 
 #: plinth/modules/email_server/forms.py:24
 msgid "domain"
 msgstr "domein"
 
 #: plinth/modules/email_server/forms.py:38
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Primaire Verbinding"
+msgstr "Primair domein"
 
 #: plinth/modules/email_server/forms.py:40
 msgid ""
@@ -2112,10 +2098,8 @@ msgid "Cannot be a number"
 msgstr "Kan geen getal zijn"
 
 #: plinth/modules/email_server/forms.py:71
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Aliases"
-msgstr "Mijn aliassen"
+msgstr "Aliassen"
 
 #: plinth/modules/email_server/forms.py:83
 #: plinth/modules/firewall/templates/firewall.html:54
@@ -2152,26 +2136,20 @@ msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:20
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Manage Aliases"
-msgstr "Mijn aliassen"
+msgstr "Aliassen beheren"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
 msgstr "Je hebt geen e-mailaliassen."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disable"
-msgstr "Uitgeschakeld"
+msgstr "Uitschakelen"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
-#, fuzzy
-#| msgid "Enabled"
 msgid "Enable"
-msgstr "Ingeschakeld"
+msgstr "Inschakelen"
 
 #: plinth/modules/email_server/templates/email_alias.html:32
 msgid "Create a new email alias"
@@ -2182,10 +2160,8 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: plinth/modules/email_server/templates/email_server.html:15
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage Spam"
-msgstr "Beheren van Snapshots"
+msgstr "Spam beheren"
 
 #: plinth/modules/email_server/templates/email_server.html:26
 msgid "Service Alert"
