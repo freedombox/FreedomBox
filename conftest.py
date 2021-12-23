@@ -166,3 +166,64 @@ def fixture_call_action(request, capsys, actions_module):
             return captured.out
 
     return _call_action
+
+
+@pytest.fixture(autouse=True)
+def fixture_fix_session_browser_screenshots(request):
+    """Fix a bug in pytest-splinter for screenshots.
+
+    When using session_browser, pytest-splinter does not take a screenshot when
+    a test has failed. It is uses internal pytest API on the FixtureRequest
+    object. This API was removed in later versions of pytest causing the
+    failure. Re-implement the fixture that has the problem fixing this issue.
+
+    Drop this fixture after a fix is merged and released in pytest-splinter.
+    See: https://github.com/pytest-dev/pytest-splinter/pull/157
+    """
+    yield
+
+    if not request.config.pluginmanager.has_plugin('pytest-splinter'):
+        return
+
+    session_tmpdir = request.getfixturevalue('session_tmpdir')
+    splinter_session_scoped_browser = request.getfixturevalue(
+        'splinter_session_scoped_browser')
+    splinter_make_screenshot_on_failure = request.getfixturevalue(
+        'splinter_make_screenshot_on_failure')
+    splinter_screenshot_dir = request.getfixturevalue(
+        'splinter_screenshot_dir')
+    splinter_screenshot_getter_html = request.getfixturevalue(
+        'splinter_screenshot_getter_html')
+    splinter_screenshot_getter_png = request.getfixturevalue(
+        'splinter_screenshot_getter_png')
+    splinter_screenshot_encoding = request.getfixturevalue(
+        'splinter_screenshot_encoding')
+
+    # Screenshot for function scoped browsers is handled in
+    # browser_instance_getter
+    if not splinter_session_scoped_browser:
+        return
+
+    for name in request.fixturenames:
+        fixture_def = request._fixture_defs.get(name)
+        if not fixture_def or not fixture_def.cached_result:
+            continue
+
+        value = fixture_def.cached_result[0]
+        should_take_screenshot = (hasattr(value, "__splinter_browser__")
+                                  and splinter_make_screenshot_on_failure
+                                  and getattr(request.node, 'splinter_failure',
+                                              True))
+
+        from pytest_splinter import plugin
+        if should_take_screenshot:
+            plugin._take_screenshot(
+                request=request,
+                fixture_name=name,
+                session_tmpdir=session_tmpdir,
+                browser_instance=value,
+                splinter_screenshot_dir=splinter_screenshot_dir,
+                splinter_screenshot_getter_html=splinter_screenshot_getter_html,
+                splinter_screenshot_getter_png=splinter_screenshot_getter_png,
+                splinter_screenshot_encoding=splinter_screenshot_encoding,
+            )
