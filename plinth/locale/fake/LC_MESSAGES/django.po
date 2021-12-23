@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-06 18:35-0500\n"
+"POT-Creation-Date: 2021-12-20 20:43-0500\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -118,8 +118,6 @@ msgid "Apache HTTP Server"
 msgstr "WEB SERVER"
 
 #: plinth/modules/apache/__init__.py:41
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:49
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
 msgstr "WEB SERVER"
 
@@ -1271,9 +1269,7 @@ msgstr "GENERAL CONFIGURATION"
 #: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
-#: plinth/templates/index.html:46
+#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
 msgid "Configure"
 msgstr "CONFIGURE"
 
@@ -1457,11 +1453,11 @@ msgstr ""
 "NETWORK TIME SERVER IS A PROGRAM THAT MAINTIANS THE SYSTEM TIME IN "
 "SYNCHRONIZATION WITH SERVERS ON THE INTERNET."
 
-#: plinth/modules/datetime/__init__.py:64
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "DATE & TIME"
 
-#: plinth/modules/datetime/__init__.py:110
+#: plinth/modules/datetime/__init__.py:113
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -1652,74 +1648,6 @@ msgstr "RESULT"
 #: plinth/modules/diagnostics/views.py:57
 msgid "Diagnostic Test"
 msgstr "DIAGNOSTIC TEST"
-
-#: plinth/modules/diaspora/__init__.py:40
-msgid ""
-"diaspora* is a decentralized social network where you can store and control "
-"your own data."
-msgstr ""
-
-#: plinth/modules/diaspora/__init__.py:66
-#: plinth/modules/diaspora/manifest.py:23
-msgid "diaspora*"
-msgstr ""
-
-#: plinth/modules/diaspora/__init__.py:67
-msgid "Federated Social Network"
-msgstr ""
-
-#: plinth/modules/diaspora/forms.py:13
-msgid "Enable new user registrations"
-msgstr ""
-
-#: plinth/modules/diaspora/manifest.py:11
-msgid "dandelion*"
-msgstr ""
-
-#: plinth/modules/diaspora/manifest.py:13
-msgid ""
-"It is an unofficial webview based client for the community-run, distributed "
-"social network diaspora*"
-msgstr ""
-
-#: plinth/modules/diaspora/templates/diaspora-post-setup.html:16
-#, python-format
-msgid ""
-"The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
-"look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
-"domain name is changed, all data of the users registered with the previous "
-"podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
-"href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
-msgstr ""
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:36
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
-msgid "Configuration"
-msgstr "CONFIGURATION"
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "UPDATE SETUP"
-
-#: plinth/modules/diaspora/views.py:74
-#, fuzzy
-#| msgid "Applications"
-msgid "User registrations enabled"
-msgstr "APPLICATIONS"
-
-#: plinth/modules/diaspora/views.py:78
-#, fuzzy
-#| msgid "Applications"
-msgid "User registrations disabled"
-msgstr "APPLICATIONS"
 
 #: plinth/modules/dynamicdns/__init__.py:22
 #, fuzzy, python-brace-format
@@ -1978,6 +1906,14 @@ msgstr ""
 "YOU HAVE DISABLED JAVASCRIPT. DYNAMIC FORM MODE IS DISABLED AND SOME HELPER "
 "FUNCTIONS MAY NOT WORK (BUT THE MAIN FUNCTIONALITY SHOULD WORK)."
 
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "UPDATE SETUP"
+
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
 msgid "NAT type"
 msgstr "NAT TYPE"
@@ -2205,7 +2141,7 @@ msgstr ""
 msgid "Email Server"
 msgstr "WEB SERVER"
 
-#: plinth/modules/email_server/__init__.py:91
+#: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2230,20 +2166,6 @@ msgstr ""
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:81
-msgid "Postfix TLS parameters"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:82
-msgid "Postfix uses a TLS certificate"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:91
-#, fuzzy
-#| msgid "No certficate"
-msgid "Has a TLS certificate"
-msgstr "NO CERTFICATE"
 
 #: plinth/modules/email_server/forms.py:17
 #, fuzzy
@@ -2313,7 +2235,7 @@ msgid "Disabled"
 msgstr "DISABLED"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:52
 #: plinth/modules/roundcube/manifest.py:6
 #, fuzzy
 #| msgid "Enable Roundcube"
@@ -2362,7 +2284,6 @@ msgid "Create a new email alias"
 msgstr "PAGEKITE ACCOUNT"
 
 #: plinth/modules/email_server/templates/email_alias.html:38
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 #, fuzzy
 #| msgid "Address"
 msgid "Add"
@@ -3454,6 +3375,12 @@ msgstr ""
 msgid "Element"
 msgstr ""
 
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: plinth/modules/snapshot/templates/snapshot.html:12
+#: plinth/templates/app.html:46
+msgid "Configuration"
+msgstr "CONFIGURATION"
+
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
@@ -3844,215 +3771,6 @@ msgstr "MONKEYSPHERE"
 msgid "AMLDonkey"
 msgstr "MONKEYSPHERE"
 
-#: plinth/modules/monkeysphere/__init__.py:17
-#, fuzzy
-#| msgid ""
-#| "With Monkeysphere, a PGP key can be generated for each configured domain "
-#| "serving SSH. The PGP public key can then be uploaded to the PGP "
-#| "keyservers. Users connecting to this machine through SSH can verify that "
-#| "they are connecting to the correct host.  For users to trust the key, at "
-#| "least one person (usually the machine owner) must sign the key using the "
-#| "regular PGP key signing process.  See the <a href=\"http://web."
-#| "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</"
-#| "a> for more details."
-msgid ""
-"With Monkeysphere, an OpenPGP key can be generated for each configured "
-"domain serving SSH. The OpenPGP public key can then be uploaded to the "
-"OpenPGP keyservers. Users connecting to this machine through SSH can verify "
-"that they are connecting to the correct host.  For users to trust the key, "
-"at least one person (usually the machine owner) must sign the key using the "
-"regular OpenPGP key signing process.  See the <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</a> "
-"for more details."
-msgstr ""
-"WITH MONKEYSPHERE, A PGP KEY CAN BE GENERATED FOR EACH CONFIGURED DOMAIN "
-"SERVING SSH. THE PGP PUBLIC KEY CAN THEN BE UPLOADED TO THE PGP KEYSERVERS. "
-"USERS CONNECTING TO THIS MACHINE THROUGH SSH CAN VERIFY THAT THEY ARE "
-"CONNECTING TO THE CORRECT HOST.  FOR USERS TO TRUST THE KEY, AT LEAST ONE "
-"PERSON (USUALLY THE MACHINE OWNER) MUST SIGN THE KEY USING THE REGULAR PGP "
-"KEY SIGNING PROCESS.  SEE THE <a href=\\\"http://web.monkeysphere.info/"
-"getting-started-ssh/\\\"> MONKEYSPHERE SSH DOCUMENTATION</a> FOR MORE "
-"DETAILS."
-
-#: plinth/modules/monkeysphere/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "With Monkeysphere, a PGP key can be generated for each configured domain "
-#| "serving SSH. The PGP public key can then be uploaded to the PGP "
-#| "keyservers. Users connecting to this machine through SSH can verify that "
-#| "they are connecting to the correct host.  For users to trust the key, at "
-#| "least one person (usually the machine owner) must sign the key using the "
-#| "regular PGP key signing process.  See the <a href=\"http://web."
-#| "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</"
-#| "a> for more details."
-msgid ""
-"Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
-"(HTTPS) certificate installed on this machine. The OpenPGP public key can "
-"then be uploaded to the OpenPGP keyservers. Users accessing the web server "
-"through HTTPS can verify that they are connecting to the correct host. To "
-"validate the certificate, the user will need to install some software that "
-"is available on the <a href=\"https://web.monkeysphere.info/download/\"> "
-"Monkeysphere website</a>."
-msgstr ""
-"WITH MONKEYSPHERE, A PGP KEY CAN BE GENERATED FOR EACH CONFIGURED DOMAIN "
-"SERVING SSH. THE PGP PUBLIC KEY CAN THEN BE UPLOADED TO THE PGP KEYSERVERS. "
-"USERS CONNECTING TO THIS MACHINE THROUGH SSH CAN VERIFY THAT THEY ARE "
-"CONNECTING TO THE CORRECT HOST.  FOR USERS TO TRUST THE KEY, AT LEAST ONE "
-"PERSON (USUALLY THE MACHINE OWNER) MUST SIGN THE KEY USING THE REGULAR PGP "
-"KEY SIGNING PROCESS.  SEE THE <a href=\\\"http://web.monkeysphere.info/"
-"getting-started-ssh/\\\"> MONKEYSPHERE SSH DOCUMENTATION</a> FOR MORE "
-"DETAILS."
-
-#: plinth/modules/monkeysphere/__init__.py:50
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
-msgid "Monkeysphere"
-msgstr "MONKEYSPHERE"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:20
-msgid "Publishing key to keyserver..."
-msgstr "PUBLISHING KEY TO KEYSERVER..."
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:27
-msgid "Cancel"
-msgstr "CANCEL"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:36
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:41
-#: plinth/modules/tor/templates/tor.html:71
-msgid "Service"
-msgstr "SERVICE"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-#, fuzzy
-#| msgid "Domain"
-msgid "Domains"
-msgstr "DOMAIN"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:38
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
-#, fuzzy
-#| msgid "GPG Fingerprint"
-msgid "OpenPGP Fingerprint"
-msgstr "GPG FINGERPRINT"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:44
-#: plinth/modules/names/components.py:24
-#, fuzzy
-#| msgid "Secure Shell (SSH)"
-msgid "Secure Shell"
-msgstr "SECURE SHELL (SSH)"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:51
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:48
-#, fuzzy
-#| msgid "Ethernet"
-msgid "Other"
-msgstr "ETHERNET"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:88
-#, python-format
-msgid "Show details for key %(fingerprint)s"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:94
-msgid "-"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:105
-msgid "Import Key"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:115
-msgid "Publish Key"
-msgstr "PUBLISH KEY"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:125
-#, fuzzy
-#| msgid "Domain"
-msgid "Add Domains"
-msgstr "DOMAIN"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:21
-msgid "OpenPGP User IDs"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:25
-msgid "Key Import Date"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:29
-#, fuzzy
-#| msgid "SSH Keys"
-msgid "SSH Key Type"
-msgstr "SSH KEYS"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:33
-#, fuzzy
-#| msgid "SSH Keys"
-msgid "SSH Key Size"
-msgstr "SSH KEYS"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:37
-#, fuzzy
-#| msgid "GPG Fingerprint"
-msgid "SSH Fingerprint"
-msgstr "GPG FINGERPRINT"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:53
-msgid "Key File"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:57
-#, fuzzy
-#| msgid "Enable Subdomains"
-msgid "Available Domains"
-msgstr "ENABLE SUBDOMAINS"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:61
-#, fuzzy
-#| msgid "Domain"
-msgid "Added Domains"
-msgstr "DOMAIN"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:69
-msgid ""
-"After this key is published to the keyservers, it can be signed using <a "
-"href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
-#, fuzzy
-#| msgid "Download directory"
-msgid "Download the key"
-msgstr "DOWNLOAD DIRECTORY"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:78
-msgid "Sign the key"
-msgstr ""
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:81
-#, fuzzy
-#| msgid "Published key to keyserver."
-msgid "Send the key back to the keyservers"
-msgstr "PUBLISHED KEY TO KEYSERVER."
-
-#: plinth/modules/monkeysphere/views.py:44
-msgid "Imported key."
-msgstr ""
-
-#: plinth/modules/monkeysphere/views.py:80
-msgid "Cancelled key publishing."
-msgstr "CANCELLED KEY PUBLISHING."
-
-#: plinth/modules/monkeysphere/views.py:131
-msgid "Published key to keyserver."
-msgstr "PUBLISHED KEY TO KEYSERVER."
-
-#: plinth/modules/monkeysphere/views.py:133
-msgid "Error occurred while publishing key."
-msgstr "ERROR OCCURRED WHILE PUBLISHING KEY."
-
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
@@ -4127,6 +3845,12 @@ msgstr ""
 #: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
 msgid "All web apps"
 msgstr ""
+
+#: plinth/modules/names/components.py:24
+#, fuzzy
+#| msgid "Secure Shell (SSH)"
+msgid "Secure Shell"
+msgstr "SECURE SHELL (SSH)"
 
 #: plinth/modules/names/templates/names.html:17
 #, fuzzy
@@ -5905,7 +5629,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "CONFIGURATION UPDATED"
 
-#: plinth/modules/roundcube/__init__.py:20
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5917,7 +5641,7 @@ msgstr ""
 "FROM AN EMAIL CLIENT, INCLUDING MIME SUPPORT, ADDRESS BOOK, FOLDER "
 "MANIPULATION, MESSAGE SEARCHING AND SPELL CHECKING."
 
-#: plinth/modules/roundcube/__init__.py:25
+#: plinth/modules/roundcube/__init__.py:24
 #, fuzzy
 #| msgid ""
 #| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
@@ -5938,7 +5662,7 @@ msgstr ""
 "<code>IMAP.EXAMPLE.COM</code>.  FOR IMAP OVER SSL (RECOMMENDED), FILL THE "
 "SERVER FIELD LIKE <code>IMAPS://IMAP.EXAMPLE.COM</code>."
 
-#: plinth/modules/roundcube/__init__.py:30
+#: plinth/modules/roundcube/__init__.py:29
 #, fuzzy
 #| msgid ""
 #| "For Gmail, username will be your Gmail address, password will be your "
@@ -5962,7 +5686,7 @@ msgstr ""
 "lesssecureapps\" >HTTPS://WWW.GOOGLE.COM/SETTINGS/SECURITY/LESSSECUREAPPS</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:53
 #, fuzzy
 #| msgid "Email Client (Roundcube)"
 msgid "Email Client"
@@ -7118,63 +6842,6 @@ msgstr ""
 msgid "File Synchronization"
 msgstr ""
 
-#: plinth/modules/tahoe/__init__.py:26
-msgid ""
-"Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
-"independent security to store files over a distributed network of storage "
-"nodes. Even if some of the nodes fail, your files can be retrieved from the "
-"remaining nodes."
-msgstr ""
-
-#: plinth/modules/tahoe/__init__.py:31
-#, python-brace-format
-msgid ""
-"This {box_name} hosts a storage node and an introducer by default. "
-"Additional introducers can be added, which will introduce this node to the "
-"other storage nodes."
-msgstr ""
-
-#: plinth/modules/tahoe/__init__.py:60
-msgid "Tahoe-LAFS"
-msgstr ""
-
-#: plinth/modules/tahoe/__init__.py:62
-msgid "Distributed File Storage"
-msgstr ""
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:17
-#, python-format
-msgid ""
-"The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing the "
-"FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL LOSE "
-"DATA. You can access Tahoe-LAFS at <a href=\"https://"
-"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
-msgstr ""
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:29
-msgid "Local introducer"
-msgstr ""
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:34
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:69
-#, fuzzy
-#| msgid "Name"
-msgid "Pet Name"
-msgstr "NAME"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:48
-msgid "Add new introducer"
-msgstr ""
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
-msgid "Connected introducers"
-msgstr ""
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
-msgid "Remove"
-msgstr ""
-
 #: plinth/modules/tor/__init__.py:26
 #, fuzzy
 #| msgid ""
@@ -7374,6 +7041,10 @@ msgstr ""
 "HELP CIRCUMVENT CENSORSHIP. IF YOUR %(box_name)s IS BEHIND A ROUTER OR "
 "FIREWALL, YOU SHOULD MAKE SURE THE FOLLOWING PORTS ARE OPEN, AND PORT-"
 "FORWARDED, IF NECESSARY:"
+
+#: plinth/modules/tor/templates/tor.html:71
+msgid "Service"
+msgstr "SERVICE"
 
 #: plinth/modules/tor/templates/tor.html:87
 msgid "SOCKS"
@@ -8873,6 +8544,159 @@ msgstr "%(percentage)s%% COMPLETE"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Applications"
+#~ msgid "User registrations enabled"
+#~ msgstr "APPLICATIONS"
+
+#, fuzzy
+#~| msgid "Applications"
+#~ msgid "User registrations disabled"
+#~ msgstr "APPLICATIONS"
+
+#, fuzzy
+#~| msgid "No certficate"
+#~ msgid "Has a TLS certificate"
+#~ msgstr "NO CERTFICATE"
+
+#, fuzzy
+#~| msgid ""
+#~| "With Monkeysphere, a PGP key can be generated for each configured domain "
+#~| "serving SSH. The PGP public key can then be uploaded to the PGP "
+#~| "keyservers. Users connecting to this machine through SSH can verify that "
+#~| "they are connecting to the correct host.  For users to trust the key, at "
+#~| "least one person (usually the machine owner) must sign the key using the "
+#~| "regular PGP key signing process.  See the <a href=\"http://web."
+#~| "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~| "documentation</a> for more details."
+#~ msgid ""
+#~ "With Monkeysphere, an OpenPGP key can be generated for each configured "
+#~ "domain serving SSH. The OpenPGP public key can then be uploaded to the "
+#~ "OpenPGP keyservers. Users connecting to this machine through SSH can "
+#~ "verify that they are connecting to the correct host.  For users to trust "
+#~ "the key, at least one person (usually the machine owner) must sign the "
+#~ "key using the regular OpenPGP key signing process.  See the <a href="
+#~ "\"http://web.monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~ "documentation</a> for more details."
+#~ msgstr ""
+#~ "WITH MONKEYSPHERE, A PGP KEY CAN BE GENERATED FOR EACH CONFIGURED DOMAIN "
+#~ "SERVING SSH. THE PGP PUBLIC KEY CAN THEN BE UPLOADED TO THE PGP "
+#~ "KEYSERVERS. USERS CONNECTING TO THIS MACHINE THROUGH SSH CAN VERIFY THAT "
+#~ "THEY ARE CONNECTING TO THE CORRECT HOST.  FOR USERS TO TRUST THE KEY, AT "
+#~ "LEAST ONE PERSON (USUALLY THE MACHINE OWNER) MUST SIGN THE KEY USING THE "
+#~ "REGULAR PGP KEY SIGNING PROCESS.  SEE THE <a href=\\\"http://web."
+#~ "monkeysphere.info/getting-started-ssh/\\\"> MONKEYSPHERE SSH "
+#~ "DOCUMENTATION</a> FOR MORE DETAILS."
+
+#, fuzzy
+#~| msgid ""
+#~| "With Monkeysphere, a PGP key can be generated for each configured domain "
+#~| "serving SSH. The PGP public key can then be uploaded to the PGP "
+#~| "keyservers. Users connecting to this machine through SSH can verify that "
+#~| "they are connecting to the correct host.  For users to trust the key, at "
+#~| "least one person (usually the machine owner) must sign the key using the "
+#~| "regular PGP key signing process.  See the <a href=\"http://web."
+#~| "monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~| "documentation</a> for more details."
+#~ msgid ""
+#~ "Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
+#~ "(HTTPS) certificate installed on this machine. The OpenPGP public key can "
+#~ "then be uploaded to the OpenPGP keyservers. Users accessing the web "
+#~ "server through HTTPS can verify that they are connecting to the correct "
+#~ "host. To validate the certificate, the user will need to install some "
+#~ "software that is available on the <a href=\"https://web.monkeysphere.info/"
+#~ "download/\"> Monkeysphere website</a>."
+#~ msgstr ""
+#~ "WITH MONKEYSPHERE, A PGP KEY CAN BE GENERATED FOR EACH CONFIGURED DOMAIN "
+#~ "SERVING SSH. THE PGP PUBLIC KEY CAN THEN BE UPLOADED TO THE PGP "
+#~ "KEYSERVERS. USERS CONNECTING TO THIS MACHINE THROUGH SSH CAN VERIFY THAT "
+#~ "THEY ARE CONNECTING TO THE CORRECT HOST.  FOR USERS TO TRUST THE KEY, AT "
+#~ "LEAST ONE PERSON (USUALLY THE MACHINE OWNER) MUST SIGN THE KEY USING THE "
+#~ "REGULAR PGP KEY SIGNING PROCESS.  SEE THE <a href=\\\"http://web."
+#~ "monkeysphere.info/getting-started-ssh/\\\"> MONKEYSPHERE SSH "
+#~ "DOCUMENTATION</a> FOR MORE DETAILS."
+
+#~ msgid "Monkeysphere"
+#~ msgstr "MONKEYSPHERE"
+
+#~ msgid "Publishing key to keyserver..."
+#~ msgstr "PUBLISHING KEY TO KEYSERVER..."
+
+#~ msgid "Cancel"
+#~ msgstr "CANCEL"
+
+#, fuzzy
+#~| msgid "Domain"
+#~ msgid "Domains"
+#~ msgstr "DOMAIN"
+
+#, fuzzy
+#~| msgid "GPG Fingerprint"
+#~ msgid "OpenPGP Fingerprint"
+#~ msgstr "GPG FINGERPRINT"
+
+#, fuzzy
+#~| msgid "Ethernet"
+#~ msgid "Other"
+#~ msgstr "ETHERNET"
+
+#~ msgid "Publish Key"
+#~ msgstr "PUBLISH KEY"
+
+#, fuzzy
+#~| msgid "Domain"
+#~ msgid "Add Domains"
+#~ msgstr "DOMAIN"
+
+#, fuzzy
+#~| msgid "SSH Keys"
+#~ msgid "SSH Key Type"
+#~ msgstr "SSH KEYS"
+
+#, fuzzy
+#~| msgid "SSH Keys"
+#~ msgid "SSH Key Size"
+#~ msgstr "SSH KEYS"
+
+#, fuzzy
+#~| msgid "GPG Fingerprint"
+#~ msgid "SSH Fingerprint"
+#~ msgstr "GPG FINGERPRINT"
+
+#, fuzzy
+#~| msgid "Enable Subdomains"
+#~ msgid "Available Domains"
+#~ msgstr "ENABLE SUBDOMAINS"
+
+#, fuzzy
+#~| msgid "Domain"
+#~ msgid "Added Domains"
+#~ msgstr "DOMAIN"
+
+#, fuzzy
+#~| msgid "Download directory"
+#~ msgid "Download the key"
+#~ msgstr "DOWNLOAD DIRECTORY"
+
+#, fuzzy
+#~| msgid "Published key to keyserver."
+#~ msgid "Send the key back to the keyservers"
+#~ msgstr "PUBLISHED KEY TO KEYSERVER."
+
+#~ msgid "Cancelled key publishing."
+#~ msgstr "CANCELLED KEY PUBLISHING."
+
+#~ msgid "Published key to keyserver."
+#~ msgstr "PUBLISHED KEY TO KEYSERVER."
+
+#~ msgid "Error occurred while publishing key."
+#~ msgstr "ERROR OCCURRED WHILE PUBLISHING KEY."
+
+#, fuzzy
+#~| msgid "Name"
+#~ msgid "Pet Name"
+#~ msgstr "NAME"
 
 #, fuzzy
 #~| msgid "Error setting domain name: {exception}"

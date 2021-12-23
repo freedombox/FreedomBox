@@ -50,9 +50,9 @@ _site_url = {
 
 _sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
-    'dynamicdns', 'firewall', 'letsencrypt', 'monkeysphere', 'names',
-    'networks', 'pagekite', 'performance', 'power', 'security', 'snapshot',
-    'ssh', 'storage', 'upgrades', 'users'
+    'dynamicdns', 'firewall', 'letsencrypt', 'names', 'networks', 'pagekite',
+    'performance', 'power', 'security', 'snapshot', 'ssh', 'storage',
+    'upgrades', 'users'
 ]
 
 
@@ -638,7 +638,7 @@ class BaseAppTests:
     def test_run_diagnostics(self, session_browser):
         """Test that all app diagnostics are passing."""
         if not self.check_diagnostics:
-            pytest.skip(f'Skipping diagnostics check for ${self.app_name}.')
+            pytest.skip(f'Skipping diagnostics check for {self.app_name}.')
 
         time.sleep(self.diagnostics_delay)
         session_browser.find_by_id('id_extra_actions_button').click()

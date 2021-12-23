@@ -10,6 +10,8 @@ from plinth.modules import config
 from plinth.modules.email_server import postconf
 from plinth.modules.names.components import DomainName
 
+from . import tls
+
 
 def get_domains():
     """Return the current domain configuration."""
@@ -39,15 +41,19 @@ def action_set_domains(primary_domain, all_domains):
     primary_domain = _clean_domain(primary_domain)
 
     defaults = {'$myhostname', 'localhost.$mydomain', 'localhost'}
-    all_domains = set(all_domains).union(defaults)
+    my_destination = ', '.join(set(all_domains).union(defaults))
     conf = {
         'myhostname': primary_domain,
         'mydomain': primary_domain,
-        'mydestination': ', '.join(all_domains)
+        'mydestination': my_destination
     }
     postconf.set_many(conf)
     pathlib.Path('/etc/mailname').write_text(primary_domain + '\n')
+    tls.set_postfix_config(primary_domain, all_domains)
+    tls.set_dovecot_config(primary_domain, all_domains)
     subprocess.run(['systemctl', 'try-reload-or-restart', 'postfix'],
+                   check=True)
+    subprocess.run(['systemctl', 'try-reload-or-restart', 'dovecot'],
                    check=True)
 
 

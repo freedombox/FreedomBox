@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-06 18:35-0500\n"
+"POT-Creation-Date: 2021-12-20 20:43-0500\n"
 "PO-Revision-Date: 2021-11-29 19:52+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -118,8 +118,6 @@ msgid "Apache HTTP Server"
 msgstr "Nettprat-tjener"
 
 #: plinth/modules/apache/__init__.py:41
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:49
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:46
 msgid "Web Server"
 msgstr "Nett-tjener"
 
@@ -1234,9 +1232,7 @@ msgstr "Generelt oppsett"
 #: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:24
-#: plinth/templates/index.html:46
+#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
 msgid "Configure"
 msgstr "Oppsett"
 
@@ -1422,11 +1418,11 @@ msgstr ""
 "Nettverkstidstjeneren er et program som synkroniserer systemets klokke med "
 "tjenere på Internettet."
 
-#: plinth/modules/datetime/__init__.py:64
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Dato og tid"
 
-#: plinth/modules/datetime/__init__.py:110
+#: plinth/modules/datetime/__init__.py:113
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkronisert til NTP-tjener"
 
@@ -1609,79 +1605,6 @@ msgstr "Resultat"
 #: plinth/modules/diagnostics/views.py:57
 msgid "Diagnostic Test"
 msgstr "Diagnostikktest"
-
-#: plinth/modules/diaspora/__init__.py:40
-msgid ""
-"diaspora* is a decentralized social network where you can store and control "
-"your own data."
-msgstr ""
-"diaspora* er et desentralisert sosialt nettverk der du kan lagre og "
-"administrere dine egne data."
-
-#: plinth/modules/diaspora/__init__.py:66
-#: plinth/modules/diaspora/manifest.py:23
-msgid "diaspora*"
-msgstr "diaspora*"
-
-#: plinth/modules/diaspora/__init__.py:67
-msgid "Federated Social Network"
-msgstr "Sammenknyttet sosialt nettverk"
-
-#: plinth/modules/diaspora/forms.py:13
-msgid "Enable new user registrations"
-msgstr "Skru på nye brukerregistreringer"
-
-#: plinth/modules/diaspora/manifest.py:11
-msgid "dandelion*"
-msgstr "dandelion*"
-
-#: plinth/modules/diaspora/manifest.py:13
-msgid ""
-"It is an unofficial webview based client for the community-run, distributed "
-"social network diaspora*"
-msgstr ""
-"Dette er en uoffisiell vevbasert klient for det gemenskapsdrevne, "
-"sammenknyttede sosiale nettverket diaspora*"
-
-#: plinth/modules/diaspora/templates/diaspora-post-setup.html:16
-#, python-format
-msgid ""
-"The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
-"look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
-"domain name is changed, all data of the users registered with the previous "
-"podname wouldn't be accessible. <br/> You can access the diaspora* pod at <a "
-"href=\"https://diaspora.%(domain_name)s\"> diaspora.%(domain_name)s </a>"
-msgstr ""
-"Diaspora* pod-domenet er satt til <b>%(domain_name)s</b>. Bruker-ID-er vil "
-"ligne <i>username@diaspora.%(domain_name)s</i><br/> Hvis FreedomBox-"
-"domenenavnet endres, vil alle data til brukerne bli registrert med det "
-"forrige podnavnet ikke være tilgjengelig. <br/> Du får diaspora* pod på <a "
-"href=\"https://diaspora.%(domain_name)s\">diaspora.%(domain_name)s</a>"
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:36
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
-msgid "Configuration"
-msgstr "Oppsett"
-
-#: plinth/modules/diaspora/templates/diaspora-pre-setup.html:43
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/modules/tahoe/templates/tahoe-pre-setup.html:43
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Oppdater oppsett"
-
-#: plinth/modules/diaspora/views.py:74
-msgid "User registrations enabled"
-msgstr "Brukerregistreringer aktivert"
-
-#: plinth/modules/diaspora/views.py:78
-msgid "User registrations disabled"
-msgstr "Brukerregistreringer deaktivert"
 
 #: plinth/modules/dynamicdns/__init__.py:22
 #, python-brace-format
@@ -1903,6 +1826,14 @@ msgstr ""
 "Du har skrudd av JavaScript. Dynamisk formmodus er avskrudd, og noen "
 "helpefunksjoner vil ikke virke (men hovedfunksjonaliteten skal virke)."
 
+#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Oppdater oppsett"
+
 #: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
 msgid "NAT type"
 msgstr "NAT-type"
@@ -2122,7 +2053,7 @@ msgstr ""
 msgid "Email Server"
 msgstr "Nettprat-tjener"
 
-#: plinth/modules/email_server/__init__.py:91
+#: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
@@ -2147,20 +2078,6 @@ msgstr ""
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:81
-msgid "Postfix TLS parameters"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:82
-msgid "Postfix uses a TLS certificate"
-msgstr ""
-
-#: plinth/modules/email_server/audit/tls.py:91
-#, fuzzy
-#| msgid "No certificate"
-msgid "Has a TLS certificate"
-msgstr "Sertifikat mangler"
 
 #: plinth/modules/email_server/forms.py:17
 #, fuzzy
@@ -2230,7 +2147,7 @@ msgid "Disabled"
 msgstr "Deaktivert"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:52
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2279,7 +2196,6 @@ msgid "Create a new email alias"
 msgstr "Lag ny sikkerhetskopi"
 
 #: plinth/modules/email_server/templates/email_alias.html:38
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:59
 msgid "Add"
 msgstr "Legg til"
 
@@ -3382,6 +3298,12 @@ msgstr ""
 msgid "Element"
 msgstr "Element"
 
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: plinth/modules/snapshot/templates/snapshot.html:12
+#: plinth/templates/app.html:46
+msgid "Configuration"
+msgstr "Oppsett"
+
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
 "Matrix service needs to be configured for a domain. Users on other Matrix "
@@ -3786,172 +3708,6 @@ msgstr "KMLDonkey"
 msgid "AMLDonkey"
 msgstr "AMLDonkey"
 
-#: plinth/modules/monkeysphere/__init__.py:17
-msgid ""
-"With Monkeysphere, an OpenPGP key can be generated for each configured "
-"domain serving SSH. The OpenPGP public key can then be uploaded to the "
-"OpenPGP keyservers. Users connecting to this machine through SSH can verify "
-"that they are connecting to the correct host.  For users to trust the key, "
-"at least one person (usually the machine owner) must sign the key using the "
-"regular OpenPGP key signing process.  See the <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation</a> "
-"for more details."
-msgstr ""
-"Med Monkeysphere kan en OpenPGP-nøkkel generes for hvert konfigurert domene "
-"som tjener SSH. OpenPGP-nøkkelen kan deretter lastes opp til OpenPGP-"
-"nøkkeltjenerne. Brukere som kobler til denne maskinen via SSH kan få "
-"bekreftet at de kobler til riktig vert. For at brukerne skal stole på "
-"nøkkelen, må minst en person (vanligvis maskinens eier) signere nøkkelen med "
-"en vanlig OpenPGP-nøkkel godkjenningsprosess. Se  <a href=\"http://web."
-"monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH documentation </"
-"a> for flere detaljer."
-
-#: plinth/modules/monkeysphere/__init__.py:25
-msgid ""
-"Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
-"(HTTPS) certificate installed on this machine. The OpenPGP public key can "
-"then be uploaded to the OpenPGP keyservers. Users accessing the web server "
-"through HTTPS can verify that they are connecting to the correct host. To "
-"validate the certificate, the user will need to install some software that "
-"is available on the <a href=\"https://web.monkeysphere.info/download/\"> "
-"Monkeysphere website</a>."
-msgstr ""
-"Monkeysphere kan også generere en OpenPGP-nøkkel for hvert \"Secure Web "
-"Server\" (HTTPS)-sertifikat som er installert på denne maskinen. OpenPGP-"
-"nøkkelen kan deretter lastes opp til OpenPGP-nøkkeltjenere. Brukere som "
-"kobler til nett-tjeneren via maskinen via HTTPS kan få bekreftet at de "
-"kobler til riktig vert. For at brukerne skal stole på sertifikatet, trenger "
-"brukeren å installere noe programvare som er tilgjengelig på <a href="
-"\"https://web.monkeysphere.info/download/\"> Monkeysphere-nettsiden </a>."
-
-#: plinth/modules/monkeysphere/__init__.py:50
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:11
-msgid "Monkeysphere"
-msgstr "Monkeysphere"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:20
-msgid "Publishing key to keyserver..."
-msgstr "Publisering av nøkkel til nøkkeltjener…"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:27
-msgid "Cancel"
-msgstr "Kanseller"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:36
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:41
-#: plinth/modules/tor/templates/tor.html:71
-msgid "Service"
-msgstr "Tjeneste"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:37
-msgid "Domains"
-msgstr "Domener"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:38
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:17
-msgid "OpenPGP Fingerprint"
-msgstr "OpenPGP Fingerprint (fingeravtrykk)"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:47
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:44
-#: plinth/modules/names/components.py:24
-msgid "Secure Shell"
-msgstr "Secure Shell (SSH)"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:51
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:48
-msgid "Other"
-msgstr "Annen"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:88
-#, python-format
-msgid "Show details for key %(fingerprint)s"
-msgstr "Se detaljer for nøkkel %(fingerprint)s"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:94
-msgid "-"
-msgstr "-"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:105
-msgid "Import Key"
-msgstr "Importer nøkkel"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:115
-msgid "Publish Key"
-msgstr "Legge ut nøkkel"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere.html:125
-msgid "Add Domains"
-msgstr "Legg til domener"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:21
-msgid "OpenPGP User IDs"
-msgstr "OpenPGP User ID-er (bruker ID-er)"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:25
-msgid "Key Import Date"
-msgstr "Dato for nøkkelimport"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:29
-msgid "SSH Key Type"
-msgstr "SSH nøkkeltype"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:33
-msgid "SSH Key Size"
-msgstr "SSH Nøkkelstørrelse"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:37
-msgid "SSH Fingerprint"
-msgstr "SSH Fingeravtrykk"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:53
-msgid "Key File"
-msgstr "Nøkkelfil"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:57
-msgid "Available Domains"
-msgstr "Tilgjengelige domener"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:61
-msgid "Added Domains"
-msgstr "Domener lagt til"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:69
-msgid ""
-"After this key is published to the keyservers, it can be signed using <a "
-"href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
-msgstr ""
-"Etter at denne nøkkelen er lagt ut til nøkkeltjenerrne, kan den signeres ved "
-"å bruke <a href=\"https://www.gnupg.org/\">GnuPG</a> med følgende kommandoer:"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:75
-msgid "Download the key"
-msgstr "Last ned nøkkelen"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:78
-msgid "Sign the key"
-msgstr "Signer nøkkelen"
-
-#: plinth/modules/monkeysphere/templates/monkeysphere_details.html:81
-msgid "Send the key back to the keyservers"
-msgstr "Send nøkkelen tilbake til nøkkeltjenerne"
-
-#: plinth/modules/monkeysphere/views.py:44
-msgid "Imported key."
-msgstr "Importert nøkkel."
-
-#: plinth/modules/monkeysphere/views.py:80
-msgid "Cancelled key publishing."
-msgstr "Avbrutt nøkkelutlegging."
-
-#: plinth/modules/monkeysphere/views.py:131
-msgid "Published key to keyserver."
-msgstr "Publisert nøkkel til nøkkeltjener."
-
-#: plinth/modules/monkeysphere/views.py:133
-msgid "Error occurred while publishing key."
-msgstr "Feil oppstått under utlegging av nøkkel."
-
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
@@ -4037,6 +3793,10 @@ msgstr "Alle"
 #: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
 msgid "All web apps"
 msgstr "Alle nettprogrammer"
+
+#: plinth/modules/names/components.py:24
+msgid "Secure Shell"
+msgstr "Secure Shell (SSH)"
 
 #: plinth/modules/names/templates/names.html:17
 #, fuzzy
@@ -5819,7 +5579,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Tilgangskontrolloppsett oppdatert"
 
-#: plinth/modules/roundcube/__init__.py:20
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5831,7 +5591,7 @@ msgstr ""
 "forventer fra en e-posttjener, medregnet MIME-støtte, adressebok, "
 "mappebehandling, søk etter meldinger og stavekontroll."
 
-#: plinth/modules/roundcube/__init__.py:25
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5844,7 +5604,7 @@ msgstr ""
 "som <code>imap.example.com</code>.  For IMAP over SSL (anbefalt), fyll "
 "feltet for tjeneren, som <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:30
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5860,7 +5620,7 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/roundcube/__init__.py:53
 msgid "Email Client"
 msgstr "E-postklient"
 
@@ -7038,72 +6798,6 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Filsynkronisering"
 
-#: plinth/modules/tahoe/__init__.py:26
-msgid ""
-"Tahoe-LAFS is a decentralized secure file storage system. It uses provider "
-"independent security to store files over a distributed network of storage "
-"nodes. Even if some of the nodes fail, your files can be retrieved from the "
-"remaining nodes."
-msgstr ""
-"Tahoe-LAFS er et desentralisert, sikkert arkivsystem for fillagring. Den "
-"bruker leverandøruavhengig sikkerhet for å lagre filer over et distribuert "
-"nettverk av lagringsnoder. Selv om noen av nodene mislykkes, kan filene "
-"hentes tilbake fra de gjenværende nodene."
-
-#: plinth/modules/tahoe/__init__.py:31
-#, python-brace-format
-msgid ""
-"This {box_name} hosts a storage node and an introducer by default. "
-"Additional introducers can be added, which will introduce this node to the "
-"other storage nodes."
-msgstr ""
-"Denne {box_name} er vert for en lagringsnode og en introduserer som "
-"standard. Ekstra introduserere kan legges til, og vil introdusere denne "
-"noden for de andre lagringsnodene."
-
-#: plinth/modules/tahoe/__init__.py:60
-msgid "Tahoe-LAFS"
-msgstr "Tahoe-LAFS"
-
-#: plinth/modules/tahoe/__init__.py:62
-msgid "Distributed File Storage"
-msgstr "Distribuert fillagring"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:17
-#, python-format
-msgid ""
-"The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing the "
-"FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL LOSE "
-"DATA. You can access Tahoe-LAFS at <a href=\"https://"
-"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
-msgstr ""
-"Tahoe-LAFS-tjenerdomenet er satt til <b>%(domain_name)s</b>. Endrer du "
-"navnet på FreedomBox-domenet, trengs en reinstallering av Tahoe-LAFS, og du "
-"VIL MISTE DATA. Du kan få tilgang til Tahoe-LAFS på <a href=\"https://"
-"%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:29
-msgid "Local introducer"
-msgstr "Lokal introduserer"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:34
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:51
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:69
-msgid "Pet Name"
-msgstr "Kjæledyrnavn"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:48
-msgid "Add new introducer"
-msgstr "Legg til en ny introduserer"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:64
-msgid "Connected introducers"
-msgstr "Tilknyttede introduserere"
-
-#: plinth/modules/tahoe/templates/tahoe-post-setup.html:82
-msgid "Remove"
-msgstr "Fjern"
-
 #: plinth/modules/tor/__init__.py:26
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
@@ -7291,6 +6985,10 @@ msgid ""
 msgstr ""
 "Hvis din %(box_name)s er bak en ruter eller brannvegg, må du forsikre deg om "
 "at de følgende portene er åpne, og at portene er videresendt, om nødvendig:"
+
+#: plinth/modules/tor/templates/tor.html:71
+msgid "Service"
+msgstr "Tjeneste"
 
 #: plinth/modules/tor/templates/tor.html:87
 msgid "SOCKS"
@@ -8796,6 +8494,236 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "diaspora* is a decentralized social network where you can store and "
+#~ "control your own data."
+#~ msgstr ""
+#~ "diaspora* er et desentralisert sosialt nettverk der du kan lagre og "
+#~ "administrere dine egne data."
+
+#~ msgid "diaspora*"
+#~ msgstr "diaspora*"
+
+#~ msgid "Federated Social Network"
+#~ msgstr "Sammenknyttet sosialt nettverk"
+
+#~ msgid "Enable new user registrations"
+#~ msgstr "Skru på nye brukerregistreringer"
+
+#~ msgid "dandelion*"
+#~ msgstr "dandelion*"
+
+#~ msgid ""
+#~ "It is an unofficial webview based client for the community-run, "
+#~ "distributed social network diaspora*"
+#~ msgstr ""
+#~ "Dette er en uoffisiell vevbasert klient for det gemenskapsdrevne, "
+#~ "sammenknyttede sosiale nettverket diaspora*"
+
+#, python-format
+#~ msgid ""
+#~ "The diaspora* pod domain is set to <b>%(domain_name)s</b>. User IDs will "
+#~ "look like <i>username@diaspora.%(domain_name)s</i><br/> If the FreedomBox "
+#~ "domain name is changed, all data of the users registered with the "
+#~ "previous podname wouldn't be accessible. <br/> You can access the "
+#~ "diaspora* pod at <a href=\"https://diaspora.%(domain_name)s\"> diaspora."
+#~ "%(domain_name)s </a>"
+#~ msgstr ""
+#~ "Diaspora* pod-domenet er satt til <b>%(domain_name)s</b>. Bruker-ID-er "
+#~ "vil ligne <i>username@diaspora.%(domain_name)s</i><br/> Hvis FreedomBox-"
+#~ "domenenavnet endres, vil alle data til brukerne bli registrert med det "
+#~ "forrige podnavnet ikke være tilgjengelig. <br/> Du får diaspora* pod på "
+#~ "<a href=\"https://diaspora.%(domain_name)s\">diaspora.%(domain_name)s</a>"
+
+#~ msgid "User registrations enabled"
+#~ msgstr "Brukerregistreringer aktivert"
+
+#~ msgid "User registrations disabled"
+#~ msgstr "Brukerregistreringer deaktivert"
+
+#, fuzzy
+#~| msgid "No certificate"
+#~ msgid "Has a TLS certificate"
+#~ msgstr "Sertifikat mangler"
+
+#~ msgid ""
+#~ "With Monkeysphere, an OpenPGP key can be generated for each configured "
+#~ "domain serving SSH. The OpenPGP public key can then be uploaded to the "
+#~ "OpenPGP keyservers. Users connecting to this machine through SSH can "
+#~ "verify that they are connecting to the correct host.  For users to trust "
+#~ "the key, at least one person (usually the machine owner) must sign the "
+#~ "key using the regular OpenPGP key signing process.  See the <a href="
+#~ "\"http://web.monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~ "documentation</a> for more details."
+#~ msgstr ""
+#~ "Med Monkeysphere kan en OpenPGP-nøkkel generes for hvert konfigurert "
+#~ "domene som tjener SSH. OpenPGP-nøkkelen kan deretter lastes opp til "
+#~ "OpenPGP-nøkkeltjenerne. Brukere som kobler til denne maskinen via SSH kan "
+#~ "få bekreftet at de kobler til riktig vert. For at brukerne skal stole på "
+#~ "nøkkelen, må minst en person (vanligvis maskinens eier) signere nøkkelen "
+#~ "med en vanlig OpenPGP-nøkkel godkjenningsprosess. Se  <a href=\"http://"
+#~ "web.monkeysphere.info/getting-started-ssh/\"> Monkeysphere SSH "
+#~ "documentation </a> for flere detaljer."
+
+#~ msgid ""
+#~ "Monkeysphere can also generate an OpenPGP key for each Secure Web Server "
+#~ "(HTTPS) certificate installed on this machine. The OpenPGP public key can "
+#~ "then be uploaded to the OpenPGP keyservers. Users accessing the web "
+#~ "server through HTTPS can verify that they are connecting to the correct "
+#~ "host. To validate the certificate, the user will need to install some "
+#~ "software that is available on the <a href=\"https://web.monkeysphere.info/"
+#~ "download/\"> Monkeysphere website</a>."
+#~ msgstr ""
+#~ "Monkeysphere kan også generere en OpenPGP-nøkkel for hvert \"Secure Web "
+#~ "Server\" (HTTPS)-sertifikat som er installert på denne maskinen. OpenPGP-"
+#~ "nøkkelen kan deretter lastes opp til OpenPGP-nøkkeltjenere. Brukere som "
+#~ "kobler til nett-tjeneren via maskinen via HTTPS kan få bekreftet at de "
+#~ "kobler til riktig vert. For at brukerne skal stole på sertifikatet, "
+#~ "trenger brukeren å installere noe programvare som er tilgjengelig på <a "
+#~ "href=\"https://web.monkeysphere.info/download/\"> Monkeysphere-nettsiden "
+#~ "</a>."
+
+#~ msgid "Monkeysphere"
+#~ msgstr "Monkeysphere"
+
+#~ msgid "Publishing key to keyserver..."
+#~ msgstr "Publisering av nøkkel til nøkkeltjener…"
+
+#~ msgid "Cancel"
+#~ msgstr "Kanseller"
+
+#~ msgid "Domains"
+#~ msgstr "Domener"
+
+#~ msgid "OpenPGP Fingerprint"
+#~ msgstr "OpenPGP Fingerprint (fingeravtrykk)"
+
+#~ msgid "Other"
+#~ msgstr "Annen"
+
+#, python-format
+#~ msgid "Show details for key %(fingerprint)s"
+#~ msgstr "Se detaljer for nøkkel %(fingerprint)s"
+
+#~ msgid "-"
+#~ msgstr "-"
+
+#~ msgid "Import Key"
+#~ msgstr "Importer nøkkel"
+
+#~ msgid "Publish Key"
+#~ msgstr "Legge ut nøkkel"
+
+#~ msgid "Add Domains"
+#~ msgstr "Legg til domener"
+
+#~ msgid "OpenPGP User IDs"
+#~ msgstr "OpenPGP User ID-er (bruker ID-er)"
+
+#~ msgid "Key Import Date"
+#~ msgstr "Dato for nøkkelimport"
+
+#~ msgid "SSH Key Type"
+#~ msgstr "SSH nøkkeltype"
+
+#~ msgid "SSH Key Size"
+#~ msgstr "SSH Nøkkelstørrelse"
+
+#~ msgid "SSH Fingerprint"
+#~ msgstr "SSH Fingeravtrykk"
+
+#~ msgid "Key File"
+#~ msgstr "Nøkkelfil"
+
+#~ msgid "Available Domains"
+#~ msgstr "Tilgjengelige domener"
+
+#~ msgid "Added Domains"
+#~ msgstr "Domener lagt til"
+
+#~ msgid ""
+#~ "After this key is published to the keyservers, it can be signed using <a "
+#~ "href=\"https://www.gnupg.org/\">GnuPG</a> with the following commands:"
+#~ msgstr ""
+#~ "Etter at denne nøkkelen er lagt ut til nøkkeltjenerrne, kan den signeres "
+#~ "ved å bruke <a href=\"https://www.gnupg.org/\">GnuPG</a> med følgende "
+#~ "kommandoer:"
+
+#~ msgid "Download the key"
+#~ msgstr "Last ned nøkkelen"
+
+#~ msgid "Sign the key"
+#~ msgstr "Signer nøkkelen"
+
+#~ msgid "Send the key back to the keyservers"
+#~ msgstr "Send nøkkelen tilbake til nøkkeltjenerne"
+
+#~ msgid "Imported key."
+#~ msgstr "Importert nøkkel."
+
+#~ msgid "Cancelled key publishing."
+#~ msgstr "Avbrutt nøkkelutlegging."
+
+#~ msgid "Published key to keyserver."
+#~ msgstr "Publisert nøkkel til nøkkeltjener."
+
+#~ msgid "Error occurred while publishing key."
+#~ msgstr "Feil oppstått under utlegging av nøkkel."
+
+#~ msgid ""
+#~ "Tahoe-LAFS is a decentralized secure file storage system. It uses "
+#~ "provider independent security to store files over a distributed network "
+#~ "of storage nodes. Even if some of the nodes fail, your files can be "
+#~ "retrieved from the remaining nodes."
+#~ msgstr ""
+#~ "Tahoe-LAFS er et desentralisert, sikkert arkivsystem for fillagring. Den "
+#~ "bruker leverandøruavhengig sikkerhet for å lagre filer over et "
+#~ "distribuert nettverk av lagringsnoder. Selv om noen av nodene mislykkes, "
+#~ "kan filene hentes tilbake fra de gjenværende nodene."
+
+#, python-brace-format
+#~ msgid ""
+#~ "This {box_name} hosts a storage node and an introducer by default. "
+#~ "Additional introducers can be added, which will introduce this node to "
+#~ "the other storage nodes."
+#~ msgstr ""
+#~ "Denne {box_name} er vert for en lagringsnode og en introduserer som "
+#~ "standard. Ekstra introduserere kan legges til, og vil introdusere denne "
+#~ "noden for de andre lagringsnodene."
+
+#~ msgid "Tahoe-LAFS"
+#~ msgstr "Tahoe-LAFS"
+
+#~ msgid "Distributed File Storage"
+#~ msgstr "Distribuert fillagring"
+
+#, python-format
+#~ msgid ""
+#~ "The Tahoe-LAFS server domain is set to <b>%(domain_name)s</b>. Changing "
+#~ "the FreedomBox domain name needs a reinstall of Tahoe-LAFS and you WILL "
+#~ "LOSE DATA. You can access Tahoe-LAFS at <a href=\"https://"
+#~ "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+#~ msgstr ""
+#~ "Tahoe-LAFS-tjenerdomenet er satt til <b>%(domain_name)s</b>. Endrer du "
+#~ "navnet på FreedomBox-domenet, trengs en reinstallering av Tahoe-LAFS, og "
+#~ "du VIL MISTE DATA. Du kan få tilgang til Tahoe-LAFS på <a href=\"https://"
+#~ "%(domain_name)s:5678\">https://%(domain_name)s:5678</a>."
+
+#~ msgid "Local introducer"
+#~ msgstr "Lokal introduserer"
+
+#~ msgid "Pet Name"
+#~ msgstr "Kjæledyrnavn"
+
+#~ msgid "Add new introducer"
+#~ msgstr "Legg til en ny introduserer"
+
+#~ msgid "Connected introducers"
+#~ msgstr "Tilknyttede introduserere"
+
+#~ msgid "Remove"
+#~ msgstr "Fjern"
 
 #, fuzzy
 #~| msgid "Error setting domain name: {exception}"

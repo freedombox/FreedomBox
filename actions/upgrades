@@ -13,6 +13,7 @@ import re
 import subprocess
 import sys
 import time
+from typing import List, Tuple
 
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
@@ -89,6 +90,18 @@ Pin: release a=buster-backports
 Pin-Priority: 500
 '''
 
+DIST_UPGRADE_OBSOLETE_PACKAGES: List[str] = []
+
+DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
+    'firewalld', 'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
+]
+
+DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
+
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = []
+
+DIST_UPGRADE_REQUIRED_FREE_SPACE = 5000000
+
 DIST_UPGRADE_SERVICE = '''
 [Unit]
 Description=Upgrade to new stable Debian release
@@ -138,15 +151,18 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def _release_held_freedombox():
+    """In case freedombox package was left in held state by an interrupted
+    process, release it."""
+    if apt_hold_flag.exists() and not is_package_manager_busy():
+        apt_unhold_freedombox()
+
+
 def _run():
     """Run unattended-upgrades"""
     subprocess.run(['dpkg', '--configure', '-a'], check=False)
     run_apt_command(['--fix-broken', 'install'])
-
-    # In case freedombox package was left in held state by an
-    # interrupted process, release it.
-    if apt_hold_flag.exists() and not is_package_manager_busy():
-        apt_unhold_freedombox()
+    _release_held_freedombox()
 
     subprocess.Popen(['systemctl', 'start', 'freedombox-manual-upgrade'],
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
@@ -166,7 +182,7 @@ def subcommand_run(_):
         sys.exit(3)
 
 
-def _check_auto():
+def _check_auto() -> bool:
     """Check if automatic upgrades are enabled."""
     arguments = [
         'apt-config', 'shell', 'UpdateInterval',
@@ -221,7 +237,7 @@ def subcommand_get_log(_):
         pass
 
 
-def _get_protocol():
+def _get_protocol() -> str:
     """Return the protocol to use for newly added repository sources."""
     try:
         from plinth.modules.tor import utils
@@ -233,7 +249,8 @@ def _get_protocol():
     return 'http'
 
 
-def _is_release_file_available(protocol, dist, backports=False):
+def _is_release_file_available(protocol: str, dist: str,
+                               backports=False) -> bool:
     """Return whether the release for dist[-backports] is available."""
     wrapper = None
     if protocol == 'tor+http':
@@ -246,7 +263,7 @@ def _is_release_file_available(protocol, dist, backports=False):
     return result == 'passed'
 
 
-def _add_backports_sources(sources_list, protocol, dist):
+def _add_backports_sources(sources_list: str, protocol: str, dist: str):
     """Add backports sources to freedombox repositories list."""
     sources = '''# This file is managed by FreedomBox, do not edit.
 # Allow carefully selected updates to 'freedombox' from backports.
@@ -326,7 +343,14 @@ def _add_apt_preferences():
             file_handle.write(APT_PREFERENCES_APPS)
 
 
-def _check_dist_upgrade(test_upgrade=False):
+def _is_sufficient_free_space() -> bool:
+    """Return whether there is sufficient free space for dist upgrade."""
+    output = subprocess.check_output(['df', '--output=avail', '/'])
+    free_space = int(output.decode().split('\n')[1])
+    return free_space >= DIST_UPGRADE_REQUIRED_FREE_SPACE
+
+
+def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
     """Check for new stable release, if updates are enabled, and if there is
     enough free space for the dist upgrade.
 
@@ -377,9 +401,7 @@ def _check_dist_upgrade(test_upgrade=False):
     if check_dist == 'testing' and not test_upgrade:
         return (False, 'test-not-set')
 
-    output = subprocess.check_output(['df', '--output=avail', '/'])
-    free_space = int(output.decode().split('\n')[1])
-    if free_space < 5000000:
+    if not _is_sufficient_free_space():
         return (False, 'not-enough-free-space')
 
     logging.info('Upgrading from %s to %s...', dist, codename)
@@ -405,29 +427,44 @@ def _check_dist_upgrade(test_upgrade=False):
     return (True, 'started-dist-upgrade')
 
 
-def _perform_dist_upgrade():
-    """Perform upgrade to next release of Debian."""
-    # Take a snapshot if supported and enabled, then disable snapshots.
-    snapshots_supported = snapshot_is_supported()
-    if snapshots_supported:
+def _take_snapshot_and_disable() -> bool:
+    """Take a snapshot if supported and enabled, then disable snapshots.
+
+    Return whether snapshots shall be re-enabled at the end."""
+    if snapshot_is_supported():
         print('Taking a snapshot before dist upgrade...', flush=True)
         subprocess.run(['/usr/share/plinth/actions/snapshot', 'create'],
                        check=True)
         aug = snapshot_load_augeas()
-        apt_snapshots_enabled = is_apt_snapshots_enabled(aug)
-        if apt_snapshots_enabled:
+        if is_apt_snapshots_enabled(aug):
             print('Disable apt snapshots during dist upgrade...', flush=True)
             subprocess.run([
                 '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot',
                 'yes'
             ], check=True)
+            return True
         else:
             print('Apt snapshots already disabled.', flush=True)
     else:
         print('Snapshots are not supported, skip taking a snapshot.',
               flush=True)
 
-    # If searx is enabled, disable it until we can upgrade it properly.
+    return False
+
+
+def _restore_snapshots_config(reenable=False):
+    """Restore original snapshots configuration."""
+    if reenable:
+        print('Re-enable apt snapshots...', flush=True)
+        subprocess.run([
+            '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot', 'no'
+        ], check=True)
+
+
+def _disable_searx() -> bool:
+    """If searx is enabled, disable it until we can upgrade it properly.
+
+    Return whether searx was originally enabled."""
     searx_is_enabled = pathlib.Path(
         '/etc/uwsgi/apps-enabled/searx.ini').exists()
     if searx_is_enabled:
@@ -437,54 +474,74 @@ def _perform_dist_upgrade():
             'searx'
         ], check=True)
 
+    return searx_is_enabled
+
+
+def _update_searx(reenable=False):
+    """If searx is installed, update search engines list.
+    Re-enable if previously enabled."""
+    if pathlib.Path('/etc/searx/settings.yml').exists():
+        print('Updating searx search engines list...', flush=True)
+        subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
+                       check=True)
+        if reenable:
+            print('Re-enabling searx after upgrade...', flush=True)
+            subprocess.run([
+                '/usr/share/plinth/actions/apache', 'uwsgi-enable', '--name',
+                'searx'
+            ], check=True)
+
+
+def _perform_dist_upgrade():
+    """Perform upgrade to next release of Debian."""
+    reenable_snapshots = _take_snapshot_and_disable()
+    reenable_searx = _disable_searx()
+
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
     with apt_hold_freedombox():
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
-        print('Upgrading base-files and unattended-upgrades...', flush=True)
-        run_apt_command(['install', 'base-files'])
-        run_apt_command(['install', 'python3-systemd', 'unattended-upgrades'])
+        # Install packages that are necessary for unattended-upgrades
+        # to start the dist upgrade.
+        print(f'Upgrading packages: {DIST_UPGRADE_PRE_INSTALL_PACKAGES}...',
+              flush=True)
+        run_apt_command(['install'] + DIST_UPGRADE_PRE_INSTALL_PACKAGES)
 
-        # Tell grub-pc to continue without installing grub again.
-        print('Set grub-pc to not require re-installing grub...', flush=True)
-        debconf_set_selections(
-            ['grub-pc grub-pc/install_devices_empty boolean true'])
+        # Pre-set debconf selections if they are required during the
+        # dist upgrade.
+        if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
+            print(
+                f'Setting debconf selections: '
+                f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
+            debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
+        # This will upgrade most of the packages.
         print('Running unattended-upgrade...', flush=True)
         subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
-        print('Removing libgcc1...', flush=True)
-        run_apt_command(['remove', 'libgcc1'])
+        if DIST_UPGRADE_OBSOLETE_PACKAGES:
+            print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
+                  flush=True)
+            run_apt_command(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
 
         # Hold packages known to have conffile prompts. FreedomBox service
         # will handle their upgrade later.
-        packages_with_prompts = [
-            'firewalld', 'mumble-server', 'radicale', 'roundcube-core'
-        ]
         print(
             'Holding packages with conffile prompts: ' +
-            ', '.join(packages_with_prompts) + '...', flush=True)
-        with apt_hold(packages_with_prompts):
-            print('Holding tt-rss package if available...', flush=True)
-            with apt_hold(['tt-rss'], ignore_errors=True):
-                print('Running apt full-upgrade...', flush=True)
-                run_apt_command(['full-upgrade'])
+            ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
+        # XXX: If any of these packages have been removed from the
+        # next stable release, they will causes the hold command to
+        # fail for all packages. So it would be safer to just hold one
+        # package at a time.
+        with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
+            print('Running apt full-upgrade...', flush=True)
+            run_apt_command(['full-upgrade'])
 
-        # If searx is installed, update search engines list.
-        if pathlib.Path('/etc/searx/settings.yml').exists():
-            print('Updating searx search engines list...', flush=True)
-            subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
-                           check=True)
-            if searx_is_enabled:
-                print('Re-enabling searx after upgrade...', flush=True)
-                subprocess.run([
-                    '/usr/share/plinth/actions/apache', 'uwsgi-enable',
-                    '--name', 'searx'
-                ], check=True)
+        _update_searx(reenable_searx)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
@@ -494,12 +551,7 @@ def _perform_dist_upgrade():
     print('Running unattended-upgrade...', flush=True)
     subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
-    # Restore original snapshots configuration.
-    if snapshots_supported and apt_snapshots_enabled:
-        print('Re-enable apt snapshots...', flush=True)
-        subprocess.run([
-            '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot', 'no'
-        ], check=True)
+    _restore_snapshots_config(reenable_snapshots)
 
     # Restart FreedomBox service to ensure it is using the latest
     # dependencies.
@@ -532,27 +584,29 @@ def subcommand_activate_backports(arguments):
     _check_and_backports_sources(arguments.develop)
 
 
+def _start_dist_upgrade_service():
+    """Create dist upgrade service and start it."""
+    with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
+        service_file.write(DIST_UPGRADE_SERVICE)
+
+    service_daemon_reload()
+    subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
+                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                     stderr=subprocess.DEVNULL, close_fds=True,
+                     start_new_session=True)
+
+
 def subcommand_start_dist_upgrade(arguments):
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process
     if updates are enabled.
     """
-    # In case freedombox package was left in held state by an
-    # interrupted process, release it.
-    if apt_hold_flag.exists() and not is_package_manager_busy():
-        apt_unhold_freedombox()
+    _release_held_freedombox()
 
     upgrade_ready, reason = _check_dist_upgrade(arguments.test)
     if upgrade_ready:
-        with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
-            service_file.write(DIST_UPGRADE_SERVICE)
-
-        service_daemon_reload()
-        subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
-                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL, close_fds=True,
-                         start_new_session=True)
+        _start_dist_upgrade_service()
 
     print(
         json.dumps({

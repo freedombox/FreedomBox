@@ -46,7 +46,7 @@ class EmailServerView(ExceptionsMixin, AppView):
     app_id = 'email_server'
     form_class = forms.DomainForm
     template_name = 'email_server.html'
-    audit_modules = ('tls', 'rcube')
+    audit_modules = ('rcube', )
 
     def get_initial(self):
         """Return the initial values to populate in the form."""

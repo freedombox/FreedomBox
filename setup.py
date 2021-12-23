@@ -39,6 +39,7 @@ DISABLED_APPS_TO_REMOVE = [
     'apps',
     'coquelicot',
     'diaspora',
+    'monkeysphere',
     'owncloud',
     'system',
     'xmpp',
@@ -46,6 +47,7 @@ DISABLED_APPS_TO_REMOVE = [
     'udiskie',
     'restore',
     'repro',
+    'tahoe',
 ]
 
 REMOVED_FILES = [

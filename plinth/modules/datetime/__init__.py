@@ -45,13 +45,16 @@ class DateTimeApp(app_module.App):
         """
         if self._time_managed is None:
             try:
-                output = subprocess.check_output([
-                    'systemctl', 'show', '--property=ConditionResult',
-                    '--value', 'systemd-timesyncd'
-                ])
-                self._time_managed = 'yes' in output.decode()
+                # Replace with the command 'systemd-analyze condition
+                # --unit=systemd-timesyncd.service' when --unit argument
+                # becomes available in a newer systemd.
+                process = subprocess.run(
+                    ['systemd-detect-virt', '--container'], check=False,
+                    stdout=subprocess.PIPE)
+                self._time_managed = (
+                    process.stdout.decode().strip() == 'none')
             except (FileNotFoundError, subprocess.CalledProcessError):
-                # When systemd is not running.
+                # When systemd-timesyncd will not run.
                 self._time_managed = False
 
         return self._time_managed
