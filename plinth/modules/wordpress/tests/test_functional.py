@@ -7,6 +7,8 @@ import pytest
 
 from plinth.tests import functional
 
+pytestmark = [pytest.mark.apps, pytest.mark.wordpress]
+
 
 @pytest.fixture(scope='module', autouse=True)
 def fixture_background(session_browser):
