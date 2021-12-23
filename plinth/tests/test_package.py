@@ -60,6 +60,24 @@ def test_packages_setup():
         [call(['foo2', 'bar2'], skip_recommends=True)])
 
 
+@patch('apt.Cache')
+def test_diagnose(cache):
+    """Test checking for latest version of the package."""
+    cache.return_value = {
+        'package2': Mock(candidate=Mock(version='2.0', is_installed=True)),
+        'package3': Mock(candidate=Mock(version='3.0', is_installed=False)),
+    }
+    component = Packages('test-component',
+                         ['package1', 'package2', 'package3'])
+    results = component.diagnose()
+    assert '(?)' in results[0][0]
+    assert results[0][1] == 'warning'
+    assert '(2.0)' in results[1][0]
+    assert results[1][1] == 'passed'
+    assert '(3.0)' in results[2][0]
+    assert results[2][1] == 'warning'
+
+
 @patch('plinth.package.packages_installed')
 def test_packages_find_conflicts(packages_installed_):
     """Test finding conflicts."""
