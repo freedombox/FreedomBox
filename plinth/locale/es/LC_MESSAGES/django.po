@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-20 20:43-0500\n"
-"PO-Revision-Date: 2021-03-12 13:03+0000\n"
+"PO-Revision-Date: 2021-12-31 18:51+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1368,18 +1368,16 @@ msgstr ""
 "no tienen otra alternativa disponible."
 
 #: plinth/modules/coturn/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
 "No está diseñado para una manipulación directa por el usuario. Algunos "
-"servidores como matrix-synapse tienen que configurarse con los detalles que "
-"se proporcionan aquí."
+"servidores como <a href=\"{ms_url}\">Matrix Synapse</a> o <a href=\"{e_url}\""
+">ejabberd</a> tienen que configurarse con los detalles que se proporcionan "
+"aquí."
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
@@ -1509,7 +1507,7 @@ msgstr "error"
 
 #: plinth/modules/diagnostics/__init__.py:100
 msgid "warning"
-msgstr ""
+msgstr "aviso"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
@@ -2038,12 +2036,16 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> proporciona un "
+"interfaz web para que los usuarios accedan a correo electrónico."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Durante la instalación se desinstalará cualquier otro servidor de correo "
+"electrónico que haya en el sistema."
 
 #: plinth/modules/email_server/__init__.py:44
 #, fuzzy
@@ -2053,15 +2055,15 @@ msgstr "Servidor de Chat"
 
 #: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+msgstr "Implementado con Postfix, Dovecot &amp; Rspamd"
 
 #: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+msgstr "Integración SASL Postfix-Dovecot"
 
 #: plinth/modules/email_server/audit/ldap.py:70
 msgid "Postfix alias maps"
-msgstr ""
+msgstr "Mapas Alias de Postfix"
 
 #: plinth/modules/email_server/audit/rcube.py:31
 #, fuzzy
@@ -2071,23 +2073,19 @@ msgstr "indisponible"
 
 #: plinth/modules/email_server/audit/rcube.py:32
 msgid "RoundCube configured for FreedomBox email"
-msgstr ""
+msgstr "RoundCube configurado para FreedomBox"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
-msgstr ""
+msgstr "Filtros de entrada y salida de correo"
 
 #: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid domain"
-msgstr "Indique un nombre de usuario válido."
+msgstr "Indique un nombre de dominio válido"
 
 #: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid destination"
-msgstr "Indique un nombre de usuario válido."
+msgstr "Indique un destino válido"
 
 #: plinth/modules/email_server/forms.py:24
 #, fuzzy
@@ -2106,22 +2104,24 @@ msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Se reciben correos para todo dominio configurado en el sistema. Selecciona "
+"el más importante entre ellos."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
-msgstr ""
+msgstr "Nuevo alias (sin @dominio)"
 
 #: plinth/modules/email_server/forms.py:55
 msgid "Contains illegal characters"
-msgstr ""
+msgstr "Contiene caracteres no permitidos"
 
 #: plinth/modules/email_server/forms.py:58
 msgid "Must start and end with a-z or 0-9"
-msgstr ""
+msgstr "Tiene que empezar y terminar con a-z ó 0-9"
 
 #: plinth/modules/email_server/forms.py:61
 msgid "Cannot be a number"
-msgstr ""
+msgstr "No puede ser un número"
 
 #: plinth/modules/email_server/forms.py:71
 #, fuzzy
@@ -2158,11 +2158,11 @@ msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
 #: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:20
@@ -2173,7 +2173,7 @@ msgstr "Administrar bibliotecas"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
-msgstr ""
+msgstr "No tienes aliases de correo electrónico."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
 #, fuzzy
@@ -2211,16 +2211,16 @@ msgstr "Tipo de servicio"
 
 #: plinth/modules/email_server/templates/email_server.html:46
 msgid "Repair"
-msgstr ""
+msgstr "Reparar"
 
 #: plinth/modules/email_server/views.py:73
 #, python-brace-format
 msgid "Internal error in {0}"
-msgstr ""
+msgstr "Fallo interno en {0}"
 
 #: plinth/modules/email_server/views.py:76
 msgid "Check syslog for more information"
-msgstr ""
+msgstr "Más información en syslog"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3117,7 +3117,7 @@ msgstr "Certificados"
 
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
-msgstr ""
+msgstr "No puedo probar: No hay dominios configurados."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
@@ -5882,6 +5882,9 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"Hay %(count)s vulnerabilidades de seguridad informadas en la app FreedomBox; "
+"la que proporciona los servicios centrales y el interfaz de usuario al "
+"servidor FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
 #, fuzzy
@@ -7877,6 +7880,11 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"WordPress es una manera popular de crear y gestionar sitios web y blogs. El "
+"contenido se administra mediante un interfaz visual. Se puede personalizar "
+"la disposición y la funcionalidad de las páginas web. Se puede escoger la "
+"apariencia mediante temas. Tanto el interfaz de administración como las "
+"páginas web producidas son adecuados para dispositivos móviles."
 
 #: plinth/modules/wordpress/__init__.py:29
 #, python-brace-format
@@ -7886,6 +7894,11 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"Necesitas ejecutar la configuración de WordPress visitando la app antes de "
+"publicar el sitio abajo. Hay que ejecutar la configuración accediendo a "
+"{box_name} mediante el nombre de dominio correcto. Habilita los permalinks "
+"en el interfaz de administrador para tener mejores URLs de acceso a tus "
+"páginas y artículos."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7893,6 +7906,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress tiene sus propias cuentas de usuario. La primera cuenta de "
+"administrador se crea durante la configuración. Anota la dirección de la <a "
+"href=\"/wordpress/wp-admin/\">página de administración</a> para acceder a "
+"ella en el futuro."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -7900,6 +7917,9 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Tras una salto de versión mayor necesitas ejecutar a mano desde el interfaz "
+"de administración una actualización de la base de datos. Se pueden instalar "
+"y actualizar plugins y temas adicionales asumiendo los riesgos."
 
 #: plinth/modules/wordpress/__init__.py:58
 #: plinth/modules/wordpress/manifest.py:6
@@ -7925,6 +7945,9 @@ msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Admitir todas las visitas. Deshabilitarlo solo permite ver el sitio "
+"WordPress o blog a los administradores. Habilítalo solo después de ejecutar "
+"la configuración inicial de WordPress."
 
 #: plinth/modules/zoph/__init__.py:26
 #, python-brace-format
@@ -8360,6 +8383,9 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Paquetes conflictivos:</strong> Algunos paquetes instalados en el "
+"sistema son incompatibles con la instalación de esta app. Si continuas se "
+"eliminarán los siguientes paquetes:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
