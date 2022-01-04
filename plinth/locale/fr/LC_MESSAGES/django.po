@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-12-18 21:57+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -484,10 +484,14 @@ msgid "Existing Backups"
 msgstr "Sauvegardes existantes"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Les informations d’identification pour ce dépôt sont stockées sur votre "
@@ -1422,7 +1426,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Veuillez utiliser les secrets d’authentification partagés suivants :"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1430,11 +1434,11 @@ msgstr ""
 "Le serveur de temps réseau est un programme permettant de maintenir l’heure "
 "du système synchronisée avec les serveurs Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Date et heure"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Heure synchronisée avec le serveur de temps NTP"
 
@@ -7141,15 +7145,13 @@ msgstr ""
 "applications pour une courte période."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Mises à jour"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Mises à jour"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Mises à Niveau Logiciels"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7257,8 +7259,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s mise à jour"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8149,23 +8152,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Générique"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Erreur pendant l’installation"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "installation en cours"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "téléchargement en cours"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "changement de support"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "fichier de configuration : {file}"
@@ -8523,6 +8531,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Mises à jour"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Préinstallation en cours"
@@ -8544,6 +8556,9 @@ msgstr "%(percentage)s%% effectué"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Updates"
+#~ msgstr "Mises à jour"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9778,9 +9793,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Export de l'archive"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Mises à Niveau Logiciels"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

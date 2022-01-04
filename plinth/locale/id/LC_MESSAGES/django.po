@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-06-24 00:42+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -471,10 +471,14 @@ msgid "Existing Backups"
 msgstr "Cadangan yang ada"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Kredensial untuk repositori ini disimpan pada %(box_name)s Anda. <br>Untuk "
@@ -1377,7 +1381,7 @@ msgstr "Gunakan URL berikut untuk mengkonfigurasi server komunikasi Anda:"
 msgid "Use the following shared authentication secret:"
 msgstr "Gunakan rahasia otentikasi bersama berikut:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1385,11 +1389,11 @@ msgstr ""
 "Network Time Server adalah program yang memelihara waktu sistem dalam "
 "sinkronisasi dengan server di Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Tanggal &amp; Hari"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Waktu disinkronkan ke server NTP"
 
@@ -6512,17 +6516,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Memperbarui"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update URL"
-msgid "Updates"
-msgstr "Perbaharui URL"
+#| msgid "Server URL updated"
+msgid "Software Update"
+msgstr "URL Server diperbarui"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -6619,7 +6619,7 @@ msgstr ""
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "Pengaturan %(box_name)s"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7417,23 +7417,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Galat saat pemasangan"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "memasang"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "mengunduh"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
@@ -7757,6 +7762,10 @@ msgstr ""
 msgid "Install"
 msgstr "Pasang"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Memperbarui"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Melakukan operasi pra-pemasangan"
@@ -7778,6 +7787,11 @@ msgstr "%(percentage)s %% selesai"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Bahasa Gujarat"
+
+#, fuzzy
+#~| msgid "Update URL"
+#~ msgid "Updates"
+#~ msgstr "Perbaharui URL"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "

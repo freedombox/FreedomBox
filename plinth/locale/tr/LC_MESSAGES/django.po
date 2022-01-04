@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-12-07 20:13+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -474,10 +474,14 @@ msgid "Existing Backups"
 msgstr "Varolan Yedekler"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Bu depo için kimlik bilgileri %(box_name)s cihazınızda saklanır. <br /> Bir "
@@ -1386,7 +1390,7 @@ msgstr "İletişim sunucunuzu yapılandırmak için aşağıdaki URL'leri kullan
 msgid "Use the following shared authentication secret:"
 msgstr "Aşağıdaki paylaşılan kimlik doğrulama gizli anahtarını kullanın:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1394,11 +1398,11 @@ msgstr ""
 "Ağ zaman sunucusu, sistem saatini İnternet'teki sunucularla eşit halde tutan "
 "bir programdır."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Tarih ve Saat"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "NTP sunucusu ile zaman eşitlendi"
 
@@ -6988,15 +6992,13 @@ msgstr ""
 "olarak yapılır ve tüm uygulamalar kısa bir süre için kullanılamaz hale gelir."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Güncelle"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Güncellemeler"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Yazılım Güncellemeleri"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7100,8 +7102,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s Güncellendi"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7969,23 +7972,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Genel"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Kurulum sırasında hata oldu"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "yükleniyor"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "indiriliyor"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "ortam değiştirme"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "yapılandırma dosyası: {file}"
@@ -8337,6 +8345,10 @@ msgstr ""
 msgid "Install"
 msgstr "Yükle"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Güncelle"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Yükleme öncesi işlemi gerçekleştiriliyor"
@@ -8358,6 +8370,9 @@ msgstr "%%%(percentage)s tamamlandı"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Updates"
+#~ msgstr "Güncellemeler"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9571,9 +9586,6 @@ msgstr "Gujarati"
 #~| msgid "reStore"
 #~ msgid "Restore apps"
 #~ msgstr "reStore"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Yazılım Güncellemeleri"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

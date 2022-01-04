@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -511,7 +511,7 @@ msgstr "EXISTING CUSTOM SERVICES"
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 
@@ -1441,7 +1441,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "THE FOLLOWING IS THE CURRENT STATUS:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 #, fuzzy
 #| msgid ""
 #| "Network time server is a program that maintians the system time in "
@@ -1453,11 +1453,11 @@ msgstr ""
 "NETWORK TIME SERVER IS A PROGRAM THAT MAINTIANS THE SYSTEM TIME IN "
 "SYNCHRONIZATION WITH SERVERS ON THE INTERNET."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "DATE & TIME"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -7143,19 +7143,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
 #, fuzzy
-#| msgid "Update URL"
-msgid "Update"
-msgstr "UPDATE URL"
-
-#: plinth/modules/upgrades/__init__.py:129
-#, fuzzy
-#| msgid "Update URL"
-msgid "Updates"
-msgstr "UPDATE URL"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "SOFTWARE UPGRADES"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7262,7 +7256,7 @@ msgstr "%(box_name)s SETUP"
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s SETUP"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8142,27 +8136,32 @@ msgstr "PPPOE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr ""
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 #, fuzzy
 #| msgid "Installation"
 msgid "installing"
 msgstr "INSTALLATION"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
 msgstr "SETTING UNCHANGED"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, fuzzy, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
@@ -8523,6 +8522,12 @@ msgstr ""
 msgid "Install"
 msgstr "INSTALL"
 
+#: plinth/templates/setup.html:73
+#, fuzzy
+#| msgid "Update URL"
+msgid "Update"
+msgstr "UPDATE URL"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr ""
@@ -8544,6 +8549,11 @@ msgstr "%(percentage)s%% COMPLETE"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Update URL"
+#~ msgid "Updates"
+#~ msgstr "UPDATE URL"
 
 #, fuzzy
 #~| msgid "Applications"
@@ -9294,9 +9304,6 @@ msgstr ""
 #~| msgid "reStore"
 #~ msgid "Restore apps"
 #~ msgstr "RESTORE"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "SOFTWARE UPGRADES"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

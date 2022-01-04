@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -498,7 +498,7 @@ msgstr "मौजूदा कस्टम सर्विसस"
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 
@@ -1434,18 +1434,18 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "निम्नलिखित डिस्कस उपयोग में है:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
 msgstr ""
 "नेटवर्क समय सर्वर एक प्रोग्रम है कि सिस्टम समय इंटरनेट सर्वरसॅ के सात में बनाए रखता है."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "तारीख और समय"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -7010,17 +7010,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "अपडेट"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update"
-msgid "Updates"
-msgstr "अपडेट"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "सॉफ्टवेयर अपग्रेडस"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7128,7 +7124,7 @@ msgstr "%(box_name)s उद्दिनांकित है."
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s is up to date."
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s उद्दिनांकित है."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8014,23 +8010,28 @@ msgstr "पीपीपीअोइ"
 msgid "Generic"
 msgstr "जेनेरिक"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "इंस्टालेशन करते समय पर त्रुटि"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
@@ -8385,6 +8386,10 @@ msgstr ""
 msgid "Install"
 msgstr "इंस्टॉल करें"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "अपडेट"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "प्री-इंस्टॉलेशन ऑपरेशन कर रहा है"
@@ -8406,6 +8411,11 @@ msgstr "%(percentage)s%% पूर्ण"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Update"
+#~ msgid "Updates"
+#~ msgstr "अपडेट"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9581,9 +9591,6 @@ msgstr ""
 
 #~ msgid "Export Archive"
 #~ msgstr "पुरालेख निर्यात करें"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "सॉफ्टवेयर अपग्रेडस"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

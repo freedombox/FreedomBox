@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-03-03 16:50+0000\n"
 "Last-Translator: Karol Werner <karol@ppkt.eu>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/freedombox/"
@@ -463,10 +463,14 @@ msgid "Existing Backups"
 msgstr "Istniejące kopie zapasowe"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Dane logowania do tego repozytorium są zapisane na twoim %(box_name)s. <br /"
@@ -1374,7 +1378,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Używane są następujące dyski:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1382,11 +1386,11 @@ msgstr ""
 "Serwer czasu jest programem, który utrzymuje czas systemowy w synchronizacji "
 "z serwerami w Internecie."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Czas i data"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Zsynchronizowano czas z serwerem NTP"
 
@@ -6511,17 +6515,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr ""
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update URL"
-msgid "Updates"
-msgstr "Uaktualnij URL"
+#| msgid "Archive deleted."
+msgid "Software Update"
+msgstr "Archiwum zostało usunięte."
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -6618,8 +6618,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s Zaktualizowana"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7454,23 +7455,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr ""
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr ""
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "plik konfiguracyjny: {file}"
@@ -7834,6 +7840,10 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr ""
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr ""
@@ -7855,6 +7865,11 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Update URL"
+#~ msgid "Updates"
+#~ msgstr "Uaktualnij URL"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "

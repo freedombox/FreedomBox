@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -471,10 +471,14 @@ msgid "Existing Backups"
 msgstr "Eksisterende sikkerhedskopier"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Adgangsoplysningerne til dette arkiv gemmes på din %(box_name)s. <br /> For "
@@ -1387,7 +1391,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Brug den følgende delte autentifikationshemmelighed:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1395,11 +1399,11 @@ msgstr ""
 "Netværkstidsserver er et program der holder systemets tid synkroniseret med "
 "servere på internettet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Dato & Tid"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkroniseret med NTP-server"
 
@@ -7026,17 +7030,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Opdater"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update"
-msgid "Updates"
-msgstr "Opdater"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Softwareopdateringer"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7144,7 +7144,7 @@ msgstr "%(box_name)s Konfiguration"
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s Konfiguration"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8028,23 +8028,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Fejl under installation"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "Installerer"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "downloader"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "medie-ændring"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurationsfil: {file}"
@@ -8398,6 +8403,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Opdater"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Udfører før-installationshandlinger"
@@ -8419,6 +8428,11 @@ msgstr "%(percentage)s%% færdig"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Update"
+#~ msgid "Updates"
+#~ msgstr "Opdater"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9317,9 +9331,6 @@ msgstr ""
 #~| msgid "reStore"
 #~ msgid "Restore apps"
 #~ msgstr "reStore"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Softwareopdateringer"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

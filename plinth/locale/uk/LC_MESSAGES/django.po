@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-11-19 11:51+0000\n"
 "Last-Translator: Andrij Mizyk <andmizyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
@@ -480,10 +480,14 @@ msgid "Existing Backups"
 msgstr "Наявні резервні копії"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Облікові дані для цього репозиторію зберігаються на Вашому %(box_name)s. "
@@ -1387,7 +1391,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Використовуйте наступний спільний секрет автентифікації:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1395,11 +1399,11 @@ msgstr ""
 "Сервер мережевого часу — це програма, що підтримує системний час "
 "синхронізовано зі серверами в Інтернеті."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Дата і час"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Час синхронізовано зі сервером NTP"
 
@@ -6481,15 +6485,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Оновити"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Оновлення"
+#, fuzzy
+#| msgid "Server URL updated"
+msgid "Software Update"
+msgstr "URL сервера оновлено"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -6585,8 +6587,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s оновлено"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7376,23 +7379,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Помилка під час установлення"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "установлення"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "завантаження"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "зміна медія"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "файл конфіґурації: {file}"
@@ -7737,6 +7745,10 @@ msgstr ""
 msgid "Install"
 msgstr "Установити"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Оновити"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Виконання передінсталяційних операцій"
@@ -7758,6 +7770,9 @@ msgstr "%(percentage)s%% завершено"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Updates"
+#~ msgstr "Оновлення"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "

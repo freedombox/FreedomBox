@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-12-27 05:53+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -479,10 +479,14 @@ msgid "Existing Backups"
 msgstr "Eksisterende sikkerhetskopier"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Innloggingsinfo for dette kodelageret er lagret på din %(box_name)s. <br> "
@@ -1399,7 +1403,7 @@ msgstr "Bruk følgende nettadresser for å sette opp din kommunikasjonstjener:"
 msgid "Use the following shared authentication secret:"
 msgstr "Følgende lagringsenheter er i bruk:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1407,11 +1411,11 @@ msgstr ""
 "Nettverkstidstjeneren er et program som synkroniserer systemets klokke med "
 "tjenere på Internettet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Dato og tid"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkronisert til NTP-tjener"
 
@@ -1616,11 +1620,10 @@ msgid ""
 msgstr ""
 "Løsningen er å tildele et DNS-navn til IP-adressen din, og oppdatere DNS-"
 "navnet hver gang internettleverandør endrer din IP. Dynamisk DNS tillater "
-"deg å flytte din nåværende offentlige IP-adressen til en <a href=\"http"
-"://gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a>-tjener. Deretter "
-"vil tjeneren tildele DNS-navnet ditt til den nye IP-en. Hvis noen fra "
-"Internett ber om ditt DNS-navn, vil de da få svar med din gjeldende IP-"
-"adresse."
+"deg å flytte din nåværende offentlige IP-adressen til en <a href=\"http://"
+"gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a>-tjener. Deretter vil "
+"tjeneren tildele DNS-navnet ditt til den nye IP-en. Hvis noen fra Internett "
+"ber om ditt DNS-navn, vil de da få svar med din gjeldende IP-adresse."
 
 #: plinth/modules/dynamicdns/__init__.py:52
 msgid "Dynamic DNS Client"
@@ -7048,17 +7051,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Oppdater"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update"
-msgid "Updates"
-msgstr "Oppdater"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Programvare-oppgraderinger"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7166,8 +7165,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s oppdatert"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8044,23 +8044,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generisk"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Feil under installasjon"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "installering"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "laster ned"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "mediaendring"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "oppsettsfil: {file}"
@@ -8416,6 +8421,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Oppdater"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Utfører en forhåndsinstallasjon"
@@ -8437,6 +8446,11 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Update"
+#~ msgid "Updates"
+#~ msgstr "Oppdater"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9648,9 +9662,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Eksporter arkiv"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Programvare-oppgraderinger"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

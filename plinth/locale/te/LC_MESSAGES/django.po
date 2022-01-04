@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-05-17 18:31+0000\n"
 "Last-Translator: chilumula vamshi krishna <kannakrishna1625@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -466,7 +466,7 @@ msgstr "ఇప్పటికే ఉన్న బ్యాకప్‌లు"
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 
@@ -1380,7 +1380,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "క్రింది డిస్కులు ఉపయోగంలో ఉన్నాయి:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1388,11 +1388,11 @@ msgstr ""
 "నెట్‌వర్క్ టైమ్ సర్వర్ మీ కంప్యూటర్ లోని సమయాన్ని ఇంటర్నెట్లో ఉన్న సమయానికి సమకాలీకరించడానికి ఉపయోగపడే ఒక "
 "ప్రోగ్రాం."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "తేదీ & సమయం"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -6938,17 +6938,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "నవీకరణ"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update"
-msgid "Updates"
-msgstr "నవీకరణ యూ.ఆర్.ఎల్"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "సాఫ్ట్‌వేర్ నవీకరణలు"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7047,7 +7043,7 @@ msgstr "%(box_name)s తాజాగా ఉంది."
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s is up to date."
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s తాజాగా ఉంది."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7901,23 +7897,28 @@ msgstr "పిపిపిఒఇ"
 msgid "Generic"
 msgstr "సాధారణమైన"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "సంస్థాపన ఒక పొరపాటు జరిగింది"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "వ్యవస్థాపిస్తోంది"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "దిగుమతి అవుతోంది"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "ప్రసార మాధ్యమం మార్పు"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "ఆకృతీకరణ ఫైలు: {file}"
@@ -8269,6 +8270,10 @@ msgstr ""
 msgid "Install"
 msgstr "నిక్షిప్తం చేయు"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "నవీకరణ"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "ప్రీ-ఇన్‌స్టాల్ ఆపరేషన్ జరుగుతోంది"
@@ -8290,6 +8295,11 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#, fuzzy
+#~| msgid "Update"
+#~ msgid "Updates"
+#~ msgstr "నవీకరణ యూ.ఆర్.ఎల్"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9454,9 +9464,6 @@ msgstr "గుజరాతీ"
 
 #~ msgid "Export Archive"
 #~ msgstr "భాండాగారాము ఎగుమతి చేయుము"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "సాఫ్ట్‌వేర్ నవీకరణలు"
 
 #~ msgid "Upgrade now &raquo;"
 #~ msgstr "ఇప్పుడు నవీనీకరించండి &raquo;"

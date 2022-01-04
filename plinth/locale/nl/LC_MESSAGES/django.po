@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-12-24 12:50+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -480,10 +480,14 @@ msgid "Existing Backups"
 msgstr "Bestaande back-ups"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "De logingegevens voor dit archief worden bewaard op deze %(box_name)s. <br /"
@@ -1400,7 +1404,7 @@ msgstr "Gebruik de volgende URL's om de communicatieserver in te stellen:"
 msgid "Use the following shared authentication secret:"
 msgstr "Gebruik het volgende gedeelde authenticatie geheim:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1408,11 +1412,11 @@ msgstr ""
 "Netwerk Tijd Server is een programma dat de systeemtijd synchroniseert met "
 "servers op internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Datum en Tijd"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Tijd gesynchroniseerd met NTP-server"
 
@@ -1689,8 +1693,8 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: https://ddns.freedombox.org/ip/)."
 msgstr ""
-"Optionele waarde. Als {box_name} niet direct is verbonden met het internet ("
-"maar verbonden met een NAT router), wordt deze URL gebruikt om het echte "
+"Optionele waarde. Als {box_name} niet direct is verbonden met het internet "
+"(maar verbonden met een NAT router), wordt deze URL gebruikt om het echte "
 "Internet IP adres te bepalen. Het antwoord op het aanroepen van deze URL zou "
 "het IP adres moeten zijn (Voorbeeld: https://ddns.freedombox.org/ip/)."
 
@@ -7024,15 +7028,13 @@ msgstr ""
 "uur, waardoor alle toepassingen even niet beschikbaar zijn."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Update"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Updates"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Software Upgrades"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7136,8 +7138,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s geaktualiseerd"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -8000,23 +8003,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generiek"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Fout tijdens installatie"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "installeren"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "downloaden"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "media wijzigen"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "configuratiebestand: {file}"
@@ -8366,6 +8374,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installeer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Update"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Pre-Install bewerkingen worden uitvoerd"
@@ -8387,6 +8399,9 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Updates"
+#~ msgstr "Updates"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9638,9 +9653,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Archief exporteren"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Software Upgrades"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

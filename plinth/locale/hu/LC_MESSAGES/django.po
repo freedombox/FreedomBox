@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-12-24 12:52+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -481,10 +481,14 @@ msgid "Existing Backups"
 msgstr "Meglévő biztonsági másolatok"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Az ehhez a tárolóhoz tartozó hitelesítő adatok a Te %(box_name)s eszközödön "
@@ -1406,7 +1410,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Használja az alábbi megosztott hitelesítési titkos kulcsot:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1414,11 +1418,11 @@ msgstr ""
 "A hálózati időkiszolgáló egy olyan program, amely karbantartja a rendszeridő "
 "szinkronizációját az Interneten lévő kiszolgálókéval."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Dátum és idő"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Az idő szinkronizálva van az NTP kiszolgálóhoz"
 
@@ -1701,8 +1705,8 @@ msgstr ""
 "Opcionális. Ha a te {box_name} eszközöd nem közvetlenül kapcsolódik az "
 "Internethez (pl. NAT-útválasztóhoz van kapcsolódva), ennek az URL-nek a "
 "segítségével válik lehetővé nyilvános IP címed meghatározása. Egy ilyen URL "
-"egyszerűen visszaadja a kliens IP címét (pl.: https://ddns.freedombox.org/ip/"
-")."
+"egyszerűen visszaadja a kliens IP címét (pl.: https://ddns.freedombox.org/"
+"ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1785,10 +1789,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Ha ingyenes dinamikus DNS fiókot keresel, találhatsz ingyenes GnuDIP "
-"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank\""
-">ddns.freedombox.org</a> címen vagy találhatsz ingyenes frissítési URL alapú "
-"szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
-"freedns.afraid.org</a> címen."
+"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
+"\">ddns.freedombox.org</a> címen vagy találhatsz ingyenes frissítési URL "
+"alapú szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank"
+"\"> freedns.afraid.org</a> címen."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -5884,8 +5888,8 @@ msgid ""
 msgstr ""
 "Az alábbi táblázat felsorolja az egyes telepített alkalmazások jelenleg "
 "bejelentett és múltbéli biztonsági réseinek számát. A sebezhetőségekről "
-"további információ a <a href=\"https://security-tracker.debian.org/tracker/\""
-">Debian Security Bug Tracker</a> oldalon található."
+"további információ a <a href=\"https://security-tracker.debian.org/tracker/"
+"\">Debian Security Bug Tracker</a> oldalon található."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -7020,15 +7024,13 @@ msgstr ""
 "történik, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Frissítés"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Frissítések"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Szoftverfrissítések"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7133,8 +7135,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s fel lett frissítve"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7553,8 +7556,8 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"A partner nyilvános kulcsa. Például: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"A partner nyilvános kulcsa. Például: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"
@@ -7590,8 +7593,8 @@ msgid ""
 "192.168.0.10."
 msgstr ""
 "A gépnek a VPN-en a végponthoz való csatlakozást követően kijelölt IP-cím. "
-"Ezt az értéket általában a kiszolgáló üzemeltetője adja meg. Példa: 192.168.0"
-".10."
+"Ezt az értéket általában a kiszolgáló üzemeltetője adja meg. Példa: "
+"192.168.0.10."
 
 #: plinth/modules/wireguard/forms.py:89
 msgid "Private key of this machine"
@@ -7963,23 +7966,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Általános"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Hiba lépett fel a telepítés során"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
@@ -8326,6 +8334,10 @@ msgstr ""
 msgid "Install"
 msgstr "Telepítés"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Frissítés"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Telepítés előtti műveletek végrehajtása"
@@ -8347,6 +8359,9 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Updates"
+#~ msgstr "Frissítések"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9528,9 +9543,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Export Archive"
 #~ msgstr "Archívum exportálása"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Szoftverfrissítések"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

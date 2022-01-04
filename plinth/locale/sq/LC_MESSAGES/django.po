@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-03 19:17-0500\n"
 "PO-Revision-Date: 2021-06-07 12:34+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -480,10 +480,14 @@ msgid "Existing Backups"
 msgstr "Kopjeruajtje Ekzistuese"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Kredencialet për këtë depo janë depozituar te %(box_name)s juaj. <br> Për të "
@@ -1396,7 +1400,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Përdor të fshehtën vijuese për mirëfilltësim të përbashkët:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1404,11 +1408,11 @@ msgstr ""
 "Shërbyesi i kohës së rrjetit është një program që kujdeset që koha e "
 "sistemit të jetë e njëkohshme me shërbyes në Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Datë &amp; Kohë"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Kohë e njëkohësuar me shërbyes NTP"
 
@@ -6979,15 +6983,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Përditësoje"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Përditësime"
+#, fuzzy
+#| msgid "Server URL updated"
+msgid "Software Update"
+msgstr "URL-ja e shërbyesit u përditësua"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7073,9 +7075,10 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
-msgstr ""
+#, fuzzy, python-format
+#| msgid "%(box_name)s is up to date."
+msgid "%(box_name)s updated"
+msgstr "%(box_name)s është i përditësuar."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
 #, python-format
@@ -7844,23 +7847,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Elementar"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Gabim gjatë instalimit"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "po instalohet"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "po shkarkohet"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "ndryshim media"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "kartelë formësimi: {file}"
@@ -8175,6 +8183,10 @@ msgstr ""
 msgid "Install"
 msgstr "Instaloje"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Përditësoje"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr ""
@@ -8196,6 +8208,9 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid "Updates"
+#~ msgstr "Përditësime"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
