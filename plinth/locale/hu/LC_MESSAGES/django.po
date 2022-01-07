@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-03 19:17-0500\n"
-"PO-Revision-Date: 2022-01-06 22:41+0000\n"
+"PO-Revision-Date: 2022-01-08 13:56+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hu/>\n"
@@ -54,20 +54,20 @@ msgstr "Nem lehet ide csatlakozni: {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Select a domain name to be used with this application"
-msgstr "Válassz egy domain nevet, amit ezzel az alkalmazással fogsz használni"
+msgstr "Válassz egy domainnevet, amit ezzel az alkalmazással fogsz használni"
 
 #: plinth/forms.py:38
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
-"Figyelem! Az alkalmazás lehet, hogy nem fog működni megfelelően, ha a domain "
-"név később módosul."
+"Figyelem! Az alkalmazás lehet, hogy nem fog működni megfelelően, ha a "
+"domainnév később módosul."
 
 #: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
-msgstr "TLS domain"
+msgstr "TLS-domain"
 
 #: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
@@ -138,11 +138,11 @@ msgid ""
 "network."
 msgstr ""
 "A szolgáltatásfelderítés lehetővé teszi a hálózaton található többi eszköz "
-"számára, hogy felfedezze a(z) {box_name} szolgáltatásait. Másrészt a(z) "
-"{box_name} számára is lehetővé teszi, hogy felfedezze a helyi hálózat többi "
-"eszközét és azok szolgáltatásait. A szolgáltatásfelderítés nem feltétlenül "
-"szükséges és kizárólag a belső hálózaton működik. Kikapcsolható a biztonság "
-"növelése érdekében, különösen nem megbízható hálózatok esetén."
+"számára, hogy felfedezze a {box_name} szolgáltatásait. Másrészt a {box_name} "
+"számára is lehetővé teszi, hogy felfedezze a helyi hálózat többi eszközét és "
+"azok szolgáltatásait. A szolgáltatásfelderítés nem feltétlenül szükséges és "
+"kizárólag a belső hálózaton működik. Kikapcsolható a biztonság növelése "
+"érdekében, különösen nem megbízható hálózatok esetén."
 
 #: plinth/modules/avahi/__init__.py:51
 msgid "Service Discovery"
@@ -223,8 +223,8 @@ msgid ""
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
 "Ennyi biztonsági mentést őriz meg a rendszer, az összes többit pedig törli. "
-"A 0-s érték letiltja az ilyen típusú biztonsági mentéseket. Ez mindennap egy "
-"meghatározott órában lép működésbe."
+"A \"0\" érték letiltja az ilyen típusú biztonsági mentéseket. Ez mindennap "
+"egy meghatározott órában lép működésbe."
 
 #: plinth/modules/backups/forms.py:64
 msgid "Number of weekly backups to keep"
@@ -375,7 +375,7 @@ msgstr "A biztonsági mentések a FreedomBoxBackups könyvtárban lesznek tárol
 
 #: plinth/modules/backups/forms.py:242
 msgid "SSH Repository Path"
-msgstr "SSH tároló elérési útja"
+msgstr "SSH-tároló elérési útja"
 
 #: plinth/modules/backups/forms.py:243
 msgid ""
@@ -426,7 +426,7 @@ msgstr "Helytelen titkosítási jelszó"
 
 #: plinth/modules/backups/repository.py:58
 msgid "SSH access denied"
-msgstr "SSH hozzáférés megtagadva"
+msgstr "SSH-hozzáférés megtagadva"
 
 #: plinth/modules/backups/repository.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
@@ -441,7 +441,7 @@ msgstr "A meglévő tároló nem titkosított."
 #: plinth/modules/backups/repository.py:327
 #, python-brace-format
 msgid "{box_name} storage"
-msgstr "{box_name} tároló"
+msgstr "{box_name} Tárhely"
 
 #: plinth/modules/backups/templates/backups.html:17
 #: plinth/modules/backups/views.py:111
@@ -487,9 +487,9 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"Az ehhez a tárolóhoz tartozó hitelesítő adatok a te %(box_name)s eszközödön "
+"Az ehhez a tárolóhoz tartozó hitelesítő adatok a %(box_name)s eszközödön "
 "lesznek eltárolva.<br> A biztonsági mentés visszaállításához egy új "
-"%(box_name) eszközön szükséged van az SSH hitelesítő adatokra és - ha "
+"%(box_name)s eszközön szükséged van az SSH hitelesítő adatokra és - ha "
 "kiválasztottad - a titkosítási jelszóra."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
@@ -627,7 +627,7 @@ msgid ""
 "Could not reach SSH host %(hostname)s. Please verify that the host is up and "
 "accepting connections."
 msgstr ""
-"Az SSH állomás %(hostname)s nem érhető el. Ellenőrizd hogy a célállomás "
+"Az SSH-állomás %(hostname)s nem érhető el. Ellenőrizd hogy a célállomás "
 "üzemel és fogadhat kapcsolatokat."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:28
@@ -636,8 +636,9 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
-"Az SSH állomás %(hostname)s hitelessége nem állapítható meg. A célállomás az "
-"alábbi SSH nyilvános kulcsokat hirdette ki. Kérlek, igazold valamelyiket."
+"Az SSH-állomás %(hostname)s hitelessége nem állapítható meg. A célállomás az "
+"alábbi SSH nyilvános kulcsokat hirdette ki. Kérlek, erősítsd meg "
+"valamelyiket."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
@@ -649,7 +650,7 @@ msgid ""
 "one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
 "instead of rsa, by choosing the corresponding file."
 msgstr ""
-"Futtasd a következő parancsot az SSH állomáson. A kimenetnek meg kell "
+"Futtasd a következő parancsot az SSH-állomáson. A kimenetnek meg kell "
 "egyeznie a megadott opciók egyikével. Az RSA helyett használható még a DSA, "
 "ECDSA, ED25519, stb. is, a megfelelő fájl kiválasztásával."
 
@@ -711,19 +712,19 @@ msgstr "Új távoli SSH tároló hozzáadva."
 
 #: plinth/modules/backups/views.py:366
 msgid "Verify SSH hostkey"
-msgstr "SSH állomáskulcs ellenőrzése"
+msgstr "SSH-állomáskulcs ellenőrzése"
 
 #: plinth/modules/backups/views.py:392
 msgid "SSH host already verified."
-msgstr "Az SSH állomás már ellenőrzött."
+msgstr "Az SSH-állomás már ellenőrzött."
 
 #: plinth/modules/backups/views.py:402
 msgid "SSH host verified."
-msgstr "SSH állomás leellenőrizve."
+msgstr "SSH-állomás leellenőrizve."
 
 #: plinth/modules/backups/views.py:417
 msgid "SSH host public key could not be verified."
-msgstr "SSH állomás nyilvános kulcsa nem ellenőrizhető le."
+msgstr "SSH-állomás nyilvános kulcsa nem ellenőrizhető le."
 
 #: plinth/modules/backups/views.py:419
 msgid "Authentication to remote server failed."
@@ -946,9 +947,9 @@ msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
-"A BIND lehetővé teszi számodra hogy közzétedd a saját tartománynévrendszer "
-"(DNS) információdat az interneten, és hogy fel tudd oldani a DNS "
-"lekérdezéseket a hálózatodon lévő eszközeidnek."
+"A BIND lehetővé teszi számodra hogy közzétedd a saját domainnévrendszer (DNS)"
+" információdat az interneten, és hogy fel tudd oldani a DNS-lekérdezéseket a "
+"hálózatodon lévő eszközeidnek."
 
 #: plinth/modules/bind/__init__.py:29
 #, python-brace-format
@@ -957,8 +958,8 @@ msgid ""
 "machines on local network. It is also incompatible with sharing Internet "
 "connection from {box_name}."
 msgstr ""
-"Jelenleg a(z) {box_név} rendszeren a BIND csak a helyi hálózaton lévő más "
-"gépek DNS-kérdéseinek feloldására szolgál. Nem kompatibilis a(z) {box_name} "
+"Jelenleg a {box_name} rendszeren a BIND csak a helyi hálózaton lévő más "
+"gépek DNS-kérdéseinek feloldására szolgál. Nem kompatibilis a {box_name} "
 "eszközről történő internet megosztással."
 
 #: plinth/modules/bind/__init__.py:76
@@ -967,7 +968,7 @@ msgstr "BIND"
 
 #: plinth/modules/bind/__init__.py:77
 msgid "Domain Name Server"
-msgstr "Domain névszerver (DNS)"
+msgstr "Domainnévszerver (DNS)"
 
 #: plinth/modules/bind/forms.py:20
 msgid "Forwarders"
@@ -986,7 +987,7 @@ msgstr "DNSSEC engedélyezése"
 
 #: plinth/modules/bind/forms.py:26
 msgid "Enable Domain Name System Security Extensions"
-msgstr "Domain Name System Security Extensions engedélyezése"
+msgstr "Domainnévrendszer biztonsági kiterjesztéseinek engedélyezése"
 
 #: plinth/modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1003,7 +1004,7 @@ msgstr "Típus"
 
 #: plinth/modules/bind/templates/bind.html:18
 msgid "Domain Names"
-msgstr "Tartománynevek"
+msgstr "Domainnevek"
 
 #: plinth/modules/bind/templates/bind.html:19
 msgid "Serving"
@@ -1036,7 +1037,7 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
-"A calibre szerver online hozzáférést biztosít az e-könyv gyűjteményedhez. "
+"A calibre szerver online hozzáférést biztosít az e-könyvgyűjteményedhez. A "
 "{box_name} eszközödön tárolhatod e-könyveidet, olvashatod online vagy "
 "bármely eszközödről."
 
@@ -1166,10 +1167,10 @@ msgid ""
 "firewall ports and advanced networking such as bonding, bridging and VLAN "
 "management."
 msgstr ""
-"A Cockpit haladó szintű tárolási műveletek elvégzésére használható, úgy mint "
-"lemez particionálás és RAID kezelés. Továbbá felhasználható egyedi "
+"A Cockpit haladó szintű tárhelyműveletek elvégzésére használható, úgy mint "
+"lemez particionálás és RAID-kezelés. Továbbá felhasználható egyedi "
 "tűzfalportok nyitására és olyan haladó hálózati funkciókhoz, mint az "
-"aggregált interfészek, hidalás és VLAN kezelés."
+"aggregált interfészek, hidalás és VLAN-kezelés."
 
 #: plinth/modules/cockpit/__init__.py:36
 #, python-brace-format
@@ -1177,16 +1178,16 @@ msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"A(z) {box_name} eszköz bármely adminisztrátori csoportba tartozó <a href=\""
-"{users_url}\">felhasználója</a> hozzáférhet."
+"A {box_name} bármely adminisztrátori csoportba tartozó <a href=\"{users_url}"
+"\">felhasználója</a> hozzáférhet."
 
 #: plinth/modules/cockpit/__init__.py:40
 msgid ""
 "Cockpit requires that you access it through a domain name. It will not work "
 "when accessed using an IP address as part of the URL."
 msgstr ""
-"A Cockpit megköveteli, hogy a domain néven keresztül érd el. Nem fog működni "
-"ha az URL részeként az IP-címet használsz."
+"A Cockpit megköveteli, hogy a domainnéven keresztül érd el. Nem fog működni "
+"ha az URL részeként IP-címet használsz."
 
 #: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
@@ -1212,7 +1213,7 @@ msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
 msgstr ""
-"Itt általános dolgokat állíthatsz be, például gazdagépnév, domain név, "
+"Itt általános dolgokat állíthatsz be, például gazdagépnév, domainnév, "
 "webszerver kezdőoldala stb."
 
 #: plinth/modules/config/__init__.py:53
@@ -1230,12 +1231,12 @@ msgstr "Beállítások"
 #: plinth/modules/dynamicdns/forms.py:97
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
-msgstr "Domain név"
+msgstr "Domainnév"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
 #: plinth/modules/dynamicdns/forms.py:100
 msgid "Invalid domain name"
-msgstr "Érvénytelen domain név"
+msgstr "Érvénytelen domainnév"
 
 #: plinth/modules/config/forms.py:40
 #, python-brace-format
@@ -1263,8 +1264,8 @@ msgid ""
 "length must be 63 characters or less."
 msgstr ""
 "Az állomásnév az a helyi név, amellyel a helyi hálózaton lévő egyéb eszközök "
-"elérhetik ezt a(z) {box_name} eszközt. Betűvel vagy számmal kell kezdődnie "
-"és végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
+"elérhetik ezt a {box_name} eszközt. Betűvel vagy számmal kell kezdődnie és "
+"végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
 "Teljes hossza nem lehet több 63 karakternél."
 
 #: plinth/modules/config/forms.py:64
@@ -1281,11 +1282,11 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
-"A domain név az a globális név, amellyel az interneten lévő egyéb eszközök "
-"elérhetik a(z) {box_name} eszközt. Pontokkal elválasztott címkéket kell "
+"A domainnév az a globális név, amellyel az interneten lévő egyéb eszközök "
+"elérhetik a {box_name} eszközt. Pontokkal elválasztott címkéket kell "
 "tartalmaznia. Minden címkének betűvel vagy számmal kell kezdődnie és "
 "végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. Egy-"
-"egy címke hossza nem lehet több 63 karakternél. A domain név teljes hossza "
+"egy címke hossza nem lehet több 63 karakternél. A domainnév teljes hossza "
 "pedig nem lehet több 253 karakternél."
 
 #: plinth/modules/config/forms.py:85
@@ -1302,12 +1303,12 @@ msgid ""
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
 "Válaszd ki azt az oldalt, amit kezdőoldalként láthatnak majd azok, akik az "
-"internetről meglátogatják a te {box_name} eszközöd. Tipikus eset az, amikor "
-"egy blog vagy wiki fogadja nyitóoldalként azt, aki felkeresi az adott "
-"domént. Vedd figyelembe, hogy ha az alapértelmezett kezdőoldal bármi másra "
-"van állítva, mint a(z) {box_name} szolgáltatás (Plinth), akkor annak "
-"eléréséhez a felhasználóknak külön meg kell adniuk a /plinth vagy a /"
-"freedombox elérési utat."
+"internetről meglátogatják a {box_name} eszközöd. Tipikus eset az, amikor egy "
+"blog vagy wiki fogadja nyitóoldalként azt, aki felkeresi az adott domaint. "
+"Vedd figyelembe, hogy ha az alapértelmezett kezdőoldal bármi másra van "
+"állítva, mint a {box_name} szolgáltatás (Plinth), akkor annak eléréséhez a "
+"felhasználóknak külön meg kell adniuk a /plinth vagy a /freedombox elérési "
+"utat."
 
 #: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
@@ -1329,11 +1330,11 @@ msgstr "Állomásnév beállítva"
 #: plinth/modules/config/views.py:58
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
-msgstr "Hiba a domain név beállítása közben: {exception}"
+msgstr "Hiba a domainnév beállítása közben: {exception}"
 
 #: plinth/modules/config/views.py:61
 msgid "Domain name set"
-msgstr "Domain név beállítva"
+msgstr "Domainnév beállítva"
 
 #: plinth/modules/config/views.py:69
 #, python-brace-format
@@ -1377,8 +1378,8 @@ msgid ""
 "be configured with the details provided here."
 msgstr ""
 "Ezt nem a felhasználók általi közvetlen használatra szánták. Az olyan "
-"szervereket, mint a Matrix Synapse, az itt megadott részletekkel kell "
-"konfigurálni."
+"szervereket, mint a <a href=\"{ms_url}\">Matrix Synapse</a> vagy az <a href="
+"\"{e_url}\">ejabberd</a>, az itt megadott részletekkel kell konfigurálni."
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
@@ -1617,10 +1618,10 @@ msgstr ""
 "A megoldás az, hogy hozzárendelsz egy DNS-nevet az IP-címedhez, és frissíted "
 "a DNS-nevet minden alkalommal, amikor az internetszolgáltató megváltoztatja "
 "az IP-címed. A Dynamic DNS lehetővé teszi számodra, hogy elküldd a jelenlegi "
-"nyilvános IP címed egy <a href=\"https://ddns.freedombox.org/\" target="
+"nyilvános IP-címed egy <a href=\"https://ddns.freedombox.org/\" target="
 "\"_blank\"> GnuDIP</a> szervernek. Ezután a szerver hozzá fogja rendelni a "
-"DNS-neved az új IP címedhez, és ha valaki az Interneten lekérdezi a DNS-"
-"neved, válaszként az aktuális IP címedet fogja megkapni."
+"DNS-neved az új IP-címedhez, és ha valaki az Interneten lekérdezi a DNS-"
+"neved, válaszként az aktuális IP-címedet fogja megkapni."
 
 #: plinth/modules/dynamicdns/__init__.py:52
 msgid "Dynamic DNS Client"
@@ -1628,7 +1629,7 @@ msgstr "Dinamikus DNS ügyfél"
 
 #: plinth/modules/dynamicdns/__init__.py:65
 msgid "Dynamic Domain Name"
-msgstr "Dinamikus domain név"
+msgstr "Dinamikus domainnév"
 
 #: plinth/modules/dynamicdns/forms.py:29
 msgid ""
@@ -1636,9 +1637,9 @@ msgid ""
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
-"Az &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; változónevek "
+"A &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; változónevek "
 "használhatók az URL-ben. Részletekért tekintsd meg a példa szolgáltatók "
-"frissítési URL sablonjait."
+"frissítési URL-sablonjait."
 
 #: plinth/modules/dynamicdns/forms.py:33
 msgid ""
@@ -1646,7 +1647,7 @@ msgid ""
 "provider does not support the GnuDIP protocol or your provider is not listed "
 "you may use the update URL of your provider."
 msgstr ""
-"Kérlek válassz egy, a Dynamic DNS szolgáltatódnak megfelelő frissítési "
+"Kérlek, válassz egy, a Dynamic DNS-szolgáltatódnak megfelelő frissítési "
 "protokollt. Ha nem támogatja a GnuDIP-et, vagy nem található a listán, akkor "
 "használhatod a szolgáltató frissítési URL-jét."
 
@@ -1655,15 +1656,14 @@ msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
-"Kérlek ide ne írj be URL-t (mint pl. „https://pelda.com/”), csak a GnuDIP-"
+"Kérlek, ide ne írj be URL-t (mint pl. „https://pelda.com/”), csak a GnuDIP-"
 "szerver állomásnevét (mint pl. „pelda.com”)."
 
 #: plinth/modules/dynamicdns/forms.py:42
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
-"A nyilvános domain név, amellyel el szeretnéd érni a te {box_name} "
-"eszközödet."
+"A nyilvános domainnév, amellyel el szeretnéd érni a {box_name} eszközödet."
 
 #: plinth/modules/dynamicdns/forms.py:45
 msgid "Use this option if your provider uses self signed certificates."
@@ -1692,7 +1692,7 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: https://ddns.freedombox.org/ip/)."
 msgstr ""
-"Opcionális. Ha a te {box_name} eszközöd nem közvetlenül kapcsolódik az "
+"Opcionális. Ha a {box_name} eszközöd nem közvetlenül kapcsolódik az "
 "Internethez (pl. NAT-routerhez van kapcsolódva), ennek az URL-nek a "
 "segítségével válik lehetővé nyilvános IP-címed meghatározása. Egy ilyen URL "
 "egyszerűen visszaadja a kliens IP-címét (pl.: https://ddns.freedombox.org/ip/"
@@ -1757,19 +1757,19 @@ msgstr "IPv6 használata IPv4 helyett"
 
 #: plinth/modules/dynamicdns/forms.py:141
 msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Kérlek adj meg egy frissítési URL-t vagy egy GnuDIP-szerver címet"
+msgstr "Kérlek, adj meg egy frissítési URL-t vagy egy GnuDIP-szerver címet"
 
 #: plinth/modules/dynamicdns/forms.py:146
 msgid "Please provide a GnuDIP username"
-msgstr "Kérlek add meg a GnuDIP felhasználónevet"
+msgstr "Kérlek, add meg a GnuDIP-felhasználónevet"
 
 #: plinth/modules/dynamicdns/forms.py:150
 msgid "Please provide a GnuDIP domain name"
-msgstr "Kérlek add meg a GnuDIP domain nevet"
+msgstr "Kérlek, add meg a GnuDIP-domainnevet"
 
 #: plinth/modules/dynamicdns/forms.py:155
 msgid "Please provide a password"
-msgstr "Kérlek add meg a jelszót"
+msgstr "Kérlek, add meg a jelszót"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
 msgid ""
@@ -1778,11 +1778,11 @@ msgid ""
 "freedombox.org</a> or you may find free update URL based services at <a "
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
-"Ha ingyenes dinamikus DNS fiókot keresel, találhatsz ingyenes GnuDIP "
-"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
-"\">ddns.freedombox.org</a> címen vagy találhatsz ingyenes frissítési URL "
-"alapú szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank"
-"\"> freedns.afraid.org</a> címen."
+"Ha ingyenes dinamikus DNS fiókot keresel, használhatod az ingyenes GnuDIP "
+"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank\""
+">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
+"szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
+"freedns.afraid.org</a> címen."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -1791,7 +1791,7 @@ msgid ""
 "port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
 "port 443 (HTTPS)."
 msgstr ""
-"Ha a te %(box_name)s eszközöd NAT-routeren keresztül kapcsolódik az "
+"Ha a %(box_name)s eszközöd NAT-routeren keresztül kapcsolódik az "
 "internethez, akkor ne felejtsd el a port továbbításokhoz hozzáadni a "
 "szabványos portokat, beleértve a TCP 80-as portot (HTTP-hez) és a TCP 443-as "
 "portot (HTTPS-hez)."
@@ -1927,7 +1927,7 @@ msgid ""
 "history of a multi-user chat room. It depends on the client settings whether "
 "the histories are stored as plain text or encrypted."
 msgstr ""
-"Ha engedélyezed, a te {box_name} eszközöd tárolni fogja a cset üzenetek "
+"Ha engedélyezed, a {box_name} eszközöd tárolni fogja a cset üzenetek "
 "előzményét. Ez lehetővé teszi a beszélgetések szinkronizálását több kliens "
 "között, és az előzmények elolvasását egy több-felhasználós csetszobában. A "
 "kliens beállításaitól függ, hogy az előzmények egyszerű szövegként vagy "
@@ -2018,9 +2018,9 @@ msgid ""
 "like <i>username@%(domainname)s</i>. You can setup your domain on the system "
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
-"Az XMPP-szervered domain neve <b>%(domainname)s</b>. A felhasználói ID-k így "
+"Az XMPP-szervered domainneve <b>%(domainname)s</b>. A felhasználói ID-k így "
 "fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a rendszered "
-"domain nevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
+"domainnevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
 
 #: plinth/modules/email_server/__init__.py:31
 msgid ""
@@ -2229,8 +2229,8 @@ msgstr ""
 "A Tűzfal démon nem fut. Kérlek futtasd. A Tűzfal alapértelmezetten "
 "bekapcsolva érkezik a %(box_name)s eszközödre. Bármely Debian alapú "
 "rendszeren (olyan mint %(box_name)s eszközöd) elindíthatod a 'service "
-"firewalld start' parancs kiadásával vagy systemd alapú rendszer rendszer "
-"esetében 'systemctl start firewalld'."
+"firewalld start' parancs kiadásával vagy systemd alapú rendszer esetében "
+"'systemctl start firewalld'."
 
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
@@ -2657,7 +2657,7 @@ msgid ""
 "tracker</a> to let our developers know. To report, first check if the issue "
 "is already reported and then use the \"New issue\" button."
 msgstr ""
-"Ha bármilyen hibát vagy problémát találsz, kérjük a <a href=\"https://salsa."
+"Ha bármilyen hibát vagy problémát találsz, kérlek, a <a href=\"https://salsa."
 "debian.org/freedombox-team/freedombox/issues\" target=\"_blank\""
 ">hibabejelentőt</a> használva tudasd a fejlesztőinkkel (angolul). A "
 "jelentéskor először ellenőrizd, hogy a problémát már jelentették-e, és "
@@ -2766,16 +2766,16 @@ msgid ""
 "attach this status log to the bug report."
 msgstr ""
 "A webes felülethez tartozó állapotnapló utolsó %(num_lines)s sorát láthatod. "
-"Ha szeretnél hibát bejelenteni, kérjük használd a <a href=\"https://salsa."
-"debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> és "
-"mellékeld ezt az állapotnaplót a bejelentéshez."
+"Ha szeretnél bejelenteni egy hibát, kérlek, használd a <a href=\"https"
+"://salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> "
+"és mellékeld ezt az állapotnaplót a bejelentéshez."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
 "Please remove any passwords or other personal information from the log "
 "before submitting the bug report."
 msgstr ""
-"Kérlek távolíts el minden jelszót és személyes információt a naplóból "
+"Kérlek, távolíts el minden jelszót és személyes információt a naplóból "
 "mielőtt elküldenéd a bejelentést."
 
 #: plinth/modules/help/views.py:25
@@ -2855,9 +2855,9 @@ msgid ""
 "For this, your browser, preferably a Tor Browser, needs to be configured for "
 "a proxy."
 msgstr ""
-"I2P segítségével névtelenül böngészheti az internetet és a rejtett "
+"Az I2P segítségével névtelenül böngészheted az internetet és a rejtett "
 "szolgáltatásokat (eepsites). Ehhez a böngészőben, lehetőleg a Tor-"
-"böngészőben, be kell állítani a proxy-t."
+"böngészőben, be kell állítani a megfelelő proxy-t."
 
 #: plinth/modules/i2p/views.py:19
 msgid ""
@@ -3003,7 +3003,7 @@ msgstr ""
 "Ahhoz hogy használd, <a href=\"https://gobby.github.io/\">töltsd le a Gobby "
 "asztali klienst</a> és telepítsd fel. Ezután indítsd el és válaszd a "
 "\"Csatlakozás a szerverhez\" lehetőséget (\"Connect to Server\") és írd be a "
-"{box_name} eszközöd domain nevét."
+"{box_name} eszközöd domainnevét."
 
 #: plinth/modules/infinoted/__init__.py:44
 msgid "infinoted"
@@ -3028,7 +3028,7 @@ msgid ""
 "domain name."
 msgstr ""
 "Indítsd el a Gobby-t majd válaszd a \"Csatlakozás a szerverhez\" lehetőséget "
-"(\"Connect to Server\") és írd be a {box_name} eszközöd domain nevét."
+"(\"Connect to Server\") és írd be a {box_name} eszközöd domainnevét."
 
 #: plinth/modules/jsxc/__init__.py:21
 msgid ""
@@ -3267,7 +3267,7 @@ msgid ""
 msgstr ""
 "A Matrix szolgáltatást be kell állítani egy domain névhez. Más Matrix-"
 "szerver felhasználói el fogják tudni érni ezen szerver felhasználóit ennek a "
-"domain névnek a használatával. A Matrix felhasználói azonosítók így fognak "
+"domainnévnek a használatával. A Matrix felhasználói azonosítók így fognak "
 "kinézni: <em>@felhasznalonev:domainnev</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
@@ -3278,7 +3278,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      <strong>Figyelmeztetés!</strong> A domain név megváltoztatása a "
+"      <strong>Figyelmeztetés!</strong> A domainnév megváltoztatása a "
 "kezdeti\n"
 "      beállítás után jelenleg nem támogatott.\n"
 "    "
@@ -3891,7 +3891,7 @@ msgstr "IPv6 címzési módszer"
 #: plinth/modules/networks/forms.py:79
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
-msgstr "Automatikus: Internetkapcsolat használata erről a hálózatról."
+msgstr "Automatikus: Internetkapcsolat használata erről a hálózatról"
 
 #: plinth/modules/networks/forms.py:82
 msgid ""
@@ -3987,7 +3987,8 @@ msgid ""
 "to. Blank or 0 value means automatic selection."
 msgstr ""
 "Opcionális. A kiválasztott frekvenciasávban használt csatorna amire "
-"korlátozódik a működés. Az üres vagy 0 érték automatikus kiválasztást jelent."
+"korlátozódik a működés. Az üres vagy \"0\" érték automatikus kiválasztást "
+"jelent."
 
 #: plinth/modules/networks/forms.py:264
 msgid "BSSID"
@@ -4285,7 +4286,7 @@ msgstr "kábel csatlakoztatva"
 
 #: plinth/modules/networks/templates/connection_show.html:120
 msgid "please check cable"
-msgstr "kérlek ellenőrizd a kábelt"
+msgstr "kérlek, ellenőrizd a kábelt"
 
 #: plinth/modules/networks/templates/connection_show.html:124
 #: plinth/modules/networks/templates/connection_show.html:140
@@ -4647,8 +4648,9 @@ msgid ""
 "in Internet connection type selection."
 msgstr ""
 "Ha nem rendelkezel a router felett, akkot ne konfiguráld . A korlátozás "
-"leküzdésére szolgáló lehetőségek megtekintéséhez válaszd a \"nincs nyilvános "
-"cím\" opciót az internetkapcsolat típusának kiválasztásakor."
+"leküzdésére szolgáló lehetőségek megtekintéséhez válaszd \"Az "
+"internetszolgáltatóm nem biztosít nyilvános IP-címet.\" opciót az "
+"internetkapcsolat típusának kiválasztásakor."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -4969,7 +4971,6 @@ msgid "Migrate to ECC"
 msgstr "Átállás ECC-re"
 
 #: plinth/modules/openvpn/templates/migrate_to_ecc.html:10
-#, fuzzy
 msgid ""
 "Your OpenVPN installation is currently using RSA. Switching to the modern "
 "Elliptic Curve Cryptography improves speed of establishing a connection and "
@@ -5019,7 +5020,7 @@ msgid ""
 "available for most platforms.  Click \"Learn more...\" above for recommended "
 "clients and instructions on how to configure them."
 msgstr ""
-"Ahhoz, hogy a te %(box_name)s eszközöd virtuális magánhálózatára (VPN) "
+"Ahhoz, hogy a %(box_name)s eszközöd virtuális magánhálózatára (VPN) "
 "kapcsolódj, le kell töltened a profilt, amit majd importálnod kell a mobil "
 "vagy asztali géped OpenVPN-kliensébe. Az OpenVPN-kliensek a legtöbb "
 "platformra elérhetők. Kattints a fentebbi „További információk…” gombra az "
@@ -5046,7 +5047,7 @@ msgid ""
 msgstr ""
 "A PageKite egy rendszer, amivel lehetővé válik a {box_name} eszközön "
 "futtatott szolgáltatások nyilvánossá tétele, ha nincs közvetlen kapcsolatod "
-"az internethez. Erre csak akkor van szükséged, ha a te {box_name} eszközöd "
+"az internethez. Erre csak akkor van szükséged, ha a {box_name} eszközöd "
 "szolgáltatásai nem érhetők el az internet felől. Ez magában foglalja az "
 "alábbi eseteket:"
 
@@ -5251,7 +5252,7 @@ msgstr ""
 #: plinth/modules/performance/__init__.py:16
 #: plinth/modules/performance/__init__.py:42
 msgid "Performance"
-msgstr "Performance"
+msgstr "Teljesítmény"
 
 #: plinth/modules/performance/__init__.py:19
 msgid ""
@@ -5259,17 +5260,17 @@ msgid ""
 "utilization of the hardware. This can give you basic insights into usage "
 "patterns and whether the hardware is overloaded by users and services."
 msgstr ""
-"A Performance alkalmazás lehetővé teszi a hardver kihasználtságára vonatkozó "
-"információk gyűjtését, tárolását és megtekintését. Ez egy alapszintű "
-"betekintést nyújt a használati mintákba, valamint abba, hogy a hardvert "
-"túlterhelik-e a felhasználók és a szolgáltatások."
+"A Teljesítmény alkalmazás lehetővé teszi a hardver kihasználtságára "
+"vonatkozó információk gyűjtését, tárolását és megtekintését. Ez egy "
+"alapszintű betekintést nyújt a használati mintákba, valamint abba, hogy a "
+"hardvert túlterhelik-e a felhasználók és a szolgáltatások."
 
 #: plinth/modules/performance/__init__.py:23
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
 msgstr ""
-"A teljesítménymutatókat a Performance Co-Pilot gyűjti össze, amelyek a "
+"A teljesítménymutatókat a Teljesítmény segédprogram gyűjti össze, amelyek a "
 "Cockpit alkalmazással tekinthetők meg."
 
 #: plinth/modules/performance/__init__.py:43
@@ -5633,7 +5634,7 @@ msgstr "Samba"
 
 #: plinth/modules/samba/__init__.py:60
 msgid "Network File Storage"
-msgstr "Hálózati fájltároló"
+msgstr "Hálózati tárhely"
 
 #: plinth/modules/samba/manifest.py:14
 msgid "Android Samba Client"
@@ -5729,9 +5730,8 @@ msgid "Group Share"
 msgstr "Csoport megosztás"
 
 #: plinth/modules/samba/views.py:67
-#, fuzzy
 msgid "Home Share"
-msgstr "Sajátkönyvtár megosztás"
+msgstr "Saját könyvtár megosztása"
 
 #: plinth/modules/samba/views.py:102
 msgid "Share enabled."
@@ -5999,7 +5999,7 @@ msgid ""
 "connect to this proxy, and their data will be encrypted and proxied through "
 "the Shadowsocks server."
 msgstr ""
-"A te {box_name} eszközöd futtathat egy Shadowsocks-klienst, ami csatlakozhat "
+"A {box_name} eszközöd futtathat egy Shadowsocks-klienst, ami csatlakozhat "
 "egy Shadowsocks-szerverhez. Továbbá egy SOCKS5 proxy-t is fog futtatni. "
 "Helyi eszközeiddel csatlakozhatsz erre a proxy-ra, és az adataik titkosítva "
 "és proxizva lesznek a Shadowsocks-szerveren keresztül."
@@ -6070,7 +6070,7 @@ msgid ""
 "<em>media</em>."
 msgstr ""
 "Kisbetűkből és számokból álló szöveg ami egyedien azonosítja a megosztást. "
-"Példa: <em>media</em>."
+"Például: <em>media</em>."
 
 #: plinth/modules/sharing/forms.py:24
 msgid "Path to share"
@@ -6194,7 +6194,7 @@ msgstr ""
 
 #: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
-msgstr "Háttértár-pillanatképek"
+msgstr "Tárhelypillanatképek"
 
 #: plinth/modules/snapshot/forms.py:12
 msgid "Free Disk Space to Maintain"
@@ -6369,7 +6369,7 @@ msgstr "Pillanatkép létrehozva."
 
 #: plinth/modules/snapshot/views.py:151
 msgid "Storage snapshots configuration updated"
-msgstr "Tárolási pillanatképek konfigurációja frissítve"
+msgstr "Tárhelypillanatképek konfigurációja frissítve"
 
 #: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:60
 #, python-brace-format
@@ -6383,8 +6383,8 @@ msgstr "Kiválasztott pillanatképek törölve"
 #: plinth/modules/snapshot/views.py:188
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
-"A Pillanatképek funkció jelenleg is használatban van. Kérlek, próbáld újra "
-"később."
+"A Tárhelypillanatképek funkció jelenleg is használatban van. Kérlek, próbáld "
+"újra később."
 
 #: plinth/modules/snapshot/views.py:207
 #, python-brace-format
@@ -6480,7 +6480,7 @@ msgstr ""
 #: plinth/modules/storage/__init__.py:51 plinth/modules/storage/__init__.py:322
 #: plinth/modules/storage/__init__.py:353
 msgid "Storage"
-msgstr "Háttértár"
+msgstr "Tárhely"
 
 #: plinth/modules/storage/__init__.py:216
 #, python-brace-format
@@ -6625,7 +6625,7 @@ msgstr "Egyéb könyvtár (add meg alább)"
 
 #: plinth/modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
-msgstr "A következő tárolóeszközök vannak használatban:"
+msgstr "A következő tárhelyek vannak használatban:"
 
 #: plinth/modules/storage/templates/storage.html:24
 msgid "Label"
@@ -6665,7 +6665,7 @@ msgid ""
 "Advanced storage operations such as disk partitioning and RAID management "
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
 msgstr ""
-"A haladó tárolási műveleteket, például a lemezpartícionálást és a RAID-"
+"A haladó tárhelyműveleteket, például a lemezpartícionálást és a RAID-"
 "kezelést a <a href=\"/_cockpit/storage\">Cockpit</a> alkalmazás biztosítja."
 
 #: plinth/modules/storage/templates/storage_expand.html:14
@@ -6755,11 +6755,10 @@ msgid ""
 "the <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor Browser</a>."
 msgstr ""
-"A Tor egy névtelenséget biztosító kommunikációs rendszer. Többet megtudhatsz "
-"róla a <a href=\"https://www.torproject.org/\">Tor Project</a> weboldalon. A "
-"legbiztonságosabb webböngészéshez a Tor Project a <a href=\"https://www."
-"torproject.org/download/download-easy.html.en\">Tor böngésző</a> használatát "
-"javasolja."
+"A Tor egy névtelen kommunikációs rendszer. Tudj meg többet a <a href=\"https"
+"://www.torproject.org/\">Tor Project</a> weboldalon. A legbiztonságosabb "
+"webböngészéshez a Tor Project a <a href=\"https://www.torproject.org/"
+"download/download-easy.html.en\">Tor böngésző</a> használatát javasolja."
 
 #: plinth/modules/tor/__init__.py:50
 msgid "Tor"
@@ -6933,9 +6932,9 @@ msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
 "the following ports are open, and port-forwarded, if necessary:"
 msgstr ""
-"Ha szükséges és a te %(box_name)s eszközöd router vagy tűzfal mögött "
-"található, akkor győződj meg arról, hogy a következő portok nyitva vannak és "
-"port továbbításuk (port-forward) megfelelő:"
+"Ha szükséges és a %(box_name)s eszközöd router vagy tűzfal mögött található, "
+"akkor győződj meg róla, hogy a következő portok nyitva vannak, és szükség "
+"esetén továbbítod őket:"
 
 #: plinth/modules/tor/templates/tor.html:71
 msgid "Service"
@@ -6949,7 +6948,7 @@ msgstr "SOCKS"
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
 msgstr ""
-"Egy Tor SOCKS port elérhető a te %(box_name)s eszközöd 9050-es TCP portján."
+"Egy Tor SOCKS port elérhető a %(box_name)s eszközöd 9050-es TCP-portján."
 
 #: plinth/modules/tor/views.py:137 plinth/views.py:222
 msgid "Setting unchanged"
@@ -6957,7 +6956,7 @@ msgstr "A beállítás változatlan"
 
 #: plinth/modules/transmission/__init__.py:24
 msgid "Transmission is a BitTorrent client with a web interface."
-msgstr "A Transmission egy webes felülettel rendelkező BitTorrent kliens."
+msgstr "A Transmission egy webes felülettel rendelkező BitTorrent-kliens."
 
 #: plinth/modules/transmission/__init__.py:25
 msgid ""
@@ -6970,7 +6969,7 @@ msgstr ""
 #: plinth/modules/transmission/__init__.py:27
 msgid "Please do not change the default port of the transmission daemon."
 msgstr ""
-"Kérjük, ne változtasd meg a transmission daemon. alapértelmezett portját."
+"Kérlek, ne változtasd meg a transmission daemon alapértelmezett portját."
 
 #: plinth/modules/transmission/__init__.py:53
 #: plinth/modules/transmission/manifest.py:6
@@ -6993,8 +6992,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ha engedélyezett, a Tiny Tiny RSS elérhető lesz <a href="
-"\"{users_url}\">bármely felhasználó számára {box_name} felhasználónévvel</a>."
+"Ha engedélyezett, a Tiny Tiny RSS-t bármely <a href=\"{users_url}\""
+">felhasználó elérheti, aki {box_name} bejelentkezéssel rendelkezik</a>."
 
 #: plinth/modules/ttrss/__init__.py:31
 msgid ""
@@ -7007,7 +7006,7 @@ msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:49
 msgid "Read and subscribe to news feeds"
-msgstr "Hírcsatornákra való feliratkozás / olvasás"
+msgstr "Hírcsatornák olvasása és feliratkozás"
 
 #: plinth/modules/ttrss/__init__.py:52 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
@@ -7037,15 +7036,13 @@ msgstr ""
 "A frissítések a helyi időzóna szerint mindennap 06:00-kor indulnak. Állítsd "
 "be az időzónát a Dátum és idő alkalmazásban. Az alkalmazások a frissítés "
 "után újraindulnak, így rövid időre elérhetetlenné válnak. Ha a rendszer "
-"újraindítása szükségesnek bizonyul, akkor az automatikusan 02:00-kor "
-"történik, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
+"újraindítása szükségesnek bizonyul, akkor a rendszer automatikusan 02:00-kor "
+"újraindul, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
 
 #: plinth/modules/upgrades/__init__.py:74
 #: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#, fuzzy
-#| msgid "Software Upgrades"
 msgid "Software Update"
 msgstr "Szoftverfrissítések"
 
@@ -7098,12 +7095,12 @@ msgid ""
 "when it is available."
 msgstr ""
 "Ha engedélyezve van, a FreedomBox frissít a következő stabil disztribúciós "
-"kiadásra, amint az elérhetővé válik."
+"kiadásra, amint a elérhető."
 
 #: plinth/modules/upgrades/forms.py:34
 #: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
-msgstr "A gyakori funkciófrissítéseket aktiválása (ajánlott)"
+msgstr "Gyakori funkciófrissítéseket aktiválása (ajánlott)"
 
 #: plinth/modules/upgrades/forms.py:40
 msgid "Update now (recommended)"
@@ -7127,7 +7124,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
-msgstr "Frissítés, várjon…"
+msgstr "Frissítés, kérlek, várj…"
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
@@ -7148,14 +7145,13 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"\tA %(box_name)s naprakész. A folytatáshoz nyomja meg a Tovább gombot.\n"
+"\tA %(box_name)s naprakész. A folytatáshoz nyomd meg a Tovább gombot.\n"
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, fuzzy, python-format
-#| msgid "%(box_name)s Updated"
+#, python-format
 msgid "%(box_name)s updated"
-msgstr "%(box_name)s fel lett frissítve"
+msgstr "A %(box_name)s frissítése kész"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
 #, python-format
@@ -7163,11 +7159,13 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
+"A %(box_name)s eszközöd a %(version)s verzióra frissült. Lásd a <a href=\""
+"%(url)s\">kiadási közleményt</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
 msgid "Dismiss"
-msgstr ""
+msgstr "Figyelmen kívül hagyás"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/upgrades/templates/upgrades_configure.html:100
@@ -7177,7 +7175,7 @@ msgstr "Frissítés…"
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr "Új %(box_name)s verzió hozzáférhető."
+msgstr "Új %(box_name)s verzió érhető el."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
@@ -7203,6 +7201,10 @@ msgid ""
 "cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
+"<strong>Figyelem!</strong> A gyakori funkciófrissítések aktiválása után már "
+"nem lehet őket kikapcsolni. A folytatás előtt érdemes pillanatfelvételt "
+"készíteni a <a href=\"%(snapshot_url)s\">Tárhelypillanatképek</a> funkció "
+"segítségével."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
@@ -7219,8 +7221,8 @@ msgid ""
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
 "<strong>Ez a művelet sokáig tarthat.</strong> Amíg a frissítés folyamatban "
-"van, nem tudsz más csomagot telepíteni. A frissítés folyamán ez a webes "
-"felület átmenetileg elérhetetlenné válhat és hibát jelezhet. Ebben az "
+"van, nem tudsz más alkalmazásokat telepíteni. A frissítés folyamán ez a "
+"webes felület átmenetileg elérhetetlenné válhat és hibát jelezhet. Ebben az "
 "esetben frissítsd az oldalt a folytatáshoz."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:128
@@ -7230,7 +7232,7 @@ msgstr "Legutóbbi frissítési naplók megjelenítése"
 #: plinth/modules/upgrades/views.py:67
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
-msgstr "Hiba az unattended-upgrades konfigurálása közben: {error}"
+msgstr "Hiba a nem felügyelt frissítések konfigurálása közben: {error}"
 
 #: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
@@ -7266,6 +7268,10 @@ msgid ""
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
+"Felhasználói fiókok létrehozása és kezelése. Ezek a fiókok a legtöbb "
+"alkalmazás központi hitelesítési mechanizmusaként szolgálnak. Egyes "
+"alkalmazások megkövetelik továbbá, hogy a felhasználói fiók egy csoport "
+"tagja legyen, hogy a felhasználó hozzáférhessen az alkalmazáshoz."
 
 #: plinth/modules/users/__init__.py:34
 #, python-brace-format
@@ -7290,15 +7296,15 @@ msgstr "Hozzáférés az összes szolgáltatáshoz és rendszerbeállításhoz"
 #: plinth/modules/users/__init__.py:113
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
-msgstr "LDAP bejegyzés ellenőrzése: \"{search_item}\""
+msgstr "LDAP-bejegyzés ellenőrzése: \"{search_item}\""
 
 #: plinth/modules/users/forms.py:36
 msgid "Username is taken or is reserved."
-msgstr "A felhasználói név (már) foglalt."
+msgstr "A felhasználónév foglalt."
 
 #: plinth/modules/users/forms.py:63
 msgid "Enter a valid username."
-msgstr "Adjon meg egy érvényes felhasználónevet."
+msgstr "Adj meg egy érvényes felhasználónevet."
 
 #: plinth/modules/users/forms.py:70
 msgid ""
@@ -7312,7 +7318,7 @@ msgstr "Hitelesítési jelszó"
 
 #: plinth/modules/users/forms.py:79
 msgid "Enter your current password to authorize account modifications."
-msgstr "A fiókmódosítások engedélyezéséhez adja meg az aktuális jelszavát."
+msgstr "A fiókmódosítások engedélyezéséhez add meg az aktuális jelszavadat."
 
 #: plinth/modules/users/forms.py:87
 msgid "Invalid password."
@@ -7326,10 +7332,10 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
-"Válassza ki, mely szolgáltatások legyenek elérhetőek az új felhasználó "
-"számára. A felhasználó bejelentkezhet azokba a szolgáltatásokba, amelyek "
-"támogatják az egyszeri bejelentkezést LDAP-on keresztül, ha a megfelelő "
-"csoport tagja.<br /><br />Az adminisztrátor csoport felhasználóinak "
+"Válaszd ki, mely szolgáltatások legyenek elérhetők az új felhasználó "
+"számára. A felhasználó, ha tagja a megfelelő csoportnak, bejelentkezhet "
+"azokba a szolgáltatásokba, amelyek támogatják az egyszeri bejelentkezést "
+"LDAP-en keresztül.<br><br>Az adminisztrátor csoport felhasználóinak "
 "lehetőségük van belépni bármely szolgáltatásba, továbbá SSH-n keresztül "
 "képesek bejelentkezni a rendszerbe, ahol adminisztrátori jogosultságokkal "
 "rendelkeznek (sudo)."
@@ -7337,16 +7343,17 @@ msgstr ""
 #: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr "LDAP felhasználó létrehozása sikertelen: {error}"
+msgstr "LDAP-felhasználó létrehozása sikertelen: {error}"
 
 #: plinth/modules/users/forms.py:162
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "Az új felhasználó hozzáadása {group} csoporthoz nem sikerült: {error}"
+msgstr ""
+"Az új felhasználó hozzáadása a(z) {group} csoporthoz nem sikerült: {error}"
 
 #: plinth/modules/users/forms.py:176
 msgid "Authorized SSH Keys"
-msgstr "Engedélyezett SSH kulcsok"
+msgstr "Engedélyezett SSH-kulcsok"
 
 #: plinth/modules/users/forms.py:178
 msgid ""
@@ -7360,7 +7367,7 @@ msgstr ""
 
 #: plinth/modules/users/forms.py:263
 msgid "Renaming LDAP user failed."
-msgstr "LDAP felhasználó átnevezése sikertelen."
+msgstr "LDAP-felhasználó átnevezése sikertelen."
 
 #: plinth/modules/users/forms.py:276
 msgid "Failed to remove user from group."
@@ -7372,7 +7379,7 @@ msgstr "Nem sikerült hozzáadni a felhasználót a csoporthoz."
 
 #: plinth/modules/users/forms.py:301
 msgid "Unable to set SSH keys."
-msgstr "SSH kulcsok beállítása sikertelen."
+msgstr "SSH-kulcsok beállítása sikertelen."
 
 #: plinth/modules/users/forms.py:319
 msgid "Failed to change user status."
@@ -7380,7 +7387,7 @@ msgstr "Nem sikerült a felhasználói állapot megváltoztatása."
 
 #: plinth/modules/users/forms.py:364
 msgid "Changing LDAP user password failed."
-msgstr "LDAP felhasználó jelszavának megváltoztatása sikertelen."
+msgstr "LDAP-felhasználó jelszavának megváltoztatása sikertelen."
 
 #: plinth/modules/users/forms.py:404
 #, python-brace-format
@@ -7392,7 +7399,7 @@ msgstr ""
 #: plinth/modules/users/forms.py:423
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
-msgstr "Nem sikerült a konzol hozzáférés korlátozása: {error}"
+msgstr "Nem sikerült a konzolos hozzáférés korlátozása: {error}"
 
 #: plinth/modules/users/forms.py:436
 msgid "User account created, you are now logged in"
@@ -7440,10 +7447,10 @@ msgid ""
 "can be changed later. This user will be granted administrative privileges. "
 "Other users can be added later."
 msgstr ""
-"Válasszon felhasználónevet és jelszót, hogy hozzáférjen ehhez a "
+"Válassz felhasználónevet és jelszót, hogy hozzáférj ehhez a "
 "kezelőfelülethez! A jelszó később módosítható. Ez a felhasználó "
-"rendszergazdai jogosultságokkal fog rendelkezni. Más felhasználók "
-"hozzáadhatóak később."
+"rendszergazdai jogosultságokkal fog rendelkezni. Más felhasználók később "
+"hozzáadhatók."
 
 #: plinth/modules/users/templates/users_firstboot.html:28
 msgid "Create Account"
@@ -7466,6 +7473,11 @@ msgid ""
 "{username}'. If an account is already usable with %(box_name)s, skip this "
 "step."
 msgstr ""
+"Töröld ezeket a fiókokat a parancssorból, és frissítsd az oldalt, hogy "
+"létrehozz egy olyan fiókot, amely használható a %(box_name)s eszközöddel. A "
+"parancssoron futtasd az 'echo \"{password}\" | /usr/share/plinth/actions/"
+"users remove-user {username}' parancsot. Ha egy fiók már használható a "
+"%(box_name)s eszközödön, akkor hagyd ki ezt a lépést."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:61
@@ -7493,7 +7505,7 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"A jelszó a <a href='%(change_password_url)s'>jelszómódosítás űrlap</a> "
+"A jelszó a <a href=\"%(change_password_url)s\">jelszómódosítási űrlap</a> "
 "kitöltésével változtatható meg."
 
 #: plinth/modules/users/templates/users_update.html:31
@@ -7522,7 +7534,7 @@ msgstr "{user} nevű felhasználó törölve."
 
 #: plinth/modules/users/views.py:151
 msgid "Deleting LDAP user failed."
-msgstr "LDAP felhasználó törlése sikertelen."
+msgstr "LDAP-felhasználó törlése sikertelen."
 
 #: plinth/modules/users/views.py:160
 msgid "Change Password"
@@ -7543,7 +7555,7 @@ msgid ""
 "route all outgoing traffic from {box_name} through the VPN."
 msgstr ""
 "Ezzel csatlakozhatsz egy olyan VPN-szolgáltatóhoz, amely támogatja a "
-"WireGuardot, és a {box_name} összes kimenő forgalmát a VPN-en keresztül "
+"WireGuardot, így a {box_name} összes kimenő forgalmát a VPN-en keresztül "
 "irányíthatod."
 
 #: plinth/modules/wireguard/__init__.py:26
@@ -7585,7 +7597,7 @@ msgid ""
 "Domain name and port in the form \"ip:port\". Example: demo.wireguard."
 "com:12912 ."
 msgstr ""
-"Domainnév és port \"ip:port\" formában. Példa: demo.wireguard.com:12912 ."
+"Domainnév és port \"ip:port\" formában. Például: demo.wireguard.com:12912 ."
 
 #: plinth/modules/wireguard/forms.py:76
 msgid "Public key of the server"
@@ -7596,8 +7608,8 @@ msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"A szerver üzemeltetője által megadott hosszú karakterlánc. Példa: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"A szerver üzemeltetője által megadott hosszú karakterlánc. Például: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:82
 msgid "Client IP address provided by server"
@@ -7610,7 +7622,7 @@ msgid ""
 "192.168.0.10."
 msgstr ""
 "A gépnek a VPN-en a végponthoz való csatlakozást követően kijelölt IP-cím. "
-"Ezt az értéket általában a szerver üzemeltetője adja meg. Példa: 192.168.0."
+"Ezt az értéket általában a szerver üzemeltetője adja meg. Például: 192.168.0."
 "10."
 
 #: plinth/modules/wireguard/forms.py:89
@@ -7627,7 +7639,7 @@ msgstr ""
 "Opcionális. Ha üresen hagyod, új nyilvános/privát kulcsok generálódnak. A "
 "nyilvános kulcsot ezután lehet megadni a szerver számára. Ez az ajánlott "
 "módszer. Egyes szerverüzemeltetők azonban ragaszkodnak ennek megadásához. "
-"Példa: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"Például: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:98
 msgid "Pre-shared key"
@@ -7641,16 +7653,16 @@ msgid ""
 msgstr ""
 "Választható. A szerver által biztosított, megosztott titkos kulcs, amely "
 "további biztonsági szintet biztosít. Csak akkor töltsd ki, ha rendelkezésre "
-"áll. Példa: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
+"áll. Például: MConEJFIg6+DFHgg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
 #: plinth/modules/wireguard/forms.py:105
 msgid "Use this connection to send all outgoing traffic"
-msgstr "Ezt a kapcsolatot használja az összes kimenő forgalom küldésére"
+msgstr "Használja ezt a kapcsolatot az összes kimenő forgalom küldésére"
 
 #: plinth/modules/wireguard/forms.py:107
 msgid "Typically checked for a VPN service though which all traffic is sent."
 msgstr ""
-"Jellemzően olyan VPN szolgáltatásnál van bejelölve, amelyen keresztül az "
+"Jellemzően olyan VPN-szolgáltatásnál van bejelölve, amelyen keresztül az "
 "összes adatforgalom keresztül halad."
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
@@ -7668,7 +7680,7 @@ msgstr "Engedélyezett IP-címek"
 #: plinth/modules/wireguard/templates/wireguard.html:19
 #: plinth/modules/wireguard/templates/wireguard.html:78
 msgid "Last Connected Time"
-msgstr "Utolsó csatlakoztatási idő"
+msgstr "Utolsó csatlakozási idő"
 
 #: plinth/modules/wireguard/templates/wireguard.html:38
 #, python-format
@@ -7722,11 +7734,11 @@ msgstr "Kapcsolat hozzáadása a szerverhez"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:19
 msgid "Add Client"
-msgstr "Ügyfél hozzáadása"
+msgstr "Kliens hozzáadása"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
-msgstr "Biztosan el szeretnéd távolítani ezt az ügyfelet?"
+msgstr "Biztosan el szeretnéd távolítani ezt az klienst?"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:14
 msgid "Are you sure that you want to delete this server?"
@@ -7734,7 +7746,7 @@ msgstr "Biztosan el szeretnéd távolítani ezt a szervert?"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_client.html:19
 msgid "Update Client"
-msgstr "Ügyfél frissítése"
+msgstr "Kliens frissítése"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_server.html:19
 msgid "Update Connection"
@@ -7747,7 +7759,7 @@ msgid ""
 "is configured with the following information."
 msgstr ""
 "%(box_name)s lehetővé teszi, hogy ez a kliens csatlakozzon hozzá. Győződj "
-"meg róla, hogy klienst a következő információkkal konfigurálták."
+"meg róla, hogy a klienst a következő információkkal konfigurálták."
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:21
 msgid "Client public key:"
@@ -7811,19 +7823,19 @@ msgstr "A gép IP-címe:"
 
 #: plinth/modules/wireguard/views.py:43
 msgid "Added new client."
-msgstr "Új ügyfél hozzáadva."
+msgstr "Új kliens hozzáadva."
 
 #: plinth/modules/wireguard/views.py:58 plinth/modules/wireguard/views.py:117
 msgid "Client with public key already exists"
-msgstr "Egy ügyfél ezzel a nyilvános kulccsal már létezik"
+msgstr "Ezzel a nyilvános kulccsal már létezik kliens"
 
 #: plinth/modules/wireguard/views.py:71
 msgid "Allowed Client"
-msgstr "Engedélyezett ügyfél"
+msgstr "Engedélyezett kliens"
 
 #: plinth/modules/wireguard/views.py:93
 msgid "Updated client."
-msgstr "Frissített ügyfél."
+msgstr "Kliens frissítve."
 
 #: plinth/modules/wireguard/views.py:98
 msgid "Modify Client"
@@ -7855,11 +7867,11 @@ msgstr "Szerver frissítve."
 
 #: plinth/modules/wireguard/views.py:196
 msgid "Modify Connection to Server"
-msgstr "Szerverhez való kapcsolat módosítása"
+msgstr "Szerverrel létesített kapcsolat módosítása"
 
 #: plinth/modules/wireguard/views.py:233
 msgid "Delete Connection to Server"
-msgstr "Szerverhez való kapcsolat törlése"
+msgstr "Szerverrel létesített kapcsolat törlése"
 
 #: plinth/modules/wireguard/views.py:253
 msgid "Server deleted."
@@ -7873,6 +7885,11 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"A WordPress egy népszerű módja a weboldalak és blogok létrehozásának és "
+"kezelésének. A tartalmat vizuális felületen keresztül lehet kezelni. A "
+"weboldalak elrendezése és funkcionalitása testre szabható. A megjelenés "
+"témák segítségével választható. Az adminisztrációs felület és az előállított "
+"weboldalak alkalmasak a mobileszközök számára."
 
 #: plinth/modules/wordpress/__init__.py:29
 #, python-brace-format
@@ -7882,6 +7899,11 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"A WordPress beállítását az alkalmazás meglátogatásával kell futtatnod, "
+"mielőtt a webhelyet az alábbiakban nyilvánosan elérhetővé tennéd. A "
+"telepítést a {box_name} megfelelő domainnévvel történő elérése során kell "
+"futtatni. Engedélyezd a permalinkeket a rendszergazdai felületen az oldalak "
+"és bejegyzések jobb URL-jeihez."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7889,6 +7911,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"A WordPress saját felhasználói fiókokkal rendelkezik. Az első rendszergazdai "
+"fiók a telepítés során jön létre. Az adminisztrációs felület könnyebb "
+"elérése érdekében mentsd el a könyvjelzőid közé az <a href=\"/wordpress/"
+"wp-admin/\">admin lapot</a>."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -7896,31 +7922,31 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Egy nagyobb verziófrissítés után manuálisan kell futtatnod az adatbázis "
+"frissítését a rendszergazdai felületről. További bővítmények vagy témák "
+"telepítése és frissítése saját felelősségre történhet."
 
 #: plinth/modules/wordpress/__init__.py:58
 #: plinth/modules/wordpress/manifest.py:6
-#, fuzzy
-#| msgid "Address"
 msgid "WordPress"
-msgstr "Cím"
+msgstr "WordPress"
 
 #: plinth/modules/wordpress/__init__.py:59
-#, fuzzy
-#| msgid "Wiki and Blog"
 msgid "Website and Blog"
-msgstr "Wiki és blog"
+msgstr "Weboldal és blog"
 
 #: plinth/modules/wordpress/forms.py:14
-#, fuzzy
-#| msgid "public access"
 msgid "Public access"
-msgstr "nyilvános hozzáférés"
+msgstr "Nyilvános hozzáférés"
 
 #: plinth/modules/wordpress/forms.py:15
 msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Engedélyezés minden látogatónak. A letiltás csak a rendszergazdák számára "
+"teszi lehetővé a WordPress webhely vagy blog megtekintését. Csak a WordPress "
+"kezdeti beállításának elvégzése után engedélyezd."
 
 #: plinth/modules/zoph/__init__.py:26
 #, python-brace-format
@@ -7934,6 +7960,15 @@ msgid ""
 "location using search, map and calendar views. Individual photos can be "
 "shared with others by sending a direct link."
 msgstr ""
+"A Zoph kezeli a fényképgyűjteményedet. A fényképeket a {box_name} tárolja, a "
+"te irányításod alatt. Ahelyett, hogy a nyilvános megjelenítésre szánt "
+"galériákra összpontosítana, a Zoph a saját használatra való kezelésükre "
+"összpontosít, aszerint rendszerezve a képeket, hogy ki készítette őket, hol "
+"készültek, és ki szerepel rajtuk. A fényképek több hierarchikus albumhoz és "
+"kategóriához is kapcsolhatók. A keresés, a naptár és a térkép nézetek "
+"segítségével könnyen kereshetsz egy a fényképen szereplő személy, dátum vagy "
+"tartózkodási hely alapján. Az egyes fényképek közvetlen link elküldésével "
+"megoszthatók másokkal."
 
 #: plinth/modules/zoph/__init__.py:37
 #, python-brace-format
@@ -7942,18 +7977,22 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
+"Az a {box_name} felhasználó, aki beállította a Zoph-ot, egyben a Zoph "
+"rendszergazdája is lesz. További felhasználók számára a {box_name} és a Zoph "
+"rendszerben is létre kell hozni egy-egy fiókot ugyanazzal a "
+"felhasználónévvel."
 
 #: plinth/modules/zoph/__init__.py:58 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:59
 msgid "Photo Organizer"
-msgstr ""
+msgstr "Fotó szervező"
 
 #: plinth/modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
-msgstr ""
+msgstr "OpenStreetMap engedélyezése a térképekhez"
 
 #: plinth/modules/zoph/forms.py:15
 msgid ""
@@ -7965,8 +8004,6 @@ msgstr ""
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
-#, fuzzy
-#| msgid "Start Setup"
 msgid "Setup"
 msgstr "Beállítás elkezdése"
 
@@ -7976,6 +8013,8 @@ msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
 msgstr ""
+"A(z) <strong>%(username)s</strong> felhasználói fiók lesz a Zoph "
+"rendszergazdai fiókja."
 
 #: plinth/network.py:29
 msgid "PPPoE"
@@ -7988,7 +8027,7 @@ msgstr "Általános"
 #: plinth/package.py:94
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
-msgstr ""
+msgstr "A(z) {package_name} a legfrissebb verzió ({latest_version})"
 
 #: plinth/package.py:245
 msgid "Error during installation"
@@ -8035,9 +8074,9 @@ msgid ""
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
 "freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
-"Ha úgy gondolja hogy a hiányzó oldalnak léteznie kellene, akkor kérjük hogy "
-"jelentse ezt a hibát a FreedomBox Service (Plinth) projekt <a href=\"https://"
-"salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőjében</a>."
+"Ha úgy gondolod, hogy a hiányzó oldalnak léteznie kellene, kérlek, jelentsd "
+"ezt a hibát a FreedomBox Service (Plinth) projekt <a href=\"https://salsa."
+"debian.org/freedombox-team/freedombox/issues\">hibabejelentőjében</a>."
 
 #: plinth/templates/500.html:10
 msgid "500"
@@ -8051,11 +8090,11 @@ msgid ""
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
 "the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
-"Ez egy belső hiba, nem pedig valami, amit Ön okozott, vagy meg tudna "
-"javítani. Kérjük hogy jelentse ezt a hibát a <a href=\"https://salsa.debian."
+"Ez egy belső hiba, nem pedig valami, amit te okoztál vagy meg tudnál "
+"javítani. Kérjük, hogy jelentsd ezt a hibát a <a href=\"https://salsa.debian."
 "org/freedombox-team/freedombox/issues\">hibabejelentőben</a>, így ki fogjuk "
-"tudni javítani. Továbbá mellékelje a bejelentésben az <a href="
-"\"%(status_log_url)s\">állapotnapló</a> tartalmát."
+"tudni javítani. Ezek mellett kérjük mellékeld a bejelentésben az <a href=\""
+"%(status_log_url)s\">állapotnapló</a> tartalmát."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
@@ -8069,7 +8108,7 @@ msgstr "A szolgáltatás nem fut (<em>%(service_name)s</em>)."
 #: plinth/templates/base.html:30
 #, python-format
 msgid "Core functionality and web interface for %(box_name)s"
-msgstr "Alapvető funkcionalitás és webes felület %(box_name)s eszközére"
+msgstr "Alapvető funkcionalitás és webes felület a %(box_name)s számára"
 
 #: plinth/templates/base.html:107
 msgid " Home"
@@ -8182,8 +8221,8 @@ msgid ""
 "Please wait for %(box_name)s to finish installation. You can start using "
 "your %(box_name)s once it is done."
 msgstr ""
-"Várd meg, amíg a %(box_name)s végez a telepítéssel! Amint az befejeződött, a "
-"%(box_name)s használatba vehető."
+"Várd meg, amíg a %(box_name)s végez a telepítéssel! Amint a frissítés "
+"befejeződött, a %(box_name)s használatba vehető."
 
 #: plinth/templates/index.html:22
 #, python-format
@@ -8236,7 +8275,7 @@ msgstr "FreedomBox Alapítvány"
 
 #: plinth/templates/index.html:154
 msgid "IRC Chatroom"
-msgstr "IRC csevegőszoba"
+msgstr "IRC-csevegőszoba"
 
 #: plinth/templates/index.html:159
 msgid "Mailing list"
@@ -8249,7 +8288,7 @@ msgid ""
 "client is connected to %(box_name)s through VPN."
 msgstr ""
 "<em>%(service_name)s</em> néven futó szolgáltatás csak a belső hálózaton "
-"érhető el, vagy ha az ügyfél VPN-en keresztül csatlakozik %(box_name)s "
+"érhető el, vagy ha az ügyfél VPN-en keresztül csatlakozik a %(box_name)s "
 "eszközhöz."
 
 #: plinth/templates/internal-zone.html:17
@@ -8267,7 +8306,7 @@ msgstr ""
 
 #: plinth/templates/messages.html:11
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 #: plinth/templates/notifications-dropdown.html:11
 msgid "Notifications"
@@ -8283,7 +8322,7 @@ msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
-"A FreedomBox-od <a href=\"%(networks_url)s\">nincs router mögött</a>. Nincs "
+"A FreedomBoxod <a href=\"%(networks_url)s\">nincs router mögött</a>. Nincs "
 "szükség semmilyen intézkedésre."
 
 #: plinth/templates/port-forwarding-info.html:19
@@ -8293,6 +8332,9 @@ msgid ""
 "are using the DMZ feature to forward all ports. No further router "
 "configuration is necessary."
 msgstr ""
+"A FreedomBox <a href=\"%(networks_url)s\">router mögött</a> van, és a DMZ "
+"funkciót használod az összes port továbbítására. Nincs szükség további "
+"router-konfigurációra."
 
 #: plinth/templates/port-forwarding-info.html:26
 #, python-format
@@ -8301,8 +8343,8 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
-"A FreedomBox-od <a href=\"%(networks_url)s\">router mögött található</a>, és "
-"nem használod a DMZ funkciót. Be kell állítanod a port továbbítást a "
+"A FreedomBoxod <a href=\"%(networks_url)s\">router mögött található</a>, és "
+"nem használod a DMZ funkciót. Be kell állítanod a porttovábbítást a "
 "routeren. A következő portokat kell továbbítani a %(service_name)s számára:"
 
 #: plinth/templates/port-forwarding-info.html:37
@@ -8311,12 +8353,12 @@ msgstr "Protokoll"
 
 #: plinth/templates/port-forwarding-info.html:38
 msgid "From Router/WAN Ports"
-msgstr ""
+msgstr "Router/WAN-portokról"
 
 #: plinth/templates/port-forwarding-info.html:39
 #, python-format
 msgid "To %(box_name)s Ports"
-msgstr "%(box_name)s portokhoz"
+msgstr "A %(box_name)s portokhoz"
 
 #: plinth/templates/setup.html:24
 msgid "Install this application?"
@@ -8324,15 +8366,15 @@ msgstr "Alkalmazás telepítése?"
 
 #: plinth/templates/setup.html:28
 msgid "This application needs an update. Update now?"
-msgstr "Az alkalmazást frissíteni szükséges. Indulhat a frissítés most?"
+msgstr "Ennek az alkalmazásnak frissítésre van szüksége. Frissítés most?"
 
 #: plinth/templates/setup.html:39
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
-"Egy másik telepítés vagy frissítés már fut. Pár perc után érdemes újra "
-"megpróbálni."
+"Egy másik telepítés vagy frissítés már folyamatban van. Kérlek, várj néhány "
+"pillanatot, mielőtt újra megpróbálnád."
 
 #: plinth/templates/setup.html:46
 msgid "This application is currently not available in your distribution."
@@ -8340,7 +8382,7 @@ msgstr "Ez az alkalmazás jelenleg nem hozzáférhető ebben a disztribúcióban
 
 #: plinth/templates/setup.html:50
 msgid "Check again"
-msgstr ""
+msgstr "Ellenörzés ismét"
 
 #: plinth/templates/setup.html:55
 msgid ""
@@ -8348,6 +8390,9 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Ellentétes csomagok:</strong> A rendszerben telepített egyes "
+"csomagok ütköznek ennek az alkalmazásnak a telepítésével. A következő "
+"csomagok törlődnek, ha folytatod:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
