@@ -3,6 +3,7 @@
 FreedomBox app for help pages.
 """
 
+import logging
 import os
 
 from django.utils.translation import gettext_lazy as _
@@ -10,6 +11,8 @@ from django.utils.translation import pgettext_lazy
 
 from plinth import app as app_module
 from plinth import cfg, menu, web_server
+
+logger = logging.getLogger(__name__)
 
 app = None
 
@@ -54,12 +57,19 @@ class HelpApp(app_module.App):
                               order=100)
         self.add(menu_item)
 
+    def post_init(self):
+        """Perform post initialization operations."""
         directory_map = {}
-        langs = os.listdir(os.path.join(cfg.doc_dir, 'manual'))
-        for lang in langs:
-            manual_dir = os.path.join(cfg.doc_dir, 'manual', lang, 'images')
-            manual_url = f'/help/manual/{lang}/images'
-            directory_map[manual_url] = manual_dir
+        try:
+            langs = os.listdir(os.path.join(cfg.doc_dir, 'manual'))
+            for lang in langs:
+                manual_dir = os.path.join(cfg.doc_dir, 'manual', lang,
+                                          'images')
+                manual_url = f'/help/manual/{lang}/images'
+                directory_map[manual_url] = manual_dir
+        except FileNotFoundError:
+            logger.error('Unable to find manual directory. Ensure that '
+                         'freedombox-doc-* packages are installed')
 
         static_files = web_server.StaticFiles('static-files-help',
                                               directory_map)
