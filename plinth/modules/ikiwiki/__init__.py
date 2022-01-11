@@ -58,8 +58,6 @@ class IkiwikiApp(app_module.App):
                               'ikiwiki:index', parent_url_name='apps')
         self.add(menu_item)
 
-        self.refresh_sites()
-
         packages = Packages('packages-ikiwiki', [
             'ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
             'xapian-omega', 'libsearch-xapian-perl', 'libimage-magick-perl'
@@ -82,6 +80,10 @@ class IkiwikiApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-ikiwiki',
                                        **manifest.backup)
         self.add(backup_restore)
+
+    def post_init(self):
+        """Perform post initialization operations."""
+        self.refresh_sites()
 
     def add_shortcut(self, site, title):
         """Add an ikiwiki shortcut to frontpage."""
