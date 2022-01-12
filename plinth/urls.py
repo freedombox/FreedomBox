@@ -6,8 +6,6 @@ from captcha import views as cviews
 from django.urls import re_path
 from stronghold.decorators import public
 
-from plinth.modules.sso.views import CaptchaLoginView
-
 from . import views
 
 urlpatterns = [
@@ -27,10 +25,6 @@ urlpatterns = [
             name='captcha-audio'),
     re_path(r'^captcha/refresh/$', public(cviews.captcha_refresh),
             name='captcha-refresh'),
-
-    # locked url from django-axes
-    re_path(r'locked/$', public(CaptchaLoginView.as_view()),
-            name='locked_out'),
 
     # Notifications
     re_path(r'^notification/(?P<id>[A-Za-z0-9-=]+)/dismiss/$',
