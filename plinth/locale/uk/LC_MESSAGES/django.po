@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 19:17-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2021-11-19 11:51+0000\n"
 "Last-Translator: Andrij Mizyk <andmizyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
@@ -646,10 +646,15 @@ msgid "How to verify?"
 msgstr "Як перевірити?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Запустіть наступні команди на машині, що розміщує SSH. Вивід має відповідати "
 "одному з наведених параметрів. Ви також можете використовувати dsa, ecdsa, "
@@ -1804,7 +1809,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Востаннє оновлено"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Про FreedomBox"
@@ -2083,6 +2088,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
@@ -2402,31 +2408,31 @@ msgstr "Репозиторій змінено."
 msgid "Edit repository"
 msgstr "Змінити репозиторій"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Документація"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Посібник"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Отримати підтримку"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Надіслати відгук"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2731,8 +2737,8 @@ msgstr "Анонімні торенти"
 #: plinth/modules/i2p/views.py:16
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 
 #: plinth/modules/i2p/views.py:19
@@ -2780,7 +2786,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Вікі та блоґ"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Перегляд і редагування застосунків вікі"
 
@@ -3445,7 +3451,7 @@ msgstr ""
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 
 #: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:9
@@ -4308,10 +4314,16 @@ msgstr ""
 "він перенаправляв увесь отриманий трафік до сервісів, які надає %(box_name)s."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'no public address' "
+#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 "Якщо Ви не контролюєте свій маршрутизатор, не налаштовуйте його. Щоб "
 "побачити способи обходу цього обмеження, оберіть параметр 'немає публічної "
@@ -4619,7 +4631,7 @@ msgid ""
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Завантажити профіль</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr ""
 
@@ -5096,10 +5108,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "Календар GNOME"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -6420,7 +6428,9 @@ msgstr ""
 "BitTorrent не анонімний."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+#, fuzzy
+#| msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Будь ласка, не змінюйте типовий порт демона transmission."
 
 #: plinth/modules/transmission/__init__.py:53
@@ -7057,7 +7067,7 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
@@ -7770,6 +7780,9 @@ msgstr "%(percentage)s%% завершено"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Mozilla Thunderbird"
 
 #~ msgid "Updates"
 #~ msgstr "Оновлення"

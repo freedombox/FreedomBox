@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 19:17-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2021-05-17 18:31+0000\n"
 "Last-Translator: chilumula vamshi krishna <kannakrishna1625@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -623,8 +623,8 @@ msgstr "ఎలా ధృవీకరించాలి?"
 #, fuzzy
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "SSH హోస్ట్ మెషిన్ మీద దిగువ కమాండ్ రన్ చేయాలి. అవుట్ పుట్ ఇవ్వబడ్డ ఆప్షన్ ల్లో ఒకదానిని జతచేయాలి. సంబంధిత "
 "ఫైలును ఎంచుకోవడం ద్వారా, rsa కు బదులుగా dsa, ecdsa, ed25519 మొదలైనవి కూడా ఉపయోగించవచ్చు."
@@ -1836,7 +1836,7 @@ msgstr ""
 msgid "Last update"
 msgstr "చివరి నవీకరణ"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "గురించి"
@@ -2121,6 +2121,7 @@ msgid "Roundcube"
 msgstr "రౌండ్ క్యూబ్"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
@@ -2488,11 +2489,11 @@ msgstr "రిపోజిటరీ సవరించబడింది."
 msgid "Edit repository"
 msgstr "వినియోగదారుని సృష్టించు"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "పత్రావళి"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 #, fuzzy
 #| msgid "Manual"
@@ -2500,21 +2501,21 @@ msgctxt "User guide"
 msgid "Manual"
 msgstr "కరదీపిక"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "సహాయం పొందు"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "అభిప్రాయాన్ని సమర్పించండి"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2846,8 +2847,8 @@ msgstr ""
 #: plinth/modules/i2p/views.py:16
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 
 #: plinth/modules/i2p/views.py:19
@@ -2906,7 +2907,7 @@ msgstr "ఇకివికీ"
 msgid "Wiki and Blog"
 msgstr "వికీ మరియు బ్లాగ్"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "వికీ అనువర్తనాలను చూడండి మరియు మార్చండి"
 
@@ -3640,7 +3641,7 @@ msgstr ""
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "మీరు మీ డెస్క్టాప్ నుండి Mumble కనెక్ట్ చేయడానికి సాధారణ నమలు పోర్ట్ 64738. <a href=\"http://"
 "mumble.info\"> 1Clients </a> 2 మీ నమలు సర్వర్ కనెక్ట్ చేయవచ్చు మరియు Android పరికరాలు "
@@ -4517,8 +4518,9 @@ msgstr ""
 #: plinth/modules/networks/templates/router_configuration_content.html:32
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -4875,7 +4877,7 @@ msgid ""
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">స్థూల వివరం దిగుమతి</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr ""
 
@@ -5399,10 +5401,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "కేలండర్"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "మొజిల్లా థండర్ బర్డ్"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -6868,7 +6866,7 @@ msgstr ""
 "బిట్ టోర్రెంట్ అజ్ఞాత కాదని గమనించండి."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
 #: plinth/modules/transmission/__init__.py:53
@@ -7527,7 +7525,7 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
@@ -8295,6 +8293,9 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "మొజిల్లా థండర్ బర్డ్"
 
 #, fuzzy
 #~| msgid "Update"

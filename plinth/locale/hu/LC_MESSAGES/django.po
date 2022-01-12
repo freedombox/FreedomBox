@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-03 19:17-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2022-01-08 13:56+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -645,10 +645,15 @@ msgid "How to verify?"
 msgstr "Hogyan ellenőrizd?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Futtasd a következő parancsot az SSH-állomáson. A kimenetnek meg kell "
 "egyeznie a megadott opciók egyikével. Az RSA helyett használható még a DSA, "
@@ -947,9 +952,9 @@ msgid ""
 "BIND enables you to publish your Domain Name System (DNS) information on the "
 "Internet, and to resolve DNS queries for your user devices on your network."
 msgstr ""
-"A BIND lehetővé teszi számodra hogy közzétedd a saját domainnévrendszer (DNS)"
-" információdat az interneten, és hogy fel tudd oldani a DNS-lekérdezéseket a "
-"hálózatodon lévő eszközeidnek."
+"A BIND lehetővé teszi számodra hogy közzétedd a saját domainnévrendszer "
+"(DNS) információdat az interneten, és hogy fel tudd oldani a DNS-"
+"lekérdezéseket a hálózatodon lévő eszközeidnek."
 
 #: plinth/modules/bind/__init__.py:29
 #, python-brace-format
@@ -1178,8 +1183,8 @@ msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the admin group."
 msgstr ""
-"A {box_name} bármely adminisztrátori csoportba tartozó <a href=\"{users_url}"
-"\">felhasználója</a> hozzáférhet."
+"A {box_name} bármely adminisztrátori csoportba tartozó <a href="
+"\"{users_url}\">felhasználója</a> hozzáférhet."
 
 #: plinth/modules/cockpit/__init__.py:40
 msgid ""
@@ -1695,8 +1700,8 @@ msgstr ""
 "Opcionális. Ha a {box_name} eszközöd nem közvetlenül kapcsolódik az "
 "Internethez (pl. NAT-routerhez van kapcsolódva), ennek az URL-nek a "
 "segítségével válik lehetővé nyilvános IP-címed meghatározása. Egy ilyen URL "
-"egyszerűen visszaadja a kliens IP-címét (pl.: https://ddns.freedombox.org/ip/"
-")."
+"egyszerűen visszaadja a kliens IP-címét (pl.: https://ddns.freedombox.org/"
+"ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1779,8 +1784,8 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Ha ingyenes dinamikus DNS fiókot keresel, használhatod az ingyenes GnuDIP "
-"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank\""
-">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
+"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
+"\">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
 "szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
 "freedns.afraid.org</a> címen."
 
@@ -1847,7 +1852,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Legutolsó frissítés"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Névjegy"
@@ -2131,6 +2136,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
@@ -2472,31 +2478,31 @@ msgstr "Tároló szerkesztve."
 msgid "Edit repository"
 msgstr "Tároló szerkesztése"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Dokumentáció"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Kézikönyv"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Támogatás kérése"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Visszajelzés küldése"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2646,9 +2652,9 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" target="
 "\"_blank\"> discussion forum</a>."
 msgstr ""
-"Tudasd velünk <a href=\"https://discuss.freedombox.org\" target=\"_blank\""
-">vitafórumunkon</a> a hiányzó funkciókat, a kedvenc alkalmazásaidat, és hogy "
-"szerinted hogyan fejleszthetnénk őket."
+"Tudasd velünk <a href=\"https://discuss.freedombox.org\" target=\"_blank"
+"\">vitafórumunkon</a> a hiányzó funkciókat, a kedvenc alkalmazásaidat, és "
+"hogy szerinted hogyan fejleszthetnénk őket."
 
 #: plinth/modules/help/templates/help_feedback.html:26
 msgid ""
@@ -2658,8 +2664,8 @@ msgid ""
 "is already reported and then use the \"New issue\" button."
 msgstr ""
 "Ha bármilyen hibát vagy problémát találsz, kérlek, a <a href=\"https://salsa."
-"debian.org/freedombox-team/freedombox/issues\" target=\"_blank\""
-">hibabejelentőt</a> használva tudasd a fejlesztőinkkel (angolul). A "
+"debian.org/freedombox-team/freedombox/issues\" target=\"_blank"
+"\">hibabejelentőt</a> használva tudasd a fejlesztőinkkel (angolul). A "
 "jelentéskor először ellenőrizd, hogy a problémát már jelentették-e, és "
 "amennyiben nem, úgy használd a „New issue” (Új probléma) gombot."
 
@@ -2687,8 +2693,8 @@ msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s project wiki </a> contains further information."
 msgstr ""
-"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> %(box_name)"
-"s projekt wiki </a> további információkat tartalmaz."
+"<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
+"%(box_name)s projekt wiki </a> további információkat tartalmaz."
 
 #: plinth/modules/help/templates/help_index.html:30
 #, python-format
@@ -2713,9 +2719,9 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Sok %(box_name)s közreműködőt és felhasználót elérhetsz akár az irc.oftc.net "
-"IRC hálózaton is. Lépj be és kérj segítséget a <a href=\"https://webchat.oftc"
-".net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> #freedombox</a> "
-"csatornán az IRC webes felületét használva."
+"IRC hálózaton is. Lépj be és kérj segítséget a <a href=\"https://webchat."
+"oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> #freedombox</"
+"a> csatornán az IRC webes felületét használva."
 
 #: plinth/modules/help/templates/help_manual.html:18
 msgid "Download as PDF"
@@ -2738,8 +2744,8 @@ msgid ""
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
 "Kereshetsz a korábbi beszélgetések között, vagy közzétehetsz egy új "
-"hozzászólást a <a href=\"https://discuss.freedombox.org\" target=\"_blank\""
-">vitafórumunkon</a>."
+"hozzászólást a <a href=\"https://discuss.freedombox.org\" target=\"_blank"
+"\">vitafórumunkon</a>."
 
 #: plinth/modules/help/templates/help_support.html:27
 msgid ""
@@ -2748,10 +2754,10 @@ msgid ""
 "Or send an email to our <a href=\"mailto:freedombox-discuss@alioth-lists."
 "debian.net\">mailing list</a>."
 msgstr ""
-"IRC- és Matrix-csatornáinkon (áthidalt) is cseveghetsz velünk: <ul> <li>#"
-"freedombox az irc.oftc.net-en</li> <li>#freedombox:matrix.org</li> </ul> "
-"Vagy küldhetsz e-mailt a <a href=\"mailto:freedombox-discuss@alioth-lists."
-"debian.net\">levelezési listánkra</a>."
+"IRC- és Matrix-csatornáinkon (áthidalt) is cseveghetsz velünk: <ul> "
+"<li>#freedombox az irc.oftc.net-en</li> <li>#freedombox:matrix.org</li> </"
+"ul> Vagy küldhetsz e-mailt a <a href=\"mailto:freedombox-discuss@alioth-"
+"lists.debian.net\">levelezési listánkra</a>."
 
 #: plinth/modules/help/templates/statuslog.html:10
 msgid "Status Log"
@@ -2766,9 +2772,9 @@ msgid ""
 "attach this status log to the bug report."
 msgstr ""
 "A webes felülethez tartozó állapotnapló utolsó %(num_lines)s sorát láthatod. "
-"Ha szeretnél bejelenteni egy hibát, kérlek, használd a <a href=\"https"
-"://salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> "
-"és mellékeld ezt az állapotnaplót a bejelentéshez."
+"Ha szeretnél bejelenteni egy hibát, kérlek, használd a <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\">hibabejelentőt</a> és "
+"mellékeld ezt az állapotnaplót a bejelentéshez."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
@@ -2850,10 +2856,15 @@ msgid "Anonymous Torrents"
 msgstr "Anonim torrentek"
 
 #: plinth/modules/i2p/views.py:16
+#, fuzzy
+#| msgid ""
+#| "I2P lets you browse the Internet and hidden services (eepsites) "
+#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
+#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 "Az I2P segítségével névtelenül böngészheted az internetet és a rejtett "
 "szolgáltatásokat (eepsites). Ehhez a böngészőben, lehetőleg a Tor-"
@@ -2909,7 +2920,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki és blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Wiki alkalmazások megtekintése és szerkesztése"
 
@@ -3076,8 +3087,8 @@ msgid ""
 msgstr ""
 "A Let's Encrypt egy ingyenes, automatizált és nyílt hitelesítésszolgáltató, "
 "amelyet az Internet Security Research Group (ISRG) működtet a közjó "
-"érdekében. Kérlek, olvasd el, majd fogadd is el a <a href=\"https"
-"://letsencrypt.org/repository/\">Let's Encrypt aláírási megállapodását</a> "
+"érdekében. Kérlek, olvasd el, majd fogadd is el a <a href=\"https://"
+"letsencrypt.org/repository/\">Let's Encrypt aláírási megállapodását</a> "
 "mielőtt használnád ezt a szolgáltatást."
 
 #: plinth/modules/letsencrypt/__init__.py:61
@@ -3300,9 +3311,9 @@ msgid ""
 "the initial setup is currently not supported."
 msgstr ""
 "A Matrix-szerver domainje be lett állítva erre: <em>%(domain_name)s</em>. A "
-"felhasználói azonosítók így fognak kinézni: "
-"<em>@felhasznalonev:%(domain_name)s</em>. A domainnév megváltoztatása a "
-"kezdeti beállítás után jelenleg nem lehetséges."
+"felhasználói azonosítók így fognak kinézni: <em>@felhasznalonev:"
+"%(domain_name)s</em>. A domainnév megváltoztatása a kezdeti beállítás után "
+"jelenleg nem lehetséges."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:22
 msgid ""
@@ -3675,10 +3686,15 @@ msgstr ""
 "hangminőségű audiókonferencia-szoftver."
 
 #: plinth/modules/mumble/__init__.py:28
+#, fuzzy
+#| msgid ""
+#| "You can connect to your Mumble server on the regular Mumble port 64738. "
+#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
+#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "A te Mumble-szerveredhez a szokásos 64738-as Mumble porton keresztül "
 "kapcsolódhatsz. A <a href=\"http://mumble.info\">Mumble-kliensek</a> "
@@ -4051,8 +4067,8 @@ msgstr ""
 "A {box_name} eszközöd a router <p class=\"help-block\">A {box_name} "
 "eszközödnek több hálózati interfésze van, úgy mint több Ethernet csatlakozó "
 "vagy Wi-Fi adapter. A {box_name} közvetlenül kapcsolódik az internetre és "
-"minden eszköze a {box_name}hoz csatlakozik az internetkapcsolat "
-"érdekében.</p>"
+"minden eszköze a {box_name}hoz csatlakozik az internetkapcsolat érdekében.</"
+"p>"
 
 #: plinth/modules/networks/forms.py:333
 #, python-brace-format
@@ -4642,10 +4658,16 @@ msgstr ""
 "hogy a %(box_name)s biztosítani tudja a szolgáltatásokat."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'no public address' "
+#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 "Ha nem rendelkezel a router felett, akkot ne konfiguráld . A korlátozás "
 "leküzdésére szolgáló lehetőségek megtekintéséhez válaszd \"Az "
@@ -4962,7 +4984,7 @@ msgid ""
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Profil letöltése</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
@@ -5409,8 +5431,8 @@ msgid ""
 "\">mobile</a> devices are available."
 msgstr ""
 "A Quassel maghoz az alapértelmezett 4242-es porton tudsz csatlakozni. "
-"Quassel kliensek elérhetők <a href=\"http://quassel-irc.org/downloads\""
-">asztali</a> és <a href=\"http://quasseldroid.iskrembilen.com/\">mobil</a> "
+"Quassel kliensek elérhetők <a href=\"http://quassel-irc.org/downloads"
+"\">asztali</a> és <a href=\"http://quasseldroid.iskrembilen.com/\">mobil</a> "
 "eszközökhöz is."
 
 #: plinth/modules/quassel/__init__.py:56 plinth/modules/quassel/manifest.py:9
@@ -5436,9 +5458,10 @@ msgid ""
 msgstr ""
 "A Radicale egy CalDAV és CardDAV szerver, amely lehetővé teszi az "
 "időbeosztás és a kapcsolati adatok szinkronizációját és megosztását. A "
-"Radicale használatához szükség lesz egy <a href=\"https://radicale.org/master"
-".html#documentation/supported-clients\">támogatott kliens alkalmazásra</a> "
-"is. A Radicale elérhető bármely felhasználó számára a {box_name} eszközön."
+"Radicale használatához szükség lesz egy <a href=\"https://radicale.org/"
+"master.html#documentation/supported-clients\">támogatott kliens "
+"alkalmazásra</a> is. A Radicale elérhető bármely felhasználó számára a "
+"{box_name} eszközön."
 
 #: plinth/modules/radicale/__init__.py:31
 msgid ""
@@ -5503,10 +5526,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "GNOME Calendar"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Thunderbird"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -5576,8 +5595,8 @@ msgstr ""
 "code>. Vedd figyelembe, hogy a hozzáféréshez engedélyezned kell a \"Kevésbé "
 "biztonságos alkalmazások hozzáférése\" menüpontot a Google-fiókod "
 "beállításaiban (<a href=\"https://www.google.com/settings/security/"
-"lesssecureapps\">https://www.google.com/settings/security/"
-"lesssecureapps</a>)."
+"lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
+"a>)."
 
 #: plinth/modules/roundcube/__init__.py:53
 msgid "Email Client"
@@ -5680,8 +5699,8 @@ msgid ""
 "shares on the <a href=\"%(users_url)s\">users</a> module page."
 msgstr ""
 "A lemezekről további információkat a <a href=\"%(storage_url)s\">tárhely</a> "
-"moduloldalon találsz, a megosztásokhoz való hozzáférést pedig a <a href=\""
-"%(users_url)s\">felhasználók</a> moduloldalon konfigurálhatod."
+"moduloldalon találsz, a megosztásokhoz való hozzáférést pedig a <a href="
+"\"%(users_url)s\">felhasználók</a> moduloldalon konfigurálhatod."
 
 #: plinth/modules/samba/templates/samba.html:120
 msgid "Users who can currently access group and home shares"
@@ -6010,8 +6029,8 @@ msgid ""
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
 "A Shadowsocks használatához a telepítés után állítsd be a SOCKS5 proxy URL-"
-"címét a készülékeden, böngésződben vagy alkalmazásodban a "
-"http://freedombox_eszkozod_cime:1080/ címre"
+"címét a készülékeden, böngésződben vagy alkalmazásodban a http://"
+"freedombox_eszkozod_cime:1080/ címre"
 
 #: plinth/modules/shadowsocks/__init__.py:51
 msgid "Shadowsocks"
@@ -6325,8 +6344,8 @@ msgid ""
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
 "Az általad használt fájlrendszer típusa: <strong>%(fs_type)s</strong>. A "
-"Pillanatképek jelenleg csak a következő fájlrendszereken érhetők el: "
-"<strong>%(types_supported)s</strong>."
+"Pillanatképek jelenleg csak a következő fájlrendszereken érhetők el: <strong>"
+"%(types_supported)s</strong>."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:12
 msgid "Roll back the system to this snapshot?"
@@ -6755,10 +6774,11 @@ msgid ""
 "the <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor Browser</a>."
 msgstr ""
-"A Tor egy névtelen kommunikációs rendszer. Tudj meg többet a <a href=\"https"
-"://www.torproject.org/\">Tor Project</a> weboldalon. A legbiztonságosabb "
-"webböngészéshez a Tor Project a <a href=\"https://www.torproject.org/"
-"download/download-easy.html.en\">Tor böngésző</a> használatát javasolja."
+"A Tor egy névtelen kommunikációs rendszer. Tudj meg többet a <a href="
+"\"https://www.torproject.org/\">Tor Project</a> weboldalon. A "
+"legbiztonságosabb webböngészéshez a Tor Project a <a href=\"https://www."
+"torproject.org/download/download-easy.html.en\">Tor böngésző</a> használatát "
+"javasolja."
 
 #: plinth/modules/tor/__init__.py:50
 msgid "Tor"
@@ -6967,7 +6987,9 @@ msgstr ""
 "a BitTorrent nem biztosít névtelenséget."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+#, fuzzy
+#| msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 "Kérlek, ne változtasd meg a transmission daemon alapértelmezett portját."
 
@@ -6992,8 +7014,9 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Ha engedélyezett, a Tiny Tiny RSS-t bármely <a href=\"{users_url}\""
-">felhasználó elérheti, aki {box_name} bejelentkezéssel rendelkezik</a>."
+"Ha engedélyezett, a Tiny Tiny RSS-t bármely <a href="
+"\"{users_url}\">felhasználó elérheti, aki {box_name} bejelentkezéssel "
+"rendelkezik</a>."
 
 #: plinth/modules/ttrss/__init__.py:31
 msgid ""
@@ -7159,8 +7182,8 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
-"A %(box_name)s eszközöd a %(version)s verzióra frissült. Lásd a <a href=\""
-"%(url)s\">kiadási közleményt</a>."
+"A %(box_name)s eszközöd a %(version)s verzióra frissült. Lásd a <a href="
+"\"%(url)s\">kiadási közleményt</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
@@ -7622,8 +7645,8 @@ msgid ""
 "192.168.0.10."
 msgstr ""
 "A gépnek a VPN-en a végponthoz való csatlakozást követően kijelölt IP-cím. "
-"Ezt az értéket általában a szerver üzemeltetője adja meg. Például: 192.168.0."
-"10."
+"Ezt az értéket általában a szerver üzemeltetője adja meg. Például: "
+"192.168.0.10."
 
 #: plinth/modules/wireguard/forms.py:89
 msgid "Private key of this machine"
@@ -7660,7 +7683,10 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr "Használja ezt a kapcsolatot az összes kimenő forgalom küldésére"
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+#, fuzzy
+#| msgid ""
+#| "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Jellemzően olyan VPN-szolgáltatásnál van bejelölve, amelyen keresztül az "
 "összes adatforgalom keresztül halad."
@@ -7913,8 +7939,8 @@ msgid ""
 msgstr ""
 "A WordPress saját felhasználói fiókokkal rendelkezik. Az első rendszergazdai "
 "fiók a telepítés során jön létre. Az adminisztrációs felület könnyebb "
-"elérése érdekében mentsd el a könyvjelzőid közé az <a href=\"/wordpress/"
-"wp-admin/\">admin lapot</a>."
+"elérése érdekében mentsd el a könyvjelzőid közé az <a href=\"/wordpress/wp-"
+"admin/\">admin lapot</a>."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -8093,8 +8119,8 @@ msgstr ""
 "Ez egy belső hiba, nem pedig valami, amit te okoztál vagy meg tudnál "
 "javítani. Kérjük, hogy jelentsd ezt a hibát a <a href=\"https://salsa.debian."
 "org/freedombox-team/freedombox/issues\">hibabejelentőben</a>, így ki fogjuk "
-"tudni javítani. Ezek mellett kérjük mellékeld a bejelentésben az <a href=\""
-"%(status_log_url)s\">állapotnapló</a> tartalmát."
+"tudni javítani. Ezek mellett kérjük mellékeld a bejelentésben az <a href="
+"\"%(status_log_url)s\">állapotnapló</a> tartalmát."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
@@ -8423,6 +8449,9 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Thunderbird"
 
 #~ msgid "Updates"
 #~ msgstr "Frissítések"
