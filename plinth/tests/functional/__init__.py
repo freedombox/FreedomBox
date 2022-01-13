@@ -407,7 +407,7 @@ def app_can_be_disabled(browser, app_name):
 def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
-    update_setup = browser.find_by_css('.btn-primary')
+    update_setup = browser.find_by_css('.btn-primary[type="submit"]')
     submit(browser, element=update_setup)
 
 
