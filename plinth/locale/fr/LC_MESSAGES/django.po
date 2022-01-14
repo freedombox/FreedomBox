@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2021-12-18 21:57+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -484,10 +484,14 @@ msgid "Existing Backups"
 msgstr "Sauvegardes existantes"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Les informations d’identification pour ce dépôt sont stockées sur votre "
@@ -648,10 +652,15 @@ msgid "How to verify?"
 msgstr "Comment vérifier ?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Lancez la commande suivante sur la machine hébergeant le serveur SSH. La "
 "sortie devrait correspondre à l’une des valeurs affichées ci-dessus. Vous "
@@ -1422,7 +1431,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Veuillez utiliser les secrets d’authentification partagés suivants :"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1430,11 +1439,11 @@ msgstr ""
 "Le serveur de temps réseau est un programme permettant de maintenir l’heure "
 "du système synchronisée avec les serveurs Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Date et heure"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Heure synchronisée avec le serveur de temps NTP"
 
@@ -1877,7 +1886,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Dernière mise à jour"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "À propos"
@@ -2162,6 +2171,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
@@ -2502,31 +2512,31 @@ msgstr "Dépôt modifié."
 msgid "Edit repository"
 msgstr "Modifier le dépôt"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Documentation"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Manuel utilisateur"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Obtenir de l’aide"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Partager vos impressions"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2892,10 +2902,15 @@ msgid "Anonymous Torrents"
 msgstr "Torrents anonymes"
 
 #: plinth/modules/i2p/views.py:16
+#, fuzzy
+#| msgid ""
+#| "I2P lets you browse the Internet and hidden services (eepsites) "
+#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
+#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 "I2P vous permet de naviguer sur Internet et sur des services cachés "
 "(eepsites) de manière anonyme. Pour cela, votre navigateur, le Navigateur "
@@ -2954,7 +2969,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki et blogue"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Consultation et modification des applications de wiki"
 
@@ -3728,10 +3743,15 @@ msgstr ""
 "et à faible temps de latence."
 
 #: plinth/modules/mumble/__init__.py:28
+#, fuzzy
+#| msgid ""
+#| "You can connect to your Mumble server on the regular Mumble port 64738. "
+#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
+#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "Vous pouvez vous connecter au serveur Mumble sur le port Mumble habituel "
 "64738. Utilisez l’un des <a href=\"http://mumble.info\">clients</a> "
@@ -4705,10 +4725,16 @@ msgstr ""
 "%(box_name)s puisse fournir ses services."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'no public address' "
+#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 "Si vous n’avez pas le contrôle de votre routeur, choisissez de ne pas le "
 "configurer. Pour voir les options permettant de surmonter cette limitation, "
@@ -5030,7 +5056,7 @@ msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\"> Télécharger le profil</"
 "a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
@@ -5586,10 +5612,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "Agenda GNOME"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -7066,7 +7088,9 @@ msgstr ""
 "l’utilisation de BitTorrent n’est pas anonyme."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+#, fuzzy
+#| msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Veuillez ne pas changer le port par défaut du démon de Transmission."
 
 #: plinth/modules/transmission/__init__.py:53
@@ -7141,15 +7165,13 @@ msgstr ""
 "applications pour une courte période."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Mises à jour"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Mises à jour"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Mises à Niveau Logiciels"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7257,8 +7279,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s mise à jour"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7778,7 +7801,10 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr "Utiliser cette connexion pour y envoyer tout le trafic sortant"
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+#, fuzzy
+#| msgid ""
+#| "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "À activer en général pour un service de réseau privé virtuel VPN à travers "
 "lequel tout le trafic est envoyé."
@@ -8149,23 +8175,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Générique"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Erreur pendant l’installation"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "installation en cours"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "téléchargement en cours"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "changement de support"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "fichier de configuration : {file}"
@@ -8523,6 +8554,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Mises à jour"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Préinstallation en cours"
@@ -8544,6 +8579,12 @@ msgstr "%(percentage)s%% effectué"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Mozilla Thunderbird"
+
+#~ msgid "Updates"
+#~ msgstr "Mises à jour"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9778,9 +9819,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Export de l'archive"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Mises à Niveau Logiciels"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

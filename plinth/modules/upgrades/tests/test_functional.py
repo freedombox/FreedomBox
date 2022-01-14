@@ -51,7 +51,8 @@ def _enable_automatic(browser, should_enable):
     else:
         checkbox_element.uncheck()
 
-    functional.submit(browser)
+    update_setup = browser.find_by_css('.btn-primary')
+    functional.submit(browser, element=update_setup)
 
 
 def _get_automatic(browser):

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2021-06-24 00:42+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -471,10 +471,14 @@ msgid "Existing Backups"
 msgstr "Cadangan yang ada"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Kredensial untuk repositori ini disimpan pada %(box_name)s Anda. <br>Untuk "
@@ -625,10 +629,15 @@ msgid "How to verify?"
 msgstr "Bagaimana memverifikasi?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Jalankan perintah berikut pada mesin host SSH. Output harus cocok dengan "
 "salah satu opsi yang disediakan. Anda juga dapat menggunakan DSA, ECDSA, "
@@ -1377,7 +1386,7 @@ msgstr "Gunakan URL berikut untuk mengkonfigurasi server komunikasi Anda:"
 msgid "Use the following shared authentication secret:"
 msgstr "Gunakan rahasia otentikasi bersama berikut:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1385,11 +1394,11 @@ msgstr ""
 "Network Time Server adalah program yang memelihara waktu sistem dalam "
 "sinkronisasi dengan server di Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Tanggal &amp; Hari"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Waktu disinkronkan ke server NTP"
 
@@ -1833,7 +1842,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Pembaharuan Terakhir"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Tentang"
@@ -2120,6 +2129,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
@@ -2470,31 +2480,31 @@ msgstr "Diedit repositori."
 msgid "Edit repository"
 msgstr "Edit Repositori"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Dokumentasi"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Manual"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Dapatkan Dukungan"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Berikan umpan balik"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2843,10 +2853,15 @@ msgid "Anonymous Torrents"
 msgstr "Torrent Anonim"
 
 #: plinth/modules/i2p/views.py:16
+#, fuzzy
+#| msgid ""
+#| "I2P lets you browse the Internet and hidden services (eepsites) "
+#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
+#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 "I2p memungkinkan Anda menjelajahi Internet dan layanan tersembunyi "
 "(eepsites) secara anonim. Untuk ini, browser Anda, lebih disukai browser "
@@ -2902,7 +2917,7 @@ msgstr "Ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki dan Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Lihat dan edit aplikasi Wiki"
 
@@ -3593,7 +3608,7 @@ msgstr ""
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 
 #: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:9
@@ -4416,8 +4431,9 @@ msgstr ""
 #: plinth/modules/networks/templates/router_configuration_content.html:32
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -4712,7 +4728,7 @@ msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
 msgstr "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Unduh Profil</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr ""
 
@@ -5162,10 +5178,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "Kalender GNOME"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -6453,7 +6465,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
 #: plinth/modules/transmission/__init__.py:53
@@ -6512,17 +6524,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Memperbarui"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update URL"
-msgid "Updates"
-msgstr "Perbaharui URL"
+#| msgid "Server URL updated"
+msgid "Software Update"
+msgstr "URL Server diperbarui"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -6619,7 +6627,7 @@ msgstr ""
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "Pengaturan %(box_name)s"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7075,7 +7083,7 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
@@ -7417,23 +7425,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Galat saat pemasangan"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "memasang"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "mengunduh"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
@@ -7757,6 +7770,10 @@ msgstr ""
 msgid "Install"
 msgstr "Pasang"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Memperbarui"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Melakukan operasi pra-pemasangan"
@@ -7778,6 +7795,14 @@ msgstr "%(percentage)s %% selesai"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Bahasa Gujarat"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Mozilla Thunderbird"
+
+#, fuzzy
+#~| msgid "Update URL"
+#~ msgid "Updates"
+#~ msgstr "Perbaharui URL"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "

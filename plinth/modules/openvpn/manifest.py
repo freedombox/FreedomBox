@@ -34,6 +34,11 @@ clients = [{
         'store_name': 'google-play',
         'url': store_url('google-play', _package_id)
     }, {
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/app/openvpn-connect/id590379981'
+    }, {
         'type': 'download',
         'os': 'gnu-linux',
         'url': _download_url,

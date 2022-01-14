@@ -27,7 +27,7 @@ _description = [
       'voice chat software.'),
     _('You can connect to your Mumble server on the regular Mumble port '
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
-      'from your desktop and Android devices are available.')
+      'from your desktop and mobile devices are available.')
 ]
 
 app = None

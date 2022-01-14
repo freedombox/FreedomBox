@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
-"PO-Revision-Date: 2021-03-12 13:03+0000\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"PO-Revision-Date: 2021-12-31 18:51+0000\n"
 "Last-Translator: Fioddor Superconcentrado <fioddor@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -483,10 +483,14 @@ msgid "Existing Backups"
 msgstr "Copias de seguridad existentes"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Las credenciales para este repositorio están almacenadas en su %(box_name)s. "
@@ -645,10 +649,15 @@ msgid "How to verify?"
 msgstr "Cómo verificar?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Ejecute el siguiente comando en el anfitrión SSH. La salida debería "
 "coincidir con alguna de las opciones ofrecidas. También puede usar dsa, "
@@ -1368,18 +1377,16 @@ msgstr ""
 "no tienen otra alternativa disponible."
 
 #: plinth/modules/coturn/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It is not meant to be used directly by users. Servers such as matrix-"
-#| "synapse need to be configured with the details provided here."
+#, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a href="
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
 "No está diseñado para una manipulación directa por el usuario. Algunos "
-"servidores como matrix-synapse tienen que configurarse con los detalles que "
-"se proporcionan aquí."
+"servidores como <a href=\"{ms_url}\">Matrix Synapse</a> o <a href="
+"\"{e_url}\">ejabberd</a> tienen que configurarse con los detalles que se "
+"proporcionan aquí."
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
@@ -1403,7 +1410,7 @@ msgstr "Use las siguientes URL para configurar su servidor de comunicación:"
 msgid "Use the following shared authentication secret:"
 msgstr "Use la clave compartida siguiente:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1411,11 +1418,11 @@ msgstr ""
 "El servidor de tiempo de red (servicio NTP) mantiene sincronizada la hora "
 "del sistema con servidores de Internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Fecha y hora"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Hora sincronizada con el servidor NTP"
 
@@ -1509,7 +1516,7 @@ msgstr "error"
 
 #: plinth/modules/diagnostics/__init__.py:100
 msgid "warning"
-msgstr ""
+msgstr "aviso"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
@@ -1855,7 +1862,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Última actualización"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Acerca de"
@@ -2038,12 +2045,16 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> proporciona un "
+"interfaz web para que los usuarios accedan a correo electrónico."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Durante la instalación se desinstalará cualquier otro servidor de correo "
+"electrónico que haya en el sistema."
 
 #: plinth/modules/email_server/__init__.py:44
 #, fuzzy
@@ -2053,15 +2064,15 @@ msgstr "Servidor de Chat"
 
 #: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+msgstr "Implementado con Postfix, Dovecot &amp; Rspamd"
 
 #: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+msgstr "Integración SASL Postfix-Dovecot"
 
 #: plinth/modules/email_server/audit/ldap.py:70
 msgid "Postfix alias maps"
-msgstr ""
+msgstr "Mapas Alias de Postfix"
 
 #: plinth/modules/email_server/audit/rcube.py:31
 #, fuzzy
@@ -2071,23 +2082,19 @@ msgstr "indisponible"
 
 #: plinth/modules/email_server/audit/rcube.py:32
 msgid "RoundCube configured for FreedomBox email"
-msgstr ""
+msgstr "RoundCube configurado para FreedomBox"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
-msgstr ""
+msgstr "Filtros de entrada y salida de correo"
 
 #: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid domain"
-msgstr "Indique un nombre de usuario válido."
+msgstr "Indique un nombre de dominio válido"
 
 #: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid destination"
-msgstr "Indique un nombre de usuario válido."
+msgstr "Indique un destino válido"
 
 #: plinth/modules/email_server/forms.py:24
 #, fuzzy
@@ -2106,22 +2113,24 @@ msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Se reciben correos para todo dominio configurado en el sistema. Selecciona "
+"el más importante entre ellos."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
-msgstr ""
+msgstr "Nuevo alias (sin @dominio)"
 
 #: plinth/modules/email_server/forms.py:55
 msgid "Contains illegal characters"
-msgstr ""
+msgstr "Contiene caracteres no permitidos"
 
 #: plinth/modules/email_server/forms.py:58
 msgid "Must start and end with a-z or 0-9"
-msgstr ""
+msgstr "Tiene que empezar y terminar con a-z ó 0-9"
 
 #: plinth/modules/email_server/forms.py:61
 msgid "Cannot be a number"
-msgstr ""
+msgstr "No puede ser un número"
 
 #: plinth/modules/email_server/forms.py:71
 #, fuzzy
@@ -2151,6 +2160,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 #, fuzzy
 #| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
@@ -2158,11 +2168,11 @@ msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
 #: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:20
@@ -2173,7 +2183,7 @@ msgstr "Administrar bibliotecas"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
-msgstr ""
+msgstr "No tienes aliases de correo electrónico."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
 #, fuzzy
@@ -2211,16 +2221,16 @@ msgstr "Tipo de servicio"
 
 #: plinth/modules/email_server/templates/email_server.html:46
 msgid "Repair"
-msgstr ""
+msgstr "Reparar"
 
 #: plinth/modules/email_server/views.py:73
 #, python-brace-format
 msgid "Internal error in {0}"
-msgstr ""
+msgstr "Fallo interno en {0}"
 
 #: plinth/modules/email_server/views.py:76
 msgid "Check syslog for more information"
-msgstr ""
+msgstr "Más información en syslog"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2503,31 +2513,31 @@ msgstr "Repositorio editado."
 msgid "Edit repository"
 msgstr "Editar repositorio"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Documentación"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Manual"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Obtener ayuda"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Enviar Comentarios"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2878,10 +2888,15 @@ msgid "Anonymous Torrents"
 msgstr "Torrents Anónimos"
 
 #: plinth/modules/i2p/views.py:16
+#, fuzzy
+#| msgid ""
+#| "I2P lets you browse the Internet and hidden services (eepsites) "
+#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
+#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 "I2P te permite navegar por Internet y por los servicios ocultos (eepsites) "
 "de manera anónima. Para esto, tu navegador, preferiblemente un Navegador "
@@ -2938,7 +2953,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki y Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Aplicaciones wiki para ver y editar"
 
@@ -3117,7 +3132,7 @@ msgstr "Certificados"
 
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
-msgstr ""
+msgstr "No puedo probar: No hay dominios configurados."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
@@ -3701,10 +3716,15 @@ msgstr ""
 "latencia y con cifrado."
 
 #: plinth/modules/mumble/__init__.py:28
+#, fuzzy
+#| msgid ""
+#| "You can connect to your Mumble server on the regular Mumble port 64738. "
+#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
+#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "Puede conectar a su servidor Mumble en el puerto habitual 64738. También hay "
 "disponibles <a href=\"http://mumble.info\">Clientes</a> para conectar desde "
@@ -4651,10 +4671,16 @@ msgstr ""
 "provee los servicios."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'no public address' "
+#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 "Si no tiene acceso a su router, elija la opción de no configurarlo. Para ver "
 "opciones para solucionar esta limitación, elija la opción \"sin dirección "
@@ -4969,7 +4995,7 @@ msgid ""
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Descargar perfil</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
@@ -5506,10 +5532,6 @@ msgstr ""
 msgid "GNOME Calendar"
 msgstr "Calendario GNOME"
 
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Mozilla Thunderbird"
-
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
 msgstr "Evolution"
@@ -5882,6 +5904,9 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"Hay %(count)s vulnerabilidades de seguridad informadas en la app FreedomBox; "
+"la que proporciona los servicios centrales y el interfaz de usuario al "
+"servidor FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
 #, fuzzy
@@ -6958,7 +6983,9 @@ msgstr ""
 "BitTorrent no es anónimo."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+#, fuzzy
+#| msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 "Por favor, no cambie el puerto predeterminado para el servicio Transmission."
 
@@ -7031,15 +7058,13 @@ msgstr ""
 "automática a las 02:00 h."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Actualización"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Actualizaciones"
+#, fuzzy
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Actualizaciones de software (Upgrades)"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7144,8 +7169,9 @@ msgstr ""
 "      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, python-format
-msgid "%(box_name)s Updated"
+#, fuzzy, python-format
+#| msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s actualizado"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7652,7 +7678,10 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr "Use esta conexión para todo el tráfico saliente"
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+#, fuzzy
+#| msgid ""
+#| "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Generalmente activado para el servicio VPN a través del que se envía el "
 "tráfico."
@@ -7877,6 +7906,11 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"WordPress es una manera popular de crear y gestionar sitios web y blogs. El "
+"contenido se administra mediante un interfaz visual. Se puede personalizar "
+"la disposición y la funcionalidad de las páginas web. Se puede escoger la "
+"apariencia mediante temas. Tanto el interfaz de administración como las "
+"páginas web producidas son adecuados para dispositivos móviles."
 
 #: plinth/modules/wordpress/__init__.py:29
 #, python-brace-format
@@ -7886,6 +7920,11 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"Necesitas ejecutar la configuración de WordPress visitando la app antes de "
+"publicar el sitio abajo. Hay que ejecutar la configuración accediendo a "
+"{box_name} mediante el nombre de dominio correcto. Habilita los permalinks "
+"en el interfaz de administrador para tener mejores URLs de acceso a tus "
+"páginas y artículos."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7893,6 +7932,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress tiene sus propias cuentas de usuario. La primera cuenta de "
+"administrador se crea durante la configuración. Anota la dirección de la <a "
+"href=\"/wordpress/wp-admin/\">página de administración</a> para acceder a "
+"ella en el futuro."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -7900,6 +7943,9 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Tras una salto de versión mayor necesitas ejecutar a mano desde el interfaz "
+"de administración una actualización de la base de datos. Se pueden instalar "
+"y actualizar plugins y temas adicionales asumiendo los riesgos."
 
 #: plinth/modules/wordpress/__init__.py:58
 #: plinth/modules/wordpress/manifest.py:6
@@ -7925,6 +7971,9 @@ msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Admitir todas las visitas. Deshabilitarlo solo permite ver el sitio "
+"WordPress o blog a los administradores. Habilítalo solo después de ejecutar "
+"la configuración inicial de WordPress."
 
 #: plinth/modules/zoph/__init__.py:26
 #, python-brace-format
@@ -8000,23 +8049,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Genérica"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Error durante la instalación"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "instalando"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "descargando"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "cambio de medio"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "archivo de configuración: {file}"
@@ -8360,10 +8414,17 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Paquetes conflictivos:</strong> Algunos paquetes instalados en el "
+"sistema son incompatibles con la instalación de esta app. Si continuas se "
+"eliminarán los siguientes paquetes:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
 msgstr "Instalar"
+
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Actualización"
 
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
@@ -8386,6 +8447,12 @@ msgstr "%(percentage)s%% completado"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Mozilla Thunderbird"
+
+#~ msgid "Updates"
+#~ msgstr "Actualizaciones"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9584,9 +9651,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Exportar archivo"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Actualizaciones de software (Upgrades)"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

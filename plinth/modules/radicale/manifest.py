@@ -33,7 +33,7 @@ clients = [{
     }]
 }, {
     'name':
-        _('Mozilla Thunderbird'),
+        _('Thunderbird'),
     'platforms': [{
         'type': 'package',
         'format': 'deb',
@@ -41,15 +41,15 @@ clients = [{
     }, {
         'type': 'download',
         'os': 'gnu-linux',
-        'url': 'https://www.mozilla.org/thunderbird/'
+        'url': 'https://www.thunderbird.net/'
     }, {
         'type': 'download',
         'os': 'macos',
-        'url': 'https://www.mozilla.org/thunderbird/'
+        'url': 'https://www.thunderbird.net/'
     }, {
         'type': 'download',
         'os': 'windows',
-        'url': 'https://www.mozilla.org/thunderbird/'
+        'url': 'https://www.thunderbird.net/'
     }]
 }, {
     'name':

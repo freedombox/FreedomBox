@@ -24,7 +24,7 @@ _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Note that BitTorrent is not anonymous.'),
-    _('Please do not change the default port of the transmission daemon.'),
+    _('Please do not change the default port of the Transmission daemon.'),
 ]
 
 app = None

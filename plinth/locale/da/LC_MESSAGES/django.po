@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -471,10 +471,14 @@ msgid "Existing Backups"
 msgstr "Eksisterende sikkerhedskopier"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "The credentials for this repository are stored on your %(box_name)s. <br /"
+#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
+#| "and, if chosen, the encryption passphrase."
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
 "Adgangsoplysningerne til dette arkiv gemmes på din %(box_name)s. <br /> For "
@@ -632,10 +636,15 @@ msgid "How to verify?"
 msgstr "Hvordan verificerer man?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Kør følgende kommando på SSH-værtscomputeren. Output skal svare til en af de "
 "angivne indstillinger. I stedet for rsa kan du også bruge dsa, ecdsa, "
@@ -1387,7 +1396,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Brug den følgende delte autentifikationshemmelighed:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1395,11 +1404,11 @@ msgstr ""
 "Netværkstidsserver er et program der holder systemets tid synkroniseret med "
 "servere på internettet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Dato & Tid"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkroniseret med NTP-server"
 
@@ -1835,7 +1844,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Seneste opdatering"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Om"
@@ -2123,6 +2132,7 @@ msgid "Roundcube"
 msgstr "Aktiver Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr ""
 
@@ -2503,11 +2513,11 @@ msgstr "pakker ikke fundet"
 msgid "Edit repository"
 msgstr "Opret Bruger"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 #, fuzzy
 #| msgid "Manual"
@@ -2515,21 +2525,21 @@ msgctxt "User guide"
 msgid "Manual"
 msgstr "Brugermanual"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr ""
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr ""
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2864,8 +2874,8 @@ msgstr ""
 #: plinth/modules/i2p/views.py:16
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 
 #: plinth/modules/i2p/views.py:19
@@ -2919,7 +2929,7 @@ msgstr "wiki"
 msgid "Wiki and Blog"
 msgstr "Wiki & Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 #, fuzzy
 #| msgid "Services and Applications"
 msgid "View and edit wiki applications"
@@ -3683,10 +3693,15 @@ msgstr ""
 "med lav forsinkelse og kryptering."
 
 #: plinth/modules/mumble/__init__.py:28
+#, fuzzy
+#| msgid ""
+#| "You can connect to your Mumble server on the regular Mumble port 64738. "
+#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
+#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "Du kan forbinde til din Mumble-server på den sædvanlige Mumble-port 64738. "
 "<a href=\"http://mumble.info\">Klienter</a> til computere og Android-enheder "
@@ -4574,8 +4589,9 @@ msgstr ""
 #: plinth/modules/networks/templates/router_configuration_content.html:32
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
@@ -4929,7 +4945,7 @@ msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
 msgstr ""
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr ""
 
@@ -5492,10 +5508,6 @@ msgstr ""
 
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
-msgstr ""
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
 msgstr ""
 
 #: plinth/modules/radicale/manifest.py:56
@@ -6956,7 +6968,7 @@ msgstr ""
 "BitTorrent ikke anonymiserer trafik."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
 #: plinth/modules/transmission/__init__.py:53
@@ -7026,17 +7038,13 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Opdater"
-
-#: plinth/modules/upgrades/__init__.py:129
 #, fuzzy
-#| msgid "Update"
-msgid "Updates"
-msgstr "Opdater"
+#| msgid "Software Upgrades"
+msgid "Software Update"
+msgstr "Softwareopdateringer"
 
 #: plinth/modules/upgrades/__init__.py:132
 #, fuzzy
@@ -7144,7 +7152,7 @@ msgstr "%(box_name)s Konfiguration"
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
-msgid "%(box_name)s Updated"
+msgid "%(box_name)s updated"
 msgstr "%(box_name)s Konfiguration"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
@@ -7654,7 +7662,7 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr ""
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
@@ -8028,23 +8036,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr ""
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr ""
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Fejl under installation"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "Installerer"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "downloader"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "medie-ændring"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurationsfil: {file}"
@@ -8398,6 +8411,10 @@ msgstr ""
 msgid "Install"
 msgstr "Installer"
 
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Opdater"
+
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
 msgstr "Udfører før-installationshandlinger"
@@ -8419,6 +8436,11 @@ msgstr "%(percentage)s%% færdig"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Update"
+#~ msgid "Updates"
+#~ msgstr "Opdater"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9317,9 +9339,6 @@ msgstr ""
 #~| msgid "reStore"
 #~ msgid "Restore apps"
 #~ msgstr "reStore"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Softwareopdateringer"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

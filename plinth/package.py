@@ -78,6 +78,27 @@ class Packages(app.FollowerComponent):
         helper = module.setup_helper
         helper.install(self.packages, skip_recommends=self.skip_recommends)
 
+    def diagnose(self):
+        """Run diagnostics and return results."""
+        results = super().diagnose()
+        cache = apt.Cache()
+        for package_name in self.packages:
+            result = 'warning'
+            latest_version = '?'
+            if package_name in cache:
+                package = cache[package_name]
+                latest_version = package.candidate.version
+                if package.candidate.is_installed:
+                    result = 'passed'
+
+            message = _('Package {package_name} is the latest version '
+                        '({latest_version})').format(
+                            package_name=package_name,
+                            latest_version=latest_version)
+            results.append([message, result])
+
+        return results
+
     def find_conflicts(self) -> Optional[list[str]]:
         """Return list of conflicting packages installed on the system."""
         if not self.conflicts:

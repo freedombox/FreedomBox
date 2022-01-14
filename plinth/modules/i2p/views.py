@@ -14,8 +14,8 @@ class I2PAppView(AppView):
     template_name = 'i2p.html'
     proxies_description = [
         _('I2P lets you browse the Internet and hidden services (eepsites) '
-          'anonymously. For this, your browser, preferably a Tor Browser, '
-          'needs to be configured for a proxy.'),
+          'anonymously. For this, your browser, preferably the Tor Browser, '
+          'needs to be configured with a proxy.'),
         _('By default HTTP, HTTPS and IRC proxies are available. Additional '
           'proxies and tunnels may be configured using the tunnel '
           'configuration interface.'),

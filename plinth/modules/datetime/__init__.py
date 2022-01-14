@@ -11,6 +11,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.package import Packages
 
 from . import manifest
 
@@ -72,6 +73,9 @@ class DateTimeApp(app_module.App):
         menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
                               'datetime:index', parent_url_name='system')
         self.add(menu_item)
+
+        packages = Packages('packages-datetime', ['systemd-timesyncd'])
+        self.add(packages)
 
         if self._is_time_managed():
             daemon = Daemon('daemon-datetime', 'systemd-timesyncd')

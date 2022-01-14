@@ -309,6 +309,7 @@ setuptools.setup(
         'pytest-django',
         'flake8',
         'requests',
+        'tomli',
     ],
     package_data={
         '': ['templates/*', 'static/*', 'locale/*/LC_MESSAGES/*.mo']

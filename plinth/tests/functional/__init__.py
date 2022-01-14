@@ -407,7 +407,8 @@ def app_can_be_disabled(browser, app_name):
 def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
-    submit(browser)
+    update_setup = browser.find_by_css('.btn-primary')
+    submit(browser, element=update_setup)
 
 
 ########################
@@ -463,7 +464,8 @@ def set_advanced_mode(browser, mode):
     else:
         advanced_mode.uncheck()
 
-    submit(browser)
+    update_setup = browser.find_by_css('.btn-primary')
+    submit(browser, element=update_setup)
 
 
 ####################

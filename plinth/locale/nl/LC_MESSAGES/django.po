@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-20 20:43-0500\n"
-"PO-Revision-Date: 2021-09-18 13:33+0000\n"
+"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"PO-Revision-Date: 2022-01-06 22:41+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -483,11 +483,11 @@ msgstr "Bestaande back-ups"
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
-"To restore a backup on a new %(box_name)s you need the ssh credentials and, "
+"To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"De logingegevens voor dit archief worden bewaard op deze %(box_name)s. <br /"
-"> Om een backup terug te zetten op een nieuwe %(box_name)s zijn de ssh "
+"De logingegevens voor dit archief worden bewaard op deze %(box_name)s. <br> "
+"Om een backup terug te zetten op een nieuwe %(box_name)s zijn de SSH "
 "logingegevens nodig en, als daarvoor gekozen is, de encryptie-wachtzin."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
@@ -643,10 +643,15 @@ msgid "How to verify?"
 msgstr "Hoe te verifiëren?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
+#, fuzzy
+#| msgid ""
+#| "Run the following command on the SSH host machine. The output should "
+#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
+#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
-"one of the provided options. You can also use dsa, ecdsa, ed25519 etc. "
-"instead of rsa, by choosing the corresponding file."
+"one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
+"instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Voer de volgende opdracht uit op de SSH-hostcomputer. De uitvoer moet "
 "overeenkomen met een van de aangeboden opties. Je kunt ook dsa, ecdsa, "
@@ -1400,7 +1405,7 @@ msgstr "Gebruik de volgende URL's om de communicatieserver in te stellen:"
 msgid "Use the following shared authentication secret:"
 msgstr "Gebruik het volgende gedeelde authenticatie geheim:"
 
-#: plinth/modules/datetime/__init__.py:18
+#: plinth/modules/datetime/__init__.py:19
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1408,11 +1413,11 @@ msgstr ""
 "Netwerk Tijd Server is een programma dat de systeemtijd synchroniseert met "
 "servers op internet."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "Datum en Tijd"
 
-#: plinth/modules/datetime/__init__.py:113
+#: plinth/modules/datetime/__init__.py:117
 msgid "Time synchronized to NTP server"
 msgstr "Tijd gesynchroniseerd met NTP-server"
 
@@ -1682,12 +1687,7 @@ msgid "Leave this field empty if you want to keep your current password."
 msgstr "Laat dit veld leeg om het huidige wachtwoord te behouden."
 
 #: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
@@ -1697,7 +1697,7 @@ msgstr ""
 "Optionele waarde. Als {box_name} niet direct is verbonden met het internet "
 "(maar verbonden met een NAT router), wordt deze URL gebruikt om het echte "
 "Internet IP adres te bepalen. Het antwoord op het aanroepen van deze URL zou "
-"het IP adres moeten zijn (Voorbeeld: http://myip.datasystems24.de)."
+"het IP adres moeten zijn (Voorbeeld: https://ddns.freedombox.org/ip/)."
 
 #: plinth/modules/dynamicdns/forms.py:62
 msgid "The username that was used when the account was created."
@@ -1773,13 +1773,6 @@ msgid "Please provide a password"
 msgstr "Voer een wachtwoord in"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1787,10 +1780,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 msgstr ""
 "Wie op zoek is naar een gratis dynamic DNS account, kan misschien een gratis "
-"GnuDIP service vinden bij <a href='http://gnudip.datasystems24.net' "
-"target='_blank'>gnudip.datasystems24.net</a> of gratis free update URL "
-"gebaseerde diensten van <a href='http://freedns.afraid.org/' "
-"target='_blank'> freedns.afraid.org</a>."
+"GnuDIP service vinden bij <a href=\"https://ddns.freedombox.org\" target="
+"\"_blank\">ddns.freedombox.org</a> of gratis free update URL gebaseerde "
+"diensten van <a href=\"https://freedns.afraid.org/\" target=\"_blank\"> "
+"freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:23
 #, python-format
@@ -1853,7 +1846,7 @@ msgstr ""
 msgid "Last update"
 msgstr "Laatste bijwerking"
 
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:52
+#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
 #: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Over ons"
@@ -2032,12 +2025,16 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> biedt gebruikers een "
+"webinterface om toegang te krijgen tot e-mail."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Tijdens de installatie worden alle andere e-mailservers in het systeem "
+"verwijderd."
 
 #: plinth/modules/email_server/__init__.py:44
 msgid "Email Server"
@@ -2068,32 +2065,28 @@ msgid "Inbound and outbound mail filters"
 msgstr "Filters voor inkomende en uitgaande e-mail"
 
 #: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid domain"
-msgstr "Voer een geldige gebruikersnaam in."
+msgstr "Voer een geldig domein in"
 
 #: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a valid destination"
-msgstr "Voer een geldige gebruikersnaam in."
+msgstr "Voer een geldige bestemming in"
 
 #: plinth/modules/email_server/forms.py:24
 msgid "domain"
 msgstr "domein"
 
 #: plinth/modules/email_server/forms.py:38
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Primaire Verbinding"
+msgstr "Primair domein"
 
 #: plinth/modules/email_server/forms.py:40
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Mails worden ontvangen voor alle domeinen die in het systeem zijn "
+"geconfigureerd. Selecteer het belangrijkste domein."
 
 #: plinth/modules/email_server/forms.py:48
 msgid "New alias (without @domain)"
@@ -2112,10 +2105,8 @@ msgid "Cannot be a number"
 msgstr "Kan geen getal zijn"
 
 #: plinth/modules/email_server/forms.py:71
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Aliases"
-msgstr "Mijn aliassen"
+msgstr "Aliassen"
 
 #: plinth/modules/email_server/forms.py:83
 #: plinth/modules/firewall/templates/firewall.html:54
@@ -2139,6 +2130,7 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
+#: plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
@@ -2152,26 +2144,20 @@ msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:20
-#, fuzzy
-#| msgid "My Aliases"
 msgid "Manage Aliases"
-msgstr "Mijn aliassen"
+msgstr "Aliassen beheren"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
 msgstr "Je hebt geen e-mailaliassen."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disable"
-msgstr "Uitgeschakeld"
+msgstr "Uitschakelen"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
-#, fuzzy
-#| msgid "Enabled"
 msgid "Enable"
-msgstr "Ingeschakeld"
+msgstr "Inschakelen"
 
 #: plinth/modules/email_server/templates/email_alias.html:32
 msgid "Create a new email alias"
@@ -2182,10 +2168,8 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: plinth/modules/email_server/templates/email_server.html:15
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage Spam"
-msgstr "Beheren van Snapshots"
+msgstr "Spam beheren"
 
 #: plinth/modules/email_server/templates/email_server.html:26
 msgid "Service Alert"
@@ -2487,31 +2471,31 @@ msgstr "Repository gewijzigd."
 msgid "Edit repository"
 msgstr "Wijzig repository"
 
-#: plinth/modules/help/__init__.py:32
+#: plinth/modules/help/__init__.py:35
 msgid "Documentation"
 msgstr "Documentatie"
 
-#: plinth/modules/help/__init__.py:36 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Handleiding"
 
-#: plinth/modules/help/__init__.py:40
+#: plinth/modules/help/__init__.py:43
 #: plinth/modules/help/templates/help_support.html:9
 #: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Help"
 
-#: plinth/modules/help/__init__.py:44
+#: plinth/modules/help/__init__.py:47
 #: plinth/modules/help/templates/help_feedback.html:9
 #: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Feedback indienen"
 
-#: plinth/modules/help/__init__.py:48
+#: plinth/modules/help/__init__.py:51
 #: plinth/modules/help/templates/help_contribute.html:9
 #: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
@@ -2866,10 +2850,15 @@ msgid "Anonymous Torrents"
 msgstr "Anonieme Torrents"
 
 #: plinth/modules/i2p/views.py:16
+#, fuzzy
+#| msgid ""
+#| "I2P lets you browse the Internet and hidden services (eepsites) "
+#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
+#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably a Tor Browser, needs to be configured for "
-"a proxy."
+"For this, your browser, preferably the Tor Browser, needs to be configured "
+"with a proxy."
 msgstr ""
 "I2P maakt het mogelijk anoniem het internet en verborgen diensten (eepsites) "
 "te bezoeken. Hiervoor moet je browser , liefst een Tor Browser, ingesteld "
@@ -2926,7 +2915,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki en Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Bekijken en bewerken van wiki toepassingen"
 
@@ -3695,10 +3684,15 @@ msgstr ""
 "groepsgespreksserver."
 
 #: plinth/modules/mumble/__init__.py:28
+#, fuzzy
+#| msgid ""
+#| "You can connect to your Mumble server on the regular Mumble port 64738. "
+#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
+#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-"desktop and Android devices are available."
+"desktop and mobile devices are available."
 msgstr ""
 "De Mumble server is beschikbaar via de standaard Mumble poort 64738. Zie <a "
 "href=\"http://mumble.info\">Clients</a> (Engelstalig) voor informatie over "
@@ -4662,10 +4656,16 @@ msgstr ""
 "services levert."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
+#, fuzzy
+#| msgid ""
+#| "If you don't have control over your router, choose not to configure it. "
+#| "To see options to overcome this limitation, choose 'no public address' "
+#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
-"see options to overcome this limitation, choose 'no public address' option "
-"in Internet connection type selection."
+"see options to overcome this limitation, choose 'I dont have a public IP "
+"address' option in <a href=\"/plinth/sys/networks/internet-connection-type/"
+"\">Internet connection type selection</a>."
 msgstr ""
 "Als je geen controle hebt over de router, kies er dan voor om deze niet te "
 "configureren. Om opties te zien om deze beperking te omzeilen, kies de optie "
@@ -4980,7 +4980,7 @@ msgid ""
 msgstr ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\"> Download profiel</a>"
 
-#: plinth/modules/openvpn/manifest.py:47
+#: plinth/modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
@@ -5522,10 +5522,6 @@ msgstr ""
 #: plinth/modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
 msgstr "GNOME Kalender"
-
-#: plinth/modules/radicale/manifest.py:36
-msgid "Mozilla Thunderbird"
-msgstr "Mozilla Thunderbird"
 
 #: plinth/modules/radicale/manifest.py:56
 msgid "Evolution"
@@ -6975,7 +6971,9 @@ msgstr ""
 "dat BitTorrent gebruik niet anoniem is."
 
 #: plinth/modules/transmission/__init__.py:27
-msgid "Please do not change the default port of the transmission daemon."
+#, fuzzy
+#| msgid "Please do not change the default port of the transmission daemon."
+msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Wijzig de standaardpoort van de Transmission daemon niet."
 
 #: plinth/modules/transmission/__init__.py:53
@@ -7046,15 +7044,11 @@ msgstr ""
 "uur, waardoor alle toepassingen even niet beschikbaar zijn."
 
 #: plinth/modules/upgrades/__init__.py:74
+#: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#: plinth/templates/setup.html:73
-msgid "Update"
-msgstr "Update"
-
-#: plinth/modules/upgrades/__init__.py:129
-msgid "Updates"
-msgstr "Updates"
+msgid "Software Update"
+msgstr "Software bijwerken"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -7159,8 +7153,8 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
-msgid "%(box_name)s Updated"
-msgstr "%(box_name)s geaktualiseerd"
+msgid "%(box_name)s updated"
+msgstr "%(box_name)s bijgewerkt"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
 #, python-format
@@ -7667,7 +7661,10 @@ msgid "Use this connection to send all outgoing traffic"
 msgstr "Deze verbinding gebruiken voor al het uitgaande verkeer"
 
 #: plinth/modules/wireguard/forms.py:107
-msgid "Typically checked for a VPN service though which all traffic is sent."
+#, fuzzy
+#| msgid ""
+#| "Typically checked for a VPN service though which all traffic is sent."
+msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Meestal ingeschakeld op een VPN-service waardoor al het verkeer wordt "
 "verzonden."
@@ -7908,6 +7905,10 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"U moet WordPress setup uitvoeren door de app te bezoeken voordat u de site "
+"hieronder openbaar beschikbaar maakt. Setup moet worden uitgevoerd wanneer u "
+"{box_name} opent met de juiste domeinnaam. Schakel permalinks in de "
+"beheerdersinterface in voor betere URL's naar uw pagina's en berichten."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7915,6 +7916,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress heeft zijn eigen gebruikersaccounts. De eerste beheerdersaccount "
+"wordt aangemaakt tijdens de installatie. Maak een bladwijzer van de <a href="
+"\"/wordpress/wp-admin/\">administratie pagina</a> om in de toekomst de "
+"administratie interface te bereiken."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -8018,23 +8023,28 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generiek"
 
-#: plinth/package.py:224
+#: plinth/package.py:94
+#, python-brace-format
+msgid "Package {package_name} is the latest version ({latest_version})"
+msgstr "Pakket {package_name} is de nieuwste versie ({latest_version})"
+
+#: plinth/package.py:245
 msgid "Error during installation"
 msgstr "Fout tijdens installatie"
 
-#: plinth/package.py:246
+#: plinth/package.py:267
 msgid "installing"
 msgstr "installeren"
 
-#: plinth/package.py:248
+#: plinth/package.py:269
 msgid "downloading"
 msgstr "downloaden"
 
-#: plinth/package.py:250
+#: plinth/package.py:271
 msgid "media change"
 msgstr "media wijzigen"
 
-#: plinth/package.py:252
+#: plinth/package.py:273
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "configuratiebestand: {file}"
@@ -8379,10 +8389,17 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Conflicterende pakketten:</strong> Sommige pakketten die op het "
+"systeem geïnstalleerd zijn conflicteren met de installatie van deze app. De "
+"volgende pakketten zullen worden verwijderd als deze app wordt geïnstalleerd:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
 msgstr "Installeer"
+
+#: plinth/templates/setup.html:73
+msgid "Update"
+msgstr "Update"
 
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
@@ -8405,6 +8422,12 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Mozilla Thunderbird"
+#~ msgstr "Mozilla Thunderbird"
+
+#~ msgid "Updates"
+#~ msgstr "Updates"
 
 #~ msgid ""
 #~ "diaspora* is a decentralized social network where you can store and "
@@ -9656,9 +9679,6 @@ msgstr "Gujarati"
 
 #~ msgid "Export Archive"
 #~ msgstr "Archief exporteren"
-
-#~ msgid "Software Upgrades"
-#~ msgstr "Software Upgrades"
 
 #~ msgid ""
 #~ "Upgrades install the latest software and security updates. When automatic "

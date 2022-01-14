@@ -104,7 +104,7 @@ class AddServerForm(forms.Form):
     default_route = forms.BooleanField(
         label=_('Use this connection to send all outgoing traffic'),
         required=False, help_text=_(
-            'Typically checked for a VPN service though which all traffic '
+            'Typically checked for a VPN service through which all traffic '
             'is sent.'))
 
     def get_settings(self):

@@ -71,7 +71,7 @@ class UpgradesApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, name=_('Update'),
+                               is_essential=True, name=_('Software Update'),
                                icon='fa-refresh', description=_description,
                                manual_page='Upgrades')
         self.add(info)
@@ -126,7 +126,7 @@ class UpgradesApp(app_module.App):
 
         data = {
             'version': plinth.__version__,
-            'app_name': 'translate:' + gettext_noop('Updates'),
+            'app_name': 'translate:' + gettext_noop('Software Update'),
             'app_icon': 'fa-refresh'
         }
         title = gettext_noop('FreedomBox Updated')

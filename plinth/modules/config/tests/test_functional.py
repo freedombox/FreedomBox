@@ -52,7 +52,8 @@ def _get_hostname(browser):
 def _set_hostname(browser, hostname):
     functional.nav_to_module(browser, 'config')
     browser.find_by_id('id_hostname').fill(hostname)
-    functional.submit(browser)
+    update_setup = browser.find_by_css('.btn-primary')
+    functional.submit(browser, element=update_setup)
 
 
 def _get_domain_name(browser):
@@ -67,7 +68,8 @@ def _set_home_page(browser, home_page):
     functional.nav_to_module(browser, 'config')
     drop_down = browser.find_by_id('id_homepage')
     drop_down.select(home_page)
-    functional.submit(browser)
+    update_setup = browser.find_by_css('.btn-primary')
+    functional.submit(browser, element=update_setup)
 
 
 def _check_home_page_redirect(browser, app_name):
