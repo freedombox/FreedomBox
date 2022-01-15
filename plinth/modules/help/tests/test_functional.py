@@ -4,6 +4,7 @@ Functional, browser based tests for help app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.help]
@@ -32,5 +33,6 @@ def _go_to_status_logs(browser):
 
 
 def _are_status_logs_shown(browser):
-    return (browser.is_text_present('Logs begin')
-            or browser.is_text_present('Journal begins'))
+    status_log = browser.find_by_css('.status-log').first.text
+    return ('-- No entries --' in status_log
+            or status_log.strip().splitlines())
