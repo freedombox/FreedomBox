@@ -48,6 +48,7 @@ DISABLED_APPS_TO_REMOVE = [
     'restore',
     'repro',
     'tahoe',
+    'mldonkey',
 ]
 
 REMOVED_FILES = [
