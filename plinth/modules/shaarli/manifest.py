@@ -28,3 +28,5 @@ clients = [{
         'url': '/shaarli/'
     }]
 }]
+
+backup = {'data': {'directories': ['/var/lib/shaarli/data']}}
