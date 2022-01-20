@@ -7,7 +7,8 @@ from axes.decorators import axes_dispatch
 from django.urls import re_path, reverse_lazy
 from stronghold.decorators import public
 
-from plinth.modules.sso.views import SSOLoginView, SSOLogoutView
+from plinth.modules.sso.views import (CaptchaLoginView, SSOLoginView,
+                                      SSOLogoutView)
 from plinth.utils import non_admin_view
 
 from . import views
@@ -33,4 +34,6 @@ urlpatterns = [
             {'next_page': reverse_lazy('index')}, name='logout'),
     re_path(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
             name='firstboot'),
+    re_path(r'accounts/login/locked/$', public(CaptchaLoginView.as_view()),
+            name='locked_out'),
 ]

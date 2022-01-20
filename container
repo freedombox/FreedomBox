@@ -551,7 +551,12 @@ def _resize_disk_image(image_file, new_size):
 
 def _get_nspawn_command(image_file):
     """Return the base nspwan command."""
-    pipe_argument = ['--pipe'] if systemd_version > 241 else []
+    pipe_argument = []
+    if systemd_version >= 247:
+        pipe_argument = ['--console=autopipe']
+    elif systemd_version > 241:
+        pipe_argument = ['--console=pipe']
+
     return [
         'sudo',
         'systemd-nspawn',
