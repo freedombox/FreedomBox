@@ -168,6 +168,17 @@ def fixture_call_action(request, capsys, actions_module):
     return _call_action
 
 
+@pytest.fixture(name='splinter_screenshot_dir', scope='session')
+def fixture_splinter_screenshot_dir(request):
+    """Set default screenshot directory to ./screenshots.
+
+    This can be overridden using --splinter-screenshot-dir=foo as the option.
+    """
+    option = request.config.getoption('--splinter-screenshot-dir')
+    screenshots_dir = option if option != '.' else './screenshots'
+    return os.path.abspath(screenshots_dir)
+
+
 @pytest.fixture(autouse=True)
 def fixture_fix_session_browser_screenshots(request):
     """Fix a bug in pytest-splinter for screenshots.
