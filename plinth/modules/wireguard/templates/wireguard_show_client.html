@@ -17,19 +17,19 @@
   <div class="table-responsive">
     <table class="table">
       <tbody>
-        <tr>
+        <tr class="client-public-key">
           <th>{% trans "Client public key:" %}</th>
           <td>{{ client.public_key }}</td>
         </tr>
-        <tr>
+        <tr class="client-allowed-ips">
           <th>{% trans "IP address to use for client:" %}</th>
           <td>{{ client.allowed_ips|join:", " }}</td>
         </tr>
-        <tr>
+        <tr class="client-preshared-key">
           <th>{% trans "Pre-shared key:" %}</th>
           <td>{{ client.preshared_key }}</td>
         </tr>
-        <tr>
+        <tr class="server-endpoints">
           <th>{% trans "Server endpoints:" %}</th>
           <td>
             {% for endpoint in endpoints %}
@@ -37,7 +37,7 @@
             {% endfor %}
           </td>
         </tr>
-        <tr>
+        <tr class="server-public-key">
           <th>{% trans "Server public key:" %}</th>
           <td>{{ server.public_key }}</td>
         </tr>
@@ -49,15 +49,15 @@
   <div class="table-responsive">
     <table class="table">
       <tbody>
-        <tr>
+        <tr class="client-transfer-tx">
           <th>{% trans "Data transmitted:" %}</th>
           <td>{{ client.status.transfer_tx|filesizeformat }}</td>
         </tr>
-        <tr>
+        <tr class="client-transfer-rx">
           <th>{% trans "Data received:" %}</th>
           <td>{{ client.status.transfer_rx|filesizeformat }}</td>
         </tr>
-        <tr>
+        <tr class="client-latest-handshake">
           <th>{% trans "Latest handshake:" %}</th>
           <td>{{ client.status.latest_handshake|default:'' }}</td>
         </tr>
@@ -66,12 +66,12 @@
   </div>
 
   <div class="btn-toolbar">
-    <a class="btn btn-default"
+    <a class="btn btn-default btn-edit-client"
        href="{% url 'wireguard:edit-client' client.public_key|urlencode:'' %}">
       <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
       {% trans "Edit" %}
     </a>
-    <a class="btn btn-default"
+    <a class="btn btn-default btn-delete-client"
        href="{% url 'wireguard:delete-client' client.public_key|urlencode:'' %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
       {% trans "Delete" %}

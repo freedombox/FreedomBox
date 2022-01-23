@@ -169,7 +169,7 @@ def add_server(settings):
 
 
 def edit_server(interface, settings):
-    """Edit information for a connecting to a server."""
+    """Edit information for connecting to a server."""
     settings['common']['interface'] = interface
     settings['common']['name'] = 'WireGuard-Client-' + interface
     if not settings['wireguard']['private_key']:

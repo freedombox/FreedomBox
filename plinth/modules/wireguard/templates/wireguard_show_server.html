@@ -20,23 +20,23 @@
       <div class="table-responsive">
         <table class="table">
           <tbody>
-            <tr>
+            <tr class="peer-endpoint">
               <th>{% trans "Server endpoint:" %}</th>
               <td>{{ peer.endpoint }}</td>
             </tr>
-            <tr>
+            <tr class="peer-public-key">
               <th>{% trans "Server public key:" %}</th>
               <td>{{ peer.public_key }}</td>
             </tr>
-            <tr>
+            <tr class="peer-preshared-key">
               <th>{% trans "Pre-shared key:" %}</th>
               <td>{{ peer.preshared_key }}</td>
             </tr>
-            <tr>
+            <tr class="server-public-key">
               <th>{% trans "Public key of this machine:" %}</th>
               <td>{{ server.public_key }}</td>
             </tr>
-            <tr>
+            <tr class="server-ip-address">
               <th>{% trans "IP address of this machine:" %}</th>
               <td>{{ server.ip_address }}</td>
             </tr>
@@ -48,15 +48,15 @@
       <div class="table-responsive">
         <table class="table">
           <tbody>
-            <tr>
+            <tr class="peer-transfer-tx">
               <th>{% trans "Data transmitted:" %}</th>
               <td>{{ peer.status.transfer_tx|filesizeformat }}</td>
             </tr>
-            <tr>
+            <tr class="peer-transfer-rx">
               <th>{% trans "Data received:" %}</th>
               <td>{{ peer.status.transfer_rx|filesizeformat }}</td>
             </tr>
-            <tr>
+            <tr class="peer-latest-handshake">
               <th>{% trans "Latest handshake:" %}</th>
               <td>{{ peer.status.latest_handshake|default:'' }}</td>
             </tr>
@@ -67,12 +67,12 @@
   {% endfor %}
 
   <div class="btn-toolbar">
-    <a class="btn btn-default"
+    <a class="btn btn-default btn-edit-server"
        href="{% url 'wireguard:edit-server' interface %}">
       <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
       {% trans "Edit" %}
     </a>
-    <a class="btn btn-default"
+    <a class="btn btn-default btn-delete-server"
        href="{% url 'wireguard:delete-server' interface %}">
       <span class="fa fa-trash-o" aria-hidden="true"></span>
       {% trans "Delete" %}

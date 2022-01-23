@@ -57,7 +57,7 @@
 
   <div class="btn-toolbar">
     <a title="{% trans 'Add a new peer' %}"
-       role="button" class="btn btn-default"
+       role="button" class="btn btn-default btn-add-client"
        href="{% url 'wireguard:add-client' %}">
       <span class="fa fa-plus" aria-hidden="true"></span>
       {% trans "Add Allowed Client" %}
@@ -82,8 +82,9 @@
           {% for peer in server.peers.values %}
             {% if forloop.first %}
               <tr>
-                <td>{{ peer.endpoint }}</td>
-                <td>
+                <td class="peer-endpoint">{{ peer.endpoint }}</td>
+                <td class="peer-public-key"
+                    data-public-key="{{ peer.public_key }}">
                   <a href="{% url 'wireguard:show-server' interface %}">
                     {{ peer.public_key }}
                   </a>
@@ -107,7 +108,7 @@
 
   <div class="btn-toolbar">
     <a title="{% trans 'Add a new server' %}"
-       role="button" class="btn btn-default"
+       role="button" class="btn btn-default btn-add-server"
        href="{% url 'wireguard:add-server' %}">
       <span class="fa fa-plus" aria-hidden="true"></span>
       {% trans "Add Connection to Server" %}
