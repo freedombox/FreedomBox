@@ -47,7 +47,7 @@ class CoturnApp(app_module.App):
 
     app_id = 'coturn'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -112,7 +112,9 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
     helper.call('post', actions.superuser_run, 'coturn', ['setup'])
-    helper.call('post', app.enable)
+    if old_version == 0:
+        helper.call('post', app.enable)
+
     app.get_component('letsencrypt-coturn').setup_certificates()
     notify_configuration_change()
 
