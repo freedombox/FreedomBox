@@ -5,8 +5,13 @@ Configuration helper for Roundcube server.
 """
 
 import argparse
+import json
+import pathlib
+import re
 
 from plinth import action_utils
+
+_config_file = pathlib.Path('/etc/roundcube/freedombox-config.php')
 
 
 def parse_arguments():
@@ -16,6 +21,11 @@ def parse_arguments():
 
     subparsers.add_parser('pre-install',
                           help='Perform Roundcube pre-install configuration')
+    subparsers.add_parser('setup', help='Setup basic configuration')
+    subparsers.add_parser('get-config', help='Print current configuration')
+    subparser = subparsers.add_parser('set-config', help='Set configuration')
+    subparser.add_argument('--local-only', choices=['True', 'False'],
+                           help='Set current configuration')
 
     subparsers.required = True
     return parser.parse_args()
@@ -27,6 +37,51 @@ def subcommand_pre_install(_):
         'roundcube-core roundcube/dbconfig-install boolean true',
         'roundcube-core roundcube/database-type string sqlite3'
     ])
+
+
+def subcommand_setup(_):
+    """Add FreedomBox configuration and include from main configuration."""
+    if not _config_file.exists():
+        _config_file.write_text('<?php\n')
+
+    base_config = pathlib.Path('/etc/roundcube/config.inc.php')
+    lines = base_config.read_text().splitlines()
+    exists = any((str(_config_file) in line for line in lines))
+    if not exists:
+        lines.append(f'include_once("{_config_file}");\n')
+        base_config.write_text('\n'.join(lines))
+
+
+def subcommand_get_config(_):
+    """Print the current configuration as JSON."""
+    pattern = r'\s*\$config\[\s*\'([^\']*)\'\s*\]\s*=\s*\'([^\']*)\'\s*;'
+    _config = {}
+    try:
+        for line in _config_file.read_text().splitlines():
+            match = re.match(pattern, line)
+            if match:
+                _config[match.group(1)] = match.group(2)
+    except FileNotFoundError:
+        pass
+
+    local_only = _config.get('default_host') == 'localhost'
+    print(json.dumps({'local_only': local_only}))
+
+
+def subcommand_set_config(arguments):
+    """Set the configuration."""
+    config = '<?php\n'
+    if arguments.local_only == 'True':
+        config = '''<?php
+$config['default_host'] = 'localhost';
+$config['mail_domain'] = '%n';
+
+$config['smtp_server'] = 'localhost';
+$config['smtp_port'] = 25;
+$config['smtp_helo_host'] = 'localhost';
+'''
+
+    _config_file.write_text(config)
 
 
 def main():

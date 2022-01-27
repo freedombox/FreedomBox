@@ -5,9 +5,8 @@ URLs for the Roundcube module.
 
 from django.urls import re_path
 
-from plinth.views import AppView
+from .views import RoundcubeAppView
 
 urlpatterns = [
-    re_path(r'^apps/roundcube/$', AppView.as_view(app_id='roundcube'),
-            name='index')
+    re_path(r'^apps/roundcube/$', RoundcubeAppView.as_view(), name='index')
 ]
