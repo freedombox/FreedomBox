@@ -344,12 +344,6 @@ To run all the standard unit tests in the container/VM:
 guest$ py.test-3
 ```
 
-Another way to run tests (not recommended):
-
-```bash
-guest$ ./setup.py test
-```
-
 To run a specific test function, test class or test module, use pytest filtering
 options. See pytest documentation for further filter options.
 
