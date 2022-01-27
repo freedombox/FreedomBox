@@ -147,7 +147,6 @@ class EmailServerApp(plinth.app.App):
         results = super().diagnose()
         results.extend([r.summarize() for r in audit.ldap.get()])
         results.extend([r.summarize() for r in audit.spam.get()])
-        results.extend([r.summarize() for r in audit.rcube.get()])
         return results
 
 
@@ -179,7 +178,6 @@ def setup(helper, old_version=None):
     helper.call('post', audit.domain.set_domains)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)
-    helper.call('post', audit.rcube.repair)
 
     # Reload
     actions.superuser_run('service', ['reload', 'postfix'])
