@@ -31,7 +31,7 @@ UPDATEMINUTES=5
 # a "blind" update
 UPDATEMINUTESUNKNOWN=3600
 TOOLNAME=ez-ipupdate
-UPDATE_TOOL=$(which ${TOOLNAME})
+GNUDIP_ACTION=/usr/share/plinth/actions/gnudip
 DISABLED_STRING='disabled'
 ENABLED_STRING='enabled'
 
@@ -157,13 +157,6 @@ doWriteCFG()
         else
             # we are directly connected
             echo "NAT no" >> ${HELPERCFG}
-            # if this file is added ez-ipupdate will take ip form this interface
-            {
-                echo "interface=${default_interface}"
-                # if this line is added to config file, ez-ipupdate will be launched on startup via init.d
-                echo "daemon"
-                echo "execute=${0} success"
-            } >> ${out_file}
         fi
     fi
 }
@@ -296,7 +289,7 @@ doGetWANIP()
     fi
 }
 
-# actualy do the update (using wget or ez-ipupdate or even both)
+# actualy do the update (using wget or gnudip action or even both)
 # this function is called via cronjob
 doUpdate()
 {
@@ -309,7 +302,11 @@ doUpdate()
         return
     fi
     if [ ! -z "${server}" ];then
-        start-stop-daemon -S -x "${UPDATE_TOOL}" -m -p "${PIDFILE}" -- -c "${cfgfile}"
+        if "${GNUDIP_ACTION}" update; then
+            ${0} success ${wanip}
+        else
+            ${0} failed
+        fi
     fi
     if [ ! -z "${updateurl}" ];then
         doReplaceVars
@@ -351,24 +348,14 @@ case ${cmd} in
     ;;
     start)
         doGetWANIP
-        if [ "$(grep ^NAT ${HELPERCFG} | awk '{print $2}')" = "no" ];then
-            #if we are not behind a NAT device and we use gnudip, start the daemon tool
-            gnudipServer=$(grep ^server= ${cfgfile} 2> /dev/null | cut -d = -f 2- |grep -v ^\'\')
-            if [ ! -f ${CFG} -a ! -z "${gnudipServer}" ];then
-                mv ${CFG_disabled} ${CFG}
-                /etc/init.d/${TOOLNAME} start
-            fi
-            # if we are not behind a NAT device and we use update-URL, add a cronjob
-            # (daemon tool does not support update-URL feature)
-            if [ ! -z "$(grep ^POSTURL $HELPERCFG | awk '{print $2}')" ];then
-                echo "*/${UPDATEMINUTES} * * * * root ${0} update" > ${CRONJOB}
-                $0 update
-            fi
-        else
-            # if we are behind a NAT device, add a cronjob (daemon tool cannot monitor WAN IP changes)
-            echo "*/${UPDATEMINUTES} * * * * root ${0} update" > $CRONJOB
-            $0 update
+        # if we use gnudip, enable gnudip.
+        gnudipServer=$(grep ^server= ${cfgfile} 2> /dev/null | cut -d = -f 2- |grep -v ^\'\')
+        if [ ! -f ${CFG} -a ! -z "${gnudipServer}" ];then
+            mv ${CFG_disabled} ${CFG}
         fi
+        # add a cronjob
+        echo "*/${UPDATEMINUTES} * * * * root ${0} update" > $CRONJOB
+        $0 update
     ;;
     get-nat)
         NAT=$(grep ^NAT $HELPERCFG 2> /dev/null | awk '{print $2}')

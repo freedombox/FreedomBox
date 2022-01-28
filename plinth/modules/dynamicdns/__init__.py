@@ -11,7 +11,6 @@ from plinth import cfg, menu
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
 from plinth.signals import domain_added
 from plinth.utils import format_lazy
 
@@ -57,9 +56,6 @@ class DynamicDNSApp(app_module.App):
         menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,
                               'dynamicdns:index', parent_url_name='system')
         self.add(menu_item)
-
-        packages = Packages('packages-dynamicdns', ['ez-ipupdate'])
-        self.add(packages)
 
         domain_type = DomainType('domain-type-dynamic',
                                  _('Dynamic Domain Name'), 'dynamicdns:index',

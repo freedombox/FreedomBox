@@ -1,0 +1,77 @@
+#!/usr/bin/python3
+# -*- mode: python -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+GnuDIP client for updating Dynamic DNS records.
+"""
+
+import argparse
+import logging
+import pathlib
+import sys
+
+from plinth.modules.dynamicdns import gnudip
+
+logger = logging.getLogger(__name__)
+
+CONFIG_FILE = pathlib.Path('/etc/ez-ipupdate/ez-ipupdate.conf')
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+
+    subparsers.add_parser('update', help='Update Dynamic DNS record')
+
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_update(_):
+    """Update Dynamic DNS record.
+
+    Uses settings from ez-ipupdate config file.
+    """
+    if not CONFIG_FILE.is_file():
+        logger.info('GnuDIP configuration not found.')
+        return
+
+    config = {}
+    with CONFIG_FILE.open() as cf:
+        lines = cf.readlines()
+        for line in lines:
+            if '=' in line:
+                items = line.split('=')
+                key = items[0].strip()
+                value = items[1].strip()
+            else:
+                key = line.strip()
+                value = True
+
+            config[key] = value
+
+    if not all(['host' in config, 'server' in config, 'user' in config]):
+        logger.warn('GnuDIP configuration is not complete.')
+        return
+
+    username, password = config['user'].split(':')
+    result, new_ip = gnudip.update(config['server'], config['host'], username,
+                                   password)
+    if result == 0 and new_ip:
+        print(new_ip)
+
+    return result
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    sys.exit(subcommand_method(arguments))
+
+
+if __name__ == '__main__':
+    main()
