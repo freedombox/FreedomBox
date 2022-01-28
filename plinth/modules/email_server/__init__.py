@@ -49,7 +49,7 @@ class EmailServerApp(plinth.app.App):
             short_description=_('Powered by Postfix, Dovecot & Rspamd'),
             description=_description, manual_page='EmailServer',
             clients=manifest.clients,
-            donation_url='https://freedomboxfoundation.org/donate/')
+            donation_url='https://rspamd.com/support.html')
         self.add(info)
 
         menu_item = plinth.menu.Menu(
