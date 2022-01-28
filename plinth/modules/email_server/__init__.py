@@ -22,11 +22,6 @@ from . import audit, manifest
 clamav_packages = ['clamav', 'clamav-daemon']
 clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
 
-port_info = {
-    'postfix': ('smtp', 25, 'smtps', 465, 'smtp-submission', 587),
-    'dovecot': ('imaps', 993, 'pop3s', 995),
-}
-
 _description = [
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
       'interface for users to access email.'),
@@ -48,7 +43,23 @@ class EmailServerApp(plinth.app.App):
     def __init__(self):
         """The app's constructor"""
         super().__init__()
-        self._add_ui_components()
+
+        info = plinth.app.Info(
+            app_id=self.app_id, version=self._version, name=self.app_name,
+            short_description=_('Powered by Postfix, Dovecot & Rspamd'),
+            description=_description, manual_page='EmailServer',
+            clients=manifest.clients,
+            donation_url='https://freedomboxfoundation.org/donate/')
+        self.add(info)
+
+        menu_item = plinth.menu.Menu(
+            'menu_' + self.app_id,  # unique id
+            info.name,  # app display name
+            info.short_description,  # app description
+            'roundcube',  # icon name in `static/theme/icons/`
+            'email_server:index',  # view name
+            parent_url_name='apps')
+        self.add(menu_item)
 
         # Other likely install conflicts have been discarded:
         # - msmtp, nullmailer, sendmail don't cause install faults.
@@ -67,8 +78,30 @@ class EmailServerApp(plinth.app.App):
                             skip_recommends=True)
         self.add(packages)
 
-        self._add_daemons()
-        self._add_firewall_ports()
+        listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
+                        (465, 'tcp6'), (587, 'tcp4'), (587, 'tcp6')]
+        daemon = plinth.daemon.Daemon('daemon-postfix', 'postfix',
+                                      listen_ports=listen_ports)
+        self.add(daemon)
+
+        listen_ports = [(143, 'tcp4'), (143, 'tcp6'), (993, 'tcp4'),
+                        (993, 'tcp6'), (110, 'tcp4'), (110, 'tcp6'),
+                        (995, 'tcp4'), (995, 'tcp6'), (4190, 'tcp4'),
+                        (4190, 'tcp6')]
+        daemon = plinth.daemon.Daemon('daemon-dovecot', 'dovecot',
+                                      listen_ports=listen_ports)
+        self.add(daemon)
+
+        listen_ports = [(11332, 'tcp4'), (11332, 'tcp6'), (11333, 'tcp4'),
+                        (11333, 'tcp6'), (11334, 'tcp4'), (11334, 'tcp6')]
+        daemon = plinth.daemon.Daemon('daemon-rspamd', 'rspamd',
+                                      listen_ports=listen_ports)
+        self.add(daemon)
+
+        port_names = ['smtp', 'smtps', 'smtp-submission', 'imaps', 'pop3s']
+        firewall = Firewall('firewall-email', info.name, ports=port_names,
+                            is_external=True)
+        self.add(firewall)
 
         # /rspamd location
         webserver = Webserver(
@@ -93,48 +126,6 @@ class EmailServerApp(plinth.app.App):
             certificate_path='/etc/dovecot/letsencrypt/{domain}/cert.pem',
             user_owner='root', group_owner='root', managing_app='email_server')
         self.add(letsencrypt)
-
-    def _add_ui_components(self):
-        info = plinth.app.Info(
-            app_id=self.app_id, version=self._version, name=self.app_name,
-            short_description=_('Powered by Postfix, Dovecot & Rspamd'),
-            description=_description, manual_page='EmailServer',
-            clients=manifest.clients,
-            donation_url='https://freedomboxfoundation.org/donate/')
-        self.add(info)
-
-        menu_item = plinth.menu.Menu(
-            'menu_' + self.app_id,  # unique id
-            info.name,  # app display name
-            info.short_description,  # app description
-            'roundcube',  # icon name in `static/theme/icons/`
-            'email_server:index',  # view name
-            parent_url_name='apps')
-        self.add(menu_item)
-
-    def _add_daemons(self):
-        for srvname in ['postfix', 'dovecot', 'rspamd']:
-            # Construct `listen_ports` parameter for the daemon
-            mixed = port_info.get(srvname, ())
-            port_numbers = [v for v in mixed if isinstance(v, int)]
-            listen = []
-            for n in port_numbers:
-                listen.append((n, 'tcp4'))
-                listen.append((n, 'tcp6'))
-            # Add daemon
-            daemon = plinth.daemon.Daemon('daemon-' + srvname, srvname,
-                                          listen_ports=listen)
-            self.add(daemon)
-
-    def _add_firewall_ports(self):
-        all_port_names = []
-        for mixed in port_info.values():
-            port_names = [v for v in mixed if isinstance(v, str)]
-            all_port_names.extend(port_names)
-
-        firewall = Firewall('firewall-email', self.app_name,
-                            ports=all_port_names, is_external=True)
-        self.add(firewall)
 
     @staticmethod
     def post_init():
