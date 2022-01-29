@@ -7,7 +7,7 @@ import subprocess
 
 from plinth.actions import superuser_run
 from plinth.modules import config
-from plinth.modules.email_server import postconf
+from plinth.modules.email import postconf
 from plinth.modules.names.components import DomainName
 
 from . import tls
@@ -31,7 +31,7 @@ def set_domains(primary_domain=None):
             primary_domain = config.get_domainname() or list(all_domains)[0]
 
     superuser_run(
-        'email_server',
+        'email',
         ['domain', 'set_domains', primary_domain, ','.join(all_domains)])
 
 

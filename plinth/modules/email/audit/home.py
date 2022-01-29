@@ -14,7 +14,7 @@ def repair():
     directory. Ensure that 'others' can access /var/mail/.
 
     """
-    actions.superuser_run('email_server', ['home', 'set_up'])
+    actions.superuser_run('email', ['home', 'set_up'])
 
 
 def action_set_up():

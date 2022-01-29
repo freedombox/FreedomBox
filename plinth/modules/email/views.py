@@ -15,11 +15,11 @@ from . import aliases as aliases_module
 from . import audit, forms
 
 
-class EmailServerView(AppView):
-    """Server configuration page"""
-    app_id = 'email_server'
+class EmailAppView(AppView):
+    """Server configuration page."""
+    app_id = 'email'
     form_class = forms.DomainForm
-    template_name = 'email_server.html'
+    template_name = 'email.html'
 
     def get_initial(self):
         """Return the initial values to populate in the form."""
@@ -52,9 +52,9 @@ class AliasView(FormView):
     posted is detected using hidden form values and the appropriate form is
     initialized for the FormView base class to work with.
     """
-    template_name = 'email_alias.html'
+    template_name = 'email-aliases.html'
     form_classes = (forms.AliasCreateForm, forms.AliasListForm)
-    success_url = reverse_lazy('email_server:aliases')
+    success_url = reverse_lazy('email:aliases')
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""
@@ -125,7 +125,7 @@ class AliasView(FormView):
 
 
 class XmlView(TemplateView):
-    template_name = 'email_autoconfig.xml'
+    template_name = 'email-autoconfig.xml'
 
     def render_to_response(self, *args, **kwargs):
         kwargs['content_type'] = 'text/xml; charset=utf-8'

@@ -6,8 +6,8 @@ import logging
 
 from django.utils.translation import gettext_lazy as _
 
-import plinth.modules.email_server.aliases as aliases
-import plinth.modules.email_server.postconf as postconf
+import plinth.modules.email.aliases as aliases
+import plinth.modules.email.postconf as postconf
 from plinth import actions
 
 from . import models
@@ -82,7 +82,7 @@ def repair():
     POST /audit/ldap/repair
     """
     aliases.first_setup()
-    actions.superuser_run('email_server', ['ldap', 'set_up'])
+    actions.superuser_run('email', ['ldap', 'set_up'])
 
 
 def action_set_up():
@@ -102,13 +102,13 @@ def fix_sasl(diagnosis):
 
 
 def action_set_sasl():
-    """Handles email_server -i ldap set_sasl"""
+    """Handles email -i ldap set_sasl"""
     with postconf.mutex.lock_all():
         fix_sasl(check_sasl())
 
 
 def action_set_submission():
-    """Handles email_server -i ldap set_submission"""
+    """Handles email -i ldap set_submission"""
     postconf.set_master_cf_options(service_flags=submission_flags,
                                    options=default_submission_options)
     postconf.set_master_cf_options(service_flags=smtps_flags,
@@ -140,6 +140,6 @@ def fix_alias_maps(diagnosis):
 
 
 def action_set_ulookup():
-    """Handles email_server -i ldap set_ulookup"""
+    """Handles email -i ldap set_ulookup"""
     with postconf.mutex.lock_all():
         fix_alias_maps(check_alias_maps())

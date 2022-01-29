@@ -36,9 +36,9 @@ app = None
 logger = logging.getLogger(__name__)
 
 
-class EmailServerApp(plinth.app.App):
-    """FreedomBox email server app"""
-    app_id = 'email_server'
+class EmailApp(plinth.app.App):
+    """FreedomBox app for an email server."""
+    app_id = 'email'
 
     _version = 1
 
@@ -46,25 +46,26 @@ class EmailServerApp(plinth.app.App):
         """The app's constructor"""
         super().__init__()
 
-        info = plinth.app.Info(
-            app_id=self.app_id, version=self._version,
-            name=_('Postfix/Dovecot'), icon_filename='roundcube',
-            short_description=_('Email Server'), description=_description,
-            manual_page='EmailServer', clients=manifest.clients,
-            donation_url='https://rspamd.com/support.html')
+        info = plinth.app.Info(app_id=self.app_id, version=self._version,
+                               name=_('Postfix/Dovecot'),
+                               icon_filename='roundcube',
+                               short_description=_('Email Server'),
+                               description=_description, manual_page='Email',
+                               clients=manifest.clients,
+                               donation_url='https://rspamd.com/support.html')
         self.add(info)
 
-        menu_item = menu.Menu('menu-email-server', info.name,
-                              info.short_description, info.icon_filename,
-                              'email_server:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-email', info.name, info.short_description,
+                              info.icon_filename, 'email:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-email-server', info.name,
+            'shortcut-email', info.name,
             short_description=info.short_description, icon=info.icon_filename,
             description=info.description,
-            configure_url=reverse_lazy('email_server:index'),
-            clients=info.clients, login_required=True)
+            configure_url=reverse_lazy('email:index'), clients=info.clients,
+            login_required=True)
         self.add(shortcut)
 
         # Other likely install conflicts have been discarded:
@@ -72,7 +73,7 @@ class EmailServerApp(plinth.app.App):
         # - qmail and smail are missing in Bullseye (Not tested,
         #   but less likely due to that).
         packages = Packages(
-            'packages-email-server', [
+            'packages-email', [
                 'postfix', 'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
                 'dovecot-imapd', 'dovecot-ldap', 'dovecot-lmtpd',
                 'dovecot-managesieved'
@@ -80,13 +81,13 @@ class EmailServerApp(plinth.app.App):
             conflicts_action=Packages.ConflictsAction.IGNORE)
         self.add(packages)
 
-        packages = Packages('packages-email-server-skip-rec', ['rspamd'],
+        packages = Packages('packages-email-skip-rec', ['rspamd'],
                             skip_recommends=True)
         self.add(packages)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
                         (465, 'tcp6'), (587, 'tcp4'), (587, 'tcp6')]
-        daemon = Daemon('daemon-email-server-postfix', 'postfix',
+        daemon = Daemon('daemon-email-postfix', 'postfix',
                         listen_ports=listen_ports)
         self.add(daemon)
 
@@ -94,13 +95,13 @@ class EmailServerApp(plinth.app.App):
                         (993, 'tcp6'), (110, 'tcp4'), (110, 'tcp6'),
                         (995, 'tcp4'), (995, 'tcp6'), (4190, 'tcp4'),
                         (4190, 'tcp6')]
-        daemon = Daemon('daemon-email-server-dovecot', 'dovecot',
+        daemon = Daemon('daemon-email-dovecot', 'dovecot',
                         listen_ports=listen_ports)
         self.add(daemon)
 
         listen_ports = [(11332, 'tcp4'), (11332, 'tcp6'), (11333, 'tcp4'),
                         (11333, 'tcp6'), (11334, 'tcp4'), (11334, 'tcp6')]
-        daemon = Daemon('daemon-email-server-rspamd', 'rspamd',
+        daemon = Daemon('daemon-email-rspamd', 'rspamd',
                         listen_ports=listen_ports)
         self.add(daemon)
 
@@ -112,25 +113,25 @@ class EmailServerApp(plinth.app.App):
         # /rspamd location
         webserver = Webserver(
             'webserver-email',  # unique id
-            'email-server-freedombox',  # config file name
+            'email-freedombox',  # config file name
             urls=['https://{host}/rspamd'])
         self.add(webserver)
 
         # Let's Encrypt event hook
         letsencrypt = LetsEncrypt(
-            'letsencrypt-email-server-postfix', domains='*',
-            daemons=['postfix'], should_copy_certificates=True,
+            'letsencrypt-email-postfix', domains='*', daemons=['postfix'],
+            should_copy_certificates=True,
             private_key_path='/etc/postfix/letsencrypt/{domain}/chain.pem',
             certificate_path='/etc/postfix/letsencrypt/{domain}/chain.pem',
-            user_owner='root', group_owner='root', managing_app='email_server')
+            user_owner='root', group_owner='root', managing_app='email')
         self.add(letsencrypt)
 
         letsencrypt = LetsEncrypt(
-            'letsencrypt-email-server-dovecot', domains='*',
-            daemons=['dovecot'], should_copy_certificates=True,
+            'letsencrypt-email-dovecot', domains='*', daemons=['dovecot'],
+            should_copy_certificates=True,
             private_key_path='/etc/dovecot/letsencrypt/{domain}/privkey.pem',
             certificate_path='/etc/dovecot/letsencrypt/{domain}/cert.pem',
-            user_owner='root', group_owner='root', managing_app='email_server')
+            user_owner='root', group_owner='root', managing_app='email')
         self.add(letsencrypt)
 
     @staticmethod
@@ -157,7 +158,7 @@ def setup(helper, old_version=None):
     """Installs and configures module"""
 
     def _clear_conflicts():
-        component = app.get_component('packages-email-server')
+        component = app.get_component('packages-email')
         packages_to_remove = component.find_conflicts()
         if packages_to_remove:
             logger.info('Removing conflicting packages: %s',
@@ -170,8 +171,8 @@ def setup(helper, old_version=None):
 
     # Setup
     helper.call('post', audit.home.repair)
-    app.get_component('letsencrypt-email-server-postfix').setup_certificates()
-    app.get_component('letsencrypt-email-server-dovecot').setup_certificates()
+    app.get_component('letsencrypt-email-postfix').setup_certificates()
+    app.get_component('letsencrypt-email-dovecot').setup_certificates()
     helper.call('post', audit.domain.set_domains)
     helper.call('post', audit.ldap.repair)
     helper.call('post', audit.spam.repair)

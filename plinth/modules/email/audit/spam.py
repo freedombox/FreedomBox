@@ -9,8 +9,8 @@ import subprocess
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
-from plinth.modules.email_server import interproc, lock, postconf
-from plinth.modules.email_server.modconf import ConfigInjector
+from plinth.modules.email import interproc, lock, postconf
+from plinth.modules.email.modconf import ConfigInjector
 
 from . import models
 
@@ -94,7 +94,7 @@ def get():
 
 
 def repair():
-    actions.superuser_run('email_server', ['spam', 'set_filter'])
+    actions.superuser_run('email', ['spam', 'set_filter'])
 
 
 def check_filter(title=''):

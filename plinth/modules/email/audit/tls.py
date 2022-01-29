@@ -1,7 +1,7 @@
 """TLS configuration for postfix and dovecot."""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from plinth.modules.email_server import interproc, postconf
+from plinth.modules.email import interproc, postconf
 
 # Mozilla Guideline v5.6, Postfix 1.17.7, OpenSSL 1.1.1d, intermediate
 # Generated 2021-08
