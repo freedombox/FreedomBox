@@ -36,7 +36,6 @@ logger = logging.getLogger(__name__)
 class EmailServerApp(plinth.app.App):
     """FreedomBox email server app"""
     app_id = 'email_server'
-    app_name = _('Email Server')
 
     _version = 1
 
@@ -45,8 +44,9 @@ class EmailServerApp(plinth.app.App):
         super().__init__()
 
         info = plinth.app.Info(
-            app_id=self.app_id, version=self._version, name=self.app_name,
-            short_description=_('Powered by Postfix, Dovecot & Rspamd'),
+            app_id=self.app_id, version=self._version, name=_('Email Server'),
+            icon_filename='roundcube',
+            short_description=_('Postfix, Dovecot & Rspamd'),
             description=_description, manual_page='EmailServer',
             clients=manifest.clients,
             donation_url='https://rspamd.com/support.html')
