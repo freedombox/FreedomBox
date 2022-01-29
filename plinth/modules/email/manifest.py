@@ -62,13 +62,15 @@ clients = [
 
 backup = {
     'data': {
+        'files': ['/etc/aliases', ],
         'directories': [
-            '/var/lib/plinth/mailsrv',
-            '/var/spool/postfix/fbx-managed',
-            '/etc/postfix',
-            '/etc/dovecot',
-            '/etc/rspamd',
-            '/var/lib/rspamd',
+            '/var/spool/postfix/fbx-managed/',
+            '/etc/postfix/',
+            '/etc/dovecot/conf.d/',
+            '/etc/rspamd/',
+            '/var/lib/postfix/freedombox-aliases/',
+            '/var/lib/rspamd/',
+            '/var/mail/',
         ]
     },
     'services': ['postfix', 'dovecot', 'rspamd']
