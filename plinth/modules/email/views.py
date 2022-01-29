@@ -129,9 +129,7 @@ class XmlView(TemplateView):
 
     def render_to_response(self, *args, **kwargs):
         kwargs['content_type'] = 'text/xml; charset=utf-8'
-        response = super().render_to_response(*args, **kwargs)
-        response['X-Robots-Tag'] = 'noindex, nofollow, noarchive'
-        return response
+        return super().render_to_response(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
