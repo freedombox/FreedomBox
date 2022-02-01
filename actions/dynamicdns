@@ -25,7 +25,7 @@ WGET=$(which wget)
 WGETOPTIONS="-o /dev/null -t 3 -T 3"
 EMPTYSTRING="none"
 NOIP="0.0.0.0"
-# how often do we poll for IP changes if we are behind a NAT?
+# how often do we poll for IP changes
 UPDATEMINUTES=5
 # if we do not have a URL to look up public IP, how often should we do
 # a "blind" update
@@ -146,19 +146,6 @@ doWriteCFG()
     
     # check if we are behind a NAT Router
     echo "IPURL ${ipurl}" >> ${HELPERCFG}
-    if [ -z ${ipurl} ];then
-        echo "NAT unknown" >> ${HELPERCFG}
-    else 
-        doGetWANIP
-        ISGLOBAL=$(ip addr ls "${default_interface}" | grep "${wanip}")
-        if [ -z "${ISGLOBAL}" ];then
-            # we are behind NAT
-            echo "NAT yes" >> ${HELPERCFG}
-        else
-            # we are directly connected
-            echo "NAT no" >> ${HELPERCFG}
-        fi
-    fi
 }
 
 # this function will read the config file from disk
@@ -357,11 +344,6 @@ case ${cmd} in
         echo "*/${UPDATEMINUTES} * * * * root ${0} update" > $CRONJOB
         $0 update
     ;;
-    get-nat)
-        NAT=$(grep ^NAT $HELPERCFG 2> /dev/null | awk '{print $2}')
-        [ -z "${NAT}" ] && NAT="unknown"
-        echo ${NAT}
-    ;;
     update)
         doReadCFG
         dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
@@ -425,15 +407,12 @@ case ${cmd} in
         doReadCFG
         doStatus
     ;;
-    get-timer)
-        echo ${UPDATEMINUTES}
-    ;;
     clean)
         rm ${CFGDIR}/*
         rm ${CRONJOB}
     ;;
     *)
-        echo "usage: status|configure <options>|start|stop|update|get-nat|clean|success [updated IP]|failed|get-last-success"
+        echo "usage: status|configure <options>|start|stop|update|clean|success [updated IP]|failed|get-last-success"
         echo ""
         echo "options are:"
         echo "-s <server>             Gnudip Server address"
@@ -451,7 +430,6 @@ case ${cmd} in
         echo "clean                   delete configuration"
         echo "success                 store update success and optional the updated IP"
         echo "failed                  store update failure"
-        echo "get-nat                 return the detected nat type"
         echo "get-last-success        return date of last successful update"
     ;;
 esac

@@ -45,19 +45,7 @@ def index(request):
 
 def get_status():
     """Return the current status."""
-    check_nat = _run(['get-nat'])
-    last_update = _run(['get-last-success'])
-
-    no_nat = check_nat.strip() == 'no'
-    nat_unchecked = check_nat.strip() == 'unknown'
-    timer = _run(['get-timer'])
-
-    return {
-        'no_nat': no_nat,
-        'nat_unchecked': nat_unchecked,
-        'timer': timer,
-        'last_update': last_update,
-    }
+    return {'last_update': _run(['get-last-success'])}
 
 
 def _apply_changes(request, old_status, new_status):
