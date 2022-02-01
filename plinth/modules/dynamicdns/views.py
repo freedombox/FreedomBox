@@ -7,9 +7,7 @@ import logging
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
-from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
 
 from plinth import actions
 from plinth.modules import dynamicdns
@@ -20,14 +18,6 @@ from .forms import ConfigureForm
 logger = logging.getLogger(__name__)
 
 EMPTYSTRING = 'none'
-
-subsubmenu = [{
-    'url': reverse_lazy('dynamicdns:index'),
-    'text': gettext_lazy('Configure')
-}, {
-    'url': reverse_lazy('dynamicdns:statuspage'),
-    'text': gettext_lazy('Status')
-}]
 
 
 def index(request):
@@ -49,12 +39,12 @@ def index(request):
             'title': _('Configure Dynamic DNS'),
             'app_info': dynamicdns.app.info,
             'form': form,
-            'subsubmenu': subsubmenu
+            'status': get_status()
         })
 
 
-def statuspage(request):
-    """Serve the status page."""
+def get_status():
+    """Return the current status."""
     check_nat = _run(['get-nat'])
     last_update = _run(['get-last-success'])
 
@@ -62,22 +52,12 @@ def statuspage(request):
     nat_unchecked = check_nat.strip() == 'unknown'
     timer = _run(['get-timer'])
 
-    if no_nat:
-        logger.info('Not behind a NAT')
-
-    if nat_unchecked:
-        logger.info('Did not check if behind a NAT')
-
-    return TemplateResponse(
-        request, 'dynamicdns_status.html', {
-            'title': _('Dynamic DNS Status'),
-            'app_info': dynamicdns.app.info,
-            'no_nat': no_nat,
-            'nat_unchecked': nat_unchecked,
-            'timer': timer,
-            'last_update': last_update,
-            'subsubmenu': subsubmenu
-        })
+    return {
+        'no_nat': no_nat,
+        'nat_unchecked': nat_unchecked,
+        'timer': timer,
+        'last_update': last_update,
+    }
 
 
 def _apply_changes(request, old_status, new_status):

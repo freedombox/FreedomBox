@@ -26,6 +26,38 @@
   </form>
 {% endblock %}
 
+{% block extra_content %}
+  <h3>{% trans "Status" %}</h3>
+
+  <h4>{% trans "NAT type" %}</h4>
+
+  <p>
+    {% if status.nat_unchecked %}
+      {% blocktrans trimmed %}
+        NAT type was not detected yet. If you do not provide an "IP Check
+        URL", we will not detect a NAT type.
+      {% endblocktrans %}
+    {% else %}
+      {% if status.no_nat %}
+        {% trans "Direct connection to the Internet." %}
+      {% else %}
+        {% blocktrans trimmed with timer=status.timer %}
+          Behind NAT. This means that Dynamic DNS service will poll
+          the "URL to look up public IP" for changes (the "URL to look
+          up public IP" entry is needed for this, otherwise IP changes
+          will not be detected). In case the WAN IP changes, it may
+          take up to {{ timer }} minutes until your DNS entry is
+          updated.
+        {% endblocktrans %}
+      {% endif %}
+    {% endif %}
+  </p>
+
+  <h4>{% trans "Last update" %}</h4>
+
+  <p>{{ status.last_update }}</p>
+{% endblock %}
+
 {% block page_js %}
   <script type="text/javascript" src="{% static 'dynamicdns/dynamicdns.js' %}"></script>
 {% endblock %}
