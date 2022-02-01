@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2021-12-27 05:53+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -842,7 +842,7 @@ msgstr "Tilganger for anonyme brukere, som ikke har angitt et passord."
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 msgid "Permissions"
 msgstr "Tilganger"
 
@@ -930,7 +930,7 @@ msgstr "admin"
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -1028,10 +1028,10 @@ msgstr "Oppdater IP-adresse og domener"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1497,20 +1497,17 @@ msgid "Diagnostics"
 msgstr "Diagnostikk"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "feilet"
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr "feil"
 
@@ -2053,88 +2050,60 @@ msgstr "Nettprat-tjener"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/rcube.py:31
-#, fuzzy
-#| msgid "Available Domains"
-msgid "RoundCube availability"
-msgstr "Tilgjengelige domener"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
 msgstr ""
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Enter a valid domain"
-msgstr "Ugyldig tjenernavn"
-
-#: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Enter a valid destination"
-msgstr "Ugyldig tjenernavn"
-
 #: plinth/modules/email_server/forms.py:24
-#, fuzzy
-#| msgid "Domain"
-msgid "domain"
-msgstr "Domene"
-
-#: plinth/modules/email_server/forms.py:38
 #, fuzzy
 #| msgid "Primary connection"
 msgid "Primary domain"
 msgstr "Primærtilkobling"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 #, fuzzy
 #| msgid "Manage Libraries"
 msgid "Aliases"
 msgstr "Håndter biblioteker"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "Aktivert"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2143,7 +2112,7 @@ msgid "Disabled"
 msgstr "Deaktivert"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2164,7 +2133,7 @@ msgid "FairEmail"
 msgstr ""
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 #, fuzzy
 #| msgid "Manage Libraries"
 msgid "Manage Aliases"
@@ -2196,30 +2165,11 @@ msgstr "Lag ny sikkerhetskopi"
 msgid "Add"
 msgstr "Legg til"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 #, fuzzy
 #| msgid "Manage Snapshots"
 msgid "Manage Spam"
 msgstr "Behandle avbildninger"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-#, fuzzy
-#| msgid "Service Type"
-msgid "Service Alert"
-msgstr "Type tjeneste"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3294,9 +3244,13 @@ msgid ""
 "TURN server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
 msgstr "Element"
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
+msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3656,54 +3610,6 @@ msgstr "Angitt mappe finnes ikke."
 #: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Oppdatert mediekatalog"
-
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-"MLDonkey er et maskin-til-maskin -fildelingsprogram brukt til utveksling av "
-"store filer. Det kan delta i flere maskin-til-maskin -nettverk, inkludert "
-"eDonkey, Kademlia, Overnet, BitTorrent og DirectConnect."
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-"Brukere som er medlem i gruppene «admin» og «ed2k» kan kontrollere dem "
-"gjennom et vevgrensesnitt. Brukere i admin-gruppen kan også kontrollere den "
-"gjennom en av de egne mobil- eller skrivebords-grenseflatene, eller et "
-"telnet-grensesnitt. Se manualen."
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr "På {box_name}, finner du nedlastede filer i mappen /var/lib/mldonkey/."
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr "Last ned filer ved bruk av eDonkey-programmer"
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-msgid "MLDonkey"
-msgstr "MLDonkey"
-
-#: plinth/modules/mldonkey/__init__.py:58
-msgid "Peer-to-peer File Sharing"
-msgstr "Maskin til maskin-fildeling"
-
-#: plinth/modules/mldonkey/manifest.py:18
-msgid "KMLDonkey"
-msgstr "KMLDonkey"
-
-#: plinth/modules/mldonkey/manifest.py:30
-msgid "AMLDonkey"
-msgstr "AMLDonkey"
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -5307,11 +5213,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "Systemoppsett"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "Start om igjen, eller slå av systemet."
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "Strøm"
 
@@ -5570,7 +5476,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Tilgangskontrolloppsett oppdatert"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5582,7 +5488,7 @@ msgstr ""
 "forventer fra en e-posttjener, medregnet MIME-støtte, adressebok, "
 "mappebehandling, søk etter meldinger og stavekontroll."
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5595,7 +5501,7 @@ msgstr ""
 "som <code>imap.example.com</code>.  For IMAP over SSL (anbefalt), fyll "
 "feltet for tjeneren, som <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5611,9 +5517,20 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 msgid "Email Client"
 msgstr "E-postklient"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5990,11 +5907,11 @@ msgstr "Feil ved oppsetting av begrenset tilgang: {exception}"
 msgid "Updated security configuration"
 msgstr "Oppdaterte sikkerhetsoppsett"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli tillater deg å lagre og dele bokmerker."
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
@@ -6002,13 +5919,19 @@ msgstr ""
 "Merk at Shaarli kun støtter en enkelt brukerkonto, som du må sette opp ved "
 "det første besøket."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 msgid "Bookmarks"
 msgstr "Bokmerker"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "Shaarli"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6246,7 +6169,11 @@ msgid "Software Installation Snapshots"
 msgstr "Øyeblikksbilder av programvareinstallasjoner"
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+#, fuzzy
+#| msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr "Skru på eller av øyeblikksbilder før og etter programvareinstallasjon"
 
 #: plinth/modules/snapshot/forms.py:32
@@ -6495,6 +6422,12 @@ msgstr "Engangspålogging"
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "Login"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "Vellykket passordbytte."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -7360,15 +7293,17 @@ msgstr ""
 msgid "Authorization Password"
 msgstr "Administratorpassord"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, python-brace-format
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 msgid "Invalid password."
 msgstr "Ugyldig passord."
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -7389,21 +7324,21 @@ msgstr ""
 "gruppen kan logge seg på alle tjenester. De kan også logge inn på systemet "
 "via SSH, og ha administrative rettigheter (sudo)."
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "Oppretting av LDAP-bruker mislyktes: {error}"
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Klarte ikke å legge ny bruker til i {group}-gruppen: {error}"
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr "Autoriserte SSH-nøkler"
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7413,43 +7348,43 @@ msgstr ""
 "på systemet uten å bruke passord. Du kan legge inn multiple (flere) nøkler, "
 "én på hver linje. Blanke linjer og linjer som starter med # vil bli ignorert."
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "Klarte ikke å bytte navn på LDAP-bruker."
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "Klarte ikke å slette bruker fra gruppe."
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "Klarte ikke legge bruker til gruppe."
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr "Klarte ikke sette SSH-nøkler."
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "Klarte ikke legge bruker til gruppe."
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "Klarte ikke å bytte passord for LDAP-bruker."
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "Klarte ikke å legge til en ny bruker i admin-gruppen: {error}"
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "Klarte ikke å begrense konsolltilgang: {error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "Brukerkonto er opprettet, du er nå logget inn"
 
@@ -7769,17 +7704,17 @@ msgstr "Tjenere %(box_name)s kobler seg til:"
 msgid "Endpoint"
 msgstr "Sluttpunkt"
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 #, fuzzy
 #| msgid "Authentication to remote server failed."
 msgid "No connections to remote servers are configured yet."
 msgstr "Identitetsbekreftelse til fjerntjener mislyktes."
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr "Legg til ny tjener"
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
 msgstr "Legg til tilkobling til tjener"
@@ -8467,6 +8402,73 @@ msgstr "%(percentage)s%% fullført"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Available Domains"
+#~ msgid "RoundCube availability"
+#~ msgstr "Tilgjengelige domener"
+
+#, fuzzy
+#~| msgid "Invalid server name"
+#~ msgid "Enter a valid domain"
+#~ msgstr "Ugyldig tjenernavn"
+
+#, fuzzy
+#~| msgid "Invalid server name"
+#~ msgid "Enter a valid destination"
+#~ msgstr "Ugyldig tjenernavn"
+
+#, fuzzy
+#~| msgid "Domain"
+#~ msgid "domain"
+#~ msgstr "Domene"
+
+#, fuzzy
+#~| msgid "Service Type"
+#~ msgid "Service Alert"
+#~ msgstr "Type tjeneste"
+
+#~ msgid ""
+#~ "MLDonkey is a peer-to-peer file sharing application used to exchange "
+#~ "large files. It can participate in multiple peer-to-peer networks "
+#~ "including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+#~ msgstr ""
+#~ "MLDonkey er et maskin-til-maskin -fildelingsprogram brukt til utveksling "
+#~ "av store filer. Det kan delta i flere maskin-til-maskin -nettverk, "
+#~ "inkludert eDonkey, Kademlia, Overnet, BitTorrent og DirectConnect."
+
+#~ msgid ""
+#~ "Users belonging to admin and ed2k group can control it through the web "
+#~ "interface. Users in the admin group can also control it through any of "
+#~ "the separate mobile or desktop front-ends or a telnet interface. See "
+#~ "manual."
+#~ msgstr ""
+#~ "Brukere som er medlem i gruppene «admin» og «ed2k» kan kontrollere dem "
+#~ "gjennom et vevgrensesnitt. Brukere i admin-gruppen kan også kontrollere "
+#~ "den gjennom en av de egne mobil- eller skrivebords-grenseflatene, eller "
+#~ "et telnet-grensesnitt. Se manualen."
+
+#, python-brace-format
+#~ msgid ""
+#~ "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ "
+#~ "directory."
+#~ msgstr ""
+#~ "På {box_name}, finner du nedlastede filer i mappen /var/lib/mldonkey/."
+
+#~ msgid "Download files using eDonkey applications"
+#~ msgstr "Last ned filer ved bruk av eDonkey-programmer"
+
+#~ msgid "MLDonkey"
+#~ msgstr "MLDonkey"
+
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "Maskin til maskin-fildeling"
+
+#~ msgid "KMLDonkey"
+#~ msgstr "KMLDonkey"
+
+#~ msgid "AMLDonkey"
+#~ msgstr "AMLDonkey"
 
 #~ msgid "Mozilla Thunderbird"
 #~ msgstr "Mozilla Thunderbird"

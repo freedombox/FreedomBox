@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2022-01-29 13:55+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -838,7 +838,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 msgid "Permissions"
 msgstr "Engedélyek"
 
@@ -923,7 +923,7 @@ msgstr "Adminisztrál"
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -1021,10 +1021,10 @@ msgstr "IP-címek és tartományok frissítése"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1492,18 +1492,15 @@ msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 msgid "passed"
 msgstr "sikerült"
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "sikertelen"
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr "hiba"
 
@@ -2045,43 +2042,23 @@ msgstr "E-mail-szerver"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Postfix, Dovecot &amp; Rspamd által működtetve"
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr "Postfix-Dovecot SASL integráció"
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
 msgstr "Postfix álnév leképezések"
-
-#: plinth/modules/email_server/audit/rcube.py:31
-msgid "RoundCube availability"
-msgstr "A RoundCube rendelkezésre állása"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
-msgstr "A RoundCube be van állítva a FreedomBox e-mailhez"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr "Bejövő és kimenő levélszűrők"
 
-#: plinth/modules/email_server/forms.py:17
-msgid "Enter a valid domain"
-msgstr "Adj meg egy érvényes domaint"
-
-#: plinth/modules/email_server/forms.py:20
-msgid "Enter a valid destination"
-msgstr "Adj meg egy érvényes célállományt"
-
 #: plinth/modules/email_server/forms.py:24
-msgid "domain"
-msgstr "domain"
-
-#: plinth/modules/email_server/forms.py:38
 msgid "Primary domain"
 msgstr "Elsődleges domain"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2089,34 +2066,34 @@ msgstr ""
 "A rendszerben konfigurált összes domain számára érkeznek levelek. Ezek közül "
 "válaszd ki a legfontosabbat."
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr "Új álnév (@domain nélkül)"
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr "Nem megengedett karaktereket tartalmaz"
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr "A-z vagy 0-9 karakterekkel kell kezdődnie és végződnie"
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr "Nem lehet szám"
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 msgid "Aliases"
 msgstr "Álnevek"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2125,7 +2102,7 @@ msgid "Disabled"
 msgstr "Letiltva"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2144,7 +2121,7 @@ msgid "FairEmail"
 msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 msgid "Manage Aliases"
 msgstr "Álnevek kezelése"
 
@@ -2168,26 +2145,9 @@ msgstr "Új e-mail álnév létrehozása"
 msgid "Add"
 msgstr "Hozzáadás"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 msgid "Manage Spam"
 msgstr "Spam kezelése"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-msgid "Service Alert"
-msgstr "Szolgáltatási riasztás"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr "Javítás"
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr "Belső hiba {0}"
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr "További információért vizsgáld meg a rendszernaplót"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3250,9 +3210,13 @@ msgstr ""
 "TURN-szervernek a Matrix Synapse számára. Ha más STUN/TURN-szervert "
 "szeretnél használni, tiltsd le ezt a beállítást."
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
 msgstr "Element"
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
+msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3615,57 +3579,6 @@ msgstr "A megadott könyvtár nem létezik."
 #: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Médiakönyvtár frissítve"
-
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-"Az MLDonkey egy peer-to-peer fájlmegosztó alkalmazás, amelyet nagyméretű "
-"fájlok cseréjére használnak. Több peer-to-peer hálózatban is képes részt "
-"venni, beleértve az eDonkey, Kademlia, Overnet, BitTorrent és DirectConnect "
-"hálózatokat."
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-"Az admin és az ed2k csoporthoz tartozó felhasználók a webes felületen "
-"keresztül vezérelhetik. Az admin csoporthoz tartozó felhasználók a különálló "
-"mobil vagy asztali frontendek bármelyikén vagy egy telnet-felületen "
-"keresztül is vezérelhetik. Lásd a kézikönyvet."
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr ""
-"{box_name} eszközön a letöltött fájlok a /var/lib/mldonkey/ könyvtárban "
-"találhatók."
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr "Fájlok letöltése eDonkey alkalmazások használatával"
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-msgid "MLDonkey"
-msgstr "MLDonkey"
-
-#: plinth/modules/mldonkey/__init__.py:58
-msgid "Peer-to-peer File Sharing"
-msgstr "P2P-fájlmegosztás"
-
-#: plinth/modules/mldonkey/manifest.py:18
-msgid "KMLDonkey"
-msgstr "KMLDonkey"
-
-#: plinth/modules/mldonkey/manifest.py:30
-msgid "AMLDonkey"
-msgstr "AMLDonkey"
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -5280,11 +5193,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "Rendszerfigyelés"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "Újraindítás vagy leállítás."
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "Leállítás"
 
@@ -5536,7 +5449,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Hozzáférési jogok beállításai frissítve"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5548,7 +5461,7 @@ msgstr ""
 "teljes funkcionalitást biztosítja, beleértve a MIME-támogatást, "
 "címjegyzéket, mappakezelést, üzenetkeresést és helyesírás-ellenőrzést."
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5562,7 +5475,7 @@ msgstr ""
 "SSL-en kersztüli IMAP-hez (ez az ajánlott), töltsd ki a kiszolgáló mezőt "
 "ezen minta alapján: <code>imaps://imap.pelda.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5579,9 +5492,20 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 msgid "Email Client"
 msgstr "E-mail kliens"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5961,11 +5885,11 @@ msgstr "Hiba a korlátozott hozzáférés beállítása során: {exception}"
 msgid "Updated security configuration"
 msgstr "Biztonsági beállítás frissítve"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "A Shaarli lehetővé teszi hogy elmentsd és megoszd a könyvjelzőidet."
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
@@ -5973,13 +5897,19 @@ msgstr ""
 "Vedd figyelembe, hogy a Shaarli csak egy felhasználói fiókot támogat, melyet "
 "az első látogatás során be kell állítani."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "Shaarli"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6226,7 +6156,11 @@ msgid "Software Installation Snapshots"
 msgstr "Szoftvertelepítési pillanatképek"
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+#, fuzzy
+#| msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr ""
 "Pillanatképek készítésének engedélyezése vagy letiltása szoftver telepítése "
 "előtt és után"
@@ -6464,6 +6398,12 @@ msgstr "Egyszeri bejelentkezés"
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "Bejelentkezés"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "A jelszó módosítása sikeres."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -7161,8 +7101,8 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
-"A %(box_name)s eszközöd a(z) %(version)s verzióra frissült. Lásd a <a href=\""
-"%(url)s\">kiadási közleményt</a>."
+"A %(box_name)s eszközöd a(z) %(version)s verzióra frissült. Lásd a <a href="
+"\"%(url)s\">kiadási közleményt</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
@@ -7318,15 +7258,18 @@ msgstr ""
 msgid "Authorization Password"
 msgstr "Hitelesítési jelszó"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, fuzzy, python-brace-format
+#| msgid "Enter your current password to authorize account modifications."
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr "A fiókmódosítások engedélyezéséhez add meg az aktuális jelszavadat."
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 msgid "Invalid password."
 msgstr "Érvénytelen jelszó."
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7342,22 +7285,22 @@ msgstr ""
 "képesek bejelentkezni a rendszerbe, ahol adminisztrátori jogosultságokkal "
 "rendelkeznek (sudo)."
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "LDAP-felhasználó létrehozása sikertelen: {error}"
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr ""
 "Az új felhasználó hozzáadása a(z) {group} csoporthoz nem sikerült: {error}"
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr "Engedélyezett SSH-kulcsok"
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7367,43 +7310,43 @@ msgstr ""
 "jelszó nélkül jelentkezzen be. Több kulcs is megadható; soronként egy. Az "
 "üres, illetve # jellel kezdődő sorok nem számítanak."
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "LDAP-felhasználó átnevezése sikertelen."
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "Nem sikerült eltávolítani a felhasználót a csoportból."
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "Nem sikerült hozzáadni a felhasználót a csoporthoz."
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr "SSH-kulcsok beállítása sikertelen."
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 msgid "Failed to change user status."
 msgstr "Nem sikerült a felhasználói állapot megváltoztatása."
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "LDAP-felhasználó jelszavának megváltoztatása sikertelen."
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr ""
 "Nem sikerült hozzáadni az új felhasználót a rendszergazdai csoporthoz: "
 "{error}"
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "Nem sikerült a konzolos hozzáférés korlátozása: {error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "Felhasználói fiók létrehozva, bejelentkezés sikeres"
 
@@ -7721,15 +7664,15 @@ msgstr "Szerverek, amelyekhez a %(box_name)s csatlakozni fog:"
 msgid "Endpoint"
 msgstr "Végpont"
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
 msgstr "A távoli szerverekhez még nincsenek konfigurálva kapcsolatok."
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr "Új szerver hozzáadása"
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
 msgstr "Kapcsolat hozzáadása a szerverhez"
@@ -8425,6 +8368,78 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "RoundCube availability"
+#~ msgstr "A RoundCube rendelkezésre állása"
+
+#~ msgid "RoundCube configured for FreedomBox email"
+#~ msgstr "A RoundCube be van állítva a FreedomBox e-mailhez"
+
+#~ msgid "Enter a valid domain"
+#~ msgstr "Adj meg egy érvényes domaint"
+
+#~ msgid "Enter a valid destination"
+#~ msgstr "Adj meg egy érvényes célállományt"
+
+#~ msgid "domain"
+#~ msgstr "domain"
+
+#~ msgid "Service Alert"
+#~ msgstr "Szolgáltatási riasztás"
+
+#~ msgid "Repair"
+#~ msgstr "Javítás"
+
+#, python-brace-format
+#~ msgid "Internal error in {0}"
+#~ msgstr "Belső hiba {0}"
+
+#~ msgid "Check syslog for more information"
+#~ msgstr "További információért vizsgáld meg a rendszernaplót"
+
+#~ msgid ""
+#~ "MLDonkey is a peer-to-peer file sharing application used to exchange "
+#~ "large files. It can participate in multiple peer-to-peer networks "
+#~ "including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+#~ msgstr ""
+#~ "Az MLDonkey egy peer-to-peer fájlmegosztó alkalmazás, amelyet nagyméretű "
+#~ "fájlok cseréjére használnak. Több peer-to-peer hálózatban is képes részt "
+#~ "venni, beleértve az eDonkey, Kademlia, Overnet, BitTorrent és "
+#~ "DirectConnect hálózatokat."
+
+#~ msgid ""
+#~ "Users belonging to admin and ed2k group can control it through the web "
+#~ "interface. Users in the admin group can also control it through any of "
+#~ "the separate mobile or desktop front-ends or a telnet interface. See "
+#~ "manual."
+#~ msgstr ""
+#~ "Az admin és az ed2k csoporthoz tartozó felhasználók a webes felületen "
+#~ "keresztül vezérelhetik. Az admin csoporthoz tartozó felhasználók a "
+#~ "különálló mobil vagy asztali frontendek bármelyikén vagy egy telnet-"
+#~ "felületen keresztül is vezérelhetik. Lásd a kézikönyvet."
+
+#, python-brace-format
+#~ msgid ""
+#~ "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ "
+#~ "directory."
+#~ msgstr ""
+#~ "{box_name} eszközön a letöltött fájlok a /var/lib/mldonkey/ könyvtárban "
+#~ "találhatók."
+
+#~ msgid "Download files using eDonkey applications"
+#~ msgstr "Fájlok letöltése eDonkey alkalmazások használatával"
+
+#~ msgid "MLDonkey"
+#~ msgstr "MLDonkey"
+
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "P2P-fájlmegosztás"
+
+#~ msgid "KMLDonkey"
+#~ msgstr "KMLDonkey"
+
+#~ msgid "AMLDonkey"
+#~ msgstr "AMLDonkey"
 
 #~ msgid "Mozilla Thunderbird"
 #~ msgstr "Thunderbird"

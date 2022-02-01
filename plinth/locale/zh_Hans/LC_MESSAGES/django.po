@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2022-01-13 18:58+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -615,7 +615,8 @@ msgid ""
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
-"请在 SSH 主机上运行下面的命令。输出应该和提供的选项之一相符。您也可以选择相对应的文件来使用 DSA、ECDSA、Ed25519 等而非 RSA。"
+"请在 SSH 主机上运行下面的命令。输出应该和提供的选项之一相符。您也可以选择相对"
+"应的文件来使用 DSA、ECDSA、Ed25519 等而非 RSA。"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
@@ -794,7 +795,7 @@ msgstr "未提供密码的匿名用户的权限。"
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 msgid "Permissions"
 msgstr "许可"
 
@@ -877,7 +878,7 @@ msgstr "管理员"
 msgid "Configuration updated."
 msgstr "配置已更新。"
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -971,10 +972,10 @@ msgstr "刷新 IP 地址和域"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1410,18 +1411,15 @@ msgid "Diagnostics"
 msgstr "诊断程序"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 msgid "passed"
 msgstr "通过了"
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "失败"
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr "错误"
 
@@ -1924,76 +1922,56 @@ msgstr "邮件服务器"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/rcube.py:31
-msgid "RoundCube availability"
-msgstr "RoundCube 可用性"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
 msgstr ""
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:17
-msgid "Enter a valid domain"
-msgstr "输入有效域名"
-
-#: plinth/modules/email_server/forms.py:20
-msgid "Enter a valid destination"
-msgstr "输入有效的目的地"
-
 #: plinth/modules/email_server/forms.py:24
-msgid "domain"
-msgstr "域名"
-
-#: plinth/modules/email_server/forms.py:38
 msgid "Primary domain"
 msgstr "主域名"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 msgid "Aliases"
 msgstr "别名"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "启用"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2002,7 +1980,7 @@ msgid "Disabled"
 msgstr "已禁用"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2021,7 +1999,7 @@ msgid "FairEmail"
 msgstr ""
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 msgid "Manage Aliases"
 msgstr "管理别名"
 
@@ -2045,26 +2023,9 @@ msgstr "创建新的电子邮件别名"
 msgid "Add"
 msgstr "添加"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 msgid "Manage Spam"
 msgstr "管理垃圾邮件"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-msgid "Service Alert"
-msgstr "服务警报"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3007,8 +2968,12 @@ msgid ""
 "TURN server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
 msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -3314,47 +3279,6 @@ msgstr ""
 msgid "Updated media directory"
 msgstr ""
 
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-msgid "MLDonkey"
-msgstr "MLDonkey"
-
-#: plinth/modules/mldonkey/__init__.py:58
-msgid "Peer-to-peer File Sharing"
-msgstr "点对点文件共享"
-
-#: plinth/modules/mldonkey/manifest.py:18
-msgid "KMLDonkey"
-msgstr "KMLDonkey"
-
-#: plinth/modules/mldonkey/manifest.py:30
-msgid "AMLDonkey"
-msgstr "AMLDonkey"
-
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
@@ -3367,8 +3291,8 @@ msgid ""
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
 "desktop and mobile devices are available."
 msgstr ""
-"您可以使用常规端口 64738 连接到您的 Mumble 服务器。您可以从桌面和移动设备连接 Mumble <a href=\"http://mumble"
-".info\">客户端</a>。"
+"您可以使用常规端口 64738 连接到您的 Mumble 服务器。您可以从桌面和移动设备连"
+"接 Mumble <a href=\"http://mumble.info\">客户端</a>。"
 
 #: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
@@ -4786,11 +4710,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "系统监控"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "重新启动或关闭系统。"
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "电源"
 
@@ -5009,7 +4933,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "访问权配置已更新"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5020,7 +4944,7 @@ msgstr ""
 "户界面。它提供您需要的从电子邮件客户端、MIME支持、地址簿、文件夹操作、消息搜"
 "索到拼写检查的完整功能。"
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5032,7 +4956,7 @@ msgstr ""
 "IMAP 服务器域名，像是 <code>imap.example.com</code>。对于 IMAP over SSL （推"
 "荐），应该填入类似 <code>imaps://imap.example.com</code> 的地址。"
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5046,9 +4970,20 @@ msgstr ""
 "href=\"https://www.google.com/settings/security/lesssecureapps\">https://www."
 "google.com/settings/security/lesssecureapps</a>)中启用“安全性较低的应用”。"
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 msgid "Email Client"
 msgstr "邮件客户端"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5374,23 +5309,29 @@ msgstr "设置限制访问错误：{exception}"
 msgid "Updated security configuration"
 msgstr "安全配置已更新"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli 允许您保存和共享书签。"
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
 msgstr "注意，Shaarli 只支持单用户帐户，您需要在初次访问时设置该帐户。"
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 msgid "Bookmarks"
 msgstr "书签"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "Shaarli"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -5600,7 +5541,9 @@ msgid "Software Installation Snapshots"
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:32
@@ -5819,6 +5762,12 @@ msgstr ""
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "登录"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "已成功更改密码。"
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -6582,15 +6531,17 @@ msgstr ""
 msgid "Authorization Password"
 msgstr "验证密码"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, python-brace-format
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 msgid "Invalid password."
 msgstr "密码无效。"
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -6602,21 +6553,21 @@ msgstr ""
 "单点登录的服务。<br><br>管理员（admin）组中的用户将能够登录所有服务。他们还可"
 "以通过 SSH 登录到系统并具有管理权限（sudo）。"
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "创建 LDAP 用户失败：{error}"
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "未能将新用户添加到 {group} 组：{error}"
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr ""
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -6625,41 +6576,41 @@ msgstr ""
 "设置 SSH 公钥将允许此用户安全地登录到系统不使用密码。您可以输入多个密钥，每行"
 "一个。将忽略空行和以 # 开头的行。"
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "重命名 LDAP 用户失败。"
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "无法从组中删除用户。"
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "无法将用户添加到组。"
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr "不能设置 SSH 密钥。"
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 msgid "Failed to change user status."
 msgstr "更改用户状态失败。"
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "更改 LDAP 用户密码失败。"
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "未能将新用户添加到管理员组：{error}"
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "限制控制台访问失败：{error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
 
@@ -6945,15 +6896,15 @@ msgstr ""
 msgid "Endpoint"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
 msgstr "尚未配置到远程服务器的连接。"
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
 msgstr "添加到服务器的连接"
@@ -7583,6 +7534,33 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "RoundCube availability"
+#~ msgstr "RoundCube 可用性"
+
+#~ msgid "Enter a valid domain"
+#~ msgstr "输入有效域名"
+
+#~ msgid "Enter a valid destination"
+#~ msgstr "输入有效的目的地"
+
+#~ msgid "domain"
+#~ msgstr "域名"
+
+#~ msgid "Service Alert"
+#~ msgstr "服务警报"
+
+#~ msgid "MLDonkey"
+#~ msgstr "MLDonkey"
+
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "点对点文件共享"
+
+#~ msgid "KMLDonkey"
+#~ msgstr "KMLDonkey"
+
+#~ msgid "AMLDonkey"
+#~ msgstr "AMLDonkey"
 
 #~ msgid "Updates"
 #~ msgstr "更新"

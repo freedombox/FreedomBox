@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2022-01-19 09:56+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -838,7 +838,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 msgid "Permissions"
 msgstr "Toegangsrechten"
 
@@ -923,7 +923,7 @@ msgstr "Admin"
 msgid "Configuration updated."
 msgstr "Configuratie bijgewerkt."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -1020,10 +1020,10 @@ msgstr "IP adressen en domeinen verversen"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1489,18 +1489,15 @@ msgid "Diagnostics"
 msgstr "Diagnose"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 msgid "passed"
 msgstr "geslaagd"
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "mislukt"
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr "fout"
 
@@ -2039,43 +2036,23 @@ msgstr "E-mailserver"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Maakt gebruik van Postfix, Dovecot &amp; Rspamd"
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr "Postfix-Dovecot SASL-integratie"
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
 msgstr "Postfix aliasverwijzingen"
-
-#: plinth/modules/email_server/audit/rcube.py:31
-msgid "RoundCube availability"
-msgstr "RoundCube-beschikbaarheid"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
-msgstr "RoundCube geconfigureerd voor FreedomBox-e-mail"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr "Filters voor inkomende en uitgaande e-mail"
 
-#: plinth/modules/email_server/forms.py:17
-msgid "Enter a valid domain"
-msgstr "Voer een geldig domein in"
-
-#: plinth/modules/email_server/forms.py:20
-msgid "Enter a valid destination"
-msgstr "Voer een geldige bestemming in"
-
 #: plinth/modules/email_server/forms.py:24
-msgid "domain"
-msgstr "domein"
-
-#: plinth/modules/email_server/forms.py:38
 msgid "Primary domain"
 msgstr "Primair domein"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2083,34 +2060,34 @@ msgstr ""
 "Mails worden ontvangen voor alle domeinen die in het systeem zijn "
 "geconfigureerd. Selecteer het belangrijkste domein."
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr "Nieuwe alias (zonder @domein)"
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr "Bevat ongeldige tekens"
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr "Moet beginnen en eindigen met a-z of 0-9"
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr "Kan geen getal zijn"
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 msgid "Aliases"
 msgstr "Aliassen"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2119,7 +2096,7 @@ msgid "Disabled"
 msgstr "Uitgeschakeld"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2138,7 +2115,7 @@ msgid "FairEmail"
 msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 msgid "Manage Aliases"
 msgstr "Aliassen beheren"
 
@@ -2162,26 +2139,9 @@ msgstr "Nieuwe e-mailalias maken"
 msgid "Add"
 msgstr "Toevoegen"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 msgid "Manage Spam"
 msgstr "Spam beheren"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-msgid "Service Alert"
-msgstr "Servicewaarschuwing"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr "Herstellen"
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr "Interne fout in {0}"
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr "Controleer syslog voor meer informatie"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3245,9 +3205,13 @@ msgstr ""
 "geconfigureerd als de STUN/TURN-server voor Matrix Synapse. Schakel dit uit "
 "als een andere STUN/TURN-server gebruikt moet worden."
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
 msgstr "Element"
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
+msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3613,57 +3577,6 @@ msgstr "De opgegeven map bestaat niet."
 #: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Mediamap bijgewerkt"
-
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-"MLDonkey is een peer-to-peer-toepassing voor het delen van bestanden die "
-"wordt gebruikt om grote bestanden uit te wisselen. Het kan deelnemen aan "
-"meerdere peer-to-peer-netwerken, waaronder eDonkey, Kademlia, Overnet, "
-"BitTorrent en DirectConnect."
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-"Gebruikers die behoren tot de admin en de ed2k groep kunnen deze via de "
-"webinterface bedienen. Gebruikers in de admin groep kunnen het ook besturen "
-"via een van de afzonderlijke mobiele of desktop front-ends of een telnet "
-"interface. Zie handleiding."
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr ""
-"Op {box_name} kunnen de gedownloade bestanden worden gevonden in /var/lib/"
-"mldonkey/ map."
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr "Bestanden downloaden met eDonkey toepassingen"
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-msgid "MLDonkey"
-msgstr "MLDonkey"
-
-#: plinth/modules/mldonkey/__init__.py:58
-msgid "Peer-to-peer File Sharing"
-msgstr "Peer-to-peer bestandsdeling"
-
-#: plinth/modules/mldonkey/manifest.py:18
-msgid "KMLDonkey"
-msgstr "KMLDonkey"
-
-#: plinth/modules/mldonkey/manifest.py:30
-msgid "AMLDonkey"
-msgstr "AMLDonkey"
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -5276,11 +5189,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "Systeembewaking"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "Herstarten of uitschakelen van het systeem."
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "Power"
 
@@ -5532,7 +5445,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Configuratie van de toegangsrechten is bijgewerkt"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5544,7 +5457,7 @@ msgstr ""
 "een email toepassing verwacht kan worden, inclusief MIME ondersteuning, een "
 "adresboek, het beheren van mappen, zoeken in berichten en spellingscontrole."
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5558,7 +5471,7 @@ msgstr ""
 "example.com</code>.  Voor IMAP over SSL (aanbevolen): vul het serverveld in, "
 "bijvoorbeeld <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5573,9 +5486,20 @@ msgstr ""
 "(<a href=\"https://www.google.com/settings/security/lesssecureapps\">https://"
 "www.google.com/settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 msgid "Email Client"
 msgstr "Email Cliënt"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5951,11 +5875,11 @@ msgstr "Fout bij beperkte toegang instellen: {exception}"
 msgid "Updated security configuration"
 msgstr "Bijgewerkte Beveiligingsconfiguratie"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Met Shaarli is het mogelijk bookmarks te bewaren en delen."
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
@@ -5963,13 +5887,19 @@ msgstr ""
 "Houd er rekening mee dat Shaarli maar een gebruiker ondersteunt, die moet "
 "worden ingesteld bij het eerste gebruik."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 msgid "Bookmarks"
 msgstr "Bladwijzers"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "Shaarli"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6210,7 +6140,11 @@ msgid "Software Installation Snapshots"
 msgstr "Software-installatie Snapshots"
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+#, fuzzy
+#| msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr ""
 "Snapshots voor en na de installatie van de software in- of uitschakelen"
 
@@ -6446,6 +6380,12 @@ msgstr "Eenmalige aanmelding"
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "Aanmelding"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "Wachtwoord succesvol gewijzigd."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -7298,15 +7238,18 @@ msgstr "Vereist. 150 tekens of minder. Alleen letters, cijfers en @/./-/_ ."
 msgid "Authorization Password"
 msgstr "Authorisatie-wachtwoord"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, fuzzy, python-brace-format
+#| msgid "Enter your current password to authorize account modifications."
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr "Voer je huidige wachtwoord in om accountwijzigingen toe te staan."
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 msgid "Invalid password."
 msgstr "Ongeldig wachtwoord."
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7321,21 +7264,21 @@ msgstr ""
 "ook op het systeem inloggen met SSH en kunnen systeemadministratie doen "
 "(sudo)."
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "LDAP gebruiker aanmaken mislukt: {error}"
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Toevoegen van gebruiker aan groep {group} mislukt: {error}"
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr "Geautoriseerde SSH-sleutels"
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7346,41 +7289,41 @@ msgstr ""
 "meerdere sleutels toevoegen, één op elke regel. Lege regels en regels die "
 "beginnen met # worden genegeerd."
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "LDAP gebruiker hernoemen mislukt."
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "Gebruiker uit groep verwijderen mislukt."
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "Gebruiker aan groep toevoegen mislukt."
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr "Kan de SSH-sleutels niet instellen."
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 msgid "Failed to change user status."
 msgstr "Gebruikerstatus aanpassen mislukt."
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "Wijzigen LDAP gebruikerswachtwoord mislukt."
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "Toevoegen van gebruiker aan admin groep mislukt: {error}"
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "Consoletoegang beperken is mislukt: {error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "Gebruikersaccount aangemaakt, je bent nu ingelogd"
 
@@ -7701,15 +7644,15 @@ msgstr "Servers waar %(box_name)s verbinding mee zal maken:"
 msgid "Endpoint"
 msgstr "Eindpunt"
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
 msgstr "Er zijn nog geen verbindingen met externe servers ingesteld."
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr "Nieuwe server toevoegen"
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
 msgstr "Verbinding toevoegen aan server"
@@ -8404,6 +8347,78 @@ msgstr "%(percentage)s%% voltooid"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "RoundCube availability"
+#~ msgstr "RoundCube-beschikbaarheid"
+
+#~ msgid "RoundCube configured for FreedomBox email"
+#~ msgstr "RoundCube geconfigureerd voor FreedomBox-e-mail"
+
+#~ msgid "Enter a valid domain"
+#~ msgstr "Voer een geldig domein in"
+
+#~ msgid "Enter a valid destination"
+#~ msgstr "Voer een geldige bestemming in"
+
+#~ msgid "domain"
+#~ msgstr "domein"
+
+#~ msgid "Service Alert"
+#~ msgstr "Servicewaarschuwing"
+
+#~ msgid "Repair"
+#~ msgstr "Herstellen"
+
+#, python-brace-format
+#~ msgid "Internal error in {0}"
+#~ msgstr "Interne fout in {0}"
+
+#~ msgid "Check syslog for more information"
+#~ msgstr "Controleer syslog voor meer informatie"
+
+#~ msgid ""
+#~ "MLDonkey is a peer-to-peer file sharing application used to exchange "
+#~ "large files. It can participate in multiple peer-to-peer networks "
+#~ "including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+#~ msgstr ""
+#~ "MLDonkey is een peer-to-peer-toepassing voor het delen van bestanden die "
+#~ "wordt gebruikt om grote bestanden uit te wisselen. Het kan deelnemen aan "
+#~ "meerdere peer-to-peer-netwerken, waaronder eDonkey, Kademlia, Overnet, "
+#~ "BitTorrent en DirectConnect."
+
+#~ msgid ""
+#~ "Users belonging to admin and ed2k group can control it through the web "
+#~ "interface. Users in the admin group can also control it through any of "
+#~ "the separate mobile or desktop front-ends or a telnet interface. See "
+#~ "manual."
+#~ msgstr ""
+#~ "Gebruikers die behoren tot de admin en de ed2k groep kunnen deze via de "
+#~ "webinterface bedienen. Gebruikers in de admin groep kunnen het ook "
+#~ "besturen via een van de afzonderlijke mobiele of desktop front-ends of "
+#~ "een telnet interface. Zie handleiding."
+
+#, python-brace-format
+#~ msgid ""
+#~ "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ "
+#~ "directory."
+#~ msgstr ""
+#~ "Op {box_name} kunnen de gedownloade bestanden worden gevonden in /var/lib/"
+#~ "mldonkey/ map."
+
+#~ msgid "Download files using eDonkey applications"
+#~ msgstr "Bestanden downloaden met eDonkey toepassingen"
+
+#~ msgid "MLDonkey"
+#~ msgstr "MLDonkey"
+
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "Peer-to-peer bestandsdeling"
+
+#~ msgid "KMLDonkey"
+#~ msgstr "KMLDonkey"
+
+#~ msgid "AMLDonkey"
+#~ msgstr "AMLDonkey"
 
 #~ msgid "Mozilla Thunderbird"
 #~ msgstr "Mozilla Thunderbird"
