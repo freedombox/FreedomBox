@@ -29,7 +29,12 @@ _description = [
       '<a href=\'http://gnudip2.sourceforge.net/\' target=\'_blank\'> '
       'GnuDIP</a> server. Afterwards, the server will assign your DNS name '
       'to the new IP, and if someone from the Internet asks for your DNS '
-      'name, they will get a response with your current IP address.')
+      'name, they will get a response with your current IP address.'),
+    _('If you are looking for a free dynamic DNS account, you may find a free '
+      'GnuDIP service at <a href=\'https://ddns.freedombox.org\' '
+      'target=\'_blank\'>ddns.freedombox.org</a> or you may find free update '
+      'URL based services at <a href=\'http://freedns.afraid.org/\' '
+      'target=\'_blank\'>freedns.afraid.org</a>.'),
 ]
 
 app = None

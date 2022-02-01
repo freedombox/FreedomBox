@@ -23,9 +23,6 @@ EMPTYSTRING = 'none'
 
 subsubmenu = [{
     'url': reverse_lazy('dynamicdns:index'),
-    'text': gettext_lazy('About')
-}, {
-    'url': reverse_lazy('dynamicdns:configure'),
     'text': gettext_lazy('Configure')
 }, {
     'url': reverse_lazy('dynamicdns:statuspage'),
@@ -34,16 +31,6 @@ subsubmenu = [{
 
 
 def index(request):
-    """Serve Dynamic DNS page."""
-    return TemplateResponse(
-        request, 'dynamicdns.html', {
-            'app_info': dynamicdns.app.info,
-            'title': dynamicdns.app.info.name,
-            'subsubmenu': subsubmenu
-        })
-
-
-def configure(request):
     """Serve the configuration form."""
     status = dynamicdns.get_status()
     form = None
@@ -58,7 +45,7 @@ def configure(request):
         form = ConfigureForm(initial=status)
 
     return TemplateResponse(
-        request, 'dynamicdns_configure.html', {
+        request, 'dynamicdns.html', {
             'title': _('Configure Dynamic DNS'),
             'app_info': dynamicdns.app.info,
             'form': form,
