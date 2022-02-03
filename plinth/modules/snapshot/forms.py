@@ -24,9 +24,9 @@ class SnapshotForm(forms.Form):
 
     enable_software_snapshots = forms.ChoiceField(
         label=_('Software Installation Snapshots'),
-        help_text=_('Enable or disable snapshots before and after software '
-                    'installation'), choices=[('yes', _('Enabled')),
-                                              ('no', _('Disabled'))])
+        help_text=_('Enable or disable snapshots before and after each '
+                    'software installation and update.'),
+        choices=[('yes', _('Enabled')), ('no', _('Disabled'))])
 
     hourly_limit = forms.IntegerField(
         label=_('Hourly Snapshots Limit'), min_value=0,

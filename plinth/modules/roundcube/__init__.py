@@ -3,6 +3,8 @@
 FreedomBox app to configure Roundcube.
 """
 
+import json
+
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
@@ -42,7 +44,7 @@ class RoundcubeApp(app_module.App):
 
     app_id = 'roundcube'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -94,7 +96,10 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
     app.setup(old_version)
-    helper.call('post', app.enable)
+    helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
+    if old_version == 0:
+        set_config(local_only=True)
+        helper.call('post', app.enable)
 
 
 def force_upgrade(helper, packages):
@@ -109,3 +114,16 @@ def force_upgrade(helper, packages):
         app.get_component('webserver-roundcube-freedombox').enable()
 
     return True
+
+
+def get_config():
+    """Return Rouncube configuration."""
+    value = actions.superuser_run('roundcube', ['get-config'])
+    return json.loads(value)
+
+
+def set_config(local_only):
+    """Set whether only local server should be allowed."""
+    actions.superuser_run('roundcube',
+                          ['set-config', '--local-only',
+                           str(local_only)])

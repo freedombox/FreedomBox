@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2022-01-15 16:56+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -825,7 +825,7 @@ msgstr "Oprávnění pro anonymní uživatele, kteří nezadali heslo."
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 msgid "Permissions"
 msgstr "Oprávnění"
 
@@ -909,7 +909,7 @@ msgstr "správce"
 msgid "Configuration updated."
 msgstr "Nastavení aktualizována."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -1005,10 +1005,10 @@ msgstr "Obnovení IP adresy a domén"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1472,18 +1472,15 @@ msgid "Diagnostics"
 msgstr "Diagnostika"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 msgid "passed"
 msgstr "prošlo"
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 msgid "failed"
 msgstr "selhalo"
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr "chyba"
 
@@ -2021,43 +2018,23 @@ msgstr "E-mailový Server"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr "Běží na Postfix, Dovecot &amp; Rspamd"
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr "Integrace Postfix-Dovecot SASL"
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
 msgstr "Mapy aliasů služby Postfix"
-
-#: plinth/modules/email_server/audit/rcube.py:31
-msgid "RoundCube availability"
-msgstr "Dostupnost RoundCube"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
-msgstr "RoundCube nakonfigurovaný pro e-mailovou schránku FreedomBox"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr "Filtry příchozí a odchozí pošty"
 
-#: plinth/modules/email_server/forms.py:17
-msgid "Enter a valid domain"
-msgstr "Zadejte platnou doménu"
-
-#: plinth/modules/email_server/forms.py:20
-msgid "Enter a valid destination"
-msgstr "Zadejte platný cíl"
-
 #: plinth/modules/email_server/forms.py:24
-msgid "domain"
-msgstr "doména"
-
-#: plinth/modules/email_server/forms.py:38
 msgid "Primary domain"
 msgstr "Primární doména"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2065,34 +2042,34 @@ msgstr ""
 "Maily jsou přijímány pro všechny domény nakonfigurované v systému. Z nich "
 "vyberte tu nejdůležitější."
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr "Nový alias (bez @domain)"
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr "Obsahuje nepovolené znaky"
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr "Musí začínat a končit písmeny a-z nebo 0-9"
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr "Nemůže být číslo"
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 msgid "Aliases"
 msgstr "Aliasy"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "Zapnuto"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2101,7 +2078,7 @@ msgid "Disabled"
 msgstr "Vypnuto"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2120,7 +2097,7 @@ msgid "FairEmail"
 msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 msgid "Manage Aliases"
 msgstr "Správa aliasů"
 
@@ -2144,26 +2121,9 @@ msgstr "Vytvořit nový e-mailový alias"
 msgid "Add"
 msgstr "Přidat"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 msgid "Manage Spam"
 msgstr "Správa spamu"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-msgid "Service Alert"
-msgstr "Servisní upozornění"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr "Oprava"
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr "Vnitřní chyba v {0}"
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr "Další informace získáte v syslog"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3210,9 +3170,13 @@ msgstr ""
 "STUN/TURN pro Matrix Synapse. Pokud chcete používat jiný server STUN/TURN, "
 "zakažte tuto funkci."
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
 msgstr "Prvek"
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
+msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3573,55 +3537,6 @@ msgstr "Zadaný adresář neexistuje."
 #: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr "Aktualizovaný adresář médií"
-
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-"MLDonkey je aplikace pro peer-to-peer sdílení souborů sloužící pro výměnu "
-"velkých souborů. Může se účastnit vícero peer-to-peer sítí, včetně eDonkey, "
-"Kademlia, Overnet, BitTorrent a DirectConnect."
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-"Uživatelé, kteří jsou členy skupin admin a ed2k ho mohou ovládat "
-"prostřednictvím webového rozhraní. Uživatelé ze skupiny admin ho také mohou "
-"ovládat prostřednictvím libovolné mobilní či desktopové nadstavby nebo přes "
-"rozhraní telnet. Viz příručka."
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr ""
-"Na {box_name}, stažené soubory se nacházejí ve složce /var/lib/mldonkey/ ."
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr "Stahovat soubory pomocí eDonkey aplikací"
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-msgid "MLDonkey"
-msgstr "MLDonkey"
-
-#: plinth/modules/mldonkey/__init__.py:58
-msgid "Peer-to-peer File Sharing"
-msgstr "Pee-to-peer sdílení souborů"
-
-#: plinth/modules/mldonkey/manifest.py:18
-msgid "KMLDonkey"
-msgstr "KMLDonkey"
-
-#: plinth/modules/mldonkey/manifest.py:30
-msgid "AMLDonkey"
-msgstr "AMLDonkey"
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -4599,8 +4514,8 @@ msgid ""
 msgstr ""
 "Pokud nemáte kontrolu nad svým routerem, zvolte jej nekonfigurovat. Chcete-"
 "li zobrazit možnosti, jak toto omezení překonat, vyberte možnost „Nemám "
-"veřejnou IP adresu“ v <a href=\"/plinth/sys/networks/"
-"internet-connection-type/\">Výběr typu připojení k internetu</a>."
+"veřejnou IP adresu“ v <a href=\"/plinth/sys/networks/internet-connection-"
+"type/\">Výběr typu připojení k internetu</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -5222,11 +5137,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "Monitoring systému"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "Restartovat nebo vypnout systém."
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "Napájení"
 
@@ -5475,7 +5390,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Nastavení přístupových práv aktualizováno"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5488,7 +5403,7 @@ msgstr ""
 "klienta, včetně podpory MIME, adresáře kontaktů, manipulace se složkami, "
 "vyhledávání ve zprávách a kontrolou pravopisu."
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5502,7 +5417,7 @@ msgstr ""
 "protokolu IMAP přes SSL (doporučeno) vyplňte pole serveru například "
 "<code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5518,9 +5433,20 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 msgid "Email Client"
 msgstr "E-mailový klient"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5894,11 +5820,11 @@ msgstr "Chyba při nastavování omezeného přístupu: {exception}"
 msgid "Updated security configuration"
 msgstr "Nastavení zabezpečení aktualizováno"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "Shaarli umožňuje ukládat a sdílet záložky."
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
@@ -5906,13 +5832,19 @@ msgstr ""
 "Všimněte si, že Shaarli podporuje pouze jeden uživatelský účet, který je "
 "třeba nastavit při první návštěvě."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 msgid "Bookmarks"
 msgstr "Záložky"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "Shaarli"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6156,7 +6088,11 @@ msgid "Software Installation Snapshots"
 msgstr "Zachycené stavy instalace software"
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+#, fuzzy
+#| msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr ""
 "Zapnout nebo vypnout pořizování zachycených stavů před a po instalaci "
 "software"
@@ -6393,6 +6329,12 @@ msgstr "Sdružené přihlášení (SSO)"
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "Přihlášení"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "Heslo úspěšně změněno."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -7230,15 +7172,18 @@ msgstr ""
 msgid "Authorization Password"
 msgstr "Autorizační heslo"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, fuzzy, python-brace-format
+#| msgid "Enter your current password to authorize account modifications."
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr "Zadejte své aktuální heslo a autorizujte změny účtu."
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 msgid "Invalid password."
 msgstr "Neplatné heslo."
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7252,21 +7197,21 @@ msgstr ""
 "skupině admin se budou moci přihlásit ke všem službám. Mohou se také "
 "přihlašovat do systému prostřednictvím SSH a mají práva správce (sudo)."
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "Vytvoření uživatele LDAP se nezdařilo: {error}"
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Nepodařilo se přidat nového uživatele do skupiny {group}: {error}"
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr "Pověřené SSH klíče"
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7276,41 +7221,41 @@ msgstr ""
 "systému i bez zadávání hesla. Klíčů je možné vložit vícero, každý na vlastní "
 "řádek. Prázdné řádky a ty, které začínají na znak # budou ignorovány."
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "Přejmenování LDAP uživatele se nezdařilo."
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "Odebrání uživatele ze skupiny se nezdařilo."
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "Přidání uživatele do skupiny se nezdařilo."
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr "Nepodařilo se vložit SSH klíče."
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 msgid "Failed to change user status."
 msgstr "Nepodařilo se změnit stav uživatele."
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "Změna hesla LDAP uživatele se nezdařila."
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "Nepodařilo se přidat nového uživatele do skupiny admin: {error}"
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
 msgstr "Nepodařilo se omezit přístup ke konzole: {error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "Uživatelský účet vytvořen, není jste jím přihlášeni"
 
@@ -7625,15 +7570,15 @@ msgstr "Servery, ke kterým se %(box_name)s připojí:"
 msgid "Endpoint"
 msgstr "Koncový bod"
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
 msgstr "Zatím nejsou nakonfigurována žádná připojení ke vzdáleným serverům."
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr "Přidat nový server"
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
 msgstr "Přidat připojení k serveru"
@@ -8326,6 +8271,76 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "RoundCube availability"
+#~ msgstr "Dostupnost RoundCube"
+
+#~ msgid "RoundCube configured for FreedomBox email"
+#~ msgstr "RoundCube nakonfigurovaný pro e-mailovou schránku FreedomBox"
+
+#~ msgid "Enter a valid domain"
+#~ msgstr "Zadejte platnou doménu"
+
+#~ msgid "Enter a valid destination"
+#~ msgstr "Zadejte platný cíl"
+
+#~ msgid "domain"
+#~ msgstr "doména"
+
+#~ msgid "Service Alert"
+#~ msgstr "Servisní upozornění"
+
+#~ msgid "Repair"
+#~ msgstr "Oprava"
+
+#, python-brace-format
+#~ msgid "Internal error in {0}"
+#~ msgstr "Vnitřní chyba v {0}"
+
+#~ msgid "Check syslog for more information"
+#~ msgstr "Další informace získáte v syslog"
+
+#~ msgid ""
+#~ "MLDonkey is a peer-to-peer file sharing application used to exchange "
+#~ "large files. It can participate in multiple peer-to-peer networks "
+#~ "including eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
+#~ msgstr ""
+#~ "MLDonkey je aplikace pro peer-to-peer sdílení souborů sloužící pro výměnu "
+#~ "velkých souborů. Může se účastnit vícero peer-to-peer sítí, včetně "
+#~ "eDonkey, Kademlia, Overnet, BitTorrent a DirectConnect."
+
+#~ msgid ""
+#~ "Users belonging to admin and ed2k group can control it through the web "
+#~ "interface. Users in the admin group can also control it through any of "
+#~ "the separate mobile or desktop front-ends or a telnet interface. See "
+#~ "manual."
+#~ msgstr ""
+#~ "Uživatelé, kteří jsou členy skupin admin a ed2k ho mohou ovládat "
+#~ "prostřednictvím webového rozhraní. Uživatelé ze skupiny admin ho také "
+#~ "mohou ovládat prostřednictvím libovolné mobilní či desktopové nadstavby "
+#~ "nebo přes rozhraní telnet. Viz příručka."
+
+#, python-brace-format
+#~ msgid ""
+#~ "On {box_name}, downloaded files can be found in /var/lib/mldonkey/ "
+#~ "directory."
+#~ msgstr ""
+#~ "Na {box_name}, stažené soubory se nacházejí ve složce /var/lib/mldonkey/ ."
+
+#~ msgid "Download files using eDonkey applications"
+#~ msgstr "Stahovat soubory pomocí eDonkey aplikací"
+
+#~ msgid "MLDonkey"
+#~ msgstr "MLDonkey"
+
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "Pee-to-peer sdílení souborů"
+
+#~ msgid "KMLDonkey"
+#~ msgstr "KMLDonkey"
+
+#~ msgid "AMLDonkey"
+#~ msgstr "AMLDonkey"
 
 #~ msgid "Mozilla Thunderbird"
 #~ msgstr "Mozilla Thunderbird"

@@ -4,8 +4,10 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth.clients import store_url
 
-_android_package_id = 'im.vector.app'
+_element_android_package_id = 'im.vector.app'
 _element_desktop_download_url = 'https://element.io/get-started'
+_fluffychat_android_package_id = 'chat.fluffy.fluffychat'
+_fluffychat_desktop_download_url = 'https://fluffychat.im/'
 
 clients = [{
     'name':
@@ -14,12 +16,12 @@ clients = [{
         'type': 'store',
         'os': 'android',
         'store_name': 'google-play',
-        'url': store_url('google-play', _android_package_id)
+        'url': store_url('google-play', _element_android_package_id)
     }, {
         'type': 'store',
         'os': 'android',
         'store_name': 'f-droid',
-        'url': store_url('f-droid', _android_package_id)
+        'url': store_url('f-droid', _element_android_package_id)
     }, {
         'type': 'store',
         'os': 'ios',
@@ -40,6 +42,32 @@ clients = [{
         'type': 'download',
         'os': 'windows',
         'url': _element_desktop_download_url,
+    }]
+}, {
+    'name':
+        _('FluffyChat'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', _fluffychat_android_package_id)
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', _fluffychat_android_package_id)
+    }, {
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/app/fluffychat/id1551469600'
+    }, {
+        'type': 'web',
+        'url': 'https://fluffychat.im/web'
+    }, {
+        'type': 'download',
+        'os': 'gnu-linux',
+        'url': _fluffychat_desktop_download_url,
     }]
 }]
 

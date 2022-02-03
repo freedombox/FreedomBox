@@ -6,25 +6,11 @@ import re
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from plinth.modules.names.components import DomainName
 
 from . import aliases as aliases_module
-
-domain_validator = RegexValidator(r'^[A-Za-z0-9-\.]+$',
-                                  _('Enter a valid domain'))
-destination_validator = RegexValidator(
-    r'^[ -~]+$',  # ASCII chars from 32 to 126
-    _('Enter a valid destination'))
-
-
-class EmailServerForm(forms.Form):
-    domain = forms.CharField(label=_('domain'), max_length=256)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
 
 def _get_domain_choices():

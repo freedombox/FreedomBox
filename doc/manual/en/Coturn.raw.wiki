@@ -1,7 +1,7 @@
 #language en
 
 ##TAG:TRANSLATION-HEADER-START
-~- [[de/FreedomBox/Manual/Coturn|Deutsch]] - [[FreedomBox/Manual/Coturn|English]] - [[es/FreedomBox/Manual/Coturn|Español]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+~- [[de/FreedomBox/Manual/Coturn|Deutsch]] - [[FreedomBox/Manual/Coturn|English]] - [[es/FreedomBox/Manual/Coturn|Español]] - [[hu/FreedomBox/Manual/Coturn|Magyar]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
 ##TAG:TRANSLATION-HEADER-END
 
 <<TableOfContents()>>
@@ -21,7 +21,7 @@ Coturn is configured in !FreedomBox as an advanced app. This means that you need
 
 === How it works ===
 
-When making an audio/video call, it is best to route the media streams between two peers directly. This will give the best possible latency (better signal quality) and avoid depending on a centralized server (privacy). It scales well because a simple chat server can host thousands of calls without involving the server in any way other than to setup the call. However, this approach does not work most of the time to due to how networks are configured. Most peers on the network do not have a unique IP address allocated to them. They work hidden behind a network device that performs "Network Address Translation" (NAT) for them. This means that the two peers have no way of reaching each other.
+When making an audio/video call, it is best to route the media streams between two peers directly. This will give the best possible latency (better signal quality) and avoid depending on a centralized server (privacy). It scales well because a simple chat server can host thousands of calls without involving the server in any way other than to setup the call. However, this approach does not work most of the time due to how networks are configured. Most peers on the network do not have a unique IP address allocated to them. They work hidden behind a network device that performs "Network Address Translation" (NAT) for them. This means that the two peers have no way of reaching each other.
 
 To address this problem, a simple technique known as STUN was introduced. With the help of a third party STUN server, the peers can trick the NAT devices, to carry the traffic between the two peers. Unfortunately, this trick only works about 80% of the time. So, if STUN fails, peers have no choice but to route their traffic through an intermediary server called TURN server. All the mechanism of trying out STUN first and then falling back to TURN is described in a protocol known as [[https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment|ICE]].
 
@@ -31,18 +31,9 @@ In summary, a communication server needs to know the URLs of the STUN/TURN serve
 
 === Configuring Matrix Synapse ===
 
-Matrix Synapse server in !FreedomBox can be configured to use Coturn TURN/STUN server. In future, when you install Matrix Synapse, !FreedomBox will automatically install Coturn and configure its parameters into Matrix Synapse. To configure Matrix Synapse, edit the file ''/etc/matrix-synapse/homeserver.yaml'' with the following lines:
+To configure Matrix Synapse to use Coturn TURN/STUN server, you need to check "Automatically manage audio/video call setup" in Matrix Synapse's configuration section, and then click on "Update seup".
 
-{{{
-turn_uris: [ "stun:myfreedombox.example.org:3478?transport=udp", "stun:myfreedombox.example.org:3478?transport=tcp", "turn:myfreedombox.example.org:3478?transport=udp", "turn:myfreedombox.example.org:3478?transport=tcp" ]
-turn_shared_secret: "my-freedombox-provided-secret"
-turn_user_lifetime: 86400000
-turn_allow_guests: True
-}}}
-
-The value for the `turn_shared_secret` is provided as `static-auth-secret` in `/etc/coturn/freedombox.conf` file.
-
-And then restart matrix-synapse server by disabling and re-enabling the matrix-synapse app.
+{{attachment:matrix_with_coturn.png|Matrix with Coturn|width=800}}
 
 === Port Forwarding ===
 

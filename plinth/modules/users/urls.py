@@ -4,11 +4,10 @@ URLs for the Users module
 """
 
 from axes.decorators import axes_dispatch
-from django.urls import re_path, reverse_lazy
+from django.urls import re_path
 from stronghold.decorators import public
 
-from plinth.modules.sso.views import (CaptchaLoginView, SSOLoginView,
-                                      SSOLogoutView)
+from plinth.modules.sso.views import CaptchaLoginView, SSOLoginView, logout
 from plinth.utils import non_admin_view
 
 from . import views
@@ -30,8 +29,7 @@ urlpatterns = [
     # axes_dispatch after axes 5.x becomes available in Debian stable.
     re_path(r'^accounts/login/$',
             public(axes_dispatch(SSOLoginView.as_view())), name='login'),
-    re_path(r'^accounts/logout/$', non_admin_view(SSOLogoutView.as_view()),
-            {'next_page': reverse_lazy('index')}, name='logout'),
+    re_path(r'^accounts/logout/$', public(logout), name='logout'),
     re_path(r'^users/firstboot/$', public(views.FirstBootView.as_view()),
             name='firstboot'),
     re_path(r'accounts/login/locked/$', public(CaptchaLoginView.as_view()),

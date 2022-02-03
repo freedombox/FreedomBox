@@ -75,8 +75,14 @@ class PasswordConfirmForm(forms.Form):
     """Password confirmation form."""
     confirm_password = forms.CharField(
         widget=forms.PasswordInput,
-        label=gettext_lazy('Authorization Password'), help_text=gettext_lazy(
-            'Enter your current password to authorize account modifications.'))
+        label=gettext_lazy('Authorization Password'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['confirm_password'].help_text = _(
+            'Enter the password for user "{user}" to authorize account '
+            'modifications.').format(user=self.request.user.username)
 
     def clean_confirm_password(self):
         """Check that current user's password matches."""

@@ -9,9 +9,13 @@ import urllib
 
 import axes.utils
 from axes.decorators import axes_form_invalid
+from django import shortcuts
+from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
+from django.utils.translation import gettext as _
 
 from plinth import actions, translation, utils, web_framework
 
@@ -89,15 +93,13 @@ class CaptchaLoginView(LoginView):
         return set_ticket_cookie(request.user, response)
 
 
-class SSOLogoutView(LogoutView):
-    """View to log out of FreedomBox and remove the auth_pubtkt cookie."""
-    template_name = 'index.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        response = super(SSOLogoutView, self).dispatch(request, *args,
-                                                       **kwargs)
-        response.delete_cookie(SSO_COOKIE_NAME)
-        return response
+def logout(request):
+    """Logout an authenticated user, remove SSO cookie and redirect to home."""
+    auth_logout(request)
+    response = shortcuts.redirect('index')
+    response.delete_cookie(SSO_COOKIE_NAME)
+    messages.success(request, _('Logged out successfully.'))
+    return response
 
 
 def refresh(request):

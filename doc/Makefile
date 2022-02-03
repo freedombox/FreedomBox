@@ -85,7 +85,7 @@ $(fetch-main-list): fetch-main-%: fetch-cleanup-%
 	xsltproc $(SCRIPTS_DIR)/fetch-images.xslt manual/$(lang)/freedombox-manual.raw.xml | \
 	  sort -u | \
 	  awk 'NF {print "wget --quiet -O manual/$(lang)/images/" $$1 " " $$2}' | \
-	  sh
+	  sh -e
 	rm manual/$(lang)/freedombox-manual.raw.xml
 
 fetch-pages-%: lang = $*

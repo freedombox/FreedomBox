@@ -6,6 +6,7 @@ FreedomBox app for power controls.
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
+from plinth import menu
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
@@ -28,11 +29,14 @@ class PowerApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Power'),
-                               description=_description, manual_page='Power')
+                               icon='fa-power-off', description=_description,
+                               manual_page='Power')
         self.add(info)
+
+        menu_item = menu.Menu('menu-power', info.name, None, info.icon,
+                              'power:index', parent_url_name='system')
+        self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-power',
                                        **manifest.backup)
         self.add(backup_restore)
-
-        # not in menu, see issue #834

@@ -53,7 +53,6 @@ default_smtps_options = {
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
 
-MAILSRV_DIR = '/var/lib/plinth/mailsrv'
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
 logger = logging.getLogger(__name__)
@@ -144,16 +143,3 @@ def action_set_ulookup():
     """Handles email_server -i ldap set_ulookup"""
     with postconf.mutex.lock_all():
         fix_alias_maps(check_alias_maps())
-
-
-def list_find(lst, element, start=None, end=None):
-    if start is None:
-        start = 0
-    if end is None:
-        end = len(lst)
-    if start < 0 or end < 0:
-        return -1
-    try:
-        return lst.index(element, start, end)
-    except ValueError:
-        return -1

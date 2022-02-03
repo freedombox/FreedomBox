@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-11 19:11-0500\n"
+"POT-Creation-Date: 2022-01-31 19:23-0500\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -871,7 +871,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/forms.py:27
 #: plinth/modules/bepasty/templates/bepasty.html:30
-#: plinth/modules/users/forms.py:102 plinth/modules/users/forms.py:228
+#: plinth/modules/users/forms.py:108 plinth/modules/users/forms.py:234
 #, fuzzy
 #| msgid "Transmission BitTorrent"
 msgid "Permissions"
@@ -966,7 +966,7 @@ msgstr "ADMIN"
 msgid "Configuration updated."
 msgstr "CONFIGURATION UPDATED."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:107
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -1074,10 +1074,10 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:104
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
 #: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
-#: plinth/modules/shadowsocks/views.py:59
+#: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
@@ -1549,12 +1549,10 @@ msgid "Diagnostics"
 msgstr "DIAGNOSTICS"
 
 #: plinth/modules/diagnostics/__init__.py:97
-#: plinth/modules/email_server/templates/email_server.html:37
 msgid "passed"
 msgstr ""
 
 #: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/email_server/templates/email_server.html:35
 #: plinth/modules/networks/views.py:49
 #, fuzzy
 #| msgid "Setup failed."
@@ -1562,7 +1560,6 @@ msgid "failed"
 msgstr "SETUP FAILED."
 
 #: plinth/modules/diagnostics/__init__.py:99
-#: plinth/modules/email_server/templates/email_server.html:33
 msgid "error"
 msgstr ""
 
@@ -2145,88 +2142,60 @@ msgstr "WEB SERVER"
 msgid "Powered by Postfix, Dovecot & Rspamd"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:69
+#: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
 msgstr ""
 
-#: plinth/modules/email_server/audit/ldap.py:70
+#: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/rcube.py:31
-#, fuzzy
-#| msgid "Enable Subdomains"
-msgid "RoundCube availability"
-msgstr "ENABLE SUBDOMAINS"
-
-#: plinth/modules/email_server/audit/rcube.py:32
-msgid "RoundCube configured for FreedomBox email"
 msgstr ""
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:17
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Enter a valid domain"
-msgstr "INVALID SERVER NAME"
-
-#: plinth/modules/email_server/forms.py:20
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Enter a valid destination"
-msgstr "INVALID SERVER NAME"
-
 #: plinth/modules/email_server/forms.py:24
-#, fuzzy
-#| msgid "Domain"
-msgid "domain"
-msgstr "DOMAIN"
-
-#: plinth/modules/email_server/forms.py:38
 #, fuzzy
 #| msgid "Primary connection"
 msgid "Primary domain"
 msgstr "PRIMARY CONNECTION"
 
-#: plinth/modules/email_server/forms.py:40
+#: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:48
+#: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:55
+#: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:58
+#: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:61
+#: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:71
+#: plinth/modules/email_server/forms.py:57
 #, fuzzy
 #| msgid "Create User"
 msgid "Aliases"
 msgstr "CREATE USER"
 
-#: plinth/modules/email_server/forms.py:83
+#: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:28
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
 msgstr "ENABLED"
 
-#: plinth/modules/email_server/forms.py:86
+#: plinth/modules/email_server/forms.py:72
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
@@ -2235,7 +2204,7 @@ msgid "Disabled"
 msgstr "DISABLED"
 
 #: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:52
+#: plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 #, fuzzy
 #| msgid "Enable Roundcube"
@@ -2256,7 +2225,7 @@ msgid "FairEmail"
 msgstr ""
 
 #: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:20
+#: plinth/modules/email_server/templates/email_server.html:15
 #, fuzzy
 #| msgid "Create User"
 msgid "Manage Aliases"
@@ -2290,30 +2259,11 @@ msgstr "PAGEKITE ACCOUNT"
 msgid "Add"
 msgstr "ADDRESS"
 
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email_server/templates/email_server.html:10
 #, fuzzy
 #| msgid "Create User"
 msgid "Manage Spam"
 msgstr "CREATE USER"
-
-#: plinth/modules/email_server/templates/email_server.html:26
-#, fuzzy
-#| msgid "Service type"
-msgid "Service Alert"
-msgstr "SERVICE TYPE"
-
-#: plinth/modules/email_server/templates/email_server.html:46
-msgid "Repair"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:73
-#, python-brace-format
-msgid "Internal error in {0}"
-msgstr ""
-
-#: plinth/modules/email_server/views.py:76
-msgid "Check syslog for more information"
-msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, fuzzy, python-brace-format
@@ -3372,8 +3322,12 @@ msgid ""
 "TURN server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/manifest.py:12
+#: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/manifest.py:48
+msgid "FluffyChat"
 msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -3722,55 +3676,6 @@ msgstr ""
 #: plinth/modules/minidlna/views.py:38
 msgid "Updated media directory"
 msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:23
-msgid ""
-"MLDonkey is a peer-to-peer file sharing application used to exchange large "
-"files. It can participate in multiple peer-to-peer networks including "
-"eDonkey, Kademlia, Overnet, BitTorrent and DirectConnect."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:26
-msgid ""
-"Users belonging to admin and ed2k group can control it through the web "
-"interface. Users in the admin group can also control it through any of the "
-"separate mobile or desktop front-ends or a telnet interface. See manual."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:31
-#, python-brace-format
-msgid ""
-"On {box_name}, downloaded files can be found in /var/lib/mldonkey/ directory."
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:53
-msgid "Download files using eDonkey applications"
-msgstr ""
-
-#: plinth/modules/mldonkey/__init__.py:56
-#: plinth/modules/mldonkey/manifest.py:11
-#, fuzzy
-#| msgid "Monkeysphere"
-msgid "MLDonkey"
-msgstr "MONKEYSPHERE"
-
-#: plinth/modules/mldonkey/__init__.py:58
-#, fuzzy
-#| msgid "Enable Shaarli"
-msgid "Peer-to-peer File Sharing"
-msgstr "ENABLE SHAARLI"
-
-#: plinth/modules/mldonkey/manifest.py:18
-#, fuzzy
-#| msgid "Monkeysphere"
-msgid "KMLDonkey"
-msgstr "MONKEYSPHERE"
-
-#: plinth/modules/mldonkey/manifest.py:30
-#, fuzzy
-#| msgid "Monkeysphere"
-msgid "AMLDonkey"
-msgstr "MONKEYSPHERE"
 
 #: plinth/modules/mumble/__init__.py:26
 msgid ""
@@ -5377,11 +5282,11 @@ msgstr ""
 msgid "System Monitoring"
 msgstr "SYSTEM CONFIGURATION"
 
-#: plinth/modules/power/__init__.py:13
+#: plinth/modules/power/__init__.py:14
 msgid "Restart or shut down the system."
 msgstr "RESTART OR SHUT DOWN THE SYSTEM."
 
-#: plinth/modules/power/__init__.py:30
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "POWER"
 
@@ -5632,7 +5537,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "CONFIGURATION UPDATED"
 
-#: plinth/modules/roundcube/__init__.py:19
+#: plinth/modules/roundcube/__init__.py:21
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5644,7 +5549,7 @@ msgstr ""
 "FROM AN EMAIL CLIENT, INCLUDING MIME SUPPORT, ADDRESS BOOK, FOLDER "
 "MANIPULATION, MESSAGE SEARCHING AND SPELL CHECKING."
 
-#: plinth/modules/roundcube/__init__.py:24
+#: plinth/modules/roundcube/__init__.py:26
 #, fuzzy
 #| msgid ""
 #| "You can access Roundcube from <a href=\"/roundcube\">/roundcube</a>. "
@@ -5665,7 +5570,7 @@ msgstr ""
 "<code>IMAP.EXAMPLE.COM</code>.  FOR IMAP OVER SSL (RECOMMENDED), FILL THE "
 "SERVER FIELD LIKE <code>IMAPS://IMAP.EXAMPLE.COM</code>."
 
-#: plinth/modules/roundcube/__init__.py:29
+#: plinth/modules/roundcube/__init__.py:31
 #, fuzzy
 #| msgid ""
 #| "For Gmail, username will be your Gmail address, password will be your "
@@ -5689,11 +5594,22 @@ msgstr ""
 "lesssecureapps\" >HTTPS://WWW.GOOGLE.COM/SETTINGS/SECURITY/LESSSECUREAPPS</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:53
+#: plinth/modules/roundcube/__init__.py:55
 #, fuzzy
 #| msgid "Email Client (Roundcube)"
 msgid "Email Client"
 msgstr "EMAIL CLIENT (ROUNDCUBE)"
+
+#: plinth/modules/roundcube/forms.py:16
+msgid "Use only the local mail server"
+msgstr ""
+
+#: plinth/modules/roundcube/forms.py:17
+#, python-brace-format
+msgid ""
+"When enabled, text box for server input is removed from login page and users "
+"can only read and send mails from this {box_name}."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -6066,11 +5982,11 @@ msgstr "ERROR SETTING TIME ZONE: {exception}"
 msgid "Updated security configuration"
 msgstr "GENERAL CONFIGURATION"
 
-#: plinth/modules/shaarli/__init__.py:17
+#: plinth/modules/shaarli/__init__.py:18
 msgid "Shaarli allows you to save and share bookmarks."
 msgstr "SHAARLI ALLOWS YOU TO SAVE AND SHARE BOOKMARKS."
 
-#: plinth/modules/shaarli/__init__.py:18
+#: plinth/modules/shaarli/__init__.py:19
 #, fuzzy
 #| msgid ""
 #| "When enabled, Shaarli will be available from <a href=\"/shaarli\">/"
@@ -6084,15 +6000,21 @@ msgstr ""
 "a> PATH ON THE WEB SERVER. NOTE THAT SHAARLI ONLY SUPPORTS A SINGLE USER "
 "ACCOUNT, WHICH YOU WILL NEED TO SETUP ON THE INITIAL VISIT."
 
-#: plinth/modules/shaarli/__init__.py:37 plinth/modules/shaarli/manifest.py:6
+#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "SHAARLI"
 
-#: plinth/modules/shaarli/__init__.py:38
+#: plinth/modules/shaarli/__init__.py:39
 #, fuzzy
 #| msgid "Bookmarks (Shaarli)"
 msgid "Bookmarks"
 msgstr "BOOKMARKS (SHAARLI)"
+
+#: plinth/modules/shaarli/manifest.py:12
+#, fuzzy
+#| msgid "Shaarli"
+msgid "Shaarlier"
+msgstr "SHAARLI"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6324,7 +6246,9 @@ msgid "Software Installation Snapshots"
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:27
-msgid "Enable or disable snapshots before and after software installation"
+msgid ""
+"Enable or disable snapshots before and after each software installation and "
+"update."
 msgstr ""
 
 #: plinth/modules/snapshot/forms.py:32
@@ -6569,6 +6493,12 @@ msgstr ""
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
 msgstr "LOGIN"
+
+#: plinth/modules/sso/views.py:101
+#, fuzzy
+#| msgid "Password changed successfully."
+msgid "Logged out successfully."
+msgstr "PASSWORD CHANGED SUCCESSFULLY."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -7428,17 +7358,19 @@ msgstr ""
 msgid "Authorization Password"
 msgstr "ADMINISTRATOR ACCOUNT"
 
-#: plinth/modules/users/forms.py:79
-msgid "Enter your current password to authorize account modifications."
+#: plinth/modules/users/forms.py:84
+#, python-brace-format
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
 
-#: plinth/modules/users/forms.py:87
+#: plinth/modules/users/forms.py:93
 #, fuzzy
 #| msgid "Show password"
 msgid "Invalid password."
 msgstr "SHOW PASSWORD"
 
-#: plinth/modules/users/forms.py:104
+#: plinth/modules/users/forms.py:110
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -7459,23 +7391,23 @@ msgstr ""
 "ABLE TO LOG IN TO ALL SERVICES. THEY CAN ALSO LOG IN TO THE SYSTEM THROUGH "
 "SSH AND HAVE ADMINISTRATIVE PRIVILEGES (SUDO)."
 
-#: plinth/modules/users/forms.py:149 plinth/modules/users/forms.py:393
+#: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, fuzzy, python-brace-format
 #| msgid "Creating LDAP user failed."
 msgid "Creating LDAP user failed: {error}"
 msgstr "CREATING LDAP USER FAILED."
 
-#: plinth/modules/users/forms.py:162
+#: plinth/modules/users/forms.py:168
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to {group} group."
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "FAILED TO ADD NEW USER TO {group} GROUP."
 
-#: plinth/modules/users/forms.py:176
+#: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
 msgstr ""
 
-#: plinth/modules/users/forms.py:178
+#: plinth/modules/users/forms.py:184
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7485,45 +7417,45 @@ msgstr ""
 "SYSTEM WITHOUT USING A PASSWORD. YOU MAY ENTER MULTIPLE KEYS, ONE ON EACH "
 "LINE. BLANK LINES AND LINES STARTING WITH # WILL BE IGNORED."
 
-#: plinth/modules/users/forms.py:263
+#: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
 msgstr "RENAMING LDAP USER FAILED."
 
-#: plinth/modules/users/forms.py:276
+#: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
 msgstr "FAILED TO REMOVE USER FROM GROUP."
 
-#: plinth/modules/users/forms.py:288
+#: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
 msgstr "FAILED TO ADD USER TO GROUP."
 
-#: plinth/modules/users/forms.py:301
+#: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
 msgstr ""
 
-#: plinth/modules/users/forms.py:319
+#: plinth/modules/users/forms.py:325
 #, fuzzy
 #| msgid "Failed to add user to group."
 msgid "Failed to change user status."
 msgstr "FAILED TO ADD USER TO GROUP."
 
-#: plinth/modules/users/forms.py:364
+#: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
 msgstr "CHANGING LDAP USER PASSWORD FAILED."
 
-#: plinth/modules/users/forms.py:404
+#: plinth/modules/users/forms.py:410
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to admin group."
 msgid "Failed to add new user to admin group: {error}"
 msgstr "FAILED TO ADD NEW USER TO ADMIN GROUP."
 
-#: plinth/modules/users/forms.py:423
+#: plinth/modules/users/forms.py:429
 #, fuzzy, python-brace-format
 #| msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgid "Failed to restrict console access: {error}"
 msgstr "FAILED TO OBTAIN CERTIFICATE FOR DOMAIN {domain}: {error}"
 
-#: plinth/modules/users/forms.py:436
+#: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
 msgstr "USER ACCOUNT CREATED, YOU ARE NOW LOGGED IN"
 
@@ -7828,15 +7760,15 @@ msgstr ""
 msgid "Endpoint"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:99
+#: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:109
+#: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
 msgstr ""
 
-#: plinth/modules/wireguard/templates/wireguard.html:113
+#: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 #, fuzzy
 #| msgid "Add Connection"
@@ -8552,6 +8484,51 @@ msgstr "%(percentage)s%% COMPLETE"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Enable Subdomains"
+#~ msgid "RoundCube availability"
+#~ msgstr "ENABLE SUBDOMAINS"
+
+#, fuzzy
+#~| msgid "Invalid server name"
+#~ msgid "Enter a valid domain"
+#~ msgstr "INVALID SERVER NAME"
+
+#, fuzzy
+#~| msgid "Invalid server name"
+#~ msgid "Enter a valid destination"
+#~ msgstr "INVALID SERVER NAME"
+
+#, fuzzy
+#~| msgid "Domain"
+#~ msgid "domain"
+#~ msgstr "DOMAIN"
+
+#, fuzzy
+#~| msgid "Service type"
+#~ msgid "Service Alert"
+#~ msgstr "SERVICE TYPE"
+
+#, fuzzy
+#~| msgid "Monkeysphere"
+#~ msgid "MLDonkey"
+#~ msgstr "MONKEYSPHERE"
+
+#, fuzzy
+#~| msgid "Enable Shaarli"
+#~ msgid "Peer-to-peer File Sharing"
+#~ msgstr "ENABLE SHAARLI"
+
+#, fuzzy
+#~| msgid "Monkeysphere"
+#~ msgid "KMLDonkey"
+#~ msgstr "MONKEYSPHERE"
+
+#, fuzzy
+#~| msgid "Monkeysphere"
+#~ msgid "AMLDonkey"
+#~ msgstr "MONKEYSPHERE"
 
 #, fuzzy
 #~| msgid "Update URL"

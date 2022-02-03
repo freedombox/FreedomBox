@@ -29,18 +29,9 @@ En resumen, un servidor de comunicaciones necesita saber las URLs de los servido
 
 === Configurar Matrix Synapse ===
 
-El servidor de Matrix Synapse de !FreedomBox se puede configurar para que use el servidor de TURN/STUN Coturn. En el futuro, cuando instales Matrix Synapse !FreedomBox instalará Coturn automáticamente y configurará sus parámetros en Matrix Synapse. Para configurar Matrix Synapse, edita el fichero ''/etc/matrix-synapse/homeserver.yaml'' con las siguientes líneas:
+Para configurar Matrix Synapse para que use el servidor de TURN/STUN Coturn tienes que marcar "Gestionar automáticamente el establecimiento de llamadas de audio/video" en la sección de configuración de Matrix Synapse y a continuación clicar en "Actualizar configuración".
 
-{{{
-turn_uris: [ "stun:myfreedombox.example.org:3478?transport=udp", "stun:myfreedombox.example.org:3478?transport=tcp", "turn:myfreedombox.example.org:3478?transport=udp", "turn:myfreedombox.example.org:3478?transport=tcp" ]
-turn_shared_secret: "my-freedombox-provided-secret"
-turn_user_lifetime: 86400000
-turn_allow_guests: True
-}}}
-
-El valor para `turn_shared_secret` se proporciona como `static-auth-secret` en el archivo `/etc/coturn/freedombox.conf`.
-
-Y luego reinicia el servidor matrix-synapse deshabilitando y rehabilitando la app de matrix-synapse.
+{{attachment:FreedomBox/Manual/Coturn/matrix_with_coturn.png|Matrix with Coturn|width=800}}
 
 === Redirección de Puertos ===
 
