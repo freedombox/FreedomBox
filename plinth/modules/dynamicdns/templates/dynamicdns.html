@@ -7,29 +7,50 @@
 {% load i18n %}
 {% load static %}
 
-{% block configuration %}
-  <form class="form" method="post">
-    {% csrf_token %}
-
-    <noscript>
-      {% blocktrans trimmed %}
-        You have disabled Javascript. Dynamic form mode is disabled
-        and some helper functions may not work (but the main
-        functionality should work).
-      {% endblocktrans %}
-    </noscript>
-
-    {{ form|bootstrap }}
-
-    <input type="submit" class="btn btn-primary"
-           value="{% trans "Update setup" %}"/>
-  </form>
-{% endblock %}
-
 {% block extra_content %}
   <h3>{% trans "Status" %}</h3>
 
-  <p>{% trans "Last update" %}: {{ status.last_update }}</p>
+  {% if domains_status %}
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Domain" %}</th>
+            <th>{% trans "Last update" %}</th>
+            <th>{% trans "Result" %}</th>
+            <th>{% trans "IP Address" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for domain in domains_status.values %}
+            <tr>
+              <td>{{ domain.domain }}</td>
+              <td>{{ domain.timestamp|timesince }}</td>
+              <td>
+                {% if domain.result %}
+                  <span class="badge badge-success">
+                    {% trans "Success" %}
+                  </span>
+                {% else %}
+                  <span class="badge badge-warning">
+                    {% trans "Failed" %}
+                  </span>
+                {% endif %}
+                {% if domain.error_message %}
+                  ({{ domain.error_message }})
+                {% elif domain.error_code %}
+                  ({{ domain.error_code }})
+                {% endif %}
+              </td>
+              <td>{{ domain.ip_address|default_if_none:'-' }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    {% trans "No status available." %}
+  {% endif %}
 {% endblock %}
 
 {% block page_js %}

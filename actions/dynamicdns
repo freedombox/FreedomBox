@@ -1,436 +1,156 @@
-#!/bin/bash
+#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration helper for Dynamic DNS.
+"""
 
-############################################################################
-#                                                                          #
-# This script is a wrapper around ez-ipupdate and/or wget                  #
-# to update a Dynamic DNS account. The script is used as an                #
-# interface between plinth and ez-ipupdate                                 #
-# the script will store configuration, return configuration                #
-# to plinth UI and do a dynamic DNS update. The script will                #
-# also determe if we are behind a NAT device, if we can use                #
-# ez-ipupdate tool or if we need to do some wget magic                     #
-#                                                                          #
-# Todo: IPv6                                                               #
-# Todo: GET WAN IP from Router via UPnP if supported                       #
-# Todo: licence string?                                                    #
-# author: Daniel Steglich <steglich@datasystems24.de>                      #
-#                                                                          #
-############################################################################
+import argparse
+import json
+import pathlib
+import urllib
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+_conf_dir = pathlib.Path('/etc/ez-ipupdate/')
+_active_config = _conf_dir / 'ez-ipupdate.conf'
+_inactive_config = _conf_dir / 'ez-ipupdate.inactive'
+_helper_config = _conf_dir / 'ez-ipupdate-plinth.cfg'
+_cron_job = pathlib.Path('/etc/cron.d/ez-ipupdate')
 
-# static values
-WGET=$(which wget)
-WGETOPTIONS="-o /dev/null -t 3 -T 3"
-EMPTYSTRING="none"
-NOIP="0.0.0.0"
-# how often do we poll for IP changes
-UPDATEMINUTES=5
-# if we do not have a URL to look up public IP, how often should we do
-# a "blind" update
-UPDATEMINUTESUNKNOWN=3600
-TOOLNAME=ez-ipupdate
-GNUDIP_ACTION=/usr/share/plinth/actions/gnudip
-DISABLED_STRING='disabled'
-ENABLED_STRING='enabled'
 
-# Dirs and filenames
-CFGDIR="/etc/${TOOLNAME}/"
-CFG="${CFGDIR}${TOOLNAME}.conf"
-CFG_disabled="${CFGDIR}${TOOLNAME}.inactive"
-IPFILE="${CFGDIR}${TOOLNAME}.currentIP"
-STATUSFILE="${CFGDIR}${TOOLNAME}.status"
-LASTUPDATE="${CFGDIR}/last-update"
-HELPERCFG="${CFGDIR}${TOOLNAME}-plinth.cfg"
-CRONJOB="/etc/cron.d/${TOOLNAME}"
-PIDFILE="/var/run/ez-ipupdate.pid"
+def parse_arguments():
+    """ Return parsed command line arguments as dictionary. """
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
-# this function will parse commandline options
-doGetOpt()
-{
-    basicauth=0
-    ignoreCertError=0
-    useIPv6=0
+    subparsers.add_parser('export-config',
+                          help='Print configuration in JSON format')
+    subparsers.add_parser('clean', help='Remove all old configuration files')
 
-    while getopts ":s:d:u:P:I:U:c:b:6:p" opt; do
-        case ${opt} in
-            s)
-                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
-                    server=${OPTARG}
-                else
-                    server=""
-                fi
-            ;;
-            d)
-                host=${OPTARG}
-            ;;
-            u)
-                user=${OPTARG}
-            ;;
-            P)
-                pass=${OPTARG}
-            ;;
-            p)
-                if read -t 0; then
-                    IFS= read -r pass
-                fi
-            ;;
-            I)
-                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
-                    ipurl=${OPTARG}
-                else
-                    ipurl=""
-                fi
-            ;;
-            U)
-                if [ "${OPTARG}" != "${EMPTYSTRING}" ];then
-                    updateurl=${OPTARG}
-                else
-                    updateurl=""
-                fi
-            ;;
-            b)
-                basicauth=${OPTARG}
-            ;;
-            c)
-                ignoreCertError=${OPTARG}
-            ;;            
-            6)
-                useIPv6=${OPTARG}
-            ;;
-            \?)
-                echo "Invalid option: -${OPTARG}" >&2
-                exit 1
-            ;;
-        esac
-    done
-}
+    subparsers.add_parser('update', help='For backwards compatibility')
+    subparser = subparsers.add_parser('success',
+                                      help='For backwards compatibility')
+    subparser.add_argument('wan_ip_address')
 
-# this function will write a persistent config file to disk
-doWriteCFG()
-{
-    mkdir ${CFGDIR} 2> /dev/null
-    # always write to the inactive config - needs to be enabled via "start" command later
-    local out_file=${CFG_disabled}
+    subparsers.required = True
+    return parser.parse_args()
 
-    # reset the last update time
-    echo 0 > ${LASTUPDATE}
 
-    # reset the last updated IP
-    echo "0.0.0.0" > ${IPFILE}
+def _read_configuration(path, separator='='):
+    """Read ez-ipupdate configuration."""
+    config = {}
+    for line in path.read_text().splitlines():
+        if line.startswith('#'):
+            continue
 
-    # reset last update (if there is one)
-    rm ${STATUSFILE} 2> /dev/null
+        parts = line.partition(separator)
+        if parts[1]:
+            config[parts[0].strip()] = parts[2].strip()
+        else:
+            config[parts[0].strip()] = True
 
-    # find the interface (always the default gateway interface)
-    default_interface=$(ip route |grep default |awk '{print $5}')
+    return config
 
-    # store the given options in ez-ipupdate compatible config file
-    {
-        echo "host=${host}"
-        echo "server=${server}"
-        echo "user=${user}:${pass}"
-        echo "service-type=gnudip"
-        echo "retrys=3"
-        echo "wildcard"
-    } > ${out_file}
-    
-    # store UPDATE URL params
-    {
-        echo "POSTURL ${updateurl}"
-        echo "POSTAUTH ${basicauth}"
-        echo "POSTSSLIGNORE ${ignoreCertError}"
-        echo "POSTUSEIPV6 ${useIPv6}"
-    } > ${HELPERCFG}
-    
-    # check if we are behind a NAT Router
-    echo "IPURL ${ipurl}" >> ${HELPERCFG}
-}
 
-# this function will read the config file from disk
-# special treatment for empty strings is done here:
-# plinth will give empty strings like: ''
-# but we don't want this single quotes to be used
-doReadCFG()
-{ 
-    host=""
-    server=""
-    user=""
-    pass=""
-    ipurl=""
+def subcommand_export_config(_):
+    """Print the old ez-ipupdate configuration in JSON format."""
+    input_config = {}
+    if _active_config.exists():
+        input_config = _read_configuration(_active_config)
+    elif _inactive_config.exists():
+        input_config = _read_configuration(_inactive_config)
 
-    if [ ! -z "${cfgfile}" ];then
-        host=$(grep ^host= "${cfgfile}" 2> /dev/null | cut -d = -f 2-)
-        server=$(grep ^server= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | grep -v ^\'\')
-        user=$(grep ^user= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | cut -d : -f 1 )
-        pass=$(grep ^user= "${cfgfile}" 2> /dev/null | cut -d = -f 2- | cut -d : -f 2-)
-    fi
+    helper = {}
+    if _helper_config.exists():
+        helper.update(_read_configuration(_helper_config, separator=' '))
 
-    if [ ! -z ${HELPERCFG} ];then
-        ipurl=$(grep ^IPURL "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
-        updateurl=$(grep POSTURL "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
-        basicauth=$(grep POSTAUTH "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
-        ignoreCertError=$(grep POSTSSLIGNORE "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
-        useIPv6=$(grep POSTUSEIPV6 "${HELPERCFG}" 2> /dev/null |awk '{print $2}' |grep -v ^\'\')
-    fi  
-}
+    def _clean(value):
+        value_map = {'enabled': True, 'disabled': False, '': None}
+        return value_map.get(value, value)
 
-# replace vars from url: i.e.:
-# https://example.com/update.php?domain=<Domain>&User=<User>&Pass=<Pass>
-# also this function will remove the surounding single quotes from the URL string
-# as plinth will add them
-doReplaceVars()
-{
-    local url=$(echo "${updateurl}" | sed "s/<Ip>/${wanip}/g")
-    url=$(echo "${url}" | sed "s/<Domain>/${host}/g")
-    url=$(echo "${url}" | sed "s/<User>/${user}/g")
-    url=$(echo "${url}" | sed "s/<Pass>/${pass}/g")
-    url=$(echo "${url}" | sed "s/'//g")
-    updateurl=${url}
-    logger "expanded update URL as ${url}"
-}
+    domain = {
+        'service_type': 'gnudip',
+        'domain': input_config.get('host'),
+        'server': input_config.get('server'),
+        'username': input_config.get('user', '').split(':')[0] or None,
+        'password': input_config.get('user', '').split(':')[-1] or None,
+        'ip_lookup_url': helper.get('IPURL'),
+        'update_url': _clean(helper.get('POSTURL')) or None,
+        'use_http_basic_auth': _clean(helper.get('POSTAUTH')),
+        'disable_ssl_cert_check': _clean(helper.get('POSTSSLIGNORE')),
+        'use_ipv6': _clean(helper.get('POSTUSEIPV6')),
+    }
 
-# doReadCFG() needs to be run before this
-# this function will return all configured parameters in a way that
-# plinth will understand (plinth know the order of
-# parameters this function will return)
-doStatus()
-{
-    PROC=$(pgrep ${TOOLNAME})
-    if [ -f "${CRONJOB}" ];then
-        echo "${ENABLED_STRING}"
-    elif [ ! -z "${PROC}" ];then
-        echo "${ENABLED_STRING}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${server}" ];then
-        echo "${server}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${host}"  ];then
-        echo "${host}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${user}" ];then
-        echo "${user}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${pass}"  ];then
-        echo "${pass}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${ipurl}" ];then
-        echo "${ipurl}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${updateurl}"  ];then
-        echo "${updateurl}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${ignoreCertError}" ];then
-        echo "${ignoreCertError}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${basicauth}" ];then
-        echo "${basicauth}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-    if [ ! -z "${useIPv6}" ];then
-        echo "${useIPv6}"
-    else
-        echo "${DISABLED_STRING}"
-    fi
-}
+    if isinstance(domain['update_url'], bool):
+        # 'POSTURL ' is a line found in the configuration file
+        domain['update_url'] = None
 
-# ask a public WEB Server for the WAN IP we are comming from
-# and store this ip within $wanip
-doGetWANIP()
-{
-    if [ ! -z "${ipurl}" ];then
-        local wgetoptions="${WGETOPTIONS}"
-        if [ "${useIPv6}" = "enabled" ];then
-            wgetoptions="${wgetoptions} -6"
-        else
-            wgetoptions="${wgetoptions} -4"
-        fi
-        local cmd="${WGET} ${wgetoptions} -O - ${ipurl}"
-        if [ "${useIPv6}" = "enabled" ];then
-            wanip=$($cmd | tr A-F a-f | sed s/[^0-9a-f:]//g)
-        else
-            wanip=$($cmd | sed s/[^0-9.]//g)
-        fi
-        [ -z "${wanip}" ] && wanip=${NOIP}
-    else
-        # no WAN IP found because of missing check URL
-        wanip=${NOIP}
-    fi
-}
+    if not domain['server']:
+        domain['service_type'] = 'other'
+        update_url = domain['update_url']
+        try:
+            server = urllib.parse.urlparse(update_url).netloc
+            service_types = {
+                'dynupdate.noip.com': 'noip.com',
+                'dynupdate.no-ip.com': 'noip.com',
+                'freedns.afraid.org': 'freedns.afraid.org'
+            }
+            domain['service_type'] = service_types.get(server, 'other')
+        except ValueError:
+            pass
 
-# actualy do the update (using wget or gnudip action or even both)
-# this function is called via cronjob
-doUpdate()
-{
-    if [ "${useIPv6}" = "enabled" ];then
-        local dnsentry="$(host -t AAAA "${host}" | sed 's/.*address\s*//')"
-    else
-        local dnsentry="$(host -t A "${host}" | sed 's/.*address\s*//')"
-    fi
-    if [ "${dnsentry}" = "${wanip}" ];then
-        return
-    fi
-    if [ ! -z "${server}" ];then
-        if "${GNUDIP_ACTION}" update; then
-            ${0} success ${wanip}
-        else
-            ${0} failed
-        fi
-    fi
-    if [ ! -z "${updateurl}" ];then
-        doReplaceVars
-        if [ "${basicauth}" = "enabled" ];then
-            WGETOPTIONS="${WGETOPTIONS} --user ${user} --password ${pass} "
-        fi
-        if [ "${ignoreCertError}" = "enabled" ];then
-            WGETOPTIONS="${WGETOPTIONS} --no-check-certificate "
-        fi
-        if [ "${useIPv6}" = "enabled" ];then
-            WGETOPTIONS="${WGETOPTIONS} -6"
-        else
-            WGETOPTIONS="${WGETOPTIONS} -4"
-        fi
-        local cmd="${WGET} -O /dev/null ${WGETOPTIONS} ${updateurl}"
-        $cmd
-        # ToDo: check the returning text from WEB Server. User need to give expected string.
-        if [ ${?} -eq 0 ];then
-            ${0} success ${wanip}
-        else
-            ${0} failed
-        fi
-    fi
-}
+    # Old logic for 'enabling' the app is as follows: If behind NAT, add
+    # cronjob. If not behind NAT and type is update URL, add cronjob. If not
+    # behind NAT and type is GnuDIP, move inactive configuration to active
+    # configuration and start the ez-ipupdate daemon.
+    enabled = False
+    if _cron_job.exists() or (domain['service_type'] == 'gnudip'
+                              and _active_config.exists()):
+        enabled = True
 
-umask u=rw,g=,o=
-cmd=${1}
-shift
-# decide which config to use
-cfgfile="/tmp/none"
-[ -f ${CFG_disabled} ] && cfgfile=${CFG_disabled}
-[ -f ${CFG} ] && cfgfile=${CFG}
+    output_config = {'enabled': enabled, 'domains': {domain['domain']: domain}}
+    print(json.dumps(output_config))
 
-# check what action is requested
-case ${cmd} in
-    configure)
-        doGetOpt "${@}"
-        doWriteCFG
-    ;;
-    start)
-        doGetWANIP
-        # if we use gnudip, enable gnudip.
-        gnudipServer=$(grep ^server= ${cfgfile} 2> /dev/null | cut -d = -f 2- |grep -v ^\'\')
-        if [ ! -f ${CFG} -a ! -z "${gnudipServer}" ];then
-            mv ${CFG_disabled} ${CFG}
-        fi
-        # add a cronjob
-        echo "*/${UPDATEMINUTES} * * * * root ${0} update" > $CRONJOB
-        $0 update
-    ;;
-    update)
-        doReadCFG
-        dnsentry=$(nslookup "${host}"|tail -n2|grep A|sed s/[^0-9.]//g)
-        doGetWANIP
-        echo ${wanip} > ${IPFILE}
-        grep -v execute ${cfgfile} > ${cfgfile}.tmp
-        mv ${cfgfile}.tmp ${cfgfile}
-        echo "execute=${0} success ${wanip}" >> ${cfgfile}
-        # if we know our WAN IP, only update if IP changes
-        if [ "${dnsentry}" != "${wanip}" -a "${wanip}" != ${NOIP} ];then
-            doUpdate
-        else
-            # If nothing has changed, nothing needs to be done but we
-            # need to write the success status (if no success was
-            # recorded yet because maybe DNS record was up to date
-            # when script is executed for the first time)
-            ${0} success ${wanip}
-        fi
-        # if we don't know our WAN IP do a blind update once a hour
-        if [ "${wanip}" = ${NOIP} ];then
-            currenttime=$(date +%s)
-            LAST=0
-            [ -f ${LASTUPDATE} ] && LAST=$(cat ${LASTUPDATE})
-            diff=$((currenttime - LAST))
-            if [ ${diff} -gt ${UPDATEMINUTESUNKNOWN} ];then
-                doUpdate
-            fi
-        fi
-    ;;
-    stop)
-        rm ${CRONJOB} 2> /dev/null
-        /etc/init.d/${TOOLNAME} stop
-        kill "$(cat ${PIDFILE})" 2> /dev/null
-        mv ${CFG} ${CFG_disabled}
-    ;;
-    success)
-        date=$(date)
-        echo "DNS record is up to date (${date})" > ${STATUSFILE}
-        date +%s > ${LASTUPDATE}
-        # if called from cronjob, the current IP is given as parameter
-        if [ $# -eq 1 ];then
-            echo "${1}" > ${IPFILE}
-        else
-            # if called from ez-ipupdate daemon, no WAN IP is given as parameter
-            doGetWANIP
-            echo ${wanip} > ${IPFILE}
-        fi
-    ;;
-    failed)
-        date=$(date)
-        echo "last update failed (${date})" > ${STATUSFILE}
-    ;;    
-    get-last-success)
-        if [ -f ${STATUSFILE} ];then
-            cat ${STATUSFILE}
-        else
-            echo "no successful update recorded since last config change"
-        fi
-    ;;
-    status)
-        doReadCFG
-        doStatus
-    ;;
-    clean)
-        rm ${CFGDIR}/*
-        rm ${CRONJOB}
-    ;;
-    *)
-        echo "usage: status|configure <options>|start|stop|update|clean|success [updated IP]|failed|get-last-success"
-        echo ""
-        echo "options are:"
-        echo "-s <server>             Gnudip Server address"
-        echo "-d <domain>             Domain to be updated"
-        echo "-u <user>               Account username"
-        echo "-P <password>           Account password"
-        echo "-p                      Read Account Password from stdin"
-        echo "-I <URL to look up public IP>       A URL which returns the IP of the client who is requesting"
-        echo "-U <update URL>         The update URL (a HTTP GET on this URL will be done)"
-        echo "-c <1|0>                disable SSL check on Update URL"
-        echo "-b <1|0>                use HTTP basic auth on Update URL"
-        echo "-6                      use IPv6 type address"
-        echo ""
-        echo "update                  do a one time update"
-        echo "clean                   delete configuration"
-        echo "success                 store update success and optional the updated IP"
-        echo "failed                  store update failure"
-        echo "get-last-success        return date of last successful update"
-    ;;
-esac
-exit 0
+
+def subcommand_clean(_):
+    """Remove all old configuration files."""
+    last_update = _conf_dir / 'last-update'
+    status = _conf_dir / 'ez-ipupdate.status'
+    current_ip = _conf_dir / 'ez-ipupdate.currentIP'
+
+    cleanup_files = [
+        _active_config, _inactive_config, last_update, _helper_config, status,
+        current_ip
+    ]
+    for cleanup_file in cleanup_files:
+        try:
+            cleanup_file.rename(cleanup_file.with_suffix('.bak'))
+        except FileNotFoundError:
+            pass
+
+    _cron_job.unlink(missing_ok=True)
+
+
+def subcommand_update(_):
+    """Empty subcommand kept only for backwards compatibility.
+
+    Drop after stable release.
+    """
+
+
+def subcommand_success(_):
+    """Empty subcommand kept only for backwards compatibility.
+
+    Drop after stable release.
+    """
+
+
+def main():
+    """Parse arguments and perform all duties."""
+    arguments = parse_arguments()
+
+    subcommand = arguments.subcommand.replace('-', '_')
+    subcommand_method = globals()['subcommand_' + subcommand]
+    subcommand_method(arguments)
+
+
+if __name__ == '__main__':
+    main()

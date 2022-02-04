@@ -485,7 +485,7 @@ class EnableState(LeaderComponent):
         kvstore.set(self.key, True)
 
     def disable(self):
-        """Store that the app/component is enabled."""
+        """Store that the app/component is disabled."""
         from plinth import kvstore
         kvstore.set(self.key, False)
 

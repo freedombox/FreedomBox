@@ -8,5 +8,6 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/dynamicdns/$', views.index, name='index'),
+    re_path(r'^sys/dynamicdns/$', views.DynamicDNSAppView.as_view(),
+            name='index'),
 ]
