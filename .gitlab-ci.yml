@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-include: https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/salsa-ci.yml
+include:
+  - remote: https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/salsa-ci.yml
+  - local: /.ci/functional-tests.yml
 
 image: registry.salsa.debian.org/freedombox-team/freedombox:gitlabci
 
@@ -40,6 +42,42 @@ doc-tests:
   needs: []
   script:
     - doc/scripts/wikiparser.py
+
+app-server-testing:
+  variables:
+    LAUNCH_TEMPLATE_NAME: functional-tests-testing
+    INSTANCE_NAME: app-server-testing
+  extends: .app-server
+
+run-functional-tests-testing:
+  needs:
+    - job: app-server-testing
+      artifacts: true
+  extends: .run-functional-tests
+
+terminate-app-server-testing:
+  needs:
+    - job: run-functional-tests-testing
+      artifacts: true
+  extends: .terminate-app-server
+
+app-server-unstable:
+  variables:
+    LAUNCH_TEMPLATE_NAME: functional-tests-unstable
+    INSTANCE_NAME: app-server-unstable
+  extends: .app-server
+
+run-functional-tests-unstable:
+  needs:
+    - job: app-server-unstable
+      artifacts: true
+  extends: .run-functional-tests
+
+terminate-app-server-unstable:
+  needs:
+    - job: run-functional-tests-unstable
+      artifacts: true
+  extends: .terminate-app-server
 
 extract-source:
     extends: .provisioning-extract-source

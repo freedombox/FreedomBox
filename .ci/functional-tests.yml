@@ -1,0 +1,59 @@
+---
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+.app-server:
+  needs:
+    - job: build
+  except:
+    - '$CI_COMMIT_TITLE =~ /^Weblate.*/'
+  script:
+    - BUILD_JOB_ID=$(curl -s "https://salsa.debian.org/api/v4/projects/$CI_PROJECT_ID/pipelines/$CI_PIPELINE_ID/jobs" | jq -r '.[] | select(.name=="build") | .id')
+    - export AWS_DEFAULT_REGION=us-east-1
+    - LAUNCH_TEMPLATE_ID=$(aws ec2 describe-launch-templates --launch-template-names $LAUNCH_TEMPLATE_NAME | jq -r ".LaunchTemplates[0].LaunchTemplateId")
+    - INSTANCE_ID=$(aws ec2 run-instances --launch-template LaunchTemplateId="$LAUNCH_TEMPLATE_ID" --associate-public-ip-address --tag-specifications "ResourceType=instance, Tags=[{Key=salsa:project-id,Value=$CI_PROJECT_ID},{Key=salsa:build-job-id,Value=$BUILD_JOB_ID},{Key=Name,Value=$INSTANCE_NAME}]" | jq -r ".Instances[0].InstanceId")
+    - APP_SERVER_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r ".Reservations[0].Instances[0].PublicIpAddress")
+    - echo "APP_SERVER_IP=$APP_SERVER_IP" >> app-servers.env
+    - echo "INSTANCE_ID=$INSTANCE_ID" >> app-servers.env
+  tags:
+    - functional-tests
+  artifacts:
+    reports:
+      dotenv: app-servers.env
+
+.run-functional-tests:
+  needs:
+    - job: app-server-unstable
+      artifacts: true
+  timeout: 2h
+  # Need to find a way of running the cleanup step even on failure
+  allow_failure: true
+  when: delayed
+  # Wait for the app-server to come up. Saves time for the CI runners.
+  start_in: 3 minutes
+  before_script:
+    - apt-get update
+    - apt-get install -y sudo curl wget
+    - ./plinth/tests/functional/install.sh
+    - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password && echo "tester:password" | chpasswd
+  script:
+    - cp -r . /home/tester/freedombox && chown -R tester:tester /home/tester/freedombox
+    - sudo -u tester bash -c 'pip3 install --user splinter pytest-splinter pytest-reporter-html1'
+    - sudo FREEDOMBOX_URL="https://$APP_SERVER_IP" -u tester bash -c 'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless --template=html1/index.html --report=functional-tests.html'
+  after_script:
+    - echo "INSTANCE_ID=$INSTANCE_ID" >> app-servers.env
+    - cp /home/tester/freedombox/functional-tests.html .
+    - cp -r /home/tester/freedombox/screenshots/ .
+  artifacts:
+    when: always
+    reports:
+      dotenv: app-servers.env
+    paths:
+      - functional-tests.html
+      - screenshots/
+
+# Does not run if the previous job times out or is cancelled
+.terminate-app-server:
+  script:
+    - aws ec2 --region us-east-1 terminate-instances --instance-ids $INSTANCE_ID > /dev/null
+  tags:
+    - functional-tests
