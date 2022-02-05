@@ -63,6 +63,6 @@ def test_default_skin():
 def test_server_url():
     """Test getting and setting $wgServer."""
     assert mediawiki.get_server_url() == 'freedombox.local'
-    new_server_url = 'mydomain.freedombox.rocks'
-    mediawiki.set_server_url(new_server_url)
-    assert mediawiki.get_server_url() == new_server_url
+    new_domain = 'mydomain.freedombox.rocks'
+    mediawiki.set_server_url(new_domain)
+    assert mediawiki.get_server_url() == new_domain

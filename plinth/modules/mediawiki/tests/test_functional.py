@@ -6,8 +6,9 @@ Functional, browser based tests for mediawiki app.
 import pathlib
 from urllib.parse import urlparse
 
-import requests
 import pytest
+import requests
+
 from plinth.tests import functional
 from plinth.tests.functional import config
 
@@ -24,7 +25,7 @@ class TestMediawikiApp(functional.BaseAppTests):
         """Setup the app."""
         functional.login(session_browser)
         functional.install(session_browser, 'mediawiki')
-        _set_server_url(session_browser)
+        _set_domain(session_browser)
 
     def test_public_registrations(self, session_browser):
         """Test enabling public registrations."""
@@ -241,9 +242,9 @@ def __has_main_page(browser):
     return 'This page has been deleted.' not in content.text
 
 
-def _set_server_url(browser):
-    """Set the value of server url to the value in the given env_var."""
+def _set_domain(browser):
+    """Set the value of domain to the value in the given env_var."""
     functional.nav_to_module(browser, 'mediawiki')
-    server_url = urlparse(config['DEFAULT']['url']).netloc
-    browser.find_by_id('id_server_url').fill(server_url)
+    domain = urlparse(config['DEFAULT']['url']).netloc
+    browser.find_by_id('id_domain').fill(domain)
     functional.submit(browser, form_class='form-configuration')
