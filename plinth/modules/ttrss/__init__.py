@@ -112,10 +112,12 @@ class TTRSSBackupRestore(BackupRestore):
 
     def backup_pre(self, packet):
         """Save database contents."""
+        super().backup_pre(packet)
         actions.superuser_run('ttrss', ['dump-database'])
 
     def restore_post(self, packet):
         """Restore database contents."""
+        super().restore_post(packet)
         actions.superuser_run('ttrss', ['restore-database'])
 
 

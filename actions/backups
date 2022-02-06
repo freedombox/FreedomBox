@@ -8,6 +8,8 @@ Wrapper to handle backups using borg-backups.
 import argparse
 import json
 import os
+import pathlib
+import re
 import subprocess
 import sys
 import tarfile
@@ -16,6 +18,7 @@ from plinth.modules.backups import MANIFESTS_FOLDER
 from plinth.utils import Version
 
 TIMEOUT = 30
+BACKUPS_DATA_PATH = pathlib.Path('/var/lib/plinth/backups-data/')
 
 
 def parse_arguments():
@@ -77,6 +80,16 @@ def parse_arguments():
         help='Restore files from an exported archive')
     restore_exported_archive.add_argument('--path', help='Tarball file path',
                                           required=True)
+
+    dump_settings = subparsers.add_parser('dump-settings',
+                                          help='Dump JSON settings to a file')
+    dump_settings.add_argument('--app-id',
+                               help='ID of the app to dump settings for')
+
+    load_settings = subparsers.add_parser(
+        'load-settings', help='Load JSON settings from a file')
+    load_settings.add_argument('--app-id',
+                               help='ID of the app to load settings for')
 
     subparsers.required = True
     return parser.parse_args()
@@ -265,6 +278,32 @@ def subcommand_restore_exported_archive(arguments):
                     if path.startswith(directory):
                         tar_handle.extract(member, '/')
                         break
+
+
+def _assert_app_id(app_id):
+    """Check that app ID is correct."""
+    if not re.fullmatch(r'[a-z0-9_]+', app_id):
+        raise Exception('Invalid App ID')
+
+
+def subcommand_dump_settings(arguments):
+    """Dump an app's settings to a JSON file."""
+    app_id = arguments.app_id
+    _assert_app_id(app_id)
+    BACKUPS_DATA_PATH.mkdir(exist_ok=True)
+    settings_path = BACKUPS_DATA_PATH / f'{app_id}-settings.json'
+    settings_path.write_text(arguments.stdin)
+
+
+def subcommand_load_settings(arguments):
+    """Load an app's settings from a JSON file."""
+    app_id = arguments.app_id
+    _assert_app_id(app_id)
+    settings_path = BACKUPS_DATA_PATH / f'{app_id}-settings.json'
+    try:
+        print(settings_path.read_text())
+    except FileNotFoundError:
+        print('{}')
 
 
 def _read_encryption_passphrase(arguments):

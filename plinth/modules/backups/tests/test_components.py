@@ -3,7 +3,12 @@
 Test the App components provides by backups app.
 """
 
+import json
+from unittest.mock import call, patch
+
 import pytest
+
+from plinth import kvstore
 
 from .. import components
 from ..components import BackupRestore
@@ -16,8 +21,9 @@ def fixture_backup_restore():
     """Fixture to create a domain type after clearing all existing ones."""
     value = {'files': ['a', 'b'], 'directories': ['a', 'b']}
     services = ['service-1', {'type': 'system', 'name': 'service-2'}]
+    settings = ['setting-1', 'setting-2']
     return BackupRestore('test-backup-restore', config=value, data=value,
-                         secrets=value, services=services)
+                         secrets=value, services=services, settings=settings)
 
 
 @pytest.mark.parametrize('section', [
@@ -159,6 +165,7 @@ def test_backup_restore_init_default_arguments():
     assert component.data == {}
     assert component.secrets == {}
     assert component.services == []
+    assert component.settings == []
     assert not component.has_data
 
 
@@ -185,6 +192,22 @@ def test_backup_restore_init_services():
     assert not component.has_data
 
 
+def test_backup_restore_init_settings():
+    """Test initialization of the backup restore object."""
+    with pytest.raises(AssertionError):
+        BackupRestore('test-backup-restore', settings='invalid-value')
+
+    settings = ['setting1', 'setting2']
+    component = BackupRestore('test-backup-restore', settings=settings)
+    assert component.settings == settings
+    assert component.has_data
+    assert component.data == {}
+
+    component.app_id = 'testapp'
+    settings_file = '/var/lib/plinth/backups-data/testapp-settings.json'
+    assert component.data == {'files': [settings_file]}
+
+
 def test_backup_restore_equal(backup_restore):
     """Test equality operator on the backup restore object."""
     assert backup_restore == BackupRestore('test-backup-restore')
@@ -199,6 +222,7 @@ def test_backup_restore_manifest(backup_restore):
     assert manifest['data'] == backup_restore.data
     assert manifest['secrets'] == backup_restore.secrets
     assert manifest['services'] == backup_restore.services
+    assert manifest['settings'] == backup_restore.settings
 
     assert BackupRestore('test-backup-restore').manifest == {}
 
@@ -206,7 +230,47 @@ def test_backup_restore_manifest(backup_restore):
 def test_backup_restore_hooks(backup_restore):
     """Test running hooks on backup restore object."""
     packet = None
-    backup_restore.backup_pre(packet)
     backup_restore.backup_post(packet)
     backup_restore.restore_pre(packet)
+
+
+@pytest.mark.django_db
+@patch('plinth.actions.superuser_run')
+def test_backup_restore_backup_pre(run, backup_restore):
+    """Test running backup-pre hook."""
+    packet = None
+    kvstore.set('setting-1', 'value-1')
+    backup_restore.app_id = 'testapp'
+
+    component = BackupRestore('test-backup-restore')
+    component.backup_pre(packet)
+    run.assert_has_calls([])
+
+    backup_restore.backup_pre(packet)
+    input_ = {'setting-1': 'value-1'}
+    run.assert_has_calls([
+        call('backups', ['dump-settings', '--app-id', 'testapp'],
+             input=json.dumps(input_).encode())
+    ])
+
+
+@pytest.mark.django_db
+@patch('plinth.actions.superuser_run')
+def test_backup_restore_restore_post(run, backup_restore):
+    """Test running restore-post hook."""
+    packet = None
+    backup_restore.app_id = 'testapp'
+
+    component = BackupRestore('test-backup-restore')
+    component.restore_post(packet)
+    run.assert_has_calls([])
+
+    output = {'setting-1': 'value-1'}
+    run.return_value = json.dumps(output)
     backup_restore.restore_post(packet)
+    run.assert_has_calls(
+        [call('backups', ['load-settings', '--app-id', 'testapp'])])
+
+    assert kvstore.get('setting-1') == 'value-1'
+    with pytest.raises(Exception):
+        kvstore.get('setting-2')

@@ -153,6 +153,7 @@ class GitwebBackupRestore(BackupRestore):
 
     def restore_post(self, packet):
         """Update access after restoration of backups."""
+        super().restore_post(packet)
         app.update_service_access()
 
 
