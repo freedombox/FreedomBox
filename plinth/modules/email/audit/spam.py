@@ -3,14 +3,12 @@
 
 import glob
 import logging
-import re
 import subprocess
 
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth.modules.email import interproc, lock, postconf
-from plinth.modules.email.modconf import ConfigInjector
 
 from . import models
 
@@ -73,12 +71,6 @@ egress_filter_cleanup_options = {
     'nested_header_checks': ''
 }
 
-# Rspamd config
-
-rspamd_re = re.compile('#[ ]*--[ ]*([A-Z]{3,5})[ ]+FREEDOMBOX CONFIG$')
-rspamd_format = '#-- {} FREEDOMBOX CONFIG'
-
-rspamd_mutex = lock.Mutex('rspamd-config')
 logger = logging.getLogger(__name__)
 
 
@@ -115,20 +107,6 @@ def action_set_filter():
 
     with postconf.mutex.lock_all():
         fix_filter(check_filter())
-
-    injector = ConfigInjector(rspamd_re, rspamd_format)
-    with rspamd_mutex.lock_all():
-        # XXX Maybe use globbing?
-        _inject_rspamd_config(injector, 'override', 'options.inc')
-        _inject_rspamd_config(injector, 'local', 'milter_headers.conf')
-
-
-def _inject_rspamd_config(injector, type, name):
-    template_path = '/etc/plinth/rspamd-config/%s_%s' % (type, name)
-    config_path = '/etc/rspamd/%s.d/%s' % (type, name)
-
-    logger.info('Opening Rspamd config file %s', config_path)
-    injector.do_template_file(template_path, config_path)
 
 
 def _compile_sieve():
