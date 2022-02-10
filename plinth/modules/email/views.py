@@ -125,6 +125,10 @@ class AliasView(FormView):
 
 
 class XmlView(TemplateView):
+    """Serve Thunderbird auto-configuration file.
+
+    https://wiki.mozilla.org/Thunderbird:Autoconfiguration:ConfigFileFormat
+    """
     template_name = 'email-autoconfig.xml'
 
     def render_to_response(self, *args, **kwargs):
