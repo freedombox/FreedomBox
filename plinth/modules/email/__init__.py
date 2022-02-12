@@ -76,13 +76,9 @@ class EmailApp(plinth.app.App):
             'packages-email', [
                 'postfix', 'postfix-ldap', 'postfix-sqlite', 'dovecot-pop3d',
                 'dovecot-imapd', 'dovecot-ldap', 'dovecot-lmtpd',
-                'dovecot-managesieved'
+                'dovecot-managesieved', 'rspamd', 'redis-server'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
             conflicts_action=Packages.ConflictsAction.IGNORE)
-        self.add(packages)
-
-        packages = Packages('packages-email-skip-rec', ['rspamd'],
-                            skip_recommends=True)
         self.add(packages)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
@@ -103,6 +99,10 @@ class EmailApp(plinth.app.App):
                         (11333, 'tcp6'), (11334, 'tcp4'), (11334, 'tcp6')]
         daemon = Daemon('daemon-email-rspamd', 'rspamd',
                         listen_ports=listen_ports)
+        self.add(daemon)
+
+        daemon = Daemon('daemon-email-redis', 'redis-server',
+                        listen_ports=[(6379, 'tcp4'), (6379, 'tcp6')])
         self.add(daemon)
 
         port_names = ['smtp', 'smtps', 'smtp-submission', 'imaps', 'pop3s']
