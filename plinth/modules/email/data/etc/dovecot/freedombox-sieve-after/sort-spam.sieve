@@ -1,8 +1,5 @@
 require ["fileinto", "mailbox"];
 
-if anyof(header :contains "X-Spam" "Yes",
-         header :contains "X-Spam-Status" "Yes",
-         header :matches "X-Spam-Flag" "YES") {
+if header :is "X-Spam" "Yes" {
   fileinto :create "Junk";
-  stop;
 }
