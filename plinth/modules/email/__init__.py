@@ -105,7 +105,9 @@ class EmailApp(plinth.app.App):
                         listen_ports=[(6379, 'tcp4'), (6379, 'tcp6')])
         self.add(daemon)
 
-        port_names = ['smtp', 'smtps', 'smtp-submission', 'imaps', 'pop3s']
+        port_names = [
+            'smtp', 'smtps', 'smtp-submission', 'imaps', 'pop3s', 'managesieve'
+        ]
         firewall = Firewall('firewall-email', info.name, ports=port_names,
                             is_external=True)
         self.add(firewall)
