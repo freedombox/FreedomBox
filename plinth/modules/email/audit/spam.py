@@ -7,33 +7,31 @@ from plinth import actions
 from plinth.modules.email import postconf
 
 milter_config = {
-    'milter_mail_macros': 'i ' + ' '.join([
-        '{auth_type}', '{auth_authen}', '{auth_author}',
-        '{client_addr}', '{client_name}',
-        '{mail_addr}', '{mail_host}', '{mail_mailer}'
-    ]),
+    'milter_mail_macros':
+        'i ' + ' '.join([
+            '{auth_type}', '{auth_authen}', '{auth_author}', '{client_addr}',
+            '{client_name}', '{mail_addr}', '{mail_host}', '{mail_mailer}'
+        ]),
     # XXX In postconf this field is a list
-    'smtpd_milters': 'inet:127.0.0.1:11332',
+    'smtpd_milters':
+        'inet:127.0.0.1:11332',
     # XXX In postconf this field is a list
-    'non_smtpd_milters': 'inet:127.0.0.1:11332',
-    'milter_header_checks': 'regexp:fbx-managed/pre-queue-milter-headers',
+    'non_smtpd_milters':
+        'inet:127.0.0.1:11332',
+    'milter_header_checks':
+        'regexp:fbx-managed/pre-queue-milter-headers',
 
     # Last-resort internal header cleanup at smtp client
-    'smtp_header_checks': 'regexp:/etc/postfix/freedombox-internal-cleanup',
-    # Reserved mail transports
-    # XXX This field is a list
-    'transport_maps': 'regexp:/etc/postfix/freedombox-transport-to',
-    # XXX This field is a list
-    'sender_dependent_default_transport_maps': \
-    'regexp:/etc/postfix/freedombox-transport-from',
+    'smtp_header_checks':
+        'regexp:/etc/postfix/freedombox-internal-cleanup',
 }
 
 # FreedomBox egress filtering
 
-egress_filter = postconf.ServiceFlags(
-    service='127.0.0.1:10025', type='inet', private='n', unpriv='-',
-    chroot='y', wakeup='-', maxproc='-', command_args='smtpd'
-)
+egress_filter = postconf.ServiceFlags(service='127.0.0.1:10025', type='inet',
+                                      private='n', unpriv='-', chroot='y',
+                                      wakeup='-', maxproc='-',
+                                      command_args='smtpd')
 
 egress_filter_options = {
     'syslog_name': 'postfix/fbxout',
@@ -47,10 +45,11 @@ egress_filter_options = {
     'mynetworks': '127.0.0.0/8,[::1]/128'
 }
 
-egress_filter_cleanup = postconf.ServiceFlags(
-    service='fbxcleanup', type='unix', private='n', unpriv='-',
-    chroot='y', wakeup='-', maxproc='0', command_args='cleanup'
-)
+egress_filter_cleanup = postconf.ServiceFlags(service='fbxcleanup',
+                                              type='unix', private='n',
+                                              unpriv='-', chroot='y',
+                                              wakeup='-', maxproc='0',
+                                              command_args='cleanup')
 
 egress_filter_cleanup_options = {
     'syslog_name': 'postfix/fbxout',
