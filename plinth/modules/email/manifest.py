@@ -64,7 +64,6 @@ backup = {
     'data': {
         'files': ['/etc/aliases', ],
         'directories': [
-            '/var/spool/postfix/fbx-managed/',
             '/etc/postfix/',
             '/etc/dovecot/conf.d/',
             '/etc/rspamd/',
