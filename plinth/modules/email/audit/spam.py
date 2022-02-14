@@ -1,16 +1,10 @@
 """Configures spam filters and the virus scanner"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-import glob
-import logging
 import subprocess
 
-from django.utils.translation import gettext_lazy as _
-
 from plinth import actions
-from plinth.modules.email import interproc, lock, postconf
-
-from . import models
+from plinth.modules.email import postconf
 
 milter_config = {
     'milter_mail_macros': 'i ' + ' '.join([
@@ -71,32 +65,8 @@ egress_filter_cleanup_options = {
     'nested_header_checks': ''
 }
 
-logger = logging.getLogger(__name__)
-
-
-def get():
-    translation_table = [
-        (check_filter, _('Inbound and outbound mail filters')),
-    ]
-    results = []
-    with postconf.mutex.lock_all():
-        for check, title in translation_table:
-            results.append(check(title))
-    return results
-
-
 def repair():
     actions.superuser_run('email', ['spam', 'set_filter'])
-
-
-def check_filter(title=''):
-    diagnosis = models.MainCfDiagnosis(title)
-    diagnosis.compare(milter_config, postconf.get_many_unsafe)
-    return diagnosis
-
-
-def fix_filter(diagnosis):
-    diagnosis.apply_changes(postconf.set_many_unsafe)
 
 
 def action_set_filter():
@@ -105,20 +75,10 @@ def action_set_filter():
     postconf.set_master_cf_options(egress_filter_cleanup,
                                    egress_filter_cleanup_options)
 
-    with postconf.mutex.lock_all():
-        fix_filter(check_filter())
+    postconf.set_many(milter_config)
 
 
 def _compile_sieve():
-    sieve_list = glob.glob('/etc/dovecot/freedombox-sieve-after/*.sieve')
-    for sieve_file in sieve_list:
-        _run_sievec(sieve_file)
-
-
-def _run_sievec(sieve_file):
-    logger.info('Compiling sieve script %s', sieve_file)
-    args = ['sievec', '--', sieve_file]
-    completed = subprocess.run(args, capture_output=True, check=False)
-    if completed.returncode != 0:
-        interproc.log_subprocess(completed)
-        raise OSError('Sieve compilation failed: ' + sieve_file)
+    """Compile all .sieve script to binary format for performance."""
+    sieve_dir = '/etc/dovecot/freedombox-sieve-after/'
+    subprocess.run(['sievec', sieve_dir], check=True)

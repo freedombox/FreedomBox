@@ -146,7 +146,6 @@ class EmailApp(plinth.app.App):
         """Run diagnostics and return the results"""
         results = super().diagnose()
         results.extend([r.summarize() for r in audit.ldap.get()])
-        results.extend([r.summarize() for r in audit.spam.get()])
         return results
 
 
