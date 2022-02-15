@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2022-02-06 23:23+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -866,7 +866,7 @@ msgid "No passwords currently configured."
 msgstr "S’ka fjalëkalime aktualisht të formësuar."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Fjalëkalim"
@@ -1014,9 +1014,10 @@ msgid "Refresh IP address and domains"
 msgstr "Rifresko adresë IP dhe përkatësi"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1216,7 +1217,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Formësim i Përgjithshëm"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1224,13 +1225,13 @@ msgid "Configure"
 msgstr "Formësoni"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Emër Përkatësie"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Emër i pavlefshëm përkatësie"
 
@@ -1375,8 +1376,8 @@ msgid ""
 "be configured with the details provided here."
 msgstr ""
 "S’është menduar të përdoret drejtpërsëdrejti nga përdoruesit. Shërbyes të "
-"tillë si <a href=\"{ms_url}\">Matrix Synapse</a>, ose <a href=\"{e_url}\""
-">ejabberd</a> duhen formësuar me hollësitë e dhëna këtu."
+"tillë si <a href=\"{ms_url}\">Matrix Synapse</a>, ose <a href="
+"\"{e_url}\">ejabberd</a> duhen formësuar me hollësitë e dhëna këtu."
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
@@ -1581,6 +1582,7 @@ msgid "Test"
 msgstr "Provë"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Përfundim"
 
@@ -1588,7 +1590,7 @@ msgstr "Përfundim"
 msgid "Diagnostic Test"
 msgstr "Test Diagnostikimesh"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1600,7 +1602,7 @@ msgstr ""
 "Internet. Kjo do t’u pengojë të tjerëve të gjejnë shërbime të cilat ofrohen "
 "nga ky {box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1618,15 +1620,35 @@ msgstr ""
 "emrin tuaj DNS me IP-në e re, dhe nëse dikush në Internet kërkon për emrin "
 "tuaj DNS, do të marrë një përgjigje me adresën tuaj aktuale IP."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
+#| "freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Nëse po kërkoni për një llogari falas DNS-je dinamike, mund të gjeni një "
+"shërbim GnuDIP të lirë, te <a href=\"http://ddns.freedombox.org' "
+"target='_blank'>ddns.freedombox.org&lt;/a>, ose mund të gjeni shërbime të "
+"lira me bazë përditësim URL-je, te &lt;a href=\" target=\"_blank\"> freedns."
+"afraid.org</a>."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Klient DNS Dinamik"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Emër Dinamik Përkatësie"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1636,7 +1658,7 @@ msgstr ""
 "përdoren brenda URL-së. Për hollësi, shihni gjedhet e përditësimit të URL-së "
 "për shembuj furnizuesish."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1647,7 +1669,7 @@ msgstr ""
 "nëse furnizuesi juaj nuk duket te lista, mund të përdorni URL-n e "
 "përditësimit të furnizuesit tuaj."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1655,19 +1677,19 @@ msgstr ""
 "Ju lutemi, mos jepni një URL këtu (bie fjala, “https://example.com/”), por "
 "vetëm strehëemrin e shërbyesit GnuDIP (p.sh., “example.com”)."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Emri publik i përkatësisë që doni të përdoret për të kapur {box_name} tuaj."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Përdoreni këtë mundësi, nëse furnizuesi juaj i shërbimeve përdor dëshmi të "
 "vetënënshkruara."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1675,12 +1697,12 @@ msgstr ""
 "Nëse kjo mundësi është përzgjedhur, emri i përdoruesit dhe fjalëkalimi për "
 "ju do të përdoren për mirëfilltësim elementa HTTP."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Nëse doni të mbahet fjalëkalimi i tanishëm, lëreni të zbrazët këtë fushë."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1688,165 +1710,73 @@ msgid ""
 "address. The URL should simply return the IP where the client comes from "
 "(example: https://ddns.freedombox.org/ip/)."
 msgstr ""
-"Vlerë Opsionale. Nëse {box_name} juaj s’lidhet drejtpërsëdrejti në Internet ("
-"p.sh., i lidhur me një rrugëzues NAT), kjo URL përdoret për të përcaktuar "
+"Vlerë Opsionale. Nëse {box_name} juaj s’lidhet drejtpërsëdrejti në Internet "
+"(p.sh., i lidhur me një rrugëzues NAT), kjo URL përdoret për të përcaktuar "
 "adresën e njëmendtë IP. URL-ja thjesht duhet të japë IP-në prej nga vjen "
 "klienti (shembull: https://ddns.freedombox.org/ip/)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "Emri i përdoruesit që u përdor kur u krijua llogaria."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "tjetër URL përditësimesh"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Aktivizo DNS Dinamik"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Lloj Shërbimi"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "Adresë Shërbyesi GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Emër i pavlefshëm shërbyesi"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "URL Përditësimi"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Prano krejt dëshmitë SSL"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "Përdor mirëfilltësim elementar HTTP"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Emër përdoruesi"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Shfaq fjalëkalim"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "URL ku të kërkohet IP publike"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr "Përdor IPv6, në vend se IPv4"
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Ju lutemi, jepni një URL përditësimi ose një adresë shërbyesi GnuDIP"
+#: plinth/modules/dynamicdns/forms.py:123
+#, fuzzy
+#| msgid "secrets required"
+msgid "This field is required."
+msgstr "lyp të fshehta"
 
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Ju lutemi, jepni një emër përdoruesi GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Ju lutemi, jepni një emër përkatësie GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Ju lutemi, jepni një fjalëkalim"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"Nëse po kërkoni për një llogari falas DNS-je dinamike, mund të gjeni një "
-"shërbim GnuDIP të lirë, te <a href=\"http://ddns.freedombox.org' "
-"target='_blank'>ddns.freedombox.org&lt;/a>, ose mund të gjeni shërbime të "
-"lira me bazë përditësim URL-je, te &lt;a href=\" target=\"_blank\"> freedns."
-"afraid.org</a>."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Nëse %(box_name)s juaj gjendet pas një rrugëzuesi NAT, mos harroni të shtoni "
-"përcjellje portash për porta standarde, përfshi portën TCP 80 (HTTP) dhe "
-"portën TCP 443 (HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Keni çaktivizuar Javascript-in. Mënyra e formularëve dinamikë është e "
-"çaktivizuar dhe disa funksione ndihmës mund të mos funksionojnë (por "
-"funksionet kryesore duhet të punojnë)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Përditësoni ujdisjen"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "Lloj NAT-i"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"S’është pikasur ende lloj NAT-i. Nëse s’jepni një “URL Kontrolli IP-je”, "
-"s’do të pikasim lloj NAT-i."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Lidhje e drejtpërdrejtë në Internet."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"Pas NAT-i. Kjo do të thotë që shërbimi DNS Dinamik do të vëzhgojë “URL ku të "
-"kërkohet IP publike” për ndryshime (zëri “URL ku të kërkohet IP publike” "
-"është i domosdoshëm për këtë, përndryshe ndryshimet e IP-së s’do të pikasen "
-"dot). Në rast ndryshimet IP-je WAN, mund të duhen deri në %(timer)s minuta, "
-"para se të përditësohet zëri juaj DNS."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Përditësimi i fundit më"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Mbi"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1860,13 +1790,60 @@ msgstr "Mbi"
 msgid "Status"
 msgstr "Gjendje"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Formësoni DNS Dinamik"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Përkatësi"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Gjendje DNS Dinamik"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Përditësimi i fundit më"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "Adresë IP"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Hyrje"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "dështoi"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "S’ka biblioteka."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Emër Lidhjeje"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Fshije lidhjen"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Already up-to-date"
+msgstr "Aktivio vetëpërditësim"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2458,6 +2435,11 @@ msgstr "Parashtroni Përshtypjet"
 msgid "Contribute"
 msgstr "Jepni Ndihmesë"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Mbi"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2901,6 +2883,13 @@ msgstr "Kalo te sajti %(site)s"
 msgid "Delete site %(site)s"
 msgstr "Fshije sajtin %(site)s"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Përditësoni ujdisjen"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3046,10 +3035,6 @@ msgstr "Dëshmi"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Përkatësi"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3428,8 +3413,8 @@ msgstr ""
 "Minetest është një bankëprovë blloqesh lojërash “botë e pafundme” me shumë "
 "lojëtarë. Ky modul i bën të mundur shërbyesit Minetest të xhirojë mbi këtë "
 "{box_name}, në portën parazgjedhje (30000). Që të lidheni me shërbyesin, "
-"lypset një <a href=\"http://www.minetest.net/downloads/\">klient "
-"Minetest</a>."
+"lypset një <a href=\"http://www.minetest.net/downloads/\">klient Minetest</"
+"a>."
 
 #: plinth/modules/minetest/__init__.py:59 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
@@ -3492,22 +3477,6 @@ msgstr "Adresë"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Portë"
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr "Formësimi për maksimumin e lojtarëve u përditësua"
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr "Formësimi për “mënyrë krijuese” u përditësua"
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr "Formësimi PVP u përditësua"
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
-msgstr "Formësimi i dëmtuar u përditësua"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -4563,9 +4532,8 @@ msgid ""
 msgstr ""
 "Nëse s’keni kontrollin e rrugëzuesit tuaj, zgjidhni të mos formësohet. Që të "
 "shihni mundësitë për kapërcimin e këtij kufizimi, zgjidhni mundësinë “S’kam "
-"adresë IP publike”, te <a href=\"/plinth/sys/networks/"
-"internet-connection-type/\">përzgjedhja e llojit të lidhjes tuaj "
-"Internet</a>."
+"adresë IP publike”, te <a href=\"/plinth/sys/networks/internet-connection-"
+"type/\">përzgjedhja e llojit të lidhjes tuaj Internet</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -6760,11 +6728,11 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"Mund të merrni ndonjë urë prej <a href=\"https://bridges.torproject.org/\""
-">https://bridges.torproject.org/</a> dhe të kopjoni/ngjitni hollësitë e urës "
-"këtu. Transportet që mbulohen tani janë &lt;em&gt;asnjë&lt;/em&gt;, "
-"&lt;em&gt;obfs3&lt;/em&gt;, &lt;em&gt;obfs4&lt;/em&gt; dhe "
-"&lt;em&gt;scamblesuit&lt;/em&gt;."
+"Mund të merrni ndonjë urë prej <a href=\"https://bridges.torproject.org/"
+"\">https://bridges.torproject.org/</a> dhe të kopjoni/ngjitni hollësitë e "
+"urës këtu. Transportet që mbulohen tani janë &lt;em&gt;asnjë&lt;/em&gt;, &lt;"
+"em&gt;obfs3&lt;/em&gt;, &lt;em&gt;obfs4&lt;/em&gt; dhe &lt;em&gt;"
+"scamblesuit&lt;/em&gt;."
 
 #: plinth/modules/tor/forms.py:92
 msgid "Enable Tor relay"
@@ -6827,7 +6795,8 @@ msgstr ""
 
 #: plinth/modules/tor/forms.py:128
 msgid "Specify at least one upstream bridge to use upstream bridges."
-msgstr "Që të përdoren ura “upstream”, përcaktoni të paktën një urë “upstream”."
+msgstr ""
+"Që të përdoren ura “upstream”, përcaktoni të paktën një urë “upstream”."
 
 #: plinth/modules/tor/manifest.py:13
 msgid "Tor Browser"
@@ -6917,8 +6886,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
-"Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga cilido <a href=\""
-"{users_url}\">përdorues me kredenciale hyrjeje në {box_name}</a>."
+"Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga cilido <a href="
+"\"{users_url}\">përdorues me kredenciale hyrjeje në {box_name}</a>."
 
 #: plinth/modules/ttrss/__init__.py:31
 msgid ""
@@ -7084,8 +7053,8 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
-"%(box_name)s është përditësuar me versionin %(version)s. Shihni <a href=\""
-"%(url)s\">njoftimin mbi hedhjen në qarkullim</a>."
+"%(box_name)s është përditësuar me versionin %(version)s. Shihni <a href="
+"\"%(url)s\">njoftimin mbi hedhjen në qarkullim</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
@@ -7191,8 +7160,13 @@ msgid "Frequent feature updates activated."
 msgstr "Përditësime të shpeshta veçorish të aktivizuara."
 
 #: plinth/modules/users/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "Create and managed user accounts. These accounts serve as centralized "
+#| "authentication mechanism for most apps. Some apps further require a user "
+#| "account to be part of a group to authorize the user to access the app."
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -7267,10 +7241,10 @@ msgid ""
 msgstr ""
 "Përzgjidhni cilat shërbime të jenë të passhme për përdoruesin e ri. "
 "Përdoruesi do të jetë në gjendje të bëjë hyrjen te shërbime që mbulojnë "
-"hyrje njëshe përmes LDAP-i, nëse gjenden në grupin e "
-"duhur.<br><br>Përdoruesit në grupin e përgjegjësve do të jenë në gjendje të "
-"hyjnë në krejt shërbimet. Munden edhe të hyjnë në sistem përmes SSH-së dhe "
-"të kenë privilegje administrative (sudo)."
+"hyrje njëshe përmes LDAP-i, nëse gjenden në grupin e duhur."
+"<br><br>Përdoruesit në grupin e përgjegjësve do të jenë në gjendje të hyjnë "
+"në krejt shërbimet. Munden edhe të hyjnë në sistem përmes SSH-së dhe të kenë "
+"privilegje administrative (sudo)."
 
 #: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
@@ -7435,8 +7409,8 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"Që të ndryshoni fjalëkalimin, përdorni <a href=\"%(change_password_url)s\""
-">formularin e ndryshimit të fjalëkalimeve</a>."
+"Që të ndryshoni fjalëkalimin, përdorni <a href=\"%(change_password_url)s"
+"\">formularin e ndryshimit të fjalëkalimeve</a>."
 
 #: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
@@ -7516,8 +7490,8 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"Kyç publik i ortakut. Shembull: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= "
-"."
+"Kyç publik i ortakut. Shembull: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"
@@ -7957,7 +7931,8 @@ msgstr "Elementar"
 #: plinth/package.py:94
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
-msgstr "Paketa {package_name} gjendet nën versionin më të ri ({latest_version})"
+msgstr ""
+"Paketa {package_name} gjendet nën versionin më të ri ({latest_version})"
 
 #: plinth/package.py:245
 msgid "Error during installation"
@@ -8160,8 +8135,8 @@ msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
 "this page."
 msgstr ""
-"Që të shtohen shkurtore te kjo faqe, aktivizoni ca <a href=\"%(apps_url)s\""
-">aplikacione</a>."
+"Që të shtohen shkurtore te kjo faqe, aktivizoni ca <a href=\"%(apps_url)s"
+"\">aplikacione</a>."
 
 #: plinth/templates/index.html:108
 #, python-format
@@ -8352,6 +8327,85 @@ msgstr "%(percentage)s%% e plotësuar"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Aktivizo DNS Dinamik"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr ""
+#~ "Ju lutemi, jepni një URL përditësimi ose një adresë shërbyesi GnuDIP"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Ju lutemi, jepni një emër përdoruesi GnuDIP"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Ju lutemi, jepni një emër përkatësie GnuDIP"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Ju lutemi, jepni një fjalëkalim"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Nëse %(box_name)s juaj gjendet pas një rrugëzuesi NAT, mos harroni të "
+#~ "shtoni përcjellje portash për porta standarde, përfshi portën TCP 80 "
+#~ "(HTTP) dhe portën TCP 443 (HTTPS)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Keni çaktivizuar Javascript-in. Mënyra e formularëve dinamikë është e "
+#~ "çaktivizuar dhe disa funksione ndihmës mund të mos funksionojnë (por "
+#~ "funksionet kryesore duhet të punojnë)."
+
+#~ msgid "NAT type"
+#~ msgstr "Lloj NAT-i"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "S’është pikasur ende lloj NAT-i. Nëse s’jepni një “URL Kontrolli IP-je”, "
+#~ "s’do të pikasim lloj NAT-i."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Lidhje e drejtpërdrejtë në Internet."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "Pas NAT-i. Kjo do të thotë që shërbimi DNS Dinamik do të vëzhgojë “URL ku "
+#~ "të kërkohet IP publike” për ndryshime (zëri “URL ku të kërkohet IP "
+#~ "publike” është i domosdoshëm për këtë, përndryshe ndryshimet e IP-së s’do "
+#~ "të pikasen dot). Në rast ndryshimet IP-je WAN, mund të duhen deri në "
+#~ "%(timer)s minuta, para se të përditësohet zëri juaj DNS."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Formësoni DNS Dinamik"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Gjendje DNS Dinamik"
+
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "Formësimi për maksimumin e lojtarëve u përditësua"
+
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Formësimi për “mënyrë krijuese” u përditësua"
+
+#~ msgid "PVP configuration updated"
+#~ msgstr "Formësimi PVP u përditësua"
+
+#~ msgid "Damage configuration updated"
+#~ msgstr "Formësimi i dëmtuar u përditësua"
 
 #, fuzzy
 #~| msgid "unavailable"

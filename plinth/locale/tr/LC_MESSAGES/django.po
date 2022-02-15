@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2022-02-02 08:55+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -859,7 +859,7 @@ msgid "No passwords currently configured."
 msgstr "Şu anda yapılandırılmış parolalar yok."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Parola"
@@ -1006,9 +1006,10 @@ msgid "Refresh IP address and domains"
 msgstr "IP adresi ve etki alanlarını yenile"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1205,7 +1206,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Genel Yapılandırma"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1213,13 +1214,13 @@ msgid "Configure"
 msgstr "Yapılandır"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Etki Alanı Adı"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Geçersiz etki alanı adı"
 
@@ -1567,6 +1568,7 @@ msgid "Test"
 msgstr "Deneme"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Sonuç"
 
@@ -1574,7 +1576,7 @@ msgstr "Sonuç"
 msgid "Diagnostic Test"
 msgstr "Tanı Denemesi"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1586,7 +1588,7 @@ msgstr ""
 "başkalarının bu {box_name} tarafından sağlanan hizmetleri bulmasını "
 "engelleyecektir."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1603,15 +1605,35 @@ msgstr ""
 "sunucu DNS adınızı yeni IP'ye atayacaktır ve İnternet'ten birisi sizin DNS "
 "adınızı sorarsa, şu anki IP adresinizle bir yanıt alacaktır."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
+#| "freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Eğer ücretsiz bir değişken DNS hesabı arıyorsanız, ücretsiz bir GnuDIP "
+"hizmetini <a href=\"https://ddns.freedombox.org\" target=\"_blank\">ddns."
+"freedombox.org</a> adresinde veya ücretsiz URL güncelleme tabanlı hizmetleri "
+"<a href=\"https://freedns.afraid.org/\" target=\"_blank\">freedns.afraid."
+"org</a> adresinde bulabilirsiniz."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Değişken DNS İstemcisi"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Değişken Etki Alanı Adı"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1621,7 +1643,7 @@ msgstr ""
 "içinde kullanılabilir. Ayrıntılar için örnek sağlayıcıların URL güncelleme "
 "şablonlarına bakın."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1631,7 +1653,7 @@ msgstr ""
 "GnuDIP protokolünü desteklemiyorsa veya sağlayıcınız listede yoksa, "
 "sağlayıcınızın güncelleme URL'sini kullanabilirsiniz."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1639,19 +1661,19 @@ msgstr ""
 "Lütfen buraya bir URL (\"https://ornek.com/\" gibi) girmeyin, sadece GnuDIP "
 "sunucusunun anamakine adını (\"ornek.com\" gibi) girin."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "{box_name} cihazınıza ulaşmak için kullanmak istediğiniz herkese açık etki "
 "alanı adı."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Sağlayıcınız kendinden imzalı sertifikalar kullanıyorsa bu seçeneği kullanın."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1659,11 +1681,11 @@ msgstr ""
 "Eğer bu seçenek seçilirse, kullanıcı adınız ve parolanız HTTP temel kimlik "
 "doğrulaması için kullanılacaktır."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Şu anki parolanızı korumak istiyorsanız bu alanı boş bırakın."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1676,160 +1698,68 @@ msgstr ""
 "belirlemek için kullanılır. URL, istemcinin geldiği IP'yi döndürmelidir "
 "(örnek: https://ddns.freedombox.org/ip/)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "Hesap oluşturulduğunda kullanılan kullanıcı adı."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "diğer güncelleme URL'si"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Değişken DNS'i etkinleştir"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Hizmet Türü"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Sunucu Adresi"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Geçersiz sunucu adı"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "Güncelleme URL'si"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Tüm SSL sertifikalarını kabul et"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "HTTP temel kimlik doğrulamasını kullan"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Kullanıcı adı"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Parolayı göster"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "Dış IP'yi aramak için URL"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr "IPv4 yerine IPv6 kullan"
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Lütfen bir güncelleme URL'si ya da bir GnuDIP sunucu adresi girin"
+#: plinth/modules/dynamicdns/forms.py:123
+#, fuzzy
+#| msgid "secrets required"
+msgid "This field is required."
+msgstr "gizli anahtarlar gerekli"
 
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Lütfen bir GnuDIP kullanıcı adı girin"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Lütfen bir GnuDIP etki alanı adı girin"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Lütfen bir parola girin"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"Eğer ücretsiz bir değişken DNS hesabı arıyorsanız, ücretsiz bir GnuDIP "
-"hizmetini <a href=\"https://ddns.freedombox.org\" target=\"_blank\">ddns."
-"freedombox.org</a> adresinde veya ücretsiz URL güncelleme tabanlı hizmetleri "
-"<a href=\"https://freedns.afraid.org/\" target=\"_blank\">freedns.afraid."
-"org</a> adresinde bulabilirsiniz."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Eğer %(box_name)s cihazınız bir NAT yönlendiricisinin arkasına bağlıysa, TCP "
-"bağlantı noktası 80 (HTTP) ve TCP bağlantı noktası 443 (HTTPS) dahil olmak "
-"üzere standart bağlantı noktaları için bağlantı noktası yönlendirme eklemeyi "
-"unutmayın."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Javascript'i etkisizleştirdiniz. Değişken biçim kipi etkisizleştirildi ve "
-"bazı yardımcı işlevler çalışmayabilir (ancak ana işlevsellik çalışmalıdır)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Ayarlamayı güncelle"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "NAT türü"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"NAT türü henüz algılanmadı. Eğer bir \"IP Denetim URL'si\" girmezseniz, bir "
-"NAT türü saptayamayacağız."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "İnternet'e doğrudan bağlantı."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"NAT arkasında. Bu, Değişken DNS hizmetinin değişiklikler için \"Dış IP'yi "
-"aramak için URL\"yi yoklayacağı anlamına gelir (bunun için \"Dış IP'yi "
-"aramak için URL\" girişi gereklidir, aksi takdirde IP değişiklikleri "
-"algılanmayacaktır). WAN IP'sinin değişmesi durumunda, DNS girişinizin "
-"güncellenmesi %(timer)s dakika kadar sürebilir."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Son güncelleme"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Hakkında"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1843,13 +1773,60 @@ msgstr "Hakkında"
 msgid "Status"
 msgstr "Durum"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Değişken DNS'i Yapılandır"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Etki Alanı"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Değişken DNS Durumu"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Son güncelleme"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "IP adresi"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Erişim"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "başarısız"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "Kullanılabilir kütüphane yok."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Bağlantı Adı"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Bağlantıyı sil"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Last update"
+msgid "Already up-to-date"
+msgstr "Son güncelleme"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2445,6 +2422,11 @@ msgstr "Geri Bildirim Gönder"
 msgid "Contribute"
 msgstr "Katkıda Bulun"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Hakkında"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2882,6 +2864,13 @@ msgstr "%(site)s sitesine git"
 msgid "Delete site %(site)s"
 msgstr "%(site)s sitesini sil"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Ayarlamayı güncelle"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3027,10 +3016,6 @@ msgstr "Sertifikalar"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr "Denenemiyor: Hiçbir etki alanı yapılandırılmamış."
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Etki Alanı"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3470,22 +3455,6 @@ msgstr "Adres"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Bağlantı noktası"
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr "En fazla oyuncu yapılandırması güncellendi"
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr "Yaratıcı kipi yapılandırması güncellendi"
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr "PVP yapılandırması güncellendi"
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
-msgstr "Hasar yapılandırması güncellendi"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -7148,8 +7117,13 @@ msgid "Frequent feature updates activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
 #: plinth/modules/users/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "Create and managed user accounts. These accounts serve as centralized "
+#| "authentication mechanism for most apps. Some apps further require a user "
+#| "account to be part of a group to authorize the user to access the app."
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -8304,6 +8278,85 @@ msgstr "%%%(percentage)s tamamlandı"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Değişken DNS'i etkinleştir"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "Lütfen bir güncelleme URL'si ya da bir GnuDIP sunucu adresi girin"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Lütfen bir GnuDIP kullanıcı adı girin"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Lütfen bir GnuDIP etki alanı adı girin"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Lütfen bir parola girin"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Eğer %(box_name)s cihazınız bir NAT yönlendiricisinin arkasına bağlıysa, "
+#~ "TCP bağlantı noktası 80 (HTTP) ve TCP bağlantı noktası 443 (HTTPS) dahil "
+#~ "olmak üzere standart bağlantı noktaları için bağlantı noktası yönlendirme "
+#~ "eklemeyi unutmayın."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Javascript'i etkisizleştirdiniz. Değişken biçim kipi etkisizleştirildi ve "
+#~ "bazı yardımcı işlevler çalışmayabilir (ancak ana işlevsellik "
+#~ "çalışmalıdır)."
+
+#~ msgid "NAT type"
+#~ msgstr "NAT türü"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "NAT türü henüz algılanmadı. Eğer bir \"IP Denetim URL'si\" girmezseniz, "
+#~ "bir NAT türü saptayamayacağız."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "İnternet'e doğrudan bağlantı."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "NAT arkasında. Bu, Değişken DNS hizmetinin değişiklikler için \"Dış IP'yi "
+#~ "aramak için URL\"yi yoklayacağı anlamına gelir (bunun için \"Dış IP'yi "
+#~ "aramak için URL\" girişi gereklidir, aksi takdirde IP değişiklikleri "
+#~ "algılanmayacaktır). WAN IP'sinin değişmesi durumunda, DNS girişinizin "
+#~ "güncellenmesi %(timer)s dakika kadar sürebilir."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Değişken DNS'i Yapılandır"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Değişken DNS Durumu"
+
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "En fazla oyuncu yapılandırması güncellendi"
+
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Yaratıcı kipi yapılandırması güncellendi"
+
+#~ msgid "PVP configuration updated"
+#~ msgstr "PVP yapılandırması güncellendi"
+
+#~ msgid "Damage configuration updated"
+#~ msgstr "Hasar yapılandırması güncellendi"
+
 #~ msgid "RoundCube availability"
 #~ msgstr "RoundCube kullanılabilirliği"
 
@@ -9233,11 +9286,6 @@ msgstr "Gujarati"
 #~ msgstr ""
 #~ "Pagekite kurulumu tamamlanmıştır. HTTP ve HTTPS servisleri artık "
 #~ "etkinleştirilmiştir."
-
-#, fuzzy
-#~| msgid "Last update"
-#~ msgid "Auto-update"
-#~ msgstr "Son güncelleme"
 
 #~ msgid "Add Remote Location"
 #~ msgstr "Uzak Konum Ekle"

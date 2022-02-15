@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -868,7 +868,7 @@ msgid "No passwords currently configured."
 msgstr "Endnu ingen kodeord konfigureret."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Kodeord"
@@ -1017,9 +1017,10 @@ msgid "Refresh IP address and domains"
 msgstr "Opfrisk IP-adresse og domæner"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1214,7 +1215,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Generel Konfiguration"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1222,13 +1223,13 @@ msgid "Configure"
 msgstr "Konfigurer"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Domænenavn"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Ugyldigt domænenavn"
 
@@ -1577,6 +1578,7 @@ msgid "Test"
 msgstr "Test"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Resultat"
 
@@ -1584,7 +1586,7 @@ msgstr "Resultat"
 msgid "Diagnostic Test"
 msgstr "Diagnostisk Test"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1595,7 +1597,7 @@ msgstr ""
 "døgnet), kan det være svært for andre at finde dig på internettet. Dette vil "
 "forhindre andre i at finde de tjenester denne {box_name} udbyder."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1612,15 +1614,34 @@ msgstr ""
 "opdatere dit DNS-navn med den nye IP-adresse, således at hvis nogen på "
 "internettet spørger til adressen vil de få din aktuelle IP-adresse."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Leder du efter en gratis dynamisk DNS-konto kan du få en gratis GnuDIP-"
+"tjeneste på <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
+"datasystems24.net</a> eller du kan få en gratis URL-baseret tjeneste på <a "
+"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Dynamisk DNS Klient"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Dynamisk domænenavn"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1630,7 +1651,7 @@ msgstr ""
 "bruges i URL'en. For flere detaljer se skabelonerne for opdaterings-URL'er i "
 "eksemplernes tjenester."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1640,7 +1661,7 @@ msgstr ""
 "udbyderen ikke understøtter GnuDIP-protokollen eller ikke er prædefineret, "
 "kan en opdaterings-URL fra din udbyder angives direkte."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1648,16 +1669,16 @@ msgstr ""
 "Her skal ikke angives en URL (såsom \"https://example.com/\"), men blot "
 "værtsnavnet for GnuDIP-serveren (såsom \"example.com\")."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "Det offentlige domænenavn du vil bruge til at nå din {box_name}."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "Aktiver dette hvis din udbyder bruger selvunderskrevne certifikater."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1665,11 +1686,11 @@ msgstr ""
 "Hvis denne option er aktiveret vil dit brugernavn og kodeord blive anvendt "
 "til basal (\"basic\") HTTP-autentifikation."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Lad dette felt stå tomt hvis du vil beholde dit nuværende kodeord."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Optional Value. If your {box_name} is not connected directly to the "
@@ -1688,165 +1709,66 @@ msgstr ""
 "hvorfra klientens forespørgsel kommer (eksempelvis: http://myip."
 "datasystems24.de)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "Brugernavnet der blev brugt ved kontooprettelse."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "anden opdaterings-URL"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Aktiver Dynamisk DNS"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Servicetype"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Serveradresse"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Ugyldigt servernavn"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "Opdaterings-URL"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Accepter alle SSL-certifikater"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "Brug basal (\"basic\") HTTP-autentifikation"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Brugernavn"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Vis kodeord"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "URL til at slå den offentlige IP-addresse op"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Angiv venligst opdaterings-URL eller GnuDIP serveradresse"
-
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Angiv venligst et brugernavn til GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Angiv venligst et domæne til GnuDIP-server"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Angiv venligst et kodeord"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
+#: plinth/modules/dynamicdns/forms.py:123
+msgid "This field is required."
 msgstr ""
-"Leder du efter en gratis dynamisk DNS-konto kan du få en gratis GnuDIP-"
-"tjeneste på <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
-"datasystems24.net</a> eller du kan få en gratis URL-baseret tjeneste på <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Hvis din %(box_name)s er tilsluttet bag en NAT-router, så glem ikke at "
-"viderestille standardporte såsom TCP-port 80 (HTTP) og TCP-port 443 (HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Din browser har ikke aktiveret JavaScript. Dynamiske indtastningsfelter og "
-"hjælpefunktionalitet virker formentlig ikke (men grundfunktionaliteten burde "
-"fungere)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Opdater indstillinger"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "NAT-type"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"NAT-typen er endnu ikke detekteret. Hvis du ikke har indtastet en \"URL for "
-"IP-kontrol\" kan den ikke detekteres."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Direkte forbindelse til internettet."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"Bag NAT. Dette betyder at Dynamisk DNS-tjenesten ved brug af \"URL for IP-"
-"kontrol\" vil tjekke din IP-adresse for ændringer (URL'en er nødvendig af "
-"denne grund, ellers kan ændringer i IP ikke detekteres). Hvis din offentlige "
-"(WAN) IP-adresse ændres, kan det tage op til %(timer)s minutter inden din "
-"registrering i DNS opdateres."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Seneste opdatering"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Om"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1860,13 +1782,60 @@ msgstr "Om"
 msgid "Status"
 msgstr "Status"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Konfigurer Dynamisk DNS"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Domæne"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Dynamisk DNS Status"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Seneste opdatering"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "IP-adresse"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Adgang"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "mislykkedes"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "Ingen samlinger tilgængelige."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Forbindelsesnavn"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Slet forbindelse"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Last update"
+msgid "Already up-to-date"
+msgstr "Seneste opdatering"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2496,6 +2465,11 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Om"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, fuzzy, python-format
@@ -2917,6 +2891,13 @@ msgstr "Gå til sitet %(site)s"
 msgid "Delete site %(site)s"
 msgstr "Slet sitet %(site)s"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Opdater indstillinger"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3076,10 +3057,6 @@ msgstr "Certifikat Status"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Domæne"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3503,30 +3480,6 @@ msgstr "Adresse"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Port"
-
-#: plinth/modules/minetest/views.py:48
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Maximum players configuration updated"
-msgstr "Konfiguration opdateret"
-
-#: plinth/modules/minetest/views.py:55
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Creative mode configuration updated"
-msgstr "Konfiguration opdateret"
-
-#: plinth/modules/minetest/views.py:61
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "PVP configuration updated"
-msgstr "Konfiguration opdateret"
-
-#: plinth/modules/minetest/views.py:67
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Damage configuration updated"
-msgstr "Konfiguration opdateret"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -7206,7 +7159,7 @@ msgstr ""
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -8369,6 +8322,92 @@ msgstr "%(percentage)s%% færdig"
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Aktiver Dynamisk DNS"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "Angiv venligst opdaterings-URL eller GnuDIP serveradresse"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Angiv venligst et brugernavn til GnuDIP"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Angiv venligst et domæne til GnuDIP-server"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Angiv venligst et kodeord"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Hvis din %(box_name)s er tilsluttet bag en NAT-router, så glem ikke at "
+#~ "viderestille standardporte såsom TCP-port 80 (HTTP) og TCP-port 443 "
+#~ "(HTTPS)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Din browser har ikke aktiveret JavaScript. Dynamiske indtastningsfelter "
+#~ "og hjælpefunktionalitet virker formentlig ikke (men grundfunktionaliteten "
+#~ "burde fungere)."
+
+#~ msgid "NAT type"
+#~ msgstr "NAT-type"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "NAT-typen er endnu ikke detekteret. Hvis du ikke har indtastet en \"URL "
+#~ "for IP-kontrol\" kan den ikke detekteres."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Direkte forbindelse til internettet."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "Bag NAT. Dette betyder at Dynamisk DNS-tjenesten ved brug af \"URL for IP-"
+#~ "kontrol\" vil tjekke din IP-adresse for ændringer (URL'en er nødvendig af "
+#~ "denne grund, ellers kan ændringer i IP ikke detekteres). Hvis din "
+#~ "offentlige (WAN) IP-adresse ændres, kan det tage op til %(timer)s "
+#~ "minutter inden din registrering i DNS opdateres."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Konfigurer Dynamisk DNS"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Dynamisk DNS Status"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "Konfiguration opdateret"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Konfiguration opdateret"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "PVP configuration updated"
+#~ msgstr "Konfiguration opdateret"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Damage configuration updated"
+#~ msgstr "Konfiguration opdateret"
+
 #, fuzzy
 #~| msgid "Available Domains"
 #~ msgid "RoundCube availability"
@@ -9157,11 +9196,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Konfiguration af PageKite er færdig. Servicerne for HTTP og HTTPS er "
 #~ "blevet aktiveret."
-
-#, fuzzy
-#~| msgid "Last update"
-#~ msgid "Auto-update"
-#~ msgstr "Seneste opdatering"
 
 #, fuzzy
 #~| msgid "Create User"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2021-05-17 18:31+0000\n"
 "Last-Translator: chilumula vamshi krishna <kannakrishna1625@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -851,7 +851,7 @@ msgid "No passwords currently configured."
 msgstr "ప్రస్తుతం ఏ షేర్లు ఏర్పాటు చేయబడలేదు."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "రహస్యపదం"
@@ -1010,9 +1010,10 @@ msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1210,7 +1211,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "సాధారణ ఆకృతీకరణ"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1218,13 +1219,13 @@ msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "డొమైను పేరు"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "డొమైన్ పేరు చెల్లదు"
 
@@ -1569,6 +1570,7 @@ msgid "Test"
 msgstr "పరీక్ష"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "ఫలితం"
 
@@ -1576,7 +1578,7 @@ msgstr "ఫలితం"
 msgid "Diagnostic Test"
 msgstr "లక్షణాల పరీక్ష"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1587,7 +1589,7 @@ msgstr ""
 "అప్పుడు ఇతరులు అంతర్జాలంలో మిమల్ని కనుగొనడానికి కష్టం ఆవతుంది. అప్పుడు వారు ఈ {box_name} "
 "అందించే సేవలను కనుగోనలేరు."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1603,17 +1605,37 @@ msgstr ""
 "అనుమతిస్తుంది. తరువాత, సర్వర్ కొత్త IP మీ DNS పేరు కేటాయిస్తుంది, మరియు ఇంటర్నెట్ నుండి ఎవరైనా మీ "
 "DNS పేరు అడుగుతాడు ఉంటే, వారు మీ ప్రస్తుత ఐ.పీ. చిరునామాతో సమాధానం పొందుతారు."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"మీరు ఒక ఉచిత డైనమిక్ DNS ఖాతా కోసం చూస్తున్న ఉంటే, మీరు <a href='http://gnudip."
+"datasystems24.net' target='_blank'> 1gnudip.datasystems24.net </a> 2 వద్ద ఉచిత "
+"GnuDIP సేవ కనుగొనేందుకు ఉండవచ్చు లేదా మీరు <a href='http://freedns.afraid.org/' "
+"target='_blank'> 3 freedns.afraid.org </a> 4 ఉచిత నవీకరణ URL ఆధారిత సేవలు "
+"కనుగొనవచ్చు."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "గతిక DNS కక్షిదారు"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 #, fuzzy
 #| msgid "Domain Name"
 msgid "Dynamic Domain Name"
 msgstr "డొమైను పేరు"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1622,7 +1644,7 @@ msgstr ""
 "&lt;వాడుకరి&gt;, &lt;పాస్&gt;, &lt;ఎల్.పి&gt;, &lt;డోమైన్&gt; అనే వేరియబల్స్ మీ యూ.ఆర్.ఎల్ తో "
 "వాడవచ్చును. వివరాల కోసం మీ యూ.ఆర్.ఎల్ నవీనికరణ టెంప్లేట్ ను చూడండి."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1631,7 +1653,7 @@ msgstr ""
 "దయ చేసి మీ నవీకరణ ప్రోటొకాల్ ను ఎంచుకోండి. మీ ప్రదాత గ్నూడిప్ ప్రోటొకాల్ కు సహకరించకపోయిన లేదా మీ ప్రదాత "
 "కింద జాబితా లో లేకపోయినా మీ ప్రదాత యొక్క నవీకరణ యూ.ఆర్.ఎల్ ను వాడగలరు."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1639,16 +1661,16 @@ msgstr ""
 "దయ చేసి యూ.ఆర్.ఎల్ (ఉ.దా \"ఏచ్.టి.టి.పి.ఎస్://ఎగ్స్యాంపల్.కామ్\") ను తెలుపవద్దు కానీ కేవలం అతిధ్య "
 "పేరును (ఉ.దా \"ఎగ్స్యాంపల్.కామ్\") మాత్రమే తెలుపండి."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "మీ {box_name} ను చేరుకోవడానికి మీరు ఉపయోగించాలని కోరుకుంటున్న మీ పబ్లిక్ డొమైన్ పేరు."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "మీ అంతర్జాల సేవ ప్రదాత ఒకవేళ స్వీయ సంతక సర్టిఫికేట్లు ఉపయోగిస్తుంటే ఈ ఎంపికను ఉపయోగించండి."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1656,11 +1678,11 @@ msgstr ""
 "ఈ ఎంపికను ఎంపిక చేస్తే, మీ వాడుకరి పేరు మరియు పాస్‌వర్డ్ హెచ్.టి.టి.పి ప్రాథమిక ప్రమాణీకరణ కోసం "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "మీరు మీ ప్రస్తుత పాస్‌వర్డ్ ను ఉంచుకోవాలనుకుంటే ఈ ఫీల్డ్ ఖాళీగా వదిలివేయండి."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Optional Value. If your {box_name} is not connected directly to the "
@@ -1678,167 +1700,66 @@ msgstr ""
 "ఎక్కడ నుండి వస్తుంది అనే ఐపీ మాత్రమే  ఈ  యూ.ఆర్.ఎల్  తిరిగివ్వాలి (ఉ.దా: ఏచ్.టి.టి.పి.://మైఐపి."
 "డాటాసిస్టమ్స్24.దే)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "మీరు మీ ఖాతాను సృష్టించినప్పుడు వాడిన వాడుకరి పేరు ."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:68
+#: plinth/modules/dynamicdns/forms.py:57
 #, fuzzy
 #| msgid "Update URL"
-msgid "other update URL"
+msgid "Other update URL"
 msgstr "URL నవీకరణ"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "చురుకైన DNS అమలుచెయ్యి"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "సేవా రకం"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "GnudIP సేవకం చిరునామా"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "సేవిక పేరు చెలదు"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "URL నవీకరణ"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "అన్ని ఎస్.ఎస్.ఎల్ సర్టిఫికెట్లు అంగీకరించు"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "రహస్యపదం కనబర్చు"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "పబ్లిక్ IP చూసేందుకు URL"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "దయచేసి నవీకరణ యూ.ఆర్.ఎల్ ను లేక ఒక GnuDIP సేవిక ఐ.పీ చిరునామాను  అందించండి"
-
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "దయచేసి గ్నూ.డిప్ వాడుకరిపేరుని అందించండి"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "గ్నూ.డిప్ డోమైన్ పేరును  దయచేసి అందించండి"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "ఒక రహస్యపదం అందించండి దయచేసి"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
+#: plinth/modules/dynamicdns/forms.py:123
+msgid "This field is required."
 msgstr ""
-"మీరు ఒక ఉచిత డైనమిక్ DNS ఖాతా కోసం చూస్తున్న ఉంటే, మీరు <a href='http://gnudip."
-"datasystems24.net' target='_blank'> 1gnudip.datasystems24.net </a> 2 వద్ద ఉచిత "
-"GnuDIP సేవ కనుగొనేందుకు ఉండవచ్చు లేదా మీరు <a href='http://freedns.afraid.org/' "
-"target='_blank'> 3 freedns.afraid.org </a> 4 ఉచిత నవీకరణ URL ఆధారిత సేవలు "
-"కనుగొనవచ్చు."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"మీ %(box_name)s కనుక ఎన్.ఏ.టి రూటర్ కి అనుసంధానం చేయబడి ఉంటే,  టిసి.పి పోర్టు ౮౦ (హెచ్.టి.టి."
-"పి)  మరియి  టిసి.పి పోర్టు ౪౪౩ (హెచ్.టి.టి.పి.ఎస్) ప్రామాణిక పోర్ట్‌లకు పోర్ట్ ఫార్వర్డింగ్ను జోడించడం "
-"మర్చిపోకండి."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"మీరు జావాస్క్రిప్ట్ ను పని చేయకుండా చేశారు. చలనశిల ఫొరము  స్థితి  మరియు కొన్ని సహాయక కార్యక్రమాలు పని "
-"చేయవు (కానీ ప్రధాన కార్యాచరణ పని చేయాలి)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "అమరికను నవీకరించు"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "NAT రకం"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"ఎన్.ఏ.టి రకము ఇంకా గుర్తింపబడలేదు. మీరు ఐ.పి తనిఖీ యూ.ఆర్.ఎల్ ఇవ్వకపోతే మేము ఎన్.ఏ.టి రకమును "
-"గుర్తింపము."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "అంతర్జాలానికి నేరు బంధం."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, fuzzy, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"NAT వెనుక. ఈ డైనమిక్ DNS సేవ మార్పులకు అనుగుణంగా \"పబ్లిక్ IP చూసేందుకు ను"
-"\" ( \"చూసేందుకు URL పబ్లిక్ IP\" ఎంట్రీ ఈ అవసరమవుతుంది, లేకపోతే ఐపీ మార్పులు కనుగొనబడింది "
-"కాదు) ఎన్నిక చేస్తాము. కేసు పాలిపోయిన ఐపీ మార్పులు, మీ DNS ఎంట్రీ నవీకరించబడింది వరకు% వరకు "
-"ఉండవచ్చు %(టైమర్)s 1 నిమిషాల."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "చివరి నవీకరణ"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "గురించి"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1852,13 +1773,60 @@ msgstr "గురించి"
 msgid "Status"
 msgstr "స్థితి"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "చురుకైనDNS ఆకృతీకరించు"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "డొమైన్"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "చలనశీల డి.ఎన్.ఎస్ స్థితి"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "చివరి నవీకరణ"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "IP చిరునామా"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access Point"
+msgid "Success"
+msgstr "ప్రాప్తి సూచి"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "Setup failed."
+msgid "Failed"
+msgstr "అమరక విఫలమైంది."
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "Tor relay port available"
+msgid "No status available."
+msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "అనుసంధానం పేరు"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "అనుసంధానం తొలగించండి"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Last update"
+msgid "Already up-to-date"
+msgstr "చివరి నవీకరణ"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2472,6 +2440,11 @@ msgstr "అభిప్రాయాన్ని సమర్పించండ�
 msgid "Contribute"
 msgstr "దోహదం చేయండి"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "గురించి"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2893,6 +2866,13 @@ msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
 msgid "Delete site %(site)s"
 msgstr "ప్రదేశం తొలగించు %(site)s"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "అమరికను నవీకరించు"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3035,10 +3015,6 @@ msgstr "యోగ్యతాపత్రాలు"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "డొమైన్"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3451,30 +3427,6 @@ msgstr "చిరునామా"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "పోర్టు"
-
-#: plinth/modules/minetest/views.py:48
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Maximum players configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/minetest/views.py:55
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Creative mode configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/minetest/views.py:61
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "PVP configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#: plinth/modules/minetest/views.py:67
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Damage configuration updated"
-msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -7087,7 +7039,7 @@ msgstr ""
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -8230,6 +8182,90 @@ msgstr "%(percentage)s %% పూర్తి"
 msgid "Gujarati"
 msgstr "గుజరాతీ"
 
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "చురుకైన DNS అమలుచెయ్యి"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "దయచేసి నవీకరణ యూ.ఆర్.ఎల్ ను లేక ఒక GnuDIP సేవిక ఐ.పీ చిరునామాను  అందించండి"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "దయచేసి గ్నూ.డిప్ వాడుకరిపేరుని అందించండి"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "గ్నూ.డిప్ డోమైన్ పేరును  దయచేసి అందించండి"
+
+#~ msgid "Please provide a password"
+#~ msgstr "ఒక రహస్యపదం అందించండి దయచేసి"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "మీ %(box_name)s కనుక ఎన్.ఏ.టి రూటర్ కి అనుసంధానం చేయబడి ఉంటే,  టిసి.పి పోర్టు ౮౦ (హెచ్.టి."
+#~ "టి.పి)  మరియి  టిసి.పి పోర్టు ౪౪౩ (హెచ్.టి.టి.పి.ఎస్) ప్రామాణిక పోర్ట్‌లకు పోర్ట్ ఫార్వర్డింగ్ను జోడించడం "
+#~ "మర్చిపోకండి."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "మీరు జావాస్క్రిప్ట్ ను పని చేయకుండా చేశారు. చలనశిల ఫొరము  స్థితి  మరియు కొన్ని సహాయక కార్యక్రమాలు పని "
+#~ "చేయవు (కానీ ప్రధాన కార్యాచరణ పని చేయాలి)."
+
+#~ msgid "NAT type"
+#~ msgstr "NAT రకం"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "ఎన్.ఏ.టి రకము ఇంకా గుర్తింపబడలేదు. మీరు ఐ.పి తనిఖీ యూ.ఆర్.ఎల్ ఇవ్వకపోతే మేము ఎన్.ఏ.టి "
+#~ "రకమును గుర్తింపము."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "అంతర్జాలానికి నేరు బంధం."
+
+#, fuzzy, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "NAT వెనుక. ఈ డైనమిక్ DNS సేవ మార్పులకు అనుగుణంగా \"పబ్లిక్ IP చూసేందుకు ను"
+#~ "\" ( \"చూసేందుకు URL పబ్లిక్ IP\" ఎంట్రీ ఈ అవసరమవుతుంది, లేకపోతే ఐపీ మార్పులు "
+#~ "కనుగొనబడింది కాదు) ఎన్నిక చేస్తాము. కేసు పాలిపోయిన ఐపీ మార్పులు, మీ DNS ఎంట్రీ నవీకరించబడింది వరకు"
+#~ "% వరకు ఉండవచ్చు %(టైమర్)s 1 నిమిషాల."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "చురుకైనDNS ఆకృతీకరించు"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "చలనశీల డి.ఎన్.ఎస్ స్థితి"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "PVP configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Damage configuration updated"
+#~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
+
 #, fuzzy
 #~| msgid "Available Domains"
 #~ msgid "RoundCube availability"
@@ -9088,11 +9124,6 @@ msgstr "గుజరాతీ"
 #~ "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 #~ msgstr ""
 #~ "పేజెకైట్ ఏర్పాటు పూర్తి అయినది. ఏచ్.టి.టి.పి మరియు ఏచ్.టి.టి.పి.ఎస్ సేవలు క్రియాశీలకంగా చేయబడ్డాయి."
-
-#, fuzzy
-#~| msgid "Last update"
-#~ msgid "Auto-update"
-#~ msgstr "చివరి నవీకరణ"
 
 #, fuzzy
 #~| msgid "Create User"

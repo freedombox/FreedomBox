@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2022-02-09 20:04+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -870,7 +870,7 @@ msgid "No passwords currently configured."
 msgstr "Jelenleg nincs beállítva jelszó."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Jelszó"
@@ -1018,9 +1018,10 @@ msgid "Refresh IP address and domains"
 msgstr "IP-címek és tartományok frissítése"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1218,7 +1219,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1226,13 +1227,13 @@ msgid "Configure"
 msgstr "Beállítások"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Domainnév"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Érvénytelen domainnév"
 
@@ -1581,6 +1582,7 @@ msgid "Test"
 msgstr "Teszt"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Eredmény"
 
@@ -1588,7 +1590,7 @@ msgstr "Eredmény"
 msgid "Diagnostic Test"
 msgstr "Ellenőrző teszt"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1600,7 +1602,7 @@ msgstr ""
 "Ez megakadályozza, hogy mások megtalálják a {box_name} által biztosított "
 "szolgáltatásokat."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1618,15 +1620,35 @@ msgstr ""
 "DNS-neved az új IP-címedhez, és ha valaki az Interneten lekérdezi a DNS-"
 "neved, válaszként az aktuális IP-címedet fogja megkapni."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
+#| "freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Ha ingyenes dinamikus DNS fiókot keresel, használhatod az ingyenes GnuDIP "
+"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
+"\">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
+"szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
+"freedns.afraid.org</a> címen."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Dinamikus DNS ügyfél"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Dinamikus domainnév"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1636,7 +1658,7 @@ msgstr ""
 "használhatók az URL-ben. Részletekért tekintsd meg a példa szolgáltatók "
 "frissítési URL-sablonjait."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1646,7 +1668,7 @@ msgstr ""
 "protokollt. Ha nem támogatja a GnuDIP-et, vagy nem található a listán, akkor "
 "használhatod a szolgáltató frissítési URL-jét."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1654,19 +1676,19 @@ msgstr ""
 "Kérlek, ide ne írj be URL-t (mint pl. „https://pelda.com/”), csak a GnuDIP-"
 "szerver állomásnevét (mint pl. „pelda.com”)."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "A nyilvános domainnév, amellyel el szeretnéd érni a {box_name} eszközödet."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Használd ezt az opciót, ha a szolgáltatód saját aláírású (self signed) "
 "tanúsítványokat használ."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1674,12 +1696,12 @@ msgstr ""
 "Ha ez az opció ki van választva, a te felhasználóneved és jelszavad lesz "
 "használva HTTP alap hitelesítéshez."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Hagyd ezt a mezőt üresen, ha szeretnéd megtartani a jelenlegi jelszavad."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
@@ -1693,161 +1715,68 @@ msgstr ""
 "egyszerűen visszaadja a kliens IP-címét (pl.: https://ddns.freedombox.org/"
 "ip/)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "A felhasználónév, amely a fiók létrehozása során lett megadva."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "egyéb frissítési URL"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Dynamic DNS engedélyezése"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Szolgáltatás típusa"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP-szerver címe"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Érvénytelen szervernév"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "Frissítési URL"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Minden SSL-tanúsítvány elfogadása"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Jelszó mutatása"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "URL a nyilvános IP-cím felderítéséhez"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr "IPv6 használata IPv4 helyett"
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Kérlek, adj meg egy frissítési URL-t vagy egy GnuDIP-szerver címet"
+#: plinth/modules/dynamicdns/forms.py:123
+#, fuzzy
+#| msgid "secrets required"
+msgid "This field is required."
+msgstr "titkosítás szükséges"
 
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Kérlek, add meg a GnuDIP-felhasználónevet"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Kérlek, add meg a GnuDIP-domainnevet"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Kérlek, add meg a jelszót"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"Ha ingyenes dinamikus DNS fiókot keresel, használhatod az ingyenes GnuDIP "
-"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
-"\">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
-"szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
-"freedns.afraid.org</a> címen."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Ha a %(box_name)s eszközöd NAT-routeren keresztül kapcsolódik az "
-"internethez, akkor ne felejtsd el a port továbbításokhoz hozzáadni a "
-"szabványos portokat, beleértve a TCP 80-as portot (HTTP-hez) és a TCP 443-as "
-"portot (HTTPS-hez)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Letiltottad a Javascriptet. A dinamikus űrlap mód le van tiltva és néhány "
-"segéd funkció nem fog működni (de a fő funkcióknak működniük kell)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Beállítások frissítése"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "NAT típusa"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"A NAT típusa még nem lett megállapítva. Ha nem adsz meg egy „IP ellenőrzési "
-"URL”-t, nem lehet megállapítani a NAT típusát."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Közvetlen kapcsolat az internetre."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"NAT mögött. Ez azt jelenti hogy a Dynamic DNS szolgáltatás rendszeresen "
-"megtekinti az „URL a nyilvános IP-cím megállapításához” címet a változások "
-"érzékeléséhez (az „URL a nyilvános IP-cím megállapításához” bejegyzés "
-"szükséges ehhez, máskülönben az IP-cím megváltozása nem lesz érzékelve). Az "
-"IP-címváltozások esetében eltarthat egészen %(timer)s percig amíg a DNS-"
-"bejegyzésed frissítve lesz."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Legutolsó frissítés"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Névjegy"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1861,13 +1790,60 @@ msgstr "Névjegy"
 msgid "Status"
 msgstr "Állapot"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Dynamic DNS beállítása"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Domain"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Dynamic DNS állapot"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Legutolsó frissítés"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "IP-cím"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Hozzáférés"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "sikertelen"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "Nincs elérhető könyvtár."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Kapcsolat neve"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Kapcsolat törlése"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Auto-update"
+msgid "Already up-to-date"
+msgstr "Automatikus frissítés"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2462,6 +2438,11 @@ msgstr "Visszajelzés küldése"
 msgid "Contribute"
 msgstr "Hozzájárulás"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Névjegy"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2904,6 +2885,13 @@ msgstr "Ugrás ide: %(site)s"
 msgid "Delete site %(site)s"
 msgstr "%(site)s webhely törlése"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Beállítások frissítése"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3050,10 +3038,6 @@ msgstr "Tanúsítványok"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Domain"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3490,22 +3474,6 @@ msgstr "Cím"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Port"
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr "Maximális játékosszám beállítás frissítve"
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr "Kreatív mód beállítás frissítve"
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr "PVP beállítás frissítve"
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
-msgstr "Sérülés beállítás frissítve"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -7200,8 +7168,13 @@ msgid "Frequent feature updates activated."
 msgstr "Gyakori funkciófrissítések aktiválva."
 
 #: plinth/modules/users/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "Create and managed user accounts. These accounts serve as centralized "
+#| "authentication mechanism for most apps. Some apps further require a user "
+#| "account to be part of a group to authorize the user to access the app."
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -8364,6 +8337,85 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 msgid "Gujarati"
 msgstr "Gudzsaráti"
 
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Dynamic DNS engedélyezése"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "Kérlek, adj meg egy frissítési URL-t vagy egy GnuDIP-szerver címet"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Kérlek, add meg a GnuDIP-felhasználónevet"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Kérlek, add meg a GnuDIP-domainnevet"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Kérlek, add meg a jelszót"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Ha a %(box_name)s eszközöd NAT-routeren keresztül kapcsolódik az "
+#~ "internethez, akkor ne felejtsd el a port továbbításokhoz hozzáadni a "
+#~ "szabványos portokat, beleértve a TCP 80-as portot (HTTP-hez) és a TCP 443-"
+#~ "as portot (HTTPS-hez)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Letiltottad a Javascriptet. A dinamikus űrlap mód le van tiltva és néhány "
+#~ "segéd funkció nem fog működni (de a fő funkcióknak működniük kell)."
+
+#~ msgid "NAT type"
+#~ msgstr "NAT típusa"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "A NAT típusa még nem lett megállapítva. Ha nem adsz meg egy „IP "
+#~ "ellenőrzési URL”-t, nem lehet megállapítani a NAT típusát."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Közvetlen kapcsolat az internetre."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "NAT mögött. Ez azt jelenti hogy a Dynamic DNS szolgáltatás rendszeresen "
+#~ "megtekinti az „URL a nyilvános IP-cím megállapításához” címet a "
+#~ "változások érzékeléséhez (az „URL a nyilvános IP-cím megállapításához” "
+#~ "bejegyzés szükséges ehhez, máskülönben az IP-cím megváltozása nem lesz "
+#~ "érzékelve). Az IP-címváltozások esetében eltarthat egészen %(timer)s "
+#~ "percig amíg a DNS-bejegyzésed frissítve lesz."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Dynamic DNS beállítása"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Dynamic DNS állapot"
+
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "Maximális játékosszám beállítás frissítve"
+
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Kreatív mód beállítás frissítve"
+
+#~ msgid "PVP configuration updated"
+#~ msgstr "PVP beállítás frissítve"
+
+#~ msgid "Damage configuration updated"
+#~ msgstr "Sérülés beállítás frissítve"
+
 #~ msgid "RoundCube availability"
 #~ msgstr "A RoundCube rendelkezésre állása"
 
@@ -9343,9 +9395,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Vulnerabilities Reported"
 #~ msgstr "Bejelentett biztonsági rések"
-
-#~ msgid "Auto-update"
-#~ msgstr "Automatikus frissítés"
 
 #~ msgid "Add Remote Location"
 #~ msgstr "Távoli hely hozzáadása"
