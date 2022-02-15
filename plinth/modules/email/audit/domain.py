@@ -33,6 +33,7 @@ def set_domains(primary_domain=None):
     superuser_run(
         'email',
         ['domain', 'set_domains', primary_domain, ','.join(all_domains)])
+    superuser_run('email', ['dkim', 'setup_dkim', primary_domain])
 
 
 def action_set_domains(primary_domain, all_domains):
