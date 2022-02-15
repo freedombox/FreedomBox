@@ -3,6 +3,6 @@
 Provides diagnosis and repair of email server configuration issues
 """
 
-from . import aliases, domain, home, ldap, models, spam, tls
+from . import aliases, domain, home, ldap, spam, tls
 
-__all__ = ['aliases', 'domain', 'home', 'ldap', 'models', 'spam', 'tls']
+__all__ = ['aliases', 'domain', 'home', 'ldap', 'spam', 'tls']
