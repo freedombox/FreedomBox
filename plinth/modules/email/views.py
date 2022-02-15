@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
+from plinth.modules.email import dns
 from plinth.views import AppView
 
 from . import aliases as aliases_module
@@ -20,6 +21,12 @@ class EmailAppView(AppView):
     app_id = 'email'
     form_class = forms.DomainForm
     template_name = 'email.html'
+
+    def get_context_data(self, **kwargs):
+        """Add additional context data for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['dns_entries'] = dns.get_entries()
+        return context
 
     def get_initial(self):
         """Return the initial values to populate in the form."""
