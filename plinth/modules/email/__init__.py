@@ -51,7 +51,7 @@ class EmailApp(plinth.app.App):
 
         info = plinth.app.Info(app_id=self.app_id, version=self._version,
                                name=_('Postfix/Dovecot'),
-                               icon_filename='roundcube',
+                               icon_filename='email',
                                short_description=_('Email Server'),
                                description=_description, manual_page='Email',
                                clients=manifest.clients,
