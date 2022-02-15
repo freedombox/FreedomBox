@@ -10,6 +10,7 @@ import plinth.app
 from plinth import actions, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
@@ -135,6 +136,10 @@ class EmailApp(plinth.app.App):
             certificate_path='/etc/dovecot/letsencrypt/{domain}/cert.pem',
             user_owner='root', group_owner='root', managing_app='email')
         self.add(letsencrypt)
+
+        backup_restore = BackupRestore('backup-restore-email',
+                                       **manifest.backup)
+        self.add(backup_restore)
 
     @staticmethod
     def post_init():
