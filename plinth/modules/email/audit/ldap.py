@@ -1,6 +1,8 @@
-"""Provides the diagnosis of SASL, mail submission, and user database lookup
-configurations"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configure postfix to use auth and local delivery with dovecot. Start smtps and
+submission services. Setup aliases database.
+"""
 
 import plinth.modules.email.aliases as aliases
 import plinth.modules.email.postconf as postconf

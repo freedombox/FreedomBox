@@ -23,7 +23,7 @@ def get_domains():
 
 
 def set_domains(primary_domain=None):
-    """Set the primary domain and all the domains for postfix. """
+    """Set the primary domain and all the domains for postfix."""
     all_domains = DomainName.list_names()
     if not primary_domain:
         primary_domain = get_domains()['primary_domain']
@@ -36,7 +36,7 @@ def set_domains(primary_domain=None):
 
 
 def action_set_domains(primary_domain, all_domains):
-    """Set the primary domain and all the domains for postfix. """
+    """Set the primary domain and all the domains for postfix."""
     all_domains = [_clean_domain(domain) for domain in all_domains.split(',')]
     primary_domain = _clean_domain(primary_domain)
 
