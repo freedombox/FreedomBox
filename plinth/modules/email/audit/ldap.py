@@ -2,15 +2,9 @@
 configurations"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-import logging
-
-from django.utils.translation import gettext_lazy as _
-
 import plinth.modules.email.aliases as aliases
 import plinth.modules.email.postconf as postconf
 from plinth import actions
-
-from . import models
 
 default_config = {
     'smtpd_sasl_auth_enable':
@@ -55,91 +49,31 @@ default_smtps_options = {
 
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
-logger = logging.getLogger(__name__)
-
-
-def get():
-    """Compare current values with the default. Generate an audit report
-
-    Recommended endpoint name:
-    GET /audit/ldap
-    """
-    translation_table = [
-        (check_sasl, _('Postfix-Dovecot SASL integration')),
-        (check_alias_maps, _('Postfix alias maps')),
-    ]
-    results = []
-    with postconf.mutex.lock_all():
-        for check, title in translation_table:
-            results.append(check(title))
-    return results
-
 
 def repair():
-    """Tries to repair SASL, mail submission, and user lookup settings
-
-    Recommended endpoint name:
-    POST /audit/ldap/repair
-    """
+    """Tries to repair SASL, mail submission, and user lookup settings."""
     aliases.first_setup()
-    actions.superuser_run('email', ['ldap', 'set_up'])
+    actions.superuser_run('email', ['ldap', 'setup'])
 
 
-def action_set_up():
-    action_set_sasl()
-    action_set_submission()
-    action_set_ulookup()
+def action_setup():
+    postconf.set_many_unsafe(default_config)
+    _setup_submission()
+    _setup_alias_maps()
 
 
-def check_sasl(title=''):
-    diagnosis = models.MainCfDiagnosis(title)
-    diagnosis.compare(default_config, postconf.get_many_unsafe)
-    return diagnosis
-
-
-def fix_sasl(diagnosis):
-    diagnosis.apply_changes(postconf.set_many_unsafe)
-
-
-def action_set_sasl():
-    """Handles email -i ldap set_sasl"""
-    with postconf.mutex.lock_all():
-        fix_sasl(check_sasl())
-
-
-def action_set_submission():
-    """Handles email -i ldap set_submission"""
+def _setup_submission():
+    """Update configuration for smtps and smtp-submission."""
     postconf.set_master_cf_options(service_flags=submission_flags,
                                    options=default_submission_options)
     postconf.set_master_cf_options(service_flags=smtps_flags,
                                    options=default_smtps_options)
 
 
-def check_alias_maps(title=''):
-    """Check the ability to mail to usernames and user aliases"""
-    diagnosis = models.MainCfDiagnosis(title)
-
+def _setup_alias_maps():
+    """Setup alias maps to include an sqlite DB."""
     alias_maps = postconf.get_unsafe('alias_maps').replace(',', ' ').split(' ')
     if SQLITE_ALIASES not in alias_maps:
-        diagnosis.flag_once('alias_maps', user=alias_maps)
-        diagnosis.critical('Required maps not in list')
+        alias_maps.append(SQLITE_ALIASES)
 
-    return diagnosis
-
-
-def fix_alias_maps(diagnosis):
-
-    def fix_value(alias_maps):
-        if SQLITE_ALIASES not in alias_maps:
-            alias_maps.append(SQLITE_ALIASES)
-
-        return ' '.join(alias_maps)
-
-    diagnosis.repair('alias_maps', fix_value)
-    diagnosis.apply_changes(postconf.set_many_unsafe)
-
-
-def action_set_ulookup():
-    """Handles email -i ldap set_ulookup"""
-    with postconf.mutex.lock_all():
-        fix_alias_maps(check_alias_maps())
+    postconf.set_many_unsafe({'alias_maps': ' '.join(alias_maps)})

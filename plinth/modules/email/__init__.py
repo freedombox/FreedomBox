@@ -147,12 +147,6 @@ class EmailApp(plinth.app.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
-    def diagnose(self):
-        """Run diagnostics and return the results"""
-        results = super().diagnose()
-        results.extend([r.summarize() for r in audit.ldap.get()])
-        return results
-
 
 def get_domains():
     """Return the list of domains configured."""
