@@ -21,14 +21,11 @@ from plinth.signals import domain_added, domain_removed
 
 from . import audit, manifest
 
-clamav_packages = ['clamav', 'clamav-daemon']
-clamav_daemons = ['clamav-daemon', 'clamav-freshclam']
-
 _description = [
     _('This is a complete email server solution using Postfix, Dovecot, '
-      'Rspamd and ClamAV. Postfix sends and receives emails. Dovecot allows '
+      'and Rspamd. Postfix sends and receives emails. Dovecot allows '
       'email clients to access your mailbox using IMAP and POP3. Rspamd deals '
-      'with spam. ClamAV identifies viruses and malware.'),
+      'with spam.'),
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
       'interface for users to access email.'),
     _('During installation, any other email servers in the system will be '
