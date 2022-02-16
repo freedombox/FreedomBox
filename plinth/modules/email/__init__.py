@@ -180,7 +180,7 @@ def setup(helper, old_version=None):
     app.get_component('letsencrypt-email-postfix').setup_certificates()
     app.get_component('letsencrypt-email-dovecot').setup_certificates()
     helper.call('post', privileged.domain.set_domains)
-    helper.call('post', privileged.ldap.repair)
+    helper.call('post', privileged.postfix.repair)
     helper.call('post', privileged.spam.repair)
 
     # Reload

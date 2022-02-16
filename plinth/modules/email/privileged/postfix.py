@@ -6,7 +6,8 @@ submission services. Setup aliases database.
 
 from plinth import actions
 
-from .. import aliases, postfix
+from .. import aliases
+from .. import postfix as postconf
 
 default_config = {
     'smtpd_sasl_auth_enable':
@@ -32,10 +33,10 @@ submission_options = {
     'smtpd_client_restrictions': 'permit_sasl_authenticated,reject',
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
-submission_service = postfix.Service(service='submission', type_='inet',
-                                     private='n', unpriv='-', chroot='y',
-                                     wakeup='-', maxproc='-', command='smtpd',
-                                     options=submission_options)
+submission_service = postconf.Service(service='submission', type_='inet',
+                                      private='n', unpriv='-', chroot='y',
+                                      wakeup='-', maxproc='-', command='smtpd',
+                                      options=submission_options)
 
 smtps_options = {
     'syslog_name': 'postfix/smtps',
@@ -43,10 +44,10 @@ smtps_options = {
     'smtpd_sasl_auth_enable': 'yes',
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
-smtps_service = postfix.Service(service='smtps', type_='inet', private='n',
-                                unpriv='-', chroot='y', wakeup='-',
-                                maxproc='-', command='smtpd',
-                                options=smtps_options)
+smtps_service = postconf.Service(service='smtps', type_='inet', private='n',
+                                 unpriv='-', chroot='y', wakeup='-',
+                                 maxproc='-', command='smtpd',
+                                 options=smtps_options)
 
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
@@ -54,26 +55,26 @@ SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 def repair():
     """Tries to repair SASL, mail submission, and user lookup settings."""
     aliases.first_setup()
-    actions.superuser_run('email', ['ldap', 'setup'])
+    actions.superuser_run('email', ['postfix', 'setup'])
 
 
 def action_setup():
-    postfix.set_config(default_config)
+    postconf.set_config(default_config)
     _setup_submission()
     _setup_alias_maps()
 
 
 def _setup_submission():
     """Update configuration for smtps and smtp-submission."""
-    postfix.set_master_config(submission_service)
-    postfix.set_master_config(smtps_service)
+    postconf.set_master_config(submission_service)
+    postconf.set_master_config(smtps_service)
 
 
 def _setup_alias_maps():
     """Setup alias maps to include an sqlite DB."""
-    alias_maps = postfix.get_config(['alias_maps'])['alias_maps']
+    alias_maps = postconf.get_config(['alias_maps'])['alias_maps']
     alias_maps = alias_maps.replace(',', ' ').split(' ')
     if SQLITE_ALIASES not in alias_maps:
         alias_maps.append(SQLITE_ALIASES)
 
-    postfix.set_config({'alias_maps': ' '.join(alias_maps)})
+    postconf.set_config({'alias_maps': ' '.join(alias_maps)})
