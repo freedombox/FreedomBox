@@ -1,17 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import contextlib
-import logging
 import os
 import uuid
-
-logger = logging.getLogger(__name__)
-
-
-def log_subprocess(result):
-    logger.critical('Subprocess returned %d', result.returncode)
-    logger.critical('Stdout: %r', result.stdout)
-    logger.critical('Stderr: %r', result.stderr)
 
 
 @contextlib.contextmanager
