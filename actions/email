@@ -10,7 +10,7 @@ import os
 import sys
 
 import plinth.log
-from plinth.modules.email import audit
+from plinth.modules.email import privileged
 
 EXIT_SYNTAX = 10
 EXIT_PERM = 20
@@ -42,12 +42,12 @@ def _call(module_name, action_name, arguments):
         logger.critical('This action is reserved for root')
         sys.exit(EXIT_PERM)
 
-    # We only run actions defined in the audit module
-    if module_name not in audit.__all__:
+    # We only run actions defined in the privileged module
+    if module_name not in privileged.__all__:
         logger.critical('Bad module name: %r', module_name)
         sys.exit(EXIT_SYNTAX)
 
-    module = getattr(audit, module_name)
+    module = getattr(privileged, module_name)
     try:
         action = getattr(module, 'action_' + action_name)
     except AttributeError:

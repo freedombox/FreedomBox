@@ -19,7 +19,7 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, remove
 from plinth.signals import domain_added, domain_removed
 
-from . import audit, manifest
+from . import manifest, privileged
 
 _description = [
     _('This is a complete email server solution using Postfix, Dovecot, '
@@ -176,12 +176,12 @@ def setup(helper, old_version=None):
     app.setup(old_version)
 
     # Setup
-    helper.call('post', audit.home.repair)
+    helper.call('post', privileged.home.repair)
     app.get_component('letsencrypt-email-postfix').setup_certificates()
     app.get_component('letsencrypt-email-dovecot').setup_certificates()
-    helper.call('post', audit.domain.set_domains)
-    helper.call('post', audit.ldap.repair)
-    helper.call('post', audit.spam.repair)
+    helper.call('post', privileged.domain.set_domains)
+    helper.call('post', privileged.ldap.repair)
+    helper.call('post', privileged.spam.repair)
 
     # Reload
     actions.superuser_run('service', ['reload', 'postfix'])
@@ -198,7 +198,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     if app.needs_setup():
         return
 
-    audit.domain.set_domains()
+    privileged.domain.set_domains()
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
@@ -206,4 +206,4 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     if app.needs_setup():
         return
 
-    audit.domain.set_domains()
+    privileged.domain.set_domains()

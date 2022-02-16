@@ -37,9 +37,9 @@ class Entry:  # pylint: disable=too-many-instance-attributes
 
 def get_entries():
     """Return the list of DNS entries to make."""
-    from . import audit
+    from . import privileged
 
-    domain = audit.domain.get_domains()['primary_domain']
+    domain = privileged.domain.get_domains()['primary_domain']
     mx_spam_entries = [
         Entry(type_='MX', value=f'{domain}.'),
         Entry(type_='TXT', value='v=spf1 mx a ~all'),
@@ -49,7 +49,7 @@ def get_entries():
             f'rua=mailto:postmaster@{domain}; ')
     ]
     try:
-        dkim_public_key = audit.dkim.get_public_key(domain)
+        dkim_public_key = privileged.dkim.get_public_key(domain)
         dkim_entries = [
             Entry(domain='dkim._domainkey', type_='TXT',
                   value=f'v=DKIM1; k=rsa; p={dkim_public_key}')

@@ -13,7 +13,7 @@ from plinth.modules.email import dns
 from plinth.views import AppView
 
 from . import aliases as aliases_module
-from . import audit, forms
+from . import forms, privileged
 
 
 class EmailAppView(AppView):
@@ -31,7 +31,7 @@ class EmailAppView(AppView):
     def get_initial(self):
         """Return the initial values to populate in the form."""
         initial = super().get_initial()
-        domains = audit.domain.get_domains()
+        domains = privileged.domain.get_domains()
         initial['primary_domain'] = domains['primary_domain']
         return initial
 
@@ -41,7 +41,7 @@ class EmailAppView(AppView):
         new_data = form.cleaned_data
         if old_data['primary_domain'] != new_data['primary_domain']:
             try:
-                audit.domain.set_domains(new_data['primary_domain'])
+                privileged.domain.set_domains(new_data['primary_domain'])
                 messages.success(self.request, _('Configuration updated'))
             except Exception:
                 messages.error(self.request,
