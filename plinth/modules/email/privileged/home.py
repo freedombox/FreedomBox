@@ -6,7 +6,7 @@ import subprocess
 from plinth import actions
 
 
-def repair():
+def setup():
     """Set correct permissions on /var/mail/ directory.
 
     For each user, /var/mail/<user> is the 'dovecot mail home' for that user.
@@ -14,9 +14,9 @@ def repair():
     directory. Ensure that 'others' can access /var/mail/.
 
     """
-    actions.superuser_run('email', ['home', 'set_up'])
+    actions.superuser_run('email', ['home', 'setup'])
 
 
-def action_set_up():
+def action_setup():
     """Run chmod on /var/mail to remove all permissions for 'others'."""
     subprocess.run(['chmod', 'o-rwx', '/var/mail'], check=True)

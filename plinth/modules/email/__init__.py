@@ -176,12 +176,12 @@ def setup(helper, old_version=None):
     app.setup(old_version)
 
     # Setup
-    helper.call('post', privileged.home.repair)
+    helper.call('post', privileged.home.setup)
     app.get_component('letsencrypt-email-postfix').setup_certificates()
     app.get_component('letsencrypt-email-dovecot').setup_certificates()
     helper.call('post', privileged.domain.set_domains)
-    helper.call('post', privileged.postfix.repair)
-    helper.call('post', privileged.spam.repair)
+    helper.call('post', privileged.postfix.setup)
+    helper.call('post', privileged.spam.setup)
 
     # Reload
     actions.superuser_run('service', ['reload', 'postfix'])

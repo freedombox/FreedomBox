@@ -16,11 +16,13 @@ _milter_config = {
 }
 
 
-def repair():
-    actions.superuser_run('email', ['spam', 'set_filter'])
+def setup():
+    """Trigger a privileged setup action."""
+    actions.superuser_run('email', ['spam', 'setup'])
 
 
-def action_set_filter():
+def action_setup():
+    """Compile sieve filters and set rspamd/postfix configuration."""
     _compile_sieve()
     _setup_rspamd()
     postfix.set_config(_milter_config)

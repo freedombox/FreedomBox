@@ -52,8 +52,8 @@ smtps_service = postconf.Service(service='smtps', type_='inet', private='n',
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
 
-def repair():
-    """Tries to repair SASL, mail submission, and user lookup settings."""
+def setup():
+    """Set SASL, mail submission, and user lookup settings."""
     aliases.first_setup()
     actions.superuser_run('email', ['postfix', 'setup'])
 
