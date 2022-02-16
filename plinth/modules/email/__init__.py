@@ -71,6 +71,13 @@ class EmailApp(plinth.app.App):
             login_required=True)
         self.add(shortcut)
 
+        shortcut = frontpage.Shortcut(
+            'shortcut-email-aliases', _('My Email Aliases'),
+            short_description=_('Manage Aliases for Mailbox'),
+            icon=info.icon_filename, url=reverse_lazy('email:aliases'),
+            login_required=True)
+        self.add(shortcut)
+
         # Other likely install conflicts have been discarded:
         # - msmtp, nullmailer, sendmail don't cause install faults.
         # - qmail and smail are missing in Bullseye (Not tested,
