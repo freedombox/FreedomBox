@@ -1,5 +1,7 @@
-"""Configures spam filters and the virus scanner"""
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configures rspamd to handle incoming and outgoing spam.
+"""
 
 import pathlib
 import re

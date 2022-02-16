@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""TLS configuration for postfix and dovecot."""
+"""
+TLS certificate configuration for postfix and dovecot.
+"""
 
 import pathlib
 

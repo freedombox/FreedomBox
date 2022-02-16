@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Privileged operations for managing aliases."""
+"""
+Privileged operations for managing aliases.
+"""
 
 import pathlib
 import shutil

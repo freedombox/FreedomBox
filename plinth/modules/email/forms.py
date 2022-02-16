@@ -2,6 +2,7 @@
 """
 Forms for the email app.
 """
+
 import re
 
 from django import forms

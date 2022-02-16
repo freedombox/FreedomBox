@@ -1,4 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+URLs for the email module.
+"""
+
 from django.urls import path
 from stronghold.decorators import public
 
