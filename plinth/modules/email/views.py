@@ -116,14 +116,8 @@ class AliasView(FormView):
     def _list_form_valid(self, form):
         """Handle a valid alias list form operation."""
         aliases = form.cleaned_data['aliases']
-        action = form.cleaned_data['action']
         username = self.request.user.username
-        if action == 'delete':
-            aliases_module.delete(username, aliases)
-        elif action == 'disable':
-            aliases_module.disable(username, aliases)
-        elif action == 'enable':
-            aliases_module.enable(username, aliases)
+        aliases_module.delete(username, aliases)
 
     def _create_form_valid(self, form):
         """Handle a valid create alias form operation."""

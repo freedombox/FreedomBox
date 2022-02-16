@@ -60,26 +60,5 @@ class AliasListForm(forms.Form):
     def __init__(self, aliases, *args, **kwargs):
         """Populate the choices for aliases."""
         super().__init__(*args, **kwargs)
-        enabled_aliases = [(alias.name, alias.name) for alias in aliases
-                           if alias.enabled]
-        disabled_aliases = [(alias.name, alias.name) for alias in aliases
-                            if not alias.enabled]
-        choices = []
-        if enabled_aliases:
-            choices.append((_('Enabled'), enabled_aliases))
-
-        if disabled_aliases:
-            choices.append((_('Disabled'), disabled_aliases))
-
+        choices = [(alias.name, alias.name) for alias in aliases]
         self.fields['aliases'].choices = choices
-
-    def clean(self):
-        """Add the pressed button to cleaned data."""
-        cleaned_data = super().clean()
-        buttons = [key[4:] for key in self.data if key.startswith('btn_')]
-        if len(buttons) != 1 or buttons[0] not in ('enable', 'disable',
-                                                   'delete'):
-            raise ValidationError('Invalid button pressed')
-
-        cleaned_data['action'] = buttons[0]
-        return cleaned_data
