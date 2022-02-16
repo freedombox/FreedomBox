@@ -7,7 +7,7 @@ import subprocess
 
 from plinth.actions import superuser_run
 from plinth.modules import config
-from plinth.modules.email import postconf
+from plinth.modules.email import postfix
 from plinth.modules.names.components import DomainName
 
 from . import tls
@@ -15,8 +15,8 @@ from . import tls
 
 def get_domains():
     """Return the current domain configuration."""
-    conf = postconf.get_many(['mydomain', 'mydestination'])
-    domains = set(postconf.parse_maps(conf['mydestination']))
+    conf = postfix.get_config(['mydomain', 'mydestination'])
+    domains = set(postfix.parse_maps(conf['mydestination']))
     defaults = {'$myhostname', 'localhost.$mydomain', 'localhost'}
     domains.difference_update(defaults)
     return {'primary_domain': conf['mydomain'], 'all_domains': domains}
@@ -48,7 +48,7 @@ def action_set_domains(primary_domain, all_domains):
         'mydomain': primary_domain,
         'mydestination': my_destination
     }
-    postconf.set_many(conf)
+    postfix.set_config(conf)
     pathlib.Path('/etc/mailname').write_text(primary_domain + '\n')
     tls.set_postfix_config(primary_domain, all_domains)
     tls.set_dovecot_config(primary_domain, all_domains)

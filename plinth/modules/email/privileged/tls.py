@@ -1,7 +1,7 @@
 """TLS configuration for postfix and dovecot."""
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from plinth.modules.email import interproc, postconf
+from .. import interproc, postfix
 
 # Mozilla Guideline v5.6, Postfix 1.17.7, OpenSSL 1.1.1d, intermediate
 # Generated 2021-08
@@ -49,7 +49,7 @@ def set_postfix_config(primary_domain, all_domains):
         'smtpd_tls_chain_files':
             f'/etc/postfix/letsencrypt/{primary_domain}/chain.pem'
     })
-    postconf.set_many_unsafe(config)
+    postfix.set_config(config)
     content = '# This file is managed by FreedomBox\n'
     for domain in all_domains:
         content += f'{domain} /etc/postfix/letsencrypt/{domain}/chain.pem\n'

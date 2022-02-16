@@ -4,9 +4,9 @@ Configure postfix to use auth and local delivery with dovecot. Start smtps and
 submission services. Setup aliases database.
 """
 
-import plinth.modules.email.aliases as aliases
-import plinth.modules.email.postconf as postconf
 from plinth import actions
+
+from .. import aliases, postfix
 
 default_config = {
     'smtpd_sasl_auth_enable':
@@ -26,28 +26,27 @@ default_config = {
         ])
 }
 
-submission_flags = postconf.ServiceFlags(service='submission', type='inet',
-                                         private='n', unpriv='-', chroot='y',
-                                         wakeup='-', maxproc='-',
-                                         command_args='smtpd')
-
-default_submission_options = {
+submission_options = {
     'syslog_name': 'postfix/submission',
     'smtpd_tls_security_level': 'encrypt',
     'smtpd_client_restrictions': 'permit_sasl_authenticated,reject',
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
+submission_service = postfix.Service(service='submission', type_='inet',
+                                     private='n', unpriv='-', chroot='y',
+                                     wakeup='-', maxproc='-', command='smtpd',
+                                     options=submission_options)
 
-smtps_flags = postconf.ServiceFlags(service='smtps', type='inet', private='n',
-                                    unpriv='-', chroot='y', wakeup='-',
-                                    maxproc='-', command_args='smtpd')
-
-default_smtps_options = {
+smtps_options = {
     'syslog_name': 'postfix/smtps',
     'smtpd_tls_wrappermode': 'yes',
     'smtpd_sasl_auth_enable': 'yes',
     'smtpd_relay_restrictions': 'permit_sasl_authenticated,reject'
 }
+smtps_service = postfix.Service(service='smtps', type_='inet', private='n',
+                                unpriv='-', chroot='y', wakeup='-',
+                                maxproc='-', command='smtpd',
+                                options=smtps_options)
 
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
@@ -59,23 +58,22 @@ def repair():
 
 
 def action_setup():
-    postconf.set_many_unsafe(default_config)
+    postfix.set_config(default_config)
     _setup_submission()
     _setup_alias_maps()
 
 
 def _setup_submission():
     """Update configuration for smtps and smtp-submission."""
-    postconf.set_master_cf_options(service_flags=submission_flags,
-                                   options=default_submission_options)
-    postconf.set_master_cf_options(service_flags=smtps_flags,
-                                   options=default_smtps_options)
+    postfix.set_master_config(submission_service)
+    postfix.set_master_config(smtps_service)
 
 
 def _setup_alias_maps():
     """Setup alias maps to include an sqlite DB."""
-    alias_maps = postconf.get_unsafe('alias_maps').replace(',', ' ').split(' ')
+    alias_maps = postfix.get_config(['alias_maps'])['alias_maps']
+    alias_maps = alias_maps.replace(',', ' ').split(' ')
     if SQLITE_ALIASES not in alias_maps:
         alias_maps.append(SQLITE_ALIASES)
 
-    postconf.set_many_unsafe({'alias_maps': ' '.join(alias_maps)})
+    postfix.set_config({'alias_maps': ' '.join(alias_maps)})

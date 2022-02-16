@@ -6,7 +6,7 @@ import re
 import subprocess
 
 from plinth import actions
-from plinth.modules.email import postconf
+from plinth.modules.email import postfix
 
 _milter_config = {
     'smtpd_milters': 'inet:127.0.0.1:11332',
@@ -21,7 +21,7 @@ def repair():
 def action_set_filter():
     _compile_sieve()
     _setup_rspamd()
-    postconf.set_many(_milter_config)
+    postfix.set_config(_milter_config)
 
 
 def _compile_sieve():
