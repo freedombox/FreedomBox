@@ -183,10 +183,10 @@ def setup(helper, old_version=None):
     helper.call('post', privileged.postfix.setup)
     helper.call('post', privileged.spam.setup)
 
-    # Reload
-    actions.superuser_run('service', ['reload', 'postfix'])
-    actions.superuser_run('service', ['reload', 'dovecot'])
-    actions.superuser_run('service', ['reload', 'rspamd'])
+    # Restart daemons
+    actions.superuser_run('service', ['try-restart', 'postfix'])
+    actions.superuser_run('service', ['try-restart', 'dovecot'])
+    actions.superuser_run('service', ['try-restart', 'rspamd'])
 
     # Expose to public internet
     helper.call('post', app.enable)
