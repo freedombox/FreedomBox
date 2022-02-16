@@ -1,7 +1,9 @@
-"""TLS configuration for postfix and dovecot."""
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""TLS configuration for postfix and dovecot."""
 
-from .. import interproc, postfix
+import pathlib
+
+from .. import postfix
 
 # Mozilla Guideline v5.6, Postfix 1.17.7, OpenSSL 1.1.1d, intermediate
 # Generated 2021-08
@@ -41,11 +43,11 @@ _postfix_config = {
 
 def set_postfix_config(primary_domain, all_domains):
     """Set postfix configuration for TLS certificates."""
-    tls_sni_map = '/etc/postfix/freedombox-tls-sni.map'
+    tls_sni_map = pathlib.Path('/etc/postfix/freedombox-tls-sni.map')
     config = dict(_postfix_config)
     config.update({
         'tls_server_sni_maps':
-            tls_sni_map,
+            str(tls_sni_map),
         'smtpd_tls_chain_files':
             f'/etc/postfix/letsencrypt/{primary_domain}/chain.pem'
     })
@@ -54,8 +56,7 @@ def set_postfix_config(primary_domain, all_domains):
     for domain in all_domains:
         content += f'{domain} /etc/postfix/letsencrypt/{domain}/chain.pem\n'
 
-    with interproc.atomically_rewrite(tls_sni_map) as file_handle:
-        file_handle.write(content)
+    tls_sni_map.write_text(content)
 
 
 def set_dovecot_config(primary_domain, all_domains):
@@ -71,6 +72,5 @@ local_name {domain} {{
   ssl_key = </etc/dovecot/letsencrypt/{domain}/privkey.pem
 }}
 '''
-    dovecot_cert_config = '/etc/dovecot/conf.d/91-freedombox-tls.conf'
-    with interproc.atomically_rewrite(dovecot_cert_config) as file_handle:
-        file_handle.write(content)
+    cert_config = pathlib.Path('/etc/dovecot/conf.d/91-freedombox-tls.conf')
+    cert_config.write_text(content)
