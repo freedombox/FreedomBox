@@ -8,10 +8,8 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from . import interproc
-from .lock import Mutex
 
 logger = logging.getLogger(__name__)
-mutex = Mutex('email-postconf')
 
 
 @dataclass
@@ -28,8 +26,10 @@ class ServiceFlags:
     crash_handler: ClassVar[str] = '/dev/null/plinth-crash'
 
     def _get_flags_ordered(self):
-        return [self.service, self.type, self.private, self.unpriv,
-                self.chroot, self.wakeup, self.maxproc, self.command_args]
+        return [
+            self.service, self.type, self.private, self.unpriv, self.chroot,
+            self.wakeup, self.maxproc, self.command_args
+        ]
 
     def serialize(self) -> str:
         ordered = self._get_flags_ordered()
@@ -57,8 +57,8 @@ def get_many(key_list):
     Return a key-value map"""
     for key in key_list:
         validate_key(key)
-    with mutex.lock_all():
-        return get_many_unsafe(key_list)
+
+    return get_many_unsafe(key_list)
 
 
 def get_many_unsafe(key_iterator, flag=''):
@@ -90,8 +90,7 @@ def set_many(kv_map):
         validate_key(key)
         validate_value(value)
 
-    with mutex.lock_all():
-        set_many_unsafe(kv_map)
+    set_many_unsafe(kv_map)
 
 
 def set_many_unsafe(kv_map, flag=''):
@@ -123,10 +122,9 @@ def set_master_cf_options(service_flags, options={}):
     # /sbin/postconf -M "service/type=<temp flag string>"
     # /sbin/postconf -P "service/type/k=v" ...
     # Delete placeholder string /dev/null/plinth-crash
-    with mutex.lock_all():
-        set_unsafe(service_key, service_flags.serialize_temp(), '-M')
-        set_many_unsafe(long_opts, '-P')
-        _master_remove_crash_handler(service_flags)
+    set_unsafe(service_key, service_flags.serialize_temp(), '-M')
+    set_many_unsafe(long_opts, '-P')
+    _master_remove_crash_handler(service_flags)
 
 
 def get_unsafe(key):
