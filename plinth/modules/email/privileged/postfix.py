@@ -75,6 +75,9 @@ def _setup_alias_maps():
     alias_maps = postconf.get_config(['alias_maps'])['alias_maps']
     alias_maps = alias_maps.replace(',', ' ').split(' ')
     if SQLITE_ALIASES not in alias_maps:
-        alias_maps.append(SQLITE_ALIASES)
+        # Prioritize FreedomBox's sqlite based aliases file over /etc/aliases.
+        # Otherwise, the common aliases will be pointing to 'root' instead of
+        # first admin user (which is more practical in FreedomBox).
+        alias_maps = [SQLITE_ALIASES] + alias_maps
 
     postconf.set_config({'alias_maps': ' '.join(alias_maps)})

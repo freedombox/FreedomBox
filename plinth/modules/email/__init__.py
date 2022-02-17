@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import plinth.app
-from plinth import actions, frontpage, menu
+from plinth import actions, cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -18,14 +18,22 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, remove
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
-from . import manifest, privileged
+from . import aliases, manifest, privileged
 
 _description = [
     _('This is a complete email server solution using Postfix, Dovecot, '
       'and Rspamd. Postfix sends and receives emails. Dovecot allows '
       'email clients to access your mailbox using IMAP and POP3. Rspamd deals '
       'with spam.'),
+    format_lazy(
+        _('Each user on {box_name} gets an email address like '
+          'user@mydomain.example. They will also receive mail from all '
+          'addresses that look like user+foo@mydomain.example. Further, '
+          'they can add aliases to their email address. Necessary aliases '
+          'such as "postmaster" are automatically created pointing to the '
+          'first admin user.'), box_name=_(cfg.box_name)),
     _('<a href="/plinth/apps/roundcube/">Roundcube app</a> provides web '
       'interface for users to access email.'),
     _('During installation, any other email servers in the system will be '
@@ -160,6 +168,13 @@ def get_domains():
     return [default_domain] if default_domain else []
 
 
+def _get_first_admin():
+    """Return an admin user in the system or None if non exist."""
+    from django.contrib.auth.models import User
+    users = User.objects.filter(groups__name='admin')
+    return users[0].username if users else None
+
+
 def setup(helper, old_version=None):
     """Installs and configures module"""
 
@@ -181,6 +196,7 @@ def setup(helper, old_version=None):
     app.get_component('letsencrypt-email-dovecot').setup_certificates()
     helper.call('post', privileged.domain.set_domains)
     helper.call('post', privileged.postfix.setup)
+    helper.call('post', aliases.setup_common_aliases, _get_first_admin())
     helper.call('post', privileged.spam.setup)
 
     # Restart daemons

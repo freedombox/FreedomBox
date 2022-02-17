@@ -89,3 +89,18 @@ COMMIT;
 '''
     with _get_cursor() as cursor:
         cursor.executescript(query)
+
+
+def setup_common_aliases(username):
+    """Create aliases for common mailboxes described in RFC2142.
+
+    See: https://datatracker.ietf.org/doc/html/rfc2142
+    """
+    aliases = [
+        'mailer-daemon', 'postmaster', 'nobody', 'webmaster', 'www',
+        'hostmaster', 'info', 'support', 'abuse', 'noc', 'security'
+        'usenet', 'news', 'ftp'
+    ]
+    for alias in aliases:
+        if not exists(alias):
+            put(username, alias)
