@@ -1,6 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Configures rspamd to handle incoming and outgoing spam.
+
+See: http://www.postfix.org/MILTER_README.html
+See: https://rspamd.com/doc/configuration/ucl.html
 """
 
 import pathlib

@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Privileged actions to setup users' dovecot mail home directory."""
+"""
+Privileged actions to setup users' dovecot mail home directory.
+
+See:
+https://doc.dovecot.org/configuration_manual/authentication/user_databases_userdb/
+"""
 
 import subprocess
 

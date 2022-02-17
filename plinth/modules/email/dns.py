@@ -1,6 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Manage DNS entries needed for an email server.
+
+See: https://en.wikipedia.org/wiki/MX_record
+See: https://dmarcguide.globalcyberalliance.org/
+See: https://support.google.com/a/answer/2466580
+See: https://datatracker.ietf.org/doc/html/rfc6186
+See: https://rspamd.com/doc/modules/dkim_signing.html
 """
 
 from dataclasses import dataclass

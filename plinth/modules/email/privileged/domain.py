@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Configure domains accepted by postfix.
+
+See: http://www.postfix.org/postconf.5.html#mydestination
+See: http://www.postfix.org/postconf.5.html#mydomain
+See: http://www.postfix.org/postconf.5.html#myhostname
 """
 
 import pathlib

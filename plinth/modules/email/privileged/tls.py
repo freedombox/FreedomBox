@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 TLS certificate configuration for postfix and dovecot.
+
+See: https://ssl-config.mozilla.org/
+See: http://www.postfix.org/TLS_README.html
+See: https://doc.dovecot.org/configuration_manual/dovecot_ssl_configuration/
 """
 
 import pathlib

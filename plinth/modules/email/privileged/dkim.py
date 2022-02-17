@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Generate DKIM keys for signing outgoing messages.
+
+See: https://rspamd.com/doc/modules/dkim_signing.html
 """
 
 import pathlib

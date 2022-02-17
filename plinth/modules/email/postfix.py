@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Set and get postfix configuration using postconf.
+
+See: http://www.postfix.org/postconf.1.html
+See: http://www.postfix.org/master.5.html
+See: http://www.postfix.org/postconf.5.html
 """
 
 import re
