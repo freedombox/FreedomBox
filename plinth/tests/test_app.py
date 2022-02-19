@@ -9,7 +9,7 @@ from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.app import (App, Component, FollowerComponent, Info,
+from plinth.app import (App, Component, EnableState, FollowerComponent, Info,
                         LeaderComponent, apps_init)
 
 # pylint: disable=protected-access
@@ -425,6 +425,28 @@ def test_info_clients_validation():
         }]
     }]
     Info('test-app', 3, clients=clients)
+
+
+def test_enable_state_key(app_with_components):
+    """Test getting the storage key for enable state component."""
+    component = EnableState('enable-state-1')
+    with pytest.raises(KeyError):
+        assert component.key
+
+    app_with_components.add(component)
+    assert component.key == app_with_components.app_id + '_enable'
+
+
+@pytest.mark.django_db
+def test_enable_state_enable_disable(app_with_components):
+    """Test enabling/disabling enable state component."""
+    component = EnableState('enable-state-1')
+    app_with_components.add(component)
+    assert not component.is_enabled()
+    component.enable()
+    assert component.is_enabled()
+    component.disable()
+    assert not component.is_enabled()
 
 
 class ModuleTest1:

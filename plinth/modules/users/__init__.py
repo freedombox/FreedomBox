@@ -26,7 +26,7 @@ first_boot_steps = [
 ]
 
 _description = [
-    _('Create and managed user accounts. These accounts serve as centralized '
+    _('Create and manage user accounts. These accounts serve as centralized '
       'authentication mechanism for most apps. Some apps further require a '
       'user account to be part of a group to authorize the user to access the '
       'app.'),

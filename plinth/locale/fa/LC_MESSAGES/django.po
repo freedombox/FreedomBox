@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2021-09-07 11:34+0000\n"
 "Last-Translator: Seyed mohammad ali Hosseinifard <ali_hosseine@yahoo.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/freedombox/"
@@ -869,7 +869,7 @@ msgid "No passwords currently configured."
 msgstr ""
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "رمز"
@@ -1029,9 +1029,10 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1215,7 +1216,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "پیکربندی عمومی"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1224,13 +1225,13 @@ msgid "Configure"
 msgstr "پیکربندی"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "نام دامنه"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "نام دامنه معتبر نیست"
 
@@ -1583,6 +1584,7 @@ msgid "Test"
 msgstr "آزمون"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "نتیجه‌ها"
 
@@ -1590,7 +1592,7 @@ msgstr "نتیجه‌ها"
 msgid "Diagnostic Test"
 msgstr "آزمون عیب‌یابی"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1601,7 +1603,7 @@ msgstr ""
 "می‌دهد، دیگران نمی‌توانند شما را به راحتی در اینترنت پیدا کنند. این باعث می‌شود "
 "که دیگران نتوانند سرویس‌هایی را که {box_name} شما ارائه می‌دهد پیدا کنند."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1618,18 +1620,37 @@ msgstr ""
 "نام DNS شما را به نشانی IP شما مرتبط می‌کند، و اگر کسی در اینترنت نام DNS شما "
 "را جستجو کرد، نشانی IP شما را در پاسخ خواهد گرفت."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"اگر به دنبال یک حساب رایگان DNS متغیر هستید، می‌توانید سرویس رایگان GnuDIP "
+"را  در <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
+"datasystems24.net</a> یا سرویس رایگان به‌روزرسانی نشانی را در <a href='http://"
+"freedns.afraid.org/' target='_blank'> freedns.afraid.org</a> به کار ببرید."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 #, fuzzy
 msgid "Dynamic DNS Client"
 msgstr "برنامهٔ DNS متغیر (Dynamic DNS Client)"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 #, fuzzy
 #| msgid "Domain Name"
 msgid "Dynamic Domain Name"
 msgstr "نام دامنه"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 #, fuzzy
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
@@ -1640,7 +1661,7 @@ msgstr ""
 "نشانی URL به کار بروند. برای جزئیات بیشتر الگوهای نشانی‌های به‌روزرسانی را از "
 "خدمات‌دهنده‌های نمونه ببینید."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1650,7 +1671,7 @@ msgstr ""
 "خدمات‌دهندهٔ شما از GnuDIP پشتیبانی نمی‌کند یا در فهرست نیست، می‌توانید نشانی "
 "به‌روزرسانی (update URL) خدمات‌دهنده‌تان را به‌کار ببرید."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1658,18 +1679,18 @@ msgstr ""
 "لطفاً یک نشانی URL (مانند \"https://example.com/\") را این‌جا ننویسید، بلکه "
 "تنها نام میزبان سرور GnuDIP را بنویسید (مانند \"example.com\")."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "نام دامنهٔ عمومی که با آن می‌خواهید به {box_name} خود وصل شوید."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "اگر خدمات‌دهندهٔ شما گواهی‌نامه‌های خودامضاشده را به‌کار می‌برد این گزینه را "
 "انتخاب کنید."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 #, fuzzy
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
@@ -1678,11 +1699,11 @@ msgstr ""
 "اگر این گزینه انتخاب شود، نام کاربری و رمز شما برای تأیید هویت سادهٔ تحت وب "
 "(HTTP basic authentication) به کار خواهد رفت."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "اگر نمی‌خواهید رمزتان را عوض کنید، این‌جا را خالی بگذارید."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Optional Value. If your {box_name} is not connected directly to the "
@@ -1699,168 +1720,66 @@ msgstr ""
 "روتر NAT وصل باشد) این نشانی برای تعیین IP واقعی به‌کار می‌رود. این نشانی باید "
 "صرفاً IP را برگرداند (مثال: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "نام کاربری که هنگام ساختن حساب به‌کار برده شد."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:68
+#: plinth/modules/dynamicdns/forms.py:57
 #, fuzzy
 #| msgid "Update URL"
-msgid "other update URL"
+msgid "Other update URL"
 msgstr "نشانی به‌روزرسانی"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "فعال‌سازی DNS متغیر"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "نوع سرویس"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "نشانی سرور GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "نام کاربری معتبر نیست"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "نشانی به‌روزرسانی"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "همهٔ گواهی‌نامه‌های SSL را بپذیر"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "به‌کاربردن تأیید هویت سادهٔ تحت وب"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "نام کاربری"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "رمز را نشان بده"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "نشانی برای دیدن آی‌پی عمومی"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
+#: plinth/modules/dynamicdns/forms.py:123
+msgid "This field is required."
 msgstr ""
-"لطفاً یک نشانی به‌روزرسانی (update URL) یا نشانی سرور GnuDIP را وارد کنید"
 
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "لطفاً یک نام کاربری GnuDIP وارد کنید"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "لطفاً یک نام دامنهٔ GnuDIP وارد کنید"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "لطفاً یک رمز وارد کنید"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"اگر به دنبال یک حساب رایگان DNS متغیر هستید، می‌توانید سرویس رایگان GnuDIP "
-"را  در <a href='http://gnudip.datasystems24.net' target='_blank'>gnudip."
-"datasystems24.net</a> یا سرویس رایگان به‌روزرسانی نشانی را در <a href='http://"
-"freedns.afraid.org/' target='_blank'> freedns.afraid.org</a> به کار ببرید."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"اگر %(box_name)s شما از راه یک روتر NAT به اینترنت وصل شده، فراموش نکنید که "
-"پورت‌های استاندارد را در تنظیمات روتر خود به درستی روی %(box_name)s تنظیم "
-"کنید، از جمله پورت 80 TCP (برای HTTP) و پورت 443 TCP (برای HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-#, fuzzy
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"جاوااسکریپت شما خاموش است. فرم‌های پویا غیرفعال می‌شوند و برخی از تابع‌های کمکی "
-"کار نخواهند کرد (البته عملکرد اصلی برنامه همچنان کار می‌کند)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "به‌روزرسانی وضعیت"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "نوع NAT"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"نوع NAT هنوز شناخته نیست. اگر یک نشانی URL برای فهمیدن IP وارد نکنید، "
-"نمی‌توانیم نوع NAT را بشناسیم."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "اتصال مستقیم به اینترنت."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, fuzzy, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"اتصال از راه NAT. این یعنی سرویس DNS متغیر نشانی واردشده را برای دیدن "
-"تغییرات IP رصد می‌کند (چنین نشانی‌ای برای فهمیدن تغییرات IP لازم است، وگرنه "
-"تغییرات IP کشف نمی‌شوند). اگر WAN IP تغییر کند، ممکن است %(timer)s دقیقه طول "
-"بکشد تا دادهٔ DNS شما به‌روز شود."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "آخرین به‌روزرسانی"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "درباره"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1875,13 +1794,58 @@ msgstr "درباره"
 msgid "Status"
 msgstr "وضعیت"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "پیکربندی DNS متغیر"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "دامنه"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "وضعیت DNS متغیر"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "آخرین به‌روزرسانی"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "نشانی آی‌پی"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access Point"
+msgid "Success"
+msgstr "نقطهٔ دسترسی"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+msgid "Failed"
+msgstr ""
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No wikis or blogs available."
+msgid "No status available."
+msgstr "ویکی یا وبلاگی موجود نیست."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "نام اتصال"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "پاک‌کردن اتصال"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Last update"
+msgid "Already up-to-date"
+msgstr "آخرین به‌روزرسانی"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2472,6 +2436,11 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "درباره"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, fuzzy, python-format
@@ -2878,6 +2847,13 @@ msgstr "به سایت %(site)s بروید"
 msgid "Delete site %(site)s"
 msgstr "سایت %(site)s را پاک کنید"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "به‌روزرسانی وضعیت"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3035,10 +3011,6 @@ msgstr "وضعیت گواهی دیجیتال"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "دامنه"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3438,30 +3410,6 @@ msgstr "نشانی"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr ""
-
-#: plinth/modules/minetest/views.py:48
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Maximum players configuration updated"
-msgstr "پیکربندی به‌روز شد"
-
-#: plinth/modules/minetest/views.py:55
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Creative mode configuration updated"
-msgstr "پیکربندی به‌روز شد"
-
-#: plinth/modules/minetest/views.py:61
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "PVP configuration updated"
-msgstr "پیکربندی به‌روز شد"
-
-#: plinth/modules/minetest/views.py:67
-#, fuzzy
-#| msgid "Configuration updated"
-msgid "Damage configuration updated"
-msgstr "پیکربندی به‌روز شد"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -6871,7 +6819,7 @@ msgstr ""
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -7974,6 +7922,92 @@ msgstr ""
 msgid "Gujarati"
 msgstr ""
 
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "فعال‌سازی DNS متغیر"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr ""
+#~ "لطفاً یک نشانی به‌روزرسانی (update URL) یا نشانی سرور GnuDIP را وارد کنید"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "لطفاً یک نام کاربری GnuDIP وارد کنید"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "لطفاً یک نام دامنهٔ GnuDIP وارد کنید"
+
+#~ msgid "Please provide a password"
+#~ msgstr "لطفاً یک رمز وارد کنید"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "اگر %(box_name)s شما از راه یک روتر NAT به اینترنت وصل شده، فراموش نکنید "
+#~ "که پورت‌های استاندارد را در تنظیمات روتر خود به درستی روی %(box_name)s "
+#~ "تنظیم کنید، از جمله پورت 80 TCP (برای HTTP) و پورت 443 TCP (برای HTTPS)."
+
+#, fuzzy
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "جاوااسکریپت شما خاموش است. فرم‌های پویا غیرفعال می‌شوند و برخی از تابع‌های "
+#~ "کمکی کار نخواهند کرد (البته عملکرد اصلی برنامه همچنان کار می‌کند)."
+
+#~ msgid "NAT type"
+#~ msgstr "نوع NAT"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "نوع NAT هنوز شناخته نیست. اگر یک نشانی URL برای فهمیدن IP وارد نکنید، "
+#~ "نمی‌توانیم نوع NAT را بشناسیم."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "اتصال مستقیم به اینترنت."
+
+#, fuzzy, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "اتصال از راه NAT. این یعنی سرویس DNS متغیر نشانی واردشده را برای دیدن "
+#~ "تغییرات IP رصد می‌کند (چنین نشانی‌ای برای فهمیدن تغییرات IP لازم است، وگرنه "
+#~ "تغییرات IP کشف نمی‌شوند). اگر WAN IP تغییر کند، ممکن است %(timer)s دقیقه "
+#~ "طول بکشد تا دادهٔ DNS شما به‌روز شود."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "پیکربندی DNS متغیر"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "وضعیت DNS متغیر"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "پیکربندی به‌روز شد"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "پیکربندی به‌روز شد"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "PVP configuration updated"
+#~ msgstr "پیکربندی به‌روز شد"
+
+#, fuzzy
+#~| msgid "Configuration updated"
+#~ msgid "Damage configuration updated"
+#~ msgstr "پیکربندی به‌روز شد"
+
 #, fuzzy
 #~| msgid "Available Domains"
 #~ msgid "RoundCube availability"
@@ -8414,11 +8448,6 @@ msgstr ""
 #~ msgid ""
 #~ "Pagekite setup finished. The HTTP and HTTPS services are activated now."
 #~ msgstr "راه‌اندازی Pagekite پایان یافت. سرویس‌های HTTP و HTTPS فعال هستند."
-
-#, fuzzy
-#~| msgid "Last update"
-#~ msgid "Auto-update"
-#~ msgstr "آخرین به‌روزرسانی"
 
 #, fuzzy
 #~| msgid "{box_name} Manual"

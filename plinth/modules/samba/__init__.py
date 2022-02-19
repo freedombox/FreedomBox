@@ -107,10 +107,12 @@ class SambaBackupRestore(BackupRestore):
 
     def backup_pre(self, packet):
         """Save registry share configuration."""
+        super().backup_pre(packet)
         actions.superuser_run('samba', ['dump-shares'])
 
     def restore_post(self, packet):
         """Restore configuration."""
+        super().restore_post(packet)
         actions.superuser_run('samba', ['setup'])
         actions.superuser_run('samba', ['restore-shares'])
 

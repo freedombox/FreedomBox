@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
-"PO-Revision-Date: 2021-06-07 12:34+0000\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
+"PO-Revision-Date: 2022-02-06 23:23+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -480,11 +480,7 @@ msgid "Existing Backups"
 msgstr "Kopjeruajtje Ekzistuese"
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:19
-#, fuzzy, python-format
-#| msgid ""
-#| "The credentials for this repository are stored on your %(box_name)s. <br /"
-#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
-#| "and, if chosen, the encryption passphrase."
+#, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
 "To restore a backup on a new %(box_name)s you need the SSH credentials and, "
@@ -492,7 +488,7 @@ msgid ""
 msgstr ""
 "Kredencialet për këtë depo janë depozituar te %(box_name)s juaj. <br> Për të "
 "rikthyer në punë kopjeruajtje te një %(box_name)s i ri ju duhen kredencialet "
-"ssh dhe, nëse qe zgjedhur, frazëkalimi për fshehtëzimin."
+"SSH dhe, nëse qe zgjedhur, frazëkalimi për fshehtëzimin."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -646,19 +642,14 @@ msgid "How to verify?"
 msgstr "Si të verifikohet?"
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:45
-#, fuzzy
-#| msgid ""
-#| "Run the following command on the SSH host machine. The output should "
-#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
-#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Xhironi urdhrin vijues në makinën e strehës SSH. Përfundimi duhet të "
-"përputhet me një nga mundësitë e dhëna. Mundeni edhe të përdorni dsa, ecdsa, "
-"ed25519 etj, në vend se rsa, duke zgjedhur kartelën përkatëse."
+"përputhet me një nga mundësitë e dhëna. Mundeni edhe të përdorni DSA, ECDSA, "
+"Ed25519 etj, në vend se RSA, duke zgjedhur kartelën përkatëse."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
@@ -875,7 +866,7 @@ msgid "No passwords currently configured."
 msgstr "S’ka fjalëkalime aktualisht të formësuar."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Fjalëkalim"
@@ -994,7 +985,7 @@ msgstr "Aktivizo Zgjerime Sigurie Sistemi Emrash Shërbyesish"
 
 #: plinth/modules/bind/templates/bind.html:11
 msgid "Serving Domains"
-msgstr ""
+msgstr "Shërbim Përkatësish"
 
 #: plinth/modules/bind/templates/bind.html:17
 #: plinth/modules/ikiwiki/forms.py:12
@@ -1011,7 +1002,7 @@ msgstr "Emra Përkatësish"
 
 #: plinth/modules/bind/templates/bind.html:19
 msgid "Serving"
-msgstr ""
+msgstr "Shërbim"
 
 #: plinth/modules/bind/templates/bind.html:20
 msgid "IP addresses"
@@ -1023,9 +1014,10 @@ msgid "Refresh IP address and domains"
 msgstr "Rifresko adresë IP dhe përkatësi"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1040,9 +1032,9 @@ msgid ""
 "store your e-books on your {box_name}, read them online or from any of your "
 "devices."
 msgstr ""
-"Shërbyesi calibre furnizon hyrje që nga interneti te koleksioni juaj i e-"
-"librave. E-librat mund t’i depozitoni në {box_name} tuaj, t’i lexoni që nga "
-"interneti ose nga cilado pajisje juaj."
+"Shërbyesi &lt;em&gt;calibre&lt;/em&gt; furnizon hyrje që nga interneti te "
+"koleksioni juaj i e-librave. E-librat mund t’i depozitoni në {box_name} "
+"tuaj, t’i lexoni që nga interneti ose nga cilado pajisje juaj."
 
 #: plinth/modules/calibre/__init__.py:29
 msgid ""
@@ -1225,7 +1217,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Formësim i Përgjithshëm"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1233,13 +1225,13 @@ msgid "Configure"
 msgstr "Formësoni"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Emër Përkatësie"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Emër i pavlefshëm përkatësie"
 
@@ -1383,6 +1375,9 @@ msgid ""
 "\"{ms_url}\">Matrix Synapse</a> or <a href=\"{e_url}\">ejabberd</a> need to "
 "be configured with the details provided here."
 msgstr ""
+"S’është menduar të përdoret drejtpërsëdrejti nga përdoruesit. Shërbyes të "
+"tillë si <a href=\"{ms_url}\">Matrix Synapse</a>, ose <a href="
+"\"{e_url}\">ejabberd</a> duhen formësuar me hollësitë e dhëna këtu."
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "Coturn"
@@ -1394,7 +1389,7 @@ msgstr "Ndihmës VoIP"
 
 #: plinth/modules/coturn/forms.py:22
 msgid "Invalid list of STUN/TURN Server URIs"
-msgstr ""
+msgstr "Listë e pavlefshme URI-sh Shërbyesi STUN/TURN"
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
@@ -1509,7 +1504,7 @@ msgstr "gabim"
 
 #: plinth/modules/diagnostics/__init__.py:100
 msgid "warning"
-msgstr ""
+msgstr "kujdes"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
@@ -1587,6 +1582,7 @@ msgid "Test"
 msgstr "Provë"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Përfundim"
 
@@ -1594,7 +1590,7 @@ msgstr "Përfundim"
 msgid "Diagnostic Test"
 msgstr "Test Diagnostikimesh"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1606,7 +1602,7 @@ msgstr ""
 "Internet. Kjo do t’u pengojë të tjerëve të gjejnë shërbime të cilat ofrohen "
 "nga ky {box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1624,15 +1620,35 @@ msgstr ""
 "emrin tuaj DNS me IP-në e re, dhe nëse dikush në Internet kërkon për emrin "
 "tuaj DNS, do të marrë një përgjigje me adresën tuaj aktuale IP."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
+#| "freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Nëse po kërkoni për një llogari falas DNS-je dinamike, mund të gjeni një "
+"shërbim GnuDIP të lirë, te <a href=\"http://ddns.freedombox.org' "
+"target='_blank'>ddns.freedombox.org&lt;/a>, ose mund të gjeni shërbime të "
+"lira me bazë përditësim URL-je, te &lt;a href=\" target=\"_blank\"> freedns."
+"afraid.org</a>."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Klient DNS Dinamik"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Emër Dinamik Përkatësie"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1642,7 +1658,7 @@ msgstr ""
 "përdoren brenda URL-së. Për hollësi, shihni gjedhet e përditësimit të URL-së "
 "për shembuj furnizuesish."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1653,7 +1669,7 @@ msgstr ""
 "nëse furnizuesi juaj nuk duket te lista, mund të përdorni URL-n e "
 "përditësimit të furnizuesit tuaj."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1661,19 +1677,19 @@ msgstr ""
 "Ju lutemi, mos jepni një URL këtu (bie fjala, “https://example.com/”), por "
 "vetëm strehëemrin e shërbyesit GnuDIP (p.sh., “example.com”)."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Emri publik i përkatësisë që doni të përdoret për të kapur {box_name} tuaj."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Përdoreni këtë mundësi, nëse furnizuesi juaj i shërbimeve përdor dëshmi të "
 "vetënënshkruara."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1681,18 +1697,13 @@ msgstr ""
 "Nëse kjo mundësi është përzgjedhur, emri i përdoruesit dhe fjalëkalimi për "
 "ju do të përdoren për mirëfilltësim elementa HTTP."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Nëse doni të mbahet fjalëkalimi i tanishëm, lëreni të zbrazët këtë fushë."
 
-#: plinth/modules/dynamicdns/forms.py:54
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Optional Value. If your {box_name} is not connected directly to the "
-#| "Internet (i.e. connected to a NAT router) this URL is used to determine "
-#| "the real IP address. The URL should simply return the IP where the client "
-#| "comes from (example: http://myip.datasystems24.de)."
+#: plinth/modules/dynamicdns/forms.py:43
+#, python-brace-format
 msgid ""
 "Optional Value. If your {box_name} is not connected directly to the Internet "
 "(i.e. connected to a NAT router) this URL is used to determine the real IP "
@@ -1702,169 +1713,70 @@ msgstr ""
 "Vlerë Opsionale. Nëse {box_name} juaj s’lidhet drejtpërsëdrejti në Internet "
 "(p.sh., i lidhur me një rrugëzues NAT), kjo URL përdoret për të përcaktuar "
 "adresën e njëmendtë IP. URL-ja thjesht duhet të japë IP-në prej nga vjen "
-"klienti (shembull: http://myip.datasystems24.de)."
+"klienti (shembull: https://ddns.freedombox.org/ip/)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "Emri i përdoruesit që u përdor kur u krijua llogaria."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "tjetër URL përditësimesh"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Aktivizo DNS Dinamik"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Lloj Shërbimi"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "Adresë Shërbyesi GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Emër i pavlefshëm shërbyesi"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "URL Përditësimi"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Prano krejt dëshmitë SSL"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "Përdor mirëfilltësim elementar HTTP"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Emër përdoruesi"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Shfaq fjalëkalim"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "URL ku të kërkohet IP publike"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr "Përdor IPv6, në vend se IPv4"
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Ju lutemi, jepni një URL përditësimi ose një adresë shërbyesi GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Ju lutemi, jepni një emër përdoruesi GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Ju lutemi, jepni një emër përkatësie GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Ju lutemi, jepni një fjalëkalim"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
+#: plinth/modules/dynamicdns/forms.py:123
 #, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"Nëse po kërkoni për një llogari falas DNS-je dinamike, mund të gjeni një "
-"shërbim GnuDIP të lirë, te <a href=\"http://gnudip.datasystems24.net\" "
-"target=\"_blank\">gnudip.datasystems24.net</a>, ose mund të gjeni shërbime "
-"të lira me bazë përditësim URL-je, te <a href=\"http://freedns.afraid.org/\" "
-"target=\"_blank\"> freedns.afraid.org</a>."
+#| msgid "secrets required"
+msgid "This field is required."
+msgstr "lyp të fshehta"
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Nëse %(box_name)s juaj gjendet pas një rrugëzuesi NAT, mos harroni të shtoni "
-"përcjellje portash për porta standarde, përfshi portën TCP 80 (HTTP) dhe "
-"portën TCP 443 (HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Keni çaktivizuar Javascript-in. Mënyra e formularëve dinamikë është e "
-"çaktivizuar dhe disa funksione ndihmës mund të mos funksionojnë (por "
-"funksionet kryesore duhet të punojnë)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Përditësoni ujdisjen"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "Lloj NAT-i"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"S’është pikasur ende lloj NAT-i. Nëse s’jepni një “URL Kontrolli IP-je”, "
-"s’do të pikasim lloj NAT-i."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Lidhje e drejtpërdrejtë në Internet."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"Pas NAT-i. Kjo do të thotë që shërbimi DNS Dinamik do të vëzhgojë “URL ku të "
-"kërkohet IP publike” për ndryshime (zëri “URL ku të kërkohet IP publike” "
-"është i domosdoshëm për këtë, përndryshe ndryshimet e IP-së s’do të pikasen "
-"dot). Në rast ndryshimet IP-je WAN, mund të duhen deri në %(timer)s minuta, "
-"para se të përditësohet zëri juaj DNS."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Përditësimi i fundit më"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Mbi"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1878,13 +1790,60 @@ msgstr "Mbi"
 msgid "Status"
 msgstr "Gjendje"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Formësoni DNS Dinamik"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Përkatësi"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Gjendje DNS Dinamik"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Përditësimi i fundit më"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "Adresë IP"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Hyrje"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "dështoi"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "S’ka biblioteka."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Emër Lidhjeje"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Fshije lidhjen"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Already up-to-date"
+msgstr "Aktivio vetëpërditësim"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1914,6 +1873,9 @@ msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
+"ejabberd lyp një shërbyes STUN/TURN për thirrje audio/video. Instaloni "
+"aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
+"të jashtëm."
 
 #: plinth/modules/ejabberd/__init__.py:65
 msgid "ejabberd"
@@ -1953,6 +1915,9 @@ msgid ""
 "server for ejabberd. Disable this if you want to use a different STUN/TURN "
 "server."
 msgstr ""
+"Formëson aplikacionin vendor <a href=\"{coturn_url}\">coturn</a> si shërbyes "
+"STUN/TURN për ejjaberd-in. Çaktivizojeni këtë, nëse doni të përdorni një "
+"shërbyes tjetër STUN/TURN."
 
 #: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
@@ -1960,11 +1925,11 @@ msgstr "URI Shërbyesi STUN/TURN"
 
 #: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
-msgstr ""
+msgstr "Listë URI-sh publike shërbyesish STUN/TURN, një për rresht."
 
 #: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
-msgstr ""
+msgstr "E fshehtë Mirëfilltësimi e Përbashkët"
 
 #: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
@@ -2034,68 +1999,67 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
+"<a href=\"/plinth/apps/roundcube/\">Aplikacioni Roundcube</a> furnizon "
+"ndërfaqe web për përdoruesit për të përdorur email-in."
 
 #: plinth/modules/email_server/__init__.py:33
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
+"Gjatë instalimit, çfarëdo shërbyesi tjetër email në sistem do të çinstalohet."
 
 #: plinth/modules/email_server/__init__.py:44
-#, fuzzy
-#| msgid "Chat Server"
 msgid "Email Server"
-msgstr "Shërbyes Fjalosjesh"
+msgstr "Shërbyes Email-i"
 
 #: plinth/modules/email_server/__init__.py:100
 msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+msgstr "Bazuar në Postfix, Dovecot &amp; Rspamd"
 
 #: plinth/modules/email_server/audit/ldap.py:68
 msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+msgstr "Ingetrim Postfix-Dovecot SASL"
 
 #: plinth/modules/email_server/audit/ldap.py:69
 msgid "Postfix alias maps"
-msgstr ""
+msgstr "Harta aliasesh Postfix"
 
 #: plinth/modules/email_server/audit/spam.py:87
 msgid "Inbound and outbound mail filters"
-msgstr ""
+msgstr "Filtra email-esh të marrë dhe të dërguar"
 
 #: plinth/modules/email_server/forms.py:24
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Lidhje parësore"
+msgstr "Përkatësi parësore"
 
 #: plinth/modules/email_server/forms.py:26
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Email-et merren për krejt përkatësitë e formësuara në sistem. Me këtyre, "
+"përzgjidhni një më të rëndësishmen."
 
 #: plinth/modules/email_server/forms.py:34
 msgid "New alias (without @domain)"
-msgstr ""
+msgstr "Alias i ri (pa @përkatësi)"
 
 #: plinth/modules/email_server/forms.py:41
 msgid "Contains illegal characters"
-msgstr ""
+msgstr "Përmban shenja të paligjshme"
 
 #: plinth/modules/email_server/forms.py:44
 msgid "Must start and end with a-z or 0-9"
-msgstr ""
+msgstr "Duhet të fillojë dhe të përfundojë me a-z ose 0-9"
 
 #: plinth/modules/email_server/forms.py:47
 msgid "Cannot be a number"
-msgstr ""
+msgstr "S’mund të jetë një numër"
 
 #: plinth/modules/email_server/forms.py:57
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Aliases"
-msgstr "Administroni Biblioteka"
+msgstr "Aliase"
 
 #: plinth/modules/email_server/forms.py:69
 #: plinth/modules/firewall/templates/firewall.html:54
@@ -2120,57 +2084,45 @@ msgstr "Roundcube"
 
 #: plinth/modules/email_server/manifest.py:16
 #: plinth/modules/radicale/manifest.py:36
-#, fuzzy
-#| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
-msgstr "Mozilla Thunderbird"
+msgstr "Thunderbird"
 
 #: plinth/modules/email_server/manifest.py:33
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
 #: plinth/modules/email_server/manifest.py:48
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
 #: plinth/modules/email_server/templates/email_alias.html:13
 #: plinth/modules/email_server/templates/email_server.html:15
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Aliases"
-msgstr "Administroni Biblioteka"
+msgstr "Administroni Aliase"
 
 #: plinth/modules/email_server/templates/email_alias.html:16
 msgid "You have no email aliases."
-msgstr ""
+msgstr "S’keni aliase emil-i."
 
 #: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "Disabled"
 msgid "Disable"
-msgstr "E çaktivizuar"
+msgstr "Çaktivizoje"
 
 #: plinth/modules/email_server/templates/email_alias.html:26
-#, fuzzy
-#| msgid "Enabled"
 msgid "Enable"
-msgstr "E aktivizuar"
+msgstr "Aktivizoje"
 
 #: plinth/modules/email_server/templates/email_alias.html:32
-#, fuzzy
-#| msgid "Create a new backup"
 msgid "Create a new email alias"
-msgstr "Krijoni një kopjeruajtje të re"
+msgstr "Krijoni një alias të ri email-i"
 
 #: plinth/modules/email_server/templates/email_alias.html:38
 msgid "Add"
 msgstr "Shtoje"
 
 #: plinth/modules/email_server/templates/email_server.html:10
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage Spam"
-msgstr "Administroni Fotografime"
+msgstr "Administroni Të Padëshiruarat"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2483,6 +2435,11 @@ msgstr "Parashtroni Përshtypjet"
 msgid "Contribute"
 msgstr "Jepni Ndihmesë"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Mbi"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2717,7 +2674,7 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
-"kërkoni në diskutimet e kaluara, ose postoni një kërkesë të re te <a href="
+"Kërkoni në diskutimet e kaluara, ose postoni një kërkesë të re te <a href="
 "\"https://discuss.freedombox.org\" target=\"_blank\">forumi ynë i "
 "diskutimeve</a>."
 
@@ -2830,11 +2787,6 @@ msgid "Anonymous Torrents"
 msgstr "Rrëkeza Aanonime"
 
 #: plinth/modules/i2p/views.py:16
-#, fuzzy
-#| msgid ""
-#| "I2P lets you browse the Internet and hidden services (eepsites) "
-#| "anonymously. For this, your browser, preferably a Tor Browser, needs to "
-#| "be configured for a proxy."
 msgid ""
 "I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
 "For this, your browser, preferably the Tor Browser, needs to be configured "
@@ -2842,7 +2794,7 @@ msgid ""
 msgstr ""
 "I2P-ja ju ljeon të shfletoni në mënyrë anonime Internetin dhe shërbime të "
 "fshehura (eepsites). Për këtë, shfletuesi juaj, mundësisht një Shfletues "
-"Tor, duhet formësuar për një ndërmjetës."
+"Tor, duhet formësuar me një ndërmjetës."
 
 #: plinth/modules/i2p/views.py:19
 msgid ""
@@ -2930,6 +2882,13 @@ msgstr "Kalo te sajti %(site)s"
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Fshije sajtin %(site)s"
+
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Përditësoni ujdisjen"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
@@ -3075,11 +3034,7 @@ msgstr "Dëshmi"
 
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
-msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Përkatësi"
+msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3187,6 +3142,13 @@ msgid ""
 "not require phone numbers to work. Users on a given Matrix server can "
 "converse with users on all other Matrix servers via federation."
 msgstr ""
+"<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> është një "
+"ekosistem i ri për shkëmbim të hapët, të federuar, mesazhesh të "
+"atypëratyshëm dhe VoIP. Synapse është një shërbyes që sendërton protokollin "
+"Matrix. Furnizon grupe fjalosjesh, thirrje audio/video, fshehtëzim skaj-më-"
+"skaj, njëkohësim pajisjesh të shumta dhe nuk lyp numra telefonash që të "
+"funksionojë. Përmes federimi, përdoruesit në një shërbyes të dhënë Matrix "
+"mund të bisedojnë me përdorues në krejt shërbyesit e tjerë Matrix."
 
 #: plinth/modules/matrixsynapse/__init__.py:37
 #, python-brace-format
@@ -3194,6 +3156,9 @@ msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
+"Matrix Synapse lyp një shërbyes STUN/TURN për thirrje audio/video. Instaloni "
+"aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
+"të jashtëm."
 
 #: plinth/modules/matrixsynapse/__init__.py:70
 msgid "Matrix Synapse"
@@ -3209,6 +3174,9 @@ msgid ""
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
+"Aktivizimi i regjistrimeve publike do të thotë se cilido në Internet mund të "
+"regjistrojë një llogari të re në shërbyesin tuaj Matrix. Çaktivizojeni këtë, "
+"nëse doni të jenë të aftë për ta përdorur vetëm përdoruesit ekzistues."
 
 #: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
@@ -3217,6 +3185,9 @@ msgid ""
 "server for Matrix Synapse. Disable this if you want to use a different STUN/"
 "TURN server."
 msgstr ""
+"Formëson aplikacionin vendor <a href=\"{coturn_url}\">coturn</a> si shërbyes "
+"STUN/TURN për Matrix Synapse. Çaktivizojeni këtë, nëse doni të përdorni një "
+"shërbyes tjetër STUN/TURN."
 
 #: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
@@ -3224,7 +3195,7 @@ msgstr "Element"
 
 #: plinth/modules/matrixsynapse/manifest.py:48
 msgid "FluffyChat"
-msgstr ""
+msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3439,6 +3410,11 @@ msgid ""
 "(30000). To connect to the server, a <a href=\"http://www.minetest.net/"
 "downloads/\">Minetest client</a> is needed."
 msgstr ""
+"Minetest është një bankëprovë blloqesh lojërash “botë e pafundme” me shumë "
+"lojëtarë. Ky modul i bën të mundur shërbyesit Minetest të xhirojë mbi këtë "
+"{box_name}, në portën parazgjedhje (30000). Që të lidheni me shërbyesin, "
+"lypset një <a href=\"http://www.minetest.net/downloads/\">klient Minetest</"
+"a>."
 
 #: plinth/modules/minetest/__init__.py:59 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
@@ -3446,7 +3422,7 @@ msgstr "Minetest"
 
 #: plinth/modules/minetest/__init__.py:60
 msgid "Block Sandbox"
-msgstr ""
+msgstr "Bankëprovë Blloqesh"
 
 #: plinth/modules/minetest/forms.py:13
 msgid "Maximum number of players"
@@ -3501,22 +3477,6 @@ msgstr "Adresë"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Portë"
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr "Formësimi PVP u përditësua"
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
-msgstr ""
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -3598,11 +3558,6 @@ msgstr ""
 "fjalosje me zë, të fshehtëzuar, &lt;em&gt;low-latency&lt;/em&gt;."
 
 #: plinth/modules/mumble/__init__.py:28
-#, fuzzy
-#| msgid ""
-#| "You can connect to your Mumble server on the regular Mumble port 64738. "
-#| "<a href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
-#| "desktop and Android devices are available."
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3610,7 +3565,7 @@ msgid ""
 msgstr ""
 "Me shërbyesin tuaj Mumble mund të lidheni përmes portës së rregullt Mumble "
 "64738. Ka klientë <a href=\"http://mumble.info\">klientë</a> të gatshëm për "
-"t’u lidhur me Mumble-in që nga desktopi apo pajisjet tuaja Android."
+"t’u lidhur me Mumble-in që nga desktopi apo pajisjet tuaja celulare."
 
 #: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
@@ -4569,11 +4524,6 @@ msgstr ""
 "që kështu %(box_name)s-i të japë shërbimet."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:32
-#, fuzzy
-#| msgid ""
-#| "If you don't have control over your router, choose not to configure it. "
-#| "To see options to overcome this limitation, choose 'no public address' "
-#| "option in Internet connection type selection."
 msgid ""
 "If you don't have control over your router, choose not to configure it. To "
 "see options to overcome this limitation, choose 'I dont have a public IP "
@@ -4581,8 +4531,9 @@ msgid ""
 "\">Internet connection type selection</a>."
 msgstr ""
 "Nëse s’keni kontrollin e rrugëzuesit tuaj, zgjidhni të mos formësohet. Që të "
-"shihni mundësitë për kapërcimin e këtij kufizimi, zgjidhni mundësinë “pa "
-"adresë publike”, te përzgjedhje lloji lidhjeje në Internet."
+"shihni mundësitë për kapërcimin e këtij kufizimi, zgjidhni mundësinë “S’kam "
+"adresë IP publike”, te <a href=\"/plinth/sys/networks/internet-connection-"
+"type/\">përzgjedhja e llojit të lidhjes tuaj Internet</a>."
 
 #: plinth/modules/networks/templates/router_configuration_content.html:39
 msgid "Choose How You Wish to Configure Your Router"
@@ -5061,7 +5012,7 @@ msgstr ""
 
 #: plinth/modules/pagekite/forms.py:40
 msgid "Kite name"
-msgstr "Emër &lt;em&gt;pagekite&lt;/em&gt;"
+msgstr "Emër Kite-i"
 
 #: plinth/modules/pagekite/forms.py:41
 msgid "Example: mybox.pagekite.me"
@@ -5073,7 +5024,7 @@ msgstr "Emër &lt;em&gt;pagekite&lt;/em&gt; i pavlefshëm"
 
 #: plinth/modules/pagekite/forms.py:47
 msgid "Kite secret"
-msgstr "E fshehtë &lt;em&gt;pagekite&lt;/em&gt;"
+msgstr "E fshehtë Kite-i"
 
 #: plinth/modules/pagekite/forms.py:48
 msgid ""
@@ -5513,7 +5464,7 @@ msgstr "Klient Email"
 
 #: plinth/modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
-msgstr ""
+msgstr "Përdor vetëm shërbyesin vendor të email-it"
 
 #: plinth/modules/roundcube/forms.py:17
 #, python-brace-format
@@ -5521,6 +5472,9 @@ msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
 msgstr ""
+"Kur aktivizohet, prej faqes së hyrjeve hiqet kuadrati për dhënie teksti "
+"kundrejt shërbyesit dhe përdoruesit mund të lexojnë dhe dërgojnë email-e "
+"vetëm prej këtij {box_name}."
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5821,6 +5775,9 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"Ka %(count)s cenueshmëri sigurie të raportuara në aplikacionin FreedomBox, i "
+"cili furnizon shërbimet bazë dhe ndërfaqen e përdoruesit për shërbyesin "
+"FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
 msgid ""
@@ -5829,6 +5786,10 @@ msgid ""
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
+"Tabela vijuese radhit numrin e tanishëm të cenueshmërive të sigurisë të "
+"raportuara për çdo aplikacion të instaluar. Më tepër hollësi mbi "
+"cenueshmëritë mund të gjenden te <a href=\"https://security-tracker.debian."
+"org/tracker/\">Ndjekësi i të Metave të Sigurisë në Debian</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -5912,10 +5873,8 @@ msgid "Bookmarks"
 msgstr "Faqerojtës"
 
 #: plinth/modules/shaarli/manifest.py:12
-#, fuzzy
-#| msgid "Shaarli"
 msgid "Shaarlier"
-msgstr "Shaarli"
+msgstr "Shaarlier"
 
 #: plinth/modules/shadowsocks/__init__.py:21
 msgid ""
@@ -6006,7 +5965,7 @@ msgid ""
 "A lowercase alpha-numeric string that uniquely identifies a share. Example: "
 "<em>media</em>."
 msgstr ""
-"Një varg alfanumerik me të vogla që identifikon në mënyrë unike një pjesë. "
+"Një varg alfanumerik me të vogla, që identifikon në mënyrë unike një pjesë. "
 "Për shembull: <em>media</em>."
 
 #: plinth/modules/sharing/forms.py:24
@@ -6158,13 +6117,12 @@ msgid "Software Installation Snapshots"
 msgstr "Fotografime Instalimi Software-i"
 
 #: plinth/modules/snapshot/forms.py:27
-#, fuzzy
-#| msgid "Enable or disable snapshots before and after software installation"
 msgid ""
 "Enable or disable snapshots before and after each software installation and "
 "update."
 msgstr ""
-"Aktivizoni ose çaktivizoni fotografime para dhe pas instalimi software-i"
+"Aktivizoni ose çaktivizoni fotografime para dhe pas instalimi dhe "
+"përditësimi software-i."
 
 #: plinth/modules/snapshot/forms.py:32
 msgid "Hourly Snapshots Limit"
@@ -6292,7 +6250,7 @@ msgstr "rrjedhë kohore"
 
 #: plinth/modules/snapshot/views.py:29
 msgid "apt"
-msgstr ""
+msgstr "apt"
 
 #: plinth/modules/snapshot/views.py:39
 msgid "Manage Snapshots"
@@ -6400,10 +6358,8 @@ msgid "Login"
 msgstr "Hyrje"
 
 #: plinth/modules/sso/views.py:101
-#, fuzzy
-#| msgid "Password changed successfully."
 msgid "Logged out successfully."
-msgstr "Fjalëkalimi u ndryshua me sukses."
+msgstr "U dol me sukses."
 
 #: plinth/modules/storage/__init__.py:26
 #, python-brace-format
@@ -6648,6 +6604,10 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
+"Syncthing është një aplikacion për njëkohësim kartelash nëpër pajisje të "
+"shumta. p.sh., kompjuteri juaj desktop dhe telefoni celular.  Krijimi, "
+"ndryshimi, ose fshirja e kartelave në një pajisje do të përsëritet vetvetiu "
+"në krejt pajisjet e tjera që xhirojnë gjithashtu Syncthing-un."
 
 #: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
@@ -6660,6 +6620,13 @@ msgid ""
 "{box_name} is only available for users belonging to the \"admin\" or "
 "\"syncthing-access\" group."
 msgstr ""
+"Xhirimi i Syncthing-ut në {box_name} furnizon një pikë shtesë njëkohësimesh "
+"për të dhënat tuaja, që është e përdorshme shumicën e kohës, duke u lejuar "
+"pajisjeve tuaja të njëkohësohen më shpesh.  {box_name} xhiron një instancë "
+"Syncthing-u që mund të përdoret nga shumë përdorues.  Grupi i pajisjeve të "
+"çdo përdoruesi mund të njëkohësohet me një grup të veçantë dosjesh.  "
+"Ndërfaqja web te {box_name} është e përdorshme vetëm nga përdorues që i "
+"përkasin grupit “përgjegjës”, ose atij “syncthing-access”."
 
 #: plinth/modules/syncthing/__init__.py:57
 msgid "Administer Syncthing application"
@@ -6710,11 +6677,11 @@ msgstr "Portë releje Tor e gatshme"
 
 #: plinth/modules/tor/__init__.py:127
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "U regjistruar transport Obfs3"
 
 #: plinth/modules/tor/__init__.py:137
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "U regjistruar transport Obfs3"
 
 #: plinth/modules/tor/__init__.py:206
 #, python-brace-format
@@ -6738,7 +6705,7 @@ msgstr "Aktivizo Tor-in"
 
 #: plinth/modules/tor/forms.py:77
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Përdorni ura “upstream” që të lidheni në rrjetin Tor"
 
 #: plinth/modules/tor/forms.py:79
 msgid ""
@@ -6746,10 +6713,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Kur aktivizohet, urat e formësuara më poshtë do të përdoren për t’u lidhur "
+"në rrjetin Tor. Përdoreni këtë mundësi nëse Furnizuesi i Shërbimit tuaj "
+"Internet (ISP) bllokon ose censuron lidhjet në Rrjetin Tor. Kjo do të "
+"çaktivizojë mënyrat rele."
 
 #: plinth/modules/tor/forms.py:84
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Ura “upstream”"
 
 #: plinth/modules/tor/forms.py:86
 msgid ""
@@ -6757,6 +6728,11 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Mund të merrni ndonjë urë prej <a href=\"https://bridges.torproject.org/"
+"\">https://bridges.torproject.org/</a> dhe të kopjoni/ngjitni hollësitë e "
+"urës këtu. Transportet që mbulohen tani janë &lt;em&gt;asnjë&lt;/em&gt;, &lt;"
+"em&gt;obfs3&lt;/em&gt;, &lt;em&gt;obfs4&lt;/em&gt; dhe &lt;em&gt;"
+"scamblesuit&lt;/em&gt;."
 
 #: plinth/modules/tor/forms.py:92
 msgid "Enable Tor relay"
@@ -6769,6 +6745,9 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Kur aktivizohet, {box_name} juaj do të xhirojë një rele Tor dhe do të "
+"dhurojë gjerësi bande për rrjetin Tor. Bëjeni këtë nëse keni gjerësi bande "
+"ngarkimesh dhe shkarkimesh më tepër se 2 megabite/s."
 
 #: plinth/modules/tor/forms.py:98
 msgid "Enable Tor bridge relay"
@@ -6780,6 +6759,10 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"Kur aktivizohet, hollësitë e relesë do të publikohen te baza e të dhënave të "
+"urave Tor, në vend se baza e të dhënave të releve publike Tor, duke e bërë "
+"më të vështirë censurimin e kësaj nyjeje. Kjo i ndihmon të tjerët të "
+"anashkalojnë censurimin."
 
 #: plinth/modules/tor/forms.py:105
 msgid "Enable Tor Hidden Service"
@@ -6813,6 +6796,7 @@ msgstr ""
 #: plinth/modules/tor/forms.py:128
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
+"Që të përdoren ura “upstream”, përcaktoni të paktën një urë “upstream”."
 
 #: plinth/modules/tor/manifest.py:13
 msgid "Tor Browser"
@@ -6844,6 +6828,9 @@ msgid ""
 "If your %(box_name)s is behind a router or firewall, you should make sure "
 "the following ports are open, and port-forwarded, if necessary:"
 msgstr ""
+"Nëse %(box_name)s juaj gjendet pas një rrugëzuesi ose firewall-i, duhet të "
+"bëni të mundur që portat vijuese të jenë të hapura, si dhe &lt;em&gt;port-"
+"forwarded&lt;/em&gt;, në qoftë e nevojshme:"
 
 #: plinth/modules/tor/templates/tor.html:71
 msgid "Service"
@@ -6856,25 +6843,27 @@ msgstr "SOCKS"
 #: plinth/modules/tor/templates/tor.html:90
 #, python-format
 msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr ""
+msgstr "Një portë SOCKS Tor-i në %(box_name)s tuaj gjendet në portën TCP 9050."
 
 #: plinth/modules/tor/views.py:137 plinth/views.py:222
 msgid "Setting unchanged"
-msgstr ""
+msgstr "Rregullim i pandryshuar"
 
 #: plinth/modules/transmission/__init__.py:24
 msgid "Transmission is a BitTorrent client with a web interface."
-msgstr ""
+msgstr "Transmission është një klient BitTorrent me një ndërfaqe web."
 
 #: plinth/modules/transmission/__init__.py:25
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr ""
+"BitTorrent është një protokoll shkëmbimi kartelash tek-për-tek. Kini "
+"parasysh se BitTorrent s’është anonim."
 
 #: plinth/modules/transmission/__init__.py:27
 msgid "Please do not change the default port of the Transmission daemon."
-msgstr ""
+msgstr "Ju lutemi, mos ndryshoni portën parazgjedhje të demonit Transmission."
 
 #: plinth/modules/transmission/__init__.py:53
 #: plinth/modules/transmission/manifest.py:6
@@ -6887,6 +6876,9 @@ msgid ""
 "allow reading news from any location, while feeling as close to a real "
 "desktop application as possible."
 msgstr ""
+"Tiny Tiny RSS është një lexues dhe grumbullues prurjesh lajmesh (RSS/Atom), "
+"i konceptuar të lejojë lexim lajmesh prej çfarëdo vendndodhjeje, ndërkohë që "
+"duket si një aplikacion desktop, aq afër kësaj sa mundet."
 
 #: plinth/modules/ttrss/__init__.py:27
 #, python-brace-format
@@ -6894,16 +6886,21 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by any <a href="
 "\"{users_url}\">user with a {box_name} login</a>."
 msgstr ""
+"Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga cilido <a href="
+"\"{users_url}\">përdorues me kredenciale hyrjeje në {box_name}</a>."
 
 #: plinth/modules/ttrss/__init__.py:31
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgstr ""
+"Kur për Tiny Tiny RSS-në përdoret një aplikacion për celular, ose për "
+"dekstop, përdorni URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> për t’u "
+"lidhur."
 
 #: plinth/modules/ttrss/__init__.py:49
 msgid "Read and subscribe to news feeds"
-msgstr ""
+msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
 
 #: plinth/modules/ttrss/__init__.py:52 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
@@ -6921,6 +6918,7 @@ msgstr "Tiny Tiny RSS (Fork)"
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
+"Kontrolloni dhe aplikoni përditësimet më të reja software-i dhe sigurie."
 
 #: plinth/modules/upgrades/__init__.py:40
 msgid ""
@@ -6929,15 +6927,18 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
+"Përditësimet bëhen më 06:00 çdo ditë, sipas zonës vendore kohore. Ujdisni "
+"zonë tuaj kohore që nga aplikacioni Datë &amp; Kohë. Aplikacionet rinisen, "
+"pas përditësimi, duke bërë që të jenë jashtë funksionimi për ca çaste. Nëse "
+"rinisja e sistemit shihet si e domosdoshme, bëhet automatikisht më 02:00, "
+"duke bërë që krejt aplikacionet të jenë jashtë funksionimi për ca çaste."
 
 #: plinth/modules/upgrades/__init__.py:74
 #: plinth/modules/upgrades/__init__.py:129
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
-#, fuzzy
-#| msgid "Server URL updated"
 msgid "Software Update"
-msgstr "URL-ja e shërbyesit u përditësua"
+msgstr "Përditësim Software-i"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
@@ -6945,7 +6946,7 @@ msgstr "FreedomBox-i u Përditësua"
 
 #: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
-msgstr ""
+msgstr "S’u fillua dot përditësim shpërndarjeje"
 
 #: plinth/modules/upgrades/__init__.py:219
 msgid ""
@@ -6953,15 +6954,21 @@ msgid ""
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
+"S’ka hapësirë të lirë të mjaftueshme te pjesa rrënjë, që të fillojë "
+"përditësimi i shpërndarjes. Ju lutemi, siguroni të paktën 5 GB të lira. "
+"Përditësimi i shpërndarjes do të riprovohet pas 24 orësh, nëse kjo është "
+"aktivizuar."
 
 #: plinth/modules/upgrades/__init__.py:230
 msgid "Distribution update started"
-msgstr ""
+msgstr "Përditësimi i shpërndarjes filloi"
 
 #: plinth/modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
+"Filloi përditësimi me hedhjen e re të qëndrueshme në qarkullim. Ky mund të "
+"dojë një kohë të gjatë për t’u plotësuar."
 
 #: plinth/modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -6970,21 +6977,24 @@ msgstr "Aktivio vetëpërditësim"
 #: plinth/modules/upgrades/forms.py:16
 msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
+"Kur është aktivizuar, FreedomBox-i përditësohet vetvetiu një herë në ditë."
 
 #: plinth/modules/upgrades/forms.py:19
 msgid "Enable auto-update to next stable release"
-msgstr ""
+msgstr "Aktivizoni vetëpërditësim me hedhjen e re të qëndrueshme në qarkullim"
 
 #: plinth/modules/upgrades/forms.py:20
 msgid ""
 "When enabled, FreedomBox will update to the next stable distribution release "
 "when it is available."
 msgstr ""
+"Kur është aktivizuar, FreedomBox-i do të përditësohet me hedhjen e re të "
+"qëndrueshme në qarkullim, kur ka të tillë."
 
 #: plinth/modules/upgrades/forms.py:34
 #: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
-msgstr ""
+msgstr "Aktivizoni përditësime të shpeshta veçorish (e rekomanduar)"
 
 #: plinth/modules/upgrades/forms.py:40
 msgid "Update now (recommended)"
@@ -6995,12 +7005,16 @@ msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
 "activated now, they can be activated later."
 msgstr ""
+"Rekomandohet me forcë të aktivizohen përditësimet e shpeshta të veçorive. "
+"Nëse s’aktivizohen tani, mund të aktivizohen më vonë."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:33
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
+"<strong>Shënim:</strong> Pasi të aktivizohen përditësime të shpeshta "
+"veçorish, s’mund të çaktivizohen më."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
@@ -7013,6 +7027,9 @@ msgid ""
 "this web interface may be temporarily unavailable and show an error. In that "
 "case, refresh the page to continue."
 msgstr ""
+"<strong>Kjo mund të dojë një kohë të gjatë për t’u plotësuar.</strong> Gjatë "
+"një përditësimi, kjo ndërfaqe web mund të jetë përkohësisht e papërdorshme "
+"dhe të shfaqë një gabim. Në rast të tillë, rifreskoni faqen, që të vazhdohet."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
 #, python-format
@@ -7021,12 +7038,14 @@ msgid ""
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
 msgstr ""
+"\n"
+"\t%(box_name)s është i përditësuar. Që të vazhdohet, klikoni mbi Pasuesi.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
-#, fuzzy, python-format
-#| msgid "%(box_name)s is up to date."
+#, python-format
 msgid "%(box_name)s updated"
-msgstr "%(box_name)s është i përditësuar."
+msgstr "%(box_name)s u përditësua"
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:13
 #, python-format
@@ -7034,6 +7053,8 @@ msgid ""
 "%(box_name)s has been updated to version %(version)s. See the <a href="
 "\"%(url)s\">release announcement</a>."
 msgstr ""
+"%(box_name)s është përditësuar me versionin %(version)s. Shihni <a href="
+"\"%(url)s\">njoftimin mbi hedhjen në qarkullim</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
@@ -7048,7 +7069,7 @@ msgstr "Po përditësohet…"
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr ""
+msgstr "Ka të gatshëm një version të ri të %(box_name)s."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
@@ -7058,12 +7079,16 @@ msgstr "Freedombox-i juaj lyp përditësim!"
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
+"Përditësimet e shpeshta të veçorive mund të aktivizohen. Aktivizimi i tyre "
+"është i rekomanduar."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
+"Përditësimet e shpeshta të veçorive s’mund të aktivizohen. Mund të mos jenë "
+"të nevojshme në shpërndarjen tuaj."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
@@ -7072,6 +7097,10 @@ msgid ""
 "cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
+"<strong>Kujdes!</strong> Pasi të aktivizohen përditësime të shpeshta "
+"veçorish, s’mund të çaktivizohen më. Mund të doni të bëni një fotografim "
+"duke përdorur <a href=\"%(snapshot_url)s\">Fotografime Depozitimesh</a>, "
+"përpara se të vazhdohet."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
@@ -7087,6 +7116,10 @@ msgid ""
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
+"<strong>Kjo mund të dojë një kohë të gjatë për t’u plotësuar..</strong> "
+"Gjatë një përditësimi, s’mund të instaloni aplikacione. Veç kësaj, kjo "
+"ndërfaqe web mund të jetë përkohësisht e papërdorshme dhe të shfaqë një "
+"gabim. Në rast të tillë, rifreskoni faqen, që të vazhdohet."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
@@ -7096,41 +7129,51 @@ msgstr "Shfaq regjistra të freskët përditësimesh"
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr ""
+"Gabim teksa formësohej &lt;em&gt;unattended-upgrades&lt;/em&gt;: {error}"
 
 #: plinth/modules/upgrades/views.py:71
 msgid "Automatic upgrades enabled"
-msgstr ""
+msgstr "U aktivizuan përmirësime të automatizuara"
 
 #: plinth/modules/upgrades/views.py:74
 msgid "Automatic upgrades disabled"
-msgstr ""
+msgstr "Përmirësimet e vetvetishme janë çaktivizuar"
 
 #: plinth/modules/upgrades/views.py:82
 msgid "Distribution upgrade enabled"
-msgstr ""
+msgstr "Me përmirësim shpërndarjeje të aktivizuar"
 
 #: plinth/modules/upgrades/views.py:85
 msgid "Distribution upgrade disabled"
-msgstr ""
+msgstr "Me përmirësim shpërndarjeje të çaktivizuar"
 
 #: plinth/modules/upgrades/views.py:127
 msgid "Upgrade process started."
-msgstr ""
+msgstr "Procesi i përmirësimit filloi."
 
 #: plinth/modules/upgrades/views.py:129
 msgid "Starting upgrade failed."
-msgstr ""
+msgstr "Nisja e përmirësimi dështoi."
 
 #: plinth/modules/upgrades/views.py:139
 msgid "Frequent feature updates activated."
-msgstr ""
+msgstr "Përditësime të shpeshta veçorish të aktivizuara."
 
 #: plinth/modules/users/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "Create and managed user accounts. These accounts serve as centralized "
+#| "authentication mechanism for most apps. Some apps further require a user "
+#| "account to be part of a group to authorize the user to access the app."
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
+"Krijoni dhe administroni llogari përdoruesi. Këto llogari shërbejnë si "
+"mekanizma të centralizuar mirëfilltësimi për shumicën e aplikacioneve. Disa "
+"aplikacione kërkojnë doemos një llogari përdoruesi, për të qenë pjesë e një "
+"grupi që autorizon përdoruesin të përdorë aplikacionin."
 
 #: plinth/modules/users/__init__.py:34
 #, python-brace-format
@@ -7139,6 +7182,10 @@ msgid ""
 "relevant to them in the home page. However, only users of the <em>admin</em> "
 "group may alter apps or system settings."
 msgstr ""
+"Te ndërfaqja web e {box_name} mund të bëjë hyrjen cilido përdorues, që të "
+"shohë një listë aplikacionesh që u bëjnë punë atyre te faqja hyrëse. Por, "
+"vetëm përdoruesit e grupit <em>përgjegjës</em> mund të ndryshojnë "
+"aplikacionet, apo rregullimet e sistemit."
 
 #: plinth/modules/users/__init__.py:57
 msgid "Users and Groups"
@@ -7146,16 +7193,16 @@ msgstr "Përdorues dhe Grupe"
 
 #: plinth/modules/users/__init__.py:77
 msgid "Access to all services and system settings"
-msgstr ""
+msgstr "Hyrje te krejt shërbimet dhe rregullime të sistemit"
 
 #: plinth/modules/users/__init__.py:113
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
-msgstr ""
+msgstr "Kontrolloni zërin LDAP \"{search_item}\""
 
 #: plinth/modules/users/forms.py:36
 msgid "Username is taken or is reserved."
-msgstr ""
+msgstr "Emri i përdoruesit është i zënë, ose i rezervuar."
 
 #: plinth/modules/users/forms.py:63
 msgid "Enter a valid username."
@@ -7165,6 +7212,8 @@ msgstr "Jepni një emër përdoruesi të vlefshëm."
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
+"E domosdoshme. 150 ose më pak shenja. Vetëm shkronja anglishteje, shifra, "
+"dhe @/./-/_."
 
 #: plinth/modules/users/forms.py:78
 msgid "Authorization Password"
@@ -7175,6 +7224,8 @@ msgstr "Fjalëkalim Autorizimi"
 msgid ""
 "Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
+"Jepni fjalëkalimin për përdoruesin “{user}”, që të autorizoni ndryshime "
+"llogarie."
 
 #: plinth/modules/users/forms.py:93
 msgid "Invalid password."
@@ -7188,20 +7239,26 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
+"Përzgjidhni cilat shërbime të jenë të passhme për përdoruesin e ri. "
+"Përdoruesi do të jetë në gjendje të bëjë hyrjen te shërbime që mbulojnë "
+"hyrje njëshe përmes LDAP-i, nëse gjenden në grupin e duhur."
+"<br><br>Përdoruesit në grupin e përgjegjësve do të jenë në gjendje të hyjnë "
+"në krejt shërbimet. Munden edhe të hyjnë në sistem përmes SSH-së dhe të kenë "
+"privilegje administrative (sudo)."
 
 #: plinth/modules/users/forms.py:155 plinth/modules/users/forms.py:399
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
-msgstr ""
+msgstr "S’u arrit të krijohej përdorues LDAP: {error}"
 
 #: plinth/modules/users/forms.py:168
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr ""
+msgstr "S’u arrit të shtohej përdorues i ri te grupi {group}: {error}"
 
 #: plinth/modules/users/forms.py:182
 msgid "Authorized SSH Keys"
-msgstr ""
+msgstr "Kyçe SSH të autorizuar"
 
 #: plinth/modules/users/forms.py:184
 msgid ""
@@ -7209,49 +7266,53 @@ msgid ""
 "system without using a password. You may enter multiple keys, one on each "
 "line. Blank lines and lines starting with # will be ignored."
 msgstr ""
+"Ujdisja e një kyçi SSH publik do ta lejojë këtë përdorues të hyjë në mënyrë "
+"të siguruar në sistem pa përdorur fjalëkalim. Mund të jepni kyçe të shumtë, "
+"një për rresht. Rreshta të zbrazët dhe rreshta që fillojnë me # do të "
+"shpërfillen."
 
 #: plinth/modules/users/forms.py:269
 msgid "Renaming LDAP user failed."
-msgstr ""
+msgstr "Riemërtimi i përdoruesit LDAP dështoi."
 
 #: plinth/modules/users/forms.py:282
 msgid "Failed to remove user from group."
-msgstr ""
+msgstr "S’u arrit të hiqej përdorues nga grupi."
 
 #: plinth/modules/users/forms.py:294
 msgid "Failed to add user to group."
-msgstr ""
+msgstr "S’u arrit të shtohej përdorues te grup."
 
 #: plinth/modules/users/forms.py:307
 msgid "Unable to set SSH keys."
-msgstr ""
+msgstr "S’arrihet të ujdisen kyçe SSH."
 
 #: plinth/modules/users/forms.py:325
 msgid "Failed to change user status."
-msgstr ""
+msgstr "S’u arrit të ndryshohej gjendje përdoruesi."
 
 #: plinth/modules/users/forms.py:370
 msgid "Changing LDAP user password failed."
-msgstr ""
+msgstr "Ndryshimi i fjalëkalimit për përdorues LDAP dështoi."
 
 #: plinth/modules/users/forms.py:410
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr ""
+msgstr "S’u arrit të shtohej përdorues i ri te grupi i përgjegjësve: {error}"
 
 #: plinth/modules/users/forms.py:429
 #, python-brace-format
 msgid "Failed to restrict console access: {error}"
-msgstr ""
+msgstr "S’u arrit të kufizohej hyrja në konsol: {error}"
 
 #: plinth/modules/users/forms.py:442
 msgid "User account created, you are now logged in"
-msgstr ""
+msgstr "Llogaria e përdoruesit u krijua, tani jeni i futur në llogari"
 
 #: plinth/modules/users/templates/users_change_password.html:11
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
-msgstr ""
+msgstr "Ndryshoni Fjalëkalimin për <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_change_password.html:21
 msgid "Save Password"
@@ -7273,7 +7334,7 @@ msgstr "Fshi Përdorues"
 #: plinth/modules/users/templates/users_delete.html:14
 #, python-format
 msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr ""
+msgstr "Të fshihet përgjithnjë përdoruesi <strong>%(username)s</strong>?"
 
 #: plinth/modules/users/templates/users_delete.html:23
 #, python-format
@@ -7290,6 +7351,10 @@ msgid ""
 "can be changed later. This user will be granted administrative privileges. "
 "Other users can be added later."
 msgstr ""
+"Zgjidhni një emër përdoruesi dhe një fjalëkalim për të hyrë në këtë ndërfaqe "
+"web. Fjalëkalimi mund të ndryshohet më vonë. Këtij përdoruesi do t’i "
+"akordohen privilegje administrative. Përdorues të tjerë mund të shtohen më "
+"vonë."
 
 #: plinth/modules/users/templates/users_firstboot.html:28
 msgid "Create Account"
@@ -7301,7 +7366,7 @@ msgstr "Ka tashmë një llogari përgjegjësi."
 
 #: plinth/modules/users/templates/users_firstboot.html:38
 msgid "The following administrator accounts exist in the system."
-msgstr ""
+msgstr "Në sistem ekzistojnë llogaritë vijuese përgjegjësish."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
 #, python-format, python-brace-format
@@ -7312,6 +7377,11 @@ msgid ""
 "{username}'. If an account is already usable with %(box_name)s, skip this "
 "step."
 msgstr ""
+"Fshijini këto llogari që nga rreshti i urdhrave dhe rifreskoni faqen, që të "
+"krijohet një llogari e cila të jetë e përdorushme me %(box_name)s. Te "
+"rreshti i urdhrave jepni urdhrin 'echo \"{password}\" | /usr/share/plinth/"
+"actions/users remove-user {username}'. Nëse ka tashmë një llogari të "
+"përdorshme me %(box_name)s, anashkalojeni këtë hap."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:61
@@ -7321,17 +7391,17 @@ msgstr "Përdorues"
 #: plinth/modules/users/templates/users_list.html:28
 #, python-format
 msgid "Edit user %(username)s"
-msgstr ""
+msgstr "Përpunoni përdoruesin %(username)s"
 
 #: plinth/modules/users/templates/users_list.html:41
 #, python-format
 msgid "Delete user %(username)s"
-msgstr ""
+msgstr "Fshije përdoruesin %(username)s"
 
 #: plinth/modules/users/templates/users_update.html:11
 #, python-format
 msgid "Edit User <em>%(username)s</em>"
-msgstr ""
+msgstr "Përpunoni Përdoruesin <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_update.html:19
 #, python-format
@@ -7339,6 +7409,8 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
+"Që të ndryshoni fjalëkalimin, përdorni <a href=\"%(change_password_url)s"
+"\">formularin e ndryshimit të fjalëkalimeve</a>."
 
 #: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
@@ -7348,12 +7420,12 @@ msgstr "Ruaji Ndryshimet"
 #: plinth/modules/users/views.py:42
 #, python-format
 msgid "User %(username)s created."
-msgstr ""
+msgstr "Përdoruesi %(username)s u krijua."
 
 #: plinth/modules/users/views.py:76
 #, python-format
 msgid "User %(username)s updated."
-msgstr ""
+msgstr "Përdoruesi %(username)s u përditësua."
 
 #: plinth/modules/users/views.py:77
 msgid "Edit User"
@@ -7362,11 +7434,11 @@ msgstr "Përpunoni Përdorues"
 #: plinth/modules/users/views.py:144
 #, python-brace-format
 msgid "User {user} deleted."
-msgstr ""
+msgstr "Përdoruesi {user} u fshi."
 
 #: plinth/modules/users/views.py:151
 msgid "Deleting LDAP user failed."
-msgstr ""
+msgstr "Fshirja e përdoruesi LDAP dështoi."
 
 #: plinth/modules/users/views.py:160
 msgid "Change Password"
@@ -7378,7 +7450,7 @@ msgstr "Fjalëkalimi u ndryshua me sukses."
 
 #: plinth/modules/wireguard/__init__.py:20
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
-msgstr ""
+msgstr "WireGuard-i është një tunel VPN i shpejtë, modern, i sigurt."
 
 #: plinth/modules/wireguard/__init__.py:22
 #, python-brace-format
@@ -7386,6 +7458,9 @@ msgid ""
 "It can be used to connect to a VPN provider which supports WireGuard, and to "
 "route all outgoing traffic from {box_name} through the VPN."
 msgstr ""
+"Mund të përdoret për t’u lidhur te një furnizues shërbimi VPN që mbulon "
+"WireGuard dhe për të kaluar përmes VPN-je krejt trafikun që del nga "
+"{box_name}."
 
 #: plinth/modules/wireguard/__init__.py:26
 #, python-brace-format
@@ -7394,6 +7469,10 @@ msgid ""
 "travelling. While connected to a public Wi-Fi network, all traffic can be "
 "securely relayed through {box_name}."
 msgstr ""
+"Një shembull tjetër përdorimi është të lidhet një pajisje celulare te "
+"{box_name}, ndërkohë që udhëtohet. Teksa gjendet e lidhur te një rrjet Wi-Fi "
+"publik, krejt trafiku mund të kalohet në mënyrë të siguruar përmes "
+"{box_name}."
 
 #: plinth/modules/wireguard/forms.py:32
 msgid "Invalid key."
@@ -7411,16 +7490,20 @@ msgid ""
 "Public key of the peer. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Kyç publik i ortakut. Shembull: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:70
 msgid "Endpoint of the server"
-msgstr ""
+msgstr "Pikëmbarim i shërbyesit"
 
 #: plinth/modules/wireguard/forms.py:71
 msgid ""
 "Domain name and port in the form \"ip:port\". Example: demo.wireguard."
 "com:12912 ."
 msgstr ""
+"Emër përkatësie dhe portë, në trajtën “ip:portë”. Shembull: demo.wireguard."
+"com:12912 ."
 
 #: plinth/modules/wireguard/forms.py:76
 msgid "Public key of the server"
@@ -7431,10 +7514,12 @@ msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Dhënë nga operatori i shërbyesit, një listë e gjatë shenjash. Shembull: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:82
 msgid "Client IP address provided by server"
-msgstr ""
+msgstr "Adresë IP klienti e furnizuar nga shërbyesi\\"
 
 #: plinth/modules/wireguard/forms.py:83
 msgid ""
@@ -7442,6 +7527,8 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
+"Adresë IP caktuar kësaj makine te VPN-ja, pas lidhjes me pikëmbarimin. Kjo "
+"vlerë zakonisht jepet nga operatori i shërbyesit. Shembull: 192.168.0.10."
 
 #: plinth/modules/wireguard/forms.py:89
 msgid "Private key of this machine"
@@ -7454,10 +7541,14 @@ msgid ""
 "some server operators insist on providing this. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Opsionale. Në u lëntë i zbrazët, prodhohen kyça të rinj publikë/privatë. "
+"Mandej kyçi publik mund t’i jepet shërbyesit. Kjo është rruga e rekomanduar. "
+"Megjithatë, disa operatorë shërbyesish këmbëngulin në dhënien e tij. "
+"ShembullConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:98
 msgid "Pre-shared key"
-msgstr ""
+msgstr "Kyç i përbashkët"
 
 #: plinth/modules/wireguard/forms.py:99
 msgid ""
@@ -7465,14 +7556,19 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
+"Opsionale. Një kyç i fshehtë i përbashkët dhënë nga shërbyesi për të shtuar "
+"një shtresë shtesë sigurie. Plotësojeni vetëm nëse është dhënë. Shembull: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
 #: plinth/modules/wireguard/forms.py:105
 msgid "Use this connection to send all outgoing traffic"
-msgstr ""
+msgstr "Përdoreni këtë lidhje për të dërguar krejt trafikun që del"
 
 #: plinth/modules/wireguard/forms.py:107
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
+"Zakonisht e zgjedhur për një shërbim VPN përmes të cilit dërgohet krejt "
+"trafiku."
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -7480,7 +7576,7 @@ msgstr "Si Shërbyes"
 
 #: plinth/modules/wireguard/templates/wireguard.html:12
 msgid "Peers allowed to connect to this server:"
-msgstr ""
+msgstr "Ortakë të lejuar për t’u lidhur me këtë shërbyes:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:18
 msgid "Allowed IPs"
@@ -7489,48 +7585,48 @@ msgstr "IP të Lejuara"
 #: plinth/modules/wireguard/templates/wireguard.html:19
 #: plinth/modules/wireguard/templates/wireguard.html:78
 msgid "Last Connected Time"
-msgstr ""
+msgstr "Kohë e Lidhjes së Fundit"
 
 #: plinth/modules/wireguard/templates/wireguard.html:38
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
-msgstr ""
+msgstr "Ende s’ka ortakë të formësuar për t’u lidhur te ky %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:48
 #, python-format
 msgid "Public key for this %(box_name)s:"
-msgstr ""
+msgstr "Kyç publik për këtë %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:54
 msgid "Not configured yet."
-msgstr ""
+msgstr "Ende e paformësuar."
 
 #: plinth/modules/wireguard/templates/wireguard.html:59
 msgid "Add a new peer"
-msgstr ""
+msgstr "Shtoni ortak të ri"
 
 #: plinth/modules/wireguard/templates/wireguard.html:63
 #: plinth/modules/wireguard/views.py:48
 msgid "Add Allowed Client"
-msgstr ""
+msgstr "Shtoni Klient të Lejuar"
 
 #: plinth/modules/wireguard/templates/wireguard.html:67
 msgid "As a Client"
-msgstr ""
+msgstr "Si Klient"
 
 #: plinth/modules/wireguard/templates/wireguard.html:69
 #, python-format
 msgid "Servers that %(box_name)s will connect to:"
-msgstr ""
+msgstr "Shërbyes me të cilët do të lidhet %(box_name)s:"
 
 #: plinth/modules/wireguard/templates/wireguard.html:76
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:20
 msgid "Endpoint"
-msgstr ""
+msgstr "Pikëmbarim"
 
 #: plinth/modules/wireguard/templates/wireguard.html:100
 msgid "No connections to remote servers are configured yet."
-msgstr ""
+msgstr "S’janë formësuar ende lidhje te shërbyes të largët."
 
 #: plinth/modules/wireguard/templates/wireguard.html:110
 msgid "Add a new server"
@@ -7539,7 +7635,7 @@ msgstr "Shtoni një shërbyes të ri"
 #: plinth/modules/wireguard/templates/wireguard.html:114
 #: plinth/modules/wireguard/views.py:157
 msgid "Add Connection to Server"
-msgstr ""
+msgstr "Shtoni Lidhje me Shërbyesin"
 
 #: plinth/modules/wireguard/templates/wireguard_add_client.html:19
 msgid "Add Client"
@@ -7547,11 +7643,11 @@ msgstr "Shtoni Klient"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_client.html:14
 msgid "Are you sure that you want to delete this client?"
-msgstr ""
+msgstr "Jeni i sigurt se doni të fshihet ky klient?"
 
 #: plinth/modules/wireguard/templates/wireguard_delete_server.html:14
 msgid "Are you sure that you want to delete this server?"
-msgstr ""
+msgstr "Jeni i sigurt se doni të fshihet ky shërbyes?"
 
 #: plinth/modules/wireguard/templates/wireguard_edit_client.html:19
 msgid "Update Client"
@@ -7567,10 +7663,12 @@ msgid ""
 "%(box_name)s will allow this client to connect to it. Ensure that the client "
 "is configured with the following information."
 msgstr ""
+"%(box_name)s do ta lejojë këtë klient të lidhet me të. Garantoni që klienti "
+"të jetë formësuar me hollësitë vijuese."
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:21
 msgid "Client public key:"
-msgstr ""
+msgstr "Kyç publik klienti:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:25
 msgid "IP address to use for client:"
@@ -7579,11 +7677,11 @@ msgstr "Adresë IP për t’u përdorur për klientin:"
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:29
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:32
 msgid "Pre-shared key:"
-msgstr ""
+msgstr "Kyç i përbashkët:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:33
 msgid "Server endpoints:"
-msgstr ""
+msgstr "Pikëmbarime shërbyesi:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:41
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:28
@@ -7612,10 +7710,13 @@ msgid ""
 "information. Ensure that the server is configured to allow %(box_name)s's "
 "public key and IP address."
 msgstr ""
+"%(box_name)s do të provojë të kapë një shërbyes WireGuard me hollësitë "
+"vijuese. Garantoni që shërbyesi të jetë i formësuar të lejojë kyçin publik "
+"dhe adresën IP të %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:24
 msgid "Server endpoint:"
-msgstr ""
+msgstr "Pikëmbarim shërbyesi:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:36
 msgid "Public key of this machine:"
@@ -7689,6 +7790,11 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"WordPress-i është një rrugë popullore për të krijuar dhe administruar sajte "
+"dhe blogje. Lënda mund të administrohet duke përdorur një ndërfaqe pamore. "
+"Ana grafike dhe funksionet e faqeve web mund të përshtaten. Dukja mund të "
+"zgjidhet përmes përdorimit të temave. Ndërfaqja e administrimit dhe faqet "
+"web të prodhuara janë të përshtatshme për pajisje celulare."
 
 #: plinth/modules/wordpress/__init__.py:29
 #, python-brace-format
@@ -7698,6 +7804,10 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"Lypset të xhironi ujdisjen e WordPress-it duke vizituar aplikacionin, para "
+"se ta bëni sajtin publik më poshtë. Ujdisja duhet xhiruar kur përdoret "
+"{box_name} me emrin e saktë të përkatësisë. Aktivizoni permalidhje te "
+"ndërfaqja e përgjegjësit, për URL më të mira për te faqet dhe postimet tuaja."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7705,6 +7815,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress-i ka llogaritë e veta për përdoruesit. Së pari, gjatë ujdisjes, "
+"krijohet llogaria e përgjegjësit. Faaqeruajeni <a href=\"/wordpress/wp-admin/"
+"\">faqen e përgjegjësit</a>, që të mund të përdorni ndërfaqen e përgjegjësit "
+"në të ardhmen."
 
 #: plinth/modules/wordpress/__init__.py:38
 msgid ""
@@ -7712,31 +7826,32 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Pas një përmirësimi të rëndësishëm versioni, lypset të xhironi dorazi "
+"përmirësimin e bazës së të dhënave, që nga ndërfaqja e përdoruesit. Shtojca "
+"ose tema shtesë mund të instalohet dhe përmirësohen duke e marrë ju përsipër "
+"rrezikun."
 
 #: plinth/modules/wordpress/__init__.py:58
 #: plinth/modules/wordpress/manifest.py:6
-#, fuzzy
-#| msgid "Address"
 msgid "WordPress"
-msgstr "Adresë"
+msgstr "WordPress"
 
 #: plinth/modules/wordpress/__init__.py:59
-#, fuzzy
-#| msgid "Wiki and Blog"
 msgid "Website and Blog"
-msgstr "Wiki dhe Blog"
+msgstr "Sajt dhe Blog"
 
 #: plinth/modules/wordpress/forms.py:14
-#, fuzzy
-#| msgid "public access"
 msgid "Public access"
-msgstr "hyrje publike"
+msgstr "Hyrje publike"
 
 #: plinth/modules/wordpress/forms.py:15
 msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Lejoji krejt vizitorët. Çaktivizimi lejon vetëm përgjegjësit të shohin "
+"sajtin ose blogun WordPress. Aktivizojeni vetëm pasi të jetë kryer ujdisja "
+"fillestare e WordPress-it."
 
 #: plinth/modules/zoph/__init__.py:26
 #, python-brace-format
@@ -7750,6 +7865,15 @@ msgid ""
 "location using search, map and calendar views. Individual photos can be "
 "shared with others by sending a direct link."
 msgstr ""
+"Zoph administron koleksionin tuaj të fotove. Fotot depozitohen te {box_name} "
+"juaj, nën kontrollin tuaj. Në vend të përqendrohet te galeri për shfaqje "
+"publike, Zoph përqendrohet në administrimin e tyre për përdorimin tuaj, duke "
+"i sistemuar sipas kush i bëri, kur u bënë dhe cilët gjenden në to. Fotot "
+"mund të lidhen në albume dhe kategori të shumta hierarkike. Është e lehtë të "
+"gjenden krejt fotot që përmbajnë një persona, ose foto të bëra në një datë "
+"të dhënë, ose foto të bëra në një vend të caktuar, duke përdorur kërkimin, "
+"pamjet hartë dhe kalendar. Foto individuale mund të ndahen me të tjerë duke "
+"dërguar një lidhje të drejtpërdrejtë."
 
 #: plinth/modules/zoph/__init__.py:37
 #, python-brace-format
@@ -7758,6 +7882,9 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
+"Përdoruesi {box_name} që ujdisi Zoph do të bëhet gjithashtu përgjegjësi në "
+"Zoph. Për përdorues të tjerë, llogaritë mund të krijohen si në {box_name}, "
+"ashtu edhe në Zoph, me të njëjtin emër përdoruesi."
 
 #: plinth/modules/zoph/__init__.py:58 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
@@ -7776,6 +7903,8 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Kur aktivizohet, kërkesat do të bëhen te shërbyesit e OpenStreetMap-it që "
+"nga shfletuesi i përdoruesit. Kjo prek privatësinë."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -7788,6 +7917,8 @@ msgid ""
 "User account <strong>%(username)s</strong> will become the administrator "
 "account for Zoph."
 msgstr ""
+"Llogaria e përdoruesit <strong>%(username)s</strong> do të bëhet llogaria e "
+"përgjegjësit për Zoph."
 
 #: plinth/network.py:29
 msgid "PPPoE"
@@ -7801,6 +7932,7 @@ msgstr "Elementar"
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
+"Paketa {package_name} gjendet nën versionin më të ri ({latest_version})"
 
 #: plinth/package.py:245
 msgid "Error during installation"
@@ -7830,7 +7962,7 @@ msgstr "403 E ndaluar"
 #: plinth/templates/403.html:14
 #, python-format
 msgid "You don't have permission to access %(request_path)s on this server."
-msgstr ""
+msgstr "S’keni leje të përdorni %(request_path)s në këtë shërbyes."
 
 #: plinth/templates/404.html:10
 msgid "404"
@@ -7847,6 +7979,9 @@ msgid ""
 "FreedomBox Service (Plinth) project <a href=\"https://salsa.debian.org/"
 "freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
+"Nëse besoni se kjo faqe që mungon duhet të ekzistojë, ju lutemi, njoftoni "
+"një të metë te <a href=\"https://salsa.debian.org/freedombox-team/freedombox/"
+"issues\">ndjekësi i të metave</a> për projektin FreedomBox Service (Plinth) ."
 
 #: plinth/templates/500.html:10
 msgid "500"
@@ -7860,6 +7995,11 @@ msgid ""
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
 "the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
+"Ky është një gabim i brendshëm dhe jo diçka që e shkaktuat apo mund ta "
+"ndreqni ju. Ju lutemi, njoftojeni gabimin te <a href=\"https://salsa.debian."
+"org/freedombox-team/freedombox/issues\">ndjekësi i të metave</a>, që të mund "
+"ta ndreqim. Po ashtu, ju lutemi, te njoftimi i të metës bashkëngjitni <a "
+"href=\"%(status_log_url)s\">regjistër gjendjesh</a>."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
@@ -7873,7 +8013,7 @@ msgstr "Shërbimi <em>%(service_name)s</em> s’po xhiron."
 #: plinth/templates/base.html:30
 #, python-format
 msgid "Core functionality and web interface for %(box_name)s"
-msgstr ""
+msgstr "Funksione bazë dhe ndërfaqe web për %(box_name)s"
 
 #: plinth/templates/base.html:107
 msgid " Home"
@@ -7986,6 +8126,8 @@ msgid ""
 "Please wait for %(box_name)s to finish installation. You can start using "
 "your %(box_name)s once it is done."
 msgstr ""
+"Ju lutemi, pritni që të përfundojë instalimi për %(box_name)s. Sapo të ketë "
+"mbaruar, mund të filloni përdorimin e %(box_name)s tuaj."
 
 #: plinth/templates/index.html:22
 #, python-format
@@ -7993,6 +8135,8 @@ msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
 "this page."
 msgstr ""
+"Që të shtohen shkurtore te kjo faqe, aktivizoni ca <a href=\"%(apps_url)s"
+"\">aplikacione</a>."
 
 #: plinth/templates/index.html:108
 #, python-format
@@ -8001,6 +8145,10 @@ msgid ""
 "server to deploy social applications on small machines. It provides online "
 "communication tools respecting your privacy and data ownership."
 msgstr ""
+"%(box_name)s, një përzierje puro Debian, është një shërbyes i "
+"vetëstrehueshëm 100%% software i lirë, për vënie në punë aplikacionesh "
+"shoqërorë në makina të vogla. Furnizon mjete komunikimi internetor që "
+"respektojnë privatësinë tuaj dhe pronësinë e të dhënave."
 
 #: plinth/templates/index.html:117
 #, python-format
@@ -8009,6 +8157,9 @@ msgid ""
 "free software, distributed under the GNU Affero General Public License, "
 "Version 3 or later."
 msgstr ""
+"Ky portal është pjesë e ndërfaqes web për %(box_name)s. %(box_name)s është "
+"&lt;em&gt;software&lt;/em&gt; i lirë, i shpërndarë sipas licencës GNU Affero "
+"General Public License, Version 3 ose i mëvonshëm."
 
 #: plinth/templates/index.html:137
 msgid "Homepage"
@@ -8040,10 +8191,12 @@ msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
 "client is connected to %(box_name)s through VPN."
 msgstr ""
+"<em>%(service_name)s</em> është i përdorshëm vetëm në rrjete të brendshëm, "
+"ose kur klienti është i lidhur me %(box_name)s përmes VPN-je."
 
 #: plinth/templates/internal-zone.html:17
 msgid "Currently there are no network interfaces configured as internal."
-msgstr ""
+msgstr "Aktualisht nuk ka ndërfaqe rrjeti të formësuara për të brendshëm."
 
 #: plinth/templates/internal-zone.html:19
 #, python-format
@@ -8051,6 +8204,8 @@ msgid ""
 "Currently the following network interfaces are configured as internal: "
 "%(interface_list)s"
 msgstr ""
+"Aktualisht janë të formësuara për rrjete të brendshëm ndërfaqet vijuese të "
+"rrjetit: %(interface_list)s"
 
 #: plinth/templates/messages.html:11
 msgid "Close"
@@ -8070,6 +8225,8 @@ msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
+"FreedomBox -i juaj s’gjendet <a href=\"%(networks_url)s\">pas një "
+"rrugëzuesi</a>. S’ka nevojë për veprim."
 
 #: plinth/templates/port-forwarding-info.html:19
 #, python-format
@@ -8078,6 +8235,9 @@ msgid ""
 "are using the DMZ feature to forward all ports. No further router "
 "configuration is necessary."
 msgstr ""
+"FreedomBox-i juaj gjendet <a href=\"%(networks_url)s\"> pas një rrugëzuesi</"
+"a> dhe ju po përdorni veçorinë DMZ për përcjellje te krejt portat. S’ka "
+"nevojë për formësim të mëtejshëm të rrugëzuesit."
 
 #: plinth/templates/port-forwarding-info.html:26
 #, python-format
@@ -8086,6 +8246,10 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
+"FreedomBox-i juaj gjendet <a href=\"%(networks_url)s\">pas një rrugëzuesi</"
+"a> dhe nuk po përdorni veçorinë DMZ. Do t’ju duhet të ujdisni te rrugëzuesi "
+"juaj përcjellje te porta. Duhet të lejoni përcjellje te portat vijuese për "
+"%(service_name)s:"
 
 #: plinth/templates/port-forwarding-info.html:37
 msgid "Protocol"
@@ -8093,12 +8257,12 @@ msgstr "Protokoll"
 
 #: plinth/templates/port-forwarding-info.html:38
 msgid "From Router/WAN Ports"
-msgstr ""
+msgstr "Nga Porta Rrugëzuesi/WAN-i"
 
 #: plinth/templates/port-forwarding-info.html:39
 #, python-format
 msgid "To %(box_name)s Ports"
-msgstr ""
+msgstr "Te Porta të %(box_name)s"
 
 #: plinth/templates/setup.html:24
 msgid "Install this application?"
@@ -8106,13 +8270,15 @@ msgstr "Të instalohet aplikacionin?"
 
 #: plinth/templates/setup.html:28
 msgid "This application needs an update. Update now?"
-msgstr ""
+msgstr "Ky aplikacion lyp një përditësim. Të përditësohet tani?"
 
 #: plinth/templates/setup.html:39
 msgid ""
 "Another installation or upgrade is already running. Please wait for a few "
 "moments before trying again."
 msgstr ""
+"Po xhirohet tashmë një tjetër instalim ose përmirësim. Ju lutemi, pritni pak "
+"çaste, përpara se të riprovoni."
 
 #: plinth/templates/setup.html:46
 msgid "This application is currently not available in your distribution."
@@ -8128,6 +8294,9 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>Paketa Me Përplasje:</strong> Disa paketa të instaluara në sistem "
+"kanë përplasje me instalimin e këtij aplikacioni. Paketa vijuese do të "
+"hiqen, nëse vazhdoni më tej:"
 
 #: plinth/templates/setup.html:71
 msgid "Install"
@@ -8139,25 +8308,104 @@ msgstr "Përditësoje"
 
 #: plinth/templates/setup.html:83
 msgid "Performing pre-install operation"
-msgstr ""
+msgstr "Po kryhet veprim para-instalimi"
 
 #: plinth/templates/setup.html:88
 msgid "Performing post-install operation"
-msgstr ""
+msgstr "Po kryhet veprim pas-instalimi"
 
 #: plinth/templates/setup.html:94
 #, python-format
 msgid "Installing %(package_names)s: %(status)s"
-msgstr ""
+msgstr "Po instalohet %(package_names)s: %(status)s"
 
 #: plinth/templates/setup.html:104
 #, python-format
 msgid "%(percentage)s%% complete"
-msgstr ""
+msgstr "%(percentage)s%% e plotësuar"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Aktivizo DNS Dinamik"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr ""
+#~ "Ju lutemi, jepni një URL përditësimi ose një adresë shërbyesi GnuDIP"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Ju lutemi, jepni një emër përdoruesi GnuDIP"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Ju lutemi, jepni një emër përkatësie GnuDIP"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Ju lutemi, jepni një fjalëkalim"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Nëse %(box_name)s juaj gjendet pas një rrugëzuesi NAT, mos harroni të "
+#~ "shtoni përcjellje portash për porta standarde, përfshi portën TCP 80 "
+#~ "(HTTP) dhe portën TCP 443 (HTTPS)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Keni çaktivizuar Javascript-in. Mënyra e formularëve dinamikë është e "
+#~ "çaktivizuar dhe disa funksione ndihmës mund të mos funksionojnë (por "
+#~ "funksionet kryesore duhet të punojnë)."
+
+#~ msgid "NAT type"
+#~ msgstr "Lloj NAT-i"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "S’është pikasur ende lloj NAT-i. Nëse s’jepni një “URL Kontrolli IP-je”, "
+#~ "s’do të pikasim lloj NAT-i."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Lidhje e drejtpërdrejtë në Internet."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "Pas NAT-i. Kjo do të thotë që shërbimi DNS Dinamik do të vëzhgojë “URL ku "
+#~ "të kërkohet IP publike” për ndryshime (zëri “URL ku të kërkohet IP "
+#~ "publike” është i domosdoshëm për këtë, përndryshe ndryshimet e IP-së s’do "
+#~ "të pikasen dot). Në rast ndryshimet IP-je WAN, mund të duhen deri në "
+#~ "%(timer)s minuta, para se të përditësohet zëri juaj DNS."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Formësoni DNS Dinamik"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Gjendje DNS Dinamik"
+
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "Formësimi për maksimumin e lojtarëve u përditësua"
+
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Formësimi për “mënyrë krijuese” u përditësua"
+
+#~ msgid "PVP configuration updated"
+#~ msgstr "Formësimi PVP u përditësua"
+
+#~ msgid "Damage configuration updated"
+#~ msgstr "Formësimi i dëmtuar u përditësua"
 
 #, fuzzy
 #~| msgid "unavailable"

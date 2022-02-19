@@ -8,7 +8,7 @@ sudo apt-get install -yq --no-install-recommends \
     python3-pip python3-wheel firefox-esr git smbclient\
     xvfb
 
-pip3 install splinter pytest-splinter pytest-xvfb
+pip3 install splinter pytest-splinter pytest-xvfb pytest-reporter-html1
 
 echo "Installing geckodriver"
 (

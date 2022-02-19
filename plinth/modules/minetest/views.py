@@ -37,6 +37,7 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
         """Change the configurations of Minetest service."""
         data = form.cleaned_data
         old_config = get_configuration()
+        updated = False
 
         if old_config['max_players'] != data['max_players'] \
            and data['max_players'] is not None:
@@ -44,26 +45,27 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
                 'minetest',
                 ['configure', '--max_players',
                  str(data['max_players'])])
-            messages.success(self.request,
-                             _('Maximum players configuration updated'))
+            updated = True
 
         if old_config['creative_mode'] != data['creative_mode']:
             value = 'true' if data['creative_mode'] else 'false'
             actions.superuser_run('minetest',
                                   ['configure', '--creative_mode', value])
-            messages.success(self.request,
-                             _('Creative mode configuration updated'))
+            updated = True
 
         if old_config['enable_pvp'] != data['enable_pvp']:
             value = 'true' if data['enable_pvp'] else 'false'
             actions.superuser_run('minetest',
                                   ['configure', '--enable_pvp', value])
-            messages.success(self.request, _('PVP configuration updated'))
+            updated = True
 
         if old_config['enable_damage'] != data['enable_damage']:
             value = 'true' if data['enable_damage'] else 'false'
             actions.superuser_run('minetest',
                                   ['configure', '--enable_damage', value])
-            messages.success(self.request, _('Damage configuration updated'))
+            updated = True
+
+        if updated:
+            messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

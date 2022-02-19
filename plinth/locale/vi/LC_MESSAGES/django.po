@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2021-07-28 08:34+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/freedombox/"
@@ -873,7 +873,7 @@ msgid "No passwords currently configured."
 msgstr "Không có mật khẩu nào hiện được thiết lập."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Mật khẩu"
@@ -1021,9 +1021,10 @@ msgid "Refresh IP address and domains"
 msgstr "Làm mới địa chỉ IP và các miền"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1220,7 +1221,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Thiết lập chung"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1228,13 +1229,13 @@ msgid "Configure"
 msgstr "Thiết lập"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Tên miền"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Tên miền không hợp lệ"
 
@@ -1581,6 +1582,7 @@ msgid "Test"
 msgstr "Kiểm tra"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Kết quả"
 
@@ -1588,7 +1590,7 @@ msgstr "Kết quả"
 msgid "Diagnostic Test"
 msgstr "Kiểm tra chẩn đoán"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1599,7 +1601,7 @@ msgstr ""
 "24h), những người khác có thể khó tìm bạn trên Internet. Việc này sẽ ngăn "
 "những người khác tìm các dịch vụ được {box_name} này cung cấp."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1616,15 +1618,35 @@ msgstr ""
 "phân tên DNS của bạn cho IP mới, và nếu ai đó từ Internet hỏi tên DNS của "
 "bạn, họ sẽ nhận một phản hồi với địa chỉ IP hiện tại của bạn."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Nếu bạn đang tìm một tài khoản DNS động miễn phí, bạn có thể tìm một dịch vụ "
+"GnuDIP miễn phí tại <a href=\"http://gnudip.datasystems24.net\" target="
+"\"_blank\">gnudip.datasystems24.net</a> hoặc bạn có thể tìm các dịch vụ miễn "
+"phí dựa trên URL cập nhật tại <a href=\"http://freedns.afraid.org/\" target="
+"\"_blank\">freedns.afraid.org</a>."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Ứng dụng khách DNS động"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Tên miền động"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1634,7 +1656,7 @@ msgstr ""
 "được sử dụng trong URL. Để biết thêm chi tiết, hãy xem các mẫu URL cập nhật "
 "của những nhà cung cấp trong ví dụ."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1644,7 +1666,7 @@ msgstr ""
 "cung cấp không hỗ trợ giao thức GnuDIP hoặc nhà cung cấp không được liệt kê, "
 "bạn có thể sử dụng URL cập nhật của nhà cung cấp."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1652,17 +1674,17 @@ msgstr ""
 "Vui lòng đừng nhập một URL ở đây (như \"https://example.com/\") mà chỉ nhập "
 "tên miền của máy chủ GnuDIP (như \"example.com\")."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "Tên miền công khai bạn muốn sử dụng để kết nối đến {box_name} của bạn."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Sử dụng tuỳ chọn này nếu nhà cung cấp của bạn sử dụng các chứng chỉ tự ký."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1670,11 +1692,11 @@ msgstr ""
 "Nếu tuỳ chọn này được chọn, tên người dùng và mật khẩu của bạn sẽ được sử "
 "dụng để xác thực HTTP cơ bản."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Bỏ trống ô này nếu bạn muốn giữ mật khẩu hiện tại."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Optional Value. If your {box_name} is not connected directly to the "
@@ -1692,162 +1714,66 @@ msgstr ""
 "xác định địa chỉ IP thật. URL này nên chỉ đơn giản là trả về địa chỉ IP nơi "
 "mà máy khách đến từ đó (vd: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr "Tên người dùng được sử dụng khi tài khoản được tạo."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:68
-msgid "other update URL"
+#: plinth/modules/dynamicdns/forms.py:57
+#, fuzzy
+#| msgid "other update URL"
+msgid "Other update URL"
 msgstr "URL cập nhật khác"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Bật DNS động"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Loại dịch vụ"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "Địa chỉ máy chủ GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Tên máy chủ không hợp lệ"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "URL cập nhật"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Chấp nhận tất cả chứng chỉ SSL"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "Sử dụng xác thực HTTP cơ bản"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Tên người dùng"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Hiện mật khẩu"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "URL để tra cứu IP công khai"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr "Sử dụng IPv6 thay vì IPv4"
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Vui lòng cung cấp một URL cập nhật hoặc một địa chỉ máy chủ GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Vui lòng cung cấp một tên người dùng GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Vui lòng cung cấp một tên miền GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Vui lòng cung cấp một mật khẩu"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
-msgstr ""
-"Nếu bạn đang tìm một tài khoản DNS động miễn phí, bạn có thể tìm một dịch vụ "
-"GnuDIP miễn phí tại <a href=\"http://gnudip.datasystems24.net\" target="
-"\"_blank\">gnudip.datasystems24.net</a> hoặc bạn có thể tìm các dịch vụ miễn "
-"phí dựa trên URL cập nhật tại <a href=\"http://freedns.afraid.org/\" target="
-"\"_blank\">freedns.afraid.org</a>."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Nếu %(box_name)s của bạn được kết nối đằng sau một router NAT, đừng quên "
-"thêm chuyển tiếp cổng cho các cổng tiêu chuẩn, bao gồm cổng TCP 80 (HTTP) và "
-"cổng TCP 443 (HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Bạn đã tắt Javascript. Chế độ form động bị tắt và một số chức năng trợ giúp "
-"có thể không hoạt động (nhưng chức năng chính có khả năng cao là sẽ hoạt "
-"động)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Cập nhật thiết lập"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "Loại NAT"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"Loại NAT chưa được phát hiện. Nếu bạn không cung cấp một \"URL kiểm tra IP"
-"\", chúng tôi sẽ không phát hiện loại NAT."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Kết nối trực tiếp đến Internet."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
+#: plinth/modules/dynamicdns/forms.py:123
+msgid "This field is required."
 msgstr ""
 
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr ""
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr ""
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1861,12 +1787,55 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
 msgstr ""
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr ""
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP addresses"
+msgid "IP Address"
+msgstr "Địa chỉ IP"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Truy cập"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "failed"
+msgid "Failed"
+msgstr "đã trượt"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No status available."
+msgstr "Không có thư viện nào có sẵn."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection refused"
+msgid "Connection timed out"
+msgstr "Kết nối bị từ chối"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+msgid "Server refused connection"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:28
+msgid "Already up-to-date"
 msgstr ""
 
 #: plinth/modules/ejabberd/__init__.py:31
@@ -2409,6 +2378,11 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr ""
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -2756,6 +2730,13 @@ msgstr ""
 msgid "Delete site %(site)s"
 msgstr ""
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Cập nhật thiết lập"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -2879,10 +2860,6 @@ msgstr ""
 
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
-msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
 msgstr ""
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
@@ -3247,22 +3224,6 @@ msgstr ""
 #: plinth/modules/minetest/templates/minetest.html:18
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr ""
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
 msgstr ""
 
 #: plinth/modules/minidlna/__init__.py:20
@@ -6432,7 +6393,7 @@ msgstr ""
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -7457,6 +7418,52 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Bật DNS động"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "Vui lòng cung cấp một URL cập nhật hoặc một địa chỉ máy chủ GnuDIP"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Vui lòng cung cấp một tên người dùng GnuDIP"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Vui lòng cung cấp một tên miền GnuDIP"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Vui lòng cung cấp một mật khẩu"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Nếu %(box_name)s của bạn được kết nối đằng sau một router NAT, đừng quên "
+#~ "thêm chuyển tiếp cổng cho các cổng tiêu chuẩn, bao gồm cổng TCP 80 (HTTP) "
+#~ "và cổng TCP 443 (HTTPS)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Bạn đã tắt Javascript. Chế độ form động bị tắt và một số chức năng trợ "
+#~ "giúp có thể không hoạt động (nhưng chức năng chính có khả năng cao là sẽ "
+#~ "hoạt động)."
+
+#~ msgid "NAT type"
+#~ msgstr "Loại NAT"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "Loại NAT chưa được phát hiện. Nếu bạn không cung cấp một \"URL kiểm tra IP"
+#~ "\", chúng tôi sẽ không phát hiện loại NAT."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Kết nối trực tiếp đến Internet."
 
 #, fuzzy
 #~| msgid "Invalid domain name"

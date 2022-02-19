@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-31 19:23-0500\n"
+"POT-Creation-Date: 2022-02-14 20:10-0500\n"
 "PO-Revision-Date: 2021-04-14 04:27+0000\n"
 "Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -892,7 +892,7 @@ msgid "No passwords currently configured."
 msgstr "Δεν έχουν ρυθμιστεί μερίσματα."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
-#: plinth/modules/dynamicdns/forms.py:106 plinth/modules/networks/forms.py:213
+#: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
 msgstr "Κωδικός"
@@ -1058,9 +1058,10 @@ msgid "Refresh IP address and domains"
 msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:169
+#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
-#: plinth/modules/matrixsynapse/views.py:124 plinth/modules/mumble/views.py:28
+#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1259,7 +1260,7 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Γενικές ρυθμίσεις"
 
-#: plinth/modules/config/__init__.py:58 plinth/modules/dynamicdns/views.py:29
+#: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
@@ -1267,13 +1268,13 @@ msgid "Configure"
 msgstr "Ρυθμίσετε"
 
 #: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
-#: plinth/modules/dynamicdns/forms.py:97
+#: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Όνομα διαδικτύου"
 
 #: plinth/modules/config/forms.py:30 plinth/modules/config/forms.py:80
-#: plinth/modules/dynamicdns/forms.py:100
+#: plinth/modules/dynamicdns/forms.py:85
 msgid "Invalid domain name"
 msgstr "Μη έγκυρο όνομα διαδικτύου"
 
@@ -1627,6 +1628,7 @@ msgid "Test"
 msgstr "Τεστ"
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:12
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:20
 msgid "Result"
 msgstr "Αποτέλεσμα"
 
@@ -1634,7 +1636,7 @@ msgstr "Αποτέλεσμα"
 msgid "Diagnostic Test"
 msgstr "Διαγνωστικός έλεγχος"
 
-#: plinth/modules/dynamicdns/__init__.py:22
+#: plinth/modules/dynamicdns/__init__.py:29
 #, python-brace-format
 msgid ""
 "If your Internet provider changes your IP address periodically (i.e. every "
@@ -1646,7 +1648,7 @@ msgstr ""
 "Αυτό θα εμποδίσει άλλους να βρουν υπηρεσίες που παρέχονται από αυτό το "
 "{box_name}."
 
-#: plinth/modules/dynamicdns/__init__.py:26
+#: plinth/modules/dynamicdns/__init__.py:33
 msgid ""
 "The solution is to assign a DNS name to your IP address and update the DNS "
 "name every time your IP is changed by your Internet provider. Dynamic DNS "
@@ -1664,15 +1666,35 @@ msgstr ""
 "αντιστοιχίσει το όνομα DNS σας στη νέα IP και αν κάποιος από το Internet "
 "ζητήσει το όνομα DNS, θα λάβει απάντηση με την τρέχουσα διεύθυνση IP."
 
-#: plinth/modules/dynamicdns/__init__.py:52
+#: plinth/modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"If you are looking for a free dynamic DNS account, you may find a free "
+"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
+"freedombox.org</a> or you may find free update URL based services at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"Εάν ψάχνετε για ένα δωρεάν λογαριασμό δυναμικού DNS, μπορείτε να βρείτε μια "
+"δωρεάν GnuDIP υπηρεσια στο <a href='http://gnudip.datasystems24.net' "
+"target='_blank'>gnudip.datasystems24.net</a> ή μια δωρεάν υπηρεσία URL "
+"ανανέωσης στο <a href='http://freedns.afraid.org/' target='_blank'> freedns."
+"afraid.org</a>."
+
+#: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
 msgstr "Πελάτης δυναμικού DNS"
 
-#: plinth/modules/dynamicdns/__init__.py:65
+#: plinth/modules/dynamicdns/__init__.py:77
 msgid "Dynamic Domain Name"
 msgstr "Δυναμικό όνομα διαδικτύου"
 
-#: plinth/modules/dynamicdns/forms.py:29
+#: plinth/modules/dynamicdns/forms.py:18
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1682,7 +1704,7 @@ msgstr ""
 "διαδικτύου &gt; μπορούν να χρησιμοποιηθούν μέσα στη διεύθυνση URL. Για "
 "λεπτομέρειες, ανατρέξτε στα παραδείγματα URL των παρόχων."
 
-#: plinth/modules/dynamicdns/forms.py:33
+#: plinth/modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1693,7 +1715,7 @@ msgstr ""
 "υπηρεσία παροχής σας δεν παρατίθεται, μπορείτε να χρησιμοποιήσετε τη "
 "διεύθυνση URL που δίνει ο παροχέας σας για την ανανέωση."
 
-#: plinth/modules/dynamicdns/forms.py:38
+#: plinth/modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1701,19 +1723,19 @@ msgstr ""
 "Παρακαλώ μην εισάγετε μια διεύθυνση URL εδώ (όπως \"https://example.com/\"), "
 "αλλά μόνο το όνομα του διακομιστή GnuDIP (όπως \"example.com\")."
 
-#: plinth/modules/dynamicdns/forms.py:42
+#: plinth/modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Το δημόσιο όνομα διαδικτύου που θέλετε να χρησιμοποιήσετε για το {box_name}."
 
-#: plinth/modules/dynamicdns/forms.py:45
+#: plinth/modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Χρησιμοποιήστε αυτήν την επιλογή εάν ο παροχέας σας χρησιμοποιεί SSL "
 "πιστοποιητικά που δεν είναι εγγεκριμένο από αρχή πιστοποιητικών."
 
-#: plinth/modules/dynamicdns/forms.py:48
+#: plinth/modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1721,13 +1743,13 @@ msgstr ""
 "Εάν αυτή η επιλογή είναι ενεργοποιημένη, το όνομα χρήστη και ο κωδικός "
 "πρόσβασής σας θα χρησιμοποιηθούν για τον βασικό έλεγχο ταυτότητας HTTP."
 
-#: plinth/modules/dynamicdns/forms.py:51
+#: plinth/modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Αφήστε αυτό το πεδίο κενό αν θέλετε να διατηρήσετε τον τρέχοντα κωδικό "
 "πρόσβασής σας."
 
-#: plinth/modules/dynamicdns/forms.py:54
+#: plinth/modules/dynamicdns/forms.py:43
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Optional Value. If your {box_name} is not connected directly to the "
@@ -1746,169 +1768,67 @@ msgstr ""
 "διεύθυνση URL θα πρέπει απλά να επιστρέψει την IP από την οποία προέρχεται ο "
 "πελάτης (παράδειγμα: http://myip.datasystems24.de)."
 
-#: plinth/modules/dynamicdns/forms.py:62
+#: plinth/modules/dynamicdns/forms.py:51
 msgid "The username that was used when the account was created."
 msgstr ""
 "Το όνομα χρήστη που χρησιμοποιήθηκε κατά τη δημιουργία του λογαριασμού."
 
-#: plinth/modules/dynamicdns/forms.py:65
+#: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:68
+#: plinth/modules/dynamicdns/forms.py:57
 #, fuzzy
 #| msgid "Update URL"
-msgid "other update URL"
+msgid "Other update URL"
 msgstr "Διεύθυνση URL ενημέρωσης"
 
-#: plinth/modules/dynamicdns/forms.py:70
-msgid "Enable Dynamic DNS"
-msgstr "Ενεργοποιήστε το Δυναμικό DNS"
-
-#: plinth/modules/dynamicdns/forms.py:73
+#: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
 msgstr "Τύπος υπηρεσίας"
 
-#: plinth/modules/dynamicdns/forms.py:78
+#: plinth/modules/dynamicdns/forms.py:64
 msgid "GnuDIP Server Address"
 msgstr "Διεύθυνση διακομιστή GnuDIP"
 
-#: plinth/modules/dynamicdns/forms.py:81
+#: plinth/modules/dynamicdns/forms.py:67
 msgid "Invalid server name"
 msgstr "Μη έγκυρο όνομα διακομιστή"
 
-#: plinth/modules/dynamicdns/forms.py:84
+#: plinth/modules/dynamicdns/forms.py:70
 msgid "Update URL"
 msgstr "Διεύθυνση URL ενημέρωσης"
 
-#: plinth/modules/dynamicdns/forms.py:89
+#: plinth/modules/dynamicdns/forms.py:74
 msgid "Accept all SSL certificates"
 msgstr "Αποδοχή όλων των πιστοποιητικών SSL"
 
-#: plinth/modules/dynamicdns/forms.py:93
+#: plinth/modules/dynamicdns/forms.py:78
 msgid "Use HTTP basic authentication"
 msgstr "Χρήση βασικού ελέγχου ταυτότητας HTTP"
 
-#: plinth/modules/dynamicdns/forms.py:103 plinth/modules/networks/forms.py:212
+#: plinth/modules/dynamicdns/forms.py:88 plinth/modules/networks/forms.py:212
 #: plinth/modules/users/forms.py:68
 msgid "Username"
 msgstr "Όνομα χρήστη"
 
-#: plinth/modules/dynamicdns/forms.py:110 plinth/modules/networks/forms.py:215
+#: plinth/modules/dynamicdns/forms.py:95 plinth/modules/networks/forms.py:215
 msgid "Show password"
 msgstr "Εμφάνιση κωδικού"
 
-#: plinth/modules/dynamicdns/forms.py:114
+#: plinth/modules/dynamicdns/forms.py:99
 msgid "URL to look up public IP"
 msgstr "Διεύθυνση URL για να αναζητήσετε δημόσια IP"
 
-#: plinth/modules/dynamicdns/forms.py:119
+#: plinth/modules/dynamicdns/forms.py:104
 msgid "Use IPv6 instead of IPv4"
 msgstr ""
 
-#: plinth/modules/dynamicdns/forms.py:141
-msgid "Please provide an update URL or a GnuDIP server address"
-msgstr "Δώστε μια διεύθυνση URL ανανέωσης ή ένα διακομιστή GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:146
-msgid "Please provide a GnuDIP username"
-msgstr "Παρακαλώ δώστε ένα όνομα χρήστη GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:150
-msgid "Please provide a GnuDIP domain name"
-msgstr "Δώστε ένα όνομα διαδικτύου για το GnuDIP"
-
-#: plinth/modules/dynamicdns/forms.py:155
-msgid "Please provide a password"
-msgstr "Δώστε έναν κωδικό πρόσβασης"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:12
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
-#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
-#| "URL based services at <a href='http://freedns.afraid.org/' "
-#| "target='_blank'> freedns.afraid.org</a>."
-msgid ""
-"If you are looking for a free dynamic DNS account, you may find a free "
-"GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'> freedns.afraid.org</a>."
+#: plinth/modules/dynamicdns/forms.py:123
+msgid "This field is required."
 msgstr ""
-"Εάν ψάχνετε για ένα δωρεάν λογαριασμό δυναμικού DNS, μπορείτε να βρείτε μια "
-"δωρεάν GnuDIP υπηρεσια στο <a href='http://gnudip.datasystems24.net' "
-"target='_blank'>gnudip.datasystems24.net</a> ή μια δωρεάν υπηρεσία URL "
-"ανανέωσης στο <a href='http://freedns.afraid.org/' target='_blank'> freedns."
-"afraid.org</a>."
 
-#: plinth/modules/dynamicdns/templates/dynamicdns.html:23
-#, python-format
-msgid ""
-"If your %(box_name)s is connected behind a NAT router, don't forget to add "
-"port forwarding for standard ports, including TCP port 80 (HTTP) and TCP "
-"port 443 (HTTPS)."
-msgstr ""
-"Εάν τo %(box_name)s είναι συνδεδεμένο πίσω από ένα δρομολογητή NAT, μην "
-"ξεχάσετε να προσθέσετε προώθηση θυρών για τυπικές θύρες, συμπεριλαμβανομένης "
-"της θύρας TCP 80 (HTTP) και της θύρας TCP 443 (HTTPS)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:15
-msgid ""
-"You have disabled Javascript. Dynamic form mode is disabled and some helper "
-"functions may not work (but the main functionality should work)."
-msgstr ""
-"Έχετε απενεργοποιήσει την JavaScript. Η λειτουργία δυναμικής φόρμας είναι "
-"απενεργοποιημένη και ορισμένες βοηθητικές λειτουργίες ενδέχεται να μην "
-"λειτουργούν (βασικές λειτουρίες θα είναι εντάξει παραυτά)."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_configure.html:25
-#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
-#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
-msgid "Update setup"
-msgstr "Ενημέρωση ρυθμίσεων"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:9
-msgid "NAT type"
-msgstr "Τύπος NAT"
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:13
-msgid ""
-"NAT type was not detected yet. If you do not provide an \"IP Check URL\", we "
-"will not detect a NAT type."
-msgstr ""
-"Ο τύπος NAT δεν εντοπίστηκε ακόμα. Εάν δεν παρέχετε μια \"διεύθυνση URL "
-"ελέγχου IP\", δεν θα ανιχνεύσουμε έναν τύπο NAT."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:19
-msgid "Direct connection to the Internet."
-msgstr "Άμεση σύνδεση στο Internet."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:21
-#, python-format
-msgid ""
-"Behind NAT. This means that Dynamic DNS service will poll the \"URL to look "
-"up public IP\" for changes (the \"URL to look up public IP\" entry is needed "
-"for this, otherwise IP changes will not be detected). In case the WAN IP "
-"changes, it may take up to %(timer)s minutes until your DNS entry is updated."
-msgstr ""
-"Πίσω από δίκτυο ΝΑΤ. Αυτό σημαίνει ότι το δυναμικό DNS θα αναζητήσει την "
-"δημόσια διεύθυνση ΙΡ στην υπηρεσία του URL ανανέωσης (η υπηρεσία του URL "
-"ανανέωσης χρειάζεται σε αυτή την περίπτωση). Στην περίπτωση που η δημόσια IP "
-"σας αλλάξει μπορεί να χρεαστουν %(timer)s λεπτά για να ανανεωθεί το DNS."
-
-#: plinth/modules/dynamicdns/templates/dynamicdns_status.html:33
-msgid "Last update"
-msgstr "Τελευταία ενημέρωση"
-
-#: plinth/modules/dynamicdns/views.py:26 plinth/modules/help/__init__.py:55
-#: plinth/templates/help-menu.html:46 plinth/templates/help-menu.html:47
-msgid "About"
-msgstr "Σχετικά με"
-
-#: plinth/modules/dynamicdns/views.py:32
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
@@ -1922,13 +1842,60 @@ msgstr "Σχετικά με"
 msgid "Status"
 msgstr "Κατάσταση"
 
-#: plinth/modules/dynamicdns/views.py:62
-msgid "Configure Dynamic DNS"
-msgstr "Ρύθμιση παραμέτρων δυναμικού DNS"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+msgid "Domain"
+msgstr "Όνομα διαδικτύου"
 
-#: plinth/modules/dynamicdns/views.py:86
-msgid "Dynamic DNS Status"
-msgstr "Κατάσταση δυναμικού DNS"
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:19
+msgid "Last update"
+msgstr "Τελευταία ενημέρωση"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:21
+#, fuzzy
+#| msgid "IP address"
+msgid "IP Address"
+msgstr "Διεύθυνση IP"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:32
+#, fuzzy
+#| msgid "Access"
+msgid "Success"
+msgstr "Πρόσβαση"
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:36
+#, fuzzy
+#| msgid "Setup failed."
+msgid "Failed"
+msgstr "Η εγκατάσταση απέτυχε."
+
+#: plinth/modules/dynamicdns/templates/dynamicdns.html:52
+#, fuzzy
+#| msgid "No repositories available."
+msgid "No status available."
+msgstr "Δεν υπάρχουν διαθέσιμα αποθετήρια."
+
+#: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
+#, fuzzy
+#| msgid "Connection Name"
+msgid "Connection timed out"
+msgstr "Όνομα σύνδεσης"
+
+#: plinth/modules/dynamicdns/views.py:25
+msgid "Could not find server"
+msgstr ""
+
+#: plinth/modules/dynamicdns/views.py:27
+#, fuzzy
+#| msgid "Delete connection"
+msgid "Server refused connection"
+msgstr "Διαγραφή σύνδεσης"
+
+#: plinth/modules/dynamicdns/views.py:28
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Already up-to-date"
+msgstr "Ενεργοποίηση αυτόματων ενημερώσεων"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2540,6 +2507,11 @@ msgstr "Υποβάλετε σχόλια"
 msgid "Contribute"
 msgstr "Συνεισφέρετε"
 
+#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/templates/help-menu.html:47
+msgid "About"
+msgstr "Σχετικά με"
+
 #: plinth/modules/help/templates/help_about.html:17
 #: plinth/modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
@@ -3006,6 +2978,13 @@ msgstr "Μεταβείτε στην τοποθεσία %(site)s"
 msgid "Delete site %(site)s"
 msgstr "Διαγραφή ιστότοπου %(site)s"
 
+#: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
+#: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
+#: plinth/modules/snapshot/templates/snapshot.html:15
+#: plinth/templates/app.html:54
+msgid "Update setup"
+msgstr "Ενημέρωση ρυθμίσεων"
+
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
 msgid "Delete Wiki or Blog <em>%(name)s</em>"
@@ -3155,10 +3134,6 @@ msgstr "Πιστοποιητικά"
 #: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr ""
-
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-msgid "Domain"
-msgstr "Όνομα διαδικτύου"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3603,22 +3578,6 @@ msgstr "Διεύθυνση"
 #: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Θύρα"
-
-#: plinth/modules/minetest/views.py:48
-msgid "Maximum players configuration updated"
-msgstr "Η ρύθμιση μέγιστου αριθμού παικτών πραγματοποιήθηκε"
-
-#: plinth/modules/minetest/views.py:55
-msgid "Creative mode configuration updated"
-msgstr "Η ρυθμιση δημιουργικής λειτουργίας πραγματοποιήθηκε"
-
-#: plinth/modules/minetest/views.py:61
-msgid "PVP configuration updated"
-msgstr "Η ρύθμιση PVP ενημερώθηκε"
-
-#: plinth/modules/minetest/views.py:67
-msgid "Damage configuration updated"
-msgstr "Η ρύθμιση ζημιών ενημερώθηκε"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -7368,8 +7327,13 @@ msgid "Frequent feature updates activated."
 msgstr ""
 
 #: plinth/modules/users/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "Create and managed user accounts. These accounts serve as centralized "
+#| "authentication mechanism for most apps. Some apps further require a user "
+#| "account to be part of a group to authorize the user to access the app."
 msgid ""
-"Create and managed user accounts. These accounts serve as centralized "
+"Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
@@ -8573,6 +8537,84 @@ msgstr "ολοκληρώθηκε το %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Enable Dynamic DNS"
+#~ msgstr "Ενεργοποιήστε το Δυναμικό DNS"
+
+#~ msgid "Please provide an update URL or a GnuDIP server address"
+#~ msgstr "Δώστε μια διεύθυνση URL ανανέωσης ή ένα διακομιστή GnuDIP"
+
+#~ msgid "Please provide a GnuDIP username"
+#~ msgstr "Παρακαλώ δώστε ένα όνομα χρήστη GnuDIP"
+
+#~ msgid "Please provide a GnuDIP domain name"
+#~ msgstr "Δώστε ένα όνομα διαδικτύου για το GnuDIP"
+
+#~ msgid "Please provide a password"
+#~ msgstr "Δώστε έναν κωδικό πρόσβασης"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is connected behind a NAT router, don't forget to "
+#~ "add port forwarding for standard ports, including TCP port 80 (HTTP) and "
+#~ "TCP port 443 (HTTPS)."
+#~ msgstr ""
+#~ "Εάν τo %(box_name)s είναι συνδεδεμένο πίσω από ένα δρομολογητή NAT, μην "
+#~ "ξεχάσετε να προσθέσετε προώθηση θυρών για τυπικές θύρες, "
+#~ "συμπεριλαμβανομένης της θύρας TCP 80 (HTTP) και της θύρας TCP 443 (HTTPS)."
+
+#~ msgid ""
+#~ "You have disabled Javascript. Dynamic form mode is disabled and some "
+#~ "helper functions may not work (but the main functionality should work)."
+#~ msgstr ""
+#~ "Έχετε απενεργοποιήσει την JavaScript. Η λειτουργία δυναμικής φόρμας είναι "
+#~ "απενεργοποιημένη και ορισμένες βοηθητικές λειτουργίες ενδέχεται να μην "
+#~ "λειτουργούν (βασικές λειτουρίες θα είναι εντάξει παραυτά)."
+
+#~ msgid "NAT type"
+#~ msgstr "Τύπος NAT"
+
+#~ msgid ""
+#~ "NAT type was not detected yet. If you do not provide an \"IP Check URL\", "
+#~ "we will not detect a NAT type."
+#~ msgstr ""
+#~ "Ο τύπος NAT δεν εντοπίστηκε ακόμα. Εάν δεν παρέχετε μια \"διεύθυνση URL "
+#~ "ελέγχου IP\", δεν θα ανιχνεύσουμε έναν τύπο NAT."
+
+#~ msgid "Direct connection to the Internet."
+#~ msgstr "Άμεση σύνδεση στο Internet."
+
+#, python-format
+#~ msgid ""
+#~ "Behind NAT. This means that Dynamic DNS service will poll the \"URL to "
+#~ "look up public IP\" for changes (the \"URL to look up public IP\" entry "
+#~ "is needed for this, otherwise IP changes will not be detected). In case "
+#~ "the WAN IP changes, it may take up to %(timer)s minutes until your DNS "
+#~ "entry is updated."
+#~ msgstr ""
+#~ "Πίσω από δίκτυο ΝΑΤ. Αυτό σημαίνει ότι το δυναμικό DNS θα αναζητήσει την "
+#~ "δημόσια διεύθυνση ΙΡ στην υπηρεσία του URL ανανέωσης (η υπηρεσία του URL "
+#~ "ανανέωσης χρειάζεται σε αυτή την περίπτωση). Στην περίπτωση που η δημόσια "
+#~ "IP σας αλλάξει μπορεί να χρεαστουν %(timer)s λεπτά για να ανανεωθεί το "
+#~ "DNS."
+
+#~ msgid "Configure Dynamic DNS"
+#~ msgstr "Ρύθμιση παραμέτρων δυναμικού DNS"
+
+#~ msgid "Dynamic DNS Status"
+#~ msgstr "Κατάσταση δυναμικού DNS"
+
+#~ msgid "Maximum players configuration updated"
+#~ msgstr "Η ρύθμιση μέγιστου αριθμού παικτών πραγματοποιήθηκε"
+
+#~ msgid "Creative mode configuration updated"
+#~ msgstr "Η ρυθμιση δημιουργικής λειτουργίας πραγματοποιήθηκε"
+
+#~ msgid "PVP configuration updated"
+#~ msgstr "Η ρύθμιση PVP ενημερώθηκε"
+
+#~ msgid "Damage configuration updated"
+#~ msgstr "Η ρύθμιση ζημιών ενημερώθηκε"
 
 #, fuzzy
 #~| msgid "Unavailable Shares"

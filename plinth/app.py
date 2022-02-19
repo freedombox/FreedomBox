@@ -463,6 +463,33 @@ class Info(FollowerComponent):
             clients_module.validate(clients)
 
 
+class EnableState(LeaderComponent):
+    """A component to hold the enable state of an app using a simple flag."""
+
+    @property
+    def key(self):
+        """Return the storage key."""
+        if not self.app_id:
+            raise KeyError('Component must be added to an app before use.')
+
+        return f'{self.app_id}_enable'
+
+    def is_enabled(self):
+        """Return whether the app/component is enabled."""
+        from plinth import kvstore
+        return kvstore.get_default(self.key, False)
+
+    def enable(self):
+        """Store that the app/component is enabled."""
+        from plinth import kvstore
+        kvstore.set(self.key, True)
+
+    def disable(self):
+        """Store that the app/component is disabled."""
+        from plinth import kvstore
+        kvstore.set(self.key, False)
+
+
 def apps_init():
     """Create apps by constructing them with components."""
     from . import module_loader  # noqa  # Avoid circular import
