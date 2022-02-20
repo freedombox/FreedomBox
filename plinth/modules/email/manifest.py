@@ -21,15 +21,15 @@ clients = [
         'platforms': [{
             'type': 'download',
             'os': 'gnu-linux',
-            'url': 'https://www.thunderbird.net/en-US/'
+            'url': 'https://www.thunderbird.net/'
         }, {
             'type': 'download',
             'os': 'macos',
-            'url': 'https://www.thunderbird.net/en-US/'
+            'url': 'https://www.thunderbird.net/'
         }, {
             'type': 'download',
             'os': 'windows',
-            'url': 'https://www.thunderbird.net/en-US/'
+            'url': 'https://www.thunderbird.net/'
         }]
     },
     {
