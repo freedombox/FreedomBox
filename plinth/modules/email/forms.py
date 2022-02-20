@@ -38,13 +38,14 @@ class AliasCreateForm(forms.Form):
     def clean_alias(self):
         """Return the checked value for alias."""
         value = self.data['alias'].strip().lower()
-        if not re.match('^[a-z0-9-_\\.]+$', value):
+        if not re.match(r'^[a-z0-9-_\.]+$', value):
             raise ValidationError(_('Contains illegal characters'))
 
-        if not re.match('^[a-z0-9].*[a-z0-9]$', value):
+        if not re.match(r'^[a-z0-9].*[a-z0-9]$', value):
             raise ValidationError(_('Must start and end with a-z or 0-9'))
 
-        if re.match('^[0-9]+$', value):
+        # For when uids are automatically aliased to username
+        if re.match(r'^[0-9]+$', value):
             raise ValidationError(_('Cannot be a number'))
 
         if aliases_module.exists(value):
