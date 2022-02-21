@@ -49,20 +49,21 @@ _postfix_config = {
 
 def set_postfix_config(primary_domain, all_domains):
     """Set postfix configuration for TLS certificates."""
-    tls_sni_map = pathlib.Path('/etc/postfix/freedombox-tls-sni.map')
+    items = []
+    for domain in all_domains:
+        items.append(f'{domain}=/etc/postfix/letsencrypt/{domain}/chain.pem')
+
+    domain_map = ','.join(items)
     config = dict(_postfix_config)
     config.update({
         'tls_server_sni_maps':
-            str(tls_sni_map),
+            f'inline:{{{domain_map}}}',
         'smtpd_tls_chain_files':
-            f'/etc/postfix/letsencrypt/{primary_domain}/chain.pem'
+            f'/etc/postfix/letsencrypt/{primary_domain}/chain.pem',
+        'smtpd_tls_cert_file':
+            ''
     })
     postfix.set_config(config)
-    content = '# This file is managed by FreedomBox\n'
-    for domain in all_domains:
-        content += f'{domain} /etc/postfix/letsencrypt/{domain}/chain.pem\n'
-
-    tls_sni_map.write_text(content)
 
 
 def set_dovecot_config(primary_domain, all_domains):
