@@ -205,7 +205,8 @@ def setup(helper, old_version=None):
     actions.superuser_run('service', ['try-restart', 'rspamd'])
 
     # Expose to public internet
-    helper.call('post', app.enable)
+    if old_version == 0:
+        helper.call('post', app.enable)
 
 
 def on_domain_added(sender, domain_type, name, description='', services=None,
