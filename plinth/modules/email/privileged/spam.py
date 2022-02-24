@@ -40,7 +40,8 @@ def _compile_sieve():
 def _setup_rspamd():
     """Adjust configuration to include FreedomBox configuration files."""
     configs = [('milter_headers.conf', 'freedombox-milter-headers.conf'),
-               ('redis.conf', 'freedombox-redis.conf')]
+               ('redis.conf', 'freedombox-redis.conf'),
+               ('logging.inc', 'freedombox-logging.inc')]
     base_path = pathlib.Path('/etc/rspamd/local.d')
     for orig_path, include_path in configs:
         _setup_local_include(base_path / orig_path, base_path / include_path)
