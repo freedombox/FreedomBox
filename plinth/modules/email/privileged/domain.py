@@ -9,9 +9,9 @@ See: http://www.postfix.org/postconf.5.html#myhostname
 
 import pathlib
 import re
-import subprocess
 
 from plinth.actions import superuser_run
+from plinth.app import App
 from plinth.modules import config
 from plinth.modules.email import postfix
 from plinth.modules.names.components import DomainName
@@ -36,10 +36,16 @@ def set_domains(primary_domain=None):
         if primary_domain not in all_domains:
             primary_domain = config.get_domainname() or list(all_domains)[0]
 
+    # Update configuration and don't restart daemons
     superuser_run(
         'email',
         ['domain', 'set_domains', primary_domain, ','.join(all_domains)])
     superuser_run('email', ['dkim', 'setup_dkim', primary_domain])
+
+    # Copy certificates (self-signed if needed) and restart daemons
+    app = App.get('email')
+    app.get_component('letsencrypt-email-postfix').setup_certificates()
+    app.get_component('letsencrypt-email-dovecot').setup_certificates()
 
 
 def action_set_domains(primary_domain, all_domains):
@@ -58,10 +64,6 @@ def action_set_domains(primary_domain, all_domains):
     pathlib.Path('/etc/mailname').write_text(primary_domain + '\n')
     tls.set_postfix_config(primary_domain, all_domains)
     tls.set_dovecot_config(primary_domain, all_domains)
-    subprocess.run(['systemctl', 'try-reload-or-restart', 'postfix'],
-                   check=True)
-    subprocess.run(['systemctl', 'try-reload-or-restart', 'dovecot'],
-                   check=True)
 
 
 def _clean_domain(domain):
