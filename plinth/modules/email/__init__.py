@@ -90,8 +90,8 @@ class EmailApp(plinth.app.App):
         packages = Packages(
             'packages-email', [
                 'postfix', 'postfix-sqlite', 'dovecot-pop3d', 'dovecot-imapd',
-                'dovecot-lmtpd', 'dovecot-managesieved', 'rspamd',
-                'redis-server', 'openssl'
+                'dovecot-lmtpd', 'dovecot-managesieved', 'dovecot-ldap',
+                'rspamd', 'redis-server', 'openssl'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
             conflicts_action=Packages.ConflictsAction.IGNORE)
         self.add(packages)
