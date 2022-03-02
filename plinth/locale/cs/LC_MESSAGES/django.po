@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-02 08:06-0500\n"
-"PO-Revision-Date: 2022-02-19 10:54+0000\n"
+"PO-Revision-Date: 2022-03-04 12:58+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1953,6 +1953,10 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
+"Jedná se o kompletní řešení e-mailového serveru využívající Postfix, Dovecot "
+"a Rspamd. Postfix odesílá a přijímá e-maily. Dovecot umožňuje e-mailovým "
+"klientům přistupovat k poštovní schránce pomocí protokolů IMAP a POP3. "
+"Rspamd se zabývá nevyžádanou poštou."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -1963,6 +1967,11 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
+"Každý uživatel na {box_name} dostane e-mailovou adresu jako user@"
+"mydomain.example. Budou také dostávat poštu ze všech adres, které vypadají "
+"jako user+foo@mydomain.example. Dále mohou ke své e-mailové adrese přidávat "
+"aliasy. Potřebné aliasy, jako například \"postmaster\", se vytvoří "
+"automaticky a ukazují na prvního uživatele-administrátora."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -1982,23 +1991,19 @@ msgstr ""
 
 #: plinth/modules/email/__init__.py:58
 msgid "Postfix/Dovecot"
-msgstr ""
+msgstr "Postfix / Dovecot"
 
 #: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "E-mailový Server"
 
 #: plinth/modules/email/__init__.py:80
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "My Email Aliases"
-msgstr "Správa aliasů"
+msgstr "Moje e-mailové aliasy"
 
 #: plinth/modules/email/__init__.py:81
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "Manage Aliases for Mailbox"
-msgstr "Správa aliasů"
+msgstr "Správa aliasů pro poštovní schránku"
 
 #: plinth/modules/email/forms.py:25
 msgid "Primary domain"
@@ -2072,29 +2077,31 @@ msgstr "Správa spamu"
 
 #: plinth/modules/email/templates/email.html:22
 msgid "DNS Records"
-msgstr ""
+msgstr "Záznamy DNS"
 
 #: plinth/modules/email/templates/email.html:25
 msgid ""
 "The following DNS records must be added manually on your primary domain for "
 "the mail server to work properly."
 msgstr ""
+"Pro správnou funkci poštovního serveru je třeba na primární doméně ručně "
+"přidat následující záznamy DNS."
 
 #: plinth/modules/email/templates/email.html:36
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: plinth/modules/email/templates/email.html:37
 msgid "Class"
-msgstr ""
+msgstr "Třída"
 
 #: plinth/modules/email/templates/email.html:39
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: plinth/modules/email/templates/email.html:40
 msgid "Weight"
-msgstr ""
+msgstr "Váha"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
@@ -2104,7 +2111,7 @@ msgstr "Port"
 
 #: plinth/modules/email/templates/email.html:42
 msgid "Host/Target/Value"
-msgstr ""
+msgstr "Hostitel / cíl / hodnota"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
