@@ -17,10 +17,76 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions, app
-from plinth.errors import ActionError
+from plinth.errors import ActionError, MissingPackageError
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
+
+
+class PackageExpression:
+
+    def possible(self) -> list[str]:
+        """Return the list of possible packages before resolving."""
+        raise NotImplementedError
+
+    def actual(self) -> str:
+        """Return the resolved list of packages to install.
+
+        TODO: Also return version and suite to install from.
+        """
+        raise NotImplementedError
+
+
+class Package(PackageExpression):
+
+    def __init__(
+            self,
+            name,
+            optional: bool = False,
+            version: Optional[str] = None,  # ">=1.0,<2.0"
+            distribution: Optional[str] = None,  # Debian, Ubuntu
+            suite: Optional[str] = None,  # stable, testing
+            codename: Optional[str] = None,  # bullseye-backports
+            architecture: Optional[str] = None):  # arm64
+        self.name = name
+        self.optional = optional
+        self.version = version
+        self.distribution = distribution
+        self.suite = suite
+        self.codename = codename
+        self.architecture = architecture
+
+    def __or__(self, other):
+        return PackageOr(self, other)
+
+    def possible(self) -> list[str]:
+        return [self.name]
+
+    def actual(self) -> str:
+        cache = apt.Cache()
+        if self.name in cache:
+            # TODO: Also return version and suite to install from
+            return self.name
+
+        raise MissingPackageError(self.name)
+
+
+class PackageOr(PackageExpression):
+    """Specify that one of the two packages will be installed."""
+
+    def __init__(self, package1: PackageExpression,
+                 package2: PackageExpression):
+        self.package1 = package1
+        self.package2 = package2
+
+    def possible(self) -> list[str]:
+        return self.package1.possible() + self.package2.possible()
+
+    def actual(self) -> str:
+        try:
+            return self.package1.actual()
+        except MissingPackageError:
+            return self.package2.actual()
 
 
 class Packages(app.FollowerComponent):

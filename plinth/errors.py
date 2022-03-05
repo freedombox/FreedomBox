@@ -25,3 +25,11 @@ class DomainNotRegisteredError(PlinthError):
     FreedomBox doesn't have a registered domain
     """
     pass
+
+
+class MissingPackageError(PlinthError):
+    """Package is not available to be installed at this time."""
+
+    def __init__(self, name):
+        self.name = name
+        super().__init__(self.name)

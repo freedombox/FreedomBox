@@ -3,15 +3,51 @@
 Test module for package module.
 """
 
+import unittest
 from unittest.mock import Mock, call, patch
 
 import pytest
 
 from plinth.app import App
-from plinth.errors import ActionError
-from plinth.package import Packages, packages_installed, remove
+from plinth.errors import ActionError, MissingPackageError
+from plinth.package import Package, Packages, packages_installed, remove
 
 setup_helper = Mock()
+
+
+class TestPackageExpressions(unittest.TestCase):
+
+    def test_package(self):
+        """Test resolving package names."""
+        package = Package('python3')
+        assert package.possible() == ['python3']
+        assert package.actual() == 'python3'
+
+        package = Package('unknown-package')
+        assert package.possible() == ['unknown-package']
+        self.assertRaises(MissingPackageError, package.actual)
+
+    def test_package_or_expression(self):
+        """Test resolving package OR expressions."""
+        expression = Package('python3') | Package('unknown-package')
+        assert expression.possible() == ['python3', 'unknown-package']
+        assert expression.actual() == 'python3'
+
+        expression = Package('unknown-package') | Package('python3')
+        assert expression.possible() == ['unknown-package', 'python3']
+        assert expression.actual() == 'python3'
+
+        # When both packages are available, prefer the first.
+        expression = Package('bash') | Package('dash')
+        assert expression.possible() == ['bash', 'dash']
+        assert expression.actual() == 'bash'
+
+        expression = Package('unknown-package') | Package(
+            'another-unknown-package')
+        assert expression.possible() == [
+            'unknown-package', 'another-unknown-package'
+        ]
+        self.assertRaises(MissingPackageError, expression.actual)
 
 
 def test_packages_init():
