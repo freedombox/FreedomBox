@@ -131,7 +131,7 @@ def _assert_managed_packages(module, packages):
         app = cls()
         components = app.get_components_of_type(Packages)
         for component in components:
-            managed_packages += component.packages
+            managed_packages += component.managed_packages()
 
     for package in packages:
         assert package in managed_packages

@@ -53,8 +53,8 @@ class TestPackageExpressions(unittest.TestCase):
 def test_packages_init():
     """Test initialization of packages component."""
     component = Packages('test-component', ['foo', 'bar'])
+    assert component.managed_packages() == ['foo', 'bar']
     assert component.component_id == 'test-component'
-    assert component.packages == ['foo', 'bar']
     assert not component.skip_recommends
     assert component.conflicts is None
     assert component.conflicts_action is None
@@ -65,10 +65,25 @@ def test_packages_init():
     component = Packages('test-component', [], skip_recommends=True,
                          conflicts=['conflict1', 'conflict2'],
                          conflicts_action=Packages.ConflictsAction.IGNORE)
-    assert component.packages == []
+    assert component.managed_packages() == []
     assert component.skip_recommends
     assert component.conflicts == ['conflict1', 'conflict2']
     assert component.conflicts_action == Packages.ConflictsAction.IGNORE
+
+
+def test_packages_resolve():
+    """Test resolving of package expressions."""
+    component = Packages('test-component', ['python3'])
+    assert component.resolve() == ['python3']
+
+    component = Packages('test-component',
+                         [Package('unknown-package') | Package('python3')])
+    assert component.resolve() == ['python3']
+
+    component = Packages('test-component', [], skip_recommends=True,
+                         conflicts=['conflict1', 'conflict2'],
+                         conflicts_action=Packages.ConflictsAction.IGNORE)
+    assert component.resolve() == []
 
 
 def test_packages_setup():
@@ -78,22 +93,31 @@ def test_packages_setup():
         """Test app"""
         app_id = 'test-app'
 
-    component = Packages('test-component', ['foo1', 'bar1'])
+    component = Packages('test-component', ['python3', 'bash'])
     app = TestApp()
     app.add(component)
     setup_helper.reset_mock()
     app.setup(old_version=3)
     setup_helper.install.assert_has_calls(
-        [call(['foo1', 'bar1'], skip_recommends=False)])
+        [call(['python3', 'bash'], skip_recommends=False)])
 
-    component = Packages('test-component', ['foo2', 'bar2'],
+    component = Packages('test-component', ['bash', 'perl'],
                          skip_recommends=True)
     app = TestApp()
     app.add(component)
     setup_helper.reset_mock()
     app.setup(old_version=3)
     setup_helper.install.assert_has_calls(
-        [call(['foo2', 'bar2'], skip_recommends=True)])
+        [call(['bash', 'perl'], skip_recommends=True)])
+
+    component = Packages('test-component',
+                         [Package('python3') | Package('unknown-package')])
+    app = TestApp()
+    app.add(component)
+    setup_helper.reset_mock()
+    app.setup(old_version=3)
+    setup_helper.install.assert_has_calls(
+        [call(['python3'], skip_recommends=False)])
 
 
 @patch('apt.Cache')

@@ -101,7 +101,8 @@ class Packages(app.FollowerComponent):
         IGNORE = 'ignore'  # Proceed as if there are no conflicts
         REMOVE = 'remove'  # Remove the packages before installing the app
 
-    def __init__(self, component_id: str, packages: list[str],
+    def __init__(self, component_id: str,
+                 packages: list[Union[str, PackageExpression]],
                  skip_recommends: bool = False,
                  conflicts: Optional[list[str]] = None,
                  conflicts_action: Optional[ConflictsAction] = None):
@@ -126,15 +127,35 @@ class Packages(app.FollowerComponent):
         super().__init__(component_id)
 
         self.component_id = component_id
-        self._packages = packages
+        self._packages = []
+        for package in packages:
+            if isinstance(package, str):
+                self._packages.append(Package(package))
+            else:
+                self._packages.append(package)
+
         self.skip_recommends = skip_recommends
         self.conflicts = conflicts
         self.conflicts_action = conflicts_action
 
     @property
-    def packages(self) -> list[str]:
-        """Return the list of packages managed by this component."""
+    def packages(self) -> list[Union[str, PackageExpression]]:
+        """Return the list of packages and package expressions managed by this
+        component."""
         return self._packages
+
+    def managed_packages(self) -> list[str]:
+        """Return the list of possible packages before resolving."""
+        managed_packages: list[str] = []
+        for package in self.packages:
+            managed_package = package.possible()
+            managed_packages.extend(managed_package)
+
+        return managed_packages
+
+    def resolve(self) -> list[str]:
+        """Return the resolved list of packages to install."""
+        return [package.actual() for package in self.packages]
 
     def setup(self, old_version):
         """Install the packages."""
@@ -142,13 +163,14 @@ class Packages(app.FollowerComponent):
         module_name = self.app.__module__
         module = sys.modules[module_name]
         helper = module.setup_helper
-        helper.install(self.packages, skip_recommends=self.skip_recommends)
+        helper.install(self.resolve(), skip_recommends=self.skip_recommends)
 
     def diagnose(self):
         """Run diagnostics and return results."""
         results = super().diagnose()
         cache = apt.Cache()
-        for package_name in self.packages:
+        # XXX: Needs to be able to handle missing packages.
+        for package_name in self.resolve():
             result = 'warning'
             latest_version = '?'
             if package_name in cache:
@@ -187,9 +209,12 @@ class Packages(app.FollowerComponent):
             return None
 
         # List of all packages from all Package components
-        cache = apt.Cache()
-        return any(package for package in self.packages
-                   if package not in cache)
+        try:
+            self.resolve()
+        except MissingPackageError:
+            return True
+
+        return False
 
 
 class PackageException(Exception):
