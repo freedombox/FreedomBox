@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 20:10-0500\n"
+"POT-Creation-Date: 2022-03-02 08:06-0500\n"
 "PO-Revision-Date: 2021-06-16 07:33+0000\n"
 "Last-Translator: Oymate <dhruboadittya96@gmail.com>\n"
 "Language-Team: Bengali <https://hosted.weblate.org/projects/freedombox/"
@@ -824,7 +824,7 @@ msgid "List"
 msgstr ""
 
 #: plinth/modules/bepasty/views.py:52
-#: plinth/modules/email_server/templates/email_alias.html:28
+#: plinth/modules/email/templates/email-aliases.html:24
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -845,7 +845,7 @@ msgstr ""
 msgid "Configuration updated."
 msgstr ""
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -908,6 +908,7 @@ msgid "Serving Domains"
 msgstr ""
 
 #: plinth/modules/bind/templates/bind.html:17
+#: plinth/modules/email/templates/email.html:38
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
 #: plinth/modules/networks/templates/connection_show.html:91
@@ -935,7 +936,7 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
@@ -1593,6 +1594,7 @@ msgid "Status"
 msgstr "অবস্থা"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "ডোমেন"
@@ -1751,142 +1753,166 @@ msgid ""
 "<a href=\"%(index_url)s\">Configure</a> page."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:31
+#: plinth/modules/email/__init__.py:26
+msgid ""
+"This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
+"Postfix sends and receives emails. Dovecot allows email clients to access "
+"your mailbox using IMAP and POP3. Rspamd deals with spam."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:31
+#, python-brace-format
+msgid ""
+"Each user on {box_name} gets an email address like user@mydomain.example. "
+"They will also receive mail from all addresses that look like user"
+"+foo@mydomain.example. Further, they can add aliases to their email address. "
+"Necessary aliases such as \"postmaster\" are automatically created pointing "
+"to the first admin user."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:37
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:33
+#: plinth/modules/email/__init__.py:39
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:44
+#: plinth/modules/email/__init__.py:58
+msgid "Postfix/Dovecot"
+msgstr ""
+
+#: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:100
-msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+#: plinth/modules/email/__init__.py:80
+#, fuzzy
+#| msgid "Enabled"
+msgid "My Email Aliases"
+msgstr "সক্রিয়"
 
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+#: plinth/modules/email/__init__.py:81
+#, fuzzy
+#| msgid "Enabled"
+msgid "Manage Aliases for Mailbox"
+msgstr "সক্রিয়"
 
-#: plinth/modules/email_server/audit/ldap.py:69
-msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/spam.py:87
-msgid "Inbound and outbound mail filters"
-msgstr ""
-
-#: plinth/modules/email_server/forms.py:24
+#: plinth/modules/email/forms.py:25
 #, fuzzy
 #| msgid "Domain"
 msgid "Primary domain"
 msgstr "ডোমেন"
 
-#: plinth/modules/email_server/forms.py:26
+#: plinth/modules/email/forms.py:27
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:34
+#: plinth/modules/email/forms.py:35
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:41
+#: plinth/modules/email/forms.py:42
 msgid "Contains illegal characters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:44
+#: plinth/modules/email/forms.py:45
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:47
+#: plinth/modules/email/forms.py:49
 msgid "Cannot be a number"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:57
+#: plinth/modules/email/forms.py:59
 #, fuzzy
 #| msgid "Enabled"
 msgid "Aliases"
 msgstr "সক্রিয়"
 
-#: plinth/modules/email_server/forms.py:69
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-msgid "Enabled"
-msgstr "সক্রিয়"
-
-#: plinth/modules/email_server/forms.py:72
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "নিষ্ক্রিয়"
-
-#: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:16
-#: plinth/modules/radicale/manifest.py:36
+#: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:33
+#: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:48
+#: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email/templates/email-aliases.html:13
+#: plinth/modules/email/templates/email.html:15
 #, fuzzy
 #| msgid "Enabled"
 msgid "Manage Aliases"
 msgstr "সক্রিয়"
 
-#: plinth/modules/email_server/templates/email_alias.html:16
+#: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-#, fuzzy
-#| msgid "Disabled"
-msgid "Disable"
-msgstr "নিষ্ক্রিয়"
-
-#: plinth/modules/email_server/templates/email_alias.html:26
-#, fuzzy
-#| msgid "Enabled"
-msgid "Enable"
-msgstr "সক্রিয়"
-
-#: plinth/modules/email_server/templates/email_alias.html:32
+#: plinth/modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_server.html:10
+#: plinth/modules/email/templates/email.html:10
 #, fuzzy
 #| msgid "Enabled"
 msgid "Manage Spam"
 msgstr "সক্রিয়"
+
+#: plinth/modules/email/templates/email.html:22
+msgid "DNS Records"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:25
+msgid ""
+"The following DNS records must be added manually on your primary domain for "
+"the mail server to work properly."
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:36
+msgid "TTL"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:37
+msgid "Class"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:39
+msgid "Priority"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:40
+msgid "Weight"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:41
+#: plinth/modules/minetest/templates/minetest.html:18
+#: plinth/modules/tor/templates/tor.html:72
+msgid "Port"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:42
+msgid "Host/Target/Value"
+msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -1927,6 +1953,19 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "সেবা/পোর্ট"
+
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+msgid "Enabled"
+msgstr "সক্রিয়"
+
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "নিষ্ক্রিয়"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -3014,11 +3053,6 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
-msgid "Port"
-msgstr ""
-
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
@@ -3058,15 +3092,15 @@ msgstr ""
 msgid "vlc"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:43
+#: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:76
+#: plinth/modules/minidlna/manifest.py:81
 msgid "yaacc"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:86
+#: plinth/modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr ""
 
@@ -4774,11 +4808,11 @@ msgstr ""
 msgid "VLC media player"
 msgstr ""
 
-#: plinth/modules/samba/manifest.py:55
+#: plinth/modules/samba/manifest.py:60
 msgid "GNOME Files"
 msgstr ""
 
-#: plinth/modules/samba/manifest.py:67
+#: plinth/modules/samba/manifest.py:72
 msgid "Dolphin"
 msgstr ""
 
@@ -7210,6 +7244,16 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Disabled"
+#~ msgid "Disable"
+#~ msgstr "নিষ্ক্রিয়"
+
+#, fuzzy
+#~| msgid "Enabled"
+#~ msgid "Enable"
+#~ msgstr "সক্রিয়"
 
 #, fuzzy
 #~| msgid "Domain"

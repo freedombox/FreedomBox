@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 20:10-0500\n"
-"PO-Revision-Date: 2022-02-02 08:55+0000\n"
+"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"PO-Revision-Date: 2022-03-04 12:58+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -857,7 +857,7 @@ msgid "List"
 msgstr "列表"
 
 #: plinth/modules/bepasty/views.py:52
-#: plinth/modules/email_server/templates/email_alias.html:28
+#: plinth/modules/email/templates/email-aliases.html:24
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -878,7 +878,7 @@ msgstr "管理员"
 msgid "Configuration updated."
 msgstr "配置已更新。"
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -945,6 +945,7 @@ msgid "Serving Domains"
 msgstr "服务域"
 
 #: plinth/modules/bind/templates/bind.html:17
+#: plinth/modules/email/templates/email.html:38
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
 #: plinth/modules/networks/templates/connection_show.html:91
@@ -972,7 +973,7 @@ msgstr "刷新 IP 地址和域"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
@@ -1538,13 +1539,6 @@ msgstr ""
 "从您当前 IP 地址收到响应。"
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
-#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
-#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
-#| "freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1553,8 +1547,8 @@ msgid ""
 msgstr ""
 "如果您正在寻找一个免费的动态 DNS 帐户，您可以在<a href=\"https://ddns."
 "freedombox.org\" target=\"_blank\">ddns.freedombox.org </a>找到免费的 GnuDIP "
-"服务，或您可以在<a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
-"freedns.afraid.org </a>找到免费更新网址服务。"
+"服务，或您可以在<a href=\"http://freedns.afraid.org/\" target=\"_blank"
+"\">freedns.afraid.org </a>找到免费更新网址服务。"
 
 #: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1630,8 +1624,6 @@ msgid "GnuDIP"
 msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
-#, fuzzy
-#| msgid "other update URL"
 msgid "Other update URL"
 msgstr "其他更新 URL"
 
@@ -1695,6 +1687,7 @@ msgid "Status"
 msgstr "状态"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "域名"
@@ -1704,50 +1697,36 @@ msgid "Last update"
 msgstr "最后一次更新"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
-#, fuzzy
-#| msgid "IP address"
 msgid "IP Address"
 msgstr "IP 地址"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
-#, fuzzy
-#| msgid "Access"
 msgid "Success"
-msgstr "访问"
+msgstr "成功"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy
-#| msgid "failed"
 msgid "Failed"
 msgstr "失败"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "没有可用的库。"
+msgstr "无状态可用。"
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "连接名称"
+msgstr "连接超时"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
 msgstr ""
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "删除连接"
+msgstr "服务器拒绝连接"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Last update"
 msgid "Already up-to-date"
-msgstr "最后一次更新"
+msgstr "已是最新"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1883,130 +1862,154 @@ msgstr ""
 "%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置</a>中设置你"
 "的域名。"
 
-#: plinth/modules/email_server/__init__.py:31
+#: plinth/modules/email/__init__.py:26
+msgid ""
+"This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
+"Postfix sends and receives emails. Dovecot allows email clients to access "
+"your mailbox using IMAP and POP3. Rspamd deals with spam."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:31
+#, python-brace-format
+msgid ""
+"Each user on {box_name} gets an email address like user@mydomain.example. "
+"They will also receive mail from all addresses that look like user"
+"+foo@mydomain.example. Further, they can add aliases to their email address. "
+"Necessary aliases such as \"postmaster\" are automatically created pointing "
+"to the first admin user."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:37
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:33
+#: plinth/modules/email/__init__.py:39
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email_server/__init__.py:44
+#: plinth/modules/email/__init__.py:58
+msgid "Postfix/Dovecot"
+msgstr ""
+
+#: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "邮件服务器"
 
-#: plinth/modules/email_server/__init__.py:100
-msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr ""
+#: plinth/modules/email/__init__.py:80
+msgid "My Email Aliases"
+msgstr "我的邮箱别名"
 
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+#: plinth/modules/email/__init__.py:81
+msgid "Manage Aliases for Mailbox"
+msgstr "管理邮箱别名"
 
-#: plinth/modules/email_server/audit/ldap.py:69
-msgid "Postfix alias maps"
-msgstr ""
-
-#: plinth/modules/email_server/audit/spam.py:87
-msgid "Inbound and outbound mail filters"
-msgstr ""
-
-#: plinth/modules/email_server/forms.py:24
+#: plinth/modules/email/forms.py:25
 msgid "Primary domain"
 msgstr "主域名"
 
-#: plinth/modules/email_server/forms.py:26
+#: plinth/modules/email/forms.py:27
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:34
+#: plinth/modules/email/forms.py:35
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:41
+#: plinth/modules/email/forms.py:42
 msgid "Contains illegal characters"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:44
+#: plinth/modules/email/forms.py:45
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:47
+#: plinth/modules/email/forms.py:49
 msgid "Cannot be a number"
 msgstr ""
 
-#: plinth/modules/email_server/forms.py:57
+#: plinth/modules/email/forms.py:59
 msgid "Aliases"
 msgstr "别名"
 
-#: plinth/modules/email_server/forms.py:69
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-msgid "Enabled"
-msgstr "启用"
-
-#: plinth/modules/email_server/forms.py:72
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "已禁用"
-
-#: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:16
-#: plinth/modules/radicale/manifest.py:36
+#: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:33
+#: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
 msgstr ""
 
-#: plinth/modules/email_server/manifest.py:48
+#: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email/templates/email-aliases.html:13
+#: plinth/modules/email/templates/email.html:15
 msgid "Manage Aliases"
 msgstr "管理别名"
 
-#: plinth/modules/email_server/templates/email_alias.html:16
+#: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr ""
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-msgid "Disable"
-msgstr "禁用"
-
-#: plinth/modules/email_server/templates/email_alias.html:26
-msgid "Enable"
-msgstr "启用"
-
-#: plinth/modules/email_server/templates/email_alias.html:32
+#: plinth/modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
 msgstr "创建新的电子邮件别名"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr "添加"
 
-#: plinth/modules/email_server/templates/email_server.html:10
+#: plinth/modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "管理垃圾邮件"
+
+#: plinth/modules/email/templates/email.html:22
+msgid "DNS Records"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:25
+msgid ""
+"The following DNS records must be added manually on your primary domain for "
+"the mail server to work properly."
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:36
+msgid "TTL"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:37
+msgid "Class"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:39
+msgid "Priority"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:40
+msgid "Weight"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:41
+#: plinth/modules/minetest/templates/minetest.html:18
+#: plinth/modules/tor/templates/tor.html:72
+msgid "Port"
+msgstr "端口"
+
+#: plinth/modules/email/templates/email.html:42
+msgid "Host/Target/Value"
+msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2053,6 +2056,19 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "服务/端口"
+
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+msgid "Enabled"
+msgstr "启用"
+
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "已禁用"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -3188,11 +3204,6 @@ msgstr "禁用后，玩家不能死或受到任何伤害。"
 msgid "Address"
 msgstr "地址"
 
-#: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
-msgid "Port"
-msgstr "端口"
-
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
@@ -3232,15 +3243,15 @@ msgstr ""
 msgid "vlc"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:43
+#: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:76
+#: plinth/modules/minidlna/manifest.py:81
 msgid "yaacc"
 msgstr ""
 
-#: plinth/modules/minidlna/manifest.py:86
+#: plinth/modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr ""
 
@@ -5013,11 +5024,11 @@ msgstr ""
 msgid "VLC media player"
 msgstr ""
 
-#: plinth/modules/samba/manifest.py:55
+#: plinth/modules/samba/manifest.py:60
 msgid "GNOME Files"
 msgstr ""
 
-#: plinth/modules/samba/manifest.py:67
+#: plinth/modules/samba/manifest.py:72
 msgid "Dolphin"
 msgstr ""
 
@@ -7503,6 +7514,12 @@ msgstr "已完成 %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "Disable"
+#~ msgstr "禁用"
+
+#~ msgid "Enable"
+#~ msgstr "启用"
 
 #~ msgid "Enable Dynamic DNS"
 #~ msgstr "启用动态 DNS"

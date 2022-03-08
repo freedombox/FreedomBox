@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+<clientConfig version="1.1">
+  <emailProvider id="{{ host }}">
+    <domain>{{ host }}</domain>
+    <displayName>{% trans "FreedomBox Email" %}</displayName>
+    <displayShortName>{{ box_name }}</displayShortName>
+    <incomingServer type="imap">
+      <hostname>{{ host }}</hostname>
+      <port>993</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+    <incomingServer type="pop3">
+      <hostname>{{ host }}</hostname>
+      <port>995</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </incomingServer>
+    <outgoingServer type="smtp">
+      <hostname>{{ host }}</hostname>
+      <port>465</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </outgoingServer>
+    <outgoingServer type="smtp">
+      <hostname>{{ host }}</hostname>
+      <port>587</port>
+      <socketType>SSL</socketType>
+      <username>%EMAILLOCALPART%</username>
+      <authentication>password-cleartext</authentication>
+    </outgoingServer>
+    <documentation url="https://wiki.debian.org/FreedomBox/Manual/Email">
+      <descr lang="en">FreedomBox Manual</descr>
+    </documentation>
+  </emailProvider>
+</clientConfig>

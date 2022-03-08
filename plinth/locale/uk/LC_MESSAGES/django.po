@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 20:10-0500\n"
-"PO-Revision-Date: 2022-02-07 23:55+0000\n"
+"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"PO-Revision-Date: 2022-02-16 20:57+0000\n"
 "Last-Translator: Andrij Mizyk <andmizyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -894,7 +894,7 @@ msgid "List"
 msgstr "Показати"
 
 #: plinth/modules/bepasty/views.py:52
-#: plinth/modules/email_server/templates/email_alias.html:28
+#: plinth/modules/email/templates/email-aliases.html:24
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -915,7 +915,7 @@ msgstr "Адміністратор"
 msgid "Configuration updated."
 msgstr "Налаштування оновлено."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -984,6 +984,7 @@ msgid "Serving Domains"
 msgstr "Обслуговування доменів"
 
 #: plinth/modules/bind/templates/bind.html:17
+#: plinth/modules/email/templates/email.html:38
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
 #: plinth/modules/networks/templates/connection_show.html:91
@@ -1011,7 +1012,7 @@ msgstr "Оновити IP-адреси і домени"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
@@ -1679,10 +1680,8 @@ msgid "GnuDIP"
 msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
-#, fuzzy
-#| msgid "other update URL"
 msgid "Other update URL"
-msgstr "інша URL оновлення"
+msgstr "Інша URL-адреса оновлення"
 
 #: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
@@ -1727,7 +1726,7 @@ msgstr "Використовувати IPv6 замість IPv4"
 
 #: plinth/modules/dynamicdns/forms.py:123
 msgid "This field is required."
-msgstr ""
+msgstr "Це поле обовʼязкове."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
@@ -1744,6 +1743,7 @@ msgid "Status"
 msgstr "Стан"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "Домен"
@@ -1753,50 +1753,36 @@ msgid "Last update"
 msgstr "Востаннє оновлено"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
-#, fuzzy
-#| msgid "IP address"
 msgid "IP Address"
 msgstr "IP-адреса"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
-#, fuzzy
-#| msgid "Access"
 msgid "Success"
-msgstr "Доступ"
+msgstr "Успішно"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy
-#| msgid "failed"
 msgid "Failed"
-msgstr "невдало"
+msgstr "Невдало"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "Нема доступних бібліотек."
+msgstr "Стан недоступний."
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Назва зʼєднання"
+msgstr "Час зʼєднання вийшов"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
-msgstr ""
+msgstr "Не вдалося знайти сервер"
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "Видалити зʼєднання"
+msgstr "Сервер відмовив у зʼєднанні"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Enable auto-update"
 msgid "Already up-to-date"
-msgstr "Дозволити автооновлення"
+msgstr "Вже оновлено"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1939,7 +1925,24 @@ msgstr ""
 "виглядатиме як <i>username@%(domainname)s</i>. Ви можете налаштувати свій "
 "домен на системній сторінці <a href=\"%(index_url)s\">Налаштувати</a>."
 
-#: plinth/modules/email_server/__init__.py:31
+#: plinth/modules/email/__init__.py:26
+msgid ""
+"This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
+"Postfix sends and receives emails. Dovecot allows email clients to access "
+"your mailbox using IMAP and POP3. Rspamd deals with spam."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:31
+#, python-brace-format
+msgid ""
+"Each user on {box_name} gets an email address like user@mydomain.example. "
+"They will also receive mail from all addresses that look like user"
+"+foo@mydomain.example. Further, they can add aliases to their email address. "
+"Necessary aliases such as \"postmaster\" are automatically created pointing "
+"to the first admin user."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:37
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -1947,125 +1950,138 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Застосунок Roundcube</a> надає "
 "вебінтерфейс для доступу користувачів до ел. пошти."
 
-#: plinth/modules/email_server/__init__.py:33
+#: plinth/modules/email/__init__.py:39
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Під час встановлення всі інші сервери ел. пошти в системі буде видалено."
 
-#: plinth/modules/email_server/__init__.py:44
+#: plinth/modules/email/__init__.py:58
+msgid "Postfix/Dovecot"
+msgstr ""
+
+#: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "Сервер електронної пошти"
 
-#: plinth/modules/email_server/__init__.py:100
-msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr "Працює на Postfix, Dovecot та Rspamd"
+#: plinth/modules/email/__init__.py:80
+#, fuzzy
+#| msgid "Manage Aliases"
+msgid "My Email Aliases"
+msgstr "Керування аліясами"
 
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix-Dovecot SASL integration"
-msgstr ""
+#: plinth/modules/email/__init__.py:81
+#, fuzzy
+#| msgid "Manage Aliases"
+msgid "Manage Aliases for Mailbox"
+msgstr "Керування аліясами"
 
-#: plinth/modules/email_server/audit/ldap.py:69
-msgid "Postfix alias maps"
-msgstr "Мапи аліясів Postfix"
-
-#: plinth/modules/email_server/audit/spam.py:87
-msgid "Inbound and outbound mail filters"
-msgstr "Фільтри вхідної і вихідної пошти"
-
-#: plinth/modules/email_server/forms.py:24
+#: plinth/modules/email/forms.py:25
 msgid "Primary domain"
 msgstr "Основний домен"
 
-#: plinth/modules/email_server/forms.py:26
+#: plinth/modules/email/forms.py:27
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
+"Листи надходять для всіх доменів, налаштованих у системі. Серед них виберіть "
+"найважливіший."
 
-#: plinth/modules/email_server/forms.py:34
+#: plinth/modules/email/forms.py:35
 msgid "New alias (without @domain)"
 msgstr "Новий аліяс (без @domain)"
 
-#: plinth/modules/email_server/forms.py:41
+#: plinth/modules/email/forms.py:42
 msgid "Contains illegal characters"
 msgstr "Містить неправильні символи"
 
-#: plinth/modules/email_server/forms.py:44
+#: plinth/modules/email/forms.py:45
 msgid "Must start and end with a-z or 0-9"
 msgstr "Має починатися і закінчуватися на a-z або 0-9"
 
-#: plinth/modules/email_server/forms.py:47
+#: plinth/modules/email/forms.py:49
 msgid "Cannot be a number"
 msgstr "Не може бути числом"
 
-#: plinth/modules/email_server/forms.py:57
+#: plinth/modules/email/forms.py:59
 msgid "Aliases"
 msgstr "Псевдоніми"
 
-#: plinth/modules/email_server/forms.py:69
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-msgid "Enabled"
-msgstr "Дозволено"
-
-#: plinth/modules/email_server/forms.py:72
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "Вимкнено"
-
-#: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:16
-#: plinth/modules/radicale/manifest.py:36
+#: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:33
+#: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
 msgstr "K-9 Mail"
 
-#: plinth/modules/email_server/manifest.py:48
+#: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email/templates/email-aliases.html:13
+#: plinth/modules/email/templates/email.html:15
 msgid "Manage Aliases"
 msgstr "Керування аліясами"
 
-#: plinth/modules/email_server/templates/email_alias.html:16
+#: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr "У Вас нема аліясів ел. пошти."
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-msgid "Disable"
-msgstr "Вимкнути"
-
-#: plinth/modules/email_server/templates/email_alias.html:26
-msgid "Enable"
-msgstr "Дозволити"
-
-#: plinth/modules/email_server/templates/email_alias.html:32
+#: plinth/modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
 msgstr "Створити новий аліяс електронної пошти"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr "Додати"
 
-#: plinth/modules/email_server/templates/email_server.html:10
+#: plinth/modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "Керування спамом"
+
+#: plinth/modules/email/templates/email.html:22
+msgid "DNS Records"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:25
+msgid ""
+"The following DNS records must be added manually on your primary domain for "
+"the mail server to work properly."
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:36
+msgid "TTL"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:37
+msgid "Class"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:39
+msgid "Priority"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:40
+msgid "Weight"
+msgstr ""
+
+#: plinth/modules/email/templates/email.html:41
+#: plinth/modules/minetest/templates/minetest.html:18
+#: plinth/modules/tor/templates/tor.html:72
+msgid "Port"
+msgstr "Порт"
+
+#: plinth/modules/email/templates/email.html:42
+msgid "Host/Target/Value"
+msgstr ""
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2109,6 +2125,19 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "Сервіс/Порт"
+
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+msgid "Enabled"
+msgstr "Дозволено"
+
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "Вимкнено"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -2271,7 +2300,7 @@ msgstr "Типова гілка"
 
 #: plinth/modules/gitweb/forms.py:135
 msgid "Gitweb displays this as a default branch."
-msgstr ""
+msgstr "Gitweb відображає це як типову гілку."
 
 #: plinth/modules/gitweb/manifest.py:18
 msgid "Git"
@@ -2586,6 +2615,10 @@ msgid ""
 "salsa.debian.org/freedombox-team/freedombox/issues\">bug tracker</a> and "
 "attach this status log to the bug report."
 msgstr ""
+"Це останні %(num_lines)s рядків із журналу стану для цього вебінтерфейсу. "
+"Якщо Ви бажаєте повідомити про ваду, будь ласка використовуйте сторінку <a "
+"href=\"https://salsa.debian.org/freedombox-team/freedombox/issues"
+"\">відстеження вад</a> і прикріпіть цей журнал стану до звіту про ваду."
 
 #: plinth/modules/help/templates/statuslog.html:24
 msgid ""
@@ -2630,6 +2663,7 @@ msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
 msgstr ""
+"Перше відвідування наданого вебінтерфейсу розпочне процес налаштування."
 
 #: plinth/modules/i2p/__init__.py:52
 msgid "Manage I2P application"
@@ -2736,7 +2770,7 @@ msgstr "Створити вікі або блоґ"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:25
 msgid "No wikis or blogs available."
-msgstr "Нема доступних вікі або боґів."
+msgstr "Нема доступних вікі або блоґів."
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_configure.html:31
 #, python-format
@@ -2813,7 +2847,7 @@ msgstr ""
 
 #: plinth/modules/infinoted/__init__.py:44
 msgid "infinoted"
-msgstr ""
+msgstr "infinoted"
 
 #: plinth/modules/infinoted/__init__.py:45
 msgid "Gobby Server"
@@ -2903,25 +2937,25 @@ msgstr "Дії"
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:37
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
-msgstr ""
+msgstr "Правильний, дійсний до %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Revoked"
-msgstr ""
+msgstr "Відкликано"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:48
 #, python-format
 msgid "Expired on %(expiry_date)s"
-msgstr ""
+msgstr "Дійсний до %(expiry_date)s"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:52
 msgid "Invalid test certificate"
-msgstr ""
+msgstr "Неправильний тестовий сертифікат"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:56
 #, python-format
 msgid "Invalid (%(reason)s)"
-msgstr ""
+msgstr "Неправильний (%(reason)s)"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:63
 msgid "No certificate"
@@ -2929,15 +2963,15 @@ msgstr "Нема сертифікату"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:80
 msgid "Re-obtain"
-msgstr ""
+msgstr "Отримати повторно"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:93
 msgid "Revoke"
-msgstr ""
+msgstr "Відкликати"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:101
 msgid "Obtain"
-msgstr ""
+msgstr "Отримати"
 
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:112
 #, python-format
@@ -2958,29 +2992,29 @@ msgstr ""
 #: plinth/modules/letsencrypt/views.py:47
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Не вдалося відкликати сертифікат для домену {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:60
 #: plinth/modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
-msgstr ""
+msgstr "Сертифікат успішно отримано для домену {domain}"
 
 #: plinth/modules/letsencrypt/views.py:65
 #: plinth/modules/letsencrypt/views.py:82
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Не вдалося отримати сертифікат для домену {domain}: {error}"
 
 #: plinth/modules/letsencrypt/views.py:94
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
-msgstr ""
+msgstr "Сертифікат успішно видалено для домену {domain}"
 
 #: plinth/modules/letsencrypt/views.py:99
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
-msgstr ""
+msgstr "Не вдалося видалити сертифікат для домену {domain}: {error}"
 
 #: plinth/modules/matrixsynapse/__init__.py:29
 msgid ""
@@ -3001,7 +3035,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/__init__.py:70
 msgid "Matrix Synapse"
-msgstr ""
+msgstr "Matrix Synapse"
 
 #: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
@@ -3028,7 +3062,7 @@ msgstr "Елемент"
 
 #: plinth/modules/matrixsynapse/manifest.py:48
 msgid "FluffyChat"
-msgstr ""
+msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -3050,6 +3084,10 @@ msgid ""
 "      setup is currently not supported.\n"
 "    "
 msgstr ""
+"\n"
+"      <strong>Увага!</strong> Зміна назви домену після початкового\n"
+"      налаштування зараз не підтримується.\n"
+"    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
 #, python-format
@@ -3057,6 +3095,8 @@ msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
+"Нема доступних доменів. <a href=\"%(config_url)s\">Налаштувати</a> "
+"щонайменше один домен для використання Matrix Synapse."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:15
 #, python-format
@@ -3071,6 +3111,8 @@ msgid ""
 "New users can be registered from any client if public registration is "
 "enabled."
 msgstr ""
+"Нові користувачі можуть реєструватися з будь-якого клієнта, якщо дозволена "
+"публічна реєстрація."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
@@ -3087,6 +3129,10 @@ msgid ""
 "website. You can use MediaWiki to host a wiki-like website, take notes or "
 "collaborate with friends on projects."
 msgstr ""
+"MediaWiki — це вікірушій, на якому працює Вікіпедія та інші проєкти "
+"WikiMedia. Вікірушій є програмою для створення колективно редагованого "
+"вебсайту. Ви можете використовувати MediaWiki для розміщення вебсайту на "
+"зразок вікі, робити нотатки або співпрацювати з друзями над проєктами."
 
 #: plinth/modules/mediawiki/__init__.py:27
 msgid ""
@@ -3096,6 +3142,11 @@ msgid ""
 "from MediaWiki itself by going to the <a href=\"/mediawiki/index.php/Special:"
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
+"Цей екземпляр MediaWiki йде з випадково зґенерованим паролем адміністратора. "
+"Ви можете вказати новий пароль у розділі «Налаштування» і ввійти за "
+"допомогою обліківки «admin». Потім Ви можете створити більше обліківок "
+"користувачів із самої MediaWiki перейшовши на сторінку <a href=\"/mediawiki/"
+"index.php/Special:CreateAccount\">Special:CreateAccount</a>."
 
 #: plinth/modules/mediawiki/__init__.py:33
 msgid ""
@@ -3123,6 +3174,8 @@ msgid ""
 "Set a new password for MediaWiki's administrator account (admin). Leave this "
 "field blank to keep the current password."
 msgstr ""
+"Вкажіть новий пароль для обліківки адміністратора (admin) MediaWiki. Залиште "
+"поле порожнім, якщо хочете зберегти поточний пароль."
 
 #: plinth/modules/mediawiki/forms.py:58
 msgid "Server URL"
@@ -3133,6 +3186,8 @@ msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
+"Використовується MediaWiki, щоб ґенерувати URL-адреси, які вказують на "
+"вікісторінки, наприклад, внизу вебсторінок, у RSS-стрічках чи в ел. листах."
 
 #: plinth/modules/mediawiki/forms.py:64
 msgid "Enable public registrations"
@@ -3143,6 +3198,8 @@ msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
+"Якщо дозволено, будь-хто з Інтернету зможе створити обліківку у Вашому "
+"екземплярі MediaWiki."
 
 #: plinth/modules/mediawiki/forms.py:69
 msgid "Enable private mode"
@@ -3153,16 +3210,20 @@ msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
+"Якщо дозволено, доступ буде обмежено. Лише люди, що мають обліківки можуть "
+"читати/писати у вікі. Публічна реєстрація також буде вимкнена."
 
 #: plinth/modules/mediawiki/forms.py:75
 msgid "Default Skin"
-msgstr ""
+msgstr "Типова шкурка"
 
 #: plinth/modules/mediawiki/forms.py:76
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
+"Оберіть типову шкурку для Вашого встановлення MediaWiki. Користувачі мають "
+"можливість вибирати бажану шкурку."
 
 #: plinth/modules/mediawiki/views.py:49
 msgid "Password updated"
@@ -3186,7 +3247,7 @@ msgstr "Приватний режим вимкнено"
 
 #: plinth/modules/mediawiki/views.py:86
 msgid "Default skin changed"
-msgstr ""
+msgstr "Типову шкурку змінено"
 
 #: plinth/modules/mediawiki/views.py:90
 msgid "Server URL updated"
@@ -3200,6 +3261,10 @@ msgid ""
 "(30000). To connect to the server, a <a href=\"http://www.minetest.net/"
 "downloads/\">Minetest client</a> is needed."
 msgstr ""
+"Minetest — це багатокористувацька блокова пісочниця з нескінченним світом. "
+"Цей модуль дозволяє запустити сервер Minetest на цьому {box_name}, з типовим "
+"портом (30000). Щоб підʼєднатися до сервера потрібено <a href=\"http://www."
+"minetest.net/downloads/\">клієнт Minetest</a>."
 
 #: plinth/modules/minetest/__init__.py:59 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
@@ -3218,6 +3283,8 @@ msgid ""
 "You can change the maximum number of players playing minetest at a single "
 "instance of time."
 msgstr ""
+"Ви можете змінити найбільшу кількість гравців, що грають minetest на одному "
+"екземплярі."
 
 #: plinth/modules/minetest/forms.py:19
 msgid "Enable creative mode"
@@ -3252,11 +3319,6 @@ msgstr ""
 #: plinth/modules/networks/forms.py:54 plinth/modules/networks/forms.py:90
 msgid "Address"
 msgstr "Адреса"
-
-#: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
-msgid "Port"
-msgstr "Порт"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -3297,15 +3359,15 @@ msgstr ""
 msgid "vlc"
 msgstr "vlc"
 
-#: plinth/modules/minidlna/manifest.py:43
+#: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
 msgstr "kodi"
 
-#: plinth/modules/minidlna/manifest.py:76
+#: plinth/modules/minidlna/manifest.py:81
 msgid "yaacc"
 msgstr "yaacc"
 
-#: plinth/modules/minidlna/manifest.py:86
+#: plinth/modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
 
@@ -3322,6 +3384,8 @@ msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr ""
+"Mumble — це високоякісне ПЗ для голосового чату з відкритим кодом, низькою "
+"затримкою і шифруванням."
 
 #: plinth/modules/mumble/__init__.py:28
 msgid ""
@@ -3432,7 +3496,7 @@ msgstr "Мережевий пристрій до якого підʼєднано
 
 #: plinth/modules/networks/forms.py:34
 msgid "Firewall Zone"
-msgstr ""
+msgstr "Зона фаєрволу"
 
 #: plinth/modules/networks/forms.py:35
 msgid ""
@@ -3523,15 +3587,15 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:87
 msgid "Ignore: Ignore this addressing method"
-msgstr ""
+msgstr "Ігнорувати: Ігнорувати на цей спосіб адресування"
 
 #: plinth/modules/networks/forms.py:92
 msgid "Prefix"
-msgstr ""
+msgstr "Префікс"
 
 #: plinth/modules/networks/forms.py:93
 msgid "Value between 1 and 128."
-msgstr ""
+msgstr "Значення між 1 і 128."
 
 #: plinth/modules/networks/forms.py:101
 msgid ""
@@ -3581,7 +3645,7 @@ msgstr ""
 
 #: plinth/modules/networks/forms.py:254
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматично"
 
 #: plinth/modules/networks/forms.py:255
 msgid "A (5 GHz)"
@@ -3844,7 +3908,7 @@ msgstr "Опис"
 
 #: plinth/modules/networks/templates/connection_show.html:109
 msgid "Physical Link"
-msgstr ""
+msgstr "Фізична ланка"
 
 #: plinth/modules/networks/templates/connection_show.html:114
 msgid "Link state"
@@ -3866,12 +3930,12 @@ msgstr "Швидкість"
 #: plinth/modules/networks/templates/connection_show.html:126
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
-msgstr ""
+msgstr "%(ethernet_speed)s Мбіт/с"
 
 #: plinth/modules/networks/templates/connection_show.html:142
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
-msgstr ""
+msgstr "%(wireless_bitrate)s Мбіт/с"
 
 #: plinth/modules/networks/templates/connection_show.html:154
 msgid "Signal strength"
@@ -3901,7 +3965,7 @@ msgstr "Сервер DNS"
 #: plinth/modules/networks/templates/connection_show.html:248
 #: plinth/modules/storage/forms.py:138
 msgid "Default"
-msgstr ""
+msgstr "Типово"
 
 #: plinth/modules/networks/templates/connection_show.html:213
 msgid "IPv6"
@@ -3920,7 +3984,7 @@ msgstr "Безпека"
 #: plinth/modules/networks/templates/connection_show.html:284
 #: plinth/modules/networks/templates/connection_show.html:303
 msgid "Firewall zone"
-msgstr ""
+msgstr "Зона фаєрволу"
 
 #: plinth/modules/networks/templates/connection_show.html:273
 msgid ""
@@ -3962,7 +4026,7 @@ msgstr "Видалити зʼєднання"
 #: plinth/modules/networks/templates/connections_delete.html:14
 #, python-format
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
-msgstr ""
+msgstr "Видалити зʼєднання <strong>%(name)s</strong> назавжди?"
 
 #: plinth/modules/networks/templates/connections_diagram.html:11
 msgid "Internet"
@@ -4231,15 +4295,15 @@ msgstr ""
 
 #: plinth/modules/networks/views.py:27
 msgid "disabled"
-msgstr ""
+msgstr "вимкнено"
 
 #: plinth/modules/networks/views.py:28
 msgid "automatic"
-msgstr ""
+msgstr "автоматично"
 
 #: plinth/modules/networks/views.py:29
 msgid "manual"
-msgstr ""
+msgstr "вручну"
 
 #: plinth/modules/networks/views.py:30
 msgid "shared"
@@ -4252,7 +4316,7 @@ msgstr ""
 #: plinth/modules/networks/views.py:37 plinth/modules/networks/views.py:98
 #: plinth/modules/networks/views.py:109
 msgid "unknown"
-msgstr ""
+msgstr "невідомо"
 
 #: plinth/modules/networks/views.py:38
 msgid "unmanaged"
@@ -4260,11 +4324,11 @@ msgstr ""
 
 #: plinth/modules/networks/views.py:39
 msgid "unavailable"
-msgstr ""
+msgstr "недоступно"
 
 #: plinth/modules/networks/views.py:40
 msgid "disconnected"
-msgstr ""
+msgstr "відʼєднано"
 
 #: plinth/modules/networks/views.py:41
 msgid "preparing"
@@ -4376,7 +4440,7 @@ msgstr "вибраний метод IP не підтримується"
 
 #: plinth/modules/networks/views.py:101
 msgid "generic"
-msgstr ""
+msgstr "загальний"
 
 #: plinth/modules/networks/views.py:102
 msgid "TUN or TAP interface"
@@ -5051,7 +5115,7 @@ msgstr "Клієнт ел. пошти"
 
 #: plinth/modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
-msgstr ""
+msgstr "Використовувати лише локальний поштовий сервер"
 
 #: plinth/modules/roundcube/forms.py:17
 #, python-brace-format
@@ -5115,11 +5179,11 @@ msgstr "Ghost Commander - втулка для Samba"
 msgid "VLC media player"
 msgstr "Медіяпрогравач VLC"
 
-#: plinth/modules/samba/manifest.py:55
+#: plinth/modules/samba/manifest.py:60
 msgid "GNOME Files"
 msgstr "Файли GNOME"
 
-#: plinth/modules/samba/manifest.py:67
+#: plinth/modules/samba/manifest.py:72
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -5402,6 +5466,8 @@ msgid ""
 "Note that Shaarli only supports a single user account, which you will need "
 "to setup on the initial visit."
 msgstr ""
+"Зауважте, що Shaarli підтримує лише одну користувацьку обліківку, яку можна "
+"налаштувати під час початкового відвідування."
 
 #: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
@@ -6592,20 +6658,15 @@ msgid "Frequent feature updates activated."
 msgstr "Оновлення частих можливостей активовано."
 
 #: plinth/modules/users/__init__.py:29
-#, fuzzy
-#| msgid ""
-#| "Create and managed user accounts. These accounts serve as centralized "
-#| "authentication mechanism for most apps. Some apps further require a user "
-#| "account to be part of a group to authorize the user to access the app."
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
-"Створення і керування обліковими записами користувачів. Ці обліківки "
-"обробляються як централізований механізм автентифікації для більшості "
-"застосунків. Деякі застосунки також вимагають, щоб обліківка була частиною "
-"групи, щоб отримати авторизований доступ до застосунку."
+"Створення і керування обліковими записами. Ці обліківки обробляються як "
+"централізований механізм автентифікації для більшості застосунків. Деякі "
+"застосунки також вимагають, щоб обліківка була частиною групи, щоб отримати "
+"авторизований доступ до застосунку."
 
 #: plinth/modules/users/__init__.py:34
 #, python-brace-format
@@ -7353,6 +7414,11 @@ msgid ""
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
 "the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
+"Це внутрішня помилка і не те, що Ви спричинили чи можете виправити. Будь "
+"ласка, повідомте про помилку на сторінці <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\">відстеження вад</a>, щоб ми могли "
+"виправити її. Також, будь ласка, прикріпіть до звіту про ваду <a href="
+"\"%(status_log_url)s\">журнал стану</a>."
 
 #: plinth/templates/app-header.html:22
 msgid "Installation"
@@ -7678,6 +7744,21 @@ msgstr "%(percentage)s%% завершено"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Powered by Postfix, Dovecot & Rspamd"
+#~ msgstr "Працює на Postfix, Dovecot та Rspamd"
+
+#~ msgid "Postfix alias maps"
+#~ msgstr "Мапи аліясів Postfix"
+
+#~ msgid "Inbound and outbound mail filters"
+#~ msgstr "Фільтри вхідної і вихідної пошти"
+
+#~ msgid "Disable"
+#~ msgstr "Вимкнути"
+
+#~ msgid "Enable"
+#~ msgstr "Дозволити"
 
 #~ msgid "Enable Dynamic DNS"
 #~ msgstr "Дозволити динамічну DNS"

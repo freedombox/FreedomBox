@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 20:10-0500\n"
-"PO-Revision-Date: 2022-02-07 23:55+0000\n"
+"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"PO-Revision-Date: 2022-03-04 12:58+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -888,7 +888,7 @@ msgid "List"
 msgstr "Výpis"
 
 #: plinth/modules/bepasty/views.py:52
-#: plinth/modules/email_server/templates/email_alias.html:28
+#: plinth/modules/email/templates/email-aliases.html:24
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -909,7 +909,7 @@ msgstr "správce"
 msgid "Configuration updated."
 msgstr "Nastavení aktualizována."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -978,6 +978,7 @@ msgid "Serving Domains"
 msgstr "Obsluhované domény"
 
 #: plinth/modules/bind/templates/bind.html:17
+#: plinth/modules/email/templates/email.html:38
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
 #: plinth/modules/networks/templates/connection_show.html:91
@@ -1005,7 +1006,7 @@ msgstr "Obnovení IP adresy a domén"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
@@ -1601,13 +1602,6 @@ msgstr ""
 "název DNS, dostane odpověď s vaší aktuální IP adresou."
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
-#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
-#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
-#| "freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1618,7 +1612,7 @@ msgstr ""
 "GnuDIP na adrese <a href=\"https://ddns.freedombox.org\" target=\"_blank"
 "\">ddns.freedombox.org</a> nebo můžete najít bezplatné služby založené na "
 "aktualizaci URL na adrese <a href=\"http://freedns.afraid.org/\" target="
-"\"_blank\"> freedns.afraid.org</a>."
+"\"_blank\">freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1704,10 +1698,8 @@ msgid "GnuDIP"
 msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
-#, fuzzy
-#| msgid "other update URL"
 msgid "Other update URL"
-msgstr "další aktualizace URL"
+msgstr "Další aktualizace URL"
 
 #: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
@@ -1751,10 +1743,8 @@ msgid "Use IPv6 instead of IPv4"
 msgstr "Použijte IPv6 místo IPv4"
 
 #: plinth/modules/dynamicdns/forms.py:123
-#, fuzzy
-#| msgid "secrets required"
 msgid "This field is required."
-msgstr "požadovaná tajemství"
+msgstr "Toto pole je povinné."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
@@ -1771,6 +1761,7 @@ msgid "Status"
 msgstr "Stav"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "Doména"
@@ -1780,50 +1771,36 @@ msgid "Last update"
 msgstr "Minulá aktualizace"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
-#, fuzzy
-#| msgid "IP address"
 msgid "IP Address"
 msgstr "IP adresa"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
-#, fuzzy
-#| msgid "Access"
 msgid "Success"
-msgstr "Přístup"
+msgstr "Úspěšné"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy
-#| msgid "failed"
 msgid "Failed"
-msgstr "selhalo"
+msgstr "Selhalo"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "Nejsou k dispozici žádné knihovny."
+msgstr "Stav není k dispozici."
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Název připojení"
+msgstr "Vypršel časový limit připojení"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
-msgstr ""
+msgstr "Nelze nalézt server"
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "Smazat připojení"
+msgstr "Server odmítl připojení"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Auto-update"
 msgid "Already up-to-date"
-msgstr "Automatická aktualizace"
+msgstr "Již aktualizováno"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1970,7 +1947,33 @@ msgstr ""
 "%(domainname)s</i>. Doménu je možné nastavit na stránce <a href="
 "\"%(index_url)s\">nastavení</a> systému."
 
-#: plinth/modules/email_server/__init__.py:31
+#: plinth/modules/email/__init__.py:26
+msgid ""
+"This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
+"Postfix sends and receives emails. Dovecot allows email clients to access "
+"your mailbox using IMAP and POP3. Rspamd deals with spam."
+msgstr ""
+"Jedná se o kompletní řešení e-mailového serveru využívající Postfix, Dovecot "
+"a Rspamd. Postfix odesílá a přijímá e-maily. Dovecot umožňuje e-mailovým "
+"klientům přistupovat k poštovní schránce pomocí protokolů IMAP a POP3. "
+"Rspamd se zabývá nevyžádanou poštou."
+
+#: plinth/modules/email/__init__.py:31
+#, python-brace-format
+msgid ""
+"Each user on {box_name} gets an email address like user@mydomain.example. "
+"They will also receive mail from all addresses that look like user"
+"+foo@mydomain.example. Further, they can add aliases to their email address. "
+"Necessary aliases such as \"postmaster\" are automatically created pointing "
+"to the first admin user."
+msgstr ""
+"Každý uživatel na {box_name} dostane e-mailovou adresu jako user@"
+"mydomain.example. Budou také dostávat poštu ze všech adres, které vypadají "
+"jako user+foo@mydomain.example. Dále mohou ke své e-mailové adrese přidávat "
+"aliasy. Potřebné aliasy, jako například \"postmaster\", se vytvoří "
+"automaticky a ukazují na prvního uživatele-administrátora."
+
+#: plinth/modules/email/__init__.py:37
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -1978,7 +1981,7 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Aplikace Roundcube</a> poskytuje "
 "uživatelům webové rozhraní pro přístup k e-mailu."
 
-#: plinth/modules/email_server/__init__.py:33
+#: plinth/modules/email/__init__.py:39
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
@@ -1986,31 +1989,27 @@ msgstr ""
 "Během instalace budou odinstalovány všechny ostatní e-mailové servery v "
 "systému."
 
-#: plinth/modules/email_server/__init__.py:44
+#: plinth/modules/email/__init__.py:58
+msgid "Postfix/Dovecot"
+msgstr "Postfix / Dovecot"
+
+#: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "E-mailový Server"
 
-#: plinth/modules/email_server/__init__.py:100
-msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr "Běží na Postfix, Dovecot &amp; Rspamd"
+#: plinth/modules/email/__init__.py:80
+msgid "My Email Aliases"
+msgstr "Moje e-mailové aliasy"
 
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix-Dovecot SASL integration"
-msgstr "Integrace Postfix-Dovecot SASL"
+#: plinth/modules/email/__init__.py:81
+msgid "Manage Aliases for Mailbox"
+msgstr "Správa aliasů pro poštovní schránku"
 
-#: plinth/modules/email_server/audit/ldap.py:69
-msgid "Postfix alias maps"
-msgstr "Mapy aliasů služby Postfix"
-
-#: plinth/modules/email_server/audit/spam.py:87
-msgid "Inbound and outbound mail filters"
-msgstr "Filtry příchozí a odchozí pošty"
-
-#: plinth/modules/email_server/forms.py:24
+#: plinth/modules/email/forms.py:25
 msgid "Primary domain"
 msgstr "Primární doména"
 
-#: plinth/modules/email_server/forms.py:26
+#: plinth/modules/email/forms.py:27
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2018,88 +2017,101 @@ msgstr ""
 "Maily jsou přijímány pro všechny domény nakonfigurované v systému. Z nich "
 "vyberte tu nejdůležitější."
 
-#: plinth/modules/email_server/forms.py:34
+#: plinth/modules/email/forms.py:35
 msgid "New alias (without @domain)"
 msgstr "Nový alias (bez @domain)"
 
-#: plinth/modules/email_server/forms.py:41
+#: plinth/modules/email/forms.py:42
 msgid "Contains illegal characters"
 msgstr "Obsahuje nepovolené znaky"
 
-#: plinth/modules/email_server/forms.py:44
+#: plinth/modules/email/forms.py:45
 msgid "Must start and end with a-z or 0-9"
 msgstr "Musí začínat a končit písmeny a-z nebo 0-9"
 
-#: plinth/modules/email_server/forms.py:47
+#: plinth/modules/email/forms.py:49
 msgid "Cannot be a number"
 msgstr "Nemůže být číslo"
 
-#: plinth/modules/email_server/forms.py:57
+#: plinth/modules/email/forms.py:59
 msgid "Aliases"
 msgstr "Aliasy"
 
-#: plinth/modules/email_server/forms.py:69
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-msgid "Enabled"
-msgstr "Zapnuto"
-
-#: plinth/modules/email_server/forms.py:72
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "Vypnuto"
-
-#: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:16
-#: plinth/modules/radicale/manifest.py:36
+#: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:33
+#: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
 msgstr "K-9 Mail"
 
-#: plinth/modules/email_server/manifest.py:48
+#: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email/templates/email-aliases.html:13
+#: plinth/modules/email/templates/email.html:15
 msgid "Manage Aliases"
 msgstr "Správa aliasů"
 
-#: plinth/modules/email_server/templates/email_alias.html:16
+#: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr "Nemáte žádné e-mailové aliasy."
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-msgid "Disable"
-msgstr "Vypnout"
-
-#: plinth/modules/email_server/templates/email_alias.html:26
-msgid "Enable"
-msgstr "Zapnout"
-
-#: plinth/modules/email_server/templates/email_alias.html:32
+#: plinth/modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
 msgstr "Vytvořit nový e-mailový alias"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr "Přidat"
 
-#: plinth/modules/email_server/templates/email_server.html:10
+#: plinth/modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "Správa spamu"
+
+#: plinth/modules/email/templates/email.html:22
+msgid "DNS Records"
+msgstr "Záznamy DNS"
+
+#: plinth/modules/email/templates/email.html:25
+msgid ""
+"The following DNS records must be added manually on your primary domain for "
+"the mail server to work properly."
+msgstr ""
+"Pro správnou funkci poštovního serveru je třeba na primární doméně ručně "
+"přidat následující záznamy DNS."
+
+#: plinth/modules/email/templates/email.html:36
+msgid "TTL"
+msgstr "TTL"
+
+#: plinth/modules/email/templates/email.html:37
+msgid "Class"
+msgstr "Třída"
+
+#: plinth/modules/email/templates/email.html:39
+msgid "Priority"
+msgstr "Priorita"
+
+#: plinth/modules/email/templates/email.html:40
+msgid "Weight"
+msgstr "Váha"
+
+#: plinth/modules/email/templates/email.html:41
+#: plinth/modules/minetest/templates/minetest.html:18
+#: plinth/modules/tor/templates/tor.html:72
+msgid "Port"
+msgstr "Port"
+
+#: plinth/modules/email/templates/email.html:42
+msgid "Host/Target/Value"
+msgstr "Hostitel / cíl / hodnota"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2148,6 +2160,19 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "Služba/port"
+
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+msgid "Enabled"
+msgstr "Zapnuto"
+
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "Vypnuto"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -3430,11 +3455,6 @@ msgstr "Pokud je vypnuto, postavy hráčů nemohou zemřít nebo se zranit."
 msgid "Address"
 msgstr "Adresa"
 
-#: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
-msgid "Port"
-msgstr "Port"
-
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
@@ -3486,15 +3506,15 @@ msgstr ""
 msgid "vlc"
 msgstr "vlc"
 
-#: plinth/modules/minidlna/manifest.py:43
+#: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
 msgstr "kodi"
 
-#: plinth/modules/minidlna/manifest.py:76
+#: plinth/modules/minidlna/manifest.py:81
 msgid "yaacc"
 msgstr "yaacc"
 
-#: plinth/modules/minidlna/manifest.py:86
+#: plinth/modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
 
@@ -5484,11 +5504,11 @@ msgstr "Ghost Commander - Samba plugin"
 msgid "VLC media player"
 msgstr "VLC media player"
 
-#: plinth/modules/samba/manifest.py:55
+#: plinth/modules/samba/manifest.py:60
 msgid "GNOME Files"
 msgstr "GNOME soubory"
 
-#: plinth/modules/samba/manifest.py:67
+#: plinth/modules/samba/manifest.py:72
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -7083,11 +7103,6 @@ msgid "Frequent feature updates activated."
 msgstr "Aktivovány časté aktualizace funkcí."
 
 #: plinth/modules/users/__init__.py:29
-#, fuzzy
-#| msgid ""
-#| "Create and managed user accounts. These accounts serve as centralized "
-#| "authentication mechanism for most apps. Some apps further require a user "
-#| "account to be part of a group to authorize the user to access the app."
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -8240,6 +8255,24 @@ msgstr "%(percentage)s%% dokončeno"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Powered by Postfix, Dovecot & Rspamd"
+#~ msgstr "Běží na Postfix, Dovecot &amp; Rspamd"
+
+#~ msgid "Postfix-Dovecot SASL integration"
+#~ msgstr "Integrace Postfix-Dovecot SASL"
+
+#~ msgid "Postfix alias maps"
+#~ msgstr "Mapy aliasů služby Postfix"
+
+#~ msgid "Inbound and outbound mail filters"
+#~ msgstr "Filtry příchozí a odchozí pošty"
+
+#~ msgid "Disable"
+#~ msgstr "Vypnout"
+
+#~ msgid "Enable"
+#~ msgstr "Zapnout"
 
 #~ msgid "Enable Dynamic DNS"
 #~ msgstr "Zapnout dynamické DNS"

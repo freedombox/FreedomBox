@@ -49,6 +49,11 @@ clients = [{
         'os': 'android',
         'store_name': 'google-play',
         'url': store_url('google-play', 'org.videolan.vlc')
+    }, {
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/app/apple-store/id650377962'
     }]
 }, {
     'name':

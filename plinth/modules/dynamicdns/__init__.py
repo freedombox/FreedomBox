@@ -258,7 +258,18 @@ def get_config():
     """Return the current configuration."""
     default_config = {'domains': {}}
     config = kvstore.get_default('dynamicdns_config', '{}')
-    return json.loads(config) or default_config
+    config = json.loads(config) or default_config
+    return _fix_corrupt_config(config)
+
+
+def _fix_corrupt_config(config):
+    """Fix malformed configuration result of bug in older version."""
+    if 'null' not in config['domains']:
+        return config
+
+    del config['domains']['null']
+    set_config(config)
+    return config
 
 
 def set_config(config):

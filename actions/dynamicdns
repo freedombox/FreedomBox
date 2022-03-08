@@ -106,7 +106,10 @@ def subcommand_export_config(_):
                               and _active_config.exists()):
         enabled = True
 
-    output_config = {'enabled': enabled, 'domains': {domain['domain']: domain}}
+    output_config = {'enabled': enabled, 'domains': {}}
+    if domain['domain']:
+        output_config['domains'][domain['domain']] = domain
+
     print(json.dumps(output_config))
 
 

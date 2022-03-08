@@ -36,6 +36,11 @@ clients = [
             'os': 'android',
             'store_name': 'f-droid',
             'url': store_url('f-droid', 'org.videolan.vlc')
+        }, {
+            'type': 'store',
+            'os': 'ios',
+            'store_name': 'app-store',
+            'url': 'https://apps.apple.com/app/apple-store/id650377962'
         }]
     },
     {

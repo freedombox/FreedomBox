@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-14 20:10-0500\n"
-"PO-Revision-Date: 2022-02-02 08:55+0000\n"
+"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"PO-Revision-Date: 2022-03-04 12:58+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -889,7 +889,7 @@ msgid "List"
 msgstr "Listele"
 
 #: plinth/modules/bepasty/views.py:52
-#: plinth/modules/email_server/templates/email_alias.html:28
+#: plinth/modules/email/templates/email-aliases.html:24
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:86
 #: plinth/modules/networks/templates/connection_show.html:56
 #: plinth/modules/samba/templates/samba.html:154
@@ -910,7 +910,7 @@ msgstr "Yönetici"
 msgid "Configuration updated."
 msgstr "Yapılandırma güncellendi."
 
-#: plinth/modules/bepasty/views.py:93 plinth/modules/email_server/views.py:41
+#: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
 #: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
 #: plinth/modules/zoph/views.py:72
@@ -980,6 +980,7 @@ msgid "Serving Domains"
 msgstr "Hizmet Veren Etki Alanları"
 
 #: plinth/modules/bind/templates/bind.html:17
+#: plinth/modules/email/templates/email.html:38
 #: plinth/modules/ikiwiki/forms.py:12
 #: plinth/modules/names/templates/names.html:15
 #: plinth/modules/networks/templates/connection_show.html:91
@@ -1007,7 +1008,7 @@ msgstr "IP adresi ve etki alanlarını yenile"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email_server/views.py:38
+#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
@@ -1606,13 +1607,6 @@ msgstr ""
 "adınızı sorarsa, şu anki IP adresinizle bir yanıt alacaktır."
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
-#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
-#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
-#| "freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1707,10 +1701,8 @@ msgid "GnuDIP"
 msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
-#, fuzzy
-#| msgid "other update URL"
 msgid "Other update URL"
-msgstr "diğer güncelleme URL'si"
+msgstr "Diğer güncelleme URL'si"
 
 #: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
@@ -1754,10 +1746,8 @@ msgid "Use IPv6 instead of IPv4"
 msgstr "IPv4 yerine IPv6 kullan"
 
 #: plinth/modules/dynamicdns/forms.py:123
-#, fuzzy
-#| msgid "secrets required"
 msgid "This field is required."
-msgstr "gizli anahtarlar gerekli"
+msgstr "Bu alan gereklidir."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
@@ -1774,6 +1764,7 @@ msgid "Status"
 msgstr "Durum"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
+#: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
 msgid "Domain"
 msgstr "Etki Alanı"
@@ -1783,50 +1774,36 @@ msgid "Last update"
 msgstr "Son güncelleme"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
-#, fuzzy
-#| msgid "IP address"
 msgid "IP Address"
-msgstr "IP adresi"
+msgstr "IP Adresi"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
-#, fuzzy
-#| msgid "Access"
 msgid "Success"
-msgstr "Erişim"
+msgstr "Başarılı"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy
-#| msgid "failed"
 msgid "Failed"
-msgstr "başarısız"
+msgstr "Başarısız"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "Kullanılabilir kütüphane yok."
+msgstr "Mevcut durum yok."
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Bağlantı Adı"
+msgstr "Bağlantı zaman aşımı"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
-msgstr ""
+msgstr "Sunucu bulunamadı"
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "Bağlantıyı sil"
+msgstr "Sunucu bağlantıyı reddetti"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Last update"
 msgid "Already up-to-date"
-msgstr "Son güncelleme"
+msgstr "Zaten güncel"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1979,7 +1956,32 @@ msgstr ""
 "Etki alanınızı sistemde <a href=\"%(index_url)s\">Yapılandır</a> sayfasında "
 "ayarlayabilirsiniz."
 
-#: plinth/modules/email_server/__init__.py:31
+#: plinth/modules/email/__init__.py:26
+msgid ""
+"This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
+"Postfix sends and receives emails. Dovecot allows email clients to access "
+"your mailbox using IMAP and POP3. Rspamd deals with spam."
+msgstr ""
+"Bu, Postfix, Dovecot ve Rspamd kullanan tam bir e-posta sunucusu çözümüdür. "
+"Postfix e-posta gönderir ve alır. Dovecot, e-posta istemcilerinin IMAP ve "
+"POP3 kullanarak posta kutunuza erişmesini sağlar. Rspamd spam ile ilgilenir."
+
+#: plinth/modules/email/__init__.py:31
+#, python-brace-format
+msgid ""
+"Each user on {box_name} gets an email address like user@mydomain.example. "
+"They will also receive mail from all addresses that look like user"
+"+foo@mydomain.example. Further, they can add aliases to their email address. "
+"Necessary aliases such as \"postmaster\" are automatically created pointing "
+"to the first admin user."
+msgstr ""
+"{box_name} üzerindeki her kullanıcı, kullanici@etkialanim.ornek gibi bir e-"
+"posta adresi alır. Ayrıca kullanici+diger@etkialanim.ornek gibi görünen tüm "
+"adreslerden posta alacaklardır. Ayrıca, e-posta adreslerine kod adları "
+"ekleyebilirler. \"Postmaster\" gibi gerekli kod adları, ilk yönetici "
+"kullanıcıyı işaret ederek otomatik olarak oluşturulur."
+
+#: plinth/modules/email/__init__.py:37
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -1987,38 +1989,34 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube uygulaması</a>, kullanıcıların "
 "e-postaya erişmesi için web arayüzü sağlar."
 
-#: plinth/modules/email_server/__init__.py:33
+#: plinth/modules/email/__init__.py:39
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Kurulum sırasında sistemdeki diğer tüm e-posta sunucuları kaldırılacaktır."
 
-#: plinth/modules/email_server/__init__.py:44
+#: plinth/modules/email/__init__.py:58
+msgid "Postfix/Dovecot"
+msgstr "Postfix/Dovecot"
+
+#: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "E-posta Sunucusu"
 
-#: plinth/modules/email_server/__init__.py:100
-msgid "Powered by Postfix, Dovecot & Rspamd"
-msgstr "Postfix, Dovecot ve Rspamd tarafından desteklenmektedir"
+#: plinth/modules/email/__init__.py:80
+msgid "My Email Aliases"
+msgstr "E-posta Kod Adlarım"
 
-#: plinth/modules/email_server/audit/ldap.py:68
-msgid "Postfix-Dovecot SASL integration"
-msgstr "Postfix-Dovecot SASL bütünleştirmesi"
+#: plinth/modules/email/__init__.py:81
+msgid "Manage Aliases for Mailbox"
+msgstr "Posta Kutusu için Kod Adlarını Yönet"
 
-#: plinth/modules/email_server/audit/ldap.py:69
-msgid "Postfix alias maps"
-msgstr "Postfix kod adı eşlemeleri"
-
-#: plinth/modules/email_server/audit/spam.py:87
-msgid "Inbound and outbound mail filters"
-msgstr "Gelen ve giden posta süzgeçleri"
-
-#: plinth/modules/email_server/forms.py:24
+#: plinth/modules/email/forms.py:25
 msgid "Primary domain"
 msgstr "Birincil etki alanı"
 
-#: plinth/modules/email_server/forms.py:26
+#: plinth/modules/email/forms.py:27
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2026,88 +2024,101 @@ msgstr ""
 "Postalar sistemde yapılandırılan tüm etki alanları için alınır. Bunlar "
 "arasından en önemli olanı seçin."
 
-#: plinth/modules/email_server/forms.py:34
+#: plinth/modules/email/forms.py:35
 msgid "New alias (without @domain)"
 msgstr "Yeni kod adı (@domain olmadan)"
 
-#: plinth/modules/email_server/forms.py:41
+#: plinth/modules/email/forms.py:42
 msgid "Contains illegal characters"
 msgstr "Geçersiz karakterler içeriyor"
 
-#: plinth/modules/email_server/forms.py:44
+#: plinth/modules/email/forms.py:45
 msgid "Must start and end with a-z or 0-9"
 msgstr "A-z veya 0-9 ile başlamalı ve bitmelidir"
 
-#: plinth/modules/email_server/forms.py:47
+#: plinth/modules/email/forms.py:49
 msgid "Cannot be a number"
 msgstr "Sayı olamaz"
 
-#: plinth/modules/email_server/forms.py:57
+#: plinth/modules/email/forms.py:59
 msgid "Aliases"
 msgstr "Kod Adları"
 
-#: plinth/modules/email_server/forms.py:69
-#: plinth/modules/firewall/templates/firewall.html:54
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-msgid "Enabled"
-msgstr "Etkinleştirildi"
-
-#: plinth/modules/email_server/forms.py:72
-#: plinth/modules/firewall/templates/firewall.html:57
-#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
-#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
-#: plinth/templates/cards.html:34
-msgid "Disabled"
-msgstr "Etkisizleştirildi"
-
-#: plinth/modules/email_server/manifest.py:8
-#: plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
 
-#: plinth/modules/email_server/manifest.py:16
-#: plinth/modules/radicale/manifest.py:36
+#: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
 msgstr "Thunderbird"
 
-#: plinth/modules/email_server/manifest.py:33
+#: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
 msgstr "K-9 Mail"
 
-#: plinth/modules/email_server/manifest.py:48
+#: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
 
-#: plinth/modules/email_server/templates/email_alias.html:13
-#: plinth/modules/email_server/templates/email_server.html:15
+#: plinth/modules/email/templates/email-aliases.html:13
+#: plinth/modules/email/templates/email.html:15
 msgid "Manage Aliases"
 msgstr "Kod Adlarını Yönet"
 
-#: plinth/modules/email_server/templates/email_alias.html:16
+#: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr "E-posta kod adlarınız yok."
 
-#: plinth/modules/email_server/templates/email_alias.html:24
-msgid "Disable"
-msgstr "Etkisizleştir"
-
-#: plinth/modules/email_server/templates/email_alias.html:26
-msgid "Enable"
-msgstr "Etkinleştir"
-
-#: plinth/modules/email_server/templates/email_alias.html:32
+#: plinth/modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
 msgstr "Yeni bir e-posta kod adı oluşturun"
 
-#: plinth/modules/email_server/templates/email_alias.html:38
+#: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr "Ekle"
 
-#: plinth/modules/email_server/templates/email_server.html:10
+#: plinth/modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "İstenmeyen İletiyi Yönet"
+
+#: plinth/modules/email/templates/email.html:22
+msgid "DNS Records"
+msgstr "DNS Kayıtları"
+
+#: plinth/modules/email/templates/email.html:25
+msgid ""
+"The following DNS records must be added manually on your primary domain for "
+"the mail server to work properly."
+msgstr ""
+"Posta sunucusunun düzgün çalışması için aşağıdaki DNS kayıtları birincil "
+"etki alanınıza el ile eklenmek zorundadır."
+
+#: plinth/modules/email/templates/email.html:36
+msgid "TTL"
+msgstr "TTL"
+
+#: plinth/modules/email/templates/email.html:37
+msgid "Class"
+msgstr "Sınıf"
+
+#: plinth/modules/email/templates/email.html:39
+msgid "Priority"
+msgstr "Öncelik"
+
+#: plinth/modules/email/templates/email.html:40
+msgid "Weight"
+msgstr "Ağırlık"
+
+#: plinth/modules/email/templates/email.html:41
+#: plinth/modules/minetest/templates/minetest.html:18
+#: plinth/modules/tor/templates/tor.html:72
+msgid "Port"
+msgstr "Bağlantı noktası"
+
+#: plinth/modules/email/templates/email.html:42
+msgid "Host/Target/Value"
+msgstr "Anamakine/Hedef/Değer"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2157,6 +2168,19 @@ msgstr ""
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
 msgstr "Hizmet/Bağlantı Noktası"
+
+#: plinth/modules/firewall/templates/firewall.html:54
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:69
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+msgid "Enabled"
+msgstr "Etkinleştirildi"
+
+#: plinth/modules/firewall/templates/firewall.html:57
+#: plinth/modules/letsencrypt/templates/letsencrypt.html:71
+#: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
+#: plinth/templates/cards.html:34
+msgid "Disabled"
+msgstr "Etkisizleştirildi"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
@@ -3451,11 +3475,6 @@ msgstr ""
 msgid "Address"
 msgstr "Adres"
 
-#: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
-msgid "Port"
-msgstr "Bağlantı noktası"
-
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
@@ -3507,15 +3526,15 @@ msgstr ""
 msgid "vlc"
 msgstr "vlc"
 
-#: plinth/modules/minidlna/manifest.py:43
+#: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
 msgstr "kodi"
 
-#: plinth/modules/minidlna/manifest.py:76
+#: plinth/modules/minidlna/manifest.py:81
 msgid "yaacc"
 msgstr "yaacc"
 
-#: plinth/modules/minidlna/manifest.py:86
+#: plinth/modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
 
@@ -5507,11 +5526,11 @@ msgstr "Ghost Commander - Samba eklentisi"
 msgid "VLC media player"
 msgstr "VLC ortam oynatıcı"
 
-#: plinth/modules/samba/manifest.py:55
+#: plinth/modules/samba/manifest.py:60
 msgid "GNOME Files"
 msgstr "GNOME Dosyaları"
 
-#: plinth/modules/samba/manifest.py:67
+#: plinth/modules/samba/manifest.py:72
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -7117,11 +7136,6 @@ msgid "Frequent feature updates activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
 #: plinth/modules/users/__init__.py:29
-#, fuzzy
-#| msgid ""
-#| "Create and managed user accounts. These accounts serve as centralized "
-#| "authentication mechanism for most apps. Some apps further require a user "
-#| "account to be part of a group to authorize the user to access the app."
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -8277,6 +8291,24 @@ msgstr "%%%(percentage)s tamamlandı"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Powered by Postfix, Dovecot & Rspamd"
+#~ msgstr "Postfix, Dovecot ve Rspamd tarafından desteklenmektedir"
+
+#~ msgid "Postfix-Dovecot SASL integration"
+#~ msgstr "Postfix-Dovecot SASL bütünleştirmesi"
+
+#~ msgid "Postfix alias maps"
+#~ msgstr "Postfix kod adı eşlemeleri"
+
+#~ msgid "Inbound and outbound mail filters"
+#~ msgstr "Gelen ve giden posta süzgeçleri"
+
+#~ msgid "Disable"
+#~ msgstr "Etkisizleştir"
+
+#~ msgid "Enable"
+#~ msgstr "Etkinleştir"
 
 #~ msgid "Enable Dynamic DNS"
 #~ msgstr "Değişken DNS'i etkinleştir"
