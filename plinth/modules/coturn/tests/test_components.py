@@ -10,7 +10,8 @@ import pytest
 from plinth.utils import random_string
 
 from .. import notify_configuration_change
-from ..components import TurnConfiguration, TurnConsumer
+from ..components import (TurnConfiguration, TurnConsumer,
+                          TurnTimeLimitedConsumer, UserTurnConfiguration)
 
 
 @pytest.fixture(name='turn_configuration')
@@ -48,13 +49,23 @@ def test_configuration_init():
     assert config.domain == 'test-domain.example'
     assert config.uris == ['test-uri1', 'test-uri2']
 
+    config = UserTurnConfiguration('test-domain.example',
+                                   ['test-uri1', 'test-uri2'], None,
+                                   'test-username', 'test-credential')
+    assert config.domain == 'test-domain.example'
+    assert config.uris == ['test-uri1', 'test-uri2']
+    assert config.shared_secret is None
+    assert config.username == 'test-username'
+    assert config.credential == 'test-credential'
+
 
 def test_component_init_and_list():
     """Test initializing and listing all the components."""
     component1 = TurnConsumer('component1')
     component2 = TurnConsumer('component2')
+    component3 = TurnTimeLimitedConsumer('component3')
     assert component1.component_id == 'component1'
-    assert [component1, component2] == list(TurnConsumer.list())
+    assert [component1, component2, component3] == list(TurnConsumer.list())
 
 
 @patch('plinth.modules.coturn.get_config')
@@ -73,3 +84,16 @@ def test_get_configuration(get_config, turn_configuration):
     get_config.return_value = turn_configuration
     component = TurnConsumer('component')
     assert component.get_configuration() == turn_configuration
+
+
+@patch('plinth.modules.coturn.get_config')
+def test_get_user_configuration(get_config, turn_configuration):
+    """Test coturn user configuration retrieval using component."""
+    get_config.return_value = turn_configuration
+    component = TurnTimeLimitedConsumer('component')
+    user_config = component.get_configuration()
+    assert user_config.domain == turn_configuration.domain
+    assert user_config.uris == turn_configuration.uris
+    assert user_config.shared_secret is None
+    assert user_config.username is not None
+    assert user_config.credential is not None

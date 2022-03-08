@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Configuration helper for Janus server.
+"""
+
+import argparse
+
+from plinth import action_utils
+
+JANUS_CONF_PATH = '/etc/janus/janus.jcfg'
+
+
+def parse_arguments():
+    """Return parsed command line arguments as dictionary"""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
+    subparsers.add_parser('setup', help='Configure Janus server')
+    subparsers.required = True
+    return parser.parse_args()
+
+
+def subcommand_setup(_):
+    """Configure Janus server."""
+    with open(JANUS_CONF_PATH, 'r') as config_file:
+        config_lines = config_file.readlines()
+
+    with open(JANUS_CONF_PATH, 'w') as config_file:
+        for line in config_lines:
+            if '#rtp_port_range' in line:
+                config_file.write("\trtp_port_range = \"50176-51199\"\n")
+            else:
+                config_file.write(line)
+
+    action_utils.service_try_restart('janus')
+
+
+def main():
+    arguments = parse_arguments()
+    sub_command = arguments.subcommand.replace('-', '_')
+    sub_command_method = globals()['subcommand_' + sub_command]
+    sub_command_method(arguments)
+
+
+if __name__ == '__main__':
+    main()
