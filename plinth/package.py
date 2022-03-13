@@ -56,6 +56,9 @@ class Package(PackageExpression):
         self.codename = codename
         self.architecture = architecture
 
+    def __repr__(self):
+        return self.name
+
     def __or__(self, other):
         return PackageOr(self, other)
 
@@ -78,6 +81,9 @@ class PackageOr(PackageExpression):
                  package2: PackageExpression):
         self.package1 = package1
         self.package2 = package2
+
+    def __repr__(self):
+        return self.package1.name + ' | ' + self.package2.name
 
     def possible(self) -> list[str]:
         return self.package1.possible() + self.package2.possible()
@@ -169,8 +175,15 @@ class Packages(app.FollowerComponent):
         """Run diagnostics and return results."""
         results = super().diagnose()
         cache = apt.Cache()
-        # XXX: Needs to be able to handle missing packages.
-        for package_name in self.resolve():
+        for package_expression in self.packages:
+            try:
+                package_name = package_expression.actual()
+            except MissingPackageError:
+                message = _('Package {expression} is not available for '
+                            'install').format(expression=package_expression)
+                results.append([message, 'failed'])
+                continue
+
             result = 'warning'
             latest_version = '?'
             if package_name in cache:

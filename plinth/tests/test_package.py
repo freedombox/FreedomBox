@@ -126,16 +126,24 @@ def test_diagnose(cache):
     cache.return_value = {
         'package2': Mock(candidate=Mock(version='2.0', is_installed=True)),
         'package3': Mock(candidate=Mock(version='3.0', is_installed=False)),
+        'package7': Mock(candidate=Mock(version='4.0', is_installed=True)),
     }
-    component = Packages('test-component',
-                         ['package1', 'package2', 'package3'])
+    component = Packages('test-component', [
+        'package1', 'package2', 'package3',
+        Package('package4') | Package('package5'),
+        Package('package6') | Package('package7')
+    ])
     results = component.diagnose()
-    assert '(?)' in results[0][0]
-    assert results[0][1] == 'warning'
+    assert 'not available for install' in results[0][0]
+    assert results[0][1] == 'failed'
     assert '(2.0)' in results[1][0]
     assert results[1][1] == 'passed'
     assert '(3.0)' in results[2][0]
     assert results[2][1] == 'warning'
+    assert 'not available for install' in results[3][0]
+    assert results[3][1] == 'failed'
+    assert '(4.0)' in results[4][0]
+    assert results[4][1] == 'passed'
 
 
 @patch('plinth.package.packages_installed')
