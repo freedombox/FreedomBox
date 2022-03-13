@@ -30,7 +30,7 @@ class PackageExpression:
         raise NotImplementedError
 
     def actual(self) -> str:
-        """Return the resolved list of packages to install.
+        """Return the name of the package to install.
 
         TODO: Also return version and suite to install from.
         """
@@ -133,7 +133,7 @@ class Packages(app.FollowerComponent):
         super().__init__(component_id)
 
         self.component_id = component_id
-        self._packages = []
+        self._packages: list[PackageExpression] = []
         for package in packages:
             if isinstance(package, str):
                 self._packages.append(Package(package))
@@ -145,7 +145,7 @@ class Packages(app.FollowerComponent):
         self.conflicts_action = conflicts_action
 
     @property
-    def packages(self) -> list[Union[str, PackageExpression]]:
+    def packages(self) -> list[PackageExpression]:
         """Return the list of packages and package expressions managed by this
         component."""
         return self._packages
@@ -207,7 +207,7 @@ class Packages(app.FollowerComponent):
 
         return packages_installed(self.conflicts)
 
-    def has_unavailable_packages(self):
+    def has_unavailable_packages(self) -> Optional[bool]:
         """Return whether any of the packages are not available.
 
         Returns True if one or more of the packages is not available in the
