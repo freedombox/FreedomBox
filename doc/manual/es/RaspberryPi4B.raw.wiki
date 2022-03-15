@@ -2,28 +2,34 @@
 
 {{attachment:raspberrypi4b.jpg|Raspberry Pi 4 Model B|width=640,height=424}}
 
-[[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/|Raspberry Pi 4 Model B]] is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 3 Model B+ with better processor and ability to drive multiple displays.  A !FreedomBox "testing" image is available for Raspberry Pi 4 Model B.
-
-Please do not expect any output on a monitor connected via HDMI to this device as it does not display anything beyond the message 'Starting kernel...'. See the [[FreedomBox/Manual/QuickStart|Quick Start page]] to access and control your !FreedomBox from network.
-
-'''Important:''' Read [[FreedomBox/Hardware|general advice]] about hardware before building a !FreedomBox with this single board computer.
+[[https://www.raspberrypi.org/products/raspberry-pi-4-model-b/|Raspberry Pi 4 Model B]] is a popular single board computer developed with the intention of promoting teaching of basic computer science in schools.  It is a successor to Raspberry Pi 3 Model B+ with better processor and ability to drive multiple displays. Both stable and "testing" images are available for Raspberry Pi 4 Model B.
 
 === Download ===
 
-Before downloading and using !FreedomBox you need to ensure that latest [[https://github.com/pftf/RPi4|Raspberry Pi 4 UEFI Firmware]] is available on an SD card. See [[https://github.com/pftf/RPi4#installation|instructions]] on how to create an SD card with this firmware. The gist is that you...
- 1. download the firmware zip files,
- 1. erase the SD card,
- 1. create a FAT partition,
- 1. unzip the files to SD card and finally
- 1. insert the SD card into the board.
+!FreedomBox SD card [[FreedomBox/Download|images]] for this hardware are available.  Download the "stable" or "testing" image for Raspberry Pi 4 Model B.  Follow the instructions on the [[FreedomBox/Download|download]] page to create a !FreedomBox SD card or USB drive and boot into !FreedomBox.
 
-!FreedomBox images meant for all "arm64" hardware work well for this device. Currently only "testing" images work and not "stable" images. However, the firmware must be present in an SD card. This means that !FreedomBox itself must be present on a different disk such as a USB flash disk or USB SATA disk. Follow the instructions on the [[FreedomBox/Download|download page]] to create a !FreedomBox USB disk and boot the device. These images also work well for USB 2.0 and USB 3.0 disk drives and the process for preparing them is same as for an SD card.
+=== Booting from USB ===
 
-An alternative to downloading these images is to install Debian on the device and then [[https://wiki.debian.org/FreedomBox/Hardware/Debian|install FreedomBox on it]]. 
+MicroSD cards are notouriously slow and prone to be corrupted. SD card corruption means that a high read/write load or a sudden power outage can make render your card unusable. It is therefore strongly recommended that you use a USB drive for your root partition. To be able to do that, you have to follow these preliminary steps:
 
+ 1. [[https://www.raspberrypi.com/software/|Download]] and install the Raspberry Pi Imager.
+ 2. Insert a microSD card to your computer.
+ 3. Open the Raspberry Pi Imager
+ 3.1  Select '''CHOOSE OS''' >> '''Misc utility images''' >> '''Bootloader''' >> '''USB Boot'''
+ 
+ 3.2 From '''CHOOSE STORAGE''' select your microSD card
+
+ 3.3 Click on '''WRITE'''
+
+ 4. After the writing was succesful, you should eject the card.
+ 5. Insert the newly created card into your Raspberry Pi and boot up the device. If it is connected to a monitor, you will see a green screen. Let your device rest for a minute, after which you can disconnect it from power and eject the card from the Raspberry Pi. It can now boot from USB.
+ 6. Final step: write your !FreedomBox image into your USB device, then connect it to your Raspberry Pi. Make sure you did not leave your microSD card in the Raspberry Pi.
+
+Please note that steps 1. to 5. only need to be done once.
+ 
 === Build Image ===
 
-!FreedomBox images for this hardware can be built using [[FreedomBox/Maker|Freedom Maker]].  Use the target 'arm64' with distribution 'testing' to build the image for this board.
+!FreedomBox images for this hardware can be built using [[FreedomBox/Maker|Freedom Maker]].  Use the target 'raspberry64' to build the image for this board.
 
 === Availability ===
 
@@ -37,7 +43,7 @@ An alternative to downloading these images is to install Debian on the device an
  * Open Hardware: No
  * CPU: Broadcom BCM2711 SOC (4x Cortex-A72``@1.5GHz)
  * RAM: 2 GB or 4GB or 8 GB
- * Storage: MicroSD card slot
+ * Storage: MicroSD card slot or USB drive
  * USB: 2x USB 2.0, 2x USB 3.0, USB Type-C power supply
  * Architecture: arm64
  * Ethernet: 10/100/1000, RJ45

@@ -1,0 +1,225 @@
+## page was renamed from FreedomBox/Manual/EmailServer
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/Email|English]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
+<<TableOfContents()>>
+
+
+## BEGIN_INCLUDE
+
+== Postfix/Dovecot/Rspamd (Email Server) ==
+
+'''Available since''': 22.6
+
+=== About the Email Server ===
+
+!FreedomBox provides a complete email server solution using Postfix, Dovecot, and Rspamd. Postfix sends and receives emails. Dovecot allows email clients to access your mailbox using IMAP and POP3. Rspamd deals with spam. The following features are available:
+
+  * Send and receive email
+    * Interoperate with other mail servers
+    * Prevent others from spoofing your email addresses using SPF
+    * Sign all outgoing email using DKIM
+    * Receive reports of spoofing attempts using DMARC
+  * Access mails easily
+    * Access mail from any device using [[FreedomBox/Manual/Roundcube|Roundcube]] webmail
+    * Configure email clients by just typing in email address and password
+    * Auto-configuration works with clients using autoconf scheme such as Thunderbird
+    * Auto-configuration works with clients using DNS scheme
+    * Keep mails on server and access them with multiple clients using IMAP
+    * Fetch mails to local machine using POP3
+  * Email address for all your users
+    * Each user on your !FreedomBox automatically gets an email address such as user@mydomain.example
+    * Each user gets unlimited automatic aliases. user+purpose@mydomain.example points to user@mydomain.example
+    * Users may themselves add more aliases. foo@mydomain.example can point to user@mydomain.example
+    * Many common aliases such as info@mydomain.example and postmaster@mydomain.example point to administrator's email address.
+  * Filter messages on the server using sieve filters
+    * Setup vacation auto-responders that work even when you are not using your email client
+    * Forward to external/internal addresses, file in folders, delete, etc.
+    * Manage filters on the server using email client (for example, Thunderbird with sieve add-on)
+  * Automatically setup and configure TLS certificates obtained by Let's Encrypt
+    * All services (SMTP, IMAP, POP3 and `manageseive`) are configured to use TLS/STARTTLS
+    * Certificates are renewed every 3 months or so
+    * Upon renewal, certificates are installed and services are restarted
+  * Backup and restore emails, aliases and configuration
+    * Set a schedule for periodic backups
+  * Scan incoming email for spam
+    * Check the message against various block lists
+    * Automatically move spam to the Junk folder
+    * Sets a flag on the message when spam score reaches a threshold
+    * Rejects the message during receiving when spam score reaches a high threshold
+    * Understand spam decisions using extended spam headers added to a message
+    * View details of spam processing and manage settings using Rspamd web interface
+    * Admins can login to spam web interface using !FreedomBox single-sign-on
+    * Teach spam vs. not-spam using example messages
+
+=== Prerequisites ===
+
+ * You must own a domain on which you can configure advanced DNS records (MX, TXT and SRV). Such a domain can be obtained by buying one from a registrar or by obtaining a paid service from one of the Dynamic DNS providers (such as `freedns.afraid.org`). Currently, free subdomains provided by FreedomBox Foundation's free Dynamic DNS service at `ddns.freedombox.org` are '''not''' suitable. Support is planned in future.
+
+ * Your ISP or cloud provider, on your Internet connection, must not be blocking traffic to external mail servers. Quite a few of them block outgoing traffic on port 25. This will render the email server unable to send mails to external addresses. Many such providers allow you to request removing this restriction. To test whether this is a problem for your Internet connection, run the following command (you should see some text like this):
+
+{{{
+user@myserver:~$ nc freedombox.org 25
+220 mx.sflc.info ESMTP Postfix (Debian/GNU)
+^C
+}}}
+
+=== Installing ===
+
+Go to the ''Apps'' menu.
+
+If already installed, the Email Server will be shown '''above''' the ''Disabled'' line. This is likely not your case, but if it is, that means that the Email Server is already installed, so skip this step and jump to the next one.
+
+ {{attachment:InstalledEmailServerInAppsMenu_en_V01.png|Email Server enabled|width=400}}
+
+
+If the Email Server is shown among the icons '''below''' the ''Disabled'' line, it is either not yet installed or it is currently disabled. This is the usual starting status.
+
+ {{attachment:EmailServerAmongAppsMenu_en_V01.png|Email Server disabled|width=400}}
+
+
+Select the ''Postfix/Dovecot'' app. You are presented with the ''Postfix/Dovecot'' app page. If not installed yet you'll be shown the ''Install'' button. Click on it!
+
+ {{attachment:InstallButtonInAppPage_en_V01.png|Email Server app page|height=300}}
+
+This will trigger the installation process.
+
+ {{attachment:Installing_en_V01.png           |Installation installing sw packages|height=200}}
+ {{attachment:InstallingPostInstall_en_V01.png|Installation running post-processes|height=200}}
+
+After installing all needed software packages and configuring them, !FreedomBox will tell you that the installation is successful and the app page will show additional content such as port information, configuration form and DNS settings.
+
+ {{attachment:AppJustInstalled_en_V01.png|Email Server page as just installed|width=300}}
+
+ {{attachment:emailserverDNS_Records_en_V01.png|Email Server page as just installed|width=300}}
+
+Next time you go to the Apps Menu it will show the app enabled (above the ''disabled'' line).
+
+=== Configuring the Email Server ===
+
+ 1. If you wish to send email to and receive mails from users on other email servers on the Internet, you need a proper domain. As explained in the Prerequisites section, either buy a domain from a registrar or obtain one from a Dynamic DNS provider. If you purchased a domain from a registrar add it in the System, Configuration page. If it is a Dynamic DNS, configured it in System, Dynamic DNS Client page.
+
+ 1. When a domain is added to !FreedomBox, a TLS certificate is automatically obtained for the domain. This certificate is then used for encrypted communication with all the services that are configured with the domain. Go to System section, Let's Encrypt app page and verify that certificate has been successfully obtained for the domain. If not, click on the Obtain button and resolve any problems that show up. For successfully obtaining the certificate, your !FreedomBox must be reachable from the Internet and your router, if any, must be configured to do port forwarding for the web ports (80, 443).
+
+ 1. After adding a domain to !FreedomBox, visit the Email app page. In the Configuration section, select the configured domain as the primary domain for the purposes of sending and receiving email.
+
+ 1. After setting the primary domain, information will become available in the DNS Records section of the page. These are the records that must be manually configured on the domain. Login to your DNS provider's web interface for managing DNS records on your domain. There enter all the entries shown in the DNS records table.
+
+   * The length of the value of DNS record for DKIM exceeds 255 characters in length. Typically, it must be broken into multiple values enclosed in the double quotes and separated by spaces. This is what !FreedomBox does. If your DNS provider has a different way to enter these multiple values, consult their documentation.
+
+   * All the records are assumed "under" the domain you are configuring but a full value can also be provided. For example, "Domain" value of "dkim._domainkey" means "dkim._domainkey.mydomain.example.". Use the latter form if necessary.
+
+ 1. Install [[FreedomBox/Manual/Roundcube|Roundcube]] app if you want to access emails using a web interface. In Roundcube configuration, be sure enable option to "Use only the local mail server". This removes the server field in the login page and makes the app work without any further configuration.
+
+=== Using the Email Server ===
+
+As a user you can:
+
+ * Start sending and getting emails using most email clients.
+ * Create and/or manage your email aliases in the ''Aliases'' tab of the ''Email Server'' app page in !FreedomBox web interface.
+ * Manage filters on the server using sieve 
+
+Once an admin has set up [[FreedomBox/Manual/Roundcube|RoundCube]] configuration for it to work with the !FreedomBox Email server you can log into !RoundCube and start sending emails without the need for other email clients. Use the same login credentials to !RoundCube that you use to log into the FreedomBox web interface. 
+
+==== With FreedomBox Webmail Client (RoundCube) ====
+
+[[FreedomBox/Manual/Roundcube|RoundCube]] email client is provided by !FreedomBox as an optional app. If !RoundCube has been installed before the email server, there is an option to make it work with !FreedomBox's email server. Once both apps are installed, you have a complete webmail setup ready.
+
+==== With Thunderbird ====
+
+Open Thunderbird. Go to ''hamburger menu &rarr; New &rarr; Existing Mail Account''. Enter a display name, your !FreedomBox email address, and your !FreedomBox password. Click continue.
+
+!FreedomBox implements the Automatic Account Configuration endpoint which Thunderbird will make use of.
+
+ {{attachment:ThunderbirdAutoconfigSetup.png|Thunderbird configuration|width=300}}
+
+==== Manual Configuration ====
+
+Tell your email client to use these parameters:
+
+ * '''Username:''' ''your !FreedomBox email address or just the username part''
+ * '''Incoming mail:''' IMAPS, port 993, forced SSL, normal password authentication
+ * '''Outgoing mail:''' SMTPS, port 465, forced SSL, normal password authentication
+
+STARTTLS on the SMTP submission port is also supported.
+
+ {{attachment:EmailServerClientConfig.png|Email client parameters|width=300}}
+
+==== Email Aliases ====
+
+Email aliases are useful for privacy. Now as !FreedomBox email user (you don't need to be an administrator) you can have temporary throw-away and specific email addresses under your control. You can list, create and delete email aliases from the ''My Email Aliases'' shortcut in !FreedomBox home page.
+
+{{attachment:EmailServerAliasesTile.png|Email alias management page|width=500}}
+ 
+{{attachment:EmailServerAliasesPage.png|Email alias management page|width=500}}
+
+Mails to non-existent users, non-existent aliases, or system users will be rejected at the SMTP connection level.
+
+==== Automatic Email Aliases ====
+
+In addition to allowing users to create their own aliases, !FreedomBox also sets up automatic aliases by appending a string to your user name with a '+' sign. If your mail address is myname@mydomain.example, then all myname+anystring@mydomain.example is an automatic alias to your email address. For example, when subscribing to a mailing list call foolist, you can provide your email address as myname+foolist@mydomain.example. When mail is sent to that address, it ends up in your mailbox of myname@mydomain.example. This is primarily useful for mail sorting and spam control.
+
+=== Advanced: Troubleshooting ===
+
+==== How to debug an action script failure? How to access the system log? ====
+
+Open a secure shell connection to your !FreedomBox. Type `sudo journalctl -b -o short-monotonic --no-pager`
+
+ * `-b` show journal entries since boot
+ * `-o short-monotonic` use short timestamp format
+ * `--no-pager` make it easier to copy and paste
+
+==== Why does the server say "relay access denied"? ====
+
+This is because Postfix was not aware of the email domain. To fix that,
+
+ 1. Ensure !FreedomBox is aware of your internet domain name. If you don't have a domain name, skip to step 2.
+  * Log into the Plinth web interface as an admin.
+  * Go to ''System &rarr; Name Services''
+  * Add a domain name if you haven't done so.
+
+==== Cannot send anything from Roundcube. It says "SMTP Error (250): Authentication failed". ====
+
+Root cause: Roundcube tried to submit your email from an unencrypted connection, but ports 465 and 587 required SSL and STARTTLS encryption, respectively.
+
+Solutions:
+
+For !RoundCube, edit the `/etc/roundcube/config.inc.php` file to make it use port 25 (unencrypted). Fix these settings:
+{{{
+$config['smtp_server'] = 'smtp://localhost';
+$config['smtp_port'] = 25;
+}}}
+
+Notes:
+ * Access your !FreedomBox via SSH.
+ * You can edit the file with `nano` text editor. The file is restricted, so you need to access it as superuser: `sudo nano /etc/roundcube/config.inc.php`.
+
+If using another email client like Thunderbird, enforce SSL or STARTTLS usage by the email client.
+
+=== Providing user feedback ===
+
+Please provide your feedback on usage on [[https://discuss.freedombox.org/t/email-server-progress/1330|this forum thread]].
+
+=== Technical info and discussion ===
+
+!FreedomBox email server was presented at Debconf21. [[attachment:Debconf21-20210808.draft.odp|Slides]] and [[https://meetings-archive.debian.net/pub/debian-meetings/2021/DebConf21/debconf21-175-debian-outreach-projects-google-summer-of-code-2021.webm|video recording]] are available courtesy of the Debian Outreach team.
+
+[[https://salsa.debian.org/freedombox-team/freedombox/-/merge_requests/2077|This salsa issue]] is driving the implementation. Feel free to join discussions and provide technical ideas.
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+=== External links ===
+
+ * Upstream websites:
+   * http://www.postfix.org
+   * https://www.dovecot.org
+   * https://www.rspamd.com
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
