@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-02 08:06-0500\n"
-"PO-Revision-Date: 2022-02-07 23:55+0000\n"
-"Last-Translator: Jaime Marquínez Ferrándiz <weblate@jregistros.fastmail."
-"net>\n"
+"PO-Revision-Date: 2022-03-10 22:59+0000\n"
+"Last-Translator: Nathaniel Ramos Alexander <rhelmuth@princeton.edu>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
 "Language: es\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1830,32 +1829,24 @@ msgid "Failed"
 msgstr "Falló"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "No hay bibliotecas disponibles."
+msgstr "Estado de actualización No disponible"
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Nombre de conexión"
+msgstr "La conexión se tardo demasiado"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
-msgstr ""
+msgstr "No se pudo encontrar el Servidor"
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "Eliminar conexión"
+msgstr "El Servidor rechazo la conexión"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Auto-update"
 msgid "Already up-to-date"
-msgstr "Actualización automática"
+msgstr "Ya Estaba Actualizada"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -1923,19 +1914,15 @@ msgid "Automatically manage audio/video call setup"
 msgstr "Administrar la configuración de llamada de audio/video automáticamente"
 
 #: plinth/modules/ejabberd/forms.py:29
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
-#| "server for Matrix Synapse. Disable this if you want to use a different "
-#| "STUN/TURN server."
+#, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
 "server for ejabberd. Disable this if you want to use a different STUN/TURN "
 "server."
 msgstr ""
 "Configura la app local <a href=\"{coturn_url}\">coturn</a> como servidor "
-"STUN/TURN para Matrix Synapse. Deshabilita esto si quieres usar un servidor "
-"STUN/TURN diferente."
+"STUN/TURN para Matrix Synapse. Deshabilita esto si quieres usar algun otro "
+"servidor STUN/TURN diferente."
 
 #: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
@@ -2014,6 +2001,10 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
+"Esta es una solución completa de servidor de correo electrónico que utiliza "
+"Postfix, Dovecot y Rspamd. Postfix envía y recibe correos electrónicos. "
+"Dovecot permite que los clientes de correo electrónico accedan a su buzón "
+"mediante IMAP y POP3. Rspamd se ocupa del spam."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -2024,6 +2015,11 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
+"Cada usuario en {box_name} obtiene una dirección de correo electrónico como "
+"usuario@midominio.ejemplo. También recibirán correo de todas las direcciones "
+"que se parezcan a usuario+foo@mydomain.example. Además, pueden agregar alias "
+"a su dirección de correo electrónico. Los alias necesarios como \"postmaster"
+"\" se crean automáticamente apuntando al primer usuario administrador."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -2043,31 +2039,23 @@ msgstr ""
 
 #: plinth/modules/email/__init__.py:58
 msgid "Postfix/Dovecot"
-msgstr ""
+msgstr "Postfix/Dovecot"
 
 #: plinth/modules/email/__init__.py:60
-#, fuzzy
-#| msgid "Chat Server"
 msgid "Email Server"
-msgstr "Servidor de Chat"
+msgstr "Servidor de correo electrónico"
 
 #: plinth/modules/email/__init__.py:80
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "My Email Aliases"
-msgstr "Administrar bibliotecas"
+msgstr "Mis alias de correo electrónico"
 
 #: plinth/modules/email/__init__.py:81
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Aliases for Mailbox"
-msgstr "Administrar bibliotecas"
+msgstr "Administrar Alias para el buzón de correo electronico"
 
 #: plinth/modules/email/forms.py:25
-#, fuzzy
-#| msgid "Primary connection"
 msgid "Primary domain"
-msgstr "Conexión principal"
+msgstr "Dominio principal"
 
 #: plinth/modules/email/forms.py:27
 msgid ""
@@ -2094,10 +2082,8 @@ msgid "Cannot be a number"
 msgstr "No puede ser un número"
 
 #: plinth/modules/email/forms.py:59
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Aliases"
-msgstr "Administrar bibliotecas"
+msgstr "Alias"
 
 #: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
@@ -2105,8 +2091,6 @@ msgid "Roundcube"
 msgstr "Roundcube"
 
 #: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
-#, fuzzy
-#| msgid "Mozilla Thunderbird"
 msgid "Thunderbird"
 msgstr "Mozilla Thunderbird"
 
@@ -2120,56 +2104,52 @@ msgstr "FairEmail"
 
 #: plinth/modules/email/templates/email-aliases.html:13
 #: plinth/modules/email/templates/email.html:15
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Aliases"
-msgstr "Administrar bibliotecas"
+msgstr "Administrar Alias"
 
 #: plinth/modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
 msgstr "No tienes aliases de correo electrónico."
 
 #: plinth/modules/email/templates/email-aliases.html:28
-#, fuzzy
-#| msgid "Create a new backup"
 msgid "Create a new email alias"
-msgstr "Crear una copia de seguridad nueva"
+msgstr "Crear un nuevo alias de correo electrónico"
 
 #: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
 msgstr "Añadir"
 
 #: plinth/modules/email/templates/email.html:10
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage Spam"
-msgstr "Gestionar instantáneas"
+msgstr "Administrar correo no deseado (SPAM)"
 
 #: plinth/modules/email/templates/email.html:22
 msgid "DNS Records"
-msgstr ""
+msgstr "Registros DNS"
 
 #: plinth/modules/email/templates/email.html:25
 msgid ""
 "The following DNS records must be added manually on your primary domain for "
 "the mail server to work properly."
 msgstr ""
+"Los siguientes registros DNS deben agregarse manualmente en su Dominio "
+"principal para que el servidor de correo funcione correctamente."
 
 #: plinth/modules/email/templates/email.html:36
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: plinth/modules/email/templates/email.html:37
 msgid "Class"
-msgstr ""
+msgstr "Class"
 
 #: plinth/modules/email/templates/email.html:39
 msgid "Priority"
-msgstr ""
+msgstr "Prioridad"
 
 #: plinth/modules/email/templates/email.html:40
 msgid "Weight"
-msgstr ""
+msgstr "Peso/Puntos"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
@@ -2179,7 +2159,7 @@ msgstr "Puerto"
 
 #: plinth/modules/email/templates/email.html:42
 msgid "Host/Target/Value"
-msgstr ""
+msgstr "Host/Objetivo/Valor"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -3267,7 +3247,7 @@ msgstr "Element"
 
 #: plinth/modules/matrixsynapse/manifest.py:48
 msgid "FluffyChat"
-msgstr ""
+msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:12
@@ -4137,6 +4117,10 @@ msgid ""
 "that you have other means to access %(box_name)s before altering this "
 "connection."
 msgstr ""
+"Esta es la conexión principal de la que depende %(box_name)s para la "
+"conectividad a Internet. Alterarlo puede hacer que sus %(box_name)s sean "
+"inalcanzables. Asegúrese de tener otros medios para acceder a %(box_name)s "
+"antes de modificar esta conexión."
 
 #: plinth/modules/networks/templates/connection_show.html:36
 msgid "Edit connection"
@@ -5511,7 +5495,7 @@ msgstr "Cliente de correo"
 
 #: plinth/modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
-msgstr ""
+msgstr "Use solo el servidor de correo local"
 
 #: plinth/modules/roundcube/forms.py:17
 #, python-brace-format
@@ -5519,6 +5503,9 @@ msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
 msgstr ""
+"Cuando está habilitado, el cuadro de texto para la entrada del servidor se "
+"elimina de la página de inicio de sesión y los usuarios solo pueden leer y "
+"enviar correos desde este {box_name}."
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -7990,7 +7977,7 @@ msgstr "Genérica"
 #: plinth/package.py:94
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
-msgstr ""
+msgstr "El paquete {package_name} es la última versión ({latest_version})"
 
 #: plinth/package.py:245
 msgid "Error during installation"

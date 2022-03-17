@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-02 08:06-0500\n"
-"PO-Revision-Date: 2022-02-28 14:55+0000\n"
+"PO-Revision-Date: 2022-03-10 22:59+0000\n"
 "Last-Translator: Benedek Nagy <benedek@bndk.club>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.1-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1622,13 +1622,6 @@ msgstr ""
 "neved, válaszként az aktuális IP-címedet fogja megkapni."
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
-#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
-#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
-#| "freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1636,8 +1629,8 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Ha ingyenes dinamikus DNS fiókot keresel, használhatod az ingyenes GnuDIP "
-"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank"
-"\">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
+"szolgáltatást a <a href=\"https://ddns.freedombox.org).\" target=\"_blank\""
+">ddns.freedombox.org</a> címen vagy az ingyenes frissítési URL alapú "
 "szolgáltatást a <a href=\"http://freedns.afraid.org/\" target=\"_blank\"> "
 "freedns.afraid.org</a> címen."
 
@@ -1725,10 +1718,8 @@ msgid "GnuDIP"
 msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
-#, fuzzy
-#| msgid "other update URL"
 msgid "Other update URL"
-msgstr "egyéb frissítési URL"
+msgstr "Egyéb frissítési URL"
 
 #: plinth/modules/dynamicdns/forms.py:59
 msgid "Service Type"
@@ -1772,10 +1763,8 @@ msgid "Use IPv6 instead of IPv4"
 msgstr "IPv6 használata IPv4 helyett"
 
 #: plinth/modules/dynamicdns/forms.py:123
-#, fuzzy
-#| msgid "secrets required"
 msgid "This field is required."
-msgstr "titkosítás szükséges"
+msgstr "Ezt a mezőt ki kell tölteni."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/firewall/templates/firewall.html:16
@@ -1802,50 +1791,36 @@ msgid "Last update"
 msgstr "Legutolsó frissítés"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
-#, fuzzy
-#| msgid "IP address"
 msgid "IP Address"
 msgstr "IP-cím"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
-#, fuzzy
-#| msgid "Access"
 msgid "Success"
-msgstr "Hozzáférés"
+msgstr "Rendben"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:36
-#, fuzzy
-#| msgid "failed"
 msgid "Failed"
-msgstr "sikertelen"
+msgstr "Sikertelen"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:52
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No status available."
-msgstr "Nincs elérhető könyvtár."
+msgstr "Nincs elérhető állapot."
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Kapcsolat neve"
+msgstr "A kapcsolat ideje lejárt"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
-msgstr ""
+msgstr "Szerver nem található"
 
 #: plinth/modules/dynamicdns/views.py:27
-#, fuzzy
-#| msgid "Delete connection"
 msgid "Server refused connection"
-msgstr "Kapcsolat törlése"
+msgstr "A szerver visszautasította a kapcsolatot"
 
 #: plinth/modules/dynamicdns/views.py:28
-#, fuzzy
-#| msgid "Auto-update"
 msgid "Already up-to-date"
-msgstr "Automatikus frissítés"
+msgstr "Már frissítve"
 
 #: plinth/modules/ejabberd/__init__.py:31
 msgid ""
@@ -2001,6 +1976,10 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
+"Ez egy komplett e-mail szervermegoldás, amely a Postfix, Dovecot és Rspamd "
+"szoftverek használja. A Postfix küldi és fogadja a leveleket, a Dovecot "
+"lehetővé teszi az e-mail kliensek hozzáférését a leveleidhez az IMAP és POP3 "
+"protokollokat használva, az Rspamd pedig a kéretlen levelek szűrését végzi."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -2011,6 +1990,12 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
+"A {box_name} összes felhasználója kap egy e-mail címet a ebben a formában: "
+"felhasznalonev@pelda.com. Minden olyan címről is kapnak majd leveleket, "
+"amelyek a következő képpen néznek ki: felhasznalonev+foo@pelda.com. A "
+"felhasználók továbbá létrehozhatnak e-mail álneveket is. A szükséges "
+"álnevek, mint pl. a \"postmaster\" az első admin felhasználóhoz tartozva "
+"automatikusan létrejönnek az alkalmazás telepítése során."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -2029,23 +2014,19 @@ msgstr ""
 
 #: plinth/modules/email/__init__.py:58
 msgid "Postfix/Dovecot"
-msgstr ""
+msgstr "Postfix/Dovecot"
 
 #: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "E-mail-szerver"
 
 #: plinth/modules/email/__init__.py:80
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "My Email Aliases"
-msgstr "Álnevek kezelése"
+msgstr "E-mail álneveim"
 
 #: plinth/modules/email/__init__.py:81
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "Manage Aliases for Mailbox"
-msgstr "Álnevek kezelése"
+msgstr "A Mailbox álneveinek kezelése"
 
 #: plinth/modules/email/forms.py:25
 msgid "Primary domain"
@@ -2119,29 +2100,31 @@ msgstr "Spam kezelése"
 
 #: plinth/modules/email/templates/email.html:22
 msgid "DNS Records"
-msgstr ""
+msgstr "DNS-rekordok"
 
 #: plinth/modules/email/templates/email.html:25
 msgid ""
 "The following DNS records must be added manually on your primary domain for "
 "the mail server to work properly."
 msgstr ""
+"Az e-mail szerver helyes működéséhez a következő DNS-rekordokat kézileg "
+"hozzá kell adnod az elsődleges domained beállításaihoz."
 
 #: plinth/modules/email/templates/email.html:36
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: plinth/modules/email/templates/email.html:37
 msgid "Class"
-msgstr ""
+msgstr "Osztály"
 
 #: plinth/modules/email/templates/email.html:39
 msgid "Priority"
-msgstr ""
+msgstr "Prioritás"
 
 #: plinth/modules/email/templates/email.html:40
 msgid "Weight"
-msgstr ""
+msgstr "Súly"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
@@ -2151,7 +2134,7 @@ msgstr "Port"
 
 #: plinth/modules/email/templates/email.html:42
 msgid "Host/Target/Value"
-msgstr ""
+msgstr "Állomás/Cél/Érték"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -7206,11 +7189,6 @@ msgid "Frequent feature updates activated."
 msgstr "Gyakori funkciófrissítések aktiválva."
 
 #: plinth/modules/users/__init__.py:29
-#, fuzzy
-#| msgid ""
-#| "Create and managed user accounts. These accounts serve as centralized "
-#| "authentication mechanism for most apps. Some apps further require a user "
-#| "account to be part of a group to authorize the user to access the app."
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
