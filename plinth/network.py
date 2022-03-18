@@ -111,7 +111,9 @@ def get_status_from_connection(connection):
 
     if status['type'] == '802-11-wireless':
         setting_wireless = connection.get_setting_wireless()
-        status['wireless']['ssid'] = setting_wireless.get_ssid().get_data()
+        status['wireless']['ssid'] = setting_wireless.get_ssid().get_data(
+        ).decode()
+        status['wireless']['mode'] = setting_wireless.get_mode()
 
     return status
 
