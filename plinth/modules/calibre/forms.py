@@ -16,6 +16,9 @@ class CreateLibraryForm(forms.Form):
 
     name = forms.CharField(
         label=_('Name of the new library'), strip=True,
+        help_text=_('Only letters of the English alphabet and numbers, '
+                    'without spaces or special characters. Example: '
+                    'My_Library_2000'),
         validators=[validators.RegexValidator(r'^[A-Za-z0-9_.-]+$')])
 
     def clean_name(self):
