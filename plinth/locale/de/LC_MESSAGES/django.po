@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"POT-Creation-Date: 2022-03-28 20:05-0400\n"
 "PO-Revision-Date: 2022-03-04 12:58+0000\n"
 "Last-Translator: Johannes Keyser <joke@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -1093,7 +1093,13 @@ msgstr "E-Book-Bibliothek"
 msgid "Name of the new library"
 msgstr "Name der neuen Bibliothek"
 
-#: plinth/modules/calibre/forms.py:27
+#: plinth/modules/calibre/forms.py:19
+msgid ""
+"Only letters of the English alphabet and numbers, without spaces or special "
+"characters. Example: My_Library_2000"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:30
 msgid "A library with this name already exists."
 msgstr "Eine Bibliothek mit diesem Namen ist bereits vorhanden."
 
@@ -1997,9 +2003,9 @@ msgid ""
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
 "Dies ist eine vollständige E-Mail-Serverlösung, die Postfix, Dovecot und "
-"Rspamd verwendet. Postfix sendet und empfängt E-Mails. Dovecot ermöglicht E"
-"-Mail-Clients den Zugriff auf Ihre Mailbox über IMAP und POP3. Rspamd "
-"kümmert sich um Spam."
+"Rspamd verwendet. Postfix sendet und empfängt E-Mails. Dovecot ermöglicht E-"
+"Mail-Clients den Zugriff auf Ihre Mailbox über IMAP und POP3. Rspamd kümmert "
+"sich um Spam."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -2011,9 +2017,9 @@ msgid ""
 "to the first admin user."
 msgstr ""
 "Jeder Benutzer der {box_name} erhält eine E-Mail-Adresse wie benutzer@meine-"
-"domain.beispiel. Man erhält auch E-Mails von allen Adressen wie benutzer+bla"
-"@meine-domain.beispiel. Außerdem können alle Benutzer ihrer E-Mail-Adresse "
-"Aliasnamen hinzufügen. Notwendige Aliase wie \"postmaster\" werden "
+"domain.beispiel. Man erhält auch E-Mails von allen Adressen wie benutzer"
+"+bla@meine-domain.beispiel. Außerdem können alle Benutzer ihrer E-Mail-"
+"Adresse Aliasnamen hinzufügen. Notwendige Aliase wie \"postmaster\" werden "
 "automatisch erstellt und verweisen auf den ersten Admin-Benutzer."
 
 #: plinth/modules/email/__init__.py:37
@@ -2899,7 +2905,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki und Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:75
+#: plinth/modules/ikiwiki/__init__.py:77
 msgid "View and edit wiki applications"
 msgstr "Wiki-Anwendungen ansehen und bearbeiten"
 
@@ -4331,7 +4337,7 @@ msgid "Create Connection"
 msgstr "Verbindung anlegen"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:516
+#: plinth/modules/networks/views.py:517
 msgid "Delete Connection"
 msgstr "Verbindung löschen"
 
@@ -4378,7 +4384,7 @@ msgid "Computer"
 msgstr "Computer"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:236 plinth/modules/networks/views.py:320
+#: plinth/modules/networks/views.py:237 plinth/modules/networks/views.py:321
 msgid "Edit Connection"
 msgstr "Verbindung bearbeiten"
 
@@ -4388,13 +4394,13 @@ msgstr "Verbindungen"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:369
+#: plinth/modules/networks/views.py:370
 msgid "Nearby Wi-Fi Networks"
 msgstr "WLANs in der Nähe"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:393
+#: plinth/modules/networks/views.py:394
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Verbindung hinzufügen"
@@ -4805,65 +4811,65 @@ msgstr "Netzwerkverbindungen"
 msgid "Cannot show connection: Connection not found."
 msgstr "Kann Verbindung nicht anzeigen: Verbindung nicht gefunden."
 
-#: plinth/modules/networks/views.py:194
+#: plinth/modules/networks/views.py:195
 msgid "Connection Information"
 msgstr "Verbindungsinformationen"
 
-#: plinth/modules/networks/views.py:208
+#: plinth/modules/networks/views.py:209
 msgid "Cannot edit connection: Connection not found."
 msgstr "Kann Verbindung nicht bearbeiten: Verbindung nicht gefunden."
 
-#: plinth/modules/networks/views.py:214
+#: plinth/modules/networks/views.py:215
 msgid "This type of connection is not yet understood."
 msgstr "Dieser Verbindungstyp ist noch nicht bekannt."
 
-#: plinth/modules/networks/views.py:332
+#: plinth/modules/networks/views.py:333
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Verbindung {name} aktiviert."
 
-#: plinth/modules/networks/views.py:336
+#: plinth/modules/networks/views.py:337
 msgid "Failed to activate connection: Connection not found."
 msgstr "Fehler beim Einschalten der Verbindung: Verbindung nicht gefunden."
 
-#: plinth/modules/networks/views.py:342
+#: plinth/modules/networks/views.py:343
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Fehler beim Einschalten der Verbindung {name}: Kein geeignetes Gerät "
 "verfügbar."
 
-#: plinth/modules/networks/views.py:355
+#: plinth/modules/networks/views.py:356
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Verbindung {name} ausgeschaltet."
 
-#: plinth/modules/networks/views.py:359
+#: plinth/modules/networks/views.py:360
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Konnte Verbindung nicht ausschalten: Verbindung nicht gefunden."
 
-#: plinth/modules/networks/views.py:411
+#: plinth/modules/networks/views.py:412
 msgid "Adding New Generic Connection"
 msgstr "Neue generische Verbindung wird hinzugefügt"
 
-#: plinth/modules/networks/views.py:429
+#: plinth/modules/networks/views.py:430
 msgid "Adding New Ethernet Connection"
 msgstr "Neue Ethernet-Verbindung wird hinzugefügt"
 
-#: plinth/modules/networks/views.py:447
+#: plinth/modules/networks/views.py:448
 msgid "Adding New PPPoE Connection"
 msgstr "Neue PPPoE-Verbindung wird hinzugefügt"
 
-#: plinth/modules/networks/views.py:482
+#: plinth/modules/networks/views.py:483
 msgid "Adding New Wi-Fi Connection"
 msgstr "WLAN-Verbindung wird hinzugefügt"
 
-#: plinth/modules/networks/views.py:497
+#: plinth/modules/networks/views.py:498
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Verbindung {name} gelöscht."
 
-#: plinth/modules/networks/views.py:501 plinth/modules/networks/views.py:511
+#: plinth/modules/networks/views.py:502 plinth/modules/networks/views.py:512
 msgid "Failed to delete connection: Connection not found."
 msgstr "Konnte Verbindung nicht löschen: Verbindung nicht gefunden."
 

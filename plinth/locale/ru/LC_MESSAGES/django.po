@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 08:06-0500\n"
+"POT-Creation-Date: 2022-03-28 20:05-0400\n"
 "PO-Revision-Date: 2022-03-20 14:17+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -1080,7 +1080,13 @@ msgstr "Электронная библиотека"
 msgid "Name of the new library"
 msgstr "Название новой библиотеки"
 
-#: plinth/modules/calibre/forms.py:27
+#: plinth/modules/calibre/forms.py:19
+msgid ""
+"Only letters of the English alphabet and numbers, without spaces or special "
+"characters. Example: My_Library_2000"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:30
 msgid "A library with this name already exists."
 msgstr "Библиотека с таким названием уже существует."
 
@@ -1976,12 +1982,12 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
-"Каждый пользователь {box_name} получает почтовый адрес наподобие \"user"
-"@mydomain.example\". Также он может получать почту с адресов типа \"user"
-"+foo@mydomain.example\". Кроме того, они могут выполнять переадресацию к "
-"почтовым адресам. Нужные адреса для переадресации, такие как \"postmaster\", "
-"создаются автоматически и переадресуют на адрес администратора, созданный "
-"первым."
+"Каждый пользователь {box_name} получает почтовый адрес наподобие "
+"\"user@mydomain.example\". Также он может получать почту с адресов типа "
+"\"user+foo@mydomain.example\". Кроме того, они могут выполнять переадресацию "
+"к почтовым адресам. Нужные адреса для переадресации, такие как \"postmaster"
+"\", создаются автоматически и переадресуют на адрес администратора, "
+"созданный первым."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -2859,7 +2865,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Вики и Блог"
 
-#: plinth/modules/ikiwiki/__init__.py:75
+#: plinth/modules/ikiwiki/__init__.py:77
 msgid "View and edit wiki applications"
 msgstr "Просмотр и редактирование приложений Wiki"
 
@@ -4273,7 +4279,7 @@ msgid "Create Connection"
 msgstr "Создание подключения"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:516
+#: plinth/modules/networks/views.py:517
 msgid "Delete Connection"
 msgstr "Удаление подключения"
 
@@ -4320,7 +4326,7 @@ msgid "Computer"
 msgstr "Компьютер"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:236 plinth/modules/networks/views.py:320
+#: plinth/modules/networks/views.py:237 plinth/modules/networks/views.py:321
 msgid "Edit Connection"
 msgstr "Редактирование подключения"
 
@@ -4330,13 +4336,13 @@ msgstr "Подключения"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:369
+#: plinth/modules/networks/views.py:370
 msgid "Nearby Wi-Fi Networks"
 msgstr "Соседние сети Wi-Fi"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:393
+#: plinth/modules/networks/views.py:394
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Добавить подключение"
@@ -4744,63 +4750,63 @@ msgstr "Сетевые подключения"
 msgid "Cannot show connection: Connection not found."
 msgstr "Не удается показать подключение: соединение не найдено."
 
-#: plinth/modules/networks/views.py:194
+#: plinth/modules/networks/views.py:195
 msgid "Connection Information"
 msgstr "Сведения о подключении"
 
-#: plinth/modules/networks/views.py:208
+#: plinth/modules/networks/views.py:209
 msgid "Cannot edit connection: Connection not found."
 msgstr "Нельзя редактировать подключение: подключение не найдено."
 
-#: plinth/modules/networks/views.py:214
+#: plinth/modules/networks/views.py:215
 msgid "This type of connection is not yet understood."
 msgstr "Этот тип подключения еще не понятен."
 
-#: plinth/modules/networks/views.py:332
+#: plinth/modules/networks/views.py:333
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Установленное подключение {name}."
 
-#: plinth/modules/networks/views.py:336
+#: plinth/modules/networks/views.py:337
 msgid "Failed to activate connection: Connection not found."
 msgstr "Невозможно установить подключение: Подключение не найдено."
 
-#: plinth/modules/networks/views.py:342
+#: plinth/modules/networks/views.py:343
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Не удалось установить подключение {name}: Нет подходящего устройства."
 
-#: plinth/modules/networks/views.py:355
+#: plinth/modules/networks/views.py:356
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Разорвано подключение {name}."
 
-#: plinth/modules/networks/views.py:359
+#: plinth/modules/networks/views.py:360
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Не удалось разорвать подключение: соединение не найдено."
 
-#: plinth/modules/networks/views.py:411
+#: plinth/modules/networks/views.py:412
 msgid "Adding New Generic Connection"
 msgstr "Добавление нового общего подключения"
 
-#: plinth/modules/networks/views.py:429
+#: plinth/modules/networks/views.py:430
 msgid "Adding New Ethernet Connection"
 msgstr "Добавление нового подключения Ethernet"
 
-#: plinth/modules/networks/views.py:447
+#: plinth/modules/networks/views.py:448
 msgid "Adding New PPPoE Connection"
 msgstr "Добавление нового подключения PPPoE"
 
-#: plinth/modules/networks/views.py:482
+#: plinth/modules/networks/views.py:483
 msgid "Adding New Wi-Fi Connection"
 msgstr "Добавление нового подключения Wi-Fi"
 
-#: plinth/modules/networks/views.py:497
+#: plinth/modules/networks/views.py:498
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Подключение {name} удалено."
 
-#: plinth/modules/networks/views.py:501 plinth/modules/networks/views.py:511
+#: plinth/modules/networks/views.py:502 plinth/modules/networks/views.py:512
 msgid "Failed to delete connection: Connection not found."
 msgstr "Не удалось удалить подключение: соединение не найдено."
 
