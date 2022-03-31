@@ -60,7 +60,9 @@ class IkiwikiApp(app_module.App):
 
         packages = Packages('packages-ikiwiki', [
             'ikiwiki', 'libdigest-sha-perl', 'libxml-writer-perl',
-            'xapian-omega', 'libsearch-xapian-perl', 'libimage-magick-perl'
+            'xapian-omega', 'libsearch-xapian-perl', 'libimage-magick-perl',
+            'gcc', 'git', 'librpc-xml-perl', 'libcgi-session-perl',
+            'libcgi-formbuilder-perl', 'libc6-dev'
         ])
         self.add(packages)
 

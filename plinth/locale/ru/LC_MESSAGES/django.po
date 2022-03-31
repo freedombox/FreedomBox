@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 08:06-0500\n"
-"PO-Revision-Date: 2022-02-22 19:54+0000\n"
+"POT-Creation-Date: 2022-03-28 20:05-0400\n"
+"PO-Revision-Date: 2022-03-20 14:17+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr "Страница источника"
+msgstr "Исходный код страницы"
 
 #: plinth/context_processors.py:23 plinth/views.py:84
 msgid "FreedomBox"
@@ -31,7 +31,7 @@ msgstr "FreedomBox"
 #: plinth/daemon.py:104
 #, python-brace-format
 msgid "Service {service_name} is running"
-msgstr "Cлужба {service_name} выполняется"
+msgstr "Выполняется служба {service_name}"
 
 #: plinth/daemon.py:158
 #, python-brace-format
@@ -1080,7 +1080,13 @@ msgstr "Электронная библиотека"
 msgid "Name of the new library"
 msgstr "Название новой библиотеки"
 
-#: plinth/modules/calibre/forms.py:27
+#: plinth/modules/calibre/forms.py:19
+msgid ""
+"Only letters of the English alphabet and numbers, without spaces or special "
+"characters. Example: My_Library_2000"
+msgstr ""
+
+#: plinth/modules/calibre/forms.py:30
 msgid "A library with this name already exists."
 msgstr "Библиотека с таким названием уже существует."
 
@@ -1963,6 +1969,9 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
+"Это полноценный почтовый сервер, использующий Postfix, Dovecot и Rspamd. "
+"Postfix отправляет и принимает почту. Dovecot предоставляет доступ почтовым "
+"клиентам по протоколоам IMAP и POP3. Rspamd фильтрует спам."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -1973,6 +1982,12 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
+"Каждый пользователь {box_name} получает почтовый адрес наподобие "
+"\"user@mydomain.example\". Также он может получать почту с адресов типа "
+"\"user+foo@mydomain.example\". Кроме того, они могут выполнять переадресацию "
+"к почтовым адресам. Нужные адреса для переадресации, такие как \"postmaster"
+"\", создаются автоматически и переадресуют на адрес администратора, "
+"созданный первым."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -1992,23 +2007,19 @@ msgstr ""
 
 #: plinth/modules/email/__init__.py:58
 msgid "Postfix/Dovecot"
-msgstr ""
+msgstr "Postfix/Dovecot"
 
 #: plinth/modules/email/__init__.py:60
 msgid "Email Server"
 msgstr "Сервер электронной почты"
 
 #: plinth/modules/email/__init__.py:80
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "My Email Aliases"
-msgstr "Управление псевдонимами"
+msgstr "Переадресация"
 
 #: plinth/modules/email/__init__.py:81
-#, fuzzy
-#| msgid "Manage Aliases"
 msgid "Manage Aliases for Mailbox"
-msgstr "Управление псевдонимами"
+msgstr "Управление переадресацией"
 
 #: plinth/modules/email/forms.py:25
 msgid "Primary domain"
@@ -2082,29 +2093,33 @@ msgstr "Управление спамом"
 
 #: plinth/modules/email/templates/email.html:22
 msgid "DNS Records"
-msgstr ""
+msgstr "Записи DNS"
 
 #: plinth/modules/email/templates/email.html:25
+#, fuzzy
 msgid ""
 "The following DNS records must be added manually on your primary domain for "
 "the mail server to work properly."
 msgstr ""
+"Данные записи DNS должны быть добавлены для вашего домена для правильной "
+"работы почтового сервера."
 
 #: plinth/modules/email/templates/email.html:36
 msgid "TTL"
-msgstr ""
+msgstr "TTL"
 
 #: plinth/modules/email/templates/email.html:37
+#, fuzzy
 msgid "Class"
-msgstr ""
+msgstr "Класс"
 
 #: plinth/modules/email/templates/email.html:39
 msgid "Priority"
-msgstr ""
+msgstr "Приоритет"
 
 #: plinth/modules/email/templates/email.html:40
 msgid "Weight"
-msgstr ""
+msgstr "Вес"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
@@ -2114,7 +2129,7 @@ msgstr "Порт"
 
 #: plinth/modules/email/templates/email.html:42
 msgid "Host/Target/Value"
-msgstr ""
+msgstr "Хост/Цель/Значение"
 
 #: plinth/modules/firewall/__init__.py:26
 #, python-brace-format
@@ -2850,7 +2865,7 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Вики и Блог"
 
-#: plinth/modules/ikiwiki/__init__.py:75
+#: plinth/modules/ikiwiki/__init__.py:77
 msgid "View and edit wiki applications"
 msgstr "Просмотр и редактирование приложений Wiki"
 
@@ -4264,7 +4279,7 @@ msgid "Create Connection"
 msgstr "Создание подключения"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:516
+#: plinth/modules/networks/views.py:517
 msgid "Delete Connection"
 msgstr "Удаление подключения"
 
@@ -4311,7 +4326,7 @@ msgid "Computer"
 msgstr "Компьютер"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:236 plinth/modules/networks/views.py:320
+#: plinth/modules/networks/views.py:237 plinth/modules/networks/views.py:321
 msgid "Edit Connection"
 msgstr "Редактирование подключения"
 
@@ -4321,13 +4336,13 @@ msgstr "Подключения"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:369
+#: plinth/modules/networks/views.py:370
 msgid "Nearby Wi-Fi Networks"
 msgstr "Соседние сети Wi-Fi"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:393
+#: plinth/modules/networks/views.py:394
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Добавить подключение"
@@ -4735,63 +4750,63 @@ msgstr "Сетевые подключения"
 msgid "Cannot show connection: Connection not found."
 msgstr "Не удается показать подключение: соединение не найдено."
 
-#: plinth/modules/networks/views.py:194
+#: plinth/modules/networks/views.py:195
 msgid "Connection Information"
 msgstr "Сведения о подключении"
 
-#: plinth/modules/networks/views.py:208
+#: plinth/modules/networks/views.py:209
 msgid "Cannot edit connection: Connection not found."
 msgstr "Нельзя редактировать подключение: подключение не найдено."
 
-#: plinth/modules/networks/views.py:214
+#: plinth/modules/networks/views.py:215
 msgid "This type of connection is not yet understood."
 msgstr "Этот тип подключения еще не понятен."
 
-#: plinth/modules/networks/views.py:332
+#: plinth/modules/networks/views.py:333
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Установленное подключение {name}."
 
-#: plinth/modules/networks/views.py:336
+#: plinth/modules/networks/views.py:337
 msgid "Failed to activate connection: Connection not found."
 msgstr "Невозможно установить подключение: Подключение не найдено."
 
-#: plinth/modules/networks/views.py:342
+#: plinth/modules/networks/views.py:343
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Не удалось установить подключение {name}: Нет подходящего устройства."
 
-#: plinth/modules/networks/views.py:355
+#: plinth/modules/networks/views.py:356
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Разорвано подключение {name}."
 
-#: plinth/modules/networks/views.py:359
+#: plinth/modules/networks/views.py:360
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Не удалось разорвать подключение: соединение не найдено."
 
-#: plinth/modules/networks/views.py:411
+#: plinth/modules/networks/views.py:412
 msgid "Adding New Generic Connection"
 msgstr "Добавление нового общего подключения"
 
-#: plinth/modules/networks/views.py:429
+#: plinth/modules/networks/views.py:430
 msgid "Adding New Ethernet Connection"
 msgstr "Добавление нового подключения Ethernet"
 
-#: plinth/modules/networks/views.py:447
+#: plinth/modules/networks/views.py:448
 msgid "Adding New PPPoE Connection"
 msgstr "Добавление нового подключения PPPoE"
 
-#: plinth/modules/networks/views.py:482
+#: plinth/modules/networks/views.py:483
 msgid "Adding New Wi-Fi Connection"
 msgstr "Добавление нового подключения Wi-Fi"
 
-#: plinth/modules/networks/views.py:497
+#: plinth/modules/networks/views.py:498
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Подключение {name} удалено."
 
-#: plinth/modules/networks/views.py:501 plinth/modules/networks/views.py:511
+#: plinth/modules/networks/views.py:502 plinth/modules/networks/views.py:512
 msgid "Failed to delete connection: Connection not found."
 msgstr "Не удалось удалить подключение: соединение не найдено."
 

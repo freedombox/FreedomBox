@@ -187,7 +187,8 @@ def show(request, uuid):
             device, connection_status['wireless']['ssid'])
         connection_status['wireless'][
             'mode_string'] = WIRELESS_MODE_STRINGS.get(
-                connection['wireless']['mode'], connection['wireless']['mode'])
+                connection_status['wireless']['mode'],
+                connection_status['wireless']['mode'])
 
     return TemplateResponse(
         request, 'connection_show.html', {
