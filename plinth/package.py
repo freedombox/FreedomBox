@@ -145,23 +145,28 @@ class Packages(app.FollowerComponent):
         self.conflicts_action = conflicts_action
 
     @property
-    def packages(self) -> list[PackageExpression]:
-        """Return the list of packages and package expressions managed by this
-        component."""
+    def package_expressions(self) -> list[PackageExpression]:
+        """Return the list of managed packages as expressions."""
         return self._packages
 
-    def managed_packages(self) -> list[str]:
+    @property
+    def possible_packages(self) -> list[str]:
         """Return the list of possible packages before resolving."""
-        managed_packages: list[str] = []
-        for package in self.packages:
-            managed_package = package.possible()
-            managed_packages.extend(managed_package)
+        packages: list[str] = []
+        for package_expression in self.package_expressions:
+            packages.extend(package_expression.possible())
 
-        return managed_packages
+        return packages
 
-    def resolve(self) -> list[str]:
-        """Return the resolved list of packages to install."""
-        return [package.actual() for package in self.packages]
+    def get_actual_packages(self) -> list[str]:
+        """Return the computed list of packages to install.
+
+        Raise MissingPackageError if a required package is not available.
+        """
+        return [
+            package_expression.actual()
+            for package_expression in self.package_expressions
+        ]
 
     def setup(self, old_version):
         """Install the packages."""
@@ -169,13 +174,14 @@ class Packages(app.FollowerComponent):
         module_name = self.app.__module__
         module = sys.modules[module_name]
         helper = module.setup_helper
-        helper.install(self.resolve(), skip_recommends=self.skip_recommends)
+        helper.install(self.get_actual_packages(),
+                       skip_recommends=self.skip_recommends)
 
     def diagnose(self):
         """Run diagnostics and return results."""
         results = super().diagnose()
         cache = apt.Cache()
-        for package_expression in self.packages:
+        for package_expression in self.package_expressions:
             try:
                 package_name = package_expression.actual()
             except MissingPackageError:
@@ -223,7 +229,7 @@ class Packages(app.FollowerComponent):
 
         # List of all packages from all Package components
         try:
-            self.resolve()
+            self.get_actual_packages()
         except MissingPackageError:
             return True
 

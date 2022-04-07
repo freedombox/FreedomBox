@@ -53,7 +53,7 @@ class TestPackageExpressions(unittest.TestCase):
 def test_packages_init():
     """Test initialization of packages component."""
     component = Packages('test-component', ['foo', 'bar'])
-    assert component.managed_packages() == ['foo', 'bar']
+    assert component.possible_packages == ['foo', 'bar']
     assert component.component_id == 'test-component'
     assert not component.skip_recommends
     assert component.conflicts is None
@@ -65,25 +65,25 @@ def test_packages_init():
     component = Packages('test-component', [], skip_recommends=True,
                          conflicts=['conflict1', 'conflict2'],
                          conflicts_action=Packages.ConflictsAction.IGNORE)
-    assert component.managed_packages() == []
+    assert component.possible_packages == []
     assert component.skip_recommends
     assert component.conflicts == ['conflict1', 'conflict2']
     assert component.conflicts_action == Packages.ConflictsAction.IGNORE
 
 
-def test_packages_resolve():
-    """Test resolving of package expressions."""
+def test_packages_get_actual_packages():
+    """Test resolving of package expressions to actual packages."""
     component = Packages('test-component', ['python3'])
-    assert component.resolve() == ['python3']
+    assert component.get_actual_packages() == ['python3']
 
     component = Packages('test-component',
                          [Package('unknown-package') | Package('python3')])
-    assert component.resolve() == ['python3']
+    assert component.get_actual_packages() == ['python3']
 
     component = Packages('test-component', [], skip_recommends=True,
                          conflicts=['conflict1', 'conflict2'],
                          conflicts_action=Packages.ConflictsAction.IGNORE)
-    assert component.resolve() == []
+    assert component.get_actual_packages() == []
 
 
 def test_packages_setup():

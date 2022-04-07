@@ -132,7 +132,7 @@ def get_apps_report():
         components = app_.get_components_of_type(Packages)
         packages = []
         for component in components:
-            packages += component.packages
+            packages += component.possible_packages
 
         if not packages:
             continue  # app has no managed packages

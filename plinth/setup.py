@@ -166,8 +166,8 @@ def list_dependencies(app_ids=None, essential=False):
             continue
 
         for component in app.get_components_of_type(Packages):
-            for package_name in component.packages:
-                print(package_name)
+            for package_expression in component.package_expressions:
+                print(package_expression)
 
 
 def run_setup_in_background():
@@ -500,9 +500,9 @@ class ForceUpgrader():
                 continue
 
             for component in app.get_components_of_type(Packages):
-                upgradable_packages.update(component.packages)
+                upgradable_packages.update(component.possible_packages)
 
-                for managed_package in component.packages:
+                for managed_package in component.possible_packages:
                     package_apps_map[managed_package].add(app.app_id)
 
         return upgradable_packages.intersection(
