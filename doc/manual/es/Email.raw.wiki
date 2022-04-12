@@ -1,0 +1,222 @@
+#language es
+
+<<Include(FreedomBox/Manual/Email, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Postfix/Dovecot/Rspamd (Servidor de correo electrónico) ==
+
+'''Disponible desde''': 22.6
+
+=== Acerca del servidor de correo electrónico ===
+
+!FreedomBox proporciona una solución completa para servir correo electrónico empleando Postfix, Dovecot, y Rspamd. Postfix envía y recibe correo. Dovecot permite a los clientes de correo acceder a tu buzón empleando los protocolos IMAP y POP3. Rspamd trata el correo indeseado. Esta solución ofrece las siguientes funcionalidades:
+
+  * Enviar y recibir correo electrónico
+    * Interoperar con otros servidores de correo electrónico
+    * Evitar mediante SPF que otros suplanten tu dirección de correo
+    * Firmar todo to correo saliente mediante DKIM
+    * Recibir informes de intentos de suplantación mediante DMARC
+  * Acceder al correo fácilmente
+    * Acceder al correo desde cualquier dispositivo mediante el lector de correo web [[FreedomBox/Manual/Roundcube|Roundcube]]
+    * Configurar clientes de correo sólo con introducir una dirección de correo electrónico y una contraseña
+    * Autoconfiguración con clientes que usen el esquema ''autoconf'', como Thunderbird
+    * Autoconfiguración con clientes que usen el esquema  ''DNS''
+    * Guardar los mensajes en el servidor y acceder a ellos con múltiples clientes mediante IMAP
+    * Descargar los mensajes a un dispositivo local mediante POP3
+  * Direcciones de correo electrónico para todos tus usuarios
+    * Cada usuario registrado en tu !FreedomBox automaticamente obtiene una dirección de correo del tipo usuario@mi.dominio
+    * Cada usuario registrado obtiene psedónimos ilimitados automaticamente. usuario+proposito@mi.dominio apunta a usuario@mi.dominio
+    * Los usuarios pueden añadir pseudónimos por sí mismos. fulano@mi.dominio puede apuntar a usuario@mi.dominio
+    * Muchos pseudónimos habituales como info@mi.dominio y postmaster@mi.dominio apuntan a la dirección de correo del administrador.
+  * Filtrar mensajes en el servidor empleando filtros sieve
+    * Configurar contestadores automáticos (por ejemplo, para vacaciones) que funcionan aunque no estés usando tu cliente de correo
+    * Reenviar a direcciones externas/internas, guardar ficheros en carpetas, eliminar, etc.
+    * Administrar filtros en el servidor desde clientes de correo (por ejemplo, Thunderbird con la extensión sieve)
+  * Configuración automatica de certificados TLS obtenidos de Let's Encrypt
+    * Todos los servicios (SMTP, IMAP, POP3 y `manageseive`) vienen configurados para usar TLS/STARTTLS
+    * Los certificados se renuevan aproximadamente cada trimestre
+    * Con cada renovación, se instalan los certificados y se reinician los servicios
+  * Copias de respaldo y restauración de correos, pseudónimos y configuración
+    * Agendar respaldos periódicos
+  * Escanear correo entrante buscando correo indeseado
+    * Comprueba el mensaje contra varias listas negras
+    * Mueve el correo indeseado a la carpeta de basura (Junk)
+    * Marca el mensaje cuando la puntuación de indeseado alcanza un umbral
+    * Rechaza el mensaje a la recepción cuando la puntuación de indeseado alcanza un umbral más alto
+    * Entiende decisiones respecto al correo indeseado mediante cabeceras extendidas añadidas al mensaje
+    * Ver detalles del procesamiento de correo indeseado y administrar ajustes mediante la interfaz web de Rspamd
+    * Los administradores pueden ingresar a la interfaz web para correo indeseado mediante el ingreso único de !FreedomBox
+    * Enseñar a distinguir correo indeseado mediante mensajes de ejemplo
+
+=== Prerequisitos ===
+
+ * Deber poseer un dominio donde configurar registros DNS avanzados (MX, TXT y SRV). Se puede obtener un dominio alquilándolo a un registro o pagando a un proveedor de servicio de DNS dinámico (como  `freedns.afraid.org`). De momento los subdominios gratuitos que proporciona el servicio de DNS dinámico de la !FreedomBox Foundation en `ddns.freedombox.org` '''no''' sirven. Hay planes a futuro para soportarlos.
+
+ * Tu ISP o proveedor de nube debe permitir el tráfico de tu conexión a internet hacia servidores de correo externos. No pocos bloquean el tráfico saliente por el puerto 25. Esto impedirá al servidor enviar correos a direcciones externas. Muchos de estos proveedores te permiten solicitar que se desactive esta restricción. Para probar si esto es un problema en tu conexión a internet ejecuta la siguiente orden (deberías ver algo así):
+
+{{{
+usuario@miservidor:~$ nc freedombox.org 25
+220 mx.sflc.info ESMTP Postfix (Debian/GNU)
+^C
+}}}
+
+=== Instalar ===
+
+Ve al menú ''Apps''.
+
+Si ya está instalado, se mostrará el Servidor de Correo '''encima''' de la línea ''Deshabilitadas''. Probablemente no sea tu caso, pero si lo es salta este paso y vé al siguiente.
+
+ {{attachment:FreedomBox/Manual/Email/InstalledEmailServerInAppsMenu_en_V01.png|Servidor de correo habilitado|width=400}}
+
+
+Si el Servidor de Correo se muestra entre los iconos '''debajo''' de la línea ''Deshabilitadas'' es que no está instalado todavía o está deshabilitado. Este es el estado habitual de partida.
+
+ {{attachment:FreedomBox/Manual/Email/EmailServerAmongAppsMenu_en_V01.png|Servidor de correo deshabilitado|width=400}}
+
+
+Seleccionando la app ''Postfix/Dovecot'' llegas a su página. Si no está instalado se te mostrará el botón ''Instalar''. Haz clic en él.
+
+ {{attachment:FreedomBox/Manual/Email/InstallButtonInAppPage_en_V01.png|Página del servidor de correo|height=300}}
+
+Esto desencadenará el proceso de instalación.
+
+ {{attachment:FreedomBox/Manual/Email/Installing_en_V01.png           |Instalación instalando paquetes|height=200}}
+ {{attachment:FreedomBox/Manual/Email/InstallingPostInstall_en_V01.png|Instalación ejecutando postprocesos|height=200}}
+
+Tras instalar y configurar todos los paquetes de software !FreedomBox te dirá que la instalación tuvo éxito y la página de la app mostrará contenido adicional como información de puertos, formulario de configuración y ajustes de DNS.
+
+ {{attachment:FreedomBox/Manual/Email/AppJustInstalled_en_V01.png|Página del servidor de correo recién instalado|width=300}}
+
+ {{attachment:FreedomBox/Manual/Email/emailserverDNS_Records_en_V01.png|Página del servidor de correo recién instalado|width=300}}
+
+La próxima vez que vayas al menú ''Apps'' mostrará la app habilitada (por encima de la línea ''deshabilitadas'').
+
+=== Configurar el servidor de correo ===
+
+ 1. Si quieres enviar y recibir correo a/de usuarios de otros servidores en Internet necesitas un dominio en condiciones. Como se explica en la sección Prerequisitos, o alquilas uno a un registro o pagas a un proveedor de servicio de DNS dinámico. Si alquilaste un dominio a un registro añádelo en la página Sistema &rarr; Configuración. Si es un DNS dinámico configuralo en la página Sistema &rarr; Cliente DNS dinámico.
+
+ 1. Cuando se añade un dominio a !FreedomBox se obtiene automáticamente un certificado TLS para dicho dominio. Este certificado se emplea entonces para comunicaciones cifradas con todos los servicios configurados con el dominio. Vé a la sección Sistema, página de Let's Encrypt y verifica que el certificado se haya obtenido con éxito para el dominio. Si no, haz clic en el botón Obtener y resuelve los problemas que surjan. Para obtener el certificado tu !FreedomBox tiene que ser accesible desde Internet y tu router, si lo hay, tiene que estar configurado para redirigirle el tráfico de los puertos web (80 y 443).
+
+ 1. Tras añadir un dominio a !FreedomBox, visita la página del Servidor de Correo. En la sección Configuración selecciona el dominio configurado como dominio primario para enviar y recibir correo electrónico.
+
+ 1. Tras establecer el dominio primario aparecerá información en la sección Registros DNS de la página. Estos son los registros que hay que ajustar manualmente en el dominio. Ingresa el interfaz web de tu proveedor de DNS para administrar los registros DNS de tu dominio. Introduce allí todas las entradas que muestra la tabla de registros DNS.
+
+   * La longitud del valor del registro DNS para DKIM excede los 255 caracteres. Típicamente hay que romperlo en una serie de valores entrecomillados con comillas dobles y separados por espacios. Esto es lo que hace !FreedomBox. Si tu proveedor de DNS tiene un modo diferente para introducir estos valores, consulta su documentación.
+
+   * Todos los valores se suponen "bajo" el dominio que estás ajustando pero se puede proporcionar un valor autocontenido. Por ejemplo, el valor "Dominio" de "dkim._domainkey" significa "dkim._domainkey.mi.dominio.". Usa este formato si fuera necesario.
+
+ 1. Instala la app [[es/FreedomBox/Manual/Roundcube|Roundcube]] si quieres acceder a los mensajes mediante una interfaz web. En la configuración de Roundcube asegurate de habilitar la opción de "Usar solo el servidor de correo local". Esto oculta el campo del servidor de la página de login y hace que la app funcione sin más configuración.
+
+=== Usar el servidor de correo ===
+
+Como usuario puedes:
+
+ * Empezar a enviar y recibir correos electrónicos empleando la mayoría de clientes de correo.
+ * Crear y/o administrar tus pseudónimos en la solapa ''Pseudónimos'' de la página ''Servidor de correo'' del interfaz web de !FreedomBox.
+ * Administrar filtros en el servidor empleando sieve.
+
+Una vez que un administrador ha establecido la configuración de [[es/FreedomBox/Manual/Roundcube|RoundCube]] para que funcione con el servidor de correo de !FreedomBox puedes ingresar a !RoundCube empezar a enviar y recibir correos electrónicos sin necesitar más clientes de correo. Usa las mismas credenciales para ingresar a !RoundCube que usas para ingresar al interfaz web de !FreedomBox. 
+
+==== Mediante el cliente web de correo de FreedomBox (RoundCube) ====
+
+!FreedomBox proporciona el cliente de correo electrónico [[es/FreedomBox/Manual/Roundcube|RoundCube]] como app opcional. Si se ha instalado !RoundCube antes que el servidor de correo hay una opción de hacerlo funcionar con el servidor de correo de !FreedomBox's. Una vez ambas apps estén instaladas, tienes una instalación de webmail completa.
+
+==== Mediante Thunderbird ====
+
+Abre Thunderbird. Ve a ''menú de hamburguesa &rarr; Nuevo &rarr; Cuenta de correo existente''. Introduce un nombre, la dirección de correo de !FreedomBox, y tu contraseña de !FreedomBox. Haz clic en Continuar.
+
+!FreedomBox implementa el endpoint de configuración automática de cuenta (AAC, Automatic Account Configuration) del que hará uso Thunderbird.
+ 
+ {{attachment:FreedomBox/Manual/Email/ThunderbirdAutoconfigSetup.png|Configuración de Thunderbird|width=300}}
+
+==== Configuración manual ====
+
+Dile a tu cliente de correo electrónico que use estos parámetros:
+
+ * '''Username:''' ''tu dirección de correo electrónico de !FreedomBox o solo la parte del nombre de usuario''
+ * '''Incoming mail:''' IMAPS, puerto 993, SSL forzoso, autenticación normal mediante contraseña
+ * '''Outgoing mail:''' SMTPS, puerto 465, SSL forzoso, autenticación normal mediante contraseña
+
+También soporta STARTTLS en el puerto de envío SMTP.
+
+ {{attachment:FreedomBox/Manual/Email/EmailServerClientConfig.png|Parámetros para el cliente de correo|width=300}}
+
+==== Pseudónimos de correo electrónico ====
+
+Los pseudónimos de correo electrónico son útiles para la privacidad. Ahora, como usuario del correo electrónico de !FreedomBox (no necesitas ser administrador) puedes tener direcciones de correo electrónico bajo tu control, ya sean temporales de usar y tirar o específicas. Puedes listar, crear y eliminar pseudónimos de correo electrónico desde el acceso directo ''Mis pseudónimos'' que hay en la página principal de !FreedomBox.
+
+{{attachment:FreedomBox/Manual/Email/EmailServerAliasesTile.png|Página de administración de pseudónimos|width=500}}
+ 
+{{attachment:FreedomBox/Manual/Email/EmailServerAliasesPage.png|Página de administración de pseudónimos|width=500}}
+
+Los mensajes dirigidos a usuarios o pseudónimos inexistentes o a usuarios de sistema se rechazarán a nivel de conexión SMTP.
+
+==== Pseudónimos de correo electrónico automáticos ====
+
+Además de permitir a los usuarios crear sus propios pseudónimos !FreedomBox reconoce pseudónimos automáticos adjuntando una cadena a tu nombre de usuario mediante un signo '+'. Si tu dirección de correo es minombre@mi.dominio, entonces todos los minombre+cualquiercosa@mi.dominio se toman como pseudónimos automáticos de tu dirección. Por ejemplo, al subscribirte a una lista de correo, llamémosla foolist, puedes dar tu dirección de correo como minombre+foolist@mi.dominio. Los mensajes que lleguen a esa dirección acabarán en el buzón de minombre@mi.dominio. Esto es útil para organizar el correo y controlar el correo indeseado.
+
+=== Avanzado: Resolución de problemas ===
+
+==== ¿Cómo depuro un fallo en un action script? ¿Cómo accedo al log del sistema? ====
+
+Abre una conexión SSH a tu !FreedomBox. Teclea `sudo journalctl -b -o short-monotonic --no-pager`
+
+ * `-b` muestra entradas desde el arranque
+ * `-o short-monotonic` usa formato corto para las marcas tiempo
+ * `--no-pager` facilita el copia-pega
+
+==== ¿Por qué dice el servidor "relay access denied"? ====
+
+Porque Postfix no reconoce el dominio del correo. Para arreglarlo
+
+ 1. Asegurate de que !FreedomBox conoce el nombre del dominio en internet. Si no tienes un nombre de dominio salta al paso 2.
+  * Ingresa al interfaz web de !FreedomBox como administrador.
+  * Ve a ''Sistema &rarr; Servicios de nombres''
+  * Añade un nombre de dominio, si no lo has hecho ya.
+
+==== No puedo enviar nada desde Roundcube. Dice "SMTP Error (250): Authentication failed". ====
+
+Causa raíz: Roundcube intentó enviar tu mensaje desde una conexión sin cifrar, pero los puertos 465 y 587 requieren cifrados SSL y STARTTLS respectivamente.
+
+Soluciones:
+
+Para !RoundCube, edita el fichero `/etc/roundcube/config.inc.php` para que use el puerto 25 (sin cifrar). Ajústalo así:
+{{{
+$config['smtp_server'] = 'smtp://localhost';
+$config['smtp_port'] = 25;
+}}}
+
+Notas:
+ * Accede a tu !FreedomBox mediante SSH.
+ * Puedes editar el fichero con el editor de texto `nano`. El fichero tiene el acceso restringido, así que tienes que acceder como superusuario: `sudo nano /etc/roundcube/config.inc.php`.
+
+Si empleas otro cliente de correo electrónico como Thunderbird, fuerza que use SSL o STARTTLS.
+
+=== Comentar tu experiencia ===
+
+Por favor, comenta tu experiencia usando el servidor de correo en [[https://discuss.freedombox.org/t/email-server-progress/1330|esta conversación del foro]].
+
+=== Información y debate técnicos ===
+
+El servidor de correo de !FreedomBox se presentó en la Debconf21. Las [[attachment:FreedomBox/Manual/Email/Debconf21-20210808.draft.odp|Diapositivas]] y la [[https://meetings-archive.debian.net/pub/debian-meetings/2021/DebConf21/debconf21-175-debian-outreach-projects-google-summer-of-code-2021.webm|grabación en vídeo]] están disponibles por cortesía del equipo Outreach de Debian.
+
+[[https://salsa.debian.org/freedombox-team/freedombox/-/merge_requests/2077|Este asunto en Salsa]] dirige la implementación. Siéntete libre de participar en los debates y proporcionar ideas técnicas.
+
+=== Enlaces externos ===
+
+ * Sitios web de origen:
+   * http://www.postfix.org
+   * https://www.dovecot.org
+   * https://www.rspamd.com
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
