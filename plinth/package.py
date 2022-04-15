@@ -17,10 +17,82 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions, app
-from plinth.errors import ActionError
+from plinth.errors import ActionError, MissingPackageError
 from plinth.utils import format_lazy
 
 logger = logging.getLogger(__name__)
+
+
+class PackageExpression:
+
+    def possible(self) -> list[str]:
+        """Return the list of possible packages before resolving."""
+        raise NotImplementedError
+
+    def actual(self) -> str:
+        """Return the name of the package to install.
+
+        TODO: Also return version and suite to install from.
+        """
+        raise NotImplementedError
+
+
+class Package(PackageExpression):
+
+    def __init__(
+            self,
+            name,
+            optional: bool = False,
+            version: Optional[str] = None,  # ">=1.0,<2.0"
+            distribution: Optional[str] = None,  # Debian, Ubuntu
+            suite: Optional[str] = None,  # stable, testing
+            codename: Optional[str] = None,  # bullseye-backports
+            architecture: Optional[str] = None):  # arm64
+        self.name = name
+        self.optional = optional
+        self.version = version
+        self.distribution = distribution
+        self.suite = suite
+        self.codename = codename
+        self.architecture = architecture
+
+    def __repr__(self):
+        return self.name
+
+    def __or__(self, other):
+        return PackageOr(self, other)
+
+    def possible(self) -> list[str]:
+        return [self.name]
+
+    def actual(self) -> str:
+        cache = apt.Cache()
+        if self.name in cache:
+            # TODO: Also return version and suite to install from
+            return self.name
+
+        raise MissingPackageError(self.name)
+
+
+class PackageOr(PackageExpression):
+    """Specify that one of the two packages will be installed."""
+
+    def __init__(self, package1: PackageExpression,
+                 package2: PackageExpression):
+        self.package1 = package1
+        self.package2 = package2
+
+    def __repr__(self):
+        return self.package1.name + ' | ' + self.package2.name
+
+    def possible(self) -> list[str]:
+        return self.package1.possible() + self.package2.possible()
+
+    def actual(self) -> str:
+        try:
+            return self.package1.actual()
+        except MissingPackageError:
+            return self.package2.actual()
 
 
 class Packages(app.FollowerComponent):
@@ -35,7 +107,8 @@ class Packages(app.FollowerComponent):
         IGNORE = 'ignore'  # Proceed as if there are no conflicts
         REMOVE = 'remove'  # Remove the packages before installing the app
 
-    def __init__(self, component_id: str, packages: list[str],
+    def __init__(self, component_id: str,
+                 packages: list[Union[str, PackageExpression]],
                  skip_recommends: bool = False,
                  conflicts: Optional[list[str]] = None,
                  conflicts_action: Optional[ConflictsAction] = None):
@@ -60,15 +133,40 @@ class Packages(app.FollowerComponent):
         super().__init__(component_id)
 
         self.component_id = component_id
-        self._packages = packages
+        self._packages: list[PackageExpression] = []
+        for package in packages:
+            if isinstance(package, str):
+                self._packages.append(Package(package))
+            else:
+                self._packages.append(package)
+
         self.skip_recommends = skip_recommends
         self.conflicts = conflicts
         self.conflicts_action = conflicts_action
 
     @property
-    def packages(self) -> list[str]:
-        """Return the list of packages managed by this component."""
+    def package_expressions(self) -> list[PackageExpression]:
+        """Return the list of managed packages as expressions."""
         return self._packages
+
+    @property
+    def possible_packages(self) -> list[str]:
+        """Return the list of possible packages before resolving."""
+        packages: list[str] = []
+        for package_expression in self.package_expressions:
+            packages.extend(package_expression.possible())
+
+        return packages
+
+    def get_actual_packages(self) -> list[str]:
+        """Return the computed list of packages to install.
+
+        Raise MissingPackageError if a required package is not available.
+        """
+        return [
+            package_expression.actual()
+            for package_expression in self.package_expressions
+        ]
 
     def setup(self, old_version):
         """Install the packages."""
@@ -76,13 +174,22 @@ class Packages(app.FollowerComponent):
         module_name = self.app.__module__
         module = sys.modules[module_name]
         helper = module.setup_helper
-        helper.install(self.packages, skip_recommends=self.skip_recommends)
+        helper.install(self.get_actual_packages(),
+                       skip_recommends=self.skip_recommends)
 
     def diagnose(self):
         """Run diagnostics and return results."""
         results = super().diagnose()
         cache = apt.Cache()
-        for package_name in self.packages:
+        for package_expression in self.package_expressions:
+            try:
+                package_name = package_expression.actual()
+            except MissingPackageError:
+                message = _('Package {expression} is not available for '
+                            'install').format(expression=package_expression)
+                results.append([message, 'failed'])
+                continue
+
             result = 'warning'
             latest_version = '?'
             if package_name in cache:
@@ -106,7 +213,7 @@ class Packages(app.FollowerComponent):
 
         return packages_installed(self.conflicts)
 
-    def has_unavailable_packages(self):
+    def has_unavailable_packages(self) -> Optional[bool]:
         """Return whether any of the packages are not available.
 
         Returns True if one or more of the packages is not available in the
@@ -121,9 +228,12 @@ class Packages(app.FollowerComponent):
             return None
 
         # List of all packages from all Package components
-        cache = apt.Cache()
-        return any(package for package in self.packages
-                   if package not in cache)
+        try:
+            self.get_actual_packages()
+        except MissingPackageError:
+            return True
+
+        return False
 
 
 class PackageException(Exception):

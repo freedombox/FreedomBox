@@ -13,20 +13,21 @@ from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Package, Packages
 from plinth.utils import format_lazy
 
 from . import manifest
 
 _mods = [
+    Package('minetest-mod-3d-armor') | Package('minetest-mod-player-3d-armor'),
     'minetest-mod-character-creator', 'minetest-mod-craftguide',
     'minetest-mod-infinite-chest', 'minetest-mod-lucky-block',
     'minetest-mod-maidroid', 'minetest-mod-mesecons',
     'minetest-mod-moreblocks', 'minetest-mod-moreores', 'minetest-mod-nether',
-    'minetest-mod-pipeworks', 'minetest-mod-player-3d-armor',
-    'minetest-mod-protector', 'minetest-mod-quartz', 'minetest-mod-skyblock',
-    'minetest-mod-throwing', 'minetest-mod-unified-inventory',
-    'minetest-mod-unifieddyes', 'minetest-mod-worldedit'
+    'minetest-mod-pipeworks', 'minetest-mod-protector', 'minetest-mod-quartz',
+    'minetest-mod-skyblock', 'minetest-mod-throwing',
+    'minetest-mod-unified-inventory', 'minetest-mod-unifieddyes',
+    'minetest-mod-worldedit'
 ]
 
 _description = [
