@@ -255,12 +255,12 @@ class PackageException(Exception):
 class Transaction:
     """Information about an ongoing transaction."""
 
-    def __init__(self, module_name, package_names):
+    def __init__(self, app_id, package_names):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
-        self.module_name = module_name
+        self.app_id = app_id
         self.package_names = package_names
 
         self._reset_status()
@@ -320,7 +320,7 @@ class Transaction:
                 extra_arguments.append('--force-missing-configuration')
 
             self._run_apt_command(['install'] + extra_arguments +
-                                  [self.module_name] + self.package_names)
+                                  [self.app_id] + self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
             raise
