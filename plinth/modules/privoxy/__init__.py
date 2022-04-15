@@ -94,13 +94,12 @@ class PrivoxyApp(app_module.App):
         results.extend(diagnose_url_with_proxy())
         return results
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', privileged.pre_install)
-    app.setup(old_version)
-    helper.call('post', privileged.setup)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        privileged.pre_install()
+        super().setup(old_version)
+        privileged.setup()
+        self.enable()
 
 
 def diagnose_url_with_proxy():

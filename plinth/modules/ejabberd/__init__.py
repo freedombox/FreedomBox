@@ -128,6 +128,25 @@ class EjabberdApp(app_module.App):
         post_hostname_change.connect(on_post_hostname_change)
         domain_added.connect(on_domain_added)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        domainname = config.get_domainname()
+        logger.info('ejabberd service domainname - %s', domainname)
+
+        actions.superuser_run('ejabberd',
+                              ['pre-install', '--domainname', domainname])
+        # XXX: Configure all other domain names
+        super().setup(old_version)
+        self.get_component('letsencrypt-ejabberd').setup_certificates(
+            [domainname])
+        actions.superuser_run('ejabberd',
+                              ['setup', '--domainname', domainname])
+        self.enable()
+
+        # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
+        configuration = self.get_component('turn-ejabberd').get_configuration()
+        update_turn_configuration(configuration, force=True)
+
 
 class EjabberdTurnConsumer(TurnConsumer):
     """Component to manage Coturn configuration for ejabberd."""
@@ -135,27 +154,6 @@ class EjabberdTurnConsumer(TurnConsumer):
     def on_config_change(self, config):
         """Add or update STUN/TURN configuration."""
         update_turn_configuration(config)
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    domainname = config.get_domainname()
-    logger.info('ejabberd service domainname - %s', domainname)
-
-    helper.call('pre', actions.superuser_run, 'ejabberd',
-                ['pre-install', '--domainname', domainname])
-    # XXX: Configure all other domain names
-    app.setup(old_version)
-    helper.call('post',
-                app.get_component('letsencrypt-ejabberd').setup_certificates,
-                [domainname])
-    helper.call('post', actions.superuser_run, 'ejabberd',
-                ['setup', '--domainname', domainname])
-    helper.call('post', app.enable)
-
-    # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
-    configuration = app.get_component('turn-ejabberd').get_configuration()
-    update_turn_configuration(configuration, force=True)
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):

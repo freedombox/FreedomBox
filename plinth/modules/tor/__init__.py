@@ -155,19 +155,18 @@ class TorApp(app_module.App):
 
         return results
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('tor',
+                              ['setup', '--old-version',
+                               str(old_version)])
+        if not old_version:
+            actions.superuser_run(
+                'tor', ['configure', '--apt-transport-tor', 'enable'])
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call(
-        'post', actions.superuser_run, 'tor',
-        ['setup', '--old-version', str(old_version)])
-    if not old_version:
-        helper.call('post', actions.superuser_run, 'tor',
-                    ['configure', '--apt-transport-tor', 'enable'])
-
-    helper.call('post', update_hidden_service_domain)
-    helper.call('post', app.enable)
+        update_hidden_service_domain()
+        self.enable()
 
 
 def update_hidden_service_domain(status=None):

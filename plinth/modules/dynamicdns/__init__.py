@@ -98,24 +98,23 @@ class DynamicDNSApp(app_module.App):
         interval = 180 if cfg.develop else 300
         glib.schedule(interval, update_dns)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if not old_version:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    if not old_version:
-        helper.call('post', app.enable)
+        if old_version == 1:
+            config = actions.superuser_run('dynamicdns', ['export-config'])
+            config = json.loads(config)
+            if config['enabled']:
+                self.enable()
+            else:
+                self.disable()
 
-    if old_version == 1:
-        config = actions.superuser_run('dynamicdns', ['export-config'])
-        config = json.loads(config)
-        if config['enabled']:
-            app.enable()
-        else:
-            app.disable()
-
-        del config['enabled']
-        set_config(config)
-        actions.superuser_run('dynamicdns', ['clean'])
+            del config['enabled']
+            set_config(config)
+            actions.superuser_run('dynamicdns', ['clean'])
 
 
 def _query_external_address(domain):

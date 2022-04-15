@@ -99,13 +99,12 @@ class LetsEncryptApp(app_module.App):
 
         return results
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    actions.superuser_run(
-        'letsencrypt',
-        ['setup', '--old-version', str(old_version)])
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('letsencrypt',
+                              ['setup', '--old-version',
+                               str(old_version)])
 
 
 def certificate_obtain(domain):

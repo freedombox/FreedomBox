@@ -89,10 +89,9 @@ class CockpitApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', privileged.setup)
-    if not old_version:
-        helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        if not old_version:
+            self.enable()

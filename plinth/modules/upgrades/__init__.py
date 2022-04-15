@@ -136,32 +136,31 @@ class UpgradesApp(app_module.App):
             group='admin')
         note.dismiss(should_dismiss=dismiss)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
+        # Enable automatic upgrades but only on first install
+        if not old_version and not cfg.develop:
+            actions.superuser_run('upgrades', ['enable-auto'])
 
-    # Enable automatic upgrades but only on first install
-    if not old_version and not cfg.develop:
-        helper.call('post', actions.superuser_run, 'upgrades', ['enable-auto'])
+        # Update apt preferences whenever on first install and on version
+        # increment.
+        actions.superuser_run('upgrades', ['setup'])
 
-    # Update apt preferences whenever on first install and on version
-    # increment.
-    helper.call('post', actions.superuser_run, 'upgrades', ['setup'])
+        # When upgrading from a version without first boot wizard for
+        # backports, assume backports have been requested.
+        if old_version and old_version < 7:
+            set_backports_requested(can_activate_backports())
 
-    # When upgrading from a version without first boot wizard for backports,
-    # assume backports have been requested.
-    if old_version and old_version < 7:
-        set_backports_requested(can_activate_backports())
+        # Enable dist upgrade for new installs, and once when upgrading
+        # from version without flag.
+        if not old_version or old_version < 8:
+            set_dist_upgrade_enabled(can_enable_dist_upgrade())
 
-    # Enable dist upgrade for new installs, and once when upgrading
-    # from version without flag.
-    if not old_version or old_version < 8:
-        set_dist_upgrade_enabled(can_enable_dist_upgrade())
-
-    # Try to setup apt repositories, if needed, if possible, on first install
-    # and on version increment.
-    helper.call('post', setup_repositories, None)
+        # Try to setup apt repositories, if needed, if possible, on first
+        # install and on version increment.
+        setup_repositories(None)
 
 
 def is_enabled():

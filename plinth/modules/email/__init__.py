@@ -165,6 +165,39 @@ class EmailApp(plinth.app.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+
+        def _clear_conflicts():
+            component = self.get_component('packages-email')
+            packages_to_remove = component.find_conflicts()
+            if packages_to_remove:
+                logger.info('Removing conflicting packages: %s',
+                            packages_to_remove)
+                remove(packages_to_remove)
+
+        # Install
+        _clear_conflicts()
+        super().setup(old_version)
+
+        # Setup
+        privileged.home.setup()
+        self.get_component('letsencrypt-email-postfix').setup_certificates()
+        self.get_component('letsencrypt-email-dovecot').setup_certificates()
+        privileged.domain.set_domains()
+        privileged.postfix.setup()
+        aliases.setup_common_aliases(_get_first_admin())
+        privileged.spam.setup()
+
+        # Restart daemons
+        actions.superuser_run('service', ['try-restart', 'postfix'])
+        actions.superuser_run('service', ['try-restart', 'dovecot'])
+        actions.superuser_run('service', ['try-restart', 'rspamd'])
+
+        # Expose to public internet
+        if old_version == 0:
+            self.enable()
+
 
 def get_domains():
     """Return the list of domains configured."""
@@ -177,40 +210,6 @@ def _get_first_admin():
     from django.contrib.auth.models import User
     users = User.objects.filter(groups__name='admin')
     return users[0].username if users else None
-
-
-def setup(helper, old_version=None):
-    """Installs and configures module"""
-
-    def _clear_conflicts():
-        component = app.get_component('packages-email')
-        packages_to_remove = component.find_conflicts()
-        if packages_to_remove:
-            logger.info('Removing conflicting packages: %s',
-                        packages_to_remove)
-            remove(packages_to_remove)
-
-    # Install
-    helper.call('pre', _clear_conflicts)
-    app.setup(old_version)
-
-    # Setup
-    helper.call('post', privileged.home.setup)
-    app.get_component('letsencrypt-email-postfix').setup_certificates()
-    app.get_component('letsencrypt-email-dovecot').setup_certificates()
-    helper.call('post', privileged.domain.set_domains)
-    helper.call('post', privileged.postfix.setup)
-    helper.call('post', aliases.setup_common_aliases, _get_first_admin())
-    helper.call('post', privileged.spam.setup)
-
-    # Restart daemons
-    actions.superuser_run('service', ['try-restart', 'postfix'])
-    actions.superuser_run('service', ['try-restart', 'dovecot'])
-    actions.superuser_run('service', ['try-restart', 'rspamd'])
-
-    # Expose to public internet
-    if old_version == 0:
-        helper.call('post', app.enable)
 
 
 def on_domain_added(sender, domain_type, name, description='', services=None,

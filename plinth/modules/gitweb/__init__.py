@@ -128,6 +128,12 @@ class GitwebApp(app_module.App):
 
         self.set_shortcut_login_required(True)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('gitweb', ['setup'])
+        self.enable()
+
 
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
@@ -155,13 +161,6 @@ class GitwebBackupRestore(BackupRestore):
         """Update access after restoration of backups."""
         super().restore_post(packet)
         app.update_service_access()
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'gitweb', ['setup'])
-    helper.call('post', app.enable)
 
 
 def repo_exists(name):

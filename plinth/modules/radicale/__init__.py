@@ -98,11 +98,10 @@ class RadicaleApp(app_module.App):
         actions.superuser_run('radicale', ['fix-paths'])
         super().enable()
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
 
 
 def force_upgrade(helper, packages):

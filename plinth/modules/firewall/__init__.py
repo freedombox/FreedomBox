@@ -78,6 +78,11 @@ class FirewallApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        _run_setup()
+
 
 def _run_setup():
     """Run firewalld setup."""
@@ -88,12 +93,6 @@ def _run_setup():
     add_service('https', 'internal')
     add_service('dns', 'internal')
     add_service('dhcp', 'internal')
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    _run_setup()
 
 
 def force_upgrade(helper, packages):

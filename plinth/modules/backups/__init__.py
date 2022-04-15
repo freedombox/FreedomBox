@@ -67,18 +67,17 @@ class BackupsApp(app_module.App):
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, backup_by_schedule)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        from . import repository
+        actions.superuser_run(
+            'backups', ['setup', '--path', repository.RootBorgRepository.PATH])
+        self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    from . import repository
-    helper.call('post', actions.superuser_run, 'backups',
-                ['setup', '--path', repository.RootBorgRepository.PATH])
-    helper.call('post', app.enable)
-
-    # First time setup or upgrading from older versions.
-    if old_version <= 2:
-        _show_schedule_setup_notification()
+        # First time setup or upgrading from older versions.
+        if old_version <= 2:
+            _show_schedule_setup_notification()
 
 
 def _backup_handler(packet, encryption_passphrase=None):

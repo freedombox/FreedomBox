@@ -93,15 +93,14 @@ class MumbleApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        if not old_version:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', privileged.setup)
-    if not old_version:
-        helper.call('post', app.enable)
-
-    app.get_component('letsencrypt-mumble').setup_certificates()
+        app.get_component('letsencrypt-mumble').setup_certificates()
 
 
 def force_upgrade(helper, packages):
@@ -115,7 +114,7 @@ def force_upgrade(helper, packages):
         return False
 
     helper.install(['mumble-server'], force_configuration='new')
-    helper.call('post', privileged.setup)
+    privileged.setup()
     return True
 
 

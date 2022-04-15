@@ -57,20 +57,19 @@ class SecurityApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if not old_version:
+            enable_fail2ban()
 
-def setup(helper, old_version=None):
-    """Install the required packages"""
-    app.setup(old_version)
-    if not old_version:
-        enable_fail2ban()
+        actions.superuser_run('service', ['reload', 'fail2ban'])
 
-    actions.superuser_run('service', ['reload', 'fail2ban'])
-
-    # Migrate to new config file.
-    enabled = get_restricted_access_enabled()
-    set_restricted_access(False)
-    if enabled:
-        set_restricted_access(True)
+        # Migrate to new config file.
+        enabled = get_restricted_access_enabled()
+        set_restricted_access(False)
+        if enabled:
+            set_restricted_access(True)
 
 
 def enable_fail2ban():

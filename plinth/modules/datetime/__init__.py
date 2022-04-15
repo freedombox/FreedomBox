@@ -97,10 +97,10 @@ class DateTimeApp(app_module.App):
         """Return that app has diagnostics only when time is managed."""
         return self._is_time_managed()
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
 
 
 def _diagnose_time_synchronized():

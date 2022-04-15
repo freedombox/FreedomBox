@@ -64,12 +64,11 @@ class SSHApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-ssh', **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Configure the module."""
-    app.setup(old_version)
-    actions.superuser_run('ssh', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('ssh', ['setup'])
+        self.enable()
 
 
 def get_host_keys():

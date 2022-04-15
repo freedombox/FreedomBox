@@ -88,17 +88,14 @@ class RoundcubeApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', privileged.pre_install)
-    app.setup(old_version)
-    helper.call('post', privileged.setup)
-    if old_version == 0:
-        privileged.set_config(local_only=True)
-        helper.call('post', app.enable)
-    elif old_version <= 2:
-        privileged.set_config(privileged.get_config()['local_only'])
+    def setup(self, old_version):
+        """Install and configure the app."""
+        privileged.pre_install()
+        super().setup(old_version)
+        privileged.setup()
+        if old_version == 0:
+            privileged.set_config(local_only=True)
+            self.enable()
 
 
 def force_upgrade(helper, packages):

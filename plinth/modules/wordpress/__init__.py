@@ -105,6 +105,13 @@ class WordPressApp(app_module.App):
                                                 **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('wordpress', ['setup'])
+        if not old_version:
+            self.enable()
+
 
 class WordPressBackupRestore(BackupRestore):
     """Component to backup/restore WordPress."""
@@ -118,11 +125,3 @@ class WordPressBackupRestore(BackupRestore):
         """Restore database contents."""
         super().restore_post(packet)
         actions.superuser_run('wordpress', ['restore-database'])
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'wordpress', ['setup'])
-    if not old_version:
-        helper.call('post', app.enable)

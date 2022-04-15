@@ -115,18 +115,17 @@ class TransmissionApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
+        if old_version and old_version <= 3 and self.is_enabled():
+            self.get_component('firewall-transmission').enable()
 
-    if old_version and old_version <= 3 and app.is_enabled():
-        app.get_component('firewall-transmission').enable()
-
-    new_configuration = {
-        'rpc-whitelist-enabled': False,
-        'rpc-authentication-required': False
-    }
-    helper.call('post', privileged.merge_configuration, new_configuration)
-    add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
-    helper.call('post', app.enable)
+        new_configuration = {
+            'rpc-whitelist-enabled': False,
+            'rpc-authentication-required': False
+        }
+        privileged.merge_configuration(new_configuration)
+        add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
+        self.enable()

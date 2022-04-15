@@ -59,14 +59,13 @@ class ApacheApp(app_module.App):
         daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
         self.add(daemon)
 
-
-def setup(helper, old_version=None):
-    """Configure the module."""
-    app.setup(old_version)
-    actions.superuser_run(
-        'apache',
-        ['setup', '--old-version', str(old_version)])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('apache',
+                              ['setup', '--old-version',
+                               str(old_version)])
+        self.enable()
 
 
 # (U)ser (W)eb (S)ites

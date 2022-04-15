@@ -90,13 +90,12 @@ class MiniDLNAApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the package"""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
-    if not old_version:
-        helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('minidlna', ['setup'])
+        if not old_version:
+            self.enable()
 
 
 def get_media_dir():

@@ -94,10 +94,9 @@ class DelugeApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    add_user_to_share_group(SYSTEM_USER)
-    helper.call('post', actions.superuser_run, 'deluge', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        add_user_to_share_group(SYSTEM_USER)
+        actions.superuser_run('deluge', ['setup'])
+        self.enable()

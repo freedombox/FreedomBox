@@ -76,6 +76,19 @@ class StorageApp(app_module.App):
         # Schedule initialization of UDisks2 initialization
         glib.schedule(3, udisks2.init, repeat=False)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('storage', ['setup'])
+        self.enable()
+        disks = get_disks()
+        root_device = get_root_device(disks)
+        if is_expandable(root_device):
+            try:
+                expand_partition(root_device)
+            except ActionError:
+                pass
+
 
 def get_disks():
     """Returns list of disks and their free space.
@@ -273,20 +286,6 @@ def get_error_message(error):
             _('The device is mounted by another user.')
     }
     return message_map.get(short_error, error)
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'storage', ['setup'])
-    helper.call('post', app.enable)
-    disks = get_disks()
-    root_device = get_root_device(disks)
-    if is_expandable(root_device):
-        try:
-            expand_partition(root_device)
-        except ActionError:
-            pass
 
 
 def warn_about_low_disk_space(request):

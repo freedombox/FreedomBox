@@ -112,9 +112,8 @@ class IkiwikiApp(app_module.App):
 
         return sites
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'ikiwiki', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('ikiwiki', ['setup'])
+        self.enable()

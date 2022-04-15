@@ -107,6 +107,13 @@ class TTRSSApp(app_module.App):
             domain = next(names.get_available_tls_domains(), None)
             set_domain(domain)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        actions.superuser_run('ttrss', ['pre-setup'])
+        super().setup(old_version)
+        actions.superuser_run('ttrss', ['setup'])
+        self.enable()
+
 
 class TTRSSBackupRestore(BackupRestore):
     """Component to backup/restore TT-RSS"""
@@ -120,14 +127,6 @@ class TTRSSBackupRestore(BackupRestore):
         """Restore database contents."""
         super().restore_post(packet)
         actions.superuser_run('ttrss', ['restore-database'])
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
-    helper.call('post', app.enable)
 
 
 def force_upgrade(helper, packages):

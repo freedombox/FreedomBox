@@ -89,9 +89,8 @@ class JanusApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the app."""
-    app.setup(old_version)
-    actions.superuser_run('janus', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('janus', ['setup'])
+        self.enable()

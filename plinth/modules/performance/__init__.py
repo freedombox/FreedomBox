@@ -74,8 +74,7 @@ class PerformanceApp(app_module.App):
                           listen_ports=None)
         self.add(daemon_3)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
