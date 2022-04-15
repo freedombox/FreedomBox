@@ -55,10 +55,20 @@ def subcommand_mount(arguments):
     kwargs = {}
     # the shell would expand ~/ to the local home directory
     remote_path = remote_path.replace('~/', '').replace('~', '')
+    # 'reconnect', 'ServerAliveInternal' and 'ServerAliveCountMax' allow the
+    # client (FreedomBox) to keep control of the SSH connection even when the
+    # SSH server misbehaves. Without these options, other commands such as
+    # '/usr/share/plinth/actions/storage usage-info', 'df',
+    # '/usr/share/plinth/actions/sshfs is-mounted', or 'mountpoint' might block
+    # indefinitely (even when manually invoked from the command line). This
+    # situation has some lateral effects, causing major system instability in
+    # the course of ~11 days, and leaving the system in such state that the
+    # only solution is a reboot.
     cmd = [
         'sshfs', remote_path, arguments.mountpoint, '-o',
         f'UserKnownHostsFile={arguments.user_known_hosts_file}', '-o',
-        'StrictHostKeyChecking=yes'
+        'StrictHostKeyChecking=yes', '-o', 'reconnect', '-o',
+        'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=3'
     ]
     if arguments.ssh_keyfile:
         cmd += ['-o', 'IdentityFile=' + arguments.ssh_keyfile]
