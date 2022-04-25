@@ -20,9 +20,8 @@ class AddShareForm(forms.Form):
             'A lowercase alpha-numeric string that uniquely identifies a '
             'share. Example: <em>media</em>.'))
 
-    path = forms.RegexField(
-        label=_('Path to share'), strip=True, regex=r'^[^\"]+$',
-        help_text=_(
+    path = forms.CharField(
+        label=_('Path to share'), strip=True, help_text=_(
             'Disk path to a folder on this server that you intend to share.'))
 
     is_public = forms.BooleanField(

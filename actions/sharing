@@ -57,7 +57,7 @@ def load_augeas():
 def subcommand_add(arguments):
     """Add a share to Apache configuration."""
     name = arguments.name
-    path = '"' + arguments.path + '"'
+    path = '"' + arguments.path.replace('"', r'\"') + '"'
     groups = arguments.groups
     is_public = arguments.is_public
     url = '/share/' + name
@@ -150,11 +150,13 @@ def _list(aug=None):
         url = aug.get(match + '/arg[1]')
         path = aug.get(match + '/arg[2]')
 
+        path = path.removesuffix('"').removeprefix('"')
+        path = path.replace(r'\"', '"')
         try:
             name = _get_name_from_url(url)
             shares.append({
                 'name': name,
-                'path': path.strip('"'),
+                'path': path,
                 'url': '/share/' + name
             })
         except ValueError:
