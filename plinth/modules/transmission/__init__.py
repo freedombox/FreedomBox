@@ -5,11 +5,12 @@ FreedomBox app to configure Transmission server.
 
 import json
 
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
 from plinth import app as app_module
-from plinth import frontpage, menu
+from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -17,6 +18,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
+from plinth.utils import format_lazy
 
 from . import manifest
 
@@ -25,6 +27,22 @@ _description = [
     _('BitTorrent is a peer-to-peer file sharing protocol. '
       'Note that BitTorrent is not anonymous.'),
     _('Please do not change the default port of the Transmission daemon.'),
+    format_lazy(
+        _('Compared to <a href="{deluge_url}">'
+          'Deluge</a>, Transmission is simpler and lightweight but is less '
+          'customizable.'), deluge_url=reverse_lazy('deluge:index')),
+    format_lazy(
+        _('It can be accessed by <a href="{users_url}">any user</a> on '
+          '{box_name} belonging to the bit-torrent group.'),
+        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
+    format_lazy(
+        _('<a href="{samba_url}">Samba</a> shares can be set as the '
+          'default download directory from the dropdown menu below.'),
+        samba_url=reverse_lazy('samba:index')),
+    format_lazy(
+        _('After a download has completed, you can also access your files '
+          'using the <a href="{sharing_url}">Sharing</a> app.'),
+        sharing_url=reverse_lazy('sharing:index'))
 ]
 
 app = None
