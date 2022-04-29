@@ -3,4 +3,4 @@
 Package init file.
 """
 
-__version__ = '22.9'
+__version__ = '22.10'
