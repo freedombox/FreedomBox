@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -xeuo pipefail
 IFS=$'\n\t'
 
 echo "Installing requirements"
