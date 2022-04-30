@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 from plinth import actions, views
+from plinth.errors import ActionError
 from plinth.modules import mediawiki
 
 from . import (get_default_skin, get_server_url, is_private_mode_enabled,
@@ -44,9 +45,16 @@ class MediaWikiAppView(views.AppView):
             return old_config.get(key) != new_config.get(key)
 
         if new_config['password']:
-            actions.superuser_run('mediawiki', ['change-password'],
-                                  input=new_config['password'].encode())
-            messages.success(self.request, _('Password updated'))
+            try:
+                actions.superuser_run('mediawiki', ['change-password'],
+                                      input=new_config['password'].encode())
+                messages.success(self.request, _('Password updated'))
+            except ActionError as exception:
+                logger.exception('Failed to update password: %s', exception)
+                messages.error(
+                    self.request,
+                    _('Password update failed. Please choose a stronger '
+                      'password'))
 
         if is_changed('enable_public_registrations'):
             # note action public-registration restarts, if running now
