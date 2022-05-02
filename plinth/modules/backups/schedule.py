@@ -321,3 +321,5 @@ class Schedule:
                 logger.info('Cleaning up in repository %s backup archive %s',
                             self.repository_uuid, archive['name'])
                 repository.delete_archive(archive['name'])
+
+        repository.cleanup()
