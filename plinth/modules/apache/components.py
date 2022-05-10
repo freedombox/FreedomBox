@@ -15,7 +15,8 @@ from plinth import action_utils, actions, app
 class Webserver(app.LeaderComponent):
     """Component to enable/disable Apache configuration."""
 
-    def __init__(self, component_id, web_name, kind='config', urls=None):
+    def __init__(self, component_id, web_name, kind='config', urls=None,
+                 expect_redirects=False):
         """Initialize the web server component.
 
         component_id should be a unique ID across all components of an app and
@@ -38,6 +39,7 @@ class Webserver(app.LeaderComponent):
         self.web_name = web_name
         self.kind = kind
         self.urls = urls or []
+        self.expect_redirects = expect_redirects
 
     def is_enabled(self):
         """Return whether the Apache configuration is enabled."""
@@ -64,7 +66,9 @@ class Webserver(app.LeaderComponent):
         for url in self.urls:
             if '{host}' in url:
                 results.extend(
-                    diagnose_url_on_all(url, check_certificate=False))
+                    diagnose_url_on_all(
+                        url, check_certificate=False,
+                        expect_redirects=self.expect_redirects))
             else:
                 results.append(diagnose_url(url, check_certificate=False))
 
@@ -128,13 +132,16 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     return [testname, result]
 
 
-def diagnose_url_on_all(url, **kwargs):
+def diagnose_url_on_all(url, expect_redirects=False, **kwargs):
     """Run a diagnostic on whether a URL is accessible."""
     results = []
     for address in action_utils.get_addresses():
         current_url = url.format(host=address['url_address'])
-        results.append(
-            diagnose_url(current_url, kind=address['kind'], **kwargs))
+        diagnose_kwargs = dict(kwargs)
+        if not expect_redirects:
+            diagnose_kwargs.setdefault('kind', address['kind'])
+
+        results.append(diagnose_url(current_url, **diagnose_kwargs))
 
     return results
 
