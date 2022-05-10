@@ -80,7 +80,8 @@ class MediaWikiApp(app_module.App):
         self.add(firewall)
 
         webserver = Webserver('webserver-mediawiki', 'mediawiki',
-                              urls=['https://{host}/mediawiki'])
+                              urls=['https://{host}/mediawiki/'],
+                              expect_redirects=True)
         self.add(webserver)
 
         webserver = Webserver('webserver-mediawiki-freedombox',
