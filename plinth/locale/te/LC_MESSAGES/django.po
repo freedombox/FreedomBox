@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2022-03-02 12:27+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -1417,7 +1417,7 @@ msgstr ""
 "అయినవెంటనే మీ పాస్‌వర్డ్ ను మార్చుకోవాలి."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr "బిట్ టోరెంట్ అనువర్తనాలను ఉపయోగించి ఫైళ్లను డౌన్లోడ్ చేయండి"
 
@@ -1426,7 +1426,7 @@ msgid "Deluge"
 msgstr "డెలూజ్"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr "బిట్ టొరెంట్ వెబ్ క్లయింట్"
 
@@ -3227,18 +3227,24 @@ msgid "Administrator Password"
 msgstr "నిర్వాహకుని రహస్యపదం"
 
 #: plinth/modules/mediawiki/forms.py:53
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). Leave "
+#| "this field blank to keep the current password."
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 "మీడియావికీ యొక్క అడ్మినిస్ట్రేటర్ ఖాతా (admin) కోసం ఒక కొత్త రహస్యపదాన్ని సెట్ చెయ్యండి. ప్రస్తుత రహస్యపదాన్ని "
 "ఉంచాలనుకుంటే ఈ ఫీల్డ్ ను ఖాళీగా వదిలేయండి."
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 msgid "Server URL"
 msgstr "సేవిక URL"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
@@ -3246,21 +3252,21 @@ msgstr ""
 "ఫుటర్, ఫీడ్‌లు మరియు ఇమెయిల్‌లు వంటి వికీని సూచించే URLలను రూపొందించడానికి MediaWiki ద్వారా "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 msgid "Enable public registrations"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr "ఇది సశక్త పరిచినట్లయితే, అంతర్జాలంలో ఉన్న ఎవరైనా మీ మీడియావికీ ఉదాహరణ మీద ఖాతాను సృజించుకోగలరు."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Enable private mode"
 msgstr "ప్రైవేట్ మోడ్‌ను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3268,11 +3274,11 @@ msgstr ""
 "ప్రారంభించబడితే, సాంగత్యం పరిమితం చేయబడుతుంది. ఖాతాలు ఉన్నవారు మాత్రమే వికీలో చదవగలరు/వ్రాయగలరు. "
 "ప్రజా రిజిస్ట్రేషన్లు కూడా నిలిపివేయబడతాయి."
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 msgid "Default Skin"
 msgstr "డిఫాల్ట్ చర్మం"
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3280,31 +3286,37 @@ msgstr ""
 "మీ మీడియావికీ ఇన్‌స్టాలేషన్ కోసం డిఫాల్ట్ చర్మాన్ని ఎంచుకోండి. వినియోగదారులు తమకు నచ్చిన చర్మాన్ని ఎంచుకునే "
 "అవకాశం ఉంటుంది."
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr "అనుమతిపదం నవీకరించబడింది"
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password update failed. Please choose a stronger password"
+msgstr "సమాచారాన్ని గుప్తీకరించాడానికి ఉపయోగించబడిన పాస్వర్డ్. తప్పకుండ సర్వర్ పాస్వర్డ్ తో సరిపోలాలి."
+
+#: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు ప్రారంభించబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 msgid "Public registrations disabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 msgid "Private mode enabled"
 msgstr "ప్రైవేట్ మోడ్ ప్రారంభించబడింది"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "ప్రైవేట్ మోడ్ నిలిపివేయబడింది"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 msgid "Default skin changed"
 msgstr "డిఫాల్ట్ చర్మం మార్చబడింది"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 msgid "Server URL updated"
 msgstr "సర్వర్ URL నవీకరించబడింది"
 
@@ -6606,21 +6618,54 @@ msgstr "టిసిపి  పోర్ట్ 9050 పై ఒక టార్ �
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "ప్రసరణ అనేది వెబ్ ఇంటర్‌ఫేస్‌తో కూడిన బిట్‌టొరెంట్ క్లయింట్."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr "బిట్ టొరెంట్ అనేది పీర్-టు-పీర్ ఫైల్ భాగస్వామ్య ప్రోటోకాల్. బిట్ టొరెంట్ అనామకం కాదని గమనించండి."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "దయచేసి ట్రాన్స్‌మిషన్ డెమోన్ డిఫాల్ట్ పోర్ట్‌ను మార్చవద్దు."
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#| "belonging to the admin group."
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"నిర్వాహక సమూహానికి చెందిన {box_name}లో <a href=\"{users_url}\">ఏదైనా వినియోగదారు</a> దీన్ని "
+"యాక్సెస్ చేయవచ్చు."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "ట్రాన్స్మిషన్"

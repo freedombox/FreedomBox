@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -1518,7 +1518,7 @@ msgstr ""
 "YOU SHOULD LOG IN AND CHANGE IT IMMEDIATELY AFTER ENABLING THIS SERVICE."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr ""
 
@@ -1529,7 +1529,7 @@ msgid "Deluge"
 msgstr "ENABLE DELUGE"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 #, fuzzy
 #| msgid "BitTorrent Web Client (Deluge)"
 msgid "BitTorrent Web Client"
@@ -3428,95 +3428,101 @@ msgstr "ADMINISTRATOR ACCOUNT"
 
 #: plinth/modules/mediawiki/forms.py:53
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 #, fuzzy
 #| msgid "Service"
 msgid "Server URL"
 msgstr "SERVICE"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 #, fuzzy
 #| msgid "Applications"
 msgid "Enable public registrations"
 msgstr "APPLICATIONS"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 #, fuzzy
 #| msgid "Enable reStore"
 msgid "Enable private mode"
 msgstr "ENABLE RESTORE"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 #, fuzzy
 #| msgid "Default"
 msgid "Default Skin"
 msgstr "DEFAULT"
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 #, fuzzy
 #| msgid "Password"
 msgid "Password updated"
 msgstr "PASSWORD"
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+msgid "Password update failed. Please choose a stronger password"
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:66
 #, fuzzy
 #| msgid "Applications"
 msgid "Public registrations enabled"
 msgstr "APPLICATIONS"
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 #, fuzzy
 #| msgid "Applications"
 msgid "Public registrations disabled"
 msgstr "APPLICATIONS"
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 #, fuzzy
 #| msgid "PageKite enabled"
 msgid "Private mode enabled"
 msgstr "PAGEKITE ENABLED"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 #, fuzzy
 #| msgid "PageKite disabled"
 msgid "Private mode disabled"
 msgstr "PAGEKITE DISABLED"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "Default skin changed"
 msgstr "SETTING UNCHANGED"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 #, fuzzy
 #| msgid "{name} deleted."
 msgid "Server URL updated"
@@ -6964,13 +6970,13 @@ msgstr "A TOR SOCKS PORT IS AVAILABLE ON YOUR %(box_name)s ON TCP PORT 9050."
 msgid "Setting unchanged"
 msgstr "SETTING UNCHANGED"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 #, fuzzy
 #| msgid "Deluge is a BitTorrent client that features a Web UI."
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "DELUGE IS A BITTORRENT CLIENT THAT FEATURES A WEB UI."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 #, fuzzy
 #| msgid ""
 #| "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
@@ -6982,11 +6988,44 @@ msgstr ""
 "BITTORRENT IS A PEER-TO-PEER FILE SHARING PROTOCOL. TRANSMISSION DAEMON "
 "HANDLES BITORRENT FILE SHARING.  NOTE THAT BITTORRENT IS NOT ANONYMOUS."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, the blogs and wikis will be available from <a href=\"/"
+#| "ikiwiki\">/ikiwiki</a>."
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"WHEN ENABLED, THE BLOGS AND WIKIS WILL BE AVAILABLE FROM <a href=\"/ikiwiki"
+"\">/IKIWIKI</a>."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 #, fuzzy
 #| msgid "Transmission BitTorrent"

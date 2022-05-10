@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -1501,7 +1501,7 @@ msgstr ""
 "बदलना चाहिये."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr "बिटटोरेंट एप्लिकेशन उपयोग कर फ़ाइल डाउनलोड करें"
 
@@ -1510,7 +1510,7 @@ msgid "Deluge"
 msgstr "डेलूज"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr "बिटटोरेंट वेब ग्राहक"
 
@@ -3374,40 +3374,46 @@ msgid "Administrator Password"
 msgstr "व्यवस्थापक पासवर्ड"
 
 #: plinth/modules/mediawiki/forms.py:53
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). Leave "
+#| "this field blank to keep the current password."
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 "मीडियाविकी एेडमिन अकाउंट के लिये नया पासवर्ड सेट करें  (एेडमिन). वर्तमान पासवर्ड रखने के "
 "लिए इस फ़ील्ड को रिक्त छोड़ें."
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 #, fuzzy
 #| msgid "Server"
 msgid "Server URL"
 msgstr "सर्वर"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 msgid "Enable public registrations"
 msgstr "सार्वजनिक रेजिस्टेशिन सक्षम करें"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr "सक्षम कर के इंटरनेट पर किसी को अपने मिडीयाविकी इस्टेशं पर एक अकाउंट बना सकता है."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Enable private mode"
 msgstr "निजी मोड सक्षम करें"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3415,45 +3421,52 @@ msgstr ""
 "अगर सक्षम है, प्रवेश प्रतिबंधित किया जाएगा. सिर्फ जो लोग जिनके पास अकाउंट है वो लोग "
 "विकी को पढ़/लिक सकते हैं. सार्वजनिक रेगीसट्रेशिन भी अक्षम कर दिए जाएंगे."
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 #, fuzzy
 #| msgid "Default"
 msgid "Default Skin"
 msgstr "डिफ़ॉल्ट"
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr "पासवर्ड अपडेट"
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password update failed. Please choose a stronger password"
+msgstr ""
+"डेटा एंक्रिप्ट करने के लिए पासवर्ड  उपयोग किया गया . सर्वर पासवर्ड से मेल खाना चाहिए."
+
+#: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
 msgstr "सार्वजनिक रेगीसट्रेशिन सक्षम किया"
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 msgid "Public registrations disabled"
 msgstr "सार्वजनिक रेगीसट्रेशिन अक्षम किया"
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 msgid "Private mode enabled"
 msgstr "निजी मोड सक्षम किया"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "निजी मोड सक्षम किया"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "Default skin changed"
 msgstr "सेटिंग स्थिर है"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 #, fuzzy
 #| msgid "Share deleted."
 msgid "Server URL updated"
@@ -6851,13 +6864,13 @@ msgstr "एक टोर सॉक्स पोर्ट आपका %(box_name
 msgid "Setting unchanged"
 msgstr "सेटिंग स्थिर है"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 #, fuzzy
 #| msgid "Deluge is a BitTorrent client that features a Web UI."
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "डेलूज एक बिटटोरेंट ग्राहक है जिसमे वेब युआई है."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 #, fuzzy
 #| msgid ""
 #| "BitTorrent is a peer-to-peer file sharing protocol. Transmission daemon "
@@ -6869,11 +6882,48 @@ msgstr ""
 "बिटटोरेंट एक पीअर-टू-पीअर फ़ाइल साझा प्रोटोकॉल है. ट्रांसमिशन डेमॉन बिटटोरेंट फ़ाइल साझा "
 "संभालती है. नोट-बिटटोरेंट अनाम नहीं है."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Cockpit will be available from <a href=\"/_cockpit/\">/"
+#| "_cockpit/</a> path on the web server. It can be accessed by <a href="
+#| "\"{users_url}\">any user</a> with a {box_name} login. Sensitive "
+#| "information and system altering abilities are limited to users belonging "
+#| "to admin group."
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"सक्षम होने पर, कॉकपिट <a href=\"/_cockpit/\">/_cockpit/</a> पात पर वेब सर्वर से "
+"माैजूद होते है. यह <a href=\"{users_url}\"> कोई से </a> एक {box_name} के सात पहुंच "
+"सकते हैं. निजी जानकारी आैर सिस्टम बदलने का योग्यता सिर्फ व्यवस्थापक लोग के पास है."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "हस्तांतरण"

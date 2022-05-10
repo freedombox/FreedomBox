@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Gujarati <https://hosted.weblate.org/projects/freedombox/"
@@ -1410,7 +1410,7 @@ msgstr ""
 "કાર્ય બાદ તુરંત જ આપે લોગ ઇન કરી ને તેને બદલી નાખવો જોઈએ."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr "BitTorrent કાર્યક્રમોનો ઉપયોગ કરીને ફાઇલો ડાઉનલોડ કરો"
 
@@ -1419,7 +1419,7 @@ msgid "Deluge"
 msgstr "અનરાધાર"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr "બીટ ટોરેન્ટ વેબ ક્લાયન્ટ"
 
@@ -3136,89 +3136,95 @@ msgstr ""
 
 #: plinth/modules/mediawiki/forms.py:53
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 msgid "Server URL"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 #, fuzzy
 #| msgid "Enable application"
 msgid "Enable public registrations"
 msgstr "એપ્લીકેશનને પ્રસ્થાપિત કરો"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 #, fuzzy
 #| msgid "Enable application"
 msgid "Enable private mode"
 msgstr "એપ્લીકેશનને પ્રસ્થાપિત કરો"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 msgid "Default Skin"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+msgid "Password update failed. Please choose a stronger password"
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:66
 #, fuzzy
 #| msgid "Application installed."
 msgid "Public registrations enabled"
 msgstr "એપ્લીકેશન પ્રસ્થાપિત થઇ ગઈ છે."
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 #, fuzzy
 #| msgid "Application installed."
 msgid "Public registrations disabled"
 msgstr "એપ્લીકેશન પ્રસ્થાપિત થઇ ગઈ છે."
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 #, fuzzy
 #| msgid "Application enabled"
 msgid "Private mode enabled"
 msgstr "એપ્લિકેશન સક્ષમ કરો"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 #, fuzzy
 #| msgid "Application disabled"
 msgid "Private mode disabled"
 msgstr "એપ્લિકેશન અક્ષમ છે"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "Default skin changed"
 msgstr "સેટિંગ યથાવત"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 msgid "Server URL updated"
 msgstr ""
 
@@ -6227,21 +6233,53 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr "સેટિંગ યથાવત"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission બીટ ટોરેન્ટ ક્લાયન્ટ છે જે વેબ UI ધરાવે છે."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"સક્ષમ કરેલ હોય ત્યારે, કોકપિટ અહીંથી ઉપલબ્ધ રહેશે <a href=\"/_cockpit/\">/_cockpit/</"
+"a> વેબ સર્વર પાથ પર. તે <a href=\"/plinth/sys/users\">કોઈપણ વપરાશકર્તા</a> "
+"સાથે{box_name} લૉગિન દ્વારા ઍક્સેસ કરી શકાય છે. સંવેદનશીલ માહિતી અને વ્યવસ્થાપનની "
+"ક્ષમતાઓ એડમિન ગ્રૂપના વપરાશકર્તાઓ માટે મર્યાદિત છે."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr ""

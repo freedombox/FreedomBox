@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2022-04-29 20:11+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -1470,7 +1470,7 @@ msgstr ""
 "etter at denne tjenesten er aktivert."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr "Last ned filer ved bruk av BitTorrent-programmer"
 
@@ -1479,7 +1479,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent nett-klient"
 
@@ -3389,30 +3389,36 @@ msgid "Administrator Password"
 msgstr "Administratorpassord"
 
 #: plinth/modules/mediawiki/forms.py:53
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). Leave "
+#| "this field blank to keep the current password."
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 "Sett et nytt passord for MediaWikis administratorkonto (admin). La dette "
 "feltet stå tomt for å beholde gjeldende passord."
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 #, fuzzy
 #| msgid "Server"
 msgid "Server URL"
 msgstr "Tjener"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 msgid "Enable public registrations"
 msgstr "Aktiver offentlig registrering"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3420,11 +3426,11 @@ msgstr ""
 "Hvis påskrudd, vil alle på Internett kunne opprette en konto på din "
 "MediaWiki-instans."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Enable private mode"
 msgstr "Skru på privat modus"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3432,11 +3438,11 @@ msgstr ""
 "Hvis påskrudd, vil tilgang begrenses. Kun folk som har kontoer kan lese/"
 "skrive på wiki-en. Offentlige registreringer vil også bli avskrudd."
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 msgid "Default Skin"
 msgstr "Forvalgt drakt"
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3444,31 +3450,37 @@ msgstr ""
 "Velg forvalgsdrakt for din MediaWiki-installasjon. Brukere kan velge egen "
 "drakt."
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr "Passord oppdatert"
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password update failed. Please choose a stronger password"
+msgstr "Passord brukt for å kryptere data. Må samsvare med tjenerpassord."
+
+#: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
 msgstr "Offentlig registrering aktivert"
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 msgid "Public registrations disabled"
 msgstr "Offentlig registrering avskrudd"
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 msgid "Private mode enabled"
 msgstr "Privat modus påskrudd"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "Privat modus avskrudd"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 msgid "Default skin changed"
 msgstr "Forvalgt drakt endret"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 msgid "Server URL updated"
 msgstr "Tjener-URL oppdatert"
 
@@ -6919,11 +6931,11 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission er en BitTorrent-klient som har et Web-grensesnitt."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -6931,11 +6943,44 @@ msgstr ""
 "BitTorrent er en like-til-like fildelingsprotokoll. Merk at BitTorrent ikke "
 "er anonym."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#| "belonging to the admin group."
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"Den kan brukes av <a href=\"{users_url}\">enhver bruker</a> på {box_name} "
+"som er medlem i admin-gruppen."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
@@ -8055,8 +8100,8 @@ msgid ""
 "freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 "Hvis du mener at denne manglende side skulle med, vennligst send feilen til "
-"FreedomBox (Plinth)-tjenestens <a href=\"https://salsa.debian.org/"
-"freedombox-team/freedombox/issues\">feilsporer</a>."
+"FreedomBox (Plinth)-tjenestens <a href=\"https://salsa.debian.org/freedombox-"
+"team/freedombox/issues\">feilsporer</a>."
 
 #: plinth/templates/500.html:10
 msgid "500"

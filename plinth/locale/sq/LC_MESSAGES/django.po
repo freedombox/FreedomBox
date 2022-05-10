@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2022-02-06 23:23+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -1461,7 +1461,7 @@ msgstr ""
 "ta ndryshoni menjëherë pas aktivizimit të këtij shërbimi."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr "Shkarkoni kartela duke përdorur aplikacione BitTorrent"
 
@@ -1470,7 +1470,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr "Klient Web BitTorrent"
 
@@ -3367,18 +3367,24 @@ msgid "Administrator Password"
 msgstr "Fjalëkalim Përgjegjësi"
 
 #: plinth/modules/mediawiki/forms.py:53
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). Leave "
+#| "this field blank to keep the current password."
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 "Caktoni një fjalëkalim të ri për llogarinë e përgjegjësit të MediaWiki-it "
 "(admin). Që të mbani fjalëkalimin e tanishëm, lëreni të zbrazët këtë fushë."
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 msgid "Server URL"
 msgstr "URL shërbyesi"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
@@ -3386,11 +3392,11 @@ msgstr ""
 "E përdorur nga MediaWiki për të prodhuar URL-ra që shpien te wiki, p.sh., te "
 "fundfaqja, prurjet ose email-e."
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 msgid "Enable public registrations"
 msgstr "Aktivizo regjistrime publike"
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3398,11 +3404,11 @@ msgstr ""
 "Në u aktivizoftë, cilido në internet do të jetë në gjendje të krijojë një "
 "llogari në instancën tuaj MediaWiki."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Enable private mode"
 msgstr "Aktivizo mënyrën private"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3411,11 +3417,11 @@ msgstr ""
 "llogari mund të lexojnë/shkruajnë te wiki. Regjistrimet publike do të jenë "
 "gjithashtu të çaktivizuar."
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 msgid "Default Skin"
 msgstr "Lëkurçe Parazgjedhje"
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3423,31 +3429,39 @@ msgstr ""
 "Zgjidhni një lëkurçe parazgjedhje për instalimin tuaj MediaWiki. Përdoruesit "
 "kanë mundësi të përzgjedhin lëkurçen e tyre të parapëlqyer."
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr "Fjalëkalimi u përditësua"
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password update failed. Please choose a stronger password"
+msgstr ""
+"Fjalëkalim i përdorur për të fshehtëzuar të dhëna. Duhet të përputhet me "
+"fjalëkalimin e shërbyesit."
+
+#: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
 msgstr "Regjistrimet publike u aktivizuan"
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 msgid "Public registrations disabled"
 msgstr "Regjistrimet publike u çaktivizuan"
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 msgid "Private mode enabled"
 msgstr "Mënyra private u aktivizua"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "Mënyra private u çaktivizua"
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 msgid "Default skin changed"
 msgstr "Lëkurçja parazgjedhje u ndryshua"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 msgid "Server URL updated"
 msgstr "URL-ja e shërbyesit u përditësua"
 
@@ -6893,11 +6907,11 @@ msgstr "Një portë SOCKS Tor-i në %(box_name)s tuaj gjendet në portën TCP 90
 msgid "Setting unchanged"
 msgstr "Rregullim i pandryshuar"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission është një klient BitTorrent me një ndërfaqe web."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -6905,11 +6919,44 @@ msgstr ""
 "BitTorrent është një protokoll shkëmbimi kartelash tek-për-tek. Kini "
 "parasysh se BitTorrent s’është anonim."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Ju lutemi, mos ndryshoni portën parazgjedhje të demonit Transmission."
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#| "belonging to the admin group."
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+"Mund të përdoret nga <a href=\"{users_url}\">cilido përdorues</a> në "
+"{box_name} që është pjesë e grupit të përgjegjësve."
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
