@@ -56,7 +56,7 @@ class InfinotedApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-infinoted', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('infinoted:index'),
             clients=info.clients, login_required=False)
         self.add(shortcut)

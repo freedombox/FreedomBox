@@ -74,6 +74,7 @@ class OpenVPNApp(app_module.App):
             'shortcut-openvpn', info.name,
             short_description=info.short_description, icon=info.icon_filename,
             description=info.description + [download_profile],
+            manual_page=info.manual_page,
             configure_url=reverse_lazy('openvpn:index'), login_required=True,
             allowed_groups=['vpn'])
         self.add(shortcut)

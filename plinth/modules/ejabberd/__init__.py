@@ -75,7 +75,7 @@ class EjabberdApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-ejabberd', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('ejabberd:index'), clients=info.clients,
             login_required=True)
         self.add(shortcut)

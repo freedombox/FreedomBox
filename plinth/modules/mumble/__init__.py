@@ -59,7 +59,7 @@ class MumbleApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-mumble', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('mumble:index'), clients=info.clients)
         self.add(shortcut)
 

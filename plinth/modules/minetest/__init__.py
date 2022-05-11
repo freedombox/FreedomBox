@@ -72,7 +72,7 @@ class MinetestApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-minetest', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('minetest:index'), clients=info.clients,
             login_required=False)
         self.add(shortcut)

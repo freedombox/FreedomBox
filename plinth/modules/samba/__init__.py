@@ -71,7 +71,7 @@ class SambaApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-samba', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('samba:index'), clients=info.clients,
             login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
