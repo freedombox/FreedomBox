@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils, actions
 from plinth import app as app_module
-from plinth import menu
+from plinth import cfg, menu
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
 from plinth.modules.apache.components import diagnose_url
@@ -19,6 +19,7 @@ from plinth.modules.names.components import DomainType
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
 from . import manifest, utils
 
@@ -28,7 +29,10 @@ _description = [
       'Project</a> website. For best protection when web surfing, the '
       'Tor Project recommends that you use the '
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
-      'Tor Browser</a>.')
+      'Tor Browser</a>.'),
+    format_lazy(
+        _('A Tor SOCKS port is available on your {box_name} for internal '
+          'networks on TCP port 9050.'), box_name=_(cfg.box_name))
 ]
 
 app = None

@@ -49,55 +49,6 @@
   {% endif %}
 {% endblock %}
 
-{% block configuration %}
-
-  {% if not config_running %}
-
-    {{ block.super }}
-
-    {% if status.relay_enabled %}
-      <h3>{% trans "Relay" %}</h3>
-      <p>
-        {% blocktrans trimmed %}
-          If your {{ box_name }} is behind a router or firewall, you should
-          make sure the following ports are open, and port-forwarded, if
-          necessary:
-        {% endblocktrans %}
-      </p>
-      <div class="table-responsive">
-        <table class="table tor-relay-ports">
-          <thead>
-            <tr>
-              <th>{% trans "Service" %}</th>
-              <th>{% trans "Port" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for name, port in status.ports.items %}
-              <tr>
-                <td class="tor-relay-port-name">{{ name }}</td>
-                <td class="tor-relay-port-number">{{ port }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% endif %}
-
-    <h3>{% trans "SOCKS" %}</h3>
-
-    <p>
-      {% blocktrans trimmed %}
-        A Tor SOCKS port is available on your {{ box_name }} on TCP port
-        9050.
-      {% endblocktrans %}
-    </p>
-
-  {% endif %}
-
-{% endblock %}
-
-
 {% block page_js %}
 
   <script type="text/javascript" src="{% static 'tor/tor.js' %}"></script>

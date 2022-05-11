@@ -9,7 +9,8 @@ from django.utils.translation import gettext as _
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import tor
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                get_port_forwarding_info)
 
 from . import utils as tor_utils
 from .forms import TorForm
@@ -46,6 +47,7 @@ def index(request):
             'has_diagnostics': True,
             'is_enabled': status['enabled'],
             'is_running': status['is_running'],
+            'port_forwarding_info': get_port_forwarding_info(tor.app),
             'refresh_page_sec': 3 if bool(config_process) else None,
         })
 

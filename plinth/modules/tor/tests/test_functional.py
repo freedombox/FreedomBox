@@ -31,7 +31,7 @@ class TestTorApp(functional.BaseAppTests):
         _feature_enable(session_browser, 'relay', should_enable=False)
         _feature_enable(session_browser, 'relay', should_enable=True)
         _assert_feature_enabled(session_browser, 'relay', enabled=True)
-        assert 'orport' in _get_relay_ports(session_browser)
+        _assert_relay_port(session_browser, 'orport')
 
     def test_set_tor_bridge_relay_configuration(self, session_browser):
         """Test setting Tor bridge relay configuration."""
@@ -39,8 +39,8 @@ class TestTorApp(functional.BaseAppTests):
         _feature_enable(session_browser, 'bridge-relay', should_enable=False)
         _feature_enable(session_browser, 'bridge-relay', should_enable=True)
         _assert_feature_enabled(session_browser, 'bridge-relay', enabled=True)
-        assert 'obfs3' in _get_relay_ports(session_browser)
-        assert 'obfs4' in _get_relay_ports(session_browser)
+        _assert_relay_port(session_browser, 'obfs3')
+        _assert_relay_port(session_browser, 'obfs4')
 
     def test_set_tor_hidden_services_configuration(self, session_browser):
         """Test setting Tor hidden services configuration."""
@@ -109,12 +109,12 @@ def _assert_feature_enabled(browser, feature, enabled):
     assert browser.find_by_name(element_name).first.checked == enabled
 
 
-def _get_relay_ports(browser):
-    """Return the list of ports shown in the relay table."""
+def _assert_relay_port(browser, port_name):
+    """Assert that port is available in port forwarding info table."""
     functional.nav_to_module(browser, 'tor')
-    return [
-        port_name.text
-        for port_name in browser.find_by_css('.tor-relay-port-name')
+    assert f'tor-{port_name}' in [
+        name.text for name in browser.find_by_css(
+            '.table-port-forwarding-info td:first-child')
     ]
 
 
