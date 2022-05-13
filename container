@@ -180,6 +180,8 @@ exit 0
 '''
 
 SETUP_AND_RUN_TESTS_SCRIPT = '''
+set -x
+
 BACKPORTS_SOURCES_LIST=/etc/apt/sources.list.d/freedombox2.list
 LDAPSCRIPTS_CONF=/etc/ldapscripts/freedombox-ldapscripts.conf
 
@@ -227,7 +229,7 @@ then
         echo
     fi
 
-    if [[ "{pytest_command}" =~ "--no-xvfb" ]]
+    if [[ "{pytest_command}" != *"--splinter-headless"* ]]
     then
         # Use the X11 authority file from the fbx user to run GUI programs
         xauth merge /home/fbx/.Xauthority

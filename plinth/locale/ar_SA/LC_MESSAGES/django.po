@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-11 19:52-0400\n"
+"POT-Creation-Date: 2022-05-09 22:12-0400\n"
 "PO-Revision-Date: 2020-06-10 15:41+0000\n"
 "Last-Translator: aiman an <an1f3@hotmail.com>\n"
 "Language-Team: Arabic (Saudi Arabia) <https://hosted.weblate.org/projects/"
@@ -1318,7 +1318,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:49
+#: plinth/modules/transmission/__init__.py:67
 msgid "Download files using BitTorrent applications"
 msgstr ""
 
@@ -1327,7 +1327,7 @@ msgid "Deluge"
 msgstr ""
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:55
+#: plinth/modules/transmission/__init__.py:73
 msgid "BitTorrent Web Client"
 msgstr ""
 
@@ -2919,77 +2919,83 @@ msgstr ""
 
 #: plinth/modules/mediawiki/forms.py:53
 msgid ""
-"Set a new password for MediaWiki's administrator account (admin). Leave this "
-"field blank to keep the current password."
+"Set a new password for MediaWiki's administrator account (admin). The "
+"password cannot be a common one and the minimum required length is "
+"<strong>10 characters</strong>. Leave this field blank to keep the current "
+"password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:60
 #, fuzzy
 #| msgid "Web Server"
 msgid "Server URL"
 msgstr "خادم ويب"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:61
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:66
 msgid "Enable public registrations"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:65
+#: plinth/modules/mediawiki/forms.py:67
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Enable private mode"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:72
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:75
+#: plinth/modules/mediawiki/forms.py:77
 msgid "Default Skin"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:76
+#: plinth/modules/mediawiki/forms.py:78
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:49
+#: plinth/modules/mediawiki/views.py:51
 msgid "Password updated"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:58
+#: plinth/modules/mediawiki/views.py:56
+msgid "Password update failed. Please choose a stronger password"
+msgstr ""
+
+#: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:75
 msgid "Public registrations disabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:72
+#: plinth/modules/mediawiki/views.py:80
 msgid "Private mode enabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:86
+#: plinth/modules/mediawiki/views.py:94
 msgid "Default skin changed"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:98
 msgid "Server URL updated"
 msgstr ""
 
@@ -5953,21 +5959,49 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:26
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:27
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:29
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:53
+#: plinth/modules/transmission/__init__.py:31
+#, python-brace-format
+msgid ""
+"Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
+"lightweight but is less customizable."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:35
+#, python-brace-format
+msgid ""
+"It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+"belonging to the bit-torrent group."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:39
+#, python-brace-format
+msgid ""
+"<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
+"directory from the dropdown menu below."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
+"After a download has completed, you can also access your files using the <a "
+"href=\"{sharing_url}\">Sharing</a> app."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr ""

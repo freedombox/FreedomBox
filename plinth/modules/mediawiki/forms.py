@@ -51,8 +51,10 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
     password = forms.CharField(
         label=_('Administrator Password'), help_text=_(
             'Set a new password for MediaWiki\'s administrator account '
-            '(admin). Leave this field blank to keep the current password.'),
-        required=False, widget=forms.PasswordInput)
+            '(admin). The password cannot be a common one and the minimum '
+            'required length is <strong>10 characters</strong>. '
+            'Leave this field blank to keep the current password.'),
+        required=False, widget=forms.PasswordInput, min_length=10)
 
     server_url = forms.CharField(
         label=_('Server URL'), required=False, help_text=_(

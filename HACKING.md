@@ -57,13 +57,13 @@ development environment inside a systemd-nspawn container.
     host$ cd freedombox
     ```
 
-2.  Work in a specific branch:
+1.  Work in a specific branch:
     ```bash
     host$ git branch YOUR-FEATURE-BRANCH
     host$ git checkout YOUR-FEATURE-BRANCH
     ```
 
-3.  To download, setup, run, and configure a container for FreedomBox
+1.  To download, setup, run, and configure a container for FreedomBox
     development, simply execute in your FreedomBox Service (Plinth) development
     folder: (This step requires at least 16GB of free disk space)
 
@@ -71,19 +71,29 @@ development environment inside a systemd-nspawn container.
     host$ ./container up
     ```
 
-4.  To run unit and functional tests for an app:
+1. To run unit tests:
 
     ```bash
-    host$ ./container run-tests --pytest-args -v --include-functional --no-xvfb plinth/modules/{app name}
+    host$ ./container run-tests
     ```
 
-5.  SSH into the running container with the following command:
+1.  To run unit and functional tests for an app:
+
+    ```bash
+    host$ ./container run-tests --pytest-args -v --include-functional --splinter-headless plinth/modules/{app-name}
+    ```
+
+    Drop the option `--splinter-headless` if you want to see the tests running
+    in browser windows. Not specifying a module in the above command would run
+    functional tests for all the apps and also unit tests.
+
+1.  SSH into the running container with the following command:
 
     ```bash
     host$ ./container ssh
     ```
 
-6. The default distribution used by the container script is "testing", but you
+1. The default distribution used by the container script is "testing", but you
    can choose a different distribution (e.g. "stable") in two ways.
 
    1. Using an environment variable.
@@ -146,12 +156,16 @@ Note: This development container has automatic upgrades disabled by default.
     To workaround this error, you must override Network Manager's behavior.
     <sup>[(src)][GloballyManagedDevices]</sup>
 
+    ```bash
+    host$ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+    host$ sudo service network-manager restart
+    host$ ./container destroy && ./container up
     ```
-    # On host machine
-    $ sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
-    $ sudo service network-manager restart
-    $ ./container destroy && ./container up
-    ```
+* File/directory not found errors when running tests can be fixed by clearing `__pycache__` directories.
+
+  ```bash
+  host$ sudo find -iname '__pycache__' | sudo xargs rm -rf {} ;
+  ```
 
 [back to index](#hacking)
 
@@ -443,7 +457,6 @@ host$ pip3 install splinter
 host$ pip3 install pytest-splinter
 host$ pip3 install pytest-xdist  # optional, to run tests in parallel
 host$ sudo apt install firefox
-host$ sudo apt install xvfb python3-pytest-xvfb  # optional, to avoid opening browser windows
 host$ sudo apt install smbclient  # optional, to test samba
 ```
 
