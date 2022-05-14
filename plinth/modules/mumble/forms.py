@@ -34,3 +34,13 @@ class MumbleForm(forms.Form):
             'SuperUser password can be used to manage permissions in Mumble.'),
         required=False,
     )
+
+    root_channel_name = forms.CharField(
+        label=_('Set the name for the root channel'),
+        min_length=1,
+        max_length=32,
+        help_text=_(
+            'Set the name of the main channel of your mumble server. '
+            'If the name was never changed, the channel is named Root.'),
+        required=False,
+    )

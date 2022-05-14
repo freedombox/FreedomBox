@@ -152,3 +152,8 @@ def get_domains():
         return [domain]
 
     return []
+
+
+def get_root_channel_name():
+    """Return the root channel name."""
+    return actions.superuser_run('mumble', ['get-root-channel-name'])

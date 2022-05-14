@@ -16,6 +16,7 @@ class MumbleAppView(AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial['domain'] = mumble.get_domain()
+        initial['root_channel_name'] = mumble.get_root_channel_name()
         return initial
 
     def form_valid(self, form):
@@ -37,5 +38,10 @@ class MumbleAppView(AppView):
             )
             messages.success(self.request,
                              _('SuperUser password successfully updated.'))
+
+        name = new_config.get('root_channel_name')
+        if name:
+            actions.superuser_run('mumble', ['change-root-channel-name', name])
+            messages.success(self.request, _('Root channel name changed.'))
 
         return super().form_valid(form)

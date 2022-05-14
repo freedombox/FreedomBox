@@ -12,6 +12,8 @@ from subprocess import PIPE, Popen
 
 import augeas
 
+from plinth import action_utils
+
 CONFIG_FILE = '/etc/mumble-server.ini'
 DATA_DIR = '/var/lib/mumble-server'
 
@@ -29,6 +31,13 @@ def parse_arguments():
     subparsers.add_parser('get-domain', help='Print Mumble domain')
     subparser = subparsers.add_parser('set-domain', help='Setup Mumble domain')
     subparser.add_argument('domain_name', help='Domain name to be allowed')
+
+    subparser = subparsers.add_parser('change-root-channel-name',
+                                      help='Set the root channel name')
+    subparser.add_argument('root_channel_name', help='New root channel name')
+
+    subparsers.add_parser('get-root-channel-name',
+                          help='Print the root channel name')
 
     subparsers.required = True
     return parser.parse_args()
@@ -81,6 +90,21 @@ def subcommand_set_domain(arguments):
     """Write a file containing domain name."""
     domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
     domain_file.write_text(arguments.domain_name)
+
+
+def subcommand_change_root_channel_name(arguments):
+    """Change the name of the Root channel."""
+    aug = load_augeas()
+    aug.set('.anon/registerName', arguments.root_channel_name)
+    aug.save()
+    action_utils.service_try_restart('mumble-server')
+
+
+def subcommand_get_root_channel_name(_):
+    aug = load_augeas()
+    name = aug.get('.anon/registerName')
+    if name:
+        print(name)
 
 
 def load_augeas():
