@@ -30,10 +30,11 @@
         {{ service_name }}:
       {% endblocktrans %}
 
-      <div class="table-responsive">
+      <div class="table-responsive table-port-forwarding-info">
         <table class="table">
           <thead>
             <tr>
+              <th>{% trans "Service Name" %}</th>
               <th>{% trans "Protocol" %}</th>
               <th>{% trans "From Router/WAN Ports" %}</th>
               <th>{% blocktrans %}To {{box_name}} Ports{% endblocktrans %}</th>
@@ -42,6 +43,7 @@
           <tbody>
             {% for port in port_forwarding_info.ports %}
             <tr>
+              <td>{{ port.name }}</td>
               <td>{{ port.protocol }}</td>
               <td>{{ port.ports }}</td>
               <td>{{ port.ports }}</td>

@@ -173,6 +173,7 @@ def get_port_forwarding_info(app_):
 
             for detail in port['details']:
                 info['ports'].append({
+                    'name': port['name'],
                     'protocol': detail[1].upper(),
                     'ports': detail[0]
                 })
