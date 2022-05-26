@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-23 20:21-0400\n"
-"PO-Revision-Date: 2022-04-21 09:08+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2022-05-27 17:17+0000\n"
+"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1082,6 +1082,8 @@ msgid ""
 "Only letters of the English alphabet, numbers and the characters _ . and - "
 "without spaces or special characters. Example: My_Library_2000"
 msgstr ""
+"Endast bokstäver i det engelska alfabetet, siffror och tecken _ . och - utan "
+"mellanslag eller specialtecken. Exempel: My_Library_2000"
 
 #: plinth/modules/calibre/forms.py:30
 msgid "A library with this name already exists."
@@ -1619,13 +1621,6 @@ msgstr ""
 "ditt DNS-namn, kommer hen att få din aktuella IP som svar."
 
 #: plinth/modules/dynamicdns/__init__.py:41
-#, fuzzy
-#| msgid ""
-#| "If you are looking for a free dynamic DNS account, you may find a free "
-#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
-#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
-#| "based services at <a href='http://freedns.afraid.org/' target='_blank'> "
-#| "freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
@@ -1633,9 +1628,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Om du letar efter ett gratis dynamiskt DNS-konto kan du hitta en gratis "
-"GnuDIP-tjänst på <a target=\"_blank\">ddns.freedombox.org</a> eller så kan "
-"du hitta gratis uppdaterings-URL-baserade tjänster på <a href=\"http://"
-"freedns.afraid.org/\" target=\"_blank\"> freedns.afraid.org</a>."
+"GnuDIP-tjänst på <a href=\"https://ddns.freedombox.org\" target=\"_blank\""
+">ddns.freedombox.org</a> eller så kan du hitta gratis uppdaterings-URL-"
+"baserade tjänster på <a href=\"http://freedns.afraid.org/\" target=\"_blank\""
+"> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1808,10 +1804,8 @@ msgid "No status available."
 msgstr "Ingen status tillgänglig."
 
 #: plinth/modules/dynamicdns/views.py:24 plinth/modules/dynamicdns/views.py:26
-#, fuzzy
-#| msgid "Connection Name"
 msgid "Connection timed out"
-msgstr "Anslutningens namn"
+msgstr "Anslutningstiden överskreds"
 
 #: plinth/modules/dynamicdns/views.py:25
 msgid "Could not find server"
@@ -1975,6 +1969,10 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
+"Detta är en komplett e-postserverlösning med Postfix, Dovecot och Rspamd. "
+"Postfix skickar och tar emot e-post. Dovecot gör det möjligt för e-"
+"postklienter att komma åt din brevlåda med hjälp av IMAP och POP3. Rspamd "
+"tar hand om skräppost."
 
 #: plinth/modules/email/__init__.py:31
 #, python-brace-format
@@ -1985,6 +1983,11 @@ msgid ""
 "Necessary aliases such as \"postmaster\" are automatically created pointing "
 "to the first admin user."
 msgstr ""
+"Varje användare på {box_name} får en e-postadress som user@mydomain.example. "
+"De får också e-post från alla adresser som ser ut som user+foo@"
+"mydomain.example. Dessutom kan de lägga till alias till sin e-postadress. "
+"Nödvändiga alias som \"postmaster\" skapas automatiskt och pekar på den "
+"första administratörsanvändaren."
 
 #: plinth/modules/email/__init__.py:37
 msgid ""
@@ -2113,7 +2116,7 @@ msgstr "Prioritet"
 
 #: plinth/modules/email/templates/email.html:40
 msgid "Weight"
-msgstr ""
+msgstr "Vikt"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
@@ -3316,31 +3319,26 @@ msgid "Administrator Password"
 msgstr "Administratörs lösenord"
 
 #: plinth/modules/mediawiki/forms.py:26
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). Leave "
-#| "this field blank to keep the current password."
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
 "<strong>10 characters</strong>. Leave this field blank to keep the current "
 "password."
 msgstr ""
-"Ställ in ett nytt lösenord för MediaWikis administratörskonto (admin). Lämna "
-"det här fältet tomt för att behålla det aktuella lösenordet."
+"Ange ett nytt lösenord för MediaWiki's administratörskonto (admin). "
+"Lösenordet kan inte vara vanligt och den minsta längden är <strong>10 "
+"tecken</strong>. Lämna det här fältet tomt om du vill behålla det nuvarande "
+"lösenordet."
 
 #: plinth/modules/mediawiki/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails."
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
 "\"."
 msgstr ""
-"Används av MediaWiki för att generera webbadresser som pekar på wiki som i "
-"sidfot, flöden och e-postmeddelanden."
+"Används av MediaWiki för att generera webbadresser som pekar på wikin, t.ex. "
+"i sidfot, flöden och e-post. Exempel: \"myfreedombox.example.org\" eller "
+"\"example.onion\"."
 
 #: plinth/modules/mediawiki/forms.py:39
 msgid "Enable public registrations"
@@ -3384,11 +3382,8 @@ msgid "Password updated"
 msgstr "Lösenord uppdaterad"
 
 #: plinth/modules/mediawiki/views.py:56
-#, fuzzy
-#| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
-msgstr ""
-"Lösenord som används för att kryptera data. Måste matcha serverns lösenord."
+msgstr "Lösenordsuppdateringen misslyckades. Välj ett starkare lösenord"
 
 #: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
@@ -3411,10 +3406,8 @@ msgid "Default skin changed"
 msgstr "Standardskal ändrat"
 
 #: plinth/modules/mediawiki/views.py:98
-#, fuzzy
-#| msgid "Domain name set"
 msgid "Domain name updated"
-msgstr "Domännamn inställt"
+msgstr "Domännamnet uppdaterat"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -6637,12 +6630,13 @@ msgstr ""
 "\">TOR Browser</a>."
 
 #: plinth/modules/tor/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#, python-brace-format
 msgid ""
 "A Tor SOCKS port is available on your {box_name} for internal networks on "
 "TCP port 9050."
-msgstr "En Tor SOCKS-port finns på din %(box_name)s på TCP-port 9050."
+msgstr ""
+"En Tor SOCKS-port finns tillgängligt på din {box_name} för interna nätverk "
+"på TCP-port 9050."
 
 #: plinth/modules/tor/__init__.py:54
 msgid "Tor"
@@ -6833,18 +6827,17 @@ msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
 "lightweight but is less customizable."
 msgstr ""
+"Jämfört med <a href=\"{deluge_url}\">Deluge</a> är Transmission enklare och "
+"lättare men mindre anpassningsbar."
 
 #: plinth/modules/transmission/__init__.py:35
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
-#| "belonging to the admin group."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the bit-torrent group."
 msgstr ""
-"Den kan nås genom att <a href=\"{users_url}\">alla användar</a> på "
-"{box_name} som hör till administratörsgruppen."
+"Den kan nås av <a href=\"{users_url}\">alla användare</a> på {box_name} som "
+"tillhör bit-torrent-gruppen."
 
 #: plinth/modules/transmission/__init__.py:39
 #, python-brace-format
@@ -6852,6 +6845,8 @@ msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
+"<a href=\"{samba_url}\">Samba</a>-resurser kan ställas in som "
+"standardnedladdningskatalogen från rullgardinsmenyn nedan."
 
 #: plinth/modules/transmission/__init__.py:43
 #, python-brace-format
@@ -6859,6 +6854,8 @@ msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
+"När en nedladdning har slutförts kan du också komma åt dina filer med hjälp "
+"av <a href=\"{sharing_url}\">Sharing</a> appen."
 
 #: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
@@ -6876,16 +6873,13 @@ msgstr ""
 "känner dig så nära en riktig stationär applikation som möjligt."
 
 #: plinth/modules/ttrss/__init__.py:27
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
-#| "\"{users_url}\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"När den är aktiverad, kan Tiny Tiny RSS nås av alla <a href="
-"\"{users_url}\">användare med en {box_name} login</a>."
+"När aktiverat kan Tiny Tiny RSS nås av <a href=\"{users_url}\">alla "
+"användare</a> som tillhör gruppen feed-reader."
 
 #: plinth/modules/ttrss/__init__.py:32
 msgid ""
@@ -8246,10 +8240,8 @@ msgstr ""
 "%(service_name)s:"
 
 #: plinth/templates/port-forwarding-info.html:37
-#, fuzzy
-#| msgid "Service Type"
 msgid "Service Name"
-msgstr "Servicetype"
+msgstr "Service namn"
 
 #: plinth/templates/port-forwarding-info.html:38
 msgid "Protocol"
