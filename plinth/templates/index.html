@@ -27,15 +27,7 @@
       {% endif %}
 
       {% if selected_shortcut.description %}
-        {% block pagetitle %}
-          <h2>{{ selected_shortcut.name }}</h2>
-        {% endblock %}
-
-        {% block description %}
-          {% for paragraph in selected_shortcut.description %}
-            <p>{{ paragraph|safe }}</p>
-          {% endfor %}
-        {% endblock %}
+        {% include "app-header.html" with app_info=selected_shortcut %}
 
         <section class="toolbar">
           <div class="btn-toolbar" role="toolbar">

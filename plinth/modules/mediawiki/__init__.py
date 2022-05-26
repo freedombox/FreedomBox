@@ -80,7 +80,8 @@ class MediaWikiApp(app_module.App):
         self.add(firewall)
 
         webserver = Webserver('webserver-mediawiki', 'mediawiki',
-                              urls=['https://{host}/mediawiki'])
+                              urls=['https://{host}/mediawiki/'],
+                              expect_redirects=True)
         self.add(webserver)
 
         webserver = Webserver('webserver-mediawiki-freedombox',
@@ -157,7 +158,11 @@ def get_server_url():
     return urlparse(server_url).netloc
 
 
-def set_server_url(server_url):
+def set_server_url(domain):
     """Set the value of $wgServer."""
+    protocol = 'https'
+    if domain.endswith('.onion'):
+        protocol = 'http'
+
     actions.superuser_run('mediawiki',
-                          ['set-server-url', f'https://{server_url}'])
+                          ['set-server-url', f'{protocol}://{domain}'])

@@ -20,8 +20,9 @@ class Shortcut(app.FollowerComponent):
     _all_shortcuts = {}
 
     def __init__(self, component_id, name, short_description=None, icon=None,
-                 url=None, description=None, configure_url=None, clients=None,
-                 login_required=False, allowed_groups=None):
+                 url=None, description=None, manual_page=None,
+                 configure_url=None, clients=None, login_required=False,
+                 allowed_groups=None):
         """Initialize the frontpage shortcut component for an app.
 
         When a user visits this web interface, they are first shown the
@@ -47,6 +48,10 @@ class Shortcut(app.FollowerComponent):
         'description' is additional information that the user is shown when
         the shortcut is activated. This must be provided instead of 'url' and
         must be 'None' if 'url' is provided.
+
+        'manual_page' is the optional name of the page for this app in the user
+        manual. If provided, a 'Learn more...' link appears in the app page for
+        this app.
 
         'configure_url' is the page to which the user may be redirected if they
         wish to change the settings for the app or one of its services. This is
@@ -78,6 +83,7 @@ class Shortcut(app.FollowerComponent):
         self.url = url
         self.icon = icon
         self.description = description
+        self.manual_page = manual_page
         self.configure_url = configure_url
         self.clients = clients
         self.login_required = login_required

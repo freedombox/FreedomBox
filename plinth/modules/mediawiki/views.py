@@ -32,7 +32,7 @@ class MediaWikiAppView(views.AppView):
             'enable_public_registrations': is_public_registration_enabled(),
             'enable_private_mode': is_private_mode_enabled(),
             'default_skin': get_default_skin(),
-            'server_url': get_server_url()
+            'domain': get_server_url()
         })
         return initial
 
@@ -93,8 +93,8 @@ class MediaWikiAppView(views.AppView):
             mediawiki.set_default_skin(new_config['default_skin'])
             messages.success(self.request, _('Default skin changed'))
 
-        if is_changed('server_url'):
-            mediawiki.set_server_url(new_config['server_url'])
-            messages.success(self.request, _('Server URL updated'))
+        if is_changed('domain'):
+            mediawiki.set_server_url(new_config['domain'])
+            messages.success(self.request, _('Domain name updated'))
 
         return super().form_valid(form)

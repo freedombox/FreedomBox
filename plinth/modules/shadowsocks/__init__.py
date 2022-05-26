@@ -63,7 +63,7 @@ class ShadowsocksApp(app_module.App):
         shortcut = frontpage.Shortcut(
             'shortcut-shadowsocks', info.name,
             short_description=info.short_description, icon=info.icon_filename,
-            description=info.description,
+            description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('shadowsocks:index'),
             login_required=True)
         self.add(shortcut)

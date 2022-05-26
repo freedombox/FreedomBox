@@ -24,9 +24,10 @@ _description = [
       'designed to allow reading news from any location, while feeling as '
       'close to a real desktop application as possible.'),
     format_lazy(
-        _('When enabled, Tiny Tiny RSS can be accessed by any '
-          '<a href="{users_url}">user with a {box_name} login</a>.'),
-        box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
+        _('When enabled, Tiny Tiny RSS can be accessed by '
+          '<a href="{users_url}">any user</a> belonging to the '
+          'feed-reader group.'), box_name=_(cfg.box_name),
+        users_url=reverse_lazy('users:index')),
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))

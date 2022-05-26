@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-09 22:12-0400\n"
+"POT-Creation-Date: 2022-05-23 20:21-0400\n"
 "PO-Revision-Date: 2022-03-02 12:27+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -117,12 +117,12 @@ msgstr "జాల సేవకం"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name}అంతర్జాల ముఖాంతరం (ఫ్లింథ్)"
 
-#: plinth/modules/apache/components.py:122
+#: plinth/modules/apache/components.py:126
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "tcp{kind} పై URL {url} వాడుక"
 
-#: plinth/modules/apache/components.py:125
+#: plinth/modules/apache/components.py:129
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "URL {url} ప్రవేశము"
@@ -890,14 +890,14 @@ msgid "Admin"
 msgstr "నిర్వాహకుడు"
 
 #: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:38
-#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
-#: plinth/modules/tor/views.py:157 plinth/modules/zoph/views.py:69
+#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:132
+#: plinth/modules/tor/views.py:159 plinth/modules/zoph/views.py:69
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
-#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
+#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:161
 #: plinth/modules/zoph/views.py:72
 msgid "An error occurred during configuration."
 msgstr "అక్రుతీకరణలో ఒక పొరపాటు జరిగింది."
@@ -1191,7 +1191,7 @@ msgstr "సాధారణ ఆకృతీకరణ"
 #: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
+#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
@@ -1733,6 +1733,7 @@ msgstr "స్థితి"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+#: plinth/modules/mediawiki/forms.py:33
 msgid "Domain"
 msgstr "డొమైన్"
 
@@ -2059,7 +2060,6 @@ msgstr ""
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "పోర్టు"
 
@@ -2361,7 +2361,7 @@ msgid "Documentation"
 msgstr "పత్రావళి"
 
 #: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
 msgctxt "User guide"
 msgid "Manual"
 msgstr "నిర్దేశిక"
@@ -2699,7 +2699,7 @@ msgstr "I2P కార్యక్షేతాన్ని నిర్వహి�
 msgid "I2P"
 msgstr "ఇ౨ప్"
 
-#: plinth/modules/i2p/__init__.py:56 plinth/modules/tor/__init__.py:51
+#: plinth/modules/i2p/__init__.py:56 plinth/modules/tor/__init__.py:55
 msgid "Anonymity Network"
 msgstr "అజ్ఞాత జాలిక"
 
@@ -3218,15 +3218,15 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "మీడియావికీ"
 
-#: plinth/modules/mediawiki/__init__.py:57 plinth/templates/index.html:132
+#: plinth/modules/mediawiki/__init__.py:57 plinth/templates/index.html:124
 msgid "Wiki"
 msgstr "వికీ"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:25
 msgid "Administrator Password"
 msgstr "నిర్వాహకుని రహస్యపదం"
 
-#: plinth/modules/mediawiki/forms.py:53
+#: plinth/modules/mediawiki/forms.py:26
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -3240,33 +3240,34 @@ msgstr ""
 "మీడియావికీ యొక్క అడ్మినిస్ట్రేటర్ ఖాతా (admin) కోసం ఒక కొత్త రహస్యపదాన్ని సెట్ చెయ్యండి. ప్రస్తుత రహస్యపదాన్ని "
 "ఉంచాలనుకుంటే ఈ ఫీల్డ్ ను ఖాళీగా వదిలేయండి."
 
-#: plinth/modules/mediawiki/forms.py:60
-msgid "Server URL"
-msgstr "సేవిక URL"
-
-#: plinth/modules/mediawiki/forms.py:61
+#: plinth/modules/mediawiki/forms.py:34
+#, fuzzy
+#| msgid ""
+#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
+#| "footer, feeds and emails."
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
-"feeds and emails."
+"feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
+"\"."
 msgstr ""
 "ఫుటర్, ఫీడ్‌లు మరియు ఇమెయిల్‌లు వంటి వికీని సూచించే URLలను రూపొందించడానికి MediaWiki ద్వారా "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/mediawiki/forms.py:66
+#: plinth/modules/mediawiki/forms.py:39
 msgid "Enable public registrations"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:67
+#: plinth/modules/mediawiki/forms.py:40
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr "ఇది సశక్త పరిచినట్లయితే, అంతర్జాలంలో ఉన్న ఎవరైనా మీ మీడియావికీ ఉదాహరణ మీద ఖాతాను సృజించుకోగలరు."
 
-#: plinth/modules/mediawiki/forms.py:71
+#: plinth/modules/mediawiki/forms.py:44
 msgid "Enable private mode"
 msgstr "ప్రైవేట్ మోడ్‌ను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:72
+#: plinth/modules/mediawiki/forms.py:45
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3274,11 +3275,11 @@ msgstr ""
 "ప్రారంభించబడితే, సాంగత్యం పరిమితం చేయబడుతుంది. ఖాతాలు ఉన్నవారు మాత్రమే వికీలో చదవగలరు/వ్రాయగలరు. "
 "ప్రజా రిజిస్ట్రేషన్లు కూడా నిలిపివేయబడతాయి."
 
-#: plinth/modules/mediawiki/forms.py:77
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Default Skin"
 msgstr "డిఫాల్ట్ చర్మం"
 
-#: plinth/modules/mediawiki/forms.py:78
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3317,8 +3318,10 @@ msgid "Default skin changed"
 msgstr "డిఫాల్ట్ చర్మం మార్చబడింది"
 
 #: plinth/modules/mediawiki/views.py:98
-msgid "Server URL updated"
-msgstr "సర్వర్ URL నవీకరించబడింది"
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Domain name updated"
+msgstr "అధికారక్షేత్రం పేరు అమర్పు"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -6054,7 +6057,7 @@ msgstr "స్నాప్షాట్‌ సృష్టించబడిన�
 msgid "Storage snapshots configuration updated"
 msgstr "నిల్వ స్నాప్‌షాట్‌ల కాన్ఫిగరేషన్ నవీకరించబడింది"
 
-#: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:62
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "చర్య లోపం:{0}{1}{2}"
@@ -6420,7 +6423,7 @@ msgstr "సింక్ తింగ్"
 msgid "File Synchronization"
 msgstr "ఫైళ్ళ సమకాలీకరణ"
 
-#: plinth/modules/tor/__init__.py:26
+#: plinth/modules/tor/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -6433,40 +6436,48 @@ msgstr ""
 "టార్ ప్రాజెక్ట్ మీరు <a href=\"https://www.torproject.org/download/download-easy."
 "html.en\"> టార్  బ్రౌజర్ </a> ను ఉపయోగించాలని సిఫార్సు చేస్తున్నారు."
 
-#: plinth/modules/tor/__init__.py:50
+#: plinth/modules/tor/__init__.py:34
+#, fuzzy, python-brace-format
+#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+msgid ""
+"A Tor SOCKS port is available on your {box_name} for internal networks on "
+"TCP port 9050."
+msgstr "టిసిపి  పోర్ట్ 9050 పై ఒక టార్ సొక్స్ పోర్ట్ మీ %(box_name)sలో అందుబాటులో ఉంది."
+
+#: plinth/modules/tor/__init__.py:54
 msgid "Tor"
 msgstr "టార్"
 
-#: plinth/modules/tor/__init__.py:67
+#: plinth/modules/tor/__init__.py:71
 msgid "Tor Onion Service"
 msgstr "టోర్ ఉల్లిపాయ సేవ"
 
-#: plinth/modules/tor/__init__.py:71
+#: plinth/modules/tor/__init__.py:75
 msgid "Tor Socks Proxy"
 msgstr "టోర్ సాక్స్ ప్రాతినిధ్య"
 
-#: plinth/modules/tor/__init__.py:75
+#: plinth/modules/tor/__init__.py:79
 msgid "Tor Bridge Relay"
 msgstr "టార్ బ్రిడ్జ్ రిలే"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:121
 msgid "Tor relay port available"
 msgstr "టార్ రిలే పోర్ట్ అందుబాటులో ఉంది"
 
-#: plinth/modules/tor/__init__.py:127
+#: plinth/modules/tor/__init__.py:131
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:137
+#: plinth/modules/tor/__init__.py:141
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 రవాణా నమోదు చేయబడింది"
 
-#: plinth/modules/tor/__init__.py:206
+#: plinth/modules/tor/__init__.py:210
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "టార్ ద్వారా {kind} లో {url} ను ఆక్సెస్ చెయ్యండి"
 
-#: plinth/modules/tor/__init__.py:217
+#: plinth/modules/tor/__init__.py:221
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "టోర్ వాడుకను నిర్ధారించండి{url} టీ సి పి పై{kind}"
@@ -6588,33 +6599,7 @@ msgstr "ఉల్లిపాయ సేవ"
 msgid "Ports"
 msgstr "పోర్ట్స్"
 
-#: plinth/modules/tor/templates/tor.html:59
-msgid "Relay"
-msgstr "రిలే"
-
-#: plinth/modules/tor/templates/tor.html:61
-#, python-format
-msgid ""
-"If your %(box_name)s is behind a router or firewall, you should make sure "
-"the following ports are open, and port-forwarded, if necessary:"
-msgstr ""
-"మీ %(box_name)s లు రౌటర్ లేదా ఫైర్వాల్ వెనుక ఉంటే, మీరు ఈ క్రింది పోర్టులు తెరిచి ఉన్నారని "
-"నిర్ధారించుకోండి మరియు అవసరమైతే పోర్ట్-ఫార్వార్డ్ చేయబడిందని నిర్ధారించుకోండి:"
-
-#: plinth/modules/tor/templates/tor.html:71
-msgid "Service"
-msgstr "సేవ"
-
-#: plinth/modules/tor/templates/tor.html:87
-msgid "SOCKS"
-msgstr "సాక్స్‌లు"
-
-#: plinth/modules/tor/templates/tor.html:90
-#, python-format
-msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr "టిసిపి  పోర్ట్ 9050 పై ఒక టార్ సొక్స్ పోర్ట్ మీ %(box_name)sలో అందుబాటులో ఉంది."
-
-#: plinth/modules/tor/views.py:137 plinth/views.py:222
+#: plinth/modules/tor/views.py:139 plinth/views.py:222
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
@@ -6681,15 +6666,18 @@ msgstr ""
 "అనుమతించేలా రూపొందించబడింది."
 
 #: plinth/modules/ttrss/__init__.py:27
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
 msgid ""
-"When enabled, Tiny Tiny RSS can be accessed by any <a href="
-"\"{users_url}\">user with a {box_name} login</a>."
+"When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
 msgstr ""
 "ప్రారంభించబడినప్పుడు, చిన్న చిన్న RSSని ఏ <a href=\"{users_url}\">{box_name} లాగిన్‌తో</a> "
 "వినియోగదారు అయినా సాంగత్యం చేయవచ్చు."
 
-#: plinth/modules/ttrss/__init__.py:31
+#: plinth/modules/ttrss/__init__.py:32
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -6697,15 +6685,15 @@ msgstr ""
 "చిన్న చిన్న RSS కోసం మొబైల్ లేదా డెస్క్‌టాప్ అప్లికేషన్‌ను ఉపయోగిస్తున్నప్పుడు, URLని ఉపయోగించండి<a href="
 "\"/tt-rss-app/\">/tt-rss-app</a> కలపడం  కోసం ."
 
-#: plinth/modules/ttrss/__init__.py:49
+#: plinth/modules/ttrss/__init__.py:50
 msgid "Read and subscribe to news feeds"
 msgstr "న్యూస్ ఫీడ్‌లను  చదవడం మరియు చందాదారునిగా చేరు"
 
-#: plinth/modules/ttrss/__init__.py:52 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "టైనీ టైనీ RSS"
 
-#: plinth/modules/ttrss/__init__.py:53
+#: plinth/modules/ttrss/__init__.py:54
 msgid "News Feed Reader"
 msgstr "న్యూస్ ఫీడ్ రీడర్"
 
@@ -7891,7 +7879,7 @@ msgstr ""
 "ఈ పేజీకి సత్వరమార్గాలను జోడించడానికి కొన్ని <a href=\"%(apps_url)s\">అప్లికేషన్‌లను</a> "
 "ప్రారంభించండి."
 
-#: plinth/templates/index.html:108
+#: plinth/templates/index.html:100
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -7902,7 +7890,7 @@ msgstr ""
 "ఉచిత సాఫ్ట్‌వేర్ స్వీయ-హోస్టింగ్ వెబ్ సర్వర్. ఇది మీ గోప్యత మరియు డేటా యాజమాన్యానికి సంబంధించి ఆన్‌లైన్ కమ్యూనికేషన్ "
 "సాధనాలను అందిస్తుంది."
 
-#: plinth/templates/index.html:117
+#: plinth/templates/index.html:109
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -7912,31 +7900,31 @@ msgstr ""
 "ఈ పోర్టల్ %(box_name)s వెబ్ సంవిధానంలో ఒక భాగం. %(box_name)s అనేది ఉచిత సాఫ్ట్‌వేర్, ఇది GNU "
 "అఫెరో జనరల్ పబ్లిక్ లైసెన్స్, వెర్షన్ 3 లేదా తదుపరిది కింద పంపిణీ చేయబడింది."
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:127
 msgid "Source Code"
 msgstr "మూల కోడ్"
 
-#: plinth/templates/index.html:140
+#: plinth/templates/index.html:132
 msgid "Homepage"
 msgstr "హోంపేజ్"
 
-#: plinth/templates/index.html:143 plinth/templates/toolbar.html:19
+#: plinth/templates/index.html:135 plinth/templates/toolbar.html:19
 msgid "Donate"
 msgstr "విరాళమివ్వండి"
 
-#: plinth/templates/index.html:147
+#: plinth/templates/index.html:139
 msgid "FreedomBox Foundation"
 msgstr "ఫ్రీడమ్ బాక్స్ నిర్దేశిక"
 
-#: plinth/templates/index.html:154
+#: plinth/templates/index.html:146
 msgid "Forum"
 msgstr ""
 
-#: plinth/templates/index.html:159
+#: plinth/templates/index.html:151
 msgid "IRC Chatroom"
 msgstr "IRC చాట్ రూమ్"
 
-#: plinth/templates/index.html:164
+#: plinth/templates/index.html:156
 msgid "Mailing list"
 msgstr "మెయిలింగ్ జాబితా"
 
@@ -8004,14 +7992,20 @@ msgstr ""
 "క్రింది పోర్ట్‌లను ఫార్వార్డ్ చేయాలి:"
 
 #: plinth/templates/port-forwarding-info.html:37
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Name"
+msgstr "సేవా రకం"
+
+#: plinth/templates/port-forwarding-info.html:38
 msgid "Protocol"
 msgstr "ప్రోటోకాల్"
 
-#: plinth/templates/port-forwarding-info.html:38
+#: plinth/templates/port-forwarding-info.html:39
 msgid "From Router/WAN Ports"
 msgstr "రూటర్/WAN పోర్ట్‌ల నుండి"
 
-#: plinth/templates/port-forwarding-info.html:39
+#: plinth/templates/port-forwarding-info.html:40
 #, python-format
 msgid "To %(box_name)s Ports"
 msgstr "%(box_name)s పోర్ట్‌లకు"
@@ -8077,6 +8071,29 @@ msgstr "%(percentage)s %% పూర్తి"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Server URL"
+#~ msgstr "సేవిక URL"
+
+#~ msgid "Server URL updated"
+#~ msgstr "సర్వర్ URL నవీకరించబడింది"
+
+#~ msgid "Relay"
+#~ msgstr "రిలే"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is behind a router or firewall, you should make sure "
+#~ "the following ports are open, and port-forwarded, if necessary:"
+#~ msgstr ""
+#~ "మీ %(box_name)s లు రౌటర్ లేదా ఫైర్వాల్ వెనుక ఉంటే, మీరు ఈ క్రింది పోర్టులు తెరిచి ఉన్నారని "
+#~ "నిర్ధారించుకోండి మరియు అవసరమైతే పోర్ట్-ఫార్వార్డ్ చేయబడిందని నిర్ధారించుకోండి:"
+
+#~ msgid "Service"
+#~ msgstr "సేవ"
+
+#~ msgid "SOCKS"
+#~ msgstr "సాక్స్‌లు"
 
 #~ msgid "Powered by Postfix, Dovecot & Rspamd"
 #~ msgstr "Postfix, Dovecot &amp; Rspamd ద్వారా ఆధారితం"

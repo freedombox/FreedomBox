@@ -19,15 +19,17 @@ def test_webserver_init():
         Webserver(None, None)
 
     webserver = Webserver('test-webserver', 'test-config', kind='module',
-                          urls=['url1', 'url2'])
+                          urls=['url1', 'url2'], expect_redirects=True)
     assert webserver.component_id == 'test-webserver'
     assert webserver.web_name == 'test-config'
     assert webserver.kind == 'module'
     assert webserver.urls == ['url1', 'url2']
+    assert webserver.expect_redirects
 
     webserver = Webserver('test-webserver', None)
     assert webserver.kind == 'config'
     assert webserver.urls == []
+    assert not webserver.expect_redirects
 
 
 @patch('plinth.action_utils.webserver_is_enabled')
@@ -73,7 +75,7 @@ def test_webserver_disable(superuser_run):
 def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     """Test running diagnostics."""
 
-    def on_all_side_effect(url, check_certificate):
+    def on_all_side_effect(url, check_certificate, expect_redirects):
         return [('test-result-' + url, 'success')]
 
     def side_effect(url, check_certificate):
@@ -81,14 +83,21 @@ def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
 
     diagnose_url_on_all.side_effect = on_all_side_effect
     diagnose_url.side_effect = side_effect
-    webserver = Webserver('test-webserver', 'test-config',
-                          urls=['{host}url1', 'url2'])
-    results = webserver.diagnose()
+    webserver1 = Webserver('test-webserver', 'test-config',
+                           urls=['{host}url1', 'url2'], expect_redirects=True)
+    results = webserver1.diagnose()
     assert results == [('test-result-{host}url1', 'success'),
                        ('test-result-url2', 'success')]
     diagnose_url_on_all.assert_has_calls(
-        [call('{host}url1', check_certificate=False)])
+        [call('{host}url1', check_certificate=False, expect_redirects=True)])
     diagnose_url.assert_has_calls([call('url2', check_certificate=False)])
+
+    diagnose_url_on_all.reset_mock()
+    webserver2 = Webserver('test-webserver', 'test-config',
+                           urls=['{host}url1', 'url2'], expect_redirects=False)
+    results = webserver2.diagnose()
+    diagnose_url_on_all.assert_has_calls(
+        [call('{host}url1', check_certificate=False, expect_redirects=False)])
 
 
 def test_uwsgi_init():

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-09 22:12-0400\n"
-"PO-Revision-Date: 2022-04-26 00:11+0000\n"
+"POT-Creation-Date: 2022-05-23 20:21-0400\n"
+"PO-Revision-Date: 2022-05-11 16:16+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -119,12 +119,12 @@ msgstr "Webserver"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Weboberfläche (Plinth)"
 
-#: plinth/modules/apache/components.py:122
+#: plinth/modules/apache/components.py:126
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Zugangs-URL {url} über TCP{kind}"
 
-#: plinth/modules/apache/components.py:125
+#: plinth/modules/apache/components.py:129
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Zugangs-URL {url}"
@@ -928,14 +928,14 @@ msgid "Admin"
 msgstr "Admin"
 
 #: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:38
-#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:130
-#: plinth/modules/tor/views.py:157 plinth/modules/zoph/views.py:69
+#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:132
+#: plinth/modules/tor/views.py:159 plinth/modules/zoph/views.py:69
 msgid "Configuration updated."
 msgstr "Konfiguration aktualisiert."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
-#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:159
+#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:161
 #: plinth/modules/zoph/views.py:72
 msgid "An error occurred during configuration."
 msgstr "Ein Fehler ist bei der Konfiguration aufgetreten."
@@ -1246,7 +1246,7 @@ msgstr "Allgemeine Konfiguration"
 #: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:46
+#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Konfigurieren"
 
@@ -1809,6 +1809,7 @@ msgstr "Status"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
+#: plinth/modules/mediawiki/forms.py:33
 msgid "Domain"
 msgstr "Domain"
 
@@ -2156,7 +2157,6 @@ msgstr "Gewicht"
 
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
-#: plinth/modules/tor/templates/tor.html:72
 msgid "Port"
 msgstr "Port"
 
@@ -2468,7 +2468,7 @@ msgid "Documentation"
 msgstr "Dokumentation"
 
 #: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:128
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Handbuch"
@@ -2825,7 +2825,7 @@ msgstr "I2P-Anwendung verwalten"
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:56 plinth/modules/tor/__init__.py:51
+#: plinth/modules/i2p/__init__.py:56 plinth/modules/tor/__init__.py:55
 msgid "Anonymity Network"
 msgstr "Anonymisierungsnetzwerk"
 
@@ -3370,19 +3370,15 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:57 plinth/templates/index.html:132
+#: plinth/modules/mediawiki/__init__.py:57 plinth/templates/index.html:124
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:25
 msgid "Administrator Password"
 msgstr "Administrator-Passwort"
 
-#: plinth/modules/mediawiki/forms.py:53
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). Leave "
-#| "this field blank to keep the current password."
+#: plinth/modules/mediawiki/forms.py:26
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3390,25 +3386,28 @@ msgid ""
 "password."
 msgstr ""
 "Geben Sie ein neues Passwort für den MediaWiki-Administrator ein (admin). "
-"Lassen Sie das Feld leer, bleibt das derzeitige Passwort bestehen."
+"Das Passwort darf nicht allgemein bekannt sein und muss mindestens "
+"<strong>10 Zeichen</strong> lang sein. Lassen Sie das Feld leer, bleibt das "
+"derzeitige Passwort bestehen."
 
-#: plinth/modules/mediawiki/forms.py:60
-msgid "Server URL"
-msgstr "Server URL"
-
-#: plinth/modules/mediawiki/forms.py:61
+#: plinth/modules/mediawiki/forms.py:34
+#, fuzzy
+#| msgid ""
+#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
+#| "footer, feeds and emails."
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
-"feeds and emails."
+"feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
+"\"."
 msgstr ""
 "Wird von MediaWiki verwendet, um URLs zu generieren, die auf das Wiki "
 "verweisen, z.B. in der Fußzeile, in Feeds und E-Mails."
 
-#: plinth/modules/mediawiki/forms.py:66
+#: plinth/modules/mediawiki/forms.py:39
 msgid "Enable public registrations"
 msgstr "Öffentliche Registrierung aktivieren"
 
-#: plinth/modules/mediawiki/forms.py:67
+#: plinth/modules/mediawiki/forms.py:40
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3416,11 +3415,11 @@ msgstr ""
 "Falls aktiviert, kann jeder im Internet ein Nutzerkonto für Ihre MediaWiki-"
 "Instanz anlegen."
 
-#: plinth/modules/mediawiki/forms.py:71
+#: plinth/modules/mediawiki/forms.py:44
 msgid "Enable private mode"
 msgstr "Privaten Modus einschalten"
 
-#: plinth/modules/mediawiki/forms.py:72
+#: plinth/modules/mediawiki/forms.py:45
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3429,11 +3428,11 @@ msgstr ""
 "können das Wiki lesen oder ändern. Außerdem wird die öffentliche "
 "Registrierung deaktiviert."
 
-#: plinth/modules/mediawiki/forms.py:77
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Default Skin"
 msgstr "Standard Thema"
 
-#: plinth/modules/mediawiki/forms.py:78
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3446,12 +3445,10 @@ msgid "Password updated"
 msgstr "Passwort geändert"
 
 #: plinth/modules/mediawiki/views.py:56
-#, fuzzy
-#| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
-"Passwort, um Daten zu verschlüsseln. Muss mit dem Server-Passwort "
-"übereinstimmen."
+"Kennwortaktualisierung fehlgeschlagen. Bitte wählen Sie ein stärkeres "
+"Passwort"
 
 #: plinth/modules/mediawiki/views.py:66
 msgid "Public registrations enabled"
@@ -3474,8 +3471,10 @@ msgid "Default skin changed"
 msgstr "Standard-Thema geändert"
 
 #: plinth/modules/mediawiki/views.py:98
-msgid "Server URL updated"
-msgstr "Server-URL aktualisiert"
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Domain name updated"
+msgstr "Domainname gesetzt"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -6358,7 +6357,7 @@ msgstr "Schnappschuss erstellt."
 msgid "Storage snapshots configuration updated"
 msgstr "Konfiguration der Speicherauszüge aktualisiert"
 
-#: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:60
+#: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:62
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Aktionsfehler: {0} [{1}] [{2}]"
@@ -6744,7 +6743,7 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Dateisynchronisation"
 
-#: plinth/modules/tor/__init__.py:26
+#: plinth/modules/tor/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -6758,40 +6757,48 @@ msgstr ""
 "Sie den <a href=\"https://www.torproject.org/download/download-easy.html.en"
 "\">Tor Browser</a> verwenden."
 
-#: plinth/modules/tor/__init__.py:50
+#: plinth/modules/tor/__init__.py:34
+#, fuzzy, python-brace-format
+#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+msgid ""
+"A Tor SOCKS port is available on your {box_name} for internal networks on "
+"TCP port 9050."
+msgstr "Tor SOCKS-Port ist auf Ihrer %(box_name)s auf TCP port 9050 verfügbar."
+
+#: plinth/modules/tor/__init__.py:54
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:67
+#: plinth/modules/tor/__init__.py:71
 msgid "Tor Onion Service"
 msgstr "Tor-Onion-Dienste"
 
-#: plinth/modules/tor/__init__.py:71
+#: plinth/modules/tor/__init__.py:75
 msgid "Tor Socks Proxy"
 msgstr "Tor-Socks-Proxy"
 
-#: plinth/modules/tor/__init__.py:75
+#: plinth/modules/tor/__init__.py:79
 msgid "Tor Bridge Relay"
 msgstr "Tor-Bridge-Relay"
 
-#: plinth/modules/tor/__init__.py:117
+#: plinth/modules/tor/__init__.py:121
 msgid "Tor relay port available"
 msgstr "Tor-Relay-Port ist verfügbar"
 
-#: plinth/modules/tor/__init__.py:127
+#: plinth/modules/tor/__init__.py:131
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:137
+#: plinth/modules/tor/__init__.py:141
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-Transport registriert"
 
-#: plinth/modules/tor/__init__.py:206
+#: plinth/modules/tor/__init__.py:210
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Zugangs-URL {url} auf TCP{kind} über Tor"
 
-#: plinth/modules/tor/__init__.py:217
+#: plinth/modules/tor/__init__.py:221
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tor-Nutzung auf {url} über TCP{kind} bestätigen"
@@ -6922,34 +6929,7 @@ msgstr "Onion-Dienste"
 msgid "Ports"
 msgstr "Ports"
 
-#: plinth/modules/tor/templates/tor.html:59
-msgid "Relay"
-msgstr "Relay"
-
-#: plinth/modules/tor/templates/tor.html:61
-#, python-format
-msgid ""
-"If your %(box_name)s is behind a router or firewall, you should make sure "
-"the following ports are open, and port-forwarded, if necessary:"
-msgstr ""
-"Wenn Ihre %(box_name)s hinter einem Router oder einer Firewall ist, sollten "
-"Sie sicherstellen, dass die folgenden Ports geöffnet und weitergeleitet "
-"werden, falls erforderlich:"
-
-#: plinth/modules/tor/templates/tor.html:71
-msgid "Service"
-msgstr "Dienst"
-
-#: plinth/modules/tor/templates/tor.html:87
-msgid "SOCKS"
-msgstr "SOCKS"
-
-#: plinth/modules/tor/templates/tor.html:90
-#, python-format
-msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
-msgstr "Tor SOCKS-Port ist auf Ihrer %(box_name)s auf TCP port 9050 verfügbar."
-
-#: plinth/modules/tor/views.py:137 plinth/views.py:222
+#: plinth/modules/tor/views.py:139 plinth/views.py:222
 msgid "Setting unchanged"
 msgstr "Einstellung unverändert"
 
@@ -6975,18 +6955,17 @@ msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
 "lightweight but is less customizable."
 msgstr ""
+"Im Vergleich zu <a href=\"{deluge_url}\">Deluge</a> ist Transmission "
+"einfacher und leichter, aber weniger anpassbar."
 
 #: plinth/modules/transmission/__init__.py:35
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
-#| "belonging to the admin group."
+#, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
 "belonging to the bit-torrent group."
 msgstr ""
 "Auf sie kann von <a href=\"{users_url}\">jedem Benutzer</a> auf der "
-"{box_name} zugegriffen werden, der zur Administratorgruppe gehören."
+"{box_name} zugegriffen werden, der zur Bit-Torrent-Gruppe gehören."
 
 #: plinth/modules/transmission/__init__.py:39
 #, python-brace-format
@@ -6994,6 +6973,8 @@ msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
+"<a href=\"{samba_url}\">Samba</a> Freigaben können über das untenstehende "
+"Dropdown-Menü als Standard-Downloadverzeichnis festgelegt werden."
 
 #: plinth/modules/transmission/__init__.py:43
 #, python-brace-format
@@ -7001,6 +6982,8 @@ msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
+"Nachdem ein Download abgeschlossen ist, können Sie auch über die App <a href="
+"\"{sharing_url}\">Sharing</a> auf Ihre Dateien zugreifen."
 
 #: plinth/modules/transmission/__init__.py:71
 #: plinth/modules/transmission/manifest.py:6
@@ -7017,15 +7000,18 @@ msgstr ""
 "genutzt werden kann, sich aber sehr wie eine normale Anwendung anfühlt."
 
 #: plinth/modules/ttrss/__init__.py:27
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
 msgid ""
-"When enabled, Tiny Tiny RSS can be accessed by any <a href="
-"\"{users_url}\">user with a {box_name} login</a>."
+"When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
 msgstr ""
 "Wenn aktiviert, kann Tiny Tiny RSS von jedem <a href="
 "\"{users_url}\">Benutzer mit einem {box_name} Login</a> aufgerufen werden."
 
-#: plinth/modules/ttrss/__init__.py:31
+#: plinth/modules/ttrss/__init__.py:32
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
@@ -7034,15 +7020,15 @@ msgstr ""
 "verwenden Sie die URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> für die "
 "Verbindung."
 
-#: plinth/modules/ttrss/__init__.py:49
+#: plinth/modules/ttrss/__init__.py:50
 msgid "Read and subscribe to news feeds"
 msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 
-#: plinth/modules/ttrss/__init__.py:52 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:53
+#: plinth/modules/ttrss/__init__.py:54
 msgid "News Feed Reader"
 msgstr "Feedreader"
 
@@ -8294,7 +8280,7 @@ msgstr ""
 "Einige <a href=\"%(apps_url)s\">Anwendungen</a> aktivieren, um Verknüpfungen "
 "zu dieser Seite hinzuzufügen."
 
-#: plinth/templates/index.html:108
+#: plinth/templates/index.html:100
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -8307,7 +8293,7 @@ msgstr ""
 "Kommunikationswerkzeuge, die Ihre Privatsphäre und Ihr Eigentum an Ihren "
 "Daten respektieren."
 
-#: plinth/templates/index.html:117
+#: plinth/templates/index.html:109
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -8318,31 +8304,31 @@ msgstr ""
 "freie Software, die unter der GNU Affero General Public License, Version 3 "
 "oder höher, vertrieben wird."
 
-#: plinth/templates/index.html:135
+#: plinth/templates/index.html:127
 msgid "Source Code"
 msgstr "Quellcode"
 
-#: plinth/templates/index.html:140
+#: plinth/templates/index.html:132
 msgid "Homepage"
 msgstr "Homepage"
 
-#: plinth/templates/index.html:143 plinth/templates/toolbar.html:19
+#: plinth/templates/index.html:135 plinth/templates/toolbar.html:19
 msgid "Donate"
 msgstr "Spenden"
 
-#: plinth/templates/index.html:147
+#: plinth/templates/index.html:139
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Stiftung"
 
-#: plinth/templates/index.html:154
+#: plinth/templates/index.html:146
 msgid "Forum"
 msgstr "Forum"
 
-#: plinth/templates/index.html:159
+#: plinth/templates/index.html:151
 msgid "IRC Chatroom"
 msgstr "IRC-Chatraum"
 
-#: plinth/templates/index.html:164
+#: plinth/templates/index.html:156
 msgid "Mailing list"
 msgstr "Mailingliste"
 
@@ -8413,14 +8399,20 @@ msgstr ""
 "für %(service_name)s weiterleiten:"
 
 #: plinth/templates/port-forwarding-info.html:37
+#, fuzzy
+#| msgid "Service Type"
+msgid "Service Name"
+msgstr "Typ des Dienstes"
+
+#: plinth/templates/port-forwarding-info.html:38
 msgid "Protocol"
 msgstr "Protokoll"
 
-#: plinth/templates/port-forwarding-info.html:38
+#: plinth/templates/port-forwarding-info.html:39
 msgid "From Router/WAN Ports"
 msgstr "Von Router-/WAN-Ports"
 
-#: plinth/templates/port-forwarding-info.html:39
+#: plinth/templates/port-forwarding-info.html:40
 #, python-format
 msgid "To %(box_name)s Ports"
 msgstr "Zu %(box_name)s Ports"
@@ -8488,6 +8480,30 @@ msgstr "%(percentage)s %% abgeschlossen"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Server URL"
+#~ msgstr "Server URL"
+
+#~ msgid "Server URL updated"
+#~ msgstr "Server-URL aktualisiert"
+
+#~ msgid "Relay"
+#~ msgstr "Relay"
+
+#, python-format
+#~ msgid ""
+#~ "If your %(box_name)s is behind a router or firewall, you should make sure "
+#~ "the following ports are open, and port-forwarded, if necessary:"
+#~ msgstr ""
+#~ "Wenn Ihre %(box_name)s hinter einem Router oder einer Firewall ist, "
+#~ "sollten Sie sicherstellen, dass die folgenden Ports geöffnet und "
+#~ "weitergeleitet werden, falls erforderlich:"
+
+#~ msgid "Service"
+#~ msgstr "Dienst"
+
+#~ msgid "SOCKS"
+#~ msgstr "SOCKS"
 
 #~ msgid "Powered by Postfix, Dovecot & Rspamd"
 #~ msgstr "Betrieben mit Postfix, Dovecot und Rspamd"
