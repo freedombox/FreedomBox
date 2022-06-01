@@ -100,6 +100,10 @@ def _visit_site(browser):
     """Visit WordPress and run the first setup wizard if needed."""
     _load_site(browser)
     if '/install.php' in browser.url:
+        # continue past language selection screen
+        if browser.find_by_id('language-continue'):
+            browser.find_by_id('language-continue').click()
+
         browser.fill('weblog_title', 'Test Blog')
         browser.fill('user_name', functional.config['DEFAULT']['username'])
         # browser.fill() once does not work for some reason for password field
