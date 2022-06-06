@@ -137,7 +137,11 @@ def _write_post(browser, title):
     if browser.find_by_css('.edit-post-welcome-guide'):
         browser.find_by_css('.components-modal__header button')[0].click()
 
-    browser.find_by_id('post-title-0').fill(title)
+    if browser.find_by_id('post-title-0'):
+        browser.find_by_id('post-title-0').fill(title)
+    else:
+        browser.find_by_css('.editor-post-title').first.type(title)
+
     browser.find_by_css('.editor-post-publish-button__button')[0].click()
     functional.eventually(browser.find_by_css, ['.editor-post-publish-button'])
     browser.find_by_css('.editor-post-publish-button')[0].click()
