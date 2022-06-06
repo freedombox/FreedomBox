@@ -69,7 +69,7 @@ class EmailApp(plinth.app.App):
 
         menu_item = menu.Menu('menu-email', info.name, info.short_description,
                               info.icon_filename, 'email:index',
-                              parent_url_name='apps', advanced=True)
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
