@@ -27,6 +27,10 @@ _description = [
       'and Rspamd. Postfix sends and receives emails. Dovecot allows '
       'email clients to access your mailbox using IMAP and POP3. Rspamd deals '
       'with spam.'),
+    _('Email server currently does not work with many free domain services '
+      'including those provided by the FreedomBox Foundation. Many ISPs '
+      'also restrict outgoing email. Some lift the restriction after an '
+      'explicit request. See manual page for more information.'),
     format_lazy(
         _('Each user on {box_name} gets an email address like '
           'user@mydomain.example. They will also receive mail from all '
