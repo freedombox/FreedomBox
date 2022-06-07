@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 20:21-0400\n"
+"POT-Creation-Date: 2022-06-06 21:07-0400\n"
 "PO-Revision-Date: 2022-05-27 17:17+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -1020,7 +1020,7 @@ msgstr "Uppdatera IP-adress och domäner"
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
-#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1628,10 +1628,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Om du letar efter ett gratis dynamiskt DNS-konto kan du hitta en gratis "
-"GnuDIP-tjänst på <a href=\"https://ddns.freedombox.org\" target=\"_blank\""
-">ddns.freedombox.org</a> eller så kan du hitta gratis uppdaterings-URL-"
-"baserade tjänster på <a href=\"http://freedns.afraid.org/\" target=\"_blank\""
-"> freedns.afraid.org</a>."
+"GnuDIP-tjänst på <a href=\"https://ddns.freedombox.org\" target=\"_blank"
+"\">ddns.freedombox.org</a> eller så kan du hitta gratis uppdaterings-URL-"
+"baserade tjänster på <a href=\"http://freedns.afraid.org/\" target=\"_blank"
+"\"> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1974,7 +1974,15 @@ msgstr ""
 "postklienter att komma åt din brevlåda med hjälp av IMAP och POP3. Rspamd "
 "tar hand om skräppost."
 
-#: plinth/modules/email/__init__.py:31
+#: plinth/modules/email/__init__.py:30
+msgid ""
+"Email server currently does not work with many free domain services "
+"including those provided by the FreedomBox Foundation. Many ISPs also "
+"restrict outgoing email. Some lift the restriction after an explicit "
+"request. See manual page for more information."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -1984,12 +1992,12 @@ msgid ""
 "to the first admin user."
 msgstr ""
 "Varje användare på {box_name} får en e-postadress som user@mydomain.example. "
-"De får också e-post från alla adresser som ser ut som user+foo@"
-"mydomain.example. Dessutom kan de lägga till alias till sin e-postadress. "
-"Nödvändiga alias som \"postmaster\" skapas automatiskt och pekar på den "
-"första administratörsanvändaren."
+"De får också e-post från alla adresser som ser ut som user+foo@mydomain."
+"example. Dessutom kan de lägga till alias till sin e-postadress. Nödvändiga "
+"alias som \"postmaster\" skapas automatiskt och pekar på den första "
+"administratörsanvändaren."
 
-#: plinth/modules/email/__init__.py:37
+#: plinth/modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -1997,26 +2005,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> ger användarna "
 "webbgränssnitt för att komma åt e-post."
 
-#: plinth/modules/email/__init__.py:39
+#: plinth/modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Under installationen avinstalleras alla andra e-postservrar i systemet."
 
-#: plinth/modules/email/__init__.py:58
+#: plinth/modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: plinth/modules/email/__init__.py:60
+#: plinth/modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-postserver"
 
-#: plinth/modules/email/__init__.py:80
+#: plinth/modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "Mina E-postalias"
 
-#: plinth/modules/email/__init__.py:81
+#: plinth/modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "Hantera alias för Brevlåda"
 
@@ -2983,6 +2991,38 @@ msgstr ""
 "Starta Gobby och välj \"Anslut till server\" och ange ditt {box_name} "
 "domännamn."
 
+#: plinth/modules/janus/__init__.py:22
+msgid "Janus is a lightweight WebRTC server."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:23
+msgid "A simple video conference room is included."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:24
+msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:41
+msgid "Janus"
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:43
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC server"
+msgstr "Webbserver"
+
+#: plinth/modules/janus/manifest.py:7
+msgid "Janus Video Room"
+msgstr ""
+
+#: plinth/modules/janus/templates/janus_video_room.html:205
+#: plinth/modules/jsxc/templates/jsxc_launch.html:117
+#: plinth/templates/base.html:247
+msgid "JavaScript license information"
+msgstr "JavaScript-licensinformation"
+
 #: plinth/modules/jsxc/__init__.py:21
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
@@ -2998,11 +3038,6 @@ msgstr "JSXC"
 #: plinth/modules/jsxc/__init__.py:45
 msgid "Chat Client"
 msgstr "Chat klient"
-
-#: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:247
-msgid "JavaScript license information"
-msgstr "JavaScript-licensinformation"
 
 #: plinth/modules/letsencrypt/__init__.py:28
 #, python-brace-format
@@ -3585,6 +3620,16 @@ msgstr ""
 "lösenordet. SuperUser lösenord kan användas för att hantera behörigheter i "
 "Mumble."
 
+#: plinth/modules/mumble/forms.py:39
+msgid "Set the name for the root channel"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:43
+msgid ""
+"Set the name of the main channel of your mumble server. If the name was "
+"never changed, the channel is named Root."
+msgstr ""
+
 #: plinth/modules/mumble/manifest.py:34
 msgid "Mumblefly"
 msgstr "Mumblefly"
@@ -3593,9 +3638,13 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:39
+#: plinth/modules/mumble/views.py:40
 msgid "SuperUser password successfully updated."
 msgstr "SuperUser lösenord har uppdaterats."
+
+#: plinth/modules/mumble/views.py:45
+msgid "Root channel name changed."
+msgstr ""
 
 #: plinth/modules/names/__init__.py:22
 #, python-brace-format
