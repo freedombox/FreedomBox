@@ -158,22 +158,6 @@ def setup(helper, old_version=None):
     update_turn_configuration(configuration, force=True)
 
 
-def get_domains():
-    """Return the list of domains that ejabberd is interested in.
-
-    XXX: Retrieve the list from ejabberd configuration.
-
-    """
-    if app.needs_setup():
-        return []
-
-    domain_name = config.get_domainname()
-    if domain_name:
-        return [domain_name]
-
-    return []
-
-
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     Backup ejabberd database before hostname is changed.
@@ -202,17 +186,37 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     ], run_in_background=True)
 
 
+def get_domains():
+    """Return the list of domains configured for ejabberd.
+    """
+    if app.needs_setup():
+        return []
+
+    output = actions.superuser_run('ejabberd', ['get-domains'])
+    return json.loads(output)
+
+
 def on_domain_added(sender, domain_type, name='', description='',
                     services=None, **kwargs):
     """Update ejabberd config after domain name change."""
     if not name or app.needs_setup():
         return
 
-    conf = actions.superuser_run('ejabberd', ['get-configuration'])
-    conf = json.loads(conf)
-    if name not in conf['domains']:
+    domains = get_domains()
+    if name not in domains:
         actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
         app.get_component('letsencrypt-ejabberd').setup_certificates()
+
+
+def set_domains(domains):
+    """Configure ejabberd to have this list of domains."""
+    if not domains or app.needs_setup():
+        return
+
+    commands = ['set-domains', '--domains']
+    commands.extend(domains)
+    actions.superuser_run('ejabberd', commands)
+    app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 
 def update_turn_configuration(config: TurnConfiguration, managed=True,

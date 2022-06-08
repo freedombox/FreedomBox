@@ -8,14 +8,36 @@ from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.ejabberd]
 
-# TODO Check service
-# TODO Check domain name display
+# TODO Check domain name displayed in description
 
 
 class TestEjabberdApp(functional.BaseAppTests):
     app_name = 'ejabberd'
     has_service = True
     has_web = False
+
+    @pytest.fixture(scope='module', autouse=True)
+    def fixture_background(self, session_browser):
+        """Login, install, and enable the app."""
+        functional.login(session_browser)
+        functional.install(session_browser, self.app_name)
+        functional.app_enable(session_browser, self.app_name)
+        yield
+        functional.login(session_browser)
+        functional.app_disable(session_browser, self.app_name)
+
+    def test_add_remove_domain(self, session_browser):
+        """Test adding and removing a domain."""
+        functional.app_enable(session_browser, 'ejabberd')
+        _enable_domain(session_browser, 'freedombox.local')
+
+        _disable_domain(session_browser, 'freedombox.local')
+        assert not _is_domain_enabled(session_browser, 'freedombox.local')
+        assert functional.service_is_running(session_browser, 'ejabberd')
+
+        _enable_domain(session_browser, 'freedombox.local')
+        assert _is_domain_enabled(session_browser, 'freedombox.local')
+        assert functional.service_is_running(session_browser, 'ejabberd')
 
     def test_message_archive_management(self, session_browser):
         """Test enabling message archive management."""
@@ -37,6 +59,29 @@ class TestEjabberdApp(functional.BaseAppTests):
         functional.backup_restore(session_browser, 'ejabberd', 'test_ejabberd')
 
         _jsxc_assert_has_contact(session_browser)
+
+
+def _enable_domain(browser, domain):
+    """Add domain name to Ejabberd configuration."""
+    functional.nav_to_module(browser, 'ejabberd')
+    checkbox = browser.find_by_value(domain).first
+    checkbox.check()
+    functional.submit(browser, form_class='form-configuration')
+
+
+def _disable_domain(browser, domain):
+    """Remove domain name from Ejabberd configuration."""
+    functional.nav_to_module(browser, 'ejabberd')
+    checkbox = browser.find_by_value(domain).first
+    checkbox.uncheck()
+    functional.submit(browser, form_class='form-configuration')
+
+
+def _is_domain_enabled(browser, domain):
+    """Return whether the domain name is enabled."""
+    functional.nav_to_module(browser, 'ejabberd')
+    checkbox = browser.find_by_value(domain).first
+    return checkbox.checked
 
 
 def _enable_message_archive_management(browser):

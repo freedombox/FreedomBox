@@ -70,10 +70,18 @@ def parse_arguments():
     hostname_change.add_argument('--old-hostname', help='Previous hostname')
     hostname_change.add_argument('--new-hostname', help='New hostname')
 
-    # Add a domain name to ejabberd
+    # Manage domain names
+    subparsers.add_parser('get-domains',
+                          help='Get all configured domains in JSON format')
+
     add_domain = subparsers.add_parser('add-domain',
                                        help='Add a domain name to ejabberd')
     add_domain.add_argument('--domainname', help='New domain name')
+
+    set_domains = subparsers.add_parser('set-domains',
+                                        help='Set list of ejabberd domains')
+    set_domains.add_argument('--domains', nargs='+',
+                             help='One or more domain names')
 
     # Configure STUN/TURN server for use with ejabberd
     turn = subparsers.add_parser(
@@ -236,8 +244,23 @@ def subcommand_change_hostname(arguments):
               EJABBERD_BACKUP_NEW)
 
 
+def subcommand_get_domains(_):
+    """Get all configured domains."""
+    if not shutil.which('ejabberdctl'):
+        print('ejabberdctl not found. Is ejabberd installed?')
+        return
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = yaml.load(file_handle)
+
+    print(json.dumps(conf['hosts']))
+
+
 def subcommand_add_domain(arguments):
-    """Update ejabberd with new domainname"""
+    """Update ejabberd with new domainname.
+
+    Restarting ejabberd is handled by letsencrypt-ejabberd component.
+    """
     if not shutil.which('ejabberdctl'):
         print('ejabberdctl not found. Is ejabberd installed?')
         return
@@ -251,6 +274,26 @@ def subcommand_add_domain(arguments):
     conf['hosts'].append(scalarstring.DoubleQuotedScalarString(domainname))
 
     conf['hosts'] = list(set(conf['hosts']))
+
+    with open(EJABBERD_CONFIG, 'w') as file_handle:
+        yaml.dump(conf, file_handle)
+
+    # Restarting ejabberd is handled by letsencrypt-ejabberd component.
+
+
+def subcommand_set_domains(arguments):
+    """Set list of ejabberd domains.
+
+    Restarting ejabberd is handled by letsencrypt-ejabberd component.
+    """
+    if not shutil.which('ejabberdctl'):
+        print('ejabberdctl not found. Is ejabberd installed?')
+        return
+
+    with open(EJABBERD_CONFIG, 'r') as file_handle:
+        conf = yaml.load(file_handle)
+
+    conf['hosts'] = arguments.domains
 
     with open(EJABBERD_CONFIG, 'w') as file_handle:
         yaml.dump(conf, file_handle)

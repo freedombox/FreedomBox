@@ -8,12 +8,21 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
+from plinth.modules import ejabberd
 from plinth.modules.coturn.forms import turn_uris_validator
 from plinth.utils import format_lazy
 
 
 class EjabberdForm(forms.Form):
     """Ejabberd configuration form."""
+    domain_names = forms.MultipleChoiceField(
+        label=_('Domain names'), widget=forms.CheckboxSelectMultiple,
+        help_text=_(
+            'Domains to be used by ejabberd. "localhost" is always included, '
+            'so it is not shown here. Note that user accounts are unique for '
+            'each domain, and migrating users to a new domain name is not yet '
+            'implemented.'), choices=[])
+
     MAM_enabled = forms.BooleanField(
         label=_('Enable Message Archive Management'), required=False,
         help_text=format_lazy(
@@ -42,6 +51,18 @@ class EjabberdForm(forms.Form):
         label=_('Shared Authentication Secret'), required=False, strip=True,
         help_text=_('Shared secret used to compute passwords for the '
                     'TURN server.'))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Start with any existing domains from ejabberd configuration.
+        domains = set(ejabberd.get_domains())
+
+        # Add other domains that can be configured.
+        from plinth.modules.names.components import DomainName
+        domains |= DomainName.list_names()
+
+        self.fields['domain_names'].choices = zip(domains, domains)
 
     def clean_turn_uris(self):
         """Normalize newlines in URIs."""
