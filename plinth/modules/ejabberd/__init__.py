@@ -218,7 +218,7 @@ def on_domain_added(sender, domain_type, name='', description='',
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update ejabberd's STUN/TURN server configuration."""
-    if app.needs_setup():
+    if not force and app.needs_setup():
         return
 
     params = ['configure-turn']
