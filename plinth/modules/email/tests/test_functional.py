@@ -19,7 +19,6 @@ class TestEmailApp(functional.BaseAppTests):
     @pytest.fixture(autouse=True)
     def fixture_background(self, session_browser):
         functional.login(session_browser)
-        functional.set_advanced_mode(session_browser, True)
         functional.install(session_browser, self.app_name)
         functional.app_enable(session_browser, self.app_name)
         yield

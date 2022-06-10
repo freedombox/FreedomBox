@@ -18,6 +18,7 @@ from plinth import action_utils
 from plinth.modules.wordpress import PUBLIC_ACCESS_FILE
 
 _config_file_path = pathlib.Path('/etc/wordpress/config-default.php')
+_static_config_file_path = pathlib.Path('/etc/wordpress/freedombox-static.php')
 _db_file_path = pathlib.Path('/etc/wordpress/database.php')
 _db_backup_file = pathlib.Path(
     '/var/lib/plinth/backups-data/wordpress-database.sql')
@@ -48,6 +49,9 @@ def parse_arguments():
 def subcommand_setup(_):
     """Create initial configuration and database for WordPress."""
     if _db_file_path.exists() or _config_file_path.exists():
+        if _config_file_path.exists():
+            _upgrade_config_file()
+
         return
 
     db_password = _generate_secret_key(16)
@@ -63,6 +67,7 @@ def _create_config_file(db_host, db_name, db_user, db_password):
 
     config_contents = f'''<?php
 # Created by FreedomBox
+include_once('{_static_config_file_path}');
 include_once('{_db_file_path}');
 define('DB_NAME', $dbname);
 define('DB_USER', $dbuser);
@@ -128,6 +133,15 @@ def _generate_secret_key(length=64, chars=None):
                       '!@#$%^&*()-_ []{}<>~`+=,.:/?|')
     rand = random.SystemRandom()
     return ''.join(rand.choice(chars) for _ in range(length))
+
+
+def _upgrade_config_file():
+    """Upgrade existing config file to add changes."""
+    include_line = f"include_once('{_static_config_file_path}');"
+    lines = _config_file_path.read_text(encoding='utf-8').splitlines()
+    if include_line not in lines:
+        lines.insert(2, include_line)  # Insert on 3rd line
+        _config_file_path.write_text('\n'.join(lines), encoding='utf-8')
 
 
 def subcommand_set_public(arguments):

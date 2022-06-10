@@ -100,6 +100,10 @@ def _visit_site(browser):
     """Visit WordPress and run the first setup wizard if needed."""
     _load_site(browser)
     if '/install.php' in browser.url:
+        # continue past language selection screen
+        if browser.find_by_id('language-continue'):
+            browser.find_by_id('language-continue').click()
+
         browser.fill('weblog_title', 'Test Blog')
         browser.fill('user_name', functional.config['DEFAULT']['username'])
         # browser.fill() once does not work for some reason for password field
@@ -133,7 +137,11 @@ def _write_post(browser, title):
     if browser.find_by_css('.edit-post-welcome-guide'):
         browser.find_by_css('.components-modal__header button')[0].click()
 
-    browser.find_by_id('post-title-0').fill(title)
+    if browser.find_by_id('post-title-0'):
+        browser.find_by_id('post-title-0').fill(title)
+    else:
+        browser.find_by_css('.editor-post-title').first.type(title)
+
     browser.find_by_css('.editor-post-publish-button__button')[0].click()
     functional.eventually(browser.find_by_css, ['.editor-post-publish-button'])
     browser.find_by_css('.editor-post-publish-button')[0].click()

@@ -4,11 +4,19 @@
 
 from __future__ import annotations  # Can be removed in Python 3.10
 
+import base64
+import hashlib
+import hmac
 import json
 import re
 from dataclasses import dataclass, field
+from time import time
 
 from plinth import app
+
+TURN_REST_TTL = 24 * 3600
+
+TURN_REST_USER = 'fbxturnuser'
 
 TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
 
@@ -55,6 +63,32 @@ class TurnConfiguration:
         return all(map(pattern.match, turn_uris))
 
 
+@dataclass
+class UserTurnConfiguration(TurnConfiguration):
+    """Data class to hold per-user TURN server configuration.
+
+    username is a string to identify a specific user and is related to
+    the credential.
+
+    credential is a string generated for this user that must be used
+    by a server to be accepted by Coturn server. It is generated for
+    each user separately upon request and will expire after a set
+    time.
+
+    """
+    username: str = None
+    credential: str = None
+
+    def to_json(self) -> str:
+        """Return a JSON representation of the configuration."""
+        return json.dumps({
+            'domain': self.domain,
+            'uris': self.uris,
+            'username': self.username,
+            'credential': self.credential
+        })
+
+
 class TurnConsumer(app.FollowerComponent):
     """Component to manage coturn configuration.
 
@@ -96,3 +130,29 @@ class TurnConsumer(app.FollowerComponent):
         """Return current coturn configuration."""
         from plinth.modules import coturn
         return coturn.get_config()
+
+
+class TurnTimeLimitedConsumer(TurnConsumer):
+    """Component to manage coturn configuration with time-limited
+    credential.
+
+    This component will generate a new credential upon each request,
+    which will expire after 1 day. The shared secret is used to
+    generate the credential, but is not provided in the configuration.
+
+    """
+
+    def get_configuration(self) -> UserTurnConfiguration:
+        """Return user coturn configuration."""
+        from plinth.modules import coturn
+        static_config = coturn.get_config()
+        timestamp = int(time()) + TURN_REST_TTL
+        username = str(timestamp) + ':' + TURN_REST_USER
+        credential = None
+        if static_config.shared_secret:
+            digest = hmac.new(bytes(static_config.shared_secret, 'utf-8'),
+                              bytes(username, 'utf-8'), hashlib.sha1).digest()
+            credential = base64.b64encode(digest).decode()
+
+        return UserTurnConfiguration(static_config.domain, static_config.uris,
+                                     None, username, credential)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 20:21-0400\n"
-"PO-Revision-Date: 2022-05-11 16:16+0000\n"
+"POT-Creation-Date: 2022-06-06 21:07-0400\n"
+"PO-Revision-Date: 2022-05-24 15:49+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -975,7 +975,7 @@ msgstr "刷新 IP 地址和域"
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
-#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1876,7 +1876,15 @@ msgid ""
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:31
+#: plinth/modules/email/__init__.py:30
+msgid ""
+"Email server currently does not work with many free domain services "
+"including those provided by the FreedomBox Foundation. Many ISPs also "
+"restrict outgoing email. Some lift the restriction after an explicit "
+"request. See manual page for more information."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -1886,31 +1894,31 @@ msgid ""
 "to the first admin user."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:37
+#: plinth/modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:39
+#: plinth/modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:58
+#: plinth/modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr ""
 
-#: plinth/modules/email/__init__.py:60
+#: plinth/modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "邮件服务器"
 
-#: plinth/modules/email/__init__.py:80
+#: plinth/modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "我的邮箱别名"
 
-#: plinth/modules/email/__init__.py:81
+#: plinth/modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "管理邮箱别名"
 
@@ -2789,6 +2797,38 @@ msgid ""
 "domain name."
 msgstr "启动 Gobby ，选择“连接到服务器”并输入你的 {box_name} 域名。"
 
+#: plinth/modules/janus/__init__.py:22
+msgid "Janus is a lightweight WebRTC server."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:23
+msgid "A simple video conference room is included."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:24
+msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:41
+msgid "Janus"
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:43
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC server"
+msgstr "Web 服务器"
+
+#: plinth/modules/janus/manifest.py:7
+msgid "Janus Video Room"
+msgstr ""
+
+#: plinth/modules/janus/templates/janus_video_room.html:205
+#: plinth/modules/jsxc/templates/jsxc_launch.html:117
+#: plinth/templates/base.html:247
+msgid "JavaScript license information"
+msgstr ""
+
 #: plinth/modules/jsxc/__init__.py:21
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
@@ -2802,11 +2842,6 @@ msgstr ""
 #: plinth/modules/jsxc/__init__.py:45
 msgid "Chat Client"
 msgstr "聊天客户端"
-
-#: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:247
-msgid "JavaScript license information"
-msgstr ""
 
 #: plinth/modules/letsencrypt/__init__.py:28
 #, python-brace-format
@@ -3149,10 +3184,8 @@ msgid "Default skin changed"
 msgstr "默认皮肤已更改"
 
 #: plinth/modules/mediawiki/views.py:98
-#, fuzzy
-#| msgid "Domain name set"
 msgid "Domain name updated"
-msgstr "域名集"
+msgstr "域名已更新"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -3307,6 +3340,16 @@ msgid ""
 "password can be used to manage permissions in Mumble."
 msgstr ""
 
+#: plinth/modules/mumble/forms.py:39
+msgid "Set the name for the root channel"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:43
+msgid ""
+"Set the name of the main channel of your mumble server. If the name was "
+"never changed, the channel is named Root."
+msgstr ""
+
 #: plinth/modules/mumble/manifest.py:34
 msgid "Mumblefly"
 msgstr ""
@@ -3315,9 +3358,13 @@ msgstr ""
 msgid "Mumla"
 msgstr ""
 
-#: plinth/modules/mumble/views.py:39
+#: plinth/modules/mumble/views.py:40
 msgid "SuperUser password successfully updated."
 msgstr "超级用户密码更新成功。"
+
+#: plinth/modules/mumble/views.py:45
+msgid "Root channel name changed."
+msgstr ""
 
 #: plinth/modules/names/__init__.py:22
 #, python-brace-format
@@ -6030,12 +6077,11 @@ msgstr ""
 "</a>。"
 
 #: plinth/modules/tor/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#, python-brace-format
 msgid ""
 "A Tor SOCKS port is available on your {box_name} for internal networks on "
 "TCP port 9050."
-msgstr "Tor SOCKS 端口是你 %(box_name)s 上的 TCP 端口 9050 。"
+msgstr "你的 {box_name} 有一个 Tor SOCKS 端口在 TCP 端口 9050 上对内网可用。"
 
 #: plinth/modules/tor/__init__.py:54
 msgid "Tor"
@@ -6247,15 +6293,12 @@ msgstr ""
 "新闻，同时提供尽可能接近真实的桌面应用程序体验。"
 
 #: plinth/modules/ttrss/__init__.py:27
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
-#| "\"{users_url}\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"启用后，任何 <a href=\"{users_url}\">有{box_name} 登录的用户</a>均可访问 "
+"启用后，属于该订阅源阅读器群的 <a href=\"{users_url}\">任何用户</a>均可访问 "
 "Tiny Tiny RSS。"
 
 #: plinth/modules/ttrss/__init__.py:32
@@ -7479,10 +7522,8 @@ msgid ""
 msgstr ""
 
 #: plinth/templates/port-forwarding-info.html:37
-#, fuzzy
-#| msgid "Service Type"
 msgid "Service Name"
-msgstr "服务类型"
+msgstr "服务名"
 
 #: plinth/templates/port-forwarding-info.html:38
 msgid "Protocol"

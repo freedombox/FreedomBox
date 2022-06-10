@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-23 20:21-0400\n"
+"POT-Creation-Date: 2022-06-06 21:07-0400\n"
 "PO-Revision-Date: 2022-05-10 02:10+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -1022,7 +1022,7 @@ msgstr "IP-címek és tartományok frissítése"
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
-#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:28
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
@@ -1994,7 +1994,15 @@ msgstr ""
 "lehetővé teszi az e-mail kliensek hozzáférését a leveleidhez az IMAP és POP3 "
 "protokollokat használva, az Rspamd pedig a kéretlen levelek szűrését végzi."
 
-#: plinth/modules/email/__init__.py:31
+#: plinth/modules/email/__init__.py:30
+msgid ""
+"Email server currently does not work with many free domain services "
+"including those provided by the FreedomBox Foundation. Many ISPs also "
+"restrict outgoing email. Some lift the restriction after an explicit "
+"request. See manual page for more information."
+msgstr ""
+
+#: plinth/modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2010,7 +2018,7 @@ msgstr ""
 "álnevek, mint pl. a \"postmaster\" az első admin felhasználóhoz tartozva "
 "automatikusan létrejönnek az alkalmazás telepítése során."
 
-#: plinth/modules/email/__init__.py:37
+#: plinth/modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2018,26 +2026,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube alkalmazás</a> webes felületet "
 "biztosít a felhasználók számára e-mail eléréséhez."
 
-#: plinth/modules/email/__init__.py:39
+#: plinth/modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "A telepítés során a rendszeren lévő összes egyéb e-mail-szerver törlődni fog."
 
-#: plinth/modules/email/__init__.py:58
+#: plinth/modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: plinth/modules/email/__init__.py:60
+#: plinth/modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-mail-szerver"
 
-#: plinth/modules/email/__init__.py:80
+#: plinth/modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "E-mail álneveim"
 
-#: plinth/modules/email/__init__.py:81
+#: plinth/modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "A Mailbox álneveinek kezelése"
 
@@ -3015,6 +3023,38 @@ msgstr ""
 "Indítsd el a Gobby-t majd válaszd a \"Csatlakozás a szerverhez\" lehetőséget "
 "(\"Connect to Server\") és írd be a {box_name} eszközöd domainnevét."
 
+#: plinth/modules/janus/__init__.py:22
+msgid "Janus is a lightweight WebRTC server."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:23
+msgid "A simple video conference room is included."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:24
+msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:41
+msgid "Janus"
+msgstr ""
+
+#: plinth/modules/janus/__init__.py:43
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC server"
+msgstr "Webszerver"
+
+#: plinth/modules/janus/manifest.py:7
+msgid "Janus Video Room"
+msgstr ""
+
+#: plinth/modules/janus/templates/janus_video_room.html:205
+#: plinth/modules/jsxc/templates/jsxc_launch.html:117
+#: plinth/templates/base.html:247
+msgid "JavaScript license information"
+msgstr "JavaScript licencinformáció"
+
 #: plinth/modules/jsxc/__init__.py:21
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
@@ -3030,11 +3070,6 @@ msgstr "JSXC"
 #: plinth/modules/jsxc/__init__.py:45
 msgid "Chat Client"
 msgstr "Chat kliens"
-
-#: plinth/modules/jsxc/templates/jsxc_launch.html:117
-#: plinth/templates/base.html:247
-msgid "JavaScript license information"
-msgstr "JavaScript licencinformáció"
 
 #: plinth/modules/letsencrypt/__init__.py:28
 #, python-brace-format
@@ -3633,6 +3668,16 @@ msgstr ""
 "Opcionális. Hagyd üresen ezt a mezőt a jelenlegi jelszó megtartásához. A "
 "SuperUser jelszó a Mumble-jogosultságok kezelésére használható."
 
+#: plinth/modules/mumble/forms.py:39
+msgid "Set the name for the root channel"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:43
+msgid ""
+"Set the name of the main channel of your mumble server. If the name was "
+"never changed, the channel is named Root."
+msgstr ""
+
 #: plinth/modules/mumble/manifest.py:34
 msgid "Mumblefly"
 msgstr "Mumblefly"
@@ -3641,9 +3686,13 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:39
+#: plinth/modules/mumble/views.py:40
 msgid "SuperUser password successfully updated."
 msgstr "A SuperUser jelszava sikeresen frissítve."
+
+#: plinth/modules/mumble/views.py:45
+msgid "Root channel name changed."
+msgstr ""
 
 #: plinth/modules/names/__init__.py:22
 #, python-brace-format

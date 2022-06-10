@@ -48,7 +48,7 @@ class WordPressApp(app_module.App):
 
     app_id = 'wordpress'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -126,4 +126,5 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
     helper.call('post', actions.superuser_run, 'wordpress', ['setup'])
-    helper.call('post', app.enable)
+    if not old_version:
+        helper.call('post', app.enable)
