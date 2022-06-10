@@ -39,6 +39,10 @@ def parse_arguments():
     subparsers.add_parser('get-root-channel-name',
                           help='Print the root channel name')
 
+    subparser = subparsers.add_parser(
+        'change-join-password', help='Set the password to join the server')
+    subparser.add_argument('join_password', help='New join password')
+
     subparsers.required = True
     return parser.parse_args()
 
@@ -90,6 +94,14 @@ def subcommand_set_domain(arguments):
     """Write a file containing domain name."""
     domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
     domain_file.write_text(arguments.domain_name)
+
+
+def subcommand_change_join_password(arguments):
+    """Change to password that is required to join the server"""
+    aug = load_augeas()
+    aug.set('.anon/serverpassword', arguments.join_password)
+    aug.save()
+    action_utils.service_try_restart('mumble-server')
 
 
 def subcommand_change_root_channel_name(arguments):
