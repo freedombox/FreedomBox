@@ -3,12 +3,9 @@
 FreedomBox app to configure Transmission server.
 """
 
-import json
-
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -20,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Transmission is a BitTorrent client with a web interface.'),
@@ -130,8 +127,6 @@ def setup(helper, old_version=None):
         'rpc-whitelist-enabled': False,
         'rpc-authentication-required': False
     }
-    helper.call('post', actions.superuser_run, 'transmission',
-                ['merge-configuration'],
-                input=json.dumps(new_configuration).encode())
+    helper.call('post', privileged.merge_configuration, new_configuration)
     add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
     helper.call('post', app.enable)
