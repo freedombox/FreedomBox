@@ -7,18 +7,19 @@ description of the expectations.
 
 """
 
+import json
 import os
 import pathlib
 import shutil
 import tempfile
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 import apt_pkg
 import pytest
 
 from plinth import cfg
 from plinth.actions import _log_command as log_command
-from plinth.actions import run, superuser_run
+from plinth.actions import privileged, run, superuser_run
 from plinth.errors import ActionError
 
 
@@ -193,3 +194,96 @@ def test_log_command(logger, cmd, message):
     logger.assert_called_once()
     args = logger.call_args[0]
     assert message == args[0] % args[1:]
+
+
+def test_privileged_properties():
+    """Test that privileged decorator sets proper properties on the method."""
+
+    def func():
+        return
+
+    wrapped_func = privileged(func)
+    assert wrapped_func._privileged
+    assert wrapped_func.__wrapped__ == func
+
+
+def test_privileged_argument_vararg_check():
+    """Test that privileged decorator checks for simple arguments."""
+
+    def func_with_varargs(*_args):
+        return
+
+    def func_with_kwargs(**_kwargs):
+        return
+
+    def func_with_kwonlyargs(*_args, _kwarg):
+        return
+
+    def func_with_kwonlydefaults(*_args, _kwargs='foo'):
+        return
+
+    for func in (func_with_varargs, func_with_kwargs, func_with_kwonlyargs,
+                 func_with_kwonlydefaults):
+        with pytest.raises(SyntaxError):
+            privileged(func)
+
+
+def test_privileged_argument_annotation_check():
+    """Test that privileged decorator checks for annotations to arguments."""
+
+    def func1(_a):
+        return
+
+    def func2(_a: int, _b):
+        return
+
+    def func_valid(_a: int, _b: dict[int, str]):
+        return
+
+    for func in (func1, func2):
+        with pytest.raises(SyntaxError):
+            privileged(func)
+
+    privileged(func_valid)
+
+
+@patch('plinth.actions.superuser_run')
+def test_privileged_method_call(superuser_run_):
+    """Test that privileged method calls the superuser action properly."""
+
+    def func_with_args(_a: int, _b: str, _c: int = 1, _d: str = 'dval',
+                       _e: str = 'eval'):
+        return
+
+    superuser_run_.return_value = json.dumps({
+        'result': 'success',
+        'return': 'bar'
+    })
+    wrapped_func = privileged(func_with_args)
+    return_value = wrapped_func(1, 'bval', None, _d='dnewval')
+    assert return_value == 'bar'
+
+    input_ = {'args': [1, 'bval', None], 'kwargs': {'_d': 'dnewval'}}
+    input_ = json.dumps(input_)
+    superuser_run_.assert_has_calls(
+        [call('actions', ['tests', 'func_with_args'], input=input_.encode())])
+
+
+@patch('plinth.actions.superuser_run')
+def test_privileged_method_exceptions(superuser_run_):
+    """Test that exceptions on privileged methods are return properly."""
+
+    def func_with_exception():
+        raise TypeError('type error')
+
+    superuser_run_.return_value = json.dumps({
+        'result': 'exception',
+        'exception': {
+            'module': 'builtins',
+            'name': 'TypeError',
+            'args': ['type error']
+        }
+    })
+    wrapped_func = privileged(func_with_exception)
+    with pytest.raises(TypeError, match='type error'):
+        wrapped_func()

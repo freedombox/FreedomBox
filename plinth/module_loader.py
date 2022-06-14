@@ -8,6 +8,7 @@ import importlib
 import logging
 import pathlib
 import re
+from typing import Optional
 
 import django
 
@@ -83,12 +84,27 @@ def get_modules_to_load():
 
     modules = []
     for file_ in files:
-        with file_.open() as file_handle:
-            for line in file_handle:
-                line = re.sub('#.*', '', line)
-                line = line.strip()
-                if line:
-                    modules.append(line)
+        module = _get_module_import_paths_from_file(file_)
+        if module:
+            modules.append(module)
 
     _modules_to_load = modules
     return modules
+
+
+def get_module_import_path(module_name: str) -> str:
+    """Return the import path for a module."""
+    file_path = pathlib.Path(cfg.config_dir) / 'modules-enabled' / module_name
+    return _get_module_import_paths_from_file(file_path)
+
+
+def _get_module_import_paths_from_file(file_path: str) -> Optional[str]:
+    """Read a module's import path from a file."""
+    with file_path.open() as file_handle:
+        for line in file_handle:
+            line = re.sub('#.*', '', line)
+            line = line.strip()
+            if line:
+                return line
+
+    return None
