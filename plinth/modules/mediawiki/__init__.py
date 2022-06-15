@@ -166,3 +166,13 @@ def set_server_url(domain):
 
     actions.superuser_run('mediawiki',
                           ['set-server-url', f'{protocol}://{domain}'])
+
+
+def get_site_name():
+    """Return the value of MediaWiki's site name."""
+    return _get_config_value('$wgSitename') or 'Wiki'
+
+
+def set_site_name(site_name):
+    """Set the value of $wgSitename."""
+    actions.superuser_run('mediawiki', ['set-site-name', site_name])

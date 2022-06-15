@@ -12,8 +12,8 @@ from plinth import actions, views
 from plinth.errors import ActionError
 from plinth.modules import mediawiki
 
-from . import (get_default_skin, get_server_url, is_private_mode_enabled,
-               is_public_registration_enabled)
+from . import (get_default_skin, get_server_url, get_site_name,
+               is_private_mode_enabled, is_public_registration_enabled)
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -32,7 +32,8 @@ class MediaWikiAppView(views.AppView):
             'enable_public_registrations': is_public_registration_enabled(),
             'enable_private_mode': is_private_mode_enabled(),
             'default_skin': get_default_skin(),
-            'domain': get_server_url()
+            'domain': get_server_url(),
+            'site_name': get_site_name()
         })
         return initial
 
@@ -96,5 +97,9 @@ class MediaWikiAppView(views.AppView):
         if is_changed('domain'):
             mediawiki.set_server_url(new_config['domain'])
             messages.success(self.request, _('Domain name updated'))
+
+        if is_changed('site_name'):
+            mediawiki.set_site_name(new_config['site_name'])
+            messages.success(self.request, _('Site name updated'))
 
         return super().form_valid(form)
