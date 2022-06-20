@@ -7,6 +7,7 @@ from django import forms
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+import plinth.forms
 from plinth import cfg
 from plinth.modules import ejabberd
 from plinth.modules.coturn.forms import turn_uris_validator
@@ -16,12 +17,11 @@ from plinth.utils import format_lazy
 class EjabberdForm(forms.Form):
     """Ejabberd configuration form."""
     domain_names = forms.MultipleChoiceField(
-        label=_('Domain names'), widget=forms.CheckboxSelectMultiple,
-        help_text=_(
-            'Domains to be used by ejabberd. "localhost" is always included, '
-            'so it is not shown here. Note that user accounts are unique for '
-            'each domain, and migrating users to a new domain name is not yet '
-            'implemented.'), choices=[])
+        label=_('Domain names'),
+        widget=plinth.forms.CheckboxSelectMultipleWithReadOnly, help_text=_(
+            'Domains to be used by ejabberd. Note that user accounts are '
+            'unique for each domain, and migrating users to a new domain name '
+            'is not yet implemented.'), choices=[])
 
     MAM_enabled = forms.BooleanField(
         label=_('Enable Message Archive Management'), required=False,
@@ -62,7 +62,15 @@ class EjabberdForm(forms.Form):
         from plinth.modules.names.components import DomainName
         domains |= DomainName.list_names()
 
-        self.fields['domain_names'].choices = zip(domains, domains)
+        choices = []
+        for domain in domains:
+            label = domain
+            if domain == 'localhost':
+                label = {'label': domain, 'disabled': True}
+
+            choices.append((domain, label))
+
+        self.fields['domain_names'].choices = choices
 
     def clean_turn_uris(self):
         """Normalize newlines in URIs."""

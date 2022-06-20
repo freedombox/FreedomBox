@@ -213,6 +213,7 @@ def set_domains(domains):
     if not domains or app.needs_setup():
         return
 
+    domains = list(set(domains) | {'localhost'})
     commands = ['set-domains', '--domains']
     commands.extend(domains)
     actions.superuser_run('ejabberd', commands)
