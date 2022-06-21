@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 21:07-0400\n"
+"POT-Creation-Date: 2022-06-20 20:21-0400\n"
 "PO-Revision-Date: 2022-03-02 12:27+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -991,12 +991,12 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
+#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
@@ -1417,7 +1417,7 @@ msgstr ""
 "అయినవెంటనే మీ పాస్‌వర్డ్ ను మార్చుకోవాలి."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:67
+#: plinth/modules/transmission/__init__.py:64
 msgid "Download files using BitTorrent applications"
 msgstr "బిట్ టోరెంట్ అనువర్తనాలను ఉపయోగించి ఫైళ్లను డౌన్లోడ్ చేయండి"
 
@@ -1426,7 +1426,7 @@ msgid "Deluge"
 msgstr "డెలూజ్"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:70
 msgid "BitTorrent Web Client"
 msgstr "బిట్ టొరెంట్ వెబ్ క్లయింట్"
 
@@ -1733,7 +1733,7 @@ msgstr "స్థితి"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:33
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "డొమైన్"
 
@@ -1812,11 +1812,23 @@ msgstr "ఈజాబ్బర్డి"
 msgid "Chat Server"
 msgstr "కబుర్ల సేవిక"
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:19
+#, fuzzy
+#| msgid "Domain Names"
+msgid "Domain names"
+msgstr "అధికారకక్షేత్రాల పేరులు"
+
+#: plinth/modules/ejabberd/forms.py:21
+msgid ""
+"Domains to be used by ejabberd. Note that user accounts are unique for each "
+"domain, and migrating users to a new domain name is not yet implemented."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
 msgstr "ప్రాచీన సందేశ నిర్వహణ ప్రారంభించండి"
 
-#: plinth/modules/ejabberd/forms.py:20
+#: plinth/modules/ejabberd/forms.py:28
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -1828,11 +1840,11 @@ msgstr ""
 "సంభాషణల సమకాలీకరణను అనుమతిస్తుంది మరియు బహుళ వినియోగదారు చాట్ రూమ్ చరిత్రను చదవగలదు. చరిత్రలు "
 "సాదా టెక్స్ట్ లేదా గుప్తీకరించబడినాయినా లేదో క్లయింట్ సెట్టింగ్లపై ఆధారపడి ఉంటుంది."
 
-#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "ఆడియో/వీడియో కాల్ స్వయంచాలకంగా నిర్వహించండి"
 
-#: plinth/modules/ejabberd/forms.py:29
+#: plinth/modules/ejabberd/forms.py:37
 #, fuzzy, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -1842,19 +1854,19 @@ msgstr ""
 "ejjabred కోసం స్థానిక  కార్యక్షేత్రం stun /turn  సేవికగా రూపకరణ చెయ్యండి. మీరు వేరే stun /turn "
 "సేవికాని ఉపయోగలించాలనుకుంటే దీన్ని నిలిపివేయండి {coturn_url}"
 
-#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "స్టన్/టర్న్ సర్వర్ యు ఆర్ ఎల్"
 
-#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "stun /turn సేవిక యొక్క ప్రజా యూరిన్ జాబితా , ప్రతి లైన్లో ఒకటి ."
 
-#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "భాగస్వామ్య ప్రమాణీకరణ రహస్యం"
 
-#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr "TURN సర్వర్ కోసం పాస్‌వర్డ్‌లను గణించడానికి ఉపయోగించే భాగస్వామ్య రహస్యం."
 
@@ -2911,23 +2923,24 @@ msgstr ""
 "గాబ్బీని ప్రారంభించి. \"సేవికకు కనెక్ట్ చేయండి\" ఎంచుకోండి మరియు మీ {box_name} యొక్క డొమైన్ పేరును "
 "నమోదు చేయండి."
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:24
-msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#: plinth/modules/janus/__init__.py:26
+#, python-brace-format
+msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:44
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:46
 #, fuzzy
 #| msgid "Web Server"
 msgid "WebRTC server"
@@ -3257,11 +3270,11 @@ msgstr "మీడియావికీ"
 msgid "Wiki"
 msgstr "వికీ"
 
-#: plinth/modules/mediawiki/forms.py:25
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "నిర్వాహకుని రహస్యపదం"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:27
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -3275,7 +3288,7 @@ msgstr ""
 "మీడియావికీ యొక్క అడ్మినిస్ట్రేటర్ ఖాతా (admin) కోసం ఒక కొత్త రహస్యపదాన్ని సెట్ చెయ్యండి. ప్రస్తుత రహస్యపదాన్ని "
 "ఉంచాలనుకుంటే ఈ ఫీల్డ్ ను ఖాళీగా వదిలేయండి."
 
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:35
 #, fuzzy
 #| msgid ""
 #| "Used by MediaWiki to generate URLs that point to the wiki such as in "
@@ -3288,21 +3301,31 @@ msgstr ""
 "ఫుటర్, ఫీడ్‌లు మరియు ఇమెయిల్‌లు వంటి వికీని సూచించే URLలను రూపొందించడానికి MediaWiki ద్వారా "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:40
+#, fuzzy
+#| msgid "Kite name"
+msgid "Site Name"
+msgstr "కైట్ పేరు"
+
+#: plinth/modules/mediawiki/forms.py:41
+msgid "Name of the site as displayed throughout the wiki."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:45
 msgid "Enable public registrations"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:40
+#: plinth/modules/mediawiki/forms.py:46
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr "ఇది సశక్త పరిచినట్లయితే, అంతర్జాలంలో ఉన్న ఎవరైనా మీ మీడియావికీ ఉదాహరణ మీద ఖాతాను సృజించుకోగలరు."
 
-#: plinth/modules/mediawiki/forms.py:44
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Enable private mode"
 msgstr "ప్రైవేట్ మోడ్‌ను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:45
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3310,11 +3333,11 @@ msgstr ""
 "ప్రారంభించబడితే, సాంగత్యం పరిమితం చేయబడుతుంది. ఖాతాలు ఉన్నవారు మాత్రమే వికీలో చదవగలరు/వ్రాయగలరు. "
 "ప్రజా రిజిస్ట్రేషన్లు కూడా నిలిపివేయబడతాయి."
 
-#: plinth/modules/mediawiki/forms.py:50
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Default Skin"
 msgstr "డిఫాల్ట్ చర్మం"
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3322,40 +3345,46 @@ msgstr ""
 "మీ మీడియావికీ ఇన్‌స్టాలేషన్ కోసం డిఫాల్ట్ చర్మాన్ని ఎంచుకోండి. వినియోగదారులు తమకు నచ్చిన చర్మాన్ని ఎంచుకునే "
 "అవకాశం ఉంటుంది."
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/views.py:52
 msgid "Password updated"
 msgstr "అనుమతిపదం నవీకరించబడింది"
 
-#: plinth/modules/mediawiki/views.py:56
+#: plinth/modules/mediawiki/views.py:57
 #, fuzzy
 #| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
 msgstr "సమాచారాన్ని గుప్తీకరించాడానికి ఉపయోగించబడిన పాస్వర్డ్. తప్పకుండ సర్వర్ పాస్వర్డ్ తో సరిపోలాలి."
 
-#: plinth/modules/mediawiki/views.py:66
+#: plinth/modules/mediawiki/views.py:67
 msgid "Public registrations enabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు ప్రారంభించబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:75
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:80
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "ప్రైవేట్ మోడ్ ప్రారంభించబడింది"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:88
 msgid "Private mode disabled"
 msgstr "ప్రైవేట్ మోడ్ నిలిపివేయబడింది"
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "డిఫాల్ట్ చర్మం మార్చబడింది"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:99
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Domain name updated"
+msgstr "అధికారక్షేత్రం పేరు అమర్పు"
+
+#: plinth/modules/mediawiki/views.py:103
+#, fuzzy
+#| msgid "Domain name set"
+msgid "Site name updated"
 msgstr "అధికారక్షేత్రం పేరు అమర్పు"
 
 #: plinth/modules/minetest/__init__.py:35
@@ -3528,11 +3557,27 @@ msgstr ""
 "ఐచ్ఛికం. ప్రస్తుత పాస్‌వర్డ్‌ను ఉంచడానికి ఈ ఫీల్డ్‌ను ఖాళీగా ఉంచండి. Mumbleలో అనుమతులను నిర్వహించడానికి "
 "SuperUser పాస్‌వర్డ్‌ని ఉపయోగించవచ్చు."
 
-#: plinth/modules/mumble/forms.py:39
+#: plinth/modules/mumble/forms.py:40
+msgid "Set a password to join the server"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:42
+#, fuzzy
+#| msgid ""
+#| "Set a new upload password for Coquelicot. Leave this field blank to keep "
+#| "the current password."
+msgid ""
+"Set a password that is required to join the server. Leave empty to use the "
+"current password."
+msgstr ""
+"కోక్లికోకు ఒక కొత్త అప్లోడ్ పాస్వర్డ్ ను సెట్ చెయ్యండి (అడ్మిన్). ప్రస్తుత అప్లోడ్ పాస్వర్డ్ ను ఉంచడానికి ఈ "
+"ఫీల్డ్ను ఖాళీగా వదిలేయండి."
+
+#: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
 msgstr ""
 
-#: plinth/modules/mumble/forms.py:43
+#: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
@@ -3550,7 +3595,13 @@ msgstr "ముంల"
 msgid "SuperUser password successfully updated."
 msgstr "సూపర్ యూసర్ ర హస్యపదం విజయవంతంగా మార్చబడినది."
 
-#: plinth/modules/mumble/views.py:45
+#: plinth/modules/mumble/views.py:46
+#, fuzzy
+#| msgid "Upload password updated"
+msgid "Join password changed"
+msgstr "అప్లోడ్ చేయడం కోసమై కేటాయించిన రహస్యపదం నవీకరించబడింది"
+
+#: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
 msgstr ""
 
@@ -6652,28 +6703,28 @@ msgstr "పోర్ట్స్"
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
-#: plinth/modules/transmission/__init__.py:26
+#: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "ప్రసరణ అనేది వెబ్ ఇంటర్‌ఫేస్‌తో కూడిన బిట్‌టొరెంట్ క్లయింట్."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:24
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr "బిట్ టొరెంట్ అనేది పీర్-టు-పీర్ ఫైల్ భాగస్వామ్య ప్రోటోకాల్. బిట్ టొరెంట్ అనామకం కాదని గమనించండి."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:26
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "దయచేసి ట్రాన్స్‌మిషన్ డెమోన్ డిఫాల్ట్ పోర్ట్‌ను మార్చవద్దు."
 
-#: plinth/modules/transmission/__init__.py:31
+#: plinth/modules/transmission/__init__.py:28
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
 "lightweight but is less customizable."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:35
+#: plinth/modules/transmission/__init__.py:32
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -6685,21 +6736,21 @@ msgstr ""
 "నిర్వాహక సమూహానికి చెందిన {box_name}లో <a href=\"{users_url}\">ఏదైనా వినియోగదారు</a> దీన్ని "
 "యాక్సెస్ చేయవచ్చు."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:36
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:40
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:71
+#: plinth/modules/transmission/__init__.py:68
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "ట్రాన్స్మిషన్"
@@ -7239,20 +7290,20 @@ msgstr "వినియోగదారి %(username)s నావీకరిం�
 msgid "Edit User"
 msgstr "వినియోగదారి మార్పు"
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:146
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "వినియోగదారి {user} తొలగించబడ్డాడు."
 
-#: plinth/modules/users/views.py:151
+#: plinth/modules/users/views.py:153
 msgid "Deleting LDAP user failed."
 msgstr "ఎల్.డి.ఏ.పి వినియోగదారి తొలగింపు విఫలం."
 
-#: plinth/modules/users/views.py:160
+#: plinth/modules/users/views.py:180
 msgid "Change Password"
 msgstr "పాస్‌వర్డ్ మార్చు"
 
-#: plinth/modules/users/views.py:161
+#: plinth/modules/users/views.py:181
 msgid "Password changed successfully."
 msgstr "పాస్‌వర్డ్ విజయవంతంగా మార్చబడినది."
 
@@ -8752,13 +8803,6 @@ msgstr "గుజరాతీ"
 #~ msgid "Upload Password"
 #~ msgstr "అప్లోడ్ పాస్‌వర్డ్‌"
 
-#~ msgid ""
-#~ "Set a new upload password for Coquelicot. Leave this field blank to keep "
-#~ "the current password."
-#~ msgstr ""
-#~ "కోక్లికోకు ఒక కొత్త అప్లోడ్ పాస్వర్డ్ ను సెట్ చెయ్యండి (అడ్మిన్). ప్రస్తుత అప్లోడ్ పాస్వర్డ్ ను ఉంచడానికి "
-#~ "ఈ ఫీల్డ్ను ఖాళీగా వదిలేయండి."
-
 #~ msgid "Maximum File Size (in MiB)"
 #~ msgstr "గరిష్ట ఫైలు పరిమాణము (MiBలో)"
 
@@ -8768,9 +8812,6 @@ msgstr "గుజరాతీ"
 
 #~ msgid "coquelicot"
 #~ msgstr "కోక్లికో"
-
-#~ msgid "Upload password updated"
-#~ msgstr "అప్లోడ్ చేయడం కోసమై కేటాయించిన రహస్యపదం నవీకరించబడింది"
 
 #~ msgid "Failed to update upload password"
 #~ msgstr "అప్లోడ్ చేయడం కోసమై కేటాయించిన రహస్యపదం నవీకరించడంలో వైఫల్యం"

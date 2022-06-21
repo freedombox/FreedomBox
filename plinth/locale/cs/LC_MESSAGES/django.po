@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 21:07-0400\n"
+"POT-Creation-Date: 2022-06-20 20:21-0400\n"
 "PO-Revision-Date: 2022-06-08 16:16+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -1006,12 +1006,12 @@ msgstr "Obnovení IP adresy a domén"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
+#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
@@ -1447,7 +1447,7 @@ msgstr ""
 "po povolení této služby."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:67
+#: plinth/modules/transmission/__init__.py:64
 msgid "Download files using BitTorrent applications"
 msgstr "Stahovat soubory pomocí BitTorrent aplikací"
 
@@ -1456,7 +1456,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:70
 msgid "BitTorrent Web Client"
 msgstr "Webový klient sítě BitTorrent"
 
@@ -1771,7 +1771,7 @@ msgstr "Stav"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:33
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "Doména"
 
@@ -1852,11 +1852,23 @@ msgstr "ejabberd"
 msgid "Chat Server"
 msgstr "Chat server"
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:19
+#, fuzzy
+#| msgid "Domain Names"
+msgid "Domain names"
+msgstr "Názvy domén"
+
+#: plinth/modules/ejabberd/forms.py:21
+msgid ""
+"Domains to be used by ejabberd. Note that user accounts are unique for each "
+"domain, and migrating users to a new domain name is not yet implemented."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
 msgstr "Zapnout správu archivu zpráv"
 
-#: plinth/modules/ejabberd/forms.py:20
+#: plinth/modules/ejabberd/forms.py:28
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -1869,11 +1881,11 @@ msgstr ""
 "místnosti více uživatelů. Závisí na nastavení klienta, zda bude historie "
 "ukládána jako čitelný text nebo zašifrovaně."
 
-#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "Automatická správa nastavení audio/video hovorů"
 
-#: plinth/modules/ejabberd/forms.py:29
+#: plinth/modules/ejabberd/forms.py:37
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -1884,19 +1896,19 @@ msgstr ""
 "STUN/TURN pro ejabberd. Pokud chcete používat jiný server STUN/TURN, zakažte "
 "tuto funkci."
 
-#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "URI serveru STUN/TURN"
 
-#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "Seznam veřejných URI serveru STUN/TURN, na každém řádku jeden."
 
-#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "Sdílené ověřovací tajemství"
 
-#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr "Sdílené tajemství používané k výpočtu hesel pro server TURN."
 
@@ -2986,24 +2998,26 @@ msgstr ""
 "Spusťte Goggy a zvolte „Připojit k serveru“ a zadejte doménový název svého "
 "{box_name}."
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr "Janus je odlehčený server WebRTC."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr "Součástí je jednoduchá videokonferenční místnost."
 
-#: plinth/modules/janus/__init__.py:24
-msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#: plinth/modules/janus/__init__.py:26
+#, fuzzy, python-brace-format
+#| msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 "Pro použití systému Janus je vyžadován server STUN/TURN (například Coturn)."
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:44
 msgid "Janus"
 msgstr "Janus"
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:46
 msgid "WebRTC server"
 msgstr "WebRTC server"
 
@@ -3347,11 +3361,11 @@ msgstr "MediaWiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:25
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "Heslo k účtu správce"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3362,7 +3376,7 @@ msgstr ""
 "běžné a minimální požadovaná délka je <strong>10 znaků</strong>. Chcete-li "
 "zachovat aktuální heslo, ponechte toto pole prázdné."
 
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
@@ -3372,11 +3386,21 @@ msgstr ""
 "například v zápatí, kanálech a e-mailech. Příklad: \"myfreedombox.example.org"
 "\" nebo \"example.onion\"."
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:40
+#, fuzzy
+#| msgid "Kite name"
+msgid "Site Name"
+msgstr "Kite název"
+
+#: plinth/modules/mediawiki/forms.py:41
+msgid "Name of the site as displayed throughout the wiki."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:45
 msgid "Enable public registrations"
 msgstr "Umožnit registraci veřejnosti"
 
-#: plinth/modules/mediawiki/forms.py:40
+#: plinth/modules/mediawiki/forms.py:46
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3384,11 +3408,11 @@ msgstr ""
 "Pokud je zapnuto, kdokoli z Internetu si bude moci vytvořit účet na vaší "
 "instanci MediaWiki."
 
-#: plinth/modules/mediawiki/forms.py:44
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Enable private mode"
 msgstr "Zapnout soukromý režim"
 
-#: plinth/modules/mediawiki/forms.py:45
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3396,11 +3420,11 @@ msgstr ""
 "Když je zapnuto, přístup bude omezen. Pouze lidé kteří zde mají uživatelské "
 "účty mohou číst/psát do wiki. Registrace veřejnosti jsou také vypnuté."
 
-#: plinth/modules/mediawiki/forms.py:50
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Default Skin"
 msgstr "Výchozí vzhled"
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3408,36 +3432,42 @@ msgstr ""
 "Vyberte výchozí vzhled pro instalaci MediaWiki. Uživatelé mají možnost "
 "vybrat si preferovaný vzhled."
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/views.py:52
 msgid "Password updated"
 msgstr "Heslo aktualizováno"
 
-#: plinth/modules/mediawiki/views.py:56
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password update failed. Please choose a stronger password"
 msgstr "Aktualizace hesla se nezdařila. Zvolte prosím silnější heslo"
 
-#: plinth/modules/mediawiki/views.py:66
+#: plinth/modules/mediawiki/views.py:67
 msgid "Public registrations enabled"
 msgstr "Registrace pro veřejnost otevřené"
 
-#: plinth/modules/mediawiki/views.py:75
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "Registrace pro veřejnost zavřené"
 
-#: plinth/modules/mediawiki/views.py:80
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "Soukromý režim zapnut"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:88
 msgid "Private mode disabled"
 msgstr "Soukromý režim vypnut"
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "Změna výchozího vzhledu"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:99
 msgid "Domain name updated"
+msgstr "Nastavení doménového názvu aktualizováno"
+
+#: plinth/modules/mediawiki/views.py:103
+#, fuzzy
+#| msgid "Domain name updated"
+msgid "Site name updated"
 msgstr "Nastavení doménového názvu aktualizováno"
 
 #: plinth/modules/minetest/__init__.py:35
@@ -3615,11 +3645,27 @@ msgstr ""
 "Volitelně. Chcete-li zachovat aktuální heslo, ponechte toto pole prázdné. "
 "Heslo SuperUser lze použít ke správě oprávnění v Mumble."
 
-#: plinth/modules/mumble/forms.py:39
+#: plinth/modules/mumble/forms.py:40
+msgid "Set a password to join the server"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:42
+#, fuzzy
+#| msgid ""
+#| "Set a new upload password for Coquelicot. Leave this field blank to keep "
+#| "the current password."
+msgid ""
+"Set a password that is required to join the server. Leave empty to use the "
+"current password."
+msgstr ""
+"Nastavte nové heslo pro nahrávání na Coquelicot. Pro ponechání stávajícího "
+"hesla tuto kolonku nevyplňujte."
+
+#: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
 msgstr "Nastavení názvu kořenového kanálu"
 
-#: plinth/modules/mumble/forms.py:43
+#: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
@@ -3639,7 +3685,13 @@ msgstr "Mumla"
 msgid "SuperUser password successfully updated."
 msgstr "Heslo SuperUser bylo úspěšně aktualizováno."
 
-#: plinth/modules/mumble/views.py:45
+#: plinth/modules/mumble/views.py:46
+#, fuzzy
+#| msgid "Upload password updated"
+msgid "Join password changed"
+msgstr "Heslo pro nahrávání aktualizováno"
+
+#: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
 msgstr "Změna názvu kořenového kanálu."
 
@@ -6849,13 +6901,13 @@ msgstr "Porty"
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
-#: plinth/modules/transmission/__init__.py:26
+#: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr ""
 "Transmission je BitTorrent klient který poskytuje webové uživatelské "
 "rozhraní."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:24
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -6863,11 +6915,11 @@ msgstr ""
 "BitTorrent je protokol pro sdílení souborů peer-to-peer. Všimněte si, že "
 "BitTorrent není anonymní."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:26
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Výchozí port démona Transmission neměňte."
 
-#: plinth/modules/transmission/__init__.py:31
+#: plinth/modules/transmission/__init__.py:28
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
@@ -6876,7 +6928,7 @@ msgstr ""
 "V porovnání s <a href=\"{deluge_url}\">Deluge</a> je Transmission jednodušší "
 "a lehčí, ale je méně přizpůsobitelný."
 
-#: plinth/modules/transmission/__init__.py:35
+#: plinth/modules/transmission/__init__.py:32
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -6885,7 +6937,7 @@ msgstr ""
 "Přístup k němu má <a href=\"{users_url}\">každý uživatel</a> na {box_name} "
 "patřící do skupiny bit-torrent."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:36
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
@@ -6894,7 +6946,7 @@ msgstr ""
 "<a href=\"{samba_url}\">Samba</a> sdílení lze nastavit jako výchozí adresář "
 "pro stahování z rozbalovací nabídky níže."
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:40
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -6903,7 +6955,7 @@ msgstr ""
 "Po dokončení stahování můžete k souborům přistupovat také pomocí aplikace <a "
 "href=\"{sharing_url}\">Sdílení</a>."
 
-#: plinth/modules/transmission/__init__.py:71
+#: plinth/modules/transmission/__init__.py:68
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
@@ -7449,20 +7501,20 @@ msgstr "Uživatel %(username)s aktualizován."
 msgid "Edit User"
 msgstr "Upravit uživatele"
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:146
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Uživatel {user} smazán."
 
-#: plinth/modules/users/views.py:151
+#: plinth/modules/users/views.py:153
 msgid "Deleting LDAP user failed."
 msgstr "Smazání LDAP uživatele se nezdařilo."
 
-#: plinth/modules/users/views.py:160
+#: plinth/modules/users/views.py:180
 msgid "Change Password"
 msgstr "Změnit heslo"
 
-#: plinth/modules/users/views.py:161
+#: plinth/modules/users/views.py:181
 msgid "Password changed successfully."
 msgstr "Heslo úspěšně změněno."
 
@@ -9030,13 +9082,6 @@ msgstr "gudžarátština"
 #~ msgid "Upload Password"
 #~ msgstr "Heslo pro nahrávání"
 
-#~ msgid ""
-#~ "Set a new upload password for Coquelicot. Leave this field blank to keep "
-#~ "the current password."
-#~ msgstr ""
-#~ "Nastavte nové heslo pro nahrávání na Coquelicot. Pro ponechání "
-#~ "stávajícího hesla tuto kolonku nevyplňujte."
-
 #~ msgid "Maximum File Size (in MiB)"
 #~ msgstr "Nejvyšší umožněná velikost souboru (v MiB)"
 
@@ -9048,9 +9093,6 @@ msgstr "gudžarátština"
 
 #~ msgid "coquelicot"
 #~ msgstr "coquelicot"
-
-#~ msgid "Upload password updated"
-#~ msgstr "Heslo pro nahrávání aktualizováno"
 
 #~ msgid "Failed to update upload password"
 #~ msgstr "Heslo pro nahrávání se nepodařilo aktualizovat"
