@@ -271,6 +271,8 @@ def privileged(func):
     to models.py, views.py and urls.py. Currently supported types are bool,
     int, float, str, dict/Dict, list/List, Optional and Union.
 
+    Privileged methods many not output to the stdout as it interferes
+    with the serialization and de-serialization process.
     """
     setattr(func, '_privileged', True)
 
