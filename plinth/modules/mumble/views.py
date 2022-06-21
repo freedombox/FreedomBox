@@ -26,6 +26,7 @@ class MumbleAppView(AppView):
 
     def form_valid(self, form):
         """Apply form changes."""
+        old_config = self.get_initial()
         new_config = form.cleaned_data
 
         if mumble.get_domain() != new_config['domain']:
@@ -45,7 +46,7 @@ class MumbleAppView(AppView):
             messages.success(self.request, _('Join password changed'))
 
         name = new_config.get('root_channel_name')
-        if name:
+        if old_config['root_channel_name'] != new_config['root_channel_name']:
             privileged.change_root_channel_name(name)
             messages.success(self.request, _('Root channel name changed.'))
 
