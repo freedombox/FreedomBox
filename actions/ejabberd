@@ -107,7 +107,7 @@ def parse_arguments():
 
 def subcommand_get_configuration(_):
     """Return the current configuration, specifically domains configured."""
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     print(json.dumps({'domains': conf['hosts']}))
@@ -126,7 +126,7 @@ def subcommand_pre_install(arguments):
 
 def subcommand_setup(arguments):
     """Enabled LDAP authentication"""
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     for listen_port in conf['listen']:
@@ -140,7 +140,7 @@ def subcommand_setup(arguments):
     conf['ldap_base'] = scalarstring.DoubleQuotedScalarString(
         'ou=users,dc=thisbox')
 
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
     upgrade_config(arguments.domainname)
@@ -157,7 +157,7 @@ def upgrade_config(domain):
     if not current_version:
         print('Warning: Unable to get ejabberd version.')
 
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     # Check if `iqdisc` is present and remove it
@@ -190,7 +190,7 @@ def upgrade_config(domain):
             listen_port['certfile'] = cert_file
 
     # Write changes back to the file
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
 
@@ -250,7 +250,7 @@ def subcommand_get_domains(_):
         print('ejabberdctl not found. Is ejabberd installed?')
         return
 
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     print(json.dumps(conf['hosts']))
@@ -268,14 +268,14 @@ def subcommand_add_domain(arguments):
     domainname = arguments.domainname
 
     # Add updated domainname to ejabberd hosts list.
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     conf['hosts'].append(scalarstring.DoubleQuotedScalarString(domainname))
 
     conf['hosts'] = list(set(conf['hosts']))
 
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
     # Restarting ejabberd is handled by letsencrypt-ejabberd component.
@@ -290,19 +290,19 @@ def subcommand_set_domains(arguments):
         print('ejabberdctl not found. Is ejabberd installed?')
         return
 
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     conf['hosts'] = arguments.domains
 
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
 
 def subcommand_mam(argument):
     """Enable, disable, or get status of Message Archive Management (MAM)."""
 
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     if 'modules' not in conf:
@@ -340,7 +340,7 @@ def subcommand_mam(argument):
         print("Unknown command: %s" % argument.command)
         return
 
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
     if action_utils.service_is_running('ejabberd'):
@@ -370,7 +370,7 @@ def _generate_uris(services: list[dict]) -> list[str]:
 
 def subcommand_get_turn_config(_):
     """Get the latest STUN/TURN configuration in JSON format."""
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     mod_stun_disco_config = conf['modules']['mod_stun_disco']
@@ -405,12 +405,12 @@ def subcommand_configure_turn(arguments):
             'services': [_generate_service(uri) for uri in uris]
         }
 
-    with open(EJABBERD_CONFIG, 'r') as file_handle:
+    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     conf['modules']['mod_stun_disco'] = mod_stun_disco_config
 
-    with open(EJABBERD_CONFIG, 'w') as file_handle:
+    with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
     if arguments.managed:

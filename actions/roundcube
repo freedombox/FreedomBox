@@ -42,14 +42,14 @@ def subcommand_pre_install(_):
 def subcommand_setup(_):
     """Add FreedomBox configuration and include from main configuration."""
     if not _config_file.exists():
-        _config_file.write_text('<?php\n')
+        _config_file.write_text('<?php\n', encoding='utf-8')
 
     base_config = pathlib.Path('/etc/roundcube/config.inc.php')
-    lines = base_config.read_text().splitlines()
+    lines = base_config.read_text(encoding='utf-8').splitlines()
     exists = any((str(_config_file) in line for line in lines))
     if not exists:
         lines.append(f'include_once("{_config_file}");\n')
-        base_config.write_text('\n'.join(lines))
+        base_config.write_text('\n'.join(lines), encoding='utf-8')
 
 
 def subcommand_get_config(_):
@@ -57,7 +57,7 @@ def subcommand_get_config(_):
     pattern = r'\s*\$config\[\s*\'([^\']*)\'\s*\]\s*=\s*\'([^\']*)\'\s*;'
     _config = {}
     try:
-        for line in _config_file.read_text().splitlines():
+        for line in _config_file.read_text(encoding='utf-8').splitlines():
             match = re.match(pattern, line)
             if match:
                 _config[match.group(1)] = match.group(2)
@@ -81,7 +81,7 @@ $config['smtp_port'] = 25;
 $config['smtp_helo_host'] = 'localhost';
 '''
 
-    _config_file.write_text(config)
+    _config_file.write_text(config, encoding='utf-8')
 
 
 def main():

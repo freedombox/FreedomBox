@@ -128,7 +128,7 @@ def is_private_mode_enabled():
 
 def _get_config_value_in_file(setting_name, config_file):
     """Return the value of a setting from a config file."""
-    with open(config_file, 'r') as config:
+    with open(config_file, 'r', encoding='utf-8') as config:
         for line in config:
             if line.startswith(setting_name):
                 return re.findall(r'["\'][^"\']*["\']', line)[0].strip('"\'')

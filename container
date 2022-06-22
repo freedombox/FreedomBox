@@ -460,7 +460,7 @@ def _extract_image(compressed_file):
 
     logger.info('Decompressing file %s', compressed_file)
     partial_file = compressed_file.with_suffix('.partial')
-    with partial_file.open('w') as file_handle:
+    with partial_file.open('w', encoding='utf-8') as file_handle:
         subprocess.run([
             'xz', '--verbose', '--decompress', '--keep', '--to-stdout',
             str(compressed_file)

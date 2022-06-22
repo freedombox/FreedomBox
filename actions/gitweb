@@ -172,7 +172,8 @@ def _clone_with_progress_report(url, repo_dir):
             elapsed = _clone_status_line_to_percent(line)
             if elapsed is not None:
                 try:
-                    with open(status_file, 'w') as file_handle:
+                    with open(status_file, 'w',
+                              encoding='utf-8') as file_handle:
                         file_handle.write(elapsed)
                 except OSError as error:
                     errors.append(str(error))
@@ -205,7 +206,7 @@ def _prepare_clone_repo(arguments):
     try:
         if arguments.is_private:
             _set_access_status(repo_name, 'private')
-        with open(status_file, 'w') as file_handle:
+        with open(status_file, 'w', encoding='utf-8') as file_handle:
             file_handle.write('0')
     except OSError:
         shutil.rmtree(repo_dir)
@@ -289,7 +290,7 @@ def _get_repo_description(repo):
     """Set description of the repository."""
     description_file = os.path.join(GIT_REPO_PATH, repo, 'description')
     if os.path.exists(description_file):
-        with open(description_file, 'r') as file_handle:
+        with open(description_file, 'r', encoding='utf-8') as file_handle:
             description = file_handle.read()
     else:
         description = ''
@@ -300,7 +301,7 @@ def _get_repo_description(repo):
 def _set_repo_description(repo, description):
     """Set description of the repository."""
     description_file = os.path.join(GIT_REPO_PATH, repo, 'description')
-    with open(description_file, 'w') as file_handle:
+    with open(description_file, 'w', encoding='utf-8') as file_handle:
         file_handle.write(description)
 
 
@@ -326,7 +327,7 @@ def _set_repo_owner(repo, owner):
         config.add_section('gitweb')
 
     config['gitweb']['owner'] = owner
-    with open(repo_config, 'w') as file_handle:
+    with open(repo_config, 'w', encoding='utf-8') as file_handle:
         config.write(file_handle)
 
 
@@ -343,7 +344,7 @@ def _set_access_status(repo, status):
     """Set repository as private or public"""
     private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
     if status == 'private':
-        open(private_file, 'a')
+        open(private_file, 'a', encoding='utf-8')
     elif status == 'public':
         if os.path.exists(private_file):
             os.remove(private_file)

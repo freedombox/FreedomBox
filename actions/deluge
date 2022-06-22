@@ -135,7 +135,8 @@ def subcommand_set_configuration(arguments):
 def subcommand_setup(_):
     """Perform initial setup for deluge."""
 
-    with open(DELUGE_WEB_SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+    with open(DELUGE_WEB_SYSTEMD_SERVICE_PATH, 'w',
+              encoding='utf-8') as file_handle:
         file_handle.write(DELUGE_WEB_SYSTEMD_SERVICE)
 
     _set_deluged_daemon_options()

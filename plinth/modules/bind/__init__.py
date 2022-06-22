@@ -117,7 +117,7 @@ def force_upgrade(helper, _packages):
 
 def get_config():
     """Get current configuration"""
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    data = [line.strip() for line in open(CONFIG_FILE, 'r', encoding='utf-8')]
 
     forwarders = ''
     dnssec_enabled = False
@@ -141,8 +141,8 @@ def get_config():
 def set_forwarders(forwarders):
     """Set DNS forwarders."""
     flag = 0
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
-    conf_file = open(CONFIG_FILE, 'w')
+    data = [line.strip() for line in open(CONFIG_FILE, 'r', encoding='utf-8')]
+    conf_file = open(CONFIG_FILE, 'w', encoding='utf-8')
     for line in data:
         if re.match(r'^\s*forwarders\s+{', line):
             conf_file.write(line + '\n')
@@ -160,10 +160,10 @@ def set_forwarders(forwarders):
 
 def set_dnssec(choice):
     """Enable or disable DNSSEC."""
-    data = [line.strip() for line in open(CONFIG_FILE, 'r')]
+    data = [line.strip() for line in open(CONFIG_FILE, 'r', encoding='utf-8')]
 
     if choice == 'enable':
-        conf_file = open(CONFIG_FILE, 'w')
+        conf_file = open(CONFIG_FILE, 'w', encoding='utf-8')
         for line in data:
             if re.match(r'//\s*dnssec-enable\s+yes;', line):
                 line = line.lstrip('/')
@@ -171,7 +171,7 @@ def set_dnssec(choice):
         conf_file.close()
 
     if choice == 'disable':
-        conf_file = open(CONFIG_FILE, 'w')
+        conf_file = open(CONFIG_FILE, 'w', encoding='utf-8')
         for line in data:
             if re.match(r'^\s*dnssec-enable\s+yes;', line):
                 line = '//' + line

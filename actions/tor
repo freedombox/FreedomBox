@@ -83,9 +83,11 @@ def _first_time_setup():
 
     # Remove line starting with +SocksPort, since our augeas lens
     # doesn't handle it correctly.
-    with open('/etc/tor/instances/plinth/torrc', 'r') as torrc:
+    with open('/etc/tor/instances/plinth/torrc', 'r',
+              encoding='utf-8') as torrc:
         torrc_lines = torrc.readlines()
-    with open('/etc/tor/instances/plinth/torrc', 'w') as torrc:
+    with open('/etc/tor/instances/plinth/torrc', 'w',
+              encoding='utf-8') as torrc:
         for line in torrc_lines:
             if not line.startswith('+'):
                 torrc.write(line)
@@ -261,7 +263,7 @@ def _get_ports():
         pass
 
     try:
-        with open(TOR_STATE_FILE, 'r') as state_file:
+        with open(TOR_STATE_FILE, 'r', encoding='utf-8') as state_file:
             for line in state_file:
                 matches = re.match(
                     r'^\s*TransportProxy\s+(\S*)\s+\S+:(\d+)\s*$', line)
@@ -315,7 +317,8 @@ def _get_hidden_service(aug=None):
         hs_status = 'Not Configured'
     else:
         try:
-            with open(os.path.join(hs_dir, 'hostname'), 'r') as conf_file:
+            with open(os.path.join(hs_dir, 'hostname'), 'r',
+                      encoding='utf-8') as conf_file:
                 hs_hostname = conf_file.read().strip()
                 hs_enabled = True
         except Exception:
@@ -482,7 +485,8 @@ def _update_port(name, number):
 </service>
 """
     try:
-        with open(SERVICE_FILE.format(name), 'w') as service_file:
+        with open(SERVICE_FILE.format(name), 'w',
+                  encoding='utf-8') as service_file:
             service_file.writelines(lines.format(name, number))
     except FileNotFoundError:
         return

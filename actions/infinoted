@@ -130,10 +130,10 @@ def _kill_daemon():
 def subcommand_setup(_):
     """Configure infinoted after install."""
     if not os.path.isfile(CONF_PATH):
-        with open(CONF_PATH, 'w') as file_handle:
+        with open(CONF_PATH, 'w', encoding='utf-8') as file_handle:
             file_handle.write(CONF)
 
-    with open(SYSTEMD_SERVICE_PATH, 'w') as file_handle:
+    with open(SYSTEMD_SERVICE_PATH, 'w', encoding='utf-8') as file_handle:
         file_handle.write(SYSTEMD_SERVICE)
 
     subprocess.check_call(['systemctl', 'daemon-reload'])

@@ -107,7 +107,7 @@ def subcommand_get_keys(arguments):
 
     path = os.path.join(get_user_homedir(user), '.ssh', 'authorized_keys')
     try:
-        with open(path, 'r') as file_handle:
+        with open(path, 'r', encoding='utf-8') as file_handle:
             print(file_handle.read())
     except FileNotFoundError:
         pass
@@ -130,7 +130,7 @@ def subcommand_set_keys(arguments):
         os.makedirs(ssh_folder)
         shutil.chown(ssh_folder, user, 'users')
 
-    with open(key_file_path, 'w') as file_handle:
+    with open(key_file_path, 'w', encoding='utf-8') as file_handle:
         file_handle.write(arguments.keys)
 
     shutil.chown(key_file_path, user, 'users')

@@ -34,7 +34,7 @@ def parse_arguments():
 def subcommand_setup(arguments):
     """Setup BIND configuration."""
     if arguments.old_version == 0:
-        with open(CONFIG_FILE, "w") as conf_file:
+        with open(CONFIG_FILE, 'w', encoding='utf-8') as conf_file:
             conf_file.write(DEFAULT_CONFIG)
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)

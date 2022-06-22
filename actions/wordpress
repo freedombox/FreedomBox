@@ -87,7 +87,7 @@ define('WP_CONTENT_DIR', '/var/lib/wordpress/wp-content');
 
 define('DISABLE_WP_CRON', true);
 '''
-    _config_file_path.write_text(config_contents)
+    _config_file_path.write_text(config_contents, encoding='utf-8')
 
     db_contents = f'''<?php
 # Created by FreedomBox
@@ -98,7 +98,7 @@ $dbserver='{db_host}';
 '''
     old_umask = os.umask(0o037)
     try:
-        _db_file_path.write_text(db_contents)
+        _db_file_path.write_text(db_contents, encoding='utf-8')
     finally:
         os.umask(old_umask)
 
@@ -158,7 +158,7 @@ def subcommand_set_public(arguments):
 def subcommand_dump_database(_):
     """Dump database to file."""
     _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
-    with _db_backup_file.open('w') as file_handle:
+    with _db_backup_file.open('w', encoding='utf-8') as file_handle:
         subprocess.run([
             'mysqldump', '--add-drop-database', '--add-drop-table',
             '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
@@ -167,7 +167,7 @@ def subcommand_dump_database(_):
 
 def subcommand_restore_database(_):
     """Restore database from file."""
-    with _db_backup_file.open('r') as file_handle:
+    with _db_backup_file.open('r', encoding='utf-8') as file_handle:
         subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
                        check=True)
 

@@ -95,7 +95,7 @@ def _backup_handler(packet, encryption_passphrase=None):
             'backup': component.manifest
         } for component in packet.components]
     }
-    with open(manifest_path, 'w') as manifest_file:
+    with open(manifest_path, 'w', encoding='utf-8') as manifest_file:
         json.dump(manifests, manifest_file)
 
     paths = packet.directories + packet.files

@@ -185,7 +185,7 @@ def get_custom_shortcuts():
                 continue
 
             logger.info('Loading custom shortcuts from %s', file_path)
-            with file_path.open() as file_handle:
+            with file_path.open(encoding='utf-8') as file_handle:
                 shortcuts['shortcuts'] += json.load(file_handle)['shortcuts']
         except Exception as exception:
             logger.warning('Error loading shortcuts from %s: %s', file_path,

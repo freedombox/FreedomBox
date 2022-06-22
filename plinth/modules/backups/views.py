@@ -381,7 +381,7 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
         known_hosts_path.parent.mkdir(parents=True, exist_ok=True)
         known_hosts_path.touch()
 
-        with known_hosts_path.open('a') as known_hosts_file:
+        with known_hosts_path.open('a', encoding='utf-8') as known_hosts_file:
             known_hosts_file.write(ssh_public_key + '\n')
 
     def get(self, *args, **kwargs):
