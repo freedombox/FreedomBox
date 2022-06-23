@@ -229,7 +229,6 @@ def _lockdown_apps(components, lockdown):
 
 def _is_snapshot_available():
     """Return whether it is possible to take filesystem snapshots."""
-    pass
 
 
 def _take_snapshot():

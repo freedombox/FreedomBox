@@ -131,10 +131,8 @@ def ignore_dbus_error(dbus_error=None, service_error=None):
         if (dbus_error and parts[1].strip()
                 == 'org.freedesktop.DBus.Error.' + dbus_error):
             logger.error('Firewalld is not running.')
-            pass
         elif (service_error and parts[2].strip() == service_error):
             logger.warning('Ignoring firewall exception: %s', service_error)
-            pass
         else:
             raise
 

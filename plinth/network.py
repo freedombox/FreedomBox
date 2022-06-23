@@ -33,12 +33,10 @@ CONNECTION_TYPE_NAMES = collections.OrderedDict([
 
 class ConnectionNotFound(Exception):
     """Network connection with a given name could not be found."""
-    pass
 
 
 class DeviceNotFound(Exception):
     """Network device for specified operation could not be found."""
-    pass
 
 
 def ipv4_string_to_int(address):
