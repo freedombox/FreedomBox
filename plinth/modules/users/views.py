@@ -29,7 +29,7 @@ class ContextMixin:
 
     def get_context_data(self, **kwargs):
         """Add self.title to template context."""
-        context = super(ContextMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['title'] = getattr(self, 'title', '')
         return context
 
@@ -45,7 +45,7 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
 
     def get_form_kwargs(self):
         """Make the request object available to the form."""
-        kwargs = super(UserCreate, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
@@ -62,7 +62,7 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     app_id = 'users'
 
     def get_context_data(self, *args, **kwargs):
-        context = super(UserList, self).get_context_data(*args, **kwargs)
+        context = super().get_context_data(*args, **kwargs)
         context['last_admin_user'] = get_last_admin_user()
         return context
 
@@ -86,14 +86,14 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_kwargs(self):
         """Make the request object available to the form."""
-        kwargs = super(UserUpdate, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         kwargs['username'] = self.object.username
         return kwargs
 
     def get_initial(self):
         """Return the data for initial form load."""
-        initial = super(UserUpdate, self).get_initial()
+        initial = super().get_initial()
         try:
             ssh_keys = actions.superuser_run(
                 'ssh', ['get-keys', '--username', self.object.username])
@@ -190,7 +190,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
 
     def get_form_kwargs(self):
         """Make the user object available to the form."""
-        kwargs = super(UserChangePassword, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         kwargs['user'] = User.objects.get(username=self.kwargs['slug'])
         return kwargs
@@ -209,7 +209,7 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
         """
         form.save()
         update_session_auth_hash(self.request, form.user)
-        return super(UserChangePassword, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class FirstBootView(django.views.generic.CreateView):
@@ -238,7 +238,7 @@ class FirstBootView(django.views.generic.CreateView):
 
     def get_form_kwargs(self):
         """Make request available to the form (to insert messages)"""
-        kwargs = super(FirstBootView, self).get_form_kwargs()
+        kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 

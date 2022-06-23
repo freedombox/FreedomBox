@@ -29,7 +29,7 @@ class TrimmedCharField(forms.CharField):
         if value:
             value = value.strip()
 
-        return super(TrimmedCharField, self).clean(value)
+        return super().clean(value)
 
 
 class ShadowsocksForm(forms.Form):

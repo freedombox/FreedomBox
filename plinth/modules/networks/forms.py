@@ -167,7 +167,7 @@ class GenericForm(ConnectionForm):
 
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
-        super(GenericForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         choices = self._get_interface_choices(nm.DeviceType.GENERIC)
         self.fields['interface'].choices = choices
 
@@ -183,7 +183,7 @@ class EthernetForm(ConnectionForm):
 
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
-        super(EthernetForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         choices = self._get_interface_choices(nm.DeviceType.ETHERNET)
         self.fields['interface'].choices = choices
 
@@ -278,7 +278,7 @@ requires clients to have the password to connect.'),
 
     def __init__(self, *args, **kwargs):
         """Initialize the form, populate interface choices."""
-        super(WifiForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         choices = self._get_interface_choices(nm.DeviceType.WIFI)
         self.fields['interface'].choices = choices
 

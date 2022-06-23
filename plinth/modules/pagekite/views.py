@@ -62,4 +62,4 @@ class ConfigurationView(AppView):
 
     def form_valid(self, form):
         form.save(self.request)
-        return super(ConfigurationView, self).form_valid(form)
+        return super().form_valid(form)

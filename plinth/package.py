@@ -241,7 +241,7 @@ class PackageException(Exception):
 
     def __init__(self, error_string=None, error_details=None, *args, **kwargs):
         """Store apt-get error string and details."""
-        super(PackageException, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.error_string = error_string
         self.error_details = error_details
