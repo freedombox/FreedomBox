@@ -120,7 +120,7 @@ def test_homepage_mapping_skip_ci():
     assert _home_page_scid2url(uws_scid) is None
 
 
-class Dict2Obj(object):
+class Dict2Obj:
     """Mock object made out of any dict."""
 
     def __init__(self, a_dict):

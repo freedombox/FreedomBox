@@ -24,7 +24,7 @@ from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
                     UserUpdateForm)
 
 
-class ContextMixin(object):
+class ContextMixin:
     """Mixin to add 'title' to the template context."""
 
     def get_context_data(self, **kwargs):

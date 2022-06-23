@@ -252,7 +252,7 @@ class PackageException(Exception):
             .format(self.error_string, self.error_details)
 
 
-class Transaction(object):
+class Transaction:
     """Information about an ongoing transaction."""
 
     def __init__(self, module_name, package_names):

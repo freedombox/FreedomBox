@@ -207,7 +207,7 @@ def webserver_disable(name, kind='config', apply_changes=True):
     return action_required
 
 
-class WebserverChange(object):
+class WebserverChange:
     """Context to restart/reload Apache after configuration changes."""
 
     def __init__(self):

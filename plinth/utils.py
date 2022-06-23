@@ -89,7 +89,7 @@ def is_user_admin(request, cached=False):
     return user_is_admin
 
 
-class YAMLFile(object):
+class YAMLFile:
     """A context management class for updating YAML files"""
 
     def __init__(self, yaml_file):
