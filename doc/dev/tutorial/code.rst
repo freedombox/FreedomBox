@@ -24,6 +24,12 @@ plinth/modules/transmission/manifest.py
 .. literalinclude:: ../../../plinth/modules/transmission/manifest.py
    :language: python3
 
+plinth/modules/transmission/privileged.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: ../../../plinth/modules/transmission/privileged.py
+   :language: python3
+
 plinth/modules/transmission/urls.py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -52,10 +58,4 @@ plinth/modules/transmission/tests/__init__.py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: ../../../plinth/modules/transmission/tests/__init__.py
-   :language: python3
-
-actions/transmission
-^^^^^^^^^^^^^^^^^^^^
-
-.. literalinclude:: ../../../actions/transmission
    :language: python3

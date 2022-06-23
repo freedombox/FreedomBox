@@ -35,6 +35,15 @@ class MumbleForm(forms.Form):
         required=False,
     )
 
+    join_password = forms.CharField(
+        max_length=32,
+        label=_('Set a password to join the server'),
+        widget=forms.PasswordInput,
+        help_text=_('Set a password that is required to join the server. '
+                    'Leave empty to use the current password.'),
+        required=False,
+    )
+
     root_channel_name = forms.CharField(
         label=_('Set the name for the root channel'),
         min_length=1,

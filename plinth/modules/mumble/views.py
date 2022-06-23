@@ -39,6 +39,12 @@ class MumbleAppView(AppView):
             messages.success(self.request,
                              _('SuperUser password successfully updated.'))
 
+        join_password = new_config.get('join_password')
+        if join_password:
+            actions.superuser_run('mumble',
+                                  ['change-join-password', join_password])
+            messages.success(self.request, _('Join password changed'))
+
         name = new_config.get('root_channel_name')
         if name:
             actions.superuser_run('mumble', ['change-root-channel-name', name])

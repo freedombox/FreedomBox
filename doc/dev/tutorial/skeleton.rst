@@ -12,26 +12,25 @@ Create a directory structure as follows with empty files. We will fill them up
 in a step-by-step manner::
 
    ─┬ <plinth_root>/
-    ├─┬ plinth/
-    │ └─┬ modules/
-    │   └─┬ transmission/
-    │     ├─ __init__.py
-    │     ├─ forms.py
-    │     ├─ manifest.py
-    │     ├─ urls.py
-    │     ├─ views.py
-    │     ├─┬ data/
-    │     │ └─┬ etc/
-    │     │   ├─┬ plinth/
-    │     │   │ └─┬ modules-enabled/
-    │     │   │   └─ transmission
-    │     │   └─┬ apache2/
-    │     │     └─┬ conf-available/
-    │     │       └─ transmission-freedombox.conf
-    │     └─┬ tests
-    │       └─ __init__.py
-    └─┬ actions/
-      └─ transmission
+    └─┬ plinth/
+      └─┬ modules/
+        └─┬ transmission/
+          ├─ __init__.py
+          ├─ forms.py
+          ├─ privileged.py
+          ├─ manifest.py
+          ├─ urls.py
+          ├─ views.py
+          ├─┬ data/
+          │ └─┬ etc/
+          │   ├─┬ plinth/
+          │   │ └─┬ modules-enabled/
+          │   │   └─ transmission
+          │   └─┬ apache2/
+          │     └─┬ conf-available/
+          │       └─ transmission-freedombox.conf
+          └─┬ tests
+            └─ __init__.py
 
 The file ``__init__.py`` indicates that the directory in which it is present is
 a Python module. For now, it is an empty file.

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 21:07-0400\n"
-"PO-Revision-Date: 2022-05-29 14:14+0000\n"
+"POT-Creation-Date: 2022-06-20 20:21-0400\n"
+"PO-Revision-Date: 2022-06-17 19:15+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
@@ -67,7 +67,7 @@ msgstr ""
 #: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
-msgstr ""
+msgstr "Домейн за TLS"
 
 #: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
@@ -75,6 +75,8 @@ msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
 msgstr ""
+"Изберете домейн, с който да използвате TLS. Ако списъкът е празен, настройте "
+"поне един домейн със сертификати."
 
 #: plinth/forms.py:64
 msgid "Language"
@@ -632,6 +634,8 @@ msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
+"Автентичността на хоста по SSH „%(hostname)s“ не може да бъде установена. "
+"Хостът връща следните публични ключове за SSH. Проверете някой от тях."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:40
 msgid "How to verify?"
@@ -643,6 +647,10 @@ msgid ""
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
+"Изпълнете следната команда на машината на хоста по SSH. Резултатът трябва да "
+"отговаря на една от предоставените възможности. Можете също така да "
+"използвате DSA, ECDSA, Ed25519 и т.н. вместо RSA, като изберете съответния "
+"файл."
 
 #: plinth/modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
@@ -988,12 +996,12 @@ msgstr ""
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
+#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "Настройките са променени"
@@ -1373,7 +1381,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:67
+#: plinth/modules/transmission/__init__.py:64
 msgid "Download files using BitTorrent applications"
 msgstr ""
 
@@ -1382,7 +1390,7 @@ msgid "Deluge"
 msgstr ""
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:70
 msgid "BitTorrent Web Client"
 msgstr ""
 
@@ -1657,9 +1665,9 @@ msgstr "Състояние"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:33
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
-msgstr ""
+msgstr "Домейн"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1667,7 +1675,7 @@ msgstr "Последно обновяване"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:21
 msgid "IP Address"
-msgstr ""
+msgstr "Адрес по IP"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:32
 msgid "Success"
@@ -1711,6 +1719,11 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
+"За да комуникирате в действителност, можете да използвате <a href="
+"\"{jsxc_url}\">клиент за уеб</a> или някой друг <a href=\"https://xmpp.org/"
+"software/clients\" target=\"_blank\">клиент за XMPP</a>. Когато е отметнато, "
+"до ejabberd ще има достъп всеки <a href=\"{users_url}\"> потребител с вход в "
+"{box_name}</a>."
 
 #: plinth/modules/ejabberd/__init__.py:42
 #, python-brace-format
@@ -1721,18 +1734,30 @@ msgstr ""
 
 #: plinth/modules/ejabberd/__init__.py:65
 msgid "ejabberd"
-msgstr ""
+msgstr "ejabberd"
 
 #: plinth/modules/ejabberd/__init__.py:66
 #: plinth/modules/matrixsynapse/__init__.py:71
 msgid "Chat Server"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:19
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Domain names"
+msgstr "Име на домейн"
+
+#: plinth/modules/ejabberd/forms.py:21
+msgid ""
+"Domains to be used by ejabberd. Note that user accounts are unique for each "
+"domain, and migrating users to a new domain name is not yet implemented."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:20
+#: plinth/modules/ejabberd/forms.py:28
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -1741,11 +1766,11 @@ msgid ""
 "the histories are stored as plain text or encrypted."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:29
+#: plinth/modules/ejabberd/forms.py:37
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -1753,19 +1778,19 @@ msgid ""
 "server."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
-msgstr ""
+msgstr "Адрес на услугата STUN/TURN"
 
-#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -1775,7 +1800,7 @@ msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:24
 msgid "Xabber"
-msgstr ""
+msgstr "Xabber"
 
 #: plinth/modules/ejabberd/manifest.py:26
 msgid ""
@@ -1785,11 +1810,11 @@ msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:41
 msgid "Yaxim"
-msgstr ""
+msgstr "Yaxim"
 
 #: plinth/modules/ejabberd/manifest.py:55
 msgid "ChatSecure"
-msgstr ""
+msgstr "ChatSecure"
 
 #: plinth/modules/ejabberd/manifest.py:57
 msgid ""
@@ -1801,11 +1826,11 @@ msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:72
 msgid "Dino"
-msgstr ""
+msgstr "Dino"
 
 #: plinth/modules/ejabberd/manifest.py:84
 msgid "Gajim"
-msgstr ""
+msgstr "Gajim"
 
 #: plinth/modules/ejabberd/templates/ejabberd.html:19
 #, python-format
@@ -1901,19 +1926,19 @@ msgstr ""
 #: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
-msgstr ""
+msgstr "Roundcube"
 
 #: plinth/modules/email/manifest.py:20 plinth/modules/radicale/manifest.py:36
 msgid "Thunderbird"
-msgstr ""
+msgstr "Thunderbird"
 
 #: plinth/modules/email/manifest.py:37
 msgid "K-9 Mail"
-msgstr ""
+msgstr "K-9 Mail"
 
 #: plinth/modules/email/manifest.py:52
 msgid "FairEmail"
-msgstr ""
+msgstr "FairEmail"
 
 #: plinth/modules/email/templates/email-aliases.html:13
 #: plinth/modules/email/templates/email.html:15
@@ -1930,11 +1955,11 @@ msgstr ""
 
 #: plinth/modules/email/templates/email-aliases.html:34
 msgid "Add"
-msgstr ""
+msgstr "Добавяне"
 
 #: plinth/modules/email/templates/email.html:10
 msgid "Manage Spam"
-msgstr ""
+msgstr "Управление на нежелана поща"
 
 #: plinth/modules/email/templates/email.html:22
 msgid "DNS Records"
@@ -1967,7 +1992,7 @@ msgstr "Тежест"
 #: plinth/modules/email/templates/email.html:41
 #: plinth/modules/minetest/templates/minetest.html:18
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 #: plinth/modules/email/templates/email.html:42
 msgid "Host/Target/Value"
@@ -1980,10 +2005,14 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
+"Защитната стена е система за сигурност, която контролира входящия и "
+"изходящия мрежов трафик в и от {box_name}. Поддържането на включена и "
+"правилно настроена защитната стена намалява риска от заплахи за сигурността "
+"от интернет."
 
 #: plinth/modules/firewall/__init__.py:62
 msgid "Firewall"
-msgstr ""
+msgstr "Защитна стена"
 
 #: plinth/modules/firewall/components.py:134
 #, python-brace-format
@@ -2011,36 +2040,36 @@ msgstr ""
 
 #: plinth/modules/firewall/templates/firewall.html:35
 msgid "Service/Port"
-msgstr ""
+msgstr "Услуга/порт"
 
 #: plinth/modules/firewall/templates/firewall.html:54
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:69
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 msgid "Enabled"
-msgstr ""
+msgstr "Включено"
 
 #: plinth/modules/firewall/templates/firewall.html:57
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:71
 #: plinth/modules/snapshot/forms.py:23 plinth/modules/snapshot/forms.py:29
 #: plinth/templates/cards.html:34
 msgid "Disabled"
-msgstr ""
+msgstr "Изключено"
 
 #: plinth/modules/firewall/templates/firewall.html:72
 msgid "Permitted"
-msgstr ""
+msgstr "Разрешено"
 
 #: plinth/modules/firewall/templates/firewall.html:75
 msgid "Permitted (internal only)"
-msgstr ""
+msgstr "Разрешено (само вътрешно)"
 
 #: plinth/modules/firewall/templates/firewall.html:78
 msgid "Permitted (external only)"
-msgstr ""
+msgstr "Разрешено (само външно)"
 
 #: plinth/modules/firewall/templates/firewall.html:81
 msgid "Blocked"
-msgstr ""
+msgstr "Блокирано"
 
 #: plinth/modules/firewall/templates/firewall.html:94
 msgid ""
@@ -2048,12 +2077,15 @@ msgid ""
 "also permitted in the firewall and when you disable a service it is also "
 "disabled in the firewall."
 msgstr ""
+"Работата на защитната стена е автоматична. Когато включите дадена услуга, тя "
+"бива разрешена и в защитната стена, а когато я спрете, тя бива забранена и в "
+"защитната стена."
 
 #: plinth/modules/firewall/templates/firewall.html:102
 #: plinth/modules/networks/templates/networks_configuration.html:22
 #: plinth/modules/storage/templates/storage.html:93
 msgid "Advanced"
-msgstr ""
+msgstr "Разширени"
 
 #: plinth/modules/firewall/templates/firewall.html:104
 msgid ""
@@ -2080,7 +2112,7 @@ msgstr ""
 #: plinth/modules/first_boot/templates/firstboot_complete.html:14
 #, python-format
 msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
+msgstr "Без никакви приложения %(box_name)s не може да направи много."
 
 #: plinth/modules/first_boot/templates/firstboot_complete.html:21
 msgid "Install Apps"
@@ -2124,11 +2156,11 @@ msgstr ""
 
 #: plinth/modules/gitweb/__init__.py:56 plinth/modules/gitweb/manifest.py:10
 msgid "Gitweb"
-msgstr ""
+msgstr "Gitweb"
 
 #: plinth/modules/gitweb/__init__.py:57
 msgid "Simple Git Hosting"
-msgstr ""
+msgstr "Обикновен хостинг на Git"
 
 #: plinth/modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2184,16 +2216,16 @@ msgstr ""
 
 #: plinth/modules/gitweb/manifest.py:18
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
-msgstr ""
+msgstr "Управление на хранилища"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:17
 #: plinth/modules/gitweb/templates/gitweb_configure.html:19
 msgid "Create repository"
-msgstr ""
+msgstr "Създаване на хранилище"
 
 #: plinth/modules/gitweb/templates/gitweb_configure.html:26
 msgid "No repositories available."
@@ -2709,27 +2741,26 @@ msgid ""
 "domain name."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:24
-msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#: plinth/modules/janus/__init__.py:26
+#, python-brace-format
+msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:44
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:43
-#, fuzzy
-#| msgid "Web Server"
+#: plinth/modules/janus/__init__.py:46
 msgid "WebRTC server"
-msgstr "Уеб сървър"
+msgstr "Услуга на WebRTC"
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -3008,11 +3039,11 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:25
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3023,73 +3054,89 @@ msgstr ""
 "често срещана парола, минималната дължина е <strong>10 знака</strong> . "
 "Оставете полето празно, за да запазите текущата парола."
 
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
 "\"."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:40
+#, fuzzy
+#| msgid "Service Name"
+msgid "Site Name"
+msgstr "Име на услуга"
+
+#: plinth/modules/mediawiki/forms.py:41
+msgid "Name of the site as displayed throughout the wiki."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:45
 msgid "Enable public registrations"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:40
+#: plinth/modules/mediawiki/forms.py:46
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:44
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Enable private mode"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:45
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:50
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Default Skin"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/views.py:52
 msgid "Password updated"
 msgstr "Паролата е променена"
 
-#: plinth/modules/mediawiki/views.py:56
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password update failed. Please choose a stronger password"
 msgstr "Паролата не е променена. Изберете по-сложна парола"
 
-#: plinth/modules/mediawiki/views.py:66
+#: plinth/modules/mediawiki/views.py:67
 msgid "Public registrations enabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:75
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:80
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:88
 msgid "Private mode disabled"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:99
 msgid "Domain name updated"
+msgstr "Името на домейна е променено"
+
+#: plinth/modules/mediawiki/views.py:103
+#, fuzzy
+#| msgid "Domain name updated"
+msgid "Site name updated"
 msgstr "Името на домейна е променено"
 
 #: plinth/modules/minetest/__init__.py:35
@@ -3148,7 +3195,7 @@ msgstr ""
 #: plinth/modules/minetest/templates/minetest.html:17
 #: plinth/modules/networks/forms.py:54 plinth/modules/networks/forms.py:90
 msgid "Address"
-msgstr ""
+msgstr "Адрес"
 
 #: plinth/modules/minidlna/__init__.py:20
 msgid ""
@@ -3240,11 +3287,21 @@ msgid ""
 "password can be used to manage permissions in Mumble."
 msgstr ""
 
-#: plinth/modules/mumble/forms.py:39
+#: plinth/modules/mumble/forms.py:40
+msgid "Set a password to join the server"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:42
+msgid ""
+"Set a password that is required to join the server. Leave empty to use the "
+"current password."
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
 msgstr ""
 
-#: plinth/modules/mumble/forms.py:43
+#: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
@@ -3262,7 +3319,11 @@ msgstr ""
 msgid "SuperUser password successfully updated."
 msgstr "Паролата на суперпотребителя е обновена."
 
-#: plinth/modules/mumble/views.py:45
+#: plinth/modules/mumble/views.py:46
+msgid "Join password changed"
+msgstr ""
+
+#: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
 msgstr ""
 
@@ -4763,11 +4824,11 @@ msgstr ""
 #: plinth/modules/radicale/__init__.py:55
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
-msgstr ""
+msgstr "Radicale"
 
 #: plinth/modules/radicale/__init__.py:56
 msgid "Calendar and Addressbook"
-msgstr ""
+msgstr "Календар и адресна книга"
 
 #: plinth/modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -4789,11 +4850,11 @@ msgstr ""
 
 #: plinth/modules/radicale/forms.py:30
 msgid "Access rights"
-msgstr ""
+msgstr "Права за достъп"
 
 #: plinth/modules/radicale/manifest.py:9
 msgid "DAVx5"
-msgstr ""
+msgstr "DAVx5"
 
 #: plinth/modules/radicale/manifest.py:11
 msgid ""
@@ -4869,6 +4930,9 @@ msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
 msgstr ""
+"Когато е отметнато, текстовото поле за въвеждане на сървъра се премахва от "
+"страницата за вход и потребителите могат да четат и изпращат писма само от "
+"тази страница {box_name}."
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5067,7 +5131,7 @@ msgstr ""
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
-msgstr ""
+msgstr "Ограничаване на входа през конзолата (препоръчително)"
 
 #: plinth/modules/security/forms.py:14
 msgid ""
@@ -5075,6 +5139,9 @@ msgid ""
 "to log in to console or via SSH. Console users may be able to access some "
 "services without further authorization."
 msgstr ""
+"Когато е отметнато, само потребителите от групата „администратор“ ще могат "
+"да влизат в конзолата или чрез SSH. Потребителите на конзолата може да имат "
+"достъп до някои услуги без допълнително удостоверяване."
 
 #: plinth/modules/security/forms.py:19
 msgid "Fail2Ban (recommended)"
@@ -5086,6 +5153,8 @@ msgid ""
 "attempts to the SSH server and other enabled password protected internet-"
 "services."
 msgstr ""
+"Когато е отметнато, Fail2Ban ще ограничи опитите за проникване с груба сила "
+"в сървъра на SSH и други разрешени мрежови услуги, защитени с парола."
 
 #: plinth/modules/security/templates/security.html:12
 #: plinth/modules/security/templates/security.html:14
@@ -5096,12 +5165,12 @@ msgstr "Доклад за сигурността"
 #: plinth/modules/upgrades/templates/backports-firstboot.html:11
 #: plinth/modules/upgrades/templates/upgrades_configure.html:44
 msgid "Frequent Feature Updates"
-msgstr ""
+msgstr "Често обновяване на възможности"
 
 #: plinth/modules/security/templates/security.html:21
 #: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
-msgstr ""
+msgstr "Честото обновяване на възможности е включено."
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
@@ -5116,6 +5185,13 @@ msgid ""
 "Instead, they are maintained by contributors to Debian and the %(box_name)s "
 "community."
 msgstr ""
+"Честото обновяване на възможности помага на услугата на %(box_name)s, както "
+"и на много ограничен набор от софтуер да получават по-често нови възможности "
+"(от хранилището backports). Това води до получаване на някои нови "
+"възможности в рамките на седмици вместо веднъж на около 2 години. Обърнете "
+"внимание, че софтуерът с често обновяване на възможностите не се ползва от "
+"подкрепата на екипа по сигурността на Дебиан. Вместо това той се поддържа от "
+"сътрудници на Дебиан и общността на %(box_name)s."
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:74
@@ -5638,7 +5714,7 @@ msgstr ""
 
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: plinth/modules/sso/views.py:101
 msgid "Logged out successfully."
@@ -5971,6 +6047,10 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Когато е отметнато, мостовете, настроени по-долу, ще се използват за "
+"свързване с мрежата на Tor. Използвайте тази настройка, ако вашият доставчик "
+"на интернет услуги (ISP) възпрепятства или цензурира връзките с мрежата на "
+"Tor. По този начин ще изключите режимите на ретранслация."
 
 #: plinth/modules/tor/forms.py:84
 msgid "Upstream bridges"
@@ -5988,23 +6068,24 @@ msgid "Enable Tor relay"
 msgstr ""
 
 #: plinth/modules/tor/forms.py:93
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
-msgstr ""
+msgstr "Когато е отментато, на {box_name} ще работи"
 
 #: plinth/modules/tor/forms.py:98
 msgid "Enable Tor bridge relay"
 msgstr ""
 
 #: plinth/modules/tor/forms.py:100
+#, fuzzy
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
-msgstr ""
+msgstr "Когато е отметнато,"
 
 #: plinth/modules/tor/forms.py:105
 msgid "Enable Tor Hidden Service"
@@ -6028,6 +6109,9 @@ msgid ""
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
 msgstr ""
+"Когато е отметнато, софтуерът, при инсталиране и обновяване, ще бъде "
+"изтеглян през мрежата на Tor. По този начин се увеличава степента на "
+"поверителност на личния живот и сигурност при изтегляне."
 
 #: plinth/modules/tor/forms.py:128
 msgid "Specify at least one upstream bridge to use upstream bridges."
@@ -6057,21 +6141,21 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr "Настройките не са променени"
 
-#: plinth/modules/transmission/__init__.py:26
+#: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:24
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:26
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:31
+#: plinth/modules/transmission/__init__.py:28
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
@@ -6080,7 +6164,7 @@ msgstr ""
 "В сравнение с <a href=\"{deluge_url}\">Deluge</a>, Transmission е по-прост и "
 "лек, но е с по-малко възможности за настройка."
 
-#: plinth/modules/transmission/__init__.py:35
+#: plinth/modules/transmission/__init__.py:32
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -6089,7 +6173,7 @@ msgstr ""
 "Достъпът до нея е възможен от <a href=\"{users_url}\">всеки потребител</a> "
 "на {box_name}, принадлежащ към групата bit-torrent."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:36
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
@@ -6098,7 +6182,7 @@ msgstr ""
 "Споделеното в <a href=\"{samba_url}\">Samba</a> може да бъде зададено като "
 "подразбирана папка за изтегляне от падащото меню по-долу."
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:40
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -6107,7 +6191,7 @@ msgstr ""
 "След приключване на изтеглянето, имате достъп до файловете си и като "
 "използвате приложението <a href=\"{sharing_url}\">Споделяне</a>."
 
-#: plinth/modules/transmission/__init__.py:71
+#: plinth/modules/transmission/__init__.py:68
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr ""
@@ -6170,15 +6254,15 @@ msgstr ""
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
-msgstr ""
+msgstr "Обновяване на софтуера"
 
 #: plinth/modules/upgrades/__init__.py:132
 msgid "FreedomBox Updated"
-msgstr "Обновяване на FreedomBox"
+msgstr "FreedomBox е обновен"
 
 #: plinth/modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
-msgstr ""
+msgstr "Обновяването на дистрибуцията не може да бъде стартирано"
 
 #: plinth/modules/upgrades/__init__.py:219
 msgid ""
@@ -6203,6 +6287,7 @@ msgstr ""
 #: plinth/modules/upgrades/forms.py:16
 msgid "When enabled, FreedomBox automatically updates once a day."
 msgstr ""
+"Когато е отметнато, FreedomBox автоматично ще се обновява веднъж дневно."
 
 #: plinth/modules/upgrades/forms.py:19
 msgid "Enable auto-update to next stable release"
@@ -6213,27 +6298,33 @@ msgid ""
 "When enabled, FreedomBox will update to the next stable distribution release "
 "when it is available."
 msgstr ""
+"Когато е отметнато, FreedomBox ще се обнови до следващото стабилно издание "
+"на дистрибуцията, когато стане достъпно."
 
 #: plinth/modules/upgrades/forms.py:34
 #: plinth/modules/upgrades/templates/upgrades_configure.html:89
 msgid "Activate frequent feature updates (recommended)"
-msgstr ""
+msgstr "Включване на често обновяване на възможностите (препоръчително)"
 
 #: plinth/modules/upgrades/forms.py:40
 msgid "Update now (recommended)"
-msgstr ""
+msgstr "Обновяване сега (препоръчително)"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
 "activated now, they can be activated later."
 msgstr ""
+"Силно препоръчително е да включите честото обновяване на възможности. Ако не "
+"го включите сега, може да го направите по-късно."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:33
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
+"<strong>Забележка:</strong> Веднъж включено честото обновяване на "
+"възможности, не може да бъде изключено."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
@@ -6290,12 +6381,16 @@ msgstr "Вашият Freedombox се нуждае от обновяване!"
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
+"Честото обновяване на възможности може да бъде включено. Включването му е "
+"препоръчително."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:56
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
+"Честото обновяване на възможности не може да бъде включено. Може да не е "
+"необходимо в тази дистрибуция."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:78
 #, python-format
@@ -6304,10 +6399,13 @@ msgid ""
 "cannot be deactivated. You may wish to take a snapshot using <a href="
 "\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
+"<strong>Забележка:</strong> Веднъж включено честото обновяване на "
+"възможности, не може да бъде изключено. Преди да продължите можете да "
+"направите <a href=\"%(snapshot_url)s\">снимка на хранилището</a>."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:94
 msgid "Manual Update"
-msgstr ""
+msgstr "Ръчно обновяване"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:108
 msgid "Update now"
@@ -6355,7 +6453,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/views.py:139
 msgid "Frequent feature updates activated."
-msgstr ""
+msgstr "Честото обновяване на възможности е включено."
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -6483,7 +6581,7 @@ msgstr ""
 #: plinth/modules/users/templates/users_change_password.html:11
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
-msgstr ""
+msgstr "Смяна на паролата на <em>%(username)s</em>"
 
 #: plinth/modules/users/templates/users_change_password.html:21
 msgid "Save Password"
@@ -6571,6 +6669,8 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
+"За да смените паролата, използвайте <a href=\"%(change_password_url)s"
+"\">формуляра за смяна на парола</a>."
 
 #: plinth/modules/users/templates/users_update.html:31
 #: plinth/templates/language-selection.html:17
@@ -6591,22 +6691,22 @@ msgstr ""
 msgid "Edit User"
 msgstr ""
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:146
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr ""
 
-#: plinth/modules/users/views.py:151
+#: plinth/modules/users/views.py:153
 msgid "Deleting LDAP user failed."
 msgstr ""
 
-#: plinth/modules/users/views.py:160
+#: plinth/modules/users/views.py:180
 msgid "Change Password"
-msgstr ""
+msgstr "Смяна на парола"
 
-#: plinth/modules/users/views.py:161
+#: plinth/modules/users/views.py:181
 msgid "Password changed successfully."
-msgstr ""
+msgstr "Паролата е сменена."
 
 #: plinth/modules/wireguard/__init__.py:20
 msgid "WireGuard is a fast, modern, secure VPN tunnel."
@@ -6987,7 +7087,7 @@ msgstr ""
 
 #: plinth/modules/zoph/__init__.py:58 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
+msgstr "Zoph"
 
 #: plinth/modules/zoph/__init__.py:59
 msgid "Photo Organizer"
@@ -7002,6 +7102,8 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Когато е отметнато, от мрежовия четец на потребителя ще се правят заявки към "
+"сървърите на OpenStreetMaps. Това влияе върху поверителността."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -7017,7 +7119,7 @@ msgstr ""
 
 #: plinth/network.py:29
 msgid "PPPoE"
-msgstr ""
+msgstr "PPPoE"
 
 #: plinth/network.py:30
 msgid "Generic"
@@ -7065,7 +7167,7 @@ msgstr ""
 
 #: plinth/templates/404.html:10
 msgid "404"
-msgstr ""
+msgstr "404"
 
 #: plinth/templates/404.html:13
 #, python-format
@@ -7081,7 +7183,7 @@ msgstr ""
 
 #: plinth/templates/500.html:10
 msgid "500"
-msgstr ""
+msgstr "500"
 
 #: plinth/templates/500.html:14
 #, python-format
@@ -7099,7 +7201,7 @@ msgstr ""
 #: plinth/templates/app.html:29
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
-msgstr ""
+msgstr "Услугата <em>%(service_name)s</em> не работи."
 
 #: plinth/templates/base.html:30
 #, python-format
@@ -7132,7 +7234,7 @@ msgstr "Системни"
 
 #: plinth/templates/base.html:163 plinth/templates/base.html:164
 msgid "Change password"
-msgstr ""
+msgstr "Смяна на парола"
 
 #: plinth/templates/base.html:177 plinth/templates/base.html:178
 msgid "Shut down"
@@ -7141,19 +7243,19 @@ msgstr "Изключване"
 #: plinth/templates/base.html:185 plinth/templates/base.html:186
 #: plinth/templates/base.html:213 plinth/templates/base.html:215
 msgid "Log out"
-msgstr ""
+msgstr "Изход"
 
 #: plinth/templates/base.html:195 plinth/templates/base.html:198
 msgid "Select language"
-msgstr ""
+msgstr "Избор на език"
 
 #: plinth/templates/base.html:204 plinth/templates/base.html:206
 msgid "Log in"
-msgstr ""
+msgstr "Вход"
 
 #: plinth/templates/clients-button.html:16
 msgid "Launch web client"
-msgstr ""
+msgstr "Пускане на клиента за уеб"
 
 #: plinth/templates/clients-button.html:25
 msgid "Client Apps"
@@ -7165,51 +7267,51 @@ msgstr ""
 
 #: plinth/templates/clients.html:42
 msgid "Desktop"
-msgstr ""
+msgstr "Настолни устройства"
 
 #: plinth/templates/clients.html:53
 msgid "GNU/Linux"
-msgstr ""
+msgstr "GNU/Linux"
 
 #: plinth/templates/clients.html:55
 msgid "Windows"
-msgstr ""
+msgstr "Windows"
 
 #: plinth/templates/clients.html:57
 msgid "macOS"
-msgstr ""
+msgstr "macOS"
 
 #: plinth/templates/clients.html:73
 msgid "Mobile"
-msgstr ""
+msgstr "Мобилни устройства"
 
 #: plinth/templates/clients.html:84
 msgid "Play Store"
-msgstr ""
+msgstr "Play Store"
 
 #: plinth/templates/clients.html:86
 msgid "F-Droid"
-msgstr ""
+msgstr "F-Droid"
 
 #: plinth/templates/clients.html:88
 msgid "App Store"
-msgstr ""
+msgstr "App Store"
 
 #: plinth/templates/clients.html:104
 msgid "Package"
-msgstr ""
+msgstr "Пакет"
 
 #: plinth/templates/clients.html:111
 msgid "Debian:"
-msgstr ""
+msgstr "Дебиан:"
 
 #: plinth/templates/clients.html:114
 msgid "Homebrew:"
-msgstr ""
+msgstr "Homebrew:"
 
 #: plinth/templates/clients.html:117
 msgid "RPM:"
-msgstr ""
+msgstr "RPM:"
 
 #: plinth/templates/first_setup.html:18
 #, python-format
@@ -7243,7 +7345,7 @@ msgstr ""
 
 #: plinth/templates/index.html:127
 msgid "Source Code"
-msgstr ""
+msgstr "Изходен код"
 
 #: plinth/templates/index.html:132
 msgid "Homepage"
@@ -7251,11 +7353,11 @@ msgstr "Страница"
 
 #: plinth/templates/index.html:135 plinth/templates/toolbar.html:19
 msgid "Donate"
-msgstr ""
+msgstr "Дарение"
 
 #: plinth/templates/index.html:139
 msgid "FreedomBox Foundation"
-msgstr ""
+msgstr "Фондация FreedomBox"
 
 #: plinth/templates/index.html:146
 msgid "Forum"
@@ -7263,11 +7365,11 @@ msgstr "Форум"
 
 #: plinth/templates/index.html:151
 msgid "IRC Chatroom"
-msgstr ""
+msgstr "Канал в IRC"
 
 #: plinth/templates/index.html:156
 msgid "Mailing list"
-msgstr ""
+msgstr "Пощенски списък"
 
 #: plinth/templates/internal-zone.html:11
 #, python-format

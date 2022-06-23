@@ -55,7 +55,7 @@ class TestSetupMiddleware:
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):
         """Fixture for returning middleware."""
-        return SetupMiddleware()
+        return SetupMiddleware(True)
 
     @staticmethod
     @patch('django.urls.reverse', return_value='users:login')
@@ -187,7 +187,7 @@ class TestAdminMiddleware:
     @pytest.fixture(name='middleware')
     def fixture_middleware(load_cfg):
         """Fixture for returning middleware."""
-        return AdminRequiredMiddleware()
+        return AdminRequiredMiddleware(True)
 
     @staticmethod
     @pytest.fixture(name='web_request')

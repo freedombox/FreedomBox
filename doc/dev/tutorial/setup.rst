@@ -24,10 +24,7 @@ installation:
           'rpc-whitelist-enabled': False,
           'rpc-authentication-required': False
       }
-      helper.call('post', actions.superuser_run, 'transmission',
-                  ['merge-configuration'],
-                  input=json.dumps(new_configuration).encode())
-
+      helper.call('post', privileged.merge_configuration, new_configuration)
       helper.call('post', app.enable)
 
 The first time this app's view is accessed, FreedomBox shows an app installation

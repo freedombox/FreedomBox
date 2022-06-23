@@ -15,13 +15,16 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnTimeLimitedConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
+from plinth.utils import format_lazy
 
 from . import manifest
 
 _description = [
     _('Janus is a lightweight WebRTC server.'),
     _('A simple video conference room is included.'),
-    _('A STUN/TURN server (such as Coturn) is required to use Janus.'),
+    format_lazy(
+        _('<a href="{coturn_url}">Coturn</a> is required to '
+          'use Janus.'), coturn_url=reverse_lazy('coturn:index')),
 ]
 
 app = None

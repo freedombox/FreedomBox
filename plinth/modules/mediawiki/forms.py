@@ -6,6 +6,7 @@ FreedomBox app for configuring MediaWiki.
 import pathlib
 
 from django import forms
+from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
 
@@ -34,6 +35,11 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
             'Used by MediaWiki to generate URLs that point to the wiki '
             'such as in footer, feeds and emails. Examples: '
             '"myfreedombox.example.org" or "example.onion".'))
+
+    site_name = forms.CharField(
+        label=_('Site Name'), required=False,
+        help_text=_('Name of the site as displayed throughout the wiki.'),
+        validators=[validators.RegexValidator('[$"]', inverse_match=True)])
 
     enable_public_registrations = forms.BooleanField(
         label=_('Enable public registrations'), required=False,

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 21:07-0400\n"
-"PO-Revision-Date: 2022-05-11 16:16+0000\n"
-"Last-Translator: John Doe <thraex@numericable.fr>\n"
+"POT-Creation-Date: 2022-06-20 20:21-0400\n"
+"PO-Revision-Date: 2022-06-17 19:15+0000\n"
+"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1030,12 +1030,12 @@ msgstr "Actualiser l’adresse IP et les domaines"
 
 #: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:85 plinth/modules/email/views.py:45
+#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
-#: plinth/modules/transmission/views.py:47 plinth/modules/ttrss/views.py:26
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
 msgid "Configuration updated"
 msgstr "Configuration mise à jour"
@@ -1488,7 +1488,7 @@ msgstr ""
 "du service."
 
 #: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:67
+#: plinth/modules/transmission/__init__.py:64
 msgid "Download files using BitTorrent applications"
 msgstr "Téléchargement de fichiers avec les applications BitTorrent"
 
@@ -1497,7 +1497,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:70
 msgid "BitTorrent Web Client"
 msgstr "Client web pour BitTorrent"
 
@@ -1820,7 +1820,7 @@ msgstr "État"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:33
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "Domaine"
 
@@ -1901,11 +1901,23 @@ msgstr "ejabberd"
 msgid "Chat Server"
 msgstr "Serveur de discussion"
 
-#: plinth/modules/ejabberd/forms.py:18
+#: plinth/modules/ejabberd/forms.py:19
+#, fuzzy
+#| msgid "Domain Names"
+msgid "Domain names"
+msgstr "Noms de domaine"
+
+#: plinth/modules/ejabberd/forms.py:21
+msgid ""
+"Domains to be used by ejabberd. Note that user accounts are unique for each "
+"domain, and migrating users to a new domain name is not yet implemented."
+msgstr ""
+
+#: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
 msgstr "Activer la gestion des archives de messages"
 
-#: plinth/modules/ejabberd/forms.py:20
+#: plinth/modules/ejabberd/forms.py:28
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -1919,11 +1931,11 @@ msgstr ""
 "tchat multiutilisateurs. Le choix de la conservation de l’historique en "
 "texte clair ou chiffré dépend de la configuration du client."
 
-#: plinth/modules/ejabberd/forms.py:27 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "Gérer automatiquement la configuration des appels audio/vidéo"
 
-#: plinth/modules/ejabberd/forms.py:29
+#: plinth/modules/ejabberd/forms.py:37
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -1934,19 +1946,19 @@ msgstr ""
 "serveur STUN/TURN pour ejabberd. Désactivez cette option si vous souhaitez "
 "utiliser un serveur STUN/TURN différent."
 
-#: plinth/modules/ejabberd/forms.py:36 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "URI du serveur STUN/TURN"
 
-#: plinth/modules/ejabberd/forms.py:38 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "Liste des URI publiques du serveur STUN/TURN, une par ligne."
 
-#: plinth/modules/ejabberd/forms.py:42 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "Secret partagé pour l’authentification"
 
-#: plinth/modules/ejabberd/forms.py:43 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 "Secret partagé utilisé pour générer les mots de passe pour le serveur TURN."
@@ -3062,31 +3074,33 @@ msgstr ""
 "Lancez Gobby, sélectionnez « Connect to Server » et saisissez le nom de "
 "domaine de la {box_name}."
 
-#: plinth/modules/janus/__init__.py:22
-msgid "Janus is a lightweight WebRTC server."
-msgstr ""
-
 #: plinth/modules/janus/__init__.py:23
-msgid "A simple video conference room is included."
-msgstr ""
+msgid "Janus is a lightweight WebRTC server."
+msgstr "Janus est un serveur léger de communication en temps réel WebRTC."
 
 #: plinth/modules/janus/__init__.py:24
-msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
-msgstr ""
+msgid "A simple video conference room is included."
+msgstr "Une salle de visioconférence simple est incluse."
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:26
+#, fuzzy, python-brace-format
+#| msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
+msgstr ""
+"Un serveur STUN/TURN (tel que Coturn) est requis pour le fonctionnement de "
+"Janus."
+
+#: plinth/modules/janus/__init__.py:44
 msgid "Janus"
-msgstr ""
+msgstr "Janus"
 
-#: plinth/modules/janus/__init__.py:43
-#, fuzzy
-#| msgid "Web Server"
+#: plinth/modules/janus/__init__.py:46
 msgid "WebRTC server"
-msgstr "Serveur web"
+msgstr "Serveur WebRTC"
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
-msgstr ""
+msgstr "Salle de visio Janus"
 
 #: plinth/modules/janus/templates/janus_video_room.html:205
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
@@ -3431,11 +3445,11 @@ msgstr "MediaWiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:25
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "Mot de passe administrateur"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3447,24 +3461,31 @@ msgstr ""
 "requise est de <strong>10 caractères</strong>. Laissez ce champ vide pour "
 "conserver le mot de passe actuel."
 
-#: plinth/modules/mediawiki/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails."
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
 "\"."
 msgstr ""
 "Utilisé par MediaWiki pour engendrer des URL qui pointent vers le wiki comme "
-"dans les pieds de pages, fils et courriels."
+"dans les pieds de pages, fils et courriels. Exemples : « mafreedombox."
+"exemple.org » ou « exemple.onion »."
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:40
+#, fuzzy
+#| msgid "Kite name"
+msgid "Site Name"
+msgstr "Nom Kite"
+
+#: plinth/modules/mediawiki/forms.py:41
+msgid "Name of the site as displayed throughout the wiki."
+msgstr ""
+
+#: plinth/modules/mediawiki/forms.py:45
 msgid "Enable public registrations"
 msgstr "Activer les inscriptions publiques"
 
-#: plinth/modules/mediawiki/forms.py:40
+#: plinth/modules/mediawiki/forms.py:46
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3472,11 +3493,11 @@ msgstr ""
 "Permet à n’importe qui depuis Internet de créer un compte sur votre instance "
 "MediaWiki."
 
-#: plinth/modules/mediawiki/forms.py:44
+#: plinth/modules/mediawiki/forms.py:50
 msgid "Enable private mode"
 msgstr "Activer le mode privé"
 
-#: plinth/modules/mediawiki/forms.py:45
+#: plinth/modules/mediawiki/forms.py:51
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3485,11 +3506,11 @@ msgstr ""
 "lire/écrire sur ce wiki. Les inscriptions publiques sont également "
 "désactivées."
 
-#: plinth/modules/mediawiki/forms.py:50
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Default Skin"
 msgstr "Thème par défaut"
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3497,41 +3518,45 @@ msgstr ""
 "Choisissez un thème par défaut pour votre installation de MediaWiki. Les "
 "utilisateurs peuvent sélectionner leur thème préféré."
 
-#: plinth/modules/mediawiki/views.py:51
+#: plinth/modules/mediawiki/views.py:52
 msgid "Password updated"
 msgstr "Mot de passe mis à jour"
 
-#: plinth/modules/mediawiki/views.py:56
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
 "Échec de la mise à jour du mot passe. Veuillez utiliser un mot de passe plus "
 "fort."
 
-#: plinth/modules/mediawiki/views.py:66
+#: plinth/modules/mediawiki/views.py:67
 msgid "Public registrations enabled"
 msgstr "Inscriptions publiques activées"
 
-#: plinth/modules/mediawiki/views.py:75
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "Inscriptions publiques désactivées"
 
-#: plinth/modules/mediawiki/views.py:80
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "Mode privé activé"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:88
 msgid "Private mode disabled"
 msgstr "Mode privé désactivé"
 
-#: plinth/modules/mediawiki/views.py:94
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "Thème par défaut modifié"
 
-#: plinth/modules/mediawiki/views.py:98
-#, fuzzy
-#| msgid "Domain name set"
+#: plinth/modules/mediawiki/views.py:99
 msgid "Domain name updated"
-msgstr "Nom de domaine configuré"
+msgstr "Nom de domaine modifié"
+
+#: plinth/modules/mediawiki/views.py:103
+#, fuzzy
+#| msgid "Domain name updated"
+msgid "Site name updated"
+msgstr "Nom de domaine modifié"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -3715,11 +3740,27 @@ msgstr ""
 "actuel. Le mot de passe du super utilisateur peut servir à gérer les "
 "permissions dans Mumble."
 
-#: plinth/modules/mumble/forms.py:39
+#: plinth/modules/mumble/forms.py:40
+msgid "Set a password to join the server"
+msgstr ""
+
+#: plinth/modules/mumble/forms.py:42
+#, fuzzy
+#| msgid ""
+#| "Set a new upload password for Coquelicot. Leave this field blank to keep "
+#| "the current password."
+msgid ""
+"Set a password that is required to join the server. Leave empty to use the "
+"current password."
+msgstr ""
+"Définir un nouveau mot de passe de téléversement pour Coquelicot. Laissez ce "
+"champ vide pour conserver le mot de passe actuel."
+
+#: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
 msgstr ""
 
-#: plinth/modules/mumble/forms.py:43
+#: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
@@ -3737,7 +3778,13 @@ msgstr "Mumla"
 msgid "SuperUser password successfully updated."
 msgstr "Le mot de passe du super utilisateur a été mis à jour."
 
-#: plinth/modules/mumble/views.py:45
+#: plinth/modules/mumble/views.py:46
+#, fuzzy
+#| msgid "Upload password updated"
+msgid "Join password changed"
+msgstr "Le mot de passe de téléversement a été mis à jour"
+
+#: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
 msgstr ""
 
@@ -7026,12 +7073,12 @@ msgstr "Ports"
 msgid "Setting unchanged"
 msgstr "Paramètre inchangé"
 
-#: plinth/modules/transmission/__init__.py:26
+#: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr ""
 "Transmission est un client BitTorrent avec une interface utilisateur web."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:24
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -7039,11 +7086,11 @@ msgstr ""
 "BitTorrent est un protocole de partage de fichiers de pair à pair. Notez que "
 "l’utilisation de BitTorrent n’est pas anonyme."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:26
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Veuillez ne pas changer le port par défaut du démon de Transmission."
 
-#: plinth/modules/transmission/__init__.py:31
+#: plinth/modules/transmission/__init__.py:28
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
@@ -7052,7 +7099,7 @@ msgstr ""
 "Comparé à <a href=\"{deluge_url}\">Deluge</a>, Transmission est plus simple "
 "et léger mais moins personnalisable."
 
-#: plinth/modules/transmission/__init__.py:35
+#: plinth/modules/transmission/__init__.py:32
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -7061,7 +7108,7 @@ msgstr ""
 "L’accès est autorisé à tout <a href=\"{users_url}\">utilisateur</a> faisant "
 "partie du groupe bit-torrent sur la {box_name}."
 
-#: plinth/modules/transmission/__init__.py:39
+#: plinth/modules/transmission/__init__.py:36
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
@@ -7071,7 +7118,7 @@ msgstr ""
 "que répertoire de téléchargement par défaut depuis le menu déroulant ci-"
 "dessous."
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:40
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -7080,7 +7127,7 @@ msgstr ""
 "Une fois qu'un téléchargement est terminé, vous pouvez également accéder à "
 "vos fichiers au moyen de l'application <a href=\"{sharing_url}\">Partage</a>."
 
-#: plinth/modules/transmission/__init__.py:71
+#: plinth/modules/transmission/__init__.py:68
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
@@ -7653,20 +7700,20 @@ msgstr "Utilisateur %(username)s mis à jour."
 msgid "Edit User"
 msgstr "Modification de l’utilisateur"
 
-#: plinth/modules/users/views.py:144
+#: plinth/modules/users/views.py:146
 #, python-brace-format
 msgid "User {user} deleted."
 msgstr "Utilisateur {user} supprimé."
 
-#: plinth/modules/users/views.py:151
+#: plinth/modules/users/views.py:153
 msgid "Deleting LDAP user failed."
 msgstr "La suppression de l’utilisateur LDAP a échoué."
 
-#: plinth/modules/users/views.py:160
+#: plinth/modules/users/views.py:180
 msgid "Change Password"
 msgstr "Changer Mot de Passe"
 
-#: plinth/modules/users/views.py:161
+#: plinth/modules/users/views.py:181
 msgid "Password changed successfully."
 msgstr "Le mot de passe a été changé."
 
@@ -9277,13 +9324,6 @@ msgstr "Gujarati"
 #~ msgid "Upload Password"
 #~ msgstr "Mot de passe de téléversement"
 
-#~ msgid ""
-#~ "Set a new upload password for Coquelicot. Leave this field blank to keep "
-#~ "the current password."
-#~ msgstr ""
-#~ "Définir un nouveau mot de passe de téléversement pour Coquelicot. Laissez "
-#~ "ce champ vide pour conserver le mot de passe actuel."
-
 #~ msgid "Maximum File Size (in MiB)"
 #~ msgstr "Taille de fichier maximale (en Mio)"
 
@@ -9295,9 +9335,6 @@ msgstr "Gujarati"
 
 #~ msgid "coquelicot"
 #~ msgstr "coquelicot"
-
-#~ msgid "Upload password updated"
-#~ msgstr "Le mot de passe de téléversement a été mis à jour"
 
 #~ msgid "Failed to update upload password"
 #~ msgstr "Échec de la mise à jour du mot de passe de téléversement"

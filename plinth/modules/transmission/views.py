@@ -3,15 +3,15 @@
 FreedomBox app for configuring Transmission Server.
 """
 
-import json
 import logging
 import socket
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions, views
+from plinth import views
 
+from . import privileged
 from .forms import TransmissionForm
 
 logger = logging.getLogger(__name__)
@@ -25,9 +25,7 @@ class TransmissionAppView(views.AppView):
     def get_initial(self):
         """Get the current settings from Transmission server."""
         status = super().get_initial()
-        configuration = actions.superuser_run('transmission',
-                                              ['get-configuration'])
-        configuration = json.loads(configuration)
+        configuration = privileged.get_configuration()
         status['storage_path'] = configuration['download-dir']
         status['hostname'] = socket.gethostname()
 
@@ -41,9 +39,7 @@ class TransmissionAppView(views.AppView):
             new_configuration = {
                 'download-dir': new_status['storage_path'],
             }
-
-            actions.superuser_run('transmission', ['merge-configuration'],
-                                  input=json.dumps(new_configuration).encode())
+            privileged.merge_configuration(new_configuration)
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

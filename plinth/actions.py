@@ -75,11 +75,16 @@ Actions run commands with this contract (version 1.1):
 
 """
 
+import functools
+import importlib
+import inspect
+import json
 import logging
 import os
 import re
 import shlex
 import subprocess
+import sys
 
 from plinth import cfg
 from plinth.errors import ActionError
@@ -236,3 +241,73 @@ def _log_command(cmd):
     cmd = ' '.join([shlex.quote(part) for part in cmd])
 
     logger.info('%s%s %s', user, prompt, cmd)
+
+
+def privileged(func):
+    """Mark a method as allowed to be run as privileged method.
+
+    This decorator is to mark any method as needing to be executed with
+    superuser privileges. This is necessary because the primary FreedomBox
+    service daemon runs as a regular user and has no special privileges. When
+    performing system operations, FreedomBox service will either communicate
+    with privileged daemons such as NetworkManager and systemd, or spawns a
+    separate process with higher privileges. When spawning a separate process
+    all the action parameters need to serialized, communicated to the process
+    and then de-serialized inside the process. The return value also need to
+    undergo such serialization and de-serialization. This decorator makes this
+    task simpler.
+
+    A call to a decorated method will be serialized into a sudo call (or later
+    into a D-Bus call). The method arguments are turned to JSON and method is
+    called with superuser privileges. As arguments are de-serialized, they are
+    verified for type before the actual call as superuser. Return values are
+    serialized and returned where they are de-serialized. Exceptions are also
+    serialized and de-serialized. The decorator wrapper code will either return
+    the value or raise exception.
+
+    For a method to be decorated, the method must have type annotations for all
+    of its parameters and should not use keyword-only arguments. It must also
+    be in a module named privileged.py directly under the application similar
+    to models.py, views.py and urls.py. Currently supported types are bool,
+    int, float, str, dict/Dict, list/List, Optional and Union.
+
+    """
+    setattr(func, '_privileged', True)
+
+    _check_privileged_action_arguments(func)
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        module_name = _get_privileged_action_module_name(func)
+        action_name = func.__name__
+        json_args = json.dumps({'args': args, 'kwargs': kwargs})
+        return_value = superuser_run('actions', [module_name, action_name],
+                                     input=json_args.encode())
+        return_value = json.loads(return_value)
+        if return_value['result'] == 'success':
+            return return_value['return']
+
+        module = importlib.import_module(return_value['exception']['module'])
+        exception = getattr(module, return_value['exception']['name'])
+        raise exception(*return_value['exception']['args'])
+
+    return wrapper
+
+
+def _check_privileged_action_arguments(func):
+    """Check that a privileged action has well defined types."""
+    argspec = inspect.getfullargspec(func)
+    if (argspec.varargs or argspec.varkw or argspec.kwonlyargs
+            or argspec.kwonlydefaults):
+        raise SyntaxError('Actions must not have variable args')
+
+    for arg in argspec.args:
+        if arg not in argspec.annotations:
+            raise SyntaxError('All arguments must be annotated')
+
+
+def _get_privileged_action_module_name(func):
+    """Figure out the module name of a privileged action."""
+    module_name = func.__module__
+    module = sys.modules[module_name]
+    return module.__package__.rpartition('.')[2]

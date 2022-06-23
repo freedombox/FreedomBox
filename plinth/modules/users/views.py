@@ -133,14 +133,16 @@ class UserDelete(ContextMixin, DeleteView):
     success_url = reverse_lazy('users:index')
     title = gettext_lazy('Delete User')
 
-    def delete(self, *args, **kwargs):
-        """Set the success message of deleting the user.
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        The SuccessMessageMixin doesn't work with the DeleteView on Django1.7,
-        so set the success message manually here.
-        """
-        output = super(UserDelete, self).delete(*args, **kwargs)
+        # Avoid a warning with Django 4.0 that delete member should not be
+        # overridden. Remove this line and _delete() after Django 4.0 reaches
+        # Debian Stable.
+        self.delete = self._delete
 
+    def _delete_from_ldap(self):
+        """Remove user from LDAP and show a success/error message."""
         message = _('User {user} deleted.').format(user=self.kwargs['slug'])
         messages.success(self.request, message)
 
@@ -150,7 +152,25 @@ class UserDelete(ContextMixin, DeleteView):
         except ActionError:
             messages.error(self.request, _('Deleting LDAP user failed.'))
 
+    def _delete(self, *args, **kwargs):
+        """Set the success message of deleting the user.
+
+        The SuccessMessageMixin doesn't work with the DeleteView on Django1.7,
+        so set the success message manually here.
+        """
+        output = super().delete(*args, **kwargs)
+        self._delete_from_ldap()
         return output
+
+    def form_valid(self, form):
+        """Perform additional operations after delete.
+
+        Since Django 4.0, DeleteView inherits form_view and a call to delete()
+        is not made.
+        """
+        response = super().form_valid(form)  # NOQA, pylint: disable=no-member
+        self._delete_from_ldap()
+        return response
 
 
 class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):

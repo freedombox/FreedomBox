@@ -7,6 +7,11 @@ from django.conf import settings
 from django.utils import translation
 
 
+def _should_use_sessions(request):
+    return hasattr(request, 'session') and hasattr(translation,
+                                                   'LANGUAGE_SESSION_KEY')
+
+
 def get_language_from_request(request):
     """Get the language in the session or as separate cookie.
 
@@ -14,7 +19,7 @@ def get_language_from_request(request):
     very narrow cases.
 
     """
-    if hasattr(request, 'session'):
+    if _should_use_sessions(request):
         language_code = request.session.get(translation.LANGUAGE_SESSION_KEY)
         if language_code:
             return language_code
@@ -31,7 +36,8 @@ def set_language(request, response, language_code):
 
     """
     if not language_code:
-        if hasattr(request, 'session'):
+
+        if _should_use_sessions(request):
             try:
                 del request.session[translation.LANGUAGE_SESSION_KEY]
             except KeyError:
@@ -46,7 +52,7 @@ def set_language(request, response, language_code):
         return
 
     translation.activate(language_code)
-    if hasattr(request, 'session'):
+    if _should_use_sessions(request):
         request.session[translation.LANGUAGE_SESSION_KEY] = language_code
 
     response.set_cookie(

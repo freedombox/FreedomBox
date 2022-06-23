@@ -66,3 +66,11 @@ def test_server_url():
     new_domain = 'mydomain.freedombox.rocks'
     mediawiki.set_server_url(new_domain)
     assert mediawiki.get_server_url() == new_domain
+
+
+def test_site_name():
+    """Test getting and setting $wgSitename."""
+    assert mediawiki.get_site_name() == 'Wiki'
+    new_site_name = 'My MediaWiki'
+    mediawiki.set_site_name(new_site_name)
+    assert mediawiki.get_site_name() == new_site_name

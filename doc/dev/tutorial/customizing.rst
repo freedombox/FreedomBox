@@ -114,9 +114,7 @@ the user submits it. Let us implement that in ``views.py``.
       def get_initial(self):
           """Get the current settings from Transmission server."""
           status = super().get_initial()
-          configuration = actions.superuser_run('transmission',
-                                                ['get-configuration'])
-          configuration = json.loads(configuration)
+          configuration = privileged.get_configuration()
           status['storage_path'] = configuration['download-dir']
           status['hostname'] = socket.gethostname()
 
@@ -130,9 +128,7 @@ the user submits it. Let us implement that in ``views.py``.
               new_configuration = {
                   'download-dir': new_status['storage_path'],
               }
-
-              actions.superuser_run('transmission', ['merge-configuration'],
-                                    input=json.dumps(new_configuration).encode())
+              privileged.merge_configuration(new_configuration)
               messages.success(self.request, 'Configuration updated')
 
           return super().form_valid(form)
@@ -150,85 +146,51 @@ the action was successful or that nothing happened. We use the Django messaging
 framework to accomplish this. See :doc:`Django messaging framework
 <django:ref/contrib/messages>` for more information.
 
-Writing actions
-^^^^^^^^^^^^^^^
+Writing privileged actions
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The actual work of performing the configuration change is carried out by an
-*action*. Actions are independent scripts that run with higher privileges
-required to perform a task. They are placed in a separate directory and invoked
-as scripts via sudo. For our application we need to write an action that can
-enable and disable the web configuration. We will do this by creating a file
-``actions/transmission``.
+The actual work of performing the configuration change is carried out by
+privileged actions. These actions are independent scripts that run with higher
+privileges required to perform a task. They are placed in a separate python
+module 'privileged.py' and invoked as regular methods. For our application we
+need to write two privileged actions that can read and write the configuration
+for transmission daemon. We will do this by creating a file ``privileged.py``.
 
 .. code-block:: python3
-  :caption: ``actions/transmission``
+  :caption: ``privileged.py``
 
-  import argparse
   import json
-  import sys
+  import pathlib
+  from typing import Union
 
   from plinth import action_utils
+  from plinth.actions import privileged
 
-  TRANSMISSION_CONFIG = '/etc/transmission-daemon/settings.json'
-
-
-  def parse_arguments():
-      """Return parsed command line arguments as dictionary."""
-      parser = argparse.ArgumentParser()
-      subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-      subparsers.add_parser('get-configuration',
-                            help='Return the current configuration')
-      subparsers.add_parser(
-          'merge-configuration',
-          help='Merge JSON configuration from stdin with existing')
-
-      subparsers.required = True
-      return parser.parse_args()
+  _transmission_config = pathlib.Path('/etc/transmission-daemon/settings.json')
 
 
-  def subcommand_get_configuration(_):
+  @privileged
+  def get_configuration() -> dict[str, str]:
       """Return the current configuration in JSON format."""
-      configuration = open(TRANSMISSION_CONFIG, 'r').read()
-      print(configuration)
+      return json.loads(_transmission_config.read_text(encoding='utf-8'))
 
 
-  def subcommand_merge_configuration(arguments):
+  @privileged
+  def merge_configuration(configuration: dict[str, Union[str, bool]]) -> None:
       """Merge given JSON configuration with existing configuration."""
-      configuration = sys.stdin.read()
-      configuration = json.loads(configuration)
-
-      current_configuration = open(TRANSMISSION_CONFIG, 'r').read()
+      current_configuration = _transmission_config.read_bytes()
       current_configuration = json.loads(current_configuration)
 
       new_configuration = current_configuration
       new_configuration.update(configuration)
       new_configuration = json.dumps(new_configuration, indent=4, sort_keys=True)
 
-      open(TRANSMISSION_CONFIG, 'w').write(new_configuration)
+      _transmission_config.write_text(new_configuration, encoding='utf-8')
       action_utils.service_reload('transmission-daemon')
 
-
-  def main():
-      """Parse arguments and perform all duties."""
-      arguments = parse_arguments()
-
-      subcommand = arguments.subcommand.replace('-', '_')
-      subcommand_method = globals()['subcommand_' + subcommand]
-      subcommand_method(arguments)
-
-
-  if __name__ == '__main__':
-      main()
-
-This is a simple Python3 program that parses command line arguments. While
-Python3 is preferred, it can be written in other languages also. It may use
-various helper utilities provided by the FreedomBox framework in
-:obj:`plinth.action_utils` to easily perform it's duties.
-
-This script is automatically installed to ``/usr/share/plinth/actions`` by
-FreedomBox's installation script ``setup.py``. Only from here will there is a
-possibility of running the script under ``sudo``. If you are writing an
-application that resides indenpendently of FreedomBox's source code, your app's
-``setup.py`` script will need to take care of copying the file to this target
-location.
+This is a simple Python3 module but it runs in a separate process with superuser
+privileges due to the :meth:`plinth.actions.privileged` decorator. All such
+methods must have full type annotations for the method parameters. Further, the
+parameters and return value must be JSON serializable. It may use various helper
+utilities provided by the FreedomBox framework in :obj:`plinth.action_utils` to
+easily perform it's duties.

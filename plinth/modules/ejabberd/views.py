@@ -24,6 +24,7 @@ class EjabberdAppView(AppView):
         """Initial data to fill in the form."""
         config, managed = ejabberd.get_turn_configuration()
         return super().get_initial() | {
+            'domain_names': ejabberd.get_domains(),
             'MAM_enabled': self.is_MAM_enabled(),
             'enable_managed_turn': managed,
             'turn_uris': '\n'.join(config.uris),
@@ -36,6 +37,11 @@ class EjabberdAppView(AppView):
         domains = ejabberd.get_domains()
         context['domainname'] = domains[0] if domains else None
         return context
+
+    @staticmethod
+    def _handle_domain_names_configuration(new_config):
+        """Update list of domain names in configuration."""
+        ejabberd.set_domains(new_config['domain_names'])
 
     @staticmethod
     def _handle_turn_configuration(old_config, new_config):
@@ -72,6 +78,11 @@ class EjabberdAppView(AppView):
             return old_config[prop] != new_config[prop]
 
         is_changed = False
+
+        if changed('domain_names'):
+            self._handle_domain_names_configuration(new_config)
+            is_changed = True
+
         if changed('MAM_enabled'):
             self._handle_MAM_configuration(old_config, new_config)
             is_changed = True
