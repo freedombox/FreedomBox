@@ -34,7 +34,8 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
         label=_('Domain'), required=False, help_text=_(
             'Used by MediaWiki to generate URLs that point to the wiki '
             'such as in footer, feeds and emails. Examples: '
-            '"myfreedombox.example.org" or "example.onion".'))
+            '"myfreedombox.example.org" or "example.onion".'),
+        validators=[validators.RegexValidator('[$"]', inverse_match=True)])
 
     site_name = forms.CharField(
         label=_('Site Name'), required=False,
