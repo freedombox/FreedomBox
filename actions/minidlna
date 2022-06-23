@@ -59,7 +59,7 @@ def _undo_old_configuration_changes():
         aug.save()
 
 
-def subcommand_setup(arguments):
+def subcommand_setup(_):
     """
     Increase inotify watches per folder to allow minidlna to
     monitor changes in large media-dirs.
@@ -72,7 +72,7 @@ def subcommand_setup(arguments):
     subprocess.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
 
 
-def subcommand_get_media_dir(arguments):
+def subcommand_get_media_dir(_):
     """Retrieve media directory from minidlna.conf"""
     line = grep('^media_dir=', CONFIG_PATH)
 
