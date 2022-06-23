@@ -104,7 +104,6 @@ def subcommand_setup(_):
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
     include_custom_config()
-    _fix_non_private_mode()
 
 
 def include_custom_config():
@@ -132,21 +131,6 @@ def include_custom_config():
 
     with open(LOCAL_SETTINGS_CONF, 'w') as conf_file:
         conf_file.writelines(lines)
-
-
-def _fix_non_private_mode():
-    """Drop the line that allows editing by anonymous users.
-
-    Remove this fix after the release of Debian 11.
-
-    """
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-
-    with open(CONF_FILE, 'w') as conf_file:
-        for line in lines:
-            if not line.startswith("$wgGroupPermissions['*']['edit']"):
-                conf_file.write(line)
 
 
 def subcommand_change_password(arguments):
