@@ -26,7 +26,8 @@ _description = [
       'obnoxious Internet junk. '),
     format_lazy(
         _('You can use Privoxy by modifying your browser proxy settings to '
-          'your {box_name} hostname (or IP address) with port 8118. '
+          'your {box_name} hostname (or IP address) with port 8118. Only '
+          'connections from local network IP addresses are permitted. '
           'While using Privoxy, you can see its configuration details and '
           'documentation at '
           '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
@@ -42,7 +43,7 @@ class PrivoxyApp(app_module.App):
 
     app_id = 'privoxy'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -98,6 +99,7 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
     app.setup(old_version)
+    helper.call('post', actions.superuser_run, 'privoxy', ['setup'])
     helper.call('post', app.enable)
 
 
