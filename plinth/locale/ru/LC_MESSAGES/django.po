@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-20 20:21-0400\n"
-"PO-Revision-Date: 2022-06-13 12:19+0000\n"
+"PO-Revision-Date: 2022-06-29 21:17+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1864,8 +1864,6 @@ msgid "Chat Server"
 msgstr "Чат-сервер"
 
 #: plinth/modules/ejabberd/forms.py:19
-#, fuzzy
-#| msgid "Domain Names"
 msgid "Domain names"
 msgstr "Доменные имена"
 
@@ -1874,6 +1872,9 @@ msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
+"Домены, которые будут использоваться ejabberd. Обратите внимание, что "
+"учетные записи пользователей уникальны для каждого домена, и перенос "
+"пользователей на новое доменное имя пока не реализовано."
 
 #: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
@@ -3027,10 +3028,9 @@ msgid "A simple video conference room is included."
 msgstr "Включает в себя простую комнату видеоконференций."
 
 #: plinth/modules/janus/__init__.py:26
-#, fuzzy, python-brace-format
-#| msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
-msgstr "Для использования Janus требуется сервер STUN/TURN (например, Coturn)."
+msgstr "<a href=\"{coturn_url}\">Coturn</a> необходим для использования Janus."
 
 #: plinth/modules/janus/__init__.py:44
 msgid "Janus"
@@ -3398,7 +3398,9 @@ msgid ""
 "password."
 msgstr ""
 "Установить новый пароль для учетной записи администратора MediaWiki (admin). "
-"Оставьте это поле пустым, чтобы сохранить текущий пароль."
+"Пароль не может быть общим, а минимальная требуемая длина составляет "
+"<strong>10 символов</strong>. Оставьте это поле пустым, чтобы сохранить "
+"текущий пароль."
 
 #: plinth/modules/mediawiki/forms.py:35
 msgid ""
@@ -3411,14 +3413,12 @@ msgstr ""
 "\"myfreedombox.example.org\" или \"example.onion\"."
 
 #: plinth/modules/mediawiki/forms.py:40
-#, fuzzy
-#| msgid "Kite name"
 msgid "Site Name"
-msgstr "Имя Kite"
+msgstr "Название сайта"
 
 #: plinth/modules/mediawiki/forms.py:41
 msgid "Name of the site as displayed throughout the wiki."
-msgstr ""
+msgstr "Название сайта, отображаемое в вики."
 
 #: plinth/modules/mediawiki/forms.py:45
 msgid "Enable public registrations"
@@ -3490,10 +3490,8 @@ msgid "Domain name updated"
 msgstr "Доменное имя обновлено"
 
 #: plinth/modules/mediawiki/views.py:103
-#, fuzzy
-#| msgid "Domain name updated"
 msgid "Site name updated"
-msgstr "Доменное имя обновлено"
+msgstr "Название сайта обновлено"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -3675,7 +3673,7 @@ msgstr ""
 
 #: plinth/modules/mumble/forms.py:40
 msgid "Set a password to join the server"
-msgstr ""
+msgstr "Установите пароль для подключения к серверу"
 
 #: plinth/modules/mumble/forms.py:42
 #, fuzzy
@@ -3686,8 +3684,8 @@ msgid ""
 "Set a password that is required to join the server. Leave empty to use the "
 "current password."
 msgstr ""
-"Установить новый пароль для Coquelicot. Оставьте это поле пустым, чтобы "
-"сохранить текущий пароль."
+"Установить пароль для подключения к серверу. Оставьте пустым, чтобы "
+"использовать текущий пароль."
 
 #: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
@@ -3714,10 +3712,8 @@ msgid "SuperUser password successfully updated."
 msgstr "Пароль суперпользователя успешно обновлён."
 
 #: plinth/modules/mumble/views.py:46
-#, fuzzy
-#| msgid "Upload password updated"
 msgid "Join password changed"
-msgstr "Пароль загрузки обновлен"
+msgstr "Пароль для подключения обновлён"
 
 #: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
