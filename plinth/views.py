@@ -33,7 +33,7 @@ REDIRECT_FIELD_NAME = 'next'
 def is_safe_url(url):
     """Check if the URL is safe to redirect to.
 
-    Based on Django internal utility.
+    Based on Django internal utility removed in Django 4.0.
 
     """
     if url is not None:
