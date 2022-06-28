@@ -203,6 +203,17 @@ def submit(browser, element=None, form_class=None, expected_url=None):
             browser.find_by_css('input[type=submit]').click()
 
 
+def set_app_form_value(browser, app_id, element_id, value):
+    """Change a value in the form and submit."""
+    nav_to_module(browser, app_id)
+    original_url = browser.url
+    browser.find_by_id(element_id).fill(value)
+    submit(browser, form_class='form-configuration')
+    # Check that there are no errors
+    assert browser.url == original_url
+    assert not browser.find_by_css('.alert-danger')
+
+
 def change_checkbox_status(browser, app_name, checkbox_id,
                            change_status_to='enabled'):
     """Change checkbox status."""

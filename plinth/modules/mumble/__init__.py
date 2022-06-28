@@ -8,7 +8,6 @@ import pathlib
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -20,7 +19,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import Version
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Mumble is an open source, low-latency, encrypted, high quality '
@@ -98,7 +97,7 @@ class MumbleApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'mumble', ['setup'])
+    helper.call('post', privileged.setup)
     if not old_version:
         helper.call('post', app.enable)
 
@@ -116,7 +115,7 @@ def force_upgrade(helper, packages):
         return False
 
     helper.install(['mumble-server'], force_configuration='new')
-    helper.call('post', actions.superuser_run, 'mumble', ['setup'])
+    helper.call('post', privileged.setup)
     return True
 
 
@@ -126,18 +125,12 @@ def get_available_domains():
             if domain.domain_type.can_have_certificate)
 
 
-def set_domain(domain):
-    """Set the TLS domain by writing a file to data directory."""
-    if domain:
-        actions.superuser_run('mumble', ['set-domain', domain])
-
-
 def get_domain():
     """Read TLS domain from config file select first available if none."""
-    domain = actions.superuser_run('mumble', ['get-domain']).strip()
+    domain = privileged.get_domain()
     if not domain:
         domain = next(get_available_domains(), None)
-        set_domain(domain)
+        privileged.set_domain(domain)
 
     return domain
 
@@ -152,8 +145,3 @@ def get_domains():
         return [domain]
 
     return []
-
-
-def get_root_channel_name():
-    """Return the root channel name."""
-    return actions.superuser_run('mumble', ['get-root-channel-name'])

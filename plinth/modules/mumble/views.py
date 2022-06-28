@@ -1,11 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Views for mumble app.
+"""
+
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth.modules import mumble
 from plinth.modules.mumble.forms import MumbleForm
 from plinth.views import AppView
+
+from . import privileged
 
 
 class MumbleAppView(AppView):
@@ -16,38 +21,33 @@ class MumbleAppView(AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial['domain'] = mumble.get_domain()
-        initial['root_channel_name'] = mumble.get_root_channel_name()
+        initial['root_channel_name'] = privileged.get_root_channel_name()
         return initial
 
     def form_valid(self, form):
-        """Apply new superuser password if it exists"""
+        """Apply form changes."""
+        old_config = self.get_initial()
         new_config = form.cleaned_data
 
         if mumble.get_domain() != new_config['domain']:
-            mumble.set_domain(new_config['domain'])
+            privileged.set_domain(new_config['domain'])
             mumble.app.get_component('letsencrypt-mumble').setup_certificates()
             messages.success(self.request, _('Configuration updated'))
 
         password = new_config.get('super_user_password')
         if password:
-            actions.run_as_user(
-                'mumble',
-                ['create-password'],
-                input=password.encode(),
-                become_user="mumble-server",
-            )
+            privileged.set_super_user_password(password)
             messages.success(self.request,
                              _('SuperUser password successfully updated.'))
 
         join_password = new_config.get('join_password')
         if join_password:
-            actions.superuser_run('mumble',
-                                  ['change-join-password', join_password])
+            privileged.change_join_password(join_password)
             messages.success(self.request, _('Join password changed'))
 
         name = new_config.get('root_channel_name')
-        if name:
-            actions.superuser_run('mumble', ['change-root-channel-name', name])
+        if old_config['root_channel_name'] != new_config['root_channel_name']:
+            privileged.change_root_channel_name(name)
             messages.success(self.request, _('Root channel name changed.'))
 
         return super().form_valid(form)
