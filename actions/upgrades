@@ -522,10 +522,6 @@ def _perform_dist_upgrade():
         print(
             'Holding packages with conffile prompts: ' +
             ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
-        # XXX: If any of these packages have been removed from the
-        # next stable release, they will causes the hold command to
-        # fail for all packages. So it would be safer to just hold one
-        # package at a time.
         with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
             print('Running apt full-upgrade...', flush=True)
             run_apt_command(['full-upgrade'])

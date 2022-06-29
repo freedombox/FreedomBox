@@ -424,16 +424,33 @@ def run_apt_command(arguments):
 
 
 @contextmanager
-def apt_hold(packages, ignore_errors=False):
-    """Prevent packages from being removed during apt operations."""
-    current_hold = subprocess.check_output(['apt-mark', 'showhold'] + packages)
-    try:
-        yield current_hold or subprocess.run(['apt-mark', 'hold'] + packages,
-                                             check=not ignore_errors)
-    finally:
+def apt_hold(packages):
+    """Prevent packages from being removed during apt operations.
+
+    `apt-mark hold PACKAGES` accepts a list of packages. But if one of
+    the package is missing from the apt repository, then it will fail
+    to hold any of the listed packages. So it is necessary to try to
+    hold each package by itself.
+
+    Packages held by this context will be unheld when leaving the
+    context. But if a package was already held beforehand, it will be
+    ignored (and not unheld).
+
+    """
+    held_packages = []
+    for package in packages:
+        current_hold = subprocess.check_output(
+            ['apt-mark', 'showhold', package])
         if not current_hold:
-            subprocess.run(['apt-mark', 'unhold'] + packages,
-                           check=not ignore_errors)
+            process = subprocess.run(['apt-mark', 'hold', package],
+                                     check=False)
+            if process.returncode == 0:  # success
+                held_packages.append(package)
+
+    yield held_packages
+
+    for package in held_packages:
+        subprocess.check_call(['apt-mark', 'unhold', package])
 
 
 @contextmanager
