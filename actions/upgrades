@@ -84,7 +84,10 @@ DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
 
 DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
 
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = []
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = [
+    # Tell grub-pc to continue without installing grub again.
+    'grub-pc grub-pc/install_devices_empty boolean true'
+]
 
 DIST_UPGRADE_REQUIRED_FREE_SPACE = 5000000
 
