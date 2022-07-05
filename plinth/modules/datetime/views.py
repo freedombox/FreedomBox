@@ -31,7 +31,7 @@ class DateTimeAppView(AppView):
     def get_current_time_zone():
         """Get current time zone."""
         path = pathlib.Path('/etc/timezone')
-        time_zone = path.read_text(encoding='utf-8').rstip()
+        time_zone = path.read_text(encoding='utf-8').rstrip()
         return time_zone or 'none'
 
     def form_valid(self, form):
