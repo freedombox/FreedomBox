@@ -1,27 +1,14 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Configuration helper for Cockpit.
+Configure Cockpit.
 """
-
-import argparse
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 CONFIG_FILE = '/etc/cockpit/cockpit.conf'
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup Cockpit configuration')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _load_augeas():
@@ -34,7 +21,8 @@ def _load_augeas():
     return aug
 
 
-def subcommand_setup(arguments):
+@privileged
+def setup():
     """Setup Cockpit configuration."""
     aug = _load_augeas()
     aug.set('/files' + CONFIG_FILE + '/WebService/UrlRoot', '/_cockpit/')
@@ -43,16 +31,3 @@ def subcommand_setup(arguments):
     action_utils.service_restart('cockpit.socket')
     # Accommodate changes in Apache configuration file from v1 to v2.
     action_utils.service_reload('apache2')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

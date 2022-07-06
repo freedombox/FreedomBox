@@ -6,7 +6,6 @@ FreedomBox app to configure Cockpit.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -16,7 +15,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -94,6 +93,6 @@ class CockpitApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'cockpit', ['setup'])
+    helper.call('post', privileged.setup)
     if not old_version:
         helper.call('post', app.enable)
