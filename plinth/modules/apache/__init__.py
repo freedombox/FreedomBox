@@ -23,7 +23,7 @@ class ApacheApp(app_module.App):
 
     app_id = 'apache'
 
-    _version = 9
+    _version = 10
 
     def __init__(self):
         """Create components for the app."""

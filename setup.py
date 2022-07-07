@@ -53,6 +53,8 @@ DISABLED_APPS_TO_REMOVE = [
 
 REMOVED_FILES = [
     '/etc/apt/preferences.d/50freedombox3.pref',
+    '/etc/apache2/sites-available/plinth.conf',
+    '/etc/apache2/sites-available/plinth-ssl.conf',
 ]
 
 LOCALE_PATHS = ['plinth/locale']
