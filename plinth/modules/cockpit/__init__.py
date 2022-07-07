@@ -59,8 +59,9 @@ class CockpitApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, name=_('Cockpit'),
-                               icon='fa-wrench', icon_filename='cockpit',
+                               depends=['apache'], is_essential=True,
+                               name=_('Cockpit'), icon='fa-wrench',
+                               icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
                                clients=manifest.clients)
