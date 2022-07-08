@@ -118,7 +118,7 @@ def _assert_managed_packages(module, packages):
     cfg.read()
     module_file = os.path.join(cfg.config_dir, 'modules-enabled', module)
 
-    with open(module_file, 'r') as file_handle:
+    with open(module_file, 'r', encoding='utf-8') as file_handle:
         module_path = file_handle.read().strip()
 
     module = import_module(module_path)

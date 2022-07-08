@@ -4,6 +4,7 @@ FreedomBox app for configuring date and time.
 """
 
 import logging
+import pathlib
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
@@ -17,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class DateTimeAppView(AppView):
+    """Serve configuration page."""
     form_class = DateTimeForm
     app_id = 'datetime'
 
@@ -25,9 +27,11 @@ class DateTimeAppView(AppView):
         status['time_zone'] = self.get_current_time_zone()
         return status
 
-    def get_current_time_zone(self):
+    @staticmethod
+    def get_current_time_zone():
         """Get current time zone."""
-        time_zone = open('/etc/timezone').read().rstrip()
+        path = pathlib.Path('/etc/timezone')
+        time_zone = path.read_text(encoding='utf-8').rstrip()
         return time_zone or 'none'
 
     def form_valid(self, form):

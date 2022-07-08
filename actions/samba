@@ -237,8 +237,8 @@ def _set_open_share_permissions(directory):
 def _use_config_file(conf_file):
     """Set samba configuration file location."""
     import augeas
-    aug = augeas.Augeas(
-        flags=augeas.Augeas.NO_LOAD + augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Shellvars/lens', 'Shellvars.lns')
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()
@@ -301,7 +301,7 @@ def subcommand_get_users(_):
 def subcommand_setup(_):
     """Configure samba, use custom samba config file."""
     from plinth import action_utils
-    with open(CONF_PATH, 'w') as file_handle:
+    with open(CONF_PATH, 'w', encoding='utf-8') as file_handle:
         file_handle.write(CONF)
     _use_config_file(CONF_PATH)
     os.makedirs('/var/lib/freedombox', exist_ok=True)
@@ -313,7 +313,7 @@ def subcommand_setup(_):
 def subcommand_dump_shares(_):
     """Dump registy share configuration."""
     os.makedirs(os.path.dirname(SHARES_CONF_BACKUP_FILE), exist_ok=True)
-    with open(SHARES_CONF_BACKUP_FILE, 'w') as backup_file:
+    with open(SHARES_CONF_BACKUP_FILE, 'w', encoding='utf-8') as backup_file:
         command = ['net', 'conf', 'list']
         subprocess.run(command, stdout=backup_file, check=True)
 

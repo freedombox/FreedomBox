@@ -59,7 +59,8 @@ def subcommand_setup(_):
 def get_title(site):
     """Get blog or wiki title"""
     try:
-        with open(os.path.join(SITE_PATH, site, 'index.html')) as index_file:
+        with open(os.path.join(SITE_PATH, site, 'index.html'),
+                  encoding='utf-8') as index_file:
             match = re.search(r'<title>(.*)</title>', index_file.read())
             if match:
                 return match[1]

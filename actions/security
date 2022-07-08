@@ -34,16 +34,16 @@ def subcommand_enable_restricted_access(_):
     except FileExistsError:
         pass
 
-    with open(ACCESS_CONF_FILE, 'w') as conffile:
+    with open(ACCESS_CONF_FILE, 'w', encoding='utf-8') as conffile:
         conffile.write(ACCESS_CONF_SNIPPET + '\n')
 
 
 def subcommand_disable_restricted_access(_):
     """Don't restrict console login to users in admin or sudo group."""
-    with open(ACCESS_CONF_FILE_OLD, 'r') as conffile:
+    with open(ACCESS_CONF_FILE_OLD, 'r', encoding='utf-8') as conffile:
         lines = conffile.readlines()
 
-    with open(ACCESS_CONF_FILE_OLD, 'w') as conffile:
+    with open(ACCESS_CONF_FILE_OLD, 'w', encoding='utf-8') as conffile:
         for line in lines:
             if line.strip() not in ACCESS_CONF_SNIPPETS:
                 conffile.write(line)

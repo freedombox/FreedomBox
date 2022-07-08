@@ -22,10 +22,10 @@ def parse_arguments():
 
 def subcommand_setup(_):
     """Configure Janus server."""
-    with open(JANUS_CONF_PATH, 'r') as config_file:
+    with open(JANUS_CONF_PATH, 'r', encoding='utf-8') as config_file:
         config_lines = config_file.readlines()
 
-    with open(JANUS_CONF_PATH, 'w') as config_file:
+    with open(JANUS_CONF_PATH, 'w', encoding='utf-8') as config_file:
         for line in config_lines:
             if '#rtp_port_range' in line:
                 config_file.write("\trtp_port_range = \"50176-51199\"\n")

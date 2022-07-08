@@ -125,7 +125,7 @@ def read_settings():
 
 def write_settings(settings):
     """Write settings from dictionary to YAML config file."""
-    with open(SETTINGS_FILE, 'w') as settings_file:
+    with open(SETTINGS_FILE, 'w', encoding='utf-8') as settings_file:
         yaml.dump(settings, settings_file)
 
 
@@ -171,7 +171,7 @@ def subcommand_setup(_):
 
 def subcommand_enable_public_access(_):
     """Enable public access to the SearX application."""
-    open(PUBLIC_ACCESS_SETTING_FILE, 'w').close()
+    open(PUBLIC_ACCESS_SETTING_FILE, 'w', encoding='utf-8').close()
 
 
 def subcommand_disable_public_access(_):

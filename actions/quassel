@@ -24,7 +24,7 @@ def parse_arguments():
 def subcommand_set_domain(arguments):
     """Write a file containing domain name."""
     domain_file = pathlib.Path('/var/lib/quassel/domain-freedombox')
-    domain_file.write_text(arguments.domain_name)
+    domain_file.write_text(arguments.domain_name, encoding='utf-8')
 
 
 def main():

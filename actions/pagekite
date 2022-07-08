@@ -156,7 +156,7 @@ def subcommand_remove_service(arguments):
     for path in paths:
         filepath = _convert_augeas_path_to_filepath(path)
         service_found = False
-        with open(filepath, 'r') as file:
+        with open(filepath, 'r', encoding='utf-8') as file:
             lines = file.readlines()
             for i, line in enumerate(lines):
                 if line.startswith('service_on') and \
@@ -165,7 +165,7 @@ def subcommand_remove_service(arguments):
                     service_found = True
                     break
         if service_found:
-            with open(filepath, 'w') as file:
+            with open(filepath, 'w', encoding='utf-8') as file:
                 file.writelines(lines)
                 # abort to only allow deleting one service
                 break
@@ -192,7 +192,7 @@ def _add_service(service):
     # TODO: after adding a service, augeas fails writing the config;
     # so add the service_on entry manually instead
     path = _convert_augeas_path_to_filepath(root)
-    with open(path, 'a') as servicefile:
+    with open(path, 'a', encoding='utf-8') as servicefile:
         line = "\nservice_on = %s\n" % utils.convert_service_to_string(service)
         servicefile.write(line)
 

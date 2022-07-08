@@ -71,3 +71,10 @@ markers = [
     "wordpress",
     "zoph",
 ]
+
+# Useful when pylint is invoked separately instead of flake8
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "too-many-arguments",  # Has not resulted in a refactoring
+    "too-many-ancestors",  # Easy to hit when using Django
+]

@@ -16,6 +16,7 @@ _JSON_FORMAT = {'indent': 4, 'sort_keys': True, 'ensure_ascii': False}
 
 class Config:
     """Read or edit a Deluge configuration file."""
+
     def __init__(self, file_name):
         """Initialize the configuration object."""
         self.file_name = file_name
@@ -26,7 +27,7 @@ class Config:
 
     def load(self):
         """Parse the configuration file into memory."""
-        text = self.file.read_text()
+        text = self.file.read_text(encoding='utf-8')
         matches = re.match(r'^({[^}]*})(.*)$', text, re.DOTALL)
         if not matches:
             raise Exception('Unexpected file format.')

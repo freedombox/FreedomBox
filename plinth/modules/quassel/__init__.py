@@ -118,7 +118,8 @@ def get_domain():
     """Read TLS domain from config file select first available if none."""
     domain = None
     try:
-        with open('/var/lib/quassel/domain-freedombox') as file_handle:
+        with open('/var/lib/quassel/domain-freedombox',
+                  encoding='utf-8') as file_handle:
             domain = file_handle.read().strip()
     except FileNotFoundError:
         pass

@@ -53,7 +53,7 @@ class SSOLoginView(LoginView):
     form_class = AuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        response = super(SSOLoginView, self).dispatch(request, *args, **kwargs)
+        response = super().dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
             translation.set_language(request, response,
                                      request.user.userprofile.language)
@@ -65,7 +65,7 @@ class SSOLoginView(LoginView):
     # axes_form_invalid when axes >= 5.0.0 becomes available in Debian stable.
     @axes_form_invalid
     def form_invalid(self, *args, **kwargs):
-        return super(SSOLoginView, self).form_invalid(*args, **kwargs)
+        return super().form_invalid(*args, **kwargs)
 
 
 class CaptchaLoginView(LoginView):
@@ -74,8 +74,7 @@ class CaptchaLoginView(LoginView):
     form_class = CaptchaAuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        response = super(CaptchaLoginView,
-                         self).dispatch(request, *args, **kwargs)
+        response = super().dispatch(request, *args, **kwargs)
         if not request.POST:
             return response
 

@@ -126,9 +126,14 @@ window.addEventListener('pageshow', function(event) {
  * Select all option for multiple checkboxes.
  */
 document.addEventListener('DOMContentLoaded', function(event) {
-    let parents = document.querySelectorAll('ul.has-select-all');
+    // Django < 4.0 generates <ul> and <li> where as Django >= 4.0 generates <div>s
+    let parents = document.querySelectorAll('ul.has-select-all,div.has-select-all');
     for (const parent of parents) {
-        let li = document.createElement('li');
+        let childElementType = 'div';
+        if (parent.tagName.toLowerCase() == 'ul')
+            childElementType = 'li';
+
+        let selectAllItem = document.createElement(childElementType);
 
         let label = document.createElement('label');
         label.for = "select_all";
@@ -139,9 +144,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
         checkbox.setAttribute('class', 'select-all');
 
         label.appendChild(checkbox);
-        li.appendChild(label);
+        selectAllItem.appendChild(label);
 
-        parent.insertBefore(li, parent.childNodes[0]);
+        parent.insertBefore(selectAllItem, parent.childNodes[0]);
         setSelectAllValue(parent);
 
         checkbox.addEventListener('change', onSelectAllChanged);

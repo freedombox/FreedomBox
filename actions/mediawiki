@@ -104,12 +104,11 @@ def subcommand_setup(_):
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
     include_custom_config()
-    _fix_non_private_mode()
 
 
 def include_custom_config():
     """Include FreedomBox specific configuration in LocalSettings.php."""
-    with open(LOCAL_SETTINGS_CONF, 'r') as conf_file:
+    with open(LOCAL_SETTINGS_CONF, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
 
     static_settings_index = None
@@ -130,23 +129,8 @@ def include_custom_config():
             settings_index,
             'include dirname(__FILE__)."/FreedomBoxStaticSettings.php";\n')
 
-    with open(LOCAL_SETTINGS_CONF, 'w') as conf_file:
+    with open(LOCAL_SETTINGS_CONF, 'w', encoding='utf-8') as conf_file:
         conf_file.writelines(lines)
-
-
-def _fix_non_private_mode():
-    """Drop the line that allows editing by anonymous users.
-
-    Remove this fix after the release of Debian 11.
-
-    """
-    with open(CONF_FILE, 'r') as conf_file:
-        lines = conf_file.readlines()
-
-    with open(CONF_FILE, 'w') as conf_file:
-        for line in lines:
-            if not line.startswith("$wgGroupPermissions['*']['edit']"):
-                conf_file.write(line)
 
 
 def subcommand_change_password(arguments):
@@ -170,7 +154,7 @@ def subcommand_update(_):
 def subcommand_public_registrations(arguments):
     """Enable or Disable public registrations for MediaWiki."""
 
-    with open(CONF_FILE, 'r') as conf_file:
+    with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
 
     def is_pub_reg_line(line):
@@ -183,7 +167,7 @@ def subcommand_public_registrations(arguments):
         else:
             print('disabled')
     else:
-        with open(CONF_FILE, 'w') as conf_file:
+        with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
             for line in lines:
                 if is_pub_reg_line(line):
                     words = line.split()
@@ -198,7 +182,7 @@ def subcommand_public_registrations(arguments):
 
 def subcommand_private_mode(arguments):
     """Enable or Disable Private mode for wiki"""
-    with open(CONF_FILE, 'r') as conf_file:
+    with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
 
     def is_read_line(line):
@@ -211,7 +195,7 @@ def subcommand_private_mode(arguments):
         else:
             print('disabled')
     else:
-        with open(CONF_FILE, 'w') as conf_file:
+        with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
             conf_value = 'false;' if arguments.command == 'enable' else 'true;'
             for line in lines:
                 if is_read_line(line):
@@ -228,7 +212,7 @@ def subcommand_private_mode(arguments):
 
 def _update_setting(setting_name, setting_line):
     """Update the value of one setting in the config file."""
-    with open(CONF_FILE, 'r') as conf_file:
+    with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
 
         inserted = False
@@ -241,7 +225,7 @@ def _update_setting(setting_name, setting_line):
         if not inserted:
             lines.append(setting_line)
 
-    with open(CONF_FILE, 'w') as conf_file:
+    with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
         conf_file.writelines(lines)
 
 

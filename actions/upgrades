@@ -84,7 +84,10 @@ DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
 
 DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
 
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = []
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = [
+    # Tell grub-pc to continue without installing grub again.
+    'grub-pc grub-pc/install_devices_empty boolean true'
+]
 
 DIST_UPGRADE_REQUIRED_FREE_SPACE = 5000000
 
@@ -194,14 +197,14 @@ def subcommand_check_auto(_):
 
 def subcommand_enable_auto(_):
     """Enable automatic upgrades"""
-    with open(AUTO_CONF_FILE, 'w') as conffile:
+    with open(AUTO_CONF_FILE, 'w', encoding='utf-8') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "1";\n')
         conffile.write('APT::Periodic::Unattended-Upgrade "1";\n')
 
 
 def subcommand_disable_auto(_):
     """Disable automatic upgrades"""
-    with open(AUTO_CONF_FILE, 'w') as conffile:
+    with open(AUTO_CONF_FILE, 'w', encoding='utf-8') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "0";\n')
         conffile.write('APT::Periodic::Unattended-Upgrade "0";\n')
 
@@ -210,14 +213,14 @@ def subcommand_get_log(_):
     """Print the automatic upgrades log."""
     try:
         print('==> ' + os.path.basename(LOG_FILE))
-        with open(LOG_FILE, 'r') as file_handle:
+        with open(LOG_FILE, 'r', encoding='utf-8') as file_handle:
             print(file_handle.read())
     except IOError:
         pass
 
     try:
         print('==> ' + os.path.basename(DPKG_LOG_FILE))
-        with open(DPKG_LOG_FILE, 'r') as file_handle:
+        with open(DPKG_LOG_FILE, 'r', encoding='utf-8') as file_handle:
             print(file_handle.read())
     except IOError:
         pass
@@ -258,7 +261,7 @@ deb {protocol}://deb.debian.org/debian {dist}-backports main
 deb-src {protocol}://deb.debian.org/debian {dist}-backports main
 '''
     sources = sources.format(protocol=protocol, dist=dist)
-    with open(sources_list, 'w') as file_handle:
+    with open(sources_list, 'w', encoding='utf-8') as file_handle:
         file_handle.write(sources)
 
 
@@ -273,7 +276,8 @@ def _check_and_backports_sources(develop=False):
         return
 
     try:
-        with open('/etc/dpkg/origins/default', 'r') as default_origin:
+        with open('/etc/dpkg/origins/default', 'r',
+                  encoding='utf-8') as default_origin:
             matches = [
                 re.match(r'Vendor:\s+Debian', line, flags=re.IGNORECASE)
                 for line in default_origin.readlines()
@@ -323,9 +327,11 @@ def _add_apt_preferences():
               'for backports.')
     else:
         print(f'Setting apt preferences for {dist}-backports.')
-        with open(base_path / '50freedombox4.pref', 'w') as file_handle:
+        with open(base_path / '50freedombox4.pref', 'w',
+                  encoding='utf-8') as file_handle:
             file_handle.write(APT_PREFERENCES_FREEDOMBOX.format(dist))
-        with open(base_path / '51freedombox-apps.pref', 'w') as file_handle:
+        with open(base_path / '51freedombox-apps.pref', 'w',
+                  encoding='utf-8') as file_handle:
             file_handle.write(APT_PREFERENCES_APPS)
 
 
@@ -391,10 +397,10 @@ def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
         return (False, 'not-enough-free-space')
 
     logging.info('Upgrading from %s to %s...', dist, codename)
-    with open(SOURCES_LIST, 'r') as sources_list:
+    with open(SOURCES_LIST, 'r', encoding='utf-8') as sources_list:
         lines = sources_list.readlines()
 
-    with open(SOURCES_LIST, 'w') as sources_list:
+    with open(SOURCES_LIST, 'w', encoding='utf-8') as sources_list:
         for line in lines:
             # E.g. replace 'buster' with 'bullseye'.
             new_line = line.replace(dist, codename)
@@ -519,10 +525,6 @@ def _perform_dist_upgrade():
         print(
             'Holding packages with conffile prompts: ' +
             ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
-        # XXX: If any of these packages have been removed from the
-        # next stable release, they will causes the hold command to
-        # fail for all packages. So it would be safer to just hold one
-        # package at a time.
         with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
             print('Running apt full-upgrade...', flush=True)
             run_apt_command(['full-upgrade'])
@@ -572,7 +574,8 @@ def subcommand_activate_backports(arguments):
 
 def _start_dist_upgrade_service():
     """Create dist upgrade service and start it."""
-    with open(DIST_UPGRADE_SERVICE_PATH, 'w') as service_file:
+    with open(DIST_UPGRADE_SERVICE_PATH, 'w',
+              encoding='utf-8') as service_file:
         service_file.write(DIST_UPGRADE_SERVICE)
 
     service_daemon_reload()

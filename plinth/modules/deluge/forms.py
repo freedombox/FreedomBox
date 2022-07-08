@@ -17,6 +17,6 @@ class DelugeForm(DirectorySelectForm):
     def __init__(self, *args, **kw):
         validator = DirectoryValidator(username=SYSTEM_USER,
                                        check_creatable=True)
-        super(DelugeForm, self).__init__(title=_('Download directory'),
-                                         default='/var/lib/deluged/Downloads',
-                                         validator=validator, *args, **kw)
+        super().__init__(title=_('Download directory'),
+                         default='/var/lib/deluged/Downloads',
+                         validator=validator, *args, **kw)

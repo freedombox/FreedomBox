@@ -80,4 +80,4 @@ local_name {domain} {{
 }}
 '''
     cert_config = pathlib.Path('/etc/dovecot/conf.d/91-freedombox-tls.conf')
-    cert_config.write_text(content)
+    cert_config.write_text(content, encoding='utf-8')

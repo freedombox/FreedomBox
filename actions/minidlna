@@ -59,19 +59,20 @@ def _undo_old_configuration_changes():
         aug.save()
 
 
-def subcommand_setup(arguments):
+def subcommand_setup(_):
     """
     Increase inotify watches per folder to allow minidlna to
     monitor changes in large media-dirs.
     """
     _undo_old_configuration_changes()
-    with open('/etc/sysctl.d/50-freedombox-minidlna.conf', 'w') as conf:
+    with open('/etc/sysctl.d/50-freedombox-minidlna.conf', 'w',
+              encoding='utf-8') as conf:
         conf.write(SYSCTL_CONF)
 
     subprocess.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
 
 
-def subcommand_get_media_dir(arguments):
+def subcommand_get_media_dir(_):
     """Retrieve media directory from minidlna.conf"""
     line = grep('^media_dir=', CONFIG_PATH)
 
@@ -97,7 +98,7 @@ def replace_in_config_file(file_path, pattern, subst):
     """
     temp_file, temp_file_path = mkstemp()
     with fdopen(temp_file, 'w') as new_file:
-        with open(file_path) as old_file:
+        with open(file_path, encoding='utf-8') as old_file:
             for line in old_file:
                 new_file.write(line.replace(pattern, subst))
 

@@ -122,7 +122,8 @@ def is_setup():
 def is_using_ecc():
     """Return whether the service is using ECC."""
     if os.path.exists(SERVER_CONFIGURATION_FILE):
-        with open(SERVER_CONFIGURATION_FILE, 'r') as file_handle:
+        with open(SERVER_CONFIGURATION_FILE, 'r',
+                  encoding='utf-8') as file_handle:
             for line in file_handle:
                 if line.strip() == 'dh none':
                     return True

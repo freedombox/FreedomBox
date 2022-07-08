@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 import ruamel.yaml
-from ruamel.yaml.compat import StringIO
 from django.test.client import RequestFactory
+from ruamel.yaml.compat import StringIO
 
 from plinth.utils import YAMLFile, is_user_admin, is_valid_user_name
 
@@ -105,7 +105,7 @@ class TestYAMLFileUtil:
             for key in conf:
                 file_conf[key] = conf[key]
 
-        with open(test_file.name, 'r') as retrieved_conf:
+        with open(test_file.name, 'r', encoding='utf-8') as retrieved_conf:
             buffer = StringIO()
             self.yaml.dump(conf, buffer)
             assert retrieved_conf.read() == buffer.getvalue()
@@ -116,13 +116,13 @@ class TestYAMLFileUtil:
         """
         test_file = tempfile.NamedTemporaryFile()
 
-        with open(test_file.name, 'w') as conf_file:
+        with open(test_file.name, 'w', encoding='utf-8') as conf_file:
             self.yaml.dump({'property1': self.kv_pair}, conf_file)
 
         with YAMLFile(test_file.name) as file_conf:
             file_conf['property2'] = self.kv_pair
 
-        with open(test_file.name, 'r') as retrieved_conf:
+        with open(test_file.name, 'r', encoding='utf-8') as retrieved_conf:
             file_conf = self.yaml.load(retrieved_conf)
             assert file_conf == {
                 'property1': self.kv_pair,
@@ -138,4 +138,4 @@ class TestYAMLFileUtil:
                 yaml_file['property1'] = 'value1'
                 raise ValueError('Test')
 
-        assert open(test_file.name, 'r').read() == ''
+        assert open(test_file.name, 'r', encoding='utf-8').read() == ''

@@ -133,6 +133,10 @@ class BaseBorgRepository(abc.ABC):
     def prepare():
         """Prepare the repository for operations."""
 
+    @staticmethod
+    def cleanup():
+        """Cleanup the repository after operations."""
+
     def get_info(self):
         """Return Borg information about a repository."""
         output = self.run(['info', '--path', self.borg_path])
@@ -393,7 +397,12 @@ class SshBorgRepository(BaseBorgRepository):
         if not self.is_usable():
             raise errors.SshfsError('Remote host not verified')
 
+        self._umount_ignore_errors()  # In case the connection is stale.
         self.mount()
+
+    def cleanup(self):
+        """Cleanup the repository after operations by unmounting."""
+        self._umount_ignore_errors()
 
     @property
     def hostname(self):
@@ -439,6 +448,13 @@ class SshBorgRepository(BaseBorgRepository):
             return
 
         self._run('sshfs', ['umount', '--mountpoint', self._mountpoint])
+
+    def _umount_ignore_errors(self):
+        """Run unmount operation and ignore any exceptions thrown."""
+        try:
+            self.umount()
+        except Exception as exception:
+            logger.warning('Unable to unmount repository', exc_info=exception)
 
     def remove(self):
         """Remove a repository from the kvstore and delete its mountpoint"""

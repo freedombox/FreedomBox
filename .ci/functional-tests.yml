@@ -9,14 +9,10 @@
   script:
     - BUILD_JOB_ID=$(curl -s "https://salsa.debian.org/api/v4/projects/$CI_PROJECT_ID/pipelines/$CI_PIPELINE_ID/jobs?scope[]=success" | jq -r '.[] | select(.name==env.BUILD_JOB_NAME) | .id')
     - export AWS_DEFAULT_REGION=us-east-1
-    - LAUNCH_TEMPLATE_ID=$(aws ec2 describe-launch-templates --launch-template-names $LAUNCH_TEMPLATE_NAME | jq -r ".LaunchTemplates[0].LaunchTemplateId")
     - |
-      INSTANCE_ID=$(aws ec2 run-instances --launch-template LaunchTemplateId="$LAUNCH_TEMPLATE_ID" --associate-public-ip-address \
-        --tag-specifications "ResourceType=instance, Tags=[{Key=salsa:project-id,Value=$CI_PROJECT_ID},{Key=salsa:build-job-id,Value=$BUILD_JOB_ID},{Key=Name,Value=$INSTANCE_NAME}]" | \
-        jq -r ".Instances[0].InstanceId")
-    - APP_SERVER_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID | jq -r ".Reservations[0].Instances[0].PublicIpAddress")
-    - echo "APP_SERVER_IP=$APP_SERVER_IP" >> app-servers.env
-    - echo "INSTANCE_ID=$INSTANCE_ID" >> app-servers.env
+      aws lambda invoke --function-name launch_app_server --payload '{"launch_template_name": "'"$LAUNCH_TEMPLATE_NAME"'", "instance_name": "'"$INSTANCE_NAME"'", "ci_project_id": "'"$CI_PROJECT_ID"'", "build_job_id": "'"$BUILD_JOB_ID"'"}' response.json
+    - echo "APP_SERVER_IP=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
+    - echo "INSTANCE_ID=$(jq -r '.instance_id' response.json)" >> app-servers.env
   tags:
     - functional-tests
   artifacts:
@@ -38,7 +34,7 @@
     - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password && echo "tester:password" | chpasswd
   script:
     - cp -r . /home/tester/freedombox && chown -R tester:tester /home/tester/freedombox
-    - sudo -u tester bash -c 'pip3 install --user splinter pytest-splinter pytest-reporter-html1'
+    - sudo -u tester bash -c 'pip3 install --user selenium==4.2.0 splinter==0.17.0 pytest-splinter pytest-reporter-html1'
     - |
       sudo FREEDOMBOX_URL="https://$APP_SERVER_IP" -u tester bash -c \
         'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless --template=html1/index.html --report=functional-tests.html'
@@ -58,6 +54,8 @@
 .terminate-app-server:
   stage: functional-tests
   script:
-    - aws ec2 --region us-east-1 terminate-instances --instance-ids $INSTANCE_ID > /dev/null
+    - export AWS_DEFAULT_REGION=us-east-1
+    - |
+      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID"'"}' response.json
   tags:
     - functional-tests

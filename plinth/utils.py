@@ -89,7 +89,7 @@ def is_user_admin(request, cached=False):
     return user_is_admin
 
 
-class YAMLFile(object):
+class YAMLFile:
     """A context management class for updating YAML files"""
 
     def __init__(self, yaml_file):
@@ -106,7 +106,7 @@ class YAMLFile(object):
         self.yaml.preserve_quotes = True
 
     def __enter__(self):
-        with open(self.yaml_file, 'r') as intro_conf:
+        with open(self.yaml_file, 'r', encoding='utf-8') as intro_conf:
             if not self.is_file_empty():
                 self.conf = self.yaml.load(intro_conf)
             else:
@@ -116,7 +116,7 @@ class YAMLFile(object):
 
     def __exit__(self, type_, value, traceback):
         if not traceback:
-            with open(self.yaml_file, 'w') as intro_conf:
+            with open(self.yaml_file, 'w', encoding='utf-8') as intro_conf:
                 self.yaml.dump(self.conf, intro_conf)
 
     def is_file_empty(self):
@@ -140,7 +140,8 @@ def generate_password(size=32):
 def grep(pattern, file_name):
     """Return lines of a file matching a pattern."""
     return [
-        line.rstrip() for line in open(file_name) if re.search(pattern, line)
+        line.rstrip() for line in open(file_name, encoding='utf-8')
+        if re.search(pattern, line)
     ]
 
 

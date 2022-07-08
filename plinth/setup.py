@@ -28,7 +28,7 @@ _is_shutting_down = False
 _force_upgrader = None
 
 
-class Helper(object):
+class Helper:
     """Helper routines for modules to show progress."""
 
     def __init__(self, module_name, module):

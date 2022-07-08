@@ -34,7 +34,7 @@ def fixture_conf_file(tmp_path):
 def test_identify_rsa_configuration(conf_file):
     """Identify RSA configuration based on configuration file."""
     with patch('plinth.modules.openvpn.SERVER_CONFIGURATION_FILE', conf_file):
-        with open(conf_file, 'w') as file_handle:
+        with open(conf_file, 'w', encoding='utf-8') as file_handle:
             file_handle.write('dh /etc/openvpn/freedombox-keys/pki/dh.pem')
         assert not openvpn.is_using_ecc()
 
@@ -42,7 +42,7 @@ def test_identify_rsa_configuration(conf_file):
 def test_identify_ecc_configuration(conf_file):
     """Identify ECC configuration based on configuration file."""
     with patch('plinth.modules.openvpn.SERVER_CONFIGURATION_FILE', conf_file):
-        with open(conf_file, 'w') as file_handle:
+        with open(conf_file, 'w', encoding='utf-8') as file_handle:
             file_handle.write('dh none')
         assert openvpn.is_using_ecc()
 

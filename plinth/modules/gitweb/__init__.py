@@ -215,7 +215,7 @@ def get_repo_list():
 
             progress_file = os.path.join(GIT_REPO_PATH, repo, 'clone_progress')
             if os.path.exists(progress_file):
-                with open(progress_file) as file_handle:
+                with open(progress_file, encoding='utf-8') as file_handle:
                     clone_progress = file_handle.read()
                     repo_info['clone_progress'] = clone_progress
 

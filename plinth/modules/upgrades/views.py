@@ -97,7 +97,7 @@ def is_newer_version_available():
 def get_os_release():
     """Returns the Debian release number and name."""
     output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
-    with open('/etc/os-release', 'r') as release_file:
+    with open('/etc/os-release', 'r', encoding='utf-8') as release_file:
         for line in release_file:
             if 'PRETTY_NAME=' in line:
                 line = line.replace('"', '').strip()

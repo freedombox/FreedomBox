@@ -126,7 +126,7 @@ def subcommand_enable_api_access(_):
 def subcommand_dump_database(_):
     """Dump database to file."""
     os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
-    with open(DB_BACKUP_FILE, 'w') as db_backup_file:
+    with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
         _run_as_postgres(['pg_dump', 'ttrss'], stdout=db_backup_file)
 
 
@@ -134,7 +134,7 @@ def subcommand_restore_database(_):
     """Restore database from file."""
     _run_as_postgres(['dropdb', 'ttrss'])
     _run_as_postgres(['createdb', 'ttrss'])
-    with open(DB_BACKUP_FILE, 'r') as db_restore_file:
+    with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
         _run_as_postgres(['psql', '--dbname', 'ttrss'], stdin=db_restore_file)
 
 

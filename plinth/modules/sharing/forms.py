@@ -55,7 +55,7 @@ class AddShareForm(forms.Form):
 
     def clean(self):
         """Check that at least one group is added for non-public shares."""
-        super(AddShareForm, self).clean()
+        super().clean()
         is_public = self.cleaned_data.get('is_public')
         groups = self.cleaned_data.get('groups')
         if not is_public and not groups:

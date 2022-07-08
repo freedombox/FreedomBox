@@ -73,11 +73,11 @@ def parse_arguments():
 
 def subcommand_post_install(_):
     """Perform post installation configuration."""
-    with open(STATIC_CONF_PATH, 'w') as static_conf_file:
+    with open(STATIC_CONF_PATH, 'w', encoding='utf-8') as static_conf_file:
         yaml.dump(STATIC_CONFIG, static_conf_file)
 
     # start with listener config from original homeserver.yaml
-    with open(ORIG_CONF_PATH) as orig_conf_file:
+    with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
         orig_config = yaml.load(orig_conf_file)
 
     listeners = orig_config['listeners']
@@ -86,7 +86,8 @@ def subcommand_post_install(_):
             listener['bind_addresses'] = ['::', '0.0.0.0']
             listener.pop('bind_address', None)
 
-    with open(LISTENERS_CONF_PATH, 'w') as listeners_conf_file:
+    with open(LISTENERS_CONF_PATH, 'w',
+              encoding='utf-8') as listeners_conf_file:
         yaml.dump({'listeners': listeners}, listeners_conf_file)
 
 
@@ -100,11 +101,11 @@ def subcommand_setup(arguments):
 def subcommand_public_registration(argument):
     """Enable/Disable/Status public user registration."""
     try:
-        with open(REGISTRATION_CONF_PATH) as reg_conf_file:
+        with open(REGISTRATION_CONF_PATH, encoding='utf-8') as reg_conf_file:
             config = yaml.load(reg_conf_file)
     except FileNotFoundError:
         # Check if its set in original conffile.
-        with open(ORIG_CONF_PATH) as orig_conf_file:
+        with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
             orig_config = yaml.load(orig_conf_file)
             config = {
                 'enable_registration':
@@ -123,7 +124,7 @@ def subcommand_public_registration(argument):
     elif argument.command == 'disable':
         config['enable_registration'] = False
 
-    with open(REGISTRATION_CONF_PATH, 'w') as reg_conf_file:
+    with open(REGISTRATION_CONF_PATH, 'w', encoding='utf-8') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
     action_utils.service_try_restart('matrix-synapse')
@@ -156,7 +157,7 @@ def _set_turn_config(conf_file):
         'turn_allow_guests': True
     }
 
-    with open(conf_file, 'w+') as turn_config:
+    with open(conf_file, 'w+', encoding='utf-8') as turn_config:
         yaml.dump(config, turn_config)
 
 

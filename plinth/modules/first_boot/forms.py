@@ -23,7 +23,7 @@ class FirstbootWizardSecretForm(forms.Form):
         generated during installation.
         """
         secret_file_path = first_boot.get_secret_file_path()
-        with open(secret_file_path) as secret_file:
+        with open(secret_file_path, encoding='utf-8') as secret_file:
             if secret != secret_file.read().strip():
                 self.add_error('secret', 'Invalid secret')
 

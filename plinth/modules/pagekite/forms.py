@@ -22,7 +22,7 @@ class TrimmedCharField(forms.CharField):
         if value:
             value = value.strip()
 
-        return super(TrimmedCharField, self).clean(value)
+        return super().clean(value)
 
 
 class ConfigurationForm(forms.Form):
@@ -155,7 +155,7 @@ class AddCustomServiceForm(BaseCustomServiceForm):
         return match_found
 
     def clean(self):
-        cleaned_data = super(AddCustomServiceForm, self).clean()
+        cleaned_data = super().clean()
         try:
             is_predefined = self.matches_predefined_service(cleaned_data)
         except KeyError:

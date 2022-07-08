@@ -61,7 +61,8 @@ def action_set_domains(primary_domain, all_domains):
         'mydestination': my_destination
     }
     postfix.set_config(conf)
-    pathlib.Path('/etc/mailname').write_text(primary_domain + '\n')
+    pathlib.Path('/etc/mailname').write_text(primary_domain + '\n',
+                                             encoding='utf-8')
     tls.set_postfix_config(primary_domain, all_domains)
     tls.set_dovecot_config(primary_domain, all_domains)
 

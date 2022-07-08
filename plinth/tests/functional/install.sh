@@ -7,7 +7,8 @@ sudo apt-get install -yq --no-install-recommends \
     python3-pytest python3-pytest-django python3-pytest-xdist \
     python3-pip python3-wheel firefox-esr git smbclient
 
-pip3 install --user splinter pytest-splinter pytest-reporter-html1
+# Use compatible versions of Splinter and Selenium
+pip3 install --user selenium==4.2.0 splinter==0.17.0 pytest-splinter pytest-reporter-html1
 
 echo "Installing geckodriver"
 (

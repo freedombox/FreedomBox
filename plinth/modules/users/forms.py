@@ -125,7 +125,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
         self.request = request
-        super(CreateUserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
             'autocapitalize': 'none',
@@ -134,7 +134,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
     def save(self, commit=True):
         """Save the user model and create LDAP user if required."""
-        user = super(CreateUserForm, self).save(commit)
+        user = super().save(commit)
 
         if commit:
             user.userprofile.language = self.cleaned_data['language']
@@ -206,7 +206,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
         self.request = request
         self.username = username
-        super(UserUpdateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.is_last_admin_user = get_last_admin_user() == self.username
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
@@ -243,7 +243,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
-        user = super(UserUpdateForm, self).save(commit=False)
+        user = super().save(commit=False)
         # Profile is auto saved with user object
         user.userprofile.language = self.cleaned_data['language']
         auth_username = self.request.user.username
@@ -348,13 +348,13 @@ class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
         self.request = request
-        super(UserChangePasswordForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['new_password1'].widget.attrs.update(
             {'autofocus': 'autofocus'})
 
     def save(self, commit=True):
         """Save the user model and change LDAP password as well."""
-        user = super(UserChangePasswordForm, self).save(commit)
+        user = super().save(commit)
         auth_username = self.request.user.username
         if commit:
             process_input = '{0}\n{1}'.format(

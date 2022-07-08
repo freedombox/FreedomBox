@@ -80,13 +80,13 @@ def enable_fail2ban():
 
 def get_restricted_access_enabled():
     """Return whether restricted access is enabled"""
-    with open(ACCESS_CONF_FILE_OLD, 'r') as conffile:
+    with open(ACCESS_CONF_FILE_OLD, 'r', encoding='utf-8') as conffile:
         if any(line.strip() in ACCESS_CONF_SNIPPETS
                for line in conffile.readlines()):
             return True
 
     try:
-        with open(ACCESS_CONF_FILE, 'r') as conffile:
+        with open(ACCESS_CONF_FILE, 'r', encoding='utf-8') as conffile:
             return any(line.strip() in ACCESS_CONF_SNIPPETS
                        for line in conffile.readlines())
     except FileNotFoundError:

@@ -185,7 +185,7 @@ def get_configured_domain_name():
     if not is_setup():
         return None
 
-    with open(SERVER_NAME_PATH) as config_file:
+    with open(SERVER_NAME_PATH, encoding='utf-8') as config_file:
         config, _, _ = load_yaml_guess_indent(config_file)
 
     return config['server_name']
@@ -196,7 +196,7 @@ def get_turn_configuration() -> (List[str], str, bool):
     for file_path, managed in ((OVERRIDDEN_TURN_CONF_PATH, False),
                                (TURN_CONF_PATH, True)):
         if is_non_empty_file(file_path):
-            with open(file_path) as config_file:
+            with open(file_path, encoding='utf-8') as config_file:
                 config, _, _ = load_yaml_guess_indent(config_file)
                 return (TurnConfiguration(None, config['turn_uris'],
                                           config['turn_shared_secret']),

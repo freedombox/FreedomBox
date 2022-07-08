@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-20 20:21-0400\n"
-"PO-Revision-Date: 2022-06-13 12:19+0000\n"
+"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"PO-Revision-Date: 2022-06-29 21:17+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -435,11 +435,11 @@ msgstr ""
 "Путь к хранилищу не пустой и не является существующим репозиторием резервных "
 "копий."
 
-#: plinth/modules/backups/repository.py:143
+#: plinth/modules/backups/repository.py:147
 msgid "Existing repository is not encrypted."
 msgstr "Имеющийся репозиторий не зашифрован."
 
-#: plinth/modules/backups/repository.py:327
+#: plinth/modules/backups/repository.py:331
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Сохранение данных {box_name}"
@@ -1020,7 +1020,7 @@ msgstr "Обновите IP-адреса и домены"
 #: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
 #: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
 #: plinth/modules/matrixsynapse/views.py:124
-#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:29
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
@@ -1439,12 +1439,12 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- не выбран часовой пояс --"
 
-#: plinth/modules/datetime/views.py:45
+#: plinth/modules/datetime/views.py:49
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
 msgstr "Ошибка установки часового пояса: {exception}"
 
-#: plinth/modules/datetime/views.py:48
+#: plinth/modules/datetime/views.py:52
 msgid "Time zone set"
 msgstr "Смена часового пояса"
 
@@ -1474,7 +1474,7 @@ msgstr "Delugе"
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Веб Клиент"
 
-#: plinth/modules/deluge/forms.py:20 plinth/modules/transmission/forms.py:21
+#: plinth/modules/deluge/forms.py:20 plinth/modules/transmission/forms.py:20
 msgid "Download directory"
 msgstr "Папка для загрузок"
 
@@ -1864,8 +1864,6 @@ msgid "Chat Server"
 msgstr "Чат-сервер"
 
 #: plinth/modules/ejabberd/forms.py:19
-#, fuzzy
-#| msgid "Domain Names"
 msgid "Domain names"
 msgstr "Доменные имена"
 
@@ -1874,6 +1872,9 @@ msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
+"Домены, которые будут использоваться ejabberd. Обратите внимание, что "
+"учетные записи пользователей уникальны для каждого домена, и перенос "
+"пользователей на новое доменное имя пока не реализовано."
 
 #: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
@@ -3027,10 +3028,9 @@ msgid "A simple video conference room is included."
 msgstr "Включает в себя простую комнату видеоконференций."
 
 #: plinth/modules/janus/__init__.py:26
-#, fuzzy, python-brace-format
-#| msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
-msgstr "Для использования Janus требуется сервер STUN/TURN (например, Coturn)."
+msgstr "<a href=\"{coturn_url}\">Coturn</a> необходим для использования Janus."
 
 #: plinth/modules/janus/__init__.py:44
 msgid "Janus"
@@ -3398,7 +3398,9 @@ msgid ""
 "password."
 msgstr ""
 "Установить новый пароль для учетной записи администратора MediaWiki (admin). "
-"Оставьте это поле пустым, чтобы сохранить текущий пароль."
+"Пароль не может быть общим, а минимальная требуемая длина составляет "
+"<strong>10 символов</strong>. Оставьте это поле пустым, чтобы сохранить "
+"текущий пароль."
 
 #: plinth/modules/mediawiki/forms.py:35
 msgid ""
@@ -3410,21 +3412,19 @@ msgstr ""
 "внизу веб-страниц, в RSS-потоках или в электронных письмах. Например: "
 "\"myfreedombox.example.org\" или \"example.onion\"."
 
-#: plinth/modules/mediawiki/forms.py:40
-#, fuzzy
-#| msgid "Kite name"
-msgid "Site Name"
-msgstr "Имя Kite"
-
 #: plinth/modules/mediawiki/forms.py:41
-msgid "Name of the site as displayed throughout the wiki."
-msgstr ""
+msgid "Site Name"
+msgstr "Название сайта"
 
-#: plinth/modules/mediawiki/forms.py:45
+#: plinth/modules/mediawiki/forms.py:42
+msgid "Name of the site as displayed throughout the wiki."
+msgstr "Название сайта, отображаемое в вики."
+
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
 msgstr "Включить публичную регистрацию"
 
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3432,11 +3432,11 @@ msgstr ""
 "Если включено, кто угодно в интернете сможет создать учётную запись в вашем "
 "экземпляре MediaWiki."
 
-#: plinth/modules/mediawiki/forms.py:50
+#: plinth/modules/mediawiki/forms.py:51
 msgid "Enable private mode"
 msgstr "Включить режим приватности"
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:52
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3445,11 +3445,11 @@ msgstr ""
 "записи, смогут читать или писать в вики. Публичные регистрации также будут "
 "отключены."
 
-#: plinth/modules/mediawiki/forms.py:56
+#: plinth/modules/mediawiki/forms.py:57
 msgid "Default Skin"
 msgstr "Скин по умолчанию"
 
-#: plinth/modules/mediawiki/forms.py:57
+#: plinth/modules/mediawiki/forms.py:58
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3490,10 +3490,8 @@ msgid "Domain name updated"
 msgstr "Доменное имя обновлено"
 
 #: plinth/modules/mediawiki/views.py:103
-#, fuzzy
-#| msgid "Domain name updated"
 msgid "Site name updated"
-msgstr "Доменное имя обновлено"
+msgstr "Название сайта обновлено"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -3635,7 +3633,7 @@ msgstr "Указанный каталог не существует."
 msgid "Updated media directory"
 msgstr "Обновленный каталог медиа"
 
-#: plinth/modules/mumble/__init__.py:26
+#: plinth/modules/mumble/__init__.py:25
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -3643,7 +3641,7 @@ msgstr ""
 "Mumble это шифрованый чат с высоким качеством голоса, низкой задержкой и "
 "открытым исходным кодом."
 
-#: plinth/modules/mumble/__init__.py:28
+#: plinth/modules/mumble/__init__.py:27
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -3653,11 +3651,11 @@ msgstr ""
 "href=\"http://mumble.info\">Клиенты</a> для подключения к Mumble с "
 "настольных и мобильных устройств так же доступны."
 
-#: plinth/modules/mumble/__init__.py:48 plinth/modules/mumble/manifest.py:9
+#: plinth/modules/mumble/__init__.py:47 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:49
+#: plinth/modules/mumble/__init__.py:48
 msgid "Voice Chat"
 msgstr "Голосовой чат"
 
@@ -3675,7 +3673,7 @@ msgstr ""
 
 #: plinth/modules/mumble/forms.py:40
 msgid "Set a password to join the server"
-msgstr ""
+msgstr "Установите пароль для подключения к серверу"
 
 #: plinth/modules/mumble/forms.py:42
 #, fuzzy
@@ -3686,8 +3684,8 @@ msgid ""
 "Set a password that is required to join the server. Leave empty to use the "
 "current password."
 msgstr ""
-"Установить новый пароль для Coquelicot. Оставьте это поле пустым, чтобы "
-"сохранить текущий пароль."
+"Установить пароль для подключения к серверу. Оставьте пустым, чтобы "
+"использовать текущий пароль."
 
 #: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
@@ -3709,15 +3707,13 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:40
+#: plinth/modules/mumble/views.py:41
 msgid "SuperUser password successfully updated."
 msgstr "Пароль суперпользователя успешно обновлён."
 
 #: plinth/modules/mumble/views.py:46
-#, fuzzy
-#| msgid "Upload password updated"
 msgid "Join password changed"
-msgstr "Пароль загрузки обновлен"
+msgstr "Пароль для подключения обновлён"
 
 #: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
@@ -6465,7 +6461,7 @@ msgstr "Единый вход"
 msgid "Login"
 msgstr "Логин"
 
-#: plinth/modules/sso/views.py:101
+#: plinth/modules/sso/views.py:100
 msgid "Logged out successfully."
 msgstr "Выход выполнен успешно."
 

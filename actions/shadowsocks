@@ -83,7 +83,7 @@ def subcommand_setup(_):
 def subcommand_get_config(_):
     """Read and print Shadowsocks configuration."""
     try:
-        print(open(SHADOWSOCKS_CONFIG_SYMLINK, 'r').read())
+        print(open(SHADOWSOCKS_CONFIG_SYMLINK, 'r', encoding='utf-8').read())
     except Exception:
         sys.exit(1)
 
@@ -91,7 +91,8 @@ def subcommand_get_config(_):
 def _merge_config(config):
     """Write merged configuration into file."""
     try:
-        current_config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r').read()
+        current_config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r',
+                              encoding='utf-8').read()
         current_config = json.loads(current_config)
     except (OSError, json.JSONDecodeError):
         current_config = {}
@@ -99,7 +100,7 @@ def _merge_config(config):
     new_config = current_config
     new_config.update(config)
     new_config = json.dumps(new_config, indent=4, sort_keys=True)
-    open(SHADOWSOCKS_CONFIG_SYMLINK, 'w').write(new_config)
+    open(SHADOWSOCKS_CONFIG_SYMLINK, 'w', encoding='utf-8').write(new_config)
 
 
 def subcommand_merge_config(_):

@@ -24,7 +24,7 @@ class TrimmedCharField(forms.CharField):
             value = value.strip()
             value = value.replace('\r\n', '\n')
 
-        return super(TrimmedCharField, self).clean(value)
+        return super().clean(value)
 
 
 def bridges_validator(bridges):

@@ -110,7 +110,8 @@ def test_add_repository_when_directory_exists_and_not_empty(
         temp_user, temp_home, password):
     remote_path = os.path.join(temp_home, 'non_empty_dir')
     os.makedirs(remote_path)
-    open(os.path.join(remote_path, 'somefile.txt'), 'w').close()
+    open(os.path.join(remote_path, 'somefile.txt'), 'w',
+         encoding='utf-8').close()
     data = {
         'repository': f'{temp_user}@localhost:{remote_path}',
         'ssh_password': password,

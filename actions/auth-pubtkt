@@ -51,12 +51,12 @@ def subcommand_create_key_pair(_):
         pkey = crypto.PKey()
         pkey.generate_key(crypto.TYPE_RSA, 4096)
 
-        with open(private_key_file, 'w') as priv_key_file:
+        with open(private_key_file, 'w', encoding='utf-8') as priv_key_file:
             priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,
                                               pkey).decode()
             priv_key_file.write(priv_key)
 
-        with open(public_key_file, 'w') as pub_key_file:
+        with open(public_key_file, 'w', encoding='utf-8') as pub_key_file:
             pub_key = crypto.dump_publickey(crypto.FILETYPE_PEM, pkey).decode()
             pub_key_file.write(pub_key)
 
@@ -93,7 +93,7 @@ def subcommand_generate_ticket(arguments):
     uid = arguments.uid
     private_key_file = arguments.private_key_file
     tokens = arguments.tokens
-    with open(private_key_file, 'r') as fil:
+    with open(private_key_file, 'r', encoding='utf-8') as fil:
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
     valid_until = minutes_from_now(12 * 60)
     grace_period = minutes_from_now(11 * 60)
