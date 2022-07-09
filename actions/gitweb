@@ -142,6 +142,28 @@ def parse_arguments():
 def subcommand_setup(_):
     """Disable default Apache2 Gitweb configuration."""
     action_utils.webserver_disable('gitweb')
+    if not _get_global_default_branch():
+        _set_global_default_branch('main')
+
+
+def _get_global_default_branch():
+    """Get globally configured default branch name."""
+    try:
+        default_branch = subprocess.check_output(
+            ['git', 'config', '--global', '--get',
+             'init.defaultBranch']).decode().strip()
+    except subprocess.CalledProcessError as exception:
+        if exception.returncode == 1:  # Default branch not configured
+            return None
+        raise
+
+    return default_branch
+
+
+def _set_global_default_branch(name):
+    """Configure default branch name globally."""
+    subprocess.check_call(
+        ['git', 'config', '--global', 'init.defaultBranch', name])
 
 
 def _clone_with_progress_report(url, repo_dir):

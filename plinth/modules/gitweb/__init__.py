@@ -42,7 +42,7 @@ class GitwebApp(app_module.App):
 
     app_id = 'gitweb'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""

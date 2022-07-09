@@ -25,7 +25,7 @@ EXISTING_REPOS = [
         'owner': '',
         'access': 'public',
         'is_private': False,
-        'default_branch': 'master',
+        'default_branch': 'main',
     },
     {
         'name': 'something2',
@@ -33,7 +33,7 @@ EXISTING_REPOS = [
         'owner': '',
         'access': 'private',
         'is_private': True,
-        'default_branch': 'master',
+        'default_branch': 'main',
     },
 ]
 
@@ -59,8 +59,8 @@ def action_run(*args, **kwargs):
 
     elif subcommand == 'get-branches':
         return json.dumps({
-            "default_branch": "master",
-            "branches": ["master", "branch1"]
+            "default_branch": "main",
+            "branches": ["main", "branch1"]
         })
 
     return None
@@ -309,7 +309,7 @@ def test_edit_repository_failed_view(rf):
             'gitweb-name': 'something_other',
             'gitweb-description': 'test-description',
             'gitweb-owner': 'test-owner',
-            'gitweb-default_branch': 'master',
+            'gitweb-default_branch': 'main',
         }
         request = rf.post(
             urls.reverse('gitweb:edit',
