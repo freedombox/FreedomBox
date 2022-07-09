@@ -55,6 +55,28 @@ def setup(domainname: str):
             listen_port['tls'] = False
         if 'use_turn' in listen_port:
             conf['listen'].remove(listen_port)  # Use coturn instead
+        if listen_port['port'] == 5443:
+            # Enable XEP-0363 HTTP File Upload
+            listen_port['request_handlers']['/upload'] = 'mod_http_upload'
+
+    origin_key = scalarstring.DoubleQuotedScalarString(
+        'Access-Control-Allow-Origin')
+    origin_value = scalarstring.DoubleQuotedScalarString('https://@HOST@')
+    methods_key = scalarstring.DoubleQuotedScalarString(
+        'Access-Control-Allow-Methods')
+    methods_value = scalarstring.DoubleQuotedScalarString(
+        'GET,HEAD,PUT,OPTIONS')
+    headers_key = scalarstring.DoubleQuotedScalarString(
+        'Access-Control-Allow-Headers')
+    headers_value = scalarstring.DoubleQuotedScalarString('Content-Type')
+    conf['modules']['mod_http_upload'] = {
+        'put_url': 'https://@HOST@/upload',
+        'custom_headers': {
+            origin_key: origin_value,
+            methods_key: methods_value,
+            headers_key: headers_value,
+        },
+    }
 
     conf['auth_method'] = 'ldap'
     conf['ldap_servers'] = [scalarstring.DoubleQuotedScalarString('localhost')]
