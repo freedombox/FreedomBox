@@ -168,11 +168,12 @@ def subcommand_setup(arguments):
         webserver.enable('javascript-common', kind='config')
 
         # default sites
-        webserver.enable('000-default', kind='site')
+        webserver.disable('000-default', kind='site')
         webserver.disable('default-tls', kind='site')
-        webserver.enable('default-ssl', kind='site')
+        webserver.disable('default-ssl', kind='site')
         webserver.disable('plinth', kind='site')
         webserver.disable('plinth-ssl', kind='site')
+        webserver.enable('freedombox-default', kind='site')
 
 
 # TODO: Check that the (name, kind) is a managed by FreedomBox before
