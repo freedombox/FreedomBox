@@ -19,6 +19,8 @@ from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.signals import domain_added
 
+from . import privileged
+
 _description = [
     _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
@@ -40,7 +42,7 @@ class ConfigApp(app_module.App):
 
     app_id = 'config'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 
@@ -194,6 +196,9 @@ def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
     _migrate_home_page_config()
+
+    if old_version <= 3:
+        privileged.set_logging_mode('volatile')
 
     # systemd-journald is socket activated, it may not be running and it does
     # not support reload.
