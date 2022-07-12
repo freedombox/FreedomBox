@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-04 21:22-0400\n"
-"PO-Revision-Date: 2022-07-10 18:16+0000\n"
+"PO-Revision-Date: 2022-07-13 22:17+0000\n"
 "Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1910,6 +1910,9 @@ msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
+"Les domaines à utiliser pour ejabberd. À noter que les comptes utilisateur "
+"sont uniques pour chaque domaine, et que la migration des comptes entre les "
+"noms de domaine n'est pas encore implémenté."
 
 #: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
@@ -2036,6 +2039,10 @@ msgid ""
 "restrict outgoing email. Some lift the restriction after an explicit "
 "request. See manual page for more information."
 msgstr ""
+"Le serveur de courriel ne fonctionne actuellement pas avec beaucoup de "
+"service des domaines gratuits, même ceux fournis par FreedomBox Foundation. "
+"Plusieurs FAI limitent aussi les courriels sortants. Certains retirent cette "
+"limite après une requête explicite. Voir le manuel pour plus de précisions."
 
 #: plinth/modules/email/__init__.py:35
 #, python-brace-format
@@ -3081,12 +3088,9 @@ msgid "A simple video conference room is included."
 msgstr "Une salle de visioconférence simple est incluse."
 
 #: plinth/modules/janus/__init__.py:26
-#, fuzzy, python-brace-format
-#| msgid "A STUN/TURN server (such as Coturn) is required to use Janus."
+#, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
-msgstr ""
-"Un serveur STUN/TURN (tel que Coturn) est requis pour le fonctionnement de "
-"Janus."
+msgstr "<a href=\"{coturn_url}\">Coturn</a> est requis pour utiliser Janus."
 
 #: plinth/modules/janus/__init__.py:44
 msgid "Janus"
@@ -3475,7 +3479,7 @@ msgstr "Nom du site"
 
 #: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
-msgstr ""
+msgstr "Le nom du site à afficher sur le wiki."
 
 #: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
@@ -3521,8 +3525,8 @@ msgstr "Mot de passe mis à jour"
 #: plinth/modules/mediawiki/views.py:57
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
-"Échec de la mise à jour du mot passe. Veuillez utiliser un mot de passe plus "
-"fort."
+"Échec de la mise à jour du mot passe. Veuillez choisir un mot de passe plus "
+"sûr"
 
 #: plinth/modules/mediawiki/views.py:67
 msgid "Public registrations enabled"
@@ -3549,10 +3553,8 @@ msgid "Domain name updated"
 msgstr "Nom de domaine modifié"
 
 #: plinth/modules/mediawiki/views.py:103
-#, fuzzy
-#| msgid "Domain name updated"
 msgid "Site name updated"
-msgstr "Nom de domaine modifié"
+msgstr "Nom de site modifié"
 
 #: plinth/modules/minetest/__init__.py:35
 #, python-brace-format
@@ -3738,29 +3740,27 @@ msgstr ""
 
 #: plinth/modules/mumble/forms.py:40
 msgid "Set a password to join the server"
-msgstr ""
+msgstr "Définir un mot de passe pour rejoindre le serveur"
 
 #: plinth/modules/mumble/forms.py:42
-#, fuzzy
-#| msgid ""
-#| "Set a new upload password for Coquelicot. Leave this field blank to keep "
-#| "the current password."
 msgid ""
 "Set a password that is required to join the server. Leave empty to use the "
 "current password."
 msgstr ""
-"Définir un nouveau mot de passe de téléversement pour Coquelicot. Laissez ce "
-"champ vide pour conserver le mot de passe actuel."
+"Définir un nouveau mot de passe est nécessaire pour rejoindre le serveur. "
+"Laissez-le vide pour utiliser l'actuel mot de passe."
 
 #: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
-msgstr ""
+msgstr "Définir le nom pour le canal racine"
 
 #: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
 msgstr ""
+"Définir le nom du canal principal de votre serveur mumble. Si le nom n'a "
+"jamais été changé, le canal est nommé \"Root\"."
 
 #: plinth/modules/mumble/manifest.py:34
 msgid "Mumblefly"
@@ -3775,14 +3775,12 @@ msgid "SuperUser password successfully updated."
 msgstr "Le mot de passe du super utilisateur a été mis à jour."
 
 #: plinth/modules/mumble/views.py:46
-#, fuzzy
-#| msgid "Upload password updated"
 msgid "Join password changed"
-msgstr "Le mot de passe de téléversement a été mis à jour"
+msgstr "Mot de passe pour rejoindre modifié"
 
 #: plinth/modules/mumble/views.py:51
 msgid "Root channel name changed."
-msgstr ""
+msgstr "Nom du canal racine modifié."
 
 #: plinth/modules/names/__init__.py:22
 #, python-brace-format
@@ -6893,14 +6891,13 @@ msgstr ""
 "\">Navigateur Tor</a>."
 
 #: plinth/modules/tor/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#, python-brace-format
 msgid ""
 "A Tor SOCKS port is available on your {box_name} for internal networks on "
 "TCP port 9050."
 msgstr ""
-"Un port SOCKS pour Tor est accessible sur votre %(box_name)s sur le port TCP "
-"9050."
+"Un port SOCKS pour Tor est accessible sur votre {box_name} pour les réseaux "
+"internes via le port TCP 9050."
 
 #: plinth/modules/tor/__init__.py:54
 msgid "Tor"
@@ -7140,16 +7137,13 @@ msgstr ""
 "application de bureau complète."
 
 #: plinth/modules/ttrss/__init__.py:27
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
-#| "\"{users_url}\">user with a {box_name} login</a>."
+#, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"Une fois activé, Tiny Tiny RSS peut être consulté par tout <a href="
-"\"{users_url}\">utilisateur disposant d’un compte sur la {box_name}</a>."
+"Une fois activé, Tiny Tiny RSS peut être consulté par <a href=\"{users_url}\""
+">n'importe quel utilisateur</a> appartenant au groupe de lecteur de fil."
 
 #: plinth/modules/ttrss/__init__.py:32
 msgid ""
