@@ -29,14 +29,16 @@ def test_hostname_field():
     for hostname in valid_hostnames:
         form = ConfigurationForm({
             'hostname': hostname,
-            'domainname': 'example.com'
+            'domainname': 'example.com',
+            'logging_mode': 'volatile'
         })
         assert form.is_valid()
 
     for hostname in invalid_hostnames:
         form = ConfigurationForm({
             'hostname': hostname,
-            'domainname': 'example.com'
+            'domainname': 'example.com',
+            'logging_mode': 'volatile'
         })
         assert not form.is_valid()
 
@@ -57,14 +59,16 @@ def test_domainname_field():
     for domainname in valid_domainnames:
         form = ConfigurationForm({
             'hostname': 'example',
-            'domainname': domainname
+            'domainname': domainname,
+            'logging_mode': 'volatile'
         })
         assert form.is_valid()
 
     for domainname in invalid_domainnames:
         form = ConfigurationForm({
             'hostname': 'example',
-            'domainname': domainname
+            'domainname': domainname,
+            'logging_mode': 'volatile'
         })
         assert not form.is_valid()
 

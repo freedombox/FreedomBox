@@ -13,6 +13,7 @@ from plinth.modules import config
 from plinth.signals import (domain_added, domain_removed, post_hostname_change,
                             pre_hostname_change)
 
+from . import privileged
 from .forms import ConfigurationForm
 
 LOGGER = logging.getLogger(__name__)
@@ -30,12 +31,15 @@ class ConfigAppView(views.AppView):
             'domainname': config.get_domainname(),
             'homepage': config.get_home_page(),
             'advanced_mode': config.get_advanced_mode(),
+            'logging_mode': privileged.get_logging_mode(),
         }
 
     def form_valid(self, form):
         """Apply the form changes"""
         old_status = form.initial
         new_status = form.cleaned_data
+
+        is_changed = False
 
         if old_status['hostname'] != new_status['hostname']:
             try:
@@ -86,6 +90,13 @@ class ConfigAppView(views.AppView):
                 else:
                     messages.success(self.request,
                                      _('Hiding advanced apps and features'))
+
+        if old_status['logging_mode'] != new_status['logging_mode']:
+            privileged.set_logging_mode(new_status['logging_mode'])
+            is_changed = True
+
+        if is_changed:
+            messages.success(self.request, _('Configuration updated'))
 
         return super(views.AppView, self).form_valid(form)
 
