@@ -1,37 +1,17 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Roundcube server.
-"""
+"""Configure roundcube."""
 
-import argparse
-import json
 import pathlib
 import re
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 _config_file = pathlib.Path('/etc/roundcube/freedombox-config.php')
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('pre-install',
-                          help='Perform Roundcube pre-install configuration')
-    subparsers.add_parser('setup', help='Setup basic configuration')
-    subparsers.add_parser('get-config', help='Print current configuration')
-    subparser = subparsers.add_parser('set-config', help='Set configuration')
-    subparser.add_argument('--local-only', choices=['True', 'False'],
-                           help='Set current configuration')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_pre_install(_):
+@privileged
+def pre_install():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections([
         'roundcube-core roundcube/dbconfig-install boolean true',
@@ -39,7 +19,8 @@ def subcommand_pre_install(_):
     ])
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Add FreedomBox configuration and include from main configuration."""
     if not _config_file.exists():
         _config_file.write_text('<?php\n', encoding='utf-8')
@@ -52,7 +33,8 @@ def subcommand_setup(_):
         base_config.write_text('\n'.join(lines), encoding='utf-8')
 
 
-def subcommand_get_config(_):
+@privileged
+def get_config() -> dict[str, bool]:
     """Print the current configuration as JSON."""
     pattern = r'\s*\$config\[\s*\'([^\']*)\'\s*\]\s*=\s*\'([^\']*)\'\s*;'
     _config = {}
@@ -65,16 +47,17 @@ def subcommand_get_config(_):
         pass
 
     local_only = _config.get('default_host') == 'localhost'
-    print(json.dumps({'local_only': local_only}))
+    return {'local_only': local_only}
 
 
-def subcommand_set_config(arguments):
+@privileged
+def set_config(local_only: bool):
     """Set the configuration."""
     config = '''<?php
 $config['log_driver'] = 'syslog';
 '''
 
-    if arguments.local_only == 'True':
+    if local_only:
         config += '''
 $config['default_host'] = 'localhost';
 $config['mail_domain'] = '%n';
@@ -85,16 +68,3 @@ $config['smtp_helo_host'] = 'localhost';
 '''
 
     _config_file.write_text(config, encoding='utf-8')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

@@ -3,11 +3,8 @@
 FreedomBox app to configure Roundcube.
 """
 
-import json
-
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
@@ -15,7 +12,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
@@ -94,14 +91,14 @@ class RoundcubeApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
+    helper.call('pre', privileged.pre_install)
     app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
+    helper.call('post', privileged.setup)
     if old_version == 0:
-        set_config(local_only=True)
+        privileged.set_config(local_only=True)
         helper.call('post', app.enable)
     elif old_version <= 2:
-        set_config(get_config()['local_only'])
+        privileged.set_config(privileged.get_config()['local_only'])
 
 
 def force_upgrade(helper, packages):
@@ -116,16 +113,3 @@ def force_upgrade(helper, packages):
         app.get_component('webserver-roundcube-freedombox').enable()
 
     return True
-
-
-def get_config():
-    """Return Rouncube configuration."""
-    value = actions.superuser_run('roundcube', ['get-config'])
-    return json.loads(value)
-
-
-def set_config(local_only):
-    """Set whether only local server should be allowed."""
-    actions.superuser_run('roundcube',
-                          ['set-config', '--local-only',
-                           str(local_only)])
