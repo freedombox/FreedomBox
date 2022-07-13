@@ -70,9 +70,12 @@ def subcommand_get_config(_):
 
 def subcommand_set_config(arguments):
     """Set the configuration."""
-    config = '<?php\n'
+    config = '''<?php
+$config['log_driver'] = 'syslog';
+'''
+
     if arguments.local_only == 'True':
-        config = '''<?php
+        config += '''
 $config['default_host'] = 'localhost';
 $config['mail_domain'] = '%n';
 

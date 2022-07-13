@@ -44,7 +44,7 @@ class RoundcubeApp(app_module.App):
 
     app_id = 'roundcube'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -100,6 +100,8 @@ def setup(helper, old_version=None):
     if old_version == 0:
         set_config(local_only=True)
         helper.call('post', app.enable)
+    elif old_version <= 2:
+        set_config(get_config()['local_only'])
 
 
 def force_upgrade(helper, packages):
