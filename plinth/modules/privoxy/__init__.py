@@ -6,7 +6,7 @@ FreedomBox app to configure Privoxy.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -17,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
@@ -97,9 +97,9 @@ class PrivoxyApp(app_module.App):
 
 def setup(helper, old_version=None):
     """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
+    helper.call('pre', privileged.pre_install)
     app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'privoxy', ['setup'])
+    helper.call('post', privileged.setup)
     helper.call('post', app.enable)
 
 

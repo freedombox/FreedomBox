@@ -1,40 +1,25 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Privoxy server.
-"""
+"""Configure privoxy."""
 
-import argparse
 import pathlib
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 PRIVOXY_CONF_PATH = pathlib.Path('/etc/privoxy/config')
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser(
-        'pre-install',
-        help='Preseed debconf values before packages are installed')
-    subparsers.add_parser('setup', help='Perform post install steps')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_pre_install(_):
+@privileged
+def pre_install():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections(
         ['privoxy privoxy/listen-address string [::]:8118'])
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup Privoxy configuration after installing it."""
     _restrict_access()
 
@@ -75,16 +60,3 @@ def _restrict_access():
             aug.set('permit-access[last() + 1]', ip_range)
 
     aug.save()
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
