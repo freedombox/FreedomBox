@@ -14,7 +14,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('RSS-Bridge generates RSS and Atom feeds for websites that do not have '
@@ -89,4 +89,5 @@ class RSSBridgeApp(app_module.App):
 def setup(helper, old_version=None):
     """Install and configure the module."""
     app.setup(old_version)
+    helper.call('post', privileged.setup)
     helper.call('post', app.enable)
