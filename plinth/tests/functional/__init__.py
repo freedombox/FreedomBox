@@ -46,6 +46,7 @@ _site_url = {
     'jsxc': '/plinth/apps/jsxc/jsxc/',
     'cockpit': '/_cockpit/',
     'syncthing': '/syncthing/',
+    'rssbridge': '/rss-bridge/',
 }
 
 _sys_modules = [
