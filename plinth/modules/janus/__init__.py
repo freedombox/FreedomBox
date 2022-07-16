@@ -43,7 +43,7 @@ class JanusApp(app_module.App):
 
         info = app_module.Info(self.app_id, self._version, name=_('Janus'),
                                icon_filename='janus',
-                               short_description=_('WebRTC server'),
+                               short_description=_('Video Room'),
                                description=_description, manual_page='Janus',
                                clients=manifest.clients)
         self.add(info)
