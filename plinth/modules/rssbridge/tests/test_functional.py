@@ -4,11 +4,7 @@ Functional, browser based tests for RSS-Bridge app.
 """
 
 import json
-import ssl
 import subprocess
-import urllib
-
-import pytest
 
 from plinth.tests import functional
 
