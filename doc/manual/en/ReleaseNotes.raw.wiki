@@ -8,6 +8,36 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 22.16 (2022-07-18) ==
+
+=== Highlights ===
+
+ * cockpit: Reconfigure to allow any origin
+ * rssbridge: New app to generate RSS feeds for websites
+
+=== Other Changes ===
+
+ * apache: Also configure to serve on /freedombox
+ * apache: Merge old configuration files into a better location
+ * apache: Redirect all logs to systemd journal
+ * cockpit: Depend on apache and setup after it
+ * cockpit: Use decorator for privileged actions
+ * config: Add option to set logging mode: none/volatile/persistent
+ * config: Set volatile logging by default
+ * debian: Follows policy version 4.6.1
+ * debian: Update copyright year
+ * gitweb: Switch default branch name to main for new repositories
+ * janus: Change short description to "Video Room"
+ * locale: Update translations for Bulgarian, Chinese (Simplified), French, Russian, Ukrainian
+ * privoxy: Restrict to private IPs, prevent access over the internet
+ * privoxy: Use privileged decorator for actions
+ * roundcube: Add fail2ban jail
+ * roundcube: Configure to log to journald
+ * roundcube: Use privileged to simplify actions
+ * rssbridge: Add functional tests
+ * rssbridge: Fix flake8 errors
+ * rssbridge: Whitelist all bridges by default
+
 == FreedomBox 22.15 (2022-07-04) ==
 
 === Highlights ===
