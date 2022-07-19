@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-18 20:16-0400\n"
-"PO-Revision-Date: 2022-06-22 17:14+0000\n"
+"PO-Revision-Date: 2022-07-20 07:18+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -1310,28 +1310,28 @@ msgstr ""
 "Laat toepassingen en functies zien die meer technische kennis vereisen."
 
 #: plinth/modules/config/forms.py:104
-#, fuzzy
-#| msgid "System Monitoring"
 msgid "System-wide logging"
-msgstr "Systeembewaking"
+msgstr "Systeembreed logboek"
 
 #: plinth/modules/config/forms.py:105
 msgid "Disable logging, for privacy"
-msgstr ""
+msgstr "Loggen uitschakelen vanwege privacy"
 
 #: plinth/modules/config/forms.py:107
 msgid "Keep some in memory until a restart, for performance"
-msgstr ""
+msgstr "Houdt wat in het geheugen tot een herstart, verhoogt prestaties"
 
 #: plinth/modules/config/forms.py:110
 msgid "Write to disk, useful for debugging"
-msgstr ""
+msgstr "Schrijven naar schijf, nuttig voor debugging"
 
 #: plinth/modules/config/forms.py:112
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
+"Logboeken bevatten informatie over wie toegang heeft gehad tot het systeem "
+"en foutopsporingsinformatie van verschillende services"
 
 #: plinth/modules/config/views.py:50
 #, python-brace-format
@@ -3059,10 +3059,8 @@ msgid "Janus"
 msgstr "Janus"
 
 #: plinth/modules/janus/__init__.py:46
-#, fuzzy
-#| msgid "Janus Video Room"
 msgid "Video Room"
-msgstr "Janus Video Ruimte"
+msgstr "Video Ruimte"
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -5374,13 +5372,7 @@ msgstr ""
 "te controleren, en advertenties en andere rommel te weren. "
 
 #: plinth/modules/privoxy/__init__.py:28
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "You can use Privoxy by modifying your browser proxy settings to your "
-#| "{box_name} hostname (or IP address) with port 8118. While using Privoxy, "
-#| "you can see its configuration details and documentation at <a href="
-#| "\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a href="
-#| "\"http://p.p\">http://p.p</a>."
+#, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
 "{box_name} hostname (or IP address) with port 8118. Only connections from "
@@ -5390,7 +5382,8 @@ msgid ""
 "\">http://p.p</a>."
 msgstr ""
 "Privoxy kan gebruikt worden door de proxy instellingen van je browser te "
-"wijzigen naar {box_name} hostname (of IP adres) met poort 8118. Zodra je "
+"wijzigen naar {box_name} hostname (of IP adres) met poort 8118. Alleen "
+"verbindingen van lokale netwerk-IP-adressen zijn toegestaan. Zodra je "
 "Privoxy gebruikt, kan de configuratie en documentatie worden bereikt op <a "
 "href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> of <a href="
 "\"http://p.p\">http://p.p</a>."
@@ -5623,18 +5616,17 @@ msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
+"RSS-Bridge genereert RSS- en Atom-feeds voor websites die er geen hebben. "
+"Gegenereerde feeds kunnen door elke feedlezer worden gebruikt."
 
 #: plinth/modules/rssbridge/__init__.py:23
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "When enabled, Tiny Tiny RSS can be accessed by <a href="
-#| "\"{users_url}\">any user</a> belonging to the feed-reader group."
+#, python-brace-format
 msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"Indien ingeschakeld, kan Tiny Tiny RSS worden geopend door <a href="
-"\"{users_url}\">elke gebruiker</a> die tot de feed-reader groep behoort."
+"Indien ingeschakeld, kan RSS-Bridge worden geopend door <a href=\"{users_url}"
+"\">elke gebruiker</a> die tot de feed-reader groep behoort."
 
 #: plinth/modules/rssbridge/__init__.py:27
 #, python-brace-format
@@ -5643,6 +5635,9 @@ msgid ""
 "follow various websites. When adding a feed, enable authentication and use "
 "your {box_name} credentials."
 msgstr ""
+"RSS-Bridge wordt met <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> gebruikt om "
+"verschillende websites te volgen. Schakel bij het toevoegen van een feed "
+"authenticatie in en gebruik de {box_name}-inloggegevens."
 
 #: plinth/modules/rssbridge/__init__.py:47 plinth/modules/ttrss/__init__.py:50
 msgid "Read and subscribe to news feeds"
@@ -5650,14 +5645,12 @@ msgstr "Lezen en abonneren op nieuwsfeeds"
 
 #: plinth/modules/rssbridge/__init__.py:50
 #: plinth/modules/rssbridge/manifest.py:10
-#, fuzzy
-#| msgid "Bridge"
 msgid "RSS-Bridge"
-msgstr "Bridge"
+msgstr "RSS-Bridge"
 
 #: plinth/modules/rssbridge/__init__.py:51
 msgid "RSS Feed Generator"
-msgstr ""
+msgstr "RSS Feed Generator"
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
