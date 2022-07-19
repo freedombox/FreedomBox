@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"POT-Creation-Date: 2022-07-18 20:16-0400\n"
 "PO-Revision-Date: 2021-07-28 08:34+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/freedombox/"
@@ -1021,10 +1021,10 @@ msgstr "Địa chỉ IP"
 msgid "Refresh IP address and domains"
 msgstr "Làm mới địa chỉ IP và các miền"
 
-#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
-#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/bind/views.py:71 plinth/modules/config/views.py:99
+#: plinth/modules/coturn/views.py:39 plinth/modules/deluge/views.py:42
+#: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:96
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
@@ -1157,7 +1157,7 @@ msgstr "Đã xoá {name}."
 msgid "Could not delete {name}: {error}"
 msgstr "Không thể xoá {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:25
+#: plinth/modules/cockpit/__init__.py:22
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1170,7 +1170,7 @@ msgstr ""
 "năng nâng cao thường không bắt buộc phải có đều có thể được điều khiển. Cũng "
 "có một ứng dụng dòng lệnh dựa trên web cho các hoạt động dòng lệnh."
 
-#: plinth/modules/cockpit/__init__.py:31
+#: plinth/modules/cockpit/__init__.py:28
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1182,7 +1182,7 @@ msgstr ""
 "mở các cổng tường lửa tùy chỉnh và các hoạt động mạng nâng cao như là gắn "
 "kết, bắc cầu và quản lý VLAN."
 
-#: plinth/modules/cockpit/__init__.py:36
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1191,32 +1191,16 @@ msgstr ""
 "Nó có thể được truy cập bởi <a href=\"{users_url}\">bất kỳ người dùng nào</"
 "a> trên {box_name} thuộc về nhóm admin."
 
-#: plinth/modules/cockpit/__init__.py:40
-msgid ""
-"Cockpit requires that you access it through a domain name. It will not work "
-"when accessed using an IP address as part of the URL."
-msgstr ""
-"Cockpit yêu cầu bạn truy cập nó qua một tên miền. Nó sẽ không hoạt động khi "
-"được truy cập vào bằng một địa chỉ IP với tư cách là một phần của URL."
-
-#: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:54 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:64
+#: plinth/modules/cockpit/__init__.py:56
 msgid "Server Administration"
 msgstr "Quản trị máy chủ"
 
-#: plinth/modules/cockpit/templates/cockpit.html:11
-msgid "Access"
-msgstr "Truy cập"
-
-#: plinth/modules/cockpit/templates/cockpit.html:14
-msgid "Cockpit will only work when accessed using the following URLs."
-msgstr "Cockpit sẽ chỉ hoạt động khi được truy cập bằng các URL sau."
-
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1224,18 +1208,18 @@ msgstr ""
 "Ở đây bạn có thể đặt một số tùy chọn thiết lập chung như tên máy chủ, tên "
 "miền, trang chủ của máy chủ web, v.v."
 
-#: plinth/modules/config/__init__.py:53
+#: plinth/modules/config/__init__.py:55
 msgid "General Configuration"
 msgstr "Thiết lập chung"
 
-#: plinth/modules/config/__init__.py:58
+#: plinth/modules/config/__init__.py:60
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Thiết lập"
 
-#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1325,43 +1309,65 @@ msgstr "Hiện các ứng dụng và tính năng nâng cao"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Hiện các ứng dụng và tính năng yêu cầu nhiều kiến thức kĩ thuật hơn."
 
-#: plinth/modules/config/views.py:46
+#: plinth/modules/config/forms.py:104
+msgid "System-wide logging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:105
+msgid "Disable logging, for privacy"
+msgstr ""
+
+#: plinth/modules/config/forms.py:107
+msgid "Keep some in memory until a restart, for performance"
+msgstr ""
+
+#: plinth/modules/config/forms.py:110
+msgid "Write to disk, useful for debugging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:112
+msgid ""
+"Logs contain information about who accessed the system and debug information "
+"from various services"
+msgstr ""
+
+#: plinth/modules/config/views.py:50
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Lỗi khi đặt tên máy chủ: {exception}"
 
-#: plinth/modules/config/views.py:49
+#: plinth/modules/config/views.py:53
 msgid "Hostname set"
 msgstr "Đã đặt tên máy chủ"
 
-#: plinth/modules/config/views.py:58
+#: plinth/modules/config/views.py:62
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Lỗi khi đặt tên miền: {exception}"
 
-#: plinth/modules/config/views.py:61
+#: plinth/modules/config/views.py:65
 msgid "Domain name set"
 msgstr "Đã đặt tên miền"
 
-#: plinth/modules/config/views.py:69
+#: plinth/modules/config/views.py:73
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Lỗi khi đặt trang chủ của máy chủ web: {exception}"
 
-#: plinth/modules/config/views.py:72
+#: plinth/modules/config/views.py:76
 msgid "Webserver home page set"
 msgstr "Đã đặt trang chủ của máy chủ web"
 
-#: plinth/modules/config/views.py:80
+#: plinth/modules/config/views.py:84
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Lỗi khi thay đổi chế độ nâng cao: {exception}"
 
-#: plinth/modules/config/views.py:85
+#: plinth/modules/config/views.py:89
 msgid "Showing advanced apps and features"
 msgstr "Đang hiện các ứng dụng và tính năng nâng cao"
 
-#: plinth/modules/config/views.py:88
+#: plinth/modules/config/views.py:92
 msgid "Hiding advanced apps and features"
 msgstr "Đang ẩn các ứng dụng và tính năng nâng cao"
 
@@ -2070,7 +2076,7 @@ msgstr ""
 msgid "Aliases"
 msgstr "Quản lý thư viện"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:51
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr ""
@@ -2898,10 +2904,8 @@ msgid "Janus"
 msgstr ""
 
 #: plinth/modules/janus/__init__.py:46
-#, fuzzy
-#| msgid "Web Server"
-msgid "WebRTC server"
-msgstr "Máy chủ web"
+msgid "Video Room"
+msgstr ""
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -4890,21 +4894,22 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
-"{box_name} hostname (or IP address) with port 8118. While using Privoxy, you "
-"can see its configuration details and documentation at <a href=\"http://"
-"config.privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
+"{box_name} hostname (or IP address) with port 8118. Only connections from "
+"local network IP addresses are permitted. While using Privoxy, you can see "
+"its configuration details and documentation at <a href=\"http://config."
+"privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
 "\">http://p.p</a>."
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:53
+#: plinth/modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
@@ -5025,7 +5030,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:21
+#: plinth/modules/roundcube/__init__.py:18
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5033,7 +5038,7 @@ msgid ""
 "manipulation, message searching and spell checking."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:26
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5042,7 +5047,7 @@ msgid ""
 "code>."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:31
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5052,7 +5057,7 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:52
 msgid "Email Client"
 msgstr ""
 
@@ -5065,6 +5070,45 @@ msgstr ""
 msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:20
+msgid ""
+"RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
+"Generated feeds can be consumed by any feed reader."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:23
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#| "belonging to the admin group."
+msgid ""
+"When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
+msgstr ""
+"Nó có thể được truy cập bởi <a href=\"{users_url}\">bất kỳ người dùng nào</"
+"a> trên {box_name} thuộc về nhóm admin."
+
+#: plinth/modules/rssbridge/__init__.py:27
+#, python-brace-format
+msgid ""
+"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+"follow various websites. When adding a feed, enable authentication and use "
+"your {box_name} credentials."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:47 plinth/modules/ttrss/__init__.py:50
+msgid "Read and subscribe to news feeds"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:50
+#: plinth/modules/rssbridge/manifest.py:10
+msgid "RSS-Bridge"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:51
+msgid "RSS Feed Generator"
 msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
@@ -6332,10 +6376,6 @@ msgid ""
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:50
-msgid "Read and subscribe to news feeds"
-msgstr ""
-
 #: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr ""
@@ -7595,6 +7635,24 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid ""
+#~ "Cockpit requires that you access it through a domain name. It will not "
+#~ "work when accessed using an IP address as part of the URL."
+#~ msgstr ""
+#~ "Cockpit yêu cầu bạn truy cập nó qua một tên miền. Nó sẽ không hoạt động "
+#~ "khi được truy cập vào bằng một địa chỉ IP với tư cách là một phần của URL."
+
+#~ msgid "Access"
+#~ msgstr "Truy cập"
+
+#~ msgid "Cockpit will only work when accessed using the following URLs."
+#~ msgstr "Cockpit sẽ chỉ hoạt động khi được truy cập bằng các URL sau."
+
+#, fuzzy
+#~| msgid "Web Server"
+#~ msgid "WebRTC server"
+#~ msgstr "Máy chủ web"
 
 #, fuzzy
 #~| msgid "Enable DNSSEC"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"POT-Creation-Date: 2022-07-18 20:16-0400\n"
 "PO-Revision-Date: 2022-07-12 03:04+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -1017,10 +1017,10 @@ msgstr "IP-адреса"
 msgid "Refresh IP address and domains"
 msgstr "Обновите IP-адреса и домены"
 
-#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
-#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/bind/views.py:71 plinth/modules/config/views.py:99
+#: plinth/modules/coturn/views.py:39 plinth/modules/deluge/views.py:42
+#: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:96
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
@@ -1155,7 +1155,7 @@ msgstr "{name} удален."
 msgid "Could not delete {name}: {error}"
 msgstr "Не удалось удалить {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:25
+#: plinth/modules/cockpit/__init__.py:22
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1168,7 +1168,7 @@ msgstr ""
 "многих продвинутых функций, которые, как правило, не требуется. Веб-терминал "
 "на основе консоли управления также доступен."
 
-#: plinth/modules/cockpit/__init__.py:31
+#: plinth/modules/cockpit/__init__.py:28
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1180,7 +1180,7 @@ msgstr ""
 "использовать для открытия настраиваемых портов брандмауэра и расширенных "
 "сетей, таких как связывание, мостовое соединение и управление VLAN."
 
-#: plinth/modules/cockpit/__init__.py:36
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1189,32 +1189,16 @@ msgstr ""
 "Доступ к нему может получить <a href=\"{users_url}\">любой пользователь</a> "
 "на {box_name}, принадлежащий группе администраторов."
 
-#: plinth/modules/cockpit/__init__.py:40
-msgid ""
-"Cockpit requires that you access it through a domain name. It will not work "
-"when accessed using an IP address as part of the URL."
-msgstr ""
-"Доступ в Кокпит возможен только через доменное имя. Доступ невозможен, если "
-"использовать IP-адрес как часть URL."
-
-#: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:54 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:64
+#: plinth/modules/cockpit/__init__.py:56
 msgid "Server Administration"
 msgstr "Администрирование сервера"
 
-#: plinth/modules/cockpit/templates/cockpit.html:11
-msgid "Access"
-msgstr "Доступ"
-
-#: plinth/modules/cockpit/templates/cockpit.html:14
-msgid "Cockpit will only work when accessed using the following URLs."
-msgstr "Кокпит будет работать, только если использовать следующие адреса."
-
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1222,18 +1206,18 @@ msgstr ""
 "Здесь вы можете установить такие опции конфигурации, как имя хоста, доменное "
 "имя, домашняя страница веб-сервера и тому подобное."
 
-#: plinth/modules/config/__init__.py:53
+#: plinth/modules/config/__init__.py:55
 msgid "General Configuration"
 msgstr "Общие настройки"
 
-#: plinth/modules/config/__init__.py:58
+#: plinth/modules/config/__init__.py:60
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Настроить"
 
-#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1323,43 +1307,67 @@ msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 "Показать приложения и функции, которые требуют больше технических знаний."
 
-#: plinth/modules/config/views.py:46
+#: plinth/modules/config/forms.py:104
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "System-wide logging"
+msgstr "Системный мониторинг"
+
+#: plinth/modules/config/forms.py:105
+msgid "Disable logging, for privacy"
+msgstr ""
+
+#: plinth/modules/config/forms.py:107
+msgid "Keep some in memory until a restart, for performance"
+msgstr ""
+
+#: plinth/modules/config/forms.py:110
+msgid "Write to disk, useful for debugging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:112
+msgid ""
+"Logs contain information about who accessed the system and debug information "
+"from various services"
+msgstr ""
+
+#: plinth/modules/config/views.py:50
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Ошибка параметра hostname: {exception}"
 
-#: plinth/modules/config/views.py:49
+#: plinth/modules/config/views.py:53
 msgid "Hostname set"
 msgstr "Смена имени хоста"
 
-#: plinth/modules/config/views.py:58
+#: plinth/modules/config/views.py:62
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Ошибка параметра имени домена: {exception}"
 
-#: plinth/modules/config/views.py:61
+#: plinth/modules/config/views.py:65
 msgid "Domain name set"
 msgstr "Смена доменного имени"
 
-#: plinth/modules/config/views.py:69
+#: plinth/modules/config/views.py:73
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Ошибка параметра домашней страницы веб-сервера: {exception}"
 
-#: plinth/modules/config/views.py:72
+#: plinth/modules/config/views.py:76
 msgid "Webserver home page set"
 msgstr "Установка домашней страницы веб-сервера"
 
-#: plinth/modules/config/views.py:80
+#: plinth/modules/config/views.py:84
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Ошибка при изменении расширенного режима: {exception}"
 
-#: plinth/modules/config/views.py:85
+#: plinth/modules/config/views.py:89
 msgid "Showing advanced apps and features"
 msgstr "Показать продвинутые приложения и функции"
 
-#: plinth/modules/config/views.py:88
+#: plinth/modules/config/views.py:92
 msgid "Hiding advanced apps and features"
 msgstr "Скрыть продвинутые приложения и функции"
 
@@ -1842,9 +1850,9 @@ msgid ""
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
 "Для общения вы можете использовать <a href=\"{jsxc_url}\">веб-клиент</a> или "
-"любой другой <a href=\"https://xmpp.org/software/clients\" target=\"_blank\""
-"> XMPP клиент</a>. Когда включен, ejabberd доступен всем <a href=\""
-"{users_url}\"> пользователям {box_name}</a>."
+"любой другой <a href=\"https://xmpp.org/software/clients\" target=\"_blank"
+"\"> XMPP клиент</a>. Когда включен, ejabberd доступен всем <a href="
+"\"{users_url}\"> пользователям {box_name}</a>."
 
 #: plinth/modules/ejabberd/__init__.py:42
 #, python-brace-format
@@ -2083,7 +2091,7 @@ msgstr "Не может быть числом"
 msgid "Aliases"
 msgstr "Псевдонимы"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:51
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -3036,8 +3044,10 @@ msgid "Janus"
 msgstr "Janus"
 
 #: plinth/modules/janus/__init__.py:46
-msgid "WebRTC server"
-msgstr "Сервер WebRTC"
+#, fuzzy
+#| msgid "Janus Video Room"
+msgid "Video Room"
+msgstr "Видеокомната Janus"
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -5343,12 +5353,19 @@ msgstr ""
 "интернете. "
 
 #: plinth/modules/privoxy/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use Privoxy by modifying your browser proxy settings to your "
+#| "{box_name} hostname (or IP address) with port 8118. While using Privoxy, "
+#| "you can see its configuration details and documentation at <a href="
+#| "\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a href="
+#| "\"http://p.p\">http://p.p</a>."
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
-"{box_name} hostname (or IP address) with port 8118. While using Privoxy, you "
-"can see its configuration details and documentation at <a href=\"http://"
-"config.privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
+"{box_name} hostname (or IP address) with port 8118. Only connections from "
+"local network IP addresses are permitted. While using Privoxy, you can see "
+"its configuration details and documentation at <a href=\"http://config."
+"privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
 "\">http://p.p</a>."
 msgstr ""
 "Вы можете использовать Privoxy, изменив настройки прокси в вашем браузере на "
@@ -5357,15 +5374,15 @@ msgstr ""
 "config.privoxy.org\">http://config.privoxy.org</a> или <a href=\"http://p.p"
 "\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:53
+#: plinth/modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr "Web-прокси"
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Доступ к {url} с прокси {proxy} на tcp{kind}"
@@ -5519,7 +5536,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Конфигурация прав доступа обновлена"
 
-#: plinth/modules/roundcube/__init__.py:21
+#: plinth/modules/roundcube/__init__.py:18
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5531,7 +5548,7 @@ msgstr ""
 "которую вы ожидаете от почтового клиента, включая поддержку MIME, адресную "
 "книгу, управление папками, поиск сообщений и проверку орфографии."
 
-#: plinth/modules/roundcube/__init__.py:26
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5545,7 +5562,7 @@ msgstr ""
 "example.com</code>. Для IMAP через SSL (рекомендуется) заполните поле "
 "сервера, например <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:31
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5561,7 +5578,7 @@ msgstr ""
 "google.com/settings/security/lesssecureapps\">https://www.google.com/"
 "settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:52
 msgid "Email Client"
 msgstr "Почтовый клиент"
 
@@ -5578,6 +5595,47 @@ msgstr ""
 "Если эта опция включена, текстовое поле для ввода данных с сервера удаляется "
 "со страницы входа, и пользователи могут читать и отправлять письма только из "
 "{box_name}."
+
+#: plinth/modules/rssbridge/__init__.py:20
+msgid ""
+"RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
+"Generated feeds can be consumed by any feed reader."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:23
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS can be accessed by <a href="
+#| "\"{users_url}\">any user</a> belonging to the feed-reader group."
+msgid ""
+"When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
+msgstr ""
+"Когда Tiny Tiny RSS включен, доступ к нему может получить <a href="
+"\"{users_url}\">любой пользователь</a>, принадлежащий к группе feed-reader."
+
+#: plinth/modules/rssbridge/__init__.py:27
+#, python-brace-format
+msgid ""
+"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+"follow various websites. When adding a feed, enable authentication and use "
+"your {box_name} credentials."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:47 plinth/modules/ttrss/__init__.py:50
+msgid "Read and subscribe to news feeds"
+msgstr "Чтение и подписка на ленты новостей"
+
+#: plinth/modules/rssbridge/__init__.py:50
+#: plinth/modules/rssbridge/manifest.py:10
+#, fuzzy
+#| msgid "Bridge"
+msgid "RSS-Bridge"
+msgstr "Мост"
+
+#: plinth/modules/rssbridge/__init__.py:51
+msgid "RSS Feed Generator"
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -6007,8 +6065,8 @@ msgid ""
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
 "Чтобы использовать Shadowsocks после настройки, установите URL прокси SOCKS5 "
-"в вашем устройстве, браузере или приложении на http://freedombox_address:"
-"1080/"
+"в вашем устройстве, браузере или приложении на http://"
+"freedombox_address:1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:51
 msgid "Shadowsocks"
@@ -7008,10 +7066,6 @@ msgstr ""
 "При использовании мобильных устройств или настольных приложений для Tiny "
 "Tiny RSS используйте URL <a href=\"/tt-rss-app/\"> / tt-rss-app</a> для "
 "подключения."
-
-#: plinth/modules/ttrss/__init__.py:50
-msgid "Read and subscribe to news feeds"
-msgstr "Чтение и подписка на ленты новостей"
 
 #: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
@@ -8442,6 +8496,22 @@ msgstr "%(percentage)s%% завершено"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid ""
+#~ "Cockpit requires that you access it through a domain name. It will not "
+#~ "work when accessed using an IP address as part of the URL."
+#~ msgstr ""
+#~ "Доступ в Кокпит возможен только через доменное имя. Доступ невозможен, "
+#~ "если использовать IP-адрес как часть URL."
+
+#~ msgid "Access"
+#~ msgstr "Доступ"
+
+#~ msgid "Cockpit will only work when accessed using the following URLs."
+#~ msgstr "Кокпит будет работать, только если использовать следующие адреса."
+
+#~ msgid "WebRTC server"
+#~ msgstr "Сервер WebRTC"
 
 #~ msgid "Server URL"
 #~ msgstr "URL сервера"
@@ -10113,9 +10183,6 @@ msgstr "Гуджарати"
 
 #~ msgid "IP Check URL"
 #~ msgstr "IP проверка URL-адреса"
-
-#~ msgid "Bridge"
-#~ msgstr "Мост"
 
 #~ msgid "Enable network time"
 #~ msgstr "Включить сетевое время"

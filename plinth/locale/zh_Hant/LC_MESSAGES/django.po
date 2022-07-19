@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"POT-Creation-Date: 2022-07-18 20:16-0400\n"
 "PO-Revision-Date: 2021-12-23 12:50+0000\n"
 "Last-Translator: pesder <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -980,10 +980,10 @@ msgstr "IP 地址"
 msgid "Refresh IP address and domains"
 msgstr "更新 IP 位址與網域名稱"
 
-#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
-#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/bind/views.py:71 plinth/modules/config/views.py:99
+#: plinth/modules/coturn/views.py:39 plinth/modules/deluge/views.py:42
+#: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:96
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
@@ -1108,7 +1108,7 @@ msgstr "{name} 已刪除。"
 msgid "Could not delete {name}: {error}"
 msgstr "無法刪除 {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:25
+#: plinth/modules/cockpit/__init__.py:22
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1120,7 +1120,7 @@ msgstr ""
 "服器。在 {box_name} 上，控制器可以用於許多不常見的進階功能。另外也提供網頁式"
 "終端機可以進行主控台操作。"
 
-#: plinth/modules/cockpit/__init__.py:31
+#: plinth/modules/cockpit/__init__.py:28
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1130,7 +1130,7 @@ msgstr ""
 "Cockpit 可以用來進行進階的儲存裝置操作，像是磁碟分𨜌和 RAID 管理。它也可以用"
 "來開啟自訂防火牆連接埠與進階的網路功能，像是綁定、橋接和 VLAN 管理。"
 
-#: plinth/modules/cockpit/__init__.py:36
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1139,32 +1139,16 @@ msgstr ""
 "它可以由 {box_name} 上屬於 admin 群組的 <a href=\"{users_url}\">任何使用者</"
 "a>存取。"
 
-#: plinth/modules/cockpit/__init__.py:40
-msgid ""
-"Cockpit requires that you access it through a domain name. It will not work "
-"when accessed using an IP address as part of the URL."
-msgstr ""
-"Cockpit 需要您透過網域名稱存取它。當 URL 使用 IP 位址為其中一部分時會無法使"
-"用。"
-
-#: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:54 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:64
+#: plinth/modules/cockpit/__init__.py:56
 msgid "Server Administration"
 msgstr "伺服器管理"
 
-#: plinth/modules/cockpit/templates/cockpit.html:11
-msgid "Access"
-msgstr "存取"
-
-#: plinth/modules/cockpit/templates/cockpit.html:14
-msgid "Cockpit will only work when accessed using the following URLs."
-msgstr "Cockpit 只有在使用下列 URL 存取時才能存取。"
-
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1172,18 +1156,18 @@ msgstr ""
 "在這裡您可以設定某些一般設定選項，像是主機名稱、網域名稱、網頁伺服器首頁等"
 "等。"
 
-#: plinth/modules/config/__init__.py:53
+#: plinth/modules/config/__init__.py:55
 msgid "General Configuration"
 msgstr "一般配置"
 
-#: plinth/modules/config/__init__.py:58
+#: plinth/modules/config/__init__.py:60
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "配置"
 
-#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1267,43 +1251,65 @@ msgstr "顯示進階的 app 與功能"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "顯示需要更多技術知識的 app 與功能。"
 
-#: plinth/modules/config/views.py:46
+#: plinth/modules/config/forms.py:104
+msgid "System-wide logging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:105
+msgid "Disable logging, for privacy"
+msgstr ""
+
+#: plinth/modules/config/forms.py:107
+msgid "Keep some in memory until a restart, for performance"
+msgstr ""
+
+#: plinth/modules/config/forms.py:110
+msgid "Write to disk, useful for debugging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:112
+msgid ""
+"Logs contain information about who accessed the system and debug information "
+"from various services"
+msgstr ""
+
+#: plinth/modules/config/views.py:50
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "設定主機名稱時發生錯誤︰{exception}"
 
-#: plinth/modules/config/views.py:49
+#: plinth/modules/config/views.py:53
 msgid "Hostname set"
 msgstr "主機名稱設定"
 
-#: plinth/modules/config/views.py:58
+#: plinth/modules/config/views.py:62
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "設定網域名稱時發生錯誤︰{exception}"
 
-#: plinth/modules/config/views.py:61
+#: plinth/modules/config/views.py:65
 msgid "Domain name set"
 msgstr "網域名稱設定"
 
-#: plinth/modules/config/views.py:69
+#: plinth/modules/config/views.py:73
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "設定網頁伺服器首頁時發生錯誤︰{exception}"
 
-#: plinth/modules/config/views.py:72
+#: plinth/modules/config/views.py:76
 msgid "Webserver home page set"
 msgstr "網頁伺服器首頁設定"
 
-#: plinth/modules/config/views.py:80
+#: plinth/modules/config/views.py:84
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "改變進階模式時發生錯誤︰{exception}"
 
-#: plinth/modules/config/views.py:85
+#: plinth/modules/config/views.py:89
 msgid "Showing advanced apps and features"
 msgstr "顯示進階 app 與功能"
 
-#: plinth/modules/config/views.py:88
+#: plinth/modules/config/views.py:92
 msgid "Hiding advanced apps and features"
 msgstr "隱藏進階 app 與功能"
 
@@ -1949,7 +1955,7 @@ msgstr ""
 msgid "Aliases"
 msgstr "管理圖書館"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:51
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr ""
@@ -2777,10 +2783,8 @@ msgid "Janus"
 msgstr ""
 
 #: plinth/modules/janus/__init__.py:46
-#, fuzzy
-#| msgid "Web Server"
-msgid "WebRTC server"
-msgstr "網頁伺服器"
+msgid "Video Room"
+msgstr ""
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -4769,21 +4773,22 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
-"{box_name} hostname (or IP address) with port 8118. While using Privoxy, you "
-"can see its configuration details and documentation at <a href=\"http://"
-"config.privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
+"{box_name} hostname (or IP address) with port 8118. Only connections from "
+"local network IP addresses are permitted. While using Privoxy, you can see "
+"its configuration details and documentation at <a href=\"http://config."
+"privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
 "\">http://p.p</a>."
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:53
+#: plinth/modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
@@ -4904,7 +4909,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:21
+#: plinth/modules/roundcube/__init__.py:18
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -4912,7 +4917,7 @@ msgid ""
 "manipulation, message searching and spell checking."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:26
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -4921,7 +4926,7 @@ msgid ""
 "code>."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:31
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -4931,7 +4936,7 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:52
 msgid "Email Client"
 msgstr ""
 
@@ -4944,6 +4949,45 @@ msgstr ""
 msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:20
+msgid ""
+"RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
+"Generated feeds can be consumed by any feed reader."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:23
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
+#| "belonging to the admin group."
+msgid ""
+"When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
+msgstr ""
+"它可以由 {box_name} 上屬於 admin 群組的 <a href=\"{users_url}\">任何使用者</"
+"a>存取。"
+
+#: plinth/modules/rssbridge/__init__.py:27
+#, python-brace-format
+msgid ""
+"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+"follow various websites. When adding a feed, enable authentication and use "
+"your {box_name} credentials."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:47 plinth/modules/ttrss/__init__.py:50
+msgid "Read and subscribe to news feeds"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:50
+#: plinth/modules/rssbridge/manifest.py:10
+msgid "RSS-Bridge"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:51
+msgid "RSS Feed Generator"
 msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
@@ -6208,10 +6252,6 @@ msgid ""
 "href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:50
-msgid "Read and subscribe to news feeds"
-msgstr ""
-
 #: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr ""
@@ -7471,6 +7511,24 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid ""
+#~ "Cockpit requires that you access it through a domain name. It will not "
+#~ "work when accessed using an IP address as part of the URL."
+#~ msgstr ""
+#~ "Cockpit 需要您透過網域名稱存取它。當 URL 使用 IP 位址為其中一部分時會無法"
+#~ "使用。"
+
+#~ msgid "Access"
+#~ msgstr "存取"
+
+#~ msgid "Cockpit will only work when accessed using the following URLs."
+#~ msgstr "Cockpit 只有在使用下列 URL 存取時才能存取。"
+
+#, fuzzy
+#~| msgid "Web Server"
+#~ msgid "WebRTC server"
+#~ msgstr "網頁伺服器"
 
 #, fuzzy
 #~| msgid "Enable DNSSEC"

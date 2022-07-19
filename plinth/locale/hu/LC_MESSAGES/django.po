@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"POT-Creation-Date: 2022-07-18 20:16-0400\n"
 "PO-Revision-Date: 2022-05-10 02:10+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -1018,10 +1018,10 @@ msgstr "IP-címek"
 msgid "Refresh IP address and domains"
 msgstr "IP-címek és tartományok frissítése"
 
-#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
-#: plinth/modules/matrixsynapse/views.py:124
+#: plinth/modules/bind/views.py:71 plinth/modules/config/views.py:99
+#: plinth/modules/coturn/views.py:39 plinth/modules/deluge/views.py:42
+#: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:96
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:124
 #: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
 #: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
@@ -1159,7 +1159,7 @@ msgstr "{name} törölve."
 msgid "Could not delete {name}: {error}"
 msgstr "{name} nem törölhető: {error}"
 
-#: plinth/modules/cockpit/__init__.py:25
+#: plinth/modules/cockpit/__init__.py:22
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1172,7 +1172,7 @@ msgstr ""
 "ritkábban használt haladó funkcióhoz érhetők el vezérlők. Egy web alapú "
 "terminál szintén elérhető a konzolos műveletekhez."
 
-#: plinth/modules/cockpit/__init__.py:31
+#: plinth/modules/cockpit/__init__.py:28
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1184,7 +1184,7 @@ msgstr ""
 "tűzfalportok nyitására és olyan haladó hálózati funkciókhoz, mint az "
 "aggregált interfészek, hidalás és VLAN-kezelés."
 
-#: plinth/modules/cockpit/__init__.py:36
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1193,34 +1193,16 @@ msgstr ""
 "A {box_name} bármely adminisztrátori csoportba tartozó <a href="
 "\"{users_url}\">felhasználója</a> hozzáférhet."
 
-#: plinth/modules/cockpit/__init__.py:40
-msgid ""
-"Cockpit requires that you access it through a domain name. It will not work "
-"when accessed using an IP address as part of the URL."
-msgstr ""
-"A Cockpit megköveteli, hogy a domainnéven keresztül érd el. Nem fog működni "
-"ha az URL részeként IP-címet használsz."
-
-#: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:54 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:64
+#: plinth/modules/cockpit/__init__.py:56
 msgid "Server Administration"
 msgstr "Szerver adminisztráció"
 
-#: plinth/modules/cockpit/templates/cockpit.html:11
-msgid "Access"
-msgstr "Hozzáférés"
-
-#: plinth/modules/cockpit/templates/cockpit.html:14
-msgid "Cockpit will only work when accessed using the following URLs."
-msgstr ""
-"A Cockpit csak akkor működik, ha a következő URL-címek használatával nyitod "
-"meg."
-
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1228,18 +1210,18 @@ msgstr ""
 "Itt általános dolgokat állíthatsz be, például gazdagépnév, domainnév, "
 "webszerver kezdőoldala stb."
 
-#: plinth/modules/config/__init__.py:53
+#: plinth/modules/config/__init__.py:55
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: plinth/modules/config/__init__.py:58
+#: plinth/modules/config/__init__.py:60
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
 #: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Beállítások"
 
-#: plinth/modules/config/__init__.py:71 plinth/modules/config/forms.py:68
+#: plinth/modules/config/__init__.py:73 plinth/modules/config/forms.py:68
 #: plinth/modules/dynamicdns/forms.py:82
 #: plinth/modules/names/templates/names.html:16
 msgid "Domain Name"
@@ -1330,43 +1312,67 @@ msgstr "Haladó szintű alkalmazások és funkciók mutatása"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Több műszaki ismeretet igénylő alkalmazások és funkciók megjelenítése."
 
-#: plinth/modules/config/views.py:46
+#: plinth/modules/config/forms.py:104
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "System-wide logging"
+msgstr "Rendszerfigyelés"
+
+#: plinth/modules/config/forms.py:105
+msgid "Disable logging, for privacy"
+msgstr ""
+
+#: plinth/modules/config/forms.py:107
+msgid "Keep some in memory until a restart, for performance"
+msgstr ""
+
+#: plinth/modules/config/forms.py:110
+msgid "Write to disk, useful for debugging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:112
+msgid ""
+"Logs contain information about who accessed the system and debug information "
+"from various services"
+msgstr ""
+
+#: plinth/modules/config/views.py:50
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Hiba az állomásnév beállítása közben: {exception}"
 
-#: plinth/modules/config/views.py:49
+#: plinth/modules/config/views.py:53
 msgid "Hostname set"
 msgstr "Állomásnév beállítva"
 
-#: plinth/modules/config/views.py:58
+#: plinth/modules/config/views.py:62
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Hiba a domainnév beállítása közben: {exception}"
 
-#: plinth/modules/config/views.py:61
+#: plinth/modules/config/views.py:65
 msgid "Domain name set"
 msgstr "Domainnév beállítva"
 
-#: plinth/modules/config/views.py:69
+#: plinth/modules/config/views.py:73
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Hiba a webszerver kezdőoldalának beállítása közben: {exception}"
 
-#: plinth/modules/config/views.py:72
+#: plinth/modules/config/views.py:76
 msgid "Webserver home page set"
 msgstr "Webszerver kezdőoldal beállítva"
 
-#: plinth/modules/config/views.py:80
+#: plinth/modules/config/views.py:84
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Hiba a haladó módba váltás során: {exception}"
 
-#: plinth/modules/config/views.py:85
+#: plinth/modules/config/views.py:89
 msgid "Showing advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók megjelenítése"
 
-#: plinth/modules/config/views.py:88
+#: plinth/modules/config/views.py:92
 msgid "Hiding advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók elrejtése"
 
@@ -2093,7 +2099,7 @@ msgstr "Nem lehet szám"
 msgid "Aliases"
 msgstr "Álnevek"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:51
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -3053,10 +3059,8 @@ msgid "Janus"
 msgstr ""
 
 #: plinth/modules/janus/__init__.py:46
-#, fuzzy
-#| msgid "Web Server"
-msgid "WebRTC server"
-msgstr "Webszerver"
+msgid "Video Room"
+msgstr ""
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -5387,12 +5391,19 @@ msgstr ""
 "eltávolítja a hirdetéseket és az egyéb nem kívánt internetes szemetet. "
 
 #: plinth/modules/privoxy/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use Privoxy by modifying your browser proxy settings to your "
+#| "{box_name} hostname (or IP address) with port 8118. While using Privoxy, "
+#| "you can see its configuration details and documentation at <a href="
+#| "\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a href="
+#| "\"http://p.p\">http://p.p</a>."
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
-"{box_name} hostname (or IP address) with port 8118. While using Privoxy, you "
-"can see its configuration details and documentation at <a href=\"http://"
-"config.privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
+"{box_name} hostname (or IP address) with port 8118. Only connections from "
+"local network IP addresses are permitted. While using Privoxy, you can see "
+"its configuration details and documentation at <a href=\"http://config."
+"privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
 "\">http://p.p</a>."
 msgstr ""
 "A Privoxy használatához módosítanod kell a webböngésződ proxy beállításait a "
@@ -5401,15 +5412,15 @@ msgstr ""
 "a címeken: <a href=\"http://config.privoxy.org\">http://config.privoxy.org/</"
 "a> és <a href=\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:53
+#: plinth/modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr "Web proxy"
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
@@ -5564,7 +5575,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Hozzáférési jogok beállításai frissítve"
 
-#: plinth/modules/roundcube/__init__.py:21
+#: plinth/modules/roundcube/__init__.py:18
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5576,7 +5587,7 @@ msgstr ""
 "teljes funkcionalitást biztosítja, beleértve a MIME-támogatást, "
 "címjegyzéket, mappakezelést, üzenetkeresést és helyesírás-ellenőrzést."
 
-#: plinth/modules/roundcube/__init__.py:26
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5590,7 +5601,7 @@ msgstr ""
 "SSL-en kersztüli IMAP-hez (ez az ajánlott), töltsd ki a kiszolgáló mezőt "
 "ezen minta alapján: <code>imaps://imap.pelda.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:31
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5607,7 +5618,7 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:52
 msgid "Email Client"
 msgstr "E-mail kliens"
 
@@ -5624,6 +5635,46 @@ msgstr ""
 "Ha engedélyezve van, a szerverhez tartozó beviteli szövegdoboz eltávolítódik "
 "a bejelentkezési oldalról, és a felhasználók csak erről a {box_name}ról "
 "olvashatnak és küldhetnek leveleket."
+
+#: plinth/modules/rssbridge/__init__.py:20
+msgid ""
+"RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
+"Generated feeds can be consumed by any feed reader."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:23
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
+msgid ""
+"When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
+msgstr ""
+"Ha engedélyezett, a Tiny Tiny RSS-t bármely <a href="
+"\"{users_url}\">felhasználó elérheti, aki {box_name} bejelentkezéssel "
+"rendelkezik</a>."
+
+#: plinth/modules/rssbridge/__init__.py:27
+#, python-brace-format
+msgid ""
+"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+"follow various websites. When adding a feed, enable authentication and use "
+"your {box_name} credentials."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:47 plinth/modules/ttrss/__init__.py:50
+msgid "Read and subscribe to news feeds"
+msgstr "Hírcsatornák olvasása és feliratkozás"
+
+#: plinth/modules/rssbridge/__init__.py:50
+#: plinth/modules/rssbridge/manifest.py:10
+msgid "RSS-Bridge"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:51
+msgid "RSS Feed Generator"
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -7075,10 +7126,6 @@ msgstr ""
 "hez, használd a <a href=\"/tt-rss-app/\">/tt-rss-app</a> URL-t a "
 "csatlakozáshoz."
 
-#: plinth/modules/ttrss/__init__.py:50
-msgid "Read and subscribe to news feeds"
-msgstr "Hírcsatornák olvasása és feliratkozás"
-
 #: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
@@ -8512,6 +8559,26 @@ msgstr "befejezettségi szint: %(percentage)s%%"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid ""
+#~ "Cockpit requires that you access it through a domain name. It will not "
+#~ "work when accessed using an IP address as part of the URL."
+#~ msgstr ""
+#~ "A Cockpit megköveteli, hogy a domainnéven keresztül érd el. Nem fog "
+#~ "működni ha az URL részeként IP-címet használsz."
+
+#~ msgid "Access"
+#~ msgstr "Hozzáférés"
+
+#~ msgid "Cockpit will only work when accessed using the following URLs."
+#~ msgstr ""
+#~ "A Cockpit csak akkor működik, ha a következő URL-címek használatával "
+#~ "nyitod meg."
+
+#, fuzzy
+#~| msgid "Web Server"
+#~ msgid "WebRTC server"
+#~ msgstr "Webszerver"
 
 #~ msgid "Server URL"
 #~ msgstr "Szerver URL"
