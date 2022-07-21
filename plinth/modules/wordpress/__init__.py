@@ -83,8 +83,6 @@ class WordPressApp(app_module.App):
                 'php',
                 # Optional, for performance
                 'php-imagick',
-                # Optional, to upload plugins/themes using SSH connection
-                'php-ssh2',
                 # Optional, for performance
                 'php-zip',
                 # WordPress only supports MySQL/MariaDB as DB
