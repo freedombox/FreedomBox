@@ -3,16 +3,20 @@
 Help app for FreedomBox.
 """
 
+import gzip
+import json
 import mimetypes
 import os
 import pathlib
 
+import apt
 from django.core.files.base import File
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
+import requests
 
 from plinth import __version__, actions, cfg
 from plinth.modules.upgrades.views import (get_os_release,
@@ -27,8 +31,52 @@ def index(request):
 
 def contribute(request):
     """Serve the contribute page"""
-    return TemplateResponse(request, 'help_contribute.html',
-                            {'title': _('Contribute')})
+    response = requests.get('https://udd.debian.org/how-can-i-help.json.gz')
+    data = gzip.decompress(response.content)
+    issues = json.loads(data)
+
+    # Split issues according to type and filter for installed packages.
+    testing_autorm = []
+    no_testing = []
+    gift = []
+    help_needed = []
+    cache = apt.Cache()
+    for issue in issues:
+        if issue['type'] == 'testing-autorm':
+            for package in issue['packages']:
+                try:
+                    if cache[package].is_installed:
+                        testing_autorm.append(issue)
+                        break
+                except KeyError:
+                    pass
+        elif issue['type'] == 'no-testing':
+            try:
+                if cache[issue['package']].is_installed:
+                    no_testing.append(issue)
+            except KeyError:
+                pass
+        elif issue['type'] == 'gift':
+            try:
+                if cache[issue['package']].is_installed:
+                    gift.append(issue)
+            except KeyError:
+                pass
+        elif issue['type'] == 'help':
+            try:
+                if cache[issue['package']].is_installed:
+                    help_needed.append(issue)
+            except KeyError:
+                pass
+
+    return TemplateResponse(
+        request, 'help_contribute.html', {
+            'title': _('Contribute'),
+            'testing_autorm': testing_autorm,
+            'no_testing': no_testing,
+            'gift': gift,
+            'help': help_needed,
+        })
 
 
 def feedback(request):
