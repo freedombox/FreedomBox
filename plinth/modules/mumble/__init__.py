@@ -16,7 +16,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version
 
 from . import manifest, privileged
@@ -102,20 +102,19 @@ class MumbleApp(app_module.App):
 
         app.get_component('letsencrypt-mumble').setup_certificates()
 
+    def force_upgrade(self, packages):
+        """Force upgrade mumble-server to resolve conffile prompts."""
+        if 'mumble-server' not in packages:
+            return False
 
-def force_upgrade(helper, packages):
-    """Force upgrade mumble-server to resolve conffile prompts."""
-    if 'mumble-server' not in packages:
-        return False
+        # Allow upgrades within 1.3.*
+        package = packages['mumble-server']
+        if Version(package['new_version']) > Version('1.4~'):
+            return False
 
-    # Allow upgrades within 1.3.*
-    package = packages['mumble-server']
-    if Version(package['new_version']) > Version('1.4~'):
-        return False
-
-    helper.install(['mumble-server'], force_configuration='new')
-    privileged.setup()
-    return True
+        install(['mumble-server'], force_configuration='new')
+        privileged.setup()
+        return True
 
 
 def get_available_domains():

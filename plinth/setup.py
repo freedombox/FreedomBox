@@ -428,10 +428,9 @@ class ForceUpgrader():
         need_retry = False
         for app_id, packages in apps.items():
             app = app_module.App.get(app_id)
-            module = sys.modules[app.__module__]
             try:
                 logger.info('Force upgrading app: %s', app.info.name)
-                if module.force_upgrade(module.setup_helper, packages):
+                if self._run_force_upgrade_as_operation(app, packages):
                     logger.info('Successfully force upgraded app: %s',
                                 app.info.name)
                 else:
@@ -444,6 +443,15 @@ class ForceUpgrader():
 
         if need_retry:
             raise self.TemporaryFailure('Some apps failed to force upgrade.')
+
+    def _run_force_upgrade_as_operation(self, app, packages):
+        """Start an operation for force upgrading."""
+        name = gettext_noop('Updating app packages')
+        operation = operation_module.manager.new(app.app_id, name,
+                                                 app.force_upgrade, [packages],
+                                                 show_message=False,
+                                                 show_notification=False)
+        return operation.join()  # Wait for completion, raise Exception
 
     def _get_list_of_apps_to_force_upgrade(self):
         """Return a list of app on which to run force upgrade."""
@@ -489,8 +497,7 @@ class ForceUpgrader():
         package_apps_map = defaultdict(set)
         upgradable_packages = set()
         for app in app_module.App.list():
-            module = sys.modules[app.__module__]
-            if not getattr(module, 'force_upgrade', None):
+            if not getattr(app, 'force_upgrade', None):
                 # App does not implement force upgrade
                 continue
 

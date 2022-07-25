@@ -15,7 +15,7 @@ from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy
 
 from . import manifest
@@ -103,22 +103,22 @@ class RadicaleApp(app_module.App):
         super().setup(old_version)
         self.enable()
 
+    def force_upgrade(self, packages):
+        """Force upgrade radicale to resolve conffile prompt."""
+        if 'radicale' not in packages:
+            return False
 
-def force_upgrade(helper, packages):
-    """Force upgrade radicale to resolve conffile prompt."""
-    if 'radicale' not in packages:
-        return False
+        # Allow upgrade from 2.* to newer 2.* and 3.*
+        package = packages['radicale']
+        if Version(package['new_version']) > Version('4~'):
+            return False
 
-    # Allow upgrade from 2.* to newer 2.* and 3.*
-    package = packages['radicale']
-    if Version(package['new_version']) > Version('4~'):
-        return False
+        rights = get_rights_value()
+        install(['radicale'], force_configuration='new')
+        actions.superuser_run('radicale',
+                              ['configure', '--rights_type', rights])
 
-    rights = get_rights_value()
-    helper.install(['radicale'], force_configuration='new')
-    actions.superuser_run('radicale', ['configure', '--rights_type', rights])
-
-    return True
+        return True
 
 
 def load_augeas():

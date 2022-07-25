@@ -14,7 +14,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy
 
 from . import manifest
@@ -114,6 +114,20 @@ class TTRSSApp(app_module.App):
         actions.superuser_run('ttrss', ['setup'])
         self.enable()
 
+    def force_upgrade(self, packages):
+        """Force update package to resolve conffile prompts."""
+        if 'tt-rss' not in packages:
+            return False
+
+        # Allow tt-rss any lower version to upgrade to 21.*
+        package = packages['tt-rss']
+        if Version(package['new_version']) > Version('22~'):
+            return False
+
+        install(['tt-rss'], force_configuration='new')
+        actions.superuser_run('ttrss', ['setup'])
+        return True
+
 
 class TTRSSBackupRestore(BackupRestore):
     """Component to backup/restore TT-RSS"""
@@ -127,21 +141,6 @@ class TTRSSBackupRestore(BackupRestore):
         """Restore database contents."""
         super().restore_post(packet)
         actions.superuser_run('ttrss', ['restore-database'])
-
-
-def force_upgrade(helper, packages):
-    """Force update package to resolve conffile prompts."""
-    if 'tt-rss' not in packages:
-        return False
-
-    # Allow tt-rss any lower version to upgrade to 21.*
-    package = packages['tt-rss']
-    if Version(package['new_version']) > Version('22~'):
-        return False
-
-    helper.install(['tt-rss'], force_configuration='new')
-    actions.superuser_run('ttrss', ['setup'])
-    return True
 
 
 def get_domain():

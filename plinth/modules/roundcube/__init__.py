@@ -10,7 +10,7 @@ from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from plinth.package import Packages, install
 
 from . import manifest, privileged
 
@@ -97,16 +97,15 @@ class RoundcubeApp(app_module.App):
             privileged.set_config(local_only=True)
             self.enable()
 
+    def force_upgrade(self, packages):
+        """Force upgrade package to resolve conffile prompts."""
+        if 'roundcube-core' not in packages:
+            return False
 
-def force_upgrade(helper, packages):
-    """Force upgrade package to resolve conffile prompts."""
-    if 'roundcube-core' not in packages:
-        return False
+        # Allow roundcube any version to upgrade to any version. This is okay
+        # because there will no longer be conflicting file changes.
+        install(['roundcube-core'], force_configuration='new')
+        if self.get_component('webserver-roundcube').is_enabled():
+            self.get_component('webserver-roundcube-freedombox').enable()
 
-    # Allow roundcube any version to upgrade to any version. This is okay
-    # because there will no longer be conflicting file changes.
-    helper.install(['roundcube-core'], force_configuration='new')
-    if app.get_component('webserver-roundcube').is_enabled():
-        app.get_component('webserver-roundcube-freedombox').enable()
-
-    return True
+        return True

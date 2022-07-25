@@ -16,7 +16,7 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -107,11 +107,10 @@ class BindApp(app_module.App):
                                str(old_version)])
         self.enable()
 
-
-def force_upgrade(helper, _packages):
-    """Force upgrade the managed packages to resolve conffile prompt."""
-    helper.install(['bind9'], force_configuration='old')
-    return True
+    def force_upgrade(self, _packages):
+        """Force upgrade the managed packages to resolve conffile prompt."""
+        install(['bind9'], force_configuration='old')
+        return True
 
 
 def get_config():

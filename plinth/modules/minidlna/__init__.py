@@ -11,7 +11,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version
 
 from . import manifest
@@ -97,6 +97,22 @@ class MiniDLNAApp(app_module.App):
         if not old_version:
             self.enable()
 
+    def force_upgrade(self, packages):
+        """Force upgrade minidlna to resolve conffile prompt."""
+        if 'minidlna' not in packages:
+            return False
+
+        # Allow upgrade from 1.2.1+dfsg-1+b1 to 1.3.x
+        package = packages['minidlna']
+        if Version(package['new_version']) > Version('1.4~'):
+            return False
+
+        media_dir = get_media_dir()
+        install(['minidlna'], force_configuration='new')
+        set_media_dir(media_dir)
+
+        return True
+
 
 def get_media_dir():
     """Return the currently set media directory."""
@@ -106,20 +122,3 @@ def get_media_dir():
 def set_media_dir(media_dir):
     """Set the media directory from which files will be scanned for sharing."""
     actions.superuser_run('minidlna', ['set-media-dir', '--dir', media_dir])
-
-
-def force_upgrade(helper, packages):
-    """Force upgrade minidlna to resolve conffile prompt."""
-    if 'minidlna' not in packages:
-        return False
-
-    # Allow upgrade from 1.2.1+dfsg-1+b1 to 1.3.x
-    package = packages['minidlna']
-    if Version(package['new_version']) > Version('1.4~'):
-        return False
-
-    media_dir = get_media_dir()
-    helper.install(['minidlna'], force_configuration='new')
-    set_media_dir(media_dir)
-
-    return True
