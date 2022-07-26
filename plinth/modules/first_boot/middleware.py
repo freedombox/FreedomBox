@@ -11,6 +11,7 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
 
+from plinth import setup
 from plinth.modules import first_boot
 from plinth.utils import is_user_admin
 
@@ -31,6 +32,13 @@ class FirstBootMiddleware(MiddlewareMixin):
         # Don't interfere with help pages
         user_requests_help = request.path.startswith(reverse('help:index'))
         if user_requests_help:
+            return
+
+        # Don't interfere with first setup progress page. When first setup is
+        # still running, no apps may have provided the first boot steps. This
+        # will result in first boot wizard getting marked as completed
+        # prematurely.
+        if setup.is_first_setup_running:
             return
 
         firstboot_completed = first_boot.is_completed()

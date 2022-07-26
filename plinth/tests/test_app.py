@@ -141,22 +141,11 @@ def test_setup_state():
     """Test retrieving the current setup state of the app."""
     app = AppSetupTest()
     app.info.version = 3
-    module = sys.modules[__name__]
 
     app.set_setup_version(3)
     assert app.get_setup_state() == App.SetupState.UP_TO_DATE
     assert not app.needs_setup()
 
-    app.set_setup_version(0)
-    try:
-        delattr(module, 'setup')
-    except AttributeError:
-        pass
-    assert app.get_setup_state() == App.SetupState.UP_TO_DATE
-    assert not app.needs_setup()
-    assert app.get_setup_version() == 3
-
-    setattr(module, 'setup', True)
     app.set_setup_version(0)
     assert app.get_setup_state() == App.SetupState.NEEDS_SETUP
     assert app.needs_setup()

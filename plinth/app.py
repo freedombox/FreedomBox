@@ -51,6 +51,7 @@ class App:
 
     class SetupState(enum.Enum):
         """Various states of app being setup."""
+
         NEEDS_SETUP = 'needs-setup'
         NEEDS_UPDATE = 'needs-update'
         UP_TO_DATE = 'up-to-date'
@@ -137,15 +138,6 @@ class App:
         """Return whether the app is not setup or needs upgrade."""
         current_version = self.get_setup_version()
         if current_version and self.info.version <= current_version:
-            return self.SetupState.UP_TO_DATE
-
-        # If an app needs installing/updating but no setup method is available,
-        # then automatically set version.
-        #
-        # Minor violation of 'get' only discipline for convenience.
-        module = sys.modules[self.__module__]
-        if not hasattr(module, 'setup'):
-            self.set_setup_version(self.info.version)
             return self.SetupState.UP_TO_DATE
 
         if not current_version:
