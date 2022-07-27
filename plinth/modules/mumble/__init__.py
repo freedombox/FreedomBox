@@ -29,8 +29,6 @@ _description = [
       'from your desktop and mobile devices are available.')
 ]
 
-app = None
-
 
 class MumbleApp(app_module.App):
     """FreedomBox app for Mumble."""
@@ -100,7 +98,7 @@ class MumbleApp(app_module.App):
         if not old_version:
             self.enable()
 
-        app.get_component('letsencrypt-mumble').setup_certificates()
+        self.get_component('letsencrypt-mumble').setup_certificates()
 
     def force_upgrade(self, packages):
         """Force upgrade mumble-server to resolve conffile prompts."""

@@ -7,6 +7,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.errors import ActionError
 from plinth.modules import tor
 from plinth.modules.firewall.components import (Firewall,
@@ -36,18 +37,19 @@ def index(request):
     else:
         form = TorForm(initial=status, prefix='tor')
 
+    app = app_module.App.get('tor')
     return TemplateResponse(
         request, 'tor.html', {
             'app_id': 'tor',
-            'app_info': tor.app.info,
+            'app_info': app.info,
             'status': status,
             'config_running': bool(config_process),
             'form': form,
-            'firewall': tor.app.get_components_of_type(Firewall),
+            'firewall': app.get_components_of_type(Firewall),
             'has_diagnostics': True,
             'is_enabled': status['enabled'],
             'is_running': status['is_running'],
-            'port_forwarding_info': get_port_forwarding_info(tor.app),
+            'port_forwarding_info': get_port_forwarding_info(app),
             'refresh_page_sec': 3 if bool(config_process) else None,
         })
 
@@ -116,10 +118,11 @@ def __apply_changes(request, old_status, new_status):
         arg_value = 'enable' if new_status['enabled'] else 'disable'
         arguments.extend(['--service', arg_value])
         # XXX: Perform app enable/disable within the background process
+        app = app_module.App.get('tor')
         if new_status['enabled']:
-            tor.app.enable()
+            app.enable()
         else:
-            tor.app.disable()
+            app.disable()
 
         config_process = actions.superuser_run('tor',
                                                ['configure'] + arguments,

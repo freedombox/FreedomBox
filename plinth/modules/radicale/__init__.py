@@ -37,8 +37,6 @@ logger = logging.getLogger(__name__)
 
 CONFIG_FILE = '/etc/radicale/config'
 
-app = None
-
 
 class RadicaleApp(app_module.App):
     """FreedomBox app for Radicale."""

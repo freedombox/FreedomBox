@@ -26,8 +26,6 @@ _description = [
       'using such connections.')
 ]
 
-app = None
-
 
 class SSHApp(app_module.App):
     """FreedomBox app for SSH."""

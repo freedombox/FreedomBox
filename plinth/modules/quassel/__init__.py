@@ -38,8 +38,6 @@ _description = [
       'are available.'),
 ]
 
-app = None
-
 
 class QuasselApp(app_module.App):
     """FreedomBox app for Quassel."""

@@ -40,8 +40,6 @@ _description = [
       'be installed and upgraded at your own risk.'),
 ]
 
-app = None
-
 
 class WordPressApp(app_module.App):
     """FreedomBox app for WordPress."""

@@ -34,8 +34,6 @@ _description = [
       '<a href="https://git-scm.com/docs/gittutorial">Git tutorial</a>.')
 ]
 
-app = None
-
 
 class GitwebApp(app_module.App):
     """FreedomBox app for Gitweb."""
@@ -160,7 +158,7 @@ class GitwebBackupRestore(BackupRestore):
     def restore_post(self, packet):
         """Update access after restoration of backups."""
         super().restore_post(packet)
-        app.update_service_access()
+        self.app.update_service_access()
 
 
 def repo_exists(name):

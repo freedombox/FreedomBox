@@ -4,8 +4,9 @@ FreedomBox app to configure minidlna.
 """
 from django.utils.translation import gettext_lazy as _
 
-import plinth.app as app_module
-from plinth import actions, frontpage, menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -26,8 +27,6 @@ _description = [
       'media players, Smartphones, Televisions, and gaming systems ('
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
-
-app = None
 
 
 class MiniDLNAApp(app_module.App):

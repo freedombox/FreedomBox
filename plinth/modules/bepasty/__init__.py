@@ -32,8 +32,6 @@ _description = [
       'their password from the list.'),
 ]
 
-app = None
-
 PERMISSIONS = {
     'read': _('Read a file, if a web link to the file is available'),
     'create': _('Create or upload files'),

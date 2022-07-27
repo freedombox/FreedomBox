@@ -29,8 +29,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 SERVER_INTERFACE = 'wg0'
 
 

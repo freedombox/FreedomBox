@@ -37,8 +37,6 @@ _description = [
 
 SYSTEM_USER = 'syncthing'
 
-app = None
-
 
 class SyncthingApp(app_module.App):
     """FreedomBox app for Syncthing."""

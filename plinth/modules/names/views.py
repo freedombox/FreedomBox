@@ -5,7 +5,7 @@ FreedomBox app for name services.
 
 from django.template.response import TemplateResponse
 
-from plinth.modules import names
+from plinth import app as app_module
 
 from . import components
 
@@ -15,7 +15,7 @@ def index(request):
     status = get_status()
 
     return TemplateResponse(request, 'names.html', {
-        'app_info': names.app.info,
+        'app_info': app_module.App.get('names').info,
         'status': status
     })
 

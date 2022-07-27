@@ -36,8 +36,6 @@ _description = [
       'the app. All users with access can use all the libraries.')
 ]
 
-app = None
-
 LIBRARY_NAME_PATTERN = r'[a-zA-Z0-9 _-]+'
 
 

@@ -24,8 +24,6 @@ _description = [
       'change it immediately after enabling this service.')
 ]
 
-app = None
-
 SYSTEM_USER = 'debian-deluged'
 
 

@@ -44,8 +44,6 @@ _description = [
       'unavailable briefly.')
 ]
 
-app = None
-
 BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'

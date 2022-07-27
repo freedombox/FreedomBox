@@ -36,8 +36,6 @@ DEFAULT_FILE = '/etc/default/snapper'
 
 fs_types_supported = ['btrfs']
 
-app = None
-
 
 class SnapshotApp(app_module.App):
     """FreedomBox app for snapshots."""

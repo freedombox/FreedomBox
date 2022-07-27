@@ -13,8 +13,6 @@ from . import manifest
 
 _description = [_('Restart or shut down the system.')]
 
-app = None
-
 
 class PowerApp(app_module.App):
     """FreedomBox app for power controls."""

@@ -38,8 +38,6 @@ _description = [
         e_url=reverse_lazy('ejabberd:index')),
 ]
 
-app = None
-
 logger = logging.getLogger(__name__)
 
 

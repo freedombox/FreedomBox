@@ -24,8 +24,6 @@ _description = [
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class JSXCApp(app_module.App):
     """FreedomBox app for JSXC."""

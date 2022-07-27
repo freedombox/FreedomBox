@@ -15,6 +15,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
 from plinth.modules import storage
@@ -43,9 +44,10 @@ subsubmenu = [
 
 def not_supported_view(request):
     """Show that snapshots are not supported on the system."""
+    app = app_module.App.get('snapshot')
     template_data = {
-        'app_info': snapshot_module.app.info,
-        'title': snapshot_module.app.info.name,
+        'app_info': app.info,
+        'title': app.info.name,
         'fs_type': storage.get_filesystem_type(),
         'fs_types_supported': snapshot_module.fs_types_supported,
     }
@@ -68,10 +70,11 @@ def index(request):
     else:
         form = SnapshotForm(initial=status)
 
+    app = app_module.App.get('snapshot')
     return TemplateResponse(
         request, 'snapshot.html', {
-            'app_info': snapshot_module.app.info,
-            'title': snapshot_module.app.info.name,
+            'app_info': app.info,
+            'title': app.info.name,
             'subsubmenu': subsubmenu,
             'form': form
         })
@@ -103,10 +106,11 @@ def manage(request):
         if not snapshot['is_default'] and not snapshot['is_active']
     ])
 
+    app = app_module.App.get('snapshot')
     return TemplateResponse(
         request, 'snapshot_manage.html', {
-            'title': snapshot_module.app.info.name,
-            'app_info': snapshot_module.app.info,
+            'title': app.info.name,
+            'app_info': app.info,
             'snapshots': snapshots,
             'has_deletable_snapshots': has_deletable_snapshots,
             'subsubmenu': subsubmenu,

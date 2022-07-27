@@ -12,7 +12,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
-from plinth import actions, views
+from plinth import actions
+from plinth import app as app_module
+from plinth import views
 from plinth.modules import calibre
 
 from . import forms
@@ -70,6 +72,6 @@ def delete_library(request, name):
         return redirect(reverse_lazy('calibre:index'))
 
     return TemplateResponse(request, 'calibre-delete-library.html', {
-        'title': calibre.app.info.name,
+        'title': app_module.App.get('calibre').info.name,
         'name': name
     })

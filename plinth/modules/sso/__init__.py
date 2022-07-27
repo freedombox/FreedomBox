@@ -9,8 +9,6 @@ from plinth import actions
 from plinth import app as app_module
 from plinth.package import Packages
 
-app = None
-
 
 class SSOApp(app_module.App):
     """FreedomBox app for single sign on."""

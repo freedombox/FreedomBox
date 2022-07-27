@@ -32,8 +32,6 @@ _description = [
           'hostile local network.'), box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class AvahiApp(app_module.App):
     """FreedomBox app for Avahi."""

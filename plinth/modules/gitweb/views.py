@@ -12,7 +12,9 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
 
-from plinth import actions, views
+from plinth import actions
+from plinth import app as app_module
+from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import gitweb
 
@@ -69,7 +71,7 @@ class CreateRepoView(SuccessMessageMixin, FormView):
                     _('An error occurred while creating the repository.'),
                     error_text))
         else:
-            gitweb.app.update_service_access()
+            app_module.App.get('gitweb').update_service_access()
 
         return super().form_valid(form)
 
@@ -115,7 +117,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
             except ActionError:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
-        gitweb.app.update_service_access()
+        app_module.App.get('gitweb').update_service_access()
 
         return super().form_valid(form)
 
@@ -132,6 +134,7 @@ def delete(request, name):
     else:
         raise Http404
 
+    app = app_module.App.get('gitweb')
     if request.method == 'POST':
         try:
             gitweb.delete_repo(name)
@@ -142,11 +145,11 @@ def delete(request, name):
                 _('Could not delete {name}: {error}').format(
                     name=name, error=error),
             )
-        gitweb.app.update_service_access()
+        app.update_service_access()
 
         return redirect(reverse_lazy('gitweb:index'))
 
     return TemplateResponse(request, 'gitweb_delete.html', {
-        'title': gitweb.app.info.name,
+        'title': app.info.name,
         'name': name
     })

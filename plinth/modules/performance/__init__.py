@@ -24,8 +24,6 @@ _description = [
       'viewed using the Cockpit app.'),
 ]
 
-app = None
-
 
 class PerformanceApp(app_module.App):
     """FreedomBox app for Performance."""

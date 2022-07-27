@@ -33,8 +33,6 @@ _description = [
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
 
-app = None
-
 
 class TTRSSApp(app_module.App):
     """FreedomBox app for TT-RSS."""

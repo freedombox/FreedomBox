@@ -31,8 +31,6 @@ _description = [
         users_url=reverse_lazy('users:index'))
 ]
 
-app = None
-
 
 class IkiwikiApp(app_module.App):
     """FreedomBox app for Ikiwiki."""

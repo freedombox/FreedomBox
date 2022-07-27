@@ -42,8 +42,6 @@ LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 CERTIFICATE_CHECK_DELAY = 120
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class LetsEncryptApp(app_module.App):
     """FreedomBox app for Let's Encrypt."""

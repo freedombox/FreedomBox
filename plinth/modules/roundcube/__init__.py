@@ -33,8 +33,6 @@ _description = [
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
 
-app = None
-
 
 class RoundcubeApp(app_module.App):
     """FreedomBox app for Roundcube."""

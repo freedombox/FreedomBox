@@ -46,8 +46,6 @@ _description = [
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class EjabberdApp(app_module.App):
     """FreedomBox app for ejabberd."""
@@ -162,6 +160,7 @@ def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     del sender  # Unused
     del kwargs  # Unused
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return
 
@@ -175,6 +174,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return
 
@@ -187,6 +187,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def get_domains():
     """Return the list of domains configured for ejabberd.
     """
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return []
 
@@ -197,6 +198,7 @@ def get_domains():
 def on_domain_added(sender, domain_type, name='', description='',
                     services=None, **kwargs):
     """Update ejabberd config after domain name change."""
+    app = app_module.App.get('ejabberd')
     if not name or app.needs_setup():
         return
 
@@ -208,6 +210,7 @@ def on_domain_added(sender, domain_type, name='', description='',
 
 def set_domains(domains):
     """Configure ejabberd to have this list of domains."""
+    app = app_module.App.get('ejabberd')
     if not domains or app.needs_setup():
         return
 
@@ -220,6 +223,7 @@ def set_domains(domains):
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update ejabberd's STUN/TURN server configuration."""
+    app = app_module.App.get('ejabberd')
     if not force and app.needs_setup():
         return
 

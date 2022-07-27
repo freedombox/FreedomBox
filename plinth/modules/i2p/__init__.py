@@ -35,8 +35,6 @@ tunnels_to_manage = {
     'Irc2P': 'i2p-irc-freedombox'
 }
 
-app = None
-
 
 class I2PApp(app_module.App):
     """FreedomBox app for I2P."""

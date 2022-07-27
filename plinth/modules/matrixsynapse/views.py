@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.forms import DomainSelectionForm
 from plinth.modules import matrixsynapse, names
 from plinth.modules.coturn.components import TurnConfiguration
@@ -33,9 +34,10 @@ class SetupView(FormView):
     def get_context_data(self, *args, **kwargs):
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
+        app = app_module.App.get('matrixsynapse')
 
-        context['title'] = matrixsynapse.app.info.name
-        context['app_info'] = matrixsynapse.app.info
+        context['title'] = app.info.name
+        context['app_info'] = app.info
         context['domain_names'] = names.components.DomainName.list_names(
             'matrix-synapse-plinth')
 

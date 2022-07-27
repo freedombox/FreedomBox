@@ -9,20 +9,23 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
-from plinth import actions, views
-from plinth.modules import ikiwiki
+from plinth import actions
+from plinth import app as app_module
+from plinth import views
 
 from .forms import IkiwikiCreateForm
 
 
 class IkiwikiAppView(views.AppView):
     """Serve configuration page."""
+
     app_id = 'ikiwiki'
     template_name = 'ikiwiki_configure.html'
 
     def get_context_data(self, **kwargs):
         """Return the context data for rendering the template view."""
-        sites = ikiwiki.app.refresh_sites()
+        app = app_module.App.get('ikiwiki')
+        sites = app.refresh_sites()
         sites = [name for name in sites if name != '']
 
         context = super().get_context_data(**kwargs)
@@ -34,6 +37,7 @@ def create(request):
     """Form to create a wiki or blog."""
     form = None
 
+    app = app_module.App.get('ikiwiki')
     if request.method == 'POST':
         form = IkiwikiCreateForm(request.POST, prefix='ikiwiki')
         if form.is_valid():
@@ -46,16 +50,16 @@ def create(request):
                              form.cleaned_data['admin_name'],
                              form.cleaned_data['admin_password'])
 
-            ikiwiki.app.refresh_sites()
-            if ikiwiki.app.is_enabled():
-                ikiwiki.app.set_enabled(True)
+            app.refresh_sites()
+            if app.is_enabled():
+                app.set_enabled(True)
 
             return redirect(reverse_lazy('ikiwiki:index'))
     else:
         form = IkiwikiCreateForm(prefix='ikiwiki')
 
     return TemplateResponse(request, 'ikiwiki_create.html', {
-        'title': ikiwiki.app.info.name,
+        'title': app.info.name,
         'form': form
     })
 
@@ -92,11 +96,12 @@ def delete(request, name):
     On GET, display a confirmation page.
     On POST, delete the wiki/blog.
     """
-    title = ikiwiki.app.components['shortcut-ikiwiki-' + name].name
+    app = app_module.App.get('ikiwiki')
+    title = app.components['shortcut-ikiwiki-' + name].name
     if request.method == 'POST':
         try:
             actions.superuser_run('ikiwiki', ['delete', '--name', name])
-            ikiwiki.app.remove_shortcut(name)
+            app.remove_shortcut(name)
             messages.success(request,
                              _('{title} deleted.').format(title=title))
         except actions.ActionError as error:
@@ -108,6 +113,6 @@ def delete(request, name):
         return redirect(reverse_lazy('ikiwiki:index'))
 
     return TemplateResponse(request, 'ikiwiki_delete.html', {
-        'title': ikiwiki.app.info.name,
+        'title': app.info.name,
         'name': title
     })

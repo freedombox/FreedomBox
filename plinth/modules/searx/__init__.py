@@ -25,8 +25,6 @@ _description = [
       'It stores no cookies by default.')
 ]
 
-app = None
-
 
 class SearxApp(app_module.App):
     """FreedomBox app for Searx."""
@@ -131,6 +129,7 @@ def is_public_access_enabled():
 def enable_public_access():
     """Allow Searx app to be accessed by anyone with access."""
     actions.superuser_run('searx', ['enable-public-access'])
+    app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').disable()
     app.set_shortcut_login_required(False)
 
@@ -138,5 +137,6 @@ def enable_public_access():
 def disable_public_access():
     """Allow Searx app to be accessed by logged-in users only."""
     actions.superuser_run('searx', ['disable-public-access'])
+    app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').enable()
     app.set_shortcut_login_required(True)

@@ -45,8 +45,6 @@ _description = [
       'target=\'_blank\'>freedns.afraid.org</a>.'),
 ]
 
-app = None
-
 
 class DynamicDNSApp(app_module.App):
     """FreedomBox app for Dynamic DNS."""
@@ -221,6 +219,7 @@ def _update_dns_for_domain(domain):
 def update_dns(_data):
     """For all configured domains, check and up to date DNS records."""
     config = get_config()
+    app = app_module.App.get('dynamicdns')
     if not app.is_enabled():
         return
 

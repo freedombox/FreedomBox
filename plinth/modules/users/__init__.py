@@ -37,8 +37,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class UsersApp(app_module.App):
     """FreedomBox app for users and groups management."""

@@ -31,8 +31,6 @@ _description = [
       'device, browser or application to http://freedombox_address:1080/')
 ]
 
-app = None
-
 
 class ShadowsocksApp(app_module.App):
     """FreedomBox app for Shadowsocks."""

@@ -14,8 +14,6 @@ from plinth import cfg, menu, web_server
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class HelpApp(app_module.App):
     """FreedomBox app for showing help."""

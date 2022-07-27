@@ -34,8 +34,6 @@ FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
 ADVANCED_MODE_KEY = 'advanced_mode'
 
-app = None
-
 
 class ConfigApp(app_module.App):
     """FreedomBox app for basic system configuration."""

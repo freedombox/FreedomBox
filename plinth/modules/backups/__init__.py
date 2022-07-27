@@ -31,8 +31,6 @@ MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 
-app = None
-
 
 class BackupsApp(app_module.App):
     """FreedomBox app for backup and restore."""

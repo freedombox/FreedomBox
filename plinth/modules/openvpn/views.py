@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.views.decorators.http import require_POST
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.modules import config, openvpn
 from plinth.views import AppView
 
@@ -37,7 +38,7 @@ def setup(_):
     if not openvpn.is_setup():
         actions.superuser_run('openvpn', ['setup'], run_in_background=True)
 
-    openvpn.app.enable()
+    app_module.App.get('openvpn').enable()
 
     return redirect('openvpn:index')
 

@@ -30,8 +30,6 @@ _description = [
         ttrss_url=reverse_lazy('ttrss:index'), box_name=cfg.box_name),
 ]
 
-app = None
-
 
 class RSSBridgeApp(app_module.App):
     """FreedomBox app for RSS-Bridge."""

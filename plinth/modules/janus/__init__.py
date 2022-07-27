@@ -27,8 +27,6 @@ _description = [
           'use Janus.'), coturn_url=reverse_lazy('coturn:index')),
 ]
 
-app = None
-
 
 class JanusApp(app_module.App):
     """FreedomBox app for janus."""

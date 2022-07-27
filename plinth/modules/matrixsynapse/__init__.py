@@ -51,8 +51,6 @@ REGISTRATION_CONF_PATH = CONF_DIR + 'freedombox-registration.yaml'
 TURN_CONF_PATH = CONF_DIR + 'freedombox-turn.yaml'
 OVERRIDDEN_TURN_CONF_PATH = CONF_DIR + 'turn.yaml'
 
-app = None
-
 
 class MatrixSynapseApp(app_module.App):
     """FreedomBox app for Matrix Synapse."""
@@ -158,6 +156,7 @@ def upgrade():
 
 def setup_domain(domain_name):
     """Configure a domain name for matrixsynapse."""
+    app = app_module.App.get('matrixsynapse')
     app.get_component('letsencrypt-matrixsynapse').setup_certificates(
         [domain_name])
     actions.superuser_run('matrixsynapse',
@@ -212,6 +211,7 @@ def get_public_registration_status() -> bool:
 
 def get_certificate_status():
     """Return the status of certificate for the configured domain."""
+    app = app_module.App.get('matrixsynapse')
     status = app.get_component('letsencrypt-matrixsynapse').get_status()
     if not status:
         return 'no-domains'
@@ -222,6 +222,7 @@ def get_certificate_status():
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update the STUN/TURN server configuration."""
+    app = app_module.App.get('matrixsynapse')
     if not force and app.needs_setup():
         return
 

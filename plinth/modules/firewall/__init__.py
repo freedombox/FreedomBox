@@ -31,8 +31,6 @@ _description = [
 
 _port_details = {}
 
-app = None
-
 logger = logging.getLogger(__name__)
 
 _DBUS_NAME = 'org.fedoraproject.FirewallD1'

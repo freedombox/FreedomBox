@@ -27,7 +27,7 @@ def index(request):
 
     return TemplateResponse(
         request, 'diagnostics.html', {
-            'app_info': diagnostics.app.info,
+            'app_info': App.get('diagnostics').info,
             'is_running': is_running,
             'results': results,
             'refresh_page_sec': 3 if is_running else None

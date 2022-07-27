@@ -35,8 +35,6 @@ _description = [
           'networks on TCP port 9050.'), box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class TorApp(app_module.App):
     """FreedomBox app for Tor."""
@@ -97,7 +95,7 @@ class TorApp(app_module.App):
     def post_init(self):
         """Perform post initialization operations."""
         # Register hidden service name with Name Services module.
-        if (not app.needs_setup() and self.is_enabled()
+        if (not self.needs_setup() and self.is_enabled()
                 and app_is_running(self)):
             status = utils.get_status(initialized=False)
             hostname = status['hs_hostname']

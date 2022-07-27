@@ -35,8 +35,6 @@ _description = [
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
 ]
 
-app = None
-
 
 class CockpitApp(app_module.App):
     """FreedomBox app for Cockpit."""

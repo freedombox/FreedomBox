@@ -8,6 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
 from plinth import action_utils, actions
+from plinth import app as app_module
 from plinth.modules import security
 from plinth.modules.upgrades import is_backports_requested
 
@@ -31,7 +32,7 @@ def index(request):
 
     return TemplateResponse(
         request, 'security.html', {
-            'app_info': security.app.info,
+            'app_info': app_module.App.get('security').info,
             'form': form,
             'is_backports_requested': is_backports_requested(),
         })

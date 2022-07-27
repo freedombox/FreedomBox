@@ -20,8 +20,6 @@ _description = [
       'need to setup on the initial visit.'),
 ]
 
-app = None
-
 
 class ShaarliApp(app_module.App):
     """FreedomBox app for Shaarli."""

@@ -20,8 +20,6 @@ _description = [
       'in synchronization with servers on the Internet.')
 ]
 
-app = None
-
 
 class DateTimeApp(app_module.App):
     """FreedomBox app for date and time if time syncronization is unmanaged."""

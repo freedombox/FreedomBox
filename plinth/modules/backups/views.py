@@ -20,6 +20,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 from django.views.generic import FormView, TemplateView, View
 
+from plinth import app as app_module
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 
@@ -40,7 +41,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['app_info'] = backups.app.info
+        context['app_info'] = app_module.App.get('backups').info
         context['repositories'] = [
             repository.get_view_content() for repository in get_repositories()
         ]

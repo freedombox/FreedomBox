@@ -34,8 +34,6 @@ _description = [
       'logged in can make changes to the content.')
 ]
 
-app = None
-
 STATIC_CONFIG_FILE = '/etc/mediawiki/FreedomBoxStaticSettings.php'
 USER_CONFIG_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 

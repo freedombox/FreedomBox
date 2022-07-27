@@ -39,8 +39,6 @@ _description = [
       'own private space.'),
 ]
 
-app = None
-
 
 class SambaApp(app_module.App):
     """FreedomBox app for Samba file sharing."""

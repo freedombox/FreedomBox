@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
+from plinth import app as app_module
 from plinth import network
 from plinth.modules import first_boot, networks
 
@@ -123,7 +124,7 @@ def index(request):
     return TemplateResponse(
         request, 'networks_configuration.html', {
             'app_id': 'networks',
-            'app_info': networks.app.info,
+            'app_info': app_module.App.get('networks').info,
             'title': _('Network Connections'),
             'has_diagnostics': True,
             'is_enabled': True,

@@ -31,8 +31,6 @@ _description = [
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class StorageApp(app_module.App):
     """FreedomBox app for storage."""

@@ -7,6 +7,7 @@ import os
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.signals import domain_added, domain_removed
 
 LOGGER = logging.getLogger(__name__)
@@ -172,8 +173,7 @@ def update_names_module(is_enabled=None):
     if is_enabled is False:
         return
 
-    from plinth.modules.pagekite import app
-    if is_enabled is None and not app.is_enabled():
+    if is_enabled is None and not app_module.App.get('pagekite').is_enabled():
         return
 
     config = get_config()

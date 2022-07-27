@@ -40,8 +40,6 @@ _description = [
 
 logger = Logger(__name__)
 
-app = None
-
 
 class NetworksApp(app_module.App):
     """FreedomBox app for Networks."""

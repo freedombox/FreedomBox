@@ -42,8 +42,6 @@ _description = [
 CONFIG_FILE = '/etc/minetest/minetest.conf'
 AUG_PATH = '/files' + CONFIG_FILE + '/.anon'
 
-app = None
-
 
 class MinetestApp(app_module.App):
     """FreedomBox app for Minetest."""

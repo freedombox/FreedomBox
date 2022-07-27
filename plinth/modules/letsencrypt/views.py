@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from plinth import app as app_module
 from plinth.errors import ActionError
 from plinth.modules import letsencrypt
 
@@ -21,13 +22,14 @@ logger = logging.getLogger(__name__)
 def index(request):
     """Serve configuration page."""
     status = letsencrypt.get_status()
+    app = app_module.App.get('letsencrypt')
     return TemplateResponse(
         request, 'letsencrypt.html', {
             'app_id': 'letsencrypt',
-            'app_info': letsencrypt.app.info,
+            'app_info': app.info,
             'status': status,
             'has_diagnostics': True,
-            'is_enabled': letsencrypt.app.is_enabled(),
+            'is_enabled': app.is_enabled(),
         })
 
 

@@ -15,8 +15,6 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.utils import format_lazy, is_valid_user_name
 
-app = None
-
 
 class ApacheApp(app_module.App):
     """FreedomBox app for Apache web server."""

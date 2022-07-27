@@ -26,8 +26,6 @@ _description = [
           'connections through the given name.'), box_name=(cfg.box_name))
 ]
 
-app = None
-
 
 class NamesApp(app_module.App):
     """FreedomBox app for names."""

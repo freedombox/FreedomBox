@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView
 
+from plinth import app as app_module
 from plinth.modules import sharing
 
 from .forms import AddShareForm
@@ -24,8 +25,9 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = sharing.app.info.name
-        context['app_info'] = sharing.app.info
+        app = app_module.App.get('sharing')
+        context['title'] = app.info.name
+        context['app_info'] = app.info
         context['shares'] = sharing.list_shares()
         return context
 

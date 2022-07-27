@@ -25,8 +25,6 @@ _description = [
       'expected.')
 ]
 
-app = None
-
 logger = logging.Logger(__name__)
 
 running_task = None

@@ -42,8 +42,6 @@ _description = [
         sharing_url=reverse_lazy('sharing:index'))
 ]
 
-app = None
-
 SYSTEM_USER = 'debian-transmission'
 
 

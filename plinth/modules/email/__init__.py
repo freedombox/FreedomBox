@@ -44,7 +44,6 @@ _description = [
       'uninstalled.')
 ]
 
-app = None
 logger = logging.getLogger(__name__)
 
 
@@ -215,6 +214,7 @@ def _get_first_admin():
 def on_domain_added(sender, domain_type, name, description='', services=None,
                     **kwargs):
     """Handle addition of a new domain."""
+    app = plinth.app.App.get('email')
     if app.needs_setup():
         return
 
@@ -223,6 +223,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
     """Handle removal of a domain."""
+    app = plinth.app.App.get('email')
     if app.needs_setup():
         return
 

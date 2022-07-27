@@ -552,7 +552,7 @@ def _initialize_module(module_name, module):
             cls for _, cls in module_classes if issubclass(cls, App)
         ]
         for app_class in app_classes:
-            module.app = app_class()
+            app_class()
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s', module,
                          exception)

@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
 import plinth.modules.coturn as coturn
+from plinth import app as app_module
 from plinth import views
 
 from . import forms
@@ -35,7 +36,8 @@ class CoturnAppView(views.AppView):
         data = form.cleaned_data
         if coturn.get_domain() != data['domain']:
             coturn.set_domain(data['domain'])
-            coturn.app.get_component('letsencrypt-coturn').setup_certificates()
+            app = app_module.App.get('coturn')
+            app.get_component('letsencrypt-coturn').setup_certificates()
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

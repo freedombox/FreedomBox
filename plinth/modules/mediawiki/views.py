@@ -8,7 +8,9 @@ import logging
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions, views
+from plinth import actions
+from plinth import app as app_module
+from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import mediawiki
 
@@ -87,7 +89,8 @@ class MediaWikiAppView(views.AppView):
                 actions.superuser_run('mediawiki', ['private-mode', 'disable'])
                 messages.success(self.request, _('Private mode disabled'))
 
-            shortcut = mediawiki.app.get_component('shortcut-mediawiki')
+            app = app_module.App.get('mediawiki')
+            shortcut = app.get_component('shortcut-mediawiki')
             shortcut.login_required = new_config['enable_private_mode']
 
         if is_changed('default_skin'):

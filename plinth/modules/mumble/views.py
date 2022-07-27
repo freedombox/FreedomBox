@@ -6,6 +6,7 @@ Views for mumble app.
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
+from plinth import app as app_module
 from plinth.modules import mumble
 from plinth.modules.mumble.forms import MumbleForm
 from plinth.views import AppView
@@ -31,7 +32,8 @@ class MumbleAppView(AppView):
 
         if mumble.get_domain() != new_config['domain']:
             privileged.set_domain(new_config['domain'])
-            mumble.app.get_component('letsencrypt-mumble').setup_certificates()
+            app = app_module.App.get('mumble')
+            app.get_component('letsencrypt-mumble').setup_certificates()
             messages.success(self.request, _('Configuration updated'))
 
         password = new_config.get('super_user_password')

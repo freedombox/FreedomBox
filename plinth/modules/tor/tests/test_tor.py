@@ -13,6 +13,7 @@ from plinth.modules.tor import forms, utils
 
 class TestTor:
     """Test cases for testing the Tor module."""
+
     @staticmethod
     @pytest.mark.usefixtures('needs_root')
     def test_is_apt_transport_tor_enabled():
@@ -22,9 +23,9 @@ class TestTor:
         utils.is_apt_transport_tor_enabled()
 
     @staticmethod
-    @patch('plinth.modules.tor.app')
+    @patch('plinth.app.App.get')
     @pytest.mark.usefixtures('needs_root', 'load_cfg')
-    def test_get_status(_app):
+    def test_get_status(_app_get):
         """Test that get_status does not raise any unhandled exceptions.
 
         This should work regardless of whether tor is installed, or
@@ -35,6 +36,7 @@ class TestTor:
 
 class TestTorForm:
     """Test whether Tor configration form works."""
+
     @staticmethod
     def test_bridge_validator():
         """Test upstream bridges' form field validator."""

@@ -58,8 +58,6 @@ listen-on-v6 { any; };
 };
 '''
 
-app = None
-
 
 class BindApp(app_module.App):
     """FreedomBox app for Bind."""

@@ -31,8 +31,6 @@ _description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-app = None
-
 SERVER_CONFIGURATION_FILE = '/etc/openvpn/server/freedombox.conf'
 
 
