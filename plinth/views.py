@@ -3,7 +3,6 @@
 Main FreedomBox views.
 """
 
-import sys
 import time
 import urllib.parse
 
@@ -18,14 +17,13 @@ from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
 from plinth import app as app_module
-from plinth import package
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.modules.firewall.components import get_port_forwarding_info
 from plinth.package import Packages
 from plinth.translation import get_language_from_request, set_language
 
-from . import forms, frontpage
+from . import forms, frontpage, operation, package, setup
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -285,11 +283,10 @@ class SetupView(TemplateView):
 
         # Reuse the value of setup_state throughout the view for consistency.
         context['setup_state'] = app.get_setup_state()
-        setup_helper = sys.modules[app.__module__].setup_helper
-        context['setup_current_operation'] = setup_helper.current_operation
+        context['operations'] = operation.manager.filter(app.app_id)
 
         # Perform expensive operation only if needed.
-        if not context['setup_current_operation']:
+        if not context['operations']:
             context[
                 'package_manager_is_busy'] = package.is_package_manager_busy()
             context[
@@ -299,7 +296,7 @@ class SetupView(TemplateView):
         context['refresh_page_sec'] = None
         if context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
-        elif context['setup_current_operation']:
+        elif context['operations']:
             context['refresh_page_sec'] = 3
 
         return context
@@ -310,9 +307,7 @@ class SetupView(TemplateView):
                 # Handle installing/upgrading applications.
                 # Start the application setup, and refresh the page every few
                 # seconds to keep displaying the status.
-                app = app_module.App.get(self.kwargs['app_id'])
-                setup_helper = sys.modules[app.__module__].setup_helper
-                setup_helper.run_in_thread()
+                setup.run_setup_on_app(self.kwargs['app_id'])
 
                 # Give a moment for the setup process to start and show
                 # meaningful status.

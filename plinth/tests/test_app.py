@@ -4,7 +4,6 @@ Test module for App, base class for all applications.
 """
 
 import collections
-import sys
 from unittest.mock import Mock, call, patch
 
 import pytest

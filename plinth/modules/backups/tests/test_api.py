@@ -15,8 +15,6 @@ from ..components import BackupRestore
 
 # pylint: disable=protected-access
 
-setup_helper = MagicMock()
-
 
 def _get_test_manifest(name):
     return {

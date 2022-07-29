@@ -7,7 +7,6 @@ import collections
 import enum
 import inspect
 import logging
-import sys
 
 from plinth import cfg
 from plinth.signals import post_app_loading
@@ -542,10 +541,6 @@ def _insert_apps(app_id, app, remaining_apps, ordered_apps):
 
 def _initialize_module(module_name, module):
     """Perform initialization on all apps in a module."""
-    # Perform setup related initialization on the module
-    from . import setup  # noqa  # Avoid circular import
-    setup.init(module_name, module)
-
     try:
         module_classes = inspect.getmembers(module, inspect.isclass)
         app_classes = [

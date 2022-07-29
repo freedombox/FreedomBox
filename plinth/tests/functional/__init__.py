@@ -342,7 +342,7 @@ def install(browser, app_name):
     install_button_css = '.form-install input[type=submit]'
     while True:
         script = 'return (document.readyState == "complete") && ' \
-            '(!Boolean(document.querySelector(".installing")));'
+            '(!Boolean(document.querySelector(".app-operation")));'
         if not browser.execute_script(script):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
@@ -352,15 +352,10 @@ def install(browser, app_name):
         elif browser.is_element_present_by_css(install_button_css):
             install_button = browser.find_by_css(install_button_css).first
             if install_button['disabled']:
-                if not browser.find_by_name('refresh-packages'):
-                    # Package manager is busy, wait and refresh page
-                    time.sleep(1)
-                    browser.visit(browser.url)
-                else:
-                    # This app is not available in this distribution
-                    warnings.warn(
-                        f'App {app_name} is not available in distribution')
-                    pytest.skip('App not available in distribution')
+                # This app is not available in this distribution
+                warnings.warn(
+                    f'App {app_name} is not available in distribution')
+                pytest.skip('App not available in distribution')
             else:
                 install_button.click()
         else:

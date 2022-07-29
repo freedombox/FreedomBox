@@ -8,7 +8,6 @@ import json
 import logging
 import pathlib
 import subprocess
-import sys
 import threading
 from typing import Optional, Union
 
@@ -19,6 +18,9 @@ from django.utils.translation import gettext_lazy
 from plinth import actions, app
 from plinth.errors import ActionError, MissingPackageError
 from plinth.utils import format_lazy
+
+from . import operation as operation_module
+from .errors import PackageNotInstalledError
 
 logger = logging.getLogger(__name__)
 
@@ -170,12 +172,8 @@ class Packages(app.FollowerComponent):
 
     def setup(self, old_version):
         """Install the packages."""
-        # TODO: Drop the need for setup helper.
-        module_name = self.app.__module__
-        module = sys.modules[module_name]
-        helper = module.setup_helper
-        helper.install(self.get_actual_packages(),
-                       skip_recommends=self.skip_recommends)
+        install(self.get_actual_packages(),
+                skip_recommends=self.skip_recommends)
 
     def diagnose(self):
         """Run diagnostics and return results."""
@@ -385,6 +383,34 @@ class Transaction:
         }
         self.status_string = status_map.get(parts[0], '')
         self.percentage = int(float(parts[2]))
+
+
+def install(package_names, skip_recommends=False, force_configuration=None,
+            reinstall=False, force_missing_configuration=False):
+    """Install a set of packages marking progress."""
+    try:
+        operation = operation_module.Operation.get_operation()
+    except AttributeError:
+        raise RuntimeError(
+            'install() must be called from within an operation.')
+
+    if not operation.thread_data.get('allow_install', True):
+        # Raise error if packages are not already installed.
+        cache = apt.Cache()
+        for package_name in package_names:
+            if not cache[package_name].is_installed:
+                raise PackageNotInstalledError(package_name)
+
+        return
+
+    logger.info('Running install for app - %s, packages - %s',
+                operation.app_id, package_names)
+
+    from . import package
+    transaction = package.Transaction(operation.app_id, package_names)
+    operation.thread_data['transaction'] = transaction
+    transaction.install(skip_recommends, force_configuration, reinstall,
+                        force_missing_configuration)
 
 
 def is_package_manager_busy():
