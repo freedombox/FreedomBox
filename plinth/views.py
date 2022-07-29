@@ -288,8 +288,6 @@ class SetupView(TemplateView):
         # Perform expensive operation only if needed.
         if not context['operations']:
             context[
-                'package_manager_is_busy'] = package.is_package_manager_busy()
-            context[
                 'has_unavailable_packages'] = self._has_unavailable_packages(
                     app)
 

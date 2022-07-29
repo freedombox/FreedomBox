@@ -34,14 +34,7 @@
     <form class="form-install" action="" method="post">
       {% csrf_token %}
 
-      {% if package_manager_is_busy %}
-        <div class="alert alert-warning" role="alert">
-          {% blocktrans trimmed %}
-            Another installation or upgrade is already running.
-            Please wait for a few moments before trying again.
-          {% endblocktrans %}
-        </div>
-      {% elif has_unavailable_packages %}
+      {% if has_unavailable_packages %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             This application is currently not available in your distribution.
@@ -64,7 +57,7 @@
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary" name="install"
-             {% if package_manager_is_busy or has_unavailable_packages %}
+             {% if has_unavailable_packages %}
              disabled="disabled"
              {% endif %}
              {% if setup_state.value == 'needs-setup' %}

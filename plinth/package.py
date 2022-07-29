@@ -9,6 +9,7 @@ import logging
 import pathlib
 import subprocess
 import threading
+import time
 from typing import Optional, Union
 
 import apt.cache
@@ -402,6 +403,13 @@ def install(package_names, skip_recommends=False, force_configuration=None,
                 raise PackageNotInstalledError(package_name)
 
         return
+
+    start_time = time.time()
+    while is_package_manager_busy():
+        if time.time() - start_time >= 24 * 3600:  # One day
+            raise PackageException(_('Timeout waiting for package manager'))
+
+        time.sleep(3)  # seconds
 
     logger.info('Running install for app - %s, packages - %s',
                 operation.app_id, package_names)

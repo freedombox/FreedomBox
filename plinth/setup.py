@@ -176,10 +176,6 @@ def _run_first_setup():
 
 def _run_regular_setup():
     """Run setup on all apps also installing required packages."""
-    # TODO show notification that upgrades are running
-    if package.is_package_manager_busy():
-        raise Exception('Package manager is busy.')
-
     app_ids = _get_apps_for_regular_setup()
     run_setup_on_apps(app_ids, allow_install=True)
 
