@@ -316,12 +316,13 @@ class Notification(models.StoredNotification):
         return new_dict
 
     @staticmethod
-    def _render(request, template, data):
+    def _render(request, template, context):
         """Use the template name and render it."""
         if not template:
             return None
 
-        context = dict(data, box_name=gettext(cfg.box_name), request=request)
+        context = dict(context, box_name=gettext(cfg.box_name),
+                       request=request)
         try:
             return SimpleTemplateResponse(template, context).render()
         except TemplateDoesNotExist:
@@ -345,14 +346,12 @@ class Notification(models.StoredNotification):
                     action['text'] = Notification._translate(
                         action['text'], data)
 
-            body = Notification._render(request, note.body_template, data)
-            notes.append({
+            note_context = {
                 'id': note.id,
                 'app_id': note.app_id,
                 'severity': note.severity,
                 'title': Notification._translate(note.title, data),
                 'message': Notification._translate(note.message, data),
-                'body': body,
                 'actions': actions,
                 'data': data,
                 'created_time': note.created_time,
@@ -360,6 +359,10 @@ class Notification(models.StoredNotification):
                 'user': note.user,
                 'group': note.group,
                 'dismissed': note.dismissed,
-            })
+            }
+            body = Notification._render(request, note.body_template,
+                                        note_context)
+            note_context['body'] = body
+            notes.append(note_context)
 
         return {'notifications': notes, 'max_severity': max_severity}
