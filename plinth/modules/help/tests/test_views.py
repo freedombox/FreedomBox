@@ -9,6 +9,7 @@ Pending: - status log
 
 """
 
+import json
 import pathlib
 import subprocess
 from unittest.mock import patch
@@ -42,7 +43,6 @@ def fixture_app_urls():
 
 
 @pytest.mark.parametrize("view_name, view", (
-    ('contribute', views.contribute),
     ('feedback', views.feedback),
     ('support', views.support),
     ('index', views.index),
@@ -51,6 +51,40 @@ def test_simple_help_pages(rf, view_name, view):
     """Simple common test for certain help views."""
     response = view(rf.get(urls.reverse('help:' + view_name)))
     assert _is_page(response)
+
+
+@patch('apt.Cache')
+@patch('gzip.decompress')
+@patch('requests.get')
+def test_contribute_page(requests_get, decompress, apt_cache, rf):
+    """Test the contribute page."""
+    issues = [{
+        'type': 'testing-autorm',
+        'packages': ['autormpkg'],
+        'source': 'autormsrc',
+        'bugs': ['123']
+    }, {
+        'type': 'no-testing',
+        'package': ['notestingpkg'],
+        'source': 'nottestingsrc',
+    }, {
+        'type': 'gift',
+        'package': ['giftpkg'],
+        'bug': '456',
+        'title': 'bug 456 title',
+    }, {
+        'type': 'help',
+        'package': ['helppkg'],
+        'bug': '567',
+        'title': 'bug 567 title',
+    }]
+    decompress.return_value = json.dumps(issues)
+    response = views.contribute(rf.get(urls.reverse('help:contribute')))
+    assert _is_page(response)
+    assert issues == (response.context_data['testing_autorm'] +
+                      response.context_data['no_testing'] +
+                      response.context_data['gift'] +
+                      response.context_data['help'])
 
 
 def test_about(rf):
