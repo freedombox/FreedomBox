@@ -10,17 +10,16 @@ import os
 import pathlib
 
 import apt
+import requests
 from django.core.files.base import File
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
-import requests
 
 from plinth import __version__, actions, cfg
-from plinth.modules.upgrades.views import (get_os_release,
-                                           is_newer_version_available)
+from plinth.modules.upgrades import views as upgrades_views
 
 
 def index(request):
@@ -96,8 +95,8 @@ def about(request):
     context = {
         'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
         'version': __version__,
-        'new_version': is_newer_version_available(),
-        'os_release': get_os_release()
+        'new_version': upgrades_views.is_newer_version_available(),
+        'os_release': upgrades_views.get_os_release()
     }
     return TemplateResponse(request, 'help_about.html', context)
 

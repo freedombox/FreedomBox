@@ -87,10 +87,12 @@ def test_contribute_page(requests_get, decompress, apt_cache, rf):
                       response.context_data['help'])
 
 
-def test_about(rf):
+@patch('plinth.modules.upgrades.views.is_newer_version_available')
+@patch('plinth.modules.upgrades.views.get_os_release')
+def test_about(_get_os_release, _is_newer_version_available, rf):
     """Test some expected items in about view."""
-    manual_url = urls.reverse('help:manual')
-    response = views.about(rf.get(manual_url))
+    about_url = urls.reverse('help:about')
+    response = views.about(rf.get(about_url))
     assert _is_page(response)
     for item in ('version', 'new_version', 'os_release'):
         assert item in response.context_data
