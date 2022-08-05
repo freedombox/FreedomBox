@@ -6,7 +6,6 @@ FreedomBox app to interface with network-manager.
 import subprocess
 from logging import Logger
 
-from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import actions
@@ -78,9 +77,6 @@ class NetworksApp(app_module.App):
         for address in addresses:
             results.append(daemon.diagnose_port_listening(53, 'tcp', address))
             results.append(daemon.diagnose_port_listening(53, 'udp', address))
-
-        results.append(_diagnose_dnssec('4'))
-        results.append(_diagnose_dnssec('6'))
 
         return results
 
@@ -156,28 +152,3 @@ def _get_interface_addresses(interfaces):
             addresses.append(parts[3].split('/')[0])
 
     return addresses
-
-
-def _diagnose_dnssec(kind='4'):
-    """Perform diagnostic on whether the system is using DNSSEC.
-
-    Kind is either '4' or '6' for IPv4 and IPv6 respectively.
-    """
-    kind_option = {'4': '-4', '6': '-6'}[kind]
-
-    result = 'failed'
-    try:
-        output = subprocess.check_output([
-            'dig', kind_option, '+time=2', '+tries=1',
-            'test.dnssec-or-not.net', 'TXT'
-        ])
-
-        if 'Yes, you are using DNSSEC' in output.decode():
-            result = 'passed'
-    except subprocess.CalledProcessError:
-        pass
-
-    template = _('Using DNSSEC on IPv{kind}')
-    testname = format_lazy(template, kind=kind)
-
-    return [testname, result]
