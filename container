@@ -918,6 +918,7 @@ def _get_ssh_command(ip_address, distribution):
         'ssh', '-Y', '-C', '-t', '-i',
         str(public_key), '-o', 'LogLevel=error', '-o',
         'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null',
+        '-o', 'IdentitiesOnly=yes',
         f'fbx@{ip_address}'
     ]
 
