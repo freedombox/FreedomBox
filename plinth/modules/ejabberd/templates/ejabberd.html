@@ -7,11 +7,10 @@
 {% load i18n %}
 {% load static %}
 
-{% block description %}
+{% block status %}
+  {{ block.super }}
 
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
+  <h3>{% trans "Status" %}</h3>
 
   <p>
     {% url 'config:index' as index_url %}
