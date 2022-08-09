@@ -177,7 +177,7 @@ sudo chmod --recursive --silent a+w htmlcov
 sudo chmod --silent a+w .coverage
 
 exit 0
-'''
+''' # noqa
 
 SETUP_AND_RUN_TESTS_SCRIPT = '''
 set -x
@@ -917,9 +917,8 @@ def _get_ssh_command(ip_address, distribution):
     return [
         'ssh', '-Y', '-C', '-t', '-i',
         str(public_key), '-o', 'LogLevel=error', '-o',
-        'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null',
-        '-o', 'IdentitiesOnly=yes',
-        f'fbx@{ip_address}'
+        'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null', '-o',
+        'IdentitiesOnly=yes', f'fbx@{ip_address}'
     ]
 
 
