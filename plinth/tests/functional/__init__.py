@@ -609,6 +609,7 @@ class BaseAppTests:
     has_web = True
     check_diagnostics = True
     diagnostics_delay = 0
+    disable_after_tests = True
 
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
@@ -634,7 +635,8 @@ class BaseAppTests:
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
-        app_disable(session_browser, self.app_name)
+        if self.disable_after_tests:
+            app_disable(session_browser, self.app_name)
 
     def test_enable_disable(self, session_browser):
         """Test enabling and disabling the app."""
