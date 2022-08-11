@@ -67,6 +67,11 @@ class DiagnosticsApp(app_module.App):
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, _warn_about_low_ram_space)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
+
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()

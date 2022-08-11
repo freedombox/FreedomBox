@@ -74,3 +74,8 @@ class HelpApp(app_module.App):
         static_files = web_server.StaticFiles('static-files-help',
                                               directory_map)
         self.add(static_files)
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()

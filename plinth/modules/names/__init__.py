@@ -59,6 +59,11 @@ class NamesApp(app_module.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
+
 
 def on_domain_added(sender, domain_type, name='', description='',
                     services=None, **kwargs):

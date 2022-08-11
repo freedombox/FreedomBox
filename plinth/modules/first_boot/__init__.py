@@ -51,6 +51,11 @@ class FirstBootApp(app_module.App):
         """Perform post initialization operations."""
         post_setup.connect(_clear_first_boot_steps)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
+
 
 def _clear_first_boot_steps(sender, module_name, **kwargs):
     """Flush the cache of first boot steps so it is recreated."""

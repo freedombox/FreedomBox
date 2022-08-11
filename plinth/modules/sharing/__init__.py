@@ -49,6 +49,11 @@ class SharingApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
+
 
 def list_shares():
     """Return a list of shares."""
