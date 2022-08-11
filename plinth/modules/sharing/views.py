@@ -10,24 +10,22 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView
 
-from plinth import app as app_module
 from plinth.modules import sharing
+from plinth.views import AppView
 
 from .forms import AddShareForm
 
 
-class IndexView(TemplateView):
-    """View to show list of shares."""
+class SharingAppView(AppView):
+    """Sharing configuration page."""
+    app_id = 'sharing'
     template_name = 'sharing.html'
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        app = app_module.App.get('sharing')
-        context['title'] = app.info.name
-        context['app_info'] = app.info
         context['shares'] = sharing.list_shares()
         return context
 

@@ -10,10 +10,11 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -28,7 +29,7 @@ class SharingApp(app_module.App):
 
     app_id = 'sharing'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -43,13 +44,21 @@ class SharingApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
+        webserver = Webserver('webserver-sharing', 'sharing-freedombox')
+        self.add(webserver)
+
         backup_restore = BackupRestore('backup-restore-sharing',
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def has_diagnostics(self):
+        """Disable diagnostics button despite having webserver component."""
+        return False
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+        privileged.setup()
         self.enable()
 
 
