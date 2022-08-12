@@ -146,7 +146,7 @@ def _verify_invalid_share(browser, name):
 def _verify_nonexistant_share(browser, name):
     """Verify that given URL for a given share name is a 404."""
     functional.visit(browser, f'/share/{name}')
-    assert '404' in browser.title
+    functional.eventually(lambda: '404' in browser.title)
 
 
 def _verify_inaccessible_share(browser, name):
