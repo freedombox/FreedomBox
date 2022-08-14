@@ -34,7 +34,8 @@ _description = [
         _('It is not meant to be used directly by users. Servers such as '
           '<a href="{ms_url}">Matrix Synapse</a> or <a href="{e_url}">ejabberd'
           '</a> need to be configured with the details provided here.'),
-        ms_url=reverse_lazy('matrixsynapse:index'), e_url=('ejabberd:index')),
+        ms_url=reverse_lazy('matrixsynapse:index'),
+        e_url=reverse_lazy('ejabberd:index')),
 ]
 
 app = None
