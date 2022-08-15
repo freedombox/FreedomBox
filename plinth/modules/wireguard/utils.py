@@ -9,7 +9,9 @@ import logging
 import subprocess
 import time
 
-from plinth import actions, network
+from plinth import actions
+from plinth import app as app_module
+from plinth import network
 from plinth.utils import import_from_gi
 
 nm = import_from_gi('NM', '1.0')
@@ -156,8 +158,7 @@ def _find_next_interface():
 
 def add_server(settings):
     """Add information for connecting to a server."""
-    from plinth.modules.wireguard import app
-
+    app = app_module.App.get('wireguard')
     interface_name = _find_next_interface()
     settings['common']['name'] = 'WireGuard-Client-' + interface_name
     settings['common']['interface'] = interface_name
@@ -182,8 +183,7 @@ def edit_server(interface, settings):
 
 def setup_server():
     """Setup a server connection that clients can connect to."""
-    from plinth.modules.wireguard import app
-
+    app = app_module.App.get('wireguard')
     setting_name = nm.SETTING_WIREGUARD_SETTING_NAME
     private_key = _generate_private_key()
     settings = {
