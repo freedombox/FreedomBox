@@ -455,7 +455,16 @@ class Info(FollowerComponent):
 
 
 class EnableState(LeaderComponent):
-    """A component to hold the enable state of an app using a simple flag."""
+    """A component to hold the enable state of an app using a simple flag.
+
+    The flag is stored in the FreedomBox service database. This component
+    should only be used if an app does not have any other way to determine if
+    it is enabled or disabled by examining the state of the system. Typical
+    apps have daemons, web server configuration, etc. and the enabled/disabled
+    state of those determine the enabled/disabled state of the entire app. If
+    an does not have any such system state, then this component may be used to
+    provide enable/disable functionality for the app.
+    """
 
     @property
     def key(self):
