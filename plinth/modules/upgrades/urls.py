@@ -21,4 +21,6 @@ urlpatterns = [
             views.UpdateFirstbootProgressView.as_view(),
             name='update-firstboot-progress'),
     re_path(r'^sys/upgrades/upgrade/$', views.upgrade, name='upgrade'),
+    re_path(r'^sys/upgrades/test-dist-upgrade/$', views.test_dist_upgrade,
+            name='test-dist-upgrade'),
 ]

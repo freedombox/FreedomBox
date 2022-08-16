@@ -189,54 +189,61 @@ def setup_repositories(_):
 
 def check_dist_upgrade(_):
     """Check for upgrade to new stable release."""
-    from plinth.notification import Notification
     if is_dist_upgrade_enabled():
-        output = actions.superuser_run('upgrades', ['start-dist-upgrade'])
-        result = json.loads(output)
-        dist_upgrade_started = result['dist_upgrade_started']
-        reason = result['reason']
-        if 'found-previous' in reason:
-            logger.info(
-                'Found previous dist-upgrade. If it was interrupted, it will '
-                'be restarted.')
-        elif 'already-' in reason:
-            logger.info('Skip dist upgrade: System is already up-to-date.')
-        elif 'codename-not-found' in reason:
-            logger.warning('Skip dist upgrade: Codename not found in release '
-                           'file.')
-        elif 'upgrades-not-enabled' in reason:
-            logger.info('Skip dist upgrade: Automatic updates are not '
-                        'enabled.')
-        elif 'test-not-set' in reason:
-            logger.info('Skip dist upgrade: --test is not set.')
-        elif 'not-enough-free-space' in reason:
-            logger.warning('Skip dist upgrade: Not enough free space in /.')
-            title = gettext_noop('Could not start distribution update')
-            message = gettext_noop(
-                'There is not enough free space in the root partition to '
-                'start the distribution update. Please ensure at least 5 GB '
-                'is free. Distribution update will be retried after 24 hours,'
-                ' if enabled.')
-            Notification.update_or_create(
-                id='upgrades-dist-upgrade-free-space', app_id='upgrades',
-                severity='warning', title=title, message=message, actions=[{
-                    'type': 'dismiss'
-                }], group='admin')
-        elif 'started-dist-upgrade' in reason:
-            logger.info('Started dist upgrade.')
-            title = gettext_noop('Distribution update started')
-            message = gettext_noop(
-                'Started update to next stable release. This may take a long '
-                'time to complete.')
-            Notification.update_or_create(id='upgrades-dist-upgrade-started',
-                                          app_id='upgrades', severity='info',
-                                          title=title, message=message,
-                                          actions=[{
-                                              'type': 'dismiss'
-                                          }], group='admin')
-        else:
-            logger.warning('Unhandled result of start-dist-upgrade: %s, %s',
-                           dist_upgrade_started, reason)
+        try_start_dist_upgrade()
+
+
+def try_start_dist_upgrade(test=False):
+    """Try to start dist upgrade."""
+    from plinth.notification import Notification
+    command = ['start-dist-upgrade']
+    if test:
+        command.append('--test')
+
+    output = actions.superuser_run('upgrades', command)
+    result = json.loads(output)
+    dist_upgrade_started = result['dist_upgrade_started']
+    reason = result['reason']
+    if 'found-previous' in reason:
+        logger.info(
+            'Found previous dist-upgrade. If it was interrupted, it will '
+            'be restarted.')
+    elif 'already-' in reason:
+        logger.info('Skip dist upgrade: System is already up-to-date.')
+    elif 'codename-not-found' in reason:
+        logger.warning('Skip dist upgrade: Codename not found in release '
+                       'file.')
+    elif 'upgrades-not-enabled' in reason:
+        logger.info('Skip dist upgrade: Automatic updates are not enabled.')
+    elif 'test-not-set' in reason:
+        logger.info('Skip dist upgrade: --test is not set.')
+    elif 'not-enough-free-space' in reason:
+        logger.warning('Skip dist upgrade: Not enough free space in /.')
+        title = gettext_noop('Could not start distribution update')
+        message = gettext_noop(
+            'There is not enough free space in the root partition to '
+            'start the distribution update. Please ensure at least 5 GB '
+            'is free. Distribution update will be retried after 24 hours,'
+            ' if enabled.')
+        Notification.update_or_create(id='upgrades-dist-upgrade-free-space',
+                                      app_id='upgrades', severity='warning',
+                                      title=title, message=message, actions=[{
+                                          'type': 'dismiss'
+                                      }], group='admin')
+    elif 'started-dist-upgrade' in reason:
+        logger.info('Started dist upgrade.')
+        title = gettext_noop('Distribution update started')
+        message = gettext_noop(
+            'Started update to next stable release. This may take a long '
+            'time to complete.')
+        Notification.update_or_create(id='upgrades-dist-upgrade-started',
+                                      app_id='upgrades', severity='info',
+                                      title=title, message=message, actions=[{
+                                          'type': 'dismiss'
+                                      }], group='admin')
+    else:
+        logger.warning('Unhandled result of start-dist-upgrade: %s, %s',
+                       dist_upgrade_started, reason)
 
 
 def is_backports_requested():
@@ -303,3 +310,14 @@ def can_enable_dist_upgrade():
     """Return whether dist upgrade can be enabled."""
     release, _ = get_current_release()
     return release not in ['unstable', 'testing']
+
+
+def can_test_dist_upgrade():
+    """Return whether dist upgrade can be tested."""
+    return can_enable_dist_upgrade() and cfg.develop
+
+
+def test_dist_upgrade():
+    """Test dist-upgrade from stable to testing."""
+    if can_test_dist_upgrade():
+        try_start_dist_upgrade(test=True)

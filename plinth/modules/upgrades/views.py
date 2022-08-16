@@ -45,6 +45,7 @@ class UpgradesConfigurationView(AppView):
         context['version'] = __version__
         context['new_version'] = is_newer_version_available()
         context['os_release'] = get_os_release()
+        context['can_test_dist_upgrade'] = upgrades.can_test_dist_upgrade()
         return context
 
     def form_valid(self, form):
@@ -213,3 +214,12 @@ class UpdateFirstbootProgressView(TemplateView):
         context['next_step'] = first_boot.next_step()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         return context
+
+
+def test_dist_upgrade(request):
+    """Test dist-upgrade from stable to testing."""
+    if request.method == 'POST':
+        upgrades.test_dist_upgrade()
+        messages.success(request, _('Starting distribution upgrade test.'))
+
+    return redirect(reverse_lazy('upgrades:index'))
