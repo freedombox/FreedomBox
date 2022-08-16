@@ -463,6 +463,13 @@ def running_inside_container():
 ##############################
 # System -> Config utilities #
 ##############################
+def set_hostname(browser, hostname):
+    nav_to_module(browser, 'config')
+    browser.find_by_id('id_hostname').fill(hostname)
+    update_setup = browser.find_by_css('.btn-primary')
+    submit(browser, element=update_setup)
+
+
 def set_advanced_mode(browser, mode):
     nav_to_module(browser, 'config')
     advanced_mode = browser.find_by_id('id_advanced_mode')

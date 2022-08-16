@@ -20,7 +20,7 @@ def fixture_background(session_browser):
 
 def test_change_hostname(session_browser):
     """Test changing the hostname."""
-    _set_hostname(session_browser, 'mybox')
+    functional.set_hostname(session_browser, 'mybox')
     assert _get_hostname(session_browser) == 'mybox'
 
 
@@ -47,13 +47,6 @@ def test_change_home_page(session_browser):
 def _get_hostname(browser):
     functional.nav_to_module(browser, 'config')
     return browser.find_by_id('id_hostname').value
-
-
-def _set_hostname(browser, hostname):
-    functional.nav_to_module(browser, 'config')
-    browser.find_by_id('id_hostname').fill(hostname)
-    update_setup = browser.find_by_css('.btn-primary')
-    functional.submit(browser, element=update_setup)
 
 
 def _get_domain_name(browser):
