@@ -8,6 +8,38 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 22.18 (2022-08-15) ==
+
+=== Highlights ===
+
+ * networks: Remove DNSSEC diagnostics
+ * setup: Allow starting installation when package manager is busy
+ * setup: Fix issue with immediate refresh after installation
+
+=== Other Changes ===
+
+ * *: Add setup method on all apps that don't have it
+ * *: Drop module level app property
+ * *: Make force upgrading part of app rather than a module
+ * *: Make setup method part of App class for all apps
+ * app: Drop optimization that skips setup process
+ * backups: tests: Mark need for Django database during API tests
+ * container: Add !IdentitiesOnly option to SSH
+ * container: Ignore flake8 error 'line too long' in bash script text
+ * coturn: Fix link to ejabberd in description
+ * doc: dev: Document previously undocumented components
+ * ejabberd: Fix showing the status messages
+ * locale: Update translations for Bulgarian, Czech, Dutch, French, German, Turkish, Ukrainian
+ * matrixsynapse: Fix showing the status messages
+ * notification: Pass full context when rendering body template
+ * operation: Add module to manage threaded operations
+ * package: Run installation operation using app_id instead of module
+ * setup: Drop setup_helper and use the new Operation API
+ * sharing: Add installing and enable/disable like other apps
+ * sharing: tests: functional: Fix a flaky test by waiting
+ * ssh: tests: functional: Keep service enabled after tests
+ * storage: Fix enumerating partitions without mount points
+
 == FreedomBox 22.17 (2022-08-01) ==
 
 === Highlights ===
