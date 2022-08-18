@@ -155,18 +155,20 @@ def get_password(username):
 
 
 def is_available(browser, site_name):
+    """Check if the given site_name is available."""
     url_to_visit = config['DEFAULT']['url'] + _get_site_url(site_name)
     browser.visit(url_to_visit)
     time.sleep(3)
     browser.reload()
-    not_404 = '404' not in browser.title
+    if '404' in browser.title:
+        return False
+
     # The site might have a default path after the sitename,
     # e.g /mediawiki/Main_Page
     print('URL =', browser.url, url_to_visit, browser.title)
     browser_url = browser.url.partition('://')[2]
     url_to_visit_without_proto = url_to_visit.strip('/').partition('://')[2]
-    no_redirect = browser_url.startswith(url_to_visit_without_proto)
-    return not_404 and no_redirect
+    return browser_url.startswith(url_to_visit_without_proto)  # not a redirect
 
 
 def download_file(browser, url):
