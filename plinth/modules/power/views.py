@@ -11,17 +11,20 @@ from django.urls import reverse
 from plinth import actions
 from plinth import app as app_module
 from plinth import package
+from plinth.views import AppView
 
 
-def index(request):
-    """Serve power controls page."""
-    app = app_module.App.get('power')
-    return TemplateResponse(
-        request, 'power.html', {
-            'title': app.info.name,
-            'app_info': app.info,
-            'pkg_manager_is_busy': package.is_package_manager_busy()
-        })
+class PowerAppView(AppView):
+    """Show power app main page."""
+
+    app_id = 'power'
+    template_name = 'power.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['pkg_manager_is_busy'] = package.is_package_manager_busy()
+        return context
 
 
 def restart(request):
