@@ -8,5 +8,5 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/names/$', views.index, name='index'),
+    re_path(r'^sys/names/$', views.NamesAppView.as_view(), name='index'),
 ]
