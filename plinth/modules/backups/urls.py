@@ -5,14 +5,14 @@ URLs for the backups module.
 
 from django.urls import re_path
 
-from .views import (AddRemoteRepositoryView, AddRepositoryView,
+from .views import (AddRemoteRepositoryView, AddRepositoryView, BackupsView,
                     CreateArchiveView, DeleteArchiveView, DownloadArchiveView,
-                    IndexView, RemoveRepositoryView, RestoreArchiveView,
+                    RemoveRepositoryView, RestoreArchiveView,
                     RestoreFromUploadView, ScheduleView, UploadArchiveView,
                     VerifySshHostkeyView, mount_repository, umount_repository)
 
 urlpatterns = [
-    re_path(r'^sys/backups/$', IndexView.as_view(), name='index'),
+    re_path(r'^sys/backups/$', BackupsView.as_view(), name='index'),
     re_path(r'^sys/backups/(?P<uuid>[^/]+)/schedule/$', ScheduleView.as_view(),
             name='schedule'),
     re_path(r'^sys/backups/create/$', CreateArchiveView.as_view(),
