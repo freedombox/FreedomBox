@@ -257,6 +257,7 @@ class AppView(FormView):
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
+        context['show_uninstall'] = not self.app.info.is_essential
         context['operations'] = operation.manager.filter(self.app.app_id)
         context['refresh_page_sec'] = None
         if context['operations']:
@@ -278,6 +279,7 @@ class SetupView(TemplateView):
         app_id = self.kwargs['app_id']
         app = app_module.App.get(app_id)
 
+        context['app_id'] = app.app_id
         context['app_info'] = app.info
 
         # Report any installed conflicting packages that will be removed.
@@ -287,8 +289,12 @@ class SetupView(TemplateView):
         context['package_conflicts_action'] = package_conflicts_action
 
         # Reuse the value of setup_state throughout the view for consistency.
-        context['setup_state'] = app.get_setup_state()
+        setup_state = app.get_setup_state()
+        context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
+        context['show_uninstall'] = (
+            not app.info.is_essential
+            and setup_state != app_module.App.SetupState.NEEDS_SETUP)
 
         # Perform expensive operation only if needed.
         if not context['operations']:

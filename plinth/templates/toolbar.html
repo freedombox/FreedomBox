@@ -21,7 +21,7 @@
         </a>
       {% endif %}
 
-      {% if has_diagnostics %}
+      {% if has_diagnostics or show_uninstall %}
         <!-- Single button -->
         <div class="btn-group button-secondary">
           <button type="button" class="btn btn-default dropdown-toggle"
@@ -32,6 +32,13 @@
           <div class="dropdown-menu" aria-labelledby="id_extra_actions_button">
             {% if has_diagnostics %}
               {% include "diagnostics_button.html" with app_id=app_id enabled=is_enabled %}
+            {% endif %}
+            {% if show_uninstall %}
+              <a class="dropdown-item uninstall-item"
+                 href="{% url 'uninstall' app_id=app_id %}"
+                 title="{% trans "Uninstall" %}">
+                {% trans "Uninstall" %}
+              </a>
             {% endif %}
           </div>
         </div>
