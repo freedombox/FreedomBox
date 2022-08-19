@@ -5,33 +5,44 @@ FreedomBox app for running diagnostics.
 
 import logging
 
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 
 from plinth.app import App
 from plinth.modules import diagnostics
+from plinth.views import AppView
 
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    """Serve the index page"""
-    if request.method == 'POST' and not diagnostics.running_task:
-        diagnostics.start_task()
+class DiagnosticsView(AppView):
+    """Diagnostics app page."""
 
-    is_running = diagnostics.running_task is not None
-    with diagnostics.results_lock:
-        results = diagnostics.current_results
+    app_id = 'diagnostics'
+    template_name = 'diagnostics.html'
 
-    return TemplateResponse(
-        request, 'diagnostics.html', {
-            'app_info': App.get('diagnostics').info,
-            'is_running': is_running,
-            'results': results,
-            'refresh_page_sec': 3 if is_running else None
-        })
+    def post(self, request):
+        """Start diagnostics."""
+        if not diagnostics.running_task:
+            diagnostics.start_task()
+
+        return HttpResponseRedirect(reverse('diagnostics:index'))
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        is_task_running = diagnostics.running_task is not None
+        with diagnostics.results_lock:
+            results = diagnostics.current_results
+
+        context = super().get_context_data(**kwargs)
+        context['has_diagnostics'] = False
+        context['is_task_running'] = is_task_running
+        context['results'] = results
+        context['refresh_page_sec'] = 3 if is_task_running else None
+        return context
 
 
 @require_POST
