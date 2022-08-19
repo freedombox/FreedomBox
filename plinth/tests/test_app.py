@@ -126,13 +126,23 @@ def test_get_components_of_type(app_with_components):
 
 
 def test_app_setup(app_with_components):
-    """Test that running setup on an app run setup on components."""
+    """Test that running setup on an app runs setup on components."""
     for component in app_with_components.components.values():
         component.setup = Mock()
 
     app_with_components.setup(old_version=2)
     for component in app_with_components.components.values():
         component.setup.assert_has_calls([call(old_version=2)])
+
+
+def test_app_uninstall(app_with_components):
+    """Test that running uninstall on an app runs uninstall on components."""
+    for component in app_with_components.components.values():
+        component.uninstall = Mock()
+
+    app_with_components.uninstall()
+    for component in app_with_components.components.values():
+        component.uninstall.assert_has_calls([call()])
 
 
 @pytest.mark.django_db
@@ -282,6 +292,12 @@ def test_component_setup():
     """Test running setup on component."""
     component = Component('test-component')
     assert component.setup(old_version=1) is None
+
+
+def test_component_uninstall():
+    """Test running uninstall on component."""
+    component = Component('test-component')
+    assert component.uninstall() is None
 
 
 def test_component_enable():

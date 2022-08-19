@@ -133,6 +133,11 @@ class App:
         for component in self.components.values():
             component.setup(old_version=old_version)
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        for component in self.components.values():
+            component.uninstall()
+
     def get_setup_state(self) -> SetupState:
         """Return whether the app is not setup or needs upgrade."""
         current_version = self.get_setup_version()
@@ -279,6 +284,9 @@ class Component:
 
     def setup(self, old_version):
         """Run operations to install and configure the component."""
+
+    def uninstall(self):
+        """De-configure and uninstall the component."""
 
     def enable(self):
         """Run operations to enable the component."""
