@@ -176,6 +176,10 @@ class Packages(app.FollowerComponent):
         install(self.get_actual_packages(),
                 skip_recommends=self.skip_recommends)
 
+    def uninstall(self):
+        """Uninstall and purge the packages."""
+        uninstall(self.get_actual_packages())
+
     def diagnose(self):
         """Run diagnostics and return results."""
         results = super().diagnose()

@@ -114,6 +114,21 @@ def test_packages_setup(install):
     install.assert_has_calls([call(['python3'], skip_recommends=False)])
 
 
+@patch('plinth.package.uninstall')
+def test_packages_uninstall(uninstall):
+    """Test uninstalling packages component."""
+
+    class TestApp(App):
+        """Test app"""
+        app_id = 'test-app'
+
+    component = Packages('test-component', ['python3', 'bash'])
+    app = TestApp()
+    app.add(component)
+    app.uninstall()
+    uninstall.assert_has_calls([call(['python3', 'bash'])])
+
+
 @patch('apt.Cache')
 def test_diagnose(cache):
     """Test checking for latest version of the package."""
