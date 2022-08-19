@@ -14,10 +14,30 @@ from django.utils.translation import gettext_lazy as _
 import plinth
 
 
+def _get_repository_choices():
+    """Return the list of available repositories."""
+    import plinth.modules.backups.repository as repository_module
+    choices = [(repository.uuid, repository.name)
+               for repository in repository_module.get_repositories()
+               if repository.is_usable()]
+
+    return choices
+
+
 class AppEnableDisableForm(forms.Form):
     """Form to enable / disable an app."""
     should_enable = forms.BooleanField(widget=forms.HiddenInput,
                                        required=False)
+
+
+class UninstallForm(forms.Form):
+    """Form to uninstall an app."""
+    should_backup = forms.BooleanField(
+        label=_('Backup app before uninstall'),
+        help_text=_('Restoring from the backup will restore app data.'),
+        required=False, initial=True)
+    repository = forms.ChoiceField(label=_('Repository to backup to'),
+                                   choices=_get_repository_choices)
 
 
 class DomainSelectionForm(forms.Form):
