@@ -69,14 +69,7 @@
     </form>
 
   {% else %}
-
-    {% for operation in operations %}
-      <div class="app-operation">
-        <span class="fa fa-refresh fa-spin processing"></span>
-        {{ operation.translated_message }}
-      </div>
-    {% endfor %}
-
+    {% include "operations.html" %}
   {% endif %}
 
 {% endblock %}
