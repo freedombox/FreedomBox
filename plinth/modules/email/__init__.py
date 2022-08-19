@@ -16,7 +16,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages, remove
+from plinth.package import Packages, uninstall
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -173,7 +173,7 @@ class EmailApp(plinth.app.App):
             if packages_to_remove:
                 logger.info('Removing conflicting packages: %s',
                             packages_to_remove)
-                remove(packages_to_remove)
+                uninstall(packages_to_remove)
 
         # Install
         _clear_conflicts()

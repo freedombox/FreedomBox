@@ -17,7 +17,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions, app
-from plinth.errors import ActionError, MissingPackageError
+from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
 from . import operation as operation_module
@@ -144,7 +144,7 @@ class Packages(app.FollowerComponent):
                 self._packages.append(package)
 
         self.skip_recommends = skip_recommends
-        self.conflicts = conflicts
+        self.conflicts = conflicts or []
         self.conflicts_action = conflicts_action
 
     @property
@@ -324,6 +324,15 @@ class Transaction:
             logger.exception('Error installing package: %s', exception)
             raise
 
+    def uninstall(self):
+        """Run an apt-get transaction to uninstall given packages."""
+        try:
+            self._run_apt_command(['remove', self.app_id, '--packages'] +
+                                  self.package_names)
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Error uninstalling package: %s', exception)
+            raise
+
     def refresh_package_lists(self):
         """Refresh apt package lists."""
         try:
@@ -351,7 +360,7 @@ class Transaction:
 
         return_code = process.wait()
         if return_code != 0:
-            raise PackageException(_('Error during installation'), self.stderr)
+            raise PackageException(_('Error running apt-get'), self.stderr)
 
     def _read_stdout(self, process):
         """Read the stdout of the process and update progress."""
@@ -421,6 +430,30 @@ def install(package_names, skip_recommends=False, force_configuration=None,
                         force_missing_configuration)
 
 
+def uninstall(package_names):
+    """Uninstall a set of packages."""
+    try:
+        operation = operation_module.Operation.get_operation()
+    except AttributeError:
+        raise RuntimeError(
+            'uninstall() must be called from within an operation.')
+
+    start_time = time.time()
+    while is_package_manager_busy():
+        if time.time() - start_time >= 24 * 3600:  # One day
+            raise PackageException(_('Timeout waiting for package manager'))
+
+        time.sleep(3)  # seconds
+
+    logger.info('Running uninstall for app - %s, packages - %s',
+                operation.app_id, package_names)
+
+    from . import package
+    transaction = package.Transaction(operation.app_id, package_names)
+    operation.thread_data['transaction'] = transaction
+    transaction.uninstall()
+
+
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
@@ -467,11 +500,3 @@ def packages_installed(candidates: Union[list, tuple]) -> list:
             pass
 
     return installed_packages
-
-
-def remove(packages: Union[list, tuple]) -> None:
-    """Remove packages."""
-    try:
-        actions.superuser_run('packages', ['remove', '--packages'] + packages)
-    except ActionError:
-        pass

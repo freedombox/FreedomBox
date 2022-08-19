@@ -51,6 +51,8 @@ def parse_arguments():
                            help='list of packages to install')
 
     subparser = subparsers.add_parser('remove', help='remove the package(s)')
+    subparser.add_argument(
+        'app_id', help='ID of app for which package is being uninstalled')
     subparser.add_argument('--packages', required=True,
                            help='List of packages to remove', nargs='+')
 
@@ -107,8 +109,19 @@ def subcommand_install(arguments):
 
 
 def subcommand_remove(arguments):
-    """Remove apt package(s)."""
-    sys.exit(run_apt_command(['remove'] + arguments.packages))
+    """Remove packages using apt-get."""
+    try:
+        _assert_managed_packages(arguments.app_id, arguments.packages)
+    except Exception as exception:
+        print('Access check failed:', exception, file=sys.stderr)
+        sys.exit(99)
+
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    with apt_hold_freedombox():
+        run_apt_command(['--fix-broken', 'install'])
+        returncode = run_apt_command(['remove'] + arguments.packages)
+
+    sys.exit(returncode)
 
 
 def _assert_managed_packages(app_id, packages):
@@ -118,7 +131,7 @@ def _assert_managed_packages(app_id, packages):
     app = app_module.App.get(app_id)
     managed_packages = []
     for component in app.get_components_of_type(Packages):
-        managed_packages += component.possible_packages
+        managed_packages += component.possible_packages + component.conflicts
 
     for package in packages:
         assert package in managed_packages
