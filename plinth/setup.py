@@ -30,10 +30,6 @@ _force_upgrader = None
 
 def run_setup_on_app(app_id, allow_install=True):
     """Execute the setup process in a thread."""
-    # Setup for the module is already running
-    if operation_module.manager.filter(app_id):
-        return
-
     # App is already up-to-date
     app = app_module.App.get(app_id)
     current_version = app.get_setup_version()
