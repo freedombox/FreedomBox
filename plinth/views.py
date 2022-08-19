@@ -256,6 +256,10 @@ class AppView(FormView):
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
+        context['operations'] = operation.manager.filter(self.app.app_id)
+        context['refresh_page_sec'] = None
+        if context['operations']:
+            context['refresh_page_sec'] = 3
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
