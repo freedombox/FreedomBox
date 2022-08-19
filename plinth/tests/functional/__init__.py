@@ -364,6 +364,34 @@ def install(browser, app_name):
             break
 
 
+def uninstall(browser, app_name):
+    """Uninstall the app if possible."""
+    nav_to_module(browser, app_name)
+    actions_button = browser.find_by_id('id_extra_actions_button')
+    if not actions_button:
+        pytest.skip('App cannot be uninstalled')
+
+    actions_button.click()
+    uninstall_item = browser.find_by_css('.uninstall-item')
+    if not uninstall_item:
+        pytest.skip('App cannot be uninstalled')
+
+    uninstall_item[0].click()
+    submit(browser, form_class='form-uninstall')
+
+    while True:
+        script = 'return (document.readyState == "complete") && ' \
+            '(!Boolean(document.querySelector(".app-operation")));'
+        if not browser.execute_script(script):
+            time.sleep(0.1)
+        elif browser.is_element_present_by_css('.neterror'):
+            browser.visit(browser.url)
+        elif browser.is_element_present_by_css('.alert-danger'):
+            raise RuntimeError('Uninstall failed')
+        else:
+            break
+
+
 ################################
 # App enable/disable utilities #
 ################################
@@ -678,3 +706,8 @@ class BaseAppTests:
         backup_create(session_browser, self.app_name, 'test_' + self.app_name)
         backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
         self.assert_app_running(session_browser)
+
+    def test_uninstall(self, session_browser):
+        """Test that app can be uninstalled and installed back again."""
+        uninstall(session_browser, self.app_name)
+        install(session_browser, self.app_name)
