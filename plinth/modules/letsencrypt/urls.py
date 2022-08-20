@@ -8,7 +8,8 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/letsencrypt/$', views.index, name='index'),
+    re_path(r'^sys/letsencrypt/$', views.LetsEncryptAppView.as_view(),
+            name='index'),
     re_path(r'^sys/letsencrypt/obtain/(?P<domain>[^/]+)/$', views.obtain,
             name='obtain'),
     re_path(r'^sys/letsencrypt/re-obtain/(?P<domain>[^/]+)/$', views.reobtain,

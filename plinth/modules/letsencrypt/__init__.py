@@ -50,6 +50,8 @@ class LetsEncryptApp(app_module.App):
 
     _version = 3
 
+    can_be_disabled = False
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()
