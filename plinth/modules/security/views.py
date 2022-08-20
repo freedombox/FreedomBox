@@ -8,34 +8,37 @@ from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
 from plinth import action_utils, actions
-from plinth import app as app_module
 from plinth.modules import security
 from plinth.modules.upgrades import is_backports_requested
+from plinth.views import AppView
 
 from .forms import SecurityForm
 
 
-def index(request):
-    """Serve the security configuration form"""
-    status = get_status(request)
+class SecurityAppView(AppView):
+    """Show security app main page."""
 
-    form = None
+    app_id = 'security'
+    template_name = 'security.html'
+    form_class = SecurityForm
+    prefix = 'security'
 
-    if request.method == 'POST':
-        form = SecurityForm(request.POST, initial=status, prefix='security')
-        if form.is_valid():
-            _apply_changes(request, status, form.cleaned_data)
-            status = get_status(request)
-            form = SecurityForm(initial=status, prefix='security')
-    else:
-        form = SecurityForm(initial=status, prefix='security')
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial.update(get_status(self.request))
+        return initial
 
-    return TemplateResponse(
-        request, 'security.html', {
-            'app_info': app_module.App.get('security').info,
-            'form': form,
-            'is_backports_requested': is_backports_requested(),
-        })
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['is_backports_requested'] = is_backports_requested()
+        return context
+
+    def form_valid(self, form):
+        """Apply the changes submitted in the form."""
+        _apply_changes(self.request, form.initial, form.cleaned_data)
+        return super().form_valid(form)
 
 
 def get_status(request):

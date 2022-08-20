@@ -4,6 +4,7 @@ Functional, browser based tests for security app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.security]
@@ -44,7 +45,7 @@ def _enable_restricted_logins(browser, should_enable):
     else:
         browser.uncheck('security-restricted_access')
 
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-configuration')
 
 
 def _get_restricted_logins(browser):
