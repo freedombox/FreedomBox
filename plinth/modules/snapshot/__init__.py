@@ -44,6 +44,8 @@ class SnapshotApp(app_module.App):
 
     _version = 4
 
+    can_be_disabled = False
+
     def __init__(self):
         """Create components for the app."""
         super().__init__()

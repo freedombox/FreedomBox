@@ -8,7 +8,7 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/snapshot/$', views.index, name='index'),
+    re_path(r'^sys/snapshot/$', views.SnapshotAppView.as_view(), name='index'),
     re_path(r'^sys/snapshot/manage/$', views.manage, name='manage'),
     re_path(r'^sys/snapshot/selected/delete$', views.delete_selected,
             name='delete-selected'),

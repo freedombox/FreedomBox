@@ -7,7 +7,8 @@
 {% load i18n %}
 
 {% block configuration %}
-  <form id="snapshot-configure" class="form-horizontal" method="post">
+  <form id="snapshot-configure" class="form-horizontal form-configuration"
+        method="post">
     {% csrf_token %}
     <h3>{% trans "Configuration" %}</h3>
     {{ form|bootstrap_horizontal:'col-md-4' }}
