@@ -13,8 +13,8 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnTimeLimitedConsumer
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
-from plinth.utils import format_lazy
+from plinth.package import Packages, install
+from plinth.utils import Version, format_lazy
 
 from . import manifest, privileged
 
@@ -91,3 +91,17 @@ class JanusApp(app_module.App):
         super().setup(old_version)
         privileged.setup()
         self.enable()
+
+    def force_upgrade(self, packages):
+        """Force upgrade janus to resolve conffile prompts."""
+        if 'janus' not in packages:
+            return False
+
+        # Allow upgrades within 1.0.*
+        package = packages['janus']
+        if Version(package['new_version']) > Version('1.1~'):
+            return False
+
+        install(['janus'], force_configuration='new')
+        privileged.setup()
+        return True
