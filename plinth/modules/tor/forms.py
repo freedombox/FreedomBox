@@ -72,7 +72,6 @@ def bridges_validator(bridges):
 
 class TorForm(forms.Form):  # pylint: disable=W0232
     """Tor configuration form."""
-    enabled = forms.BooleanField(label=_('Enable Tor'), required=False)
     use_upstream_bridges = forms.BooleanField(
         label=_('Use upstream bridges to connect to Tor network'),
         required=False, help_text=_(

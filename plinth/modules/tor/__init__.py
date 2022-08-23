@@ -106,6 +106,19 @@ class TorApp(app_module.App):
                                          domain_type='domain-type-tor',
                                          name=hostname, services=services)
 
+    def enable(self):
+        """Enable the app and update firewall ports."""
+        super().enable()
+        actions.superuser_run('tor', ['update-ports'])
+        update_hidden_service_domain()
+
+    def disable(self):
+        """Disable APT use of Tor before disabling."""
+        actions.superuser_run('tor',
+                              ['configure', '--apt-transport-tor', 'disable'])
+        super().disable()
+        update_hidden_service_domain()
+
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()

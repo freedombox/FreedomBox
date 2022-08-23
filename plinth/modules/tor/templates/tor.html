@@ -8,49 +8,36 @@
 {% load static %}
 
 {% block status %}
-  {% if config_running %}
-    <h3>{% trans "Status" %}</h3>
+  {{ block.super }}
 
-    <p class="running-status-parent">
-      <span class="running-status loading"></span>
-      {% trans "Tor configuration is being updated" %}
-    </p>
-  {% else %}
-    {{ block.super }}
-
-    {% if status.hs_enabled %}
-      <div class="table-responsive">
-        <table class="table tor-hs">
-          <thead>
-            <tr>
-              <th>{% trans "Onion Service" %}</th>
-              <th>{% trans "Status" %}</th>
-              <th>{% trans "Ports" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
-              <td class="tor-hs-status">{{ status.hs_status }}</td>
-              <td class="tor-hs-services">
-                {{ status.hs_services|join:', ' }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    {% endif %}
+  {% if status.hs_enabled %}
+    <div class="table-responsive">
+      <table class="table tor-hs">
+        <thead>
+          <tr>
+            <th>{% trans "Onion Service" %}</th>
+            <th>{% trans "Status" %}</th>
+            <th>{% trans "Ports" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tor-hs-hostname">{{ status.hs_hostname }}</td>
+            <td class="tor-hs-status">{{ status.hs_status }}</td>
+            <td class="tor-hs-services">
+              {{ status.hs_services|join:', ' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   {% endif %}
 {% endblock %}
 
 {% block internal_zone %}
-  {% if not config_running %}
-    {{ block.super }}
-  {% endif %}
+  {{ block.super }}
 {% endblock %}
 
 {% block page_js %}
-
   <script type="text/javascript" src="{% static 'tor/tor.js' %}"></script>
-
 {% endblock %}

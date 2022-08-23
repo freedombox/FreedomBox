@@ -8,5 +8,5 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^apps/tor/$', views.index, name='index'),
+    re_path(r'^apps/tor/$', views.TorAppView.as_view(), name='index'),
 ]
