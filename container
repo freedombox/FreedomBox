@@ -319,6 +319,11 @@ def parse_arguments():
                            default=default_distribution,
                            help='Distribution of the image to update')
 
+    # Display help message when no args are passed
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit()
+
     return parser.parse_args()
 
 
