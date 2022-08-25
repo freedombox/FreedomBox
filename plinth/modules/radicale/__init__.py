@@ -8,7 +8,6 @@ import logging
 import augeas
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
@@ -18,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -93,7 +92,7 @@ class RadicaleApp(app_module.App):
 
     def enable(self):
         """Fix missing directories before enabling radicale."""
-        actions.superuser_run('radicale', ['fix-paths'])
+        privileged.fix_paths()
         super().enable()
 
     def setup(self, old_version):
@@ -113,8 +112,7 @@ class RadicaleApp(app_module.App):
 
         rights = get_rights_value()
         install(['radicale'], force_configuration='new')
-        actions.superuser_run('radicale',
-                              ['configure', '--rights_type', rights])
+        privileged.configure(rights)
 
         return True
 
