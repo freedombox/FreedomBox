@@ -1,9 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration actions for the minidlna server.
-"""
-import argparse
+"""Configure minidlna server."""
+
 import subprocess
 from os import chmod, fdopen, remove, stat
 from shutil import move
@@ -12,6 +9,7 @@ from tempfile import mkstemp
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.utils import grep
 
 CONFIG_PATH = '/etc/minidlna.conf'
@@ -20,23 +18,6 @@ SYSCTL_CONF = '''# This file is managed and overwritten by FreedomBox.
 # Helps minidlna monitor changes in large media directories
 fs.inotify.max_user_watches = 100000
 '''
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup SSH server')
-
-    subparsers.add_parser('get-media-dir', help='Get media directory')
-
-    set_media_dir = subparsers.add_parser('set-media-dir',
-                                          help='Set custom media directory')
-    set_media_dir.add_argument('--dir')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _undo_old_configuration_changes():
@@ -59,10 +40,11 @@ def _undo_old_configuration_changes():
         aug.save()
 
 
-def subcommand_setup(_):
-    """
-    Increase inotify watches per folder to allow minidlna to
-    monitor changes in large media-dirs.
+@privileged
+def setup():
+    """Increase inotify watches per folder.
+
+    This is to allow minidlna to monitor changes in large media-dirs.
     """
     _undo_old_configuration_changes()
     with open('/etc/sysctl.d/50-freedombox-minidlna.conf', 'w',
@@ -72,29 +54,31 @@ def subcommand_setup(_):
     subprocess.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
 
 
-def subcommand_get_media_dir(_):
-    """Retrieve media directory from minidlna.conf"""
+@privileged
+def get_media_dir() -> str:
+    """Retrieve media directory from minidlna.conf."""
     line = grep('^media_dir=', CONFIG_PATH)
+    return line[0].split('=')[1]
 
-    print(line[0].split("=")[1])
 
-
-def subcommand_set_media_dir(arguments):
-    """Set media directory in minidlna.conf"""
+@privileged
+def set_media_dir(media_dir: str):
+    """Set media directory in minidlna.conf."""
     line = grep('^media_dir=', CONFIG_PATH)[0]
 
-    new_line = 'media_dir=%s\n' % arguments.dir
+    new_line = 'media_dir=%s\n' % media_dir
     replace_in_config_file(CONFIG_PATH, line, new_line)
     if action_utils.service_is_running('minidlna'):
         action_utils.service_restart('minidlna')
 
 
 def replace_in_config_file(file_path, pattern, subst):
-    """
-    Create a temporary minidlna.conf file,
-    replace the media dir config,
-    remove original one and move the temporary file.
-    Preserve permissions as the original file.
+    """Replace a directive in configuration file.
+
+    - Create a temporary minidlna.conf file
+    - Replace the media dir config
+    - Remove original one and move the temporary file
+    - Preserve permissions as the original file
     """
     temp_file, temp_file_path = mkstemp()
     with fdopen(temp_file, 'w') as new_file:
@@ -106,16 +90,3 @@ def replace_in_config_file(file_path, pattern, subst):
     remove(file_path)
     move(temp_file_path, file_path)
     chmod(file_path, old_st_mode)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

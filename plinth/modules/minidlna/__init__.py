@@ -4,7 +4,6 @@ FreedomBox app to configure minidlna.
 """
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -15,7 +14,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('MiniDLNA is a simple media server software, with the aim of being '
@@ -30,13 +29,14 @@ _description = [
 
 
 class MiniDLNAApp(app_module.App):
-    """Freedombox app managing miniDlna"""
+    """Freedombox app managing miniDlna."""
+
     app_id = 'minidlna'
 
     _version = 2
 
     def __init__(self):
-        """Initialize the app components"""
+        """Initialize the app components."""
         super().__init__()
 
         groups = {'minidlna': _('Media streaming server')}
@@ -92,7 +92,7 @@ class MiniDLNAApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('minidlna', ['setup'])
+        privileged.setup()
         if not old_version:
             self.enable()
 
@@ -106,18 +106,8 @@ class MiniDLNAApp(app_module.App):
         if Version(package['new_version']) > Version('1.4~'):
             return False
 
-        media_dir = get_media_dir()
+        media_dir = privileged.get_media_dir()
         install(['minidlna'], force_configuration='new')
-        set_media_dir(media_dir)
+        privileged.set_media_dir(media_dir)
 
         return True
-
-
-def get_media_dir():
-    """Return the currently set media directory."""
-    return actions.superuser_run('minidlna', ['get-media-dir'])
-
-
-def set_media_dir(media_dir):
-    """Set the media directory from which files will be scanned for sharing."""
-    actions.superuser_run('minidlna', ['set-media-dir', '--dir', media_dir])
