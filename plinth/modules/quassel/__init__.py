@@ -1,14 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for Quassel.
-"""
+"""FreedomBox app for Quassel."""
 
 import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -20,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -108,7 +105,7 @@ class QuasselApp(app_module.App):
 def set_domain(domain):
     """Set the TLS domain by writing a file to data directory."""
     if domain:
-        actions.superuser_run('quassel', ['set-domain', domain])
+        privileged.set_domain(domain)
 
 
 def get_domain():
