@@ -1,17 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for power module.
-"""
+"""FreedomBox app for power controls."""
 
 from django.forms import Form
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import package
 from plinth.views import AppView
+
+from . import privileged
 
 
 class PowerAppView(AppView):
@@ -32,7 +31,7 @@ def restart(request):
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['restart'], run_in_background=True)
+        privileged.restart(_run_in_background=True)
         return redirect(reverse('apps'))
 
     app = app_module.App.get('power')
@@ -51,7 +50,7 @@ def shutdown(request):
     form = None
 
     if request.method == 'POST':
-        actions.superuser_run('power', ['shutdown'], run_in_background=True)
+        privileged.shutdown(_run_in_background=True)
         return redirect(reverse('apps'))
 
     app = app_module.App.get('power')
