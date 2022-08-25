@@ -1,10 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for infinoted.
-"""
+"""Configure infinoted."""
 
-import argparse
 import grp
 import os
 import pwd
@@ -13,6 +9,7 @@ import subprocess
 import time
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 DATA_DIR = '/var/lib/infinoted'
 KEY_DIR = '/etc/infinoted'
@@ -103,17 +100,6 @@ WantedBy=multi-user.target
 '''
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Configure infinoted after install')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
 def _kill_daemon():
     """Try to kill the infinoted daemon for upto 5 minutes."""
     end_time = time.time() + 300
@@ -127,7 +113,8 @@ def _kill_daemon():
         time.sleep(1)
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Configure infinoted after install."""
     if not os.path.isfile(CONF_PATH):
         with open(CONF_PATH, 'w', encoding='utf-8') as file_handle:
@@ -180,16 +167,3 @@ def subcommand_setup(_):
                  group='infinoted')
 
     action_utils.service_enable('infinoted')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
