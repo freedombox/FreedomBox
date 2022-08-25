@@ -1,14 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure OpenVPN server.
-"""
+"""FreedomBox app to configure OpenVPN server."""
 
 import os
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -18,7 +15,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -44,7 +41,7 @@ class OpenVPNApp(app_module.App):
     @property
     def can_be_disabled(self):
         """Return whether the app can be disabled."""
-        return is_setup()
+        return privileged.is_setup()
 
     def __init__(self):
         """Create components for the app."""
@@ -102,18 +99,13 @@ class OpenVPNApp(app_module.App):
         Return True when there are no leader components and OpenVPN setup
         is done.
         """
-        return super().is_enabled() and is_setup()
+        return super().is_enabled() and privileged.is_setup()
 
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('openvpn', ['setup'])
+        privileged.setup()
         self.enable()
-
-
-def is_setup():
-    """Return whether the service is running."""
-    return actions.superuser_run('openvpn', ['is-setup']).strip() == 'true'
 
 
 def is_using_ecc():

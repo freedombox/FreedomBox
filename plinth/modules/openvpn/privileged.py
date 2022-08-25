@@ -1,16 +1,13 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for OpenVPN server.
-"""
+"""Configure OpenVPN server."""
 
-import argparse
 import os
 import subprocess
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
 
@@ -120,24 +117,6 @@ CERTIFICATE_CONFIGURATION_ECC = {
 COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION_ECC, 'cwd': KEYS_DIRECTORY}
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('is-setup', help='Return whether setup is completed')
-    subparsers.add_parser('setup', help='Setup OpenVPN server configuration')
-
-    get_profile = subparsers.add_parser(
-        'get-profile', help='Return the OpenVPN profile of a user')
-    get_profile.add_argument('username', help='User to get profile for')
-    get_profile.add_argument('remote_server',
-                             help='The server name for the user to connect')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
 def _is_using_ecc():
     """Return whether the service is using ECC."""
     if os.path.exists(SERVER_CONFIGURATION_PATH):
@@ -149,17 +128,14 @@ def _is_using_ecc():
     return False
 
 
-def _is_setup():
+@privileged
+def is_setup() -> bool:
     """Return whether setup is complete."""
     return _is_non_empty_file(DH_PARAMS) or os.path.exists(EC_PARAMS_DIR)
 
 
-def subcommand_is_setup(_):
-    """Print whether setup is complete."""
-    print('true' if _is_setup() else 'false')
-
-
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup configuration, CA and certificates."""
     _write_server_config()
     _create_certificates()
@@ -236,11 +212,9 @@ def _create_certificates():
                           **COMMON_ARGS)
 
 
-def subcommand_get_profile(arguments):
+@privileged
+def get_profile(username: str, remote_server: str) -> str:
     """Return the profile for a user."""
-    username = arguments.username
-    remote_server = arguments.remote_server
-
     if username == 'ca' or username == 'server':
         raise Exception('Invalid username')
 
@@ -264,16 +238,14 @@ def subcommand_get_profile(arguments):
     client_configuration = CLIENT_CONFIGURATION_ECC if _is_using_ecc(
     ) else CLIENT_CONFIGURATION_RSA
 
-    profile = client_configuration.format(ca=ca_string,
-                                          cert=user_certificate_string,
-                                          key=user_key_string,
-                                          remote=remote_server)
-
-    print(profile)
+    return client_configuration.format(ca=ca_string,
+                                       cert=user_certificate_string,
+                                       key=user_key_string,
+                                       remote=remote_server)
 
 
 def set_unique_subject(value):
-    """ Sets the unique_subject value to a particular value"""
+    """Set the unique_subject value to a particular value."""
     aug = load_augeas()
     aug.set('/files' + ATTR_FILE + '/unique_subject', value)
     aug.save()
@@ -300,16 +272,3 @@ def load_augeas():
     aug.set('/augeas/load/Simplevars/incl[last() + 1]', ATTR_FILE)
     aug.load()
     return aug
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
