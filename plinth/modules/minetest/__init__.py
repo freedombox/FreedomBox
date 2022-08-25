@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for Minetest server.
-"""
+"""FreedomBox app for Minetest server."""
 
 import augeas
 from django.urls import reverse_lazy
