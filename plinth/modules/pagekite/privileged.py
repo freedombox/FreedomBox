@@ -1,20 +1,14 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for PageKite interface.
-"""
+"""Configure PageKite."""
 
-import argparse
-import json
 import os
-import sys
+from typing import Union
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.modules.pagekite import utils
-
-aug = None
 
 PATHS = {
     'service_on':
@@ -32,35 +26,10 @@ PATHS = {
 }
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    # Configuration
-    subparsers.add_parser('get-config', help='Return current configuration')
-    set_config = subparsers.add_parser(
-        'set-config',
-        help='Configure kite name, its secret and frontend. Secret is read '
-        'from stdin.')
-    set_config.add_argument('--kite-name',
-                            help='Name of the kite (eg: mybox.pagekite.me)')
-    set_config.add_argument('--frontend', help='Frontend url')
-
-    # Add/remove pagekite services (service_on entries)
-    add_service = subparsers.add_parser('add-service',
-                                        help='Add a pagekite service')
-    add_service.add_argument('--service', help='json service dictionary')
-    remove_service = subparsers.add_parser('remove-service',
-                                           help='Remove a pagekite service')
-    remove_service.add_argument('--service', help='json service dictionary')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_get_config(_):
-    """Print the current configuration as JSON dictionary."""
+@privileged
+def get_config() -> dict[str, object]:
+    """Return the current configuration as JSON dictionary."""
+    aug = _augeas_load()
     if aug.match(PATHS['abort_not_configured']):
         aug.remove(PATHS['abort_not_configured'])
         aug.save()
@@ -70,9 +39,9 @@ def subcommand_get_config(_):
     else:
         frontend = aug.get(PATHS['frontend']) or ''
 
-    frontend = frontend.split(':')
-    server_domain = frontend[0]
-    server_port = frontend[1] if len(frontend) >= 2 else '80'
+    frontend_parts = frontend.split(':')
+    server_domain = frontend_parts[0]
+    server_port = frontend_parts[1] if len(frontend_parts) >= 2 else '80'
 
     status = {
         'kite_name': aug.get(PATHS['kitename']),
@@ -113,30 +82,32 @@ def subcommand_get_config(_):
 
             service['url'] = url
 
-    print(json.dumps(status))
+    return status
 
 
-def subcommand_set_config(arguments):
+@privileged
+def set_config(frontend: str, kite_name: str, kite_secret: str):
     """Set pagekite kite name, secret and frontend URL."""
+    aug = _augeas_load()
     aug.remove(PATHS['abort_not_configured'])
 
-    aug.set(PATHS['kitename'], arguments.kite_name)
-    aug.set(PATHS['kitesecret'], sys.stdin.read())
+    aug.set(PATHS['kitename'], kite_name)
+    aug.set(PATHS['kitesecret'], kite_secret)
 
-    frontend_domain = arguments.frontend.split(':')[0]
+    frontend_domain = frontend.split(':')[0]
     if frontend_domain in ('pagekite.net', 'defaults', 'default'):
         aug.set(PATHS['defaults'], '')
         aug.remove(PATHS['frontend'])
     else:
         aug.remove(PATHS['defaults'])
-        aug.set(PATHS['frontend'], arguments.frontend)
+        aug.set(PATHS['frontend'], frontend)
 
     aug.save()
 
     for service_name in utils.PREDEFINED_SERVICES.keys():
         service = utils.PREDEFINED_SERVICES[service_name]['params']
         try:
-            _add_service(service)
+            _add_service(aug, service)
         except RuntimeError:
             pass
 
@@ -146,10 +117,12 @@ def subcommand_set_config(arguments):
         action_utils.service_restart('pagekite')
 
 
-def subcommand_remove_service(arguments):
-    """Searches and removes the service(s) that match all given parameters"""
-    service = utils.load_service(arguments.service)
-    paths = _get_existing_service_paths(service)
+@privileged
+def remove_service(service: dict[str, Union[str, bool]]):
+    """Search and remove the service(s) that match all given parameters."""
+    aug = _augeas_load()
+    service = utils.load_service(service)
+    paths = _get_existing_service_paths(aug, service)
     # TODO: theoretically, everything to do here is:
     # [aug.remove(path) for path in paths]
     # but augeas won't let you save the changed files and doesn't say why
@@ -172,8 +145,8 @@ def subcommand_remove_service(arguments):
     action_utils.service_restart('pagekite')
 
 
-def _get_existing_service_paths(service, keys=None):
-    """Return paths of existing services that match the given service params"""
+def _get_existing_service_paths(aug, service, keys=None):
+    """Return paths of existing services that match the given service."""
     # construct an augeas query path with patterns like:
     #     */service_on/*[protocol='http']
     path = PATHS['service_on']
@@ -182,13 +155,13 @@ def _get_existing_service_paths(service, keys=None):
     return aug.match(path)
 
 
-def _add_service(service):
+def _add_service(aug, service):
     """Add a new service into configuration."""
-    if _get_existing_service_paths(service, ['protocol', 'kitename']):
+    if _get_existing_service_paths(aug, service, ['protocol', 'kitename']):
         msg = "Service with the parameters %s already exists"
         raise RuntimeError(msg % service)
 
-    root = _get_new_service_path(service['protocol'])
+    root = _get_new_service_path(aug, service['protocol'])
     # TODO: after adding a service, augeas fails writing the config;
     # so add the service_on entry manually instead
     path = _convert_augeas_path_to_filepath(root)
@@ -197,16 +170,18 @@ def _add_service(service):
         servicefile.write(line)
 
 
-def subcommand_add_service(arguments):
-    """Add one service"""
-    service = utils.load_service(arguments.service)
-    _add_service(service)
+@privileged
+def add_service(service: dict[str, Union[str, bool]]):
+    """Add one service."""
+    aug = _augeas_load()
+    service = utils.load_service(service)
+    _add_service(aug, service)
     action_utils.service_try_restart('pagekite')
 
 
 def _convert_augeas_path_to_filepath(augpath, prefix='/files',
                                      suffix='service_on'):
-    """Convert an augeas service_on path to the actual file path"""
+    """Convert an augeas service_on path to the actual file path."""
     if augpath.startswith(prefix):
         augpath = augpath.replace(prefix, "", 1)
 
@@ -216,35 +191,21 @@ def _convert_augeas_path_to_filepath(augpath, prefix='/files',
     return augpath.rstrip('/')
 
 
-def _get_new_service_path(protocol):
-    """Get the augeas path of a new service for a protocol
+def _get_new_service_path(aug, protocol):
+    """Get the augeas path of a new service for a protocol.
 
-    This takes care of existing services using a /service_on/*/ query"""
+    This takes care of existing services using a /service_on/*/ query
+    """
     root = utils.get_augeas_servicefile_path(protocol)
     new_index = len(aug.match(root + '/*')) + 1
     return os.path.join(root, str(new_index))
 
 
-def augeas_load():
+def _augeas_load():
     """Initialize Augeas."""
-    global aug
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Pagekite/lens', 'Pagekite.lns')
     aug.set('/augeas/load/Pagekite/incl[last() + 1]', '/etc/pagekite.d/*.rc')
     aug.load()
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    augeas_load()
-
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == "__main__":
-    main()
+    return aug

@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure PageKite.
-"""
+"""FreedomBox app to configure PageKite."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon

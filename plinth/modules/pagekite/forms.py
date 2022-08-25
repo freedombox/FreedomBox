@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Forms for configuring Pagekite."""
 
 import copy
-import json
 
 from django import forms
 from django.contrib import messages
@@ -9,16 +9,14 @@ from django.core import validators
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth.errors import ActionError
-
-from . import utils
+from . import privileged, utils
 
 
 class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
+    """Trim the contents of a CharField."""
 
     def clean(self, value):
-        """Clean and validate the field value"""
+        """Clean and validate the field value."""
         if value:
             value = value.strip()
 
@@ -26,7 +24,7 @@ class TrimmedCharField(forms.CharField):
 
 
 class ConfigurationForm(forms.Form):
-    """Configure PageKite credentials and frontend"""
+    """Configure PageKite credentials and frontend."""
 
     server_domain = forms.CharField(
         label=gettext_lazy('Server domain'), required=False,
@@ -72,9 +70,7 @@ class ConfigurationForm(forms.Form):
 
         if old != new:
             frontend = f"{new['server_domain']}:{new['server_port']}"
-            utils.run([
-                'set-config', '--kite-name', kite_name, '--frontend', frontend
-            ], input=new['kite_secret'].encode())
+            privileged.set_config(frontend, kite_name, new['kite_secret'])
             messages.success(request, _('Configuration updated'))
 
             # Update kite name registered with Name Services module.
@@ -82,7 +78,8 @@ class ConfigurationForm(forms.Form):
 
 
 class BaseCustomServiceForm(forms.Form):
-    """Basic form functionality to handle a custom service"""
+    """Basic form functionality to handle a custom service."""
+
     choices = [('http', 'http'), ('https', 'https'), ('raw', 'raw')]
     protocol = forms.ChoiceField(choices=choices,
                                  label=gettext_lazy('protocol'))
@@ -96,7 +93,7 @@ class BaseCustomServiceForm(forms.Form):
                                     required=False)
 
     def convert_formdata_to_service(self, formdata):
-        """Add information to make a service out of the form data"""
+        """Add information to make a service out of the form data."""
         # convert integers to str (to compare values with DEFAULT_SERVICES)
         for field in ('frontend_port', 'backend_port'):
             formdata[field] = str(formdata[field])
@@ -126,15 +123,15 @@ class DeleteCustomServiceForm(BaseCustomServiceForm):
 
     def delete(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
-        utils.run(['remove-service', '--service', json.dumps(service)])
+        privileged.remove_service(service)
         messages.success(request, _('Deleted custom service'))
 
 
 class AddCustomServiceForm(BaseCustomServiceForm):
-    """Adds the save() method and validation to not add predefined services"""
+    """Adds the save() method and validation to not add predefined services."""
 
     def matches_predefined_service(self, formdata):
-        """Returns whether the user input matches a predefined service"""
+        """Return whether the user input matches a predefined service."""
         service = self.convert_formdata_to_service(formdata)
         match_found = False
         for predefined_service_obj in utils.PREDEFINED_SERVICES.values():
@@ -168,9 +165,9 @@ class AddCustomServiceForm(BaseCustomServiceForm):
     def save(self, request):
         service = self.convert_formdata_to_service(self.cleaned_data)
         try:
-            utils.run(['add-service', '--service', json.dumps(service)])
+            privileged.add_service(service)
             messages.success(request, _('Added custom service'))
-        except ActionError as exception:
+        except Exception as exception:
             if "already exists" in str(exception):
                 messages.error(request, _('This service already exists'))
             else:

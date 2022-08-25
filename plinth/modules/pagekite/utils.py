@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Utilities for configuring Pagekite."""
 
-import json
 import logging
 import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth.signals import domain_added, domain_removed
 
@@ -80,21 +79,6 @@ PREDEFINED_SERVICES = {
 }
 
 
-def get_config():
-    """Return the current PageKite configuration."""
-    return json.loads(run(['get-config']))
-
-
-def run(arguments, superuser=True, input=None):
-    """Run a given command and raise exception if there was an error"""
-    command = 'pagekite'
-
-    if superuser:
-        return actions.superuser_run(command, arguments, input=input)
-    else:
-        return actions.run(command, arguments, input=input)
-
-
 def convert_service_to_string(service):
     """ Convert service dict into a ":"-separated parameter string
 
@@ -110,15 +94,14 @@ def convert_service_to_string(service):
     return service_string
 
 
-def load_service(json_service):
-    """ create a service out of json command-line argument
+def load_service(service):
+    """Create a service out of json command-line argument.
 
     1) parse json
     2) only use the parameters that we need (SERVICE_PARAMS)
     3) convert unicode to strings
     """
-    service = json.loads(json_service)
-    return dict((str(key), str(service[key])) for key in SERVICE_PARAMS)
+    return {str(key): str(service[key]) for key in SERVICE_PARAMS}
 
 
 def get_augeas_servicefile_path(protocol):
@@ -176,7 +159,8 @@ def update_names_module(is_enabled=None):
     if is_enabled is None and not app_module.App.get('pagekite').is_enabled():
         return
 
-    config = get_config()
+    from . import privileged
+    config = privileged.get_config()
     enabled_services = [
         service for service, value in config['predefined_services'].items()
         if value
@@ -186,8 +170,3 @@ def update_names_module(is_enabled=None):
                                  domain_type='domain-type-pagekite',
                                  name=config['kite_name'],
                                  services=enabled_services)
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()
