@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure I2P.
-"""
+"""FreedomBox app to configure I2P."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -16,7 +13,7 @@ from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('The Invisible Internet Project is an anonymous network layer intended '
@@ -103,25 +100,11 @@ class I2PApp(app_module.App):
         self.disable()
         # Add favorites to the configuration
         for fav in FAVORITES:
-            args = [
-                'add-favorite',
-                '--name',
-                fav.get('name'),
-                '--url',
-                fav.get('url'),
-            ]
-            if 'icon' in fav:
-                args.extend(['--icon', fav.get('icon')])
-
-            if 'description' in fav:
-                args.extend(['--description', fav.get('description')])
-
-            actions.superuser_run('i2p', args)
+            privileged.add_favorite(fav['name'], fav['url'],
+                                    fav.get('description'), fav.get('icon'))
 
         # Tunnels to all interfaces
         for tunnel in tunnels_to_manage:
-            actions.superuser_run('i2p', [
-                'set-tunnel-property', '--name', tunnel, '--property',
-                'interface', '--value', '0.0.0.0'
-            ])
+            privileged.set_tunnel_property(tunnel, 'interface', '0.0.0.0')
+
         self.enable()
