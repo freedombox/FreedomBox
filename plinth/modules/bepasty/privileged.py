@@ -1,10 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for bepasty.
-"""
+"""Configuration helper for bepasty."""
 
-import argparse
 import collections
 import grp
 import json
@@ -15,11 +11,12 @@ import secrets
 import shutil
 import string
 import subprocess
-import sys
+from typing import Optional
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.modules import bepasty
 
 DATA_DIR = '/var/lib/bepasty'
@@ -27,42 +24,6 @@ DATA_DIR = '/var/lib/bepasty'
 PASSWORD_LENGTH = 20
 
 CONF_FILE = pathlib.Path('/etc/bepasty-freedombox.conf')
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    setup = subparsers.add_parser(
-        'setup', help='Perform post-installation operations for bepasty')
-    setup.add_argument('--domain-name', required=True,
-                       help='The domain name that will be used by bepasty')
-
-    subparsers.add_parser('get-configuration', help='Get all configuration')
-
-    add_password = subparsers.add_parser(
-        'add-password', help='Generate a password with given permissions')
-    add_password.add_argument(
-        '--permissions', nargs='+',
-        help='Any number of permissions from the set: {}'.format(', '.join(
-            bepasty.PERMISSIONS.keys())))
-    add_password.add_argument(
-        '--comment', required=False,
-        help='A comment for the password and its permissions')
-
-    subparsers.add_parser('remove-password',
-                          help='Remove a password and its permissions')
-
-    set_default = subparsers.add_parser('set-default',
-                                        help='Set default permissions')
-    set_default.add_argument(
-        '--permissions', nargs='*',
-        help='Any number of permissions from the set: {}'.format(', '.join(
-            bepasty.PERMISSIONS.keys())))
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _augeas_load():
@@ -104,7 +65,8 @@ def conf_file_write(conf):
     aug.save()
 
 
-def subcommand_setup(arguments):
+@privileged
+def setup(domain_name: str):
     """Post installation actions for bepasty."""
     # Create bepasty group if needed.
     try:
@@ -135,7 +97,7 @@ def subcommand_setup(arguments):
                 'the original configuration format is supported. Each line '
                 'should be in KEY = VALUE format. VALUE must be a JSON '
                 'encoded string.',
-            'SITENAME': arguments.domain_name,
+            'SITENAME': domain_name,
             'STORAGE_FILESYSTEM_DIRECTORY': '/var/lib/bepasty',
             'SECRET_KEY': secrets.token_hex(64),
             'PERMISSIONS': {
@@ -155,29 +117,30 @@ def subcommand_setup(arguments):
         shutil.chown(CONF_FILE, user='bepasty', group='bepasty')
 
 
-def subcommand_get_configuration(_):
+@privileged
+def get_configuration() -> dict[str, object]:
     """Get default permissions, passwords, permissions and comments."""
-    conf = conf_file_read()
-    print(json.dumps(conf))
+    return conf_file_read()
 
 
-def subcommand_add_password(arguments):
+@privileged
+def add_password(permissions: list[str], comment: Optional[str] = None):
     """Generate a password with given permissions."""
     conf = conf_file_read()
-    permissions = _format_permissions(arguments.permissions)
+    permissions = _format_permissions(permissions)
     password = _generate_password()
     conf['PERMISSIONS'][password] = permissions
-    if arguments.comment:
-        conf['PERMISSION_COMMENTS'][password] = arguments.comment
+    if comment:
+        conf['PERMISSION_COMMENTS'][password] = comment
 
     conf_file_write(conf)
     action_utils.service_try_restart('uwsgi')
 
 
-def subcommand_remove_password(_arguments):
+@privileged
+def remove_password(password: str):
     """Remove a password and its permissions."""
     conf = conf_file_read()
-    password = ''.join(sys.stdin)
     if password in conf['PERMISSIONS']:
         del conf['PERMISSIONS'][password]
 
@@ -187,9 +150,10 @@ def subcommand_remove_password(_arguments):
     action_utils.service_try_restart('uwsgi')
 
 
-def subcommand_set_default(arguments):
+@privileged
+def set_default(permissions: list[str]):
     """Set default permissions."""
-    conf = {'DEFAULT_PERMISSIONS': _format_permissions(arguments.permissions)}
+    conf = {'DEFAULT_PERMISSIONS': _format_permissions(permissions)}
     conf_file_write(conf)
     action_utils.service_try_restart('uwsgi')
 
@@ -204,16 +168,3 @@ def _generate_password():
     """Generate a random password."""
     alphabet = string.ascii_letters + string.digits
     return ''.join(secrets.choice(alphabet) for _ in range(PASSWORD_LENGTH))
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
