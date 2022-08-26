@@ -1,18 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Utilities for managing WireGuard.
-"""
+"""Utilities for managing WireGuard."""
 
 import datetime
-import json
 import logging
 import subprocess
 import time
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import network
 from plinth.utils import import_from_gi
+
+from . import privileged
 
 nm = import_from_gi('NM', '1.0')
 
@@ -70,8 +68,7 @@ def get_nm_info():
 
 def get_info():
     """Return server and clients info."""
-    output = actions.superuser_run('wireguard', ['get-info'])
-    status = json.loads(output)
+    status = privileged.get_info()
 
     nm_info = get_nm_info()
 

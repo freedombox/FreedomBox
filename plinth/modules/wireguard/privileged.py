@@ -1,40 +1,27 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for WireGuard.
-"""
+"""Configuration helper for WireGuard."""
 
-import argparse
-import json
 import subprocess
+
+from plinth.actions import privileged
 
 SERVER_INTERFACE = 'wg0'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('get-info',
-                          help='Get info for each configured interface')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def _get_info():
+@privileged
+def get_info() -> dict[str, dict]:
     """Return info for each configured interface."""
     output = subprocess.check_output(['wg', 'show', 'all',
                                       'dump']).decode().strip()
     lines = output.split('\n')
-    interfaces = {}
+    interfaces: dict[str, dict] = {}
     for line in lines:
         if not line:
             continue
 
-        fields = line.split()
-        fields = [field if field != '(none)' else None for field in fields]
+        fields = [
+            field if field != '(none)' else None for field in line.split()
+        ]
         interface_name = fields[0]
         if interface_name in interfaces:
             latest_handshake = int(fields[5]) if int(fields[5]) else None
@@ -61,21 +48,3 @@ def _get_info():
             }
 
     return interfaces
-
-
-def subcommand_get_info(_):
-    """Print info for each configured interface."""
-    print(json.dumps(_get_info()))
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
