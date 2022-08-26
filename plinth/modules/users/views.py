@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Django views for user app."""
 
 import django.views.generic
 from django.contrib import messages
@@ -13,6 +14,7 @@ from django.utils.translation import gettext_lazy
 from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 
+import plinth.modules.ssh.privileged as ssh_privileged
 from plinth import actions, translation
 from plinth.errors import ActionError
 from plinth.modules import first_boot
@@ -36,6 +38,7 @@ class ContextMixin:
 
 class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
     """View to create a new user."""
+
     form_class = CreateUserForm
     template_name = 'users_create.html'
     model = User
@@ -95,8 +98,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
         """Return the data for initial form load."""
         initial = super().get_initial()
         try:
-            ssh_keys = actions.superuser_run(
-                'ssh', ['get-keys', '--username', self.object.username])
+            ssh_keys = ssh_privileged.get_keys(self.object.username)
             initial['ssh_keys'] = ssh_keys.strip()
             initial['language'] = self.object.userprofile.language
         except ActionError:

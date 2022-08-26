@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for OpenSSH server.
-"""
+"""FreedomBox app for OpenSSH server."""
 
 import pathlib
 import re
@@ -9,7 +7,6 @@ import subprocess
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
@@ -17,7 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('A Secure Shell server uses the secure shell protocol to accept '
@@ -65,7 +62,7 @@ class SSHApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('ssh', ['setup'])
+        privileged.setup()
         self.enable()
 
 
@@ -87,9 +84,3 @@ def get_host_keys():
                 host_keys.append(match.groupdict())
 
     return host_keys
-
-
-def is_password_authentication_disabled():
-    """Return if ssh password authentication is enabled."""
-    return actions.superuser_run('ssh',
-                                 ['get-password-config']).strip() == 'no'

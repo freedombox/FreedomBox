@@ -15,6 +15,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 import plinth.forms
+import plinth.modules.ssh.privileged as ssh_privileged
 from plinth import actions
 from plinth.errors import ActionError
 from plinth.modules import first_boot
@@ -294,16 +295,10 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                                        _('Failed to add user to group.'))
 
             try:
-                actions.superuser_run('ssh', [
-                    'set-keys',
-                    '--username',
-                    user.get_username(),
-                    '--keys',
-                    self.cleaned_data['ssh_keys'].strip(),
-                    '--auth-user',
-                    auth_username,
-                ], input=confirm_password.encode())
-            except ActionError:
+                ssh_privileged.set_keys(user.get_username(),
+                                        self.cleaned_data['ssh_keys'].strip(),
+                                        auth_username, confirm_password)
+            except Exception:
                 messages.error(self.request, _('Unable to set SSH keys.'))
 
             is_active = self.cleaned_data['is_active']

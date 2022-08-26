@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for the SSH module
-"""
+"""Views for the SSH app."""
+
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
@@ -9,32 +8,36 @@ from plinth import actions
 from plinth.modules import ssh
 from plinth.views import AppView
 
-from . import is_password_authentication_disabled
+from . import privileged
 from .forms import SSHServerForm
 
 
 class SshAppView(AppView):
+    """Show ssh app main page."""
+
     app_id = 'ssh'
     template_name = 'ssh.html'
     form_class = SSHServerForm
 
     def get_context_data(self, *args, **kwargs):
+        """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['host_keys'] = ssh.get_host_keys()
 
         return context
 
     def get_initial(self):
-        """Initial form value"""
+        """Return initial values of the form."""
         initial = super().get_initial()
         initial.update({
-            'password_auth_disabled': is_password_authentication_disabled(),
+            'password_auth_disabled':
+                not privileged.is_password_authentication_enabled(),
         })
 
         return initial
 
     def form_valid(self, form):
-        """Apply changes from the form"""
+        """Apply changes from the form."""
         old_config = self.get_initial()
         new_config = form.cleaned_data
 
@@ -43,16 +46,9 @@ class SshAppView(AppView):
 
         passwd_auth_changed = is_field_changed('password_auth_disabled')
         if passwd_auth_changed:
-            if new_config['password_auth_disabled']:
-                passwd_auth = 'no'
-                message = _('SSH authentication with password disabled.')
-            else:
-                passwd_auth = 'yes'
-                message = _('SSH authentication with password enabled.')
-
-            actions.superuser_run(
-                'ssh', ['set-password-config', '--value', passwd_auth])
+            privileged.set_password_authentication(
+                not new_config['password_auth_disabled'])
             actions.superuser_run('service', ['reload', 'ssh'])
-            messages.success(self.request, message)
+            messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

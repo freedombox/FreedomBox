@@ -1,52 +1,20 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for SSH server.
-"""
+"""Configuration helper for SSH server."""
 
-import argparse
 import grp
 import os
 import pwd
 import shutil
 import stat
 import subprocess
-import sys
 
 import augeas
 
 from plinth import action_utils, utils
+from plinth.actions import privileged
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup SSH server')
-
-    get_keys = subparsers.add_parser('get-keys',
-                                     help='Get SSH authorized keys')
-    get_keys.add_argument('--username', required=True, type=_managed_user)
-
-    set_keys = subparsers.add_parser('set-keys',
-                                     help='Set SSH authorized keys')
-    set_keys.add_argument('--username', required=True, type=_managed_user)
-    set_keys.add_argument('--keys', required=True)
-    set_keys.add_argument('--auth-user', required=True)
-
-    subparsers.add_parser('get-password-config',
-                          help='Get SSH password auth configuration')
-
-    set_password_config = subparsers.add_parser(
-        'set-password-config', help='Set SSH password auth configuration')
-    set_password_config.add_argument('--value')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def _validate_user(username, must_be_admin=True):
+def _validate_user(username, password, must_be_admin=True):
     """Validate a user."""
     if must_be_admin:
         try:
@@ -55,29 +23,23 @@ def _validate_user(username, must_be_admin=True):
             admins = []
 
         if username not in admins:
-            msg = '"{}" is not authorized to perform this action'.format(
-                username)
-            raise argparse.ArgumentTypeError(msg)
+            msg = f'"{username}" is not authorized to perform this action'
+            raise PermissionError(msg)
 
-    password = _read_password()
     if not utils.is_authenticated_user(username, password):
-        raise argparse.ArgumentTypeError("Invalid credentials")
+        raise PermissionError('Invalid credentials')
 
 
 def _managed_user(username):
     """Raise an error if the user is root."""
     if pwd.getpwnam(username).pw_gid == 0:
-        msg = 'User {} is not managed by FreedomBox'.format(username)
-        raise argparse.ArgumentTypeError(msg)
+        raise ValueError(f'User {username} is not managed by FreedomBox')
+
     return username
 
 
-def _read_password():
-    """Read the password from stdin."""
-    return ''.join(sys.stdin)
-
-
-def subcommand_setup(arguments):
+@privileged
+def setup():
     """Setup Open SSH server.
 
     Regenerates deleted SSH keys. This is necessary when FreedomBox image is
@@ -87,7 +49,6 @@ def subcommand_setup(arguments):
     If the keys already exist, do nothing. This is necessary when a user
     installs FreedomBox using an apt package. SSH keys exist and running
     reconfigure on the openssh-server package does not regenerate them.
-
     """
     action_utils.dpkg_reconfigure('openssh-server', {})
 
@@ -97,29 +58,25 @@ def get_user_homedir(username):
     try:
         return pwd.getpwnam(username).pw_dir
     except KeyError:
-        print('Username not found')
-        sys.exit(1)
+        raise ValueError('Username not found')
 
 
-def subcommand_get_keys(arguments):
+@privileged
+def get_keys(user: str) -> str:
     """Get SSH authorized keys."""
-    user = arguments.username
-
     path = os.path.join(get_user_homedir(user), '.ssh', 'authorized_keys')
     try:
         with open(path, 'r', encoding='utf-8') as file_handle:
-            print(file_handle.read())
+            return file_handle.read()
     except FileNotFoundError:
-        pass
+        return ''
 
 
-def subcommand_set_keys(arguments):
+@privileged
+def set_keys(user: str, keys: str, auth_user: str, auth_password: str):
     """Set SSH authorized keys."""
-    user = arguments.username
-    auth_user = arguments.auth_user
-
     must_be_admin = user != auth_user
-    _validate_user(auth_user, must_be_admin=must_be_admin)
+    _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)
 
     ssh_folder = os.path.join(get_user_homedir(user), '.ssh')
     key_file_path = os.path.join(ssh_folder, 'authorized_keys')
@@ -131,7 +88,7 @@ def subcommand_set_keys(arguments):
         shutil.chown(ssh_folder, user, 'users')
 
     with open(key_file_path, 'w', encoding='utf-8') as file_handle:
-        file_handle.write(arguments.keys)
+        file_handle.write(keys)
 
     shutil.chown(key_file_path, user, 'users')
     os.chmod(key_file_path, stat.S_IRUSR | stat.S_IWUSR)
@@ -148,30 +105,19 @@ def _load_augeas():
     return aug
 
 
-def subcommand_get_password_config(_):
+@privileged
+def is_password_authentication_enabled() -> bool:
     """Retrieve value of password authentication from sshd configuration."""
     aug = _load_augeas()
     field_path = '/files/etc/ssh/sshd_config/PasswordAuthentication'
     get_value = aug.get(field_path)
-    print(get_value or 'yes')
+    return (get_value or 'yes') == 'yes'
 
 
-def subcommand_set_password_config(arguments):
+@privileged
+def set_password_authentication(enable: bool):
     """Set value of password authentication in sshd configuration."""
+    value = 'yes' if enable else 'no'
     aug = _load_augeas()
-    aug.set('/files/etc/ssh/sshd_config/PasswordAuthentication',
-            arguments.value)
+    aug.set('/files/etc/ssh/sshd_config/PasswordAuthentication', value)
     aug.save()
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
