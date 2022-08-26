@@ -1,13 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Searx.
-"""
+"""FreedomBox app to configure Searx."""
 
 import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
@@ -16,7 +13,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Searx is a privacy-respecting Internet metasearch engine. '
@@ -95,9 +92,9 @@ class SearxApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('searx', ['setup'])
+        privileged.setup()
         if not old_version or old_version < 3:
-            actions.superuser_run('searx', ['disable-public-access'])
+            privileged.disable_public_access()
             self.enable()
             self.set_shortcut_login_required(True)
 
@@ -115,12 +112,6 @@ class SearxWebserverAuth(Webserver):
             super().enable()
 
 
-def get_safe_search_setting():
-    """Get the current value of the safe search setting for Searx."""
-    value = actions.superuser_run('searx', ['get-safe-search'])
-    return int(value.strip())
-
-
 def is_public_access_enabled():
     """Check whether public access is enabled for Searx."""
     return os.path.exists(manifest.PUBLIC_ACCESS_SETTING_FILE)
@@ -128,7 +119,7 @@ def is_public_access_enabled():
 
 def enable_public_access():
     """Allow Searx app to be accessed by anyone with access."""
-    actions.superuser_run('searx', ['enable-public-access'])
+    privileged.enable_public_access()
     app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').disable()
     app.set_shortcut_login_required(False)
@@ -136,7 +127,7 @@ def enable_public_access():
 
 def disable_public_access():
     """Allow Searx app to be accessed by logged-in users only."""
-    actions.superuser_run('searx', ['disable-public-access'])
+    privileged.disable_public_access()
     app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').enable()
     app.set_shortcut_login_required(True)

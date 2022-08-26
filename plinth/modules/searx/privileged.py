@@ -1,10 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for searx.
-"""
+"""Configure searx."""
 
-import argparse
 import gzip
 import os
 import pathlib
@@ -15,40 +11,13 @@ import augeas
 import yaml
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.modules.searx.manifest import PUBLIC_ACCESS_SETTING_FILE
 from plinth.utils import gunzip
 
 SETTINGS_FILE = '/etc/searx/settings.yml'
 
 UWSGI_FILE = '/etc/uwsgi/apps-available/searx.ini'
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser(
-        'setup', help='Perform post-installation operations for Searx')
-
-    subparsers.add_parser('enable-public-access',
-                          help='Enable public access to the Searx application')
-    subparsers.add_parser(
-        'disable-public-access',
-        help='Disable public access to the Searx application')
-
-    safe_search = subparsers.add_parser(
-        'set-safe-search',
-        help='Set the default filter for safe search on Searx')
-    safe_search.add_argument(
-        'filter', type=int,
-        help='Filter results. 0: None, 1: Moderate, 2: Strict')
-
-    subparsers.add_parser('get-safe-search',
-                          help='Print the value of the safe search setting.')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _copy_uwsgi_configuration():
@@ -100,21 +69,22 @@ def _set_safe_search(settings):
     settings['search']['safe_search'] = 1
 
 
-def subcommand_set_safe_search(arguments):
+@privileged
+def set_safe_search(filter_: int):
     """Set safe search filter for search results."""
-    value = arguments.filter
     settings = read_settings()
-    settings['search']['safe_search'] = value
+    settings['search']['safe_search'] = filter_
     write_settings(settings)
 
 
-def subcommand_get_safe_search(_):
-    """Print the value of the safe search setting."""
+@privileged
+def get_safe_search() -> int:
+    """Return the value of the safe search setting."""
     if os.path.exists(SETTINGS_FILE):
         settings = read_settings()
-        print(settings['search']['safe_search'])
+        return int(settings['search']['safe_search'])
     else:
-        print(0)
+        return 0
 
 
 def read_settings():
@@ -138,15 +108,16 @@ def _get_example_settings_file():
 
 
 def _update_search_engines(settings):
-    """Updates settings with the latest supported search engines."""
+    """Update settings with the latest supported search engines."""
     example_settings_file = _get_example_settings_file()
     open_func = gzip.open if example_settings_file.suffix == '.gz' else open
     with open_func(example_settings_file, 'rb') as example_settings:
         settings['engines'] = yaml.safe_load(example_settings)['engines']
 
 
-def subcommand_setup(_):
-    """Post installation actions for Searx"""
+@privileged
+def setup():
+    """Post installation actions for Searx."""
     _copy_uwsgi_configuration()
     _update_uwsgi_configuration()
 
@@ -169,25 +140,14 @@ def subcommand_setup(_):
     action_utils.service_restart('uwsgi')
 
 
-def subcommand_enable_public_access(_):
+@privileged
+def enable_public_access():
     """Enable public access to the SearX application."""
     open(PUBLIC_ACCESS_SETTING_FILE, 'w', encoding='utf-8').close()
 
 
-def subcommand_disable_public_access(_):
+@privileged
+def disable_public_access():
     """Disable public access to the SearX application."""
     if os.path.exists(PUBLIC_ACCESS_SETTING_FILE):
         os.remove(PUBLIC_ACCESS_SETTING_FILE)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

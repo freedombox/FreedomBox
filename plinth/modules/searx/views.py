@@ -1,29 +1,27 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Django views for Searx.
-"""
+"""Django views for Searx."""
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import views
-from plinth.errors import ActionError
 from plinth.modules import searx
 
+from . import privileged
 from .forms import SearxForm
 
 
 class SearxAppView(views.AppView):
     """Serve configuration page."""
+
     app_id = 'searx'
     form_class = SearxForm
 
     def get_initial(self):
         """Return the status of the service to fill in the form."""
         initial = super().get_initial()
-        initial['safe_search'] = searx.get_safe_search_setting()
+        initial['safe_search'] = privileged.get_safe_search()
         initial['public_access'] = searx.is_public_access_enabled() and \
             app_module.App.get('searx').is_enabled()
         return initial
@@ -35,10 +33,9 @@ class SearxAppView(views.AppView):
 
         if str(old_data['safe_search']) != form_data['safe_search']:
             try:
-                actions.superuser_run(
-                    'searx', ['set-safe-search', form_data['safe_search']])
+                privileged.set_safe_search(int(form_data['safe_search']))
                 messages.success(self.request, _('Configuration updated.'))
-            except ActionError:
+            except Exception:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
 
@@ -49,7 +46,7 @@ class SearxAppView(views.AppView):
                 else:
                     searx.disable_public_access()
                 messages.success(self.request, _('Configuration updated.'))
-            except ActionError:
+            except Exception:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
 
