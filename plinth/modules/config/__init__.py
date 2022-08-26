@@ -1,15 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for basic system configuration.
-"""
+"""FreedomBox app for basic system configuration."""
 
-import os
 import socket
 
 import augeas
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import RelatedDaemon
@@ -26,12 +22,6 @@ _description = [
       'like hostname, domain name, webserver home page etc.')
 ]
 
-APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
-APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
-APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
-                                      APACHE_HOMEPAGE_CONF_FILE_NAME)
-FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
-                                        'freedombox.conf')
 ADVANCED_MODE_KEY = 'advanced_mode'
 
 
@@ -103,19 +93,18 @@ class ConfigApp(app_module.App):
 
 
 def get_domainname():
-    """Return the domainname"""
+    """Return the domainname."""
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
 
 
 def get_hostname():
-    """Return the hostname"""
+    """Return the hostname."""
     return socket.gethostname()
 
 
 def home_page_url2scid(url):
-    """Returns the shortcut ID of the given home page url."""
-
+    """Return the shortcut ID of the given home page url."""
     if url in ('/plinth/', '/plinth', 'plinth'):
         return 'plinth'
 
@@ -134,7 +123,7 @@ def home_page_url2scid(url):
 
 
 def _home_page_scid2url(shortcut_id):
-    """Returns the url for the given home page shortcut ID."""
+    """Return the url for the given home page shortcut ID."""
     if shortcut_id is None:
         url = None
     elif shortcut_id == 'plinth':
@@ -178,23 +167,22 @@ def _get_home_page_url(conf_file):
 
 def get_home_page():
     """Return the shortcut ID that is set as current home page."""
-    CONF_FILE = APACHE_HOMEPAGE_CONFIG if os.path.exists(
-        APACHE_HOMEPAGE_CONFIG) else FREEDOMBOX_APACHE_CONFIG
+    CONF_FILE = privileged.APACHE_HOMEPAGE_CONFIG if os.path.exists(
+        privileged.APACHE_HOMEPAGE_CONFIG
+    ) else privileged.FREEDOMBOX_APACHE_CONFIG
 
     url = _get_home_page_url(CONF_FILE)
     return home_page_url2scid(url)
 
 
 def change_home_page(shortcut_id):
-    """Change the FreedomBox's default redirect to URL of the shortcut
-       specified.
-    """
+    """Change the FreedomBox's default redirect to URL of a shortcut."""
     url = _home_page_scid2url(shortcut_id)
     if url is None:
         url = '/plinth/'  # fall back to default url if scid is unknown.
 
     # URL may be a reverse_lazy() proxy
-    actions.superuser_run('config', ['set-home-page', str(url)])
+    privileged.set_home_page(str(url))
 
 
 def get_advanced_mode():
@@ -211,12 +199,11 @@ def set_advanced_mode(advanced_mode):
 
 def _migrate_home_page_config():
     """Move the home page configuration to an external file."""
-
     # Hold the current home page in a variable
     home_page = get_home_page()
 
     # Reset the home page to plinth in freedombox.conf
-    actions.superuser_run('config', ['reset-home-page'])
+    privileged.reset_home_page()
 
     # Write the home page setting into the new conf file
     # This step is run at the end because it reloads the Apache server
