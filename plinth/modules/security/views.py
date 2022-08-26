@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for security module
-"""
+"""Views for security module."""
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
@@ -12,6 +10,7 @@ from plinth.modules import security
 from plinth.modules.upgrades import is_backports_requested
 from plinth.views import AppView
 
+from . import privileged
 from .forms import SecurityForm
 
 
@@ -42,15 +41,15 @@ class SecurityAppView(AppView):
 
 
 def get_status(request):
-    """Return the current status"""
+    """Return the current status."""
     return {
-        'restricted_access': security.get_restricted_access_enabled(),
+        'restricted_access': privileged.get_restricted_access_enabled(),
         'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')
     }
 
 
 def _apply_changes(request, old_status, new_status):
-    """Apply the form changes"""
+    """Apply the form changes."""
     if old_status['restricted_access'] != new_status['restricted_access']:
         try:
             security.set_restricted_access(new_status['restricted_access'])
@@ -70,7 +69,7 @@ def _apply_changes(request, old_status, new_status):
 
 
 def report(request):
-    """Serve the security report page"""
+    """Serve the security report page."""
     apps_report = security.get_apps_report()
     return TemplateResponse(
         request, 'security_report.html', {
