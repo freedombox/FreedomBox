@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Syncthing.
-"""
+"""FreedomBox app to configure Syncthing."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -17,7 +14,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Syncthing is an application to synchronize files across multiple '
@@ -106,13 +103,13 @@ class SyncthingApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('syncthing', ['setup'])
+        privileged.setup()
         add_user_to_share_group(SYSTEM_USER, SyncthingApp.DAEMON)
 
         if not old_version:
             self.enable()
 
-        actions.superuser_run('syncthing', ['setup-config'])
+        privileged.setup_config()
 
         if old_version == 1 and self.is_enabled():
             self.get_component('firewall-syncthing-ports').enable()

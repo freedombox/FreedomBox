@@ -1,10 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Syncthing.
-"""
+"""Configure Syncthing."""
 
-import argparse
 import grp
 import os
 import pwd
@@ -15,22 +11,10 @@ import time
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 DATA_DIR = '/var/lib/syncthing'
 CONF_FILE = DATA_DIR + '/.config/syncthing/config.xml'
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup Syncthing')
-
-    subparsers.add_parser('setup-config', help='Setup Syncthing configuration')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def augeas_load():
@@ -42,8 +26,9 @@ def augeas_load():
     return aug
 
 
-def subcommand_setup(_):
-    """Actions to be performed before installing Syncthing"""
+@privileged
+def setup():
+    """Perform post-install actions for Syncthing."""
     # Create syncthing group if needed.
     try:
         grp.getgrnam('syncthing')
@@ -65,7 +50,8 @@ def subcommand_setup(_):
         shutil.chown(DATA_DIR, user='syncthing', group='syncthing')
 
 
-def subcommand_setup_config(_):
+@privileged
+def setup_config():
     """Make configuration changes."""
     # wait until the configuration file is created by the syncthing daemon
     timeout = 300
@@ -94,16 +80,3 @@ def subcommand_setup_config(_):
 
     if conf_changed:
         action_utils.service_try_restart('syncthing@syncthing')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
