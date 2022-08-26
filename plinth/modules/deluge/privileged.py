@@ -1,11 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for BitTorrent web client.
-"""
+"""Configuration helper for BitTorrent web client."""
 
-import argparse
-import json
 import pathlib
 import subprocess
 import time
@@ -13,6 +8,7 @@ import time
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.modules.deluge.utils import Config
 
 DELUGED_DEFAULT_FILE = '/etc/default/deluged'
@@ -51,27 +47,6 @@ SystemCallArchitectures=native
 [Install]
 WantedBy=multi-user.target
 '''  # noqa: E501
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup deluge')
-
-    subparsers.add_parser('get-configuration',
-                          help='Return the current configuration')
-
-    subparser = subparsers.add_parser('set-configuration',
-                                      help='Set the configuration parameter')
-    subparser.add_argument('parameter',
-                           help='Name of the configuration parameter')
-    subparser.add_argument('value',
-                           help='Value of the configuration parameter')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _set_configuration(filename, parameter, value):
@@ -116,25 +91,24 @@ def _set_deluged_daemon_options():
     aug.save()
 
 
-def subcommand_get_configuration(_):
-    """Return the current deluged configuration in JSON format."""
+@privileged
+def get_configuration() -> dict[str, str]:
+    """Return the current deluged configuration."""
     with Config(DELUGE_CONF_DIR / 'core.conf') as config:
         download_location = config.content['download_location']
 
-    print(json.dumps({'download_location': download_location}))
+    return {'download_location': download_location}
 
 
-def subcommand_set_configuration(arguments):
+@privileged
+def set_configuration(download_location: str):
     """Set the deluged configuration."""
-    if arguments.parameter != 'download_location':
-        return
-
-    _set_configuration('core.conf', arguments.parameter, arguments.value)
+    _set_configuration('core.conf', 'download_location', download_location)
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Perform initial setup for deluge."""
-
     with open(DELUGE_WEB_SYSTEMD_SERVICE_PATH, 'w',
               encoding='utf-8') as file_handle:
         file_handle.write(DELUGE_WEB_SYSTEMD_SERVICE)
@@ -180,16 +154,3 @@ def _wait_for_configuration(service, file_name):
 
     if not is_running:
         action_utils.service_stop(service)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure a Deluge web client.
-"""
+"""FreedomBox app to configure a Deluge web client."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -16,7 +13,7 @@ from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Deluge is a BitTorrent client that features a Web UI.'),
@@ -96,5 +93,5 @@ class DelugeApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         add_user_to_share_group(SYSTEM_USER)
-        actions.superuser_run('deluge', ['setup'])
+        privileged.setup()
         self.enable()
