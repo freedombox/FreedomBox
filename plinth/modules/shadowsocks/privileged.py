@@ -1,42 +1,24 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Helper script for configuring Shadowsocks.
-"""
+"""Configure Shadowsocks."""
 
-import argparse
 import json
 import os
 import pathlib
 import random
 import string
-import sys
 from shutil import move
+from typing import Union
 
 from plinth import action_utils
-from plinth.modules.shadowsocks import ShadowsocksApp
+from plinth.actions import privileged
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/freedombox.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
     '/var/lib/private/shadowsocks-libev/freedombox/freedombox.json'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Perform initial setup steps')
-    subparsers.add_parser('get-config',
-                          help='Read and print JSON config to stdout')
-    subparsers.add_parser('merge-config',
-                          help='Merge JSON config from stdin with existing')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_setup(_):
+@privileged
+def setup():
     """Perform initial setup steps."""
     # Only client socks5 proxy is supported for now. Disable the
     # server component.
@@ -76,16 +58,16 @@ def subcommand_setup(_):
     if not wrong_state_dir.is_symlink() and wrong_state_dir.is_dir():
         wrong_state_dir.rmdir()
 
+    from plinth.modules.shadowsocks import ShadowsocksApp
     if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
         action_utils.service_restart(ShadowsocksApp.DAEMON)
 
 
-def subcommand_get_config(_):
+@privileged
+def get_config() -> dict[str, Union[int, str]]:
     """Read and print Shadowsocks configuration."""
-    try:
-        print(open(SHADOWSOCKS_CONFIG_SYMLINK, 'r', encoding='utf-8').read())
-    except Exception:
-        sys.exit(1)
+    config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r', encoding='utf-8').read()
+    return json.loads(config)
 
 
 def _merge_config(config):
@@ -103,26 +85,13 @@ def _merge_config(config):
     open(SHADOWSOCKS_CONFIG_SYMLINK, 'w', encoding='utf-8').write(new_config)
 
 
-def subcommand_merge_config(_):
+@privileged
+def merge_config(config: dict[str, Union[int, str]]):
     """Configure Shadowsocks."""
-    config = sys.stdin.read()
-    config = json.loads(config)
     _merge_config(config)
 
     # Don't try_restart because initial configuration may not be valid so
     # shadowsocks will not be running even when enabled.
+    from . import ShadowsocksApp
     if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
         action_utils.service_restart(ShadowsocksApp.DAEMON)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
