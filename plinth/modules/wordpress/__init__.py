@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure WordPress.
-"""
+"""FreedomBox app to configure WordPress."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -15,9 +12,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
-
-PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
+from . import manifest, privileged
 
 _description = [
     _('WordPress is a popular way to create and manage websites and blogs. '
@@ -106,7 +101,7 @@ class WordPressApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('wordpress', ['setup'])
+        privileged.setup()
         if not old_version:
             self.enable()
         elif old_version < 3:
@@ -120,9 +115,9 @@ class WordPressBackupRestore(BackupRestore):
     def backup_pre(self, packet):
         """Save database contents."""
         super().backup_pre(packet)
-        actions.superuser_run('wordpress', ['dump-database'])
+        privileged.dump_database()
 
     def restore_post(self, packet):
         """Restore database contents."""
         super().restore_post(packet)
-        actions.superuser_run('wordpress', ['restore-database'])
+        privileged.restore_database()

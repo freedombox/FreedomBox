@@ -1,10 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for WordPress.
-"""
+"""Configuration helper for WordPress."""
 
-import argparse
 import os
 import pathlib
 import random
@@ -15,7 +11,9 @@ import subprocess
 import augeas
 
 from plinth import action_utils
-from plinth.modules.wordpress import PUBLIC_ACCESS_FILE
+from plinth.actions import privileged
+
+PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
 
 _config_file_path = pathlib.Path('/etc/wordpress/config-default.php')
 _static_config_file_path = pathlib.Path('/etc/wordpress/freedombox-static.php')
@@ -27,26 +25,8 @@ DB_NAME = 'wordpress_fbx'
 DB_USER = 'wordpress_fbx'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup',
-                          help='Create initial configuration and database')
-    subparsers.add_parser('dump-database', help='Dump database to file')
-    subparsers.add_parser('restore-database',
-                          help='Restore database from file')
-    subparser = subparsers.add_parser('set-public',
-                                      help='Allow/disallow public access')
-    subparser.add_argument('--enable', choices=('True', 'False'),
-                           help='Whether to enable or disable public acceess')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_setup(_):
+@privileged
+def setup():
     """Create initial configuration and database for WordPress."""
     if _db_file_path.exists() or _config_file_path.exists():
         if _config_file_path.exists():
@@ -144,10 +124,11 @@ def _upgrade_config_file():
         _config_file_path.write_text('\n'.join(lines), encoding='utf-8')
 
 
-def subcommand_set_public(arguments):
+@privileged
+def set_public(enable: bool):
     """Allow/disallow public access."""
     public_access_file = pathlib.Path(PUBLIC_ACCESS_FILE)
-    if arguments.enable == 'True':
+    if enable:
         public_access_file.touch()
     else:
         public_access_file.unlink(missing_ok=True)
@@ -155,7 +136,13 @@ def subcommand_set_public(arguments):
     action_utils.service_reload('apache2')
 
 
-def subcommand_dump_database(_):
+def is_public() -> bool:
+    """Return whether public access is enabled."""
+    return pathlib.Path(PUBLIC_ACCESS_FILE).exists()
+
+
+@privileged
+def dump_database():
     """Dump database to file."""
     _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
     with _db_backup_file.open('w', encoding='utf-8') as file_handle:
@@ -165,7 +152,8 @@ def subcommand_dump_database(_):
         ], stdout=file_handle, check=True)
 
 
-def subcommand_restore_database(_):
+@privileged
+def restore_database():
     """Restore database from file."""
     with _db_backup_file.open('r', encoding='utf-8') as file_handle:
         subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
@@ -189,16 +177,3 @@ def _load_augeas():
     aug.load()
 
     return aug
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
