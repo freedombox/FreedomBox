@@ -1,14 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Zoph web application
-"""
+"""FreedomBox app to configure Zoph web application."""
 
-import json
 import logging
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
@@ -17,7 +13,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -88,34 +84,10 @@ class ZophApp(app_module.App):
 
     def setup(self, old_version):
         """Install and configure the app."""
-        actions.superuser_run('zoph', ['pre-install'])
+        privileged.pre_install()
         super().setup(old_version)
-        actions.superuser_run('zoph', ['setup'])
+        privileged.setup()
         self.enable()
-
-
-def set_configuration(admin_user=None, enable_osm=None):
-    """Configure Zoph."""
-    args = []
-    if admin_user:
-        args += ['--admin-user', admin_user]
-
-    if enable_osm is not None:
-        args += ['--enable-osm', str(enable_osm)]
-
-    actions.superuser_run('zoph', ['set-configuration'] + args)
-
-
-def is_configured():
-    """Return whether the Zoph app is configured."""
-    output = actions.superuser_run('zoph', ['is-configured'])
-    return output.strip() == 'true'
-
-
-def get_configuration():
-    """Return full configuration of Zoph."""
-    configuration = actions.superuser_run('zoph', ['get-configuration'])
-    return json.loads(configuration)
 
 
 class ZophBackupRestore(BackupRestore):
@@ -124,9 +96,9 @@ class ZophBackupRestore(BackupRestore):
     def backup_pre(self, packet):
         """Save database contents."""
         super().backup_pre(packet)
-        actions.superuser_run('zoph', ['dump-database'])
+        privileged.dump_database()
 
     def restore_post(self, packet):
         """Restore database contents."""
         super().restore_post(packet)
-        actions.superuser_run('zoph', ['restore-database'])
+        privileged.restore_database()

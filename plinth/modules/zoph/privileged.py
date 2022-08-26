@@ -1,47 +1,21 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Zoph server.
-"""
+"""Configuration helper for Zoph server."""
 
-import argparse
 import configparser
-import json
 import os
 import re
 import subprocess
+from typing import Optional
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 APACHE_CONF = '/etc/apache2/conf-available/zoph.conf'
 DB_BACKUP_FILE = '/var/lib/plinth/backups-data/zoph-database.sql'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('pre-install',
-                          help='Perform Zoph pre-install configuration')
-    subparser = subparsers.add_parser('setup',
-                                      help='Perform Zoph configuration setup')
-    subparsers.add_parser('get-configuration',
-                          help='Return the current configuration')
-    subparser = subparsers.add_parser('set-configuration',
-                                      help='Configure zoph')
-    subparser.add_argument('--admin-user', help='Name of the admin user')
-    subparser.add_argument('--enable-osm', help='Enable OpenSteetMap maps')
-    subparsers.add_parser('is-configured', help='return true if configured')
-    subparsers.add_parser('dump-database', help='Dump database to file')
-    subparsers.add_parser('restore-database',
-                          help='Restore database from file')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_pre_install(_):
+@privileged
+def pre_install():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections([
         'zoph zoph/dbconfig-install boolean true',
@@ -49,7 +23,8 @@ def subcommand_pre_install(_):
     ])
 
 
-def subcommand_get_configuration(_):
+@privileged
+def get_configuration() -> dict[str, str]:
     """Return the current configuration."""
     configuration = {}
     process = subprocess.run(['zoph', '--dump-config'], stdout=subprocess.PIPE,
@@ -58,7 +33,7 @@ def subcommand_get_configuration(_):
         name, value = line.partition(':')[::2]
         configuration[name.strip()] = value[1:]
 
-    print(json.dumps(configuration))
+    return configuration
 
 
 def _zoph_configure(key, value):
@@ -66,7 +41,8 @@ def _zoph_configure(key, value):
     subprocess.run(['zoph', '--config', key, value], check=True)
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup Zoph configuration."""
     _zoph_configure('import.enable', 'true')
     _zoph_configure('import.upload', 'true')
@@ -88,19 +64,20 @@ def _get_db_name():
     return config['zoph']['db_name'].strip('"')
 
 
-def subcommand_set_configuration(arguments):
+@privileged
+def set_configuration(enable_osm: Optional[bool] = None,
+                      admin_user: Optional[str] = None):
     """Setup Zoph Apache configuration."""
     _zoph_configure('interface.user.remote', 'true')
 
     # Note that using OpenSteetmap as a mapping provider is a very nice
     # feature, but some people may regard its use as a privacy issue
-    if arguments.enable_osm:
-        value = 'osm' if arguments.enable_osm == 'True' else ''
+    if enable_osm is not None:
+        value = 'osm' if enable_osm else ''
         _zoph_configure('maps.provider', value)
 
-    if arguments.admin_user:
+    if admin_user:
         # Edit the database to rename the admin user to FreedomBox admin user.
-        admin_user = arguments.admin_user
         if not re.match(r'^[\w.@][\w.@-]+\Z', admin_user, flags=re.ASCII):
             # Check to avoid SQL injection
             raise ValueError('Invalid username')
@@ -112,13 +89,16 @@ def subcommand_set_configuration(arguments):
                        check=True)
 
 
-def subcommand_is_configured(_):
-    """Print whether zoph app is configured."""
-    subprocess.run(['zoph', '--get-config', 'interface.user.remote'],
-                   check=True)
+@privileged
+def is_configured() -> bool:
+    """Return whether zoph app is configured."""
+    process = subprocess.run(['zoph', '--get-config', 'interface.user.remote'],
+                             stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode().strip() == 'true'
 
 
-def subcommand_dump_database(_):
+@privileged
+def dump_database():
     """Dump database to file."""
     db_name = _get_db_name()
     os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
@@ -127,23 +107,11 @@ def subcommand_dump_database(_):
                        check=True)
 
 
-def subcommand_restore_database(_):
+@privileged
+def restore_database():
     """Restore database from file."""
     db_name = _get_db_name()
     subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
     subprocess.run(['mysqladmin', 'create', db_name], check=True)
     with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
         subprocess.run(['mysql', db_name], stdin=db_restore_file, check=True)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

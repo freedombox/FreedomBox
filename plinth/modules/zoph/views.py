@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for configuring Zoph photo organiser.
-"""
+"""FreedomBox app for configuring Zoph photo organiser."""
 
 import logging
 
@@ -14,9 +12,8 @@ from django.views.generic import TemplateView
 
 from plinth import app as app_module
 from plinth import views
-from plinth.errors import ActionError
-from plinth.modules import zoph
 
+from . import privileged
 from .forms import ZophForm
 
 logger = logging.getLogger(__name__)
@@ -24,6 +21,7 @@ logger = logging.getLogger(__name__)
 
 class SetupView(TemplateView):
     """Show zoph setup page."""
+
     template_name = 'zoph-pre-setup.html'
     success_url = reverse_lazy('zoph:index')
 
@@ -38,18 +36,19 @@ class SetupView(TemplateView):
     def post(self, _request, *args, **kwargs):
         """Handle form submission."""
         admin_user = self.request.user.get_username()
-        zoph.set_configuration(admin_user=admin_user)
+        privileged.set_configuration(admin_user=admin_user)
         return HttpResponseRedirect(reverse_lazy('zoph:index'))
 
 
 class ZophAppView(views.AppView):
     """App configuration page."""
+
     form_class = ZophForm
     app_id = 'zoph'
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""
-        if not zoph.is_configured():
+        if not privileged.is_configured():
             return redirect('zoph:setup')
 
         return super().dispatch(request, *args, **kwargs)
@@ -57,7 +56,7 @@ class ZophAppView(views.AppView):
     def get_initial(self):
         """Get the current settings from Zoph."""
         status = super().get_initial()
-        config = zoph.get_configuration()
+        config = privileged.get_configuration()
         status['enable_osm'] = (config['maps.provider'] == 'osm')
         return status
 
@@ -67,9 +66,10 @@ class ZophAppView(views.AppView):
         new_status = form.cleaned_data
         if old_status['enable_osm'] != new_status['enable_osm']:
             try:
-                zoph.set_configuration(enable_osm=new_status['enable_osm'])
+                privileged.set_configuration(
+                    enable_osm=new_status['enable_osm'])
                 messages.success(self.request, _('Configuration updated.'))
-            except ActionError:
+            except Exception:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
 
