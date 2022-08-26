@@ -10,7 +10,7 @@ from django import urls
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
-from plinth import actions, module_loader
+from plinth import module_loader
 from plinth.modules.calibre import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
@@ -30,7 +30,8 @@ def fixture_calibre_urls():
 @pytest.fixture(autouse=True)
 def calibre_patch():
     """Patch calibre methods."""
-    with patch('plinth.modules.calibre.list_libraries') as list_libraries:
+    with patch('plinth.modules.calibre.privileged.list_libraries'
+               ) as list_libraries:
         list_libraries.return_value = ['TestExistingLibrary']
 
         yield
@@ -46,7 +47,7 @@ def make_request(request, view, **kwargs):
     return response, messages
 
 
-@patch('plinth.modules.calibre.create_library')
+@patch('plinth.modules.calibre.privileged.create_library')
 def test_create_library(create_library, rf):
     """Test that create library view works."""
     form_data = {'calibre-name': 'TestLibrary'}
@@ -60,11 +61,10 @@ def test_create_library(create_library, rf):
     create_library.assert_has_calls([call('TestLibrary')])
 
 
-@patch('plinth.modules.calibre.create_library')
+@patch('plinth.modules.calibre.privileged.create_library')
 def test_create_library_failed(create_library, rf):
     """Test that create library fails as expected."""
-    create_library.side_effect = actions.ActionError('calibre', 'TestOutput',
-                                                     'TestError')
+    create_library.side_effect = RuntimeError('TestError')
     form_data = {'calibre-name': 'TestLibrary'}
     request = rf.post(urls.reverse('calibre:create-library'), data=form_data)
     view = views.CreateLibraryView.as_view()
@@ -109,7 +109,7 @@ def test_delete_library_confirmation_view(_app, rf):
     assert response.context_data['name'] == 'TestExistingLibrary'
 
 
-@patch('plinth.modules.calibre.delete_library')
+@patch('plinth.modules.calibre.privileged.delete_library')
 @patch('plinth.app.App.get')
 def test_delete_library(_app, delete_library, rf):
     """Test that deleting a library works."""
@@ -121,18 +121,16 @@ def test_delete_library(_app, delete_library, rf):
     delete_library.assert_has_calls([call('TestExistingLibrary')])
 
 
-@patch('plinth.modules.calibre.delete_library')
+@patch('plinth.modules.calibre.privileged.delete_library')
 def test_delete_library_error(delete_library, rf):
     """Test that deleting a library shows error when operation fails."""
-    delete_library.side_effect = actions.ActionError('calibre', 'TestInput',
-                                                     'TestError')
+    delete_library.side_effect = ValueError('TestError')
     response, messages = make_request(rf.post(''), views.delete_library,
                                       name='TestExistingLibrary')
     assert response.status_code == 302
     assert response.url == urls.reverse('calibre:index')
     assert list(messages)[0].message == \
-        'Could not delete TestExistingLibrary: '\
-        "('calibre', 'TestInput', 'TestError')"
+        'Could not delete TestExistingLibrary: TestError'
 
 
 def test_delete_library_non_existing(rf):

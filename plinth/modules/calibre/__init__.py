@@ -1,14 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for calibre e-book library.
-"""
+"""FreedomBox app for calibre e-book library."""
 
-import json
 import re
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -109,21 +105,3 @@ def validate_library_name(library_name):
     """Raise exception if library name does not fit the accepted pattern."""
     if not re.fullmatch(r'[A-Za-z0-9_.-]+', library_name):
         raise Exception('Invalid library name')
-
-
-def list_libraries():
-    """Return a list of libraries."""
-    output = actions.superuser_run('calibre', ['list-libraries'])
-    return json.loads(output)['libraries']
-
-
-def create_library(name):
-    """Create an empty library."""
-    actions.superuser_run('calibre', ['create-library', name])
-    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])
-
-
-def delete_library(name):
-    """Delete a library and its contents."""
-    actions.superuser_run('calibre', ['delete-library', name])
-    actions.superuser_run('service', ['try-restart', CalibreApp.DAEMON])
