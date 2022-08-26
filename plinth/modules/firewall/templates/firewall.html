@@ -15,97 +15,82 @@
 
   <h3>{% trans "Status" %}</h3>
 
-  {% if firewall_status == 'not_running' %}
+  <div class="table-responsive">
+    <table class='table table-autowidth'>
+      <thead>
+        <th>{% trans "Service/Port" %}</th>
+        <th>{% trans "Status" %}</th>
+      </thead>
 
-    <p>
-      {% blocktrans trimmed %}
-        Firewall daemon is not running. Please run it. Firewall comes
-        enabled by default on {{ box_name }}. On any Debian based
-        system (such as {{ box_name }}) you may run it using the
-        command 'service firewalld start' or in case of a system with
-        systemd 'systemctl start firewalld'.
-      {% endblocktrans %}
-    </p>
-
-  {% else %}
-
-    <div class="table-responsive">
-      <table class='table table-autowidth'>
-        <thead>
-          <th>{% trans "Service/Port" %}</th>
-          <th>{% trans "Status" %}</th>
-        </thead>
-
-        <tbody>
-          {% for component in components|dictsort:"name" %}
-            {% if component.ports %}
-              <tr>
-                <td class="app-name">
-                  <a class="dropdown-toggle" href="#"
-                     data-toggle="collapse" role="button"
-                     data-target=".{{component.component_id}}"
-                     aria-expanded="false"
-                     aria-controls="{{component.component_id}}">
-                    {{ component.name }}</a>
+      <tbody>
+        {% for component in components|dictsort:"name" %}
+          {% if component.ports %}
+            <tr>
+              <td class="app-name">
+                <a class="dropdown-toggle" href="#"
+                   data-toggle="collapse" role="button"
+                   data-target=".{{component.component_id}}"
+                   aria-expanded="false"
+                   aria-controls="{{component.component_id}}">
+                  {{ component.name }}</a>
+              </td>
+              <td class="app-status">
+                {% if component.is_enabled %}
+                  <span class='badge badge-success'>
+                    {% trans "Enabled" %}</span>
+                {% else %}
+                  <span class='badge badge-warning'>
+                    {% trans "Disabled" %}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% for port in component.ports_details %}
+              <tr class="collapse {{component.component_id}}">
+                <td class='service'>
+                  <span class="service-name">{{ port.name }}</span>:
+                  {% for port_number, protocol in port.details %}
+                    {{ port_number }}/{{ protocol }}
+                  {% endfor %}
                 </td>
-                <td class="app-status">
-                  {% if component.is_enabled %}
+                <td class="service-status">
+                  {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
                     <span class='badge badge-success'>
-                      {% trans "Enabled" %}</span>
-                  {% else %}
+                      {% trans "Permitted" %}</span>
+                  {% elif port.name in internal_enabled_ports %}
                     <span class='badge badge-warning'>
-                      {% trans "Disabled" %}</span>
+                      {% trans "Permitted (internal only)" %}</span>
+                  {% elif port.name in external_enabled_ports %}
+                    <span class='badge badge-warning'>
+                      {% trans "Permitted (external only)" %}</span>
+                  {% else %}
+                    <span class='badge badge-danger'>
+                      {% trans "Blocked" %}</span>
                   {% endif %}
                 </td>
               </tr>
-              {% for port in component.ports_details %}
-                <tr class="collapse {{component.component_id}}">
-                  <td class='service'>
-                    <span class="service-name">{{ port.name }}</span>:
-                    {% for port_number, protocol in port.details %}
-                      {{ port_number }}/{{ protocol }}
-                    {% endfor %}
-                  </td>
-                  <td class="service-status">
-                    {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
-                      <span class='badge badge-success'>
-                        {% trans "Permitted" %}</span>
-                    {% elif port.name in internal_enabled_ports %}
-                      <span class='badge badge-warning'>
-                        {% trans "Permitted (internal only)" %}</span>
-                    {% elif port.name in external_enabled_ports %}
-                      <span class='badge badge-warning'>
-                        {% trans "Permitted (external only)" %}</span>
-                    {% else %}
-                      <span class='badge badge-danger'>
-                        {% trans "Blocked" %}</span>
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
-    <p>
-      <em>
-        {% blocktrans trimmed %}
-          The operation of the firewall is automatic. When you enable
-          a service it is also permitted in the firewall and when you
-          disable a service it is also disabled in the firewall.
-        {% endblocktrans %}
-      </em>
-    </p>
-
-    <h3>{%trans "Advanced" %} </h3>
-    <p>
+  <p>
+    <em>
       {% blocktrans trimmed %}
-        Advanced firewall operations such as opening custom ports are provided
-        by the <a href="/_cockpit/network/firewall">Cockpit</a> app.
+        The operation of the firewall is automatic. When you enable
+        a service it is also permitted in the firewall and when you
+        disable a service it is also disabled in the firewall.
       {% endblocktrans %}
-    </p>
-  {% endif %}
+    </em>
+  </p>
+
+  <h3>{%trans "Advanced" %} </h3>
+  <p>
+    {% blocktrans trimmed %}
+      Advanced firewall operations such as opening custom ports are provided
+      by the <a href="/_cockpit/network/firewall">Cockpit</a> app.
+    {% endblocktrans %}
+  </p>
 
 {% endblock %}

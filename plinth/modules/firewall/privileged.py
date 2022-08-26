@@ -1,31 +1,12 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for FreedomBox firewall interface.
-"""
+"""Configuration helper for FreedomBox firewall interface."""
 
-import argparse
 import subprocess
 
 import augeas
 
 from plinth import action_utils
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    # Setup
-    subparsers.add_parser('setup', help='Perform basic firewall setup')
-
-    # Get status
-    subparsers.add_parser('get-status',
-                          help='Get whether firewalld is running')
-
-    subparsers.required = True
-    return parser.parse_args()
+from plinth.actions import privileged
 
 
 def _flush_iptables_rules():
@@ -81,26 +62,11 @@ def set_firewall_backend(backend):
         action_utils.service_restart('firewalld')
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Perform basic firewalld setup."""
     action_utils.service_enable('firewalld')
-    subprocess.call(['firewall-cmd', '--set-default-zone=external'])
+    subprocess.run(['firewall-cmd', '--set-default-zone=external'],
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                   check=True)
     set_firewall_backend('nftables')
-
-
-def subcommand_get_status(_):
-    """Print status of the firewalld service"""
-    subprocess.call(['firewall-cmd', '--state'])
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == "__main__":
-    main()
