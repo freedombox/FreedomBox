@@ -1,21 +1,18 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for the Tor service
-"""
+"""Configure Tor service."""
 
-import argparse
 import codecs
-import json
 import os
 import re
 import socket
 import subprocess
 import time
+from typing import Any, Optional, Union
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.modules.tor.utils import (APT_TOR_PREFIX, get_augeas,
                                       get_real_apt_uri_path, iter_apt_uris)
 
@@ -25,48 +22,10 @@ TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
 TOR_AUTH_COOKIE = '/var/run/tor-instances/plinth/control.authcookie'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    setup_parser = subparsers.add_parser('setup',
-                                         help='Setup Tor configuration')
-    setup_parser.add_argument(
-        '--old-version', type=int, required=True,
-        help='Version number being upgraded from or None if setting up first '
-        'time.')
-
-    subparsers.add_parser('get-status', help='Get Tor status in JSON format')
-
-    configure = subparsers.add_parser('configure', help='Configure Tor')
-    configure.add_argument('--relay', choices=['enable', 'disable'],
-                           help='Configure relay')
-    configure.add_argument('--bridge-relay', choices=['enable', 'disable'],
-                           help='Configure bridge relay')
-    configure.add_argument('--hidden-service', choices=['enable', 'disable'],
-                           help='Configure hidden service')
-    configure.add_argument('--apt-transport-tor',
-                           choices=['enable', 'disable'],
-                           help='Configure package download over Tor')
-    configure.add_argument('--use-upstream-bridges',
-                           choices=['enable', 'disable'],
-                           help='Configure use of upstream bridges')
-    configure.add_argument('--upstream-bridges',
-                           help='Set list of upstream bridges to use')
-
-    subparsers.add_parser('update-ports',
-                          help='Update firewall ports based on what Tor uses')
-
-    subparsers.add_parser('restart', help='Restart Tor')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_setup(arguments):
+@privileged
+def setup(old_version: int):
     """Setup Tor configuration after installing it."""
-    if arguments.old_version and arguments.old_version <= 4:
+    if old_version and old_version <= 4:
         _upgrade_orport_value()
         return
 
@@ -98,7 +57,7 @@ def _first_time_setup():
     aug.set(TOR_CONFIG + '/SocksPort[1]', '[::]:9050')
     aug.set(TOR_CONFIG + '/SocksPort[2]', '0.0.0.0:9050')
     aug.set(TOR_CONFIG + '/ControlPort', '9051')
-    _enable_relay(relay='enable', bridge='enable', aug=aug)
+    _enable_relay(relay=True, bridge=True, aug=aug)
     aug.set(TOR_CONFIG + '/ExitPolicy[1]', 'reject *:*')
     aug.set(TOR_CONFIG + '/ExitPolicy[2]', 'reject6 *:*')
 
@@ -163,43 +122,46 @@ def _upgrade_orport_value():
     action_utils.service_restart('firewalld')
 
 
-def subcommand_get_status(_):
-    """Get Tor status in JSON format."""
-    print(json.dumps(get_status()))
-
-
-def subcommand_configure(arguments):
+@privileged
+def configure(use_upstream_bridges: Optional[bool] = None,
+              upstream_bridges: Optional[str] = None,
+              relay: Optional[bool] = None,
+              bridge_relay: Optional[bool] = None,
+              hidden_service: Optional[bool] = None,
+              apt_transport_tor: Optional[bool] = None):
     """Configure Tor."""
     aug = augeas_load()
 
-    _use_upstream_bridges(arguments.use_upstream_bridges, aug=aug)
+    _use_upstream_bridges(use_upstream_bridges, aug=aug)
 
-    if arguments.use_upstream_bridges == 'enable':
-        arguments.relay = 'disable'
-        arguments.bridge_relay = 'disable'
+    if use_upstream_bridges:
+        relay = False
+        bridge_relay = False
 
-    if arguments.upstream_bridges:
-        _set_upstream_bridges(arguments.upstream_bridges, aug=aug)
+    if upstream_bridges:
+        _set_upstream_bridges(upstream_bridges, aug=aug)
 
-    _enable_relay(arguments.relay, arguments.bridge_relay, aug=aug)
+    _enable_relay(relay, bridge_relay, aug=aug)
 
-    if arguments.hidden_service == 'enable':
+    if hidden_service:
         _enable_hs(aug=aug)
-    elif arguments.hidden_service == 'disable':
+    elif hidden_service is not None:
         _disable_hs(aug=aug)
 
-    if arguments.apt_transport_tor == 'enable':
+    if apt_transport_tor:
         _enable_apt_transport_tor()
-    elif arguments.apt_transport_tor == 'disable':
+    elif apt_transport_tor is not None:
         _disable_apt_transport_tor()
 
 
-def subcommand_update_ports(_):
+@privileged
+def update_ports():
     """Update firewall ports based on what Tor uses."""
     _update_ports()
 
 
-def subcommand_restart(_):
+@privileged
+def restart():
     """Restart Tor."""
     if (action_utils.service_is_enabled('tor@plinth', strict_check=True)
             and action_utils.service_is_running('tor@plinth')):
@@ -216,7 +178,8 @@ def subcommand_restart(_):
                 time.sleep(10)
 
 
-def get_status():
+@privileged
+def get_status() -> dict[str, Union[bool, str, dict[str, Any]]]:
     """Return dict with Tor status."""
     aug = augeas_load()
     return {
@@ -229,32 +192,32 @@ def get_status():
     }
 
 
-def _are_upstream_bridges_enabled(aug):
+def _are_upstream_bridges_enabled(aug) -> bool:
     """Return whether upstream bridges are being used."""
     use_bridges = aug.get(TOR_CONFIG + '/UseBridges')
     return use_bridges == '1'
 
 
-def _get_upstream_bridges(aug):
+def _get_upstream_bridges(aug) -> str:
     """Return upstream bridges separated by newlines."""
     matches = aug.match(TOR_CONFIG + '/Bridge')
     bridges = [aug.get(match) for match in matches]
     return '\n'.join(bridges)
 
 
-def _is_relay_enabled(aug):
+def _is_relay_enabled(aug) -> bool:
     """Return whether a relay is enabled."""
     orport = aug.get(TOR_CONFIG + '/ORPort[1]')
     return bool(orport) and orport != '0'
 
 
-def _is_bridge_relay_enabled(aug):
+def _is_bridge_relay_enabled(aug) -> bool:
     """Return whether bridge relay is enabled."""
     bridge = aug.get(TOR_CONFIG + '/BridgeRelay')
     return bridge == '1'
 
 
-def _get_ports():
+def _get_ports() -> dict[str, str]:
     """Return dict mapping port names to numbers."""
     ports = {}
     try:
@@ -275,7 +238,7 @@ def _get_ports():
     return ports
 
 
-def _get_orport():
+def _get_orport() -> str:
     """Return the ORPort by querying running instance."""
     cookie = open(TOR_AUTH_COOKIE, 'rb').read()
     cookie = codecs.encode(cookie, 'hex').decode()
@@ -296,8 +259,8 @@ QUIT
     return matches.group(1)
 
 
-def _get_hidden_service(aug=None):
-    """Return a string with configured Tor hidden service information"""
+def _get_hidden_service(aug=None) -> dict[str, Any]:
+    """Return a string with configured Tor hidden service information."""
     hs_enabled = False
     hs_status = 'Ok'
     hs_hostname = None
@@ -344,7 +307,8 @@ def _disable():
     action_utils.service_disable('tor@plinth')
 
 
-def _use_upstream_bridges(use_upstream_bridges=None, aug=None):
+def _use_upstream_bridges(use_upstream_bridges: Optional[bool] = None,
+                          aug=None):
     """Enable use of upstream bridges."""
     if use_upstream_bridges is None:
         return
@@ -352,9 +316,9 @@ def _use_upstream_bridges(use_upstream_bridges=None, aug=None):
     if not aug:
         aug = augeas_load()
 
-    if use_upstream_bridges == 'enable':
+    if use_upstream_bridges:
         aug.set(TOR_CONFIG + '/UseBridges', '1')
-    elif use_upstream_bridges == 'disable':
+    else:
         aug.set(TOR_CONFIG + '/UseBridges', '0')
 
     aug.save()
@@ -383,7 +347,8 @@ def _set_upstream_bridges(upstream_bridges=None, aug=None):
     aug.save()
 
 
-def _enable_relay(relay=None, bridge=None, aug=None):
+def _enable_relay(relay: Optional[bool], bridge: Optional[bool],
+                  aug: augeas.Augeas):
     """Enable Tor bridge relay."""
     if relay is None and bridge is None:
         return
@@ -393,18 +358,18 @@ def _enable_relay(relay=None, bridge=None, aug=None):
 
     use_upstream_bridges = _are_upstream_bridges_enabled(aug)
 
-    if relay == 'enable' and not use_upstream_bridges:
+    if relay and not use_upstream_bridges:
         aug.set(TOR_CONFIG + '/ORPort[1]', '9001')
         aug.set(TOR_CONFIG + '/ORPort[2]', '[::]:9001')
-    elif relay == 'disable':
+    elif relay is not None:
         aug.remove(TOR_CONFIG + '/ORPort')
 
-    if bridge == 'enable' and not use_upstream_bridges:
+    if bridge and not use_upstream_bridges:
         aug.set(TOR_CONFIG + '/BridgeRelay', '1')
         aug.set(TOR_CONFIG + '/ServerTransportPlugin',
                 'obfs3,obfs4 exec /usr/bin/obfs4proxy')
         aug.set(TOR_CONFIG + '/ExtORPort', 'auto')
-    elif bridge == 'disable':
+    elif bridge is not None:
         aug.remove(TOR_CONFIG + '/BridgeRelay')
         aug.remove(TOR_CONFIG + '/ServerTransportPlugin')
         aug.remove(TOR_CONFIG + '/ExtORPort')
@@ -413,7 +378,7 @@ def _enable_relay(relay=None, bridge=None, aug=None):
 
 
 def _enable_hs(aug=None):
-    """Enable Tor hidden service"""
+    """Enable Tor hidden service."""
     if not aug:
         aug = augeas_load()
 
@@ -429,7 +394,7 @@ def _enable_hs(aug=None):
 
 
 def _disable_hs(aug=None):
-    """Disable Tor hidden service"""
+    """Disable Tor hidden service."""
     if not aug:
         aug = augeas_load()
 
@@ -443,13 +408,7 @@ def _disable_hs(aug=None):
 
 def _enable_apt_transport_tor():
     """Enable package download over Tor."""
-    try:
-        aug = get_augeas()
-    except Exception:
-        # If there was an error, don't proceed
-        print('Error: Unable to understand sources format.')
-        exit(1)
-
+    aug = get_augeas()
     for uri_path in iter_apt_uris(aug):
         uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
@@ -527,16 +486,3 @@ def augeas_load():
             '/etc/tor/instances/plinth/torrc')
     aug.load()
     return aug
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

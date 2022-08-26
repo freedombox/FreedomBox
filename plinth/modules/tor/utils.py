@@ -1,18 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Tor utility functions
-"""
+"""Tor utility functions."""
 
 import glob
 import itertools
-import json
 
 import augeas
 
-from plinth import actions
 from plinth import app as app_module
 from plinth.daemon import app_is_running
 from plinth.modules.names.components import DomainName
+
+from . import privileged
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
                          '/files/etc/apt/sources.list.d/*/*/uri')
@@ -21,8 +19,7 @@ APT_TOR_PREFIX = 'tor+'
 
 def get_status(initialized=True):
     """Return current Tor status."""
-    output = actions.superuser_run('tor', ['get-status'])
-    status = json.loads(output)
+    status = privileged.get_status()
 
     hs_info = status['hidden_service']
     hs_services = []
