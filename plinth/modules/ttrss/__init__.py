@@ -1,12 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Tiny Tiny RSS.
-"""
+"""FreedomBox app to configure Tiny Tiny RSS."""
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -17,7 +14,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, '
@@ -97,20 +94,20 @@ class TTRSSApp(app_module.App):
     def enable(self):
         """Enable components and API access."""
         super().enable()
-        actions.superuser_run('ttrss', ['enable-api-access'])
+        privileged.enable_api_access()
 
         # Try to set the domain to one of the available TLS domains
-        domain = get_domain()
+        domain = privileged.get_domain()
         if not domain or domain == 'localhost':
             from plinth.modules import names
             domain = next(names.get_available_tls_domains(), None)
-            set_domain(domain)
+            privileged.set_domain(domain)
 
     def setup(self, old_version):
         """Install and configure the app."""
-        actions.superuser_run('ttrss', ['pre-setup'])
+        privileged.pre_setup()
         super().setup(old_version)
-        actions.superuser_run('ttrss', ['setup'])
+        privileged.setup()
         self.enable()
 
     def force_upgrade(self, packages):
@@ -124,30 +121,19 @@ class TTRSSApp(app_module.App):
             return False
 
         install(['tt-rss'], force_configuration='new')
-        actions.superuser_run('ttrss', ['setup'])
+        privileged.setup()
         return True
 
 
 class TTRSSBackupRestore(BackupRestore):
-    """Component to backup/restore TT-RSS"""
+    """Component to backup/restore TT-RSS."""
 
     def backup_pre(self, packet):
         """Save database contents."""
         super().backup_pre(packet)
-        actions.superuser_run('ttrss', ['dump-database'])
+        privileged.dump_database()
 
     def restore_post(self, packet):
         """Restore database contents."""
         super().restore_post(packet)
-        actions.superuser_run('ttrss', ['restore-database'])
-
-
-def get_domain():
-    """Read TLS domain from tt-rss config file."""
-    return actions.superuser_run('ttrss', ['get-domain']).strip()
-
-
-def set_domain(domain):
-    """Set the TLS domain in tt-rss configuration file."""
-    if domain:
-        actions.superuser_run('ttrss', ['set-domain', domain])
+        privileged.restore_database()

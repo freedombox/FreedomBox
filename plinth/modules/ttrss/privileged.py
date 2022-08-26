@@ -1,16 +1,14 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Tiny Tiny RSS.
-"""
+"""Configure Tiny Tiny RSS."""
 
-import argparse
 import os
 import subprocess
+from typing import Optional
 
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 CONFIG_FILE = '/etc/tt-rss/config.php'
 DEFAULT_FILE = '/etc/default/tt-rss'
@@ -18,36 +16,15 @@ DATABASE_FILE = '/etc/tt-rss/database.php'
 DB_BACKUP_FILE = '/var/lib/plinth/backups-data/ttrss-database.sql'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('pre-setup', help='Perform pre-setup operations')
-    subparsers.add_parser('setup', help='Setup Tiny Tiny RSS configuration')
-    subparsers.add_parser('enable-api-access', help='Enable Tiny Tiny RSS API')
-    subparsers.add_parser('dump-database', help='Dump database to file')
-    subparsers.add_parser('restore-database',
-                          help='Restore database from file')
-    subparsers.add_parser('get-domain',
-                          help='Get the domain set for Tiny Tiny RSS.')
-    set_domain = subparsers.add_parser(
-        'set-domain', help='Set the domain to be used by Tiny Tiny RSS.')
-    set_domain.add_argument(
-        'domain_name',
-        help='The domain name that will be used by Tiny Tiny RSS.')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_pre_setup(_):
+@privileged
+def pre_setup():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections(
         ['tt-rss tt-rss/database-type string pgsql'])
 
 
-def subcommand_get_domain(_):
+@privileged
+def get_domain() -> Optional[str]:
     """Get the domain set for Tiny Tiny RSS."""
     aug = load_augeas()
 
@@ -55,12 +32,18 @@ def subcommand_get_domain(_):
     for match in aug.match('/files' + CONFIG_FILE + '/define'):
         if aug.get(match) == 'SELF_URL_PATH':
             url = aug.get(match + '/value').strip("'")
-            print(urlparse(url).netloc)
+            return urlparse(url).netloc
+
+    return None
 
 
-def subcommand_set_domain(args):
+@privileged
+def set_domain(domain_name: Optional[str]):
     """Set the domain to be used by Tiny Tiny RSS."""
-    url = f"'https://{args.domain_name}/tt-rss/'"
+    if not domain_name:
+        return
+
+    url = f"'https://{domain_name}/tt-rss/'"
     aug = load_augeas()
 
     for match in aug.match('/files' + CONFIG_FILE + '/define'):
@@ -70,7 +53,8 @@ def subcommand_set_domain(args):
     aug.save()
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup Tiny Tiny RSS configuration."""
     aug = load_augeas()
 
@@ -96,7 +80,8 @@ def subcommand_setup(_):
         action_utils.service_restart('tt-rss')
 
 
-def subcommand_enable_api_access(_):
+@privileged
+def enable_api_access():
     """Enable API access so that tt-rss can be accessed through mobile app."""
     import psycopg2  # Only available post installation
 
@@ -123,14 +108,16 @@ def subcommand_enable_api_access(_):
     connection.close()
 
 
-def subcommand_dump_database(_):
+@privileged
+def dump_database():
     """Dump database to file."""
     os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
     with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
         _run_as_postgres(['pg_dump', 'ttrss'], stdout=db_backup_file)
 
 
-def subcommand_restore_database(_):
+@privileged
+def restore_database():
     """Restore database from file."""
     _run_as_postgres(['dropdb', 'ttrss'])
     _run_as_postgres(['createdb', 'ttrss'])
@@ -155,16 +142,3 @@ def load_augeas():
     aug.set('/augeas/load/Phpvars/incl[last() + 1]', DATABASE_FILE)
     aug.load()
     return aug
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

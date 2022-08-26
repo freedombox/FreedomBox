@@ -12,38 +12,25 @@ APP_ID = 'ttrss'
 pytestmark = [pytest.mark.apps, pytest.mark.ttrss, pytest.mark.sso]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login and install the app."""
-    functional.login(session_browser)
-    functional.install(session_browser, APP_ID)
-    yield
-    functional.app_disable(session_browser, APP_ID)
+class TestTTRSSApp(functional.BaseAppTests):
+    """Class to customize basic app tests for TTRSS."""
 
+    app_name = 'ttrss'
+    has_service = True
+    has_web = True
 
-def test_enable_disable(session_browser):
-    """Test enabling the app."""
-    functional.app_disable(session_browser, APP_ID)
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore of app data."""
+        functional.app_enable(session_browser, APP_ID)
+        _subscribe(session_browser)
+        functional.backup_create(session_browser, APP_ID, 'test_ttrss')
 
-    functional.app_enable(session_browser, APP_ID)
-    assert functional.service_is_running(session_browser, APP_ID)
+        _unsubscribe(session_browser)
+        functional.backup_restore(session_browser, APP_ID, 'test_ttrss')
 
-    functional.app_disable(session_browser, APP_ID)
-    assert functional.service_is_not_running(session_browser, APP_ID)
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore of app data."""
-    functional.app_enable(session_browser, APP_ID)
-    _subscribe(session_browser)
-    functional.backup_create(session_browser, APP_ID, 'test_ttrss')
-
-    _unsubscribe(session_browser)
-    functional.backup_restore(session_browser, APP_ID, 'test_ttrss')
-
-    assert functional.service_is_running(session_browser, APP_ID)
-    assert _is_subscribed(session_browser)
+        assert functional.service_is_running(session_browser, APP_ID)
+        assert _is_subscribed(session_browser)
 
 
 def _ttrss_load_main_interface(browser):
