@@ -1,33 +1,28 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for BIND module.
-"""
+"""Views for BIND module."""
 
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
-from plinth.modules import bind, names
+from plinth.modules import names
 from plinth.views import AppView
 
-from . import get_config
+from . import privileged
 from .forms import BindForm
 
 
 class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     """A specialized view for configuring Bind."""
+
     app_id = 'bind'
     form_class = BindForm
     template_name = 'bind.html'
 
     def get_context_data(self, *args, **kwargs):
-        """
-        Get/append information for domains bind is configured to respond for
-        and additional names from the names module
-        """
+        """Get/append information for domains and additional names."""
         context = super().get_context_data(**kwargs)
 
-        served_domains = bind.get_served_domains()
+        served_domains = privileged.get_served_domains()
         context['domains_table'] = []
         for key, val in served_domains.items():
             if key == 'localhost.':
@@ -53,21 +48,17 @@ class BindAppView(AppView):  # pylint: disable=too-many-ancestors
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial.update(get_config())
+        initial.update(privileged.get_config())
         return initial
 
     def form_valid(self, form):
         """Change the configurations of Bind service."""
         data = form.cleaned_data
-        old_config = get_config()
+        old_config = privileged.get_config()
 
         if old_config['forwarders'] != data['forwarders'] \
            or old_config['enable_dnssec'] != data['enable_dnssec']:
-            dnssec_setting = 'enable' if data['enable_dnssec'] else 'disable'
-            actions.superuser_run('bind', [
-                'configure', '--forwarders', data['forwarders'], '--dnssec',
-                dnssec_setting
-            ])
+            privileged.configure(data['forwarders'], data['enable_dnssec'])
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
