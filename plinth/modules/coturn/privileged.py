@@ -1,11 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Coturn daemon.
-"""
+"""Configuration helper for Coturn daemon."""
 
-import argparse
-import json
 import pathlib
 import random
 import shutil
@@ -14,23 +9,9 @@ import string
 import augeas
 
 from plinth import action_utils
+from plinth.actions import privileged
 
 CONFIG_FILE = pathlib.Path('/etc/coturn/freedombox.conf')
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup Coturn server')
-    subparsers.add_parser('get-config',
-                          help='Return the current configuration')
-    subparser = subparsers.add_parser('set-domain', help='Set the TLS domain')
-    subparser.add_argument('domain_name', help='TLS domain name to set')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _key_path(key):
@@ -38,7 +19,8 @@ def _key_path(key):
     return '/files' + str(CONFIG_FILE) + '/' + key
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup Coturn server."""
     CONFIG_FILE.parent.mkdir(exist_ok=True)
     if not CONFIG_FILE.exists():
@@ -75,25 +57,26 @@ def subcommand_setup(_):
     action_utils.service_try_restart('coturn')
 
 
-def subcommand_get_config(_):
-    """Return the current configuration in JSON format."""
+@privileged
+def get_config() -> dict[str, str]:
+    """Return the current configuration."""
     aug = augeas_load()
     config = {
         'static_auth_secret': aug.get(_key_path('static-auth-secret')),
         'realm': aug.get(_key_path('realm')),
     }
-    print(json.dumps(config))
+    return config
 
 
-def subcommand_set_domain(arguments):
+@privileged
+def set_domain(domain_name: str):
     """Set the TLS domain.
 
     This value is usually not stored. So, set realm value even though it is not
     needed to set realm for REST API based authentication.
-
     """
     aug = augeas_load()
-    aug.set(_key_path('realm'), arguments.domain_name)
+    aug.set(_key_path('realm'), domain_name)
     aug.save()
 
 
@@ -106,16 +89,3 @@ def augeas_load():
     aug.load()
 
     return aug
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

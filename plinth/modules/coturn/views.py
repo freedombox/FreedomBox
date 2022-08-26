@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for Coturn app.
-"""
+"""Views for Coturn app."""
 
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +13,7 @@ from . import forms
 
 class CoturnAppView(views.AppView):
     """Serve configuration page."""
+
     app_id = 'coturn'
     template_name = 'coturn.html'
     form_class = forms.CoturnForm
