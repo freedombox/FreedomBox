@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for the Single Sign On app of FreedomBox.
-"""
+"""Views for the Single Sign On app of FreedomBox."""
 
 import logging
 import os
@@ -17,8 +15,9 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
 
-from plinth import actions, translation, utils, web_framework
+from plinth import translation, utils, web_framework
 
+from . import privileged
 from .forms import AuthenticationForm, CaptchaAuthenticationForm
 
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
@@ -29,15 +28,11 @@ logger = logging.getLogger(__name__)
 
 
 def set_ticket_cookie(user, response):
-    """Generate and set a mod_auth_pubtkt as a cookie in the provided
-    response.
-    """
+    """Generate and set a mod_auth_pubtkt as a cookie in the response."""
     tokens = list(map(lambda g: g.name, user.groups.all()))
     private_key_file = os.path.join(KEYS_DIRECTORY, PRIVATE_KEY_FILE_NAME)
-    ticket = actions.superuser_run('auth-pubtkt', [
-        'generate-ticket', '--uid', user.username, '--private-key-file',
-        private_key_file, '--tokens', ','.join(tokens)
-    ])
+    ticket = privileged.generate_ticket(user.username, private_key_file,
+                                        tokens)
     response.set_cookie(SSO_COOKIE_NAME, urllib.parse.quote(ticket))
     return response
 
@@ -46,13 +41,14 @@ class SSOLoginView(LoginView):
     """View to login to FreedomBox and set a auth_pubtkt cookie.
 
     Cookie will be used to provide Single Sign On for some other applications.
-
     """
+
     redirect_authenticated_user = True
     template_name = 'login.html'
     form_class = AuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
         response = super().dispatch(request, *args, **kwargs)
         if request.user.is_authenticated:
             translation.set_language(request, response,
@@ -65,15 +61,19 @@ class SSOLoginView(LoginView):
     # axes_form_invalid when axes >= 5.0.0 becomes available in Debian stable.
     @axes_form_invalid
     def form_invalid(self, *args, **kwargs):
+        """Trigger django-axes logic to deal with too many attempts."""
         return super().form_invalid(*args, **kwargs)
 
 
 class CaptchaLoginView(LoginView):
+    """A login view with mandatory CAPTCHA image."""
+
     redirect_authenticated_user = True
     template_name = 'login.html'
     form_class = CaptchaAuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
+        """Handle a request and return a HTTP response."""
         response = super().dispatch(request, *args, **kwargs)
         if not request.POST:
             return response
@@ -102,7 +102,7 @@ def logout(request):
 
 
 def refresh(request):
-    """Simulate cookie refresh - redirect logged in user with a new cookie"""
+    """Simulate cookie refresh - redirect logged in user with a new cookie."""
     redirect_url = request.GET.get(REDIRECT_FIELD_NAME, '')
     response = HttpResponseRedirect(redirect_url)
     response.delete_cookie(SSO_COOKIE_NAME)

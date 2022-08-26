@@ -1,44 +1,23 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Module with utilities to generate a auth_pubtkt ticket and
-sign it with the FreedomBox server's private key.
+"""Generate a auth_pubtkt ticket.
+
+Sign tickets with the FreedomBox server's private key.
 """
 
-import argparse
 import base64
 import datetime
 import os
 
 from OpenSSL import crypto
 
+from plinth.actions import privileged
+
 KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
 
 
-def parse_arguments():
-    """ Return parsed command line arguments as dictionary. """
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser(
-        'create-key-pair', help='create a key pair for the apache server '
-        'to sign auth_pubtkt tickets')
-    gen_tkt = subparsers.add_parser('generate-ticket',
-                                    help='generate auth_pubtkt ticket')
-    gen_tkt.add_argument('--uid', help='username of the user')
-    gen_tkt.add_argument('--private-key-file',
-                         help='path of the private key file of the server')
-    gen_tkt.add_argument('--tokens',
-                         help='tokens, usually containing the user groups')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_create_key_pair(_):
-    """Create public/private key pair for signing the auth_pubtkt
-    tickets.
-    """
+@privileged
+def create_key_pair():
+    """Create public/private key pair for signing the tickets."""
     private_key_file = os.path.join(KEYS_DIRECTORY, 'privkey.pem')
     public_key_file = os.path.join(KEYS_DIRECTORY, 'pubkey.pem')
 
@@ -64,9 +43,10 @@ def subcommand_create_key_pair(_):
             os.chmod(fil, 0o440)
 
 
-def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
-                  graceperiod=None, extra_fields=None):
+def _create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
+                   graceperiod=None, extra_fields=None):
     """Create and return a signed mod_auth_pubtkt ticket."""
+    tokens = ','.join(tokens)
     fields = [
         f'uid={uid}',
         f'validuntil={int(validuntil)}',
@@ -78,49 +58,33 @@ def create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
         and ';'.join(['{}={}'.format(k, v) for k, v in extra_fields]),
     ]
     data = ';'.join(filter(None, fields))
-    signature = 'sig={}'.format(sign(pkey, data))
+    signature = 'sig={}'.format(_sign(pkey, data))
     return ';'.join([data, signature])
 
 
-def sign(pkey, data):
-    """Calculates and returns ticket's signature."""
+def _sign(pkey, data):
+    """Calculate and return ticket's signature."""
     sig = crypto.sign(pkey, data.encode(), 'sha512')
     return base64.b64encode(sig).decode()
 
 
-def subcommand_generate_ticket(arguments):
+@privileged
+def generate_ticket(uid: str, private_key_file: str, tokens: list[str]) -> str:
     """Generate a mod_auth_pubtkt ticket using login credentials."""
-    uid = arguments.uid
-    private_key_file = arguments.private_key_file
-    tokens = arguments.tokens
     with open(private_key_file, 'r', encoding='utf-8') as fil:
         pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
-    valid_until = minutes_from_now(12 * 60)
-    grace_period = minutes_from_now(11 * 60)
-    print(
-        create_ticket(pkey, uid, valid_until, tokens=tokens,
-                      graceperiod=grace_period))
+    valid_until = _minutes_from_now(12 * 60)
+    grace_period = _minutes_from_now(11 * 60)
+    return _create_ticket(pkey, uid, valid_until, tokens=tokens,
+                          graceperiod=grace_period)
 
 
-def minutes_from_now(minutes):
+def _minutes_from_now(minutes):
     """Return a timestamp at the given number of minutes from now."""
-    return seconds_from_now(minutes * 60)
+    return _seconds_from_now(minutes * 60)
 
 
-def seconds_from_now(seconds):
+def _seconds_from_now(seconds):
     """Return a timestamp at the given number of seconds from now."""
     return (datetime.datetime.now() +
             datetime.timedelta(0, seconds)).timestamp()
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

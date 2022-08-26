@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Single Sign On services.
-"""
+"""FreedomBox app to configure Single Sign On services."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth.package import Packages
+
+from . import privileged
 
 
 class SSOApp(app_module.App):
     """FreedomBox app for single sign on."""
+
     app_id = 'sso'
 
     _version = 1
@@ -34,4 +34,4 @@ class SSOApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('auth-pubtkt', ['create-key-pair'])
+        privileged.create_key_pair()
