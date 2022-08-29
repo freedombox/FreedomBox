@@ -25,9 +25,21 @@ class TestMediawikiApp(functional.BaseAppTests):
         """Setup the app."""
         functional.login(session_browser)
         functional.install(session_browser, 'mediawiki')
+        functional.app_enable(session_browser, 'mediawiki')
         _set_domain(session_browser)
+        _set_admin_password(session_browser, 'whatever123')
 
-    def test_public_registrations(self, session_browser):
+    @pytest.fixture(name='no_login')
+    def fixture_no_login(self, session_browser):
+        """Ensure logout from MediaWiki."""
+        _logout(session_browser)
+
+    @pytest.fixture(name='login')
+    def fixture_login(self, session_browser):
+        """Ensure login to MediaWiki."""
+        _login_with_credentials(session_browser, 'admin', 'whatever123')
+
+    def test_public_registrations(self, session_browser, no_login):
         """Test enabling public registrations."""
         _enable_public_registrations(session_browser)
         _verify_create_account_link(session_browser)
@@ -35,7 +47,7 @@ class TestMediawikiApp(functional.BaseAppTests):
         _disable_public_registrations(session_browser)
         _verify_no_create_account_link(session_browser)
 
-    def test_private_mode(self, session_browser):
+    def test_private_mode(self, session_browser, no_login):
         """Test enabling private mode."""
         _enable_private_mode(session_browser)
         _verify_no_create_account_link(session_browser)
@@ -44,7 +56,8 @@ class TestMediawikiApp(functional.BaseAppTests):
         _disable_private_mode(session_browser)
         _verify_anonymous_reads_edits_link(session_browser)
 
-    def test_private_mode_public_registrations(self, session_browser):
+    def test_private_mode_public_registrations(self, session_browser,
+                                               no_login):
         """Test interactive between private mode and public registrations.
 
         Requires JS."""
@@ -58,25 +71,18 @@ class TestMediawikiApp(functional.BaseAppTests):
         _enable_public_registrations(session_browser)
         _verify_create_account_link(session_browser)
 
-    def test_upload_files(self, session_browser):
-        """Test that logged in user can see upload files option.
-
-        Requires JS."""
-        _set_admin_password(session_browser, 'whatever123')
-        _login_with_credentials(session_browser, 'admin', 'whatever123')
-
-    def test_upload_images(self, session_browser):
+    def test_upload_images(self, session_browser, login):
         """Test uploading an image."""
         _upload_image(session_browser, 'admin', 'whatever123', 'noise.png')
         assert _image_exists(session_browser, 'Noise.png')
 
-    def test_upload_svg_image(self, session_browser):
+    def test_upload_svg_image(self, session_browser, login):
         """Test uploading an SVG image."""
         _upload_image(session_browser, 'admin', 'whatever123',
                       'apps-background.svg')
         assert _image_exists(session_browser, 'Apps-background.svg')
 
-    def test_backup_restore(self, session_browser):
+    def test_backup_restore(self, session_browser, login):
         """Test backup and restore of pages and images."""
         if not _image_exists(session_browser, 'Noise.png'):
             _upload_image(session_browser, 'admin', 'whatever123', 'Noise.png')
@@ -147,19 +153,19 @@ def _verify_no_create_account_link(browser):
         lambda: not _is_create_account_available(browser))
 
 
-def _is_anonymouse_read_allowed(browser):
+def _is_anonymous_read_allowed(browser):
     """Load the main page and check if anonymous reading is allowed."""
     functional.visit(browser, '/mediawiki')
     return browser.is_element_present_by_id('ca-nstab-main')
 
 
 def _verify_anonymous_reads_edits_link(browser):
-    assert functional.eventually(_is_anonymouse_read_allowed, args=[browser])
+    assert functional.eventually(_is_anonymous_read_allowed, args=[browser])
 
 
 def _verify_no_anonymous_reads_edits_link(browser):
     assert functional.eventually(
-        lambda: not _is_anonymouse_read_allowed(browser))
+        lambda: not _is_anonymous_read_allowed(browser))
     assert browser.is_element_present_by_id('ca-nstab-special')
 
 
@@ -177,6 +183,13 @@ def _login_with_credentials(browser, username, password):
     # persist between steps
     assert functional.eventually(browser.is_element_present_by_id,
                                  args=['t-upload'])
+
+
+def _logout(browser):
+    """Logout from MediaWiki."""
+    functional.visit(browser, '/mediawiki/Special:UserLogout')
+    if browser.find_by_css('#bodyContent form'):
+        functional.submit(browser, form_class='oo-ui-formLayout')
 
 
 def _upload_image(browser, username, password, image, ignore_warnings=True):

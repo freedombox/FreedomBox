@@ -1,63 +1,17 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for MediaWiki.
-"""
+"""Configure MediaWiki."""
 
-import argparse
 import os
 import subprocess
-import sys
 import tempfile
+from typing import Optional
 
+from plinth.actions import privileged
 from plinth.utils import generate_password
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
 CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 LOCAL_SETTINGS_CONF = '/etc/mediawiki/LocalSettings.php'
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Setup MediaWiki')
-    subparsers.add_parser('update', help='Run MediaWiki update script')
-
-    help_pub_reg = 'Enable/Disable/Status public user registration.'
-    pub_reg = subparsers.add_parser('public-registrations', help=help_pub_reg)
-    pub_reg.add_argument('command', choices=('enable', 'disable', 'status'),
-                         help=help_pub_reg)
-
-    help_private_mode = 'Enable/Disable/Status private mode.'
-    private_mode = subparsers.add_parser('private-mode',
-                                         help=help_private_mode)
-    private_mode.add_argument('command',
-                              choices=('enable', 'disable', 'status'),
-                              help=help_private_mode)
-
-    change_password = subparsers.add_parser('change-password',
-                                            help='Change user password')
-    change_password.add_argument('--username', default='admin',
-                                 help='name of the MediaWiki user')
-    change_password.add_argument('--password',
-                                 help='new password for the MediaWiki user')
-
-    default_skin = subparsers.add_parser('set-default-skin',
-                                         help='Set the default skin')
-    default_skin.add_argument('skin', help='name of the skin')
-
-    server_url = subparsers.add_parser(
-        'set-server-url', help='Set the value of $wgServer for this server')
-    server_url.add_argument('server_url', help='value of $wgServer')
-
-    site_name = subparsers.add_parser(
-        'set-site-name', help='Set the value of $wgSitename for this Wiki')
-    site_name.add_argument('site_name', help='value of $wgSitename')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _get_php_command():
@@ -82,7 +36,8 @@ def _get_php_command():
     return f'php{version}'
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Run the installer script to create database and configuration file."""
     data_dir = '/var/lib/mediawiki-db/'
     if not os.path.exists(data_dir):
@@ -103,10 +58,10 @@ def subcommand_setup(_):
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
-    include_custom_config()
+    _include_custom_config()
 
 
-def include_custom_config():
+def _include_custom_config():
     """Include FreedomBox specific configuration in LocalSettings.php."""
     with open(LOCAL_SETTINGS_CONF, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
@@ -133,26 +88,30 @@ def include_custom_config():
         conf_file.writelines(lines)
 
 
-def subcommand_change_password(arguments):
-    """Change the password for a given user"""
-    new_password = ''.join(sys.stdin)
+@privileged
+def change_password(username: str, password: str):
+    """Change the password for a given user."""
     change_password_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                           'changePassword.php')
 
     subprocess.check_call([
-        _get_php_command(), change_password_script, '--user',
-        arguments.username, '--password', new_password
+        _get_php_command(), change_password_script, '--user', username,
+        '--password', password
     ])
 
 
-def subcommand_update(_):
+@privileged
+def update():
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
     subprocess.check_call([_get_php_command(), update_script, '--quick'])
 
 
-def subcommand_public_registrations(arguments):
+@privileged
+def public_registrations(command: str) -> Optional[bool]:
     """Enable or Disable public registrations for MediaWiki."""
+    if command not in ('enable', 'disable', 'status'):
+        raise ValueError('Invalid command')
 
     with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
@@ -160,28 +119,31 @@ def subcommand_public_registrations(arguments):
     def is_pub_reg_line(line):
         return line.startswith("$wgGroupPermissions['*']['createaccount']")
 
-    if arguments.command == 'status':
+    if command == 'status':
         conf_lines = list(filter(is_pub_reg_line, lines))
-        if conf_lines:
-            print('enabled' if 'true' in conf_lines[0] else 'disabled')
-        else:
-            print('disabled')
-    else:
-        with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
-            for line in lines:
-                if is_pub_reg_line(line):
-                    words = line.split()
-                    if arguments.command == 'enable':
-                        words[-1] = 'true;'
-                    else:
-                        words[-1] = 'false;'
-                    conf_file.write(" ".join(words) + '\n')
+        return bool(conf_lines and 'true' in conf_lines[0])
+
+    with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
+        for line in lines:
+            if is_pub_reg_line(line):
+                words = line.split()
+                if command == 'enable':
+                    words[-1] = 'true;'
                 else:
-                    conf_file.write(line)
+                    words[-1] = 'false;'
+                conf_file.write(" ".join(words) + '\n')
+            else:
+                conf_file.write(line)
+
+    return None
 
 
-def subcommand_private_mode(arguments):
-    """Enable or Disable Private mode for wiki"""
+@privileged
+def private_mode(command: str):
+    """Enable or Disable Private mode for wiki."""
+    if command not in ('enable', 'disable', 'status'):
+        raise ValueError('Invalid command')
+
     with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
         lines = conf_file.readlines()
 
@@ -189,25 +151,22 @@ def subcommand_private_mode(arguments):
         return line.startswith("$wgGroupPermissions['*']['read']")
 
     read_conf_lines = list(filter(is_read_line, lines))
-    if arguments.command == 'status':
-        if read_conf_lines and 'false' in read_conf_lines[0]:
-            print('enabled')
-        else:
-            print('disabled')
-    else:
-        with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
-            conf_value = 'false;' if arguments.command == 'enable' else 'true;'
-            for line in lines:
-                if is_read_line(line):
-                    words = line.split()
-                    words[-1] = conf_value
-                    conf_file.write(" ".join(words) + '\n')
-                else:
-                    conf_file.write(line)
+    if command == 'status':
+        return (read_conf_lines and 'false' in read_conf_lines[0])
 
-            if not read_conf_lines:
-                conf_file.write("$wgGroupPermissions['*']['read'] = " +
-                                conf_value + '\n')
+    with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
+        conf_value = 'false;' if command == 'enable' else 'true;'
+        for line in lines:
+            if is_read_line(line):
+                words = line.split()
+                words[-1] = conf_value
+                conf_file.write(" ".join(words) + '\n')
+            else:
+                conf_file.write(line)
+
+        if not read_conf_lines:
+            conf_file.write("$wgGroupPermissions['*']['read'] = " +
+                            conf_value + '\n')
 
 
 def _update_setting(setting_name, setting_line):
@@ -229,31 +188,20 @@ def _update_setting(setting_name, setting_line):
         conf_file.writelines(lines)
 
 
-def subcommand_set_default_skin(arguments):
+@privileged
+def set_default_skin(skin: str):
     """Set a default skin."""
-    skin = arguments.skin
     _update_setting('$wgDefaultSkin ', f'$wgDefaultSkin = "{skin}";\n')
 
 
-def subcommand_set_server_url(arguments):
+@privileged
+def set_server_url(server_url: str):
     """Set the value of $wgServer for this MediaWiki server."""
     # This is a required setting from MediaWiki 1.34
-    _update_setting('$wgServer', f'$wgServer = "{arguments.server_url}";\n')
+    _update_setting('$wgServer', f'$wgServer = "{server_url}";\n')
 
 
-def subcommand_set_site_name(arguments):
+@privileged
+def set_site_name(site_name: str):
     """Set the value of $wgSitename for this MediaWiki server."""
-    _update_setting('$wgSitename', f'$wgSitename = "{arguments.site_name}";\n')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
+    _update_setting('$wgSitename', f'$wgSitename = "{site_name}";\n')

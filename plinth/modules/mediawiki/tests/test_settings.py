@@ -10,15 +10,17 @@ from unittest.mock import patch
 import pytest
 
 from plinth.modules import mediawiki
+from plinth.modules.mediawiki import privileged
 
-actions_name = 'mediawiki'
+pytestmark = pytest.mark.usefixtures('mock_privileged')
 current_directory = pathlib.Path(__file__).parent
+privileged_modules_to_mock = ['plinth.modules.mediawiki.privileged']
 
 
 @pytest.fixture(autouse=True)
-def fixture_setup_configuration(actions_module, conf_file):
+def fixture_setup_configuration(conf_file):
     """Set configuration file path in actions module."""
-    actions_module.CONF_FILE = conf_file
+    privileged.CONF_FILE = conf_file
 
 
 @pytest.fixture(name='conf_file')
@@ -34,12 +36,11 @@ def fixture_conf_file(tmp_path):
 
 
 @pytest.fixture(name='test_configuration', autouse=True)
-def fixture_test_configuration(call_action, conf_file):
+def fixture_test_configuration(conf_file):
     """Use a separate MediaWiki configuration for tests.
 
     Uses local FreedomBoxStaticSettings.php, a temp version of
-    FreedomBoxSettings.php and patches actions.superuser_run with the fixture
-    call_action
+    FreedomBoxSettings.php
 
     """
     data_directory = pathlib.Path(__file__).parent.parent / 'data'
@@ -47,8 +48,7 @@ def fixture_test_configuration(call_action, conf_file):
                              mediawiki.STATIC_CONFIG_FILE.split('/')[-1])
     with patch('plinth.modules.mediawiki.STATIC_CONFIG_FILE',
                static_config_file), \
-            patch('plinth.modules.mediawiki.USER_CONFIG_FILE', conf_file), \
-            patch('plinth.actions.superuser_run', call_action):
+         patch('plinth.modules.mediawiki.USER_CONFIG_FILE', conf_file):
         yield
 
 
@@ -56,7 +56,7 @@ def test_default_skin():
     """Test getting and setting the default skin."""
     assert mediawiki.get_default_skin() == 'timeless'
     new_skin = 'vector'
-    mediawiki.set_default_skin(new_skin)
+    privileged.set_default_skin(new_skin)
     assert mediawiki.get_default_skin() == new_skin
 
 
@@ -72,5 +72,5 @@ def test_site_name():
     """Test getting and setting $wgSitename."""
     assert mediawiki.get_site_name() == 'Wiki'
     new_site_name = 'My MediaWiki'
-    mediawiki.set_site_name(new_site_name)
+    privileged.set_site_name(new_site_name)
     assert mediawiki.get_site_name() == new_site_name
