@@ -157,7 +157,7 @@ def is_available(browser, site_name):
     browser.visit(url_to_visit)
     time.sleep(3)
     browser.reload()
-    if '404' in browser.title:
+    if '404' in browser.title or 'Page not found' in browser.title:
         return False
 
     # The site might have a default path after the sitename,

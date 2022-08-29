@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure XMPP web client/jsxc.
-"""
+"""FreedomBox app to configure XMPP web client/jsxc."""
 
 import logging
 
@@ -32,8 +30,6 @@ class JSXCApp(app_module.App):
 
     _version = 1
 
-    can_be_disabled = False
-
     def __init__(self):
         """Create components for the app."""
         super().__init__()
@@ -49,6 +45,9 @@ class JSXCApp(app_module.App):
                               info.icon_filename, 'jsxc:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        enable_state = app_module.EnableState('enable-state-jsxc')
+        self.add(enable_state)
 
         shortcut = frontpage.Shortcut('shortcut-jsxc', name=info.name,
                                       short_description=info.short_description,

@@ -54,6 +54,7 @@ class TestEjabberdApp(functional.BaseAppTests):
     def test_backup_restore(self, session_browser):
         """Test backup and restore of app data."""
         functional.app_enable(session_browser, 'ejabberd')
+        functional.app_enable(session_browser, 'jsxc')
         _jsxc_add_contact(session_browser)
         functional.backup_create(session_browser, 'ejabberd', 'test_ejabberd')
 
