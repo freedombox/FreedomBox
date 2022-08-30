@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Functional, browser based tests for ejabberd app.
-"""
+"""Functional, browser based tests for ejabberd app."""
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.ejabberd]
@@ -20,7 +19,9 @@ class TestEjabberdApp(functional.BaseAppTests):
     def fixture_background(self, session_browser):
         """Login, install, and enable the app."""
         functional.login(session_browser)
+        functional.install(session_browser, 'jsxc')
         functional.install(session_browser, self.app_name)
+        functional.app_enable(session_browser, 'jsxc')
         functional.app_enable(session_browser, self.app_name)
         yield
         functional.login(session_browser)
