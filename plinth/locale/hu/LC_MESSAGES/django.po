@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 20:19-0400\n"
+"POT-Creation-Date: 2022-08-29 21:10-0400\n"
 "PO-Revision-Date: 2022-05-10 02:10+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Oldal forrása"
 
-#: plinth/context_processors.py:23 plinth/views.py:82
+#: plinth/context_processors.py:23 plinth/views.py:83
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -53,10 +53,24 @@ msgid "Cannot connect to {host}:{port}"
 msgstr "Nem lehet ide csatlakozni: {host}:{port}"
 
 #: plinth/forms.py:36
+msgid "Backup app before uninstall"
+msgstr ""
+
+#: plinth/forms.py:37
+msgid "Restoring from the backup will restore app data."
+msgstr ""
+
+#: plinth/forms.py:39
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository to backup to"
+msgstr "Tároló nem található"
+
+#: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
 msgstr "Válassz egy domainnevet, amit ezzel az alkalmazással fogsz használni"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:58
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -64,12 +78,12 @@ msgstr ""
 "Figyelem! Az alkalmazás lehet, hogy nem fog működni megfelelően, ha a "
 "domainnév később módosul."
 
-#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:72 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS-domain"
 
-#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:74 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -78,15 +92,15 @@ msgstr ""
 "Válassz ki egy domaint, amelyhez a TLS-t szeretnél használni. Ha a lista "
 "üres, konfigurálj legalább egy domaint tanúsítványokkal."
 
-#: plinth/forms.py:64
+#: plinth/forms.py:84
 msgid "Language"
 msgstr "Nyelv"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:85
 msgid "Language to use for presenting this web interface"
 msgstr "A webes felület megjelenítéséhez használt nyelv"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:92
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
 
@@ -428,7 +442,7 @@ msgid "{box_name} storage"
 msgstr "{box_name} Tárhely"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:112
+#: plinth/modules/backups/views.py:113
 msgid "Create a new backup"
 msgstr "Új biztonsági mentés létrehozása"
 
@@ -539,7 +553,7 @@ msgstr "Letöltés"
 
 #: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:207
+#: plinth/modules/backups/views.py:208
 msgid "Restore"
 msgstr "Visszaállítás"
 
@@ -642,99 +656,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Állomás ellenőrzése"
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:57
 msgid "Backup schedule updated."
 msgstr "A biztonsági mentések készítésének ütemezése frissítve."
 
-#: plinth/modules/backups/views.py:75
+#: plinth/modules/backups/views.py:76
 msgid "Schedule Backups"
 msgstr "Biztonsági mentések ütemezése"
 
-#: plinth/modules/backups/views.py:107
+#: plinth/modules/backups/views.py:108
 msgid "Archive created."
 msgstr "Archívum létrehozva."
 
-#: plinth/modules/backups/views.py:135
+#: plinth/modules/backups/views.py:136
 msgid "Delete Archive"
 msgstr "Archívum törlése"
 
-#: plinth/modules/backups/views.py:147
+#: plinth/modules/backups/views.py:148
 msgid "Archive deleted."
 msgstr "Archívum törölve."
 
-#: plinth/modules/backups/views.py:160
+#: plinth/modules/backups/views.py:161
 msgid "Upload and restore a backup"
 msgstr "Biztonsági mentések feltöltése és visszaállítása"
 
-#: plinth/modules/backups/views.py:195
+#: plinth/modules/backups/views.py:196
 msgid "Restored files from backup."
 msgstr "Visszaállított fájlok a biztonsági mentésből."
 
-#: plinth/modules/backups/views.py:223
+#: plinth/modules/backups/views.py:224
 msgid "No backup file found."
 msgstr "Nem található biztonsági mentési fájl."
 
-#: plinth/modules/backups/views.py:231
+#: plinth/modules/backups/views.py:232
 msgid "Restore from uploaded file"
 msgstr "Visszaállítás a feltöltött fájlból"
 
-#: plinth/modules/backups/views.py:290
+#: plinth/modules/backups/views.py:291
 msgid "No additional disks available to add a repository."
 msgstr "Nincs további lemez amit a tárolóhoz lehetne adni."
 
-#: plinth/modules/backups/views.py:298
+#: plinth/modules/backups/views.py:299
 msgid "Create backup repository"
 msgstr "Biztonsági mentési tároló létrehozása"
 
-#: plinth/modules/backups/views.py:325
+#: plinth/modules/backups/views.py:326
 msgid "Create remote backup repository"
 msgstr "Távoli biztonsági mentési tároló létrehozása"
 
-#: plinth/modules/backups/views.py:345
+#: plinth/modules/backups/views.py:346
 msgid "Added new remote SSH repository."
 msgstr "Új távoli SSH tároló hozzáadva."
 
-#: plinth/modules/backups/views.py:367
+#: plinth/modules/backups/views.py:368
 msgid "Verify SSH hostkey"
 msgstr "SSH-állomáskulcs ellenőrzése"
 
-#: plinth/modules/backups/views.py:393
+#: plinth/modules/backups/views.py:394
 msgid "SSH host already verified."
 msgstr "Az SSH-állomás már ellenőrzött."
 
-#: plinth/modules/backups/views.py:403
+#: plinth/modules/backups/views.py:404
 msgid "SSH host verified."
 msgstr "SSH-állomás leellenőrizve."
 
-#: plinth/modules/backups/views.py:418
+#: plinth/modules/backups/views.py:419
 msgid "SSH host public key could not be verified."
 msgstr "SSH-állomás nyilvános kulcsa nem ellenőrizhető le."
 
-#: plinth/modules/backups/views.py:420
+#: plinth/modules/backups/views.py:421
 msgid "Authentication to remote server failed."
 msgstr "A távoli szerverrel végzett hitelesítés sikertelen."
 
-#: plinth/modules/backups/views.py:422
+#: plinth/modules/backups/views.py:423
 msgid "Error establishing connection to server: {}"
 msgstr "Hiba lépett fel a szerverhez kapcsolódás során: {}"
 
-#: plinth/modules/backups/views.py:433
+#: plinth/modules/backups/views.py:434
 msgid "Repository removed."
 msgstr "Tároló eltávolítva."
 
-#: plinth/modules/backups/views.py:447
+#: plinth/modules/backups/views.py:448
 msgid "Remove Repository"
 msgstr "Tároló eltávolítása"
 
-#: plinth/modules/backups/views.py:456
+#: plinth/modules/backups/views.py:457
 msgid "Repository removed. Backups were not deleted."
 msgstr "Tároló eltávolítva. A biztonsági mentések nem lettek törölve."
 
-#: plinth/modules/backups/views.py:466
+#: plinth/modules/backups/views.py:467
 msgid "Unmounting failed!"
 msgstr "Lecsatolás sikertelen!"
 
-#: plinth/modules/backups/views.py:481 plinth/modules/backups/views.py:485
+#: plinth/modules/backups/views.py:482 plinth/modules/backups/views.py:486
 msgid "Mounting failed"
 msgstr "Felcsatolás sikertelen"
 
@@ -902,15 +916,14 @@ msgid "Admin"
 msgstr "Adminisztrál"
 
 #: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:40
-#: plinth/modules/searx/views.py:51 plinth/modules/tor/views.py:135
-#: plinth/modules/tor/views.py:162 plinth/modules/zoph/views.py:71
+#: plinth/modules/searx/views.py:51 plinth/modules/tor/views.py:75
+#: plinth/modules/zoph/views.py:71
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:119 plinth/modules/searx/views.py:43
-#: plinth/modules/searx/views.py:54 plinth/modules/tor/views.py:164
-#: plinth/modules/zoph/views.py:74
+#: plinth/modules/searx/views.py:54 plinth/modules/zoph/views.py:74
 msgid "An error occurred during configuration."
 msgstr "Hiba történt a beállítás során."
 
@@ -1203,7 +1216,7 @@ msgstr "Általános beállítások"
 #: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:36 plinth/templates/index.html:38
+#: plinth/modules/snapshot/views.py:37 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Beállítások"
 
@@ -1490,49 +1503,49 @@ msgstr ""
 "annak megerősítésére, hogy az alkalmazások és szolgáltatások az elvárt módon "
 "működnek."
 
-#: plinth/modules/diagnostics/__init__.py:48
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:50
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:102
 msgid "passed"
 msgstr "sikerült"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:103
 #: plinth/modules/networks/views.py:50
 msgid "failed"
 msgstr "sikertelen"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "error"
 msgstr "hiba"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:105
 msgid "warning"
 msgstr "figyelmeztetés"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr "A memóriahasználat csökkentése érdekében tilts le néhány alkalmazást."
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr "Ne telepíts további alkalmazásokat erre a rendszerre."
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1541,7 +1554,7 @@ msgstr ""
 "A rendszerben kevés a memória: {percent_used}% használt, "
 "{memory_available} {memory_available_unit} szabad. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr "Kevés a memória"
 
@@ -1591,7 +1604,7 @@ msgstr "Teszt"
 msgid "Result"
 msgstr "Eredmény"
 
-#: plinth/modules/diagnostics/views.py:57
+#: plinth/modules/diagnostics/views.py:68
 msgid "Diagnostic Test"
 msgstr "Ellenőrző teszt"
 
@@ -1778,8 +1791,7 @@ msgstr "Ezt a mezőt ki kell tölteni."
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:12
 #: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/samba/templates/samba.html:67
-#: plinth/modules/tor/templates/tor.html:12
-#: plinth/modules/tor/templates/tor.html:27
+#: plinth/modules/tor/templates/tor.html:19
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
@@ -2974,8 +2986,8 @@ msgstr "%(site)s webhely törlése"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
+#: plinth/modules/snapshot/templates/snapshot.html:16
+#: plinth/templates/app.html:55
 msgid "Update setup"
 msgstr "Beállítások frissítése"
 
@@ -3064,24 +3076,24 @@ msgstr ""
 "Indítsd el a Gobby-t majd válaszd a \"Csatlakozás a szerverhez\" lehetőséget "
 "(\"Connect to Server\") és írd be a {box_name} eszközöd domainnevét."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:22
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:24
+#: plinth/modules/janus/__init__.py:23
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:26
+#: plinth/modules/janus/__init__.py:25
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:42
+#: plinth/modules/janus/__init__.py:41
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:44
+#: plinth/modules/janus/__init__.py:43
 msgid "Video Room"
 msgstr ""
 
@@ -3095,7 +3107,7 @@ msgstr ""
 msgid "JavaScript license information"
 msgstr "JavaScript licencinformáció"
 
-#: plinth/modules/jsxc/__init__.py:21
+#: plinth/modules/jsxc/__init__.py:19
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3103,11 +3115,11 @@ msgstr ""
 "JSXC egy webes kliens az XMPP-hez. Általában helyileg futtatott XMPP-"
 "szerverrel használják."
 
-#: plinth/modules/jsxc/__init__.py:42 plinth/modules/jsxc/manifest.py:7
+#: plinth/modules/jsxc/__init__.py:38 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:43
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Chat kliens"
 
@@ -3140,15 +3152,15 @@ msgstr ""
 "letsencrypt.org/repository/\">Let's Encrypt aláírási megállapodását</a> "
 "mielőtt használnád ezt a szolgáltatást."
 
-#: plinth/modules/letsencrypt/__init__.py:59
+#: plinth/modules/letsencrypt/__init__.py:61
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:60
+#: plinth/modules/letsencrypt/__init__.py:62
 msgid "Certificates"
 msgstr "Tanúsítványok"
 
-#: plinth/modules/letsencrypt/__init__.py:96
+#: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
 
@@ -3213,7 +3225,7 @@ msgstr ""
 "Nincsenek domainek beállítva. Előbb <a href=\"%(config_url)s\">állítsd be a "
 "domaineket</a> ahhoz, hogy tanúsítványokat kaphass hozzájuk."
 
-#: plinth/modules/letsencrypt/views.py:43
+#: plinth/modules/letsencrypt/views.py:41
 #, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
@@ -3222,29 +3234,29 @@ msgstr ""
 "A {domain} domain tanúsítványa sikeresen visszavonva. Eltarthat néhány "
 "pillanatig, mire életbe lép."
 
-#: plinth/modules/letsencrypt/views.py:49
+#: plinth/modules/letsencrypt/views.py:47
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "A {domain} domain tanúsítványát nem sikerült visszavonni: {error}"
 
-#: plinth/modules/letsencrypt/views.py:62
-#: plinth/modules/letsencrypt/views.py:79
+#: plinth/modules/letsencrypt/views.py:60
+#: plinth/modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "A {domain} domain sikeresen megkapta a tanúsítványt"
 
-#: plinth/modules/letsencrypt/views.py:67
-#: plinth/modules/letsencrypt/views.py:84
+#: plinth/modules/letsencrypt/views.py:65
+#: plinth/modules/letsencrypt/views.py:82
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "A {domain} domain nem kapott tanúsítványt: {error}"
 
-#: plinth/modules/letsencrypt/views.py:96
+#: plinth/modules/letsencrypt/views.py:94
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "{domain} domain tanúsítványa sikeresen törölve"
 
-#: plinth/modules/letsencrypt/views.py:101
+#: plinth/modules/letsencrypt/views.py:99
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "{domain} domain tanúsítványát nem sikerült kitörölni: {error}"
@@ -3314,8 +3326,8 @@ msgid "FluffyChat"
 msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
+#: plinth/modules/snapshot/templates/snapshot.html:13
+#: plinth/templates/app.html:47
 msgid "Configuration"
 msgstr "Beállítások"
 
@@ -3786,7 +3798,7 @@ msgstr ""
 "engedélyezettek vagy tiltottak-e az adott néven keresztül bejövő kapcsolatok "
 "számára."
 
-#: plinth/modules/names/__init__.py:41
+#: plinth/modules/names/__init__.py:43
 msgid "Name Services"
 msgstr "Névszolgáltatások"
 
@@ -3823,7 +3835,7 @@ msgstr ""
 "Előfordulhat, hogy más módszerekkel felügyelt eszközök itt nem lesznek a "
 "konfigurálhatók."
 
-#: plinth/modules/networks/__init__.py:56
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "Hálózatok"
 
@@ -4393,7 +4405,7 @@ msgid "This connection is not active."
 msgstr "Ez a kapcsolat nem aktív."
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:40
+#: plinth/modules/security/__init__.py:42
 msgid "Security"
 msgstr "Biztonság"
 
@@ -4445,7 +4457,7 @@ msgid "Create Connection"
 msgstr "Kapcsolat létrehozása"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:518
+#: plinth/modules/networks/views.py:519
 msgid "Delete Connection"
 msgstr "Kapcsolat törlése"
 
@@ -4492,7 +4504,7 @@ msgid "Computer"
 msgstr "Számítógép"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:238 plinth/modules/networks/views.py:322
+#: plinth/modules/networks/views.py:239 plinth/modules/networks/views.py:323
 msgid "Edit Connection"
 msgstr "Kapcsolat szerkesztése"
 
@@ -4502,13 +4514,13 @@ msgstr "Kapcsolatok"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:371
+#: plinth/modules/networks/views.py:372
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi hálózatok a közelben"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:395
+#: plinth/modules/networks/views.py:396
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Kapcsolat hozzáadása"
@@ -4907,73 +4919,69 @@ msgstr "hozzáférési pont"
 msgid "mesh point"
 msgstr "mesh pont"
 
-#: plinth/modules/networks/views.py:128
-msgid "Network Connections"
-msgstr "Hálózati kapcsolatok"
-
-#: plinth/modules/networks/views.py:143
+#: plinth/modules/networks/views.py:144
 msgid "Cannot show connection: Connection not found."
 msgstr "Nem jeleníthető meg a kapcsolat, mivel nem található."
 
-#: plinth/modules/networks/views.py:196
+#: plinth/modules/networks/views.py:197
 msgid "Connection Information"
 msgstr "Információ a kapcsolatról"
 
-#: plinth/modules/networks/views.py:210
+#: plinth/modules/networks/views.py:211
 msgid "Cannot edit connection: Connection not found."
 msgstr "A kapcsolat nem szerkeszthető, mivel nem található."
 
-#: plinth/modules/networks/views.py:216
+#: plinth/modules/networks/views.py:217
 msgid "This type of connection is not yet understood."
 msgstr "Az ilyen típusú kapcsolat még nem ismert."
 
-#: plinth/modules/networks/views.py:334
+#: plinth/modules/networks/views.py:335
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "{name} kapcsolat aktiválva."
 
-#: plinth/modules/networks/views.py:338
+#: plinth/modules/networks/views.py:339
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kapcsolat aktiválása sikertelen: kapcsolat nem található."
 
-#: plinth/modules/networks/views.py:344
+#: plinth/modules/networks/views.py:345
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "{name} kapcsolat aktiválása sikertelen: nem áll rendelkezésre megfelelő "
 "eszköz."
 
-#: plinth/modules/networks/views.py:357
+#: plinth/modules/networks/views.py:358
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "{name} kapcsolat deaktiválva."
 
-#: plinth/modules/networks/views.py:361
+#: plinth/modules/networks/views.py:362
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kapcsolat deaktiválása sikertelen: kapcsolat nem található."
 
-#: plinth/modules/networks/views.py:413
+#: plinth/modules/networks/views.py:414
 msgid "Adding New Generic Connection"
 msgstr "Új általános kapcsolat hozzáadása"
 
-#: plinth/modules/networks/views.py:431
+#: plinth/modules/networks/views.py:432
 msgid "Adding New Ethernet Connection"
 msgstr "Új Ethernet kapcsolat hozzáadása"
 
-#: plinth/modules/networks/views.py:449
+#: plinth/modules/networks/views.py:450
 msgid "Adding New PPPoE Connection"
 msgstr "Új PPPoE kapcsolat hozzáadása"
 
-#: plinth/modules/networks/views.py:484
+#: plinth/modules/networks/views.py:485
 msgid "Adding New Wi-Fi Connection"
 msgstr "Új Wi-Fi kapcsolat hozzáadása"
 
-#: plinth/modules/networks/views.py:499
+#: plinth/modules/networks/views.py:500
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Kapcsolat törölve: {name}."
 
-#: plinth/modules/networks/views.py:503 plinth/modules/networks/views.py:513
+#: plinth/modules/networks/views.py:504 plinth/modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "A kapcsolat törlése sikertelen, mivel nem található."
 
@@ -5334,7 +5342,7 @@ msgstr "Rendszerfigyelés"
 msgid "Restart or shut down the system."
 msgstr "Újraindítás vagy leállítás."
 
-#: plinth/modules/power/__init__.py:29
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "Leállítás"
 
@@ -5984,7 +5992,7 @@ msgstr ""
 "fenn őket."
 
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:75
+#: plinth/modules/security/views.py:78
 msgid "Security Report"
 msgstr "Biztonsági jelentés"
 
@@ -6063,12 +6071,12 @@ msgstr "Nem"
 msgid "Not running"
 msgstr "Nem fut"
 
-#: plinth/modules/security/views.py:57
+#: plinth/modules/security/views.py:60
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "Hiba a korlátozott hozzáférés beállítása során: {exception}"
 
-#: plinth/modules/security/views.py:60
+#: plinth/modules/security/views.py:63
 msgid "Updated security configuration"
 msgstr "Biztonsági beállítás frissítve"
 
@@ -6307,7 +6315,7 @@ msgstr ""
 "plinth/sys/backups\">Biztonsági mentéseket</a>, mivel a pillanatképek csak "
 "ugyanazon a partíción tárolhatók, mint amelyen készülnek. "
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
 msgstr "Tárhelypillanatképek"
 
@@ -6410,7 +6418,7 @@ msgstr "Dátum"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:42
 #: plinth/modules/snapshot/templates/snapshot_manage.html:20
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:203
 msgid "Delete Snapshots"
 msgstr "Pillanatképek törlése"
 
@@ -6464,55 +6472,55 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Visszaállítás erre a pillanatképre: %(number)s"
 
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:29
 msgid "manually created"
 msgstr "kézzel létrehozva"
 
-#: plinth/modules/snapshot/views.py:29
+#: plinth/modules/snapshot/views.py:30
 msgid "timeline"
 msgstr "idővonal"
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:31
 msgid "apt"
 msgstr "apt"
 
-#: plinth/modules/snapshot/views.py:40
+#: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
 msgstr "Pillanatképek kezelése"
 
-#: plinth/modules/snapshot/views.py:91
+#: plinth/modules/snapshot/views.py:94
 msgid "Created snapshot."
 msgstr "Pillanatkép létrehozva."
 
-#: plinth/modules/snapshot/views.py:155
+#: plinth/modules/snapshot/views.py:158
 msgid "Storage snapshots configuration updated"
 msgstr "Tárhelypillanatképek konfigurációja frissítve"
 
-#: plinth/modules/snapshot/views.py:159 plinth/modules/tor/views.py:64
+#: plinth/modules/snapshot/views.py:162
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Hiba a művelet közben: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:187
+#: plinth/modules/snapshot/views.py:190
 msgid "Deleted selected snapshots"
 msgstr "Kiválasztott pillanatképek törölve"
 
-#: plinth/modules/snapshot/views.py:192
+#: plinth/modules/snapshot/views.py:195
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 "A Tárhelypillanatképek funkció jelenleg is használatban van. Kérlek, próbáld "
 "újra később."
 
-#: plinth/modules/snapshot/views.py:211
+#: plinth/modules/snapshot/views.py:214
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "A {number} számú pillanatképre visszaállítva."
 
-#: plinth/modules/snapshot/views.py:214
+#: plinth/modules/snapshot/views.py:217
 msgid "The system must be restarted to complete the rollback."
 msgstr "A visszaállítás befejezéséhez a rendszert újra kell indítani."
 
-#: plinth/modules/snapshot/views.py:226
+#: plinth/modules/snapshot/views.py:229
 msgid "Rollback to Snapshot"
 msgstr "Visszaállítás pillanatképre"
 
@@ -6907,24 +6915,24 @@ msgstr "Tor Socks proxy"
 msgid "Tor Bridge Relay"
 msgstr "Tor híd relay"
 
-#: plinth/modules/tor/__init__.py:119
+#: plinth/modules/tor/__init__.py:132
 msgid "Tor relay port available"
 msgstr "Tor relay port elérhető"
 
-#: plinth/modules/tor/__init__.py:129
+#: plinth/modules/tor/__init__.py:142
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 átvitel regisztrálva"
 
-#: plinth/modules/tor/__init__.py:139
+#: plinth/modules/tor/__init__.py:152
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 átvitel regisztrálva"
 
-#: plinth/modules/tor/__init__.py:207
+#: plinth/modules/tor/__init__.py:220
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Hozzáférés a {url} URL-hez tcp{kind}-on Tor használatával"
 
-#: plinth/modules/tor/__init__.py:218
+#: plinth/modules/tor/__init__.py:231
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Hagyd jóvá a Tor használatát {url} célcímhez tcp{kind} protokollon"
@@ -6936,15 +6944,11 @@ msgstr ""
 "Adj meg egy érvényes hidat ezzel a formátummal: [átvitel_neve] IP_cím:Port "
 "[ujjlenyomat]"
 
-#: plinth/modules/tor/forms.py:75
-msgid "Enable Tor"
-msgstr "Tor engedélyezése"
-
-#: plinth/modules/tor/forms.py:77
+#: plinth/modules/tor/forms.py:76
 msgid "Use upstream bridges to connect to Tor network"
 msgstr "Használj felmenő hidakat a Tor hálózatra kapcsolódáshoz"
 
-#: plinth/modules/tor/forms.py:79
+#: plinth/modules/tor/forms.py:78
 msgid ""
 "When enabled, the bridges configured below will be used to connect to the "
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
@@ -6955,11 +6959,11 @@ msgstr ""
 "internetszolgáltatód blokkolja vagy cenzúrázza a Tor hálózati kapcsolatokat. "
 "Ez le fogja tiltani a relay módokat."
 
-#: plinth/modules/tor/forms.py:84
+#: plinth/modules/tor/forms.py:83
 msgid "Upstream bridges"
 msgstr "Felmenő hidak"
 
-#: plinth/modules/tor/forms.py:86
+#: plinth/modules/tor/forms.py:85
 msgid ""
 "You can get some bridges from <a href=\"https://bridges.torproject.org/"
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
@@ -6970,11 +6974,11 @@ msgstr ""
 "információit ide. A jelenleg támogatott átvitelek: none (nincs), obfs3, "
 "obfs4 és scamblesuit."
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:91
 msgid "Enable Tor relay"
 msgstr "Tor relay engedélyezése"
 
-#: plinth/modules/tor/forms.py:93
+#: plinth/modules/tor/forms.py:92
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -6986,11 +6990,11 @@ msgstr ""
 "legalább 2 megabit/másodperc feltöltési és letöltési sávszélességgel "
 "rendelkezel."
 
-#: plinth/modules/tor/forms.py:98
+#: plinth/modules/tor/forms.py:97
 msgid "Enable Tor bridge relay"
 msgstr "Tor híd relay engedélyezése"
 
-#: plinth/modules/tor/forms.py:100
+#: plinth/modules/tor/forms.py:99
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -7000,11 +7004,11 @@ msgstr ""
 "helyett a Tor híd adatbázisban jelennek meg, ami megnehezíti a csomópont "
 "cenzúrázását. Ez segít másoknak megkerülni a cenzúrát."
 
-#: plinth/modules/tor/forms.py:105
+#: plinth/modules/tor/forms.py:104
 msgid "Enable Tor Hidden Service"
 msgstr "Tor rejtett szolgáltatás engedélyezése"
 
-#: plinth/modules/tor/forms.py:107
+#: plinth/modules/tor/forms.py:106
 #, python-brace-format
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
@@ -7015,11 +7019,11 @@ msgstr ""
 "kiválasztott szolgáltatásokat nyújthasson (pl. wiki vagy chat) anélkül, hogy "
 "felfedné a helyét. Ezt még ne használd erős anonimitás eléréséhez."
 
-#: plinth/modules/tor/forms.py:112
+#: plinth/modules/tor/forms.py:111
 msgid "Download software packages over Tor"
 msgstr "A szoftvercsomagok Tor-on keresztüli letöltése"
 
-#: plinth/modules/tor/forms.py:113
+#: plinth/modules/tor/forms.py:112
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
@@ -7029,7 +7033,7 @@ msgstr ""
 "szoftver a Tor hálózaton keresztül töltődik le. Ez magasabb szintű "
 "biztonságot jelent szoftverek letöltésekor."
 
-#: plinth/modules/tor/forms.py:128
+#: plinth/modules/tor/forms.py:127
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr "Felmenő híd használatához adj meg legalább egyet."
 
@@ -7041,21 +7045,25 @@ msgstr "Tor böngésző"
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Tor proxy Android platformra"
 
-#: plinth/modules/tor/templates/tor.html:16
-msgid "Tor configuration is being updated"
-msgstr "A Tor beállításainak frissítése folyamatban"
-
-#: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/tor/templates/tor.html:18
 msgid "Onion Service"
 msgstr "Onion-szolgáltatás"
 
-#: plinth/modules/tor/templates/tor.html:28
+#: plinth/modules/tor/templates/tor.html:20
 msgid "Ports"
 msgstr "Portok"
 
-#: plinth/modules/tor/views.py:142 plinth/views.py:220
-msgid "Setting unchanged"
-msgstr "A beállítás változatlan"
+#: plinth/modules/tor/views.py:55
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "Updating configuration"
+msgstr "Hiba történt a beállítás közben."
+
+#: plinth/modules/tor/views.py:72
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error configuring app: {error}"
+msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7186,11 +7194,11 @@ msgstr "Szoftverfrissítések"
 msgid "FreedomBox Updated"
 msgstr "FreedomBox frissítve"
 
-#: plinth/modules/upgrades/__init__.py:214
+#: plinth/modules/upgrades/__init__.py:222
 msgid "Could not start distribution update"
 msgstr "A disztribúció frissítése nem tudott elindulni"
 
-#: plinth/modules/upgrades/__init__.py:216
+#: plinth/modules/upgrades/__init__.py:224
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7201,11 +7209,11 @@ msgstr ""
 "disztribúció frissítését a rendszer 24 óra múlva újrapróbálja, ha "
 "engedélyezve van."
 
-#: plinth/modules/upgrades/__init__.py:227
+#: plinth/modules/upgrades/__init__.py:235
 msgid "Distribution update started"
 msgstr "A disztribúció frissítése elindult"
 
-#: plinth/modules/upgrades/__init__.py:229
+#: plinth/modules/upgrades/__init__.py:237
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7366,38 +7374,62 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr "Legutóbbi frissítési naplók megjelenítése"
 
-#: plinth/modules/upgrades/views.py:67
+#: plinth/modules/upgrades/templates/upgrades_configure.html:138
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Test Distribution Upgrade"
+msgstr "Disztribúció frissítés engedélyezve"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:140
+msgid ""
+"This will attempt to upgrade the system from stable to testing. <strong>It "
+"is meant only for development use.</strong>"
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:150
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Test distribution upgrade now"
+msgstr "Disztribúció frissítés engedélyezve"
+
+#: plinth/modules/upgrades/views.py:68
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "Hiba a nem felügyelt frissítések konfigurálása közben: {error}"
 
-#: plinth/modules/upgrades/views.py:71
+#: plinth/modules/upgrades/views.py:72
 msgid "Automatic upgrades enabled"
 msgstr "Automatikus frissítések engedélyezve"
 
-#: plinth/modules/upgrades/views.py:74
+#: plinth/modules/upgrades/views.py:75
 msgid "Automatic upgrades disabled"
 msgstr "Automatikus frissítések kikapcsolva"
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:83
 msgid "Distribution upgrade enabled"
 msgstr "Disztribúció frissítés engedélyezve"
 
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:86
 msgid "Distribution upgrade disabled"
 msgstr "Disztribúció frissítés letiltva"
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Upgrade process started."
 msgstr "A frissítési folyamat elkezdődött."
 
-#: plinth/modules/upgrades/views.py:129
+#: plinth/modules/upgrades/views.py:130
 msgid "Starting upgrade failed."
 msgstr "A frissítést nem sikerült elindítani."
 
-#: plinth/modules/upgrades/views.py:139
+#: plinth/modules/upgrades/views.py:140
 msgid "Frequent feature updates activated."
 msgstr "Gyakori funkciófrissítések aktiválva."
+
+#: plinth/modules/upgrades/views.py:223
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Starting distribution upgrade test."
+msgstr "Disztribúció frissítés engedélyezve"
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -8181,90 +8213,116 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "Szolgáltatás letiltva: {name}"
 
-#: plinth/package.py:187
+#: plinth/package.py:191
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:200
+#: plinth/package.py:204
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "A(z) {package_name} a legfrissebb verzió ({latest_version})"
 
-#: plinth/package.py:354
-msgid "Error during installation"
-msgstr "Hiba lépett fel a telepítés során"
+#: plinth/package.py:367
+#, fuzzy
+#| msgid "Error During Backup"
+msgid "Error running apt-get"
+msgstr "Hiba történt a biztonsági mentés közben"
 
-#: plinth/package.py:376
+#: plinth/package.py:389
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:378
+#: plinth/package.py:391
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:380
+#: plinth/package.py:393
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: plinth/package.py:382
+#: plinth/package.py:395
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
 
-#: plinth/package.py:410
+#: plinth/package.py:423 plinth/package.py:448
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: plinth/setup.py:44
+#: plinth/setup.py:40
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "Alkalmazások telepítése"
 
-#: plinth/setup.py:46
+#: plinth/setup.py:42
 #, fuzzy
 #| msgid "Updating..."
 msgid "Updating app"
 msgstr "Frissítés…"
 
-#: plinth/setup.py:72
+#: plinth/setup.py:68
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error installing app: {string} {details}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
 
-#: plinth/setup.py:76
+#: plinth/setup.py:72
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error updating app: {string} {details}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
 
-#: plinth/setup.py:82
+#: plinth/setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
-#: plinth/setup.py:85
+#: plinth/setup.py:81
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
-#: plinth/setup.py:89
+#: plinth/setup.py:85
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Alkalmazás telepítve."
 
-#: plinth/setup.py:91
+#: plinth/setup.py:87
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "Legutolsó frissítés"
 
-#: plinth/setup.py:411
+#: plinth/setup.py:104
+#, fuzzy
+#| msgid "Install Apps"
+msgid "Uninstalling app"
+msgstr "Alkalmazások telepítése"
+
+#: plinth/setup.py:122
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {string} {details}"
+msgid "Error uninstalling app: {string} {details}"
+msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
+
+#: plinth/setup.py:128
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error uninstalling app: {error}"
+msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
+
+#: plinth/setup.py:131
+#, fuzzy
+#| msgid "Application installed."
+msgid "App uninstalled."
+msgstr "Alkalmazás telepítve."
+
+#: plinth/setup.py:451
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -8320,7 +8378,7 @@ msgstr ""
 msgid "Installation"
 msgstr "Telepítés"
 
-#: plinth/templates/app.html:29
+#: plinth/templates/app.html:30
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "A szolgáltatás nem fut (<em>%(service_name)s</em>)."
@@ -8628,9 +8686,53 @@ msgstr "Telepítés"
 msgid "Update"
 msgstr "Frissítés"
 
+#: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#: plinth/templates/uninstall.html:36
+#, fuzzy
+#| msgid "Install"
+msgid "Uninstall"
+msgstr "Telepítés"
+
+#: plinth/templates/uninstall.html:11
+#, fuzzy, python-format
+#| msgid "Edit User <em>%(username)s</em>"
+msgid "Uninstall App <em>%(app_name)s</em>?"
+msgstr "<em>%(username)s</em> felhasználó szerkesztése"
+
+#: plinth/templates/uninstall.html:17
+msgid "Uninstalling an app is an exprimental feature."
+msgstr ""
+
+#: plinth/templates/uninstall.html:23
+msgid ""
+"All app data and configuration will be permanently lost. App may be "
+"installed freshly again."
+msgstr ""
+
+#: plinth/views.py:221
+msgid "Setting unchanged"
+msgstr "A beállítás változatlan"
+
+#: plinth/views.py:401
+#, python-brace-format
+msgid "before uninstall of {app_id}"
+msgstr ""
+
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Network Connections"
+#~ msgstr "Hálózati kapcsolatok"
+
+#~ msgid "Enable Tor"
+#~ msgstr "Tor engedélyezése"
+
+#~ msgid "Tor configuration is being updated"
+#~ msgstr "A Tor beállításainak frissítése folyamatban"
+
+#~ msgid "Error during installation"
+#~ msgstr "Hiba lépett fel a telepítés során"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -9115,11 +9217,6 @@ msgstr "Gudzsaráti"
 #~| msgid "Error setting domain name: {exception}"
 #~ msgid "Postfix domain name config"
 #~ msgstr "Hiba a domain név beállítása közben: {exception}"
-
-#, fuzzy
-#~| msgid "An error occurred during configuration."
-#~ msgid "Error updating configuration"
-#~ msgstr "Hiba történt a beállítás közben."
 
 #, fuzzy
 #~| msgid "Specified directory does not exist."

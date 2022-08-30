@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-15 20:19-0400\n"
+"POT-Creation-Date: 2022-08-29 21:10-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:82
+#: plinth/context_processors.py:23 plinth/views.py:83
 msgid "FreedomBox"
 msgstr "फ्रीडमबोएक्स"
 
@@ -54,39 +54,53 @@ msgid "Cannot connect to {host}:{port}"
 msgstr "{host}:{port} से नहीं जोड़ सखता"
 
 #: plinth/forms.py:36
+msgid "Backup app before uninstall"
+msgstr ""
+
+#: plinth/forms.py:37
+msgid "Restoring from the backup will restore app data."
+msgstr ""
+
+#: plinth/forms.py:39
+#, fuzzy
+#| msgid "Create User"
+msgid "Repository to backup to"
+msgstr "यूसर बनाये"
+
+#: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
 msgstr "इस एप्लिकेशन के साथ एक डोमेन का नाम चुने"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:58
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
 "वर्णइंग! अगर डोमेन का नाम बाद में बदल गया, एप्लिकेशन शायद ठीक से नहीं कर सकता है."
 
-#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:72 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 #, fuzzy
 #| msgid "Subdomain"
 msgid "TLS domain"
 msgstr "सबडोमेन"
 
-#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:74 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
 msgstr ""
 
-#: plinth/forms.py:64
+#: plinth/forms.py:84
 msgid "Language"
 msgstr "भाषा"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:85
 msgid "Language to use for presenting this web interface"
 msgstr "इस वेब इंटरफेस में इसतेमाल कि जाने वाली भाषा"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:92
 msgid "Use the language preference set in the browser"
 msgstr "जो भाषा ब्राउज़र में हैं, वो भाषा उपयोग करें"
 
@@ -426,7 +440,7 @@ msgid "{box_name} storage"
 msgstr "{box_name} मैनुअल"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:112
+#: plinth/modules/backups/views.py:113
 #, fuzzy
 #| msgid "Create Account"
 msgid "Create a new backup"
@@ -559,7 +573,7 @@ msgstr "डाउनलोडिंग"
 
 #: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:207
+#: plinth/modules/backups/views.py:208
 #, fuzzy
 #| msgid "reStore"
 msgid "Restore"
@@ -651,111 +665,111 @@ msgstr ""
 msgid "Verify Host"
 msgstr ""
 
-#: plinth/modules/backups/views.py:56
+#: plinth/modules/backups/views.py:57
 msgid "Backup schedule updated."
 msgstr ""
 
-#: plinth/modules/backups/views.py:75
+#: plinth/modules/backups/views.py:76
 #, fuzzy
 #| msgid "Create Account"
 msgid "Schedule Backups"
 msgstr "अकाउंट बनाएँ"
 
-#: plinth/modules/backups/views.py:107
+#: plinth/modules/backups/views.py:108
 msgid "Archive created."
 msgstr "पुरालेख बनाया गया."
 
-#: plinth/modules/backups/views.py:135
+#: plinth/modules/backups/views.py:136
 msgid "Delete Archive"
 msgstr "पुरालेख हटाईये"
 
-#: plinth/modules/backups/views.py:147
+#: plinth/modules/backups/views.py:148
 msgid "Archive deleted."
 msgstr "पुरालेख हटा गया है."
 
-#: plinth/modules/backups/views.py:160
+#: plinth/modules/backups/views.py:161
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "Upload and restore a backup"
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/views.py:195
+#: plinth/modules/backups/views.py:196
 msgid "Restored files from backup."
 msgstr ""
 
-#: plinth/modules/backups/views.py:223
+#: plinth/modules/backups/views.py:224
 #, fuzzy
 #| msgid "Name for new backup archive."
 msgid "No backup file found."
 msgstr "नया बैकअप पुरालेख के लिये नाम."
 
-#: plinth/modules/backups/views.py:231
+#: plinth/modules/backups/views.py:232
 msgid "Restore from uploaded file"
 msgstr ""
 
-#: plinth/modules/backups/views.py:290
+#: plinth/modules/backups/views.py:291
 msgid "No additional disks available to add a repository."
 msgstr ""
 
-#: plinth/modules/backups/views.py:298
+#: plinth/modules/backups/views.py:299
 #, fuzzy
 #| msgid "Create Snapshot"
 msgid "Create backup repository"
 msgstr "स्नैपशॉट बनाइये"
 
-#: plinth/modules/backups/views.py:325
+#: plinth/modules/backups/views.py:326
 msgid "Create remote backup repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:345
+#: plinth/modules/backups/views.py:346
 #, fuzzy
 #| msgid "Add new introducer"
 msgid "Added new remote SSH repository."
 msgstr "नया इंट्रोड्यूसर जोड़ें"
 
-#: plinth/modules/backups/views.py:367
+#: plinth/modules/backups/views.py:368
 msgid "Verify SSH hostkey"
 msgstr ""
 
-#: plinth/modules/backups/views.py:393
+#: plinth/modules/backups/views.py:394
 msgid "SSH host already verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:403
+#: plinth/modules/backups/views.py:404
 msgid "SSH host verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:418
+#: plinth/modules/backups/views.py:419
 msgid "SSH host public key could not be verified."
 msgstr ""
 
-#: plinth/modules/backups/views.py:420
+#: plinth/modules/backups/views.py:421
 msgid "Authentication to remote server failed."
 msgstr ""
 
-#: plinth/modules/backups/views.py:422
+#: plinth/modules/backups/views.py:423
 #, fuzzy
 #| msgid "Error installing application: {error}"
 msgid "Error establishing connection to server: {}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: plinth/modules/backups/views.py:433
+#: plinth/modules/backups/views.py:434
 msgid "Repository removed."
 msgstr ""
 
-#: plinth/modules/backups/views.py:447
+#: plinth/modules/backups/views.py:448
 msgid "Remove Repository"
 msgstr ""
 
-#: plinth/modules/backups/views.py:456
+#: plinth/modules/backups/views.py:457
 msgid "Repository removed. Backups were not deleted."
 msgstr ""
 
-#: plinth/modules/backups/views.py:466
+#: plinth/modules/backups/views.py:467
 msgid "Unmounting failed!"
 msgstr ""
 
-#: plinth/modules/backups/views.py:481 plinth/modules/backups/views.py:485
+#: plinth/modules/backups/views.py:482 plinth/modules/backups/views.py:486
 #, fuzzy
 #| msgid "The operation failed."
 msgid "Mounting failed"
@@ -923,15 +937,14 @@ msgid "Admin"
 msgstr ""
 
 #: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:40
-#: plinth/modules/searx/views.py:51 plinth/modules/tor/views.py:135
-#: plinth/modules/tor/views.py:162 plinth/modules/zoph/views.py:71
+#: plinth/modules/searx/views.py:51 plinth/modules/tor/views.py:75
+#: plinth/modules/zoph/views.py:71
 msgid "Configuration updated."
 msgstr "कॉन्फ़िगरेशन अपडेट किया."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:119 plinth/modules/searx/views.py:43
-#: plinth/modules/searx/views.py:54 plinth/modules/tor/views.py:164
-#: plinth/modules/zoph/views.py:74
+#: plinth/modules/searx/views.py:54 plinth/modules/zoph/views.py:74
 msgid "An error occurred during configuration."
 msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
 
@@ -1231,7 +1244,7 @@ msgstr "सामान्य कॉन्फ़िगरेशन"
 #: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:36 plinth/templates/index.html:38
+#: plinth/modules/snapshot/views.py:37 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "कॉन्फ़िगर करें"
 
@@ -1522,60 +1535,60 @@ msgstr ""
 "पुष्टि करने के लिये कि एप्लिकेशन या सेवाएं अच्छेसे चल रहे है, सिस्टम निदान परिक्षा बहुत सारे "
 "चेकों करोगे."
 
-#: plinth/modules/diagnostics/__init__.py:48
-#: plinth/modules/diagnostics/__init__.py:239
+#: plinth/modules/diagnostics/__init__.py:50
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "निदानिकी"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:102
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "क्वासेल"
 
-#: plinth/modules/diagnostics/__init__.py:101
+#: plinth/modules/diagnostics/__init__.py:103
 #: plinth/modules/networks/views.py:50
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "सेटअप विफल."
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "error"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:105
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:205
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:210
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:217
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:222
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:234
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr ""
 
@@ -1624,7 +1637,7 @@ msgstr "परीक्षा"
 msgid "Result"
 msgstr "परिणाम"
 
-#: plinth/modules/diagnostics/views.py:57
+#: plinth/modules/diagnostics/views.py:68
 msgid "Diagnostic Test"
 msgstr "निदान परिक्षा"
 
@@ -1818,8 +1831,7 @@ msgstr ""
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:12
 #: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/samba/templates/samba.html:67
-#: plinth/modules/tor/templates/tor.html:12
-#: plinth/modules/tor/templates/tor.html:27
+#: plinth/modules/tor/templates/tor.html:19
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
@@ -3011,8 +3023,8 @@ msgstr "साइट हटाएं %(site)s"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
+#: plinth/modules/snapshot/templates/snapshot.html:16
+#: plinth/templates/app.html:55
 msgid "Update setup"
 msgstr "सेटअप अपडेट"
 
@@ -3099,24 +3111,24 @@ msgid ""
 "domain name."
 msgstr "गोबी शुरू करें और \"सर्वर से कनेक्ट\" चुनिये और {box_name} का डोमेन नाम दर्ज करें."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:22
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:24
+#: plinth/modules/janus/__init__.py:23
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:26
+#: plinth/modules/janus/__init__.py:25
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:42
+#: plinth/modules/janus/__init__.py:41
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:44
+#: plinth/modules/janus/__init__.py:43
 msgid "Video Room"
 msgstr ""
 
@@ -3130,7 +3142,7 @@ msgstr ""
 msgid "JavaScript license information"
 msgstr "जावास्क्रिप्ट लाइसेंस जानकारी"
 
-#: plinth/modules/jsxc/__init__.py:21
+#: plinth/modules/jsxc/__init__.py:19
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3138,11 +3150,11 @@ msgstr ""
 "जेएसएक्ससि, एक्सएमपिपि को एक वेब क्लाइंट है. अाम तौर पर यह एक्सएमपिपि के सात उपयोग "
 "किया जाता है."
 
-#: plinth/modules/jsxc/__init__.py:42 plinth/modules/jsxc/manifest.py:7
+#: plinth/modules/jsxc/__init__.py:38 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "जेएसएक्ससि"
 
-#: plinth/modules/jsxc/__init__.py:43
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "चैट क्लाइंट"
 
@@ -3172,15 +3184,15 @@ msgstr ""
 "\"https://letsencrypt.org/repository/\"> लेटस एंक्रिप्ट ग्राहक समझौते</a> इस "
 "सिरविस उपयोग करने से पहले."
 
-#: plinth/modules/letsencrypt/__init__.py:59
+#: plinth/modules/letsencrypt/__init__.py:61
 msgid "Let's Encrypt"
 msgstr "लेटस एंक्रिप्ट"
 
-#: plinth/modules/letsencrypt/__init__.py:60
+#: plinth/modules/letsencrypt/__init__.py:62
 msgid "Certificates"
 msgstr "प्रमाण पत्र"
 
-#: plinth/modules/letsencrypt/__init__.py:96
+#: plinth/modules/letsencrypt/__init__.py:98
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -3248,7 +3260,7 @@ msgstr ""
 "कोई डोमेन कॉंफ़िगर नहीं किया गया है. डोमेन कॉंफ़िगर करें उंहें के लिए प्रमाणपत्र प्राप्त करने के "
 "लिये."
 
-#: plinth/modules/letsencrypt/views.py:43
+#: plinth/modules/letsencrypt/views.py:41
 #, python-brace-format
 msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
@@ -3257,29 +3269,29 @@ msgstr ""
 "डोमेन पर प्रमाणपत्र कामयाबी सेवापस ले लिया गया{domain}. यह कुछ समय को प्रभावी करने के "
 "लिए ले सकता है."
 
-#: plinth/modules/letsencrypt/views.py:49
+#: plinth/modules/letsencrypt/views.py:47
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}: {error}"
 msgstr "डोमेन पर प्रमाणपत्र कामयाबी से वापस नहीं ले लिया गया{domain}:{error}"
 
-#: plinth/modules/letsencrypt/views.py:62
-#: plinth/modules/letsencrypt/views.py:79
+#: plinth/modules/letsencrypt/views.py:60
+#: plinth/modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से प्राप्त किया {domain}"
 
-#: plinth/modules/letsencrypt/views.py:67
-#: plinth/modules/letsencrypt/views.py:84
+#: plinth/modules/letsencrypt/views.py:65
+#: plinth/modules/letsencrypt/views.py:82
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}: {error}"
 msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से नहीं प्राप्त किया {domain}:{error}"
 
-#: plinth/modules/letsencrypt/views.py:96
+#: plinth/modules/letsencrypt/views.py:94
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से हटाया गया {domain}"
 
-#: plinth/modules/letsencrypt/views.py:101
+#: plinth/modules/letsencrypt/views.py:99
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "डोमेन के लिए प्रमाणपत्र नहीं हटाया गया {domain}:{error}"
@@ -3341,8 +3353,8 @@ msgid "FluffyChat"
 msgstr ""
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
+#: plinth/modules/snapshot/templates/snapshot.html:13
+#: plinth/templates/app.html:47
 msgid "Configuration"
 msgstr "कॉन्फ़िगरेशन"
 
@@ -3780,7 +3792,7 @@ msgid ""
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
 
-#: plinth/modules/names/__init__.py:41
+#: plinth/modules/names/__init__.py:43
 msgid "Name Services"
 msgstr "नाम सरविस"
 
@@ -3814,7 +3826,7 @@ msgid ""
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:56
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "नेटवर्क्‍स"
 
@@ -4317,7 +4329,7 @@ msgid "This connection is not active."
 msgstr "यह कनेक्शन सक्रिय नहीं है."
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:40
+#: plinth/modules/security/__init__.py:42
 msgid "Security"
 msgstr "सुरक्षा"
 
@@ -4366,7 +4378,7 @@ msgid "Create Connection"
 msgstr "कनेक्शन बनाएँ"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:518
+#: plinth/modules/networks/views.py:519
 msgid "Delete Connection"
 msgstr "कनेक्शन हटाएँ"
 
@@ -4413,7 +4425,7 @@ msgid "Computer"
 msgstr "कंप्यूटर"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:238 plinth/modules/networks/views.py:322
+#: plinth/modules/networks/views.py:239 plinth/modules/networks/views.py:323
 msgid "Edit Connection"
 msgstr "कनेक्शन संपादित करें"
 
@@ -4425,13 +4437,13 @@ msgstr "कनेक्शन"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:371
+#: plinth/modules/networks/views.py:372
 msgid "Nearby Wi-Fi Networks"
 msgstr "पास के वाई-फाई नेटवर्क"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:395
+#: plinth/modules/networks/views.py:396
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "कनेक्शन जोड़ें"
@@ -4848,71 +4860,67 @@ msgstr "अभिगम केंद्र"
 msgid "mesh point"
 msgstr "अभिगम केंद्र"
 
-#: plinth/modules/networks/views.py:128
-msgid "Network Connections"
-msgstr "नेटवर्क कनेक्शन्स"
-
-#: plinth/modules/networks/views.py:143
+#: plinth/modules/networks/views.py:144
 msgid "Cannot show connection: Connection not found."
 msgstr "कनेक्शन नहीं दिखा सकता: कनेक्शन से नहीं मिला."
 
-#: plinth/modules/networks/views.py:196
+#: plinth/modules/networks/views.py:197
 msgid "Connection Information"
 msgstr "कनेक्शन के बारे में जानकारी"
 
-#: plinth/modules/networks/views.py:210
+#: plinth/modules/networks/views.py:211
 msgid "Cannot edit connection: Connection not found."
 msgstr "कनेक्शन नहीं संपादित कर सकता: कनेक्शन से नहीं मिला."
 
-#: plinth/modules/networks/views.py:216
+#: plinth/modules/networks/views.py:217
 msgid "This type of connection is not yet understood."
 msgstr "इस प्रकार का कनेक्शन अभी समझ में नहीं आता."
 
-#: plinth/modules/networks/views.py:334
+#: plinth/modules/networks/views.py:335
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "कनेक्शन सक्रिय है {name}."
 
-#: plinth/modules/networks/views.py:338
+#: plinth/modules/networks/views.py:339
 msgid "Failed to activate connection: Connection not found."
 msgstr "कनेक्शन सक्रिय करने में विफल:  कनेक्शन नहीं मिला."
 
-#: plinth/modules/networks/views.py:344
+#: plinth/modules/networks/views.py:345
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "कनेक्शन सक्रिय करने में विफल {name}: कोई उपयुक्त डिवाइस उपलब्ध नहीं है."
 
-#: plinth/modules/networks/views.py:357
+#: plinth/modules/networks/views.py:358
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "निष्क्रिय कनेक्शन {name}."
 
-#: plinth/modules/networks/views.py:361
+#: plinth/modules/networks/views.py:362
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "कनेक्शन को निष्क्रिय करने में विफल: कनेक्शन नहीं मिला."
 
-#: plinth/modules/networks/views.py:413
+#: plinth/modules/networks/views.py:414
 msgid "Adding New Generic Connection"
 msgstr "नया जेनेरिक कनेक्शन जोड़ रहा है"
 
-#: plinth/modules/networks/views.py:431
+#: plinth/modules/networks/views.py:432
 msgid "Adding New Ethernet Connection"
 msgstr "नया ईथरनेट कनेक्शन जोड़ रहा है"
 
-#: plinth/modules/networks/views.py:449
+#: plinth/modules/networks/views.py:450
 msgid "Adding New PPPoE Connection"
 msgstr "नया PPPoE कनेक्शन जोड़ रहा है"
 
-#: plinth/modules/networks/views.py:484
+#: plinth/modules/networks/views.py:485
 msgid "Adding New Wi-Fi Connection"
 msgstr "नया वाई-फाई कनेक्शन जोड़ रहा है"
 
-#: plinth/modules/networks/views.py:499
+#: plinth/modules/networks/views.py:500
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "कनेक्शन {name} हटाया गया."
 
-#: plinth/modules/networks/views.py:503 plinth/modules/networks/views.py:513
+#: plinth/modules/networks/views.py:504 plinth/modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "कनेक्शन हटाने में विफल: कनेक्शन नहीं मिला."
 
@@ -5275,7 +5283,7 @@ msgstr ""
 msgid "Restart or shut down the system."
 msgstr "सिस्टम को रीस्टार्ट करें या शट डाउन करें ."
 
-#: plinth/modules/power/__init__.py:29
+#: plinth/modules/power/__init__.py:31
 msgid "Power"
 msgstr "पावर"
 
@@ -5929,7 +5937,7 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:75
+#: plinth/modules/security/views.py:78
 #, fuzzy
 #| msgid "Security"
 msgid "Security Report"
@@ -6008,12 +6016,12 @@ msgstr "कोई नहीं"
 msgid "Not running"
 msgstr "टोर चल रहा है"
 
-#: plinth/modules/security/views.py:57
+#: plinth/modules/security/views.py:60
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "त्रुटि सेटिंग एक्सेस प्रतिबंधित: {exception}"
 
-#: plinth/modules/security/views.py:60
+#: plinth/modules/security/views.py:63
 msgid "Updated security configuration"
 msgstr "सुरक्षा कॉंफ़िगरेशन अपडेट किया गया"
 
@@ -6256,7 +6264,7 @@ msgstr ""
 "स्नैपशॉट्स सिर्फ btrfs फाइल सिस्टम और रूट पार्टीशन पर काम करते हैं. स्नैपशॉट बैकअप के लिए "
 "प्रतिस्थापन नहीं है क्योंकि वे उसी पार्टीशन पर संग्रहित होते हैं. "
 
-#: plinth/modules/snapshot/__init__.py:52
+#: plinth/modules/snapshot/__init__.py:54
 msgid "Storage Snapshots"
 msgstr "स्टोरेज स्नैपशॉटस"
 
@@ -6355,7 +6363,7 @@ msgstr "तिथि"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:42
 #: plinth/modules/snapshot/templates/snapshot_manage.html:20
-#: plinth/modules/snapshot/views.py:200
+#: plinth/modules/snapshot/views.py:203
 msgid "Delete Snapshots"
 msgstr "स्नैपशॉटस हटाएँ"
 
@@ -6405,57 +6413,57 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "स्नैपशॉट से रोलबैक करें #%(number)s"
 
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:29
 #, fuzzy
 #| msgid "Archive created."
 msgid "manually created"
 msgstr "पुरालेख बनाया गया."
 
-#: plinth/modules/snapshot/views.py:29
+#: plinth/modules/snapshot/views.py:30
 msgid "timeline"
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:30
+#: plinth/modules/snapshot/views.py:31
 msgid "apt"
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:40
+#: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
 msgstr "स्नैपशॉटस प्रबंधित करें"
 
-#: plinth/modules/snapshot/views.py:91
+#: plinth/modules/snapshot/views.py:94
 msgid "Created snapshot."
 msgstr "स्नैपशॉट बनाया गया है."
 
-#: plinth/modules/snapshot/views.py:155
+#: plinth/modules/snapshot/views.py:158
 msgid "Storage snapshots configuration updated"
 msgstr "स्टोरेज स्नैपशॉट कॉंफ़िगरेशन अपडेट किया गया"
 
-#: plinth/modules/snapshot/views.py:159 plinth/modules/tor/views.py:64
+#: plinth/modules/snapshot/views.py:162
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "क्रिया त्रुटि: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:187
+#: plinth/modules/snapshot/views.py:190
 #, fuzzy
 #| msgid "Delete all the snapshots"
 msgid "Deleted selected snapshots"
 msgstr "सब स्नैपशॉटस हटाएँ"
 
-#: plinth/modules/snapshot/views.py:192
+#: plinth/modules/snapshot/views.py:195
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 
-#: plinth/modules/snapshot/views.py:211
+#: plinth/modules/snapshot/views.py:214
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "स्नैपशॉट #{number} पर वापस रोलबाक होगा."
 
-#: plinth/modules/snapshot/views.py:214
+#: plinth/modules/snapshot/views.py:217
 msgid "The system must be restarted to complete the rollback."
 msgstr "रोलबैक शुरु करने के लिए सिस्टम रीस्टार्ट करने का ज़रुरत है."
 
-#: plinth/modules/snapshot/views.py:226
+#: plinth/modules/snapshot/views.py:229
 msgid "Rollback to Snapshot"
 msgstr "स्नैपशॉट को रोलबैक करें"
 
@@ -6859,24 +6867,24 @@ msgstr "टोर सोक्स प्रॉक्सी"
 msgid "Tor Bridge Relay"
 msgstr "टो ब्रिज रीले"
 
-#: plinth/modules/tor/__init__.py:119
+#: plinth/modules/tor/__init__.py:132
 msgid "Tor relay port available"
 msgstr "टोर रीले पोर्ट उपलब्ध है"
 
-#: plinth/modules/tor/__init__.py:129
+#: plinth/modules/tor/__init__.py:142
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:139
+#: plinth/modules/tor/__init__.py:152
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:207
+#: plinth/modules/tor/__init__.py:220
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "यूआरएल एक्सेस करें {url} टीसीपी पर {kind} टोर के माध्यम से"
 
-#: plinth/modules/tor/__init__.py:218
+#: plinth/modules/tor/__init__.py:231
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "टोर उपयोग की पुष्टि करें {url} पर टीसीपी पर {kind}"
@@ -6887,15 +6895,11 @@ msgid ""
 msgstr ""
 "इस फार्मेट उपयोग कर एक वैध ब्रिज दर्ज करें: [transport] IP:ORPort [fingerprint]"
 
-#: plinth/modules/tor/forms.py:75
-msgid "Enable Tor"
-msgstr "टोर सक्षम करें"
-
-#: plinth/modules/tor/forms.py:77
+#: plinth/modules/tor/forms.py:76
 msgid "Use upstream bridges to connect to Tor network"
 msgstr "अपस्ट्रीम ब्रिजस उपयोग करके टो नेटवर्क से कनेक्ट करें"
 
-#: plinth/modules/tor/forms.py:79
+#: plinth/modules/tor/forms.py:78
 msgid ""
 "When enabled, the bridges configured below will be used to connect to the "
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
@@ -6905,11 +6909,11 @@ msgstr ""
 "करेगा. अगर आपका इंटरनेट सर्विस प्रदाता (ISP) टोर नेटवर्क से कनेक्शन सेंसर या ब्लॉक करता है "
 "इस विकल्प का उपयोग करें. यह रिले मोड को अक्षम कर देगा."
 
-#: plinth/modules/tor/forms.py:84
+#: plinth/modules/tor/forms.py:83
 msgid "Upstream bridges"
 msgstr "अपस्ट्रीम ब्रिजस"
 
-#: plinth/modules/tor/forms.py:86
+#: plinth/modules/tor/forms.py:85
 msgid ""
 "You can get some bridges from <a href=\"https://bridges.torproject.org/"
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
@@ -6919,11 +6923,11 @@ msgstr ""
 "\">https://bridges.torproject.org/</a> और ब्रिज जानकारी यहाॅं से कॉपी/पेस्ट कर सकते "
 "हैं. वर्तमान में समर्थित ट्रांसपोर्ट्स कोई नहीं, obfs3, obfs4 और scamblesuit हैं."
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:91
 msgid "Enable Tor relay"
 msgstr "टोर रीले सक्षम करें"
 
-#: plinth/modules/tor/forms.py:93
+#: plinth/modules/tor/forms.py:92
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -6934,11 +6938,11 @@ msgstr ""
 "अगर आपके पास दो से अधिक मेगाबिट से अपलोड \n"
 "आैर डाउनलोड बैंडविड्थ है यह करें."
 
-#: plinth/modules/tor/forms.py:98
+#: plinth/modules/tor/forms.py:97
 msgid "Enable Tor bridge relay"
 msgstr "टोर ब्रिज रीले सक्षम करें"
 
-#: plinth/modules/tor/forms.py:100
+#: plinth/modules/tor/forms.py:99
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -6948,13 +6952,13 @@ msgstr ""
 "और इस नोड सेंसर करने के लिए और मुश्किल होगा. यह दूसरों को सेंसरशिप से टाल करने के लिये मदद "
 "करता है."
 
-#: plinth/modules/tor/forms.py:105
+#: plinth/modules/tor/forms.py:104
 #, fuzzy
 #| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Hidden Service"
 msgstr "टोर हिडन सर्विस सक्षम करें"
 
-#: plinth/modules/tor/forms.py:107
+#: plinth/modules/tor/forms.py:106
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "A hidden service will allow {box_name} to provide selected services (such "
@@ -6968,11 +6972,11 @@ msgstr ""
 "हिडन सर्विस {box_name} को इसके स्थान को प्रकट किए बिना चयनित सर्विसस प्रदान करने की "
 "अनुमति देगी. स्ट्रॉन्ग गुमनामी के लिए इससे अभी न करें."
 
-#: plinth/modules/tor/forms.py:112
+#: plinth/modules/tor/forms.py:111
 msgid "Download software packages over Tor"
 msgstr "टो पर  सॉफ्टवेयर पैकेजस डाउनलोड करें"
 
-#: plinth/modules/tor/forms.py:113
+#: plinth/modules/tor/forms.py:112
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
@@ -6981,7 +6985,7 @@ msgstr ""
 "सक्षम होने पर सॉफ्टवेयर इंस्टालेशन और अपग्रेड के लिए टो नेटवर्क पर डाउनलोड किया जाएगा. "
 "यह सॉफ़्टवेयर डाउनलोड के दौरान एकांत और सुरक्षा जोड़ता है."
 
-#: plinth/modules/tor/forms.py:128
+#: plinth/modules/tor/forms.py:127
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr "अपस्ट्रीम ब्रिजस उपयोग करने के लिए एक अपस्ट्रीम ब्रिजस निर्दिष्ट करें."
 
@@ -6993,23 +6997,27 @@ msgstr "टोर ब्राउजर"
 msgid "Orbot: Proxy with Tor"
 msgstr "अोरबोट: टोर के साथ प्रॉक्सी"
 
-#: plinth/modules/tor/templates/tor.html:16
-msgid "Tor configuration is being updated"
-msgstr "टोर कॉन्फ़िगरेशन अपडेट किया जा रहा है"
-
-#: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/tor/templates/tor.html:18
 #, fuzzy
 #| msgid "Hidden Service"
 msgid "Onion Service"
 msgstr "हिडन सर्विस"
 
-#: plinth/modules/tor/templates/tor.html:28
+#: plinth/modules/tor/templates/tor.html:20
 msgid "Ports"
 msgstr "पोर्टस"
 
-#: plinth/modules/tor/views.py:142 plinth/views.py:220
-msgid "Setting unchanged"
-msgstr "सेटिंग स्थिर है"
+#: plinth/modules/tor/views.py:55
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "Updating configuration"
+msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
+
+#: plinth/modules/tor/views.py:72
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error configuring app: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 #, fuzzy
@@ -7151,24 +7159,24 @@ msgstr "सॉफ्टवेयर अपग्रेडस"
 msgid "FreedomBox Updated"
 msgstr "फ्रीडमबाक्स फाउंडेशन"
 
-#: plinth/modules/upgrades/__init__.py:214
+#: plinth/modules/upgrades/__init__.py:222
 msgid "Could not start distribution update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:216
+#: plinth/modules/upgrades/__init__.py:224
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:227
+#: plinth/modules/upgrades/__init__.py:235
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/__init__.py:229
+#: plinth/modules/upgrades/__init__.py:237
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7334,42 +7342,66 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr ""
 
-#: plinth/modules/upgrades/views.py:67
+#: plinth/modules/upgrades/templates/upgrades_configure.html:138
+#, fuzzy
+#| msgid "Automatic upgrades enabled"
+msgid "Test Distribution Upgrade"
+msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:140
+msgid ""
+"This will attempt to upgrade the system from stable to testing. <strong>It "
+"is meant only for development use.</strong>"
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:150
+#, fuzzy
+#| msgid "Automatic upgrades enabled"
+msgid "Test distribution upgrade now"
+msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
+
+#: plinth/modules/upgrades/views.py:68
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr "अनअटेंडेड-अपग्रेडस कॉन्फ़िगर करते समय त्रुटि: {error}"
 
-#: plinth/modules/upgrades/views.py:71
+#: plinth/modules/upgrades/views.py:72
 msgid "Automatic upgrades enabled"
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:74
+#: plinth/modules/upgrades/views.py:75
 msgid "Automatic upgrades disabled"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:83
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Distribution upgrade enabled"
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:86
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution upgrade disabled"
 msgstr "ऑटोमेटिक अपग्रेडस अक्षम किया गया"
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Upgrade process started."
 msgstr "अपग्रेड प्रक्रिया शुरू हुई."
 
-#: plinth/modules/upgrades/views.py:129
+#: plinth/modules/upgrades/views.py:130
 msgid "Starting upgrade failed."
 msgstr "अपग्रेड प्रारंभ करना विफल रहा."
 
-#: plinth/modules/upgrades/views.py:139
+#: plinth/modules/upgrades/views.py:140
 msgid "Frequent feature updates activated."
 msgstr ""
+
+#: plinth/modules/upgrades/views.py:223
+#, fuzzy
+#| msgid "Automatic upgrades enabled"
+msgid "Starting distribution upgrade test."
+msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -8157,88 +8189,114 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "सर्विस सक्षम किया गया:{name}"
 
-#: plinth/package.py:187
+#: plinth/package.py:191
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:200
+#: plinth/package.py:204
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: plinth/package.py:354
-msgid "Error during installation"
-msgstr "इंस्टालेशन करते समय पर त्रुटि"
+#: plinth/package.py:367
+#, fuzzy
+#| msgid "Existing custom services"
+msgid "Error running apt-get"
+msgstr "मौजूदा कस्टम सर्विसस"
 
-#: plinth/package.py:376
+#: plinth/package.py:389
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: plinth/package.py:378
+#: plinth/package.py:391
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: plinth/package.py:380
+#: plinth/package.py:393
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: plinth/package.py:382
+#: plinth/package.py:395
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
 
-#: plinth/package.py:410
+#: plinth/package.py:423 plinth/package.py:448
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: plinth/setup.py:44
+#: plinth/setup.py:40
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "ऐप्लिकेशन इंस्टॉल करें"
 
-#: plinth/setup.py:46
+#: plinth/setup.py:42
 msgid "Updating app"
 msgstr ""
 
-#: plinth/setup.py:72
+#: plinth/setup.py:68
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error installing app: {string} {details}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता : {string} {details}"
 
-#: plinth/setup.py:76
+#: plinth/setup.py:72
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error updating app: {string} {details}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता : {string} {details}"
 
-#: plinth/setup.py:82
+#: plinth/setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: plinth/setup.py:85
+#: plinth/setup.py:81
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: plinth/setup.py:89
+#: plinth/setup.py:85
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "एप्लिकेशन इंस्टॉल हो गया."
 
-#: plinth/setup.py:91
+#: plinth/setup.py:87
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "अंतिम अपडेट"
 
-#: plinth/setup.py:411
+#: plinth/setup.py:104
+#, fuzzy
+#| msgid "Install Apps"
+msgid "Uninstalling app"
+msgstr "ऐप्लिकेशन इंस्टॉल करें"
+
+#: plinth/setup.py:122
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {string} {details}"
+msgid "Error uninstalling app: {string} {details}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता : {string} {details}"
+
+#: plinth/setup.py:128
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error uninstalling app: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+
+#: plinth/setup.py:131
+#, fuzzy
+#| msgid "Application installed."
+msgid "App uninstalled."
+msgstr "एप्लिकेशन इंस्टॉल हो गया."
+
+#: plinth/setup.py:451
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -8305,7 +8363,7 @@ msgstr ""
 msgid "Installation"
 msgstr "इंस्टालेशन"
 
-#: plinth/templates/app.html:29
+#: plinth/templates/app.html:30
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "सर्विस <em>%(service_name)s</em> नहीं चल रहा है."
@@ -8605,9 +8663,53 @@ msgstr "इंस्टॉल करें"
 msgid "Update"
 msgstr "अपडेट"
 
+#: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#: plinth/templates/uninstall.html:36
+#, fuzzy
+#| msgid "Install"
+msgid "Uninstall"
+msgstr "इंस्टॉल करें"
+
+#: plinth/templates/uninstall.html:11
+#, fuzzy, python-format
+#| msgid "Edit user %(username)s"
+msgid "Uninstall App <em>%(app_name)s</em>?"
+msgstr "यूसर संपादित करें %(username)s"
+
+#: plinth/templates/uninstall.html:17
+msgid "Uninstalling an app is an exprimental feature."
+msgstr ""
+
+#: plinth/templates/uninstall.html:23
+msgid ""
+"All app data and configuration will be permanently lost. App may be "
+"installed freshly again."
+msgstr ""
+
+#: plinth/views.py:221
+msgid "Setting unchanged"
+msgstr "सेटिंग स्थिर है"
+
+#: plinth/views.py:401
+#, python-brace-format
+msgid "before uninstall of {app_id}"
+msgstr ""
+
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid "Network Connections"
+#~ msgstr "नेटवर्क कनेक्शन्स"
+
+#~ msgid "Enable Tor"
+#~ msgstr "टोर सक्षम करें"
+
+#~ msgid "Tor configuration is being updated"
+#~ msgstr "टोर कॉन्फ़िगरेशन अपडेट किया जा रहा है"
+
+#~ msgid "Error during installation"
+#~ msgstr "इंस्टालेशन करते समय पर त्रुटि"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -9042,11 +9144,6 @@ msgstr ""
 #~| msgid "Error setting domain name: {exception}"
 #~ msgid "Postfix domain name config"
 #~ msgstr "{exception}: डोमेन नाम सेट करने में एरर"
-
-#, fuzzy
-#~| msgid "An error occurred during configuration."
-#~ msgid "Error updating configuration"
-#~ msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
 
 #, fuzzy
 #~| msgid "Disabled"
