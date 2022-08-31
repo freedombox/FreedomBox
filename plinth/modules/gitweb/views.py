@@ -42,7 +42,7 @@ class CreateRepoView(SuccessMessageMixin, FormView):
 
     form_class = CreateRepoForm
     prefix = 'gitweb'
-    template_name = 'gitweb_create_edit.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('gitweb:index')
     success_message = _('Repository created.')
 
@@ -81,7 +81,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
 
     form_class = EditRepoForm
     prefix = 'gitweb'
-    template_name = 'gitweb_create_edit.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('gitweb:index')
     success_message = _('Repository edited.')
 
