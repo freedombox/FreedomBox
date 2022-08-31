@@ -3,8 +3,9 @@
 Functional, browser based tests for shaarli app.
 """
 
-import pytest
 import time
+
+import pytest
 
 from plinth.tests import functional
 
@@ -37,7 +38,9 @@ class TestShaarliApp(functional.BaseAppTests):
         password_field = session_browser.find_by_id('password')
         password_field.fill(functional.config['DEFAULT']['password'])
 
-        functional.submit(session_browser)
+        button = session_browser.find_by_css(
+            '#installform input[type=submit]')[0]
+        functional.submit(session_browser, element=button)
 
     def _shaarli_login(self, session_browser):
         """Login to shaarli."""
