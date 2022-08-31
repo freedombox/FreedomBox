@@ -193,6 +193,10 @@ def download_file_outside_browser(url):
 # Form handling utilities #
 ###########################
 def submit(browser, element=None, form_class=None, expected_url=None):
+    """Submit a specific form in the current page and wait for page change."""
+    if not (element or form_class):
+        raise AssertionError('Either element or form_class must be sent')
+
     with wait_for_page_update(browser, expected_url=expected_url):
         if element:
             element.click()
