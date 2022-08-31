@@ -506,26 +506,28 @@ def set_advanced_mode(browser, mode):
 ####################
 # Backup utilities #
 ####################
-def _click_button_and_confirm(browser, href):
+def _click_button_and_confirm(browser, href, form_class):
     buttons = browser.links.find_by_href(href)
     if buttons:
-        submit(browser, buttons.first)
-        submit(browser, expected_url='/plinth/sys/backups/')
+        submit(browser, element=buttons.first)
+        submit(browser, form_class=form_class,
+               expected_url='/plinth/sys/backups/')
 
 
 def _backup_delete_archive_by_name(browser, archive_name):
     nav_to_module(browser, 'backups')
     href = f'/plinth/sys/backups/root/delete/{archive_name}/'
-    _click_button_and_confirm(browser, href)
+    _click_button_and_confirm(browser, href, 'form-delete')
 
 
 def backup_create(browser, app_name, archive_name=None):
+    """Create a new backup for a given app."""
     install(browser, 'backups')
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
     buttons = browser.links.find_by_href('/plinth/sys/backups/create/')
-    submit(browser, buttons.first)
+    submit(browser, element=buttons.first)
     eventually(browser.find_by_css, args=['.select-all'])
     browser.find_by_css('.select-all').first.uncheck()
     if archive_name:
@@ -534,13 +536,14 @@ def backup_create(browser, app_name, archive_name=None):
     # ensure the checkbox is scrolled into view
     browser.execute_script('window.scrollTo(0, 0)')
     browser.find_by_value(app_name).first.check()
-    submit(browser)
+    submit(browser, form_class='form-backups')
 
 
 def backup_restore(browser, app_name, archive_name=None):
+    """Restore a given app from a backup archive."""
     nav_to_module(browser, 'backups')
     href = f'/plinth/sys/backups/root/restore-archive/{archive_name}/'
-    _click_button_and_confirm(browser, href)
+    _click_button_and_confirm(browser, href, 'form-restore')
 
 
 ######################
