@@ -284,7 +284,7 @@ def login_with_account(browser, url, username, password=None):
         if login_button:
             browser.fill('username', username)
             browser.fill('password', password)
-            submit(browser)
+            submit(browser, form_class='form-login')
     else:
         browser.visit(base_url + '/plinth/firstboot/welcome')
         submit(browser, form_class='form-start')  # "Start Setup" button
