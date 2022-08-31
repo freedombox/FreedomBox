@@ -253,7 +253,7 @@ def _create_admin_account(browser, username, password):
     browser.find_by_id('id_username').fill(username)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
-    submit(browser)
+    submit(browser, form_class='form-create')
 
 
 def login(browser):
@@ -604,7 +604,7 @@ def create_user(browser, name, password=None, groups=[]):
     browser.find_by_id('id_confirm_password').fill(
         config['DEFAULT']['password'])
 
-    submit(browser)
+    submit(browser, form_class='form-create')
 
 
 def delete_user(browser, name):
@@ -615,7 +615,7 @@ def delete_user(browser, name):
 
     with wait_for_page_update(browser):
         delete_link.first.click()
-    submit(browser)
+    submit(browser, form_class='form-delete')
 
 
 def user_exists(browser, name):

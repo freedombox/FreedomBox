@@ -251,7 +251,7 @@ def _rename_user(browser, old_name, new_name):
                                    '/edit/').first.click()
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-update')
 
 
 def _set_language(browser, language_code):
@@ -260,7 +260,7 @@ def _set_language(browser, language_code):
     browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
                           language_code + '"]').first.click()
     browser.find_by_id('id_confirm_password').fill(_admin_password)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-update')
 
 
 def _check_language(browser, language_code):
@@ -294,14 +294,14 @@ def _set_ssh_keys(browser, ssh_keys, username=None):
     browser.find_by_id('id_ssh_keys').fill(ssh_keys)
     browser.find_by_id('id_confirm_password').fill(auth_password)
 
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-update')
 
 
 def _set_user_inactive(browser, username):
     functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
     browser.find_by_id('id_is_active').uncheck()
     browser.find_by_id('id_confirm_password').fill(_admin_password)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-update')
 
 
 def _change_password(browser, new_password, current_password=None,
@@ -319,7 +319,7 @@ def _change_password(browser, new_password, current_password=None,
     browser.find_by_id('id_new_password1').fill(new_password)
     browser.find_by_id('id_new_password2').fill(new_password)
     browser.find_by_id('id_confirm_password').fill(auth_password)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-change-password')
 
 
 def _try_login_to_ssh(key_file=None):
