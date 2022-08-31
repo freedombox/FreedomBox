@@ -97,9 +97,10 @@ class BepastyView(AppView):
 
 class AddPasswordView(SuccessMessageMixin, FormView):
     """View to add a new password."""
+
     form_class = AddPasswordForm
     prefix = 'bepasty'
-    template_name = 'bepasty_add.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('bepasty:index')
     success_message = _('Password added.')
 

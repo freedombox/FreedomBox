@@ -73,7 +73,7 @@ def _add_password(browser):
         browser.find_by_css('#id_bepasty-permissions input[value="{}"]'.format(
             permission)).check()
     browser.fill('bepasty-comment', 'bepasty functional test')
-    functional.submit(browser, form_class='form-add')
+    functional.submit(browser, form_class='form-bepasty')
 
 
 def _remove_all_passwords(browser):
