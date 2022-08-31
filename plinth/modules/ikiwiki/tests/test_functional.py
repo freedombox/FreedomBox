@@ -4,6 +4,7 @@ Functional, browser based tests for ikiwiki app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.ikiwiki]
@@ -39,7 +40,7 @@ def _create_wiki_if_needed(browser):
             functional.config['DEFAULT']['username'])
         browser.find_by_id('id_ikiwiki-admin_password').fill(
             functional.config['DEFAULT']['password'])
-        functional.submit(browser)
+        functional.submit(browser, form_class='form-create')
 
 
 def _delete_wiki(browser):
@@ -47,7 +48,7 @@ def _delete_wiki(browser):
     functional.nav_to_module(browser, 'ikiwiki')
     browser.links.find_by_href(
         '/plinth/apps/ikiwiki/wiki/delete/').first.click()
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-delete')
 
 
 def _wiki_exists(browser):
