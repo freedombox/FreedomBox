@@ -287,7 +287,7 @@ def login_with_account(browser, url, username, password=None):
             submit(browser)
     else:
         browser.visit(base_url + '/plinth/firstboot/welcome')
-        submit(browser)  # click the "Start Setup" button
+        submit(browser, form_class='form-start')  # "Start Setup" button
         _create_admin_account(browser, username, password)
         if '/network-topology-first-boot' in browser.url:
             submit(browser, element=browser.find_by_name('skip')[0])
