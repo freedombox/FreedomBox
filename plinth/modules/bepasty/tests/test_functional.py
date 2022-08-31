@@ -81,7 +81,7 @@ def _remove_all_passwords(browser):
     while True:
         remove_button = browser.find_by_css('.password-remove')
         if remove_button:
-            functional.submit(browser, remove_button)
+            functional.submit(browser, element=remove_button)
         else:
             break
 
@@ -95,7 +95,7 @@ def _can_login(browser, password):
     _logout(browser)
     browser.fill('token', password)
     login = browser.find_by_xpath('//form//button')
-    functional.submit(browser, login, '/bepasty')
+    functional.submit(browser, element=login)
 
     return bool(browser.find_by_value('Logout'))
 
