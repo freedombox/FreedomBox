@@ -65,17 +65,17 @@ def _delete_all(browser):
     delete_button = browser.find_by_name('delete_selected').first
     if not delete_button['disabled']:
         browser.find_by_id('select-all').check()
-        functional.submit(browser, delete_button)
+        functional.submit(browser, element=delete_button)
 
         confirm_button = browser.find_by_name('delete_confirm')
         if confirm_button:  # Only if redirected to confirm page
-            functional.submit(browser, confirm_button)
+            functional.submit(browser, element=confirm_button)
 
 
 def _create_snapshot(browser):
     functional.visit(browser, '/plinth/sys/snapshot/manage/')
     create_button = browser.find_by_name('create').first
-    functional.submit(browser, create_button)
+    functional.submit(browser, element=create_button)
 
 
 def _get_count(browser):
