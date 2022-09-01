@@ -342,7 +342,8 @@ def install(browser, app_name):
     install_button_css = '.form-install input[type=submit]'
     while True:
         script = 'return (document.readyState == "complete") && ' \
-            '(!Boolean(document.querySelector(".app-operation")));'
+            '(!Boolean(document.querySelector(".app-operation"))) &&' \
+            '(!Boolean(document.querySelector(".app-just-installed")));'
         if not browser.execute_script(script):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
