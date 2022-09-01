@@ -3,6 +3,7 @@
 
 import os
 import pathlib
+import subprocess
 
 import augeas
 
@@ -17,6 +18,15 @@ FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
 
 JOURNALD_FILE = pathlib.Path('/etc/systemd/journald.conf.d/50-freedombox.conf')
+
+
+@privileged
+def set_hostname(hostname: str):
+    """Set system hostname using hostnamectl."""
+    subprocess.run(
+        ['hostnamectl', 'set-hostname', '--transient', '--static', hostname],
+        check=True)
+    action_utils.service_restart('avahi-daemon')
 
 
 def load_augeas():

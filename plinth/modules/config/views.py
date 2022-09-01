@@ -102,7 +102,7 @@ class ConfigAppView(views.AppView):
 
 
 def set_hostname(hostname):
-    """Sets machine hostname to hostname"""
+    """Set machine hostname and send signals before and after."""
     old_hostname = config.get_hostname()
     domainname = config.get_domainname()
 
@@ -114,7 +114,7 @@ def set_hostname(hostname):
                                     new_hostname=hostname)
 
     LOGGER.info('Changing hostname to - %s', hostname)
-    actions.superuser_run('hostname-change', [hostname])
+    privileged.set_hostname(hostname)
 
     LOGGER.info('Setting domain name after hostname change - %s', domainname)
     actions.superuser_run('domainname-change', [domainname])
