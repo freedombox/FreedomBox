@@ -1,15 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure ejabberd server.
-"""
+"""FreedomBox app to configure ejabberd server."""
 
 import json
 import logging
+from typing import Tuple
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -25,7 +23,7 @@ from plinth.signals import (domain_added, post_hostname_change,
                             pre_hostname_change)
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('XMPP is an open and standardized communication protocol. Here '
@@ -131,14 +129,12 @@ class EjabberdApp(app_module.App):
         domainname = config.get_domainname()
         logger.info('ejabberd service domainname - %s', domainname)
 
-        actions.superuser_run('ejabberd',
-                              ['pre-install', '--domainname', domainname])
+        privileged.pre_install(domainname)
         # XXX: Configure all other domain names
         super().setup(old_version)
         self.get_component('letsencrypt-ejabberd').setup_certificates(
             [domainname])
-        actions.superuser_run('ejabberd',
-                              ['setup', '--domainname', domainname])
+        privileged.setup(domainname)
         self.enable()
 
         # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
@@ -155,19 +151,14 @@ class EjabberdTurnConsumer(TurnConsumer):
 
 
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
-    """
-    Backup ejabberd database before hostname is changed.
-    """
+    """Backup ejabberd database before hostname is changed."""
     del sender  # Unused
     del kwargs  # Unused
     app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return
 
-    actions.superuser_run('ejabberd', [
-        'pre-change-hostname', '--old-hostname', old_hostname,
-        '--new-hostname', new_hostname
-    ])
+    privileged.pre_change_hostname(old_hostname, new_hostname)
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
@@ -178,21 +169,16 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     if app.needs_setup():
         return
 
-    actions.superuser_run('ejabberd', [
-        'change-hostname', '--old-hostname', old_hostname, '--new-hostname',
-        new_hostname
-    ], run_in_background=True)
+    privileged.change_hostname(_run_in_background=True)
 
 
 def get_domains():
-    """Return the list of domains configured for ejabberd.
-    """
+    """Return the list of domains configured for ejabberd."""
     app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return []
 
-    output = actions.superuser_run('ejabberd', ['get-domains'])
-    return json.loads(output)
+    return privileged.get_domains()
 
 
 def on_domain_added(sender, domain_type, name='', description='',
@@ -204,7 +190,7 @@ def on_domain_added(sender, domain_type, name='', description='',
 
     domains = get_domains()
     if name not in domains:
-        actions.superuser_run('ejabberd', ['add-domain', '--domainname', name])
+        privileged.add_domain(name)
         app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 
@@ -214,9 +200,7 @@ def set_domains(domains):
     if not domains or app.needs_setup():
         return
 
-    commands = ['set-domains', '--domains']
-    commands.extend(domains)
-    actions.superuser_run('ejabberd', commands)
+    privileged.set_domains(domains)
     app.get_component('letsencrypt-ejabberd').setup_certificates()
 
 
@@ -227,14 +211,11 @@ def update_turn_configuration(config: TurnConfiguration, managed=True,
     if not force and app.needs_setup():
         return
 
-    params = ['configure-turn']
-    params += ['--managed'] if managed else []
-    actions.superuser_run('ejabberd', params, input=config.to_json().encode())
+    privileged.configure_turn(json.loads(config.to_json()), managed)
 
 
-def get_turn_configuration() -> (TurnConfiguration, bool):
+def get_turn_configuration() -> Tuple[TurnConfiguration, bool]:
     """Get the latest STUN/TURN configuration."""
-    json_config = actions.superuser_run('ejabberd', ['get-turn-config'])
-    tc, managed = json.loads(json_config)
-    return (TurnConfiguration(tc['domain'], tc['uris'],
-                              tc['shared_secret']), managed)
+    tc, managed = privileged.get_turn_config()
+    return TurnConfiguration(tc['domain'], tc['uris'],
+                             tc['shared_secret']), managed

@@ -1,23 +1,22 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for the ejabberd service
-"""
+"""Configuration helper for the ejabberd service."""
 
-import argparse
-import json
+import logging
 import os
 import re
 import shutil
 import socket
 import subprocess
-import sys
 from pathlib import Path
+from typing import Any, Optional, Tuple
 
 from ruamel.yaml import YAML, scalarstring
 
 from plinth import action_utils
+from plinth.actions import privileged
 from plinth.version import Version
+
+logger = logging.getLogger(__name__)
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
@@ -34,88 +33,9 @@ yaml.preserve_quotes = True
 TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    # Get configuration
-    subparsers.add_parser('get-configuration',
-                          help='Return the current configuration')
-
-    # Preseed debconf values before packages are installed.
-    pre_install = subparsers.add_parser(
-        'pre-install',
-        help='Preseed debconf values before packages are installed.')
-    pre_install.add_argument(
-        '--domainname',
-        help='The domain name that will be used by the XMPP service.')
-
-    # Setup ejabberd configuration
-    setup = subparsers.add_parser('setup', help='Setup ejabberd configuration')
-    setup.add_argument(
-        '--domainname',
-        help='The domain name that will be used by the XMPP service.')
-
-    # Prepare ejabberd for hostname change
-    pre_hostname_change = subparsers.add_parser(
-        'pre-change-hostname', help='Prepare ejabberd for nodename change')
-    pre_hostname_change.add_argument('--old-hostname',
-                                     help='Previous hostname')
-    pre_hostname_change.add_argument('--new-hostname', help='New hostname')
-
-    # Update ejabberd nodename
-    hostname_change = subparsers.add_parser('change-hostname',
-                                            help='Update ejabberd nodename')
-    hostname_change.add_argument('--old-hostname', help='Previous hostname')
-    hostname_change.add_argument('--new-hostname', help='New hostname')
-
-    # Manage domain names
-    subparsers.add_parser('get-domains',
-                          help='Get all configured domains in JSON format')
-
-    add_domain = subparsers.add_parser('add-domain',
-                                       help='Add a domain name to ejabberd')
-    add_domain.add_argument('--domainname', help='New domain name')
-
-    set_domains = subparsers.add_parser('set-domains',
-                                        help='Set list of ejabberd domains')
-    set_domains.add_argument('--domains', nargs='+',
-                             help='One or more domain names')
-
-    # Configure STUN/TURN server for use with ejabberd
-    turn = subparsers.add_parser(
-        'configure-turn', help='Configure a TURN server for use with ejabberd')
-    turn.add_argument(
-        '--managed', required=False, default=False, action='store_true',
-        help='Whether configuration is provided by user or auto-managed by '
-        'FreedomBox')
-
-    subparsers.add_parser(
-        'get-turn-config',
-        help='Get the latest STUN/TURN configuration in JSON format')
-
-    # Switch/check Message Archive Management (MAM) in ejabberd config
-    help_MAM = 'Switch or check Message Archive Management (MAM).'
-    mam = subparsers.add_parser('mam', help=help_MAM)
-    mam.add_argument('command', choices=('enable', 'disable', 'status'),
-                     help=help_MAM)
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_get_configuration(_):
-    """Return the current configuration, specifically domains configured."""
-    with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
-        conf = yaml.load(file_handle)
-
-    print(json.dumps({'domains': conf['hosts']}))
-
-
-def subcommand_pre_install(arguments):
+@privileged
+def pre_install(domainname: str):
     """Preseed debconf values before packages are installed."""
-    domainname = arguments.domainname
     if not domainname:
         # If new domainname is blank, use hostname instead.
         domainname = socket.gethostname()
@@ -124,8 +44,9 @@ def subcommand_pre_install(arguments):
         ['ejabberd ejabberd/hostname string ' + domainname])
 
 
-def subcommand_setup(arguments):
-    """Enabled LDAP authentication"""
+@privileged
+def setup(domainname: str):
+    """Enable LDAP authentication."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
@@ -143,19 +64,20 @@ def subcommand_setup(arguments):
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
-    upgrade_config(arguments.domainname)
+    _upgrade_config(domainname)
 
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
     except subprocess.CalledProcessError as err:
-        print('Failed to restart ejabberd with new configuration: %s', err)
+        logger.warn('Failed to restart ejabberd with new configuration: %s',
+                    err)
 
 
-def upgrade_config(domain):
-    """Fix the config file by removing deprecated settings"""
+def _upgrade_config(domain):
+    """Fix the config file by removing deprecated settings."""
     current_version = _get_version()
     if not current_version:
-        print('Warning: Unable to get ejabberd version.')
+        logger.warn('Warning: Unable to get ejabberd version.')
 
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
@@ -194,31 +116,25 @@ def upgrade_config(domain):
         yaml.dump(conf, file_handle)
 
 
-def subcommand_pre_change_hostname(arguments):
-    """Prepare ejabberd for hostname change"""
+@privileged
+def pre_change_hostname(old_hostname: str, new_hostname: str):
+    """Prepare ejabberd for hostname change."""
     if not shutil.which('ejabberdctl'):
-        print('ejabberdctl not found. Is ejabberd installed?')
+        logger.info('ejabberdctl not found')
         return
 
-    old_hostname = arguments.old_hostname
-    new_hostname = arguments.new_hostname
-
     subprocess.call(['ejabberdctl', 'backup', EJABBERD_BACKUP])
-    try:
-        subprocess.check_output([
-            'ejabberdctl', 'mnesia-change-nodename',
-            'ejabberd@' + old_hostname, 'ejabberd@' + new_hostname,
-            EJABBERD_BACKUP, EJABBERD_BACKUP_NEW
-        ])
-        os.remove(EJABBERD_BACKUP)
-    except subprocess.CalledProcessError as err:
-        print('Failed to change hostname in ejabberd backup database: %s', err)
+    subprocess.check_output([
+        'ejabberdctl', 'mnesia-change-nodename', 'ejabberd@' + old_hostname,
+        'ejabberd@' + new_hostname, EJABBERD_BACKUP, EJABBERD_BACKUP_NEW
+    ])
+    os.remove(EJABBERD_BACKUP)
 
 
-def subcommand_change_hostname(arguments):
-    """Update ejabberd with new hostname"""
+@privileged
+def change_hostname():
+    """Update ejabberd with new hostname."""
     if not shutil.which('ejabberdctl'):
-        print('ejabberdctl not found. Is ejabberd installed?')
         return
 
     action_utils.service_stop('ejabberd')
@@ -238,34 +154,33 @@ def subcommand_change_hostname(arguments):
                 ['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW])
             os.remove(EJABBERD_BACKUP_NEW)
         except subprocess.CalledProcessError as err:
-            print('Failed to restore ejabberd backup database: %s', err)
+            logger.error('Failed to restore ejabberd backup database: %s', err)
     else:
-        print('Could not load ejabberd backup database: %s not found' %
-              EJABBERD_BACKUP_NEW)
+        logger.error('Could not load ejabberd backup database: %s not found' %
+                     EJABBERD_BACKUP_NEW)
 
 
-def subcommand_get_domains(_):
+@privileged
+def get_domains() -> list[str]:
     """Get all configured domains."""
     if not shutil.which('ejabberdctl'):
-        print('ejabberdctl not found. Is ejabberd installed?')
-        return
+        return []
 
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
-    print(json.dumps(conf['hosts']))
+    return conf['hosts']
 
 
-def subcommand_add_domain(arguments):
+@privileged
+def add_domain(domainname: str):
     """Update ejabberd with new domainname.
 
     Restarting ejabberd is handled by letsencrypt-ejabberd component.
     """
     if not shutil.which('ejabberdctl'):
-        print('ejabberdctl not found. Is ejabberd installed?')
+        logger.info('ejabberdctl not found')
         return
-
-    domainname = arguments.domainname
 
     # Add updated domainname to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
@@ -281,43 +196,43 @@ def subcommand_add_domain(arguments):
     # Restarting ejabberd is handled by letsencrypt-ejabberd component.
 
 
-def subcommand_set_domains(arguments):
+@privileged
+def set_domains(domains: list[str]):
     """Set list of ejabberd domains.
 
     Restarting ejabberd is handled by letsencrypt-ejabberd component.
     """
+    if not len(domains):
+        raise ValueError('No domains provided')
+
     if not shutil.which('ejabberdctl'):
-        print('ejabberdctl not found. Is ejabberd installed?')
         return
 
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
-    conf['hosts'] = arguments.domains
+    conf['hosts'] = domains
 
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
 
-def subcommand_mam(argument):
+@privileged
+def mam(command: str) -> Optional[bool]:
     """Enable, disable, or get status of Message Archive Management (MAM)."""
+    if command not in ('enable', 'disable', 'status'):
+        raise ValueError('Invalid command')
 
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
     if 'modules' not in conf:
-        print('Found no "modules" entry in ejabberd configuration file.')
-        return
+        return None
 
-    if argument.command == 'status':
-        if 'mod_mam' in conf['modules']:
-            print('enabled')
-            return
-        else:
-            print('disabled')
-            return
+    if command == 'status':
+        return 'mod_mam' in conf['modules']
 
-    if argument.command == 'enable':
+    if command == 'enable':
         # Explicitly set the recommended / default settings for mod_mam,
         # see https://docs.ejabberd.im/admin/configuration/#mod-mam.
         settings_mod_mam = {
@@ -332,19 +247,18 @@ def subcommand_mam(argument):
             }
         }
         conf['modules'].update(settings_mod_mam)
-    elif argument.command == 'disable':
+    elif command == 'disable':
         # disable modules by erasing from config file
         if 'mod_mam' in conf['modules']:
             conf['modules'].pop('mod_mam')
-    else:
-        print("Unknown command: %s" % argument.command)
-        return
 
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
     if action_utils.service_is_running('ejabberd'):
         subprocess.call(['ejabberdctl', 'reload_config'])
+
+    return None
 
 
 def _generate_service(uri: str) -> dict:
@@ -368,7 +282,8 @@ def _generate_uris(services: list[dict]) -> list[str]:
     ]
 
 
-def subcommand_get_turn_config(_):
+@privileged
+def get_turn_config() -> Tuple[dict[str, Any], bool]:
     """Get the latest STUN/TURN configuration in JSON format."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
@@ -377,24 +292,18 @@ def subcommand_get_turn_config(_):
     managed = os.path.exists(EJABBERD_MANAGED_COTURN)
 
     if bool(mod_stun_disco_config):
-        print(
-            json.dumps([{
-                'domain': '',
-                'uris': _generate_uris(mod_stun_disco_config['services']),
-                'shared_secret': mod_stun_disco_config['secret'],
-            }, managed]))
+        return {
+            'domain': '',
+            'uris': _generate_uris(mod_stun_disco_config['services']),
+            'shared_secret': mod_stun_disco_config['secret'],
+        }, managed
     else:
-        print(
-            json.dumps([{
-                'domain': None,
-                'uris': [],
-                'shared_secret': None
-            }, managed]))
+        return {'domain': None, 'uris': [], 'shared_secret': None}, managed
 
 
-def subcommand_configure_turn(arguments):
+@privileged
+def configure_turn(turn_server_config: dict[str, Any], managed: bool):
     """Set parameters for the STUN/TURN server to use with ejabberd."""
-    turn_server_config = json.loads(''.join(sys.stdin))
     uris = turn_server_config['uris']
     mod_stun_disco_config = {}
 
@@ -413,7 +322,7 @@ def subcommand_configure_turn(arguments):
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
-    if arguments.managed:
+    if managed:
         Path(EJABBERD_MANAGED_COTURN).touch()
     else:
         Path(EJABBERD_MANAGED_COTURN).unlink(missing_ok=True)
@@ -423,7 +332,7 @@ def subcommand_configure_turn(arguments):
 
 
 def _get_version():
-    """ Get the current ejabberd version """
+    """Get the current ejabberd version."""
     try:
         output = subprocess.check_output(['ejabberdctl',
                                           'status']).decode('utf-8')
@@ -435,16 +344,3 @@ def _get_version():
         version = str(version_info[1])
         return Version(version)
     return None
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
