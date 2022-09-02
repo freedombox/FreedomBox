@@ -84,7 +84,6 @@ import os
 import re
 import shlex
 import subprocess
-import sys
 
 from plinth import cfg
 from plinth.errors import ActionError
@@ -311,5 +310,13 @@ def _check_privileged_action_arguments(func):
 def _get_privileged_action_module_name(func):
     """Figure out the module name of a privileged action."""
     module_name = func.__module__
-    module = sys.modules[module_name]
-    return module.__package__.rpartition('.')[2]
+    while module_name:
+        module_name, _, last = module_name.rpartition('.')
+        if last == 'privileged':
+            break
+
+    if not module_name:
+        raise ValueError('Privileged actions must be placed under a '
+                         'package/module named privileged')
+
+    return module_name.rpartition('.')[2]

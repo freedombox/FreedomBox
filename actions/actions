@@ -59,7 +59,11 @@ def _call(module_name, action_name, arguments):
         raise SyntaxError('Invalid module name')
 
     cfg.read()
-    import_path = module_loader.get_module_import_path(module_name)
+    if module_name == 'plinth':
+        import_path = 'plinth'
+    else:
+        import_path = module_loader.get_module_import_path(module_name)
+
     try:
         module = importlib.import_module(import_path + '.privileged')
     except ModuleNotFoundError as exception:

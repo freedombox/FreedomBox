@@ -14,13 +14,11 @@ import shutil
 import tempfile
 from unittest.mock import call, patch
 
-import apt_pkg
 import pytest
 
 from plinth import cfg
 from plinth.actions import _log_command as log_command
 from plinth.actions import privileged, run, superuser_run
-from plinth.errors import ActionError
 
 
 @pytest.fixture(autouse=True)
@@ -36,7 +34,6 @@ def actions_test_setup(load_cfg):
         cfg.actions_dir = str(tmp_directory)
 
         actions_dir = pathlib.Path(__file__).parent / '../../actions'
-        shutil.copy(str(actions_dir / 'packages'), str(tmp_directory))
         shutil.copy(str(actions_dir / 'test_path'), str(tmp_directory))
         shutil.copy('/bin/echo', str(tmp_directory))
         shutil.copy('/usr/bin/id', str(tmp_directory))
@@ -143,24 +140,6 @@ def test_multiple_options_and_output():
     assert options == output
 
 
-@pytest.mark.usefixtures('needs_root')
-def test_is_package_manager_busy():
-    """Test the behavior of `is-package-manager-busy` in both locked and
-    unlocked states of the dpkg lock file."""
-
-    apt_pkg.init()  # initialize apt_pkg module
-
-    # In the locked state, the lsof command returns 0.
-    # Hence no error is thrown.
-    with apt_pkg.SystemLock():
-        superuser_run('packages', ['is-package-manager-busy'])
-
-    # In the unlocked state, the lsof command returns 1.
-    # An ActionError is raised in this case.
-    with pytest.raises(ActionError):
-        superuser_run('packages', ['is-package-manager-busy'])
-
-
 @pytest.mark.usefixtures('develop_mode', 'needs_root')
 def test_action_path(monkeypatch):
     """Test that in development mode, python action scripts get the
@@ -247,14 +226,16 @@ def test_privileged_argument_annotation_check():
     privileged(func_valid)
 
 
+@patch('plinth.actions._get_privileged_action_module_name')
 @patch('plinth.actions.superuser_run')
-def test_privileged_method_call(superuser_run_):
+def test_privileged_method_call(superuser_run_, get_module_name):
     """Test that privileged method calls the superuser action properly."""
 
     def func_with_args(_a: int, _b: str, _c: int = 1, _d: str = 'dval',
                        _e: str = 'eval'):
         return
 
+    get_module_name.return_value = 'tests'
     superuser_run_.return_value = json.dumps({
         'result': 'success',
         'return': 'bar'
@@ -269,13 +250,15 @@ def test_privileged_method_call(superuser_run_):
         [call('actions', ['tests', 'func_with_args'], input=input_.encode())])
 
 
+@patch('plinth.actions._get_privileged_action_module_name')
 @patch('plinth.actions.superuser_run')
-def test_privileged_method_exceptions(superuser_run_):
+def test_privileged_method_exceptions(superuser_run_, get_module_name):
     """Test that exceptions on privileged methods are return properly."""
 
     def func_with_exception():
         raise TypeError('type error')
 
+    get_module_name.return_value = 'tests'
     superuser_run_.return_value = json.dumps({
         'result': 'exception',
         'exception': {
