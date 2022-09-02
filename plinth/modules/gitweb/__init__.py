@@ -1,24 +1,19 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Gitweb.
-"""
+"""FreedomBox app to configure Gitweb."""
 
-import json
 import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.errors import ActionError
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 from .forms import is_repo_url
 from .manifest import GIT_REPO_PATH
 
@@ -129,7 +124,7 @@ class GitwebApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('gitweb', ['setup'])
+        privileged.setup()
         self.enable()
 
 
@@ -161,36 +156,31 @@ class GitwebBackupRestore(BackupRestore):
         self.app.update_service_access()
 
 
-def repo_exists(name):
-    """Check whether a remote repository exists."""
-    try:
-        actions.run('gitweb', ['check-repo-exists', '--url', name])
-    except ActionError:
-        return False
-
-    return True
-
-
 def have_public_repos(repos):
-    """Check for public repositories"""
+    """Check for public repositories."""
     return any((repo['access'] == 'public' for repo in repos))
 
 
 def create_repo(repo, repo_description, owner, is_private):
     """Create a new repository or clone a remote repository."""
-    args = ['--description', repo_description, '--owner', owner]
-    if is_private:
-        args.append('--is-private')
+    kwargs = {
+        'url': None,
+        'name': None,
+        'description': repo_description,
+        'owner': owner,
+        'is_private': is_private
+    }
+
     if is_repo_url(repo):
-        args = ['create-repo', '--url', repo] + args
+        kwargs['url'] = repo
         # create a repo directory and set correct access rights
-        actions.superuser_run('gitweb', args + ['--prepare-only'])
+        privileged.create_repo(prepare_only=True, **kwargs)
         # start cloning in background
-        actions.superuser_run('gitweb', args + ['--skip-prepare'],
-                              run_in_background=True)
+        privileged.create_repo(skip_prepare=True, _run_in_background=True,
+                               **kwargs)
     else:
-        args = ['create-repo', '--name', repo] + args
-        actions.superuser_run('gitweb', args)
+        kwargs['name'] = repo
+        privileged.create_repo(**kwargs)
 
 
 def get_repo_list():
@@ -223,8 +213,7 @@ def get_repo_list():
 
 def repo_info(repo):
     """Get information about repository."""
-    output = actions.run('gitweb', ['repo-info', '--name', repo])
-    info = json.loads(output)
+    info = privileged.repo_info(repo)
     if info['access'] == 'private':
         info['is_private'] = True
     else:
@@ -234,72 +223,25 @@ def repo_info(repo):
     return info
 
 
-def _rename_repo(oldname, newname):
-    """Rename a repository."""
-    args = ['rename-repo', '--oldname', oldname, '--newname', newname]
-    actions.superuser_run('gitweb', args)
-
-
-def _set_default_branch(repo, branch):
-    """Set default branch of the repository."""
-    args = [
-        'set-default-branch',
-        '--name',
-        repo,
-        '--branch',
-        branch,
-    ]
-    actions.superuser_run('gitweb', args)
-
-
-def _set_repo_description(repo, repo_description):
-    """Set description of the repository."""
-    args = [
-        'set-repo-description',
-        '--name',
-        repo,
-        '--description',
-        repo_description,
-    ]
-    actions.superuser_run('gitweb', args)
-
-
-def _set_repo_owner(repo, owner):
-    """Set repository's owner name."""
-    args = ['set-repo-owner', '--name', repo, '--owner', owner]
-    actions.superuser_run('gitweb', args)
-
-
-def _set_repo_access(repo, access):
-    """Set repository's owner name."""
-    args = ['set-repo-access', '--name', repo, '--access', access]
-    actions.superuser_run('gitweb', args)
-
-
 def edit_repo(form_initial, form_cleaned):
     """Edit repository data."""
     repo = form_initial['name']
 
     if form_cleaned['name'] != repo:
-        _rename_repo(repo, form_cleaned['name'])
+        privileged.rename_repo(repo, form_cleaned['name'])
         repo = form_cleaned['name']
 
     if form_cleaned['description'] != form_initial['description']:
-        _set_repo_description(repo, form_cleaned['description'])
+        privileged.set_repo_description(repo, form_cleaned['description'])
 
     if form_cleaned['owner'] != form_initial['owner']:
-        _set_repo_owner(repo, form_cleaned['owner'])
+        privileged.set_repo_owner(repo, form_cleaned['owner'])
 
     if form_cleaned['is_private'] != form_initial['is_private']:
         if form_cleaned['is_private']:
-            _set_repo_access(repo, 'private')
+            privileged.set_repo_access(repo, 'private')
         else:
-            _set_repo_access(repo, 'public')
+            privileged.set_repo_access(repo, 'public')
 
     if form_cleaned['default_branch'] != form_initial['default_branch']:
-        _set_default_branch(repo, form_cleaned['default_branch'])
-
-
-def delete_repo(repo):
-    """Delete a repository."""
-    actions.superuser_run('gitweb', ['delete-repo', '--name', repo])
+        privileged.set_default_branch(repo, form_cleaned['default_branch'])

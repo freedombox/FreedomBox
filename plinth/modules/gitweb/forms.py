@@ -3,7 +3,6 @@
 Django form for configuring Gitweb.
 """
 
-import json
 import re
 from urllib.parse import urlparse
 
@@ -12,14 +11,14 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth.modules import gitweb
+
+from . import privileged
 
 
 def _get_branches(repo):
     """Get all the branches in the repository."""
-    branch_data = json.loads(
-        actions.run('gitweb', ['get-branches', '--name', repo]))
+    branch_data = privileged.get_branches(repo)
     default_branch = branch_data['default_branch']
     branches = branch_data['branches']
 
@@ -113,7 +112,7 @@ class CreateRepoForm(forms.Form):
                     _('A repository with this name already exists.'))
 
         if is_repo_url(name):
-            if not gitweb.repo_exists(name):
+            if not privileged.repo_exists(name):
                 raise ValidationError('Remote repository is not available.')
 
         return name

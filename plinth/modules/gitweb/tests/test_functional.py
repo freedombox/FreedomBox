@@ -237,7 +237,7 @@ def _gitweb_git_command_is_successful(command, cwd):
     if process.returncode != 0:
         if 'Authentication failed' in process.stderr.decode():
             return False
-        print(process.stdout.decode())
+
         process.check_returncode()  # Raise exception
     return True
 
