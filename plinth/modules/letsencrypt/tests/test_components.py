@@ -3,7 +3,6 @@
 Test the Let's Encrypt component for managing certificates.
 """
 
-import json
 from unittest.mock import call, patch
 
 import pytest
@@ -28,6 +27,29 @@ def fixture_component():
         certificate_path='/etc/test-app/{domain}/certificate.path',
         user_owner='test-user', group_owner='test-group',
         managing_app='test-app')
+
+
+@pytest.fixture(name='try_restart')
+def fixture_try_restart():
+    """Patch and return service.try_restart privileged call."""
+    with patch('plinth.privileged.service.try_restart') as try_restart:
+        yield try_restart
+
+
+@pytest.fixture(name='copy_certificate')
+def fixture_copy_certificate():
+    """Patch and return privileged.copy_certificate call."""
+    with patch('plinth.modules.letsencrypt.privileged.copy_certificate'
+               ) as copy_certificate:
+        yield copy_certificate
+
+
+@pytest.fixture(name='compare_certificate')
+def fixture_compare_certificate():
+    """Patch and return privileged.compare_certificate call."""
+    with patch('plinth.modules.letsencrypt.privileged.compare_certificate'
+               ) as compare_certificate:
+        yield compare_certificate
 
 
 @pytest.fixture(name='get_status')
@@ -63,13 +85,6 @@ def fixture_domain_list():
                              'domain-type-2', '__all__')
         domain_list.return_value = [domain1, domain2, domain3]
         yield domain_list
-
-
-@pytest.fixture(name='superuser_run')
-def fixture_superuser_run():
-    """Return patched plinth.actions.superuser_run() method."""
-    with patch('plinth.actions.superuser_run') as superuser_run:
-        yield superuser_run
 
 
 def test_init_without_arguments():
@@ -133,13 +148,8 @@ def test_list():
     assert set(LetsEncrypt.list()) == {component1, component2}
 
 
-def _assert_copy_certificate_called(component, superuser_run, domains):
+def _assert_copy_certificate_called(component, copy_certificate, domains):
     """Check that copy certificate calls have been made properly."""
-    copy_calls = [
-        mock_call for mock_call in superuser_run.mock_calls
-        if mock_call[1][0] == 'letsencrypt'
-        and mock_call[1][1][0] == 'copy-certificate'
-    ]
     expected_calls = []
     for domain, domain_status in domains.items():
         if domain_status == 'valid':
@@ -153,83 +163,72 @@ def _assert_copy_certificate_called(component, superuser_run, domains):
 
         private_key_path = '/etc/test-app/{}/private.path'.format(domain)
         certificate_path = '/etc/test-app/{}/certificate.path'.format(domain)
-        expected_call = call('letsencrypt', [
-            'copy-certificate', '--managing-app', component.managing_app,
-            '--user-owner', component.user_owner, '--group-owner',
-            component.group_owner, '--source-private-key-path',
-            str(source_private_key_path), '--source-certificate-path',
-            str(source_certificate_path), '--private-key-path',
-            private_key_path, '--certificate-path', certificate_path
-        ])
+        expected_call = call(component.managing_app,
+                             str(source_private_key_path),
+                             str(source_certificate_path), private_key_path,
+                             certificate_path, component.user_owner,
+                             component.group_owner)
         expected_calls.append(expected_call)
 
-    assert len(expected_calls) == len(copy_calls)
-    for expected_call in expected_calls:
-        print(expected_call)
-        print(copy_calls)
-        assert expected_call in copy_calls
+    copy_certificate.assert_has_calls(expected_calls, any_order=True)
 
 
-def _assert_restarted_daemons(daemons, superuser_run):
+def _assert_restarted_daemons(daemons, try_restart):
     """Check that a call has restarted the daemons of a component."""
-    run_calls = [
-        mock_call for mock_call in superuser_run.mock_calls
-        if mock_call[1][0] == 'service'
-    ]
-    expected_calls = [
-        call('service', ['try-restart', daemon]) for daemon in daemons
-    ]
-    assert len(expected_calls) == len(run_calls)
-    for expected_call in expected_calls:
-        assert expected_call in run_calls
+    expected_calls = [call(daemon) for daemon in daemons]
+    try_restart.assert_has_calls(expected_calls, any_order=True)
 
 
-def test_setup_certificates(superuser_run, get_status, component):
+def test_setup_certificates(copy_certificate, try_restart, get_status,
+                            component):
     """Test that initial copying of certs for an app works."""
     component.setup_certificates()
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'valid',
         'invalid.example': 'invalid'
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_setup_certificates_without_copy(superuser_run, get_status, component):
+def test_setup_certificates_without_copy(copy_certificate, try_restart,
+                                         get_status, component):
     """Test that initial copying of certs for an app works."""
     component.should_copy_certificates = False
     component.setup_certificates()
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_setup_certificates_with_app_domains(superuser_run, get_status,
-                                             component):
+def test_setup_certificates_with_app_domains(copy_certificate, try_restart,
+                                             get_status, component):
     """Test that initial copying of certs for an app works."""
     component._domains = ['irrelevant1.example', 'irrelevant2.example']
     component.setup_certificates(
         app_domains=['valid.example', 'invalid.example'])
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'valid',
         'invalid.example': 'invalid'
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_setup_certificates_with_all_domains(domain_list, superuser_run,
-                                             get_status, component):
+def test_setup_certificates_with_all_domains(domain_list, copy_certificate,
+                                             try_restart, get_status,
+                                             component):
     """Test that initial copying for certs works when app domains is '*'."""
     component._domains = '*'
     component.setup_certificates()
     _assert_copy_certificate_called(
-        component, superuser_run, {
+        component, copy_certificate, {
             'valid.example': 'valid',
             'invalid1.example': 'invalid',
             'invalid2.example': 'invalid'
         })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def _assert_compare_certificate_called(component, superuser_run, domains):
+def _assert_compare_certificate_called(component, compare_certificate,
+                                       domains):
     """Check that compare certificate was called properly."""
     expected_calls = []
     for domain in domains:
@@ -239,37 +238,34 @@ def _assert_compare_certificate_called(component, superuser_run, domains):
             '/etc/letsencrypt/live/{}/fullchain.pem'.format(domain)
         private_key_path = '/etc/test-app/{}/private.path'.format(domain)
         certificate_path = '/etc/test-app/{}/certificate.path'.format(domain)
-        expected_call = call('letsencrypt', [
-            'compare-certificate', '--managing-app', component.managing_app,
-            '--source-private-key-path',
-            str(source_private_key_path), '--source-certificate-path',
-            str(source_certificate_path), '--private-key-path',
-            private_key_path, '--certificate-path', certificate_path
-        ])
+        expected_call = call(component.managing_app,
+                             str(source_private_key_path),
+                             str(source_certificate_path), private_key_path,
+                             certificate_path)
         expected_calls.append(expected_call)
 
-    superuser_run.assert_has_calls(expected_calls)
+    compare_certificate.assert_has_calls(expected_calls, any_order=True)
 
 
-def test_get_status(component, superuser_run, get_status):
+def test_get_status(component, compare_certificate, get_status):
     """Test that getting domain status works."""
-    superuser_run.return_value = json.dumps({'result': True})
+    compare_certificate.return_value = True
     assert component.get_status() == {
         'valid.example': 'valid',
         'invalid.example': 'self-signed'
     }
-    _assert_compare_certificate_called(component, superuser_run,
+    _assert_compare_certificate_called(component, compare_certificate,
                                        ['valid.example'])
 
 
-def test_get_status_outdate_copy(component, superuser_run, get_status):
+def test_get_status_outdate_copy(component, compare_certificate, get_status):
     """Test that getting domain status works with outdated copy."""
-    superuser_run.return_value = json.dumps({'result': False})
+    compare_certificate.return_value = False
     assert component.get_status() == {
         'valid.example': 'outdated-copy',
         'invalid.example': 'self-signed'
     }
-    _assert_compare_certificate_called(component, superuser_run,
+    _assert_compare_certificate_called(component, compare_certificate,
                                        ['valid.example'])
 
 
@@ -282,130 +278,139 @@ def test_get_status_without_copy(component, get_status):
     }
 
 
-def test_on_certificate_obtained(superuser_run, component):
+def test_on_certificate_obtained(copy_certificate, try_restart, component):
     """Test that certificate obtained event handler works."""
     component.on_certificate_obtained(['valid.example', 'irrelevant.example'],
                                       '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'valid',
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_obtained_with_all_domains(superuser_run, component):
+def test_on_certificate_obtained_with_all_domains(copy_certificate,
+                                                  try_restart, component):
     """Test that certificate obtained event handler works for app with
        all domains.
     """
     component._domains = '*'
     component.on_certificate_obtained(['valid.example'],
                                       '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'valid',
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_obtained_irrelevant(superuser_run, component):
+def test_on_certificate_obtained_irrelevant(copy_certificate, try_restart,
+                                            component):
     """Test that certificate obtained event handler works with
        irrelevant domain.
     """
     component.on_certificate_obtained(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons([], superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons([], try_restart)
 
 
-def test_on_certificate_obtained_without_copy(superuser_run, component):
+def test_on_certificate_obtained_without_copy(copy_certificate, try_restart,
+                                              component):
     """Test that certificate obtained event handler works without copying."""
     component.should_copy_certificates = False
     component.on_certificate_obtained(['valid.example'],
                                       '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_renewed(superuser_run, component):
+def test_on_certificate_renewed(copy_certificate, try_restart, component):
     """Test that certificate renewed event handler works."""
     component.on_certificate_renewed(['valid.example', 'irrelevant.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'valid',
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_renewed_irrelevant(superuser_run, component):
+def test_on_certificate_renewed_irrelevant(copy_certificate, try_restart,
+                                           component):
     """Test that certificate renewed event handler works for
        irrelevant domains.
 """
     component.on_certificate_renewed(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons([], superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons([], try_restart)
 
 
-def test_on_certificate_renewed_without_copy(superuser_run, component):
+def test_on_certificate_renewed_without_copy(copy_certificate, try_restart,
+                                             component):
     """Test that certificate renewed event handler works without copying."""
     component.should_copy_certificates = False
     component.on_certificate_renewed(['valid.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_revoked(superuser_run, component):
+def test_on_certificate_revoked(copy_certificate, try_restart, component):
     """Test that certificate revoked event handler works."""
     component.on_certificate_revoked(['valid.example', 'irrelevant.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'invalid',
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_revoked_irrelevant(superuser_run, component):
+def test_on_certificate_revoked_irrelevant(copy_certificate, try_restart,
+                                           component):
     """Test that certificate revoked event handler works for
        irrelevant domains.
     """
     component.on_certificate_revoked(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons([], superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons([], try_restart)
 
 
-def test_on_certificate_revoked_without_copy(superuser_run, component):
+def test_on_certificate_revoked_without_copy(copy_certificate, try_restart,
+                                             component):
     """Test that certificate revoked event handler works without copying."""
     component.should_copy_certificates = False
     component.on_certificate_revoked(['valid.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_deleted(superuser_run, component):
+def test_on_certificate_deleted(copy_certificate, try_restart, component):
     """Test that certificate deleted event handler works."""
     component.on_certificate_deleted(['valid.example', 'irrelevant.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {
+    _assert_copy_certificate_called(component, copy_certificate, {
         'valid.example': 'invalid',
     })
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_restarted_daemons(component.daemons, try_restart)
 
 
-def test_on_certificate_deleted_irrelevant(superuser_run, component):
+def test_on_certificate_deleted_irrelevant(copy_certificate, try_restart,
+                                           component):
     """Test that certificate deleted event handler works for
        irrelevant domains.
     """
     component.on_certificate_deleted(
         ['irrelevant.example'], '/etc/letsencrypt/live/irrelevant.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons([], superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons([], try_restart)
 
 
-def test_on_certificate_deleted_without_copy(superuser_run, component):
+def test_on_certificate_deleted_without_copy(copy_certificate, try_restart,
+                                             component):
     """Test that certificate deleted event handler works without copying."""
     component.should_copy_certificates = False
     component.on_certificate_deleted(['valid.example'],
                                      '/etc/letsencrypt/live/valid.example/')
-    _assert_copy_certificate_called(component, superuser_run, {})
-    _assert_restarted_daemons(component.daemons, superuser_run)
+    _assert_copy_certificate_called(component, copy_certificate, {})
+    _assert_restarted_daemons(component.daemons, try_restart)

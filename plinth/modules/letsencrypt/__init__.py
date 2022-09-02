@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for using Let's Encrypt.
-"""
+"""FreedomBox app for using Let's Encrypt."""
 
 import json
 import logging
@@ -9,10 +7,8 @@ import pathlib
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
-from plinth.errors import ActionError
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
@@ -21,7 +17,7 @@ from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed, post_app_loading
 from plinth.utils import format_lazy
 
-from . import components, manifest
+from . import components, manifest, privileged
 
 _description = [
     format_lazy(
@@ -102,14 +98,12 @@ class LetsEncryptApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('letsencrypt',
-                              ['setup', '--old-version',
-                               str(old_version)])
+        privileged.setup(old_version)
 
 
 def certificate_obtain(domain):
     """Obtain a certificate for a domain and notify handlers."""
-    actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
+    privileged.obtain(domain)
     components.on_certificate_event('obtained', [domain], None)
 
 
@@ -124,7 +118,7 @@ def certificate_reobtain(domain):
     trigger obtain event (LE will trigger a renewal event).
 
     """
-    actions.superuser_run('letsencrypt', ['obtain', '--domain', domain])
+    privileged.obtain(domain)
 
 
 def certificate_revoke(domain, really_revoke=True):
@@ -138,20 +132,20 @@ def certificate_revoke(domain, really_revoke=True):
     obtaining certificates on the Let's Encrypt servers).
     """
     if really_revoke:
-        actions.superuser_run('letsencrypt', ['revoke', '--domain', domain])
+        privileged.revoke(domain)
 
     components.on_certificate_event('revoked', [domain], None)
 
 
 def certificate_delete(domain):
     """Delete a certificate for a domain and notify handlers."""
-    actions.superuser_run('letsencrypt', ['delete', '--domain', domain])
+    privileged.delete(domain)
     components.on_certificate_event('deleted', [domain], None)
 
 
 def on_domain_added(sender, domain_type='', name='', description='',
                     services=None, **kwargs):
-    """Obtain a certificate for the new domain"""
+    """Obtain a certificate for the new domain."""
     if not DomainType.get(domain_type).can_have_certificate:
         return False
 
@@ -167,12 +161,12 @@ def on_domain_added(sender, domain_type='', name='', description='',
             logger.info('Obtaining certificate for %s', name)
             certificate_obtain(name)
         return True
-    except ActionError:
+    except Exception:
         return False
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
-    """Revoke Let's Encrypt certificate for the removed domain"""
+    """Revoke Let's Encrypt certificate for the removed domain."""
     if not DomainType.get(domain_type).can_have_certificate:
         return False
 
@@ -181,7 +175,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
             logger.info('Revoking certificate for %s', name)
             certificate_revoke(name, really_revoke=False)
         return True
-    except ActionError as exception:
+    except Exception as exception:
         logger.warning('Failed to revoke certificate for %s: %s', name,
                        exception.args[2])
         return False
@@ -189,8 +183,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 
 def get_status():
     """Get the current settings."""
-    status = actions.superuser_run('letsencrypt', ['get-status'])
-    status = json.loads(status)
+    status = privileged.get_status()
 
     for domain in names.components.DomainName.list():
         if domain.domain_type.can_have_certificate:
@@ -247,9 +240,7 @@ def certificate_get_last_seen_modified_time(lineage):
 def certificate_set_last_seen_modified_time(lineage):
     """Write to store a certificate's last seen expiry date."""
     lineage = pathlib.Path(lineage)
-    output = actions.superuser_run(
-        'letsencrypt', ['get-modified-time', '--domain', lineage.name])
-    modified_time = int(output)
+    modified_time = privileged.get_modified_time(lineage.name)
 
     from plinth import kvstore
     info = kvstore.get_default('letsencrypt_certificate_info', '{}')

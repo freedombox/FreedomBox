@@ -11,7 +11,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from plinth.errors import ActionError
 from plinth.modules import letsencrypt
 from plinth.views import AppView
 
@@ -41,11 +40,11 @@ def revoke(request, domain):
             _('Certificate successfully revoked for domain {domain}.'
               'This may take a few moments to take effect.').format(
                   domain=domain))
-    except ActionError as exception:
+    except Exception as exception:
         messages.error(
             request,
             _('Failed to revoke certificate for domain {domain}: {error}').
-            format(domain=domain, error=exception.args[2]))
+            format(domain=domain, error=exception.args))
 
     return redirect(reverse_lazy('letsencrypt:index'))
 
@@ -59,11 +58,11 @@ def obtain(request, domain):
             request,
             _('Certificate successfully obtained for domain {domain}').format(
                 domain=domain))
-    except ActionError as exception:
+    except Exception as exception:
         messages.error(
             request,
             _('Failed to obtain certificate for domain {domain}: {error}').
-            format(domain=domain, error=exception.args[2]))
+            format(domain=domain, error=exception.args))
     return redirect(reverse_lazy('letsencrypt:index'))
 
 
@@ -76,11 +75,11 @@ def reobtain(request, domain):
             request,
             _('Certificate successfully obtained for domain {domain}').format(
                 domain=domain))
-    except ActionError as exception:
+    except Exception as exception:
         messages.error(
             request,
             _('Failed to obtain certificate for domain {domain}: {error}').
-            format(domain=domain, error=exception.args[2]))
+            format(domain=domain, error=exception.args))
     return redirect(reverse_lazy('letsencrypt:index'))
 
 
@@ -93,10 +92,10 @@ def delete(request, domain):
             request,
             _('Certificate successfully deleted for domain {domain}').format(
                 domain=domain))
-    except ActionError as exception:
+    except Exception as exception:
         messages.error(
             request,
             _('Failed to delete certificate for domain {domain}: {error}').
-            format(domain=domain, error=exception.args[2]))
+            format(domain=domain, error=exception.args))
 
     return redirect(reverse_lazy('letsencrypt:index'))
