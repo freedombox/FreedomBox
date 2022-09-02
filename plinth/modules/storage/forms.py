@@ -3,7 +3,6 @@
 Forms for directory selection.
 """
 
-import json
 import os
 
 from django import forms
@@ -13,14 +12,14 @@ from django.utils.translation import gettext_lazy as _
 from plinth import actions
 from plinth import app as app_module
 from plinth.modules import storage
+from plinth.modules.samba import privileged as samba_privileged
 
 
 def get_available_samba_shares():
     """Get available samba shares."""
     available_shares = []
     if _is_app_enabled('samba'):
-        samba_shares = json.loads(
-            actions.superuser_run('samba', ['get-shares']))
+        samba_shares = samba_privileged.get_shares()
         if samba_shares:
             disks = storage.get_mounts()
             for share in samba_shares:

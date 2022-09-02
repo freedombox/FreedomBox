@@ -1,15 +1,12 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for samba.
-"""
+"""Configuration helper for samba."""
 
-import argparse
 import configparser
-import json
 import os
 import shutil
 import subprocess
+
+from plinth.actions import privileged
 
 SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
 DEFAULT_FILE = '/etc/default/samba'
@@ -43,42 +40,6 @@ CONF = r'''
    # enable registry based shares
    registry shares = yes
 '''  # noqa: E501
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Configure samba after install')
-
-    subparsers.add_parser('get-shares', help='Get configured samba shares')
-
-    subparsers.add_parser('get-users', help='Get users from Samba database')
-
-    subparser = subparsers.add_parser('add-share', help='Add new samba share')
-    subparser.add_argument('--mount-point', help='Path of the mount point',
-                           required=True)
-    subparser.add_argument('--share-type', help='Type of the share',
-                           required=True, choices=['open', 'group', 'home'])
-    subparser.add_argument('--windows-filesystem', required=False,
-                           default=False, action='store_true',
-                           help='Path is Windows filesystem')
-
-    subparser = subparsers.add_parser(
-        'delete-share', help='Delete a samba share configuration')
-    subparser.add_argument('--mount-point', help='Path of the mount point',
-                           required=True)
-    subparser.add_argument('--share-type', help='Type of the share',
-                           required=True, choices=['open', 'group', 'home'])
-
-    subparsers.add_parser('dump-shares',
-                          help='Dump share configuration to file')
-    subparsers.add_parser('restore-shares',
-                          help='Restore share configuration from file')
-
-    subparsers.required = True
-    return parser.parse_args()
 
 
 def _close_share(share_name):
@@ -182,7 +143,7 @@ def _get_mount_point(path):
     return path.split(subpath)[0]
 
 
-def _get_shares():
+def _get_shares() -> list[dict[str, str]]:
     """Get shares."""
     shares = []
     output = subprocess.check_output(['net', 'conf', 'list'])
@@ -265,40 +226,50 @@ def _set_share_permissions(directory):
     subprocess.check_call(['setfacl', '-Rdm', 'g::rwX', directory])
 
 
-def subcommand_add_share(arguments):
+@privileged
+def add_share(mount_point: str, share_type: str, windows_filesystem: bool):
     """Create a samba share."""
-    mount_point = os.path.normpath(arguments.mount_point)
+    if share_type not in ('open', 'group', 'home'):
+        raise ValueError('Invalid share type')
+
+    mount_point = os.path.normpath(mount_point)
     if not os.path.ismount(mount_point):
         raise RuntimeError(
             'Path "{0}" is not a mount point.'.format(mount_point))
-    _create_share(mount_point, arguments.share_type,
-                  arguments.windows_filesystem)
+    _create_share(mount_point, share_type, windows_filesystem)
 
 
-def subcommand_delete_share(arguments):
+@privileged
+def delete_share(mount_point: str, share_type: str):
     """Delete a samba share configuration."""
-    mount_point = os.path.normpath(arguments.mount_point)
+    if share_type not in ('open', 'group', 'home'):
+        raise ValueError('Invalid share type')
+
+    mount_point = os.path.normpath(mount_point)
     shares = _get_shares()
     for share in shares:
         if share['mount_point'] == mount_point and share[
-                'share_type'] == arguments.share_type:
+                'share_type'] == share_type:
             _close_share(share['name'])
             _conf_command(['delshare', share['name']])
 
 
-def subcommand_get_shares(_):
+@privileged
+def get_shares() -> list[dict[str, str]]:
     """Get samba shares."""
-    print(json.dumps(_get_shares()))
+    return _get_shares()
 
 
-def subcommand_get_users(_):
+@privileged
+def get_users() -> list[str]:
     """Get users from Samba database."""
     output = subprocess.check_output(['pdbedit', '-L']).decode()
     samba_users = [line.split(':')[0] for line in output.split()]
-    print(json.dumps({'users': samba_users}))
+    return samba_users
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Configure samba, use custom samba config file."""
     from plinth import action_utils
     with open(CONF_PATH, 'w', encoding='utf-8') as file_handle:
@@ -310,7 +281,8 @@ def subcommand_setup(_):
         action_utils.service_restart('smbd')
 
 
-def subcommand_dump_shares(_):
+@privileged
+def dump_shares():
     """Dump registy share configuration."""
     os.makedirs(os.path.dirname(SHARES_CONF_BACKUP_FILE), exist_ok=True)
     with open(SHARES_CONF_BACKUP_FILE, 'w', encoding='utf-8') as backup_file:
@@ -318,22 +290,11 @@ def subcommand_dump_shares(_):
         subprocess.run(command, stdout=backup_file, check=True)
 
 
-def subcommand_restore_shares(_):
+@privileged
+def restore_shares():
     """Restore registy share configuration."""
     if not os.path.exists(SHARES_CONF_BACKUP_FILE):
         raise RuntimeError(
             'Backup file {0} does not exist.'.format(SHARES_CONF_BACKUP_FILE))
     _conf_command(['drop'])
     _conf_command(['import', SHARES_CONF_BACKUP_FILE])
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
