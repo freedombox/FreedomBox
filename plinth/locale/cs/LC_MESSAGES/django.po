@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-29 21:10-0400\n"
-"PO-Revision-Date: 2022-08-20 15:15+0000\n"
+"PO-Revision-Date: 2022-09-03 14:18+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -54,17 +54,15 @@ msgstr "Nedaří se připojit k {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Zálohování aplikace před odinstalací"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
-msgstr ""
+msgstr "Obnovením ze zálohy se obnoví data aplikace."
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Repozitář nenalezen"
+msgstr "Úložiště, do kterého se má zálohovat"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -6957,16 +6955,13 @@ msgid "Ports"
 msgstr "Porty"
 
 #: plinth/modules/tor/views.py:55
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "Updating configuration"
-msgstr "Při nastavování se vyskytla chyba."
+msgstr "Aktualizace konfigurace"
 
 #: plinth/modules/tor/views.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Chyba při aktualizaci aplikace: {error}"
+msgstr "Chyba při konfiguraci aplikace: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7271,10 +7266,8 @@ msgid "Show recent update logs"
 msgstr "Zobrazit protokoly posledních aktualizací"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:138
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test Distribution Upgrade"
-msgstr "Upgrade distribuce povoleno"
+msgstr "Upgrade testovací distribuce"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid ""
@@ -7283,10 +7276,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test distribution upgrade now"
-msgstr "Upgrade distribuce povoleno"
+msgstr "Otestujte aktualizaci distribuce"
 
 #: plinth/modules/upgrades/views.py:68
 #, python-brace-format
@@ -7322,10 +7313,8 @@ msgid "Frequent feature updates activated."
 msgstr "Aktivovány časté aktualizace funkcí."
 
 #: plinth/modules/upgrades/views.py:223
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Starting distribution upgrade test."
-msgstr "Upgrade distribuce povoleno"
+msgstr "Zahájení testu aktualizace distribuce."
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -8108,10 +8097,8 @@ msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Balíček {package_name} je nejnovější verze ({latest_version})"
 
 #: plinth/package.py:367
-#, fuzzy
-#| msgid "Error During Backup"
 msgid "Error running apt-get"
-msgstr "Chyba při zálohování"
+msgstr "Chyba při spuštění apt-get"
 
 #: plinth/package.py:389
 msgid "installing"
@@ -8171,28 +8158,22 @@ msgid "App updated"
 msgstr "Aplikace aktualizována"
 
 #: plinth/setup.py:104
-#, fuzzy
-#| msgid "Installing app"
 msgid "Uninstalling app"
-msgstr "Instalace aplikací"
+msgstr "Odinstalování aplikace"
 
 #: plinth/setup.py:122
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {string} {details}"
+#, python-brace-format
 msgid "Error uninstalling app: {string} {details}"
-msgstr "Chyba instalace aplikace: {string} {details}"
+msgstr "Chyba odinstalace aplikace: {string} {details}"
 
 #: plinth/setup.py:128
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {error}"
+#, python-brace-format
 msgid "Error uninstalling app: {error}"
-msgstr "Chyba při instalaci aplikace: {error}"
+msgstr "Chyba při odinstalaci aplikace: {error}"
 
 #: plinth/setup.py:131
-#, fuzzy
-#| msgid "App installed."
 msgid "App uninstalled."
-msgstr "Aplikace nainstalována."
+msgstr "Aplikace odinstalována."
 
 #: plinth/setup.py:451
 msgid "Updating app packages"
@@ -8555,26 +8536,25 @@ msgstr "Aktualizovat"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 #: plinth/templates/uninstall.html:36
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Instalace"
+msgstr "Odinstalace"
 
 #: plinth/templates/uninstall.html:11
-#, fuzzy, python-format
-#| msgid "Edit User <em>%(username)s</em>"
+#, python-format
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "Upravit uživatele %(username)s"
+msgstr "Odinstalovat aplikaci <em>%(app_name)s</em>?"
 
 #: plinth/templates/uninstall.html:17
 msgid "Uninstalling an app is an exprimental feature."
-msgstr ""
+msgstr "Odinstalování aplikace je exprimentální funkce."
 
 #: plinth/templates/uninstall.html:23
 msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"Všechna data a konfigurace aplikace budou trvale ztraceny. Aplikaci lze "
+"nainstalovat znovu."
 
 #: plinth/views.py:221
 msgid "Setting unchanged"
@@ -8583,7 +8563,7 @@ msgstr "Nastavení se nezměnila"
 #: plinth/views.py:401
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "před odinstalací {app_id}"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"
