@@ -10,13 +10,13 @@ See: http://www.postfix.org/postconf.5.html#myhostname
 import pathlib
 import re
 
-from plinth.actions import superuser_run
+from plinth.actions import privileged
 from plinth.app import App
 from plinth.modules import config
 from plinth.modules.email import postfix
 from plinth.modules.names.components import DomainName
 
-from . import tls
+from . import dkim, tls
 
 
 def get_domains():
@@ -28,7 +28,7 @@ def get_domains():
     return {'primary_domain': conf['mydomain'], 'all_domains': domains}
 
 
-def set_domains(primary_domain=None):
+def set_all_domains(primary_domain=None):
     """Set the primary domain and all the domains for postfix."""
     all_domains = DomainName.list_names()
     if not primary_domain:
@@ -37,10 +37,8 @@ def set_domains(primary_domain=None):
             primary_domain = config.get_domainname() or list(all_domains)[0]
 
     # Update configuration and don't restart daemons
-    superuser_run(
-        'email',
-        ['domain', 'set_domains', primary_domain, ','.join(all_domains)])
-    superuser_run('email', ['dkim', 'setup_dkim', primary_domain])
+    set_domains(primary_domain, list(all_domains))
+    dkim.setup_dkim(primary_domain)
 
     # Copy certificates (self-signed if needed) and restart daemons
     app = App.get('email')
@@ -48,9 +46,10 @@ def set_domains(primary_domain=None):
     app.get_component('letsencrypt-email-dovecot').setup_certificates()
 
 
-def action_set_domains(primary_domain, all_domains):
+@privileged
+def set_domains(primary_domain: str, all_domains: list[str]):
     """Set the primary domain and all the domains for postfix."""
-    all_domains = [_clean_domain(domain) for domain in all_domains.split(',')]
+    all_domains = [_clean_domain(domain) for domain in all_domains]
     primary_domain = _clean_domain(primary_domain)
 
     defaults = {'$myhostname', 'localhost.$mydomain', 'localhost'}

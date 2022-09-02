@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configure postfix to use auth and local delivery with dovecot. Start smtps and
-submission services. Setup aliases database.
+"""Configure postix.
+
+- Configure postfix to use auth and local delivery with dovecot.
+- Start SMTPS and submission services. Setup aliases database.
 
 See:
 https://doc.dovecot.org/configuration_manual/howto/postfix_and_dovecot_sasl/
@@ -9,9 +10,8 @@ See: https://doc.dovecot.org/configuration_manual/howto/postfix_dovecot_lmtp/
 See: http://www.postfix.org/TLS_README.html
 """
 
-from plinth import actions
+from plinth.actions import privileged
 
-from .. import aliases
 from .. import postfix as postconf
 
 default_config = {
@@ -57,13 +57,9 @@ smtps_service = postconf.Service(service='smtps', type_='inet', private='n',
 SQLITE_ALIASES = 'sqlite:/etc/postfix/freedombox-aliases.cf'
 
 
-def setup():
-    """Set SASL, mail submission, and user lookup settings."""
-    aliases.first_setup()
-    actions.superuser_run('email', ['postfix', 'setup'])
-
-
-def action_setup():
+@privileged
+def setup_postfix():
+    """Configure postfix."""
     postconf.set_config(default_config)
     _setup_submission()
     _setup_alias_maps()

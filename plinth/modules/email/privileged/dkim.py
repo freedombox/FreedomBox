@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Generate DKIM keys for signing outgoing messages.
+"""Generate DKIM keys for signing outgoing messages.
 
 See: https://rspamd.com/doc/modules/dkim_signing.html
 """
@@ -10,7 +9,7 @@ import re
 import shutil
 import subprocess
 
-from plinth import actions
+from plinth.actions import privileged
 
 _keys_dir = pathlib.Path('/var/lib/rspamd/dkim/')
 
@@ -23,24 +22,19 @@ def _validate_domain_name(domain):
             raise ValueError('Invalid domain name')
 
 
-def get_public_key(domain):
-    """Return the DKIM public key for the given domain."""
-    output = actions.superuser_run('email',
-                                   ['dkim', 'get_dkim_public_key', domain])
-    return output.strip()
-
-
-def action_get_dkim_public_key(domain):
+@privileged
+def get_dkim_public_key(domain: str) -> str:
     """Privileged action to get the public key from DKIM key."""
     _validate_domain_name(domain)
     key_file = _keys_dir / f'{domain}.dkim.key'
     output = subprocess.check_output(
         ['openssl', 'rsa', '-in',
          str(key_file), '-pubout'], stderr=subprocess.DEVNULL)
-    print(''.join(output.decode().splitlines()[1:-1]))
+    return ''.join(output.decode().splitlines()[1:-1])
 
 
-def action_setup_dkim(domain):
+@privileged
+def setup_dkim(domain: str):
     """Create DKIM key for a given domain."""
     _validate_domain_name(domain)
 

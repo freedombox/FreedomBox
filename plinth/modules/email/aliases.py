@@ -1,14 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Manage email aliases stored in sqlite database.
-"""
+"""Manage email aliases stored in sqlite database."""
 
 import contextlib
 import pwd
 import sqlite3
 from dataclasses import dataclass
 
-from plinth import actions
+from . import privileged
 
 
 @dataclass
@@ -75,7 +73,7 @@ def delete(username, aliases):
 
 def first_setup():
     """Create the database file and schema inside it."""
-    actions.superuser_run('email', ['aliases', 'setup'])
+    privileged.aliases.setup_aliases()
 
     # Create schema if not exists
     query = '''

@@ -10,7 +10,7 @@ import pathlib
 import re
 import subprocess
 
-from plinth import actions
+from plinth.actions import privileged
 from plinth.modules.email import postfix
 
 _milter_config = {
@@ -19,12 +19,8 @@ _milter_config = {
 }
 
 
-def setup():
-    """Trigger a privileged setup action."""
-    actions.superuser_run('email', ['spam', 'setup'])
-
-
-def action_setup():
+@privileged
+def setup_spam():
     """Compile sieve filters and set rspamd/postfix configuration."""
     _compile_sieve()
     _setup_rspamd()

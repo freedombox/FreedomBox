@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage an email server.
-"""
+"""FreedomBox app to manage an email server."""
 
 import logging
 
@@ -49,12 +47,13 @@ logger = logging.getLogger(__name__)
 
 class EmailApp(plinth.app.App):
     """FreedomBox app for an email server."""
+
     app_id = 'email'
 
     _version = 1
 
     def __init__(self):
-        """The app's constructor"""
+        """Initialize the email app."""
         super().__init__()
 
         info = plinth.app.Info(app_id=self.app_id, version=self._version,
@@ -180,13 +179,14 @@ class EmailApp(plinth.app.App):
         super().setup(old_version)
 
         # Setup
-        privileged.home.setup()
+        privileged.setup_home()
         self.get_component('letsencrypt-email-postfix').setup_certificates()
         self.get_component('letsencrypt-email-dovecot').setup_certificates()
-        privileged.domain.set_domains()
-        privileged.postfix.setup()
+        privileged.domain.set_all_domains()
+        aliases.first_setup()
+        privileged.setup_postfix()
         aliases.setup_common_aliases(_get_first_admin())
-        privileged.spam.setup()
+        privileged.setup_spam()
 
         # Restart daemons
         actions.superuser_run('service', ['try-restart', 'postfix'])
@@ -218,7 +218,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     if app.needs_setup():
         return
 
-    privileged.domain.set_domains()
+    privileged.domain.set_all_domains()
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
@@ -227,4 +227,4 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     if app.needs_setup():
         return
 
-    privileged.domain.set_domains()
+    privileged.domain.set_all_domains()
