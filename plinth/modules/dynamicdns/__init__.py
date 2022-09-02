@@ -11,7 +11,6 @@ import urllib
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
 from plinth.modules.backups.components import BackupRestore
@@ -20,7 +19,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import gnudip, manifest
+from . import gnudip, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -103,8 +102,7 @@ class DynamicDNSApp(app_module.App):
             self.enable()
 
         if old_version == 1:
-            config = actions.superuser_run('dynamicdns', ['export-config'])
-            config = json.loads(config)
+            config = privileged.export_config()
             if config['enabled']:
                 self.enable()
             else:
@@ -112,7 +110,7 @@ class DynamicDNSApp(app_module.App):
 
             del config['enabled']
             set_config(config)
-            actions.superuser_run('dynamicdns', ['clean'])
+            privileged.clean()
 
 
 def _query_external_address(domain):
