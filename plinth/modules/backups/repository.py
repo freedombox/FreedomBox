@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Remote and local Borg backup repositories
-"""
+"""Remote and local Borg backup repositories."""
 
 import abc
 import contextlib
@@ -19,7 +17,7 @@ from plinth import actions, cfg
 from plinth.errors import ActionError
 from plinth.utils import format_lazy
 
-from . import (_backup_handler, api, errors, get_known_hosts_path,
+from . import (_backup_handler, api, errors, get_known_hosts_path, privileged,
                restore_archive_handler, split_path, store)
 from .schedule import Schedule
 
@@ -212,6 +210,14 @@ class BaseBorgRepository(abc.ABC):
             return {'encryption_passphrase': passphrase}
 
         return {}
+
+    @contextlib.contextmanager
+    def _handle_errors(self):
+        """Parse exceptions into more specific ones."""
+        try:
+            yield
+        except Exception as exception:
+            self.reraise_known_error(exception)
 
     def _run(self, cmd, arguments, superuser=True, **kwargs):
         """Run a backups or sshfs action script command."""
@@ -418,9 +424,8 @@ class SshBorgRepository(BaseBorgRepository):
     @property
     def is_mounted(self):
         """Return whether remote path is mounted locally."""
-        output = self._run('sshfs',
-                           ['is-mounted', '--mountpoint', self._mountpoint])
-        return json.loads(output)
+        with self._handle_errors():
+            return privileged.is_mounted(self._mountpoint)
 
     def initialize(self):
         """Initialize the repository after mounting the target directory."""
@@ -432,22 +437,27 @@ class SshBorgRepository(BaseBorgRepository):
         """Mount the remote path locally using sshfs."""
         if self.is_mounted:
             return
+
         known_hosts_path = get_known_hosts_path()
-        arguments = [
-            'mount', '--mountpoint', self._mountpoint, '--path', self._path,
-            '--user-known-hosts-file',
-            str(known_hosts_path)
-        ]
-        arguments, kwargs = self._append_sshfs_arguments(
-            arguments, self.credentials)
-        self._run('sshfs', arguments, **kwargs)
+        kwargs = {'user_known_hosts_file': str(known_hosts_path)}
+        if 'ssh_password' in self.credentials and self.credentials[
+                'ssh_password']:
+            kwargs['password'] = self.credentials['ssh_password']
+
+        if 'ssh_keyfile' in self.credentials and self.credentials[
+                'ssh_keyfile']:
+            kwargs['ssh_keyfile'] = self.credentials['ssh_keyfile']
+
+        with self._handle_errors():
+            privileged.mount(self._mountpoint, self._path, **kwargs)
 
     def umount(self):
         """Unmount the remote path that was mounted locally using sshfs."""
         if not self.is_mounted:
             return
 
-        self._run('sshfs', ['umount', '--mountpoint', self._mountpoint])
+        with self._handle_errors():
+            privileged.umount(self._mountpoint)
 
     def _umount_ignore_errors(self):
         """Run unmount operation and ignore any exceptions thrown."""
@@ -457,7 +467,7 @@ class SshBorgRepository(BaseBorgRepository):
             logger.warning('Unable to unmount repository', exc_info=exception)
 
     def remove(self):
-        """Remove a repository from the kvstore and delete its mountpoint"""
+        """Remove a repository from the kvstore and delete its mountpoint."""
         self.umount()
         store.delete(self.uuid)
         try:
@@ -470,19 +480,6 @@ class SshBorgRepository(BaseBorgRepository):
                     os.rmdir(self._mountpoint)
         except Exception as err:
             logger.error(err)
-
-    @staticmethod
-    def _append_sshfs_arguments(arguments, credentials):
-        """Add credentials to a run command and kwargs"""
-        kwargs = {}
-
-        if 'ssh_password' in credentials and credentials['ssh_password']:
-            kwargs['input'] = credentials['ssh_password'].encode()
-
-        if 'ssh_keyfile' in credentials and credentials['ssh_keyfile']:
-            arguments += ['--ssh-keyfile', credentials['ssh_keyfile']]
-
-        return (arguments, kwargs)
 
     def _ensure_remote_directory(self):
         """Create remote SSH directory if it does not exist."""
