@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-App component for other apps to use Apache configuration functionality.
-"""
+"""App component for other apps to use Apache configuration functionality."""
 
 import re
 import subprocess
@@ -9,7 +7,9 @@ import subprocess
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy
 
-from plinth import action_utils, actions, app
+from plinth import action_utils, app
+
+from . import privileged
 
 
 class Webserver(app.LeaderComponent):
@@ -47,14 +47,11 @@ class Webserver(app.LeaderComponent):
 
     def enable(self):
         """Enable the Apache configuration."""
-        actions.superuser_run(
-            'apache', ['enable', '--name', self.web_name, '--kind', self.kind])
+        privileged.enable(self.web_name, self.kind)
 
     def disable(self):
         """Disable the Apache configuration."""
-        actions.superuser_run(
-            'apache',
-            ['disable', '--name', self.web_name, '--kind', self.kind])
+        privileged.disable(self.web_name, self.kind)
 
     def diagnose(self):
         """Check if the web path is accessible by clients.
@@ -99,13 +96,11 @@ class Uwsgi(app.LeaderComponent):
 
     def enable(self):
         """Enable the uWSGI configuration."""
-        actions.superuser_run('apache',
-                              ['uwsgi-enable', '--name', self.uwsgi_name])
+        privileged.uwsgi_enable(self.uwsgi_name)
 
     def disable(self):
         """Disable the uWSGI configuration."""
-        actions.superuser_run('apache',
-                              ['uwsgi-disable', '--name', self.uwsgi_name])
+        privileged.uwsgi_disable(self.uwsgi_name)
 
     def is_running(self):
         """Return whether the uWSGI daemon is running with configuration."""

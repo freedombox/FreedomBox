@@ -1,48 +1,13 @@
-#!/usr/bin/python3
-# -*- mode: python -*-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Apache web server.
-"""
+"""Configure Apache web server."""
 
-import argparse
 import glob
 import os
 import re
 import subprocess
 
 from plinth import action_utils
-
-
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-    subparser = subparsers.add_parser('setup', help='Setup for Apache')
-    subparser.add_argument(
-        '--old-version', type=int, required=True,
-        help='Earlier version of the app that is already setup.')
-    subparser = subparsers.add_parser(
-        'enable', help='Enable a site/config/module in apache')
-    subparser.add_argument('--name',
-                           help='Name of the site/config/module to enable')
-    subparser.add_argument('--kind', choices=['site', 'config', 'module'])
-    subparser = subparsers.add_parser(
-        'disable', help='Disable a site/config/module in apache')
-    subparser.add_argument('--name',
-                           help='Name of the site/config/module to disable')
-    subparser.add_argument('--kind', choices=['site', 'config', 'module'])
-    subparser = subparsers.add_parser(
-        'uwsgi-enable', help='Enable a site/config/module in UWSGI')
-    subparser.add_argument('--name',
-                           help='Name of the site/config/module to enable')
-    subparser = subparsers.add_parser(
-        'uwsgi-disable', help='Disable a site/config/module in UWSGI')
-    subparser.add_argument('--name',
-                           help='Name of the site/config/module to disable')
-
-    subparsers.required = True
-    return parser.parse_args()
+from plinth.actions import privileged
 
 
 def _get_sort_key_of_version(version):
@@ -87,14 +52,15 @@ def _disable_mod_php(webserver):
         webserver.disable('php' + version, kind='module')
 
 
-def subcommand_setup(arguments):
+@privileged
+def setup(old_version: int):
     """Setup Apache configuration."""
     # Regenerate the snakeoil self-signed SSL certificate. This is so that
     # FreedomBox images don't all have the same certificate. When FreedomBox
     # package is installed via apt, don't regenerate. When upgrading to newer
     # version of Apache FreedomBox app and setting up for the first time don't
     # regenerate.
-    if action_utils.is_disk_image() and arguments.old_version == 0:
+    if action_utils.is_disk_image() and old_version == 0:
         subprocess.run([
             'make-ssl-cert', 'generate-default-snakeoil', '--force-overwrite'
         ], check=True)
@@ -178,34 +144,33 @@ def subcommand_setup(arguments):
 
 # TODO: Check that the (name, kind) is a managed by FreedomBox before
 # performing operation.
-def subcommand_enable(arguments):
+@privileged
+def enable(name: str, kind: str):
     """Enable an Apache site/config/module."""
-    action_utils.webserver_enable(arguments.name, arguments.kind)
+    _assert_kind(kind)
+    action_utils.webserver_enable(name, kind)
 
 
-def subcommand_disable(arguments):
+@privileged
+def disable(name: str, kind: str):
     """Disable an Apache site/config/module."""
-    action_utils.webserver_disable(arguments.name, arguments.kind)
+    _assert_kind(kind)
+    action_utils.webserver_disable(name, kind)
 
 
-def subcommand_uwsgi_enable(arguments):
+def _assert_kind(kind: str):
+    """Raise and exception if kind parameter has an unexpected value."""
+    if kind not in ('site', 'config', 'module'):
+        raise ValueError('Invalid value for parameter kind')
+
+
+@privileged
+def uwsgi_enable(name: str):
     """Enable uWSGI configuration and reload."""
-    action_utils.uwsgi_enable(arguments.name)
+    action_utils.uwsgi_enable(name)
 
 
-def subcommand_uwsgi_disable(arguments):
+@privileged
+def uwsgi_disable(name: str):
     """Disable uWSGI configuration and reload."""
-    action_utils.uwsgi_disable(arguments.name)
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
+    action_utils.uwsgi_disable(name)

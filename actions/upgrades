@@ -468,10 +468,9 @@ def _disable_searx() -> bool:
         '/etc/uwsgi/apps-enabled/searx.ini').exists()
     if searx_is_enabled:
         print('Disabling searx...', flush=True)
-        subprocess.run([
-            '/usr/share/plinth/actions/apache', 'uwsgi-disable', '--name',
-            'searx'
-        ], check=True)
+        subprocess.run(
+            ['/usr/share/plinth/actions/actions', 'apache', 'uwsgi_disable'],
+            input='{"args": ["searx"], "kwargs": {}}'.encode(), check=True)
 
     return searx_is_enabled
 
@@ -486,9 +485,8 @@ def _update_searx(reenable=False):
         if reenable:
             print('Re-enabling searx after upgrade...', flush=True)
             subprocess.run([
-                '/usr/share/plinth/actions/apache', 'uwsgi-enable', '--name',
-                'searx'
-            ], check=True)
+                '/usr/share/plinth/actions/actions', 'apache', 'uwsgi_enable'
+            ], input='{"args": ["searx"], "kwargs": {}}'.encode(), check=True)
 
 
 def _perform_dist_upgrade():

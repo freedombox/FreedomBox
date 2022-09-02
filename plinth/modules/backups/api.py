@@ -15,6 +15,7 @@ import logging
 from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import setup
+from plinth.modules.apache import privileged as apache_privileged
 
 from .components import BackupRestore
 
@@ -340,16 +341,12 @@ class ApacheServiceHandler(ServiceHandler):
         self.was_enabled = action_utils.webserver_is_enabled(
             self.web_name, kind=self.kind)
         if self.was_enabled:
-            actions.superuser_run(
-                'apache',
-                ['disable', '--name', self.web_name, '--kind', self.kind])
+            apache_privileged.disable(self.web_name, self.kind)
 
     def restart(self):
         """Restart the service if it was earlier running."""
         if self.was_enabled:
-            actions.superuser_run(
-                'apache',
-                ['enable', '--name', self.web_name, '--kind', self.kind])
+            apache_privileged.enable(self.web_name, self.kind)
 
 
 def _shutdown_services(components):

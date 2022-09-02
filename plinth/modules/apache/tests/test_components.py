@@ -47,27 +47,22 @@ def test_webserver_is_enabled(webserver_is_enabled):
     webserver_is_enabled.assert_has_calls([call('test-config', kind='module')])
 
 
-@patch('plinth.actions.superuser_run')
-def test_webserver_enable(superuser_run):
+@patch('plinth.modules.apache.privileged.enable')
+def test_webserver_enable(enable):
     """Test that enabling webserver configuration works."""
     webserver = Webserver('test-webserver', 'test-config', kind='module')
 
     webserver.enable()
-    superuser_run.assert_has_calls([
-        call('apache', ['enable', '--name', 'test-config', '--kind', 'module'])
-    ])
+    enable.assert_has_calls([call('test-config', 'module')])
 
 
-@patch('plinth.actions.superuser_run')
-def test_webserver_disable(superuser_run):
+@patch('plinth.modules.apache.privileged.disable')
+def test_webserver_disable(disable):
     """Test that disabling webserver configuration works."""
     webserver = Webserver('test-webserver', 'test-config', kind='module')
 
     webserver.disable()
-    superuser_run.assert_has_calls([
-        call('apache',
-             ['disable', '--name', 'test-config', '--kind', 'module'])
-    ])
+    disable.assert_has_calls([call('test-config', 'module')])
 
 
 @patch('plinth.modules.apache.components.diagnose_url')
@@ -132,24 +127,22 @@ def test_uwsgi_is_enabled(uwsgi_is_enabled, service_is_enabled):
     assert not uwsgi.is_enabled()
 
 
-@patch('plinth.actions.superuser_run')
-def test_uwsgi_enable(superuser_run):
+@patch('plinth.modules.apache.privileged.uwsgi_enable')
+def test_uwsgi_enable(enable):
     """Test that enabling uwsgi configuration works."""
     uwsgi = Uwsgi('test-uwsgi', 'test-config')
 
     uwsgi.enable()
-    superuser_run.assert_has_calls(
-        [call('apache', ['uwsgi-enable', '--name', 'test-config'])])
+    enable.assert_has_calls([call('test-config')])
 
 
-@patch('plinth.actions.superuser_run')
-def test_uwsgi_disable(superuser_run):
+@patch('plinth.modules.apache.privileged.uwsgi_disable')
+def test_uwsgi_disable(disable):
     """Test that disabling uwsgi configuration works."""
     uwsgi = Uwsgi('test-uwsgi', 'test-config')
 
     uwsgi.disable()
-    superuser_run.assert_has_calls(
-        [call('apache', ['uwsgi-disable', '--name', 'test-config'])])
+    disable.assert_has_calls([call('test-config')])
 
 
 @patch('plinth.action_utils.service_is_running')
