@@ -4,6 +4,7 @@
 import os
 import pathlib
 import subprocess
+from typing import Optional
 
 import augeas
 
@@ -27,6 +28,32 @@ def set_hostname(hostname: str):
         ['hostnamectl', 'set-hostname', '--transient', '--static', hostname],
         check=True)
     action_utils.service_restart('avahi-daemon')
+
+
+@privileged
+def set_domainname(domainname: Optional[str] = None):
+    """Set system domainname in /etc/hosts."""
+    hostname = subprocess.check_output(['hostname']).decode().strip()
+    hosts_path = pathlib.Path('/etc/hosts')
+    if domainname:
+        insert_line = f'127.0.1.1 {hostname}.{domainname} {hostname}\n'
+    else:
+        insert_line = f'127.0.1.1 {hostname}\n'
+
+    lines = hosts_path.read_text(encoding='utf-8').splitlines(keepends=True)
+    new_lines = []
+    found = False
+    for line in lines:
+        if '127.0.1.1' in line:
+            new_lines.append(insert_line)
+            found = True
+        else:
+            new_lines.append(line)
+
+    if not found:
+        new_lines.append(insert_line)
+
+    hosts_path.write_text(''.join(new_lines), encoding='utf-8')
 
 
 def load_augeas():

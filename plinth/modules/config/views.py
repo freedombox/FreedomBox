@@ -1,14 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox views for basic system configuration.
-"""
+"""FreedomBox views for basic system configuration."""
 
 import logging
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions, views
+from plinth import views
 from plinth.modules import config
 from plinth.signals import (domain_added, domain_removed, post_hostname_change,
                             pre_hostname_change)
@@ -21,11 +19,12 @@ LOGGER = logging.getLogger(__name__)
 
 class ConfigAppView(views.AppView):
     """Serve configuration page."""
+
     form_class = ConfigurationForm
     app_id = 'config'
 
     def get_initial(self):
-        """Return the current status"""
+        """Return the current status."""
         return {
             'hostname': config.get_hostname(),
             'domainname': config.get_domainname(),
@@ -35,7 +34,7 @@ class ConfigAppView(views.AppView):
         }
 
     def form_valid(self, form):
-        """Apply the form changes"""
+        """Apply the form changes."""
         old_status = form.initial
         new_status = form.cleaned_data
 
@@ -117,7 +116,7 @@ def set_hostname(hostname):
     privileged.set_hostname(hostname)
 
     LOGGER.info('Setting domain name after hostname change - %s', domainname)
-    actions.superuser_run('domainname-change', [domainname])
+    privileged.set_domainname(domainname)
 
     post_hostname_change.send_robust(sender='config',
                                      old_hostname=old_hostname,
@@ -125,7 +124,7 @@ def set_hostname(hostname):
 
 
 def set_domainname(domainname, old_domainname):
-    """Sets machine domain name to domainname"""
+    """Set machine domain name to domainname."""
     old_domainname = config.get_domainname()
 
     # Domain name is not case sensitive, but Let's Encrypt certificate
@@ -133,7 +132,7 @@ def set_domainname(domainname, old_domainname):
     domainname = domainname.lower()
 
     LOGGER.info('Changing domain name to - %s', domainname)
-    actions.superuser_run('domainname-change', [domainname])
+    privileged.set_domainname(domainname)
 
     # Update domain registered with Name Services module.
     if old_domainname:
