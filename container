@@ -193,7 +193,7 @@ mount -o remount /freedombox
 if [[ "{distribution}" == "stable"  && ! -e $BACKPORTS_SOURCES_LIST ]]
 then
     echo "> In container: Enable backports"
-    /freedombox/actions/upgrades activate-backports
+    /freedombox/actions/actions upgrades activate_backports --no-args
 fi
 
 echo "> In container: Upgrade packages"
@@ -698,7 +698,10 @@ def _setup(image_file, distribution):
         return
 
     logger.info('In container: Disabling automatic updates temporarily')
-    _runc(image_file, ['/usr/share/plinth/actions/upgrades', 'disable-auto'])
+    contents = 'APT::Periodic::Update-Package-Lists "0";\n' \
+        'APT::Periodic::Unattended-Upgrade "0";\n'
+    _runc(image_file, ['tee', '/etc/apt/apt.conf.d/20auto-upgrades'],
+          input=contents.encode())
 
     logger.info('In container: Disabling FreedomBox service')
     _runc(image_file, ['systemctl', 'disable', 'plinth'],

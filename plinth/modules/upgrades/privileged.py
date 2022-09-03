@@ -1,30 +1,26 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configures or runs unattended-upgrades
-"""
+"""Configure or run unattended-upgrades."""
 
-import argparse
-import json
 import logging
 import os
 import pathlib
 import re
 import subprocess
-import sys
 import time
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
                                  is_package_manager_busy, run_apt_command,
                                  service_daemon_reload, service_restart)
+from plinth.actions import privileged
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import is_apt_snapshots_enabled
 from plinth.modules.snapshot import is_supported as snapshot_is_supported
 from plinth.modules.snapshot import load_augeas as snapshot_load_augeas
-from plinth.modules.upgrades import (BACKPORTS_SOURCES_LIST, SOURCES_LIST,
-                                     get_current_release, is_backports_current)
+
+SOURCES_LIST = '/etc/apt/sources.list'
+BACKPORTS_SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
 AUTO_CONF_FILE = '/etc/apt/apt.conf.d/20auto-upgrades'
 LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades.log'
@@ -32,7 +28,8 @@ DPKG_LOG_FILE = '/var/log/unattended-upgrades/unattended-upgrades-dpkg.log'
 RELEASE_FILE_URL = \
     'https://deb.debian.org/debian/dists/{}/Release'
 
-APT_PREFERENCES_FREEDOMBOX = '''Explanation: This file is managed by FreedomBox, do not edit.
+APT_PREFERENCES_FREEDOMBOX = \
+    '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
 Package: src:freedombox
 Pin: release a={}-backports
@@ -42,7 +39,8 @@ Pin-Priority: 500
 # Whenever these preferences needs to change, increment the version number
 # upgrades app. This ensures that setup is run again and the new contents are
 # overwritten on the old file.
-APT_PREFERENCES_APPS = '''Explanation: This file is managed by FreedomBox, do not edit.
+APT_PREFERENCES_APPS = \
+    '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: matrix-synapse shall not be available in Debian stable but
 Explanation: only in backports. Upgrade priority of packages that have needed
 Explanation: versions only in backports.
@@ -104,7 +102,7 @@ Description=Upgrade to new stable Debian release
 
 [Service]
 Type=oneshot
-ExecStart=/usr/share/plinth/actions/upgrades dist-upgrade
+ExecStart=/usr/share/plinth/actions/actions upgrades dist_upgrade --no-args
 KillMode=process
 TimeoutSec=12hr
 '''
@@ -116,46 +114,18 @@ dist_upgrade_flag = pathlib.Path(
     '/var/lib/freedombox/dist-upgrade-in-progress')
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('run', help='Upgrade packages on the system')
-    subparsers.add_parser('check-auto',
-                          help='Check if automatic upgrades are enabled')
-    subparsers.add_parser('enable-auto', help='Enable automatic upgrades')
-    subparsers.add_parser('disable-auto', help='Disable automatic upgrades.')
-    subparsers.add_parser('get-log', help='Print the automatic upgrades log')
-
-    subparsers.add_parser('setup', help='Setup apt preferences')
-
-    activate_backports = subparsers.add_parser(
-        'activate-backports', help='Activate backports if possible')
-    activate_backports.add_argument('--develop', required=False, default=False,
-                                    action='store_true',
-                                    help='Development mode')
-
-    start_dist_upgrade = subparsers.add_parser(
-        'start-dist-upgrade', help='Check and start dist upgrade process')
-    start_dist_upgrade.add_argument(
-        '--test', required=False, default=False, action='store_true',
-        help='Test dist-upgrade from stable to testing')
-    subparsers.add_parser('dist-upgrade', help='Perform dist upgrade')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
 def _release_held_freedombox():
-    """In case freedombox package was left in held state by an interrupted
-    process, release it."""
+    """If freedombox package was left in held state, release it.
+
+    This can happen due to an interrupted process.
+    """
     if apt_hold_flag.exists() and not is_package_manager_busy():
         apt_unhold_freedombox()
 
 
-def _run():
-    """Run unattended-upgrades"""
+@privileged
+def run():
+    """Run unattended-upgrades."""
     subprocess.run(['dpkg', '--configure', '-a'], check=False)
     run_apt_command(['--fix-broken', 'install'])
     _release_held_freedombox()
@@ -164,18 +134,6 @@ def _run():
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL, close_fds=True,
                      start_new_session=True)
-
-
-def subcommand_run(_):
-    """Run unattended-upgrades"""
-    try:
-        _run()
-    except FileNotFoundError:
-        print('Error: systemctl is not available.', file=sys.stderr)
-        sys.exit(2)
-    except Exception as error:
-        print('Error: {0}'.format(error), file=sys.stderr)
-        sys.exit(3)
 
 
 def _check_auto() -> bool:
@@ -193,44 +151,47 @@ def _check_auto() -> bool:
     return bool(update_interval)
 
 
-def subcommand_check_auto(_):
-    """Check if automatic upgrades are enabled"""
-    try:
-        print(_check_auto())
-    except subprocess.CalledProcessError as error:
-        print('Error: {0}'.format(error), file=sys.stderr)
-        sys.exit(1)
+@privileged
+def check_auto() -> bool:
+    """Check if automatic upgrades are enabled."""
+    return _check_auto()
 
 
-def subcommand_enable_auto(_):
-    """Enable automatic upgrades"""
+@privileged
+def enable_auto():
+    """Enable automatic upgrades."""
     with open(AUTO_CONF_FILE, 'w', encoding='utf-8') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "1";\n')
         conffile.write('APT::Periodic::Unattended-Upgrade "1";\n')
 
 
-def subcommand_disable_auto(_):
-    """Disable automatic upgrades"""
+@privileged
+def disable_auto():
+    """Disable automatic upgrades."""
     with open(AUTO_CONF_FILE, 'w', encoding='utf-8') as conffile:
         conffile.write('APT::Periodic::Update-Package-Lists "0";\n')
         conffile.write('APT::Periodic::Unattended-Upgrade "0";\n')
 
 
-def subcommand_get_log(_):
-    """Print the automatic upgrades log."""
+@privileged
+def get_log() -> str:
+    """Return the automatic upgrades log."""
+    log_lines = []
     try:
-        print('==> ' + os.path.basename(LOG_FILE))
+        log_lines.append('==> ' + os.path.basename(LOG_FILE))
         with open(LOG_FILE, 'r', encoding='utf-8') as file_handle:
-            print(file_handle.read())
+            log_lines.append(file_handle.read())
     except IOError:
         pass
 
     try:
-        print('==> ' + os.path.basename(DPKG_LOG_FILE))
+        log_lines.append('==> ' + os.path.basename(DPKG_LOG_FILE))
         with open(DPKG_LOG_FILE, 'r', encoding='utf-8') as file_handle:
-            print(file_handle.read())
+            log_lines.append(file_handle.read())
     except IOError:
         pass
+
+    return '\n'.join(log_lines)
 
 
 def _get_protocol() -> str:
@@ -278,8 +239,10 @@ def _check_and_backports_sources(develop=False):
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
+    from plinth.modules.upgrades import (get_current_release,
+                                         is_backports_current)
     if is_backports_current():
-        print('Repositories list up-to-date. Skipping update.')
+        logging.info('Repositories list up-to-date. Skipping update.')
         return
 
     try:
@@ -290,25 +253,26 @@ def _check_and_backports_sources(develop=False):
                 for line in default_origin.readlines()
             ]
     except FileNotFoundError:
-        print('Could not open /etc/dpkg/origins/default')
+        logging.info('Could not open /etc/dpkg/origins/default')
         return
 
     if not any(matches):
-        print('System is running a derivative of Debian. Skip enabling '
-              'backports.')
+        logging.info('System is running a derivative of Debian. Skip enabling '
+                     'backports.')
         return
 
     release, dist = get_current_release()
     if release == 'unstable' or (release == 'testing' and not develop):
-        print(f'System release is {release}. Skip enabling backports.')
+        logging.info(f'System release is {release}. Skip enabling backports.')
         return
 
     protocol = _get_protocol()
     if protocol == 'tor+http':
-        print('Package download over Tor is enabled.')
+        logging.info('Package download over Tor is enabled.')
 
     if not _is_release_file_available(protocol, dist, backports=True):
-        print(f'Release file for {dist}-backports is not available yet.')
+        logging.info(
+            f'Release file for {dist}-backports is not available yet.')
         return
 
     print(f'{dist}-backports is now available. Adding to sources.')
@@ -328,12 +292,14 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
+    from plinth.modules.upgrades import get_current_release
     _, dist = get_current_release()
     if dist == 'sid':
-        print(f'System distribution is {dist}. Skip setting apt preferences '
-              'for backports.')
+        logging.info(
+            f'System distribution is {dist}. Skip setting apt preferences '
+            'for backports.')
     else:
-        print(f'Setting apt preferences for {dist}-backports.')
+        logging.info(f'Setting apt preferences for {dist}-backports.')
         with open(base_path / '50freedombox4.pref', 'w',
                   encoding='utf-8') as file_handle:
             file_handle.write(APT_PREFERENCES_FREEDOMBOX.format(dist))
@@ -350,17 +316,20 @@ def _is_sufficient_free_space() -> bool:
 
 
 def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
-    """Check for new stable release, if updates are enabled, and if there is
+    """Check if a distribution upgrade be performed.
+
+    Check for new stable release, if updates are enabled, and if there is
     enough free space for the dist upgrade.
 
     If test_upgrade is True, also check for upgrade to testing.
 
-    Returns (boolean, string) indicating if the upgrade is ready, and a reason
+    Return (boolean, string) indicating if the upgrade is ready, and a reason
     if not.
     """
     if dist_upgrade_flag.exists():
         return (True, 'found-previous')
 
+    from plinth.modules.upgrades import get_current_release
     release, dist = get_current_release()
     if release in ['unstable', 'testing']:
         return (False, f'already-{release}')
@@ -429,7 +398,8 @@ def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
 def _take_snapshot_and_disable() -> bool:
     """Take a snapshot if supported and enabled, then disable snapshots.
 
-    Return whether snapshots shall be re-enabled at the end."""
+    Return whether snapshots shall be re-enabled at the end.
+    """
     if snapshot_is_supported():
         print('Taking a snapshot before dist upgrade...', flush=True)
         subprocess.run([
@@ -467,7 +437,8 @@ def _restore_snapshots_config(reenable=False):
 def _disable_searx() -> bool:
     """If searx is enabled, disable it until we can upgrade it properly.
 
-    Return whether searx was originally enabled."""
+    Return whether searx was originally enabled.
+    """
     searx_is_enabled = pathlib.Path(
         '/etc/uwsgi/apps-enabled/searx.ini').exists()
     if searx_is_enabled:
@@ -481,7 +452,9 @@ def _disable_searx() -> bool:
 
 def _update_searx(reenable=False):
     """If searx is installed, update search engines list.
-    Re-enable if previously enabled."""
+
+    Re-enable if previously enabled.
+    """
     if pathlib.Path('/etc/searx/settings.yml').exists():
         print('Updating searx search engines list...', flush=True)
         subprocess.run([
@@ -567,19 +540,20 @@ def _perform_dist_upgrade():
         dist_upgrade_flag.unlink()
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup apt preferences."""
     _add_apt_preferences()
 
 
-def subcommand_activate_backports(arguments):
+@privileged
+def activate_backports(develop: bool = False):
     """Setup software repositories needed for FreedomBox.
 
     Repositories list for now only contains the backports. If the file exists,
     assume that it contains backports.
-
     """
-    _check_and_backports_sources(arguments.develop)
+    _check_and_backports_sources(develop)
 
 
 def _start_dist_upgrade_service():
@@ -595,7 +569,8 @@ def _start_dist_upgrade_service():
                      start_new_session=True)
 
 
-def subcommand_start_dist_upgrade(arguments):
+@privileged
+def start_dist_upgrade(test: bool = False) -> dict[str, Union[str, bool]]:
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process
@@ -603,31 +578,14 @@ def subcommand_start_dist_upgrade(arguments):
     """
     _release_held_freedombox()
 
-    upgrade_ready, reason = _check_dist_upgrade(arguments.test)
+    upgrade_ready, reason = _check_dist_upgrade(test)
     if upgrade_ready:
         _start_dist_upgrade_service()
 
-    print(
-        json.dumps({
-            'dist_upgrade_started': upgrade_ready,
-            'reason': reason,
-        }))
+    return {'dist_upgrade_started': upgrade_ready, 'reason': reason}
 
 
-def subcommand_dist_upgrade(_):
-    """Perform major distribution upgrade.
-    """
+@privileged
+def dist_upgrade():
+    """Perform major distribution upgrade."""
     _perform_dist_upgrade()
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

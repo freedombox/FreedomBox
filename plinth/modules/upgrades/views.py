@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for upgrades.
-"""
+"""FreedomBox app for upgrades."""
+
 import subprocess
 
 from apt.cache import Cache
@@ -13,34 +12,37 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import __version__, actions, package
-from plinth.errors import ActionError
+from plinth import __version__, package
 from plinth.modules import first_boot, upgrades
 from plinth.views import AppView
 
+from . import privileged
 from .forms import BackportsFirstbootForm, ConfigureForm, UpdateFirstbootForm
 
 
 class UpgradesConfigurationView(AppView):
     """Serve configuration page."""
+
     form_class = ConfigureForm
     success_url = reverse_lazy('upgrades:index')
     template_name = "upgrades_configure.html"
     app_id = 'upgrades'
 
     def get_initial(self):
+        """Return the initial values for the form."""
         return {
-            'auto_upgrades_enabled': upgrades.is_enabled(),
+            'auto_upgrades_enabled': privileged.check_auto(),
             'dist_upgrade_enabled': upgrades.is_dist_upgrade_enabled()
         }
 
     def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_backports_requested'] = upgrades.is_backports_requested()
         context['is_busy'] = (_is_updating()
                               or package.is_package_manager_busy())
-        context['log'] = get_log()
+        context['log'] = privileged.get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         context['version'] = __version__
         context['new_version'] = is_newer_version_available()
@@ -58,10 +60,10 @@ class UpgradesConfigurationView(AppView):
 
             try:
                 if new_status['auto_upgrades_enabled']:
-                    upgrades.enable()
+                    privileged.enable_auto()
                 else:
-                    upgrades.disable()
-            except ActionError as exception:
+                    privileged.disable_auto()
+            except Exception as exception:
                 error = exception.args[2]
                 messages.error(
                     self.request,
@@ -89,14 +91,14 @@ class UpgradesConfigurationView(AppView):
 
 
 def is_newer_version_available():
-    """Returns whether a newer Freedombox version is available."""
+    """Return whether a newer Freedombox version is available."""
     cache = Cache()
     freedombox = cache['freedombox']
     return not freedombox.candidate.is_installed
 
 
 def get_os_release():
-    """Returns the Debian release number and name."""
+    """Return the Debian release number and name."""
     output = 'Error: Cannot read PRETTY_NAME in /etc/os-release.'
     with open('/etc/os-release', 'r', encoding='utf-8') as release_file:
         for line in release_file:
@@ -105,11 +107,6 @@ def get_os_release():
                 line = line.split('=')
                 output = line[1]
     return output
-
-
-def get_log():
-    """Return the current log for unattended upgrades."""
-    return actions.superuser_run('upgrades', ['get-log'])
 
 
 def _is_updating():
@@ -124,9 +121,9 @@ def upgrade(request):
     """Serve the upgrade page."""
     if request.method == 'POST':
         try:
-            actions.superuser_run('upgrades', ['run'])
+            privileged.run()
             messages.success(request, _('Upgrade process started.'))
-        except ActionError:
+        except Exception:
             messages.error(request, _('Starting upgrade failed.'))
 
     return redirect(reverse_lazy('upgrades:index'))
@@ -144,6 +141,7 @@ def activate_backports(request):
 
 class BackportsFirstbootView(FormView):
     """View to configure backports during first boot wizard."""
+
     template_name = 'backports-firstboot.html'
     form_class = BackportsFirstbootForm
 
@@ -179,6 +177,7 @@ class BackportsFirstbootView(FormView):
 
 class UpdateFirstbootView(FormView):
     """View to run initial update during first boot wizard."""
+
     template_name = 'update-firstboot.html'
     form_class = UpdateFirstbootForm
 
@@ -197,7 +196,7 @@ class UpdateFirstbootView(FormView):
         """Run update if selected, and mark step as done."""
         self.update = form.cleaned_data['update_now']
         if self.update:
-            actions.superuser_run('upgrades', ['run'])
+            privileged.run()
 
         first_boot.mark_step_done('initial_update')
         return super().form_valid(form)
@@ -205,6 +204,7 @@ class UpdateFirstbootView(FormView):
 
 class UpdateFirstbootProgressView(TemplateView):
     """View to show initial update progress."""
+
     template_name = 'update-firstboot-progress.html'
 
     def get_context_data(self, *args, **kwargs):
