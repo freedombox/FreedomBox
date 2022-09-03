@@ -1,17 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to interface with network-manager.
-"""
+"""FreedomBox app to interface with network-manager."""
 
 import subprocess
 from logging import Logger
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
 from plinth.package import Packages
+
+from . import privileged
 
 first_boot_steps = [
     {
@@ -83,7 +82,7 @@ class NetworksApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('networks')
+        privileged.setup()
         self.enable()
 
 
