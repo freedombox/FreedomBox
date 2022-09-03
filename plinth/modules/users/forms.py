@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Django forms for user management."""
 
 import pwd
 import re
@@ -16,13 +17,11 @@ from django.utils.translation import gettext_lazy
 
 import plinth.forms
 import plinth.modules.ssh.privileged as ssh_privileged
-from plinth import actions
-from plinth.errors import ActionError
 from plinth.modules import first_boot
 from plinth.modules.security import set_restricted_access
 from plinth.utils import is_user_admin
 
-from . import get_last_admin_user
+from . import get_last_admin_user, privileged
 from .components import UsersAndGroups
 
 
@@ -74,11 +73,13 @@ USERNAME_FIELD = forms.CharField(
 
 class PasswordConfirmForm(forms.Form):
     """Password confirmation form."""
+
     confirm_password = forms.CharField(
         widget=forms.PasswordInput,
         label=gettext_lazy('Authorization Password'))
 
     def __init__(self, *args, **kwargs):
+        """Initialize form."""
         super().__init__(*args, **kwargs)
 
         self.fields['confirm_password'].help_text = _(
@@ -103,6 +104,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
     Include options to add user to groups.
     """
+
     username = USERNAME_FIELD
     groups = forms.MultipleChoiceField(
         choices=UsersAndGroups.get_group_choices,
@@ -120,6 +122,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
     class Meta(UserCreationForm.Meta):
         """Metadata to control automatic form building."""
+
         fields = ('username', 'password1', 'password2', 'groups', 'language',
                   'confirm_password')
 
@@ -143,14 +146,11 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
             auth_username = self.request.user.username
             confirm_password = self.cleaned_data['confirm_password']
 
-            process_input = '{0}\n{1}'.format(self.cleaned_data['password1'],
-                                              confirm_password).encode()
             try:
-                actions.superuser_run('users', [
-                    'create-user',
-                    user.get_username(), '--auth-user', auth_username
-                ], input=process_input)
-            except ActionError as error:
+                privileged.create_user(user.get_username(),
+                                       self.cleaned_data['password1'],
+                                       auth_username, confirm_password)
+            except Exception as error:
                 messages.error(
                     self.request,
                     _('Creating LDAP user failed: {error}'.format(
@@ -158,12 +158,10 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
             for group in self.cleaned_data['groups']:
                 try:
-                    actions.superuser_run('users', [
-                        'add-user-to-group',
-                        user.get_username(), group, '--auth-user',
-                        auth_username
-                    ], input=confirm_password.encode())
-                except ActionError as error:
+                    privileged.add_user_to_group(user.get_username(), group,
+                                                 auth_username,
+                                                 confirm_password)
+                except Exception as error:
                     messages.error(
                         self.request,
                         _('Failed to add new user to {group} group: {error}').
@@ -178,6 +176,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
+
     username = USERNAME_FIELD
     ssh_keys = forms.CharField(
         label=gettext_lazy('Authorized SSH Keys'), required=False,
@@ -192,6 +191,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
     class Meta:
         """Metadata to control automatic form building."""
+
         fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active',
                   'confirm_password')
         model = User
@@ -254,18 +254,13 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
             user.save()
             self.save_m2m()
 
-            output = actions.superuser_run('users',
-                                           ['get-user-groups', self.username])
-            old_groups = output.strip().split('\n')
+            old_groups = privileged.get_user_groups(self.username)
             old_groups = [group for group in old_groups if group]
 
             if self.username != user.get_username():
                 try:
-                    actions.superuser_run(
-                        'users',
-                        ['rename-user', self.username,
-                         user.get_username()])
-                except ActionError:
+                    privileged.rename_user(self.username, user.get_username())
+                except Exception:
                     messages.error(self.request,
                                    _('Renaming LDAP user failed.'))
 
@@ -273,24 +268,20 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
             for old_group in old_groups:
                 if old_group not in new_groups:
                     try:
-                        actions.superuser_run('users', [
-                            'remove-user-from-group',
-                            user.get_username(), old_group, '--auth-user',
-                            auth_username
-                        ], input=confirm_password.encode())
-                    except ActionError:
+                        privileged.remove_user_from_group(
+                            user.get_username(), old_group, auth_username,
+                            confirm_password)
+                    except Exception:
                         messages.error(self.request,
                                        _('Failed to remove user from group.'))
 
             for new_group in new_groups:
                 if new_group not in old_groups:
                     try:
-                        actions.superuser_run('users', [
-                            'add-user-to-group',
-                            user.get_username(), new_group, '--auth-user',
-                            auth_username
-                        ], input=confirm_password.encode())
-                    except ActionError:
+                        privileged.add_user_to_group(user.get_username(),
+                                                     new_group, auth_username,
+                                                     confirm_password)
+                    except Exception:
                         messages.error(self.request,
                                        _('Failed to add user to group.'))
 
@@ -308,14 +299,9 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
                 else:
                     status = 'inactive'
                 try:
-                    actions.superuser_run('users', [
-                        'set-user-status',
-                        user.get_username(),
-                        status,
-                        '--auth-user',
-                        auth_username,
-                    ], input=confirm_password.encode())
-                except ActionError:
+                    privileged.set_user_status(user.get_username(), status,
+                                               auth_username, confirm_password)
+                except Exception:
                     messages.error(self.request,
                                    _('Failed to change user status.'))
 
@@ -352,15 +338,11 @@ class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
         user = super().save(commit)
         auth_username = self.request.user.username
         if commit:
-            process_input = '{0}\n{1}'.format(
-                self.cleaned_data['new_password1'],
-                self.cleaned_data['confirm_password']).encode()
             try:
-                actions.superuser_run('users', [
-                    'set-user-password',
-                    user.get_username(), '--auth-user', auth_username
-                ], input=process_input)
-            except ActionError:
+                privileged.set_user_password(
+                    user.get_username(), self.cleaned_data['new_password1'],
+                    auth_username, self.cleaned_data['confirm_password'])
+            except Exception:
                 messages.error(self.request,
                                _('Changing LDAP user password failed.'))
 
@@ -369,6 +351,7 @@ class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
 
 class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     """User module first boot step: create a new admin user."""
+
     username = USERNAME_FIELD
 
     def __init__(self, *args, **kwargs):
@@ -383,23 +366,17 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
             first_boot.mark_step_done('users_firstboot')
 
             try:
-                actions.superuser_run(
-                    'users',
-                    ['create-user',
-                     user.get_username(), '--auth-user', ''],
-                    input=self.cleaned_data['password1'].encode())
-            except ActionError as error:
+                privileged.create_user(user.get_username(),
+                                       self.cleaned_data['password1'])
+            except Exception as error:
                 messages.error(
                     self.request,
                     _('Creating LDAP user failed: {error}'.format(
                         error=error)))
 
             try:
-                actions.superuser_run(
-                    'users',
-                    ['add-user-to-group',
-                     user.get_username(), 'admin'])
-            except ActionError as error:
+                privileged.add_user_to_group(user.get_username(), 'admin')
+            except Exception as error:
                 messages.error(
                     self.request,
                     _('Failed to add new user to admin group: {error}'.format(

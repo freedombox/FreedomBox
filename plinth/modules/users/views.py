@@ -15,13 +15,12 @@ from django.views.generic.edit import (CreateView, DeleteView, FormView,
                                        UpdateView)
 
 import plinth.modules.ssh.privileged as ssh_privileged
-from plinth import actions, translation
-from plinth.errors import ActionError
+from plinth import translation
 from plinth.modules import first_boot
 from plinth.utils import is_user_admin
 from plinth.views import AppView
 
-from . import get_last_admin_user
+from . import get_last_admin_user, privileged
 from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
                     UserUpdateForm)
 
@@ -59,6 +58,7 @@ class UserCreate(ContextMixin, SuccessMessageMixin, CreateView):
 
 class UserList(AppView, ContextMixin, django.views.generic.ListView):
     """View to list users."""
+
     model = User
     template_name = 'users_list.html'
     title = gettext_lazy('Users')
@@ -72,6 +72,7 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
 
 class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
     """View to update a user's details."""
+
     template_name = 'users_update.html'
     model = User
     form_class = UserUpdateForm
@@ -101,7 +102,7 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
             ssh_keys = ssh_privileged.get_keys(self.object.username)
             initial['ssh_keys'] = ssh_keys.strip()
             initial['language'] = self.object.userprofile.language
-        except ActionError:
+        except Exception:
             pass
 
         return initial
@@ -129,6 +130,7 @@ class UserDelete(ContextMixin, DeleteView):
     On GET, display a confirmation page.
     On POST, delete the user.
     """
+
     template_name = 'users_delete.html'
     model = User
     slug_field = 'username'
@@ -136,6 +138,7 @@ class UserDelete(ContextMixin, DeleteView):
     title = gettext_lazy('Delete User')
 
     def __init__(self, *args, **kwargs):
+        """Initialize view, override delete method."""
         super().__init__(*args, **kwargs)
 
         # Avoid a warning with Django 4.0 that delete member should not be
@@ -149,9 +152,8 @@ class UserDelete(ContextMixin, DeleteView):
         messages.success(self.request, message)
 
         try:
-            actions.superuser_run('users',
-                                  ['remove-user', self.kwargs['slug']])
-        except ActionError:
+            privileged.remove_user(self.kwargs['slug'])
+        except Exception:
             messages.error(self.request, _('Deleting LDAP user failed.'))
 
     def _delete(self, *args, **kwargs):
@@ -177,6 +179,7 @@ class UserDelete(ContextMixin, DeleteView):
 
 class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
     """View to change user password."""
+
     template_name = 'users_change_password.html'
     form_class = UserChangePasswordForm
     title = gettext_lazy('Change Password')
@@ -216,8 +219,8 @@ class UserChangePassword(ContextMixin, SuccessMessageMixin, FormView):
 
 class FirstBootView(django.views.generic.CreateView):
     """Create user account and log the user in."""
-    template_name = 'users_firstboot.html'
 
+    template_name = 'users_firstboot.html'
     form_class = FirstBootForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -231,15 +234,11 @@ class FirstBootView(django.views.generic.CreateView):
     def get_context_data(self, *args, **kwargs):
         """Add admin users to context data."""
         context = super().get_context_data(*args, **kwargs)
-
-        output = actions.superuser_run('users', ['get-group-users', 'admin'])
-        admin_users = output.strip().split('\n') if output.strip() else []
-        context['admin_users'] = admin_users
-
+        context['admin_users'] = privileged.get_group_users('admin')
         return context
 
     def get_form_kwargs(self):
-        """Make request available to the form (to insert messages)"""
+        """Make request available to the form (to insert messages)."""
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs

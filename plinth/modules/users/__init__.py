@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage users.
-"""
+"""FreedomBox app to manage users."""
 
 import grp
 import subprocess
@@ -15,6 +13,7 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.package import Packages
 
+from . import privileged
 from .components import UsersAndGroups
 
 first_boot_steps = [
@@ -91,10 +90,10 @@ class UsersApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         if not old_version:
-            actions.superuser_run('users', ['first-setup'])
+            privileged.first_setup()
 
-        actions.superuser_run('users', ['setup'])
-        create_group('freedombox-share')
+        privileged.setup()
+        privileged.create_group('freedombox-share')
 
 
 def _diagnose_ldap_entry(search_item):
@@ -114,21 +113,9 @@ def _diagnose_ldap_entry(search_item):
     return [testname, result]
 
 
-def create_group(group):
-    """Add an LDAP group."""
-    actions.superuser_run('users', options=['create-group', group])
-
-
-def remove_group(group):
-    """Remove an LDAP group."""
-    actions.superuser_run('users', options=['remove-group', group])
-
-
 def get_last_admin_user():
     """If there is only one admin user return its name else return None."""
-    output = actions.superuser_run('users', ['get-group-users', 'admin'])
-    admin_users = output.strip().split('\n')
-
+    admin_users = privileged.get_group_users('admin')
     if len(admin_users) == 1 and admin_users[0]:
         return admin_users[0]
 
@@ -142,7 +129,6 @@ def add_user_to_share_group(username, service=None):
     except KeyError:
         group_members = []
     if username not in group_members:
-        actions.superuser_run(
-            'users', ['add-user-to-group', username, 'freedombox-share'])
+        privileged.add_user_to_group(username, 'freedombox-share')
         if service:
             actions.superuser_run('service', ['try-restart', service])

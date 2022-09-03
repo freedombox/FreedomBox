@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 Test module to exercise user actions.
@@ -6,7 +5,6 @@ Test module to exercise user actions.
 it is recommended to run this module with root privileges in a virtual machine.
 """
 
-import pathlib
 import random
 import re
 import string
@@ -15,8 +13,14 @@ import subprocess
 import pytest
 
 from plinth import action_utils
-from plinth.modules import security
+from plinth.modules.security import privileged as security_privileged
+from plinth.modules.users import privileged
 from plinth.tests import config as test_config
+
+pytestmark = pytest.mark.usefixtures('mock_privileged')
+privileged_modules_to_mock = [
+    'plinth.modules.users.privileged', 'plinth.modules.security.privileged'
+]
 
 _cleanup_users = None
 _cleanup_groups = None
@@ -46,13 +50,6 @@ def _random_string(length=8):
     """Return a random string created from lower case ascii."""
     return ''.join(
         [random.choice(string.ascii_lowercase) for _ in range(length)])
-
-
-def _is_exit_zero(args):
-    """Return whether a command gave exit code zero"""
-    process = subprocess.run(args, stdout=subprocess.DEVNULL,
-                             stderr=subprocess.DEVNULL, check=False)
-    return process.returncode == 0
 
 
 def _get_password_hash(username):
@@ -90,21 +87,14 @@ def _try_login_to_ssh(username, password, returncode=0):
     return process.returncode == returncode
 
 
-def _action_file():
-    """Return the path to the 'users' actions file."""
-    current_directory = pathlib.Path(__file__).parent
-    return str(current_directory / '..' / '..' / '..' / '..' / 'actions' /
-               'users')
-
-
 @pytest.fixture(name='disable_restricted_access', autouse=True)
 def fixture_disable_restricted_access(needs_root, load_cfg):
     """Disable console login restrictions."""
-    restricted_access = security.get_restricted_access_enabled()
+    restricted_access = security_privileged.get_restricted_access_enabled()
     if restricted_access:
-        security.set_restricted_access(False)
+        security_privileged.disable_restricted_access()
         yield
-        security.set_restricted_access(True)
+        security_privileged.enable_restricted_access()
     else:
         yield
 
@@ -135,14 +125,7 @@ def fixture_auto_cleanup_users_groups(needs_root, load_cfg):
             pass
 
     for group in _cleanup_groups:
-        _delete_group(group)
-
-
-def _call_action(arguments, check=True, **kwargs):
-    """Call the action script."""
-    kwargs['stdout'] = kwargs.get('stdout', subprocess.PIPE)
-    kwargs['stderr'] = kwargs.get('stderr', subprocess.PIPE)
-    return subprocess.run([_action_file()] + arguments, check=check, **kwargs)
+        privileged.remove_group(group)
 
 
 def _create_user(username=None, groups=None):
@@ -151,16 +134,13 @@ def _create_user(username=None, groups=None):
     password = username + '_passwd'
     admin_user, admin_password = _get_admin_user_password()
 
-    process_input = "{0}\n{1}".format(password, admin_password).encode()
-    _call_action(['create-user', '--auth-user', admin_user, username],
-                 input=process_input)
+    privileged.create_user(username, password, admin_user, admin_password)
 
     if groups:
         for group in groups:
             admin_user, admin_password = _get_admin_user_password()
-            _call_action([
-                'add-user-to-group', '--auth-user', admin_user, username, group
-            ], input=admin_password.encode())
+            privileged.add_user_to_group(username, group, admin_user,
+                                         admin_password)
             if group != 'admin':
                 _cleanup_groups.add(group)
 
@@ -170,11 +150,11 @@ def _create_user(username=None, groups=None):
 
 def _delete_user(username):
     """Utility to delete an LDAP and Samba user"""
-    process_input = None
-    if _get_group_users('admin') == [username]:
+    admin_password = None
+    if privileged.get_group_users('admin') == [username]:
         _, admin_password = _get_admin_user_password()
-        process_input = admin_password.encode()
-    _call_action(['remove-user', username], input=process_input)
+
+    privileged.remove_user(username, admin_password)
 
 
 def _create_admin_if_does_not_exist():
@@ -186,8 +166,7 @@ def _create_admin_if_does_not_exist():
 
 def _get_admin_user_password():
     """Return an admin username and password."""
-
-    admin_users = _get_group_users('admin')
+    admin_users = privileged.get_group_users('admin')
 
     if not admin_users:
         return ('', '')
@@ -205,34 +184,18 @@ def _rename_user(old_username, new_username=None):
     """Rename a user."""
     new_username = new_username or _random_string()
 
-    _call_action(['rename-user', old_username, new_username])
+    privileged.rename_user(old_username, new_username)
     _cleanup_users.remove(old_username)
     _cleanup_users.add(new_username)
     return new_username
 
 
-def _get_group_users(group):
-    """Return the list of members in a group."""
-    process = _call_action(['get-group-users', group])
-    return process.stdout.decode().split()
-
-
-def _get_user_groups(username):
-    """Return the list of groups for a user."""
-    process = _call_action(['get-user-groups', username])
-    return process.stdout.decode().split()
-
-
 def _create_group(groupname=None):
     groupname = groupname or _random_string()
-    _call_action(['create-group', groupname])
+    privileged.create_group(groupname)
     if groupname != 'admin':
         _cleanup_groups.add(groupname)
     return groupname
-
-
-def _delete_group(groupname):
-    _call_action(['remove-group', groupname])
 
 
 def test_create_user():
@@ -256,9 +219,8 @@ def test_change_user_password():
     old_password_hash = _get_password_hash(username)
     new_password = 'pass $123'
 
-    process_input = "{0}\n{1}".format(new_password, admin_password).encode()
-    _call_action(['set-user-password', username, '--auth-user', admin_user],
-                 input=process_input)
+    privileged.set_user_password(username, new_password, admin_user,
+                                 admin_password)
 
     new_password_hash = _get_password_hash(username)
     assert old_password_hash != new_password_hash
@@ -277,9 +239,8 @@ def test_change_password_as_non_admin_user():
     old_password_hash = _get_password_hash(username)
     new_password = 'pass $123'
 
-    process_input = "{0}\n{1}".format(new_password, old_password).encode()
-    _call_action(['set-user-password', username, '--auth-user', username],
-                 input=process_input)
+    privileged.set_user_password(username, new_password, username,
+                                 old_password)
 
     new_password_hash = _get_password_hash(username)
     assert old_password_hash != new_password_hash
@@ -298,11 +259,9 @@ def test_change_other_users_password_as_non_admin():
     username2, _ = _create_user()
     new_password = 'pass $123'
 
-    process_input = "{0}\n{1}".format(new_password, password1).encode()
     with pytest.raises(subprocess.CalledProcessError):
-        _call_action(
-            ['set-user-password', username2, '--auth-user', username1],
-            input=process_input)
+        privileged.set_user_password(username2, new_password, username1,
+                                     password1)
 
 
 def test_set_password_for_non_existent_user():
@@ -313,11 +272,9 @@ def test_set_password_for_non_existent_user():
     non_existent_user = _random_string()
     fake_password = _random_string()
 
-    process_input = "{0}\n{1}".format(fake_password, admin_password).encode()
     with pytest.raises(subprocess.CalledProcessError):
-        _call_action([
-            'set-user-password', non_existent_user, '--auth-user', admin_user
-        ], input=process_input)
+        privileged.set_user_password(non_existent_user, fake_password,
+                                     admin_user, admin_password)
 
 
 def test_rename_user():
@@ -325,15 +282,15 @@ def test_rename_user():
     _create_admin_if_does_not_exist()
 
     old_username, password = _create_user(groups=['admin', _random_string()])
-    old_groups = _get_user_groups(old_username)
+    old_groups = privileged.get_user_groups(old_username)
 
     new_username = _rename_user(old_username)
     assert _try_login_to_ssh(new_username, password)
     assert _try_login_to_ssh(old_username, password, returncode=5)
     assert old_username not in _get_samba_users()
 
-    new_groups = _get_user_groups(new_username)
-    old_users_groups = _get_user_groups(old_username)
+    new_groups = privileged.get_user_groups(new_username)
+    old_users_groups = privileged.get_user_groups(old_username)
     assert not old_users_groups  # empty
     assert old_groups == new_groups
 
@@ -357,11 +314,12 @@ def test_delete_user():
 
     username, password = _create_user(groups=[_random_string()])
     _delete_user(username)
-    groups_after = _get_user_groups(username)
+    groups_after = privileged.get_user_groups(username)
     assert not groups_after  # User gets removed from all groups
 
     # User account cannot be found after deletion
-    assert not _is_exit_zero(['ldapid', username])
+    with pytest.raises(subprocess.CalledProcessError):
+        subprocess.run(['ldapid', username], check=True)
 
     # Deleted user cannot login to ssh
     assert _try_login_to_ssh(username, password, returncode=5)
@@ -373,7 +331,7 @@ def test_delete_non_existent_user():
     """Deleting a non-existent user should fail."""
     non_existent_user = _random_string()
     with pytest.raises(subprocess.CalledProcessError):
-        _call_action(['delete-user', non_existent_user])
+        privileged.remove_user(non_existent_user)
 
 
 def test_groups():
@@ -381,16 +339,18 @@ def test_groups():
     groupname = _random_string()
 
     _create_group(groupname)
-    assert _is_exit_zero(['ldapgid', groupname])
+    with pytest.raises(subprocess.CalledProcessError):
+        subprocess.run(['ldapgid', groupname], check=True)
 
     # create-group is idempotent
-    assert _is_exit_zero([_action_file(), 'create-group', groupname])
+    privileged.create_group(groupname)
 
-    _delete_group(groupname)
-    assert not _is_exit_zero(['ldapgid', groupname])
+    privileged.remove_group(groupname)
+    with pytest.raises(subprocess.CalledProcessError):
+        subprocess.run(['ldapgid', groupname], check=True)
 
     # delete-group is idempotent
-    assert _is_exit_zero([_action_file(), 'remove-group', groupname])
+    privileged.remove_group(groupname)
 
 
 def test_delete_admin_group_fails():
@@ -398,7 +358,8 @@ def test_delete_admin_group_fails():
     groupname = 'admin'
     _create_group('admin')
 
-    assert not _is_exit_zero([_action_file(), 'remove-group', groupname])
+    with pytest.raises(ValueError):
+        privileged.remove_group(groupname)
 
 
 def test_user_group_interactions():
@@ -408,48 +369,38 @@ def test_user_group_interactions():
 
     group1 = _random_string()
     user1, _ = _create_user(groups=[group1])
-    assert [group1] == _get_user_groups(user1)
+    assert [group1] == privileged.get_user_groups(user1)
 
     # add-user-to-group is not idempotent
     with pytest.raises(subprocess.CalledProcessError):
-        _call_action(
-            ['add-user-to-group', '--auth-user', admin_user, user1, group1],
-            input=admin_password.encode())
+        privileged.add_user_to_group(user1, group1, admin_user, admin_password)
 
     # The same user can be added to other new groups
     group2 = _random_string()
     _create_group(group2)
-    _call_action(
-        ['add-user-to-group', '--auth-user', admin_user, user1, group2],
-        input=admin_password.encode())
+    privileged.add_user_to_group(user1, group2, admin_user, admin_password)
 
     # Adding a user to a non-existent group creates the group
     group3 = _random_string()
-    _call_action(
-        ['add-user-to-group', '--auth-user', admin_user, user1, group3],
-        input=admin_password.encode())
+    privileged.add_user_to_group(user1, group3, admin_user, admin_password)
     _cleanup_groups.add(group3)
 
     # The expected groups got created and the user is part of them.
     expected_groups = [group1, group2, group3]
-    assert expected_groups == _get_user_groups(user1)
+    assert expected_groups == privileged.get_user_groups(user1)
 
     # Remove user from group
     group_to_remove_from = random.choice(expected_groups)
-    _call_action([
-        'remove-user-from-group', '--auth-user', admin_user, user1,
-        group_to_remove_from
-    ], input=admin_password.encode())
+    privileged.remove_user_from_group(user1, group_to_remove_from, admin_user,
+                                      admin_password)
 
     # User is no longer in the group that they're removed from
     expected_groups.remove(group_to_remove_from)
-    assert expected_groups == _get_user_groups(user1)
+    assert expected_groups == privileged.get_user_groups(user1)
 
     # User cannot be removed from a group that they're not part of
     random_group = _random_string()
     _create_group(random_group)
     with pytest.raises(subprocess.CalledProcessError):
-        _call_action([
-            'remove-user-from-group', '--auth-user', admin_user, user1,
-            random_group
-        ], input=admin_password.encode())
+        privileged.remove_user_from_group(user1, random_group, admin_user,
+                                          admin_password)

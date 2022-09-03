@@ -10,6 +10,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
+from plinth.modules.users import privileged as users_privileged
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
@@ -119,9 +120,7 @@ class SyncthingApp(app_module.App):
             old_groupname = 'syncthing'
             new_groupname = 'syncthing-access'
 
-            actions.superuser_run(
-                'users',
-                options=['rename-group', old_groupname, new_groupname])
+            users_privileged.rename_group(old_groupname, new_groupname)
 
             from django.contrib.auth.models import Group
             Group.objects.filter(name=old_groupname).update(name=new_groupname)

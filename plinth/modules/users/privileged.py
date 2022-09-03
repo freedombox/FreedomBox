@@ -1,142 +1,53 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for the LDAP user directory
-"""
+"""Configuration helper for the LDAP user directory."""
 
-import argparse
 import logging
 import os
 import re
 import shutil
 import subprocess
-import sys
+from typing import Optional
 
 import augeas
 
 from plinth import action_utils, utils
+from plinth.actions import privileged
 
 INPUT_LINES = None
 ACCESS_CONF = '/etc/security/access.conf'
 LDAPSCRIPTS_CONF = '/etc/ldapscripts/freedombox-ldapscripts.conf'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('first-setup', help='Perform initial setup of LDAP')
-    subparsers.add_parser('setup', help='Setup LDAP')
-
-    subparser = subparsers.add_parser('create-user',
-                                      help='Create an LDAP user')
-    subparser.add_argument('username', help='Name of the LDAP user to create')
-    subparser.add_argument('--auth-user', required=True)
-
-    subparser = subparsers.add_parser('remove-user',
-                                      help='Delete an LDAP user')
-    subparser.add_argument(
-        'username', help='Name of the LDAP user to delete. If the username is '
-        'the last admin user, a password should be provided through STDIN.')
-
-    subparser = subparsers.add_parser('rename-user',
-                                      help='Rename an LDAP user')
-    subparser.add_argument('oldusername', help='Old name of the LDAP user')
-    subparser.add_argument('newusername', help='New name of the LDAP user')
-
-    subparser = subparsers.add_parser('set-user-password',
-                                      help='Set the password of an LDAP user')
-    subparser.add_argument(
-        'username', help='Name of the LDAP user to set the password for')
-    subparser.add_argument('--auth-user', required=True)
-
-    subparser = subparsers.add_parser('create-group',
-                                      help='Create an LDAP group')
-    subparser.add_argument('groupname',
-                           help='Name of the LDAP group to create')
-
-    subparser = subparsers.add_parser('rename-group',
-                                      help='Rename an LDAP group')
-    subparser.add_argument('old_groupname',
-                           help='Name of the LDAP group to rename')
-    subparser.add_argument('new_groupname', help='Name of the new LDAP group')
-
-    subparser = subparsers.add_parser('remove-group',
-                                      help='Delete an LDAP group')
-    subparser.add_argument('groupname',
-                           help='Name of the LDAP group to delete')
-
-    subparser = subparsers.add_parser(
-        'get-user-groups', help='Get all the LDAP groups for an LDAP user')
-    subparser.add_argument('username',
-                           help='LDAP user to retrieve the groups for')
-
-    subparser = subparsers.add_parser('add-user-to-group',
-                                      help='Add an LDAP user to an LDAP group')
-    subparser.add_argument('username', help='LDAP user to add to group')
-    subparser.add_argument('groupname', help='LDAP group to add the user to')
-    subparser.add_argument('--auth-user', required=False)
-
-    subparser = subparsers.add_parser('set-user-status',
-                                      help='Set user as active or inactive')
-    subparser.add_argument('username', help='User to change status')
-    subparser.add_argument('status', choices=['active', 'inactive'],
-                           help='New status of the user')
-    subparser.add_argument('--auth-user', required=True)
-
-    subparser = subparsers.add_parser(
-        'remove-user-from-group',
-        help='Remove an LDAP user from an LDAP group')
-    subparser.add_argument('username', help='LDAP user to remove from group')
-    subparser.add_argument('groupname',
-                           help='LDAP group to remove the user from')
-    subparser.add_argument('--auth-user', required=False)
-
-    help_get_group_users = 'Get the list of all users in an LDAP group'
-    subparser = subparsers.add_parser('get-group-users',
-                                      help=help_get_group_users)
-    subparser.add_argument(
-        'groupname', help='name of the LDAP group to get the '
-        'list of users')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def validate_user(username, must_be_admin=True):
+def _validate_user(username, password, must_be_admin=True):
     """Validate a user."""
     if must_be_admin:
-        admins = get_admin_users()
+        admins = _get_admin_users()
 
         if not admins:
             # any user is valid
             return
 
         if not username:
-            msg = 'Argument --auth-user is required'
-            raise argparse.ArgumentTypeError(msg)
+            raise PermissionError('Authentication user is required')
 
         if username not in admins:
-            msg = '"{}" is not authorized to perform this action'.format(
-                username)
-            raise argparse.ArgumentTypeError(msg)
+            msg = f'"{username}" is not authorized to perform this action'
+            raise PermissionError(msg)
 
     if not username:
-        msg = 'Argument --auth-user is required'
-        raise argparse.ArgumentTypeError(msg)
+        raise PermissionError('Authentication user is required')
 
-    validate_password(username)
+    _validate_password(username, password)
 
 
-def validate_password(username):
+def _validate_password(username, password):
     """Raise an error if the user password is invalid."""
-    password = read_password(last=True)
     if not utils.is_authenticated_user(username, password):
-        raise argparse.ArgumentTypeError("Invalid credentials")
+        raise PermissionError('Invalid credentials')
 
 
-def subcommand_first_setup(_):
+@privileged
+def first_setup():
     """Perform initial setup of LDAP."""
     # Avoid reconfiguration of slapd during module upgrades, because
     # this will move the existing database.
@@ -147,19 +58,20 @@ def subcommand_first_setup(_):
     action_utils.dpkg_reconfigure('slapd', {'domain': 'thisbox'})
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Setup LDAP."""
     # Update pam configs for access and mkhomedir.
     subprocess.run(['pam-auth-update', '--package'], check=True)
 
-    configure_ldapscripts()
+    _configure_ldapscripts()
 
-    configure_ldap_authentication()
+    _configure_ldap_authentication()
 
-    configure_ldap_structure()
+    _configure_ldap_structure()
 
 
-def configure_ldap_authentication():
+def _configure_ldap_authentication():
     """Configure LDAP authentication."""
     action_utils.dpkg_reconfigure(
         'nslcd', {
@@ -179,18 +91,18 @@ def configure_ldap_authentication():
     action_utils.service_start('nslcd')
 
 
-def configure_ldap_structure():
+def _configure_ldap_structure():
     """Configure LDAP basic structure."""
     was_running = action_utils.service_is_running('slapd')
     if not was_running:
         action_utils.service_start('slapd')
 
-    setup_admin()
-    create_organizational_unit('users')
-    create_organizational_unit('groups')
+    _setup_admin()
+    _create_organizational_unit('users')
+    _create_organizational_unit('groups')
 
 
-def create_organizational_unit(unit):
+def _create_organizational_unit(unit):
     """Create an organizational unit in LDAP."""
     distinguished_name = 'ou={unit},dc=thisbox'.format(unit=unit)
     try:
@@ -210,7 +122,7 @@ ou: {unit}'''.format(unit=unit)
                        check=True)
 
 
-def setup_admin():
+def _setup_admin():
     """Remove LDAP admin password and Allow root to modify the users."""
     process = subprocess.run([
         'ldapsearch', '-Q', '-L', '-L', '-L', '-Y', 'EXTERNAL', '-H',
@@ -243,7 +155,7 @@ olcRootDN: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 ''')
 
 
-def configure_ldapscripts():
+def _configure_ldapscripts():
     """Set the configuration used by ldapscripts for later user management."""
     # modify a copy of the config file
     shutil.copy('/etc/ldapscripts/ldapscripts.conf', LDAPSCRIPTS_CONF)
@@ -266,7 +178,7 @@ def configure_ldapscripts():
     aug.save()
 
 
-def get_samba_users():
+def _get_samba_users():
     """Get users from the Samba user database."""
     # 'pdbedit -L' is better for listing users but is installed only with samba
     stdout = subprocess.check_output(
@@ -274,14 +186,14 @@ def get_samba_users():
     return re.findall(r'USER_(.*)\\0', stdout)
 
 
-def delete_samba_user(username):
+def _delete_samba_user(username):
     """Delete a Samba user."""
-    if username in get_samba_users():
+    if username in _get_samba_users():
         subprocess.check_call(['smbpasswd', '-x', username])
-        disconnect_samba_user(username)
+        _disconnect_samba_user(username)
 
 
-def disconnect_samba_user(username):
+def _disconnect_samba_user(username):
     """Disconnect a Samba user."""
     try:
         subprocess.check_call(['pkill', '-U', username, 'smbd'])
@@ -290,84 +202,63 @@ def disconnect_samba_user(username):
             raise
 
 
-def get_input_lines():
-    """Return list of input lines from stdin."""
-    global INPUT_LINES
-    if INPUT_LINES is None:
-        INPUT_LINES = [line.strip() for line in sys.stdin]
-    return INPUT_LINES
-
-
-def read_password(last=False):
-    """Return the password.
-
-    Set last=True to read password from last line of the input.
-
-    """
-    line = -1 if last else 0
-    return get_input_lines()[line]
-
-
-def subcommand_create_user(arguments):
+@privileged
+def create_user(username: str, password: str, auth_user: Optional[str] = None,
+                auth_password: Optional[str] = None):
     """Create an LDAP user, set password and flush cache."""
-    username = arguments.username
-    auth_user = arguments.auth_user
-
-    validate_user(auth_user)
+    _validate_user(auth_user, auth_password)
 
     _run(['ldapadduser', username, 'users'])
-    password = read_password()
-    set_user_password(username, password)
-    flush_cache()
-    set_samba_user(username, password)
+    _set_user_password(username, password)
+    _flush_cache()
+    _set_samba_user(username, password)
 
 
-def subcommand_remove_user(arguments):
+@privileged
+def remove_user(username: str, password: Optional[str] = None):
     """Remove an LDAP user."""
-    username = arguments.username
-    groups = get_user_groups(username)
+    groups = _get_user_groups(username)
 
     # require authentication if the user is last admin user
-    if get_group_users('admin') == [username]:
-        validate_password(username)
+    if _get_group_users('admin') == [username]:
+        _validate_password(username, password)
 
-    delete_samba_user(username)
+    _delete_samba_user(username)
 
     for group in groups:
-        remove_user_from_group(username, group)
+        _remove_user_from_group(username, group)
 
     _run(['ldapdeleteuser', username])
 
-    flush_cache()
+    _flush_cache()
 
 
-def subcommand_rename_user(arguments):
+@privileged
+def rename_user(old_username: str, new_username: str):
     """Rename an LDAP user."""
-    old_username = arguments.oldusername
-    new_username = arguments.newusername
-    groups = get_user_groups(old_username)
+    groups = _get_user_groups(old_username)
 
-    delete_samba_user(old_username)
+    _delete_samba_user(old_username)
 
     for group in groups:
-        remove_user_from_group(old_username, group)
+        _remove_user_from_group(old_username, group)
 
     _run(['ldaprenameuser', old_username, new_username])
 
     for group in groups:
-        add_user_to_group(new_username, group)
+        _add_user_to_group(new_username, group)
 
-    flush_cache()
+    _flush_cache()
 
 
-def set_user_password(username, password):
+def _set_user_password(username, password):
     """Set a user's password."""
     process = _run(['slappasswd', '-s', password], stdout=subprocess.PIPE)
     password = process.stdout.decode().strip()
     _run(['ldapsetpasswd', username, password])
 
 
-def set_samba_user(username, password):
+def _set_samba_user(username, password):
     """Insert a user to the Samba database.
 
     If a user already exists, update password.
@@ -379,24 +270,21 @@ def set_samba_user(username, password):
         raise RuntimeError('Unable to add Samba user: ', proc.stderr)
 
 
-def subcommand_set_user_password(arguments):
+@privileged
+def set_user_password(username: str, password: str, auth_user: str,
+                      auth_password: str):
     """Set a user's password."""
-    username = arguments.username
-    auth_user = arguments.auth_user
-
     must_be_admin = username != auth_user
-    validate_user(auth_user, must_be_admin=must_be_admin)
+    _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)
 
-    password = read_password()
-    set_user_password(username, password)
-    set_samba_user(username, password)
+    _set_user_password(username, password)
+    _set_samba_user(username, password)
 
 
-def get_admin_users():
-    """Returns list of members in the admin group.
+def _get_admin_users():
+    """Return list of members in the admin group.
 
-    Raises an error if the slapd service is not running.
-
+    Raise an error if the slapd service is not running.
     """
     admin_users = []
 
@@ -420,8 +308,8 @@ def get_admin_users():
     return admin_users
 
 
-def get_group_users(groupname):
-    """Returns list of members in the group."""
+def _get_group_users(groupname):
+    """Return list of members in the group."""
     try:
         process = _run(['ldapgid', '-P', groupname], stdout=subprocess.PIPE)
     except subprocess.CalledProcessError:
@@ -435,10 +323,11 @@ def get_group_users(groupname):
     return users
 
 
-def get_user_groups(username):
-    """Returns only the supplementary groups of the given user.
+def _get_user_groups(username):
+    """Return only the supplementary groups of the given user.
 
-    Exclude the 'users' primary group from the returned list."""
+    Exclude the 'users' primary group from the returned list.
+    """
     process = _run(['ldapid', username], stdout=subprocess.PIPE, check=False)
     output = process.stdout.decode().strip()
     if output:
@@ -460,121 +349,119 @@ def get_user_groups(username):
     return []
 
 
-def subcommand_get_user_groups(arguments):
+@privileged
+def get_user_groups(username: str) -> list[str]:
     """Return list of a given user's groups."""
-    groups = get_user_groups(arguments.username)
-    if groups:
-        print(*groups, sep='\n')
+    return _get_user_groups(username)
 
 
-def group_exists(groupname):
+def _group_exists(groupname):
     """Return whether a group already exits."""
     process = _run(['ldapgid', groupname], check=False)
     return process.returncode == 0
 
 
-def create_group(groupname):
+def _create_group(groupname):
     """Add an LDAP group."""
-    if not group_exists(groupname):
+    if not _group_exists(groupname):
         _run(['ldapaddgroup', groupname])
 
 
-def subcommand_create_group(arguments):
+@privileged
+def create_group(groupname: str):
     """Add an LDAP group."""
-    create_group(arguments.groupname)
-    flush_cache()
+    _create_group(groupname)
+    _flush_cache()
 
 
-def subcommand_rename_group(arguments):
+@privileged
+def rename_group(old_groupname: str, new_groupname: str):
     """Rename an LDAP group.
 
     Skip if the group to rename from doesn't exist.
     """
-    old_groupname = arguments.old_groupname
-    new_groupname = arguments.new_groupname
-
     if old_groupname == 'admin' or new_groupname == 'admin':
-        raise argparse.ArgumentTypeError('Can\'t rename the group "admin"')
+        raise ValueError('Can\'t rename the group "admin"')
 
-    if group_exists(old_groupname):
+    if _group_exists(old_groupname):
         _run(['ldaprenamegroup', old_groupname, new_groupname])
-        flush_cache()
+        _flush_cache()
 
 
-def subcommand_remove_group(arguments):
+@privileged
+def remove_group(groupname: str):
     """Remove an LDAP group."""
-    groupname = arguments.groupname
-
     if groupname == 'admin':
-        raise argparse.ArgumentTypeError("Can't remove the group 'admin'")
+        raise ValueError("Can't remove the group 'admin'")
 
-    if group_exists(groupname):
+    if _group_exists(groupname):
         _run(['ldapdeletegroup', groupname])
-        flush_cache()
+        _flush_cache()
 
 
-def add_user_to_group(username, groupname):
+def _add_user_to_group(username, groupname):
     """Add an LDAP user to an LDAP group."""
-    create_group(groupname)
+    _create_group(groupname)
     _run(['ldapaddusertogroup', username, groupname])
 
 
-def subcommand_add_user_to_group(arguments):
+@privileged
+def add_user_to_group(username: str, groupname: str,
+                      auth_user: Optional[str] = None,
+                      auth_password: Optional[str] = None):
     """Add an LDAP user to an LDAP group."""
-    groupname = arguments.groupname
-
     if groupname == 'admin':
-        validate_user(arguments.auth_user)
+        _validate_user(auth_user, auth_password)
 
-    add_user_to_group(arguments.username, groupname)
-    flush_cache()
+    _add_user_to_group(username, groupname)
+    _flush_cache()
 
 
-def remove_user_from_group(username, groupname):
+def _remove_user_from_group(username, groupname):
     """Remove an LDAP user from an LDAP group."""
     _run(['ldapdeleteuserfromgroup', username, groupname])
 
 
-def subcommand_remove_user_from_group(arguments):
+@privileged
+def remove_user_from_group(username: str, groupname: str, auth_user: str,
+                           auth_password: str):
     """Remove an LDAP user from an LDAP group."""
-    username = arguments.username
-    groupname = arguments.groupname
-
     if groupname == 'admin':
-        validate_user(arguments.auth_user)
+        _validate_user(auth_user, auth_password)
 
-    remove_user_from_group(username, groupname)
-    flush_cache()
+    _remove_user_from_group(username, groupname)
+    _flush_cache()
     if groupname == 'freedombox-share':
-        disconnect_samba_user(username)
+        _disconnect_samba_user(username)
 
 
-def subcommand_get_group_users(arguments):
+@privileged
+def get_group_users(group_name: str) -> list[str]:
     """Get the list of users of an LDAP group."""
-    for user in get_group_users(arguments.groupname):
-        print(user)
+    return _get_group_users(group_name)
 
 
-def subcommand_set_user_status(arguments):
+@privileged
+def set_user_status(username: str, status: str, auth_user: str,
+                    auth_password: str):
     """Set the status of the user."""
-    username = arguments.username
-    status = arguments.status
-    auth_user = arguments.auth_user
+    if status not in ('active', 'inactive'):
+        raise ValueError('Invalid status')
 
-    validate_user(auth_user)
+    _validate_user(auth_user, auth_password)
 
     if status == 'active':
         flag = '-e'
     else:
         flag = '-d'
 
-    if username in get_samba_users():
+    if username in _get_samba_users():
         subprocess.check_call(['smbpasswd', flag, username])
         if status == 'inactive':
-            disconnect_samba_user(username)
+            _disconnect_samba_user(username)
 
 
-def flush_cache():
+def _flush_cache():
     """Flush nscd and apache2 cache."""
     _run(['nscd', '--invalidate=passwd'])
     _run(['nscd', '--invalidate=group'])
@@ -587,17 +474,3 @@ def _run(arguments, check=True, **kwargs):
     kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
     kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
     return subprocess.run(arguments, env=env, check=check, **kwargs)
-
-
-def main():
-    """Parse arguments and perform all duties"""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

@@ -1,15 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Manage application shortcuts on front page.
-"""
+"""Manage application shortcuts on front page."""
 
 import json
 import logging
 import pathlib
 
 from plinth import app, cfg
-
-from . import actions
+from plinth.modules.users import privileged as users_privileged
 
 logger = logging.getLogger(__name__)
 
@@ -116,8 +113,7 @@ class Shortcut(app.FollowerComponent):
             return cls._all_shortcuts
 
         # XXX: Turn this into an API call in users module and cache
-        output = actions.superuser_run('users', ['get-user-groups', username])
-        user_groups = set(output.strip().split('\n'))
+        user_groups = set(users_privileged.get_user_groups(username))
 
         if 'admin' in user_groups:  # Admin has access to all services
             return cls._all_shortcuts

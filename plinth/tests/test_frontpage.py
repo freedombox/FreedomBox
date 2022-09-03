@@ -109,33 +109,33 @@ def test_shortcut_list_web_apps_only(common_shortcuts):
     assert return_list == [cuts[0], cuts[1], cuts[2]]
 
 
-@patch('plinth.actions.superuser_run')
-def test_shortcut_list_with_username(superuser_run, common_shortcuts):
+@patch('plinth.modules.users.privileged.get_user_groups')
+def test_shortcut_list_with_username(get_user_groups, common_shortcuts):
     """Test listing for particular users."""
     cuts = common_shortcuts
 
     return_list = Shortcut.list()
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
 
-    superuser_run.return_value = 'admin'
+    get_user_groups.return_value = ['admin']
     return_list = Shortcut.list(username='admin')
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
 
-    superuser_run.return_value = 'group1'
+    get_user_groups.return_value = ['group1']
     return_list = Shortcut.list(username='user1')
     assert return_list == [cuts[0], cuts[1], cuts[3]]
 
-    superuser_run.return_value = 'group1\ngroup2'
+    get_user_groups.return_value = ['group1', 'group2']
     return_list = Shortcut.list(username='user2')
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
 
     cut = Shortcut('group2-web-app-component-1', 'name5', 'short2', url='url4',
                    login_required=False, allowed_groups=['group3'])
-    superuser_run.return_value = 'group3'
+    get_user_groups.return_value = ['group3']
     return_list = Shortcut.list(username='user3')
     assert return_list == [cuts[0], cuts[3], cut]
 
-    superuser_run.return_value = 'group4'
+    get_user_groups.return_value = ['group4']
     return_list = Shortcut.list(username='user4')
     assert return_list == [cuts[0], cuts[3], cut]
 
