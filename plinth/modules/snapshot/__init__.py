@@ -1,22 +1,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage filesystem snapshots.
-"""
+"""FreedomBox app to manage filesystem snapshots."""
 
-import json
 import pathlib
 
 import augeas
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.modules import storage
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Snapshots allows creating and managing btrfs file system snapshots. '
@@ -71,9 +67,7 @@ class SnapshotApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         if is_supported():
-            actions.superuser_run('snapshot',
-                                  ['setup', '--old-version',
-                                   str(old_version)])
+            privileged.setup(old_version)
             self.enable()
 
 
@@ -82,7 +76,7 @@ class SnapshotBackupRestore(BackupRestore):
 
     def restore_post(self, packet):
         """Run after restore."""
-        actions.superuser_run('snapshot', ['kill-daemon'])
+        privileged.kill_daemon()
 
 
 def is_supported():
@@ -114,9 +108,9 @@ def is_apt_snapshots_enabled(aug):
 
 
 def get_configuration():
+    """Return snapper configuration."""
     aug = load_augeas()
-    output = actions.superuser_run('snapshot', ['get-config'])
-    output = json.loads(output)
+    output = privileged.get_config()
 
     def get_boolean_choice(status):
         return ('yes', 'Enabled') if status else ('no', 'Disabled')

@@ -1,11 +1,6 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for filesystem snapshots.
-"""
+"""Configuration helper for filesystem snapshots."""
 
-import argparse
-import json
 import os
 import signal
 import subprocess
@@ -13,46 +8,15 @@ import subprocess
 import augeas
 import dbus
 
+from plinth.actions import privileged
+
 FSTAB = '/etc/fstab'
 AUG_FSTAB = '/files/etc/fstab'
 DEFAULT_FILE = '/etc/default/snapper'
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparser = subparsers.add_parser('setup', help='Configure snapper')
-    subparser.add_argument(
-        '--old-version', type=int, required=True,
-        help='Earlier version of the app that is already setup.')
-    subparsers.add_parser('list', help='List snapshots')
-    subparsers.add_parser('create', help='Create snapshot')
-    subparsers.add_parser('get-config', help='Configurations of snapshot')
-
-    subparser = subparsers.add_parser('delete',
-                                      help='Delete a snapshot by number')
-    subparser.add_argument('number', help='Number of snapshot to delete')
-
-    subparser = subparsers.add_parser('set-config',
-                                      help='Configure automatic snapshots')
-    subparser.add_argument('config')
-    subparsers.add_parser('kill-daemon',
-                          help='Kill snapperd to reload configuration')
-
-    subparser = subparsers.add_parser('rollback', help='Rollback to snapshot')
-    subparser.add_argument('number', help='Number of snapshot to rollback to')
-
-    subparser = subparsers.add_parser('disable-apt-snapshot',
-                                      help='enable/disable apt snapshots')
-    subparser.add_argument('state')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_setup(arguments):
+@privileged
+def setup(old_version: int):
     """Configure snapper."""
     # Check if root config exists.
     command = ['snapper', 'list-configs']
@@ -65,9 +29,9 @@ def subcommand_setup(arguments):
         subprocess.run(command, check=True)
 
     _add_fstab_entry('/')
-    if arguments.old_version == 0:
+    if old_version == 0:
         _set_default_config()
-    elif arguments.old_version <= 3:
+    elif old_version <= 3:
         _migrate_config_from_version_3()
     else:
         pass  # After version 4 and above don't reset configuration
@@ -170,7 +134,8 @@ def _parse_number(number):
     return number.strip('-+*'), is_default, is_active
 
 
-def subcommand_list(_):
+@privileged
+def list_() -> list[dict[str, str]]:
     """List snapshots."""
     process = subprocess.run(['snapper', 'list'], stdout=subprocess.PIPE,
                              check=True)
@@ -189,7 +154,7 @@ def subcommand_list(_):
             snapshots.append(snapshot)
 
     snapshots.reverse()
-    print(json.dumps(snapshots))
+    return snapshots
 
 
 def _get_default_snapshot():
@@ -208,8 +173,9 @@ def _get_default_snapshot():
     return None
 
 
-def subcommand_disable_apt_snapshot(arguments):
-    """Set flag to Enable/Disable apt software snapshots in config files"""
+@privileged
+def disable_apt_snapshot(state: str):
+    """Set flag to Enable/Disable apt software snapshots in config files."""
     # Initialize Augeas
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
@@ -217,24 +183,28 @@ def subcommand_disable_apt_snapshot(arguments):
     aug.set('/augeas/load/Shellvars/incl[last() + 1]', DEFAULT_FILE)
     aug.load()
 
-    aug.set('/files' + DEFAULT_FILE + '/DISABLE_APT_SNAPSHOT', arguments.state)
+    aug.set('/files' + DEFAULT_FILE + '/DISABLE_APT_SNAPSHOT', state)
     aug.save()
 
 
-def subcommand_create(_):
+@privileged
+def create():
     """Create snapshot."""
     command = ['snapper', 'create', '--description', 'manually created']
     subprocess.run(command, check=True)
 
 
-def subcommand_delete(arguments):
+@privileged
+def delete(number: str):
     """Delete a snapshot by number."""
-    command = ['snapper', 'delete', arguments.number]
+    command = ['snapper', 'delete', number]
     subprocess.run(command, check=True)
 
 
-def subcommand_set_config(arguments):
-    command = ['snapper', 'set-config'] + arguments.config.split()
+@privileged
+def set_config(config: list[str]):
+    """Set snapper configuration."""
+    command = ['snapper', 'set-config'] + config
     subprocess.run(command, check=True)
 
 
@@ -249,12 +219,14 @@ def _get_config():
     return config
 
 
-def subcommand_get_config(_):
-    config = _get_config()
-    print(json.dumps(config))
+@privileged
+def get_config() -> dict[str, str]:
+    """Return snapper configuration."""
+    return _get_config()
 
 
-def subcommand_kill_daemon(_):
+@privileged
+def kill_daemon():
     """Kill the snapper daemon.
 
     This is generally not necessary because we do configuration changes via
@@ -262,7 +234,6 @@ def subcommand_kill_daemon(_):
     need to kill the daemon to reload configuration.
 
     Ideally, we should be able to reload/terminate the service using systemd.
-
     """
     bus = dbus.SystemBus()
 
@@ -277,23 +248,10 @@ def subcommand_kill_daemon(_):
         os.kill(pid, signal.SIGTERM)
 
 
-def subcommand_rollback(arguments):
+@privileged
+def rollback(number: str):
     """Rollback to snapshot."""
     command = [
-        'snapper', 'rollback', '--description', 'created by rollback',
-        arguments.number
+        'snapper', 'rollback', '--description', 'created by rollback', number
     ]
     subprocess.run(command, check=True)
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

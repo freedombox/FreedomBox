@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for snapshot module.
-"""
+"""Views for snapshot module."""
 
-import json
 import urllib.parse
 
 from django.contrib import messages
@@ -14,14 +11,12 @@ from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import actions
 from plinth import app as app_module
-from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
 from plinth.modules import storage
 from plinth.views import AppView
 
-from . import get_configuration
+from . import get_configuration, privileged
 from .forms import SnapshotForm
 
 # i18n for snapshot descriptions
@@ -90,7 +85,7 @@ def manage(request):
 
     if request.method == 'POST':
         if 'create' in request.POST:
-            actions.superuser_run('snapshot', ['create'])
+            privileged.create()
             messages.success(request, _('Created snapshot.'))
         if 'delete_selected' in request.POST:
             to_delete = request.POST.getlist('snapshot_list')
@@ -102,8 +97,7 @@ def manage(request):
                 url = reverse('snapshot:delete-selected')
                 return HttpResponseRedirect(f'{url}?{params}')
 
-    output = actions.superuser_run('snapshot', ['list'])
-    snapshots = json.loads(output)
+    snapshots = privileged.list_()
     has_deletable_snapshots = any([
         snapshot for snapshot in snapshots
         if not snapshot['is_default'] and not snapshot['is_active']
@@ -148,15 +142,14 @@ def update_configuration(request, old_status, new_status):
     if old_status['enable_software_snapshots'] != new_status[
             'enable_software_snapshots']:
         if new_status['enable_software_snapshots'] == 'yes':
-            actions.superuser_run('snapshot', ['disable-apt-snapshot', 'no'])
+            privileged.disable_apt_snapshot('no')
         else:
-            actions.superuser_run('snapshot', ['disable-apt-snapshot', 'yes'])
+            privileged.disable_apt_snapshot('yes')
 
     try:
-        actions.superuser_run('snapshot', ['set-config', " ".join(config)])
-
+        privileged.set_config(list(config))
         messages.success(request, _('Storage snapshots configuration updated'))
-    except ActionError as exception:
+    except Exception as exception:
         messages.error(
             request,
             _('Action error: {0} [{1}] [{2}]').format(exception.args[0],
@@ -174,8 +167,7 @@ def delete_selected(request):
     if not to_delete:
         return redirect(reverse('snapshot:manage'))
 
-    output = actions.superuser_run('snapshot', ['list'])
-    snapshots = json.loads(output)
+    snapshots = privileged.list_()
     snapshots_to_delete = [
         snapshot for snapshot in snapshots if snapshot['number'] in to_delete
         and not snapshot['is_active'] and not snapshot['is_default']
@@ -184,11 +176,10 @@ def delete_selected(request):
     if request.method == 'POST':
         try:
             for snapshot in snapshots_to_delete:
-                actions.superuser_run('snapshot',
-                                      ['delete', snapshot['number']])
+                privileged.delete(snapshot['number'])
 
             messages.success(request, _('Deleted selected snapshots'))
-        except ActionError as exception:
+        except Exception as exception:
             if 'Config is in use.' in exception.args[2]:
                 messages.error(
                     request,
@@ -208,7 +199,7 @@ def delete_selected(request):
 def rollback(request, number):
     """Show confirmation to rollback to a snapshot."""
     if request.method == 'POST':
-        actions.superuser_run('snapshot', ['rollback', number])
+        privileged.rollback(number)
         messages.success(
             request,
             _('Rolled back to snapshot #{number}.').format(number=number))
@@ -217,9 +208,7 @@ def rollback(request, number):
             _('The system must be restarted to complete the rollback.'))
         return redirect(reverse('power:restart'))
 
-    output = actions.superuser_run('snapshot', ['list'])
-    snapshots = json.loads(output)
-
+    snapshots = privileged.list_()
     snapshot = None
     for current_snapshot in snapshots:
         if current_snapshot['number'] == number:

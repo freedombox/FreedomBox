@@ -432,15 +432,18 @@ def _take_snapshot_and_disable() -> bool:
     Return whether snapshots shall be re-enabled at the end."""
     if snapshot_is_supported():
         print('Taking a snapshot before dist upgrade...', flush=True)
-        subprocess.run(['/usr/share/plinth/actions/snapshot', 'create'],
-                       check=True)
+        subprocess.run([
+            '/usr/share/plinth/actions/actions', 'snapshot', 'create',
+            '--no-args'
+        ], check=True)
         aug = snapshot_load_augeas()
         if is_apt_snapshots_enabled(aug):
             print('Disable apt snapshots during dist upgrade...', flush=True)
             subprocess.run([
-                '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot',
-                'yes'
-            ], check=True)
+                '/usr/share/plinth/actions/actions',
+                'snapshot',
+                'disable_apt_snapshot',
+            ], input='{"args": ["yes"], "kwargs": {}}'.encode(), check=True)
             return True
         else:
             print('Apt snapshots already disabled.', flush=True)
@@ -456,8 +459,9 @@ def _restore_snapshots_config(reenable=False):
     if reenable:
         print('Re-enable apt snapshots...', flush=True)
         subprocess.run([
-            '/usr/share/plinth/actions/snapshot', 'disable-apt-snapshot', 'no'
-        ], check=True)
+            '/usr/share/plinth/actions/actions', 'snapshot',
+            'disable_apt_snapshot'
+        ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
 
 
 def _disable_searx() -> bool:
