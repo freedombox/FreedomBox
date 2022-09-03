@@ -701,4 +701,5 @@ class BaseAppTests:
     def test_uninstall(self, session_browser):
         """Test that app can be uninstalled and installed back again."""
         uninstall(session_browser, self.app_name)
+        assert not is_installed(session_browser, self.app_name)
         install(session_browser, self.app_name)
