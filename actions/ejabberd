@@ -12,20 +12,20 @@ import shutil
 import socket
 import subprocess
 import sys
-from distutils.version import LooseVersion as LV
 from pathlib import Path
 
 from ruamel.yaml import YAML, scalarstring
 
 from plinth import action_utils
+from plinth.version import Version
 
 EJABBERD_CONFIG = '/etc/ejabberd/ejabberd.yml'
 EJABBERD_BACKUP = '/var/log/ejabberd/ejabberd.dump'
 EJABBERD_BACKUP_NEW = '/var/log/ejabberd/ejabberd_new.dump'
 EJABBERD_ORIG_CERT = '/etc/ejabberd/ejabberd.pem'
 EJABBERD_MANAGED_COTURN = '/etc/ejabberd/freedombox_managed_coturn'
-IQDISC_DEPRECATED_VERSION = LV('18.03')
-MOD_IRC_DEPRECATED_VERSION = LV('18.06')
+IQDISC_DEPRECATED_VERSION = Version('18.03')
+MOD_IRC_DEPRECATED_VERSION = Version('18.06')
 
 yaml = YAML()
 yaml.allow_duplicate_keys = True
@@ -433,7 +433,7 @@ def _get_version():
     version_info = output.strip().split('\n')[-1].split()
     if version_info:
         version = str(version_info[1])
-        return LV(version)
+        return Version(version)
     return None
 
 
