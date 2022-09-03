@@ -1,25 +1,21 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage storage.
-"""
+"""FreedomBox app to manage storage."""
 
 import base64
 import logging
-import subprocess
 
 import psutil
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu
-from plinth.errors import ActionError, PlinthError
+from plinth.errors import PlinthError
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest, udisks2
+from . import manifest, privileged, udisks2
 
 _description = [
     format_lazy(
@@ -77,19 +73,19 @@ class StorageApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('storage', ['setup'])
+        privileged.setup()
         self.enable()
         disks = get_disks()
         root_device = get_root_device(disks)
         if is_expandable(root_device):
             try:
-                expand_partition(root_device)
-            except ActionError:
+                privileged.expand_partition(root_device)
+            except Exception:
                 pass
 
 
 def get_disks():
-    """Returns list of disks and their free space.
+    """Return list of disks and their free space.
 
     The primary source of information is UDisks' list of block devices.
     Information from df is used for free space available.
@@ -136,8 +132,8 @@ def get_mounts():
 def _get_disks_from_df():
     """Return the list of disks and free space available using 'df'."""
     try:
-        output = actions.superuser_run('storage', ['usage-info'])
-    except subprocess.CalledProcessError as exception:
+        output = privileged.usage_info()
+    except Exception as exception:
         logger.exception('Error getting disk information: %s', exception)
         return []
 
@@ -162,7 +158,7 @@ def _get_disks_from_df():
 
 
 def get_filesystem_type(mount_point='/'):
-    """Returns the type of the filesystem mounted at mountpoint."""
+    """Return the type of the filesystem mounted at mountpoint."""
     for partition in psutil.disk_partitions():
         if partition.mountpoint == mount_point:
             return partition.fstype
@@ -204,18 +200,9 @@ def is_expandable(device):
         return False
 
     try:
-        output = actions.superuser_run('storage',
-                                       ['is-partition-expandable', device],
-                                       log_error=False)
-    except actions.ActionError:
+        return privileged.is_partition_expandable(device, _log_error=False)
+    except Exception:
         return False
-
-    return int(output.strip())
-
-
-def expand_partition(device):
-    """Expand a partition."""
-    actions.superuser_run('storage', ['expand-partition', device])
 
 
 def format_bytes(size):

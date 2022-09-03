@@ -4,13 +4,16 @@ Test module for storage module operations.
 """
 
 import contextlib
-import os
-import pathlib
 import re
 import subprocess
 import tempfile
 
 import pytest
+
+from plinth.modules.storage import privileged
+
+pytestmark = pytest.mark.usefixtures('mock_privileged')
+privileged_modules_to_mock = ['plinth.modules.storage.privileged']
 
 
 class Disk():
@@ -255,8 +258,11 @@ def test_ext4_expansion(partition_table_type):
 def _assert_free_space(disk, partition_number, space=True):
     """Verify that free is available/not available after a partition."""
     device = disk.get_partition_device(partition_number)
-    result = _check_action(['storage', 'is-partition-expandable', device])
-    assert result == space
+    if space:
+        privileged.is_partition_expandable(device)
+    else:
+        with pytest.raises(RuntimeError):
+            privileged.is_partition_expandable(device)
 
 
 def _expand_partition(disk, partition_number, success=True):
@@ -264,32 +270,13 @@ def _expand_partition(disk, partition_number, success=True):
     _assert_aligned(disk, partition_number)
     with disk.mount_partition(partition_number) as mount_point:
         device = disk.get_partition_device(partition_number)
-        result = _check_action([
-            'storage', 'expand-partition', device, '--mount-point', mount_point
-        ])
+        if success:
+            privileged.expand_partition(device, mount_point)
+        else:
+            with pytest.raises(RuntimeError):
+                privileged.expand_partition(device, mount_point)
 
-    assert result == success
     _assert_aligned(disk, partition_number)
-
-
-def _call_action(action_command, check=True, **kwargs):
-    """Call the action script."""
-    test_directory = pathlib.Path(__file__).parent
-    top_directory = (test_directory / '..' / '..' / '..' / '..').resolve()
-    action_command[0] = top_directory / 'actions' / action_command[0]
-    kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
-    kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
-    env = dict(os.environ, PYTHONPATH=str(top_directory))
-    return subprocess.run(action_command, env=env, check=check, **kwargs)
-
-
-def _check_action(action_command):
-    """Return success/failure result of the action command."""
-    try:
-        _call_action(action_command)
-        return True
-    except subprocess.CalledProcessError:
-        return False
 
 
 def _assert_aligned(disk, partition_number):
@@ -319,43 +306,40 @@ def _assert_ext4_file_system_healthy(disk, partition_number):
 def _assert_validate_directory(path, error, check_writable=False,
                                check_creatable=False):
     """Perform directory validation checks."""
-    action_command = ['storage', 'validate-directory', '--path', path]
-    if check_writable:
-        action_command += ['--check-writable']
-    if check_creatable:
-        action_command += ['--check-creatable']
-    proc = _call_action(action_command, stderr=subprocess.PIPE,
-                        stdout=subprocess.PIPE)
-    output = proc.stdout.decode()
-    if 'ValidationError' in output:
-        error_nr = output.strip().split()[1]
-        assert error_nr == error
+    if error:
+        match = None if not error.args else error.args[0]
+        with pytest.raises(error.__class__, match=match):
+            privileged.validate_directory(path, check_creatable,
+                                          check_writable)
     else:
-        assert output == error
+        privileged.validate_directory(path, check_creatable, check_writable)
 
 
 @pytest.mark.usefixtures('needs_not_root')
-@pytest.mark.parametrize('path,error', [('/missing', '1'),
-                                        ('/etc/os-release', '2'),
-                                        ('/root', '3'), ('/', ''),
-                                        ('/etc/..', '')])
+@pytest.mark.parametrize('path,error',
+                         [('/missing', FileNotFoundError()),
+                          ('/etc/os-release', NotADirectoryError()),
+                          ('/root', PermissionError('read')), ('/', None),
+                          ('/etc/..', None)])
 def test_validate_directory(path, error):
     """Test that directory validation returns expected output."""
     _assert_validate_directory(path, error)
 
 
 @pytest.mark.usefixtures('needs_not_root')
-@pytest.mark.parametrize('path,error', [('/', '4'), ('/tmp', '')])
+@pytest.mark.parametrize('path,error', [('/', PermissionError('write')),
+                                        ('/tmp', None)])
 def test_validate_directory_writable(path, error):
     """Test that directory writable validation returns expected output."""
     _assert_validate_directory(path, error, check_writable=True)
 
 
 @pytest.mark.usefixtures('needs_not_root')
-@pytest.mark.parametrize('path,error',
-                         [('/var/lib/plinth_storage_test_not_exists', '4'),
-                          ('/tmp/plint_storage_test_not_exists', ''),
-                          ('/var/../tmp/plint_storage_test_not_exists', '')])
+@pytest.mark.parametrize(
+    'path,error',
+    [('/var/lib/plinth_storage_test_not_exists', PermissionError('write')),
+     ('/tmp/plint_storage_test_not_exists', None),
+     ('/var/../tmp/plint_storage_test_not_exists', None)])
 def test_validate_directory_creatable(path, error):
     """Test that directory creatable validation returns expected output."""
     _assert_validate_directory(path, error, check_creatable=True)

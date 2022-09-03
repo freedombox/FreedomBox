@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for storage module.
-"""
+"""Views for storage module."""
 
-import json
 import logging
 import urllib.parse
 
@@ -14,17 +11,17 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from plinth import actions, views
-from plinth.errors import ActionError
+from plinth import views
 from plinth.modules import storage
 
-from . import get_error_message
+from . import get_error_message, privileged
 
 logger = logging.getLogger(__name__)
 
 
 class StorageAppView(views.AppView):
     """Show storage information."""
+
     app_id = 'storage'
     template_name = 'storage.html'
 
@@ -63,7 +60,7 @@ def expand(request):
 def expand_partition(request, device):
     """Expand the partition."""
     try:
-        storage.expand_partition(device)
+        privileged.expand_partition(device)
     except Exception as exception:
         messages.error(
             request,
@@ -83,8 +80,7 @@ def eject(request, device_path):
     device_path = urllib.parse.unquote(device_path)
 
     try:
-        drive = json.loads(
-            actions.superuser_run('storage', ['eject', device_path]))
+        drive = privileged.eject(device_path)
         if drive:
             messages.success(
                 request,
@@ -93,8 +89,8 @@ def eject(request, device_path):
                        drive_model=drive['model']))
         else:
             messages.success(request, _('Device can be safely unplugged.'))
-    except ActionError as exception:
-        message = get_error_message(exception.args[2])
+    except Exception as exception:
+        message = get_error_message(exception.args[-2].decode())  # stdout
 
         logger.error('Error ejecting device - %s', message)
         messages.error(

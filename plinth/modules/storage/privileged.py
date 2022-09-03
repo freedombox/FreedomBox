@@ -1,85 +1,31 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for disks manager.
-"""
+"""Configure disks manager."""
 
-import argparse
-import json
 import os
 import re
 import stat
 import subprocess
-import sys
 
 from plinth import utils
+from plinth.actions import privileged
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('setup', help='Configure storage after install')
-
-    subparser = subparsers.add_parser(
-        'is-partition-expandable',
-        help='Return whether a given partition can be expanded')
-    subparser.add_argument(
-        'device', help='Partition for which check needs to be performed')
-
-    subparser = subparsers.add_parser(
-        'expand-partition',
-        help='Expand a partition to take adjacent free space')
-    subparser.add_argument('device',
-                           help='Partition which needs to be resized')
-    subparser.add_argument(
-        '--mount-point', default='/',
-        help=('Mount point which the device is mounted. '
-              'Needed for btrfs filesystems'))
-
-    subparser = subparsers.add_parser('mount', help='Mount a filesystem')
-    subparser.add_argument('--block-device',
-                           help='Block device of the filesystem to mount')
-
-    subparser = subparsers.add_parser('eject', help='Eject a storage device')
-    subparser.add_argument('device', help='Path of the device to eject')
-
-    subparsers.add_parser('usage-info',
-                          help='Get information about disk space usage')
-
-    subparser = subparsers.add_parser('validate-directory',
-                                      help='Validate a directory')
-    subparser.add_argument('--path', help='Path of the directory',
-                           required=True)
-    subparser.add_argument('--check-creatable', required=False, default=False,
-                           action='store_true',
-                           help='Check that the directory is creatable')
-    subparser.add_argument('--check-writable', required=False, default=False,
-                           action='store_true',
-                           help='Check that the directory is writable')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_is_partition_expandable(arguments):
+@privileged
+def is_partition_expandable(device: str) -> int:
     """Return a list of partitions that can be expanded."""
-    _, _, free_space = _get_free_space(arguments.device)
-    print(free_space['size'])
+    _, _, free_space = _get_free_space(device)
+    return int(free_space['size'])
 
 
-def subcommand_expand_partition(arguments):
+@privileged
+def expand_partition(device: str, mount_point: str = '/'):
     """Expand a partition to take adjacent free space."""
-    device = arguments.device
-    mount_point = arguments.mount_point
     device, requested_partition, free_space = _get_free_space(device)
 
     if requested_partition['table_type'] == 'msdos' and \
        int(requested_partition['number']) >= 5:
-        print('Expanding logical partitions currently unsupported',
-              file=sys.stderr)
-        sys.exit(4)
+        raise RuntimeError(
+            'Expanding logical partitions currently unsupported')
 
     if requested_partition['table_type'] == 'gpt':
         _move_gpt_second_header(device)
@@ -102,8 +48,7 @@ def _move_gpt_second_header(device):
     try:
         subprocess.run(command, check=True)
     except subprocess.CalledProcessError:
-        print('Error moving GPT second header to the end')
-        sys.exit(6)
+        raise RuntimeError('Error moving GPT second header to the end')
 
 
 def _resize_partition(device, requested_partition, free_space):
@@ -127,8 +72,7 @@ def _resize_partition(device, requested_partition, free_space):
             subprocess.run(fallback_command, check=True,
                            input=input_text.encode())
         except subprocess.CalledProcessError as exception:
-            print('Error expanding partition:', exception, file=sys.stderr)
-            sys.exit(5)
+            raise RuntimeError(f'Error expanding partition: {exception}')
 
 
 def _resize_file_system(device, requested_partition, free_space,
@@ -149,8 +93,7 @@ def _resize_ext4(device, requested_partition, _free_space, _mount_point):
         subprocess.run(command, stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True)
     except subprocess.CalledProcessError as exception:
-        print('Error expanding filesystem:', exception, file=sys.stderr)
-        sys.exit(6)
+        raise RuntimeError(f'Error expanding filesystem: {exception}')
 
 
 def _resize_btrfs(_device, _requested_partition, _free_space, mount_point='/'):
@@ -159,8 +102,7 @@ def _resize_btrfs(_device, _requested_partition, _free_space, mount_point='/'):
         command = ['btrfs', 'filesystem', 'resize', 'max', mount_point]
         subprocess.run(command, stdout=subprocess.DEVNULL, check=True)
     except subprocess.CalledProcessError as exception:
-        print('Error expanding filesystem:', exception, file=sys.stderr)
-        sys.exit(6)
+        raise RuntimeError(f'Error expanding filesystem: {exception}')
 
 
 def _get_free_space(device):
@@ -172,21 +114,18 @@ def _get_free_space(device):
         requested_partition, free_spaces = \
             _get_partitions_and_free_spaces(device, partition_number)
     except Exception as exception:
-        print('Error getting partition details: ', exception, file=sys.stderr)
-        sys.exit(2)
+        raise RuntimeError(f'Error getting partition details: {exception}')
 
     # Don't accept extended partitions for now
     if requested_partition['table_type'] == 'msdos' and \
        int(requested_partition['number']) >= 5:
-        print('Expanding logical partitions currently unsupported',
-              file=sys.stderr)
-        sys.exit(3)
+        raise RuntimeError(
+            'Expanding logical partitions currently unsupported')
 
     # Don't accept anything but btrfs and ext4 filesystems
     if requested_partition['type'] not in ('btrfs', 'ext4'):
-        print('Unsupported file system type: ', requested_partition['type'],
-              file=sys.stderr)
-        sys.exit(4)
+        raise RuntimeError(
+            f'Unsupported file system type: {requested_partition["type"]}')
 
     found_free_space = None
     for free_space in free_spaces:
@@ -199,7 +138,7 @@ def _get_free_space(device):
         found_free_space = free_space
 
     if not found_free_space:
-        sys.exit(5)
+        raise RuntimeError('No free space available')
 
     return device, requested_partition, found_free_space
 
@@ -218,8 +157,7 @@ def _get_root_device_and_partition_number(device):
     if not match:
         match = re.match(r'(.+[a-zA-Z])(\d+)$', device)
         if not match:
-            print('Invalid device, must be a partition', file=sys.stderr)
-            sys.exit(1)
+            raise ValueError('Invalid device, must be a partition')
 
     return match.group(1), match.group(2)
 
@@ -263,7 +201,8 @@ def _interpret_unit(value):
     return int(value)
 
 
-def subcommand_mount(arguments):
+@privileged
+def mount(block_device: str):
     """Mount a disk are root user.
 
     XXX: This is primarily to provide compatibility with older code that used
@@ -276,22 +215,16 @@ def subcommand_mount(arguments):
     UDISKS_FILESYSTEM_SHARED=1 by writing a udev rule.
 
     """
-    process = subprocess.run([
-        'udisksctl', 'mount', '--block-device', arguments.block_device,
+    subprocess.run([
+        'udisksctl', 'mount', '--block-device', block_device,
         '--no-user-interaction'
-    ], check=False)
-    sys.exit(process.returncode)
+    ], check=True)
 
 
-def subcommand_eject(arguments):
+@privileged
+def eject(device_path: str) -> str:
     """Eject a device by its path."""
-    device_path = arguments.device
-    try:
-        drive = eject_drive_of_device(device_path)
-        print(json.dumps(drive))
-    except Exception as exception:
-        print(exception, file=sys.stderr)
-        sys.exit(1)
+    return _eject_drive_of_device(device_path)
 
 
 def _get_options():
@@ -302,7 +235,7 @@ def _get_options():
     return options
 
 
-def eject_drive_of_device(device_path):
+def _eject_drive_of_device(device_path):
     """Eject a device after unmounting all of its partitions.
 
     Return the details (model, vendor) of drives ejected.
@@ -327,10 +260,10 @@ def eject_drive_of_device(device_path):
     block_device = obj.get_block()
     drive_object_path = block_device.props.drive
     if drive_object_path != '/':
-        umount_all_filesystems_of_drive(drive_object_path)
+        _umount_all_filesystems_of_drive(drive_object_path)
     else:
         # Block device has not associated drive
-        umount_filesystem(obj.get_filesystem())
+        _umount_filesystem(obj.get_filesystem())
 
     # Eject the drive
     drive = client.get_drive_for_block(block_device)
@@ -350,13 +283,13 @@ def eject_drive_of_device(device_path):
     return None
 
 
-def umount_filesystem(filesystem):
-    """Unmount a filesystem """
+def _umount_filesystem(filesystem):
+    """Unmount a filesystem."""
     if filesystem and filesystem.props.mount_points:
         filesystem.call_unmount_sync(_get_options())
 
 
-def umount_all_filesystems_of_drive(drive_object_path):
+def _umount_all_filesystems_of_drive(drive_object_path):
     """Unmount all filesystems on block devices of a drive."""
     udisks = utils.import_from_gi('UDisks', '2.0')
     client = udisks.Client.new_sync()
@@ -367,10 +300,11 @@ def umount_all_filesystems_of_drive(drive_object_path):
         if not block_device or block_device.props.drive != drive_object_path:
             continue
 
-        umount_filesystem(obj.get_filesystem())
+        _umount_filesystem(obj.get_filesystem())
 
 
-def subcommand_setup(_):
+@privileged
+def setup():
     """Configure storage."""
     # create udisks2 default mount directory
     mounts_directory = '/media/root'
@@ -384,58 +318,43 @@ def subcommand_setup(_):
     os.chmod(mounts_directory, stats.st_mode | stat.S_IROTH | stat.S_IXOTH)
 
 
-def subcommand_usage_info(_):
+@privileged
+def usage_info() -> str:
     """Get information about disk space usage."""
     command = [
         'df', '--exclude-type=tmpfs', '--exclude-type=devtmpfs',
         '--block-size=1', '--output=source,fstype,size,used,avail,pcent,target'
     ]
-    subprocess.run(command, check=True)
+    return subprocess.check_output(command).decode()
 
 
-def subcommand_validate_directory(arguments):
-    """Validate a directory"""
+@privileged
+def validate_directory(directory: str, check_creatable: bool,
+                       check_writable: bool):
+    """Validate a directory."""
     if os.geteuid() == 0:
         raise RuntimeError('You must not be root to run this command')
 
-    directory = arguments.path
-
     def part_exists(path):
-        """Returns part of the path that exists."""
+        """Return part of the path that exists."""
         if not path or os.path.exists(path):
             return path
         return part_exists(os.path.dirname(path))
 
-    if arguments.check_creatable:
+    if check_creatable:
         directory = part_exists(directory)
         if not directory:
             directory = '.'
     else:
         if not os.path.exists(directory):
-            # doesn't exist
-            print('ValidationError: 1')
-            return
+            raise FileNotFoundError
 
     if not os.path.isdir(directory):
-        # is not a directory
-        print('ValidationError: 2')
-    elif not os.access(directory, os.R_OK):
-        # is not readable
-        print('ValidationError: 3')
-    elif arguments.check_writable or arguments.check_creatable:
+        raise NotADirectoryError
+
+    if not os.access(directory, os.R_OK):
+        raise PermissionError('read')
+
+    if check_writable or check_creatable:
         if not os.access(directory, os.W_OK):
-            # is not writable
-            print('ValidationError: 4')
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
+            raise PermissionError('write')
