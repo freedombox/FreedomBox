@@ -3,7 +3,6 @@
 Test the App components provides by backups app.
 """
 
-import json
 from unittest.mock import call, patch
 
 import pytest
@@ -235,8 +234,8 @@ def test_backup_restore_hooks(backup_restore):
 
 
 @pytest.mark.django_db
-@patch('plinth.actions.superuser_run')
-def test_backup_restore_backup_pre(run, backup_restore):
+@patch('plinth.modules.backups.privileged.dump_settings')
+def test_backup_restore_backup_pre(dump_settings, backup_restore):
     """Test running backup-pre hook."""
     packet = None
     kvstore.set('setting-1', 'value-1')
@@ -244,32 +243,27 @@ def test_backup_restore_backup_pre(run, backup_restore):
 
     component = BackupRestore('test-backup-restore')
     component.backup_pre(packet)
-    run.assert_has_calls([])
+    dump_settings.assert_has_calls([])
 
     backup_restore.backup_pre(packet)
-    input_ = {'setting-1': 'value-1'}
-    run.assert_has_calls([
-        call('backups', ['dump-settings', '--app-id', 'testapp'],
-             input=json.dumps(input_).encode())
-    ])
+    dump_settings.assert_has_calls([call('testapp', {'setting-1': 'value-1'})])
 
 
 @pytest.mark.django_db
-@patch('plinth.actions.superuser_run')
-def test_backup_restore_restore_post(run, backup_restore):
+@patch('plinth.modules.backups.privileged.load_settings')
+def test_backup_restore_restore_post(load_settings, backup_restore):
     """Test running restore-post hook."""
     packet = None
     backup_restore.app_id = 'testapp'
 
     component = BackupRestore('test-backup-restore')
     component.restore_post(packet)
-    run.assert_has_calls([])
+    load_settings.assert_has_calls([])
 
     output = {'setting-1': 'value-1'}
-    run.return_value = json.dumps(output)
+    load_settings.return_value = output
     backup_restore.restore_post(packet)
-    run.assert_has_calls(
-        [call('backups', ['load-settings', '--app-id', 'testapp'])])
+    load_settings.assert_has_calls([call('testapp')])
 
     assert kvstore.get('setting-1') == 'value-1'
     with pytest.raises(Exception):
