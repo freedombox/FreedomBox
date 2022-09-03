@@ -1,24 +1,25 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Configuration helper for Matrix-Synapse server.
-"""
+"""Configure Matrix-Synapse server."""
 
-import argparse
 import json
 import os
 import pathlib
-import sys
+from typing import Optional
 
 import yaml
 
 from plinth import action_utils
-from plinth.modules.matrixsynapse import (LISTENERS_CONF_PATH, ORIG_CONF_PATH,
-                                          REGISTRATION_CONF_PATH,
-                                          STATIC_CONF_PATH)
+from plinth.actions import privileged
 
-TURN_CONF_PATH = '/etc/matrix-synapse/conf.d/freedombox-turn.yaml'
-OVERRIDDEN_TURN_CONF_PATH = '/etc/matrix-synapse/conf.d/turn.yaml'
+CONF_DIR = "/etc/matrix-synapse/conf.d/"
+
+ORIG_CONF_PATH = '/etc/matrix-synapse/homeserver.yaml'
+SERVER_NAME_PATH = CONF_DIR + 'server_name.yaml'
+STATIC_CONF_PATH = CONF_DIR + 'freedombox-static.yaml'
+LISTENERS_CONF_PATH = CONF_DIR + 'freedombox-listeners.yaml'
+REGISTRATION_CONF_PATH = CONF_DIR + 'freedombox-registration.yaml'
+TURN_CONF_PATH = CONF_DIR + 'freedombox-turn.yaml'
+OVERRIDDEN_TURN_CONF_PATH = CONF_DIR + 'turn.yaml'
 
 STATIC_CONFIG = {
     'max_upload_size':
@@ -40,38 +41,8 @@ STATIC_CONFIG = {
 }
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary"""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('post-install', help='Perform post install steps')
-    help_pubreg = 'Enable/Disable/Status public user registration.'
-    pubreg = subparsers.add_parser('public-registration', help=help_pubreg)
-    pubreg.add_argument('command', choices=('enable', 'disable', 'status'),
-                        help=help_pubreg)
-    setup = subparsers.add_parser('setup', help='Set domain name for Matrix')
-    setup.add_argument(
-        '--domain-name',
-        help='The domain name that will be used by Matrix Synapse')
-
-    subparsers.add_parser(
-        'move-old-conf',
-        help='Move old configuration file to backup before reinstall')
-
-    turn = subparsers.add_parser(
-        'configure-turn',
-        help='Configure a TURN server for use with Matrix Synapse')
-    turn.add_argument(
-        '--managed', required=False, default=False, action='store_true',
-        help='Whether configuration is provided by user or auto-managed by '
-        'FreedomBox')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_post_install(_):
+@privileged
+def post_install():
     """Perform post installation configuration."""
     with open(STATIC_CONF_PATH, 'w', encoding='utf-8') as static_conf_file:
         yaml.dump(STATIC_CONFIG, static_conf_file)
@@ -91,15 +62,19 @@ def subcommand_post_install(_):
         yaml.dump({'listeners': listeners}, listeners_conf_file)
 
 
-def subcommand_setup(arguments):
+@privileged
+def setup(domain_name: str):
     """Configure the domain name for matrix-synapse package."""
-    domain_name = arguments.domain_name
     action_utils.dpkg_reconfigure('matrix-synapse',
                                   {'server-name': domain_name})
 
 
-def subcommand_public_registration(argument):
+@privileged
+def public_registration(command: str) -> Optional[bool]:
     """Enable/Disable/Status public user registration."""
+    if command not in ('enable', 'disable', 'status'):
+        raise ValueError('Invalid command')
+
     try:
         with open(REGISTRATION_CONF_PATH, encoding='utf-8') as reg_conf_file:
             config = yaml.load(reg_conf_file)
@@ -112,25 +87,22 @@ def subcommand_public_registration(argument):
                     orig_config.get('enable_registration', False)
             }
 
-    if argument.command == 'status':
-        if config['enable_registration']:
-            print('enabled')
-            return
-        else:
-            print('disabled')
-            return
-    elif argument.command == 'enable':
+    if command == 'status':
+        return bool(config['enable_registration'])
+    elif command == 'enable':
         config['enable_registration'] = True
-    elif argument.command == 'disable':
+    elif command == 'disable':
         config['enable_registration'] = False
 
     with open(REGISTRATION_CONF_PATH, 'w', encoding='utf-8') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
     action_utils.service_try_restart('matrix-synapse')
+    return None
 
 
-def subcommand_move_old_conf(_arguments):
+@privileged
+def move_old_conf():
     """Move old configuration to backup so it can be restored by reinstall."""
     conf_file = pathlib.Path(ORIG_CONF_PATH)
     if conf_file.exists():
@@ -138,8 +110,8 @@ def subcommand_move_old_conf(_arguments):
         conf_file.replace(backup_file)
 
 
-def _set_turn_config(conf_file):
-    turn_server_config = json.loads(''.join(sys.stdin))
+def _set_turn_config(conf_file, conf):
+    turn_server_config = json.loads(conf)
 
     if not turn_server_config['uris']:
         # No valid configuration, remove the configuration file
@@ -161,22 +133,12 @@ def _set_turn_config(conf_file):
         yaml.dump(config, turn_config)
 
 
-def subcommand_configure_turn(arguments):
+@privileged
+def configure_turn(managed: bool, conf: str):
     """Set parameters for the STUN/TURN server to use with Matrix Synapse."""
-    if arguments.managed:
-        _set_turn_config(TURN_CONF_PATH)
+    if managed:
+        _set_turn_config(TURN_CONF_PATH, conf)
     else:
-        _set_turn_config(OVERRIDDEN_TURN_CONF_PATH)
+        _set_turn_config(OVERRIDDEN_TURN_CONF_PATH, conf)
 
     action_utils.service_try_restart('matrix-synapse')
-
-
-def main():
-    arguments = parse_arguments()
-    sub_command = arguments.subcommand.replace('-', '_')
-    sub_command_method = globals()['subcommand_' + sub_command]
-    sub_command_method(arguments)
-
-
-if __name__ == '__main__':
-    main()
