@@ -1,131 +1,97 @@
-#!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Wrapper to handle package installation with apt-get.
-"""
+"""Wrapper to handle package installation with apt-get."""
 
-import argparse
-import json
 import logging
 import os
 import subprocess
-import sys
 from collections import defaultdict
+from typing import Any, Optional
 
 import apt.cache
 import apt_inst
 import apt_pkg
 
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import module_loader
-from plinth.action_utils import (apt_hold_freedombox, is_package_manager_busy,
-                                 run_apt_command)
-from plinth.package import Packages
+from plinth.action_utils import run_apt_command
+from plinth.actions import privileged
 
 logger = logging.getLogger(__name__)
 
 
-def parse_arguments():
-    """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
-
-    subparsers.add_parser('update', help='update the package lists')
-
-    subparser = subparsers.add_parser('install', help='install packages')
-    subparser.add_argument(
-        '--skip-recommends', action='store_true',
-        help='whether to skip installing recommended packages')
-    subparser.add_argument(
-        '--force-configuration', choices=['new', 'old'],
-        help='force old/new configuration files during install')
-    subparser.add_argument(
-        '--reinstall', action='store_true',
-        help='force re-installation of package even if it is current')
-    subparser.add_argument(
-        '--force-missing-configuration', action='store_true',
-        help='force installation of missing configuration files')
-    subparser.add_argument(
-        'app_id', help='ID of app for which package is being installed')
-    subparser.add_argument('packages', nargs='+',
-                           help='list of packages to install')
-
-    subparser = subparsers.add_parser('remove', help='remove the package(s)')
-    subparser.add_argument(
-        'app_id', help='ID of app for which package is being uninstalled')
-    subparser.add_argument('--packages', required=True,
-                           help='List of packages to remove', nargs='+')
-
-    subparsers.add_parser('is-package-manager-busy',
-                          help='Return whether package manager is busy')
-    subparser = subparsers.add_parser(
-        'filter-conffile-packages',
-        help='Filter out packages that do not have pending conffile prompts')
-    subparser.add_argument('--packages', required=True,
-                           help='List of packages to filter', nargs='+')
-
-    subparsers.required = True
-    return parser.parse_args()
-
-
-def subcommand_update(arguments):
+@privileged
+def update():
     """Update apt package lists."""
-    sys.exit(run_apt_command(['update']))
+    returncode = run_apt_command(['update'])
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
 
 
-def subcommand_install(arguments):
+@privileged
+def install(app_id: str, packages: list[str], skip_recommends: bool = False,
+            force_configuration: Optional[str] = None, reinstall: bool = False,
+            force_missing_configuration: bool = False):
     """Install packages using apt-get."""
+    if force_configuration not in ('old', 'new', None):
+        raise ValueError('Invalid value for force_configuration')
+
     try:
-        _assert_managed_packages(arguments.app_id, arguments.packages)
-    except Exception as exception:
-        print('Access check failed:', exception, file=sys.stderr)
-        sys.exit(99)
+        _assert_managed_packages(app_id, packages)
+    except Exception:
+        raise PermissionError(f'Packages are not managed: {packages}')
 
     extra_arguments = []
-    if arguments.skip_recommends:
+    if skip_recommends:
         extra_arguments.append('--no-install-recommends')
 
-    if arguments.force_configuration == 'old':
+    if force_configuration == 'old':
         extra_arguments += [
             '-o', 'Dpkg::Options::=--force-confdef', '-o',
             'Dpkg::Options::=--force-confold'
         ]
-    elif arguments.force_configuration == 'new':
+    elif force_configuration == 'new':
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confnew']
 
-    if arguments.reinstall:
+    if reinstall:
         extra_arguments.append('--reinstall')
 
-    if arguments.force_missing_configuration:
+    if force_missing_configuration:
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
     subprocess.run(['dpkg', '--configure', '-a'], check=False)
-    with apt_hold_freedombox():
+    with action_utils.apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
-        returncode = run_apt_command(['install'] + extra_arguments +
-                                     arguments.packages)
+        returncode = run_apt_command(['install'] + extra_arguments + packages)
 
-    sys.exit(returncode)
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
 
 
-def subcommand_remove(arguments):
+@privileged
+def remove(app_id: str, packages: list[str]):
     """Remove packages using apt-get."""
     try:
-        _assert_managed_packages(arguments.app_id, arguments.packages)
-    except Exception as exception:
-        print('Access check failed:', exception, file=sys.stderr)
-        sys.exit(99)
+        _assert_managed_packages(app_id, packages)
+    except Exception:
+        raise PermissionError(f'Packages are not managed: {packages}')
 
     subprocess.run(['dpkg', '--configure', '-a'], check=False)
-    with apt_hold_freedombox():
+    with action_utils.apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
-        returncode = run_apt_command(['remove'] + arguments.packages)
+        returncode = run_apt_command(['remove'] + packages)
 
-    sys.exit(returncode)
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
 
 
 def _assert_managed_packages(app_id, packages):
     """Check that list of packages are in fact managed by module."""
+    from plinth.package import Packages
+
     module_loader.load_modules()
     app_module.apps_init()
     app = app_module.App.get(app_id)
@@ -137,16 +103,18 @@ def _assert_managed_packages(app_id, packages):
         assert package in managed_packages
 
 
-def subcommand_is_package_manager_busy(_):
+@privileged
+def is_package_manager_busy() -> bool:
     """Check whether package manager is busy.
 
     An exit code of zero indicates that package manager is busy.
     """
-    if not is_package_manager_busy():
-        sys.exit(-1)
+    return action_utils.is_package_manager_busy()
 
 
-def subcommand_filter_conffile_packages(arguments):
+@privileged
+def filter_conffile_packages(
+        packages_list: list[str]) -> dict[str, dict[str, Any]]:
     """Return filtered list of packages which have pending conffile prompts.
 
     When considering which file needs a configuration file prompt, mimic the
@@ -177,7 +145,7 @@ def subcommand_filter_conffile_packages(arguments):
 
     """
     apt_pkg.init()  # Read configuration that will be used later.
-    packages = set(arguments.packages)
+    packages = set(packages_list)
 
     status_hashes, current_versions = _get_conffile_hashes_from_status_file(
         packages)
@@ -205,7 +173,7 @@ def subcommand_filter_conffile_packages(arguments):
         }
         packages_info[package] = package_info
 
-    print(json.dumps(packages_info))
+    return packages_info
 
 
 def _get_modified_conffiles(status_hashes, mismatched_hashes,
@@ -333,7 +301,7 @@ def _download_packages(packages):
     run_result = fetcher.run()
     if run_result != apt_pkg.Acquire.RESULT_CONTINUE:
         logger.error('Downloading packages failed.')
-        sys.exit(1)
+        raise RuntimeError('Downloading packages failed.')
 
     downloaded_files = []
     for item in fetcher.items:
@@ -409,16 +377,3 @@ def _get_conffile_hashes_from_downloaded_file(packages, downloaded_file,
         hashes[conffile] = md5sum
 
     return package_name, hashes, new_version
-
-
-def main():
-    """Parse arguments and perform all duties."""
-    arguments = parse_arguments()
-
-    subcommand = arguments.subcommand.replace('-', '_')
-    subcommand_method = globals()['subcommand_' + subcommand]
-    subcommand_method(arguments)
-
-
-if __name__ == '__main__':
-    main()

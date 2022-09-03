@@ -18,6 +18,7 @@ from plinth.signals import post_setup
 
 from . import operation as operation_module
 from . import package
+from .privileged import packages as packages_privileged
 
 logger = logging.getLogger(__name__)
 
@@ -418,7 +419,7 @@ class ForceUpgrader():
         if _is_shutting_down:
             raise self.PermanentFailure('Service is shutting down')
 
-        if package.is_package_manager_busy():
+        if packages_privileged.is_package_manager_busy():
             raise self.TemporaryFailure('Package manager is busy')
 
         apps = self._get_list_of_apps_to_force_upgrade()

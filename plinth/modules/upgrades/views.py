@@ -12,8 +12,9 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from plinth import __version__, package
+from plinth import __version__
 from plinth.modules import first_boot, upgrades
+from plinth.privileged import packages as packages_privileged
 from plinth.views import AppView
 
 from . import privileged
@@ -41,7 +42,7 @@ class UpgradesConfigurationView(AppView):
         context['can_activate_backports'] = upgrades.can_activate_backports()
         context['is_backports_requested'] = upgrades.is_backports_requested()
         context['is_busy'] = (_is_updating()
-                              or package.is_package_manager_busy())
+                              or packages_privileged.is_package_manager_busy())
         context['log'] = privileged.get_log()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         context['version'] = __version__
@@ -210,7 +211,7 @@ class UpdateFirstbootProgressView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['is_busy'] = (_is_updating()
-                              or package.is_package_manager_busy())
+                              or packages_privileged.is_package_manager_busy())
         context['next_step'] = first_boot.next_step()
         context['refresh_page_sec'] = 3 if context['is_busy'] else None
         return context

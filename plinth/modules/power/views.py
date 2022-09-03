@@ -22,7 +22,8 @@ class PowerAppView(AppView):
     def get_context_data(self, *args, **kwargs):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
-        context['pkg_manager_is_busy'] = package.is_package_manager_busy()
+        is_busy = package.is_package_manager_busy()
+        context['pkg_manager_is_busy'] = is_busy
         return context
 
 
@@ -36,12 +37,13 @@ def restart(request):
 
     app = app_module.App.get('power')
     form = Form(prefix='power')
+    is_busy = package.is_package_manager_busy()
     return TemplateResponse(
         request, 'power_restart.html', {
             'title': app.info.name,
             'form': form,
             'manual_page': app.info.manual_page,
-            'pkg_manager_is_busy': package.is_package_manager_busy()
+            'pkg_manager_is_busy': is_busy
         })
 
 
@@ -55,10 +57,11 @@ def shutdown(request):
 
     app = app_module.App.get('power')
     form = Form(prefix='power')
+    is_busy = package.is_package_manager_busy()
     return TemplateResponse(
         request, 'power_shutdown.html', {
             'title': app.info.name,
             'form': form,
             'manual_page': app.info.manual_page,
-            'pkg_manager_is_busy': package.is_package_manager_busy()
+            'pkg_manager_is_busy': is_busy
         })
