@@ -10,6 +10,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.utils import format_lazy
 
 from . import manifest, privileged
@@ -106,7 +107,7 @@ class WordPressApp(app_module.App):
             self.enable()
         elif old_version < 3:
             # Apply changes to Apache configuration from v2 to v3.
-            actions.superuser_run('service', ['reload', 'apache2'])
+            service_privileged.reload('apache2')
 
 
 class WordPressBackupRestore(BackupRestore):

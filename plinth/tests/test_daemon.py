@@ -4,19 +4,39 @@ Test module for component managing system daemons and other systemd units.
 """
 
 import socket
+import subprocess
 from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth.app import App, FollowerComponent
+from plinth.app import App, FollowerComponent, Info
 from plinth.daemon import (Daemon, RelatedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
+
+privileged_modules_to_mock = ['plinth.privileged.service']
+
+
+class AppTest(App):
+    """Test application that contains a daemon."""
+
+    app_id = 'test-app'
 
 
 @pytest.fixture(name='daemon')
 def fixture_daemon():
     """Create a test daemon object."""
     return Daemon('test-daemon', 'test-unit')
+
+
+@pytest.fixture(name='app_list')
+def fixture_app_list(daemon):
+    """A list of apps on which tests are to be run."""
+    app1 = AppTest()
+    app1.add(Info('test-app', 1))
+    app1.add(daemon)
+    with patch('plinth.app.App.list') as app_list:
+        app_list.return_value = [app1]
+        yield app_list
 
 
 def test_initialization():
@@ -56,25 +76,51 @@ def test_is_enabled(service_is_enabled, daemon):
     service_is_enabled.assert_has_calls([call('test-unit', strict_check=True)])
 
 
-@patch('plinth.actions.superuser_run')
-def test_enable(superuser_run, daemon):
+@patch('subprocess.run')
+@patch('subprocess.call')
+def test_enable(subprocess_call, subprocess_run, app_list, mock_privileged,
+                daemon):
     """Test that enabling the daemon works."""
     daemon.enable()
-    superuser_run.assert_has_calls([call('service', ['enable', 'test-unit'])])
+    subprocess_call.assert_has_calls(
+        [call(['systemctl', 'enable', 'test-unit'])])
+    subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
+                                   stdout=subprocess.DEVNULL, check=False)
 
+    subprocess_call.reset_mock()
     daemon.alias = 'test-unit-2'
     daemon.enable()
-    superuser_run.assert_has_calls([
-        call('service', ['enable', 'test-unit']),
-        call('service', ['enable', 'test-unit-2'])
+    subprocess_call.assert_has_calls([
+        call(['systemctl', 'enable', 'test-unit']),
+        call(['systemctl', 'enable', 'test-unit-2'])
     ])
+    subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
+                                   stdout=subprocess.DEVNULL, check=False)
+    subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit-2'],
+                                   stdout=subprocess.DEVNULL, check=False)
 
 
-@patch('plinth.actions.superuser_run')
-def test_disable(superuser_run, daemon):
+@patch('subprocess.run')
+@patch('subprocess.call')
+def test_disable(subprocess_call, subprocess_run, mock_privileged, daemon):
     """Test that disabling the daemon works."""
     daemon.disable()
-    superuser_run.assert_has_calls([call('service', ['disable', 'test-unit'])])
+    subprocess_call.assert_has_calls(
+        [call(['systemctl', 'disable', 'test-unit'])])
+    subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
+                                   stdout=subprocess.DEVNULL, check=False)
+
+    subprocess_call.reset_mock()
+    daemon.alias = 'test-unit-2'
+    daemon.disable()
+    subprocess_call.assert_has_calls([
+        call(['systemctl', 'disable', 'test-unit']),
+        call(['systemctl', 'disable', 'test-unit-2'])
+    ])
+    subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
+                                   stdout=subprocess.DEVNULL, check=False)
+    subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit-2'],
+                                   stdout=subprocess.DEVNULL, check=False)
 
 
 @patch('plinth.action_utils.service_is_running')

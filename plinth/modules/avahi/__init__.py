@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for service discovery.
-"""
+"""FreedomBox app for service discovery."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
@@ -14,6 +11,7 @@ from plinth.modules.config import get_hostname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed, post_hostname_change
 from plinth.utils import format_lazy
 
@@ -90,7 +88,7 @@ class AvahiApp(app_module.App):
         # Reload avahi-daemon now that first-run does not reboot. After
         # performing FreedomBox Service (Plinth) package installation, new
         # Avahi files will be available and require restart.
-        actions.superuser_run('service', ['reload', 'avahi-daemon'])
+        service_privileged.reload('avahi-daemon')
         self.enable()
 
 

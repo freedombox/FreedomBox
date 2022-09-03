@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import plinth.app
-from plinth import actions, cfg, frontpage, menu
+from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -15,6 +15,7 @@ from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, uninstall
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -189,9 +190,9 @@ class EmailApp(plinth.app.App):
         privileged.setup_spam()
 
         # Restart daemons
-        actions.superuser_run('service', ['try-restart', 'postfix'])
-        actions.superuser_run('service', ['try-restart', 'dovecot'])
-        actions.superuser_run('service', ['try-restart', 'rspamd'])
+        service_privileged.try_restart('postfix')
+        service_privileged.try_restart('dovecot')
+        service_privileged.try_restart('rspamd')
 
         # Expose to public internet
         if old_version == 0:

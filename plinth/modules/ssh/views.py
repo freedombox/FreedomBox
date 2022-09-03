@@ -4,8 +4,8 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth.modules import ssh
+from plinth.privileged import service as service_privileged
 from plinth.views import AppView
 
 from . import privileged
@@ -48,7 +48,7 @@ class SshAppView(AppView):
         if passwd_auth_changed:
             privileged.set_password_authentication(
                 not new_config['password_auth_disabled'])
-            actions.superuser_run('service', ['reload', 'ssh'])
+            service_privileged.reload('ssh')
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

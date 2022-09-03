@@ -7,12 +7,12 @@ from collections import defaultdict
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 
 from . import manifest, privileged
 
@@ -55,7 +55,7 @@ class SecurityApp(app_module.App):
         if not old_version:
             enable_fail2ban()
 
-        actions.superuser_run('service', ['reload', 'fail2ban'])
+        service_privileged.reload('fail2ban')
 
         # Migrate to new config file.
         enabled = privileged.get_restricted_access_enabled()
@@ -66,8 +66,8 @@ class SecurityApp(app_module.App):
 
 def enable_fail2ban():
     """Unmask, enable and run the fail2ban service."""
-    actions.superuser_run('service', ['unmask', 'fail2ban'])
-    actions.superuser_run('service', ['enable', 'fail2ban'])
+    service_privileged.unmask('fail2ban')
+    service_privileged.enable('fail2ban')
 
 
 def set_restricted_access(enabled):

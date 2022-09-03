@@ -13,6 +13,7 @@ from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
                                    uws_url_of_user)
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added
 
 from . import privileged
@@ -82,14 +83,14 @@ class ConfigApp(app_module.App):
 
         # systemd-journald is socket activated, it may not be running and it
         # does not support reload.
-        actions.superuser_run('service', ['try-restart', 'systemd-journald'])
+        service_privileged.try_restart('systemd-journald')
         # rsyslog when enabled, is activated by syslog.socket (shipped by
         # systemd). See:
         # https://www.freedesktop.org/wiki/Software/systemd/syslog/ .
-        actions.superuser_run('service', ['disable', 'rsyslog'])
+        service_privileged.disable('rsyslog')
         # Ensure that rsyslog is not started by something else as it is
         # installed by default on Debian systems.
-        actions.superuser_run('service', ['mask', 'rsyslog'])
+        service_privileged.mask('rsyslog')
 
 
 def get_domainname():

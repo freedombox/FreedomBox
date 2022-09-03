@@ -5,9 +5,10 @@ from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth.modules import security
 from plinth.modules.upgrades import is_backports_requested
+from plinth.privileged import service as service_privileged
 from plinth.views import AppView
 
 from . import privileged
@@ -63,9 +64,9 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['fail2ban_enabled'] != new_status['fail2ban_enabled']:
         if new_status['fail2ban_enabled']:
-            actions.superuser_run('service', ['enable', 'fail2ban'])
+            service_privileged.enable('fail2ban')
         else:
-            actions.superuser_run('service', ['disable', 'fail2ban'])
+            service_privileged.disable('fail2ban')
 
 
 def report(request):

@@ -5,8 +5,9 @@ import logging
 import pathlib
 import threading
 
-from plinth import actions, app
+from plinth import app
 from plinth.modules.names.components import DomainName
+from plinth.privileged import service as service_privileged
 
 from . import privileged
 
@@ -168,7 +169,7 @@ class LetsEncrypt(app.FollowerComponent):
                     self._copy_self_signed_certificates([domain])
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def get_status(self):
         """Return the status of certificates for all interested domains.
@@ -213,7 +214,7 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_letsencrypt_certificates(interested_domains, lineage)
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def on_certificate_renewed(self, domains, lineage):
         """Handle event when a certificate is renewed.
@@ -247,7 +248,7 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_self_signed_certificates(interested_domains)
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def on_certificate_deleted(self, domains, lineage):
         """Handle event when a certificate is deleted.

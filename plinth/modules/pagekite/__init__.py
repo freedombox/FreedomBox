@@ -9,6 +9,7 @@ from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.utils import format_lazy
 
 from . import manifest, utils
@@ -103,5 +104,4 @@ class PagekiteApp(app_module.App):
             self.enable()
 
         if old_version == 1:
-            actions.superuser_run('service',
-                                  ['try-restart', PagekiteApp.DAEMON])
+            service_privileged.try_restart(PagekiteApp.DAEMON)

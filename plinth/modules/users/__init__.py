@@ -7,11 +7,11 @@ import subprocess
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 
 from . import privileged
 from .components import UsersAndGroups
@@ -131,4 +131,4 @@ def add_user_to_share_group(username, service=None):
     if username not in group_members:
         privileged.add_user_to_group(username, 'freedombox-share')
         if service:
-            actions.superuser_run('service', ['try-restart', service])
+            service_privileged.try_restart(service)

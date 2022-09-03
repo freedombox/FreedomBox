@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Component for managing a background daemon or any systemd unit.
-"""
+"""Component for managing a background daemon or any systemd unit."""
 
 import socket
 import subprocess
@@ -11,7 +9,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import action_utils, actions, app
+from plinth import action_utils, app
 
 
 class Daemon(app.LeaderComponent):
@@ -70,15 +68,17 @@ class Daemon(app.LeaderComponent):
 
     def enable(self):
         """Run operations to enable the daemon/unit."""
-        actions.superuser_run('service', ['enable', self.unit])
+        from plinth.privileged import service as service_privileged
+        service_privileged.enable(self.unit)
         if self.alias:
-            actions.superuser_run('service', ['enable', self.alias])
+            service_privileged.enable(self.alias)
 
     def disable(self):
         """Run operations to disable the daemon/unit."""
-        actions.superuser_run('service', ['disable', self.unit])
+        from plinth.privileged import service as service_privileged
+        service_privileged.disable(self.unit)
         if self.alias:
-            actions.superuser_run('service', ['disable', self.alias])
+            service_privileged.disable(self.alias)
 
     def is_running(self):
         """Return whether the daemon/unit is running."""
