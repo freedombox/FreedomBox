@@ -28,11 +28,12 @@ def get_share_mounts():
 
     for mount in storage.get_mounts():
         mount_point = mount['mount_point']
-        if mount_point not in ignore_mounts:
-            basename = os.path.basename(mount_point)
-            mount['name'] = basename or _('FreedomBox OS disk')
-            mount['share_name_prefix'] = basename or 'disk'
-            mounts.append(mount)
+        if mount_point in ignore_mounts or os.path.isfile(mount_point):
+            continue
+        basename = os.path.basename(mount_point)
+        mount['name'] = basename or _('FreedomBox OS disk')
+        mount['share_name_prefix'] = basename or 'disk'
+        mounts.append(mount)
 
     return sorted(mounts, key=lambda k: k['mount_point'])
 
