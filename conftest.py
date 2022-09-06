@@ -168,6 +168,41 @@ def fixture_call_action(request, capsys, actions_module):
     return _call_action
 
 
+@pytest.fixture(name='mock_privileged')
+def fixture_mock_privileged(request):
+    """Mock the privileged decorator to nullify its effects."""
+    try:
+        privileged_modules_to_mock = request.module.privileged_modules_to_mock
+    except AttributeError:
+        raise AttributeError(
+            'mock_privileged fixture requires "privileged_module_to_mock" '
+            'attribute at module level')
+
+    for module_name in privileged_modules_to_mock:
+        module = importlib.import_module(module_name)
+        for name, member in module.__dict__.items():
+            wrapped = getattr(member, '__wrapped__', None)
+            if not callable(member) or not wrapped:
+                continue
+
+            if not getattr(member, '_privileged', False):
+                continue
+
+            setattr(wrapped, '_original_wrapper', member)
+            module.__dict__[name] = wrapped
+
+    yield
+
+    for module_name in privileged_modules_to_mock:
+        module = importlib.import_module(module_name)
+        for name, member in module.__dict__.items():
+            wrapper = getattr(member, '_original_wrapper', None)
+            if not callable(member) or not wrapper:
+                continue
+
+            module.__dict__[name] = wrapper
+
+
 @pytest.fixture(name='splinter_screenshot_dir', scope='session')
 def fixture_splinter_screenshot_dir(request):
     """Set default screenshot directory to ./screenshots.
