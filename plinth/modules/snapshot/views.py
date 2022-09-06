@@ -15,9 +15,11 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.errors import ActionError
 from plinth.modules import snapshot as snapshot_module
 from plinth.modules import storage
+from plinth.views import AppView
 
 from . import get_configuration
 from .forms import SnapshotForm
@@ -43,9 +45,10 @@ subsubmenu = [
 
 def not_supported_view(request):
     """Show that snapshots are not supported on the system."""
+    app = app_module.App.get('snapshot')
     template_data = {
-        'app_info': snapshot_module.app.info,
-        'title': snapshot_module.app.info.name,
+        'app_info': app.info,
+        'title': app.info.name,
         'fs_type': storage.get_filesystem_type(),
         'fs_types_supported': snapshot_module.fs_types_supported,
     }
@@ -53,28 +56,31 @@ def not_supported_view(request):
                             template_data)
 
 
-def index(request):
-    """Show snapshot list."""
-    if not snapshot_module.is_supported():
-        return not_supported_view(request)
+class SnapshotAppView(AppView):
+    """Show snapshot app main page."""
 
-    status = get_configuration()
-    if request.method == 'POST':
-        form = SnapshotForm(request.POST)
-        if 'update' in request.POST and form.is_valid():
-            update_configuration(request, status, form.cleaned_data)
-            status = get_configuration()
-            form = SnapshotForm(initial=status)
-    else:
-        form = SnapshotForm(initial=status)
+    app_id = 'snapshot'
+    template_name = 'snapshot.html'
+    form_class = SnapshotForm
 
-    return TemplateResponse(
-        request, 'snapshot.html', {
-            'app_info': snapshot_module.app.info,
-            'title': snapshot_module.app.info.name,
-            'subsubmenu': subsubmenu,
-            'form': form
-        })
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial.update(get_configuration())
+        return initial
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['subsubmenu'] = subsubmenu
+        return context
+
+    def form_valid(self, form):
+        """Apply the changes submitted in the form."""
+        if 'update' in self.request.POST:
+            update_configuration(self.request, form.initial, form.cleaned_data)
+
+        return super().form_valid(form)
 
 
 def manage(request):
@@ -103,10 +109,11 @@ def manage(request):
         if not snapshot['is_default'] and not snapshot['is_active']
     ])
 
+    app = app_module.App.get('snapshot')
     return TemplateResponse(
         request, 'snapshot_manage.html', {
-            'title': snapshot_module.app.info.name,
-            'app_info': snapshot_module.app.info,
+            'title': app.info.name,
+            'app_info': app.info,
             'snapshots': snapshots,
             'has_deletable_snapshots': has_deletable_snapshots,
             'subsubmenu': subsubmenu,

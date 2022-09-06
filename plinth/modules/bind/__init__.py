@@ -16,7 +16,7 @@ from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import format_lazy
 
 from . import manifest
@@ -58,8 +58,6 @@ listen-on-v6 { any; };
 };
 '''
 
-app = None
-
 
 class BindApp(app_module.App):
     """FreedomBox app for Bind."""
@@ -99,20 +97,18 @@ class BindApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('bind',
+                              ['setup', '--old-version',
+                               str(old_version)])
+        self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call(
-        'post', actions.superuser_run, 'bind',
-        ['setup', '--old-version', str(old_version)])
-    helper.call('post', app.enable)
-
-
-def force_upgrade(helper, _packages):
-    """Force upgrade the managed packages to resolve conffile prompt."""
-    helper.install(['bind9'], force_configuration='old')
-    return True
+    def force_upgrade(self, _packages):
+        """Force upgrade the managed packages to resolve conffile prompt."""
+        install(['bind9'], force_configuration='old')
+        return True
 
 
 def get_config():

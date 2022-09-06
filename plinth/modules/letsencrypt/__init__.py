@@ -42,8 +42,6 @@ LIVE_DIRECTORY = '/etc/letsencrypt/live/'
 CERTIFICATE_CHECK_DELAY = 120
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class LetsEncryptApp(app_module.App):
     """FreedomBox app for Let's Encrypt."""
@@ -51,6 +49,8 @@ class LetsEncryptApp(app_module.App):
     app_id = 'letsencrypt'
 
     _version = 3
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -99,13 +99,12 @@ class LetsEncryptApp(app_module.App):
 
         return results
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    actions.superuser_run(
-        'letsencrypt',
-        ['setup', '--old-version', str(old_version)])
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('letsencrypt',
+                              ['setup', '--old-version',
+                               str(old_version)])
 
 
 def certificate_obtain(domain):

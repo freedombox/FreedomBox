@@ -19,6 +19,8 @@ from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.signals import domain_added
 
+from . import privileged
+
 _description = [
     _('Here you can set some general configuration options '
       'like hostname, domain name, webserver home page etc.')
@@ -32,15 +34,13 @@ FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                         'freedombox.conf')
 ADVANCED_MODE_KEY = 'advanced_mode'
 
-app = None
-
 
 class ConfigApp(app_module.App):
     """FreedomBox app for basic system configuration."""
 
     app_id = 'config'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 
@@ -81,6 +81,25 @@ class ConfigApp(app_module.App):
             domain_added.send_robust(sender='config',
                                      domain_type='domain-type-static',
                                      name=domainname, services='__all__')
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        _migrate_home_page_config()
+
+        if old_version <= 3:
+            privileged.set_logging_mode('volatile')
+
+        # systemd-journald is socket activated, it may not be running and it
+        # does not support reload.
+        actions.superuser_run('service', ['try-restart', 'systemd-journald'])
+        # rsyslog when enabled, is activated by syslog.socket (shipped by
+        # systemd). See:
+        # https://www.freedesktop.org/wiki/Software/systemd/syslog/ .
+        actions.superuser_run('service', ['disable', 'rsyslog'])
+        # Ensure that rsyslog is not started by something else as it is
+        # installed by default on Debian systems.
+        actions.superuser_run('service', ['mask', 'rsyslog'])
 
 
 def get_domainname():
@@ -188,22 +207,6 @@ def set_advanced_mode(advanced_mode):
     """Turn on/off advanced mode."""
     from plinth import kvstore
     kvstore.set(ADVANCED_MODE_KEY, advanced_mode)
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    _migrate_home_page_config()
-
-    # systemd-journald is socket activated, it may not be running and it does
-    # not support reload.
-    actions.superuser_run('service', ['try-restart', 'systemd-journald'])
-    # rsyslog when enabled, is activated by syslog.socket (shipped by systemd).
-    # See: https://www.freedesktop.org/wiki/Software/systemd/syslog/ .
-    actions.superuser_run('service', ['disable', 'rsyslog'])
-    # Ensure that rsyslog is not started by something else as it is installed
-    # by default on Debian systems.
-    actions.superuser_run('service', ['mask', 'rsyslog'])
 
 
 def _migrate_home_page_config():

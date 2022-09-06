@@ -42,8 +42,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class PagekiteApp(app_module.App):
     """FreedomBox app for Pagekite."""
@@ -101,12 +99,12 @@ class PagekiteApp(app_module.App):
         utils.update_names_module(is_enabled=False)
         super().disable()
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if not old_version:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    if not old_version:
-        helper.call('post', app.enable)
-
-    if old_version == 1:
-        actions.superuser_run('service', ['try-restart', PagekiteApp.DAEMON])
+        if old_version == 1:
+            actions.superuser_run('service',
+                                  ['try-restart', PagekiteApp.DAEMON])

@@ -36,8 +36,6 @@ DEFAULT_FILE = '/etc/default/snapper'
 
 fs_types_supported = ['btrfs']
 
-app = None
-
 
 class SnapshotApp(app_module.App):
     """FreedomBox app for snapshots."""
@@ -45,6 +43,8 @@ class SnapshotApp(app_module.App):
     app_id = 'snapshot'
 
     _version = 4
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -67,6 +67,15 @@ class SnapshotApp(app_module.App):
                                                **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if is_supported():
+            actions.superuser_run('snapshot',
+                                  ['setup', '--old-version',
+                                   str(old_version)])
+            self.enable()
+
 
 class SnapshotBackupRestore(BackupRestore):
     """Component to backup/restore snapshot module."""
@@ -84,16 +93,6 @@ def is_supported():
     # 77eb6565d3d8df95a06cd52ce31174d98994939c/snapper/BtrfsUtils.cc#L61
     root_inode_number = pathlib.Path('/').stat().st_ino
     return fs_type in fs_types_supported and root_inode_number == 256
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    if is_supported():
-        helper.call('post', actions.superuser_run, 'snapshot',
-                    ['setup', '--old-version',
-                     str(old_version)])
-        helper.call('post', app.enable)
 
 
 def load_augeas():

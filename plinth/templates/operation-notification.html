@@ -1,0 +1,26 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+{% load static %}
+
+<p>
+  {% if data.state == "waiting" %}
+    <span class="fa fa-clock-o"></span>
+  {% elif data.state == "running" %}
+    <span class="fa fa-refresh fa-spin processing"></span>
+  {% elif data.state == "completed" %}
+  {% endif %}
+
+  {{ message }}
+</p>
+
+{% if data.state == "completed" %}
+  <p>
+    <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
+       role="button" class="btn btn-default">
+      {% trans "Dismiss" %}
+    </a>
+  </p>
+{% endif %}

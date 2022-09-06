@@ -32,8 +32,6 @@ _description = [
           'hostile local network.'), box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class AvahiApp(app_module.App):
     """FreedomBox app for Avahi."""
@@ -86,16 +84,14 @@ class AvahiApp(app_module.App):
 
         post_hostname_change.connect(on_post_hostname_change)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    # Reload avahi-daemon now that first-run does not reboot. After performing
-    # FreedomBox Service (Plinth) package installation, new Avahi files will be
-    # available and require restart.
-    helper.call('post', actions.superuser_run, 'service',
-                ['reload', 'avahi-daemon'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        # Reload avahi-daemon now that first-run does not reboot. After
+        # performing FreedomBox Service (Plinth) package installation, new
+        # Avahi files will be available and require restart.
+        actions.superuser_run('service', ['reload', 'avahi-daemon'])
+        self.enable()
 
 
 def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):

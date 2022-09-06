@@ -177,7 +177,7 @@ sudo chmod --recursive --silent a+w htmlcov
 sudo chmod --silent a+w .coverage
 
 exit 0
-'''
+''' # noqa
 
 SETUP_AND_RUN_TESTS_SCRIPT = '''
 set -x
@@ -257,19 +257,22 @@ systemd_version = None
 
 def parse_arguments():
     """Return parsed command line arguments as dictionary."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     subparsers = parser.add_subparsers(dest='subcommand', help='Sub command')
 
     distributions = list(URLS.keys())
 
     distribution = os.environ.get('DISTRIBUTION')
 
+    formatter_class = argparse.ArgumentDefaultsHelpFormatter
     default_distribution = 'testing'
     if distribution and distribution in distributions:
         default_distribution = distribution
 
     # Up
-    subparser = subparsers.add_parser('up', help='Bring up the container')
+    subparser = subparsers.add_parser('up', help='Bring up the container',
+                                      formatter_class=formatter_class)
     subparser.add_argument(
         '--distribution', choices=distributions, default=default_distribution,
         help='Distribution of the image to download and setup')
@@ -278,20 +281,23 @@ def parse_arguments():
 
     # Print IP address
     subparser = subparsers.add_parser(
-        'ip', help='Print the IP address of the container.')
+        'ip', help='Print the IP address of the container.',
+        formatter_class=formatter_class)
     subparser.add_argument(
         '--distribution', choices=distributions, default=default_distribution,
         help='Distribution of the container to print IP address')
 
     # ssh
-    subparser = subparsers.add_parser('ssh', help='SSH into the container')
+    subparser = subparsers.add_parser('ssh', help='SSH into the container',
+                                      formatter_class=formatter_class)
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the container to SSH into')
 
     # Run tests
     subparser = subparsers.add_parser('run-tests',
-                                      help='Run tests in the container')
+                                      help='Run tests in the container',
+                                      formatter_class=formatter_class)
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the container to run tests')
@@ -300,24 +306,32 @@ def parse_arguments():
         help='Additional arguments to pass to the pytest command')
 
     # Stop
-    subparser = subparsers.add_parser('stop', help='Stop the container')
+    subparser = subparsers.add_parser('stop', help='Stop the container',
+                                      formatter_class=formatter_class)
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the container to stop')
 
     # Destroy
     subparser = subparsers.add_parser('destroy',
-                                      help='Destroy the container image')
+                                      help='Destroy the container image',
+                                      formatter_class=formatter_class)
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the image to delete')
 
     # Update
     subparser = subparsers.add_parser(
-        'update', help='Update the container image to the latest version')
+        'update', help='Update the container image to the latest version',
+        formatter_class=formatter_class)
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the image to update')
+
+    # Display help message when no args are passed
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit()
 
     return parser.parse_args()
 
@@ -917,8 +931,8 @@ def _get_ssh_command(ip_address, distribution):
     return [
         'ssh', '-Y', '-C', '-t', '-i',
         str(public_key), '-o', 'LogLevel=error', '-o',
-        'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null',
-        f'fbx@{ip_address}'
+        'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null', '-o',
+        'IdentitiesOnly=yes', f'fbx@{ip_address}'
     ]
 
 

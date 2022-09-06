@@ -29,8 +29,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 SERVER_INTERFACE = 'wg0'
 
 
@@ -94,8 +92,7 @@ class WireguardApp(app_module.App):
         enabled = super().is_enabled()
         return enabled and kvstore.get_default('wireguard-enabled', False)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()

@@ -6,19 +6,16 @@ FreedomBox app to configure Cockpit.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
-from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
-from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import manifest, utils
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -36,13 +33,7 @@ _description = [
         _('It can be accessed by <a href="{users_url}">any user</a> on '
           '{box_name} belonging to the admin group.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
-    format_lazy(
-        _('Cockpit requires that you access it through a domain name. '
-          'It will not work when accessed using an IP address as part'
-          ' of the URL.')),
 ]
-
-app = None
 
 
 class CockpitApp(app_module.App):
@@ -50,17 +41,16 @@ class CockpitApp(app_module.App):
 
     app_id = 'cockpit'
 
-    _version = 1
-
-    DAEMON = 'cockpit.socket'
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
-                               is_essential=True, name=_('Cockpit'),
-                               icon='fa-wrench', icon_filename='cockpit',
+                               depends=['apache'], is_essential=True,
+                               name=_('Cockpit'), icon='fa-wrench',
+                               icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
                                clients=manifest.clients)
@@ -90,43 +80,16 @@ class CockpitApp(app_module.App):
                               urls=['https://{host}/_cockpit/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-cockpit', self.DAEMON)
+        daemon = Daemon('daemon-cockpit', 'cockpit.socket')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-cockpit',
                                        **manifest.backup)
         self.add(backup_restore)
 
-    @staticmethod
-    def post_init():
-        """Perform post initialization operations."""
-        domain_added.connect(on_domain_added)
-        domain_removed.connect(on_domain_removed)
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    domains = names.components.DomainName.list_names('https')
-    helper.call('post', actions.superuser_run, 'cockpit',
-                ['setup'] + list(domains))
-    helper.call('post', app.enable)
-
-
-def on_domain_added(sender, domain_type, name='', description='',
-                    services=None, **kwargs):
-    """Handle addition of a new domain."""
-    if name and not app.needs_setup():
-        if name not in utils.get_domains():
-            actions.superuser_run('cockpit', ['add-domain', name])
-            actions.superuser_run('service',
-                                  ['try-restart', CockpitApp.DAEMON])
-
-
-def on_domain_removed(sender, domain_type, name='', **kwargs):
-    """Handle removal of a domain."""
-    if name and not app.needs_setup():
-        if name in utils.get_domains():
-            actions.superuser_run('cockpit', ['remove-domain', name])
-            actions.superuser_run('service',
-                                  ['try-restart', CockpitApp.DAEMON])
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        if not old_version:
+            self.enable()

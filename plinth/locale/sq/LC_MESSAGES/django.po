@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-04 21:22-0400\n"
+"POT-Creation-Date: 2022-08-29 21:10-0400\n"
 "PO-Revision-Date: 2022-02-06 23:23+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Burim faqeje"
 
-#: plinth/context_processors.py:23 plinth/views.py:84
+#: plinth/context_processors.py:23 plinth/views.py:83
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -53,10 +53,24 @@ msgid "Cannot connect to {host}:{port}"
 msgstr "S’lidhet dot me {host}:{port}"
 
 #: plinth/forms.py:36
+msgid "Backup app before uninstall"
+msgstr ""
+
+#: plinth/forms.py:37
+msgid "Restoring from the backup will restore app data."
+msgstr ""
+
+#: plinth/forms.py:39
+#, fuzzy
+#| msgid "Repository not found"
+msgid "Repository to backup to"
+msgstr "S’u gjet depo"
+
+#: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
 msgstr "Përzgjidhni një emër përkatësie për t’u përdorur me këtë aplikacion"
 
-#: plinth/forms.py:38
+#: plinth/forms.py:58
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -64,12 +78,12 @@ msgstr ""
 "Kujdes! Aplikacioni mund të mos funksionojë si duhet, nëse emri i "
 "përkatësisë ndryshohet më vonë."
 
-#: plinth/forms.py:52 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:72 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "Përkatësi TLS"
 
-#: plinth/forms.py:54 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:74 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -78,41 +92,27 @@ msgstr ""
 "Përzgjidhni një përkatësi për ta përdorur me TLS. Nëse lista është e "
 "zbrazët, ju lutemi, formësoni të paktën një përkatësi me dëshmi."
 
-#: plinth/forms.py:64
+#: plinth/forms.py:84
 msgid "Language"
 msgstr "Gjuhë"
 
-#: plinth/forms.py:65
+#: plinth/forms.py:85
 msgid "Language to use for presenting this web interface"
 msgstr "Gjuhë për t’u përdorur për të paraqitur këtë ndërfaqe web"
 
-#: plinth/forms.py:72
+#: plinth/forms.py:92
 msgid "Use the language preference set in the browser"
 msgstr "Përdor parapëlqim gjuhe të caktuar te shfletuesi"
 
-#: plinth/middleware.py:38 plinth/templates/setup.html:18
-msgid "Application installed."
-msgstr "Aplikacioni u instalua."
-
-#: plinth/middleware.py:43
-#, python-brace-format
-msgid "Error installing application: {string} {details}"
-msgstr "Gabim në instalimin e aplikacionit: {string} {details}"
-
-#: plinth/middleware.py:47
-#, python-brace-format
-msgid "Error installing application: {error}"
-msgstr "Gabim në instalimin e aplikacionit: {error}"
-
-#: plinth/modules/apache/__init__.py:33
+#: plinth/modules/apache/__init__.py:31
 msgid "Apache HTTP Server"
 msgstr "Shërbyes HTTP Apache"
 
-#: plinth/modules/apache/__init__.py:41
+#: plinth/modules/apache/__init__.py:39
 msgid "Web Server"
 msgstr "Shërbyes"
 
-#: plinth/modules/apache/__init__.py:47
+#: plinth/modules/apache/__init__.py:45
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Ndërfaqe Web e {box_name} (Plinth)"
@@ -144,11 +144,11 @@ msgstr ""
 "në rrjete të brendshëm.  Mund të çaktivizohet, për të përmirësuar sigurinë, "
 "veçanërisht kur bëhet lidhje te një rrjet vendor jomikpritës."
 
-#: plinth/modules/avahi/__init__.py:51
+#: plinth/modules/avahi/__init__.py:49
 msgid "Service Discovery"
 msgstr "Zbulim Shërbimesh"
 
-#: plinth/modules/avahi/__init__.py:64
+#: plinth/modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Përkatësi Rrjeti Vendor"
 
@@ -156,12 +156,12 @@ msgstr "Përkatësi Rrjeti Vendor"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Kopjeruajtjet lejojnë krijim dhe administrim arkivash kopjeruajtjeje."
 
-#: plinth/modules/backups/__init__.py:50 plinth/modules/backups/__init__.py:202
-#: plinth/modules/backups/__init__.py:247
+#: plinth/modules/backups/__init__.py:48 plinth/modules/backups/__init__.py:199
+#: plinth/modules/backups/__init__.py:244
 msgid "Backups"
 msgstr "Kopjeruajtje"
 
-#: plinth/modules/backups/__init__.py:199
+#: plinth/modules/backups/__init__.py:196
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -170,18 +170,18 @@ msgstr ""
 "Parapëlqeni një vendndodhje të largët kopjeruajtjesh të fshehtëzuara ose një "
 "disk ekstra bashkëngjitur."
 
-#: plinth/modules/backups/__init__.py:205
+#: plinth/modules/backups/__init__.py:202
 msgid "Enable a Backup Schedule"
 msgstr "Aktivizoni një Plan Kopjeruajtjesh"
 
-#: plinth/modules/backups/__init__.py:209
-#: plinth/modules/backups/__init__.py:256
-#: plinth/modules/storage/__init__.py:329
+#: plinth/modules/backups/__init__.py:206
+#: plinth/modules/backups/__init__.py:253
+#: plinth/modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Kalo te {app_name}"
 
-#: plinth/modules/backups/__init__.py:244
+#: plinth/modules/backups/__init__.py:241
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -190,7 +190,7 @@ msgstr ""
 "Dështoi një kopjeruajtje e planifikuar. {error_count} përpjekjet e mëparshme "
 "nuk patën sukses. Gabimi i fundit qe: {error_message}"
 
-#: plinth/modules/backups/__init__.py:252
+#: plinth/modules/backups/__init__.py:249
 msgid "Error During Backup"
 msgstr "Gabim Gjatë Kopjeruajtjes"
 
@@ -276,7 +276,7 @@ msgstr "Depo"
 #: plinth/modules/ikiwiki/forms.py:15
 #: plinth/modules/networks/templates/connection_show.html:71
 #: plinth/modules/samba/templates/samba.html:66
-#: plinth/modules/sharing/templates/sharing.html:33
+#: plinth/modules/sharing/templates/sharing.html:32
 msgid "Name"
 msgstr "Emër"
 
@@ -443,7 +443,7 @@ msgid "{box_name} storage"
 msgstr "Depozitë {box_name}"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:111
+#: plinth/modules/backups/views.py:113
 msgid "Create a new backup"
 msgstr "Krijoni një kopjeruajtje të re"
 
@@ -495,7 +495,7 @@ msgid "Create Location"
 msgstr "Krijoni Vendndodhje"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
-#: plinth/modules/gitweb/views.py:50
+#: plinth/modules/gitweb/views.py:52
 msgid "Create Repository"
 msgstr "Krijoni Depo"
 
@@ -553,7 +553,7 @@ msgstr "Shkarkim"
 
 #: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:206
+#: plinth/modules/backups/views.py:208
 msgid "Restore"
 msgstr "Riktheje"
 
@@ -655,99 +655,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Verifikoni Strehë"
 
-#: plinth/modules/backups/views.py:55
+#: plinth/modules/backups/views.py:57
 msgid "Backup schedule updated."
 msgstr "Orari i kopjeruajtjeve u përditësua."
 
-#: plinth/modules/backups/views.py:74
+#: plinth/modules/backups/views.py:76
 msgid "Schedule Backups"
 msgstr "Planifikoni Kopjeruajtje"
 
-#: plinth/modules/backups/views.py:106
+#: plinth/modules/backups/views.py:108
 msgid "Archive created."
 msgstr "Arkivi u krijua."
 
-#: plinth/modules/backups/views.py:134
+#: plinth/modules/backups/views.py:136
 msgid "Delete Archive"
 msgstr "Fshini Arkiv"
 
-#: plinth/modules/backups/views.py:146
+#: plinth/modules/backups/views.py:148
 msgid "Archive deleted."
 msgstr "Arkivi u fshi."
 
-#: plinth/modules/backups/views.py:159
+#: plinth/modules/backups/views.py:161
 msgid "Upload and restore a backup"
 msgstr "Ngarkoni dhe riktheni një kopjeruajtje"
 
-#: plinth/modules/backups/views.py:194
+#: plinth/modules/backups/views.py:196
 msgid "Restored files from backup."
 msgstr "U rikthyen kartela prej kopjeruajtjeje."
 
-#: plinth/modules/backups/views.py:222
+#: plinth/modules/backups/views.py:224
 msgid "No backup file found."
 msgstr "S’u gjet kartelë kopjeruajtje."
 
-#: plinth/modules/backups/views.py:230
+#: plinth/modules/backups/views.py:232
 msgid "Restore from uploaded file"
 msgstr "Riktheni prej kartele të ngarkuar"
 
-#: plinth/modules/backups/views.py:289
+#: plinth/modules/backups/views.py:291
 msgid "No additional disks available to add a repository."
 msgstr "S’ka disqe shtesë ku të shtohet një depo."
 
-#: plinth/modules/backups/views.py:297
+#: plinth/modules/backups/views.py:299
 msgid "Create backup repository"
 msgstr "Krijoni depo kopjeruajtesh"
 
-#: plinth/modules/backups/views.py:324
+#: plinth/modules/backups/views.py:326
 msgid "Create remote backup repository"
 msgstr "Krijoni depo të largët kopjeruajtjesh"
 
-#: plinth/modules/backups/views.py:344
+#: plinth/modules/backups/views.py:346
 msgid "Added new remote SSH repository."
 msgstr "Shtoni depo SSH të re të largët."
 
-#: plinth/modules/backups/views.py:366
+#: plinth/modules/backups/views.py:368
 msgid "Verify SSH hostkey"
 msgstr "Verifikoni kyç strehe SSH"
 
-#: plinth/modules/backups/views.py:392
+#: plinth/modules/backups/views.py:394
 msgid "SSH host already verified."
 msgstr "Strehë SSH e verifikuar tashmë."
 
-#: plinth/modules/backups/views.py:402
+#: plinth/modules/backups/views.py:404
 msgid "SSH host verified."
 msgstr "Streha SSH u verifikua."
 
-#: plinth/modules/backups/views.py:417
+#: plinth/modules/backups/views.py:419
 msgid "SSH host public key could not be verified."
 msgstr "S’u verifikua dot kyç publik strehe SSH."
 
-#: plinth/modules/backups/views.py:419
+#: plinth/modules/backups/views.py:421
 msgid "Authentication to remote server failed."
 msgstr "Mirëfilltësimi te shërbyesi i largët dështoi."
 
-#: plinth/modules/backups/views.py:421
+#: plinth/modules/backups/views.py:423
 msgid "Error establishing connection to server: {}"
 msgstr "Gabim gjatë vendosjes së lidhjes me shërbyesin: {}"
 
-#: plinth/modules/backups/views.py:432
+#: plinth/modules/backups/views.py:434
 msgid "Repository removed."
 msgstr "Depoja u hoq."
 
-#: plinth/modules/backups/views.py:446
+#: plinth/modules/backups/views.py:448
 msgid "Remove Repository"
 msgstr "Hiqni Depo"
 
-#: plinth/modules/backups/views.py:455
+#: plinth/modules/backups/views.py:457
 msgid "Repository removed. Backups were not deleted."
 msgstr "Depoja u hoq. Kopjeruajtjet s’u fshinë."
 
-#: plinth/modules/backups/views.py:465
+#: plinth/modules/backups/views.py:467
 msgid "Unmounting failed!"
 msgstr "Çmontimi dështoi!"
 
-#: plinth/modules/backups/views.py:480 plinth/modules/backups/views.py:484
+#: plinth/modules/backups/views.py:482 plinth/modules/backups/views.py:486
 msgid "Mounting failed"
 msgstr "Montimi dështoi"
 
@@ -787,39 +787,39 @@ msgstr ""
 "t’ju lejojë të shfuqizoni më vonë hyrje për një persona apo një grup, duke "
 "hequr nga lista fjalëkalimin përkatës."
 
-#: plinth/modules/bepasty/__init__.py:38 plinth/modules/bepasty/__init__.py:47
+#: plinth/modules/bepasty/__init__.py:36 plinth/modules/bepasty/__init__.py:45
 msgid "Read a file, if a web link to the file is available"
 msgstr "Lexoni një kartelë, nëse zotëroni një lidhje web për te kartela"
 
-#: plinth/modules/bepasty/__init__.py:39
+#: plinth/modules/bepasty/__init__.py:37
 msgid "Create or upload files"
 msgstr "Krijoni ose ngarkoni kartela"
 
-#: plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:38
 msgid "List all files and their web links"
 msgstr "Paraqit krejt kartelat dhe lidhjet e tyre"
 
-#: plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:39
 msgid "Delete files"
 msgstr "Fshini kartela"
 
-#: plinth/modules/bepasty/__init__.py:42
+#: plinth/modules/bepasty/__init__.py:40
 msgid "Administer files: lock/unlock files"
 msgstr "Administroni kartela: kyçni/shkyçni kartela"
 
-#: plinth/modules/bepasty/__init__.py:46
+#: plinth/modules/bepasty/__init__.py:44
 msgid "None, password is always required"
 msgstr "Askush, fjalëkalimi është përherë i domosdoshëm"
 
-#: plinth/modules/bepasty/__init__.py:48
+#: plinth/modules/bepasty/__init__.py:46
 msgid "List and read all files"
 msgstr "Shfaqni dhe lexoni krejt kartelat"
 
-#: plinth/modules/bepasty/__init__.py:63 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:61 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:65
+#: plinth/modules/bepasty/__init__.py:63
 msgid "File & Snippet Sharing"
 msgstr "Dhënie Kartelash &amp; Copëzash"
 
@@ -911,16 +911,15 @@ msgstr "Fshije"
 msgid "Admin"
 msgstr "Përgjegjës"
 
-#: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:38
-#: plinth/modules/searx/views.py:49 plinth/modules/tor/views.py:132
-#: plinth/modules/tor/views.py:159 plinth/modules/zoph/views.py:69
+#: plinth/modules/bepasty/views.py:90 plinth/modules/searx/views.py:40
+#: plinth/modules/searx/views.py:51 plinth/modules/tor/views.py:75
+#: plinth/modules/zoph/views.py:71
 msgid "Configuration updated."
 msgstr "Formësimi u përditësua."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
-#: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:41
-#: plinth/modules/searx/views.py:52 plinth/modules/tor/views.py:161
-#: plinth/modules/zoph/views.py:72
+#: plinth/modules/gitweb/views.py:119 plinth/modules/searx/views.py:43
+#: plinth/modules/searx/views.py:54 plinth/modules/zoph/views.py:74
 msgid "An error occurred during configuration."
 msgstr "Ndodhi një gabim gjatë formësimit."
 
@@ -956,11 +955,11 @@ msgstr ""
 "për makina të tjera në rrjetin vendor. Gjithashtu është i papërputhshëm me "
 "ndarje lidhje Interneti me të tjerë që nga {box_name}."
 
-#: plinth/modules/bind/__init__.py:76
+#: plinth/modules/bind/__init__.py:74
 msgid "BIND"
 msgstr "BIND"
 
-#: plinth/modules/bind/__init__.py:77
+#: plinth/modules/bind/__init__.py:75
 msgid "Domain Name Server"
 msgstr "Shërbyes Emrash Përkatësish"
 
@@ -1014,12 +1013,12 @@ msgstr "Adresa IP"
 msgid "Refresh IP address and domains"
 msgstr "Rifresko adresë IP dhe përkatësi"
 
-#: plinth/modules/bind/views.py:71 plinth/modules/coturn/views.py:39
-#: plinth/modules/deluge/views.py:42 plinth/modules/dynamicdns/views.py:78
-#: plinth/modules/ejabberd/views.py:96 plinth/modules/email/views.py:45
-#: plinth/modules/matrixsynapse/views.py:124
-#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:35
-#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:28
+#: plinth/modules/bind/views.py:71 plinth/modules/config/views.py:99
+#: plinth/modules/coturn/views.py:41 plinth/modules/deluge/views.py:42
+#: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:96
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:126
+#: plinth/modules/minetest/views.py:69 plinth/modules/mumble/views.py:37
+#: plinth/modules/pagekite/forms.py:78 plinth/modules/quassel/views.py:29
 #: plinth/modules/roundcube/views.py:32 plinth/modules/shadowsocks/views.py:59
 #: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:26
 #: plinth/modules/wordpress/views.py:37
@@ -1062,15 +1061,15 @@ msgstr ""
 "gjendje të përdorin aplikacionin. Krejt përdoruesit e lejuar mund të hyjnë "
 "në të gjitha bibliotekat."
 
-#: plinth/modules/calibre/__init__.py:57
+#: plinth/modules/calibre/__init__.py:55
 msgid "Use calibre e-book libraries"
 msgstr "Përdorni biblioteka calibre e-librash"
 
-#: plinth/modules/calibre/__init__.py:60 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:58 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:61
+#: plinth/modules/calibre/__init__.py:59
 msgid "E-book Library"
 msgstr "Bibliotekë E-librash"
 
@@ -1132,25 +1131,25 @@ msgstr "Kalo te biblioteka %(library)s"
 msgid "Delete library %(library)s"
 msgstr "Fshije bibliotekën %(library)s"
 
-#: plinth/modules/calibre/views.py:39
+#: plinth/modules/calibre/views.py:41
 msgid "Library created."
 msgstr "Biblioteka u krijua."
 
-#: plinth/modules/calibre/views.py:50
+#: plinth/modules/calibre/views.py:52
 msgid "An error occurred while creating the library."
 msgstr "Ndodhi një gabim teksa krijohej biblioteka."
 
-#: plinth/modules/calibre/views.py:64 plinth/modules/gitweb/views.py:138
+#: plinth/modules/calibre/views.py:66 plinth/modules/gitweb/views.py:141
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} u fshi."
 
-#: plinth/modules/calibre/views.py:68 plinth/modules/gitweb/views.py:142
+#: plinth/modules/calibre/views.py:70 plinth/modules/gitweb/views.py:145
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "S’u fshi dot {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:25
+#: plinth/modules/cockpit/__init__.py:22
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1164,7 +1163,7 @@ msgstr ""
 "domosdoshme. Ka gjithashtu edhe një terminal me bazë web, për veprime që nga "
 "një konsol."
 
-#: plinth/modules/cockpit/__init__.py:31
+#: plinth/modules/cockpit/__init__.py:28
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1177,7 +1176,7 @@ msgstr ""
 "fjala &lt;em&gt;bonding&lt;/em&gt;, &lt;em&gt;bridging&lt;/em&gt; dhe "
 "administrmi VLAN-i."
 
-#: plinth/modules/cockpit/__init__.py:36
+#: plinth/modules/cockpit/__init__.py:33
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1186,33 +1185,16 @@ msgstr ""
 "Mund të përdoret nga <a href=\"{users_url}\">cilido përdorues</a> në "
 "{box_name} që është pjesë e grupit të përgjegjësve."
 
-#: plinth/modules/cockpit/__init__.py:40
-msgid ""
-"Cockpit requires that you access it through a domain name. It will not work "
-"when accessed using an IP address as part of the URL."
-msgstr ""
-"Cockpit lyp përdorim që nga një emër përkatësie. S’do të funksionojë, nëse "
-"provohet duke përdorur një adresë IP, si pjesë e URL-së."
-
-#: plinth/modules/cockpit/__init__.py:62 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:64
+#: plinth/modules/cockpit/__init__.py:54
 msgid "Server Administration"
 msgstr "Administrim Shërbyesi"
 
-#: plinth/modules/cockpit/templates/cockpit.html:11
-msgid "Access"
-msgstr "Hyrje"
-
-#: plinth/modules/cockpit/templates/cockpit.html:14
-msgid "Cockpit will only work when accessed using the following URLs."
-msgstr ""
-"Cockpit do të funksionojë vetëm kur në të hyhet duke përdorur URL-të vijuese."
-
-#: plinth/modules/config/__init__.py:23
+#: plinth/modules/config/__init__.py:25
 msgid ""
 "Here you can set some general configuration options like hostname, domain "
 "name, webserver home page etc."
@@ -1227,7 +1209,7 @@ msgstr "Formësim i Përgjithshëm"
 #: plinth/modules/config/__init__.py:58
 #: plinth/modules/names/templates/names.html:30
 #: plinth/modules/names/templates/names.html:44
-#: plinth/modules/snapshot/views.py:35 plinth/templates/index.html:38
+#: plinth/modules/snapshot/views.py:37 plinth/templates/index.html:38
 msgid "Configure"
 msgstr "Formësoni"
 
@@ -1322,43 +1304,67 @@ msgstr "Shfaq aplikacione dhe veçori të thelluara"
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Shfaq aplikacione dhe veçori që lypin dije më teknike."
 
-#: plinth/modules/config/views.py:46
+#: plinth/modules/config/forms.py:104
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "System-wide logging"
+msgstr "Mbikëqyrje Sistemi"
+
+#: plinth/modules/config/forms.py:105
+msgid "Disable logging, for privacy"
+msgstr ""
+
+#: plinth/modules/config/forms.py:107
+msgid "Keep some in memory until a restart, for performance"
+msgstr ""
+
+#: plinth/modules/config/forms.py:110
+msgid "Write to disk, useful for debugging"
+msgstr ""
+
+#: plinth/modules/config/forms.py:112
+msgid ""
+"Logs contain information about who accessed the system and debug information "
+"from various services"
+msgstr ""
+
+#: plinth/modules/config/views.py:50
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Gabim në caktim strehëemri: {exception}"
 
-#: plinth/modules/config/views.py:49
+#: plinth/modules/config/views.py:53
 msgid "Hostname set"
 msgstr "Strehëemri u caktua"
 
-#: plinth/modules/config/views.py:58
+#: plinth/modules/config/views.py:62
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Gabim në caktimin e emrin të përkatësisë: {exception}"
 
-#: plinth/modules/config/views.py:61
+#: plinth/modules/config/views.py:65
 msgid "Domain name set"
 msgstr "Emri i përkatësisë u caktua"
 
-#: plinth/modules/config/views.py:69
+#: plinth/modules/config/views.py:73
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Gabim në caktim faqeje hyrëse shërbyesi: {exception}"
 
-#: plinth/modules/config/views.py:72
+#: plinth/modules/config/views.py:76
 msgid "Webserver home page set"
 msgstr "Faqja hyrëse e shërbyesit u caktua"
 
-#: plinth/modules/config/views.py:80
+#: plinth/modules/config/views.py:84
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Gabim në ndryshimin e mënyrës së thelluar: {exception}"
 
-#: plinth/modules/config/views.py:85
+#: plinth/modules/config/views.py:89
 msgid "Showing advanced apps and features"
 msgstr "Me aplikacione dhe veçori të thelluara shfaqur"
 
-#: plinth/modules/config/views.py:88
+#: plinth/modules/config/views.py:92
 msgid "Hiding advanced apps and features"
 msgstr "Me aplikacione dhe veçori të thelluara fshehur"
 
@@ -1386,11 +1392,11 @@ msgstr ""
 "tillë si <a href=\"{ms_url}\">Matrix Synapse</a>, ose <a href="
 "\"{e_url}\">ejabberd</a> duhen formësuar me hollësitë e dhëna këtu."
 
-#: plinth/modules/coturn/__init__.py:57
+#: plinth/modules/coturn/__init__.py:56
 msgid "Coturn"
 msgstr "Coturn"
 
-#: plinth/modules/coturn/__init__.py:58
+#: plinth/modules/coturn/__init__.py:57
 msgid "VoIP Helper"
 msgstr "Ndihmës VoIP"
 
@@ -1415,11 +1421,11 @@ msgstr ""
 "Shërbyesi i kohës së rrjetit është një program që kujdeset që koha e "
 "sistemit të jetë e njëkohshme me shërbyes në Internet."
 
-#: plinth/modules/datetime/__init__.py:68
+#: plinth/modules/datetime/__init__.py:66
 msgid "Date & Time"
 msgstr "Datë &amp; Kohë"
 
-#: plinth/modules/datetime/__init__.py:117
+#: plinth/modules/datetime/__init__.py:115
 msgid "Time synchronized to NTP server"
 msgstr "Kohë e njëkohësuar me shërbyes NTP"
 
@@ -1460,17 +1466,17 @@ msgstr ""
 "Fjalëkalimi parazgjedhje është “deluge”, por duhet të bëni hyrjen me të dhe "
 "ta ndryshoni menjëherë pas aktivizimit të këtij shërbimi."
 
-#: plinth/modules/deluge/__init__.py:44
-#: plinth/modules/transmission/__init__.py:64
+#: plinth/modules/deluge/__init__.py:42
+#: plinth/modules/transmission/__init__.py:62
 msgid "Download files using BitTorrent applications"
 msgstr "Shkarkoni kartela duke përdorur aplikacione BitTorrent"
 
-#: plinth/modules/deluge/__init__.py:48 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:46 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:50
-#: plinth/modules/transmission/__init__.py:70
+#: plinth/modules/deluge/__init__.py:48
+#: plinth/modules/transmission/__init__.py:68
 msgid "BitTorrent Web Client"
 msgstr "Klient Web BitTorrent"
 
@@ -1492,49 +1498,49 @@ msgstr ""
 "siç pritet."
 
 #: plinth/modules/diagnostics/__init__.py:50
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:241
 msgid "Diagnostics"
 msgstr "Diagnostikime"
 
-#: plinth/modules/diagnostics/__init__.py:97
+#: plinth/modules/diagnostics/__init__.py:102
 msgid "passed"
 msgstr "kaloi"
 
-#: plinth/modules/diagnostics/__init__.py:98
-#: plinth/modules/networks/views.py:49
+#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/networks/views.py:50
 msgid "failed"
 msgstr "dështoi"
 
-#: plinth/modules/diagnostics/__init__.py:99
+#: plinth/modules/diagnostics/__init__.py:104
 msgid "error"
 msgstr "gabim"
 
-#: plinth/modules/diagnostics/__init__.py:100
+#: plinth/modules/diagnostics/__init__.py:105
 msgid "warning"
 msgstr "kujdes"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:202
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:214
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Duhet të çaktivizoni disa aplikacione, për të zvogëluar përdorim kujtese."
 
-#: plinth/modules/diagnostics/__init__.py:219
+#: plinth/modules/diagnostics/__init__.py:224
 msgid "You should not install any new apps on this system."
 msgstr "S’duhet të instaloni çfarëdo aplikacioni të ri në këtë sistem."
 
-#: plinth/modules/diagnostics/__init__.py:231
+#: plinth/modules/diagnostics/__init__.py:236
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1543,7 +1549,7 @@ msgstr ""
 "Ka pak kujtesë për sistemin: {percent_used}% të përdorur, {memory_available} "
 "{memory_available_unit} të lirë. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:233
+#: plinth/modules/diagnostics/__init__.py:238
 msgid "Low Memory"
 msgstr "Kujtesë e Pakët"
 
@@ -1593,7 +1599,7 @@ msgstr "Provë"
 msgid "Result"
 msgstr "Përfundim"
 
-#: plinth/modules/diagnostics/views.py:57
+#: plinth/modules/diagnostics/views.py:68
 msgid "Diagnostic Test"
 msgstr "Test Diagnostikimesh"
 
@@ -1647,11 +1653,11 @@ msgstr ""
 "lira me bazë përditësim URL-je, te &lt;a href=\" target=\"_blank\"> freedns."
 "afraid.org</a>."
 
-#: plinth/modules/dynamicdns/__init__.py:64
+#: plinth/modules/dynamicdns/__init__.py:62
 msgid "Dynamic DNS Client"
 msgstr "Klient DNS Dinamik"
 
-#: plinth/modules/dynamicdns/__init__.py:77
+#: plinth/modules/dynamicdns/__init__.py:75
 msgid "Dynamic Domain Name"
 msgstr "Emër Dinamik Përkatësie"
 
@@ -1784,13 +1790,14 @@ msgid "This field is required."
 msgstr "lyp të fshehta"
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
+#: plinth/modules/ejabberd/templates/ejabberd.html:13
 #: plinth/modules/firewall/templates/firewall.html:16
 #: plinth/modules/firewall/templates/firewall.html:36
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:17
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:12
 #: plinth/modules/networks/templates/connection_show.html:254
 #: plinth/modules/samba/templates/samba.html:67
-#: plinth/modules/tor/templates/tor.html:12
-#: plinth/modules/tor/templates/tor.html:27
+#: plinth/modules/tor/templates/tor.html:19
 #: plinth/modules/upgrades/templates/upgrades_configure.html:14
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:48
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:47
@@ -1886,12 +1893,12 @@ msgstr ""
 "aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
 "të jashtëm."
 
-#: plinth/modules/ejabberd/__init__.py:65
+#: plinth/modules/ejabberd/__init__.py:63
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:66
-#: plinth/modules/matrixsynapse/__init__.py:71
+#: plinth/modules/ejabberd/__init__.py:64
+#: plinth/modules/matrixsynapse/__init__.py:69
 msgid "Chat Server"
 msgstr "Shërbyes Fjalosjesh"
 
@@ -2003,7 +2010,7 @@ msgstr "Dino"
 msgid "Gajim"
 msgstr "Gajim"
 
-#: plinth/modules/ejabberd/templates/ejabberd.html:19
+#: plinth/modules/ejabberd/templates/ejabberd.html:18
 #, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
@@ -2055,21 +2062,21 @@ msgid ""
 msgstr ""
 "Gjatë instalimit, çfarëdo shërbyesi tjetër email në sistem do të çinstalohet."
 
-#: plinth/modules/email/__init__.py:62
+#: plinth/modules/email/__init__.py:61
 msgid "Postfix/Dovecot"
 msgstr ""
 
-#: plinth/modules/email/__init__.py:64
+#: plinth/modules/email/__init__.py:63
 msgid "Email Server"
 msgstr "Shërbyes Email-i"
 
-#: plinth/modules/email/__init__.py:84
+#: plinth/modules/email/__init__.py:83
 #, fuzzy
 #| msgid "Manage Aliases"
 msgid "My Email Aliases"
 msgstr "Administroni Aliase"
 
-#: plinth/modules/email/__init__.py:85
+#: plinth/modules/email/__init__.py:84
 #, fuzzy
 #| msgid "Manage Aliases"
 msgid "Manage Aliases for Mailbox"
@@ -2107,7 +2114,7 @@ msgstr "S’mund të jetë një numër"
 msgid "Aliases"
 msgstr "Aliase"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:54
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:49
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2191,7 +2198,7 @@ msgstr ""
 "në rrjet te {box_name} juaj. Mbajta e një firewall-i të aktivizuar dhe të "
 "formësuar si duhet ul rrezikun e kërcënimeve të sigurisë nga Interneti."
 
-#: plinth/modules/firewall/__init__.py:62
+#: plinth/modules/firewall/__init__.py:60
 msgid "Firewall"
 msgstr "Firewall"
 
@@ -2353,15 +2360,15 @@ msgstr ""
 "Për të mësuar më tepër se si të përdoret Git, vizitoni <a href=\"https://git-"
 "scm.com/docs/gittutorial\">përkujdesore Git-i</a>."
 
-#: plinth/modules/gitweb/__init__.py:51
+#: plinth/modules/gitweb/__init__.py:49
 msgid "Read-write access to Git repositories"
 msgstr "Hyrje për shkrim-lexim në depo Git"
 
-#: plinth/modules/gitweb/__init__.py:56 plinth/modules/gitweb/manifest.py:10
+#: plinth/modules/gitweb/__init__.py:54 plinth/modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:57
+#: plinth/modules/gitweb/__init__.py:55
 msgid "Simple Git Hosting"
 msgstr "Strehim i Thjeshtë Git"
 
@@ -2457,54 +2464,54 @@ msgstr "Fshi Depon Git <em>%(name)s</em>"
 msgid "Delete this repository permanently?"
 msgstr "Të fshihet kjo depo përgjithmonë?"
 
-#: plinth/modules/gitweb/views.py:45
+#: plinth/modules/gitweb/views.py:47
 msgid "Repository created."
 msgstr "Depoja u krijua."
 
-#: plinth/modules/gitweb/views.py:69
+#: plinth/modules/gitweb/views.py:71
 msgid "An error occurred while creating the repository."
 msgstr "Ndodhi një gabim teksa krijohej depoja."
 
-#: plinth/modules/gitweb/views.py:84
+#: plinth/modules/gitweb/views.py:86
 msgid "Repository edited."
 msgstr "Depoja u përpunua."
 
-#: plinth/modules/gitweb/views.py:89
+#: plinth/modules/gitweb/views.py:91
 msgid "Edit repository"
 msgstr "Përpunoni depon"
 
-#: plinth/modules/help/__init__.py:35
+#: plinth/modules/help/__init__.py:33
 msgid "Documentation"
 msgstr "Dokumentim"
 
-#: plinth/modules/help/__init__.py:39 plinth/templates/help-menu.html:20
+#: plinth/modules/help/__init__.py:37 plinth/templates/help-menu.html:20
 #: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Doracak"
 
-#: plinth/modules/help/__init__.py:43
+#: plinth/modules/help/__init__.py:41
 #: plinth/modules/help/templates/help_support.html:9
-#: plinth/modules/help/views.py:43 plinth/templates/help-menu.html:27
+#: plinth/modules/help/views.py:90 plinth/templates/help-menu.html:27
 #: plinth/templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Merrni Asistencë"
 
-#: plinth/modules/help/__init__.py:47
+#: plinth/modules/help/__init__.py:45
 #: plinth/modules/help/templates/help_feedback.html:9
-#: plinth/modules/help/views.py:37 plinth/templates/help-menu.html:33
+#: plinth/modules/help/views.py:84 plinth/templates/help-menu.html:33
 #: plinth/templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Parashtroni Përshtypjet"
 
-#: plinth/modules/help/__init__.py:51
+#: plinth/modules/help/__init__.py:49
 #: plinth/modules/help/templates/help_contribute.html:9
-#: plinth/modules/help/views.py:31 plinth/templates/help-menu.html:39
+#: plinth/modules/help/views.py:73 plinth/templates/help-menu.html:39
 #: plinth/templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Jepni Ndihmesë"
 
-#: plinth/modules/help/__init__.py:55 plinth/templates/help-menu.html:46
+#: plinth/modules/help/__init__.py:53 plinth/templates/help-menu.html:46
 #: plinth/templates/help-menu.html:47
 msgid "About"
 msgstr "Mbi"
@@ -2641,6 +2648,41 @@ msgstr ""
 #: plinth/templates/app-header.html:53
 msgid "Learn more..."
 msgstr "Mësoni më tepër…"
+
+#: plinth/modules/help/templates/help_contribute.html:46
+msgid "How can I help?"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:48
+msgid ""
+"Below is a list of opportunities for contributing to Debian. It has been "
+"filtered to only show packages that are installed on this system."
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:59
+msgid "Show issues"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:63
+msgid "Packages that will be removed from Debian testing"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:69
+#: plinth/modules/help/templates/help_contribute.html:85
+msgid "source package:"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:80
+msgid "Packages that are not in Debian testing"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:92
+msgid "Good first issues for beginners"
+msgstr ""
+
+#: plinth/modules/help/templates/help_contribute.html:104
+msgid "Issues for which the package maintainer has requested help"
+msgstr ""
 
 #: plinth/modules/help/templates/help_feedback.html:12
 #, python-format
@@ -2785,16 +2827,16 @@ msgstr ""
 "Ju lutemi, hiqni çfarëdo fjalëkalimi apo hollësi të tjera personale prej "
 "regjistrit, përpara se të parashtroni njoftimin për të metën."
 
-#: plinth/modules/help/views.py:25
+#: plinth/modules/help/views.py:28
 msgid "Documentation and FAQ"
 msgstr "Dokumentim dhe PBR"
 
-#: plinth/modules/help/views.py:49
+#: plinth/modules/help/views.py:96
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Mbi {box_name}"
 
-#: plinth/modules/help/views.py:83
+#: plinth/modules/help/views.py:130
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Doracak për {box_name}"
@@ -2826,19 +2868,19 @@ msgid ""
 msgstr ""
 "Vizita e parë te ndërfaqja web e dhënë do të fillojë procesin e formësimit."
 
-#: plinth/modules/i2p/__init__.py:52
+#: plinth/modules/i2p/__init__.py:50
 msgid "Manage I2P application"
 msgstr "Administroni aplikacion I2P"
 
-#: plinth/modules/i2p/__init__.py:55 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:56 plinth/modules/tor/__init__.py:55
+#: plinth/modules/i2p/__init__.py:54 plinth/modules/tor/__init__.py:53
 msgid "Anonymity Network"
 msgstr "Rrjet Anonimiteti"
 
-#: plinth/modules/i2p/__init__.py:82
+#: plinth/modules/i2p/__init__.py:80
 msgid "I2P Proxy"
 msgstr "Ndërmjetës I2P"
 
@@ -2908,15 +2950,15 @@ msgstr ""
 "ekzistueset. Te <a href=\"{users_url}\">Formësim Përdoruesish</a> mund të "
 "ndryshoni këto leje ose të shtoni përdorues të rinj."
 
-#: plinth/modules/ikiwiki/__init__.py:49 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:47 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:50
+#: plinth/modules/ikiwiki/__init__.py:48
 msgid "Wiki and Blog"
 msgstr "Wiki dhe Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:77
+#: plinth/modules/ikiwiki/__init__.py:75
 msgid "View and edit wiki applications"
 msgstr "Shihni dhe përpunoni aplikacione wiki"
 
@@ -2954,8 +2996,8 @@ msgstr "Fshije sajtin %(site)s"
 
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: plinth/modules/snapshot/templates/snapshot.html:15
-#: plinth/templates/app.html:54
+#: plinth/modules/snapshot/templates/snapshot.html:16
+#: plinth/templates/app.html:55
 msgid "Update setup"
 msgstr "Përditësoni ujdisjen"
 
@@ -2972,32 +3014,32 @@ msgstr ""
 "Ky veprim do të heqë krejt postimet, faqet dhe komentet, përfshi historik "
 "rishikimesh.  Të fshihet përgjithmonë kjo wiki ose ky blog?"
 
-#: plinth/modules/ikiwiki/views.py:70
+#: plinth/modules/ikiwiki/views.py:74
 #, python-brace-format
 msgid "Created wiki {name}."
 msgstr "U krijua wiki {name}."
 
-#: plinth/modules/ikiwiki/views.py:73
+#: plinth/modules/ikiwiki/views.py:77
 #, python-brace-format
 msgid "Could not create wiki: {error}"
 msgstr "S’u krijua dot wiki: {error}"
 
-#: plinth/modules/ikiwiki/views.py:83
+#: plinth/modules/ikiwiki/views.py:87
 #, python-brace-format
 msgid "Created blog {name}."
 msgstr "U krijua blogu {name}."
 
-#: plinth/modules/ikiwiki/views.py:86
+#: plinth/modules/ikiwiki/views.py:90
 #, python-brace-format
 msgid "Could not create blog: {error}"
 msgstr "S’u krijua dot blogu: {error}"
 
-#: plinth/modules/ikiwiki/views.py:101
+#: plinth/modules/ikiwiki/views.py:106
 #, python-brace-format
 msgid "{title} deleted."
 msgstr "{title} u fshi."
 
-#: plinth/modules/ikiwiki/views.py:105
+#: plinth/modules/ikiwiki/views.py:110
 #, python-brace-format
 msgid "Could not delete {title}: {error}"
 msgstr "S’u fshi dot {title}: {error}"
@@ -3019,11 +3061,11 @@ msgstr ""
 "klientin desktop, dhe instalojeni. Mandej nisni Gobby-n dhe përzgjidhni "
 "“Lidhu me Shërbyes” dhe jepni emrin e përkatësisë së {box_name} tuaj."
 
-#: plinth/modules/infinoted/__init__.py:44
+#: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
 msgstr "infinoted"
 
-#: plinth/modules/infinoted/__init__.py:45
+#: plinth/modules/infinoted/__init__.py:43
 msgid "Gobby Server"
 msgstr "Shërbyes Gobby"
 
@@ -3044,28 +3086,26 @@ msgstr ""
 "Niseni Gobby-n dhe përzgjidhni “Lidhu me Shërbyes” dhe jepni emrin e "
 "përkatësisë tuaj {box_name}."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:22
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:24
+#: plinth/modules/janus/__init__.py:23
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:26
+#: plinth/modules/janus/__init__.py:25
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:44
+#: plinth/modules/janus/__init__.py:41
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:46
-#, fuzzy
-#| msgid "Web Server"
-msgid "WebRTC server"
-msgstr "Shërbyes"
+#: plinth/modules/janus/__init__.py:43
+msgid "Video Room"
+msgstr ""
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
@@ -3077,7 +3117,7 @@ msgstr ""
 msgid "JavaScript license information"
 msgstr "Hollësi licence JavaScript"
 
-#: plinth/modules/jsxc/__init__.py:21
+#: plinth/modules/jsxc/__init__.py:19
 msgid ""
 "JSXC is a web client for XMPP. Typically it is used with an XMPP server "
 "running locally."
@@ -3085,11 +3125,11 @@ msgstr ""
 "JSXC është një klient web për XMPP-në. Zakonisht përdoret me një shërbyes "
 "XMPP që xhiron lokalisht."
 
-#: plinth/modules/jsxc/__init__.py:44 plinth/modules/jsxc/manifest.py:7
+#: plinth/modules/jsxc/__init__.py:38 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
 
-#: plinth/modules/jsxc/__init__.py:45
+#: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Klient Fjalosjesh"
 
@@ -3257,7 +3297,7 @@ msgstr ""
 "aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
 "të jashtëm."
 
-#: plinth/modules/matrixsynapse/__init__.py:70
+#: plinth/modules/matrixsynapse/__init__.py:68
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3295,8 +3335,8 @@ msgid "FluffyChat"
 msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: plinth/modules/snapshot/templates/snapshot.html:12
-#: plinth/templates/app.html:46
+#: plinth/modules/snapshot/templates/snapshot.html:13
+#: plinth/templates/app.html:47
 msgid "Configuration"
 msgstr "Formësim"
 
@@ -3401,12 +3441,12 @@ msgstr ""
 "Cilido me një lidhje për te kjo wiki mund ta lexojë atë. Ndryshime te lënda "
 "mund të bëjnë vetëm përdorues që kanë bërë hyrjen në llogaritë e tyre."
 
-#: plinth/modules/mediawiki/__init__.py:56
+#: plinth/modules/mediawiki/__init__.py:54
 #: plinth/modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:57 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -3488,11 +3528,11 @@ msgstr ""
 "Zgjidhni një lëkurçe parazgjedhje për instalimin tuaj MediaWiki. Përdoruesit "
 "kanë mundësi të përzgjedhin lëkurçen e tyre të parapëlqyer."
 
-#: plinth/modules/mediawiki/views.py:52
+#: plinth/modules/mediawiki/views.py:54
 msgid "Password updated"
 msgstr "Fjalëkalimi u përditësua"
 
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:59
 #, fuzzy
 #| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
@@ -3500,33 +3540,33 @@ msgstr ""
 "Fjalëkalim i përdorur për të fshehtëzuar të dhëna. Duhet të përputhet me "
 "fjalëkalimin e shërbyesit."
 
-#: plinth/modules/mediawiki/views.py:67
+#: plinth/modules/mediawiki/views.py:69
 msgid "Public registrations enabled"
 msgstr "Regjistrimet publike u aktivizuan"
 
-#: plinth/modules/mediawiki/views.py:76
+#: plinth/modules/mediawiki/views.py:78
 msgid "Public registrations disabled"
 msgstr "Regjistrimet publike u çaktivizuan"
 
-#: plinth/modules/mediawiki/views.py:81
+#: plinth/modules/mediawiki/views.py:83
 msgid "Private mode enabled"
 msgstr "Mënyra private u aktivizua"
 
-#: plinth/modules/mediawiki/views.py:88
+#: plinth/modules/mediawiki/views.py:90
 msgid "Private mode disabled"
 msgstr "Mënyra private u çaktivizua"
 
-#: plinth/modules/mediawiki/views.py:95
+#: plinth/modules/mediawiki/views.py:98
 msgid "Default skin changed"
 msgstr "Lëkurçja parazgjedhje u ndryshua"
 
-#: plinth/modules/mediawiki/views.py:99
+#: plinth/modules/mediawiki/views.py:102
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Domain name updated"
 msgstr "Emri i përkatësisë u caktua"
 
-#: plinth/modules/mediawiki/views.py:103
+#: plinth/modules/mediawiki/views.py:106
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Site name updated"
@@ -3546,11 +3586,11 @@ msgstr ""
 "lypset një <a href=\"http://www.minetest.net/downloads/\">klient Minetest</"
 "a>."
 
-#: plinth/modules/minetest/__init__.py:60 plinth/modules/minetest/manifest.py:9
+#: plinth/modules/minetest/__init__.py:58 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
 msgstr "Minetest"
 
-#: plinth/modules/minetest/__init__.py:61
+#: plinth/modules/minetest/__init__.py:59
 msgid "Block Sandbox"
 msgstr "Bankëprovë Blloqesh"
 
@@ -3603,7 +3643,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adresë"
 
-#: plinth/modules/minidlna/__init__.py:20
+#: plinth/modules/minidlna/__init__.py:21
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3621,15 +3661,15 @@ msgstr ""
 "telefona të mençur, televizorë, dhe sisteme lojërash (të tillë si PS3 dhe "
 "Xbox 360), ose aplikacione të tillë si totem dhe Kodi."
 
-#: plinth/modules/minidlna/__init__.py:43
+#: plinth/modules/minidlna/__init__.py:42
 msgid "Media streaming server"
 msgstr "Shërbyes transmetimi mediash"
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:47
+#: plinth/modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr "Shërbyes i Thjeshtë Mediash"
 
@@ -3692,11 +3732,11 @@ msgstr ""
 "64738. Ka klientë <a href=\"http://mumble.info\">klientë</a> të gatshëm për "
 "t’u lidhur me Mumble-in që nga desktopi apo pajisjet tuaja celulare."
 
-#: plinth/modules/mumble/__init__.py:47 plinth/modules/mumble/manifest.py:9
+#: plinth/modules/mumble/__init__.py:45 plinth/modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "Mumble"
 
-#: plinth/modules/mumble/__init__.py:48
+#: plinth/modules/mumble/__init__.py:46
 msgid "Voice Chat"
 msgstr "Fjalosje Me Zë"
 
@@ -3741,17 +3781,17 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
-#: plinth/modules/mumble/views.py:41
+#: plinth/modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
 msgstr "Fjalëkalimi i superpërdoruesit u përditësua me sukses."
 
-#: plinth/modules/mumble/views.py:46
+#: plinth/modules/mumble/views.py:48
 #, fuzzy
 #| msgid "Password added."
 msgid "Join password changed"
 msgstr "U shtua fjalëkalim."
 
-#: plinth/modules/mumble/views.py:51
+#: plinth/modules/mumble/views.py:53
 msgid "Root channel name changed."
 msgstr ""
 
@@ -3789,7 +3829,7 @@ msgstr "Shell i Sigurt"
 msgid "Services"
 msgstr "Shërbime"
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:35
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3797,7 +3837,7 @@ msgstr ""
 "Formësoni pajisje rrjeti. Lidhuni në Internet përmes Ethernet-i, Wi-Fi ose "
 "PPPoE. Ndajeni atë lidhje me pajisje të tjera në rrjet."
 
-#: plinth/modules/networks/__init__.py:38
+#: plinth/modules/networks/__init__.py:37
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3805,14 +3845,9 @@ msgstr ""
 "Pajisjet e administruara përmes metodash të tjera mund të mos jenë të "
 "pranishme për formësim këtu."
 
-#: plinth/modules/networks/__init__.py:59
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "Rrjete"
-
-#: plinth/modules/networks/__init__.py:180
-#, python-brace-format
-msgid "Using DNSSEC on IPv{kind}"
-msgstr "Po përdoret DNSSEC në IPv{kind}"
 
 #: plinth/modules/networks/forms.py:16
 msgid "Connection Type"
@@ -4431,7 +4466,7 @@ msgid "Create Connection"
 msgstr "Krijoni Lidhje"
 
 #: plinth/modules/networks/templates/connections_delete.html:11
-#: plinth/modules/networks/views.py:517
+#: plinth/modules/networks/views.py:519
 msgid "Delete Connection"
 msgstr "Fshije Lidhjen"
 
@@ -4451,13 +4486,13 @@ msgstr "Hapësirë"
 
 #: plinth/modules/networks/templates/connections_diagram.html:29
 #: plinth/modules/networks/templates/connections_diagram.html:59
-#: plinth/modules/networks/views.py:99 plinth/network.py:27
+#: plinth/modules/networks/views.py:100 plinth/network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: plinth/modules/networks/templates/connections_diagram.html:32
 #: plinth/modules/networks/templates/connections_diagram.html:62
-#: plinth/modules/networks/views.py:100 plinth/network.py:28
+#: plinth/modules/networks/views.py:101 plinth/network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -4478,7 +4513,7 @@ msgid "Computer"
 msgstr "Kompjuter"
 
 #: plinth/modules/networks/templates/connections_edit.html:20
-#: plinth/modules/networks/views.py:237 plinth/modules/networks/views.py:321
+#: plinth/modules/networks/views.py:239 plinth/modules/networks/views.py:323
 msgid "Edit Connection"
 msgstr "Përpunoni Lidhje"
 
@@ -4488,13 +4523,13 @@ msgstr "Lidhje"
 
 #: plinth/modules/networks/templates/connections_list.html:12
 #: plinth/modules/networks/templates/connections_list.html:14
-#: plinth/modules/networks/views.py:370
+#: plinth/modules/networks/views.py:372
 msgid "Nearby Wi-Fi Networks"
 msgstr "Rrjete Wi-Fi Atypari"
 
 #: plinth/modules/networks/templates/connections_list.html:17
 #: plinth/modules/networks/templates/connections_list.html:19
-#: plinth/modules/networks/views.py:394
+#: plinth/modules/networks/views.py:396
 #: plinth/modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Shtoni Lidhje"
@@ -4718,246 +4753,242 @@ msgstr ""
 "numrin e modelit të rrugëzuesit tuaj dhe kërkoni në internet për doracakun e "
 "rrugëzuesit. Kjo do t’ju japë udhëzimet e plota se si të kryhet kjo punë."
 
-#: plinth/modules/networks/views.py:27
+#: plinth/modules/networks/views.py:28
 msgid "disabled"
 msgstr "i çaktivizuar"
 
-#: plinth/modules/networks/views.py:28
+#: plinth/modules/networks/views.py:29
 msgid "automatic"
 msgstr "automatik"
 
-#: plinth/modules/networks/views.py:29
+#: plinth/modules/networks/views.py:30
 msgid "manual"
 msgstr "dorazi"
 
-#: plinth/modules/networks/views.py:30
+#: plinth/modules/networks/views.py:31
 msgid "shared"
 msgstr "e përbashkët"
 
-#: plinth/modules/networks/views.py:31
+#: plinth/modules/networks/views.py:32
 msgid "link-local"
 msgstr ""
 
-#: plinth/modules/networks/views.py:37 plinth/modules/networks/views.py:98
-#: plinth/modules/networks/views.py:109
+#: plinth/modules/networks/views.py:38 plinth/modules/networks/views.py:99
+#: plinth/modules/networks/views.py:110
 msgid "unknown"
 msgstr "e panjohur"
 
-#: plinth/modules/networks/views.py:38
+#: plinth/modules/networks/views.py:39
 msgid "unmanaged"
 msgstr "e paadministruar"
 
-#: plinth/modules/networks/views.py:39
+#: plinth/modules/networks/views.py:40
 msgid "unavailable"
 msgstr "jo i passhëm"
 
-#: plinth/modules/networks/views.py:40
+#: plinth/modules/networks/views.py:41
 msgid "disconnected"
 msgstr "i shkëputur"
 
-#: plinth/modules/networks/views.py:41
+#: plinth/modules/networks/views.py:42
 msgid "preparing"
 msgstr "po përgatitet"
 
-#: plinth/modules/networks/views.py:42
+#: plinth/modules/networks/views.py:43
 msgid "connecting"
 msgstr "po lidhet"
 
-#: plinth/modules/networks/views.py:43
+#: plinth/modules/networks/views.py:44
 msgid "needs authentication"
 msgstr "lyp mirëfilltësim"
 
-#: plinth/modules/networks/views.py:44
+#: plinth/modules/networks/views.py:45
 msgid "requesting address"
 msgstr "po kërkohet adresë"
 
-#: plinth/modules/networks/views.py:45
+#: plinth/modules/networks/views.py:46
 msgid "checking"
 msgstr "po kontrollohet"
 
-#: plinth/modules/networks/views.py:46
+#: plinth/modules/networks/views.py:47
 msgid "waiting for secondary"
 msgstr "po pritet për dytësor"
 
-#: plinth/modules/networks/views.py:47
+#: plinth/modules/networks/views.py:48
 msgid "activated"
 msgstr "e aktivizuar"
 
-#: plinth/modules/networks/views.py:48
+#: plinth/modules/networks/views.py:49
 msgid "deactivating"
 msgstr "po çaktivizohet"
 
-#: plinth/modules/networks/views.py:56
+#: plinth/modules/networks/views.py:57
 msgid "no reason"
 msgstr "pa arsye"
 
-#: plinth/modules/networks/views.py:58
+#: plinth/modules/networks/views.py:59
 msgid "unknown error"
 msgstr "gabim i panjohur"
 
-#: plinth/modules/networks/views.py:60
+#: plinth/modules/networks/views.py:61
 msgid "device is now managed"
 msgstr "pajisja tani administrohet"
 
-#: plinth/modules/networks/views.py:62
+#: plinth/modules/networks/views.py:63
 msgid "device is now unmanaged"
 msgstr "pajisja tani është e paadministruar"
 
-#: plinth/modules/networks/views.py:64
+#: plinth/modules/networks/views.py:65
 msgid "configuration failed"
 msgstr "formësimi dështoi"
 
-#: plinth/modules/networks/views.py:66
+#: plinth/modules/networks/views.py:67
 msgid "secrets required"
 msgstr "lyp të fshehta"
 
-#: plinth/modules/networks/views.py:68
+#: plinth/modules/networks/views.py:69
 msgid "DHCP client failed to start"
 msgstr "Klienti DHCP s’arriti të niset"
 
-#: plinth/modules/networks/views.py:70
+#: plinth/modules/networks/views.py:71
 msgid "DHCP client error"
 msgstr "Gabim klienti DHCP"
 
-#: plinth/modules/networks/views.py:72
+#: plinth/modules/networks/views.py:73
 msgid "DHCP client failed"
 msgstr "Klienti DHCP dështoi"
 
-#: plinth/modules/networks/views.py:74
+#: plinth/modules/networks/views.py:75
 msgid "shared connection service failed to start"
 msgstr "dështoi nisja e shërbimit për lidhje të përbashkët"
 
-#: plinth/modules/networks/views.py:76
+#: plinth/modules/networks/views.py:77
 msgid "shared connection service failed"
 msgstr "dështoi shërbimi për lidhje të përbashkët"
 
-#: plinth/modules/networks/views.py:78
+#: plinth/modules/networks/views.py:79
 msgid "device was removed"
 msgstr "pajisja u hoq"
 
-#: plinth/modules/networks/views.py:80
+#: plinth/modules/networks/views.py:81
 msgid "device disconnected by user"
 msgstr "pajisja u shkëput nga përdoruesi"
 
-#: plinth/modules/networks/views.py:82
+#: plinth/modules/networks/views.py:83
 msgid "a dependency of the connection failed"
 msgstr "dështoi plotësimi i një varësie të lidhjes"
 
-#: plinth/modules/networks/views.py:84
+#: plinth/modules/networks/views.py:85
 msgid "Wi-Fi network not found"
 msgstr "S’u gjet rrjet Wi-Fi"
 
-#: plinth/modules/networks/views.py:86
+#: plinth/modules/networks/views.py:87
 msgid "a secondary connection failed"
 msgstr "dështoi një lidhje dytësore"
 
-#: plinth/modules/networks/views.py:88
+#: plinth/modules/networks/views.py:89
 msgid "new connection activation was enqueued"
 msgstr "u vu në radhë aktivizim lidhjeje të re"
 
-#: plinth/modules/networks/views.py:90
+#: plinth/modules/networks/views.py:91
 msgid "a duplicate IP address was detected"
 msgstr "u pikas adresë IP e përsëdytur"
 
-#: plinth/modules/networks/views.py:92
+#: plinth/modules/networks/views.py:93
 msgid "selected IP method is not supported"
 msgstr "metoda e përzgjedhur për IP nuk mbulohet"
 
-#: plinth/modules/networks/views.py:101
+#: plinth/modules/networks/views.py:102
 msgid "generic"
 msgstr "elementare"
 
-#: plinth/modules/networks/views.py:102
+#: plinth/modules/networks/views.py:103
 msgid "TUN or TAP interface"
 msgstr "Ndërfaqe TUN ose TAP"
 
-#: plinth/modules/networks/views.py:103 plinth/modules/wireguard/__init__.py:49
+#: plinth/modules/networks/views.py:104 plinth/modules/wireguard/__init__.py:47
 #: plinth/modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: plinth/modules/networks/views.py:110
+#: plinth/modules/networks/views.py:111
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: plinth/modules/networks/views.py:111
+#: plinth/modules/networks/views.py:112
 msgid "infrastructure"
 msgstr "infrastrukturë"
 
-#: plinth/modules/networks/views.py:112
+#: plinth/modules/networks/views.py:113
 msgid "access point"
 msgstr "pikë hyrjeje"
 
-#: plinth/modules/networks/views.py:113
+#: plinth/modules/networks/views.py:114
 msgid "mesh point"
 msgstr "pikë mesh"
 
-#: plinth/modules/networks/views.py:127
-msgid "Network Connections"
-msgstr "Lidhje Rrjeti"
-
-#: plinth/modules/networks/views.py:142
+#: plinth/modules/networks/views.py:144
 msgid "Cannot show connection: Connection not found."
 msgstr "S’shfaqet dot lidhje: S’u gjet lidhje."
 
-#: plinth/modules/networks/views.py:195
+#: plinth/modules/networks/views.py:197
 msgid "Connection Information"
 msgstr "Hollësi Lidhjeje"
 
-#: plinth/modules/networks/views.py:209
+#: plinth/modules/networks/views.py:211
 msgid "Cannot edit connection: Connection not found."
 msgstr "S’përpunohet dot lidhje: S’u gjet lidhje."
 
-#: plinth/modules/networks/views.py:215
+#: plinth/modules/networks/views.py:217
 msgid "This type of connection is not yet understood."
 msgstr "Ky lloj lidhjesh nuk kuptohet ende."
 
-#: plinth/modules/networks/views.py:333
+#: plinth/modules/networks/views.py:335
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "U aktivizua lidhja {name}."
 
-#: plinth/modules/networks/views.py:337
+#: plinth/modules/networks/views.py:339
 msgid "Failed to activate connection: Connection not found."
 msgstr "S’u arrit të aktivizohet lidhje: S’u gjet lidhje."
 
-#: plinth/modules/networks/views.py:343
+#: plinth/modules/networks/views.py:345
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "S’u arrit të aktivizohet lidhja {name}: S’u gjet pajisje e përshtatshme."
 
-#: plinth/modules/networks/views.py:356
+#: plinth/modules/networks/views.py:358
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "U çaktivizua lidhja {name}."
 
-#: plinth/modules/networks/views.py:360
+#: plinth/modules/networks/views.py:362
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Dështoi çaktivizimi i lidhjes: S’u gjet lidhje."
 
-#: plinth/modules/networks/views.py:412
+#: plinth/modules/networks/views.py:414
 msgid "Adding New Generic Connection"
 msgstr "Po Shtohet Lidhje e Re Elementare"
 
-#: plinth/modules/networks/views.py:430
+#: plinth/modules/networks/views.py:432
 msgid "Adding New Ethernet Connection"
 msgstr "Po Shtohet Lidhje e Re Ethernet"
 
-#: plinth/modules/networks/views.py:448
+#: plinth/modules/networks/views.py:450
 msgid "Adding New PPPoE Connection"
 msgstr "Po Shtohet Lidhje e Re PPPoE"
 
-#: plinth/modules/networks/views.py:483
+#: plinth/modules/networks/views.py:485
 msgid "Adding New Wi-Fi Connection"
 msgstr "Po Shtohet Lidhje e Re Wi-Fi"
 
-#: plinth/modules/networks/views.py:498
+#: plinth/modules/networks/views.py:500
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Lidhja {name} u fshi."
 
-#: plinth/modules/networks/views.py:502 plinth/modules/networks/views.py:512
+#: plinth/modules/networks/views.py:504 plinth/modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "S’u arrit të fshihet lidhje: S’u gjet lidhje."
 
@@ -4978,20 +5009,20 @@ msgstr ""
 "brendshme të dhëna nga {box_name}. Mund të hyni edhe në Internet përmes "
 "{box_name}-it, për më tepër siguri dhe anonimitet."
 
-#: plinth/modules/openvpn/__init__.py:55
+#: plinth/modules/openvpn/__init__.py:53
 msgid "Connect to VPN services"
 msgstr "Lidhuni me shërbime VPN"
 
-#: plinth/modules/openvpn/__init__.py:58 plinth/modules/openvpn/manifest.py:17
+#: plinth/modules/openvpn/__init__.py:56 plinth/modules/openvpn/manifest.py:17
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: plinth/modules/openvpn/__init__.py:59
-#: plinth/modules/wireguard/__init__.py:51
+#: plinth/modules/openvpn/__init__.py:57
+#: plinth/modules/wireguard/__init__.py:49
 msgid "Virtual Private Network"
 msgstr "Rrjet Virtual Privat"
 
-#: plinth/modules/openvpn/__init__.py:70
+#: plinth/modules/openvpn/__init__.py:68
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5132,15 +5163,15 @@ msgstr ""
 "të ardhmen mund të jetë e mundshme të përdorni {box_name}-in e një shokut "
 "tuaj për këtë."
 
-#: plinth/modules/pagekite/__init__.py:63
+#: plinth/modules/pagekite/__init__.py:61
 msgid "PageKite"
 msgstr "PageKite"
 
-#: plinth/modules/pagekite/__init__.py:64
+#: plinth/modules/pagekite/__init__.py:62
 msgid "Public Visibility"
 msgstr "E dukshme Publikisht"
 
-#: plinth/modules/pagekite/__init__.py:77
+#: plinth/modules/pagekite/__init__.py:75
 msgid "PageKite Domain"
 msgstr "Përkatësi PageKite"
 
@@ -5256,29 +5287,29 @@ msgstr ""
 "përcaktoni këtu. Për shembull, HTTPS në porta të tjera nga 443 dihet se "
 "shkakton probleme."
 
-#: plinth/modules/pagekite/utils.py:45
+#: plinth/modules/pagekite/utils.py:46
 msgid "Web Server (HTTP)"
 msgstr "Shërbyes (HTTP)"
 
-#: plinth/modules/pagekite/utils.py:47
+#: plinth/modules/pagekite/utils.py:48
 #, python-brace-format
 msgid "Site will be available at <a href=\"http://{0}\">http://{0}</a>"
 msgstr "Sajti do të gjendet në <a href=\"http://{0}\">http://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:59
+#: plinth/modules/pagekite/utils.py:60
 msgid "Web Server (HTTPS)"
 msgstr "Shërbyes (HTTPS)"
 
-#: plinth/modules/pagekite/utils.py:61
+#: plinth/modules/pagekite/utils.py:62
 #, python-brace-format
 msgid "Site will be available at <a href=\"https://{0}\">https://{0}</a>"
 msgstr "Sajti do të gjendet në <a href=\"https://{0}\">https://{0}</a>"
 
-#: plinth/modules/pagekite/utils.py:73
+#: plinth/modules/pagekite/utils.py:74
 msgid "Secure Shell (SSH)"
 msgstr "Shell i Sigurt (SSH)"
 
-#: plinth/modules/pagekite/utils.py:75
+#: plinth/modules/pagekite/utils.py:76
 msgid ""
 "See SSH client setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructions</a>"
@@ -5287,7 +5318,7 @@ msgstr ""
 "\">udhëzime</a> ujdisjeje klienti SSH"
 
 #: plinth/modules/performance/__init__.py:16
-#: plinth/modules/performance/__init__.py:42
+#: plinth/modules/performance/__init__.py:40
 msgid "Performance"
 msgstr "Funksionim"
 
@@ -5310,7 +5341,7 @@ msgstr ""
 "Matjet mbi funksionimin grumbullohen nga Performance Co-Pilot dhe mund të "
 "shihen duke përdorur aplikacionin Cockpit."
 
-#: plinth/modules/performance/__init__.py:43
+#: plinth/modules/performance/__init__.py:41
 msgid "System Monitoring"
 msgstr "Mbikëqyrje Sistemi"
 
@@ -5393,12 +5424,19 @@ msgstr ""
 "tjera hedhurina të papëlqyeshme Internet. "
 
 #: plinth/modules/privoxy/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use Privoxy by modifying your browser proxy settings to your "
+#| "{box_name} hostname (or IP address) with port 8118. While using Privoxy, "
+#| "you can see its configuration details and documentation at <a href="
+#| "\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a href="
+#| "\"http://p.p\">http://p.p</a>."
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
-"{box_name} hostname (or IP address) with port 8118. While using Privoxy, you "
-"can see its configuration details and documentation at <a href=\"http://"
-"config.privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
+"{box_name} hostname (or IP address) with port 8118. Only connections from "
+"local network IP addresses are permitted. While using Privoxy, you can see "
+"its configuration details and documentation at <a href=\"http://config."
+"privoxy.org\">http://config.privoxy.org/</a> or <a href=\"http://p.p"
 "\">http://p.p</a>."
 msgstr ""
 "Privoxy-në mund ta përdorni duke ndryshuar rregullimet e shfletuesit tuaj "
@@ -5407,15 +5445,15 @@ msgstr ""
 "për të mund të shihni te <a href=\"http://config.privoxy.org\">http://config."
 "privoxy.org/</a> ose <a href=\"http://p.p\">http://p.p</a>."
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:51
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: plinth/modules/privoxy/__init__.py:53
+#: plinth/modules/privoxy/__init__.py:52
 msgid "Web Proxy"
 msgstr "Ndërmjetës Web"
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:113
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Hapni {url} me ndërmjetësin {proxy} në tcp{kind}"
@@ -5449,11 +5487,11 @@ msgstr ""
 "\"http://quassel-irc.org/downloads\">desktopi</a> dhe <a href=\"http://"
 "quasseldroid.iskrembilen.com/\">celulari</a> juaj."
 
-#: plinth/modules/quassel/__init__.py:56 plinth/modules/quassel/manifest.py:9
+#: plinth/modules/quassel/__init__.py:54 plinth/modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
 
-#: plinth/modules/quassel/__init__.py:57
+#: plinth/modules/quassel/__init__.py:55
 msgid "IRC Client"
 msgstr "Klient IRC"
 
@@ -5487,12 +5525,12 @@ msgstr ""
 "të ri dhe librash adresash. Nuk mbulon shtim veprimtarish ose kontaktesh, "
 "çka duhen bërë duke përdorur një tjetër klient."
 
-#: plinth/modules/radicale/__init__.py:55
+#: plinth/modules/radicale/__init__.py:53
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:56
+#: plinth/modules/radicale/__init__.py:54
 msgid "Calendar and Addressbook"
 msgstr "Kalendar dhe Libër adresash"
 
@@ -5570,7 +5608,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Formësimi i të drejtave për hyrje u përditësua"
 
-#: plinth/modules/roundcube/__init__.py:21
+#: plinth/modules/roundcube/__init__.py:18
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5583,7 +5621,7 @@ msgstr ""
 "për MIME, libër adresash, manipulim dosjesh, kërkim në mesazhe dhe kontroll "
 "drejtshkrimi."
 
-#: plinth/modules/roundcube/__init__.py:26
+#: plinth/modules/roundcube/__init__.py:23
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5597,7 +5635,7 @@ msgstr ""
 "IMAP përmes SSL (e rekomanduar), plotësoni fushën e shërbyesit, bie fjala, "
 "<code>imaps://imap.shembull.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:31
+#: plinth/modules/roundcube/__init__.py:28
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5613,7 +5651,7 @@ msgstr ""
 "Google (<a href=\"https://www.google.com/settings/security/lesssecureapps"
 "\">https://www.google.com/settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:55
+#: plinth/modules/roundcube/__init__.py:50
 msgid "Email Client"
 msgstr "Klient Email"
 
@@ -5630,6 +5668,45 @@ msgstr ""
 "Kur aktivizohet, prej faqes së hyrjeve hiqet kuadrati për dhënie teksti "
 "kundrejt shërbyesit dhe përdoruesit mund të lexojnë dhe dërgojnë email-e "
 "vetëm prej këtij {box_name}."
+
+#: plinth/modules/rssbridge/__init__.py:20
+msgid ""
+"RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
+"Generated feeds can be consumed by any feed reader."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:23
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "When enabled, Tiny Tiny RSS can be accessed by any <a href="
+#| "\"{users_url}\">user with a {box_name} login</a>."
+msgid ""
+"When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
+"user</a> belonging to the feed-reader group."
+msgstr ""
+"Kur aktivizohet, Tiny Tiny RSS mund të përdoret nga cilido <a href="
+"\"{users_url}\">përdorues me kredenciale hyrjeje në {box_name}</a>."
+
+#: plinth/modules/rssbridge/__init__.py:27
+#, python-brace-format
+msgid ""
+"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+"follow various websites. When adding a feed, enable authentication and use "
+"your {box_name} credentials."
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:48
+msgid "Read and subscribe to news feeds"
+msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
+
+#: plinth/modules/rssbridge/__init__.py:48
+#: plinth/modules/rssbridge/manifest.py:10
+msgid "RSS-Bridge"
+msgstr ""
+
+#: plinth/modules/rssbridge/__init__.py:49
+msgid "RSS Feed Generator"
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5673,15 +5750,15 @@ msgstr ""
 "Pjesë Home - cilido përdorues në grupin freedombox-share mund të ketë "
 "hapësirën e vet private."
 
-#: plinth/modules/samba/__init__.py:56
+#: plinth/modules/samba/__init__.py:54
 msgid "Access to the private shares"
 msgstr "Hyrje te ndarje private"
 
-#: plinth/modules/samba/__init__.py:59
+#: plinth/modules/samba/__init__.py:57
 msgid "Samba"
 msgstr "Samba"
 
-#: plinth/modules/samba/__init__.py:60
+#: plinth/modules/samba/__init__.py:58
 msgid "Network File Storage"
 msgstr "Depozitë Kartelash Në Rrjet"
 
@@ -5815,15 +5892,15 @@ msgstr ""
 "Searx mund të përdoret për të shmangur gjurmim dhe profilizim nga motorë "
 "kërkimesh. Si parazgjedhje, nuk depoziton cookies."
 
-#: plinth/modules/searx/__init__.py:42
+#: plinth/modules/searx/__init__.py:40
 msgid "Search the web"
 msgstr "Kërkoni në internet"
 
-#: plinth/modules/searx/__init__.py:45 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:43 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:46
+#: plinth/modules/searx/__init__.py:44
 msgid "Web Search"
 msgstr "Kërkim në Web"
 
@@ -5920,7 +5997,7 @@ msgstr ""
 "kontribues te Debian dhe bashkësia %(box_name)s."
 
 #: plinth/modules/security/templates/security_report.html:10
-#: plinth/modules/security/views.py:74
+#: plinth/modules/security/views.py:78
 msgid "Security Report"
 msgstr "Raport Sigurie"
 
@@ -5998,12 +6075,12 @@ msgstr "Jo"
 msgid "Not running"
 msgstr "S’xhiron"
 
-#: plinth/modules/security/views.py:56
+#: plinth/modules/security/views.py:60
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
 msgstr "Gabim në ujdisje hyrjeje të kufizuar: {exception}"
 
-#: plinth/modules/security/views.py:59
+#: plinth/modules/security/views.py:63
 msgid "Updated security configuration"
 msgstr "U përditësua formësim sigurie"
 
@@ -6019,11 +6096,11 @@ msgstr ""
 "Mbani parasysh se Shaarli mbulon vetëm një llogari të vetme përdoruesi, të "
 "cilën duhet ta ujdisni gjatë vizitës fillestare."
 
-#: plinth/modules/shaarli/__init__.py:38 plinth/modules/shaarli/manifest.py:25
+#: plinth/modules/shaarli/__init__.py:36 plinth/modules/shaarli/manifest.py:25
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: plinth/modules/shaarli/__init__.py:39
+#: plinth/modules/shaarli/__init__.py:37
 msgid "Bookmarks"
 msgstr "Faqerojtës"
 
@@ -6063,11 +6140,11 @@ msgstr ""
 "pajisjen, shfletuesin ose aplikacionin tuaj caktoni http://"
 "freedombox_address:1080/"
 
-#: plinth/modules/shadowsocks/__init__.py:51
+#: plinth/modules/shadowsocks/__init__.py:49
 msgid "Shadowsocks"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:53
+#: plinth/modules/shadowsocks/__init__.py:51
 msgid "Socks5 Proxy"
 msgstr "Ndërmjetës SOCKS5"
 
@@ -6098,7 +6175,7 @@ msgstr ""
 msgid "Encryption method. Must match setting on server."
 msgstr "Metodë fshehtëzimi. Duhet të përputhet me atë të caktuar te shërbyesi."
 
-#: plinth/modules/sharing/__init__.py:20
+#: plinth/modules/sharing/__init__.py:21
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -6107,7 +6184,7 @@ msgstr ""
 "Dhënia ju lejon të ndani nëpër internet kartela dhe dosje në {box_name}-in "
 "tuaj me grupe dhe përdorues të zgjedhur nga ju."
 
-#: plinth/modules/sharing/__init__.py:39
+#: plinth/modules/sharing/__init__.py:38
 msgid "Sharing"
 msgstr "Dhënie"
 
@@ -6161,28 +6238,28 @@ msgstr "Ka tashmë një pjesë me këtë emër."
 msgid "Shares should be either public or shared with at least one group"
 msgstr "Pjesët duhet të jenë ose publike, ose të ndara me të paktën një grup"
 
-#: plinth/modules/sharing/templates/sharing.html:19
-#: plinth/modules/sharing/templates/sharing.html:22
+#: plinth/modules/sharing/templates/sharing.html:18
+#: plinth/modules/sharing/templates/sharing.html:21
 msgid "Add share"
 msgstr "Shtoni pjesë"
 
-#: plinth/modules/sharing/templates/sharing.html:27
+#: plinth/modules/sharing/templates/sharing.html:26
 msgid "No shares currently configured."
 msgstr "Aktualisht s’ka pjesë të formësuar."
 
-#: plinth/modules/sharing/templates/sharing.html:34
+#: plinth/modules/sharing/templates/sharing.html:33
 msgid "Disk Path"
 msgstr "Shteg Disku"
 
-#: plinth/modules/sharing/templates/sharing.html:35
+#: plinth/modules/sharing/templates/sharing.html:34
 msgid "Shared Over"
 msgstr "Ndarë Përmes"
 
-#: plinth/modules/sharing/templates/sharing.html:36
+#: plinth/modules/sharing/templates/sharing.html:35
 msgid "With Groups"
 msgstr "Me Grupe"
 
-#: plinth/modules/sharing/templates/sharing.html:53
+#: plinth/modules/sharing/templates/sharing.html:52
 msgid "public access"
 msgstr "hyrje publike"
 
@@ -6341,7 +6418,7 @@ msgstr "Datë"
 
 #: plinth/modules/snapshot/templates/snapshot_delete_selected.html:42
 #: plinth/modules/snapshot/templates/snapshot_manage.html:20
-#: plinth/modules/snapshot/views.py:196
+#: plinth/modules/snapshot/views.py:203
 msgid "Delete Snapshots"
 msgstr "Fshi Fotografime"
 
@@ -6395,54 +6472,54 @@ msgstr ""
 msgid "Rollback to Snapshot #%(number)s"
 msgstr "Prapaktheje te Fotografimi #%(number)s"
 
-#: plinth/modules/snapshot/views.py:27
+#: plinth/modules/snapshot/views.py:29
 msgid "manually created"
 msgstr "krijuar dorazi"
 
-#: plinth/modules/snapshot/views.py:28
+#: plinth/modules/snapshot/views.py:30
 msgid "timeline"
 msgstr "rrjedhë kohore"
 
-#: plinth/modules/snapshot/views.py:29
+#: plinth/modules/snapshot/views.py:31
 msgid "apt"
 msgstr "apt"
 
-#: plinth/modules/snapshot/views.py:39
+#: plinth/modules/snapshot/views.py:41
 msgid "Manage Snapshots"
 msgstr "Administroni Fotografime"
 
-#: plinth/modules/snapshot/views.py:88
+#: plinth/modules/snapshot/views.py:94
 msgid "Created snapshot."
 msgstr "U krijua fotografim."
 
-#: plinth/modules/snapshot/views.py:151
+#: plinth/modules/snapshot/views.py:158
 msgid "Storage snapshots configuration updated"
 msgstr "U përditësua formësim për depozitim fotografimesh"
 
-#: plinth/modules/snapshot/views.py:155 plinth/modules/tor/views.py:62
+#: plinth/modules/snapshot/views.py:162
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
 msgstr "Gabim veprimi: {0} [{1}] [{2}]"
 
-#: plinth/modules/snapshot/views.py:183
+#: plinth/modules/snapshot/views.py:190
 msgid "Deleted selected snapshots"
 msgstr "U fshinë fotografimet e përzgjedhur"
 
-#: plinth/modules/snapshot/views.py:188
+#: plinth/modules/snapshot/views.py:195
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 "Fotografimi është aktualisht në përdorim. Ju lutemi, riprovoni më vonë."
 
-#: plinth/modules/snapshot/views.py:207
+#: plinth/modules/snapshot/views.py:214
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "U kthye prapa te fotografimi #{number}."
 
-#: plinth/modules/snapshot/views.py:210
+#: plinth/modules/snapshot/views.py:217
 msgid "The system must be restarted to complete the rollback."
 msgstr "Që të plotësohet prapakthimi, duhet rinisur sistemi."
 
-#: plinth/modules/snapshot/views.py:222
+#: plinth/modules/snapshot/views.py:229
 msgid "Rollback to Snapshot"
 msgstr "Prapaktheje te Fotografim"
 
@@ -6458,7 +6535,7 @@ msgstr ""
 "një kompjuter i largët i autorizuar mund të kryejë punë administrimi, të "
 "kopjojë kartela ose të xhirojë shërbime të tjera."
 
-#: plinth/modules/ssh/__init__.py:45
+#: plinth/modules/ssh/__init__.py:43
 msgid "Secure Shell (SSH) Server"
 msgstr "Shërbyes Shelli të Sigurt (SSH)"
 
@@ -6504,7 +6581,7 @@ msgstr "Mirëfilltësimi SSH me fjalëkalim u çaktivizua."
 msgid "SSH authentication with password enabled."
 msgstr "Mirëfilltësimi SSH me fjalëkalim u aktivizua."
 
-#: plinth/modules/sso/__init__.py:28
+#: plinth/modules/sso/__init__.py:26
 msgid "Single Sign On"
 msgstr "Hyrje Njëshe"
 
@@ -6528,107 +6605,107 @@ msgstr ""
 "përdorim, të montoni dhe çmontoni media të heqshme, të zgjeroni pjesën "
 "rrënjë, etj."
 
-#: plinth/modules/storage/__init__.py:51 plinth/modules/storage/__init__.py:322
-#: plinth/modules/storage/__init__.py:353
+#: plinth/modules/storage/__init__.py:49 plinth/modules/storage/__init__.py:319
+#: plinth/modules/storage/__init__.py:350
 msgid "Storage"
 msgstr "Depozitë"
 
-#: plinth/modules/storage/__init__.py:216
+#: plinth/modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajte"
 
-#: plinth/modules/storage/__init__.py:220
+#: plinth/modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:224
+#: plinth/modules/storage/__init__.py:235
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:231
+#: plinth/modules/storage/__init__.py:242
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:254
 msgid "The operation failed."
 msgstr "Veprimi dështoi."
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation was cancelled."
 msgstr "Veprimi u anulua."
 
-#: plinth/modules/storage/__init__.py:247
+#: plinth/modules/storage/__init__.py:258
 msgid "The device is already unmounting."
 msgstr "Pajisja po çmontohet tashmë."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Veprimi nuk mbulohet, për shkak se mungon mbulimi për përudhësin/mjetin."
 
-#: plinth/modules/storage/__init__.py:252
+#: plinth/modules/storage/__init__.py:263
 msgid "The operation timed out."
 msgstr "Veprimit i mbaroi koha."
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:265
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Veprimi do të zgjonte një disk që është në gjendjen “deep-sleep”."
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:268
 msgid "Attempting to unmount a device that is busy."
 msgstr "Po përpiqet të çmontohet një pajisje që është e zënë."
 
-#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:270
 msgid "The operation has already been cancelled."
 msgstr "Veprimi është anuluar tashmë."
 
-#: plinth/modules/storage/__init__.py:261
-#: plinth/modules/storage/__init__.py:263
-#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:272
+#: plinth/modules/storage/__init__.py:274
+#: plinth/modules/storage/__init__.py:276
 msgid "Not authorized to perform the requested operation."
 msgstr "I paautorizuar për kryerjen e veprimit të kërkuar."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:278
 msgid "The device is already mounted."
 msgstr "Pajisja është e çmontuar tashmë."
 
-#: plinth/modules/storage/__init__.py:269
+#: plinth/modules/storage/__init__.py:280
 msgid "The device is not mounted."
 msgstr "Pajisja s’është e montuar."
 
-#: plinth/modules/storage/__init__.py:271
+#: plinth/modules/storage/__init__.py:282
 msgid "Not permitted to use the requested option."
 msgstr "S’i lejohet të përdorë mundësinë e kërkuar."
 
-#: plinth/modules/storage/__init__.py:273
+#: plinth/modules/storage/__init__.py:284
 msgid "The device is mounted by another user."
 msgstr "Pajisja është montuar nga tjetër përdorues."
 
-#: plinth/modules/storage/__init__.py:317
+#: plinth/modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Hapësirë e ulët në pjesë sistemi: {percent_used}% të përdorura, {free_space} "
 "të lira."
 
-#: plinth/modules/storage/__init__.py:319
+#: plinth/modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Hapësirë disku e pamjaftueshme"
 
-#: plinth/modules/storage/__init__.py:347
+#: plinth/modules/storage/__init__.py:344
 msgid "Disk failure imminent"
 msgstr "Shumë afër dështimi disku"
 
-#: plinth/modules/storage/__init__.py:349
+#: plinth/modules/storage/__init__.py:346
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6783,16 +6860,16 @@ msgstr ""
 "Ndërfaqja web te {box_name} është e përdorshme vetëm nga përdorues që i "
 "përkasin grupit “përgjegjës”, ose atij “syncthing-access”."
 
-#: plinth/modules/syncthing/__init__.py:57
+#: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
 msgstr "Administroni aplikacionin Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:61
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:62
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Njëkohësim Kartelash"
 
@@ -6818,40 +6895,40 @@ msgid ""
 "TCP port 9050."
 msgstr "Një portë SOCKS Tor-i në %(box_name)s tuaj gjendet në portën TCP 9050."
 
-#: plinth/modules/tor/__init__.py:54
+#: plinth/modules/tor/__init__.py:52
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:71
+#: plinth/modules/tor/__init__.py:69
 msgid "Tor Onion Service"
 msgstr "Shërbim Onion Tor"
 
-#: plinth/modules/tor/__init__.py:75
+#: plinth/modules/tor/__init__.py:73
 msgid "Tor Socks Proxy"
 msgstr "Ndërmjetës SOCKS Tor"
 
-#: plinth/modules/tor/__init__.py:79
+#: plinth/modules/tor/__init__.py:77
 msgid "Tor Bridge Relay"
 msgstr "Rele Ure Tor"
 
-#: plinth/modules/tor/__init__.py:121
+#: plinth/modules/tor/__init__.py:132
 msgid "Tor relay port available"
 msgstr "Portë releje Tor e gatshme"
 
-#: plinth/modules/tor/__init__.py:131
+#: plinth/modules/tor/__init__.py:142
 msgid "Obfs3 transport registered"
 msgstr "U regjistruar transport Obfs3"
 
-#: plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:152
 msgid "Obfs4 transport registered"
 msgstr "U regjistruar transport Obfs3"
 
-#: plinth/modules/tor/__init__.py:210
+#: plinth/modules/tor/__init__.py:220
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "URL hyrjesh {url} në tcp{kind} përmes Tor-i"
 
-#: plinth/modules/tor/__init__.py:221
+#: plinth/modules/tor/__init__.py:231
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Ripohoni përdorim Tor-i te {url} në tcp{kind}"
@@ -6862,15 +6939,11 @@ msgid ""
 msgstr ""
 "Jepni një urë të vlefshme me këtë format: [transport] IP:ORPort [fingerprint]"
 
-#: plinth/modules/tor/forms.py:75
-msgid "Enable Tor"
-msgstr "Aktivizo Tor-in"
-
-#: plinth/modules/tor/forms.py:77
+#: plinth/modules/tor/forms.py:76
 msgid "Use upstream bridges to connect to Tor network"
 msgstr "Përdorni ura “upstream” që të lidheni në rrjetin Tor"
 
-#: plinth/modules/tor/forms.py:79
+#: plinth/modules/tor/forms.py:78
 msgid ""
 "When enabled, the bridges configured below will be used to connect to the "
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
@@ -6881,11 +6954,11 @@ msgstr ""
 "Internet (ISP) bllokon ose censuron lidhjet në Rrjetin Tor. Kjo do të "
 "çaktivizojë mënyrat rele."
 
-#: plinth/modules/tor/forms.py:84
+#: plinth/modules/tor/forms.py:83
 msgid "Upstream bridges"
 msgstr "Ura “upstream”"
 
-#: plinth/modules/tor/forms.py:86
+#: plinth/modules/tor/forms.py:85
 msgid ""
 "You can get some bridges from <a href=\"https://bridges.torproject.org/"
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
@@ -6897,11 +6970,11 @@ msgstr ""
 "em&gt;obfs3&lt;/em&gt;, &lt;em&gt;obfs4&lt;/em&gt; dhe &lt;em&gt;"
 "scamblesuit&lt;/em&gt;."
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:91
 msgid "Enable Tor relay"
 msgstr "Aktivizo rele Tor"
 
-#: plinth/modules/tor/forms.py:93
+#: plinth/modules/tor/forms.py:92
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -6912,11 +6985,11 @@ msgstr ""
 "dhurojë gjerësi bande për rrjetin Tor. Bëjeni këtë nëse keni gjerësi bande "
 "ngarkimesh dhe shkarkimesh më tepër se 2 megabite/s."
 
-#: plinth/modules/tor/forms.py:98
+#: plinth/modules/tor/forms.py:97
 msgid "Enable Tor bridge relay"
 msgstr "Aktivizo rele ure Tor"
 
-#: plinth/modules/tor/forms.py:100
+#: plinth/modules/tor/forms.py:99
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -6927,11 +7000,11 @@ msgstr ""
 "më të vështirë censurimin e kësaj nyjeje. Kjo i ndihmon të tjerët të "
 "anashkalojnë censurimin."
 
-#: plinth/modules/tor/forms.py:105
+#: plinth/modules/tor/forms.py:104
 msgid "Enable Tor Hidden Service"
 msgstr "Aktivizo Shërbim Tor të Fshehur"
 
-#: plinth/modules/tor/forms.py:107
+#: plinth/modules/tor/forms.py:106
 #, python-brace-format
 msgid ""
 "A hidden service will allow {box_name} to provide selected services (such as "
@@ -6942,11 +7015,11 @@ msgstr ""
 "përzgjedhura (bie fjala, wiki, ose fjalosje) pa treguar vendndodhjen e tyre. "
 "Mos e përdorni këtë ende për anonimitet të fortë."
 
-#: plinth/modules/tor/forms.py:112
+#: plinth/modules/tor/forms.py:111
 msgid "Download software packages over Tor"
 msgstr "Shkarkoni paketa software përmes Tor-i"
 
-#: plinth/modules/tor/forms.py:113
+#: plinth/modules/tor/forms.py:112
 msgid ""
 "When enabled, software will be downloaded over the Tor network for "
 "installations and upgrades. This adds a degree of privacy and security "
@@ -6956,7 +7029,7 @@ msgstr ""
 "përmes rrjeti Tor. Kjo shton një shkallë privatësie dhe sigurie gjatë "
 "shkarkimit të software-it."
 
-#: plinth/modules/tor/forms.py:128
+#: plinth/modules/tor/forms.py:127
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
 "Që të përdoren ura “upstream”, përcaktoni të paktën një urë “upstream”."
@@ -6969,21 +7042,25 @@ msgstr "Shfletuesi Tor"
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Ndërmjetës me Tor"
 
-#: plinth/modules/tor/templates/tor.html:16
-msgid "Tor configuration is being updated"
-msgstr "Formësimi i Tor-it po përditësohet"
-
-#: plinth/modules/tor/templates/tor.html:26
+#: plinth/modules/tor/templates/tor.html:18
 msgid "Onion Service"
 msgstr "Shërbim Onion"
 
-#: plinth/modules/tor/templates/tor.html:28
+#: plinth/modules/tor/templates/tor.html:20
 msgid "Ports"
 msgstr "Porta"
 
-#: plinth/modules/tor/views.py:139 plinth/views.py:222
-msgid "Setting unchanged"
-msgstr "Rregullim i pandryshuar"
+#: plinth/modules/tor/views.py:55
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "Updating configuration"
+msgstr "Ndodhi një gabim gjatë formësimit."
+
+#: plinth/modules/tor/views.py:72
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error configuring app: {error}"
+msgstr "Gabim në instalimin e aplikacionit: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7034,7 +7111,7 @@ msgid ""
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:68
+#: plinth/modules/transmission/__init__.py:66
 #: plinth/modules/transmission/manifest.py:6
 msgid "Transmission"
 msgstr "Transmission"
@@ -7070,15 +7147,11 @@ msgstr ""
 "dekstop, përdorni URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> për t’u "
 "lidhur."
 
-#: plinth/modules/ttrss/__init__.py:50
-msgid "Read and subscribe to news feeds"
-msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
-
-#: plinth/modules/ttrss/__init__.py:53 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:51 plinth/modules/ttrss/manifest.py:18
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:54
+#: plinth/modules/ttrss/__init__.py:52
 msgid "News Feed Reader"
 msgstr "Lexues Prurjesh Lajmesh"
 
@@ -7105,22 +7178,22 @@ msgstr ""
 "rinisja e sistemit shihet si e domosdoshme, bëhet automatikisht më 02:00, "
 "duke bërë që krejt aplikacionet të jenë jashtë funksionimi për ca çaste."
 
-#: plinth/modules/upgrades/__init__.py:74
-#: plinth/modules/upgrades/__init__.py:129
+#: plinth/modules/upgrades/__init__.py:72
+#: plinth/modules/upgrades/__init__.py:127
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Përditësim Software-i"
 
-#: plinth/modules/upgrades/__init__.py:132
+#: plinth/modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox-i u Përditësua"
 
-#: plinth/modules/upgrades/__init__.py:217
+#: plinth/modules/upgrades/__init__.py:222
 msgid "Could not start distribution update"
 msgstr "S’u fillua dot përditësim shpërndarjeje"
 
-#: plinth/modules/upgrades/__init__.py:219
+#: plinth/modules/upgrades/__init__.py:224
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7131,11 +7204,11 @@ msgstr ""
 "Përditësimi i shpërndarjes do të riprovohet pas 24 orësh, nëse kjo është "
 "aktivizuar."
 
-#: plinth/modules/upgrades/__init__.py:230
+#: plinth/modules/upgrades/__init__.py:235
 msgid "Distribution update started"
 msgstr "Përditësimi i shpërndarjes filloi"
 
-#: plinth/modules/upgrades/__init__.py:232
+#: plinth/modules/upgrades/__init__.py:237
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7230,6 +7303,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
 #: plinth/templates/notifications.html:44
+#: plinth/templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "Hidhe tej"
 
@@ -7297,39 +7371,63 @@ msgstr ""
 msgid "Show recent update logs"
 msgstr "Shfaq regjistra të freskët përditësimesh"
 
-#: plinth/modules/upgrades/views.py:67
+#: plinth/modules/upgrades/templates/upgrades_configure.html:138
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Test Distribution Upgrade"
+msgstr "Me përmirësim shpërndarjeje të aktivizuar"
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:140
+msgid ""
+"This will attempt to upgrade the system from stable to testing. <strong>It "
+"is meant only for development use.</strong>"
+msgstr ""
+
+#: plinth/modules/upgrades/templates/upgrades_configure.html:150
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Test distribution upgrade now"
+msgstr "Me përmirësim shpërndarjeje të aktivizuar"
+
+#: plinth/modules/upgrades/views.py:68
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
 msgstr ""
 "Gabim teksa formësohej &lt;em&gt;unattended-upgrades&lt;/em&gt;: {error}"
 
-#: plinth/modules/upgrades/views.py:71
+#: plinth/modules/upgrades/views.py:72
 msgid "Automatic upgrades enabled"
 msgstr "U aktivizuan përmirësime të automatizuara"
 
-#: plinth/modules/upgrades/views.py:74
+#: plinth/modules/upgrades/views.py:75
 msgid "Automatic upgrades disabled"
 msgstr "Përmirësimet e vetvetishme janë çaktivizuar"
 
-#: plinth/modules/upgrades/views.py:82
+#: plinth/modules/upgrades/views.py:83
 msgid "Distribution upgrade enabled"
 msgstr "Me përmirësim shpërndarjeje të aktivizuar"
 
-#: plinth/modules/upgrades/views.py:85
+#: plinth/modules/upgrades/views.py:86
 msgid "Distribution upgrade disabled"
 msgstr "Me përmirësim shpërndarjeje të çaktivizuar"
 
-#: plinth/modules/upgrades/views.py:127
+#: plinth/modules/upgrades/views.py:128
 msgid "Upgrade process started."
 msgstr "Procesi i përmirësimit filloi."
 
-#: plinth/modules/upgrades/views.py:129
+#: plinth/modules/upgrades/views.py:130
 msgid "Starting upgrade failed."
 msgstr "Nisja e përmirësimi dështoi."
 
-#: plinth/modules/upgrades/views.py:139
+#: plinth/modules/upgrades/views.py:140
 msgid "Frequent feature updates activated."
 msgstr "Përditësime të shpeshta veçorish të aktivizuara."
+
+#: plinth/modules/upgrades/views.py:223
+#, fuzzy
+#| msgid "Distribution upgrade enabled"
+msgid "Starting distribution upgrade test."
+msgstr "Me përmirësim shpërndarjeje të aktivizuar"
 
 #: plinth/modules/users/__init__.py:29
 #, fuzzy
@@ -7359,15 +7457,15 @@ msgstr ""
 "vetëm përdoruesit e grupit <em>përgjegjës</em> mund të ndryshojnë "
 "aplikacionet, apo rregullimet e sistemit."
 
-#: plinth/modules/users/__init__.py:57
+#: plinth/modules/users/__init__.py:55
 msgid "Users and Groups"
 msgstr "Përdorues dhe Grupe"
 
-#: plinth/modules/users/__init__.py:77
+#: plinth/modules/users/__init__.py:75
 msgid "Access to all services and system settings"
 msgstr "Hyrje te krejt shërbimet dhe rregullime të sistemit"
 
-#: plinth/modules/users/__init__.py:113
+#: plinth/modules/users/__init__.py:111
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Kontrolloni zërin LDAP \"{search_item}\""
@@ -8003,12 +8101,12 @@ msgstr ""
 "ose tema shtesë mund të instalohet dhe përmirësohen duke e marrë ju përsipër "
 "rrezikun."
 
-#: plinth/modules/wordpress/__init__.py:58
+#: plinth/modules/wordpress/__init__.py:56
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:59
+#: plinth/modules/wordpress/__init__.py:57
 msgid "Website and Blog"
 msgstr "Sajt dhe Blog"
 
@@ -8058,11 +8156,11 @@ msgstr ""
 "Zoph. Për përdorues të tjerë, llogaritë mund të krijohen si në {box_name}, "
 "ashtu edhe në Zoph, me të njëjtin emër përdoruesi."
 
-#: plinth/modules/zoph/__init__.py:58 plinth/modules/zoph/manifest.py:6
+#: plinth/modules/zoph/__init__.py:56 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
 
-#: plinth/modules/zoph/__init__.py:59
+#: plinth/modules/zoph/__init__.py:57
 msgid "Photo Organizer"
 msgstr "Sistemues Fotografish"
 
@@ -8100,37 +8198,135 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Elementar"
 
-#: plinth/package.py:188
+#: plinth/operation.py:116
+#, fuzzy, python-brace-format
+#| msgid "Error setting hostname: {exception}"
+msgid "Error: {name}: {exception_message}"
+msgstr "Gabim në caktim strehëemri: {exception}"
+
+#: plinth/operation.py:119
+#, python-brace-format
+msgid "Waiting to start: {name}"
+msgstr ""
+
+#: plinth/operation.py:125
+#, python-brace-format
+msgid "Finished: {name}"
+msgstr ""
+
+#: plinth/package.py:191
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:201
+#: plinth/package.py:204
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 "Paketa {package_name} gjendet nën versionin më të ri ({latest_version})"
 
-#: plinth/package.py:355
-msgid "Error during installation"
-msgstr "Gabim gjatë instalimit"
+#: plinth/package.py:367
+#, fuzzy
+#| msgid "Error During Backup"
+msgid "Error running apt-get"
+msgstr "Gabim Gjatë Kopjeruajtjes"
 
-#: plinth/package.py:377
+#: plinth/package.py:389
 msgid "installing"
 msgstr "po instalohet"
 
-#: plinth/package.py:379
+#: plinth/package.py:391
 msgid "downloading"
 msgstr "po shkarkohet"
 
-#: plinth/package.py:381
+#: plinth/package.py:393
 msgid "media change"
 msgstr "ndryshim media"
 
-#: plinth/package.py:383
+#: plinth/package.py:395
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "kartelë formësimi: {file}"
+
+#: plinth/package.py:423 plinth/package.py:448
+msgid "Timeout waiting for package manager"
+msgstr ""
+
+#: plinth/setup.py:40
+#, fuzzy
+#| msgid "Install Apps"
+msgid "Installing app"
+msgstr "Instaloni Aplikacione"
+
+#: plinth/setup.py:42
+#, fuzzy
+#| msgid "Updating..."
+msgid "Updating app"
+msgstr "Po përditësohet…"
+
+#: plinth/setup.py:68
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {string} {details}"
+msgid "Error installing app: {string} {details}"
+msgstr "Gabim në instalimin e aplikacionit: {string} {details}"
+
+#: plinth/setup.py:72
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {string} {details}"
+msgid "Error updating app: {string} {details}"
+msgstr "Gabim në instalimin e aplikacionit: {string} {details}"
+
+#: plinth/setup.py:78
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error installing app: {error}"
+msgstr "Gabim në instalimin e aplikacionit: {error}"
+
+#: plinth/setup.py:81
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error updating app: {error}"
+msgstr "Gabim në instalimin e aplikacionit: {error}"
+
+#: plinth/setup.py:85
+#, fuzzy
+#| msgid "Application installed."
+msgid "App installed."
+msgstr "Aplikacioni u instalua."
+
+#: plinth/setup.py:87
+#, fuzzy
+#| msgid "Last update"
+msgid "App updated"
+msgstr "Përditësimi i fundit më"
+
+#: plinth/setup.py:104
+#, fuzzy
+#| msgid "Install Apps"
+msgid "Uninstalling app"
+msgstr "Instaloni Aplikacione"
+
+#: plinth/setup.py:122
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {string} {details}"
+msgid "Error uninstalling app: {string} {details}"
+msgstr "Gabim në instalimin e aplikacionit: {string} {details}"
+
+#: plinth/setup.py:128
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error uninstalling app: {error}"
+msgstr "Gabim në instalimin e aplikacionit: {error}"
+
+#: plinth/setup.py:131
+#, fuzzy
+#| msgid "Application installed."
+msgid "App uninstalled."
+msgstr "Aplikacioni u instalua."
+
+#: plinth/setup.py:451
+msgid "Updating app packages"
+msgstr ""
 
 #: plinth/templates/403.html:10
 msgid "403 Forbidden"
@@ -8182,7 +8378,7 @@ msgstr ""
 msgid "Installation"
 msgstr "Instalim"
 
-#: plinth/templates/app.html:29
+#: plinth/templates/app.html:30
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Shërbimi <em>%(service_name)s</em> s’po xhiron."
@@ -8451,6 +8647,10 @@ msgstr "Nga Porta Rrugëzuesi/WAN-i"
 msgid "To %(box_name)s Ports"
 msgstr "Te Porta të %(box_name)s"
 
+#: plinth/templates/setup.html:18
+msgid "Application installed."
+msgstr "Aplikacioni u instalua."
+
 #: plinth/templates/setup.html:24
 msgid "Install this application?"
 msgstr "Të instalohet aplikacionin?"
@@ -8460,22 +8660,14 @@ msgid "This application needs an update. Update now?"
 msgstr "Ky aplikacion lyp një përditësim. Të përditësohet tani?"
 
 #: plinth/templates/setup.html:39
-msgid ""
-"Another installation or upgrade is already running. Please wait for a few "
-"moments before trying again."
-msgstr ""
-"Po xhirohet tashmë një tjetër instalim ose përmirësim. Ju lutemi, pritni pak "
-"çaste, përpara se të riprovoni."
-
-#: plinth/templates/setup.html:46
 msgid "This application is currently not available in your distribution."
 msgstr "Ky aplikacion aktualisht s’mund të kihet në shpërndarjen tuaj."
 
-#: plinth/templates/setup.html:50
+#: plinth/templates/setup.html:43
 msgid "Check again"
 msgstr "Rikontrollo"
 
-#: plinth/templates/setup.html:55
+#: plinth/templates/setup.html:48
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -8485,35 +8677,106 @@ msgstr ""
 "kanë përplasje me instalimin e këtij aplikacioni. Paketa vijuese do të "
 "hiqen, nëse vazhdoni më tej:"
 
-#: plinth/templates/setup.html:71
+#: plinth/templates/setup.html:64
 msgid "Install"
 msgstr "Instaloje"
 
-#: plinth/templates/setup.html:73
+#: plinth/templates/setup.html:66
 msgid "Update"
 msgstr "Përditësoje"
 
-#: plinth/templates/setup.html:83
-msgid "Performing pre-install operation"
-msgstr "Po kryhet veprim para-instalimi"
+#: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
+#: plinth/templates/uninstall.html:36
+#, fuzzy
+#| msgid "Install"
+msgid "Uninstall"
+msgstr "Instaloje"
 
-#: plinth/templates/setup.html:88
-msgid "Performing post-install operation"
-msgstr "Po kryhet veprim pas-instalimi"
+#: plinth/templates/uninstall.html:11
+#, fuzzy, python-format
+#| msgid "Edit User <em>%(username)s</em>"
+msgid "Uninstall App <em>%(app_name)s</em>?"
+msgstr "Përpunoni Përdoruesin <em>%(username)s</em>"
 
-#: plinth/templates/setup.html:94
-#, python-format
-msgid "Installing %(package_names)s: %(status)s"
-msgstr "Po instalohet %(package_names)s: %(status)s"
+#: plinth/templates/uninstall.html:17
+msgid "Uninstalling an app is an exprimental feature."
+msgstr ""
 
-#: plinth/templates/setup.html:104
-#, python-format
-msgid "%(percentage)s%% complete"
-msgstr "%(percentage)s%% e plotësuar"
+#: plinth/templates/uninstall.html:23
+msgid ""
+"All app data and configuration will be permanently lost. App may be "
+"installed freshly again."
+msgstr ""
+
+#: plinth/views.py:221
+msgid "Setting unchanged"
+msgstr "Rregullim i pandryshuar"
+
+#: plinth/views.py:401
+#, python-brace-format
+msgid "before uninstall of {app_id}"
+msgstr ""
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid "Network Connections"
+#~ msgstr "Lidhje Rrjeti"
+
+#~ msgid "Enable Tor"
+#~ msgstr "Aktivizo Tor-in"
+
+#~ msgid "Tor configuration is being updated"
+#~ msgstr "Formësimi i Tor-it po përditësohet"
+
+#~ msgid "Error during installation"
+#~ msgstr "Gabim gjatë instalimit"
+
+#, python-brace-format
+#~ msgid "Using DNSSEC on IPv{kind}"
+#~ msgstr "Po përdoret DNSSEC në IPv{kind}"
+
+#~ msgid ""
+#~ "Another installation or upgrade is already running. Please wait for a few "
+#~ "moments before trying again."
+#~ msgstr ""
+#~ "Po xhirohet tashmë një tjetër instalim ose përmirësim. Ju lutemi, pritni "
+#~ "pak çaste, përpara se të riprovoni."
+
+#~ msgid "Performing pre-install operation"
+#~ msgstr "Po kryhet veprim para-instalimi"
+
+#~ msgid "Performing post-install operation"
+#~ msgstr "Po kryhet veprim pas-instalimi"
+
+#, python-format
+#~ msgid "Installing %(package_names)s: %(status)s"
+#~ msgstr "Po instalohet %(package_names)s: %(status)s"
+
+#, python-format
+#~ msgid "%(percentage)s%% complete"
+#~ msgstr "%(percentage)s%% e plotësuar"
+
+#~ msgid ""
+#~ "Cockpit requires that you access it through a domain name. It will not "
+#~ "work when accessed using an IP address as part of the URL."
+#~ msgstr ""
+#~ "Cockpit lyp përdorim që nga një emër përkatësie. S’do të funksionojë, "
+#~ "nëse provohet duke përdorur një adresë IP, si pjesë e URL-së."
+
+#~ msgid "Access"
+#~ msgstr "Hyrje"
+
+#~ msgid "Cockpit will only work when accessed using the following URLs."
+#~ msgstr ""
+#~ "Cockpit do të funksionojë vetëm kur në të hyhet duke përdorur URL-të "
+#~ "vijuese."
+
+#, fuzzy
+#~| msgid "Web Server"
+#~ msgid "WebRTC server"
+#~ msgstr "Shërbyes"
 
 #~ msgid "Server URL"
 #~ msgstr "URL shërbyesi"
@@ -8947,11 +9210,6 @@ msgstr "Gujaratase"
 #~| msgid "Error setting domain name: {exception}"
 #~ msgid "Postfix domain name config"
 #~ msgstr "Gabim në caktimin e emrin të përkatësisë: {exception}"
-
-#, fuzzy
-#~| msgid "An error occurred during configuration."
-#~ msgid "Error updating configuration"
-#~ msgstr "Ndodhi një gabim gjatë formësimit."
 
 #, fuzzy
 #~| msgid "Directory does not exist."

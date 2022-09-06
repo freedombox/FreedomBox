@@ -40,8 +40,6 @@ _description = [
       'be installed and upgraded at your own risk.'),
 ]
 
-app = None
-
 
 class WordPressApp(app_module.App):
     """FreedomBox app for WordPress."""
@@ -83,8 +81,6 @@ class WordPressApp(app_module.App):
                 'php',
                 # Optional, for performance
                 'php-imagick',
-                # Optional, to upload plugins/themes using SSH connection
-                'php-ssh2',
                 # Optional, for performance
                 'php-zip',
                 # WordPress only supports MySQL/MariaDB as DB
@@ -107,6 +103,13 @@ class WordPressApp(app_module.App):
                                                 **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('wordpress', ['setup'])
+        if not old_version:
+            self.enable()
+
 
 class WordPressBackupRestore(BackupRestore):
     """Component to backup/restore WordPress."""
@@ -120,11 +123,3 @@ class WordPressBackupRestore(BackupRestore):
         """Restore database contents."""
         super().restore_post(packet)
         actions.superuser_run('wordpress', ['restore-database'])
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'wordpress', ['setup'])
-    if not old_version:
-        helper.call('post', app.enable)

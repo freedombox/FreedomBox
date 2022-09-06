@@ -37,8 +37,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class UsersApp(app_module.App):
     """FreedomBox app for users and groups management."""
@@ -89,14 +87,14 @@ class UsersApp(app_module.App):
 
         return results
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if not old_version:
+            actions.superuser_run('users', ['first-setup'])
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    if not old_version:
-        helper.call('post', actions.superuser_run, 'users', ['first-setup'])
-    helper.call('post', actions.superuser_run, 'users', ['setup'])
-    create_group('freedombox-share')
+        actions.superuser_run('users', ['setup'])
+        create_group('freedombox-share')
 
 
 def _diagnose_ldap_entry(search_item):

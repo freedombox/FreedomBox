@@ -6,7 +6,6 @@ FreedomBox app for janus.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -14,10 +13,10 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnTimeLimitedConsumer
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
-from plinth.utils import format_lazy
+from plinth.package import Packages, install
+from plinth.utils import Version, format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Janus is a lightweight WebRTC server.'),
@@ -26,8 +25,6 @@ _description = [
         _('<a href="{coturn_url}">Coturn</a> is required to '
           'use Janus.'), coturn_url=reverse_lazy('coturn:index')),
 ]
-
-app = None
 
 
 class JanusApp(app_module.App):
@@ -43,7 +40,7 @@ class JanusApp(app_module.App):
 
         info = app_module.Info(self.app_id, self._version, name=_('Janus'),
                                icon_filename='janus',
-                               short_description=_('WebRTC server'),
+                               short_description=_('Video Room'),
                                description=_description, manual_page='Janus',
                                clients=manifest.clients)
         self.add(info)
@@ -89,9 +86,22 @@ class JanusApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the app."""
-    app.setup(old_version)
-    actions.superuser_run('janus', ['setup'])
-    helper.call('post', app.enable)
+    def force_upgrade(self, packages):
+        """Force upgrade janus to resolve conffile prompts."""
+        if 'janus' not in packages:
+            return False
+
+        # Allow upgrades within 1.0.*
+        package = packages['janus']
+        if Version(package['new_version']) > Version('1.1~'):
+            return False
+
+        install(['janus'], force_configuration='new')
+        privileged.setup()
+        return True

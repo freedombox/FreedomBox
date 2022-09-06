@@ -8,6 +8,6 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/security/$', views.index, name='index'),
+    re_path(r'^sys/security/$', views.SecurityAppView.as_view(), name='index'),
     re_path(r'^sys/security/report$', views.report, name='report'),
 ]

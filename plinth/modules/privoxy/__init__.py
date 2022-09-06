@@ -6,7 +6,7 @@ FreedomBox app to configure Privoxy.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -17,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Privoxy is a non-caching web proxy with advanced filtering '
@@ -26,7 +26,8 @@ _description = [
       'obnoxious Internet junk. '),
     format_lazy(
         _('You can use Privoxy by modifying your browser proxy settings to '
-          'your {box_name} hostname (or IP address) with port 8118. '
+          'your {box_name} hostname (or IP address) with port 8118. Only '
+          'connections from local network IP addresses are permitted. '
           'While using Privoxy, you can see its configuration details and '
           'documentation at '
           '<a href="http://config.privoxy.org">http://config.privoxy.org/</a> '
@@ -34,15 +35,13 @@ _description = [
         box_name=_(cfg.box_name)),
 ]
 
-app = None
-
 
 class PrivoxyApp(app_module.App):
     """FreedomBox app for Privoxy."""
 
     app_id = 'privoxy'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -93,12 +92,12 @@ class PrivoxyApp(app_module.App):
         results.extend(diagnose_url_with_proxy())
         return results
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'privoxy', ['pre-install'])
-    app.setup(old_version)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        privileged.pre_install()
+        super().setup(old_version)
+        privileged.setup()
+        self.enable()
 
 
 def diagnose_url_with_proxy():

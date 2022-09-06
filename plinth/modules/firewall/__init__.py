@@ -13,7 +13,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy, import_from_gi
 
 from . import manifest
@@ -30,8 +30,6 @@ _description = [
 ]
 
 _port_details = {}
-
-app = None
 
 logger = logging.getLogger(__name__)
 
@@ -78,6 +76,27 @@ class FirewallApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        _run_setup()
+
+    def force_upgrade(self, packages):
+        """Force upgrade firewalld to resolve conffile prompts."""
+        if 'firewalld' not in packages:
+            return False
+
+        # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x, 0.9.x ->
+        # 1.0.x
+        package = packages['firewalld']
+        if Version(package['current_version']) >= Version('1.0') or \
+           Version(package['new_version']) < Version('0.7'):
+            return False
+
+        install(['firewalld'], force_configuration='new')
+        _run_setup()
+        return True
+
 
 def _run_setup():
     """Run firewalld setup."""
@@ -88,28 +107,6 @@ def _run_setup():
     add_service('https', 'internal')
     add_service('dns', 'internal')
     add_service('dhcp', 'internal')
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    _run_setup()
-
-
-def force_upgrade(helper, packages):
-    """Force upgrade firewalld to resolve conffile prompts."""
-    if 'firewalld' not in packages:
-        return False
-
-    # firewalld 0.6.x -> 0.7.x, 0.6.x -> 0.8.x, 0.7.x -> 0.8.x, 0.9.x -> 1.0.x
-    package = packages['firewalld']
-    if Version(package['current_version']) >= Version('1.0') or \
-       Version(package['new_version']) < Version('0.7'):
-        return False
-
-    helper.install(['firewalld'], force_configuration='new')
-    _run_setup()
-    return True
 
 
 def _get_dbus_proxy(object, interface):

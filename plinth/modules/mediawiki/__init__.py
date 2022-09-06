@@ -34,8 +34,6 @@ _description = [
       'logged in can make changes to the content.')
 ]
 
-app = None
-
 STATIC_CONFIG_FILE = '/etc/mediawiki/FreedomBoxStaticSettings.php'
 USER_CONFIG_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 
@@ -95,6 +93,13 @@ class MediaWikiApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('mediawiki', ['setup'])
+        actions.superuser_run('mediawiki', ['update'])
+        self.enable()
+
 
 class Shortcut(frontpage.Shortcut):
     """Frontpage shortcut for only logged users when in private mode."""
@@ -103,14 +108,6 @@ class Shortcut(frontpage.Shortcut):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()
         self.login_required = is_private_mode_enabled()
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'mediawiki', ['setup'])
-    helper.call('post', actions.superuser_run, 'mediawiki', ['update'])
-    helper.call('post', app.enable)
 
 
 def is_public_registration_enabled():

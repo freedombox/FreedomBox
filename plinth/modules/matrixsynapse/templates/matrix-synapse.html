@@ -6,10 +6,10 @@
 {% load i18n %}
 {% load static %}
 
-{% block description %}
-  {% for paragraph in description %}
-    <p>{{ paragraph|safe }}</p>
-  {% endfor %}
+{% block status %}
+  {{ block.super }}
+
+  <h3>{% trans "Status" %}</h3>
 
   <p>
     {% blocktrans trimmed %}

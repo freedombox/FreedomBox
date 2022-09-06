@@ -35,8 +35,6 @@ tunnels_to_manage = {
     'Irc2P': 'i2p-irc-freedombox'
 }
 
-app = None
-
 
 class I2PApp(app_module.App):
     """FreedomBox app for I2P."""
@@ -98,33 +96,32 @@ class I2PApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-i2p', **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
+        self.disable()
+        # Add favorites to the configuration
+        for fav in FAVORITES:
+            args = [
+                'add-favorite',
+                '--name',
+                fav.get('name'),
+                '--url',
+                fav.get('url'),
+            ]
+            if 'icon' in fav:
+                args.extend(['--icon', fav.get('icon')])
 
-    helper.call('post', app.disable)
-    # Add favorites to the configuration
-    for fav in FAVORITES:
-        args = [
-            'add-favorite',
-            '--name',
-            fav.get('name'),
-            '--url',
-            fav.get('url'),
-        ]
-        if 'icon' in fav:
-            args.extend(['--icon', fav.get('icon')])
+            if 'description' in fav:
+                args.extend(['--description', fav.get('description')])
 
-        if 'description' in fav:
-            args.extend(['--description', fav.get('description')])
+            actions.superuser_run('i2p', args)
 
-        helper.call('post', actions.superuser_run, 'i2p', args)
-
-    # Tunnels to all interfaces
-    for tunnel in tunnels_to_manage:
-        helper.call('post', actions.superuser_run, 'i2p', [
-            'set-tunnel-property', '--name', tunnel, '--property', 'interface',
-            '--value', '0.0.0.0'
-        ])
-    helper.call('post', app.enable)
+        # Tunnels to all interfaces
+        for tunnel in tunnels_to_manage:
+            actions.superuser_run('i2p', [
+                'set-tunnel-property', '--name', tunnel, '--property',
+                'interface', '--value', '0.0.0.0'
+            ])
+        self.enable()

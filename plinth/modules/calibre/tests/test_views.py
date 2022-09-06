@@ -100,7 +100,7 @@ def test_create_library_invalid_name(rf):
     assert response.status_code == 200
 
 
-@patch('plinth.modules.calibre.app')
+@patch('plinth.app.App.get')
 def test_delete_library_confirmation_view(_app, rf):
     """Test that deleting library confirmation shows correct name."""
     response, _ = make_request(rf.get(''), views.delete_library,
@@ -110,7 +110,7 @@ def test_delete_library_confirmation_view(_app, rf):
 
 
 @patch('plinth.modules.calibre.delete_library')
-@patch('plinth.modules.calibre.app')
+@patch('plinth.app.App.get')
 def test_delete_library(_app, delete_library, rf):
     """Test that deleting a library works."""
     response, messages = make_request(rf.post(''), views.delete_library,

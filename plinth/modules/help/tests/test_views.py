@@ -9,6 +9,7 @@ Pending: - status log
 
 """
 
+import json
 import pathlib
 import subprocess
 from unittest.mock import patch
@@ -42,7 +43,6 @@ def fixture_app_urls():
 
 
 @pytest.mark.parametrize("view_name, view", (
-    ('contribute', views.contribute),
     ('feedback', views.feedback),
     ('support', views.support),
     ('index', views.index),
@@ -53,10 +53,46 @@ def test_simple_help_pages(rf, view_name, view):
     assert _is_page(response)
 
 
-def test_about(rf):
+@patch('apt.Cache')
+@patch('gzip.decompress')
+@patch('requests.get')
+def test_contribute_page(requests_get, decompress, apt_cache, rf):
+    """Test the contribute page."""
+    issues = [{
+        'type': 'testing-autorm',
+        'packages': ['autormpkg'],
+        'source': 'autormsrc',
+        'bugs': ['123']
+    }, {
+        'type': 'no-testing',
+        'package': ['notestingpkg'],
+        'source': 'nottestingsrc',
+    }, {
+        'type': 'gift',
+        'package': ['giftpkg'],
+        'bug': '456',
+        'title': 'bug 456 title',
+    }, {
+        'type': 'help',
+        'package': ['helppkg'],
+        'bug': '567',
+        'title': 'bug 567 title',
+    }]
+    decompress.return_value = json.dumps(issues)
+    response = views.contribute(rf.get(urls.reverse('help:contribute')))
+    assert _is_page(response)
+    assert issues == (response.context_data['testing_autorm'] +
+                      response.context_data['no_testing'] +
+                      response.context_data['gift'] +
+                      response.context_data['help'])
+
+
+@patch('plinth.modules.upgrades.views.is_newer_version_available')
+@patch('plinth.modules.upgrades.views.get_os_release')
+def test_about(_get_os_release, _is_newer_version_available, rf):
     """Test some expected items in about view."""
-    manual_url = urls.reverse('help:manual')
-    response = views.about(rf.get(manual_url))
+    about_url = urls.reverse('help:about')
+    response = views.about(rf.get(about_url))
     assert _is_page(response)
     for item in ('version', 'new_version', 'os_release'):
         assert item in response.context_data

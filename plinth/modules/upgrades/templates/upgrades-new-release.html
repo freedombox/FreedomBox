@@ -10,14 +10,14 @@
 </div>
 
 <p>
-  {% blocktrans trimmed with url="https://discuss.freedombox.org/c/announcements/7" %}
+  {% blocktrans trimmed with url="https://discuss.freedombox.org/c/announcements/7" version=data.version %}
     {{ box_name }} has been updated to version {{ version }}. See the
     <a href="{{ url }}">release announcement</a>.
   {% endblocktrans %}
 </p>
 
 <p>
-  <a href="{% url 'notification_dismiss' id='upgrades-new-release' %}?next={{ request.path|iriencode }}"
+  <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
      role="button" class="btn btn-default">
     {% trans "Dismiss" %}
   </a>

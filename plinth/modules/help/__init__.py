@@ -14,8 +14,6 @@ from plinth import cfg, menu, web_server
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class HelpApp(app_module.App):
     """FreedomBox app for showing help."""
@@ -74,3 +72,8 @@ class HelpApp(app_module.App):
         static_files = web_server.StaticFiles('static-files-help',
                                               directory_map)
         self.add(static_files)
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()

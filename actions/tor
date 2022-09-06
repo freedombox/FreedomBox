@@ -40,8 +40,6 @@ def parse_arguments():
     subparsers.add_parser('get-status', help='Get Tor status in JSON format')
 
     configure = subparsers.add_parser('configure', help='Configure Tor')
-    configure.add_argument('--service', choices=['enable', 'disable'],
-                           help='Configure Tor service')
     configure.add_argument('--relay', choices=['enable', 'disable'],
                            help='Configure relay')
     configure.add_argument('--bridge-relay', choices=['enable', 'disable'],
@@ -56,6 +54,9 @@ def parse_arguments():
                            help='Configure use of upstream bridges')
     configure.add_argument('--upstream-bridges',
                            help='Set list of upstream bridges to use')
+
+    subparsers.add_parser('update-ports',
+                          help='Update firewall ports based on what Tor uses')
 
     subparsers.add_parser('restart', help='Restart Tor')
 
@@ -171,9 +172,6 @@ def subcommand_configure(arguments):
     """Configure Tor."""
     aug = augeas_load()
 
-    if arguments.service == 'disable':
-        _disable()
-
     _use_upstream_bridges(arguments.use_upstream_bridges, aug=aug)
 
     if arguments.use_upstream_bridges == 'enable':
@@ -190,13 +188,15 @@ def subcommand_configure(arguments):
     elif arguments.hidden_service == 'disable':
         _disable_hs(aug=aug)
 
-    if arguments.service == 'enable':
-        _enable()
-
     if arguments.apt_transport_tor == 'enable':
         _enable_apt_transport_tor()
     elif arguments.apt_transport_tor == 'disable':
         _disable_apt_transport_tor()
+
+
+def subcommand_update_ports(_):
+    """Update firewall ports based on what Tor uses."""
+    _update_ports()
 
 
 def subcommand_restart(_):

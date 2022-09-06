@@ -20,7 +20,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import format_lazy, is_non_empty_file
 
 from . import manifest
@@ -50,8 +50,6 @@ LISTENERS_CONF_PATH = CONF_DIR + 'freedombox-listeners.yaml'
 REGISTRATION_CONF_PATH = CONF_DIR + 'freedombox-registration.yaml'
 TURN_CONF_PATH = CONF_DIR + 'freedombox-turn.yaml'
 OVERRIDDEN_TURN_CONF_PATH = CONF_DIR + 'turn.yaml'
-
-app = None
 
 
 class MatrixSynapseApp(app_module.App):
@@ -118,6 +116,23 @@ class MatrixSynapseApp(app_module.App):
         turn = MatrixSynapseTurnConsumer('turn-matrixsynapse')
         self.add(turn)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if old_version and old_version < 6:
+            upgrade()
+        else:
+            actions.superuser_run('matrixsynapse', ['post-install'])
+
+        if not old_version:
+            self.enable()
+
+        self.get_component('letsencrypt-matrixsynapse').setup_certificates()
+
+        # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
+        config = self.get_component('turn-matrixsynapse').get_configuration()
+        update_turn_configuration(config, force=True)
+
 
 class MatrixSynapseTurnConsumer(TurnConsumer):
     """Component to manage Coturn configuration for Matrix Synapse."""
@@ -127,31 +142,12 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
         update_turn_configuration(config)
 
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    if old_version and old_version < 6:
-        helper.call('post', upgrade, helper)
-    else:
-        helper.call('post', actions.superuser_run, 'matrixsynapse',
-                    ['post-install'])
-
-    if not old_version:
-        helper.call('post', app.enable)
-
-    app.get_component('letsencrypt-matrixsynapse').setup_certificates()
-
-    # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
-    config = app.get_component('turn-matrixsynapse').get_configuration()
-    update_turn_configuration(config, force=True)
-
-
-def upgrade(helper):
+def upgrade():
     """Upgrade matrix-synapse configuration to avoid conffile prompt."""
     public_registration_status = get_public_registration_status()
     actions.superuser_run('matrixsynapse', ['move-old-conf'])
-    helper.install(['matrix-synapse'], force_configuration='new',
-                   reinstall=True, force_missing_configuration=True)
+    install(['matrix-synapse'], force_configuration='new', reinstall=True,
+            force_missing_configuration=True)
     actions.superuser_run('matrixsynapse', ['post-install'])
     if public_registration_status:
         actions.superuser_run('matrixsynapse',
@@ -160,6 +156,7 @@ def upgrade(helper):
 
 def setup_domain(domain_name):
     """Configure a domain name for matrixsynapse."""
+    app = app_module.App.get('matrixsynapse')
     app.get_component('letsencrypt-matrixsynapse').setup_certificates(
         [domain_name])
     actions.superuser_run('matrixsynapse',
@@ -214,6 +211,7 @@ def get_public_registration_status() -> bool:
 
 def get_certificate_status():
     """Return the status of certificate for the configured domain."""
+    app = app_module.App.get('matrixsynapse')
     status = app.get_component('letsencrypt-matrixsynapse').get_status()
     if not status:
         return 'no-domains'
@@ -224,6 +222,7 @@ def get_certificate_status():
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update the STUN/TURN server configuration."""
+    app = app_module.App.get('matrixsynapse')
     if not force and app.needs_setup():
         return
 

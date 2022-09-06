@@ -22,6 +22,7 @@ from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
 from plinth.modules import backups, storage
+from plinth.views import AppView
 
 from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
                is_ssh_hostkey_verified)
@@ -33,14 +34,15 @@ logger = logging.getLogger(__name__)
 
 
 @method_decorator(delete_tmp_backup_file, name='dispatch')
-class IndexView(TemplateView):
+class BackupsView(AppView):
     """View to show list of archives."""
+
+    app_id = 'backups'
     template_name = 'backups.html'
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['app_info'] = backups.app.info
         context['repositories'] = [
             repository.get_view_content() for repository in get_repositories()
         ]

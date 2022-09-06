@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView
 
 from plinth import network
 from plinth.modules import first_boot, networks
+from plinth.views import AppView
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
                     InternetConnectionTypeForm, NetworkTopologyForm, PPPoEForm,
@@ -114,23 +115,24 @@ WIRELESS_MODE_STRINGS = {
 }
 
 
-def index(request):
-    """Show connection list."""
-    connections = network.get_connection_list()
+class NetworksAppView(AppView):
+    """Show networks app main page."""
 
-    network_topology_type = networks.get_network_topology_type()
-    internet_connection_type = networks.get_internet_connection_type()
-    return TemplateResponse(
-        request, 'networks_configuration.html', {
-            'app_id': 'networks',
-            'app_info': networks.app.info,
-            'title': _('Network Connections'),
-            'has_diagnostics': True,
-            'is_enabled': True,
-            'connections': connections,
-            'network_topology': network_topology_type,
-            'internet_connectivity_type': internet_connection_type,
-        })
+    app_id = 'networks'
+    template_name = 'networks_configuration.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        connections = network.get_connection_list()
+
+        network_topology_type = networks.get_network_topology_type()
+        internet_connection_type = networks.get_internet_connection_type()
+
+        context = super().get_context_data(*args, **kwargs)
+        context['connections'] = connections
+        context['network_topology'] = network_topology_type
+        context['internet_connectivity_type'] = internet_connection_type
+        return context
 
 
 def show(request, uuid):

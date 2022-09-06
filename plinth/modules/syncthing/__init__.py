@@ -37,8 +37,6 @@ _description = [
 
 SYSTEM_USER = 'syncthing'
 
-app = None
-
 
 class SyncthingApp(app_module.App):
     """FreedomBox app for Syncthing."""
@@ -105,42 +103,42 @@ class SyncthingApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('syncthing', ['setup'])
+        add_user_to_share_group(SYSTEM_USER, SyncthingApp.DAEMON)
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'syncthing', ['setup'])
-    add_user_to_share_group(SYSTEM_USER, SyncthingApp.DAEMON)
+        if not old_version:
+            self.enable()
 
-    if not old_version:
-        helper.call('post', app.enable)
+        actions.superuser_run('syncthing', ['setup-config'])
 
-    helper.call('post', actions.superuser_run, 'syncthing', ['setup-config'])
+        if old_version == 1 and self.is_enabled():
+            self.get_component('firewall-syncthing-ports').enable()
 
-    if old_version == 1 and app.is_enabled():
-        app.get_component('firewall-syncthing-ports').enable()
+        if old_version and old_version <= 3:
+            # rename LDAP and Django group
+            old_groupname = 'syncthing'
+            new_groupname = 'syncthing-access'
 
-    if old_version and old_version <= 3:
-        # rename LDAP and Django group
-        old_groupname = 'syncthing'
-        new_groupname = 'syncthing-access'
+            actions.superuser_run(
+                'users',
+                options=['rename-group', old_groupname, new_groupname])
 
-        actions.superuser_run(
-            'users', options=['rename-group', old_groupname, new_groupname])
+            from django.contrib.auth.models import Group
+            Group.objects.filter(name=old_groupname).update(name=new_groupname)
 
-        from django.contrib.auth.models import Group
-        Group.objects.filter(name=old_groupname).update(name=new_groupname)
+            # update web shares to have new group name
+            from plinth.modules import sharing
+            shares = sharing.list_shares()
+            for share in shares:
+                if old_groupname in share['groups']:
+                    new_groups = share['groups']
+                    new_groups.remove(old_groupname)
+                    new_groups.append(new_groupname)
 
-        # update web shares to have new group name
-        from plinth.modules import sharing
-        shares = sharing.list_shares()
-        for share in shares:
-            if old_groupname in share['groups']:
-                new_groups = share['groups']
-                new_groups.remove(old_groupname)
-                new_groups.append(new_groupname)
-
-                name = share['name']
-                sharing.remove_share(name)
-                sharing.add_share(name, share['path'], new_groups,
-                                  share['is_public'])
+                    name = share['name']
+                    sharing.remove_share(name)
+                    sharing.add_share(name, share['path'], new_groups,
+                                      share['is_public'])

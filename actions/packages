@@ -5,21 +5,19 @@ Wrapper to handle package installation with apt-get.
 """
 
 import argparse
-import inspect
 import json
 import logging
 import os
 import subprocess
 import sys
 from collections import defaultdict
-from importlib import import_module
 
 import apt.cache
 import apt_inst
 import apt_pkg
 
 from plinth import app as app_module
-from plinth import cfg
+from plinth import module_loader
 from plinth.action_utils import (apt_hold_freedombox, is_package_manager_busy,
                                  run_apt_command)
 from plinth.package import Packages
@@ -48,11 +46,13 @@ def parse_arguments():
         '--force-missing-configuration', action='store_true',
         help='force installation of missing configuration files')
     subparser.add_argument(
-        'module', help='name of module for which package is being installed')
+        'app_id', help='ID of app for which package is being installed')
     subparser.add_argument('packages', nargs='+',
                            help='list of packages to install')
 
     subparser = subparsers.add_parser('remove', help='remove the package(s)')
+    subparser.add_argument(
+        'app_id', help='ID of app for which package is being uninstalled')
     subparser.add_argument('--packages', required=True,
                            help='List of packages to remove', nargs='+')
 
@@ -76,7 +76,7 @@ def subcommand_update(arguments):
 def subcommand_install(arguments):
     """Install packages using apt-get."""
     try:
-        _assert_managed_packages(arguments.module, arguments.packages)
+        _assert_managed_packages(arguments.app_id, arguments.packages)
     except Exception as exception:
         print('Access check failed:', exception, file=sys.stderr)
         sys.exit(99)
@@ -109,29 +109,29 @@ def subcommand_install(arguments):
 
 
 def subcommand_remove(arguments):
-    """Remove apt package(s)."""
-    sys.exit(run_apt_command(['remove'] + arguments.packages))
+    """Remove packages using apt-get."""
+    try:
+        _assert_managed_packages(arguments.app_id, arguments.packages)
+    except Exception as exception:
+        print('Access check failed:', exception, file=sys.stderr)
+        sys.exit(99)
+
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    with apt_hold_freedombox():
+        run_apt_command(['--fix-broken', 'install'])
+        returncode = run_apt_command(['remove'] + arguments.packages)
+
+    sys.exit(returncode)
 
 
-def _assert_managed_packages(module, packages):
+def _assert_managed_packages(app_id, packages):
     """Check that list of packages are in fact managed by module."""
-    cfg.read()
-    module_file = os.path.join(cfg.config_dir, 'modules-enabled', module)
-
-    with open(module_file, 'r', encoding='utf-8') as file_handle:
-        module_path = file_handle.read().strip()
-
-    module = import_module(module_path)
-    module_classes = inspect.getmembers(module, inspect.isclass)
-    app_classes = [
-        cls[1] for cls in module_classes if issubclass(cls[1], app_module.App)
-    ]
+    module_loader.load_modules()
+    app_module.apps_init()
+    app = app_module.App.get(app_id)
     managed_packages = []
-    for cls in app_classes:
-        app = cls()
-        components = app.get_components_of_type(Packages)
-        for component in components:
-            managed_packages += component.possible_packages
+    for component in app.get_components_of_type(Packages):
+        managed_packages += component.possible_packages + component.conflicts
 
     for package in packages:
         assert package in managed_packages

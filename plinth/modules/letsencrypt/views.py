@@ -7,28 +7,28 @@ import logging
 
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from plinth.errors import ActionError
 from plinth.modules import letsencrypt
+from plinth.views import AppView
 
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    """Serve configuration page."""
-    status = letsencrypt.get_status()
-    return TemplateResponse(
-        request, 'letsencrypt.html', {
-            'app_id': 'letsencrypt',
-            'app_info': letsencrypt.app.info,
-            'status': status,
-            'has_diagnostics': True,
-            'is_enabled': letsencrypt.app.is_enabled(),
-        })
+class LetsEncryptAppView(AppView):
+    """Show Let's Encrypt app main page."""
+
+    app_id = 'letsencrypt'
+    template_name = 'letsencrypt.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['status'] = letsencrypt.get_status()
+        return context
 
 
 @require_POST

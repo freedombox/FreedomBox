@@ -4,6 +4,7 @@ Functional, browser based tests for snapshot app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.snapshot]
@@ -73,7 +74,8 @@ def _delete_all(browser):
 
 def _create_snapshot(browser):
     functional.visit(browser, '/plinth/sys/snapshot/manage/')
-    functional.submit(browser)  # Click on 'Create Snapshot'
+    create_button = browser.find_by_name('create').first
+    functional.submit(browser, create_button)
 
 
 def _get_count(browser):
@@ -102,7 +104,7 @@ def _set_configuration(browser, free_space, timeline_enabled, software_enabled,
     browser.find_by_name('weekly_limit').fill(weekly)
     browser.find_by_name('monthly_limit').fill(monthly)
     browser.find_by_name('yearly_limit').fill(yearly)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-configuration')
 
 
 def _get_configuration(browser):

@@ -5,3 +5,6 @@ Daemon
 
 .. autoclass:: plinth.daemon.Daemon
    :members:
+
+.. autoclass:: plinth.daemon.RelatedDaemon
+   :members:

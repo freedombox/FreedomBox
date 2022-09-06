@@ -5,7 +5,7 @@ Views for the Janus app.
 
 from django.views.generic import TemplateView
 
-from plinth.modules import janus
+from plinth import app as app_module
 
 
 class JanusRoomView(TemplateView):
@@ -14,7 +14,8 @@ class JanusRoomView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         """Add user's TURN server information to view context."""
-        config = janus.app.get_component('turn-janus').get_configuration()
+        app = app_module.App.get('janus')
+        config = app.get_component('turn-janus').get_configuration()
         context = super().get_context_data(*args, **kwargs)
         context['user_turn_config'] = config.to_json()
         return context

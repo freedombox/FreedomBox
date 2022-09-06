@@ -17,7 +17,7 @@
 
      {% trans "Application installed." %}
 
-  {% elif not setup_current_operation %}
+  {% elif not operations %}
 
     <p>
       {% if setup_state.value == 'needs-setup' %}
@@ -34,14 +34,7 @@
     <form class="form-install" action="" method="post">
       {% csrf_token %}
 
-      {% if package_manager_is_busy %}
-        <div class="alert alert-warning" role="alert">
-          {% blocktrans trimmed %}
-            Another installation or upgrade is already running.
-            Please wait for a few moments before trying again.
-          {% endblocktrans %}
-        </div>
-      {% elif has_unavailable_packages %}
+      {% if has_unavailable_packages %}
         <div class="alert alert-warning" role="alert">
           {% blocktrans trimmed %}
             This application is currently not available in your distribution.
@@ -64,7 +57,7 @@
       {% endif %}
 
       <input type="submit" class="btn btn-md btn-primary" name="install"
-             {% if package_manager_is_busy or has_unavailable_packages %}
+             {% if has_unavailable_packages %}
              disabled="disabled"
              {% endif %}
              {% if setup_state.value == 'needs-setup' %}
@@ -76,40 +69,7 @@
     </form>
 
   {% else %}
-
-    {% if setup_current_operation.step == 'pre' %}
-      <div class="installing install-state-pre">
-        <span class="fa fa-refresh fa-spin processing"></span>
-        {% trans "Performing pre-install operation" %}
-      </div>
-    {% elif setup_current_operation.step == 'post' %}
-      <div class="installing install-state-post">
-        <span class="fa fa-refresh fa-spin processing"></span>
-        {% trans "Performing post-install operation" %}
-      </div>
-    {% elif setup_current_operation.step == 'install' %}
-      {% with transaction=setup_current_operation.transaction %}
-        <div class="installing install-state-installing">
-          <span class="fa fa-refresh fa-spin processing"></span>
-          {% blocktrans trimmed with package_names=transaction.package_names|join:", " status=transaction.status_string %}
-            Installing {{ package_names }}: {{ status }}
-          {% endblocktrans %}
-        </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped active
-                      w-{{ transaction.percentage }}"
-               role="progressbar" aria-valuemin="0" aria-valuemax="100"
-               aria-valuenow="{{ transaction.percentage }}">
-            <span class="sr-only">
-              {% blocktrans trimmed with percentage=transaction.percentage %}
-                {{ percentage }}% complete
-              {% endblocktrans %}
-            </span>
-          </div>
-        </div>
-      {% endwith %}
-    {% endif %}
-
+    {% include "operations.html" %}
   {% endif %}
 
 {% endblock %}

@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
+from plinth import app as app_module
 from plinth import views
 from plinth.errors import ActionError
 from plinth.modules import zoph
@@ -29,8 +30,9 @@ class SetupView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
-        context['title'] = zoph.app.info.name
-        context['app_info'] = zoph.app.info
+        app = app_module.App.get('zoph')
+        context['title'] = app.info.name
+        context['app_info'] = app.info
         return context
 
     def post(self, _request, *args, **kwargs):

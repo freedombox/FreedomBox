@@ -16,7 +16,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version
 
 from . import manifest, privileged
@@ -28,8 +28,6 @@ _description = [
       '64738. <a href="http://mumble.info">Clients</a> to connect to Mumble '
       'from your desktop and mobile devices are available.')
 ]
-
-app = None
 
 
 class MumbleApp(app_module.App):
@@ -93,30 +91,28 @@ class MumbleApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        privileged.setup()
+        if not old_version:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', privileged.setup)
-    if not old_version:
-        helper.call('post', app.enable)
+        self.get_component('letsencrypt-mumble').setup_certificates()
 
-    app.get_component('letsencrypt-mumble').setup_certificates()
+    def force_upgrade(self, packages):
+        """Force upgrade mumble-server to resolve conffile prompts."""
+        if 'mumble-server' not in packages:
+            return False
 
+        # Allow upgrades within 1.3.*
+        package = packages['mumble-server']
+        if Version(package['new_version']) > Version('1.4~'):
+            return False
 
-def force_upgrade(helper, packages):
-    """Force upgrade mumble-server to resolve conffile prompts."""
-    if 'mumble-server' not in packages:
-        return False
-
-    # Allow upgrades within 1.3.*
-    package = packages['mumble-server']
-    if Version(package['new_version']) > Version('1.4~'):
-        return False
-
-    helper.install(['mumble-server'], force_configuration='new')
-    helper.call('post', privileged.setup)
-    return True
+        install(['mumble-server'], force_configuration='new')
+        privileged.setup()
+        return True
 
 
 def get_available_domains():

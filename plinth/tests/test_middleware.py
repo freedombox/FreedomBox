@@ -3,7 +3,7 @@
 Test module for custom middleware.
 """
 
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, Mock, call, patch
 
 import pytest
 from django.contrib.auth.models import AnonymousUser, Group, User
@@ -136,20 +136,24 @@ class TestSetupMiddleware:
         view.assert_called_once_with(request, app_id='mockapp')
 
     @staticmethod
-    @patch('plinth.tests.test_middleware.setup_helper')
+    @patch('plinth.operation.manager')
+    @patch('django.contrib.messages.error')
     @patch('django.contrib.messages.success')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
     @pytest.mark.django_db
     def test_install_result_collection(reverse, resolve, messages_success,
-                                       setup_helper_, app, middleware, kwargs):
+                                       messages_error, operation_manager, app,
+                                       middleware, kwargs):
         """Test that module installation result is collected properly."""
         resolve.return_value.namespaces = ['mockapp']
-        setup_helper_.is_finished = True
-        setup_helper_.collect_result.return_value = None
+        operation_manager.collect_results.return_value = [
+            Mock(message='message1', exception=None),
+            Mock(message='message2', exception='x-exception')
+        ]
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 
-        # Admin user can't collect result
+        # Admin user can collect result
         request = RequestFactory().get('/plinth/mockapp')
         user = User(username='adminuser')
         user.save()
@@ -162,12 +166,14 @@ class TestSetupMiddleware:
         response = middleware.process_view(request, **kwargs)
 
         assert response is None
-        assert messages_success.called
-        setup_helper_.collect_result.assert_called_once_with()
+        messages_success.assert_has_calls([call(request, 'message1')])
+        messages_error.assert_has_calls([call(request, 'message2')])
+        operation_manager.collect_results.assert_has_calls([call('mockapp')])
 
         # Non-admin user can't collect result
         messages_success.reset_mock()
-        setup_helper_.collect_result.reset_mock()
+        messages_error.reset_mock()
+        operation_manager.collect_results.reset_mock()
         request = RequestFactory().get('/plinth/mockapp')
         user = User(username='johndoe')
         user.save()
@@ -177,7 +183,8 @@ class TestSetupMiddleware:
 
         assert response is None
         assert not messages_success.called
-        setup_helper_.collect_result.assert_not_called()
+        assert not messages_error.called
+        operation_manager.collect_results.assert_not_called()
 
 
 class TestAdminMiddleware:

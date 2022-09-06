@@ -17,3 +17,4 @@ class TestAvahiApp(BaseAppTests):
     app_name = 'avahi'
     has_service = True
     has_web = False
+    disable_after_tests = False

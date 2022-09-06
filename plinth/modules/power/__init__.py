@@ -13,8 +13,6 @@ from . import manifest
 
 _description = [_('Restart or shut down the system.')]
 
-app = None
-
 
 class PowerApp(app_module.App):
     """FreedomBox app for power controls."""
@@ -22,6 +20,8 @@ class PowerApp(app_module.App):
     app_id = 'power'
 
     _version = 1
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -40,3 +40,8 @@ class PowerApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-power',
                                        **manifest.backup)
         self.add(backup_restore)
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()

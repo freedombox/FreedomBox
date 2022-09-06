@@ -31,8 +31,6 @@ _description = [
           'for added security and anonymity.'), box_name=_(cfg.box_name))
 ]
 
-app = None
-
 SERVER_CONFIGURATION_FILE = '/etc/openvpn/server/freedombox.conf'
 
 
@@ -106,12 +104,11 @@ class OpenVPNApp(app_module.App):
         """
         return super().is_enabled() and is_setup()
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'openvpn', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('openvpn', ['setup'])
+        self.enable()
 
 
 def is_setup():

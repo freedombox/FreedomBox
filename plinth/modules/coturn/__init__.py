@@ -34,10 +34,9 @@ _description = [
         _('It is not meant to be used directly by users. Servers such as '
           '<a href="{ms_url}">Matrix Synapse</a> or <a href="{e_url}">ejabberd'
           '</a> need to be configured with the details provided here.'),
-        ms_url=reverse_lazy('matrixsynapse:index'), e_url=('ejabberd:index')),
+        ms_url=reverse_lazy('matrixsynapse:index'),
+        e_url=reverse_lazy('ejabberd:index')),
 ]
-
-app = None
 
 logger = logging.getLogger(__name__)
 
@@ -107,16 +106,15 @@ class CoturnApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('coturn', ['setup'])
+        if old_version == 0:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'coturn', ['setup'])
-    if old_version == 0:
-        helper.call('post', app.enable)
-
-    app.get_component('letsencrypt-coturn').setup_certificates()
-    notify_configuration_change()
+        self.get_component('letsencrypt-coturn').setup_certificates()
+        notify_configuration_change()
 
 
 def get_available_domains():

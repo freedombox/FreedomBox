@@ -32,8 +32,6 @@ _description = [
       'their password from the list.'),
 ]
 
-app = None
-
 PERMISSIONS = {
     'read': _('Read a file, if a web link to the file is available'),
     'create': _('Create or upload files'),
@@ -96,16 +94,17 @@ class BepastyApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'bepasty',
-                ['setup', '--domain-name', 'freedombox.local'])
-    helper.call('post', app.enable)
-    if old_version == 1 and not get_configuration().get('DEFAULT_PERMISSIONS'):
-        # Upgrade to a better default only if user hasn't changed the value.
-        set_default_permissions('read')
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('bepasty',
+                              ['setup', '--domain-name', 'freedombox.local'])
+        self.enable()
+        if old_version == 1 and not get_configuration().get(
+                'DEFAULT_PERMISSIONS'):
+            # Upgrade to a better default only if user hasn't changed the
+            # value.
+            set_default_permissions('read')
 
 
 def get_configuration():

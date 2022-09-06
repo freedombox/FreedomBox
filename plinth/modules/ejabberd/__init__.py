@@ -46,8 +46,6 @@ _description = [
 
 logger = logging.getLogger(__name__)
 
-app = None
-
 
 class EjabberdApp(app_module.App):
     """FreedomBox app for ejabberd."""
@@ -128,6 +126,25 @@ class EjabberdApp(app_module.App):
         post_hostname_change.connect(on_post_hostname_change)
         domain_added.connect(on_domain_added)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        domainname = config.get_domainname()
+        logger.info('ejabberd service domainname - %s', domainname)
+
+        actions.superuser_run('ejabberd',
+                              ['pre-install', '--domainname', domainname])
+        # XXX: Configure all other domain names
+        super().setup(old_version)
+        self.get_component('letsencrypt-ejabberd').setup_certificates(
+            [domainname])
+        actions.superuser_run('ejabberd',
+                              ['setup', '--domainname', domainname])
+        self.enable()
+
+        # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
+        configuration = self.get_component('turn-ejabberd').get_configuration()
+        update_turn_configuration(configuration, force=True)
+
 
 class EjabberdTurnConsumer(TurnConsumer):
     """Component to manage Coturn configuration for ejabberd."""
@@ -137,33 +154,13 @@ class EjabberdTurnConsumer(TurnConsumer):
         update_turn_configuration(config)
 
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    domainname = config.get_domainname()
-    logger.info('ejabberd service domainname - %s', domainname)
-
-    helper.call('pre', actions.superuser_run, 'ejabberd',
-                ['pre-install', '--domainname', domainname])
-    # XXX: Configure all other domain names
-    app.setup(old_version)
-    helper.call('post',
-                app.get_component('letsencrypt-ejabberd').setup_certificates,
-                [domainname])
-    helper.call('post', actions.superuser_run, 'ejabberd',
-                ['setup', '--domainname', domainname])
-    helper.call('post', app.enable)
-
-    # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
-    configuration = app.get_component('turn-ejabberd').get_configuration()
-    update_turn_configuration(configuration, force=True)
-
-
 def on_pre_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """
     Backup ejabberd database before hostname is changed.
     """
     del sender  # Unused
     del kwargs  # Unused
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return
 
@@ -177,6 +174,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
     """Update ejabberd config after hostname change."""
     del sender  # Unused
     del kwargs  # Unused
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return
 
@@ -189,6 +187,7 @@ def on_post_hostname_change(sender, old_hostname, new_hostname, **kwargs):
 def get_domains():
     """Return the list of domains configured for ejabberd.
     """
+    app = app_module.App.get('ejabberd')
     if app.needs_setup():
         return []
 
@@ -199,6 +198,7 @@ def get_domains():
 def on_domain_added(sender, domain_type, name='', description='',
                     services=None, **kwargs):
     """Update ejabberd config after domain name change."""
+    app = app_module.App.get('ejabberd')
     if not name or app.needs_setup():
         return
 
@@ -210,6 +210,7 @@ def on_domain_added(sender, domain_type, name='', description='',
 
 def set_domains(domains):
     """Configure ejabberd to have this list of domains."""
+    app = app_module.App.get('ejabberd')
     if not domains or app.needs_setup():
         return
 
@@ -222,6 +223,7 @@ def set_domains(domains):
 def update_turn_configuration(config: TurnConfiguration, managed=True,
                               force=False):
     """Update ejabberd's STUN/TURN server configuration."""
+    app = app_module.App.get('ejabberd')
     if not force and app.needs_setup():
         return
 

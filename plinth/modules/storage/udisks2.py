@@ -170,7 +170,7 @@ def get_disks():
         }
         try:
             file_system = Filesystem(object_)
-            device['mount_points'] = file_system.mount_points
+            device['mount_points'] = file_system.mount_points or []
         except Exception:
             continue
 

@@ -8,7 +8,7 @@ from django.urls import re_path
 from . import views
 
 urlpatterns = [
-    re_path(r'^sys/networks/$', views.index, name='index'),
+    re_path(r'^sys/networks/$', views.NetworksAppView.as_view(), name='index'),
     re_path(r'^sys/networks/(?P<uuid>[\w.@+-]+)/show/$', views.show,
             name='show'),
     re_path(r'^sys/networks/(?P<uuid>[\w.@+-]+)/edit/$', views.edit,

@@ -9,8 +9,6 @@ from plinth import actions
 from plinth import app as app_module
 from plinth.package import Packages
 
-app = None
-
 
 class SSOApp(app_module.App):
     """FreedomBox app for single sign on."""
@@ -33,8 +31,7 @@ class SSOApp(app_module.App):
         ])
         self.add(packages)
 
-
-def setup(helper, old_version=None):
-    """Install the required packages"""
-    app.setup(old_version)
-    actions.superuser_run('auth-pubtkt', ['create-key-pair'])
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('auth-pubtkt', ['create-key-pair'])

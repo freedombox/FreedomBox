@@ -15,15 +15,13 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.utils import format_lazy, is_valid_user_name
 
-app = None
-
 
 class ApacheApp(app_module.App):
     """FreedomBox app for Apache web server."""
 
     app_id = 'apache'
 
-    _version = 9
+    _version = 10
 
     def __init__(self):
         """Create components for the app."""
@@ -59,14 +57,13 @@ class ApacheApp(app_module.App):
         daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
         self.add(daemon)
 
-
-def setup(helper, old_version=None):
-    """Configure the module."""
-    app.setup(old_version)
-    actions.superuser_run(
-        'apache',
-        ['setup', '--old-version', str(old_version)])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('apache',
+                              ['setup', '--old-version',
+                               str(old_version)])
+        self.enable()
 
 
 # (U)ser (W)eb (S)ites

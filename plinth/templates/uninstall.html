@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+  <h2>
+    {% blocktrans trimmed with app_name=app_info.name %}
+      Uninstall App <em>{{ app_name }}</em>?
+    {% endblocktrans %}
+  </h2>
+
+  <div class="alert alert-warning" role="alert">
+    {% blocktrans trimmed %}
+      Uninstalling an app is an exprimental feature.
+    {% endblocktrans %}
+  </div>
+
+  <p>
+    {% blocktrans trimmed %}
+      All app data and configuration will be permanently lost. App may be
+      installed freshly again.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    <form class="form form-uninstall" method="post">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-danger" name="uninstall_confirm"
+             value="{% trans 'Uninstall' %}"/>
+    </form>
+  </p>
+{% endblock %}

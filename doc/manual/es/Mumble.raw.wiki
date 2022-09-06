@@ -27,24 +27,7 @@ Si tu !FreedomBox está detrás de un router necesitarás configurar la redirecc
 
 === Administrar Permisos ===
 
-En Mumble un superusuario puede crear cuentas de administrador que a su vez pueden administrar permisos a grupos y canales. Esto se puede hacer tras ingresar con el usuario "!SuperUser" y la contraseña de superusuario. Ver la [[https://wiki.mumble.info/wiki/Murmurguide|Guía de Mumble]] para obtener información respecto a cómo hacer esto. Actualmente !FreedomBox no ofrece una interfaz gráfica para obtener o establecer la contraseña de superusuario en Mumble. Se genera una contraseña de superusuario automáticamente durante la instalación de Mumble. Para obtenerla ingresa en el terminal como `admin` usando [[es/FreedomBox/Manual/Cockpit|Cockpit]] , la [[es/FreedomBox/Manual/SecureShell|Shell Segura]] o la consola. Y ejecuta el siguiente comando:
-
-{{{
-sudo grep SuperUser /var/log/mumble-server/mumble-server.log
-}}}
-
-Deberás ver una salida como esta:
-{{{
-<W>2019-11-06 02:47:41.313 1 => Password for 'SuperUser' set to 'noo8Dahwiesh'
-}}}
-
-O puedes establecer una contraseña nueva así:
-
-{{{
-sudo su -
-echo "nuevacontraseña" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"
-}}}
-
+En Mumble un superusuario puede crear cuentas de administrador que a su vez pueden administrar permisos a grupos y canales. Esto se puede hacer tras ingresar con el usuario "!SuperUser" y la contraseña de superusuario. Ver la [[https://wiki.mumble.info/wiki/Murmurguide|Guía de Mumble]] para obtener información respecto a cómo hacer esto. La interfaz web de !FreedomBox permite establecer la contraseña de superusuario.
 
 === External links ===
 

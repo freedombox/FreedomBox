@@ -3,21 +3,22 @@
 FreedomBox app for name services.
 """
 
-from django.template.response import TemplateResponse
-
-from plinth.modules import names
+from plinth.views import AppView
 
 from . import components
 
 
-def index(request):
-    """Serve name services page."""
-    status = get_status()
+class NamesAppView(AppView):
+    """Show names app main page."""
 
-    return TemplateResponse(request, 'names.html', {
-        'app_info': names.app.info,
-        'status': status
-    })
+    app_id = 'names'
+    template_name = 'names.html'
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['status'] = get_status()
+        return context
 
 
 def get_status():

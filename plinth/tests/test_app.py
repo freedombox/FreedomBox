@@ -4,7 +4,6 @@ Test module for App, base class for all applications.
 """
 
 import collections
-import sys
 from unittest.mock import Mock, call, patch
 
 import pytest
@@ -127,7 +126,7 @@ def test_get_components_of_type(app_with_components):
 
 
 def test_app_setup(app_with_components):
-    """Test that running setup on an app run setup on components."""
+    """Test that running setup on an app runs setup on components."""
     for component in app_with_components.components.values():
         component.setup = Mock()
 
@@ -136,27 +135,26 @@ def test_app_setup(app_with_components):
         component.setup.assert_has_calls([call(old_version=2)])
 
 
+def test_app_uninstall(app_with_components):
+    """Test that running uninstall on an app runs uninstall on components."""
+    for component in app_with_components.components.values():
+        component.uninstall = Mock()
+
+    app_with_components.uninstall()
+    for component in app_with_components.components.values():
+        component.uninstall.assert_has_calls([call()])
+
+
 @pytest.mark.django_db
 def test_setup_state():
     """Test retrieving the current setup state of the app."""
     app = AppSetupTest()
     app.info.version = 3
-    module = sys.modules[__name__]
 
     app.set_setup_version(3)
     assert app.get_setup_state() == App.SetupState.UP_TO_DATE
     assert not app.needs_setup()
 
-    app.set_setup_version(0)
-    try:
-        delattr(module, 'setup')
-    except AttributeError:
-        pass
-    assert app.get_setup_state() == App.SetupState.UP_TO_DATE
-    assert not app.needs_setup()
-    assert app.get_setup_version() == 3
-
-    setattr(module, 'setup', True)
     app.set_setup_version(0)
     assert app.get_setup_state() == App.SetupState.NEEDS_SETUP
     assert app.needs_setup()
@@ -294,6 +292,12 @@ def test_component_setup():
     """Test running setup on component."""
     component = Component('test-component')
     assert component.setup(old_version=1) is None
+
+
+def test_component_uninstall():
+    """Test running uninstall on component."""
+    component = Component('test-component')
+    assert component.uninstall() is None
 
 
 def test_component_enable():

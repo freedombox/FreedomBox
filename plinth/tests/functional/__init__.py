@@ -34,11 +34,8 @@ logger = logging.getLogger(__name__)
 base_url = config['DEFAULT']['url']
 
 _app_checkbox_id = {
-    'tor': 'id_tor-enabled',
     'openvpn': 'id_openvpn-enabled',
 }
-
-_apps_with_loaders = ['tor']
 
 # unlisted sites just use '/' + site_name as url
 _site_url = {
@@ -46,6 +43,7 @@ _site_url = {
     'jsxc': '/plinth/apps/jsxc/jsxc/',
     'cockpit': '/_cockpit/',
     'syncthing': '/syncthing/',
+    'rssbridge': '/rss-bridge/',
 }
 
 _sys_modules = [
@@ -154,18 +152,20 @@ def get_password(username):
 
 
 def is_available(browser, site_name):
+    """Check if the given site_name is available."""
     url_to_visit = config['DEFAULT']['url'] + _get_site_url(site_name)
     browser.visit(url_to_visit)
     time.sleep(3)
     browser.reload()
-    not_404 = '404' not in browser.title
+    if '404' in browser.title or 'Page not found' in browser.title:
+        return False
+
     # The site might have a default path after the sitename,
     # e.g /mediawiki/Main_Page
     print('URL =', browser.url, url_to_visit, browser.title)
     browser_url = browser.url.partition('://')[2]
     url_to_visit_without_proto = url_to_visit.strip('/').partition('://')[2]
-    no_redirect = browser_url.startswith(url_to_visit_without_proto)
-    return not_404 and no_redirect
+    return browser_url.startswith(url_to_visit_without_proto)  # not a redirect
 
 
 def download_file(browser, url):
@@ -225,9 +225,6 @@ def change_checkbox_status(browser, app_name, checkbox_id,
 
     submit(browser, form_class='form-configuration')
 
-    if app_name in _apps_with_loaders:
-        wait_for_config_update(browser, app_name)
-
 
 def wait_for_config_update(browser, app_name):
     """Wait until the configuration update progress goes away.
@@ -238,7 +235,7 @@ def wait_for_config_update(browser, app_name):
 
     """
     script = 'return (document.readyState == "complete") && ' \
-        '(!Boolean(document.querySelector(".running-status.loading")));'
+        '(!Boolean(document.querySelector(".app-operation")));'
     while not browser.execute_script(script):
         time.sleep(0.1)
 
@@ -341,7 +338,7 @@ def install(browser, app_name):
     install_button_css = '.form-install input[type=submit]'
     while True:
         script = 'return (document.readyState == "complete") && ' \
-            '(!Boolean(document.querySelector(".installing")));'
+            '(!Boolean(document.querySelector(".app-operation")));'
         if not browser.execute_script(script):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
@@ -351,17 +348,40 @@ def install(browser, app_name):
         elif browser.is_element_present_by_css(install_button_css):
             install_button = browser.find_by_css(install_button_css).first
             if install_button['disabled']:
-                if not browser.find_by_name('refresh-packages'):
-                    # Package manager is busy, wait and refresh page
-                    time.sleep(1)
-                    browser.visit(browser.url)
-                else:
-                    # This app is not available in this distribution
-                    warnings.warn(
-                        f'App {app_name} is not available in distribution')
-                    pytest.skip('App not available in distribution')
+                # This app is not available in this distribution
+                warnings.warn(
+                    f'App {app_name} is not available in distribution')
+                pytest.skip('App not available in distribution')
             else:
                 install_button.click()
+        else:
+            break
+
+
+def uninstall(browser, app_name):
+    """Uninstall the app if possible."""
+    nav_to_module(browser, app_name)
+    actions_button = browser.find_by_id('id_extra_actions_button')
+    if not actions_button:
+        pytest.skip('App cannot be uninstalled')
+
+    actions_button.click()
+    uninstall_item = browser.find_by_css('.uninstall-item')
+    if not uninstall_item:
+        pytest.skip('App cannot be uninstalled')
+
+    uninstall_item[0].click()
+    submit(browser, form_class='form-uninstall')
+
+    while True:
+        script = 'return (document.readyState == "complete") && ' \
+            '(!Boolean(document.querySelector(".app-operation")));'
+        if not browser.execute_script(script):
+            time.sleep(0.1)
+        elif browser.is_element_present_by_css('.neterror'):
+            browser.visit(browser.url)
+        elif browser.is_element_present_by_css('.alert-danger'):
+            raise RuntimeError('Uninstall failed')
         else:
             break
 
@@ -383,9 +403,6 @@ def _change_app_status(browser, app_name, change_status_to='enabled'):
         checkbox_id = _app_checkbox_id[app_name]
         change_checkbox_status(browser, app_name, checkbox_id,
                                change_status_to)
-
-    if app_name in _apps_with_loaders:
-        wait_for_config_update(browser, app_name)
 
 
 def app_enable(browser, app_name):
@@ -467,6 +484,13 @@ def running_inside_container():
 ##############################
 # System -> Config utilities #
 ##############################
+def set_hostname(browser, hostname):
+    nav_to_module(browser, 'config')
+    browser.find_by_id('id_hostname').fill(hostname)
+    update_setup = browser.find_by_css('.btn-primary')
+    submit(browser, element=update_setup)
+
+
 def set_advanced_mode(browser, mode):
     nav_to_module(browser, 'config')
     advanced_mode = browser.find_by_id('id_advanced_mode')
@@ -613,6 +637,7 @@ class BaseAppTests:
     has_web = True
     check_diagnostics = True
     diagnostics_delay = 0
+    disable_after_tests = True
 
     def assert_app_running(self, session_browser):
         """Assert that the app is running."""
@@ -638,7 +663,8 @@ class BaseAppTests:
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
-        app_disable(session_browser, self.app_name)
+        if self.disable_after_tests:
+            app_disable(session_browser, self.app_name)
 
     def test_enable_disable(self, session_browser):
         """Test enabling and disabling the app."""
@@ -671,3 +697,8 @@ class BaseAppTests:
         backup_create(session_browser, self.app_name, 'test_' + self.app_name)
         backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
         self.assert_app_running(session_browser)
+
+    def test_uninstall(self, session_browser):
+        """Test that app can be uninstalled and installed back again."""
+        uninstall(session_browser, self.app_name)
+        install(session_browser, self.app_name)

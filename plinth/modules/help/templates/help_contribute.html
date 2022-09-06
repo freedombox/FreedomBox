@@ -42,4 +42,76 @@
       {% trans 'Learn more...' %}
     </a>
   </p>
+
+  <h3>{% trans "How can I help?" %}</h3>
+  <p>
+    {% blocktrans trimmed %}
+      Below is a list of opportunities for contributing to Debian. It
+      has been filtered to only show packages that are installed on
+      this system.
+    {% endblocktrans %}
+  </p>
+  <p>
+    <a class="btn btn-default collapsed collapsible-button" role="button"
+       data-toggle="collapse" href="#collapse-issues" aria-expanded="false"
+       aria-controls="collapse-issues">
+      <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+      {% trans "Show issues" %}
+    </a>
+
+    <div class="collapse" id="collapse-issues">
+      <h4>{% trans "Packages that will be removed from Debian testing" %}</h4>
+      <ul>
+        {% for issue in testing_autorm %}
+          <li>
+            {% for package in issue.packages %}
+              <b>{{ package }}</b> {% endfor %}
+            ({% trans "source package:" %}
+            <a href="https://tracker.debian.org/pkg/{{ issue.source }}">
+              {{ issue.source }}</a>):
+            {% for bug in issue.bugs %}
+              <a href="https://bugs.debian.org/{{ bug }}">
+                #{{ bug }}</a>
+            {% endfor %}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <h4>{% trans "Packages that are not in Debian testing" %}</h4>
+      <ul>
+        {% for issue in no_testing %}
+          <li>
+            <b>{{ issue.package }}</b>
+            ({% trans "source package:" %}
+            <a href="https://tracker.debian.org/pkg/{{ issue.source }}">
+              {{ issue.source }}</a>)
+          </li>
+        {% endfor %}
+      </ul>
+
+      <h4>{% trans "Good first issues for beginners" %}</h4>
+      <ul>
+        {% for issue in gift %}
+          <li>
+            <b>{{ issue.package }}</b>:
+            <a href="https://bugs.debian.org/{{ issue.bug }}">
+              #{{ issue.bug }}</a>
+            {{ issue.title }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <h4>{% trans "Issues for which the package maintainer has requested help" %}</h4>
+      <ul>
+        {% for issue in help %}
+          <li>
+            <b>{{ issue.package }}</b>:
+            <a href="https://bugs.debian.org/{{ issue.bug }}">
+              #{{ issue.bug }}</a>
+            {{ issue.title }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </p>
 {% endblock %}

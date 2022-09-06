@@ -5,69 +5,67 @@ Functional, browser based tests for sharing app.
 
 import pytest
 import splinter
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.apps, pytest.mark.sharing]
 
 
-@pytest.fixture(scope='module', autouse=True)
-def fixture_background(session_browser):
-    """Login."""
-    functional.login(session_browser)
+class TestSharingApp(functional.BaseAppTests):
+    app_name = 'sharing'
+    has_service = False
+    has_web = False
+    check_diagnostics = False
 
+    def test_add_remove_share(self, session_browser):
+        """Test adding and removing a share."""
+        _remove_share(session_browser, 'tmp')
+        _add_share(session_browser, 'tmp', '/tmp', 'admin')
+        _verify_share(session_browser, 'tmp', '/tmp', 'admin')
+        _access_share(session_browser, 'tmp')
 
-def test_add_remove_share(session_browser):
-    """Test adding and removing a share."""
-    _remove_share(session_browser, 'tmp')
-    _add_share(session_browser, 'tmp', '/tmp', 'admin')
-    _verify_share(session_browser, 'tmp', '/tmp', 'admin')
-    _access_share(session_browser, 'tmp')
+        _remove_share(session_browser, 'tmp')
+        _verify_invalid_share(session_browser, 'tmp')
+        _verify_nonexistant_share(session_browser, 'tmp')
 
-    _remove_share(session_browser, 'tmp')
-    _verify_invalid_share(session_browser, 'tmp')
-    _verify_nonexistant_share(session_browser, 'tmp')
+    def test_edit_share(self, session_browser):
+        """Test editing a share."""
+        _remove_share(session_browser, 'tmp')
+        _remove_share(session_browser, 'boot')
 
+        _add_share(session_browser, 'tmp', '/tmp', 'admin')
+        _edit_share(session_browser, 'tmp', 'boot', '/boot', 'admin')
 
-def test_edit_share(session_browser):
-    """Test editing a share."""
-    _remove_share(session_browser, 'tmp')
-    _remove_share(session_browser, 'boot')
+        _verify_invalid_share(session_browser, 'tmp')
+        _verify_nonexistant_share(session_browser, 'tmp')
 
-    _add_share(session_browser, 'tmp', '/tmp', 'admin')
-    _edit_share(session_browser, 'tmp', 'boot', '/boot', 'admin')
+        _verify_share(session_browser, 'boot', '/boot', 'admin')
+        _access_share(session_browser, 'boot')
 
-    _verify_invalid_share(session_browser, 'tmp')
-    _verify_nonexistant_share(session_browser, 'tmp')
+    def test_share_permissions(self, session_browser):
+        """Test share permissions."""
+        _remove_share(session_browser, 'tmp')
+        _add_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
+        _verify_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
+        _verify_inaccessible_share(session_browser, 'tmp')
 
-    _verify_share(session_browser, 'boot', '/boot', 'admin')
-    _access_share(session_browser, 'boot')
+        _make_share_public(session_browser, 'tmp')
+        functional.logout(session_browser)
+        assert functional.is_available(session_browser, 'share_tmp')
+        functional.login(session_browser)
 
+    @pytest.mark.backups
+    def test_backup_restore(self, session_browser):
+        """Test backup and restore."""
+        _remove_share(session_browser, 'tmp')
+        _add_share(session_browser, 'tmp', '/tmp', 'admin')
+        functional.backup_create(session_browser, 'sharing', 'test_sharing')
 
-def test_share_permissions(session_browser):
-    """Test share permissions."""
-    _remove_share(session_browser, 'tmp')
-    _add_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
-    _verify_share(session_browser, 'tmp', '/tmp', 'syncthing-access')
-    _verify_inaccessible_share(session_browser, 'tmp')
+        _remove_share(session_browser, 'tmp')
+        functional.backup_restore(session_browser, 'sharing', 'test_sharing')
 
-    _make_share_public(session_browser, 'tmp')
-    functional.logout(session_browser)
-    assert functional.is_available(session_browser, 'share_tmp')
-    functional.login(session_browser)
-
-
-@pytest.mark.backups
-def test_backup_restore(session_browser):
-    """Test backup and restore."""
-    _remove_share(session_browser, 'tmp')
-    _add_share(session_browser, 'tmp', '/tmp', 'admin')
-    functional.backup_create(session_browser, 'sharing', 'test_sharing')
-
-    _remove_share(session_browser, 'tmp')
-    functional.backup_restore(session_browser, 'sharing', 'test_sharing')
-
-    _verify_share(session_browser, 'tmp', '/tmp', 'admin')
-    _access_share(session_browser, 'tmp')
+        _verify_share(session_browser, 'tmp', '/tmp', 'admin')
+        _access_share(session_browser, 'tmp')
 
 
 def _remove_share(browser, name):
@@ -146,7 +144,7 @@ def _verify_invalid_share(browser, name):
 def _verify_nonexistant_share(browser, name):
     """Verify that given URL for a given share name is a 404."""
     functional.visit(browser, f'/share/{name}')
-    assert '404' in browser.title
+    functional.eventually(lambda: '404' in browser.title)
 
 
 def _verify_inaccessible_share(browser, name):

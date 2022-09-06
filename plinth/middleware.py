@@ -4,7 +4,6 @@ Common Django middleware.
 """
 
 import logging
-import sys
 
 from django import urls
 from django.conf import settings
@@ -13,41 +12,26 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.utils.deprecation import MiddlewareMixin
-from django.utils.translation import gettext_lazy as _
 from stronghold.utils import is_view_func_public
 
 from plinth import app as app_module
 from plinth import setup
-from plinth.package import PackageException
 from plinth.utils import is_user_admin
 
+from . import operation as operation_module
 from . import views
 
 logger = logging.getLogger(__name__)
 
 
-def _collect_setup_result(request, app):
-    """Show success/fail message from previous install operation."""
-    setup_helper = sys.modules[app.__module__].setup_helper
-    if not setup_helper.is_finished:
-        return
-
-    exception = setup_helper.collect_result()
-    if not exception:
-        if not app.info.is_essential:
-            messages.success(request, _('Application installed.'))
-    else:
-        if isinstance(exception, PackageException):
-            error_string = getattr(exception, 'error_string', str(exception))
-            error_details = getattr(exception, 'error_details', '')
-            message = _('Error installing application: {string} '
-                        '{details}').format(string=error_string,
-                                            details=error_details)
+def _collect_operations_results(request, app):
+    """Show success/fail messages from previous operations."""
+    operations = operation_module.manager.collect_results(app.app_id)
+    for operation in operations:
+        if operation.exception:
+            messages.error(request, operation.message)
         else:
-            message = _('Error installing application: {error}') \
-                .format(error=exception)
-
-        messages.error(request, message)
+            messages.success(request, operation.message)
 
 
 class SetupMiddleware(MiddlewareMixin):
@@ -77,9 +61,9 @@ class SetupMiddleware(MiddlewareMixin):
         app = app_module.App.get(app_id)
 
         is_admin = is_user_admin(request)
-        # Collect and show setup operation result to admins
+        # Collect and show operations' results to admins
         if is_admin:
-            _collect_setup_result(request, app)
+            _collect_operations_results(request, app)
 
         # Check if application is up-to-date
         if app.get_setup_state() == \

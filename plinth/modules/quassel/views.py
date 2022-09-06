@@ -3,6 +3,7 @@
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
+from plinth import app as app_module
 from plinth.forms import TLSDomainForm
 from plinth.modules import quassel
 from plinth.views import AppView
@@ -23,8 +24,8 @@ class QuasselAppView(AppView):
         data = form.cleaned_data
         if quassel.get_domain() != data['domain']:
             quassel.set_domain(data['domain'])
-            quassel.app.get_component(
-                'letsencrypt-quassel').setup_certificates()
+            app = app_module.App.get('quassel')
+            app.get_component('letsencrypt-quassel').setup_certificates()
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

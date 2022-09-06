@@ -36,8 +36,6 @@ _description = [
       'the app. All users with access can use all the libraries.')
 ]
 
-app = None
-
 LIBRARY_NAME_PATTERN = r'[a-zA-Z0-9 _-]+'
 
 
@@ -101,11 +99,10 @@ class CalibreApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
 
 
 def validate_library_name(library_name):

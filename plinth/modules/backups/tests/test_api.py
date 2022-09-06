@@ -14,8 +14,7 @@ from .. import api, forms, repository
 from ..components import BackupRestore
 
 # pylint: disable=protected-access
-
-setup_helper = MagicMock()
+pytestmark = pytest.mark.django_db
 
 
 def _get_test_manifest(name):

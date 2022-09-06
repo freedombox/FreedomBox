@@ -7,7 +7,6 @@ import collections
 import enum
 import inspect
 import logging
-import sys
 
 from plinth import cfg
 from plinth.signals import post_app_loading
@@ -51,6 +50,7 @@ class App:
 
     class SetupState(enum.Enum):
         """Various states of app being setup."""
+
         NEEDS_SETUP = 'needs-setup'
         NEEDS_UPDATE = 'needs-update'
         UP_TO_DATE = 'up-to-date'
@@ -133,19 +133,15 @@ class App:
         for component in self.components.values():
             component.setup(old_version=old_version)
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        for component in self.components.values():
+            component.uninstall()
+
     def get_setup_state(self) -> SetupState:
         """Return whether the app is not setup or needs upgrade."""
         current_version = self.get_setup_version()
         if current_version and self.info.version <= current_version:
-            return self.SetupState.UP_TO_DATE
-
-        # If an app needs installing/updating but no setup method is available,
-        # then automatically set version.
-        #
-        # Minor violation of 'get' only discipline for convenience.
-        module = sys.modules[self.__module__]
-        if not hasattr(module, 'setup'):
-            self.set_setup_version(self.info.version)
             return self.SetupState.UP_TO_DATE
 
         if not current_version:
@@ -288,6 +284,9 @@ class Component:
 
     def setup(self, old_version):
         """Run operations to install and configure the component."""
+
+    def uninstall(self):
+        """De-configure and uninstall the component."""
 
     def enable(self):
         """Run operations to enable the component."""
@@ -464,7 +463,16 @@ class Info(FollowerComponent):
 
 
 class EnableState(LeaderComponent):
-    """A component to hold the enable state of an app using a simple flag."""
+    """A component to hold the enable state of an app using a simple flag.
+
+    The flag is stored in the FreedomBox service database. This component
+    should only be used if an app does not have any other way to determine if
+    it is enabled or disabled by examining the state of the system. Typical
+    apps have daemons, web server configuration, etc. and the enabled/disabled
+    state of those determine the enabled/disabled state of the entire app. If
+    an does not have any such system state, then this component may be used to
+    provide enable/disable functionality for the app.
+    """
 
     @property
     def key(self):
@@ -550,17 +558,13 @@ def _insert_apps(app_id, app, remaining_apps, ordered_apps):
 
 def _initialize_module(module_name, module):
     """Perform initialization on all apps in a module."""
-    # Perform setup related initialization on the module
-    from . import setup  # noqa  # Avoid circular import
-    setup.init(module_name, module)
-
     try:
         module_classes = inspect.getmembers(module, inspect.isclass)
         app_classes = [
             cls for _, cls in module_classes if issubclass(cls, App)
         ]
         for app_class in app_classes:
-            module.app = app_class()
+            app_class()
     except Exception as exception:
         logger.exception('Exception while running init for %s: %s', module,
                          exception)

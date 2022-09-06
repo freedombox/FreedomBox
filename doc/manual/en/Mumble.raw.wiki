@@ -29,24 +29,7 @@ If your !FreedomBox is behind a router, you will need to set up port forwarding 
 
 === Managing Permissions ===
 
-A super user in Mumble has the ability to create administrator accounts who can in turn  manage groups and channel permissions. This can be done after logging in with the username "!SuperUser" using the super user password. See [[https://wiki.mumble.info/wiki/Murmurguide|Mumble Guide]] for information on how to do this.. !FreedomBox currently does not offer a UI to get or set the super user password for Mumble. A super user password is automatically generated during Mumble setup. To get the password, login to the terminal as admin user using [[FreedomBox/Manual/Cockpit|Cockpit]] , [[FreedomBox/Manual/SecureShell|Secure Shell]] or the console. Then, to read the super user password that was automatically generated during Mumble installation run the following command:
-
-{{{
-sudo grep SuperUser /var/log/mumble-server/mumble-server.log
-}}}
-
-You should see output such as:
-{{{
-<W>2019-11-06 02:47:41.313 1 => Password for 'SuperUser' set to 'noo8Dahwiesh'
-}}}
-
-Alternatively, you can set a new password as follows:
-
-{{{
-sudo su -
-echo "newpassword" | su mumble-server -s /bin/sh -c "/usr/sbin/murmurd -ini /etc/mumble-server.ini --readsupw"
-}}}
-
+A super user in Mumble has the ability to create administrator accounts who can in turn  manage groups and channel permissions. This can be done after logging in with the username "!SuperUser" using the super user password. See [[https://wiki.mumble.info/wiki/Murmurguide|Mumble Guide]] for information on how to do this. The !SuperUser password can be set through the !FreedomBox interface.
 
 === External links ===
 

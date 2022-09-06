@@ -3,19 +3,16 @@
 FreedomBox app to configure Roundcube.
 """
 
-import json
-
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.package import Packages
+from plinth.package import Packages, install
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Roundcube webmail is a browser-based multilingual IMAP '
@@ -36,15 +33,13 @@ _description = [
       '>https://www.google.com/settings/security/lesssecureapps</a>).'),
 ]
 
-app = None
-
 
 class RoundcubeApp(app_module.App):
     """FreedomBox app for Roundcube."""
 
     app_id = 'roundcube'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -91,39 +86,24 @@ class RoundcubeApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        privileged.pre_install()
+        super().setup(old_version)
+        privileged.setup()
+        if old_version == 0:
+            privileged.set_config(local_only=True)
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'roundcube', ['pre-install'])
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'roundcube', ['setup'])
-    if old_version == 0:
-        set_config(local_only=True)
-        helper.call('post', app.enable)
+    def force_upgrade(self, packages):
+        """Force upgrade package to resolve conffile prompts."""
+        if 'roundcube-core' not in packages:
+            return False
 
+        # Allow roundcube any version to upgrade to any version. This is okay
+        # because there will no longer be conflicting file changes.
+        install(['roundcube-core'], force_configuration='new')
+        if self.get_component('webserver-roundcube').is_enabled():
+            self.get_component('webserver-roundcube-freedombox').enable()
 
-def force_upgrade(helper, packages):
-    """Force upgrade package to resolve conffile prompts."""
-    if 'roundcube-core' not in packages:
-        return False
-
-    # Allow roundcube any version to upgrade to any version. This is okay
-    # because there will no longer be conflicting file changes.
-    helper.install(['roundcube-core'], force_configuration='new')
-    if app.get_component('webserver-roundcube').is_enabled():
-        app.get_component('webserver-roundcube-freedombox').enable()
-
-    return True
-
-
-def get_config():
-    """Return Rouncube configuration."""
-    value = actions.superuser_run('roundcube', ['get-config'])
-    return json.loads(value)
-
-
-def set_config(local_only):
-    """Set whether only local server should be allowed."""
-    actions.superuser_run('roundcube',
-                          ['set-config', '--local-only',
-                           str(local_only)])
+        return True

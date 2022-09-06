@@ -9,10 +9,8 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App
-from plinth.errors import ActionError, MissingPackageError
-from plinth.package import Package, Packages, packages_installed, remove
-
-setup_helper = Mock()
+from plinth.errors import MissingPackageError
+from plinth.package import Package, Packages, packages_installed
 
 
 class TestPackageExpressions(unittest.TestCase):
@@ -56,7 +54,7 @@ def test_packages_init():
     assert component.possible_packages == ['foo', 'bar']
     assert component.component_id == 'test-component'
     assert not component.skip_recommends
-    assert component.conflicts is None
+    assert component.conflicts == []
     assert component.conflicts_action is None
 
     with pytest.raises(ValueError):
@@ -86,7 +84,8 @@ def test_packages_get_actual_packages():
     assert component.get_actual_packages() == []
 
 
-def test_packages_setup():
+@patch('plinth.package.install')
+def test_packages_setup(install):
     """Test setting up packages component."""
 
     class TestApp(App):
@@ -96,28 +95,38 @@ def test_packages_setup():
     component = Packages('test-component', ['python3', 'bash'])
     app = TestApp()
     app.add(component)
-    setup_helper.reset_mock()
     app.setup(old_version=3)
-    setup_helper.install.assert_has_calls(
+    install.assert_has_calls(
         [call(['python3', 'bash'], skip_recommends=False)])
 
     component = Packages('test-component', ['bash', 'perl'],
                          skip_recommends=True)
     app = TestApp()
     app.add(component)
-    setup_helper.reset_mock()
     app.setup(old_version=3)
-    setup_helper.install.assert_has_calls(
-        [call(['bash', 'perl'], skip_recommends=True)])
+    install.assert_has_calls([call(['bash', 'perl'], skip_recommends=True)])
 
     component = Packages('test-component',
                          [Package('python3') | Package('unknown-package')])
     app = TestApp()
     app.add(component)
-    setup_helper.reset_mock()
     app.setup(old_version=3)
-    setup_helper.install.assert_has_calls(
-        [call(['python3'], skip_recommends=False)])
+    install.assert_has_calls([call(['python3'], skip_recommends=False)])
+
+
+@patch('plinth.package.uninstall')
+def test_packages_uninstall(uninstall):
+    """Test uninstalling packages component."""
+
+    class TestApp(App):
+        """Test app"""
+        app_id = 'test-app'
+
+    component = Packages('test-component', ['python3', 'bash'])
+    app = TestApp()
+    app.add(component)
+    app.uninstall()
+    uninstall.assert_has_calls([call(['python3', 'bash'])])
 
 
 @patch('apt.Cache')
@@ -195,17 +204,3 @@ def test_packages_installed():
     assert len(packages_installed(())) == 0
     assert len(packages_installed(('unknown-package', ))) == 0
     assert len(packages_installed(('python3', ))) == 1
-
-
-@patch('plinth.actions.superuser_run')
-def test_remove(run):
-    """Test removing packages."""
-    remove(['package1', 'package2'])
-    run.assert_has_calls(
-        [call('packages', ['remove', '--packages', 'package1', 'package2'])])
-
-    run.reset_mock()
-    run.side_effect = ActionError()
-    remove(['package1'])
-    run.assert_has_calls(
-        [call('packages', ['remove', '--packages', 'package1'])])

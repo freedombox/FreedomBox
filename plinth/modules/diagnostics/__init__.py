@@ -25,8 +25,6 @@ _description = [
       'expected.')
 ]
 
-app = None
-
 logger = logging.Logger(__name__)
 
 running_task = None
@@ -42,6 +40,8 @@ class DiagnosticsApp(app_module.App):
     app_id = 'diagnostics'
 
     _version = 1
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -66,6 +66,11 @@ class DiagnosticsApp(app_module.App):
         # Check periodically for low RAM space
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, _warn_about_low_ram_space)
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
 
     def diagnose(self):
         """Run diagnostics and return the results."""

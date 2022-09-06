@@ -24,8 +24,6 @@ ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
 OLD_ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
 ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
 
-app = None
-
 
 class SecurityApp(app_module.App):
     """FreedomBox app for security."""
@@ -33,6 +31,8 @@ class SecurityApp(app_module.App):
     app_id = 'security'
 
     _version = 7
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -57,20 +57,19 @@ class SecurityApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        if not old_version:
+            enable_fail2ban()
 
-def setup(helper, old_version=None):
-    """Install the required packages"""
-    app.setup(old_version)
-    if not old_version:
-        enable_fail2ban()
+        actions.superuser_run('service', ['reload', 'fail2ban'])
 
-    actions.superuser_run('service', ['reload', 'fail2ban'])
-
-    # Migrate to new config file.
-    enabled = get_restricted_access_enabled()
-    set_restricted_access(False)
-    if enabled:
-        set_restricted_access(True)
+        # Migrate to new config file.
+        enabled = get_restricted_access_enabled()
+        set_restricted_access(False)
+        if enabled:
+            set_restricted_access(True)
 
 
 def enable_fail2ban():

@@ -31,8 +31,6 @@ _description = [
       'device, browser or application to http://freedombox_address:1080/')
 ]
 
-app = None
-
 
 class ShadowsocksApp(app_module.App):
     """FreedomBox app for Shadowsocks."""
@@ -84,9 +82,8 @@ class ShadowsocksApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'shadowsocks', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('shadowsocks', ['setup'])
+        self.enable()

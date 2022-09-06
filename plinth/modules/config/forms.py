@@ -99,3 +99,15 @@ class ConfigurationForm(forms.Form):
         help_text=gettext_lazy(
             'Show apps and features that require more technical '
             'knowledge.'))
+
+    logging_mode = forms.ChoiceField(
+        label=gettext_lazy('System-wide logging'),
+        choices=(('none', gettext_lazy('Disable logging, for privacy')),
+                 ('volatile',
+                  gettext_lazy('Keep some in memory until a restart, '
+                               'for performance')),
+                 ('persistent',
+                  gettext_lazy('Write to disk, useful for debugging'))),
+        help_text=gettext_lazy(
+            'Logs contain information about who accessed the system and debug '
+            'information from various services'))

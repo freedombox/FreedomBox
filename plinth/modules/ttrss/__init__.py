@@ -14,7 +14,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy
 
 from . import manifest
@@ -32,8 +32,6 @@ _description = [
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
           'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
-
-app = None
 
 
 class TTRSSApp(app_module.App):
@@ -54,7 +52,8 @@ class TTRSSApp(app_module.App):
                                short_description=_('News Feed Reader'),
                                description=_description,
                                manual_page='TinyTinyRSS',
-                               clients=manifest.clients)
+                               clients=manifest.clients,
+                               donation_url='https://www.patreon.com/cthulhoo')
         self.add(info)
 
         menu_item = menu.Menu('menu-ttrss', info.name, info.short_description,
@@ -107,6 +106,27 @@ class TTRSSApp(app_module.App):
             domain = next(names.get_available_tls_domains(), None)
             set_domain(domain)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        actions.superuser_run('ttrss', ['pre-setup'])
+        super().setup(old_version)
+        actions.superuser_run('ttrss', ['setup'])
+        self.enable()
+
+    def force_upgrade(self, packages):
+        """Force update package to resolve conffile prompts."""
+        if 'tt-rss' not in packages:
+            return False
+
+        # Allow tt-rss any lower version to upgrade to 21.*
+        package = packages['tt-rss']
+        if Version(package['new_version']) > Version('22~'):
+            return False
+
+        install(['tt-rss'], force_configuration='new')
+        actions.superuser_run('ttrss', ['setup'])
+        return True
+
 
 class TTRSSBackupRestore(BackupRestore):
     """Component to backup/restore TT-RSS"""
@@ -120,29 +140,6 @@ class TTRSSBackupRestore(BackupRestore):
         """Restore database contents."""
         super().restore_post(packet)
         actions.superuser_run('ttrss', ['restore-database'])
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'ttrss', ['pre-setup'])
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'ttrss', ['setup'])
-    helper.call('post', app.enable)
-
-
-def force_upgrade(helper, packages):
-    """Force update package to resolve conffile prompts."""
-    if 'tt-rss' not in packages:
-        return False
-
-    # Allow tt-rss any lower version to upgrade to 21.*
-    package = packages['tt-rss']
-    if Version(package['new_version']) > Version('22~'):
-        return False
-
-    helper.install(['tt-rss'], force_configuration='new')
-    actions.superuser_run('ttrss', ['setup'])
-    return True
 
 
 def get_domain():

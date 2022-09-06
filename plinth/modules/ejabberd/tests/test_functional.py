@@ -29,6 +29,8 @@ class TestEjabberdApp(functional.BaseAppTests):
     def test_add_remove_domain(self, session_browser):
         """Test adding and removing a domain."""
         functional.app_enable(session_browser, 'ejabberd')
+        functional.app_enable(session_browser, 'avahi')
+        functional.set_hostname(session_browser, 'freedombox')
         _enable_domain(session_browser, 'freedombox.local')
 
         _disable_domain(session_browser, 'freedombox.local')
@@ -52,6 +54,7 @@ class TestEjabberdApp(functional.BaseAppTests):
     def test_backup_restore(self, session_browser):
         """Test backup and restore of app data."""
         functional.app_enable(session_browser, 'ejabberd')
+        functional.app_enable(session_browser, 'jsxc')
         _jsxc_add_contact(session_browser)
         functional.backup_create(session_browser, 'ejabberd', 'test_ejabberd')
 

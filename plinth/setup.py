@@ -4,20 +4,20 @@ Utilities for performing application setup operations.
 """
 
 import logging
-import sys
 import threading
 import time
 from collections import defaultdict
 
 import apt
+from django.utils.translation import gettext_noop
 
 import plinth
 from plinth import app as app_module
-from plinth.package import Packages
+from plinth.package import PackageException, Packages
 from plinth.signals import post_setup
 
+from . import operation as operation_module
 from . import package
-from .errors import PackageNotInstalledError
 
 logger = logging.getLogger(__name__)
 
@@ -28,106 +28,112 @@ _is_shutting_down = False
 _force_upgrader = None
 
 
-class Helper:
-    """Helper routines for modules to show progress."""
+def run_setup_on_app(app_id, allow_install=True):
+    """Execute the setup process in a thread."""
+    # App is already up-to-date
+    app = app_module.App.get(app_id)
+    current_version = app.get_setup_version()
+    if current_version >= app.info.version:
+        return
 
-    def __init__(self, module_name, module):
-        """Initialize the object."""
-        self.module_name = module_name
-        self.module = module
-        self.current_operation = None
-        self.is_finished = None
-        self.exception = None
-        self.allow_install = True
+    if not current_version:
+        name = gettext_noop('Installing app')
+    else:
+        name = gettext_noop('Updating app')
 
-    def run_in_thread(self):
-        """Execute the setup process in a thread."""
-        thread = threading.Thread(target=self._run)
-        thread.start()
+    logger.debug('Creating operation to setup app: %s', app_id)
+    show_notification = show_message = (current_version
+                                        or not app.info.is_essential)
+    return operation_module.manager.new(
+        app_id, name, _run_setup_on_app, [app, current_version],
+        show_message=show_message, show_notification=show_notification,
+        thread_data={'allow_install': allow_install})
 
-    def _run(self):
-        """Collect exceptions when running in a thread."""
-        try:
-            self.run()
-        except Exception as exception:
-            self.exception = exception
 
-    def collect_result(self):
-        """Return the exception if any."""
-        exception = self.exception
-        self.exception = None
-        self.is_finished = None
-        return exception
-
-    def run(self, allow_install=True):
-        """Execute the setup process."""
-        # Setup for the module is already running
-        if self.current_operation:
-            return
-
-        app = self.module.app
+def _run_setup_on_app(app, current_version):
+    """Execute the setup process."""
+    logger.info('Setup run: %s', app.app_id)
+    exception_to_update = None
+    message = None
+    try:
         current_version = app.get_setup_version()
-        if current_version >= app.info.version:
-            return
-
-        self.allow_install = allow_install
-        self.exception = None
-        self.current_operation = None
-        self.is_finished = False
-        try:
-            if hasattr(self.module, 'setup'):
-                logger.info('Running module setup - %s', self.module_name)
-                self.module.setup(self, old_version=current_version)
-            else:
-                logger.info('Module does not require setup - %s',
-                            self.module_name)
-        except Exception as exception:
-            logger.exception('Error running setup - %s', exception)
-            raise exception
+        app.setup(old_version=current_version)
+        app.set_setup_version(app.info.version)
+        post_setup.send_robust(sender=app.__class__, module_name=app.app_id)
+    except PackageException as exception:
+        exception_to_update = exception
+        error_string = getattr(exception, 'error_string', str(exception))
+        error_details = getattr(exception, 'error_details', '')
+        if not current_version:
+            message = gettext_noop('Error installing app: {string} '
+                                   '{details}').format(string=error_string,
+                                                       details=error_details)
         else:
-            app.set_setup_version(app.info.version)
-            post_setup.send_robust(sender=self.__class__,
-                                   module_name=self.module_name)
-        finally:
-            self.is_finished = True
-            self.current_operation = None
+            message = gettext_noop('Error updating app: {string} '
+                                   '{details}').format(string=error_string,
+                                                       details=error_details)
+    except Exception as exception:
+        exception_to_update = exception
+        if not current_version:
+            message = gettext_noop('Error installing app: {error}').format(
+                error=exception)
+        else:
+            message = gettext_noop('Error updating app: {error}').format(
+                error=exception)
+    else:
+        if not current_version:
+            message = gettext_noop('App installed.')
+        else:
+            message = gettext_noop('App updated')
 
-    def install(self, package_names, skip_recommends=False,
-                force_configuration=None, reinstall=False,
-                force_missing_configuration=False):
-        """Install a set of packages marking progress."""
-        if self.allow_install is False:
-            # Raise error if packages are not already installed.
-            cache = apt.Cache()
-            for package_name in package_names:
-                if not cache[package_name].is_installed:
-                    raise PackageNotInstalledError(package_name)
-
-            return
-
-        logger.info('Running install for module - %s, packages - %s',
-                    self.module_name, package_names)
-
-        transaction = package.Transaction(self.module_name, package_names)
-        self.current_operation = {
-            'step': 'install',
-            'transaction': transaction,
-        }
-        transaction.install(skip_recommends, force_configuration, reinstall,
-                            force_missing_configuration)
-
-    def call(self, step, method, *args, **kwargs):
-        """Call an arbitrary method during setup and note down its stage."""
-        logger.info('Running step for module - %s, step - %s',
-                    self.module_name, step)
-        self.current_operation = {'step': step}
-        return method(*args, **kwargs)
+    logger.info('Setup completed: %s: %s %s', app.app_id, message,
+                exception_to_update)
+    operation = operation_module.Operation.get_operation()
+    operation.on_update(message, exception_to_update)
 
 
-def init(module_name, module):
-    """Create a setup helper for a module for later use."""
-    if not hasattr(module, 'setup_helper'):
-        module.setup_helper = Helper(module_name, module)
+def run_uninstall_on_app(app_id):
+    """Execute the uninstall process in a thread."""
+    # App is already uninstalled
+    app = app_module.App.get(app_id)
+    if not app.get_setup_version():
+        return
+
+    logger.debug('Creating operation to uninstall app: %s', app_id)
+    return operation_module.manager.new(app_id,
+                                        gettext_noop('Uninstalling app'),
+                                        _run_uninstall_on_app, [app],
+                                        show_notification=True)
+
+
+def _run_uninstall_on_app(app):
+    """Execute the uninstall process."""
+    logger.info('Uninstall run: %s', app.app_id)
+    exception_to_update = None
+    message = None
+    try:
+        app.disable()
+        app.uninstall()
+        app.set_setup_version(0)
+    except PackageException as exception:
+        exception_to_update = exception
+        error_string = getattr(exception, 'error_string', str(exception))
+        error_details = getattr(exception, 'error_details', '')
+        message = gettext_noop('Error uninstalling app: {string} '
+                               '{details}').format(string=error_string,
+                                                   details=error_details)
+
+    except Exception as exception:
+        exception_to_update = exception
+        message = gettext_noop('Error uninstalling app: {error}').format(
+            error=exception)
+    else:
+        message = gettext_noop('App uninstalled.')
+
+    logger.info('Uninstall completed: %s: %s %s', app.app_id, message,
+                exception_to_update)
+    operation = operation_module.Operation.get_operation()
+    operation.on_update(message, exception_to_update)
 
 
 def stop():
@@ -151,8 +157,9 @@ def setup_apps(app_ids=None, essential=False, allow_install=True):
         if app_ids and app.app_id not in app_ids:
             continue
 
-        module = sys.modules[app.__module__]
-        module.setup_helper.run(allow_install=allow_install)
+        operation = run_setup_on_app(app.app_id, allow_install=allow_install)
+        if operation:
+            operation.join()
 
 
 def list_dependencies(app_ids=None, essential=False):
@@ -173,10 +180,10 @@ def list_dependencies(app_ids=None, essential=False):
 def run_setup_in_background():
     """Run setup in a background thread."""
     _set_is_first_setup()
-    threading.Thread(target=_run_setup).start()
+    threading.Thread(target=_run_setup_on_startup).start()
 
 
-def _run_setup():
+def _run_setup_on_startup():
     """Run setup with retry till it succeeds."""
     sleep_time = 10
     while True:
@@ -203,17 +210,12 @@ def _run_first_setup():
     """Run setup on essential apps on first setup."""
     global is_first_setup_running
     is_first_setup_running = True
-    # TODO When it errors out, show error in the UI
     run_setup_on_apps(None, allow_install=False)
     is_first_setup_running = False
 
 
 def _run_regular_setup():
     """Run setup on all apps also installing required packages."""
-    # TODO show notification that upgrades are running
-    if package.is_package_manager_busy():
-        raise Exception('Package manager is busy.')
-
     app_ids = _get_apps_for_regular_setup()
     run_setup_on_apps(app_ids, allow_install=True)
 
@@ -428,10 +430,9 @@ class ForceUpgrader():
         need_retry = False
         for app_id, packages in apps.items():
             app = app_module.App.get(app_id)
-            module = sys.modules[app.__module__]
             try:
                 logger.info('Force upgrading app: %s', app.info.name)
-                if module.force_upgrade(module.setup_helper, packages):
+                if self._run_force_upgrade_as_operation(app, packages):
                     logger.info('Successfully force upgraded app: %s',
                                 app.info.name)
                 else:
@@ -444,6 +445,15 @@ class ForceUpgrader():
 
         if need_retry:
             raise self.TemporaryFailure('Some apps failed to force upgrade.')
+
+    def _run_force_upgrade_as_operation(self, app, packages):
+        """Start an operation for force upgrading."""
+        name = gettext_noop('Updating app packages')
+        operation = operation_module.manager.new(app.app_id, name,
+                                                 app.force_upgrade, [packages],
+                                                 show_message=False,
+                                                 show_notification=False)
+        return operation.join()  # Wait for completion, raise Exception
 
     def _get_list_of_apps_to_force_upgrade(self):
         """Return a list of app on which to run force upgrade."""
@@ -489,8 +499,7 @@ class ForceUpgrader():
         package_apps_map = defaultdict(set)
         upgradable_packages = set()
         for app in app_module.App.list():
-            module = sys.modules[app.__module__]
-            if not getattr(module, 'force_upgrade', None):
+            if not getattr(app, 'force_upgrade', None):
                 # App does not implement force upgrade
                 continue
 

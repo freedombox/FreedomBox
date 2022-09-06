@@ -10,8 +10,8 @@ import json
 import augeas
 
 from plinth import actions
+from plinth import app as app_module
 from plinth.daemon import app_is_running
-from plinth.modules import tor
 from plinth.modules.names.components import DomainName
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
@@ -42,9 +42,10 @@ def get_status(initialized=True):
         or status['bridge_relay_enabled']
     }
 
+    app = app_module.App.get('tor')
     return {
-        'enabled': tor.app.is_enabled() if initialized else False,
-        'is_running': app_is_running(tor.app) if initialized else False,
+        'enabled': app.is_enabled() if initialized else False,
+        'is_running': app_is_running(app) if initialized else False,
         'use_upstream_bridges': status['use_upstream_bridges'],
         'upstream_bridges': status['upstream_bridges'],
         'relay_enabled': status['relay_enabled'],

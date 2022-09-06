@@ -39,8 +39,6 @@ _description = [
       'own private space.'),
 ]
 
-app = None
-
 
 class SambaApp(app_module.App):
     """FreedomBox app for Samba file sharing."""
@@ -101,6 +99,12 @@ class SambaApp(app_module.App):
                                             **manifest.backup)
         self.add(backup_restore)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('samba', ['setup'])
+        self.enable()
+
 
 class SambaBackupRestore(BackupRestore):
     """Component to backup/restore Samba."""
@@ -115,13 +119,6 @@ class SambaBackupRestore(BackupRestore):
         super().restore_post(packet)
         actions.superuser_run('samba', ['setup'])
         actions.superuser_run('samba', ['restore-shares'])
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'samba', ['setup'])
-    helper.call('post', app.enable)
 
 
 def add_share(mount_point, share_type, filesystem):

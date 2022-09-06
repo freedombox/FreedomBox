@@ -26,8 +26,6 @@ _description = [
           'connections through the given name.'), box_name=(cfg.box_name))
 ]
 
-app = None
-
 
 class NamesApp(app_module.App):
     """FreedomBox app for names."""
@@ -35,6 +33,8 @@ class NamesApp(app_module.App):
     app_id = 'names'
 
     _version = 1
+
+    can_be_disabled = False
 
     def __init__(self):
         """Create components for the app."""
@@ -58,6 +58,11 @@ class NamesApp(app_module.App):
         """Perform post initialization operations."""
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
+
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
 
 
 def on_domain_added(sender, domain_type, name='', description='',

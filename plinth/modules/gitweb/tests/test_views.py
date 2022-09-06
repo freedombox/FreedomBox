@@ -4,7 +4,7 @@ Tests for gitweb views.
 """
 
 import json
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import pytest
 from django import urls
@@ -25,7 +25,7 @@ EXISTING_REPOS = [
         'owner': '',
         'access': 'public',
         'is_private': False,
-        'default_branch': 'master',
+        'default_branch': 'main',
     },
     {
         'name': 'something2',
@@ -33,7 +33,7 @@ EXISTING_REPOS = [
         'owner': '',
         'access': 'private',
         'is_private': True,
-        'default_branch': 'master',
+        'default_branch': 'main',
     },
 ]
 
@@ -59,8 +59,8 @@ def action_run(*args, **kwargs):
 
     elif subcommand == 'get-branches':
         return json.dumps({
-            "default_branch": "master",
-            "branches": ["master", "branch1"]
+            "default_branch": "main",
+            "branches": ["main", "branch1"]
         })
 
     return None
@@ -70,7 +70,7 @@ def action_run(*args, **kwargs):
 def gitweb_patch():
     """Patch gitweb."""
     with patch('plinth.modules.gitweb.get_repo_list') as get_repo_list, \
-            patch('plinth.modules.gitweb.app') as gitweb_app, \
+            patch('plinth.app.App.get') as app_get, \
             patch('plinth.actions.superuser_run', side_effect=action_run), \
             patch('plinth.actions.run', side_effect=action_run):
         get_repo_list.return_value = [{
@@ -78,7 +78,9 @@ def gitweb_patch():
         }, {
             'name': EXISTING_REPOS[1]['name']
         }]
-        gitweb_app.update_service_access.return_value = None
+        app = Mock()
+        app_get.return_value = app
+        app.update_service_access.return_value = None
 
         yield
 
@@ -309,7 +311,7 @@ def test_edit_repository_failed_view(rf):
             'gitweb-name': 'something_other',
             'gitweb-description': 'test-description',
             'gitweb-owner': 'test-owner',
-            'gitweb-default_branch': 'master',
+            'gitweb-default_branch': 'main',
         }
         request = rf.post(
             urls.reverse('gitweb:edit',

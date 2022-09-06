@@ -4,14 +4,15 @@ FreedomBox app to configure minidlna.
 """
 from django.utils.translation import gettext_lazy as _
 
-import plinth.app as app_module
-from plinth import actions, frontpage, menu
+from plinth import actions
+from plinth import app as app_module
+from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Packages
+from plinth.package import Packages, install
 from plinth.utils import Version
 
 from . import manifest
@@ -26,8 +27,6 @@ _description = [
       'media players, Smartphones, Televisions, and gaming systems ('
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
-
-app = None
 
 
 class MiniDLNAApp(app_module.App):
@@ -90,13 +89,28 @@ class MiniDLNAApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('minidlna', ['setup'])
+        if not old_version:
+            self.enable()
 
-def setup(helper, old_version=None):
-    """Install and configure the package"""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'minidlna', ['setup'])
-    if not old_version:
-        helper.call('post', app.enable)
+    def force_upgrade(self, packages):
+        """Force upgrade minidlna to resolve conffile prompt."""
+        if 'minidlna' not in packages:
+            return False
+
+        # Allow upgrade from 1.2.1+dfsg-1+b1 to 1.3.x
+        package = packages['minidlna']
+        if Version(package['new_version']) > Version('1.4~'):
+            return False
+
+        media_dir = get_media_dir()
+        install(['minidlna'], force_configuration='new')
+        set_media_dir(media_dir)
+
+        return True
 
 
 def get_media_dir():
@@ -107,20 +121,3 @@ def get_media_dir():
 def set_media_dir(media_dir):
     """Set the media directory from which files will be scanned for sharing."""
     actions.superuser_run('minidlna', ['set-media-dir', '--dir', media_dir])
-
-
-def force_upgrade(helper, packages):
-    """Force upgrade minidlna to resolve conffile prompt."""
-    if 'minidlna' not in packages:
-        return False
-
-    # Allow upgrade from 1.2.1+dfsg-1+b1 to 1.3.x
-    package = packages['minidlna']
-    if Version(package['new_version']) > Version('1.4~'):
-        return False
-
-    media_dir = get_media_dir()
-    helper.install(['minidlna'], force_configuration='new')
-    set_media_dir(media_dir)
-
-    return True

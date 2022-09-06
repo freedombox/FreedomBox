@@ -40,8 +40,6 @@ _description = [
         box_name=_(cfg.box_name))
 ]
 
-app = None
-
 
 class ZophApp(app_module.App):
     """FreedomBox app for Zoph."""
@@ -88,13 +86,12 @@ class ZophApp(app_module.App):
                                            **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    helper.call('pre', actions.superuser_run, 'zoph', ['pre-install'])
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'zoph', ['setup'])
-    helper.call('post', app.enable)
+    def setup(self, old_version):
+        """Install and configure the app."""
+        actions.superuser_run('zoph', ['pre-install'])
+        super().setup(old_version)
+        actions.superuser_run('zoph', ['setup'])
+        self.enable()
 
 
 def set_configuration(admin_user=None, enable_osm=None):

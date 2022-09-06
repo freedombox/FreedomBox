@@ -5,8 +5,9 @@ URLs for Cockpit module.
 
 from django.urls import re_path
 
-from plinth.modules.cockpit.views import CockpitAppView
+from plinth.views import AppView
 
 urlpatterns = [
-    re_path(r'^sys/cockpit/$', CockpitAppView.as_view(), name='index'),
+    re_path(r'^sys/cockpit/$', AppView.as_view(app_id='cockpit'),
+            name='index'),
 ]

@@ -7,6 +7,7 @@ Components
    :caption: Available components:
 
    info
+   enablestate
    menu
    packages
    daemon
@@ -15,6 +16,7 @@ Components
    frontpage
    domain
    letsencrypt
+   users
    staticfiles
    backups
    coturn

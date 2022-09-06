@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "app.html" %}
 {% comment %}
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
@@ -11,9 +11,8 @@
         href="{% static 'sharing/sharing.css' %}"/>
 {% endblock %}
 
-{% block content %}
-
-  {% include "app-header.html" with icon_filename=icon_filename name=title description=description %}
+{% block configuration %}
+  {{ block.super }}
 
   <div class="btn-toolbar">
     <a title="{% trans 'Add share' %}"

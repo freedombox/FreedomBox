@@ -8,7 +8,7 @@
 
 {% block configuration %}
 
-  {% if not is_running %}
+  {% if not is_task_running %}
     <form class="form form-run-diagnostics" method="post"
           action="{% url 'diagnostics:index' %}">
       {% csrf_token %}

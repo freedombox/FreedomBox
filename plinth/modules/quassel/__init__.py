@@ -38,8 +38,6 @@ _description = [
       'are available.'),
 ]
 
-app = None
-
 
 class QuasselApp(app_module.App):
     """FreedomBox app for Quassel."""
@@ -100,12 +98,11 @@ class QuasselApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', app.enable)
-    app.get_component('letsencrypt-quassel').setup_certificates()
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        self.enable()
+        self.get_component('letsencrypt-quassel').setup_certificates()
 
 
 def set_domain(domain):

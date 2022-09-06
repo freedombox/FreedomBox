@@ -8,8 +8,8 @@ import json
 import logging
 import pathlib
 import subprocess
-import sys
 import threading
+import time
 from typing import Optional, Union
 
 import apt.cache
@@ -17,8 +17,11 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import actions, app
-from plinth.errors import ActionError, MissingPackageError
+from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
+
+from . import operation as operation_module
+from .errors import PackageNotInstalledError
 
 logger = logging.getLogger(__name__)
 
@@ -141,7 +144,7 @@ class Packages(app.FollowerComponent):
                 self._packages.append(package)
 
         self.skip_recommends = skip_recommends
-        self.conflicts = conflicts
+        self.conflicts = conflicts or []
         self.conflicts_action = conflicts_action
 
     @property
@@ -170,12 +173,12 @@ class Packages(app.FollowerComponent):
 
     def setup(self, old_version):
         """Install the packages."""
-        # TODO: Drop the need for setup helper.
-        module_name = self.app.__module__
-        module = sys.modules[module_name]
-        helper = module.setup_helper
-        helper.install(self.get_actual_packages(),
-                       skip_recommends=self.skip_recommends)
+        install(self.get_actual_packages(),
+                skip_recommends=self.skip_recommends)
+
+    def uninstall(self):
+        """Uninstall and purge the packages."""
+        uninstall(self.get_actual_packages())
 
     def diagnose(self):
         """Run diagnostics and return results."""
@@ -255,12 +258,12 @@ class PackageException(Exception):
 class Transaction:
     """Information about an ongoing transaction."""
 
-    def __init__(self, module_name, package_names):
+    def __init__(self, app_id, package_names):
         """Initialize transaction object.
 
         Set most values to None until they are sent as progress update.
         """
-        self.module_name = module_name
+        self.app_id = app_id
         self.package_names = package_names
 
         self._reset_status()
@@ -320,9 +323,18 @@ class Transaction:
                 extra_arguments.append('--force-missing-configuration')
 
             self._run_apt_command(['install'] + extra_arguments +
-                                  [self.module_name] + self.package_names)
+                                  [self.app_id] + self.package_names)
         except subprocess.CalledProcessError as exception:
             logger.exception('Error installing package: %s', exception)
+            raise
+
+    def uninstall(self):
+        """Run an apt-get transaction to uninstall given packages."""
+        try:
+            self._run_apt_command(['remove', self.app_id, '--packages'] +
+                                  self.package_names)
+        except subprocess.CalledProcessError as exception:
+            logger.exception('Error uninstalling package: %s', exception)
             raise
 
     def refresh_package_lists(self):
@@ -352,7 +364,7 @@ class Transaction:
 
         return_code = process.wait()
         if return_code != 0:
-            raise PackageException(_('Error during installation'), self.stderr)
+            raise PackageException(_('Error running apt-get'), self.stderr)
 
     def _read_stdout(self, process):
         """Read the stdout of the process and update progress."""
@@ -385,6 +397,65 @@ class Transaction:
         }
         self.status_string = status_map.get(parts[0], '')
         self.percentage = int(float(parts[2]))
+
+
+def install(package_names, skip_recommends=False, force_configuration=None,
+            reinstall=False, force_missing_configuration=False):
+    """Install a set of packages marking progress."""
+    try:
+        operation = operation_module.Operation.get_operation()
+    except AttributeError:
+        raise RuntimeError(
+            'install() must be called from within an operation.')
+
+    if not operation.thread_data.get('allow_install', True):
+        # Raise error if packages are not already installed.
+        cache = apt.Cache()
+        for package_name in package_names:
+            if not cache[package_name].is_installed:
+                raise PackageNotInstalledError(package_name)
+
+        return
+
+    start_time = time.time()
+    while is_package_manager_busy():
+        if time.time() - start_time >= 24 * 3600:  # One day
+            raise PackageException(_('Timeout waiting for package manager'))
+
+        time.sleep(3)  # seconds
+
+    logger.info('Running install for app - %s, packages - %s',
+                operation.app_id, package_names)
+
+    from . import package
+    transaction = package.Transaction(operation.app_id, package_names)
+    operation.thread_data['transaction'] = transaction
+    transaction.install(skip_recommends, force_configuration, reinstall,
+                        force_missing_configuration)
+
+
+def uninstall(package_names):
+    """Uninstall a set of packages."""
+    try:
+        operation = operation_module.Operation.get_operation()
+    except AttributeError:
+        raise RuntimeError(
+            'uninstall() must be called from within an operation.')
+
+    start_time = time.time()
+    while is_package_manager_busy():
+        if time.time() - start_time >= 24 * 3600:  # One day
+            raise PackageException(_('Timeout waiting for package manager'))
+
+        time.sleep(3)  # seconds
+
+    logger.info('Running uninstall for app - %s, packages - %s',
+                operation.app_id, package_names)
+
+    from . import package
+    transaction = package.Transaction(operation.app_id, package_names)
+    operation.thread_data['transaction'] = transaction
+    transaction.uninstall()
 
 
 def is_package_manager_busy():
@@ -433,11 +504,3 @@ def packages_installed(candidates: Union[list, tuple]) -> list:
             pass
 
     return installed_packages
-
-
-def remove(packages: Union[list, tuple]) -> None:
-    """Remove packages."""
-    try:
-        actions.superuser_run('packages', ['remove', '--packages'] + packages)
-    except ActionError:
-        pass

@@ -61,7 +61,7 @@
 
   <script type="text/javascript" src="{% static 'theme/js/main.js' %}" defer></script>
 
-  {% if refresh_page_sec %}
+  {% if refresh_page_sec is not None %}
     <noscript>
       <meta http-equiv="refresh" content="{{ refresh_page_sec }}" />
     </noscript>
@@ -72,7 +72,7 @@
 </head>
 
 <body class="{%block body_class %}{%endblock%}"
-      {% if refresh_page_sec %}
+      {% if refresh_page_sec is not None %}
         data-refresh-page-sec="{{ refresh_page_sec }}"
       {% endif %}>
 <div id="wrapper">

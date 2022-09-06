@@ -25,8 +25,6 @@ _description = [
       'It stores no cookies by default.')
 ]
 
-app = None
-
 
 class SearxApp(app_module.App):
     """FreedomBox app for Searx."""
@@ -94,6 +92,15 @@ class SearxApp(app_module.App):
         shortcut.login_required = login_required
         self.add(shortcut)
 
+    def setup(self, old_version):
+        """Install and configure the app."""
+        super().setup(old_version)
+        actions.superuser_run('searx', ['setup'])
+        if not old_version or old_version < 3:
+            actions.superuser_run('searx', ['disable-public-access'])
+            self.enable()
+            self.set_shortcut_login_required(True)
+
 
 class SearxWebserverAuth(Webserver):
     """Component to handle Searx authentication webserver configuration."""
@@ -106,17 +113,6 @@ class SearxWebserverAuth(Webserver):
         """Enable apache configuration only if public access is disabled."""
         if not is_public_access_enabled():
             super().enable()
-
-
-def setup(helper, old_version=None):
-    """Install and configure the module."""
-    app.setup(old_version)
-    helper.call('post', actions.superuser_run, 'searx', ['setup'])
-    if not old_version or old_version < 3:
-        helper.call('post', actions.superuser_run, 'searx',
-                    ['disable-public-access'])
-        helper.call('post', app.enable)
-        app.set_shortcut_login_required(True)
 
 
 def get_safe_search_setting():
@@ -133,6 +129,7 @@ def is_public_access_enabled():
 def enable_public_access():
     """Allow Searx app to be accessed by anyone with access."""
     actions.superuser_run('searx', ['enable-public-access'])
+    app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').disable()
     app.set_shortcut_login_required(False)
 
@@ -140,5 +137,6 @@ def enable_public_access():
 def disable_public_access():
     """Allow Searx app to be accessed by logged-in users only."""
     actions.superuser_run('searx', ['disable-public-access'])
+    app = app_module.App.get('searx')
     app.get_component('webserver-searx-auth').enable()
     app.set_shortcut_login_required(True)
