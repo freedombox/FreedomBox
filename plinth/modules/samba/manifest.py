@@ -24,13 +24,17 @@ clients = [{
     }]
 }, {
     'name':
-        _('Ghost Commander - Samba plugin'),
+        _('Ghost Commander'),
     'platforms': [{
         'type': 'store',
         'os': 'android',
         'store_name': 'f-droid',
-        'url': store_url('f-droid', 'com.ghostsq.commander.samba')
-    }, {
+        'url': store_url('f-droid', 'com.ghostsq.commander')
+    }]
+}, {
+    'name':
+        _('Ghost Commander - Samba plugin'),
+    'platforms': [{
         'type': 'store',
         'os': 'android',
         'store_name': 'google-play',
