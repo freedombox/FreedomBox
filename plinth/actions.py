@@ -84,6 +84,7 @@ import os
 import re
 import shlex
 import subprocess
+import threading
 
 from plinth import cfg
 from plinth.errors import ActionError
@@ -281,18 +282,111 @@ def privileged(func):
     def wrapper(*args, **kwargs):
         module_name = _get_privileged_action_module_name(func)
         action_name = func.__name__
-        json_args = json.dumps({'args': args, 'kwargs': kwargs})
-        return_value = superuser_run('actions', [module_name, action_name],
-                                     input=json_args.encode())
-        return_value = json.loads(return_value)
-        if return_value['result'] == 'success':
-            return return_value['return']
-
-        module = importlib.import_module(return_value['exception']['module'])
-        exception = getattr(module, return_value['exception']['name'])
-        raise exception(*return_value['exception']['args'])
+        return _run_privileged_method_as_process(module_name, action_name,
+                                                 args, kwargs)
 
     return wrapper
+
+
+def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
+    """Execute the privileged method in a sub-process with sudo."""
+    run_as_user = kwargs.pop('_run_as_user', None)
+    run_in_background = kwargs.pop('_run_in_background', False)
+
+    read_fd, write_fd = os.pipe()
+    os.set_inheritable(write_fd, True)
+
+    # Prepare the command
+    command = ['sudo', '--non-interactive', '--close-from', str(write_fd + 1)]
+    if run_as_user:
+        command += ['--user', run_as_user]
+
+    if cfg.develop:
+        command += [f'PYTHONPATH={cfg.file_root}']
+
+    command += [
+        os.path.join(cfg.actions_dir, 'actions'), module_name, action_name,
+        '--write-fd',
+        str(write_fd)
+    ]
+
+    proc_kwargs = {
+        'stdin': subprocess.PIPE,
+        'stdout': subprocess.PIPE,
+        'stderr': subprocess.PIPE,
+        'shell': False,
+        'pass_fds': [write_fd],
+    }
+    if cfg.develop:
+        # In development mode pass on local pythonpath to access Plinth
+        proc_kwargs['env'] = {'PYTHONPATH': cfg.file_root}
+
+    _log_action(module_name, action_name, run_as_user, run_in_background)
+
+    proc = subprocess.Popen(command, **proc_kwargs)
+    os.close(write_fd)
+
+    buffers = []
+    # XXX: Use async to avoid creating a thread.
+    read_thread = threading.Thread(target=_thread_reader,
+                                   args=(read_fd, buffers))
+    read_thread.start()
+
+    wait_args = (module_name, action_name, args, kwargs, proc, command,
+                 read_fd, read_thread, buffers)
+    if not run_in_background:
+        return _wait_for_return(*wait_args)
+
+    wait_thread = threading.Thread(target=_wait_for_return, args=wait_args)
+    wait_thread.start()
+
+
+def _wait_for_return(module_name, action_name, args, kwargs, proc, command,
+                     read_fd, read_thread, buffers):
+    """Communicate with the subprocess and wait for its return."""
+    log_error = kwargs.pop('_log_error', True)
+    json_args = json.dumps({'args': args, 'kwargs': kwargs})
+
+    output, error = proc.communicate(input=json_args.encode())
+    read_thread.join()
+    if proc.returncode != 0:
+        logger.error('Error executing command - %s, %s, %s', command, output,
+                     error)
+        raise subprocess.CalledProcessError(proc.returncode, command)
+
+    try:
+        return_value = json.loads(b''.join(buffers))
+    except json.JSONDecodeError:
+        logger.error(
+            'Error decoding action return value %s..%s(*%s, **%s): %s',
+            module_name, action_name, args, kwargs, return_value)
+        raise
+
+    if return_value['result'] == 'success':
+        return return_value['return']
+
+    module = importlib.import_module(return_value['exception']['module'])
+    exception_class = getattr(module, return_value['exception']['name'])
+    exception = exception_class(*return_value['exception']['args'], output,
+                                error)
+    if log_error:
+        logger.error('Error running action %s..%s(*%s, **%s): %s %s %s',
+                     module_name, action_name, args, kwargs, exception,
+                     exception.args, return_value['exception']['traceback'])
+
+    raise exception
+
+
+def _thread_reader(read_fd, buffers):
+    """Read from the pipe in a separate thread."""
+    while True:
+        buffer = os.read(read_fd, 10240)
+        if not buffer:
+            break
+
+        buffers.append(buffer)
+
+    os.close(read_fd)
 
 
 def _check_privileged_action_arguments(func):
@@ -320,3 +414,10 @@ def _get_privileged_action_module_name(func):
                          'package/module named privileged')
 
     return module_name.rpartition('.')[2]
+
+
+def _log_action(module_name, action_name, run_as_user, run_in_background):
+    """Log an action in a compact format."""
+    prompt = f'({run_as_user})$' if run_as_user else '#'
+    suffix = '&' if run_in_background else ''
+    logger.info('%s %s..%s(…) %s', prompt, module_name, action_name, suffix)
