@@ -148,26 +148,6 @@ def fixture_actions_module(request):
     return module
 
 
-@pytest.fixture(name='call_action')
-def fixture_call_action(request, capsys, actions_module):
-    """Run actions with custom root path."""
-
-    actions_name = getattr(request.module, 'actions_name')
-
-    def _call_action(*args, **_kwargs):
-        if isinstance(args[0], list):
-            argv = [actions_name] + args[0]  # Command line style usage
-        else:
-            argv = [args[0]] + args[1]  # superuser_run style usage
-
-        with patch('argparse._sys.argv', argv):
-            actions_module.main()
-            captured = capsys.readouterr()
-            return captured.out
-
-    return _call_action
-
-
 @pytest.fixture(name='mock_privileged')
 def fixture_mock_privileged(request):
     """Mock the privileged decorator to nullify its effects."""

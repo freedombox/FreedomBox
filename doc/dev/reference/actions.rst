@@ -13,4 +13,4 @@ else. These actions are also directly usable by a skilled administrator.
 The following documentation for the ``actions`` module.
 
 .. automodule:: plinth.actions
-   :members: run, superuser_run, run_as_user, _run, privileged
+   :members: privileged
