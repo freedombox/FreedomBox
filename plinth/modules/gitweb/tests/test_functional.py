@@ -137,7 +137,7 @@ def _create_repo(browser, repo, access=None, ok_if_exists=False):
             browser.find_by_id('id_gitweb-is_private').check()
         elif access == 'public':
             browser.find_by_id('id_gitweb-is_private').uncheck()
-        functional.submit(browser)
+        functional.submit(browser, form_class='form-gitweb')
     elif not ok_if_exists:
         assert False, 'Repo already exists.'
 
@@ -171,7 +171,7 @@ def _delete_repo(browser, repo, ignore_missing=False):
         '/plinth/apps/gitweb/{}/delete/'.format(repo))
     if delete_link or not ignore_missing:
         delete_link.first.click()
-        functional.submit(browser)
+        functional.submit(browser, form_class='form-delete')
 
 
 def _edit_repo_metadata(browser, repo, metadata):
@@ -186,7 +186,7 @@ def _edit_repo_metadata(browser, repo, metadata):
         browser.find_by_id('id_gitweb-is_private').check()
     else:
         browser.find_by_id('id_gitweb-is_private').uncheck()
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-gitweb')
 
 
 def _get_gitweb_site_default_repo_branch(browser, repo):
@@ -306,7 +306,7 @@ def _set_default_branch(browser, repo, branch):
     browser.links.find_by_href(
         '/plinth/apps/gitweb/{}/edit/'.format(repo)).first.click()
     browser.find_by_id('id_gitweb-default_branch').select(branch)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-gitweb')
 
 
 def _set_repo_access(browser, repo, access):
@@ -318,7 +318,7 @@ def _set_repo_access(browser, repo, access):
         browser.find_by_id('id_gitweb-is_private').check()
     else:
         browser.find_by_id('id_gitweb-is_private').uncheck()
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-gitweb')
 
 
 def _site_repo_exists(browser, repo):

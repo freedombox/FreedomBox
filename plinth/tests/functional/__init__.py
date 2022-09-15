@@ -193,6 +193,10 @@ def download_file_outside_browser(url):
 # Form handling utilities #
 ###########################
 def submit(browser, element=None, form_class=None, expected_url=None):
+    """Submit a specific form in the current page and wait for page change."""
+    if not (element or form_class):
+        raise AssertionError('Either element or form_class must be sent')
+
     with wait_for_page_update(browser, expected_url=expected_url):
         if element:
             element.click()
@@ -253,7 +257,7 @@ def _create_admin_account(browser, username, password):
     browser.find_by_id('id_username').fill(username)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
-    submit(browser)
+    submit(browser, form_class='form-create')
 
 
 def login(browser):
@@ -284,10 +288,10 @@ def login_with_account(browser, url, username, password=None):
         if login_button:
             browser.fill('username', username)
             browser.fill('password', password)
-            submit(browser)
+            submit(browser, form_class='form-login')
     else:
         browser.visit(base_url + '/plinth/firstboot/welcome')
-        submit(browser)  # click the "Start Setup" button
+        submit(browser, form_class='form-start')  # "Start Setup" button
         _create_admin_account(browser, username, password)
         if '/network-topology-first-boot' in browser.url:
             submit(browser, element=browser.find_by_name('skip')[0])
@@ -338,7 +342,8 @@ def install(browser, app_name):
     install_button_css = '.form-install input[type=submit]'
     while True:
         script = 'return (document.readyState == "complete") && ' \
-            '(!Boolean(document.querySelector(".app-operation")));'
+            '(!Boolean(document.querySelector(".app-operation"))) &&' \
+            '(!Boolean(document.querySelector(".app-just-installed")));'
         if not browser.execute_script(script):
             time.sleep(0.1)
         elif browser.is_element_present_by_css('.neterror'):
@@ -506,26 +511,28 @@ def set_advanced_mode(browser, mode):
 ####################
 # Backup utilities #
 ####################
-def _click_button_and_confirm(browser, href):
+def _click_button_and_confirm(browser, href, form_class):
     buttons = browser.links.find_by_href(href)
     if buttons:
-        submit(browser, buttons.first)
-        submit(browser, expected_url='/plinth/sys/backups/')
+        submit(browser, element=buttons.first)
+        submit(browser, form_class=form_class,
+               expected_url='/plinth/sys/backups/')
 
 
 def _backup_delete_archive_by_name(browser, archive_name):
     nav_to_module(browser, 'backups')
     href = f'/plinth/sys/backups/root/delete/{archive_name}/'
-    _click_button_and_confirm(browser, href)
+    _click_button_and_confirm(browser, href, 'form-delete')
 
 
 def backup_create(browser, app_name, archive_name=None):
+    """Create a new backup for a given app."""
     install(browser, 'backups')
     if archive_name:
         _backup_delete_archive_by_name(browser, archive_name)
 
     buttons = browser.links.find_by_href('/plinth/sys/backups/create/')
-    submit(browser, buttons.first)
+    submit(browser, element=buttons.first)
     eventually(browser.find_by_css, args=['.select-all'])
     browser.find_by_css('.select-all').first.uncheck()
     if archive_name:
@@ -534,13 +541,14 @@ def backup_create(browser, app_name, archive_name=None):
     # ensure the checkbox is scrolled into view
     browser.execute_script('window.scrollTo(0, 0)')
     browser.find_by_value(app_name).first.check()
-    submit(browser)
+    submit(browser, form_class='form-backups')
 
 
 def backup_restore(browser, app_name, archive_name=None):
+    """Restore a given app from a backup archive."""
     nav_to_module(browser, 'backups')
     href = f'/plinth/sys/backups/root/restore-archive/{archive_name}/'
-    _click_button_and_confirm(browser, href)
+    _click_button_and_confirm(browser, href, 'form-restore')
 
 
 ######################
@@ -601,7 +609,7 @@ def create_user(browser, name, password=None, groups=[]):
     browser.find_by_id('id_confirm_password').fill(
         config['DEFAULT']['password'])
 
-    submit(browser)
+    submit(browser, form_class='form-create')
 
 
 def delete_user(browser, name):
@@ -612,7 +620,7 @@ def delete_user(browser, name):
 
     with wait_for_page_update(browser):
         delete_link.first.click()
-    submit(browser)
+    submit(browser, form_class='form-delete')
 
 
 def user_exists(browser, name):
@@ -701,4 +709,5 @@ class BaseAppTests:
     def test_uninstall(self, session_browser):
         """Test that app can be uninstalled and installed back again."""
         uninstall(session_browser, self.app_name)
+        assert not is_installed(session_browser, self.app_name)
         install(session_browser, self.app_name)

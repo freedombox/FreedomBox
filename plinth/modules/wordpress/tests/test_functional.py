@@ -113,7 +113,8 @@ def _visit_site(browser):
                      functional.config['DEFAULT']['password'])
         browser.check('pw_weak')
         browser.fill('admin_email', 'admin@example.org')
-        functional.submit(browser)
+        submit_button = browser.find_by_id('submit')
+        functional.submit(browser, element=submit_button)
 
         if not browser.find_by_css('.install-success'):
             raise Exception('WordPress installation failed')
@@ -124,7 +125,8 @@ def _visit_site(browser):
         functional.visit(browser, '/wordpress/wp-login.php')
         browser.fill('log', functional.config['DEFAULT']['username'])
         browser.fill('pwd', functional.config['DEFAULT']['password'])
-        functional.submit(browser)
+        login_button = browser.find_by_id('wp-submit')
+        functional.submit(browser, element=login_button)
 
 
 def _write_post(browser, title):

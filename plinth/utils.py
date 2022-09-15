@@ -9,13 +9,12 @@ import os
 import random
 import re
 import string
-from distutils.version import LooseVersion
 
 import markupsafe
 import ruamel.yaml
 from django.utils.functional import lazy
 
-Version = LooseVersion  # Abstraction over distutils.version.LooseVersion
+from plinth.version import Version
 
 
 def import_from_gi(library, version):
@@ -184,7 +183,7 @@ def is_axes_old():
         # axes.get_version() was removed in 5.0.13
         return False
 
-    return LooseVersion(version) < LooseVersion('5.0')
+    return Version(version) < Version('5.0')
 
 
 def is_authenticated_user(username, password):

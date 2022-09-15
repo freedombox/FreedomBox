@@ -33,7 +33,9 @@ class GitwebAppView(views.AppView):
         repos = gitweb.get_repo_list()
         context['repos'] = repos
         context['cloning'] = any('clone_progress' in repo for repo in repos)
-        context['refresh_page_sec'] = 3 if context['cloning'] else None
+        if context['cloning']:
+            context['refresh_page_sec'] = 3
+
         return context
 
 
@@ -42,7 +44,7 @@ class CreateRepoView(SuccessMessageMixin, FormView):
 
     form_class = CreateRepoForm
     prefix = 'gitweb'
-    template_name = 'gitweb_create_edit.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('gitweb:index')
     success_message = _('Repository created.')
 
@@ -81,7 +83,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
 
     form_class = EditRepoForm
     prefix = 'gitweb'
-    template_name = 'gitweb_create_edit.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('gitweb:index')
     success_message = _('Repository edited.')
 

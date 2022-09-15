@@ -62,7 +62,7 @@ def _add_library(browser, name):
     browser.links.find_by_href(
         '/plinth/apps/calibre/library/create/').first.click()
     browser.find_by_id('id_calibre-name').fill(name)
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-calibre')
 
 
 def _delete_library(browser, name, ignore_missing=False):
@@ -77,7 +77,7 @@ def _delete_library(browser, name, ignore_missing=False):
         raise ValueError('Library not found')
 
     link.first.click()
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-delete')
 
 
 def _is_library_available(browser, name):

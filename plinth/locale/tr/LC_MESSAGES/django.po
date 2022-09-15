@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-29 21:10-0400\n"
-"PO-Revision-Date: 2022-08-18 17:21+0000\n"
+"POT-Creation-Date: 2022-09-12 20:36-0400\n"
+"PO-Revision-Date: 2022-09-02 06:23+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -54,17 +54,15 @@ msgstr "{host}:{port} adresine bağlanamıyor"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Kaldırmadan önce uygulamayı yedekle"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
-msgstr ""
+msgstr "Yedekten geri yükleme, uygulama verilerini geri yükleyecek."
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Depo bulunamadı"
+msgstr "Yedeklenecek depo"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -437,7 +435,7 @@ msgid "{box_name} storage"
 msgstr "{box_name} depolaması"
 
 #: plinth/modules/backups/templates/backups.html:17
-#: plinth/modules/backups/views.py:113
+#: plinth/modules/backups/views.py:116
 msgid "Create a new backup"
 msgstr "Yeni bir yedek oluşturun"
 
@@ -489,7 +487,7 @@ msgid "Create Location"
 msgstr "Konum Oluştur"
 
 #: plinth/modules/backups/templates/backups_add_repository.html:19
-#: plinth/modules/gitweb/views.py:52
+#: plinth/modules/gitweb/views.py:54
 msgid "Create Repository"
 msgstr "Depo Oluştur"
 
@@ -505,19 +503,6 @@ msgstr "Zaman"
 #, python-format
 msgid "Delete Archive %(name)s"
 msgstr "%(name)s Arşivini Sil"
-
-#: plinth/modules/backups/templates/backups_form.html:20
-#: plinth/modules/backups/templates/backups_schedule.html:19
-#: plinth/modules/bepasty/templates/bepasty_add.html:20
-#: plinth/modules/gitweb/templates/gitweb_create_edit.html:20
-#: plinth/modules/networks/templates/internet_connectivity_type.html:18
-#: plinth/modules/networks/templates/network_topology_update.html:18
-#: plinth/modules/networks/templates/router_configuration_update.html:19
-#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
-#: plinth/modules/sharing/templates/sharing_add_edit.html:20
-#: plinth/templates/form.html:19
-msgid "Submit"
-msgstr "Gönder"
 
 #: plinth/modules/backups/templates/backups_repository.html:19
 msgid "This repository is encrypted"
@@ -545,7 +530,7 @@ msgstr "İndir"
 
 #: plinth/modules/backups/templates/backups_repository.html:87
 #: plinth/modules/backups/templates/backups_restore.html:27
-#: plinth/modules/backups/views.py:208
+#: plinth/modules/backups/views.py:211
 msgid "Restore"
 msgstr "Geri Yükle"
 
@@ -648,99 +633,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Anamakineyi Doğrula"
 
-#: plinth/modules/backups/views.py:57
+#: plinth/modules/backups/views.py:59
 msgid "Backup schedule updated."
 msgstr "Yedekleme planı güncellendi."
 
-#: plinth/modules/backups/views.py:76
+#: plinth/modules/backups/views.py:78
 msgid "Schedule Backups"
 msgstr "Yedeklemeleri Zamanla"
 
-#: plinth/modules/backups/views.py:108
+#: plinth/modules/backups/views.py:111
 msgid "Archive created."
 msgstr "Arşiv oluşturuldu."
 
-#: plinth/modules/backups/views.py:136
+#: plinth/modules/backups/views.py:139
 msgid "Delete Archive"
 msgstr "Arşivi Sil"
 
-#: plinth/modules/backups/views.py:148
+#: plinth/modules/backups/views.py:151
 msgid "Archive deleted."
 msgstr "Arşiv silindi."
 
-#: plinth/modules/backups/views.py:161
+#: plinth/modules/backups/views.py:164
 msgid "Upload and restore a backup"
 msgstr "Yedeklemeyi karşıya yükleyin ve geri yükleyin"
 
-#: plinth/modules/backups/views.py:196
+#: plinth/modules/backups/views.py:199
 msgid "Restored files from backup."
 msgstr "Dosyalar yedekten geri yüklendi."
 
-#: plinth/modules/backups/views.py:224
+#: plinth/modules/backups/views.py:227
 msgid "No backup file found."
 msgstr "Yedekleme dosyası bulunamadı."
 
-#: plinth/modules/backups/views.py:232
+#: plinth/modules/backups/views.py:235
 msgid "Restore from uploaded file"
 msgstr "Karşıya yüklenen dosyadan geri yükle"
 
-#: plinth/modules/backups/views.py:291
+#: plinth/modules/backups/views.py:294
 msgid "No additional disks available to add a repository."
 msgstr "Bir depo eklemek için ek diskler yok."
 
-#: plinth/modules/backups/views.py:299
+#: plinth/modules/backups/views.py:302
 msgid "Create backup repository"
 msgstr "Yedekleme deposu oluşturun"
 
-#: plinth/modules/backups/views.py:326
+#: plinth/modules/backups/views.py:329
 msgid "Create remote backup repository"
 msgstr "Uzak yedekleme deposu oluşturun"
 
-#: plinth/modules/backups/views.py:346
+#: plinth/modules/backups/views.py:349
 msgid "Added new remote SSH repository."
 msgstr "Yeni uzak SSH deposu eklendi."
 
-#: plinth/modules/backups/views.py:368
+#: plinth/modules/backups/views.py:371
 msgid "Verify SSH hostkey"
 msgstr "SSH anamakine anahtarını doğrula"
 
-#: plinth/modules/backups/views.py:394
+#: plinth/modules/backups/views.py:397
 msgid "SSH host already verified."
 msgstr "SSH anamakinesi zaten doğrulandı."
 
-#: plinth/modules/backups/views.py:404
+#: plinth/modules/backups/views.py:407
 msgid "SSH host verified."
 msgstr "SSH anamakinesi doğrulandı."
 
-#: plinth/modules/backups/views.py:419
+#: plinth/modules/backups/views.py:422
 msgid "SSH host public key could not be verified."
 msgstr "SSH anamakinesi ortak anahtarı doğrulanamadı."
 
-#: plinth/modules/backups/views.py:421
+#: plinth/modules/backups/views.py:424
 msgid "Authentication to remote server failed."
 msgstr "Uzak sunucuya kimlik doğrulama başarısız oldu."
 
-#: plinth/modules/backups/views.py:423
+#: plinth/modules/backups/views.py:426
 msgid "Error establishing connection to server: {}"
 msgstr "Sunucuyla bağlantı kurulurken hata oldu: {}"
 
-#: plinth/modules/backups/views.py:434
+#: plinth/modules/backups/views.py:437
 msgid "Repository removed."
 msgstr "Depo kaldırıldı."
 
-#: plinth/modules/backups/views.py:448
+#: plinth/modules/backups/views.py:451
 msgid "Remove Repository"
 msgstr "Depoyu Kaldır"
 
-#: plinth/modules/backups/views.py:457
+#: plinth/modules/backups/views.py:460
 msgid "Repository removed. Backups were not deleted."
 msgstr "Depo kaldırıldı. Yedekler silinmedi."
 
-#: plinth/modules/backups/views.py:467
+#: plinth/modules/backups/views.py:470
 msgid "Unmounting failed!"
 msgstr "Bağlantıyı kaldırma başarısız oldu!"
 
-#: plinth/modules/backups/views.py:482 plinth/modules/backups/views.py:486
+#: plinth/modules/backups/views.py:485 plinth/modules/backups/views.py:489
 msgid "Mounting failed"
 msgstr "Bağlama başarısız oldu"
 
@@ -911,20 +896,20 @@ msgid "Configuration updated."
 msgstr "Yapılandırma güncellendi."
 
 #: plinth/modules/bepasty/views.py:93 plinth/modules/email/views.py:48
-#: plinth/modules/gitweb/views.py:119 plinth/modules/searx/views.py:43
+#: plinth/modules/gitweb/views.py:121 plinth/modules/searx/views.py:43
 #: plinth/modules/searx/views.py:54 plinth/modules/zoph/views.py:74
 msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
-#: plinth/modules/bepasty/views.py:104
+#: plinth/modules/bepasty/views.py:105
 msgid "Password added."
 msgstr "Parola eklendi."
 
-#: plinth/modules/bepasty/views.py:109
+#: plinth/modules/bepasty/views.py:110
 msgid "Add Password"
 msgstr "Parola Ekle"
 
-#: plinth/modules/bepasty/views.py:126
+#: plinth/modules/bepasty/views.py:127
 msgid "Password deleted."
 msgstr "Parola silindi."
 
@@ -1132,12 +1117,12 @@ msgstr "Kütüphane oluşturuldu."
 msgid "An error occurred while creating the library."
 msgstr "Kütüphane oluşturulurken bir hata meydana geldi."
 
-#: plinth/modules/calibre/views.py:66 plinth/modules/gitweb/views.py:141
+#: plinth/modules/calibre/views.py:66 plinth/modules/gitweb/views.py:143
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} silindi."
 
-#: plinth/modules/calibre/views.py:70 plinth/modules/gitweb/views.py:145
+#: plinth/modules/calibre/views.py:70 plinth/modules/gitweb/views.py:147
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} silinemedi: {error}"
@@ -2439,19 +2424,19 @@ msgstr "<em>%(name)s</em> Git Deposunu Sil"
 msgid "Delete this repository permanently?"
 msgstr "Bu depo kalıcı olarak silinsin mi?"
 
-#: plinth/modules/gitweb/views.py:47
+#: plinth/modules/gitweb/views.py:49
 msgid "Repository created."
 msgstr "Depo oluşturuldu."
 
-#: plinth/modules/gitweb/views.py:71
+#: plinth/modules/gitweb/views.py:73
 msgid "An error occurred while creating the repository."
 msgstr "Depo oluşturulurken bir hata meydana geldi."
 
-#: plinth/modules/gitweb/views.py:86
+#: plinth/modules/gitweb/views.py:88
 msgid "Repository edited."
 msgstr "Depo düzenlendi."
 
-#: plinth/modules/gitweb/views.py:91
+#: plinth/modules/gitweb/views.py:93
 msgid "Edit repository"
 msgstr "Depoyu düzenle"
 
@@ -4566,6 +4551,15 @@ msgstr "İSS'imin sağladığı bağlantı türünü bilmiyorum."
 msgid "Update..."
 msgstr "Güncelle..."
 
+#: plinth/modules/networks/templates/internet_connectivity_type.html:18
+#: plinth/modules/networks/templates/network_topology_update.html:18
+#: plinth/modules/networks/templates/router_configuration_update.html:19
+#: plinth/modules/pagekite/templates/pagekite_custom_services.html:28
+#: plinth/modules/sharing/templates/sharing_add_edit.html:20
+#: plinth/templates/form.html:19
+msgid "Submit"
+msgstr "Gönder"
+
 #: plinth/modules/networks/templates/network_topology_content.html:10
 #, python-format
 msgid "How is Your %(box_name)s Connected to the Internet?"
@@ -5706,18 +5700,24 @@ msgid "Android Samba Client"
 msgstr "Android Samba İstemcisi"
 
 #: plinth/modules/samba/manifest.py:27
+#, fuzzy
+#| msgid "Ghost Commander - Samba plugin"
+msgid "Ghost Commander"
+msgstr "Ghost Commander - Samba eklentisi"
+
+#: plinth/modules/samba/manifest.py:36
 msgid "Ghost Commander - Samba plugin"
 msgstr "Ghost Commander - Samba eklentisi"
 
-#: plinth/modules/samba/manifest.py:41
+#: plinth/modules/samba/manifest.py:45
 msgid "VLC media player"
 msgstr "VLC ortam oynatıcı"
 
-#: plinth/modules/samba/manifest.py:60
+#: plinth/modules/samba/manifest.py:64
 msgid "GNOME Files"
 msgstr "GNOME Dosyaları"
 
-#: plinth/modules/samba/manifest.py:72
+#: plinth/modules/samba/manifest.py:76
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -5780,36 +5780,36 @@ msgstr "Paylaşım adı"
 msgid "Action"
 msgstr "Eylem"
 
-#: plinth/modules/samba/views.py:33
+#: plinth/modules/samba/views.py:34
 msgid "FreedomBox OS disk"
 msgstr "FreedomBox OS disk"
 
-#: plinth/modules/samba/views.py:59 plinth/modules/storage/forms.py:146
+#: plinth/modules/samba/views.py:60 plinth/modules/storage/forms.py:146
 msgid "Open Share"
 msgstr "Açık Paylaşım"
 
-#: plinth/modules/samba/views.py:63 plinth/modules/storage/forms.py:144
+#: plinth/modules/samba/views.py:64 plinth/modules/storage/forms.py:144
 msgid "Group Share"
 msgstr "Grup Paylaşımı"
 
-#: plinth/modules/samba/views.py:67
+#: plinth/modules/samba/views.py:68
 msgid "Home Share"
 msgstr "Ev Paylaşımı"
 
-#: plinth/modules/samba/views.py:102
+#: plinth/modules/samba/views.py:103
 msgid "Share enabled."
 msgstr "Paylaşım etkinleştirildi."
 
-#: plinth/modules/samba/views.py:107
+#: plinth/modules/samba/views.py:108
 #, python-brace-format
 msgid "Error enabling share: {error_message}"
 msgstr "Paylaşımı etkinleştirirken hata oldu: {error_message}"
 
-#: plinth/modules/samba/views.py:112
+#: plinth/modules/samba/views.py:113
 msgid "Share disabled."
 msgstr "Paylaşım etkisizleştirildi."
 
-#: plinth/modules/samba/views.py:117
+#: plinth/modules/samba/views.py:118
 #, python-brace-format
 msgid "Error disabling share: {error_message}"
 msgstr "Paylaşımı etkisizleştirirken hata oldu: {error_message}"
@@ -6983,16 +6983,13 @@ msgid "Ports"
 msgstr "Bağlantı Noktaları"
 
 #: plinth/modules/tor/views.py:55
-#, fuzzy
-#| msgid "Error updating configuration"
 msgid "Updating configuration"
-msgstr "Yapılandırma güncellenirken hata oldu"
+msgstr "Yapılandırma güncelleniyor"
 
 #: plinth/modules/tor/views.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Uygulama güncellenirken hata oldu: {error}"
+msgstr "Uygulama yapılandırılırken hata oldu: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7303,22 +7300,20 @@ msgid "Show recent update logs"
 msgstr "Son güncelleme günlüklerini göster"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:138
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test Distribution Upgrade"
-msgstr "Dağıtım yükseltmesi etkinleştirildi"
+msgstr "Dağıtım Yükseltmesini Dene"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
+"Bu, deneme için sistemi kararlı durumdan yükseltmeye çalışacak. "
+"<strong>Sadece geliştirme amaçlı kullanım içindir.</strong>"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test distribution upgrade now"
-msgstr "Dağıtım yükseltmesi etkinleştirildi"
+msgstr "Dağıtım yükseltmesini şimdi dene"
 
 #: plinth/modules/upgrades/views.py:68
 #, python-brace-format
@@ -7354,10 +7349,8 @@ msgid "Frequent feature updates activated."
 msgstr "Sık yapılan özellik güncellemeleri etkinleştirildi."
 
 #: plinth/modules/upgrades/views.py:223
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Starting distribution upgrade test."
-msgstr "Dağıtım yükseltmesi etkinleştirildi"
+msgstr "Dağıtım yükseltmesi denemesi başlatılıyor."
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -8143,10 +8136,8 @@ msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "{package_name} paketi en son sürümdür ({latest_version})"
 
 #: plinth/package.py:367
-#, fuzzy
-#| msgid "Error During Backup"
 msgid "Error running apt-get"
-msgstr "Yedekleme Sırasında Hata"
+msgstr "apt-get çalıştırılırken hata oldu"
 
 #: plinth/package.py:389
 msgid "installing"
@@ -8206,28 +8197,22 @@ msgid "App updated"
 msgstr "Uygulama güncellendi"
 
 #: plinth/setup.py:104
-#, fuzzy
-#| msgid "Installing app"
 msgid "Uninstalling app"
-msgstr "Uygulama yükleniyor"
+msgstr "Uygulama kaldırılıyor"
 
 #: plinth/setup.py:122
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {string} {details}"
+#, python-brace-format
 msgid "Error uninstalling app: {string} {details}"
-msgstr "Uygulama yüklenirken hata oldu: {string} {details}"
+msgstr "Uygulama kaldırılırken hata oldu: {string} {details}"
 
 #: plinth/setup.py:128
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {error}"
+#, python-brace-format
 msgid "Error uninstalling app: {error}"
-msgstr "Uygulama yüklenirken hata oldu: {error}"
+msgstr "Uygulama kaldırılırken hata oldu: {error}"
 
 #: plinth/setup.py:131
-#, fuzzy
-#| msgid "App installed."
 msgid "App uninstalled."
-msgstr "Uygulama yüklendi."
+msgstr "Uygulama kaldırıldı."
 
 #: plinth/setup.py:451
 msgid "Updating app packages"
@@ -8550,27 +8535,27 @@ msgstr "Yönlendirici/WAN Bağlantı Noktalarından"
 msgid "To %(box_name)s Ports"
 msgstr "%(box_name)s Bağlantı Noktalarına"
 
-#: plinth/templates/setup.html:18
+#: plinth/templates/setup.html:19
 msgid "Application installed."
 msgstr "Uygulama yüklendi."
 
-#: plinth/templates/setup.html:24
+#: plinth/templates/setup.html:26
 msgid "Install this application?"
 msgstr "Bu uygulama yüklensin mi?"
 
-#: plinth/templates/setup.html:28
+#: plinth/templates/setup.html:30
 msgid "This application needs an update. Update now?"
 msgstr "Bu uygulamanın güncellenmesi gerekiyor. Şimdi güncellensin mi?"
 
-#: plinth/templates/setup.html:39
+#: plinth/templates/setup.html:41
 msgid "This application is currently not available in your distribution."
 msgstr "Bu uygulama şu anda dağıtımınızda mevcut değil."
 
-#: plinth/templates/setup.html:43
+#: plinth/templates/setup.html:45
 msgid "Check again"
 msgstr "Tekrar denetle"
 
-#: plinth/templates/setup.html:48
+#: plinth/templates/setup.html:50
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -8580,36 +8565,35 @@ msgstr ""
 "uygulamanın kurulumuyla çakışıyor. Devam ederseniz aşağıdaki paketler "
 "kaldırılacaktır:"
 
-#: plinth/templates/setup.html:64
+#: plinth/templates/setup.html:66
 msgid "Install"
 msgstr "Yükle"
 
-#: plinth/templates/setup.html:66
+#: plinth/templates/setup.html:68
 msgid "Update"
 msgstr "Güncelle"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 #: plinth/templates/uninstall.html:36
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Yükle"
+msgstr "Kaldır"
 
 #: plinth/templates/uninstall.html:11
-#, fuzzy, python-format
-#| msgid "Edit User <em>%(username)s</em>"
+#, python-format
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "<em>%(username)s</em> Kullanıcısını Düzenleyin"
+msgstr "<em>%(app_name)s</em> Uygulaması Kaldırılsın mı?"
 
 #: plinth/templates/uninstall.html:17
 msgid "Uninstalling an app is an exprimental feature."
-msgstr ""
+msgstr "Bir uygulamayı kaldırmak, deneysel bir özelliktir."
 
 #: plinth/templates/uninstall.html:23
 msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"Tüm uygulama verileri ve yapılandırması kalıcı olarak kaybolacaktır. "
+"Uygulama tekrar yeni olarak yüklenebilir."
 
 #: plinth/views.py:221
 msgid "Setting unchanged"
@@ -8618,7 +8602,7 @@ msgstr "Ayar değişmedi"
 #: plinth/views.py:401
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "{app_id} kaldırılmadan önce"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"

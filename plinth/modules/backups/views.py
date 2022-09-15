@@ -50,9 +50,11 @@ class BackupsView(AppView):
 
 
 class ScheduleView(SuccessMessageMixin, FormView):
+    """View to edit a backup schedule."""
+
     form_class = forms.ScheduleForm
     prefix = 'backups_schedule'
-    template_name = 'backups_schedule.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('backups:index')
     success_message = gettext_lazy('Backup schedule updated.')
 
@@ -101,9 +103,10 @@ class ScheduleView(SuccessMessageMixin, FormView):
 
 class CreateArchiveView(SuccessMessageMixin, FormView):
     """View to create a new archive."""
+
     form_class = forms.CreateArchiveForm
     prefix = 'backups'
-    template_name = 'backups_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('backups:index')
     success_message = gettext_lazy('Archive created.')
 

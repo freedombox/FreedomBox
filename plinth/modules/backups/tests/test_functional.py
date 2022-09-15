@@ -150,7 +150,7 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
     functional.eventually(browser.find_by_css, args=['.select-all'])
     browser.find_by_css('.select-all').first.check()
     browser.find_by_css(f'input[value="{without_app}"]').first.uncheck()
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-backups_schedule')
 
 
 def _download_file_logged_in(browser, url, suffix=''):
@@ -186,8 +186,8 @@ def _upload_and_restore(browser, app_name, downloaded_file_path):
     fileinput = browser.driver.find_element_by_id('id_backups-file')
     fileinput.send_keys(downloaded_file_path)
     # submit upload form
-    functional.submit(browser)
+    functional.submit(browser, form_class='form-upload')
     # submit restore form
     with functional.wait_for_page_update(browser,
                                          expected_url='/plinth/sys/backups/'):
-        functional.submit(browser)
+        functional.submit(browser, form_class='form-restore')
