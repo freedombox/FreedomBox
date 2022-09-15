@@ -405,21 +405,12 @@ def is_disk_image():
 
 def run_apt_command(arguments):
     """Run apt-get with provided arguments."""
-    # Ask apt-get to output its progress to file descriptor 3.
-    command = [
-        'apt-get', '--assume-yes', '--quiet=2', '--option', 'APT::Status-Fd=3'
-    ] + arguments
+    command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
-    # Duplicate stdout to file descriptor 3 for this process.
-    os.dup2(1, 3)
-
-    # Pass on file descriptor 3 instead of closing it.  Close stdout
-    # so that regular output is ignored.
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     process = subprocess.run(command, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, close_fds=False,
-                             env=env, check=False)
+                             stdout=subprocess.DEVNULL, env=env, check=False)
     return process.returncode
 
 
