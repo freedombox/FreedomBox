@@ -34,7 +34,7 @@ def get_logging_mode() -> str:
 
 
 @privileged
-def set_logging_mode(mode: str) -> None:
+def set_logging_mode(mode: str):
     """Set the current logging mode."""
     if mode not in ('volatile', 'persistent', 'none'):
         raise ValueError('Invalid mode')
