@@ -50,8 +50,8 @@ _site_url = {
 _sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'names', 'networks', 'pagekite',
-    'performance', 'power', 'security', 'snapshot', 'ssh', 'storage',
-    'upgrades', 'users'
+    'performance', 'power', 'privacy', 'security', 'snapshot', 'ssh',
+    'storage', 'upgrades', 'users'
 ]
 
 
