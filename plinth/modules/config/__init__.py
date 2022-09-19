@@ -76,7 +76,6 @@ class ConfigApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        _migrate_home_page_config()
 
         if old_version <= 3:
             privileged.set_logging_mode('volatile')
@@ -148,8 +147,9 @@ def _home_page_scid2url(shortcut_id):
     return url
 
 
-def _get_home_page_url(conf_file):
+def _get_home_page_url():
     """Get the default application for the domain."""
+    conf_file = privileged.APACHE_HOMEPAGE_CONFIG
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
@@ -168,11 +168,7 @@ def _get_home_page_url(conf_file):
 
 def get_home_page():
     """Return the shortcut ID that is set as current home page."""
-    CONF_FILE = privileged.APACHE_HOMEPAGE_CONFIG if os.path.exists(
-        privileged.APACHE_HOMEPAGE_CONFIG
-    ) else privileged.FREEDOMBOX_APACHE_CONFIG
-
-    url = _get_home_page_url(CONF_FILE)
+    url = _get_home_page_url()
     return home_page_url2scid(url)
 
 
@@ -196,16 +192,3 @@ def set_advanced_mode(advanced_mode):
     """Turn on/off advanced mode."""
     from plinth import kvstore
     kvstore.set(ADVANCED_MODE_KEY, advanced_mode)
-
-
-def _migrate_home_page_config():
-    """Move the home page configuration to an external file."""
-    # Hold the current home page in a variable
-    home_page = get_home_page()
-
-    # Reset the home page to plinth in freedombox.conf
-    privileged.reset_home_page()
-
-    # Write the home page setting into the new conf file
-    # This step is run at the end because it reloads the Apache server
-    change_home_page(home_page)

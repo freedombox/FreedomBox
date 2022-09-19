@@ -15,8 +15,6 @@ APACHE_CONF_ENABLED_DIR = '/etc/apache2/conf-enabled'
 APACHE_HOMEPAGE_CONF_FILE_NAME = 'freedombox-apache-homepage.conf'
 APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                       APACHE_HOMEPAGE_CONF_FILE_NAME)
-FREEDOMBOX_APACHE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
-                                        'freedombox.conf')
 
 JOURNALD_FILE = pathlib.Path('/etc/systemd/journald.conf.d/50-freedombox.conf')
 
@@ -115,25 +113,3 @@ def set_home_page(homepage: str):
         conf_file.write(redirect_rule)
 
     action_utils.webserver_enable('freedombox-apache-homepage')
-
-
-@privileged
-def reset_home_page():
-    """Set the Apache web server's home page to the default - /plinth."""
-    config_file = FREEDOMBOX_APACHE_CONFIG
-    default_path = 'plinth'
-
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
-    aug.set('/augeas/load/Httpd/incl[last() + 1]', config_file)
-    aug.load()
-
-    aug.defvar('conf', '/files' + config_file)
-
-    for match in aug.match('/files' + config_file +
-                           '/directive["RedirectMatch"]'):
-        if aug.get(match + "/arg[1]") == '''"^/$"''':
-            aug.set(match + "/arg[2]", '"/{}"'.format(default_path))
-
-    aug.save()
