@@ -56,9 +56,8 @@ class BindAppView(AppView):  # pylint: disable=too-many-ancestors
         data = form.cleaned_data
         old_config = privileged.get_config()
 
-        if old_config['forwarders'] != data['forwarders'] \
-           or old_config['enable_dnssec'] != data['enable_dnssec']:
-            privileged.configure(data['forwarders'], data['enable_dnssec'])
+        if old_config['forwarders'] != data['forwarders']:
+            privileged.configure(data['forwarders'])
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

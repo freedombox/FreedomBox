@@ -28,9 +28,6 @@ forwarders {
 };
 forward first;
 
-dnssec-enable yes;
-dnssec-validation auto;
-
 auth-nxdomain no;    # conform to RFC1035
 listen-on-v6 { any; };
 };
@@ -43,6 +40,8 @@ def setup(old_version: int):
     if old_version == 0:
         with open(CONFIG_FILE, 'w', encoding='utf-8') as conf_file:
             conf_file.write(DEFAULT_CONFIG)
+    elif old_version < 3:
+        _remove_dnssec()
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
 
@@ -50,10 +49,9 @@ def setup(old_version: int):
 
 
 @privileged
-def configure(forwarders: str, dnssec: bool):
+def configure(forwarders: str):
     """Configure BIND."""
     _set_forwarders(forwarders)
-    _set_dnssec(dnssec)
     action_utils.service_restart('named')
 
 
@@ -62,22 +60,15 @@ def get_config():
     data = [line.strip() for line in open(CONFIG_FILE, 'r', encoding='utf-8')]
 
     forwarders = ''
-    dnssec_enabled = False
     flag = False
     for line in data:
         if re.match(r'^\s*forwarders\s+{', line):
             flag = True
-        elif re.match(r'^\s*dnssec-enable\s+yes;', line):
-            dnssec_enabled = True
         elif flag and '//' not in line:
             forwarders = re.sub('[;]', '', line)
             flag = False
 
-    conf = {
-        'forwarders': forwarders,
-        'enable_dnssec': dnssec_enabled,
-    }
-    return conf
+    return {'forwarders': forwarders}
 
 
 def _set_forwarders(forwarders):
@@ -100,24 +91,14 @@ def _set_forwarders(forwarders):
     conf_file.close()
 
 
-def _set_dnssec(choice):
-    """Enable or disable DNSSEC."""
+def _remove_dnssec():
+    """Remove DNSSEC options."""
     data = [line.strip() for line in open(CONFIG_FILE, 'r', encoding='utf-8')]
 
-    if choice:
-        conf_file = open(CONFIG_FILE, 'w', encoding='utf-8')
+    with open(CONFIG_FILE, 'w', encoding='utf-8') as file_handle:
         for line in data:
-            if re.match(r'//\s*dnssec-enable\s+yes;', line):
-                line = line.lstrip('/')
-            conf_file.write(line + '\n')
-        conf_file.close()
-    else:
-        conf_file = open(CONFIG_FILE, 'w', encoding='utf-8')
-        for line in data:
-            if re.match(r'^\s*dnssec-enable\s+yes;', line):
-                line = '//' + line
-            conf_file.write(line + '\n')
-        conf_file.close()
+            if not re.match(r'^\s*dnssec-enable\s+yes;', line):
+                file_handle.write(line + '\n')
 
 
 def get_served_domains():

@@ -74,18 +74,6 @@ def test_set_forwarders():
     assert conf['forwarders'] == ''
 
 
-@pytest.mark.usefixtures('configuration_file')
-def test_enable_dnssec():
-    """Test that enabling DNSSEC works."""
-    bind.privileged._set_dnssec(True)
-    conf = bind.privileged.get_config()
-    assert conf['enable_dnssec']
-
-    bind.privileged._set_dnssec(False)
-    conf = bind.privileged.get_config()
-    assert not conf['enable_dnssec']
-
-
 @pytest.mark.usefixtures('bind_zones_folder')
 def test_get_correct_served_domains():
     """

@@ -30,7 +30,7 @@ class BindApp(app_module.App):
 
     app_id = 'bind'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
