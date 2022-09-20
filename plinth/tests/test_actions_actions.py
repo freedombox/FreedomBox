@@ -22,11 +22,6 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
     """Test that calling a method results in proper syntax checks."""
     call = actions_module._call
 
-    # Test for root permissions
-    getuid.return_value = 1000
-    with pytest.raises(PermissionError):
-        call('x-module', 'x-action', {})
-
     # Module name validation
     getuid.return_value = 0
     with pytest.raises(SyntaxError, match='Invalid module name'):

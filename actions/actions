@@ -62,9 +62,6 @@ def main():
 
 def _call(module_name, action_name, arguments):
     """Import the module and run action as superuser"""
-    if os.getuid() != 0:
-        raise PermissionError('This action is reserved for root')
-
     if '.' in module_name:
         raise SyntaxError('Invalid module name')
 
