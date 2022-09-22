@@ -46,7 +46,7 @@ class WordPressApp(app_module.App):
 
     app_id = 'wordpress'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -109,6 +109,9 @@ class WordPressApp(app_module.App):
         actions.superuser_run('wordpress', ['setup'])
         if not old_version:
             self.enable()
+        elif old_version < 3:
+            # Apply changes to Apache configuration from v2 to v3.
+            actions.superuser_run('service', ['reload', 'apache2'])
 
 
 class WordPressBackupRestore(BackupRestore):
