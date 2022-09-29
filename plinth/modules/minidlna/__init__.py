@@ -75,7 +75,7 @@ class MiniDLNAApp(app_module.App):
         self.add(firewall)
 
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
-                              urls=['http://localhost:8200/'])
+                              urls=['https://{host}/_minidlna/'])
         self.add(webserver)
 
         daemon = Daemon('daemon-minidlna', 'minidlna')
