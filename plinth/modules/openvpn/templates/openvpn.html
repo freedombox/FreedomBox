@@ -7,49 +7,31 @@
 {% load i18n %}
 {% load static %}
 
-{% block status %}
-
-  {% if status.is_setup %}
-    {{ block.super }}
-  {% endif %}
-
-{% endblock %}
-
 {% block configuration %}
 
-  {% if status.is_setup %}
+  <h3>{% trans "Profile" %}</h3>
 
-    <h3>{% trans "Profile" %}</h3>
+  <p>
+    {% blocktrans trimmed %}
+      To connect to {{ box_name }}'s VPN, you need to download a profile and
+      feed it to an OpenVPN client on your mobile or desktop machine. OpenVPN
+      Clients are available for most platforms. Click "Learn more..." above for
+      recommended clients and instructions on how to configure them.
+    {% endblocktrans %}
+  </p>
 
-    <p>
-      {% blocktrans trimmed %}
-        To connect to {{ box_name }}'s VPN, you need to download a
-        profile and feed it to an OpenVPN client on your mobile or
-        desktop machine.  OpenVPN Clients are available for most
-        platforms.  Click "Learn more..." above for recommended clients
-        and instructions on how to configure them.
-      {% endblocktrans %}
-    </p>
+  <p>
+    {% blocktrans trimmed %}
+      Profile is specific to each user of {{ box_name }}. Keep it a secret.
+    {% endblocktrans %}
+  </p>
 
-    <p>
-      {% blocktrans trimmed %}
-        Profile is specific to each user of {{ box_name }}.  Keep it a
-        secret.
-      {% endblocktrans %}
-    </p>
+  <form class="form form-profile" method="post"
+        action="{% url 'openvpn:profile' %}">
+    {% csrf_token %}
 
-    <form class="form form-profile" method="post"
-          action="{% url 'openvpn:profile' %}">
-      {% csrf_token %}
-
-      <input type="submit" class="btn btn-primary no-running-status"
-             value="{% trans "Download my profile" %}"/>
-    </form>
-
-    {% if not using_ecc %}
-      {% include "migrate_to_ecc.html" %}
-    {% endif %}
-
-  {% endif %}
+    <input type="submit" class="btn btn-primary no-running-status"
+           value="{% trans "Download my profile" %}"/>
+  </form>
 
 {% endblock %}

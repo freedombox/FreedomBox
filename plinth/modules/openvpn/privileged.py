@@ -50,26 +50,7 @@ cipher AES-256-CBC
 script-security 2
 '''
 
-CLIENT_CONFIGURATION_RSA = '''
-client
-remote {remote} 1194
-proto udp
-proto udp6
-dev tun
-nobind
-remote-cert-tls server
-cipher AES-256-CBC
-comp-lzo
-redirect-gateway
-verb 3
-<ca>
-{ca}</ca>
-<cert>
-{cert}</cert>
-<key>
-{key}</key>'''
-
-CLIENT_CONFIGURATION_ECC = '''
+CLIENT_CONFIGURATION = '''
 client
 remote {remote} 1194
 proto udp
@@ -88,6 +69,7 @@ verb 3
 {key}</key>'''
 
 CERTIFICATE_CONFIGURATION = {
+    'EASYRSA_ALGO': 'ec',
     'EASYRSA_BATCH': '1',
     'EASYRSA_DIGEST': 'sha512',
     'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
@@ -104,34 +86,7 @@ CERTIFICATE_CONFIGURATION = {
     'EASYRSA_REQ_NAME': 'FreedomBox'
 }
 
-CERTIFICATE_CONFIGURATION_RSA = {
-    'EASYRSA_KEY_SIZE': '4096',
-    **CERTIFICATE_CONFIGURATION
-}
-
-CERTIFICATE_CONFIGURATION_ECC = {
-    'EASYRSA_ALGO': 'ec',
-    **CERTIFICATE_CONFIGURATION
-}
-
-COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION_ECC, 'cwd': KEYS_DIRECTORY}
-
-
-def _is_using_ecc():
-    """Return whether the service is using ECC."""
-    if os.path.exists(SERVER_CONFIGURATION_PATH):
-        with open(SERVER_CONFIGURATION_PATH, 'r',
-                  encoding='utf-8') as file_handle:
-            for line in file_handle:
-                if line.strip() == 'dh none':
-                    return True
-    return False
-
-
-@privileged
-def is_setup() -> bool:
-    """Return whether setup is complete."""
-    return _is_non_empty_file(DH_PARAMS) or os.path.exists(EC_PARAMS_DIR)
+COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
 
 
 @privileged
@@ -227,18 +182,13 @@ def get_profile(username: str, remote_server: str) -> str:
         subprocess.check_call([
             '/usr/share/easy-rsa/easyrsa', 'build-client-full', username,
             'nopass'
-        ], env=CERTIFICATE_CONFIGURATION_ECC if _is_using_ecc() else
-                              CERTIFICATE_CONFIGURATION_RSA,
-                              cwd=KEYS_DIRECTORY)
+        ], env=CERTIFICATE_CONFIGURATION, cwd=KEYS_DIRECTORY)
 
     user_certificate_string = _read_file(user_certificate)
     user_key_string = _read_file(user_key)
     ca_string = _read_file(CA_CERTIFICATE_PATH)
 
-    client_configuration = CLIENT_CONFIGURATION_ECC if _is_using_ecc(
-    ) else CLIENT_CONFIGURATION_RSA
-
-    return client_configuration.format(ca=ca_string,
+    return CLIENT_CONFIGURATION.format(ca=ca_string,
                                        cert=user_certificate_string,
                                        key=user_key_string,
                                        remote=remote_server)

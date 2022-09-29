@@ -4,11 +4,8 @@
 import logging
 
 from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.views.decorators.http import require_POST
 
-from plinth import app as app_module
-from plinth.modules import config, openvpn
+from plinth.modules import config
 from plinth.views import AppView
 
 from . import privileged
@@ -21,26 +18,6 @@ class OpenVPNAppView(AppView):
 
     app_id = 'openvpn'
     template_name = 'openvpn.html'
-
-    def get_context_data(self, *args, **kwargs):
-        """Add additional context data for template."""
-        context = super().get_context_data(*args, **kwargs)
-        context['status'] = {
-            'is_setup': privileged.is_setup(),
-        }
-        context['using_ecc'] = openvpn.is_using_ecc()
-        return context
-
-
-@require_POST
-def setup(_):
-    """Start the setup process."""
-    if not privileged.is_setup():
-        privileged.setup()
-
-    app_module.App.get('openvpn').enable()
-
-    return redirect('openvpn:index')
 
 
 def profile(request):
@@ -58,12 +35,3 @@ def profile(request):
         'attachment; filename={username}.ovpn'.format(username=username)
 
     return response
-
-
-@require_POST
-def ecc(_):
-    """Migrate from RSA to ECC."""
-    if privileged.is_setup():
-        privileged.setup()
-
-    return redirect('openvpn:index')
