@@ -4,7 +4,6 @@
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import app as app_module
 from plinth import views
 from plinth.modules import searx
 
@@ -22,8 +21,7 @@ class SearxAppView(views.AppView):
         """Return the status of the service to fill in the form."""
         initial = super().get_initial()
         initial['safe_search'] = privileged.get_safe_search()
-        initial['public_access'] = searx.is_public_access_enabled() and \
-            app_module.App.get('searx').is_enabled()
+        initial['public_access'] = searx.is_public_access_enabled()
         return initial
 
     def form_valid(self, form):

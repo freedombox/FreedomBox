@@ -480,8 +480,9 @@ def _update_searx(reenable=False):
     Re-enable if previously enabled."""
     if pathlib.Path('/etc/searx/settings.yml').exists():
         print('Updating searx search engines list...', flush=True)
-        subprocess.run(['/usr/share/plinth/actions/searx', 'setup'],
-                       check=True)
+        subprocess.run([
+            '/usr/share/plinth/actions/actions', 'searx', 'setup', '--no-args'
+        ], check=True)
         if reenable:
             print('Re-enabling searx after upgrade...', flush=True)
             subprocess.run([
