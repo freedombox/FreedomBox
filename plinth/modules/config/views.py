@@ -97,7 +97,7 @@ class ConfigAppView(views.AppView):
         if is_changed:
             messages.success(self.request, _('Configuration updated'))
 
-        return super(views.AppView, self).form_valid(form)
+        return super().form_valid(form)
 
 
 def set_hostname(hostname):
