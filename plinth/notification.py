@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Module to provide API for showing notifications.
-"""
+"""Module to provide API for showing notifications."""
 
 import copy
 import logging
+import string
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -278,22 +277,22 @@ class Notification(models.StoredNotification):
         return Notification.objects.filter(*filters)[0:10]
 
     @staticmethod
-    def _translate(string, data=None):
+    def _translate(string_, data=None):
         """Translate a string for final display using data dict."""
-        if not string:
+        if not string_:
             return None
 
-        string = gettext(string)
+        string_ = gettext(string_)
         try:
-            string = str(string)
+            string_ = str(string_)
             if data:
-                string = string.format(**data)
+                string_ = SafeFormatter().vformat(string_, [], data)
         except KeyError as error:
             logger.warning(
                 'Notification missing required key during translation: %s',
                 error)
 
-        return string
+        return string_
 
     @staticmethod
     def _translate_dict(data_dict, data=None):
@@ -366,3 +365,14 @@ class Notification(models.StoredNotification):
             notes.append(note_context)
 
         return {'notifications': notes, 'max_severity': max_severity}
+
+
+class SafeFormatter(string.Formatter):
+    """A string.format() handler to deal with missing arguments."""
+
+    def get_value(self, key, args, kwargs):
+        """Retrieve a given field value."""
+        try:
+            return super().get_value(key, args, kwargs)
+        except (IndexError, KeyError):
+            return f'?{key}?'

@@ -11,6 +11,9 @@ import pathlib
 import re
 import shutil
 import subprocess
+import setuptools
+from setuptools.command.install import install
+
 from distutils import log
 from distutils.command.build import build
 from distutils.command.clean import clean
@@ -18,9 +21,6 @@ from distutils.command.install_data import install_data
 from distutils.core import Command
 from distutils.dir_util import remove_tree
 from distutils.util import change_root
-
-import setuptools
-from setuptools.command.install import install
 
 from plinth import __version__
 

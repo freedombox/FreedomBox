@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-12 20:36-0400\n"
-"PO-Revision-Date: 2022-08-03 22:17+0000\n"
+"POT-Creation-Date: 2022-09-26 19:51-0400\n"
+"PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -56,17 +56,16 @@ msgstr "Kan niet verbinden met {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Maak een back-up van de toepassing vóór de-installatie"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
 msgstr ""
+"Herstellen vanaf de back-up zal ook de toepassings-gegevens herstellen."
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Repository niet gevonden"
+msgstr "Repository om backup naar te maken"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -5736,10 +5735,8 @@ msgid "Android Samba Client"
 msgstr "Android Samba Cliënt"
 
 #: plinth/modules/samba/manifest.py:27
-#, fuzzy
-#| msgid "Ghost Commander - Samba plugin"
 msgid "Ghost Commander"
-msgstr "Ghost Commander - Samba plugin"
+msgstr "Ghost Commander"
 
 #: plinth/modules/samba/manifest.py:36
 msgid "Ghost Commander - Samba plugin"
@@ -7026,16 +7023,13 @@ msgid "Ports"
 msgstr "Poorten"
 
 #: plinth/modules/tor/views.py:55
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "Updating configuration"
-msgstr "Er is een fout opgetreden tijdens de configuratie."
+msgstr "Configuratie bijwerken"
 
 #: plinth/modules/tor/views.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Fout bij het installeren van de toepassing: {error}"
+msgstr "Fout bij het configureren van de toepassing: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7344,22 +7338,20 @@ msgid "Show recent update logs"
 msgstr "Recente updateverslagen weergeven"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:138
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test Distribution Upgrade"
-msgstr "Distributie bijwerken ingeschakeld"
+msgstr "Upgrade van distributie testen"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
+"Dit zal proberen om het systeem te upgraden van stable naar testing. "
+"<strong>Dit is alleen bedoeld voor ontwikkelingsgebruik.</strong>"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test distribution upgrade now"
-msgstr "Distributie bijwerken ingeschakeld"
+msgstr "Test de distributie-upgrade nu"
 
 #: plinth/modules/upgrades/views.py:68
 #, python-brace-format
@@ -7395,10 +7387,8 @@ msgid "Frequent feature updates activated."
 msgstr "Tussentijdse Software Updates zijn ingeschakeld."
 
 #: plinth/modules/upgrades/views.py:223
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Starting distribution upgrade test."
-msgstr "Distributie bijwerken ingeschakeld"
+msgstr "Start de distributie upgrade test."
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -8165,21 +8155,19 @@ msgid "Generic"
 msgstr "Generiek"
 
 #: plinth/operation.py:116
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error: {name}: {exception_message}"
-msgstr "Hostnaam instellen mislukt: {exception}"
+msgstr "Fout: {name}: {exception_message}"
 
 #: plinth/operation.py:119
 #, python-brace-format
 msgid "Waiting to start: {name}"
-msgstr ""
+msgstr "Wachten om te starten: {name}"
 
 #: plinth/operation.py:125
-#, fuzzy, python-brace-format
-#| msgid "Service disabled: {name}"
+#, python-brace-format
 msgid "Finished: {name}"
-msgstr "Dienst uitgeschakeld: {name}"
+msgstr "Klaar: {name}"
 
 #: plinth/package.py:191
 #, python-brace-format
@@ -8192,10 +8180,8 @@ msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Pakket {package_name} is de nieuwste versie ({latest_version})"
 
 #: plinth/package.py:367
-#, fuzzy
-#| msgid "Error During Backup"
 msgid "Error running apt-get"
-msgstr "Fout tijdens back-up"
+msgstr "Fout bij het uitvoeren van apt-get"
 
 #: plinth/package.py:389
 msgid "installing"
@@ -8216,85 +8202,65 @@ msgstr "configuratiebestand: {file}"
 
 #: plinth/package.py:423 plinth/package.py:448
 msgid "Timeout waiting for package manager"
-msgstr ""
+msgstr "Time-out wachtend op pakketbeheerder"
 
 #: plinth/setup.py:40
-#, fuzzy
-#| msgid "Install Apps"
 msgid "Installing app"
-msgstr "Installeer Toepassingen"
+msgstr "Toepassing installeren"
 
 #: plinth/setup.py:42
-#, fuzzy
-#| msgid "Updating..."
 msgid "Updating app"
-msgstr "Bezig met bijwerken…"
+msgstr "Toepassing updaten"
 
 #: plinth/setup.py:68
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error installing app: {string} {details}"
 msgstr "Fout bij het installeren van de toepassing: {string} {details}"
 
 #: plinth/setup.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error updating app: {string} {details}"
-msgstr "Fout bij het installeren van de toepassing: {string} {details}"
+msgstr "Fout bij het bijwerken van de toepassing: {string} {details}"
 
 #: plinth/setup.py:78
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error installing app: {error}"
 msgstr "Fout bij het installeren van de toepassing: {error}"
 
 #: plinth/setup.py:81
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error updating app: {error}"
-msgstr "Fout bij het installeren van de toepassing: {error}"
+msgstr "Fout bij het bijwerken van de toepassing: {error}"
 
 #: plinth/setup.py:85
-#, fuzzy
-#| msgid "Application installed."
 msgid "App installed."
 msgstr "De toepassing is geïnstalleerd."
 
 #: plinth/setup.py:87
-#, fuzzy
-#| msgid "Last update"
 msgid "App updated"
-msgstr "Laatste bijwerking"
+msgstr "Toepassing bijgewerkt"
 
 #: plinth/setup.py:104
-#, fuzzy
-#| msgid "Install Apps"
 msgid "Uninstalling app"
-msgstr "Installeer Toepassingen"
+msgstr "Toepassing wordt verwijderd"
 
 #: plinth/setup.py:122
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error uninstalling app: {string} {details}"
-msgstr "Fout bij het installeren van de toepassing: {string} {details}"
+msgstr "Fout bij het verwijderen van de toepassing: {string} {details}"
 
 #: plinth/setup.py:128
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error uninstalling app: {error}"
-msgstr "Fout bij het installeren van de toepassing: {error}"
+msgstr "Fout bij het verwijderen van de toepassing: {error}"
 
 #: plinth/setup.py:131
-#, fuzzy
-#| msgid "Application installed."
 msgid "App uninstalled."
-msgstr "De toepassing is geïnstalleerd."
+msgstr "De toepassing is verwijderd."
 
 #: plinth/setup.py:451
-#, fuzzy
-#| msgid "Upgrade Packages"
 msgid "Updating app packages"
-msgstr "Pakketten Bijwerken"
+msgstr "Toepassings-pakketten bijwerken"
 
 #: plinth/templates/403.html:10
 msgid "403 Forbidden"
@@ -8654,26 +8620,25 @@ msgstr "Update"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 #: plinth/templates/uninstall.html:36
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Installeer"
+msgstr "Verwijderen"
 
 #: plinth/templates/uninstall.html:11
-#, fuzzy, python-format
-#| msgid "Edit User <em>%(username)s</em>"
+#, python-format
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "Gebruiker <em>%(username)s</em> wijzigen"
+msgstr "Toepassing <em>%(app_name)s</em> verwijderen?"
 
 #: plinth/templates/uninstall.html:17
 msgid "Uninstalling an app is an exprimental feature."
-msgstr ""
+msgstr "Het verwijderen van een toepassing is een exprimentele functie."
 
 #: plinth/templates/uninstall.html:23
 msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"Alle toepassings-gegevens en configuratie gaan permanent verloren. de "
+"toepassing kan opnieuw vers worden geïnstalleerd."
 
 #: plinth/views.py:221
 msgid "Setting unchanged"
@@ -8682,7 +8647,7 @@ msgstr "Instelling onveranderd"
 #: plinth/views.py:401
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "voor het verwijderen van {app_id}"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"

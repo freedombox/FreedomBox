@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-12 20:36-0400\n"
-"PO-Revision-Date: 2022-08-18 17:21+0000\n"
+"POT-Creation-Date: 2022-09-26 19:51-0400\n"
+"PO-Revision-Date: 2022-10-01 13:58+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -54,17 +54,16 @@ msgstr "Не може да се свърже с {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Направете резерено копие преди да премахнете приложението"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
 msgstr ""
+"Възстановяване от резервно копие ще възстанови и данните на приложението."
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Хранилището не е намерено"
+msgstr "Хранилище за резервно копие"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -762,6 +761,10 @@ msgid ""
 "revoke access for a single person or group, by removing their password from "
 "the list."
 msgstr ""
+"Можете също така да създадете няколко пароли с един и същ набор от права и "
+"да ги разпределите между различни хора или групи. Това ще ви позволи по-"
+"късно да отмените достъпа на едно лице или група, като премахнете паролата "
+"от списъка."
 
 #: plinth/modules/bepasty/__init__.py:36 plinth/modules/bepasty/__init__.py:45
 msgid "Read a file, if a web link to the file is available"
@@ -769,7 +772,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/__init__.py:37
 msgid "Create or upload files"
-msgstr ""
+msgstr "Създаване или качване на файлове"
 
 #: plinth/modules/bepasty/__init__.py:38
 msgid "List all files and their web links"
@@ -793,7 +796,7 @@ msgstr ""
 
 #: plinth/modules/bepasty/__init__.py:61 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
-msgstr ""
+msgstr "bepasty"
 
 #: plinth/modules/bepasty/__init__.py:63
 msgid "File & Snippet Sharing"
@@ -844,7 +847,7 @@ msgstr ""
 #: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
 #: plinth/modules/shadowsocks/forms.py:45
 msgid "Password"
-msgstr ""
+msgstr "Парола"
 
 #: plinth/modules/bepasty/views.py:22
 msgid "admin"
@@ -961,7 +964,7 @@ msgstr ""
 #: plinth/modules/samba/templates/samba.html:65
 #: plinth/modules/storage/templates/storage.html:26
 msgid "Type"
-msgstr ""
+msgstr "Вид"
 
 #: plinth/modules/bind/templates/bind.html:18
 msgid "Domain Names"
@@ -1021,7 +1024,7 @@ msgstr ""
 
 #: plinth/modules/calibre/__init__.py:58 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
-msgstr ""
+msgstr "calibre"
 
 #: plinth/modules/calibre/__init__.py:59
 msgid "E-book Library"
@@ -1060,7 +1063,7 @@ msgstr ""
 #: plinth/modules/networks/templates/connections_delete.html:23
 #, python-format
 msgid "Delete %(name)s"
-msgstr ""
+msgstr "Премахване на %(name)s"
 
 #: plinth/modules/calibre/templates/calibre.html:11
 msgid "Manage Libraries"
@@ -1132,7 +1135,7 @@ msgstr ""
 #: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
-msgstr ""
+msgstr "Cockpit"
 
 #: plinth/modules/cockpit/__init__.py:54
 msgid "Server Administration"
@@ -1193,6 +1196,9 @@ msgid ""
 "and have as interior characters only alphabets, digits and hyphens.  Total "
 "length must be 63 characters or less."
 msgstr ""
+"Това е името, към което местните устройства се обръщат към {box_name}. "
+"Трябва да започва и завършва с буква или цифра, но може да съдържа и тире. "
+"Общата дължина не трябва да надхвърля 63 знака."
 
 #: plinth/modules/config/forms.py:64
 msgid "Invalid hostname"
@@ -1208,6 +1214,11 @@ msgid ""
 "63 characters or less.  Total length of domain name must be 253 characters "
 "or less."
 msgstr ""
+"Това е името, към което другите устройства в интернет се обръщат към "
+"{box_name}. Състои се от етикети, разделени с точка. Всеки етикет започва и "
+"завършва с буква или цифра, но може да съдържа и тире. Дължина на етикета не "
+"трябва да надхвърля 63 знака. Максималната дължина на името на домейна е 253 "
+"знака."
 
 #: plinth/modules/config/forms.py:85
 msgid "Webserver Home Page"
@@ -1222,6 +1233,12 @@ msgid ""
 "is set to something other than {box_name} Service (Plinth), your users must "
 "explicitly type /plinth or /freedombox to reach {box_name} Service (Plinth)."
 msgstr ""
+"Изберете подразбирана страница, която да бъде показвана, когато някой отвори "
+"{box_name} през и тернет. Типичен пример е блог или уики като начална "
+"страница, когато някой отвори домейна. Имайте предвид, че ако изберете нещо "
+"различно от „Услуга на {box_name} (Plinth)“ потребителите трябва сами да "
+"добавят /plinth или /freedombox, за да достъпят услугата на {box_name} "
+"(Plinth)."
 
 #: plinth/modules/config/forms.py:98
 msgid "Show advanced apps and features"
@@ -1229,31 +1246,33 @@ msgstr "Допълнителни приложения и възможности"
 
 #: plinth/modules/config/forms.py:100
 msgid "Show apps and features that require more technical knowledge."
-msgstr "Показване на приложения и възможности, изискващи технически познания"
+msgstr "Показване на приложения и възможности, изискващи технически познания."
 
 #: plinth/modules/config/forms.py:104
-#, fuzzy
-#| msgid "System Monitoring"
 msgid "System-wide logging"
-msgstr "Наблюдение на системата"
+msgstr "Системен дневник"
 
 #: plinth/modules/config/forms.py:105
 msgid "Disable logging, for privacy"
-msgstr ""
+msgstr "Изключване на дневника с цел поверителност"
 
 #: plinth/modules/config/forms.py:107
 msgid "Keep some in memory until a restart, for performance"
 msgstr ""
+"Запазване на някаква част в паметта до рестартиране, с цел подобряване на "
+"производителността"
 
 #: plinth/modules/config/forms.py:110
 msgid "Write to disk, useful for debugging"
-msgstr ""
+msgstr "Запазване на диска, полезно при отстраняване на дефекти"
 
 #: plinth/modules/config/forms.py:112
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
+"Дневникът съдържа информация, за това кой е достъпвал системата, както и "
+"информация от различни услуги за отстраняване на дефекти"
 
 #: plinth/modules/config/views.py:50
 #, python-brace-format
@@ -1313,7 +1332,7 @@ msgstr ""
 
 #: plinth/modules/coturn/__init__.py:56
 msgid "Coturn"
-msgstr ""
+msgstr "Coturn"
 
 #: plinth/modules/coturn/__init__.py:57
 msgid "VoIP Helper"
@@ -1389,7 +1408,7 @@ msgstr ""
 
 #: plinth/modules/deluge/__init__.py:46 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
-msgstr ""
+msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:48
 #: plinth/modules/transmission/__init__.py:68
@@ -1607,7 +1626,7 @@ msgstr ""
 
 #: plinth/modules/dynamicdns/forms.py:54
 msgid "GnuDIP"
-msgstr ""
+msgstr "GnuDIP"
 
 #: plinth/modules/dynamicdns/forms.py:57
 msgid "Other update URL"
@@ -1753,10 +1772,8 @@ msgid "Chat Server"
 msgstr ""
 
 #: plinth/modules/ejabberd/forms.py:19
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Domain names"
-msgstr "Име на домейн"
+msgstr "Имена на домейни"
 
 #: plinth/modules/ejabberd/forms.py:21
 msgid ""
@@ -2346,7 +2363,7 @@ msgstr ""
 #: plinth/modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
-msgstr ""
+msgstr "%(box_name)s е обновено."
 
 #: plinth/modules/help/templates/help_about.html:35
 #, python-format
@@ -2429,30 +2446,32 @@ msgstr "Научете повече…"
 
 #: plinth/modules/help/templates/help_contribute.html:46
 msgid "How can I help?"
-msgstr ""
+msgstr "Как да помогна?"
 
 #: plinth/modules/help/templates/help_contribute.html:48
 msgid ""
 "Below is a list of opportunities for contributing to Debian. It has been "
 "filtered to only show packages that are installed on this system."
 msgstr ""
+"По-долу е списъкът с възможности за принос към Дебиан. Той е филтриран така, "
+"че да показва само пакетите, които са инсталирани на системата."
 
 #: plinth/modules/help/templates/help_contribute.html:59
 msgid "Show issues"
-msgstr ""
+msgstr "Дефекти"
 
 #: plinth/modules/help/templates/help_contribute.html:63
 msgid "Packages that will be removed from Debian testing"
-msgstr ""
+msgstr "Пакети, които ще бъдат премахнати от тестовия Дебиан"
 
 #: plinth/modules/help/templates/help_contribute.html:69
 #: plinth/modules/help/templates/help_contribute.html:85
 msgid "source package:"
-msgstr ""
+msgstr "пакет с изходен код:"
 
 #: plinth/modules/help/templates/help_contribute.html:80
 msgid "Packages that are not in Debian testing"
-msgstr ""
+msgstr "Пакети, които не са в тестовия Дебиан"
 
 #: plinth/modules/help/templates/help_contribute.html:92
 msgid "Good first issues for beginners"
@@ -2460,7 +2479,7 @@ msgstr "Дефекти, подходящи за начинаещи"
 
 #: plinth/modules/help/templates/help_contribute.html:104
 msgid "Issues for which the package maintainer has requested help"
-msgstr ""
+msgstr "Дефекти, за които поддържащият пакета е поискал помощ"
 
 #: plinth/modules/help/templates/help_feedback.html:12
 #, python-format
@@ -2613,7 +2632,7 @@ msgstr ""
 
 #: plinth/modules/i2p/__init__.py:53 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
-msgstr ""
+msgstr "I2P"
 
 #: plinth/modules/i2p/__init__.py:54 plinth/modules/tor/__init__.py:53
 msgid "Anonymity Network"
@@ -2621,7 +2640,7 @@ msgstr ""
 
 #: plinth/modules/i2p/__init__.py:80
 msgid "I2P Proxy"
-msgstr ""
+msgstr "I2P Proxy"
 
 #: plinth/modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -2674,7 +2693,7 @@ msgstr ""
 
 #: plinth/modules/ikiwiki/__init__.py:47 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
-msgstr ""
+msgstr "ikiwiki"
 
 #: plinth/modules/ikiwiki/__init__.py:48
 msgid "Wiki and Blog"
@@ -2778,7 +2797,7 @@ msgstr ""
 
 #: plinth/modules/infinoted/__init__.py:42
 msgid "infinoted"
-msgstr ""
+msgstr "infinoted"
 
 #: plinth/modules/infinoted/__init__.py:43
 msgid "Gobby Server"
@@ -2786,7 +2805,7 @@ msgstr ""
 
 #: plinth/modules/infinoted/manifest.py:10
 msgid "Gobby"
-msgstr ""
+msgstr "Gobby"
 
 #: plinth/modules/infinoted/manifest.py:12
 msgid "Gobby is a collaborative text editor"
@@ -2814,7 +2833,7 @@ msgstr ""
 
 #: plinth/modules/janus/__init__.py:41
 msgid "Janus"
-msgstr ""
+msgstr "Janus"
 
 #: plinth/modules/janus/__init__.py:43
 msgid "Video Room"
@@ -2838,7 +2857,7 @@ msgstr ""
 
 #: plinth/modules/jsxc/__init__.py:38 plinth/modules/jsxc/manifest.py:7
 msgid "JSXC"
-msgstr ""
+msgstr "JSXC"
 
 #: plinth/modules/jsxc/__init__.py:39
 msgid "Chat Client"
@@ -2864,7 +2883,7 @@ msgstr ""
 
 #: plinth/modules/letsencrypt/__init__.py:61
 msgid "Let's Encrypt"
-msgstr ""
+msgstr "Let's Encrypt"
 
 #: plinth/modules/letsencrypt/__init__.py:62
 msgid "Certificates"
@@ -2986,7 +3005,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/__init__.py:68
 msgid "Matrix Synapse"
-msgstr ""
+msgstr "Matrix Synapse"
 
 #: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
@@ -3009,11 +3028,11 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/manifest.py:14
 msgid "Element"
-msgstr ""
+msgstr "Element"
 
 #: plinth/modules/matrixsynapse/manifest.py:48
 msgid "FluffyChat"
-msgstr ""
+msgstr "FluffyChat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: plinth/modules/snapshot/templates/snapshot.html:13
@@ -3091,11 +3110,11 @@ msgstr ""
 #: plinth/modules/mediawiki/__init__.py:54
 #: plinth/modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
-msgstr ""
+msgstr "MediaWiki"
 
 #: plinth/modules/mediawiki/__init__.py:55 plinth/templates/index.html:124
 msgid "Wiki"
-msgstr ""
+msgstr "Wiki"
 
 #: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
@@ -3120,10 +3139,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/mediawiki/forms.py:41
-#, fuzzy
-#| msgid "Service Name"
 msgid "Site Name"
-msgstr "Име на услуга"
+msgstr "Име на страницата"
 
 #: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
@@ -3203,50 +3220,59 @@ msgid ""
 "(30000). To connect to the server, a <a href=\"http://www.minetest.net/"
 "downloads/\">Minetest client</a> is needed."
 msgstr ""
+"Minetest е многопотребителски пясъчник с безкраен свят от блокове. Модулът "
+"дава възможност за стартиране на сървъра на Minetest на {box_name}, на порта "
+"по подразбиране (30000). За да се свържете със сървъра, е необходим <a href="
+"\"http://www.minetest.net/downloads/\">клиент за Minetest</a>."
 
 #: plinth/modules/minetest/__init__.py:58 plinth/modules/minetest/manifest.py:9
 msgid "Minetest"
-msgstr ""
+msgstr "Minetest"
 
 #: plinth/modules/minetest/__init__.py:59
 msgid "Block Sandbox"
-msgstr ""
+msgstr "Пясъчник с блокове"
 
 #: plinth/modules/minetest/forms.py:13
 msgid "Maximum number of players"
-msgstr ""
+msgstr "Максимален брой играчи"
 
 #: plinth/modules/minetest/forms.py:15
 msgid ""
 "You can change the maximum number of players playing minetest at a single "
 "instance of time."
 msgstr ""
+"Можете да промените разрешения брой играчи на minetest по едно и също време."
 
 #: plinth/modules/minetest/forms.py:19
 msgid "Enable creative mode"
-msgstr ""
+msgstr "Творчески режим"
 
 #: plinth/modules/minetest/forms.py:20
 msgid ""
 "Creative mode changes the rules of the game to make it more suitable for "
 "creative gameplay, rather than challenging \"survival\" gameplay."
 msgstr ""
+"Когато е отметнато, правилата на играта се променят и тя става по-подходяща "
+"за творческа игра, вместо по-предизвикателна от вида „оцеляване“."
 
 #: plinth/modules/minetest/forms.py:25
 msgid "Enable PVP"
-msgstr ""
+msgstr "Играч срещу играч"
 
 #: plinth/modules/minetest/forms.py:26
 msgid "Enabling Player Vs Player will allow players to damage other players."
-msgstr ""
+msgstr "Когато е отметнато, играчите могат да нанасят щети един на друг."
 
 #: plinth/modules/minetest/forms.py:30
 msgid "Enable damage"
-msgstr ""
+msgstr "Получаване на щети"
 
 #: plinth/modules/minetest/forms.py:31
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
+"Когато е отметнато, играчите могат да умират и да получават щети от различен "
+"характер."
 
 #: plinth/modules/minetest/templates/minetest.html:17
 #: plinth/modules/networks/forms.py:54 plinth/modules/networks/forms.py:90
@@ -3270,7 +3296,7 @@ msgstr ""
 
 #: plinth/modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
-msgstr ""
+msgstr "MiniDLNA"
 
 #: plinth/modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
@@ -3290,7 +3316,7 @@ msgstr ""
 
 #: plinth/modules/minidlna/manifest.py:10
 msgid "vlc"
-msgstr ""
+msgstr "vlc"
 
 #: plinth/modules/minidlna/manifest.py:48
 msgid "kodi"
@@ -3871,7 +3897,7 @@ msgstr ""
 
 #: plinth/modules/networks/templates/connection_show.html:170
 msgid "IPv4"
-msgstr ""
+msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:175
 #: plinth/modules/networks/templates/connection_show.html:218
@@ -3897,7 +3923,7 @@ msgstr ""
 
 #: plinth/modules/networks/templates/connection_show.html:213
 msgid "IPv6"
-msgstr ""
+msgstr "IPv6"
 
 #: plinth/modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
@@ -4057,7 +4083,7 @@ msgstr "Пропускане на стъпката"
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:38
 #: plinth/modules/upgrades/templates/update-firstboot.html:33
 msgid "Next"
-msgstr ""
+msgstr "Напред"
 
 #: plinth/modules/networks/templates/internet_connectivity_main.html:9
 msgid "Your Internet Connection Type"
@@ -4996,6 +5022,8 @@ msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
+"RSS-Bridge създава емисии на RSS и Atom на страници, които нямат собствена. "
+"Емисията може да бъде използвана от всеки четец на емисии."
 
 #: plinth/modules/rssbridge/__init__.py:23
 #, python-brace-format
@@ -5013,19 +5041,22 @@ msgid ""
 "follow various websites. When adding a feed, enable authentication and use "
 "your {box_name} credentials."
 msgstr ""
+"Можете да използвате RSS-Bridge заедно с <a href=\"{ttrss_url}\">Tiny Tiny "
+"RSS</a>, за да следвате различни страници. При добавяне на емисия, включете "
+"удостоверяването и използвайте данните за вход на {box_name}."
 
 #: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:48
 msgid "Read and subscribe to news feeds"
-msgstr ""
+msgstr "Четене и абонамент за новинарски емисии"
 
 #: plinth/modules/rssbridge/__init__.py:48
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
-msgstr ""
+msgstr "RSS-Bridge"
 
 #: plinth/modules/rssbridge/__init__.py:49
 msgid "RSS Feed Generator"
-msgstr ""
+msgstr "Създател на емисии на RSS"
 
 #: plinth/modules/samba/__init__.py:27
 msgid ""
@@ -5076,7 +5107,7 @@ msgstr ""
 
 #: plinth/modules/samba/manifest.py:27
 msgid "Ghost Commander"
-msgstr ""
+msgstr "Ghost Commander"
 
 #: plinth/modules/samba/manifest.py:36
 msgid "Ghost Commander - Samba plugin"
@@ -5092,7 +5123,7 @@ msgstr ""
 
 #: plinth/modules/samba/manifest.py:76
 msgid "Dolphin"
-msgstr ""
+msgstr "Dolphin"
 
 #: plinth/modules/samba/templates/samba.html:20
 msgid "Shares"
@@ -6240,16 +6271,13 @@ msgid "Ports"
 msgstr ""
 
 #: plinth/modules/tor/views.py:55
-#, fuzzy
-#| msgid "Updated security configuration"
 msgid "Updating configuration"
-msgstr "Настройките за сигурност са променени"
+msgstr "Настройките са променени"
 
 #: plinth/modules/tor/views.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Грешка при инсталиране на приложението: {error}"
+msgstr "Грешка при настройка на приложението: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -6434,7 +6462,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:19
 msgid "Updating, please wait..."
-msgstr ""
+msgstr "Обновяване, изчакайте…"
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:22
 #: plinth/modules/upgrades/templates/update-firstboot.html:20
@@ -6443,6 +6471,9 @@ msgid ""
 "this web interface may be temporarily unavailable and show an error. In that "
 "case, refresh the page to continue."
 msgstr ""
+"<strong>За да завърши може да отнеме много време</strong>. Докато тече "
+"обновяването този интерфейс може временно да е недостъпен и да показва "
+"грешка. В този случаи, за да продължите презаредете страницата."
 
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:31
 #, python-format
@@ -6451,6 +6482,9 @@ msgid ""
 "\t%(box_name)s is up to date. Press Next to continue.\n"
 "      "
 msgstr ""
+"\n"
+"\t%(box_name)s е последно издание. За да продължите, изберете „Напред“.\n"
+"      "
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -6475,12 +6509,12 @@ msgstr ""
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/upgrades/templates/upgrades_configure.html:100
 msgid "Updating..."
-msgstr ""
+msgstr "Обновяване…"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:32
 #, python-format
 msgid "There is a new %(box_name)s version available."
-msgstr ""
+msgstr "Налично е ново издание на %(box_name)s."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:35
 msgid "Your Freedombox needs an update!"
@@ -6518,7 +6552,7 @@ msgstr "Ръчно обновяване"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:108
 msgid "Update now"
-msgstr ""
+msgstr "Обновяване"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
@@ -6526,28 +6560,30 @@ msgid ""
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
+"<strong>За да завърши може да отнеме много време</strong>. Докато тече "
+"обновяването не може да инсталирате приложения. Също така този интерфейс "
+"може временно да е недостъпен и да показва грешка. В този случаи, за да "
+"продължите презаредете страницата."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
-msgstr ""
+msgstr "Дневник на последните обновявания"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:138
-#, fuzzy
-#| msgid "Could not start distribution update"
 msgid "Test Distribution Upgrade"
-msgstr "Обновяването на дистрибуцията не може да бъде стартирано"
+msgstr "Надграждане на дистрибуцията до тестова"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
+"Това е начин за обновяване на системата от стабилна до тестова. "
+"<strong>Предназначено е само с цел разработка.</strong>"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
-#, fuzzy
-#| msgid "Could not start distribution update"
 msgid "Test distribution upgrade now"
-msgstr "Обновяването на дистрибуцията не може да бъде стартирано"
+msgstr "Надграждане на дистрибуцията до тестова"
 
 #: plinth/modules/upgrades/views.py:68
 #, python-brace-format
@@ -6583,10 +6619,8 @@ msgid "Frequent feature updates activated."
 msgstr "Честото обновяване на възможности е включено."
 
 #: plinth/modules/upgrades/views.py:223
-#, fuzzy
-#| msgid "Could not start distribution update"
 msgid "Starting distribution upgrade test."
-msgstr "Обновяването на дистрибуцията не може да бъде стартирано"
+msgstr "Начало на опит за обновяване на дистрибуцията."
 
 #: plinth/modules/users/__init__.py:29
 msgid ""
@@ -7283,20 +7317,19 @@ msgid "Generic"
 msgstr ""
 
 #: plinth/operation.py:116
-#, fuzzy, python-brace-format
-#| msgid "Error setting hostname: {exception}"
+#, python-brace-format
 msgid "Error: {name}: {exception_message}"
-msgstr "Грешка при задаване на името на хоста: {exception}"
+msgstr "Грешка {name}: {exception_message}"
 
 #: plinth/operation.py:119
 #, python-brace-format
 msgid "Waiting to start: {name}"
-msgstr ""
+msgstr "Изчакване да започне: {name}"
 
 #: plinth/operation.py:125
 #, python-brace-format
 msgid "Finished: {name}"
-msgstr ""
+msgstr "Готово: {name}"
 
 #: plinth/package.py:191
 #, python-brace-format
@@ -7309,10 +7342,8 @@ msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
 #: plinth/package.py:367
-#, fuzzy
-#| msgid "Error During Backup"
 msgid "Error running apt-get"
-msgstr "Грешка при създаване на резервно копие"
+msgstr "Грешка при изпълняване на apt-get"
 
 #: plinth/package.py:389
 msgid "installing"
@@ -7333,81 +7364,65 @@ msgstr ""
 
 #: plinth/package.py:423 plinth/package.py:448
 msgid "Timeout waiting for package manager"
-msgstr ""
+msgstr "Времето за изчакване на диспечера на пакети е изтекло"
 
 #: plinth/setup.py:40
-#, fuzzy
-#| msgid "Install Apps"
 msgid "Installing app"
-msgstr "Инсталиране на приложения"
+msgstr "Инсталиране на приложение"
 
 #: plinth/setup.py:42
 msgid "Updating app"
-msgstr ""
+msgstr "Обновяване на приложение"
 
 #: plinth/setup.py:68
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error installing app: {string} {details}"
 msgstr "Грешка при инсталиране на приложението: {string} {details}"
 
 #: plinth/setup.py:72
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error updating app: {string} {details}"
-msgstr "Грешка при инсталиране на приложението: {string} {details}"
+msgstr "Грешка при обновяване на приложението: {string} {details}"
 
 #: plinth/setup.py:78
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error installing app: {error}"
 msgstr "Грешка при инсталиране на приложението: {error}"
 
 #: plinth/setup.py:81
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error updating app: {error}"
-msgstr "Грешка при инсталиране на приложението: {error}"
+msgstr "Грешка при обновяване на приложението: {error}"
 
 #: plinth/setup.py:85
-#, fuzzy
-#| msgid "Application installed."
 msgid "App installed."
 msgstr "Приложението е инсталирано."
 
 #: plinth/setup.py:87
-#, fuzzy
-#| msgid "Last update"
 msgid "App updated"
-msgstr "Последно обновяване"
+msgstr "Приложението е обновено"
 
 #: plinth/setup.py:104
-#, fuzzy
-#| msgid "Install Apps"
 msgid "Uninstalling app"
-msgstr "Инсталиране на приложения"
+msgstr "Премахване на приложение"
 
 #: plinth/setup.py:122
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
+#, python-brace-format
 msgid "Error uninstalling app: {string} {details}"
-msgstr "Грешка при инсталиране на приложението: {string} {details}"
+msgstr "Грешка при премахване на приложението: {string} {details}"
 
 #: plinth/setup.py:128
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error uninstalling app: {error}"
-msgstr "Грешка при инсталиране на приложението: {error}"
+msgstr "Грешка при премахване на приложението: {error}"
 
 #: plinth/setup.py:131
-#, fuzzy
-#| msgid "Application installed."
 msgid "App uninstalled."
-msgstr "Приложението е инсталирано."
+msgstr "Приложението е премахнато."
 
 #: plinth/setup.py:451
 msgid "Updating app packages"
-msgstr ""
+msgstr "Обновяване на пакетите на приложението"
 
 #: plinth/templates/403.html:10
 msgid "403 Forbidden"
@@ -7572,6 +7587,8 @@ msgid ""
 "Please wait for %(box_name)s to finish installation. You can start using "
 "your %(box_name)s once it is done."
 msgstr ""
+"Изчакайте да завърши инсталирането на %(box_name)s. След това можете да "
+"започнете употреба."
 
 #: plinth/templates/index.html:22
 #, python-format
@@ -7683,16 +7700,16 @@ msgstr "Име на услуга"
 
 #: plinth/templates/port-forwarding-info.html:38
 msgid "Protocol"
-msgstr ""
+msgstr "Протокол"
 
 #: plinth/templates/port-forwarding-info.html:39
 msgid "From Router/WAN Ports"
-msgstr ""
+msgstr "От мершрутизатора/порта за WAN"
 
 #: plinth/templates/port-forwarding-info.html:40
 #, python-format
 msgid "To %(box_name)s Ports"
-msgstr ""
+msgstr "Към порт на %(box_name)s"
 
 #: plinth/templates/setup.html:19
 msgid "Application installed."
@@ -7700,11 +7717,11 @@ msgstr "Приложението е инсталирано."
 
 #: plinth/templates/setup.html:26
 msgid "Install this application?"
-msgstr ""
+msgstr "Инсталиране на приложението?"
 
 #: plinth/templates/setup.html:30
 msgid "This application needs an update. Update now?"
-msgstr ""
+msgstr "Приложението се нуждае от обновяване. Да бъде ли обновено?"
 
 #: plinth/templates/setup.html:41
 msgid "This application is currently not available in your distribution."
@@ -7734,26 +7751,25 @@ msgstr "Обновяване"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 #: plinth/templates/uninstall.html:36
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Инсталиране"
+msgstr "Премахване"
 
 #: plinth/templates/uninstall.html:11
-#, fuzzy, python-format
-#| msgid "Edit User <em>%(username)s</em>"
+#, python-format
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "Променяне на потребителя <em>%(username)s</em>"
+msgstr "Премахване на приложението <em>%(app_name)s</em>?"
 
 #: plinth/templates/uninstall.html:17
 msgid "Uninstalling an app is an exprimental feature."
-msgstr ""
+msgstr "Премахването на приложения е експериментална възможност."
 
 #: plinth/templates/uninstall.html:23
 msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"Всички данни и настройки на приложението ще бъдат загубени. Приложението "
+"може да бъде инсталирано отново."
 
 #: plinth/views.py:221
 msgid "Setting unchanged"
@@ -7762,7 +7778,7 @@ msgstr "Настройките не са променени"
 #: plinth/views.py:401
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "преди премахване на {app_id}"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"

@@ -52,3 +52,13 @@ wfLoadExtension( 'MultimediaViewer' );
 wfLoadExtension( 'Renameuser' );
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'WikiEditor' );
+
+# Add a "Powered by FreedomBox" footer icon
+$wgExtensionFunctions[] = function () {
+    global $wgFooterIcons, $wgResourceBasePath;
+    $wgFooterIcons['poweredby']['freedombox'] = [
+        'src' => "$wgResourceBasePath/resources/assets/freedombox/poweredby_freedombox.svg",
+        'url' => 'https://freedombox.org/',
+        'alt' => 'Powered by FreedomBox',
+    ];
+};
