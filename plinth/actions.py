@@ -292,6 +292,8 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
     """Execute the privileged method in a sub-process with sudo."""
     run_as_user = kwargs.pop('_run_as_user', None)
     run_in_background = kwargs.pop('_run_in_background', False)
+    raw_output = kwargs.pop('_raw_output', False)
+    log_error = kwargs.pop('_log_error', True)
 
     read_fd, write_fd = os.pipe()
     os.set_inheritable(write_fd, True)
@@ -326,14 +328,18 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
     proc = subprocess.Popen(command, **proc_kwargs)
     os.close(write_fd)
 
+    if raw_output:
+        input_ = json.dumps({'args': args, 'kwargs': kwargs}).encode()
+        return proc, read_fd, input_
+
     buffers = []
     # XXX: Use async to avoid creating a thread.
     read_thread = threading.Thread(target=_thread_reader,
                                    args=(read_fd, buffers))
     read_thread.start()
 
-    wait_args = (module_name, action_name, args, kwargs, proc, command,
-                 read_fd, read_thread, buffers)
+    wait_args = (module_name, action_name, args, kwargs, log_error, proc,
+                 command, read_fd, read_thread, buffers)
     if not run_in_background:
         return _wait_for_return(*wait_args)
 
@@ -341,10 +347,9 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
     wait_thread.start()
 
 
-def _wait_for_return(module_name, action_name, args, kwargs, proc, command,
-                     read_fd, read_thread, buffers):
+def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
+                     command, read_fd, read_thread, buffers):
     """Communicate with the subprocess and wait for its return."""
-    log_error = kwargs.pop('_log_error', True)
     json_args = json.dumps({'args': args, 'kwargs': kwargs})
 
     output, error = proc.communicate(input=json_args.encode())
