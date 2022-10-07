@@ -39,13 +39,8 @@ def service_is_running(servicename):
     Does not need to run as root.
     """
     try:
-        if is_systemd_running():
-            subprocess.run(['systemctl', 'status', servicename], check=True,
-                           stdout=subprocess.DEVNULL)
-        else:
-            subprocess.run(['service', servicename, 'status'], check=True,
-                           stdout=subprocess.DEVNULL)
-
+        subprocess.run(['systemctl', 'status', servicename], check=True,
+                       stdout=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         # If a service is not running we get a status code != 0 and
@@ -126,12 +121,8 @@ def service_reload(service_name):
 
 def service_action(service_name, action):
     """Perform the given action on the service_name."""
-    if is_systemd_running():
-        subprocess.run(['systemctl', action, service_name],
-                       stdout=subprocess.DEVNULL, check=False)
-    else:
-        subprocess.run(['service', service_name, action],
-                       stdout=subprocess.DEVNULL, check=False)
+    subprocess.run(['systemctl', action, service_name],
+                   stdout=subprocess.DEVNULL, check=False)
 
 
 def webserver_is_enabled(name, kind='config'):

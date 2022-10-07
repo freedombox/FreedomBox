@@ -30,7 +30,7 @@ def fixture_patch():
         path.touch()
 
     with patch('subprocess.call') as subprocess_call, \
-            patch('shutil.chown'):
+         patch('subprocess.run'), patch('shutil.chown'):
         subprocess_call.side_effect = side_effect
         yield
 

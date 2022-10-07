@@ -66,7 +66,7 @@ def fixture_test_configuration(conf_file):
 
 
 def _set_turn_configuration(config=managed_configuration, managed=True):
-    with patch('plinth.privileged.service.is_running', return_value=False):
+    with patch('plinth.action_utils.service_is_running', return_value=False):
         ejabberd.update_turn_configuration(config, managed=managed)
 
 

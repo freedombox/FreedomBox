@@ -72,12 +72,14 @@ updated_coturn_configuration = TurnConfiguration(
 
 
 def _set_managed_configuration(config=coturn_configuration):
-    matrixsynapse.update_turn_configuration(config)
+    with patch('plinth.action_utils.service_try_restart'):
+        matrixsynapse.update_turn_configuration(config)
 
 
 def _set_overridden_configuration(
                                   config=overridden_configuration):
-    matrixsynapse.update_turn_configuration(config, managed=False)
+    with patch('plinth.action_utils.service_try_restart'):
+        matrixsynapse.update_turn_configuration(config, managed=False)
 
 
 def _assert_conf(expected_configuration, expected_managed):
