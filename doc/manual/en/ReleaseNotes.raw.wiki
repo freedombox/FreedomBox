@@ -8,6 +8,43 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 22.22 (2022-10-10) ==
+
+=== Highlights ===
+
+  * privacy: Add new system app for popularity-contest
+  * matrix: Add fail2ban jail
+
+=== Other Changes ===
+
+  * *: Use privileged decorator for actions
+  * action_utils: Drop support for non-systemd environments
+  * action_utils: Drop unused progress requests from apt-get
+  * actions: Allow actions to be called by other users
+  * actions: Allow nested and top-level actions
+  * actions: Drop unused superuser_run and related methods
+  * actions: Implement getting raw output from the process
+  * actions: Use separate IPC for communicating results
+  * apache: Fix logs still going into /var/log files
+  * bind: Drop enabling DNSSEC (deprecated) as it is always enabled
+  * config: Drop ability to set hostname on systems without systemd
+  * config: Drop legacy migration of Apache homepage settings
+  * fail2ban: Make fail2ban log to journald
+  * firewall: Drop showing running status
+  * locale: Update translations for Albanian, Czech, Norwegian Bokmål, Russian, Swedish, Ukrainian
+  * minidlna: Use the exposed URL for diagnostic test
+  * openvpn: Drop RSA to ECC migration code and two-step setup
+  * privacy: Set vendor as !FreedomBox for dpkg and popularity-contest
+  * searx: Show status of public access irrespective of enabled state
+  * templates: Update HTML meta tags for better description and app-name
+  * tests: Add fixture to help in testing privileged actions
+  * wordpress: Update fail2ban filter
+
+== FreedomBox 22.21.1 (2022-10-01) ==
+
+ * locale: Update translations for Bulgarian, Ukrainian
+ * notification: Don't fail when formatting message strings
+
 == FreedomBox 22.21 (2022-09-26) ==
 
  * janus: Enable systemd sandboxing
