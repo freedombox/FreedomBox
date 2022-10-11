@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-09-14 17:19+0000\n"
+"PO-Revision-Date: 2022-10-14 10:25+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -4992,12 +4992,7 @@ msgid "Profile"
 msgstr "Profiel"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
@@ -5011,8 +5006,7 @@ msgstr ""
 "en gebruiksinstructies."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
 "Profielen zijn voor iedere gebruiker van %(box_name)s anders. Houd ze geheim."
@@ -5331,25 +5325,24 @@ msgstr "Nu Uitschakelen"
 
 #: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Beheer de privacy-instellingen voor het hele systeem."
 
 #: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Privacy"
 
 #: plinth/modules/privacy/__init__.py:62
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Werk de privacy-instellingen bij zodat ze overeenkomen met uw voorkeuren."
 
 #: plinth/modules/privacy/__init__.py:67
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Privacy-instelling bekijken"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Periodiek een lijst van gebruikte apps laten zien (aanbevolen)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5361,6 +5354,13 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Help Debian/{box_name} ontwikkelaars door deel te nemen aan het Popularity "
+"Contest package survey programma. Indien ingeschakeld, wordt elke week "
+"anoniem een lijst van op dit systeem gebruikte apps aan Debian gestuurd. "
+"Statistieken van de verzamelde gegevens zijn openbaar beschikbaar op <a href="
+"\"https://popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a>. De "
+"insturen gebeurt via het Tor-netwerk voor extra anonimiteit als de Tor-app "
+"is ingeschakeld."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -7561,13 +7561,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "De volgende beheerprofielen bestaan in het systeem."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7577,9 +7571,10 @@ msgid ""
 msgstr ""
 "Verwijder deze accounts door middel van de opdrachtregel en vernieuw de "
 "pagina om een account aan te maken dat te gebruiken is met %(box_name)s. "
-"Voer op de opdrachtregel het commando 'echo \"{password}\" | /usr/share/"
-"plinth/actions/users remove-user {username}' uit. Sla deze stap over als een "
-"account al bruikbaar is bij %(box_name)s."
+"Voer op de opdrachtregel het commando \"echo '{\"args\": [\"USERNAME\", "
+"\"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/actions/actions "
+"users remove_user\". uit. Sla deze stap over als een account al bruikbaar is "
+"bij %(box_name)s."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8294,6 +8289,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox is een persoonlijke server die is ontworpen voor privacy en "
+"gegevenseigendom. Het is gratis software waarmee u eenvoudig server-apps "
+"kunt installeren en beheren."
 
 #: plinth/templates/base.html:110
 msgid " Home"
