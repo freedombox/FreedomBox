@@ -21,6 +21,13 @@ def setup():
     aug.set('ENCRYPT', 'yes')
     aug.save()
 
+    # Set the vendor to 'FreedomBox' with 'Debian' as parent
+    default_link = pathlib.Path('/etc/dpkg/origins/default')
+    debian_link = pathlib.Path('/etc/dpkg/origins/debian')
+    if default_link.is_symlink() and default_link.resolve() == debian_link:
+        default_link.unlink()
+        default_link.symlink_to('freedombox')
+
 
 @privileged
 def set_configuration(enable_popcon: Optional[bool] = None):
