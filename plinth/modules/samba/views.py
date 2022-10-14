@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for samba module.
-"""
+"""Views for samba module."""
 
 import logging
 import os
@@ -15,8 +13,9 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from plinth import views
-from plinth.errors import ActionError
 from plinth.modules import samba, storage
+
+from . import privileged
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +39,7 @@ def get_share_mounts():
 
 class SambaAppView(views.AppView):
     """Samba sharing basic configuration."""
+
     app_id = 'samba'
     template_name = 'samba.html'
 
@@ -49,7 +49,7 @@ class SambaAppView(views.AppView):
         disks = get_share_mounts()
         context['disks'] = disks
 
-        shares = samba.get_shares()
+        shares = privileged.get_shares()
         shared_mounts = defaultdict(list)
         for share in shares:
             shared_mounts[share['mount_point']].append(share['share_type'])
@@ -101,7 +101,7 @@ def share(request, mount_point):
             try:
                 samba.add_share(mount_point, share_type, filesystem)
                 messages.success(request, _('Share enabled.'))
-            except ActionError as exception:
+            except Exception as exception:
                 logger.exception('Error enabling share')
                 messages.error(
                     request,
@@ -109,9 +109,9 @@ def share(request, mount_point):
                         error_message=exception))
         elif action == 'disable':
             try:
-                samba.delete_share(mount_point, share_type)
+                privileged.delete_share(mount_point, share_type)
                 messages.success(request, _('Share disabled.'))
-            except ActionError as exception:
+            except Exception as exception:
                 logger.exception('Error disabling share')
                 messages.error(
                     request,

@@ -157,8 +157,10 @@ class TestBackupProcesses:
     @staticmethod
     @patch('plinth.action_utils.webserver_is_enabled')
     @patch('plinth.action_utils.service_is_running')
-    @patch('plinth.actions.superuser_run')
-    def test__shutdown_services(run, service_is_running, webserver_is_enabled):
+    @patch('plinth.privileged.service.stop')
+    @patch('plinth.modules.apache.privileged.disable')
+    def test__shutdown_services(apache_disable, service_stop,
+                                service_is_running, webserver_is_enabled):
         """Test that services are stopped in correct order."""
         components = [_get_backup_component('a'), _get_backup_component('b')]
         service_is_running.return_value = True
@@ -182,17 +184,13 @@ class TestBackupProcesses:
             [call('b', kind='site'),
              call('a', kind='site')])
 
-        calls = [
-            call('apache', ['disable', '--name', 'b', '--kind', 'site']),
-            call('service', ['stop', 'b']),
-            call('apache', ['disable', '--name', 'a', '--kind', 'site']),
-            call('service', ['stop', 'a'])
-        ]
-        run.assert_has_calls(calls)
+        apache_disable.assert_has_calls([call('b', 'site'), call('a', 'site')])
+        service_stop.assert_has_calls([call('b'), call('a')])
 
     @staticmethod
-    @patch('plinth.actions.superuser_run')
-    def test__restore_services(run):
+    @patch('plinth.privileged.service.start')
+    @patch('plinth.modules.apache.privileged.enable')
+    def test__restore_services(apache_enable, service_start):
         """Test that services are restored in correct order."""
         original_state = [
             api.SystemServiceHandler(None, 'a-service'),
@@ -211,11 +209,8 @@ class TestBackupProcesses:
         original_state[2].was_enabled = True
         original_state[3].was_enabled = False
         api._restore_services(original_state)
-        calls = [
-            call('service', ['start', 'a-service']),
-            call('apache', ['enable', '--name', 'c-service', '--kind', 'site'])
-        ]
-        run.assert_has_calls(calls)
+        service_start.assert_has_calls([call('a-service')])
+        apache_enable.assert_has_calls([call('c-service', 'site')])
 
     @staticmethod
     def test__run_operation():

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for configuring ikiwiki.
-"""
+"""FreedomBox app for configuring ikiwiki."""
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -9,10 +7,10 @@ from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import views
 
+from . import privileged
 from .forms import IkiwikiCreateForm
 
 
@@ -67,12 +65,9 @@ def create(request):
 def _create_wiki(request, name, admin_name, admin_password):
     """Create wiki."""
     try:
-        actions.superuser_run(
-            'ikiwiki',
-            ['create-wiki', '--wiki_name', name, '--admin_name', admin_name],
-            input=admin_password.encode())
+        privileged.create_wiki(name, admin_name, admin_password)
         messages.success(request, _('Created wiki {name}.').format(name=name))
-    except actions.ActionError as error:
+    except Exception as error:
         messages.error(request,
                        _('Could not create wiki: {error}').format(error=error))
 
@@ -80,12 +75,9 @@ def _create_wiki(request, name, admin_name, admin_password):
 def _create_blog(request, name, admin_name, admin_password):
     """Create blog."""
     try:
-        actions.superuser_run(
-            'ikiwiki',
-            ['create-blog', '--blog_name', name, '--admin_name', admin_name],
-            input=admin_password.encode())
+        privileged.create_blog(name, admin_name, admin_password)
         messages.success(request, _('Created blog {name}.').format(name=name))
-    except actions.ActionError as error:
+    except Exception as error:
         messages.error(request,
                        _('Could not create blog: {error}').format(error=error))
 
@@ -100,11 +92,11 @@ def delete(request, name):
     title = app.components['shortcut-ikiwiki-' + name].name
     if request.method == 'POST':
         try:
-            actions.superuser_run('ikiwiki', ['delete', '--name', name])
+            privileged.delete(name)
             app.remove_shortcut(name)
             messages.success(request,
                              _('{title} deleted.').format(title=title))
-        except actions.ActionError as error:
+        except Exception as error:
             messages.error(
                 request,
                 _('Could not delete {title}: {error}').format(

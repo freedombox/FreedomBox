@@ -22,11 +22,6 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
     """Test that calling a method results in proper syntax checks."""
     call = actions_module._call
 
-    # Test for root permissions
-    getuid.return_value = 1000
-    with pytest.raises(PermissionError):
-        call('x-module', 'x-action', {})
-
     # Module name validation
     getuid.return_value = 0
     with pytest.raises(SyntaxError, match='Invalid module name'):
@@ -77,14 +72,13 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
 
     setattr(module, 'func', exception_func)
     return_value = call('test-module', 'func', {'args': [], 'kwargs': {}})
-    assert return_value == {
-        'result': 'exception',
-        'exception': {
-            'module': 'builtins',
-            'name': 'RuntimeError',
-            'args': ('foo exception', )
-        }
-    }
+    assert return_value['result'] == 'exception'
+    assert return_value['exception']['module'] == 'builtins'
+    assert return_value['exception']['name'] == 'RuntimeError'
+    assert return_value['exception']['args'] == ('foo exception', )
+    assert isinstance(return_value['exception']['traceback'], list)
+    for line in return_value['exception']['traceback']:
+        assert isinstance(line, str)
 
 
 def test_assert_valid_arguments(actions_module):

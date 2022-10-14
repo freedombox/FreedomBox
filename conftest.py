@@ -148,24 +148,39 @@ def fixture_actions_module(request):
     return module
 
 
-@pytest.fixture(name='call_action')
-def fixture_call_action(request, capsys, actions_module):
-    """Run actions with custom root path."""
+@pytest.fixture(name='mock_privileged')
+def fixture_mock_privileged(request):
+    """Mock the privileged decorator to nullify its effects."""
+    try:
+        privileged_modules_to_mock = request.module.privileged_modules_to_mock
+    except AttributeError:
+        raise AttributeError(
+            'mock_privileged fixture requires "privileged_module_to_mock" '
+            'attribute at module level')
 
-    actions_name = getattr(request.module, 'actions_name')
+    for module_name in privileged_modules_to_mock:
+        module = importlib.import_module(module_name)
+        for name, member in module.__dict__.items():
+            wrapped = getattr(member, '__wrapped__', None)
+            if not callable(member) or not wrapped:
+                continue
 
-    def _call_action(*args, **_kwargs):
-        if isinstance(args[0], list):
-            argv = [actions_name] + args[0]  # Command line style usage
-        else:
-            argv = [args[0]] + args[1]  # superuser_run style usage
+            if not getattr(member, '_privileged', False):
+                continue
 
-        with patch('argparse._sys.argv', argv):
-            actions_module.main()
-            captured = capsys.readouterr()
-            return captured.out
+            setattr(wrapped, '_original_wrapper', member)
+            module.__dict__[name] = wrapped
 
-    return _call_action
+    yield
+
+    for module_name in privileged_modules_to_mock:
+        module = importlib.import_module(module_name)
+        for name, member in module.__dict__.items():
+            wrapper = getattr(member, '_original_wrapper', None)
+            if not callable(member) or not wrapper:
+                continue
+
+            module.__dict__[name] = wrapper
 
 
 @pytest.fixture(name='splinter_screenshot_dir', scope='session')

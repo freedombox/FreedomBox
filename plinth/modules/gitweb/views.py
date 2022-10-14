@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Django views for Gitweb.
-"""
+"""Django views for Gitweb."""
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -12,12 +10,11 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import views
-from plinth.errors import ActionError
 from plinth.modules import gitweb
 
+from . import privileged
 from .forms import CreateRepoForm, EditRepoForm
 
 
@@ -65,13 +62,12 @@ class CreateRepoView(SuccessMessageMixin, FormView):
         try:
             gitweb.create_repo(form_data['name'], form_data['description'],
                                form_data['owner'], form_data['is_private'])
-        except ActionError as error:
+        except Exception as error:
             self.success_message = ''
-            error_text = error.args[2].split('\n')[0]
             messages.error(
                 self.request, "{0} {1}".format(
                     _('An error occurred while creating the repository.'),
-                    error_text))
+                    error))
         else:
             app_module.App.get('gitweb').update_service_access()
 
@@ -116,7 +112,7 @@ class EditRepoView(SuccessMessageMixin, FormView):
 
             try:
                 gitweb.edit_repo(form.initial, form_data)
-            except ActionError:
+            except Exception:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
         app_module.App.get('gitweb').update_service_access()
@@ -139,9 +135,9 @@ def delete(request, name):
     app = app_module.App.get('gitweb')
     if request.method == 'POST':
         try:
-            gitweb.delete_repo(name)
+            privileged.delete_repo(name)
             messages.success(request, _('{name} deleted.').format(name=name))
-        except actions.ActionError as error:
+        except Exception as error:
             messages.error(
                 request,
                 _('Could not delete {name}: {error}').format(

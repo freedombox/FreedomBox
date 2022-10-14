@@ -1,14 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Django form for configuring calibre.
-"""
+"""Django form for configuring calibre."""
 
 from django import forms
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import calibre
+from . import privileged
 
 
 class CreateLibraryForm(forms.Form):
@@ -25,7 +23,7 @@ class CreateLibraryForm(forms.Form):
         """Check if the library name is valid."""
         name = self.cleaned_data['name']
 
-        if name in calibre.list_libraries():
+        if name in privileged.list_libraries():
             raise ValidationError(
                 _('A library with this name already exists.'))
 

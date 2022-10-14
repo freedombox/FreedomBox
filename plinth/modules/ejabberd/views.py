@@ -1,31 +1,30 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for the Ejabberd module
-"""
+"""Views for the Ejabberd app."""
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions
 from plinth.modules import coturn, ejabberd
 from plinth.modules.coturn.components import TurnConfiguration
 from plinth.views import AppView
 
+from . import privileged
 from .forms import EjabberdForm
 
 
 class EjabberdAppView(AppView):
     """Show ejabberd as a service."""
+
     app_id = 'ejabberd'
     template_name = 'ejabberd.html'
     form_class = EjabberdForm
 
     def get_initial(self):
-        """Initial data to fill in the form."""
+        """Return initial data to fill in the form."""
         config, managed = ejabberd.get_turn_configuration()
         return super().get_initial() | {
             'domain_names': ejabberd.get_domains(),
-            'MAM_enabled': self.is_MAM_enabled(),
+            'MAM_enabled': privileged.mam('status'),
             'enable_managed_turn': managed,
             'turn_uris': '\n'.join(config.uris),
             'shared_secret': config.shared_secret
@@ -65,9 +64,9 @@ class EjabberdAppView(AppView):
     def _handle_MAM_configuration(old_config, new_config):
         # note ejabberd action "enable" or "disable" restarts, if running
         if new_config['MAM_enabled']:
-            actions.superuser_run('ejabberd', ['mam', 'enable'])
+            privileged.mam('enable')
         else:
-            actions.superuser_run('ejabberd', ['mam', 'disable'])
+            privileged.mam('disable')
 
     def form_valid(self, form):
         """Enable/disable a service and set messages."""
@@ -96,8 +95,3 @@ class EjabberdAppView(AppView):
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
-
-    def is_MAM_enabled(self):
-        """Return whether Message Archive Management (MAM) is enabled."""
-        output = actions.superuser_run('ejabberd', ['mam', 'status'])
-        return output.strip() == 'enabled'

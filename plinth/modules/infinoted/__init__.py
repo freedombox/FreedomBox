@@ -6,7 +6,6 @@ FreedomBox app for infinoted.
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -15,7 +14,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('infinoted is a server for Gobby, a collaborative text editor.'),
@@ -77,5 +76,5 @@ class InfinotedApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('infinoted', ['setup'])
+        privileged.setup()
         self.enable()

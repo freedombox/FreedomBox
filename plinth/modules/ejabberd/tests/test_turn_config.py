@@ -11,6 +11,7 @@ import pytest
 
 from plinth.modules import ejabberd
 from plinth.modules.coturn.components import TurnConfiguration
+from plinth.modules.ejabberd import privileged
 
 managed_configuration = TurnConfiguration(
     'freedombox.local', [],
@@ -20,9 +21,9 @@ overridden_configuration = TurnConfiguration(
     'public.coturn.site', [],
     'BUeKvKzhAsTZ8MEwMd3yTwpr2uvbOxgWe51aiP02OAGyOlj6WGuCyqj7iaOsbkC7')
 
-actions_name = 'ejabberd'
-
+pytestmark = pytest.mark.usefixtures('mock_privileged')
 current_directory = pathlib.Path(__file__).parent
+privileged_modules_to_mock = ['plinth.modules.ejabberd.privileged']
 
 
 @pytest.fixture(name='conf_file')
@@ -45,30 +46,26 @@ def fixture_managed_file(tmp_path):
 
 
 @pytest.fixture(autouse=True)
-def fixture_set_configuration_paths(actions_module, conf_file, managed_file):
+def fixture_set_configuration_paths(conf_file, managed_file):
     """Setup configuration file paths in action module."""
-    actions_module.EJABBERD_CONFIG = conf_file
-    actions_module.EJABBERD_MANAGED_COTURN = managed_file
+    privileged.EJABBERD_CONFIG = conf_file
+    privileged.EJABBERD_MANAGED_COTURN = managed_file
 
 
 @pytest.fixture(name='test_configuration', autouse=True)
-def fixture_test_configuration(call_action, conf_file):
+def fixture_test_configuration(conf_file):
     """Use a separate ejabberd configuration for tests.
 
-    Patches actions.superuser_run with the fixture call_action.
     The module state is patched to be 'up-to-date'.
     """
-    with patch('plinth.actions.superuser_run',
-               call_action), patch('plinth.app.App.get') as app_get:
+    with patch('plinth.app.App.get') as app_get:
         app = Mock()
         app_get.return_value = app
         app.needs_setup.return_value = False
         yield
 
 
-def _set_turn_configuration(monkeypatch, config=managed_configuration,
-                            managed=True):
-    monkeypatch.setattr('sys.stdin', config.to_json())
+def _set_turn_configuration(config=managed_configuration, managed=True):
     with patch('plinth.action_utils.service_is_running', return_value=False):
         ejabberd.update_turn_configuration(config, managed=managed)
 
@@ -81,17 +78,17 @@ def _assert_conf(expected_configuration, expected_managed):
     assert managed == expected_managed
 
 
-def test_managed_turn_server_configuration(monkeypatch):
-    _set_turn_configuration(monkeypatch)
+def test_managed_turn_server_configuration():
+    _set_turn_configuration()
     _assert_conf(managed_configuration, True)
 
 
-def test_overridden_turn_server_configuration(monkeypatch):
-    _set_turn_configuration(monkeypatch, overridden_configuration, False)
+def test_overridden_turn_server_configuration():
+    _set_turn_configuration(overridden_configuration, False)
     _assert_conf(overridden_configuration, False)
 
 
-def test_remove_turn_configuration(monkeypatch):
-    _set_turn_configuration(monkeypatch)
-    _set_turn_configuration(monkeypatch, TurnConfiguration(), False)
+def test_remove_turn_configuration():
+    _set_turn_configuration()
+    _set_turn_configuration(TurnConfiguration(), False)
     _assert_conf(TurnConfiguration(), False)

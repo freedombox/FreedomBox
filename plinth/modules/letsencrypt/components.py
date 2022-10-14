@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-App component for other apps to use handle Let's Encrypt certificates.
-"""
+"""App component for other apps to use handle Let's Encrypt certificates."""
 
-import json
 import logging
 import pathlib
 import threading
 
-from plinth import actions, app
+from plinth import app
 from plinth.modules.names.components import DomainName
+from plinth.privileged import service as service_privileged
+
+from . import privileged
 
 logger = logging.getLogger(__name__)
 
@@ -169,7 +169,7 @@ class LetsEncrypt(app.FollowerComponent):
                     self._copy_self_signed_certificates([domain])
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def get_status(self):
         """Return the status of certificates for all interested domains.
@@ -214,7 +214,7 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_letsencrypt_certificates(interested_domains, lineage)
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def on_certificate_renewed(self, domains, lineage):
         """Handle event when a certificate is renewed.
@@ -248,7 +248,7 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_self_signed_certificates(interested_domains)
 
         for daemon in self.daemons:
-            actions.superuser_run('service', ['try-restart', daemon])
+            service_privileged.try_restart(daemon)
 
     def on_certificate_deleted(self, domains, lineage):
         """Handle event when a certificate is deleted.
@@ -327,14 +327,11 @@ class LetsEncrypt(app.FollowerComponent):
                           source_certificate_path, private_key_path,
                           certificate_path):
         """Copy certificate for a single domain."""
-        actions.superuser_run('letsencrypt', [
-            'copy-certificate', '--managing-app', self.managing_app,
-            '--user-owner', self.user_owner, '--group-owner', self.group_owner,
-            '--source-private-key-path',
-            str(source_private_key_path), '--source-certificate-path',
-            str(source_certificate_path), '--private-key-path',
-            private_key_path, '--certificate-path', certificate_path
-        ])
+        privileged.copy_certificate(self.managing_app,
+                                    str(source_private_key_path),
+                                    str(source_certificate_path),
+                                    private_key_path, certificate_path,
+                                    self.user_owner, self.group_owner)
 
     def _compare_certificate(self, domain, lineage):
         """Compare LE certificate with app certificate."""
@@ -342,14 +339,11 @@ class LetsEncrypt(app.FollowerComponent):
         source_certificate_path = pathlib.Path(lineage) / 'fullchain.pem'
         private_key_path = self.private_key_path.format(domain=domain)
         certificate_path = self.certificate_path.format(domain=domain)
-        output = actions.superuser_run('letsencrypt', [
-            'compare-certificate', '--managing-app', self.managing_app,
-            '--source-private-key-path',
-            str(source_private_key_path), '--source-certificate-path',
-            str(source_certificate_path), '--private-key-path',
-            private_key_path, '--certificate-path', certificate_path
-        ])
-        return json.loads(output)['result']
+        return privileged.compare_certificate(self.managing_app,
+                                              str(source_private_key_path),
+                                              str(source_certificate_path),
+                                              private_key_path,
+                                              certificate_path)
 
 
 def on_certificate_event(event, domains, lineage):

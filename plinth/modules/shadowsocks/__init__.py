@@ -1,12 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Shadowsocks.
-"""
+"""FreedomBox app to configure Shadowsocks."""
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -15,7 +12,7 @@ from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to '
@@ -85,5 +82,5 @@ class ShadowsocksApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('shadowsocks', ['setup'])
+        privileged.setup()
         self.enable()

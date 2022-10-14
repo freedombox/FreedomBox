@@ -3,7 +3,6 @@
 Tests for gitweb views.
 """
 
-import json
 from unittest.mock import Mock, patch
 
 import pytest
@@ -12,7 +11,6 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
 from plinth import module_loader
-from plinth.errors import ActionError
 from plinth.modules.gitweb import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
@@ -48,31 +46,28 @@ def fixture_gitweb_urls():
         yield
 
 
-def action_run(*args, **kwargs):
-    """Action return values."""
-    subcommand = args[1][0]
-    if subcommand == 'repo-info':
-        return json.dumps(EXISTING_REPOS[0])
-
-    elif subcommand == 'check-repo-exists':
-        return True
-
-    elif subcommand == 'get-branches':
-        return json.dumps({
-            "default_branch": "main",
-            "branches": ["main", "branch1"]
-        })
-
-    return None
-
-
 @pytest.fixture(autouse=True)
 def gitweb_patch():
     """Patch gitweb."""
+    privileged = 'plinth.modules.gitweb.privileged'
     with patch('plinth.modules.gitweb.get_repo_list') as get_repo_list, \
-            patch('plinth.app.App.get') as app_get, \
-            patch('plinth.actions.superuser_run', side_effect=action_run), \
-            patch('plinth.actions.run', side_effect=action_run):
+         patch('plinth.app.App.get') as app_get, \
+         patch(f'{privileged}.create_repo'), \
+         patch(f'{privileged}.repo_exists') as repo_exists,\
+         patch(f'{privileged}.repo_info') as repo_info, \
+         patch(f'{privileged}.rename_repo'), \
+         patch(f'{privileged}.set_repo_description'), \
+         patch(f'{privileged}.set_repo_owner'), \
+         patch(f'{privileged}.set_repo_access'), \
+         patch(f'{privileged}.set_default_branch'), \
+         patch(f'{privileged}.delete_repo'), \
+         patch(f'{privileged}.get_branches') as get_branches:
+        repo_exists.return_value = True
+        repo_info.return_value = dict(EXISTING_REPOS[0])
+        get_branches.return_value = {
+            'default_branch': 'main',
+            'branches': ['main', 'branch1']
+        }
         get_repo_list.return_value = [{
             'name': EXISTING_REPOS[0]['name']
         }, {
@@ -163,7 +158,7 @@ def test_create_repo_failed_view(rf):
     general_error_message = "An error occurred while creating the repository."
     error_description = 'some error'
     with patch('plinth.modules.gitweb.create_repo',
-               side_effect=ActionError('gitweb', '', error_description)):
+               side_effect=PermissionError(error_description)):
         form_data = {
             'gitweb-name': 'something_other',
             'gitweb-description': '',
@@ -198,7 +193,8 @@ def test_clone_repo_view(rf):
 
 def test_clone_repo_missing_remote_view(rf):
     """Test that cloning non-existing repo shows correct error message."""
-    with patch('plinth.modules.gitweb.repo_exists', return_value=False):
+    with patch('plinth.modules.gitweb.privileged.repo_exists',
+               return_value=False):
         form_data = {
             'gitweb-name': 'https://example.com/test.git',
             'gitweb-description': '',
@@ -306,7 +302,7 @@ def test_edit_repository_no_change_view(rf):
 def test_edit_repository_failed_view(rf):
     """Test that failed repo editing sends correct error message."""
     with patch('plinth.modules.gitweb.edit_repo',
-               side_effect=ActionError('Error')):
+               side_effect=PermissionError('Error')):
         form_data = {
             'gitweb-name': 'something_other',
             'gitweb-description': 'test-description',
@@ -347,8 +343,8 @@ def test_delete_repository_view(rf):
 def test_delete_repository_fail_view(rf):
     """Test that failed repository deletion sends correct error message."""
 
-    with patch('plinth.modules.gitweb.delete_repo',
-               side_effect=ActionError('Error')):
+    with patch('plinth.modules.gitweb.privileged.delete_repo',
+               side_effect=FileNotFoundError('Error')):
         response, messages = make_request(rf.post(''), views.delete,
                                           name=EXISTING_REPOS[0]['name'])
 

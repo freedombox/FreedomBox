@@ -20,7 +20,7 @@ def get_configuration() -> dict[str, str]:
 
 
 @privileged
-def merge_configuration(configuration: dict[str, Union[str, bool]]) -> None:
+def merge_configuration(configuration: dict[str, Union[str, bool]]):
     """Merge given JSON configuration with existing configuration."""
     current_configuration = _transmission_config.read_bytes()
     current_configuration = json.loads(current_configuration)

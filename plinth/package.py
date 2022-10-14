@@ -1,14 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Framework for installing and updating distribution packages
-"""
+"""Framework for installing and updating distribution packages."""
 
 import enum
-import json
 import logging
 import pathlib
-import subprocess
-import threading
 import time
 from typing import Optional, Union
 
@@ -16,7 +11,8 @@ import apt.cache
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
-from plinth import actions, app
+import plinth.privileged.packages as privileged
+from plinth import app
 from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
@@ -107,6 +103,7 @@ class Packages(app.FollowerComponent):
 
     class ConflictsAction(enum.Enum):
         """Action to take when a conflicting package is installed."""
+
         IGNORE = 'ignore'  # Proceed as if there are no conflicts
         REMOVE = 'remove'  # Remove the packages before installing the app
 
@@ -307,73 +304,35 @@ class Transaction:
 
         """
         try:
-            self._run_apt_command(['update'])
-            extra_arguments = []
-            if skip_recommends:
-                extra_arguments.append('--skip-recommends')
-
-            if force_configuration is not None:
-                extra_arguments.append(
-                    '--force-configuration={}'.format(force_configuration))
-
-            if reinstall:
-                extra_arguments.append('--reinstall')
-
-            if force_missing_configuration:
-                extra_arguments.append('--force-missing-configuration')
-
-            self._run_apt_command(['install'] + extra_arguments +
-                                  [self.app_id] + self.package_names)
-        except subprocess.CalledProcessError as exception:
+            privileged.update()
+            kwargs = {
+                'app_id': self.app_id,
+                'packages': self.package_names,
+                'skip_recommends': skip_recommends,
+                'force_configuration': force_configuration,
+                'reinstall': reinstall,
+                'force_missing_configuration': force_missing_configuration
+            }
+            privileged.install(**kwargs)
+        except Exception as exception:
             logger.exception('Error installing package: %s', exception)
             raise
 
     def uninstall(self):
         """Run an apt-get transaction to uninstall given packages."""
         try:
-            self._run_apt_command(['remove', self.app_id, '--packages'] +
-                                  self.package_names)
-        except subprocess.CalledProcessError as exception:
+            privileged.remove(app_id=self.app_id, packages=self.package_names)
+        except Exception as exception:
             logger.exception('Error uninstalling package: %s', exception)
             raise
 
     def refresh_package_lists(self):
         """Refresh apt package lists."""
         try:
-            self._run_apt_command(['update'])
-        except subprocess.CalledProcessError as exception:
+            privileged.update()
+        except Exception as exception:
             logger.exception('Error updating package lists: %s', exception)
             raise
-
-    def _run_apt_command(self, arguments):
-        """Run apt-get and update progress."""
-        self._reset_status()
-
-        process = actions.superuser_run('packages', arguments,
-                                        run_in_background=True)
-        process.stdin.close()
-
-        stdout_thread = threading.Thread(target=self._read_stdout,
-                                         args=(process, ))
-        stderr_thread = threading.Thread(target=self._read_stderr,
-                                         args=(process, ))
-        stdout_thread.start()
-        stderr_thread.start()
-        stdout_thread.join()
-        stderr_thread.join()
-
-        return_code = process.wait()
-        if return_code != 0:
-            raise PackageException(_('Error running apt-get'), self.stderr)
-
-    def _read_stdout(self, process):
-        """Read the stdout of the process and update progress."""
-        for line in process.stdout:
-            self._parse_progress(line.decode())
-
-    def _read_stderr(self, process):
-        """Read the stderr of the process and store in buffer."""
-        self.stderr = process.stderr.read().decode()
 
     def _parse_progress(self, line):
         """Parse the apt-get process output line.
@@ -461,10 +420,8 @@ def uninstall(package_names):
 def is_package_manager_busy():
     """Return whether a package manager is running."""
     try:
-        actions.superuser_run('packages', ['is-package-manager-busy'],
-                              log_error=False)
-        return True
-    except actions.ActionError:
+        return privileged.is_package_manager_busy(_log_error=False)
+    except Exception:
         return False
 
 
@@ -479,12 +436,8 @@ def filter_conffile_prompt_packages(packages):
 
     Information for each package includes: current_version, new_version and
     list of modified_conffiles.
-
     """
-    response = actions.superuser_run(
-        'packages',
-        ['filter-conffile-packages', '--packages'] + list(packages))
-    return json.loads(response)
+    return privileged.filter_conffile_packages(list(packages))
 
 
 def packages_installed(candidates: Union[list, tuple]) -> list:

@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for security module
-"""
+"""Views for security module."""
 
 from django.contrib import messages
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth.modules import security
 from plinth.modules.upgrades import is_backports_requested
+from plinth.privileged import service as service_privileged
 from plinth.views import AppView
 
+from . import privileged
 from .forms import SecurityForm
 
 
@@ -42,15 +42,15 @@ class SecurityAppView(AppView):
 
 
 def get_status(request):
-    """Return the current status"""
+    """Return the current status."""
     return {
-        'restricted_access': security.get_restricted_access_enabled(),
+        'restricted_access': privileged.get_restricted_access_enabled(),
         'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')
     }
 
 
 def _apply_changes(request, old_status, new_status):
-    """Apply the form changes"""
+    """Apply the form changes."""
     if old_status['restricted_access'] != new_status['restricted_access']:
         try:
             security.set_restricted_access(new_status['restricted_access'])
@@ -64,13 +64,13 @@ def _apply_changes(request, old_status, new_status):
 
     if old_status['fail2ban_enabled'] != new_status['fail2ban_enabled']:
         if new_status['fail2ban_enabled']:
-            actions.superuser_run('service', ['enable', 'fail2ban'])
+            service_privileged.enable('fail2ban')
         else:
-            actions.superuser_run('service', ['disable', 'fail2ban'])
+            service_privileged.disable('fail2ban')
 
 
 def report(request):
-    """Serve the security report page"""
+    """Serve the security report page."""
     apps_report = security.get_apps_report()
     return TemplateResponse(
         request, 'security_report.html', {

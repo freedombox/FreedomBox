@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Django forms for sharing app.
-"""
+"""Django forms for sharing app."""
 
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth.modules import sharing
 from plinth.modules.users.components import UsersAndGroups
+
+from . import privileged
 
 
 class AddShareForm(forms.Form):
@@ -47,7 +46,7 @@ class AddShareForm(forms.Form):
         if 'name' in self.initial and name == self.initial['name']:
             return name
 
-        if any((share for share in sharing.list_shares()
+        if any((share for share in privileged.list_shares()
                 if name == share['name'])):
             raise ValidationError(_('A share with this name already exists.'))
 

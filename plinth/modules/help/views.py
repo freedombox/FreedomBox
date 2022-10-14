@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Help app for FreedomBox.
-"""
+"""Help app for FreedomBox."""
 
 import gzip
 import json
@@ -18,8 +16,10 @@ from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
 
-from plinth import __version__, actions, cfg
+from plinth import __version__, cfg
 from plinth.modules.upgrades import views as upgrades_views
+
+from . import privileged
 
 
 def index(request):
@@ -162,7 +162,7 @@ def download_manual(request):
 
 
 def status_log(request):
-    """Serve the last 100 lines of plinth's status log"""
-    output = actions.superuser_run('help', ['get-logs'])
-    context = {'num_lines': 100, 'data': output}
+    """Serve the last 100 lines of plinth's status log."""
+    logs = privileged.get_logs()
+    context = {'num_lines': 100, 'data': logs}
     return TemplateResponse(request, 'statuslog.html', context)

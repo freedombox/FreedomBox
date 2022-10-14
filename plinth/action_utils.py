@@ -39,13 +39,8 @@ def service_is_running(servicename):
     Does not need to run as root.
     """
     try:
-        if is_systemd_running():
-            subprocess.run(['systemctl', 'status', servicename], check=True,
-                           stdout=subprocess.DEVNULL)
-        else:
-            subprocess.run(['service', servicename, 'status'], check=True,
-                           stdout=subprocess.DEVNULL)
-
+        subprocess.run(['systemctl', 'status', servicename], check=True,
+                       stdout=subprocess.DEVNULL)
         return True
     except subprocess.CalledProcessError:
         # If a service is not running we get a status code != 0 and
@@ -126,12 +121,8 @@ def service_reload(service_name):
 
 def service_action(service_name, action):
     """Perform the given action on the service_name."""
-    if is_systemd_running():
-        subprocess.run(['systemctl', action, service_name],
-                       stdout=subprocess.DEVNULL, check=False)
-    else:
-        subprocess.run(['service', service_name, action],
-                       stdout=subprocess.DEVNULL, check=False)
+    subprocess.run(['systemctl', action, service_name],
+                   stdout=subprocess.DEVNULL, check=False)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -405,21 +396,12 @@ def is_disk_image():
 
 def run_apt_command(arguments):
     """Run apt-get with provided arguments."""
-    # Ask apt-get to output its progress to file descriptor 3.
-    command = [
-        'apt-get', '--assume-yes', '--quiet=2', '--option', 'APT::Status-Fd=3'
-    ] + arguments
+    command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
-    # Duplicate stdout to file descriptor 3 for this process.
-    os.dup2(1, 3)
-
-    # Pass on file descriptor 3 instead of closing it.  Close stdout
-    # so that regular output is ignored.
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     process = subprocess.run(command, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, close_fds=False,
-                             env=env, check=False)
+                             stdout=subprocess.DEVNULL, env=env, check=False)
     return process.returncode
 
 

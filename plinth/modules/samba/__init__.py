@@ -1,17 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure samba.
-"""
+"""FreedomBox app to configure samba."""
 
 import grp
-import json
 import pwd
 import socket
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -21,7 +17,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Samba allows to share files and folders between FreedomBox and '
@@ -102,7 +98,7 @@ class SambaApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('samba', ['setup'])
+        privileged.setup()
         self.enable()
 
 
@@ -112,37 +108,24 @@ class SambaBackupRestore(BackupRestore):
     def backup_pre(self, packet):
         """Save registry share configuration."""
         super().backup_pre(packet)
-        actions.superuser_run('samba', ['dump-shares'])
+        privileged.dump_shares()
 
     def restore_post(self, packet):
         """Restore configuration."""
         super().restore_post(packet)
-        actions.superuser_run('samba', ['setup'])
-        actions.superuser_run('samba', ['restore-shares'])
+        privileged.setup()
+        privileged.restore_shares()
 
 
 def add_share(mount_point, share_type, filesystem):
     """Add a share."""
-    command = [
-        'add-share', '--mount-point', mount_point, '--share-type', share_type
-    ]
-    if filesystem in ['ntfs', 'vfat']:
-        command = command + ['--windows-filesystem']
-    actions.superuser_run('samba', command)
-
-
-def delete_share(mount_point, share_type):
-    """Delete a share."""
-    actions.superuser_run('samba', [
-        'delete-share', '--mount-point', mount_point, '--share-type',
-        share_type
-    ])
+    windows_filesystem = (filesystem in ['ntfs', 'vfat'])
+    privileged.add_share(mount_point, share_type, windows_filesystem)
 
 
 def get_users():
     """Get non-system users who are in the freedombox-share or admin group."""
-    output = actions.superuser_run('samba', ['get-users'])
-    samba_users = json.loads(output)['users']
+    samba_users = privileged.get_users()
     group_users = grp.getgrnam('freedombox-share').gr_mem + grp.getgrnam(
         'admin').gr_mem
 
@@ -158,10 +141,3 @@ def get_users():
         'password_re_enter_needed':
             sorted(set(allowed_users) - set(samba_users))
     }
-
-
-def get_shares():
-    """Get defined shares."""
-    output = actions.superuser_run('samba', ['get-shares'])
-
-    return json.loads(output)

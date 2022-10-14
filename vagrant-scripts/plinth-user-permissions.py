@@ -1,24 +1,16 @@
 #!/usr/bin/python3
 # -*- mode: python -*-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Set required permissions for user "plinth" to run plinth in the development
-environment.
-"""
+"""Set required permissions for user "plinth" to run plinth in dev setup."""
 
-import augeas
+import pathlib
 
-sudoers_file = '/etc/sudoers.d/plinth'
-aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                    augeas.Augeas.NO_MODL_AUTOLOAD)
+content = '''
+Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/actions/actions, /vagrant/actions/actions
+Defaults!FREEDOMBOX_ACTION_DEV closefrom_override
+plinth ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV
+fbx    ALL=(ALL:ALL) NOPASSWD : ALL
+'''
 
-# lens for shell-script config file
-aug.set('/augeas/load/Shellvars/lens', 'Sudoers.lns')
-aug.set('/augeas/load/Shellvars/incl[last() + 1]', sudoers_file)
-aug.load()
-
-aug.set('/files{}/spec[1]/host_group/command[2]'.format(sudoers_file),
-        '/vagrant/actions/*')
-aug.set('/files{}/spec[1]/host_group/command[1]/tag[2]'.format(sudoers_file),
-        'SETENV')
-aug.save()
+sudoers_file = pathlib.Path('/etc/sudoers.d/01-freedombox-development')
+sudoers_file.write_text(content)

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for configuring Shadowsocks.
-"""
+"""FreedomBox app for configuring Shadowsocks."""
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
@@ -22,10 +20,10 @@ METHODS = [('chacha20-ietf-poly1305',
 
 
 class TrimmedCharField(forms.CharField):
-    """Trim the contents of a CharField"""
+    """Trim the contents of a CharField."""
 
     def clean(self, value):
-        """Clean and validate the field value"""
+        """Clean and validate the field value."""
         if value:
             value = value.strip()
 
@@ -33,7 +31,8 @@ class TrimmedCharField(forms.CharField):
 
 
 class ShadowsocksForm(forms.Form):
-    """Shadowsocks configuration form"""
+    """Shadowsocks configuration form."""
+
     server = TrimmedCharField(label=_('Server'),
                               help_text=_('Server hostname or IP address'))
 

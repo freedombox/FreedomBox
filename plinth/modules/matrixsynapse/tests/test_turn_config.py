@@ -9,8 +9,10 @@ import pytest
 
 from plinth.modules import matrixsynapse
 from plinth.modules.coturn.components import TurnConfiguration
+from plinth.modules.matrixsynapse import privileged
 
-actions_name = 'matrixsynapse'
+pytestmark = pytest.mark.usefixtures('mock_privileged')
+privileged_modules_to_mock = ['plinth.modules.matrixsynapse.privileged']
 
 
 @pytest.fixture(name='managed_turn_conf_file')
@@ -28,29 +30,27 @@ def fixture_overridden_turn_conf_file(tmp_path):
 
 
 @pytest.fixture(autouse=True)
-def fixture_set_paths(actions_module, capsys, managed_turn_conf_file,
-                      overridden_turn_conf_file):
+def fixture_set_paths(managed_turn_conf_file, overridden_turn_conf_file):
     """Run actions with custom root path."""
-    actions_module.TURN_CONF_PATH = managed_turn_conf_file
-    actions_module.OVERRIDDEN_TURN_CONF_PATH = overridden_turn_conf_file
-    with patch('plinth.action_utils.service_try_restart'):
+    privileged.TURN_CONF_PATH = managed_turn_conf_file
+    privileged.OVERRIDDEN_TURN_CONF_PATH = overridden_turn_conf_file
+    with patch('plinth.privileged.service.try_restart'):
         yield
 
 
 @pytest.fixture(name='test_configuration', autouse=True)
-def fixture_test_configuration(call_action, managed_turn_conf_file,
+def fixture_test_configuration(managed_turn_conf_file,
                                overridden_turn_conf_file):
     """Use a separate Matrix Synapse configuration for tests.
 
-    Overrides TURN configuration files and patches actions.superuser_run
-    with the fixture call_action
+    Overrides TURN configuration files.
     """
-    with (patch('plinth.modules.matrixsynapse.TURN_CONF_PATH',
+    matrixsynapse = 'plinth.modules.matrixsynapse'
+    with (patch(f'{matrixsynapse}.privileged.TURN_CONF_PATH',
                 managed_turn_conf_file),
-          patch('plinth.modules.matrixsynapse.OVERRIDDEN_TURN_CONF_PATH',
+          patch(f'{matrixsynapse}.privileged.OVERRIDDEN_TURN_CONF_PATH',
                 overridden_turn_conf_file),
-          patch('plinth.modules.matrixsynapse.is_setup', return_value=True),
-          patch('plinth.actions.superuser_run', call_action),
+          patch(f'{matrixsynapse}.is_setup', return_value=True),
           patch('plinth.app.App.get') as app_get):
         app = Mock()
         app_get.return_value = app
@@ -71,15 +71,15 @@ updated_coturn_configuration = TurnConfiguration(
     'aiP02OsbkC7BUeKvKzhAsTZ8MEwMd3yTwpr2uvbOxgWe51AGyOlj6WGuCyqj7iaO')
 
 
-def _set_managed_configuration(monkeypatch, config=coturn_configuration):
-    monkeypatch.setattr('sys.stdin', config.to_json())
-    matrixsynapse.update_turn_configuration(config)
+def _set_managed_configuration(config=coturn_configuration):
+    with patch('plinth.action_utils.service_try_restart'):
+        matrixsynapse.update_turn_configuration(config)
 
 
-def _set_overridden_configuration(monkeypatch,
+def _set_overridden_configuration(
                                   config=overridden_configuration):
-    monkeypatch.setattr('sys.stdin', config.to_json())
-    matrixsynapse.update_turn_configuration(config, managed=False)
+    with patch('plinth.action_utils.service_try_restart'):
+        matrixsynapse.update_turn_configuration(config, managed=False)
 
 
 def _assert_conf(expected_configuration, expected_managed):
@@ -90,30 +90,30 @@ def _assert_conf(expected_configuration, expected_managed):
     assert managed == expected_managed
 
 
-def test_managed_turn_server_configuration(monkeypatch):
+def test_managed_turn_server_configuration():
     """Test setting and getting managed TURN server configuration."""
-    _set_managed_configuration(monkeypatch)
+    _set_managed_configuration()
     _assert_conf(coturn_configuration, True)
 
 
-def test_overridden_turn_server_configuration(monkeypatch):
+def test_overridden_turn_server_configuration():
     """Test setting and getting overridden TURN sever configuration."""
-    _set_overridden_configuration(monkeypatch)
+    _set_overridden_configuration()
     _assert_conf(overridden_configuration, False)
 
 
-def test_revert_to_managed_turn_server_configuration(monkeypatch):
+def test_revert_to_managed_turn_server_configuration():
     """Test setting and getting overridden TURN sever configuration."""
     # Had to do all 3 operations because all fixtures were function-scoped
-    _set_managed_configuration(monkeypatch)
-    _set_overridden_configuration(monkeypatch)
-    _set_overridden_configuration(monkeypatch, TurnConfiguration())
+    _set_managed_configuration()
+    _set_overridden_configuration()
+    _set_overridden_configuration(TurnConfiguration())
     _assert_conf(coturn_configuration, True)
 
 
-def test_coturn_configuration_update_after_admin_override(monkeypatch):
+def test_coturn_configuration_update_after_admin_override():
     """Test that overridden conf prevails even if managed conf is updated."""
-    _set_managed_configuration(monkeypatch)
-    _set_overridden_configuration(monkeypatch)
-    _set_managed_configuration(monkeypatch, updated_coturn_configuration)
+    _set_managed_configuration()
+    _set_overridden_configuration()
+    _set_managed_configuration(updated_coturn_configuration)
     _assert_conf(overridden_configuration, False)

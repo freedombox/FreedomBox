@@ -1,13 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for bepasty.
-"""
-
-import json
+"""FreedomBox app for bepasty."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.modules.apache.components import Uwsgi, Webserver
@@ -15,7 +10,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('bepasty is a web application that allows large files to be uploaded '
@@ -97,38 +92,10 @@ class BepastyApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('bepasty',
-                              ['setup', '--domain-name', 'freedombox.local'])
+        privileged.setup('freedombox.local')
         self.enable()
-        if old_version == 1 and not get_configuration().get(
+        if old_version == 1 and not privileged.get_configuration().get(
                 'DEFAULT_PERMISSIONS'):
             # Upgrade to a better default only if user hasn't changed the
             # value.
-            set_default_permissions('read')
-
-
-def get_configuration():
-    """Get a full configuration including passwords and defaults."""
-    output = actions.superuser_run('bepasty', ['get-configuration'])
-    return json.loads(output)
-
-
-def add_password(permissions, comment=None):
-    """Generate a password with given permissions."""
-    command = ['add-password', '--permissions'] + permissions
-    if comment:
-        command += ['--comment', comment]
-
-    actions.superuser_run('bepasty', command)
-
-
-def remove_password(password):
-    """Remove a password and its permissions."""
-    actions.superuser_run('bepasty', ['remove-password'],
-                          input=password.encode())
-
-
-def set_default_permissions(permissions):
-    """Set default permissions."""
-    perm = permissions.split()
-    actions.superuser_run('bepasty', ['set-default', '--permissions'] + perm)
+            privileged.set_default(['read'])

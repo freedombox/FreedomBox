@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for the bepasty app.
-"""
+"""Views for the bepasty app."""
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -11,10 +9,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import FormView
 
-from plinth.errors import ActionError
-from plinth.modules import bepasty
 from plinth.views import AppView
 
+from . import privileged
 from .forms import AddPasswordForm, SetDefaultPermissionsForm
 
 # i18n for permission comments
@@ -27,6 +24,7 @@ PERMISSION_COMMENTS_STRINGS = {
 
 class BepastyView(AppView):
     """Serve configuration page."""
+
     app_id = 'bepasty'
     form_class = SetDefaultPermissionsForm
     template_name = 'bepasty.html'
@@ -39,7 +37,7 @@ class BepastyView(AppView):
     def _get_configuration(self):
         """Return the current configuration."""
         if not self.conf:
-            self.conf = bepasty.get_configuration()
+            self.conf = privileged.get_configuration()
 
         return self.conf
 
@@ -85,10 +83,10 @@ class BepastyView(AppView):
 
         if old_data['default_permissions'] != form_data['default_permissions']:
             try:
-                bepasty.set_default_permissions(
-                    form_data['default_permissions'])
+                privileged.set_default(
+                    form_data['default_permissions'].split(' '))
                 messages.success(self.request, _('Configuration updated.'))
-            except ActionError:
+            except Exception:
                 messages.error(self.request,
                                _('An error occurred during configuration.'))
 
@@ -112,17 +110,14 @@ class AddPasswordView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Add the password on valid form submission."""
-        _add_password(form.cleaned_data)
+        form_data = form.cleaned_data
+        privileged.add_password(form_data['permissions'], form_data['comment'])
         return super().form_valid(form)
-
-
-def _add_password(form_data):
-    bepasty.add_password(form_data['permissions'], form_data['comment'])
 
 
 @require_POST
 def remove(request, password):
     """View to remove a password."""
-    bepasty.remove_password(password)
+    privileged.remove_password(password)
     messages.success(request, _('Password deleted.'))
     return redirect(reverse_lazy('bepasty:index'))

@@ -1,21 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for configuring MediaWiki.
-"""
+"""FreedomBox app for configuring MediaWiki."""
 
 import logging
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import views
-from plinth.errors import ActionError
 from plinth.modules import mediawiki
 
-from . import (get_default_skin, get_server_url, get_site_name,
-               is_private_mode_enabled, is_public_registration_enabled)
+from . import get_default_skin, get_server_url, get_site_name, privileged
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -23,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 class MediaWikiAppView(views.AppView):
     """App configuration page."""
+
     app_id = 'mediawiki'
     form_class = MediaWikiForm
     template_name = 'mediawiki.html'
@@ -31,11 +27,16 @@ class MediaWikiAppView(views.AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'enable_public_registrations': is_public_registration_enabled(),
-            'enable_private_mode': is_private_mode_enabled(),
-            'default_skin': get_default_skin(),
-            'domain': get_server_url(),
-            'site_name': get_site_name()
+            'enable_public_registrations':
+                privileged.public_registrations('status'),
+            'enable_private_mode':
+                privileged.private_mode('status'),
+            'default_skin':
+                get_default_skin(),
+            'domain':
+                get_server_url(),
+            'site_name':
+                get_site_name()
         })
         return initial
 
@@ -49,10 +50,9 @@ class MediaWikiAppView(views.AppView):
 
         if new_config['password']:
             try:
-                actions.superuser_run('mediawiki', ['change-password'],
-                                      input=new_config['password'].encode())
+                privileged.change_password('admin', new_config['password'])
                 messages.success(self.request, _('Password updated'))
-            except ActionError as exception:
+            except Exception as exception:
                 logger.exception('Failed to update password: %s', exception)
                 messages.error(
                     self.request,
@@ -63,8 +63,7 @@ class MediaWikiAppView(views.AppView):
             # note action public-registration restarts, if running now
             if new_config['enable_public_registrations']:
                 if not new_config['enable_private_mode']:
-                    actions.superuser_run('mediawiki',
-                                          ['public-registrations', 'enable'])
+                    privileged.public_registrations('enable')
                     messages.success(self.request,
                                      _('Public registrations enabled'))
                 else:
@@ -72,21 +71,19 @@ class MediaWikiAppView(views.AppView):
                         self.request, 'Public registrations ' +
                         'cannot be enabled when private mode is enabled')
             else:
-                actions.superuser_run('mediawiki',
-                                      ['public-registrations', 'disable'])
+                privileged.public_registrations('disable')
                 messages.success(self.request,
                                  _('Public registrations disabled'))
 
         if is_changed('enable_private_mode'):
             if new_config['enable_private_mode']:
-                actions.superuser_run('mediawiki', ['private-mode', 'enable'])
+                privileged.private_mode('enable')
                 messages.success(self.request, _('Private mode enabled'))
                 if new_config['enable_public_registrations']:
                     # If public registrations are enabled, then disable it
-                    actions.superuser_run('mediawiki',
-                                          ['public-registrations', 'disable'])
+                    privileged.public_registrations('disable')
             else:
-                actions.superuser_run('mediawiki', ['private-mode', 'disable'])
+                privileged.private_mode('disable')
                 messages.success(self.request, _('Private mode disabled'))
 
             app = app_module.App.get('mediawiki')
@@ -94,7 +91,7 @@ class MediaWikiAppView(views.AppView):
             shortcut.login_required = new_config['enable_private_mode']
 
         if is_changed('default_skin'):
-            mediawiki.set_default_skin(new_config['default_skin'])
+            privileged.set_default_skin(new_config['default_skin'])
             messages.success(self.request, _('Default skin changed'))
 
         if is_changed('domain'):
@@ -102,7 +99,7 @@ class MediaWikiAppView(views.AppView):
             messages.success(self.request, _('Domain name updated'))
 
         if is_changed('site_name'):
-            mediawiki.set_site_name(new_config['site_name'])
+            privileged.set_site_name(new_config['site_name'])
             messages.success(self.request, _('Site name updated'))
 
         return super().form_valid(form)

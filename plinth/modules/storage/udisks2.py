@@ -1,14 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Handle disk operations using UDisk2 DBus API.
-"""
+"""Handle disk operations using UDisk2 DBus API."""
 
 import logging
 import threading
 
-from plinth import actions, cfg
-from plinth.errors import ActionError
+from plinth import cfg
 from plinth.utils import import_from_gi
+
+from . import privileged
 
 glib = import_from_gi('GLib', '2.0')
 gio = import_from_gi('Gio', '2.0')
@@ -195,11 +194,8 @@ def _mount(object_path):
     logger.info('Auto-mounting device: %s %s', block_device.id,
                 block_device.preferred_device)
     try:
-        actions.superuser_run(
-            'storage',
-            ['mount', '--block-device', block_device.preferred_device],
-            log_error=False)
-    except ActionError as exception:
+        privileged.mount(block_device.preferred_device, _log_error=False)
+    except Exception as exception:
         parts = exception.args[2].split(':')
         if parts[1].strip() != 'GDBus.Error':
             raise

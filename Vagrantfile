@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision "shell", run: 'always', inline: <<-SHELL
     # Disable automatic upgrades
-    /vagrant/actions/upgrades disable-auto
+    echo -e 'APT::Periodic::Update-Package-Lists "0";\nAPT::Periodic::Unattended-Upgrade "0";' > //etc/apt/apt.conf.d/20auto-upgrades
     # Do not run system plinth
     systemctl stop plinth
     systemctl disable plinth

@@ -73,10 +73,9 @@ provide options to the user. Add the following to ``forms.py``.
       def __init__(self, *args, **kw):
           validator = DirectoryValidator(username=SYSTEM_USER,
                                          check_creatable=True)
-        super(TransmissionForm,
-              self).__init__(title=_('Download directory'),
-                             default='/var/lib/transmission-daemon/downloads',
-                             validator=validator, *args, **kw)
+          super().__init__(title=_('Download directory'),
+                           default='/var/lib/transmission-daemon/downloads',
+                           validator=validator, *args, **kw)
 
 This uses a utility provided by the framework and creates a Django form that
 shows a single option to set the download directory for our Transmission app.

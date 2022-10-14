@@ -1,13 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Tor.
-"""
-
-import json
+"""FreedomBox app to configure Tor."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils, actions
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
@@ -21,7 +17,7 @@ from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import manifest, utils
+from . import manifest, privileged, utils
 
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
@@ -109,13 +105,12 @@ class TorApp(app_module.App):
     def enable(self):
         """Enable the app and update firewall ports."""
         super().enable()
-        actions.superuser_run('tor', ['update-ports'])
+        privileged.update_ports()
         update_hidden_service_domain()
 
     def disable(self):
         """Disable APT use of Tor before disabling."""
-        actions.superuser_run('tor',
-                              ['configure', '--apt-transport-tor', 'disable'])
+        privileged.configure(apt_transport_tor=False)
         super().disable()
         update_hidden_service_domain()
 
@@ -125,8 +120,8 @@ class TorApp(app_module.App):
 
         results.extend(_diagnose_control_port())
 
-        output = actions.superuser_run('tor', ['get-status'])
-        ports = json.loads(output)['ports']
+        status = privileged.get_status()
+        ports = status['ports']
 
         results.append([
             _('Tor relay port available'),
@@ -169,12 +164,9 @@ class TorApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('tor',
-                              ['setup', '--old-version',
-                               str(old_version)])
+        privileged.setup(old_version)
         if not old_version:
-            actions.superuser_run(
-                'tor', ['configure', '--apt-transport-tor', 'enable'])
+            privileged.configure(apt_transport_tor=True)
 
         update_hidden_service_domain()
         self.enable()

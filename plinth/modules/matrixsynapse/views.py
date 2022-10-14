@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Views for the Matrix Synapse module.
-"""
+"""Views for the Matrix Synapse module."""
 
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -9,19 +7,19 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
-from plinth import actions
 from plinth import app as app_module
 from plinth.forms import DomainSelectionForm
 from plinth.modules import matrixsynapse, names
 from plinth.modules.coturn.components import TurnConfiguration
 from plinth.views import AppView
 
-from . import get_public_registration_status, get_turn_configuration
+from . import get_turn_configuration, privileged
 from .forms import MatrixSynapseForm
 
 
 class SetupView(FormView):
     """Show matrix-synapse setup page."""
+
     template_name = 'matrix-synapse-pre-setup.html'
     form_class = DomainSelectionForm
     success_url = reverse_lazy('matrixsynapse:index')
@@ -46,6 +44,7 @@ class SetupView(FormView):
 
 class MatrixSynapseAppView(AppView):
     """Show matrix-synapse service page."""
+
     app_id = 'matrixsynapse'
     template_name = 'matrix-synapse.html'
     form_class = MatrixSynapseForm
@@ -69,21 +68,24 @@ class MatrixSynapseAppView(AppView):
         initial = super().get_initial()
         config, managed = get_turn_configuration()
         initial.update({
-            'enable_public_registration': get_public_registration_status(),
-            'enable_managed_turn': managed,
-            'turn_uris': '\n'.join(config.uris),
-            'shared_secret': config.shared_secret
+            'enable_public_registration':
+                privileged.public_registration('status'),
+            'enable_managed_turn':
+                managed,
+            'turn_uris':
+                '\n'.join(config.uris),
+            'shared_secret':
+                config.shared_secret
         })
         return initial
 
     @staticmethod
     def _handle_public_registrations(new_config):
+
         if new_config['enable_public_registration']:
-            actions.superuser_run('matrixsynapse',
-                                  ['public-registration', 'enable'])
+            privileged.public_registration('enable')
         else:
-            actions.superuser_run('matrixsynapse',
-                                  ['public-registration', 'disable'])
+            privileged.public_registration('disable')
 
     @staticmethod
     def _handle_turn_configuration(old_config, new_config):

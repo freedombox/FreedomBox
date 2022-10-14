@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage backup archives.
-"""
+"""FreedomBox app to manage backup archives."""
 
 import json
 import logging
@@ -14,12 +12,11 @@ from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.package import Packages
 
-from . import api
+from . import api, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +24,6 @@ _description = [
     _('Backups allows creating and managing backup archives.'),
 ]
 
-MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 # session variable name that stores when a backup file should be deleted
 SESSION_PATH_VARIABLE = 'fbx-backups-upload-path'
 
@@ -69,8 +65,7 @@ class BackupsApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         from . import repository
-        actions.superuser_run(
-            'backups', ['setup', '--path', repository.RootBorgRepository.PATH])
+        privileged.setup(repository.RootBorgRepository.PATH)
         self.enable()
 
         # First time setup or upgrading from older versions.
@@ -79,11 +74,11 @@ class BackupsApp(app_module.App):
 
 
 def _backup_handler(packet, encryption_passphrase=None):
-    """Performs backup operation on packet."""
-    if not os.path.exists(MANIFESTS_FOLDER):
-        os.makedirs(MANIFESTS_FOLDER)
+    """Perform backup operation on packet."""
+    if not os.path.exists(privileged.MANIFESTS_FOLDER):
+        os.makedirs(privileged.MANIFESTS_FOLDER)
 
-    manifest_path = os.path.join(MANIFESTS_FOLDER,
+    manifest_path = os.path.join(privileged.MANIFESTS_FOLDER,
                                  get_valid_filename(packet.path) + '.json')
     manifests = {
         'apps': [{
@@ -97,17 +92,10 @@ def _backup_handler(packet, encryption_passphrase=None):
 
     paths = packet.directories + packet.files
     paths.append(manifest_path)
-    arguments = ['create-archive', '--path', packet.path]
-    if packet.archive_comment:
-        arguments += ['--comment', packet.archive_comment]
 
-    arguments += ['--paths'] + paths
-    input_data = ''
-    if encryption_passphrase:
-        input_data = json.dumps(
-            {'encryption_passphrase': encryption_passphrase})
-
-    actions.superuser_run('backups', arguments, input=input_data.encode())
+    privileged.create_archive(packet.path, paths,
+                              comment=packet.archive_comment,
+                              encryption_passphrase=encryption_passphrase)
 
 
 def backup_by_schedule(data):
@@ -123,34 +111,16 @@ def backup_by_schedule(data):
                                               exception=exception)
 
 
-def get_exported_archive_apps(path):
-    """Get list of apps included in exported archive file."""
-    arguments = ['get-exported-archive-apps', '--path', path]
-    output = actions.superuser_run('backups', arguments)
-    return output.splitlines()
-
-
 def _restore_exported_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
-    locations = {'directories': packet.directories, 'files': packet.files}
-    locations_data = json.dumps(locations)
-    actions.superuser_run('backups',
-                          ['restore-exported-archive', '--path', packet.path],
-                          input=locations_data.encode())
+    privileged.restore_exported_archive(packet.path, packet.directories,
+                                        packet.files)
 
 
 def restore_archive_handler(packet, encryption_passphrase=None):
     """Perform restore operation on packet."""
-    locations = {
-        'directories': packet.directories,
-        'files': packet.files,
-        'encryption_passphrase': encryption_passphrase
-    }
-    locations_data = json.dumps(locations)
-    arguments = [
-        'restore-archive', '--path', packet.path, '--destination', '/'
-    ]
-    actions.superuser_run('backups', arguments, input=locations_data.encode())
+    privileged.restore_archive(packet.path, '/', packet.directories,
+                               packet.files, encryption_passphrase)
 
 
 def restore_from_upload(path, app_ids=None):

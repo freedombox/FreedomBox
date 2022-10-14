@@ -31,18 +31,6 @@ def fixture_users_urls():
         yield
 
 
-def action_run(action, options, **kwargs):
-    """Action return values."""
-    if action == 'users' and options == ['get-group-users', 'admin']:
-        return 'admin'
-    if action == 'ssh' and options[:2] == ['get-keys', '--username']:
-        return ''
-    if action == 'users' and options == ['get-user-groups', 'tester']:
-        return ''
-
-    return None
-
-
 @pytest.fixture(autouse=True)
 def module_patch():
     """Patch users module."""
@@ -54,8 +42,20 @@ def module_patch():
     UsersAndGroups('users-and-groups-minetest',
                    reserved_usernames=['debian-minetest'])
 
-    with patch('pwd.getpwall', return_value=pwd_users),\
-            patch('plinth.actions.superuser_run', side_effect=action_run):
+    privileged = 'plinth.modules.users.privileged'
+    with patch('pwd.getpwall', return_value=pwd_users), \
+         patch(f'{privileged}.create_user'), \
+         patch(f'{privileged}.add_user_to_group'), \
+         patch(f'{privileged}.set_user_password'), \
+         patch(f'{privileged}.set_user_status'), \
+         patch(f'{privileged}.rename_user'), \
+         patch(f'{privileged}.get_group_users') as get_group_users, \
+         patch('plinth.modules.ssh.privileged.set_keys'), \
+         patch('plinth.modules.ssh.privileged.get_keys') as get_keys, \
+         patch(f'{privileged}.get_user_groups') as get_user_groups:
+        get_group_users.return_value = ['admin']
+        get_keys.return_value = []
+        get_user_groups.return_value = []
         yield
 
 

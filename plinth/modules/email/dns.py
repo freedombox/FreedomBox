@@ -12,12 +12,11 @@ See: https://rspamd.com/doc/modules/dkim_signing.html
 from dataclasses import dataclass
 from typing import Union
 
-from plinth.errors import ActionError
-
 
 @dataclass
 class Entry:  # pylint: disable=too-many-instance-attributes
     """A DNS entry."""
+
     type_: str
     value: str
     domain: Union[str, None] = None
@@ -55,12 +54,12 @@ def get_entries():
             f'rua=mailto:postmaster@{domain}; ')
     ]
     try:
-        dkim_public_key = privileged.dkim.get_public_key(domain)
+        dkim_public_key = privileged.get_dkim_public_key(domain)
         dkim_entries = [
             Entry(domain='dkim._domainkey', type_='TXT',
                   value=f'v=DKIM1; k=rsa; p={dkim_public_key}')
         ]
-    except ActionError:
+    except Exception:
         dkim_entries = []
 
     autoconfig_entries = [

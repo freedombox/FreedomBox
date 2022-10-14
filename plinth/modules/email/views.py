@@ -41,7 +41,7 @@ class EmailAppView(AppView):
         new_data = form.cleaned_data
         if old_data['primary_domain'] != new_data['primary_domain']:
             try:
-                privileged.domain.set_domains(new_data['primary_domain'])
+                privileged.domain.set_all_domains(new_data['primary_domain'])
                 messages.success(self.request, _('Configuration updated'))
             except Exception:
                 messages.error(self.request,

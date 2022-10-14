@@ -6,10 +6,9 @@ Views for radicale module.
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth.views import AppView
 
-from . import get_rights_value
+from . import get_rights_value, privileged
 from .forms import RadicaleForm
 
 
@@ -28,9 +27,7 @@ class RadicaleAppView(AppView):
         """Change the access control of Radicale service."""
         data = form.cleaned_data
         if get_rights_value() != data['access_rights']:
-            actions.superuser_run(
-                'radicale',
-                ['configure', '--rights_type', data['access_rights']])
+            privileged.configure(data['access_rights'])
             messages.success(self.request,
                              _('Access rights configuration updated'))
         return super().form_valid(form)

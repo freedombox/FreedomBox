@@ -35,7 +35,7 @@ def setup():
 
 @privileged
 def get_config() -> dict[str, bool]:
-    """Print the current configuration as JSON."""
+    """Return the current configuration as a dictionary."""
     pattern = r'\s*\$config\[\s*\'([^\']*)\'\s*\]\s*=\s*\'([^\']*)\'\s*;'
     _config = {}
     try:

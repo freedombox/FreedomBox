@@ -1,14 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure a firewall.
-"""
+"""FreedomBox app to configure a firewall."""
 
 import contextlib
 import logging
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
@@ -16,7 +13,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy, import_from_gi
 
-from . import manifest
+from . import manifest, privileged
 
 gio = import_from_gi('Gio', '2.0')
 glib = import_from_gi('GLib', '2.0')
@@ -98,7 +95,7 @@ class FirewallApp(app_module.App):
 
 def _run_setup():
     """Run firewalld setup."""
-    _run(['setup'], superuser=True)
+    privileged.setup()
     add_service('http', 'external')
     add_service('http', 'internal')
     add_service('https', 'external')
@@ -171,17 +168,8 @@ def try_with_reload(operation):
         operation()
 
 
-def get_enabled_status():
-    """Return whether firewall is enabled"""
-    output = _run(['get-status'], superuser=True)
-    if not output:
-        return False
-    else:
-        return output.split()[0] == 'running'
-
-
 def get_enabled_services(zone):
-    """Return the status of various services currently enabled"""
+    """Return the status of various services currently enabled."""
     with ignore_dbus_error(dbus_error='ServiceUnknown'):
         zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
         return zone_proxy.getServices('(s)', zone)
@@ -190,7 +178,7 @@ def get_enabled_services(zone):
 
 
 def get_port_details(service_port):
-    """Return the port types and numbers for a service port"""
+    """Return the port types and numbers for a service port."""
     try:
         return _port_details[service_port]
     except KeyError:
@@ -215,7 +203,7 @@ def get_interfaces(zone):
 
 
 def add_service(port, zone):
-    """Enable a service in firewall"""
+    """Enable a service in firewall."""
     with ignore_dbus_error(dbus_error='ServiceUnknown'):
         zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
         with ignore_dbus_error(service_error='ALREADY_ENABLED'):
@@ -229,7 +217,7 @@ def add_service(port, zone):
 
 
 def remove_service(port, zone):
-    """Remove a service in firewall"""
+    """Remove a service in firewall."""
     with ignore_dbus_error(dbus_error='ServiceUnknown'):
         zone_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _ZONE_INTERFACE)
         with ignore_dbus_error(service_error='NOT_ENABLED'):
@@ -240,13 +228,3 @@ def remove_service(port, zone):
         config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
         with ignore_dbus_error(service_error='NOT_ENABLED'):
             config_zone.removeService('(s)', port)
-
-
-def _run(arguments, superuser=False):
-    """Run an given command and raise exception if there was an error"""
-    command = 'firewall'
-
-    if superuser:
-        return actions.superuser_run(command, arguments)
-    else:
-        return actions.run(command, arguments)

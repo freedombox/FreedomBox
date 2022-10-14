@@ -193,7 +193,7 @@ mount -o remount /freedombox
 if [[ "{distribution}" == "stable"  && ! -e $BACKPORTS_SOURCES_LIST ]]
 then
     echo "> In container: Enable backports"
-    /freedombox/actions/upgrades activate-backports
+    /freedombox/actions/actions upgrades activate_backports --no-args
 fi
 
 echo "> In container: Upgrade packages"
@@ -650,8 +650,10 @@ def _setup_users(image_file):
            str(gid), 'plinth'], stdout=subprocess.DEVNULL)
 
     logger.info('In container: Setting up sudo for users "fbx" and "plinth"')
-    sudo_config = 'plinth    ALL=(ALL:ALL) NOPASSWD:SETENV : ' \
-        '/usr/share/plinth/actions/* , /freedombox/actions/*\n' \
+    sudo_config = 'Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/' \
+        'actions/actions, /freedombox/actions/actions\n' \
+        'Defaults!FREEDOMBOX_ACTION_DEV closefrom_override\n' \
+        'plinth    ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV\n' \
         'fbx    ALL=(ALL:ALL) NOPASSWD : ALL\n'
     _runc(image_file, ['tee', '/etc/sudoers.d/01-freedombox-development'],
           input=sudo_config.encode(), stdout=subprocess.DEVNULL)
@@ -696,7 +698,10 @@ def _setup(image_file, distribution):
         return
 
     logger.info('In container: Disabling automatic updates temporarily')
-    _runc(image_file, ['/usr/share/plinth/actions/upgrades', 'disable-auto'])
+    contents = 'APT::Periodic::Update-Package-Lists "0";\n' \
+        'APT::Periodic::Unattended-Upgrade "0";\n'
+    _runc(image_file, ['tee', '/etc/apt/apt.conf.d/20auto-upgrades'],
+          input=contents.encode())
 
     logger.info('In container: Disabling FreedomBox service')
     _runc(image_file, ['systemctl', 'disable', 'plinth'],

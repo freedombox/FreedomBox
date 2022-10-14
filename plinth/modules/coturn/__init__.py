@@ -1,16 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Coturn server.
-"""
+"""FreedomBox app to configure Coturn server."""
 
-import json
 import logging
 import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
@@ -23,7 +19,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Coturn is a server to facilitate audio/video calls and conferences by '
@@ -109,7 +105,7 @@ class CoturnApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('coturn', ['setup'])
+        privileged.setup()
         if old_version == 0:
             self.enable()
 
@@ -151,14 +147,13 @@ def get_domains():
 def set_domain(domain):
     """Set the TLS domain by writing a file to data directory."""
     if domain:
-        actions.superuser_run('coturn', ['set-domain', domain])
+        privileged.set_domain(domain)
         notify_configuration_change()
 
 
 def get_config():
     """Return the coturn server configuration."""
-    output = actions.superuser_run('coturn', ['get-config'])
-    config = json.loads(output)
+    config = privileged.get_config()
     return TurnConfiguration(config['realm'], [], config['static_auth_secret'])
 
 

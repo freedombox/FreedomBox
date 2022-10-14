@@ -1,26 +1,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Forms for directory selection.
-"""
+"""Forms for directory selection."""
 
-import json
 import os
 
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth.modules import storage
+from plinth.modules.samba import privileged as samba_privileged
+
+from . import privileged
 
 
 def get_available_samba_shares():
     """Get available samba shares."""
     available_shares = []
     if _is_app_enabled('samba'):
-        samba_shares = json.loads(
-            actions.superuser_run('samba', ['get-shares']))
+        samba_shares = samba_privileged.get_shares()
         if samba_shares:
             disks = storage.get_mounts()
             for share in samba_shares:
@@ -41,6 +39,8 @@ def _is_app_enabled(app_id):
 
 
 class DirectoryValidator:
+    """Validation helper to check a directory."""
+
     username = None
     check_writable = False
     check_creatable = False
@@ -49,6 +49,7 @@ class DirectoryValidator:
 
     def __init__(self, username=None, check_writable=None,
                  check_creatable=None):
+        """Initialize the validator."""
         if username is not None:
             self.username = username
         if check_writable is not None:
@@ -61,29 +62,22 @@ class DirectoryValidator:
         if not value.startswith('/'):
             raise ValidationError(_('Invalid directory name.'), 'invalid')
 
-        command = ['validate-directory', '--path', value]
-        if self.check_creatable:
-            command.append('--check-creatable')
-        elif self.check_writable:
-            command.append('--check-writable')
+        try:
+            if not self.username:
+                raise ValueError('Invalid username for directory validator')
 
-        if self.username:
-            output = actions.run_as_user('storage', command,
-                                         become_user=self.username)
-        else:
-            output = actions.run('storage', command)
-
-        if 'ValidationError' in output:
-            error_nr = int(output.strip().split()[1])
-            if error_nr == 1:
-                raise ValidationError(_('Directory does not exist.'),
-                                      'invalid')
-            elif error_nr == 2:
-                raise ValidationError(_('Path is not a directory.'), 'invalid')
-            elif error_nr == 3:
+            privileged.validate_directory(value, self.check_creatable,
+                                          self.check_writable,
+                                          _run_as_user=self.username)
+        except FileNotFoundError:
+            raise ValidationError(_('Directory does not exist.'), 'invalid')
+        except NotADirectoryError:
+            raise ValidationError(_('Path is not a directory.'), 'invalid')
+        except PermissionError as exception:
+            if exception.args[0] == 'read':
                 raise ValidationError(
                     _('Directory is not readable by the user.'), 'invalid')
-            elif error_nr == 4:
+            else:
                 raise ValidationError(
                     _('Directory is not writable by the user.'), 'invalid')
 

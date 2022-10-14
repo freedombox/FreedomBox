@@ -44,13 +44,14 @@ _site_url = {
     'cockpit': '/_cockpit/',
     'syncthing': '/syncthing/',
     'rssbridge': '/rss-bridge/',
+    'ttrss': '/tt-rss/',
 }
 
 _sys_modules = [
     'avahi', 'backups', 'bind', 'cockpit', 'config', 'datetime', 'diagnostics',
     'dynamicdns', 'firewall', 'letsencrypt', 'names', 'networks', 'pagekite',
-    'performance', 'power', 'security', 'snapshot', 'ssh', 'storage',
-    'upgrades', 'users'
+    'performance', 'power', 'privacy', 'security', 'snapshot', 'ssh',
+    'storage', 'upgrades', 'users'
 ]
 
 

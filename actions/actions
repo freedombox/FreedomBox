@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import sys
+import traceback
 import typing
 
 import plinth.log
@@ -26,16 +27,25 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('module', help='Module to trigger action in')
     parser.add_argument('action', help='Action to trigger in module')
+    parser.add_argument('--write-fd', type=int, default=1,
+                        help='File descriptor to write output to')
+    parser.add_argument('--no-args', default=False, action='store_true',
+                        help='Do not read arguments from stdin')
     args = parser.parse_args()
 
     try:
         try:
-            arguments = json.loads(sys.stdin.read())
+            arguments = {'args': [], 'kwargs': {}}
+            if not args.no_args:
+                input_ = sys.stdin.read()
+                if input_:
+                    arguments = json.loads(input_)
         except json.JSONDecodeError as exception:
             raise SyntaxError('Arguments on stdin not JSON.') from exception
 
         return_value = _call(args.module, args.action, arguments)
-        print(json.dumps(return_value))
+        with os.fdopen(args.write_fd, 'w') as write_file_handle:
+            write_file_handle.write(json.dumps(return_value))
     except PermissionError as exception:
         logger.error(exception.args[0])
         sys.exit(EXIT_PERM)
@@ -52,14 +62,15 @@ def main():
 
 def _call(module_name, action_name, arguments):
     """Import the module and run action as superuser"""
-    if os.getuid() != 0:
-        raise PermissionError('This action is reserved for root')
-
     if '.' in module_name:
         raise SyntaxError('Invalid module name')
 
     cfg.read()
-    import_path = module_loader.get_module_import_path(module_name)
+    if module_name == 'plinth':
+        import_path = 'plinth'
+    else:
+        import_path = module_loader.get_module_import_path(module_name)
+
     try:
         module = importlib.import_module(import_path + '.privileged')
     except ModuleNotFoundError as exception:
@@ -87,7 +98,8 @@ def _call(module_name, action_name, arguments):
             'exception': {
                 'module': type(exception).__module__,
                 'name': type(exception).__name__,
-                'args': exception.args
+                'args': exception.args,
+                'traceback': traceback.format_tb(exception.__traceback__)
             }
         }
 

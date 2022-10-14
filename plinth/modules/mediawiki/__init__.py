@@ -1,14 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure MediaWiki.
-"""
+"""FreedomBox app to configure MediaWiki."""
 
 import re
 from urllib.parse import urlparse
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -17,7 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
@@ -96,8 +93,8 @@ class MediaWikiApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('mediawiki', ['setup'])
-        actions.superuser_run('mediawiki', ['update'])
+        privileged.setup()
+        privileged.update()
         self.enable()
 
 
@@ -107,20 +104,7 @@ class Shortcut(frontpage.Shortcut):
     def enable(self):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()
-        self.login_required = is_private_mode_enabled()
-
-
-def is_public_registration_enabled():
-    """Return whether public registration is enabled."""
-    output = actions.superuser_run('mediawiki',
-                                   ['public-registrations', 'status'])
-    return output.strip() == 'enabled'
-
-
-def is_private_mode_enabled():
-    """Return whether private mode is enabled or disabled."""
-    output = actions.superuser_run('mediawiki', ['private-mode', 'status'])
-    return output.strip() == 'enabled'
+        self.login_required = privileged.private_mode('status')
 
 
 def _get_config_value_in_file(setting_name, config_file):
@@ -144,11 +128,6 @@ def get_default_skin():
     return _get_config_value('$wgDefaultSkin')
 
 
-def set_default_skin(skin):
-    """Set the value of the default skin."""
-    actions.superuser_run('mediawiki', ['set-default-skin', skin])
-
-
 def get_server_url():
     """Return the value of the server URL."""
     server_url = _get_config_value('$wgServer')
@@ -161,15 +140,9 @@ def set_server_url(domain):
     if domain.endswith('.onion'):
         protocol = 'http'
 
-    actions.superuser_run('mediawiki',
-                          ['set-server-url', f'{protocol}://{domain}'])
+    privileged.set_server_url(f'{protocol}://{domain}')
 
 
 def get_site_name():
     """Return the value of MediaWiki's site name."""
     return _get_config_value('$wgSitename') or 'Wiki'
-
-
-def set_site_name(site_name):
-    """Set the value of $wgSitename."""
-    actions.superuser_run('mediawiki', ['set-site-name', site_name])

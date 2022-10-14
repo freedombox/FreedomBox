@@ -3,7 +3,7 @@
 Tests for samba views.
 """
 
-import json
+import pathlib
 import urllib
 from unittest.mock import patch
 
@@ -12,11 +12,11 @@ from django import urls
 from django.contrib.messages.storage.fallback import FallbackStorage
 
 from plinth import module_loader
-from plinth.errors import ActionError
 from plinth.modules.samba import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
 pytestmark = pytest.mark.urls('plinth.urls')
+setfacl_path = pathlib.Path('/usr/bin/setfacl')
 
 USERS = {"access_ok": ["testuser"], 'password_re_enter_needed': []}
 
@@ -70,18 +70,12 @@ def fixture_samba_urls():
         yield
 
 
-def action_run(action, options, **kwargs):
-    """Action return values."""
-    if action == 'samba' and options == ['get-shares']:
-        return json.dumps(SHARES)
-
-    return None
-
-
 @pytest.fixture(autouse=True)
-def samba_patch_actions():
-    """Patch actions scripts runner."""
-    with patch('plinth.actions.superuser_run', side_effect=action_run):
+def samba_patch_privileged():
+    """Patch privileged scripts runner."""
+    with patch('plinth.modules.samba.privileged.get_shares') as get_shares, \
+         patch('plinth.modules.samba.privileged.delete_share'):
+        get_shares.return_value = SHARES
         yield
 
 
@@ -120,6 +114,7 @@ def test_samba_shares_view(rf):
         assert response.status_code == 200
 
 
+@pytest.mark.skipif(not setfacl_path.exists(), reason='setfacl not installed')
 def test_enable_samba_share_view(rf):
     """Test that enabling share sends correct success message."""
     form_data = {'filesystem_type': 'ext4', 'open_share': 'enable'}
@@ -138,7 +133,7 @@ def test_enable_samba_share_failed_view(rf):
     mount_point = urllib.parse.quote('/')
     error_message = 'Sharing failed'
     with patch('plinth.modules.samba.add_share',
-               side_effect=ActionError(error_message)):
+               side_effect=RuntimeError(error_message)):
         response, messages = make_request(rf.post('', data=form_data),
                                           views.share, mount_point=mount_point)
 
@@ -165,13 +160,12 @@ def test_disable_samba_share_failed_view(rf):
     form_data = {'filesystem_type': 'ext4', 'open_share': 'disable'}
     mount_point = urllib.parse.quote('/')
     error_message = 'Unsharing failed'
-    with patch('plinth.modules.samba.delete_share',
-               side_effect=ActionError(error_message)):
+    with patch('plinth.modules.samba.privileged.delete_share',
+               side_effect=RuntimeError(error_message)):
         response, messages = make_request(rf.post('', data=form_data),
                                           views.share, mount_point=mount_point)
 
-        assert list(
-            messages)[0].message == 'Error disabling share: {0}'.format(
-                error_message)
+        assert list(messages)[
+            0].message == 'Error disabling share: {0}'.format(error_message)
         assert response.status_code == 302
         assert response.url == urls.reverse('samba:index')

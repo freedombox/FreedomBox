@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Syncthing.
-"""
+"""FreedomBox app to configure Syncthing."""
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
@@ -13,11 +10,12 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users import add_user_to_share_group
+from plinth.modules.users import privileged as users_privileged
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Syncthing is an application to synchronize files across multiple '
@@ -106,13 +104,13 @@ class SyncthingApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('syncthing', ['setup'])
+        privileged.setup()
         add_user_to_share_group(SYSTEM_USER, SyncthingApp.DAEMON)
 
         if not old_version:
             self.enable()
 
-        actions.superuser_run('syncthing', ['setup-config'])
+        privileged.setup_config()
 
         if old_version == 1 and self.is_enabled():
             self.get_component('firewall-syncthing-ports').enable()
@@ -122,9 +120,7 @@ class SyncthingApp(app_module.App):
             old_groupname = 'syncthing'
             new_groupname = 'syncthing-access'
 
-            actions.superuser_run(
-                'users',
-                options=['rename-group', old_groupname, new_groupname])
+            users_privileged.rename_group(old_groupname, new_groupname)
 
             from django.contrib.auth.models import Group
             Group.objects.filter(name=old_groupname).update(name=new_groupname)

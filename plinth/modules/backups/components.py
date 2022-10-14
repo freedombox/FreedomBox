@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-App component for other apps to use backup/restore functionality.
-"""
+"""App component for other apps to use backup/restore functionality."""
 
 import copy
-import json
 
-from plinth import actions, app
+from plinth import app
+
+from . import privileged
 
 
 def _validate_directories_and_files(section):
@@ -150,19 +149,14 @@ class BackupRestore(app.FollowerComponent):
             except Exception:
                 pass
 
-        input_ = json.dumps(data).encode()
-        actions.superuser_run('backups',
-                              ['dump-settings', '--app-id', self.app_id],
-                              input=input_)
+        privileged.dump_settings(self.app_id, data)
 
     def _settings_restore_post(self):
         """Read from a file and restore keys to kvstore."""
         if not self.settings:
             return
 
-        output = actions.superuser_run(
-            'backups', ['load-settings', '--app-id', self.app_id])
-        data = json.loads(output)
+        data = privileged.load_settings(self.app_id)
 
         from plinth import kvstore
         for key, value in data.items():

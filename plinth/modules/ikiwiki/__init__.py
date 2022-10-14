@@ -1,12 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure ikiwiki.
-"""
+"""FreedomBox app to configure ikiwiki."""
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.modules.apache.components import Webserver
@@ -16,7 +13,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('ikiwiki is a simple wiki and blog application. It supports '
@@ -100,9 +97,8 @@ class IkiwikiApp(app_module.App):
         component.remove()  # Remove from global list.
 
     def refresh_sites(self):
-        """Refresh blog and wiki list"""
-        sites = actions.run('ikiwiki', ['get-sites']).split('\n')
-        sites = [name.split(' ', 1) for name in sites if name != '']
+        """Refresh blog and wiki list."""
+        sites = privileged.get_sites()
 
         for site in sites:
             if not 'shortcut-ikiwiki-' + site[0] in self.components:
@@ -113,5 +109,5 @@ class IkiwikiApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('ikiwiki', ['setup'])
+        privileged.setup()
         self.enable()

@@ -8,20 +8,15 @@ https://doc.dovecot.org/configuration_manual/authentication/user_databases_userd
 
 import subprocess
 
-from plinth import actions
+from plinth.actions import privileged
 
 
-def setup():
+@privileged
+def setup_home():
     """Set correct permissions on /var/mail/ directory.
 
     For each user, /var/mail/<user> is the 'dovecot mail home' for that user.
     Dovecot creates new directories with the same permissions as the parent
-    directory. Ensure that 'others' can access /var/mail/.
-
+    directory. Ensure that 'others' can't access /var/mail/.
     """
-    actions.superuser_run('email', ['home', 'setup'])
-
-
-def action_setup():
-    """Run chmod on /var/mail to remove all permissions for 'others'."""
     subprocess.run(['chmod', 'o-rwx', '/var/mail'], check=True)

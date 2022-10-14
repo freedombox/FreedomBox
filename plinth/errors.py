@@ -8,10 +8,6 @@ class PlinthError(Exception):
     """Base class for all FreedomBox specific errors."""
 
 
-class ActionError(PlinthError):
-    """Use this error for exceptions when executing an action."""
-
-
 class PackageNotInstalledError(PlinthError):
     """Could not complete module setup due to missing package."""
 

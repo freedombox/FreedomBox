@@ -1,21 +1,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for configuring Shadowsocks.
-"""
-
-import json
+"""FreedomBox app for configuring Shadowsocks."""
 
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions, views
-from plinth.errors import ActionError
+from plinth import views
 
+from . import privileged
 from .forms import ShadowsocksForm
 
 
 class ShadowsocksAppView(views.AppView):
     """Configuration view for Shadowsocks local socks5 proxy."""
+
     app_id = 'shadowsocks'
     form_class = ShadowsocksForm
 
@@ -23,10 +20,8 @@ class ShadowsocksAppView(views.AppView):
         """Get initial values for form."""
         status = super().get_initial()
         try:
-            configuration = actions.superuser_run('shadowsocks',
-                                                  ['get-config'])
-            status.update(json.loads(configuration))
-        except ActionError:
+            status.update(privileged.get_config())
+        except Exception:
             status.update({
                 'server': '',
                 'server_port': 8388,
@@ -54,8 +49,7 @@ class ShadowsocksAppView(views.AppView):
                 'method': new_status['method'],
             }
 
-            actions.superuser_run('shadowsocks', ['merge-config'],
-                                  input=json.dumps(new_config).encode())
+            privileged.merge_config(new_config)
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

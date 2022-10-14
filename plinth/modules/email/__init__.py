@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to manage an email server.
-"""
+"""FreedomBox app to manage an email server."""
 
 import logging
 
@@ -9,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 import plinth.app
-from plinth import actions, cfg, frontpage, menu
+from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -17,6 +15,7 @@ from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, uninstall
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -49,12 +48,13 @@ logger = logging.getLogger(__name__)
 
 class EmailApp(plinth.app.App):
     """FreedomBox app for an email server."""
+
     app_id = 'email'
 
     _version = 1
 
     def __init__(self):
-        """The app's constructor"""
+        """Initialize the email app."""
         super().__init__()
 
         info = plinth.app.Info(app_id=self.app_id, version=self._version,
@@ -180,18 +180,19 @@ class EmailApp(plinth.app.App):
         super().setup(old_version)
 
         # Setup
-        privileged.home.setup()
+        privileged.setup_home()
         self.get_component('letsencrypt-email-postfix').setup_certificates()
         self.get_component('letsencrypt-email-dovecot').setup_certificates()
-        privileged.domain.set_domains()
-        privileged.postfix.setup()
+        privileged.domain.set_all_domains()
+        aliases.first_setup()
+        privileged.setup_postfix()
         aliases.setup_common_aliases(_get_first_admin())
-        privileged.spam.setup()
+        privileged.setup_spam()
 
         # Restart daemons
-        actions.superuser_run('service', ['try-restart', 'postfix'])
-        actions.superuser_run('service', ['try-restart', 'dovecot'])
-        actions.superuser_run('service', ['try-restart', 'rspamd'])
+        service_privileged.try_restart('postfix')
+        service_privileged.try_restart('dovecot')
+        service_privileged.try_restart('rspamd')
 
         # Expose to public internet
         if old_version == 0:
@@ -218,7 +219,7 @@ def on_domain_added(sender, domain_type, name, description='', services=None,
     if app.needs_setup():
         return
 
-    privileged.domain.set_domains()
+    privileged.domain.set_all_domains()
 
 
 def on_domain_removed(sender, domain_type, name='', **kwargs):
@@ -227,4 +228,4 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
     if app.needs_setup():
         return
 
-    privileged.domain.set_domains()
+    privileged.domain.set_all_domains()

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for security configuration.
-"""
+"""FreedomBox app for security configuration."""
 
 import re
 import subprocess
@@ -9,20 +7,14 @@ from collections import defaultdict
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 
-from . import manifest
-
-ACCESS_CONF_FILE = '/etc/security/access.d/50freedombox.conf'
-ACCESS_CONF_FILE_OLD = '/etc/security/access.conf'
-ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx plinth (admin) (sudo):ALL'
-OLD_ACCESS_CONF_SNIPPET = '-:ALL EXCEPT root fbx (admin) (sudo):ALL'
-ACCESS_CONF_SNIPPETS = [OLD_ACCESS_CONF_SNIPPET, ACCESS_CONF_SNIPPET]
+from . import manifest, privileged
 
 
 class SecurityApp(app_module.App):
@@ -63,46 +55,31 @@ class SecurityApp(app_module.App):
         if not old_version:
             enable_fail2ban()
 
-        actions.superuser_run('service', ['reload', 'fail2ban'])
+        service_privileged.reload('fail2ban')
 
         # Migrate to new config file.
-        enabled = get_restricted_access_enabled()
+        enabled = privileged.get_restricted_access_enabled()
         set_restricted_access(False)
         if enabled:
             set_restricted_access(True)
 
 
 def enable_fail2ban():
-    actions.superuser_run('service', ['unmask', 'fail2ban'])
-    actions.superuser_run('service', ['enable', 'fail2ban'])
-
-
-def get_restricted_access_enabled():
-    """Return whether restricted access is enabled"""
-    with open(ACCESS_CONF_FILE_OLD, 'r', encoding='utf-8') as conffile:
-        if any(line.strip() in ACCESS_CONF_SNIPPETS
-               for line in conffile.readlines()):
-            return True
-
-    try:
-        with open(ACCESS_CONF_FILE, 'r', encoding='utf-8') as conffile:
-            return any(line.strip() in ACCESS_CONF_SNIPPETS
-                       for line in conffile.readlines())
-    except FileNotFoundError:
-        return False
+    """Unmask, enable and run the fail2ban service."""
+    service_privileged.unmask('fail2ban')
+    service_privileged.enable('fail2ban')
 
 
 def set_restricted_access(enabled):
-    """Enable or disable restricted access"""
-    action = 'disable-restricted-access'
+    """Enable or disable restricted access."""
     if enabled:
-        action = 'enable-restricted-access'
-
-    actions.superuser_run('security', [action])
+        privileged.enable_restricted_access()
+    else:
+        privileged.disable_restricted_access()
 
 
 def get_apps_report():
-    """Return a security report for each app"""
+    """Return a security report for each app."""
     lines = subprocess.check_output(['debsecan']).decode().split('\n')
     cves = defaultdict(set)
     for line in lines:

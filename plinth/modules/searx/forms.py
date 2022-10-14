@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Django form for configuring Searx.
-"""
+"""Django form for configuring Searx."""
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
@@ -9,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 class SearxForm(forms.Form):
     """Searx configuration form."""
+
     safe_search = forms.ChoiceField(
         label=_('Safe Search'), help_text=_(
             'Select the default family filter to apply to your search results.'

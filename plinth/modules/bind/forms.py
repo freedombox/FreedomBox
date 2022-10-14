@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Forms for BIND module.
-"""
+"""Forms for BIND module."""
 
 from django import forms
 from django.core.validators import validate_ipv46_address
@@ -15,12 +13,9 @@ def validate_ips(ips):
 
 
 class BindForm(forms.Form):
-    """BIND configuration form"""
+    """BIND configuration form."""
+
     forwarders = forms.CharField(
         label=_('Forwarders'), required=False, validators=[validate_ips],
         help_text=_('A list DNS servers, separated by space, to which '
                     'requests will be forwarded'))
-
-    enable_dnssec = forms.BooleanField(
-        label=_('Enable DNSSEC'), required=False,
-        help_text=_('Enable Domain Name System Security Extensions'))

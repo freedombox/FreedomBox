@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for upgrades.
-"""
+"""FreedomBox app for upgrades."""
 
-import json
 import logging
 import os
 import subprocess
@@ -13,14 +10,13 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 import plinth
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
 from plinth.daemon import RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 first_boot_steps = [
     {
@@ -47,10 +43,6 @@ _description = [
 BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'
-
-SOURCES_LIST = '/etc/apt/sources.list'
-
-BACKPORTS_SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
 logger = logging.getLogger(__name__)
 
@@ -140,11 +132,11 @@ class UpgradesApp(app_module.App):
 
         # Enable automatic upgrades but only on first install
         if not old_version and not cfg.develop:
-            actions.superuser_run('upgrades', ['enable-auto'])
+            privileged.enable_auto()
 
         # Update apt preferences whenever on first install and on version
         # increment.
-        actions.superuser_run('upgrades', ['setup'])
+        privileged.setup()
 
         # When upgrading from a version without first boot wizard for
         # backports, assume backports have been requested.
@@ -161,30 +153,10 @@ class UpgradesApp(app_module.App):
         setup_repositories(None)
 
 
-def is_enabled():
-    """Return whether the module is enabled."""
-    output = actions.run('upgrades', ['check-auto'])
-    return 'True' in output.split()
-
-
-def enable():
-    """Enable the module."""
-    actions.superuser_run('upgrades', ['enable-auto'])
-
-
-def disable():
-    """Disable the module."""
-    actions.superuser_run('upgrades', ['disable-auto'])
-
-
 def setup_repositories(_):
     """Setup apt repositories for backports."""
     if is_backports_requested():
-        command = ['activate-backports']
-        if cfg.develop:
-            command.append('--develop')
-
-        actions.superuser_run('upgrades', command)
+        privileged.activate_backports(cfg.develop)
 
 
 def check_dist_upgrade(_):
@@ -196,12 +168,8 @@ def check_dist_upgrade(_):
 def try_start_dist_upgrade(test=False):
     """Try to start dist upgrade."""
     from plinth.notification import Notification
-    command = ['start-dist-upgrade']
-    if test:
-        command.append('--test')
 
-    output = actions.superuser_run('upgrades', command)
-    result = json.loads(output)
+    result = privileged.start_dist_upgrade(test)
     dist_upgrade_started = result['dist_upgrade_started']
     reason = result['reason']
     if 'found-previous' in reason:
@@ -270,7 +238,7 @@ def set_dist_upgrade_enabled(enabled=True):
 
 def is_backports_enabled():
     """Return whether backports are enabled in the system configuration."""
-    return os.path.exists(BACKPORTS_SOURCES_LIST)
+    return os.path.exists(privileged.BACKPORTS_SOURCES_LIST)
 
 
 def get_current_release():

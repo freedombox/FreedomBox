@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure matrix-synapse server.
-"""
+"""FreedomBox app to configure matrix-synapse server."""
 
 import logging
 import os
@@ -11,7 +9,6 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from ruamel.yaml.util import load_yaml_guess_indent
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
@@ -23,7 +20,7 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, install
 from plinth.utils import format_lazy, is_non_empty_file
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('<a href="https://matrix.org/docs/guides/faq.html">Matrix</a> is an new '
@@ -40,16 +37,6 @@ _description = [
 ]
 
 logger = logging.getLogger(__name__)
-
-CONF_DIR = "/etc/matrix-synapse/conf.d/"
-
-ORIG_CONF_PATH = '/etc/matrix-synapse/homeserver.yaml'
-SERVER_NAME_PATH = CONF_DIR + 'server_name.yaml'
-STATIC_CONF_PATH = CONF_DIR + 'freedombox-static.yaml'
-LISTENERS_CONF_PATH = CONF_DIR + 'freedombox-listeners.yaml'
-REGISTRATION_CONF_PATH = CONF_DIR + 'freedombox-registration.yaml'
-TURN_CONF_PATH = CONF_DIR + 'freedombox-turn.yaml'
-OVERRIDDEN_TURN_CONF_PATH = CONF_DIR + 'turn.yaml'
 
 
 class MatrixSynapseApp(app_module.App):
@@ -122,7 +109,7 @@ class MatrixSynapseApp(app_module.App):
         if old_version and old_version < 6:
             upgrade()
         else:
-            actions.superuser_run('matrixsynapse', ['post-install'])
+            privileged.post_install()
 
         if not old_version:
             self.enable()
@@ -144,14 +131,13 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
 
 def upgrade():
     """Upgrade matrix-synapse configuration to avoid conffile prompt."""
-    public_registration_status = get_public_registration_status()
-    actions.superuser_run('matrixsynapse', ['move-old-conf'])
+    public_registration_status = privileged.public_registration('status')
+    privileged.move_old_conf()
     install(['matrix-synapse'], force_configuration='new', reinstall=True,
             force_missing_configuration=True)
-    actions.superuser_run('matrixsynapse', ['post-install'])
+    privileged.post_install()
     if public_registration_status:
-        actions.superuser_run('matrixsynapse',
-                              ['public-registration', 'enable'])
+        privileged.public_registration('enable')
 
 
 def setup_domain(domain_name):
@@ -159,13 +145,12 @@ def setup_domain(domain_name):
     app = app_module.App.get('matrixsynapse')
     app.get_component('letsencrypt-matrixsynapse').setup_certificates(
         [domain_name])
-    actions.superuser_run('matrixsynapse',
-                          ['setup', '--domain-name', domain_name])
+    privileged.setup(domain_name)
 
 
 def is_setup():
     """Return whether the Matrix Synapse server is setup."""
-    return os.path.exists(SERVER_NAME_PATH)
+    return os.path.exists(privileged.SERVER_NAME_PATH)
 
 
 def get_domains():
@@ -182,7 +167,7 @@ def get_configured_domain_name():
     if not is_setup():
         return None
 
-    with open(SERVER_NAME_PATH, encoding='utf-8') as config_file:
+    with open(privileged.SERVER_NAME_PATH, encoding='utf-8') as config_file:
         config, _, _ = load_yaml_guess_indent(config_file)
 
     return config['server_name']
@@ -190,8 +175,8 @@ def get_configured_domain_name():
 
 def get_turn_configuration() -> (List[str], str, bool):
     """Return TurnConfiguration if setup else empty."""
-    for file_path, managed in ((OVERRIDDEN_TURN_CONF_PATH, False),
-                               (TURN_CONF_PATH, True)):
+    for file_path, managed in ((privileged.OVERRIDDEN_TURN_CONF_PATH, False),
+                               (privileged.TURN_CONF_PATH, True)):
         if is_non_empty_file(file_path):
             with open(file_path, encoding='utf-8') as config_file:
                 config, _, _ = load_yaml_guess_indent(config_file)
@@ -200,13 +185,6 @@ def get_turn_configuration() -> (List[str], str, bool):
                         managed)
 
     return (TurnConfiguration(), True)
-
-
-def get_public_registration_status() -> bool:
-    """Return whether public registration is enabled."""
-    output = actions.superuser_run('matrixsynapse',
-                                   ['public-registration', 'status'])
-    return output.strip() == 'enabled'
 
 
 def get_certificate_status():
@@ -226,7 +204,4 @@ def update_turn_configuration(config: TurnConfiguration, managed=True,
     if not force and app.needs_setup():
         return
 
-    params = ['configure-turn']
-    params += ['--managed'] if managed else []
-    actions.superuser_run('matrixsynapse', params,
-                          input=config.to_json().encode())
+    privileged.configure_turn(managed, config.to_json())

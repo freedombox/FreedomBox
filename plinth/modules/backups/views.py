@@ -25,7 +25,7 @@ from plinth.modules import backups, storage
 from plinth.views import AppView
 
 from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
-               is_ssh_hostkey_verified)
+               is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
@@ -238,7 +238,7 @@ class RestoreFromUploadView(BaseRestoreView):
     def _get_included_apps(self):
         """Save some data used to instantiate the form."""
         path = self.request.session.get(SESSION_PATH_VARIABLE)
-        return backups.get_exported_archive_apps(path)
+        return privileged.get_exported_archive_apps(path)
 
     def form_valid(self, form):
         """Restore files from the archive on valid form submission."""

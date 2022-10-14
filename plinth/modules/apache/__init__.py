@@ -1,12 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app for Apache server.
-"""
+"""FreedomBox app for Apache server."""
+
 import os
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import actions
 from plinth import app as app_module
 from plinth import cfg
 from plinth.daemon import Daemon, RelatedDaemon
@@ -15,13 +13,15 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.utils import format_lazy, is_valid_user_name
 
+from . import privileged
+
 
 class ApacheApp(app_module.App):
     """FreedomBox app for Apache web server."""
 
     app_id = 'apache'
 
-    _version = 10
+    _version = 11
 
     def __init__(self):
         """Create components for the app."""
@@ -60,9 +60,7 @@ class ApacheApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        actions.superuser_run('apache',
-                              ['setup', '--old-version',
-                               str(old_version)])
+        privileged.setup(old_version)
         self.enable()
 
 
@@ -70,17 +68,17 @@ class ApacheApp(app_module.App):
 
 
 def uws_directory_of_user(user):
-    """Returns the directory of the given user's website."""
+    """Return the directory of the given user's website."""
     return '/home/{}/public_html'.format(user)
 
 
 def uws_url_of_user(user):
-    """Returns the url path of the given user's website."""
+    """Return the url path of the given user's website."""
     return '/~{}/'.format(user)
 
 
 def user_of_uws_directory(directory):
-    """Returns the user of a given user website directory."""
+    """Return the user of a given user website directory."""
     if directory.startswith('/home/'):
         pos_ini = 6
     elif directory.startswith('home/'):
@@ -97,7 +95,7 @@ def user_of_uws_directory(directory):
 
 
 def user_of_uws_url(url):
-    """Returns the user of a given user website url path."""
+    """Return the user of a given user website url path."""
     MISSING = -1
 
     pos_ini = url.find('~')
@@ -113,7 +111,7 @@ def user_of_uws_url(url):
 
 
 def uws_directory_of_url(url):
-    """Returns the directory of the user's website for the given url path.
+    """Return the directory of the user's website for the given url path.
 
     Note: It doesn't return the full OS file path to the url path!
     """
@@ -121,7 +119,7 @@ def uws_directory_of_url(url):
 
 
 def uws_url_of_directory(directory):
-    """Returns the url base path of the user's website for the given OS path.
+    """Return the url base path of the user's website for the given OS path.
 
     Note: It doesn't return the url path for the file!
     """
@@ -129,10 +127,10 @@ def uws_url_of_directory(directory):
 
 
 def get_users_with_website():
-    """Returns a dictionary of users with actual website subdirectory."""
+    """Return a dictionary of users with actual website subdirectory."""
 
     def lst_sub_dirs(directory):
-        """Returns the list of subdirectories of the given directory."""
+        """Return the list of subdirectories of the given directory."""
         return [
             name for name in os.listdir(directory)
             if os.path.isdir(os.path.join(directory, name))

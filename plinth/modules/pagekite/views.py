@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 
 from plinth.views import AppView
 
-from . import utils
+from . import privileged
 from .forms import (AddCustomServiceForm, ConfigurationForm,
                     DeleteCustomServiceForm)
 
@@ -50,7 +50,7 @@ class ConfigurationView(AppView):
     def __init__(self, *args, **kwargs):
         """Load and store the current configuration."""
         super().__init__(*args, **kwargs)
-        self.config = utils.get_config()
+        self.config = privileged.get_config()
         self.initial = self.config
 
     def get_context_data(self, *args, **kwargs):
