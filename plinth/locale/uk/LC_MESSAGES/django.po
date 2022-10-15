@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-10-14 10:25+0000\n"
+"PO-Revision-Date: 2022-10-16 14:35+0000\n"
 "Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -1826,7 +1826,7 @@ msgid ""
 "target='_blank'>XMPP client</a>. When enabled, ejabberd can be accessed by "
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
-"Для справжнього спілкування Вам потрібен <a href=\"{jsxc_url}\">веб-клієнт</"
+"Для справжнього спілкування Вам потрібен <a href=\"{jsxc_url}\">вебклієнт</"
 "a> або будь-який інший <a href=\"https://xmpp.org/software/clients\" target="
 "\"_blank\">клієнт XMPP</a>. Якщо ввімкнено, то отримати доступ до ejabberd "
 "зможе <a href=\"{users_url}\">будь-який користувач із логіном {box_name}</a>."
@@ -2496,7 +2496,7 @@ msgstr ""
 "спілкування.  Це мережевий пристрій, який спроєктований, щоб надати "
 "інтерфейс для решти Інтернету на умовах захищеної приватності і безпеки "
 "даних.  Він розміщує застосунки, як-от блоґи, вікі, вебсайти, соціальні "
-"мережі, ел. пошту, веб-проксі та реле Tor на пристрої, який може замінити "
+"мережі, ел. пошту, вебпроксі та реле Tor на пристрої, який може замінити "
 "WiFi-маршрутизатор, і таким чином Ваші дані залишаються з Вами."
 
 #: plinth/modules/help/templates/help_about.html:48
@@ -5365,7 +5365,7 @@ msgstr "Privoxy"
 
 #: plinth/modules/privoxy/__init__.py:52
 msgid "Web Proxy"
-msgstr "Веб-проксі"
+msgstr "Вебпроксі"
 
 #: plinth/modules/privoxy/__init__.py:113
 #, python-brace-format
@@ -5729,27 +5729,31 @@ msgstr ""
 
 #: plinth/modules/samba/templates/samba.html:120
 msgid "Users who can currently access group and home shares"
-msgstr ""
+msgstr "Користувачі, які зараз мають доступ до групових і домашніх ресурсів"
 
 #: plinth/modules/samba/templates/samba.html:124
 msgid ""
 "Users needing to re-enter their password on the password change page to "
 "access group and home shares"
 msgstr ""
+"Користувачам необхідно повторно ввести пароль на сторінці зміни пароля для "
+"доступу до групових і домашніх ресурсів"
 
 #: plinth/modules/samba/templates/samba.html:129
 msgid "Unavailable Shares"
-msgstr ""
+msgstr "Недоступний спільний доступ"
 
 #: plinth/modules/samba/templates/samba.html:131
 msgid ""
 "Shares that are configured but the disk is not available. If the disk is "
 "plugged back in, sharing will be automatically enabled."
 msgstr ""
+"Загальний доступ, який налаштовано, але диск недоступний. Якщо диск буде "
+"знову підключено, спільний доступ буде автоматично ввімкнено."
 
 #: plinth/modules/samba/templates/samba.html:140
 msgid "Share name"
-msgstr ""
+msgstr "Назва загального ресурсу"
 
 #: plinth/modules/samba/templates/samba.html:141
 msgid "Action"
@@ -5761,19 +5765,19 @@ msgstr "Диск ОС FreedomBox"
 
 #: plinth/modules/samba/views.py:60 plinth/modules/storage/forms.py:140
 msgid "Open Share"
-msgstr ""
+msgstr "Відкрити спільний ресурс"
 
 #: plinth/modules/samba/views.py:64 plinth/modules/storage/forms.py:138
 msgid "Group Share"
-msgstr ""
+msgstr "Груповий ресурс"
 
 #: plinth/modules/samba/views.py:68
 msgid "Home Share"
-msgstr ""
+msgstr "Домашній ресурс"
 
 #: plinth/modules/samba/views.py:103
 msgid "Share enabled."
-msgstr ""
+msgstr "Загальний доступ дозволено."
 
 #: plinth/modules/samba/views.py:108
 #, python-brace-format
@@ -5782,7 +5786,7 @@ msgstr "Помилка дозволу поширення: {error_message}"
 
 #: plinth/modules/samba/views.py:113
 msgid "Share disabled."
-msgstr ""
+msgstr "Загальний доступ вимкнено."
 
 #: plinth/modules/samba/views.py:118
 #, python-brace-format
@@ -5900,6 +5904,13 @@ msgid ""
 "Instead, they are maintained by contributors to Debian and the %(box_name)s "
 "community."
 msgstr ""
+"Часті оновлення функцій дозволяють службі %(box_name)s, а також дуже "
+"обмеженому набору програмного забезпечення, частіше отримувати нові функції ("
+"з репозиторію бекпортів). Це призводить до того, що деякі нові функції "
+"з'являються протягом декількох тижнів, а не лише раз на 2 роки або близько "
+"того. Зауважте, що програмне забезпечення з частими оновленнями не "
+"підтримується командою безпеки Debian. Замість цього вони підтримуються "
+"учасниками Debian і спільнотою %(box_name)s."
 
 #: plinth/modules/security/templates/security_report.html:10
 #: plinth/modules/security/views.py:78
@@ -5912,6 +5923,9 @@ msgid ""
 "There are %(count)s reported security vulnerabilities in the FreedomBox app, "
 "which provides the core services and user interface for a FreedomBox server."
 msgstr ""
+"На сайті %(count)s повідомляється про уразливості безпеки в програмі "
+"FreedomBox, який надає основні служби та користувацький інтерфейс для "
+"сервера FreedomBox."
 
 #: plinth/modules/security/templates/security_report.html:19
 msgid ""
@@ -5920,6 +5934,10 @@ msgid ""
 "vulnerabilities can be found on the <a href=\"https://security-tracker."
 "debian.org/tracker/\">Debian Security Bug Tracker</a>."
 msgstr ""
+"У наступній таблиці перерахована поточна кількість уразливостей в безпеці "
+"для кожного встановленого застосунку. Подрлбиці про уразливості можна знайти "
+"на <a href=\"https://security-tracker.debian.org/tracker/\">Debian Security "
+"Bug Tracker</a>."
 
 #: plinth/modules/security/templates/security_report.html:28
 msgid ""
@@ -5927,6 +5945,9 @@ msgid ""
 "sandboxing features are in use. Sandboxing mitigates the impact of a "
 "potentially compromised app to the rest of the system."
 msgstr ""
+"Для застосунків, що надають служби, стовпчик \"Пісочниця\" показує, чи "
+"використовується функція \"пісочниці\". Пісочниця пом'якшує вплив потенційно "
+"скомпрометованої програми на решту системи."
 
 #: plinth/modules/security/templates/security_report.html:35
 msgid ""
@@ -5934,6 +5955,9 @@ msgid ""
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
+"\"Покриття пісочниці\" - це оцінка того, наскільки ефективно службу "
+"ізольовано від решти системи. Він відображається тільки під час роботи "
+"служби."
 
 #: plinth/modules/security/templates/security_report.html:45
 msgid "App Name"
@@ -5945,15 +5969,15 @@ msgstr "Поточні вразливості"
 
 #: plinth/modules/security/templates/security_report.html:47
 msgid "Sandboxed"
-msgstr ""
+msgstr "Пісочниця"
 
 #: plinth/modules/security/templates/security_report.html:48
 msgid "Sandbox Coverage"
-msgstr ""
+msgstr "Покриття пісочниці"
 
 #: plinth/modules/security/templates/security_report.html:58
 msgid "N/A"
-msgstr ""
+msgstr "Н/Д"
 
 #: plinth/modules/security/templates/security_report.html:60
 msgid "Yes"
@@ -5970,7 +5994,7 @@ msgstr "Не запущено"
 #: plinth/modules/security/views.py:60
 #, python-brace-format
 msgid "Error setting restricted access: {exception}"
-msgstr ""
+msgstr "Помилка налаштування обмеженого доступу: {exception}"
 
 #: plinth/modules/security/views.py:63
 msgid "Updated security configuration"
@@ -6006,6 +6030,9 @@ msgid ""
 "your Internet traffic. It can be used to bypass Internet filtering and "
 "censorship."
 msgstr ""
+"Shadowsocks - це легкий і безпечний SOCKS5 проксі, призначений для захисту "
+"вашого інтернет-трафіку. Може використовуватися для обходу інтернет-"
+"фільтрації та цензури."
 
 #: plinth/modules/shadowsocks/__init__.py:22
 #, python-brace-format
@@ -6015,16 +6042,23 @@ msgid ""
 "connect to this proxy, and their data will be encrypted and proxied through "
 "the Shadowsocks server."
 msgstr ""
+"На вашому {box_name} може бути запущений клієнт Shadowsocks, який може "
+"підключатися до сервера Shadowsocks. Також буде запущений проксі-сервер "
+"SOCKS5. Локальні пристрої можуть підключатися до цього проксі, і їх дані "
+"будуть зашифровані і передані через сервер Shadowsocks."
 
 #: plinth/modules/shadowsocks/__init__.py:27
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
+"Щоб використовувати Shadowsocks після налаштування, встановіть URL-адресу "
+"проксі-сервера SOCKS5 у вашому пристрої, браузері або програмі на "
+"http://freedombox_address:1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:46
 msgid "Shadowsocks"
-msgstr ""
+msgstr "Shadowsocks"
 
 #: plinth/modules/shadowsocks/__init__.py:48
 msgid "Socks5 Proxy"
@@ -6131,7 +6165,7 @@ msgstr "Шлях на диску"
 
 #: plinth/modules/sharing/templates/sharing.html:34
 msgid "Shared Over"
-msgstr ""
+msgstr "Спільний доступ через"
 
 #: plinth/modules/sharing/templates/sharing.html:35
 msgid "With Groups"
@@ -6326,6 +6360,8 @@ msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
 "currently only available on <strong>%(types_supported)s</strong> filesystems."
 msgstr ""
+"У вас файлова система типу <strong>%(fs_type)s</strong>. Знімки наразі "
+"доступні лише для файлових систем типу <strong>%(types_supported)s</strong>."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:12
 msgid "Roll back the system to this snapshot?"
@@ -6337,11 +6373,13 @@ msgid ""
 "automatically created. You will be able to undo a rollback by reverting to "
 "the newly created snapshot."
 msgstr ""
+"Буде автоматично створено новий знімок з поточним станом файлової системи. "
+"Ви зможете скасувати відкат, повернувшись до новоствореного знімка."
 
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:44
 #, python-format
 msgid "Rollback to Snapshot #%(number)s"
-msgstr ""
+msgstr "Повернутись до Знімка №%(number)s"
 
 #: plinth/modules/snapshot/views.py:24
 msgid "manually created"
@@ -6391,7 +6429,7 @@ msgstr "Систему потрібно перезапустити, щоб за�
 
 #: plinth/modules/snapshot/views.py:218
 msgid "Rollback to Snapshot"
-msgstr ""
+msgstr "Повернутися до знімка"
 
 #: plinth/modules/ssh/__init__.py:20
 msgid ""
@@ -6445,7 +6483,7 @@ msgstr "Відбиток"
 
 #: plinth/modules/sso/__init__.py:26
 msgid "Single Sign On"
-msgstr ""
+msgstr "Єдиний вхід"
 
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
@@ -6511,6 +6549,7 @@ msgstr "Пристрій вже відмонтований."
 #: plinth/modules/storage/__init__.py:247
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
+"Операція не підтримується через відсутність підтримки драйверів/засобів."
 
 #: plinth/modules/storage/__init__.py:250
 msgid "The operation timed out."
@@ -6518,11 +6557,11 @@ msgstr "Час операції вийшов."
 
 #: plinth/modules/storage/__init__.py:252
 msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
+msgstr "Операція розбудить диск, який перебуває у стані глибокого сну."
 
 #: plinth/modules/storage/__init__.py:255
 msgid "Attempting to unmount a device that is busy."
-msgstr ""
+msgstr "Спроба відмонтувати пристрій, який зайнятий."
 
 #: plinth/modules/storage/__init__.py:257
 msgid "The operation has already been cancelled."
@@ -6532,7 +6571,7 @@ msgstr "Операція вже була скасована."
 #: plinth/modules/storage/__init__.py:261
 #: plinth/modules/storage/__init__.py:263
 msgid "Not authorized to perform the requested operation."
-msgstr ""
+msgstr "Немає прав на виконання запитуваної операції."
 
 #: plinth/modules/storage/__init__.py:265
 msgid "The device is already mounted."
@@ -6544,7 +6583,7 @@ msgstr "Пристрій не змонтовано."
 
 #: plinth/modules/storage/__init__.py:269
 msgid "Not permitted to use the requested option."
-msgstr ""
+msgstr "Не дозволено використовувати запитувану опцію."
 
 #: plinth/modules/storage/__init__.py:271
 msgid "The device is mounted by another user."
@@ -6563,7 +6602,7 @@ msgstr "Мало простору на диску"
 
 #: plinth/modules/storage/__init__.py:331
 msgid "Disk failure imminent"
-msgstr ""
+msgstr "Неминучий збій диска"
 
 #: plinth/modules/storage/__init__.py:333
 #, python-brace-format
@@ -6571,6 +6610,8 @@ msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
 "any data while you still can and replace the drive."
 msgstr ""
+"Диск {id} повідомляє, що найближчим часом, ймовірно, вийде з ладу. Скопіюйте "
+"всі дані, поки це ще можливо, і замініть диск."
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -6602,7 +6643,7 @@ msgstr "Підкаталог (необовʼязково)"
 
 #: plinth/modules/storage/forms.py:136
 msgid "Share"
-msgstr ""
+msgstr "Поділитися"
 
 #: plinth/modules/storage/forms.py:144
 msgid "Other directory (specify below)"
@@ -6626,7 +6667,7 @@ msgstr "Використано"
 
 #: plinth/modules/storage/templates/storage.html:77
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Розширення розділу"
 
 #: plinth/modules/storage/templates/storage.html:79
 #, python-format
@@ -6635,6 +6676,9 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"Після кореневого розділу є %(expandable_root_size)s нерозподіленого "
+"простору. Кореневий розділ можна розширити, щоб використати цей простір. Це "
+"надасть вам додатковий вільний простір для зберігання ваших файлів."
 
 #: plinth/modules/storage/templates/storage.html:89
 #: plinth/modules/storage/templates/storage_expand.html:24
@@ -6657,6 +6701,9 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Будь ласка, створіть резервну копію ваших даних перед тим, як продовжити. "
+"Після цієї операції у вашому кореневому розділі буде доступно "
+"%(expandable_root_size)s додаткового вільного місця."
 
 #: plinth/modules/storage/views.py:67
 #, python-brace-format
@@ -6688,6 +6735,10 @@ msgid ""
 "deletion of files on one device will be automatically replicated on all "
 "other devices that also run Syncthing."
 msgstr ""
+"Syncthing - це програма для синхронізації файлів на декількох пристроях, "
+"наприклад, на стаціонарному комп'ютері та мобільному телефоні. Створення, "
+"зміна або видалення файлів на одному пристрої буде автоматично репліковано "
+"на всі інші пристрої, на яких також запущено Syncthing."
 
 #: plinth/modules/syncthing/__init__.py:26
 #, python-brace-format
@@ -6700,6 +6751,13 @@ msgid ""
 "{box_name} is only available for users belonging to the \"admin\" or "
 "\"syncthing-access\" group."
 msgstr ""
+"Запуск Syncthing на {box_name} забезпечує додаткову точку синхронізації для "
+"ваших даних, яка доступна більшу частину часу, що дозволяє вашим пристроям "
+"синхронізуватися частіше. {box_name} запускає один екземпляр синхронізації, "
+"який може використовуватися декількома користувачами. Набір пристроїв "
+"кожного користувача може бути синхронізований з окремим набором папок. "
+"Вебінтерфейс на сайті {box_name} доступний лише для користувачів, які "
+"належать до групи \"admin\" або \"syncthing-access\"."
 
 #: plinth/modules/syncthing/__init__.py:53
 msgid "Administer Syncthing application"
@@ -6745,33 +6803,33 @@ msgstr "Сервіс Tor Onion"
 
 #: plinth/modules/tor/__init__.py:69
 msgid "Tor Socks Proxy"
-msgstr ""
+msgstr "Проксі Tor Socks"
 
 #: plinth/modules/tor/__init__.py:73
 msgid "Tor Bridge Relay"
-msgstr ""
+msgstr "Ретранслятор Tor типу міст"
 
 #: plinth/modules/tor/__init__.py:127
 msgid "Tor relay port available"
-msgstr ""
+msgstr "Доступний порт ретрансляції Tor"
 
 #: plinth/modules/tor/__init__.py:137
 msgid "Obfs3 transport registered"
-msgstr ""
+msgstr "Зареєстровано транспорт Obfs3"
 
 #: plinth/modules/tor/__init__.py:147
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "Зареєстровано транспорт Obfs4"
 
 #: plinth/modules/tor/__init__.py:212
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr ""
+msgstr "Доступ за адресою {url} на tcp{kind} через Tor"
 
 #: plinth/modules/tor/__init__.py:223
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr ""
+msgstr "Підтвердити використання Tor можна за посиланням {url} на tcp{kind}"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -6780,7 +6838,7 @@ msgstr "Уведіть правильний міст у форматі: [transpo
 
 #: plinth/modules/tor/forms.py:76
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
+msgstr "Використання upstream-мостів для під'єднання до мережі Tor"
 
 #: plinth/modules/tor/forms.py:78
 msgid ""
@@ -6788,10 +6846,14 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
+"Якщо це увімкнено, для підключення до мережі Tor будуть використовуватися "
+"мости, налаштовані нижче. Використовуйте цю опцію, якщо ваш Інтернет-"
+"провайдер (ISP) блокує або цензурує з'єднання з мережею Tor. Це вимкне "
+"режими ретрансляції."
 
 #: plinth/modules/tor/forms.py:83
 msgid "Upstream bridges"
-msgstr ""
+msgstr "Upstream-мости"
 
 #: plinth/modules/tor/forms.py:85
 msgid ""
@@ -6799,10 +6861,14 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
+"Ви можете отримати деякі мости з <a href=\"https://bridges.torproject.org/\""
+">https://bridges.torproject.org/</a> і скопіювати/вставити дані про міст "
+"сюди. Наразі підтримуються такі види транспорту: none, obfs3, obfs4 та "
+"scamblesuit."
 
 #: plinth/modules/tor/forms.py:91
 msgid "Enable Tor relay"
-msgstr ""
+msgstr "Увімкнути ретранслятор Tor"
 
 #: plinth/modules/tor/forms.py:92
 #, python-brace-format
@@ -6811,10 +6877,13 @@ msgid ""
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
 msgstr ""
+"Якщо увімкнено, ваш {box_name} буде запускати ретранслятор Tor і передавати "
+"пропускну здатність мережі Tor. Зробіть це, якщо у вас є більше 2 мегабіт/с "
+"пропускної здатності для завантаження і вивантаження."
 
 #: plinth/modules/tor/forms.py:97
 msgid "Enable Tor bridge relay"
-msgstr ""
+msgstr "Увімкнути ретранслятор моста Tor"
 
 #: plinth/modules/tor/forms.py:99
 msgid ""
@@ -6822,6 +6891,9 @@ msgid ""
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
 msgstr ""
+"При вмиканні, дані про ретрансляцію оприлюднюються в базі даних моста Tor, а "
+"не в загальнодоступній базі даних ретрансляції Tor, що ускладнює цензуру "
+"цього вузла. Це допомагає іншим обходити цензуру."
 
 #: plinth/modules/tor/forms.py:104
 msgid "Enable Tor Hidden Service"
@@ -6834,6 +6906,9 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
+"Прихована служба дозволить {box_name} надавати вибрані послуги (такі як вікі "
+"або чат), не розкриваючи свого місцезнаходження. Не використовуйте це для "
+"повної анонімності поки що."
 
 #: plinth/modules/tor/forms.py:111
 msgid "Download software packages over Tor"
@@ -6845,10 +6920,14 @@ msgid ""
 "installations and upgrades. This adds a degree of privacy and security "
 "during software downloads."
 msgstr ""
+"Якщо увімкнено, програмне забезпечення буде завантажуватися через мережу Tor "
+"для встановлення та оновлення. Це додає певний рівень конфіденційності та "
+"безпеки під час завантаження програмного забезпечення."
 
 #: plinth/modules/tor/forms.py:127
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
+"Указати хоча б один upstream-міст для використання мостів вище за течією."
 
 #: plinth/modules/tor/manifest.py:13
 msgid "Tor Browser"
@@ -6856,7 +6935,7 @@ msgstr "Tor Browser"
 
 #: plinth/modules/tor/manifest.py:29
 msgid "Orbot: Proxy with Tor"
-msgstr ""
+msgstr "Orbot: проксі з Tor"
 
 #: plinth/modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -6915,6 +6994,8 @@ msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
+"<a href=\"{samba_url}\">Samba</a> файли можуть бути встановлені в якості "
+"каталогу для типового завантаження зі спадного меню нижче."
 
 #: plinth/modules/transmission/__init__.py:40
 #, python-brace-format
@@ -6922,6 +7003,8 @@ msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
+"Після завантаження ви також можете отримати доступ до своїх файлів за "
+"допомогою застосунку <a href=\"{sharing_url}\">Sharing</a>."
 
 #: plinth/modules/transmission/__init__.py:66
 #: plinth/modules/transmission/manifest.py:6
@@ -6979,6 +7062,12 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
+"Оновлення виконуються щодня о 06:00 за місцевим часом. Установіть свій "
+"часовий пояс у застосунку \"Дата і час\". Після оновлення застосунки "
+"перезапускаються, що призводить до їх короткочасної недоступності. Якщо "
+"перезавантаження системи вважається необхідним, воно відбувається "
+"автоматично о 02:00, що призводить до короткочасної недоступності всіх "
+"застосунків."
 
 #: plinth/modules/upgrades/__init__.py:64
 #: plinth/modules/upgrades/__init__.py:119
@@ -7001,6 +7090,10 @@ msgid ""
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
+"У кореневому розділі недостатньо вільного місця для запуску оновлення "
+"дистрибутива. Будь ласка, забезпечте наявність принаймні 5 ГБ вільного "
+"місця. Оновлення дистрибутива буде повторено через 24 години, якщо його "
+"увімкнено."
 
 #: plinth/modules/upgrades/__init__.py:203
 msgid "Distribution update started"
@@ -7156,6 +7249,10 @@ msgid ""
 "you cannot install apps. Also, this web interface may be temporarily "
 "unavailable and show an error. In that case, refresh the page to continue."
 msgstr ""
+"<strong>Це може зайняти багато часу.</strong> Під час оновлення ви не можете "
+"встановлювати застосунки. Також цей вебінтерфейс може бути тимчасово "
+"недоступний і показувати помилку. У такому випадку оновіть сторінку, щоб "
+"продовжити."
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:128
 msgid "Show recent update logs"
@@ -7170,6 +7267,8 @@ msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
+"Буде спроба оновити систему зі стабільної до тестової. <strong>Призначено "
+"тільки для використання в розробці.</strong>"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
 msgid "Test distribution upgrade now"
@@ -7178,7 +7277,7 @@ msgstr "Тестувати оновлення дистрибутиву зара�
 #: plinth/modules/upgrades/views.py:71
 #, python-brace-format
 msgid "Error when configuring unattended-upgrades: {error}"
-msgstr ""
+msgstr "Помилка під час налаштування автоматичних оновлень: {error}"
 
 #: plinth/modules/upgrades/views.py:75
 msgid "Automatic upgrades enabled"
@@ -7421,6 +7520,12 @@ msgid ""
 "sudo /usr/share/plinth/actions/actions users remove_user\". If an account is "
 "already usable with %(box_name)s, skip this step."
 msgstr ""
+"Видаліть ці облікові записи з командного рядка та оновіть сторінку для "
+"створення облікового запису, який можна використовувати з %(box_name)s. У "
+"командному рядку виконайте команду \"echo '{\"args\": [\"USERNAME\", "
+"\"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/actions/actions "
+"users remove_user\". Якщо обліковий запис вже використовується на %(box_name)"
+"s, пропустіть цей крок."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -7549,6 +7654,8 @@ msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Надається оператором сервера, довгий рядок символів. Приклад: MConEJFIg6+"
+"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:82
 msgid "Client IP address provided by server"
@@ -7560,6 +7667,9 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
+"IP-адреса, присвоєна цьому комп'ютеру в VPN після під'єднання до кінцевої "
+"точки. Це значення зазвичай надається оператором сервера. Приклад: 192.168.0."
+"10."
 
 #: plinth/modules/wireguard/forms.py:89
 msgid "Private key of this machine"
@@ -7572,10 +7682,14 @@ msgid ""
 "some server operators insist on providing this. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"Необов'язково. Якщо залишити поле порожнім, будуть утворені нові відкриті/"
+"закриті ключі. Відкритий ключ може бути наданий серверу. Це рекомендований "
+"спосіб. Однак деякі оператори серверів наполягають на його наданні. Приклад: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: plinth/modules/wireguard/forms.py:98
 msgid "Pre-shared key"
-msgstr ""
+msgstr "Попередньо спільний ключ"
 
 #: plinth/modules/wireguard/forms.py:99
 msgid ""
@@ -7583,6 +7697,9 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
+"Необов'язково. Загальний таємний ключ, що надається сервером для додавання "
+"додаткового рівня безпеки. Заповнюйте тільки в тому випадку, якщо він "
+"надається. Приклад: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 
 #: plinth/modules/wireguard/forms.py:105
 msgid "Use this connection to send all outgoing traffic"
@@ -7590,7 +7707,7 @@ msgstr "Використовуйте це з’єднання для надси�
 
 #: plinth/modules/wireguard/forms.py:107
 msgid "Typically checked for a VPN service through which all traffic is sent."
-msgstr ""
+msgstr "Зазвичай перевіряється служба VPN, через яку надсилається весь трафік."
 
 #: plinth/modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -7612,7 +7729,7 @@ msgstr "Час останнього зʼєднання"
 #: plinth/modules/wireguard/templates/wireguard.html:38
 #, python-format
 msgid "No peers configured to connect to this %(box_name)s yet."
-msgstr ""
+msgstr "Поки що немає однорангових під'єднань до цього %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard.html:48
 #, python-format
@@ -7685,6 +7802,8 @@ msgid ""
 "%(box_name)s will allow this client to connect to it. Ensure that the client "
 "is configured with the following information."
 msgstr ""
+"%(box_name)s дозволить цьому клієнту під'єднатися до нього. Переконайтеся, "
+"що клієнт налаштований з наступними даними."
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:21
 msgid "Client public key:"
@@ -7697,7 +7816,7 @@ msgstr "IP-адреса для використання клієнтом:"
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:29
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:32
 msgid "Pre-shared key:"
-msgstr ""
+msgstr "Попередньо спільний ключ:"
 
 #: plinth/modules/wireguard/templates/wireguard_show_client.html:33
 msgid "Server endpoints:"
@@ -7730,6 +7849,9 @@ msgid ""
 "information. Ensure that the server is configured to allow %(box_name)s's "
 "public key and IP address."
 msgstr ""
+"%(box_name)s спробує зв'язатися з сервером WireGuard з наступними даними. "
+"Переконайтеся, що сервер налаштовано так, щоб дозволити відкритий ключ та IP-"
+"адресу %(box_name)s."
 
 #: plinth/modules/wireguard/templates/wireguard_show_server.html:24
 msgid "Server endpoint:"
@@ -7807,6 +7929,11 @@ msgid ""
 "Administration interface and produced web pages are suitable for mobile "
 "devices."
 msgstr ""
+"WordPress - це популярний спосіб створення та управління веб-сайтами та "
+"блогами. Управління контентом здійснюється за допомогою візуального "
+"інтерфейсу. Макет і функціональність веб-сторінок можна налаштовувати. "
+"Зовнішній вигляд можна обирати за допомогою тем. Інтерфейс адміністрування "
+"та створені веб-сторінки підходять для мобільних пристроїв."
 
 #: plinth/modules/wordpress/__init__.py:25
 #, python-brace-format
@@ -7816,6 +7943,11 @@ msgid ""
 "the correct domain name. Enable permalinks in administrator interface for "
 "better URLs to your pages and posts."
 msgstr ""
+"Перед тим, як зробити сайт загальнодоступним, необхідно запустити "
+"налаштування WordPress, відвідавши застосунок, наведений нижче. Налаштування "
+"повинно бути запущено при доступі до {box_name} з правильним доменним ім'ям. "
+"Увімкніть дозволені посилання в інтерфейсі адміністратора, щоб отримати "
+"кращі URL-адреси на ваші сторінки та дописи."
 
 #: plinth/modules/wordpress/__init__.py:30
 msgid ""
@@ -7823,6 +7955,10 @@ msgid ""
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
+"WordPress має власні облікові записи користувачів. Перший обліковий запис "
+"адміністратора створюється під час налаштування. Збережіть <a href=\"/"
+"wordpress/wp-admin/\">сторінку адміністратора</a> в закладках для доступу до "
+"інтерфейсу адміністрування в майбутньому."
 
 #: plinth/modules/wordpress/__init__.py:34
 msgid ""
@@ -7830,6 +7966,9 @@ msgid ""
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
+"Після значного оновлення версії необхідно вручну запустити оновлення бази "
+"даних з інтерфейсу адміністратора. Додаткові плагіни або теми можуть бути "
+"встановлені та оновлені на власний ризик."
 
 #: plinth/modules/wordpress/__init__.py:52
 #: plinth/modules/wordpress/manifest.py:6
@@ -7849,6 +7988,9 @@ msgid ""
 "Allow all visitors. Disabling allows only administrators to view the "
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
+"Дозволити всім відвідувачам. Вимкнення дозволяє тільки адміністраторам "
+"переглядати сайт або блог WordPress. Увімкнути тільки після виконання "
+"початкового налаштування WordPress."
 
 #: plinth/modules/zoph/__init__.py:22
 #, python-brace-format
@@ -7900,6 +8042,8 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
+"Якщо увімкнено, запити до серверів OpenStreetMap будуть надсилатися з "
+"браузера користувача. Це впливає на конфіденційність."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -7921,7 +8065,7 @@ msgstr "PPPoE"
 
 #: plinth/network.py:30
 msgid "Generic"
-msgstr ""
+msgstr "Загальний"
 
 #: plinth/operation.py:116
 #, python-brace-format
@@ -7931,17 +8075,17 @@ msgstr "Помилка: {name}: {exception_message}"
 #: plinth/operation.py:119
 #, python-brace-format
 msgid "Waiting to start: {name}"
-msgstr ""
+msgstr "Очікування запуску: {name}"
 
 #: plinth/operation.py:125
 #, python-brace-format
 msgid "Finished: {name}"
-msgstr ""
+msgstr "Завершено: {name}"
 
 #: plinth/package.py:188
 #, python-brace-format
 msgid "Package {expression} is not available for install"
-msgstr ""
+msgstr "Пакунок {expression} недоступний для встановлення"
 
 #: plinth/package.py:201
 #, python-brace-format
@@ -7967,7 +8111,7 @@ msgstr "файл конфіґурації: {file}"
 
 #: plinth/package.py:382 plinth/package.py:407
 msgid "Timeout waiting for package manager"
-msgstr ""
+msgstr "Час очікування менеджера пакунків"
 
 #: plinth/setup.py:41
 msgid "Installing app"
@@ -8087,6 +8231,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox - це персональний сервер, розроблений для забезпечення "
+"конфіденційності та володіння даними. Це безплатне програмне забезпечення, "
+"яке дозволяє легко встановлювати та керувати серверними програмами."
 
 #: plinth/templates/base.html:110
 msgid " Home"
@@ -8208,6 +8355,8 @@ msgid ""
 "Enable some <a href=\"%(apps_url)s\">applications</a> to add shortcuts to "
 "this page."
 msgstr ""
+"Дозвольте деяким <a href=\"%(apps_url)s\">застосункам</a> додавати ярлики на "
+"цю сторінку."
 
 #: plinth/templates/index.html:100
 #, python-format
