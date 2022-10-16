@@ -5,9 +5,9 @@ URLs for the RSS-Bridge module.
 
 from django.urls import re_path
 
-from plinth.views import AppView
+from .views import RSSBridgeAppView
 
 urlpatterns = [
-    re_path(r'^apps/rssbridge/$', AppView.as_view(app_id='rssbridge'),
+    re_path(r'^apps/rssbridge/$', RSSBridgeAppView.as_view(app_id='rssbridge'),
             name='index'),
 ]
