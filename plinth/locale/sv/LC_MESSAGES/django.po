@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-10-03 14:15+0000\n"
+"PO-Revision-Date: 2022-10-20 21:06+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1613,10 +1613,9 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Om du letar efter ett gratis dynamiskt DNS-konto kan du hitta en gratis "
-"GnuDIP-tjänst på <a href=\"https://ddns.freedombox.org\" target=\"_blank"
-"\">ddns.freedombox.org</a> eller så kan du hitta gratis uppdaterings-URL-"
-"baserade tjänster på <a href=\"http://freedns.afraid.org/\" target=\"_blank"
-"\"> freedns.afraid.org</a>."
+"GnuDIP-tjänst på <a target=\"_blank\">ddns.freedombox.org</a> eller så kan "
+"du hitta gratis uppdaterings-URL-baserade tjänster på <a href=\"http"
+"://freedns.afraid.org/\" target=\"_blank\"> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/__init__.py:61
 msgid "Dynamic DNS Client"
@@ -4951,12 +4950,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
@@ -4964,17 +4958,16 @@ msgid ""
 "clients and instructions on how to configure them."
 msgstr ""
 "För att ansluta till %(box_name)s VPN måste du ladda ner en profil och mata "
-"den till en OpenVPN-klient på din mobila eller stationära dator.  OpenVPN-"
-"klienter är tillgängliga för de flesta plattformar.  Klicka på \"Läs mer..."
-"\" ovan för rekommenderade klienter och instruktioner om hur du konfigurerar "
+"den till en OpenVPN-klient på din mobila eller stationära dator. OpenVPN-"
+"klienter är tillgängliga för de flesta plattformar. Klicka på \"Läs mer...\" "
+"ovan för rekommenderade klienter och instruktioner om hur du konfigurerar "
 "dem."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
-"Profilen är specifik för varje användare av %(box_name)s  Håll det hemligt."
+"Profilen är specifik för varje användare av %(box_name)s. Håll det hemligt."
 
 #: plinth/modules/openvpn/templates/openvpn.html:34
 msgid "Download my profile"
@@ -5290,25 +5283,24 @@ msgstr "Stäng av nu"
 
 #: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Hantera systemomfattande sekretessinställningar."
 
 #: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Integritet"
 
 #: plinth/modules/privacy/__init__.py:62
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Vänligen uppdatera sekretessinställningar för att matcha dina preferenser."
 
 #: plinth/modules/privacy/__init__.py:67
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Granska sekretessinställningen"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Skicka med jämna mellanrum en lista över appar som används (föreslagna)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5320,6 +5312,13 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Hjälp Debian/{box_name} -utvecklare genom att delta i "
+"paketundersökningsprogrammet Popularity Contest. När den är aktiverad kommer "
+"en lista över program som används på det här systemet att anonymt skickas in "
+"till Debian varje vecka. Statistik för de insamlade uppgifterna är "
+"offentligt tillgänglig på <a href=\"https://popcon.debian.org/\" target="
+"\"_blank\">popcon.debian.org</a>. Inlämningen sker via Tor-nätverket för "
+"ytterligare anonymitet om Tor-appen är aktiverad."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -7503,13 +7502,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "Följande administratörskonton finns i systemet."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7518,10 +7511,10 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 "Ta bort dessa konton från kommandoraden och uppdatera sidan för att skapa "
-"ett konto som är användbart med %(box_name)s. På kommandoraden kör kommandot "
-"'echo \"{password}\" | /usr/share/plinth/actions/users remove-user "
-"{username}'. Om ett konto redan är användbart med %(box_name)s, hoppa över "
-"detta steg."
+"ett konto som kan användas med %(box_name)s. På kommandoraden kör du "
+"kommandot \"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' |"
+" sudo /usr/share/plinth/actions/actions users remove_user\". Om ett konto "
+"redan kan användas med %(box_name)s, hoppa över detta steg."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8231,6 +8224,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox är en personlig server utformad för integritet och dataägande. "
+"Det är gratis programvara som låter dig enkelt installera och hantera "
+"serverappar."
 
 #: plinth/templates/base.html:110
 msgid " Home"
