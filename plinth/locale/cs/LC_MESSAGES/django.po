@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-10-05 09:23+0000\n"
+"PO-Revision-Date: 2022-10-16 14:35+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -4940,12 +4940,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
@@ -4954,16 +4949,15 @@ msgid ""
 msgstr ""
 "Chcete-li se připojit k síti VPN společnosti %(box_name)s, musíte si "
 "stáhnout profil a vložit jej do klienta OpenVPN v mobilním nebo stolním "
-"počítači.  Klienti OpenVPN jsou k dispozici pro většinu platforem.  "
-"Doporučené klienty a pokyny k jejich konfiguraci najdete po kliknutí na "
-"\"Další informace...\" výše."
+"počítači. Klienti OpenVPN jsou k dispozici pro většinu platforem. Doporučené "
+"klienty a pokyny k jejich konfiguraci najdete po kliknutí na \"Další "
+"informace...\" výše."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
-"Profil je specifický každému z uživatelů %(box_name)s.  Uchovejte ho v "
+"Profil je specifický každému z uživatelů %(box_name)s. Uchovejte ho v "
 "tajnosti."
 
 #: plinth/modules/openvpn/templates/openvpn.html:34
@@ -5274,25 +5268,25 @@ msgstr "Vypnout nyní"
 
 #: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Správa nastavení ochrany osobních údajů v celém systému."
 
 #: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Soukromí"
 
 #: plinth/modules/privacy/__init__.py:62
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Aktualizujte nastavení ochrany osobních údajů tak, aby odpovídalo vašim "
+"preferencím."
 
 #: plinth/modules/privacy/__init__.py:67
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Zkontrolujte nastavení ochrany osobních údajů"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Pravidelně předkládejte seznam používaných aplikací (doporučeno)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5304,6 +5298,12 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Pomozte vývojářům Debianu/{box_name} účastí v programu průzkumu balíčků "
+"Popularity Contest. Když je tato možnost povolena, seznam aplikací "
+"používaných v tomto systému bude každý týden anonymně odeslán do Debianu. "
+"Statistiky shromážděných dat jsou veřejně dostupné na <a href=\"https"
+"://popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a>. Odesílání "
+"probíhá přes síť Tor pro další anonymitu, pokud je povolena aplikace Tor."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -7484,13 +7484,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "V systému existují následující účty správců."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7499,10 +7493,10 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 "Odstraňte tyto účty z příkazového řádku a obnovte stránku, abyste vytvořili "
-"účet, který je použitelný s %(box_name)s. V příkazovém řádku spusťte příkaz "
-"'echo \"{password}\". | /usr/share/plinth/actions/users remove-user "
-"{username}\". Pokud je účet již použitelný s %(box_name)s, tento krok "
-"přeskočte."
+"účet, který lze použít s %(box_name)s. Na příkazovém řádku spusťte příkaz "
+"\"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' | sudo /"
+"usr/share/plinth/actions/actions users remove_user\". Pokud je účet již "
+"použitelný s %(box_name)s, tento krok přeskočte."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8208,6 +8202,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox je osobní server určený pro ochranu soukromí a vlastnictví dat. "
+"Jedná se o bezplatný software, který umožňuje snadnou instalaci a správu "
+"serverových aplikací."
 
 #: plinth/templates/base.html:110
 msgid " Home"

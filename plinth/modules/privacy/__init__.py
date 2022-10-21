@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to the Privacy app."""
 
-import augeas
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
