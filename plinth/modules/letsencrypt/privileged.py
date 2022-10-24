@@ -272,8 +272,8 @@ def compare_certificate(managing_app: str, source_private_key: str,
 
     private_key_path = pathlib.Path(private_key)
     certificate_path = pathlib.Path(certificate)
-    _assert_managed_path(managing_app, private_key)
-    _assert_managed_path(managing_app, certificate)
+    _assert_managed_path(managing_app, private_key_path)
+    _assert_managed_path(managing_app, certificate_path)
 
     result = False
     try:
