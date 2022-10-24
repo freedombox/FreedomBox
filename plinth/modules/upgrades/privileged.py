@@ -495,8 +495,8 @@ def _perform_dist_upgrade():
 
         # XXX: unattended-upgrade gets stuck here, see #2266.
         # This will upgrade most of the packages.
-        #print('Running unattended-upgrade...', flush=True)
-        #subprocess.run(['unattended-upgrade', '--verbose'], check=False)
+        # print('Running unattended-upgrade...', flush=True)
+        # subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
