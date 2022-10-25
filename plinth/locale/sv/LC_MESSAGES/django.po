@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 21:35-0400\n"
+"POT-Creation-Date: 2022-10-24 20:15-0400\n"
 "PO-Revision-Date: 2022-10-20 21:06+0000\n"
 "Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -172,7 +172,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Aktivera ett schema för säkerhetskopiering"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:71
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
 #: plinth/modules/storage/__init__.py:313
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -999,9 +999,9 @@ msgstr "Uppdatera IP-adress och domäner"
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
-#: plinth/modules/shadowsocks/views.py:53 plinth/modules/ssh/views.py:52
-#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
-#: plinth/modules/wordpress/views.py:31
+#: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
+#: plinth/modules/ssh/views.py:52 plinth/modules/transmission/views.py:43
+#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Konfiguration uppdaterad"
 
@@ -1614,8 +1614,8 @@ msgid ""
 msgstr ""
 "Om du letar efter ett gratis dynamiskt DNS-konto kan du hitta en gratis "
 "GnuDIP-tjänst på <a target=\"_blank\">ddns.freedombox.org</a> eller så kan "
-"du hitta gratis uppdaterings-URL-baserade tjänster på <a href=\"http"
-"://freedns.afraid.org/\" target=\"_blank\"> freedns.afraid.org</a>."
+"du hitta gratis uppdaterings-URL-baserade tjänster på <a href=\"http://"
+"freedns.afraid.org/\" target=\"_blank\"> freedns.afraid.org</a>."
 
 #: plinth/modules/dynamicdns/__init__.py:61
 msgid "Dynamic DNS Client"
@@ -5281,26 +5281,27 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Stäng av nu"
 
-#: plinth/modules/privacy/__init__.py:15
+#: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
 msgstr "Hantera systemomfattande sekretessinställningar."
 
-#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
+#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
 msgid "Privacy"
 msgstr "Integritet"
 
-#: plinth/modules/privacy/__init__.py:62
+#: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Vänligen uppdatera sekretessinställningar för att matcha dina preferenser."
 
-#: plinth/modules/privacy/__init__.py:67
+#: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
 msgstr "Granska sekretessinställningen"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr "Skicka med jämna mellanrum en lista över appar som används (föreslagna)"
+msgstr ""
+"Skicka med jämna mellanrum en lista över appar som används (föreslagna)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5608,6 +5609,14 @@ msgstr "RSS-Bridge"
 msgid "RSS Feed Generator"
 msgstr "RSS Feed Generator"
 
+#: plinth/modules/rssbridge/forms.py:12 plinth/modules/searx/forms.py:17
+msgid "Allow Public Access"
+msgstr "Tillåt offentlig åtkomst"
+
+#: plinth/modules/rssbridge/forms.py:13 plinth/modules/searx/forms.py:18
+msgid "Allow this application to be used by anyone who can reach it."
+msgstr "Tillåt att det här programmet används av alla som kan nå det."
+
 #: plinth/modules/samba/__init__.py:23
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
@@ -5820,14 +5829,6 @@ msgstr "Måttlig"
 #: plinth/modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Strikt"
-
-#: plinth/modules/searx/forms.py:17
-msgid "Allow Public Access"
-msgstr "Tillåt offentlig åtkomst"
-
-#: plinth/modules/searx/forms.py:18
-msgid "Allow this application to be used by anyone who can reach it."
-msgstr "Tillåt att det här programmet används av alla som kan nå det."
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
@@ -7512,8 +7513,8 @@ msgid ""
 msgstr ""
 "Ta bort dessa konton från kommandoraden och uppdatera sidan för att skapa "
 "ett konto som kan användas med %(box_name)s. På kommandoraden kör du "
-"kommandot \"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' |"
-" sudo /usr/share/plinth/actions/actions users remove_user\". Om ett konto "
+"kommandot \"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' "
+"| sudo /usr/share/plinth/actions/actions users remove_user\". Om ett konto "
 "redan kan användas med %(box_name)s, hoppa över detta steg."
 
 #: plinth/modules/users/templates/users_list.html:11
