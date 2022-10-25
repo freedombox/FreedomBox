@@ -9,7 +9,7 @@ This document provides reference information for FreedomBox **contribution** hac
 1. [Submitting your changes](#submitting-your-changes)
 1. [Other related stuff](#miscelanea)
 
-It doesn't cover arquitecture, design choices, or other product internals.
+It doesn't cover architecture, design choices or other product internals.
 
 ## Picking a task to work on
 
@@ -20,8 +20,6 @@ Newcomers will find easy, self-contained tasks tagged as "beginner".
 Source code for FreedomBox Service is available from
 [salsa.debian.org](https://salsa.debian.org/freedombox-team/freedombox).
 
-
-
 ## Development environments: setting up and their usage
 
 ### Requirements for Development OS
@@ -30,9 +28,9 @@ FreedomBox is built as part of Debian GNU/Linux. However, you don't need to
 install Debian to do development for FreedomBox. FreedomBox development is
 typically done with a container or a Virtual Machine.
 
-* For running a container, you need systemd containers, Git, Python3 and a
+* To run a container, you need systemd containers, Git, Python3 and a
 sudo-enabled user. This approach is recommended.
-* For running a VM, you can work on any operating system that can install latest
+* To run a VM, you can work on any operating system that can install latest
 versions of Git, Vagrant and VirtualBox.
 
 In addition:

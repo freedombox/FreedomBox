@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <p>
+    {% blocktrans %}
+      You can <a href="https://library.kiwix.org"
+                 target="_blank" rel="noopener noreferrer">download</a>
+      content packages from the Kiwix project or
+      <a href="https://openzim.org/wiki/Build_your_ZIM_file"
+         target="_blank" rel="noopener noreferrer">create</a> your own.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans %}
+      Content packages can be added in the following ways:
+      <ul>
+        <li>upload a ZIM file</li>
+        <!-- <li>upload a BitTorrent file to download a ZIM file</li> -->
+        <!-- <li>provide a download link to a ZIM file</li> -->
+        <!-- <li>provide a magnet link to download a ZIM file</li> -->
+        <!-- <li>provide a file path to a ZIM file</li> -->
+      </ul>
+
+      <!-- TODO Add this somewhere -->
+      <!-- The Kiwix project recommends using BitTorrent for downloads. -->
+    {% endblocktrans %}
+  </p>
+
+  {% if max_filesize %}
+    <div class="alert alert-warning" role="alert">
+      <!-- <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> -->
+      <!-- <span class="sr-only">{% trans "Caution:" %}</span> -->
+      {% blocktrans trimmed %}
+        You have {{ max_filesize }} of free disk space available.
+      {% endblocktrans %}
+    </div>
+  {% endif %}
+
+  <form class="form form-kiwix" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Upload file" %}"/>
+  </form>
+
+{% endblock %}
