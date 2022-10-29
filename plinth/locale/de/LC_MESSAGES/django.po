@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-24 20:15-0400\n"
-"PO-Revision-Date: 2022-09-14 17:19+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"PO-Revision-Date: 2022-10-30 11:00+0000\n"
+"Last-Translator: Johannes Keyser <joke@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -5038,12 +5038,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
@@ -5051,14 +5046,13 @@ msgid ""
 "clients and instructions on how to configure them."
 msgstr ""
 "Um eine Verbindung mit dem VPN von %(box_name)s herzustellen, müssen Sie ein "
-"Profil herunterladen und es an einen OpenVPN-Client auf Ihrem Mobilen oder "
-"Desktopcomputer senden.  OpenVPN-Clients sind für die meisten Plattformen "
-"verfügbar.   Klicken Sie auf \"Mehr erfahren...\" empfohlenen Clients und "
-"Anweisungen zur Konfiguration."
+"Profil herunterladen und es an einen OpenVPN-Client auf Ihrem Smartphone "
+"oder Desktopcomputer senden. OpenVPN-Clients sind für die meisten "
+"Plattformen verfügbar. Klicken Sie auf \"Mehr erfahren...\" für empfohlene "
+"Clients und Anleitungen zur Konfiguration."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
 "Das Profil ist für jeden Benutzer von %(box_name)s spezifisch. Halten Sie es "
@@ -5379,25 +5373,24 @@ msgstr "Jetzt herunterfahren"
 
 #: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Verwaltung systemweiter Datenschutzeinstellungen."
 
 #: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Datenschutz"
 
 #: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Bitte passen Sie die Datenschutzeinstellungen entsprechend Ihren Wünschen an."
 
 #: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Datenschutzeinstellungen anpassen"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Regelmäßiges Übermitteln einer Liste der verwendeten Apps (Vorschlag)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5409,6 +5402,13 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Helfen Sie den Debian/{box_name}-Entwicklern, indem Sie am Popularity "
+"Contest Paket-Umfrageprogramm teilnehmen. Falls aktiviert, wird jede Woche "
+"eine Liste von Anwendungen, die auf diesem System verwendet werden, anonym "
+"an Debian geschickt. Statistiken für die gesammelten Daten sind öffentlich "
+"verfügbar unter <a href=\"https://popcon.debian.org/\" target=\"_blank\""
+">popcon.debian.org</a>. Die Übermittlung erfolgt über das Tor-Netzwerk für "
+"zusätzliche Anonymität, wenn die Tor-App aktiviert ist."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -7640,13 +7640,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "Die folgenden Administratorkonten sind im System vorhanden."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7654,12 +7648,12 @@ msgid ""
 "sudo /usr/share/plinth/actions/actions users remove_user\". If an account is "
 "already usable with %(box_name)s, skip this step."
 msgstr ""
-"Löschen Sie diese Konten von der Befehlszeile aus und aktualisieren Sie die "
+"Löschen Sie diese Konten aus der Kommandozeile und aktualisieren Sie die "
 "Seite, um ein Konto zu erstellen, das mit %(box_name)s verwendet werden "
-"kann. Führen Sie in der Befehlszeile den Befehl 'echo \"{password}\" | /usr/"
-"share/plinth/actions/users remove-user {username}' aus. Wenn ein Konto "
-"bereits mit %(box_name)s verwendet werden kann, überspringen Sie diesen "
-"Schritt."
+"kann. Führen Sie in der Kommandozeile den Befehl aus: \"echo '{\"args\": ["
+"\"BENUTZERNAME\", \"PASSWORT\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
+"actions/actions users remove_user\". Wenn ein Konto bereits mit %(box_name)s "
+"nutzbar ist, überspringen Sie diesen Schritt."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8387,6 +8381,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox ist ein persönlicher Server, der für Privatsphäre und Datenschutz "
+"entwickelt wurde. Es ist freie Software zur einfachen Installation und "
+"Verwaltung von Serveranwendungen."
 
 #: plinth/templates/base.html:110
 msgid " Home"
