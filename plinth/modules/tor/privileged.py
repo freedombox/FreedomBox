@@ -3,6 +3,7 @@
 
 import codecs
 import os
+import pathlib
 import re
 import socket
 import subprocess
@@ -20,6 +21,7 @@ SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
 TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
 TOR_AUTH_COOKIE = '/var/run/tor-instances/plinth/control.authcookie'
+TOR_APACHE_SITE = '/etc/apache2/conf-available/onion-location-freedombox.conf'
 
 
 @privileged
@@ -30,6 +32,7 @@ def setup(old_version: int):
         return
 
     _first_time_setup()
+    _set_onion_header(_get_hidden_service(aug=None))
 
 
 def _first_time_setup():
@@ -391,6 +394,7 @@ def _enable_hs(aug=None):
     aug.set(TOR_CONFIG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
     aug.set(TOR_CONFIG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
     aug.save()
+    _set_onion_header(_get_hidden_service(aug))
 
 
 def _disable_hs(aug=None):
@@ -404,6 +408,7 @@ def _disable_hs(aug=None):
     aug.remove(TOR_CONFIG + '/HiddenServiceDir')
     aug.remove(TOR_CONFIG + '/HiddenServicePort')
     aug.save()
+    _set_onion_header(None)
 
 
 def _enable_apt_transport_tor():
@@ -486,3 +491,22 @@ def augeas_load():
             '/etc/tor/instances/plinth/torrc')
     aug.load()
     return aug
+
+
+def _set_onion_header(hidden_service):
+    """Set Apache configuration for the Onion-Location header."""
+    config_file = pathlib.Path(TOR_APACHE_SITE)
+    if hidden_service and hidden_service['enabled']:
+        # https://community.torproject.org/onion-services/advanced/onion-location/
+        hostname = hidden_service['hostname']
+        config_contents = f'''# This file is managed by FreedomBox
+<LocationMatch "^(?!/(wordpress|mediawiki|tt-rss))/[^/]+">
+    Header set Onion-Location "http://{hostname}%{{REQUEST_URI}}s"
+</LocationMatch>
+'''
+        config_file.write_text(config_contents, encoding='utf-8')
+    else:
+        config_file.write_text('# This file is managed by FreedomBox\n',
+                               encoding='utf-8')
+
+    action_utils.service_reload('apache2')
