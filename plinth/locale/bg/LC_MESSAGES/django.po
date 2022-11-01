@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-10-14 10:25+0000\n"
+"POT-Creation-Date: 2022-10-24 20:15-0400\n"
+"PO-Revision-Date: 2022-10-24 10:34+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -174,7 +174,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Включване на резервни копия по график"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:71
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
 #: plinth/modules/storage/__init__.py:313
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -982,9 +982,9 @@ msgstr ""
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
-#: plinth/modules/shadowsocks/views.py:53 plinth/modules/ssh/views.py:52
-#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
-#: plinth/modules/wordpress/views.py:31
+#: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
+#: plinth/modules/ssh/views.py:52 plinth/modules/transmission/views.py:43
+#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Настройките са променени"
 
@@ -4772,19 +4772,19 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Изключване"
 
-#: plinth/modules/privacy/__init__.py:15
+#: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
 msgstr ""
 
-#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
+#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
 msgid "Privacy"
 msgstr ""
 
-#: plinth/modules/privacy/__init__.py:62
+#: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 
-#: plinth/modules/privacy/__init__.py:67
+#: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
 msgstr ""
 
@@ -5000,8 +5000,8 @@ msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
-"RSS-Bridge създава емисии на RSS и Atom на страници, които нямат собствена. "
-"Емисията може да бъде използвана от всеки четец на емисии."
+"RSS-Bridge създава емисии на RSS и на Atom от страници, които нямат "
+"собствена. Емисията може да бъде използвана от всеки четец на емисии."
 
 #: plinth/modules/rssbridge/__init__.py:23
 #, python-brace-format
@@ -5035,6 +5035,14 @@ msgstr "RSS-Bridge"
 #: plinth/modules/rssbridge/__init__.py:49
 msgid "RSS Feed Generator"
 msgstr "Създател на емисии на RSS"
+
+#: plinth/modules/rssbridge/forms.py:12 plinth/modules/searx/forms.py:17
+msgid "Allow Public Access"
+msgstr ""
+
+#: plinth/modules/rssbridge/forms.py:13 plinth/modules/searx/forms.py:18
+msgid "Allow this application to be used by anyone who can reach it."
+msgstr ""
 
 #: plinth/modules/samba/__init__.py:23
 msgid ""
@@ -5225,14 +5233,6 @@ msgstr ""
 
 #: plinth/modules/searx/forms.py:14
 msgid "Strict"
-msgstr ""
-
-#: plinth/modules/searx/forms.py:17
-msgid "Allow Public Access"
-msgstr ""
-
-#: plinth/modules/searx/forms.py:18
-msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
 
 #: plinth/modules/security/forms.py:13
@@ -6127,7 +6127,7 @@ msgstr ""
 
 #: plinth/modules/tor/__init__.py:147
 msgid "Obfs4 transport registered"
-msgstr ""
+msgstr "Транспортът Obfs4 е регистриран"
 
 #: plinth/modules/tor/__init__.py:212
 #, python-brace-format
@@ -6175,12 +6175,15 @@ msgid "Enable Tor relay"
 msgstr ""
 
 #: plinth/modules/tor/forms.py:92
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
 "the Tor network. Do this if you have more than 2 megabits/s of upload and "
 "download bandwidth."
-msgstr "Когато е отментато, на {box_name} ще работи"
+msgstr ""
+"Когато е отментато, {box_name} ще е участник в мрежата на Тор като дарява "
+"част от пропускателната способност. Направете го ако разполагате с ширина на "
+"канала по-голяма от 2Мбит/сек."
 
 #: plinth/modules/tor/forms.py:97
 msgid "Enable Tor bridge relay"

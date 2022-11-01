@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 21:35-0400\n"
+"POT-Creation-Date: 2022-10-24 20:15-0400\n"
 "PO-Revision-Date: 2022-10-14 10:25+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -172,7 +172,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Bir Yedekleme Planı etkinleştirin"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:71
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
 #: plinth/modules/storage/__init__.py:313
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -989,9 +989,9 @@ msgstr "IP adresi ve etki alanlarını yenile"
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
-#: plinth/modules/shadowsocks/views.py:53 plinth/modules/ssh/views.py:52
-#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
-#: plinth/modules/wordpress/views.py:31
+#: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
+#: plinth/modules/ssh/views.py:52 plinth/modules/transmission/views.py:43
+#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Yapılandırma güncellendi"
 
@@ -5287,19 +5287,19 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Şimdi Kapat"
 
-#: plinth/modules/privacy/__init__.py:15
+#: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
 msgstr "Sistem genelinde gizlilik ayarlarını yönetin."
 
-#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
+#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
 msgid "Privacy"
 msgstr "Gizlilik"
 
-#: plinth/modules/privacy/__init__.py:62
+#: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr "Lütfen gizlilik ayarlarını tercihlerinize uyacak şekilde güncelleyin."
 
-#: plinth/modules/privacy/__init__.py:67
+#: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
 msgstr "Gizlilik ayarlarını gözden geçirin"
 
@@ -5321,8 +5321,8 @@ msgstr ""
 "Popülarite Yarışması paket anket programına katılarak Debian/{box_name} "
 "geliştiricilerine yardımcı olun. Etkinleştirildiğinde, bu sistemde "
 "kullanılan uygulamaların bir listesi her hafta isimsiz olarak Debian'a "
-"gönderilecektir. Toplanan verilere ilişkin istatistikler, <a href=\"https"
-"://popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a> adresinde "
+"gönderilecektir. Toplanan verilere ilişkin istatistikler, <a href=\"https://"
+"popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a> adresinde "
 "herkese açıktır. Tor uygulaması etkinleştirilirse, ek isimsizlik için "
 "gönderme Tor ağı üzerinden gerçekleşir."
 
@@ -5618,6 +5618,15 @@ msgstr "RSS-Bridge"
 msgid "RSS Feed Generator"
 msgstr "RSS Bildirim Oluşturucu"
 
+#: plinth/modules/rssbridge/forms.py:12 plinth/modules/searx/forms.py:17
+msgid "Allow Public Access"
+msgstr "Herkese Açık Erişime izin ver"
+
+#: plinth/modules/rssbridge/forms.py:13 plinth/modules/searx/forms.py:18
+msgid "Allow this application to be used by anyone who can reach it."
+msgstr ""
+"Bu uygulamanın, ona ulaşabilen herkes tarafından kullanılmasına izin verin."
+
 #: plinth/modules/samba/__init__.py:23
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
@@ -5832,15 +5841,6 @@ msgstr "Orta"
 #: plinth/modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Sıkı"
-
-#: plinth/modules/searx/forms.py:17
-msgid "Allow Public Access"
-msgstr "Herkese Açık Erişime izin ver"
-
-#: plinth/modules/searx/forms.py:18
-msgid "Allow this application to be used by anyone who can reach it."
-msgstr ""
-"Bu uygulamanın, ona ulaşabilen herkes tarafından kullanılmasına izin verin."
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
@@ -7531,8 +7531,8 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 "Bu hesapları komut satırından silin ve %(box_name)s ile kullanılabilen bir "
-"hesap oluşturmak için sayfayı yenileyin. Komut satırında \"echo '{\"args\": ["
-"\"KULLANICIADI\", \"PAROLA\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
+"hesap oluşturmak için sayfayı yenileyin. Komut satırında \"echo '{\"args\": "
+"[\"KULLANICIADI\", \"PAROLA\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
 "actions/actions users remove_user\" komutunu çalıştırın. Eğer %(box_name)s "
 "ile kullanılabilen bir hesap zaten varsa, bu adımı atlayın."
 

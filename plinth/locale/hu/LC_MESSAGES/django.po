@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 21:35-0400\n"
-"PO-Revision-Date: 2022-09-14 17:19+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2022-10-24 20:15-0400\n"
+"PO-Revision-Date: 2022-10-24 18:39+0000\n"
+"Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hu/>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -54,17 +54,15 @@ msgstr "Nem lehet ide csatlakozni: {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Biztonsági mentés készítése az alkalmazásról eltávolítás előtt"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
 msgstr ""
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Tároló nem található"
+msgstr "A biztonsági mentés helye"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -174,7 +172,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Ütemezett biztonsági mentés engedélyezése"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:71
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
 #: plinth/modules/storage/__init__.py:313
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -1003,9 +1001,9 @@ msgstr "IP-címek és tartományok frissítése"
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
-#: plinth/modules/shadowsocks/views.py:53 plinth/modules/ssh/views.py:52
-#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
-#: plinth/modules/wordpress/views.py:31
+#: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
+#: plinth/modules/ssh/views.py:52 plinth/modules/transmission/views.py:43
+#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "A beállítások frissültek"
 
@@ -1292,28 +1290,28 @@ msgid "Show apps and features that require more technical knowledge."
 msgstr "Több műszaki ismeretet igénylő alkalmazások és funkciók megjelenítése."
 
 #: plinth/modules/config/forms.py:104
-#, fuzzy
-#| msgid "System Monitoring"
 msgid "System-wide logging"
-msgstr "Rendszerfigyelés"
+msgstr "Rendszerszintű naplózás"
 
 #: plinth/modules/config/forms.py:105
 msgid "Disable logging, for privacy"
-msgstr ""
+msgstr "Naplózás letiltása"
 
 #: plinth/modules/config/forms.py:107
 msgid "Keep some in memory until a restart, for performance"
-msgstr ""
+msgstr "Naplófájlok megtartása a következő újraindításig (jobb teljesítmény)"
 
 #: plinth/modules/config/forms.py:110
 msgid "Write to disk, useful for debugging"
-msgstr ""
+msgstr "Naplófájlok lemezre írása, hibakeresés esetén hasznos"
 
 #: plinth/modules/config/forms.py:112
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
+"A naplófájlok tárolják, hogy ki kapcsolódott a rendszerhez, illetve "
+"hibakeresési információkkal is szolgálnak számos alkalmazás számára."
 
 #: plinth/modules/config/views.py:49
 #, python-brace-format
@@ -1873,6 +1871,9 @@ msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
+"Az ejabberd által használható domainek. Kérlek vedd figyelembe, hogy a "
+"felhasználói fiókok egyedien kötődnek egy-egy domainhez és a felhasználói "
+"fiókok átköltöztetése egyik domainről a másikra jelenleg még nem lehetséges."
 
 #: plinth/modules/ejabberd/forms.py:26
 msgid "Enable Message Archive Management"
@@ -1999,6 +2000,11 @@ msgid ""
 "restrict outgoing email. Some lift the restriction after an explicit "
 "request. See manual page for more information."
 msgstr ""
+"Az e-mail szerver jelenleg nem működik a legtöbb ingyenes domain "
+"szolgáltatással, ideértve a FreedomBox Foundation által nyújtottakat is. Sok "
+"internetszolgáltató továbbá korlátozza a kimenő e-maileket. Néhány "
+"internetszolgáltató kifejezett kérés után feloldja a korlátozást. További "
+"információkért lásd a kézikönyv oldalát."
 
 #: plinth/modules/email/__init__.py:34
 #, python-brace-format
@@ -2607,38 +2613,43 @@ msgstr "Bővebben..."
 
 #: plinth/modules/help/templates/help_contribute.html:46
 msgid "How can I help?"
-msgstr ""
+msgstr "Hogyan segíthetek?"
 
 #: plinth/modules/help/templates/help_contribute.html:48
 msgid ""
 "Below is a list of opportunities for contributing to Debian. It has been "
 "filtered to only show packages that are installed on this system."
 msgstr ""
+"Az alábbiakban felsoroljuk a Debianhoz való segítségnyújtás lehetőségeit. A "
+"lista csak olyan csomagokat mutat, amelyek telepítve vannak ezen a "
+"rendszeren."
 
 #: plinth/modules/help/templates/help_contribute.html:59
 msgid "Show issues"
-msgstr ""
+msgstr "Problémák mutatása"
 
 #: plinth/modules/help/templates/help_contribute.html:63
 msgid "Packages that will be removed from Debian testing"
 msgstr ""
+"Azon csomagok, amelyek el lesznek távolítva a Debian testing verziójából"
 
 #: plinth/modules/help/templates/help_contribute.html:69
 #: plinth/modules/help/templates/help_contribute.html:85
 msgid "source package:"
-msgstr ""
+msgstr "forráscsomagok:"
 
 #: plinth/modules/help/templates/help_contribute.html:80
 msgid "Packages that are not in Debian testing"
-msgstr ""
+msgstr "Azon csomagok, amelyek nem részei a Debian testing verziójának"
 
 #: plinth/modules/help/templates/help_contribute.html:92
 msgid "Good first issues for beginners"
-msgstr ""
+msgstr "Kezdők számára ajánlott problémák"
 
 #: plinth/modules/help/templates/help_contribute.html:104
 msgid "Issues for which the package maintainer has requested help"
 msgstr ""
+"Olyan problémák, amelyeknél a csomagkarbantartónak segítségre van szüksége"
 
 #: plinth/modules/help/templates/help_feedback.html:12
 #, python-format
@@ -3044,16 +3055,18 @@ msgstr ""
 
 #: plinth/modules/janus/__init__.py:22
 msgid "Janus is a lightweight WebRTC server."
-msgstr ""
+msgstr "A Janus egy alacsony teljesítményigényű videokonferencia szerver."
 
 #: plinth/modules/janus/__init__.py:23
 msgid "A simple video conference room is included."
-msgstr ""
+msgstr "Egy egyszerű videokonferencia-terem rendelkezésre áll."
 
 #: plinth/modules/janus/__init__.py:25
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
+"A Janus használatához szükség van a <a href=\"{coturn_url}\">Coturn</a> "
+"alkalmazásra."
 
 #: plinth/modules/janus/__init__.py:41
 msgid "Janus"
@@ -3061,11 +3074,11 @@ msgstr "Janus"
 
 #: plinth/modules/janus/__init__.py:43
 msgid "Video Room"
-msgstr ""
+msgstr "Videószoba"
 
 #: plinth/modules/janus/manifest.py:7
 msgid "Janus Video Room"
-msgstr ""
+msgstr "Janus videószoba"
 
 #: plinth/modules/janus/templates/janus_video_room.html:205
 #: plinth/modules/jsxc/templates/jsxc_launch.html:117
@@ -3410,31 +3423,26 @@ msgid "Administrator Password"
 msgstr "Rendszergazdai jelszó"
 
 #: plinth/modules/mediawiki/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). Leave "
-#| "this field blank to keep the current password."
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
 "<strong>10 characters</strong>. Leave this field blank to keep the current "
 "password."
 msgstr ""
-"Állíts be új jelszót a MediaWiki rendszergazdai (admin) fiókjának. Hagyd "
-"üresen ezt a mezőt a jelenlegi jelszó megtartásához."
+"Új jelszó beállítása a MediaWiki 'admin' nevű felhasználója számára. A "
+"jelszó nem lehet gyakran használt kifejezés, továbbá legalább <strong>10 "
+"karakterből</strong> kell állnia. Hagyd üresen ezt a mezőt, ha meg szeretnéd "
+"tartani a jelenlegi jelszót."
 
 #: plinth/modules/mediawiki/forms.py:35
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails."
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example.onion"
 "\"."
 msgstr ""
 "A MediaWiki a wikire mutató URL-ek létrehozására használja, például "
-"láblécben, hírcsatornákban és e-mailekben."
+"láblécben, hírcsatornákban és e-mailekben. Példa: \"freedomboxom.pelda.org\" "
+"or \"pelda.onion\"."
 
 #: plinth/modules/mediawiki/forms.py:41
 #, fuzzy
@@ -3444,7 +3452,7 @@ msgstr "Kite név"
 
 #: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
-msgstr ""
+msgstr "Az oldal neve, ahogyan az a wikiben megjelenik."
 
 #: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
@@ -3488,11 +3496,8 @@ msgid "Password updated"
 msgstr "Jelszó frissítve"
 
 #: plinth/modules/mediawiki/views.py:59
-#, fuzzy
-#| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
-msgstr ""
-"Az adattitkosításra használt jelszó. A szerver jelszavával meg kell egyeznie."
+msgstr "A jlszó frisítése nem sikerült. Kérlek válassz egy erősebb jelszót"
 
 #: plinth/modules/mediawiki/views.py:68
 msgid "Public registrations enabled"
@@ -3515,16 +3520,12 @@ msgid "Default skin changed"
 msgstr "Az alapértelmezett felszín megváltozott"
 
 #: plinth/modules/mediawiki/views.py:99
-#, fuzzy
-#| msgid "Domain name set"
 msgid "Domain name updated"
-msgstr "Domainnév beállítva"
+msgstr "Domainnév frissítve"
 
 #: plinth/modules/mediawiki/views.py:103
-#, fuzzy
-#| msgid "Domain name set"
 msgid "Site name updated"
-msgstr "Domainnév beállítva"
+msgstr "Az oldal neve frissítve"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -3704,29 +3705,28 @@ msgstr ""
 
 #: plinth/modules/mumble/forms.py:40
 msgid "Set a password to join the server"
-msgstr ""
+msgstr "A szerverhez való csatlakozáshoz szükséges jelszó"
 
 #: plinth/modules/mumble/forms.py:42
-#, fuzzy
-#| msgid ""
-#| "Set a new upload password for Coquelicot. Leave this field blank to keep "
-#| "the current password."
 msgid ""
 "Set a password that is required to join the server. Leave empty to use the "
 "current password."
 msgstr ""
-"Állíts be új feltöltési jelszót a Coquelicot számára. Ha szeretnéd "
-"megtartani a jelenlegi jelszót, hagyd üresen ezt a mezőt."
+"Adj meg egy jelszót, ami majd ahhoz kell, hogy a felhasználók csatlakozni "
+"tudjanak a szerverhez. Hagyd üresen, ha nem akarod megváltoztatni a "
+"jelenlegi jelszót."
 
 #: plinth/modules/mumble/forms.py:48
 msgid "Set the name for the root channel"
-msgstr ""
+msgstr "A root csatorna nevének beállítása"
 
 #: plinth/modules/mumble/forms.py:52
 msgid ""
 "Set the name of the main channel of your mumble server. If the name was "
 "never changed, the channel is named Root."
 msgstr ""
+"Állítsd be a mumble szerver fő csatornájának nevét. Ha nem változtatod meg, "
+"az alapértelmezett név a 'Root' lesz."
 
 #: plinth/modules/mumble/manifest.py:34
 msgid "Mumblefly"
@@ -3741,14 +3741,12 @@ msgid "SuperUser password successfully updated."
 msgstr "A SuperUser jelszava sikeresen frissítve."
 
 #: plinth/modules/mumble/views.py:48
-#, fuzzy
-#| msgid "Upload password updated"
 msgid "Join password changed"
-msgstr "Feltöltési jelszó frissítve"
+msgstr "A csatlakozáshoz szükséges jelszó megváltoztatva"
 
 #: plinth/modules/mumble/views.py:53
 msgid "Root channel name changed."
-msgstr ""
+msgstr "A szerver fő csatornájának neve megváltoztatva."
 
 #: plinth/modules/names/__init__.py:22
 #, python-brace-format
@@ -5026,8 +5024,7 @@ msgstr ""
 "ajánlott kliensek és a beállítási utasítások megtekintéséhez."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
 "A profil a %(box_name)s eszköz minden egyes felhasználójára egyedi. Tartsd "
@@ -5344,23 +5341,25 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Leállítás most"
 
-#: plinth/modules/privacy/__init__.py:15
+#: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Rendszerszintű adatvédelmi beállítások kezelése."
 
-#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
+#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
 #, fuzzy
 #| msgid "Privoxy"
 msgid "Privacy"
 msgstr "Privoxy"
 
-#: plinth/modules/privacy/__init__.py:62
+#: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Kérjük, frissítsd az adatvédelmi beállításokat, a preferenciáidnak "
+"megfelelően."
 
-#: plinth/modules/privacy/__init__.py:67
+#: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Adatvédelmi beállítások kezelése"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
@@ -5668,11 +5667,20 @@ msgstr "Hírcsatornák olvasása és feliratkozás"
 #: plinth/modules/rssbridge/__init__.py:48
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
-msgstr ""
+msgstr "RSS-Bridge"
 
 #: plinth/modules/rssbridge/__init__.py:49
 msgid "RSS Feed Generator"
+msgstr "RSS-hírfolyam generátor"
+
+#: plinth/modules/rssbridge/forms.py:12 plinth/modules/searx/forms.py:17
+msgid "Allow Public Access"
+msgstr "Nyilvános hozzáférés engedélyezése"
+
+#: plinth/modules/rssbridge/forms.py:13 plinth/modules/searx/forms.py:18
+msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
+"Engedélyezi ennek az alkalmazásnak a használatát bárkinek, aki el tudja érni."
 
 #: plinth/modules/samba/__init__.py:23
 msgid ""
@@ -5891,15 +5899,6 @@ msgstr "Enyhe"
 #: plinth/modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Szigorú"
-
-#: plinth/modules/searx/forms.py:17
-msgid "Allow Public Access"
-msgstr "Nyilvános hozzáférés engedélyezése"
-
-#: plinth/modules/searx/forms.py:18
-msgid "Allow this application to be used by anyone who can reach it."
-msgstr ""
-"Engedélyezi ennek az alkalmazásnak a használatát bárkinek, aki el tudja érni."
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
@@ -6859,13 +6858,13 @@ msgstr ""
 "javasolja."
 
 #: plinth/modules/tor/__init__.py:30
-#, fuzzy, python-brace-format
-#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#, python-brace-format
 msgid ""
 "A Tor SOCKS port is available on your {box_name} for internal networks on "
 "TCP port 9050."
 msgstr ""
-"Egy Tor SOCKS port elérhető a %(box_name)s eszközöd 9050-es TCP-portján."
+"Egy Tor SOCKS port elérhető a {box_name} eszközöd 9050-es TCP-portján a "
+"belső hálózat számára."
 
 #: plinth/modules/tor/__init__.py:48
 msgid "Tor"
@@ -7022,16 +7021,13 @@ msgid "Ports"
 msgstr "Portok"
 
 #: plinth/modules/tor/views.py:53
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "Updating configuration"
-msgstr "Hiba történt a beállítás közben."
+msgstr "Beállítások frissítése"
 
 #: plinth/modules/tor/views.py:70
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
+msgstr "Hiba lépett fel az alkalmazás konfigurációja során: {error}"
 
 #: plinth/modules/transmission/__init__.py:23
 msgid "Transmission is a BitTorrent client with a web interface."

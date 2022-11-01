@@ -159,7 +159,7 @@ def _get_disks_from_df():
 
 def get_filesystem_type(mount_point='/'):
     """Return the type of the filesystem mounted at mountpoint."""
-    for partition in psutil.disk_partitions():
+    for partition in psutil.disk_partitions(all=True):
         if partition.mountpoint == mount_point:
             return partition.fstype
 

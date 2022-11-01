@@ -249,7 +249,8 @@ def _check_and_backports_sources(develop=False):
         with open('/etc/dpkg/origins/default', 'r',
                   encoding='utf-8') as default_origin:
             matches = [
-                re.match(r'Vendor:\s+Debian', line, flags=re.IGNORECASE)
+                re.match(r'Vendor:\s+(Debian|FreedomBox)', line,
+                         flags=re.IGNORECASE)
                 for line in default_origin.readlines()
             ]
     except FileNotFoundError:
@@ -492,9 +493,10 @@ def _perform_dist_upgrade():
                 f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
             debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
+        # XXX: unattended-upgrade gets stuck here, see #2266.
         # This will upgrade most of the packages.
-        print('Running unattended-upgrade...', flush=True)
-        subprocess.run(['unattended-upgrade', '--verbose'], check=False)
+        # print('Running unattended-upgrade...', flush=True)
+        # subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.

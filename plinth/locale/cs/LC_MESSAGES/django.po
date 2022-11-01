@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 21:35-0400\n"
+"POT-Creation-Date: 2022-10-24 20:15-0400\n"
 "PO-Revision-Date: 2022-10-16 14:35+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -171,7 +171,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Povolení plánu zálohování"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:71
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
 #: plinth/modules/storage/__init__.py:313
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -987,9 +987,9 @@ msgstr "Obnovení IP adresy a domén"
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
-#: plinth/modules/shadowsocks/views.py:53 plinth/modules/ssh/views.py:52
-#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
-#: plinth/modules/wordpress/views.py:31
+#: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
+#: plinth/modules/ssh/views.py:52 plinth/modules/transmission/views.py:43
+#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
@@ -5266,21 +5266,21 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Vypnout nyní"
 
-#: plinth/modules/privacy/__init__.py:15
+#: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
 msgstr "Správa nastavení ochrany osobních údajů v celém systému."
 
-#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:64
+#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
 msgid "Privacy"
 msgstr "Soukromí"
 
-#: plinth/modules/privacy/__init__.py:62
+#: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Aktualizujte nastavení ochrany osobních údajů tak, aby odpovídalo vašim "
 "preferencím."
 
-#: plinth/modules/privacy/__init__.py:67
+#: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
 msgstr "Zkontrolujte nastavení ochrany osobních údajů"
 
@@ -5301,8 +5301,8 @@ msgstr ""
 "Pomozte vývojářům Debianu/{box_name} účastí v programu průzkumu balíčků "
 "Popularity Contest. Když je tato možnost povolena, seznam aplikací "
 "používaných v tomto systému bude každý týden anonymně odeslán do Debianu. "
-"Statistiky shromážděných dat jsou veřejně dostupné na <a href=\"https"
-"://popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a>. Odesílání "
+"Statistiky shromážděných dat jsou veřejně dostupné na <a href=\"https://"
+"popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a>. Odesílání "
 "probíhá přes síť Tor pro další anonymitu, pokud je povolena aplikace Tor."
 
 #: plinth/modules/privoxy/__init__.py:23
@@ -5595,6 +5595,15 @@ msgstr "RSS-Bridge"
 msgid "RSS Feed Generator"
 msgstr "Generátor kanálů RSS"
 
+#: plinth/modules/rssbridge/forms.py:12 plinth/modules/searx/forms.py:17
+msgid "Allow Public Access"
+msgstr "Umožnit veřejný přístup"
+
+#: plinth/modules/rssbridge/forms.py:13 plinth/modules/searx/forms.py:18
+msgid "Allow this application to be used by anyone who can reach it."
+msgstr ""
+"Umožnit, aby tato aplikace byla používána kýmkoli, kdo se k ní může dostat."
+
 #: plinth/modules/samba/__init__.py:23
 msgid ""
 "Samba allows to share files and folders between FreedomBox and other "
@@ -5810,15 +5819,6 @@ msgstr "Střední"
 #: plinth/modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Přísný"
-
-#: plinth/modules/searx/forms.py:17
-msgid "Allow Public Access"
-msgstr "Umožnit veřejný přístup"
-
-#: plinth/modules/searx/forms.py:18
-msgid "Allow this application to be used by anyone who can reach it."
-msgstr ""
-"Umožnit, aby tato aplikace byla používána kýmkoli, kdo se k ní může dostat."
 
 #: plinth/modules/security/forms.py:13
 msgid "Restrict console logins (recommended)"
