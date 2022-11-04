@@ -11,10 +11,10 @@ from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
-from plinth.package import Package, Packages
-from plinth.utils import format_lazy
+from plinth.package import Package, Packages, install
+from plinth.utils import Version, format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _mods = [
     Package('minetest-mod-3d-armor') | Package('minetest-mod-player-3d-armor'),
@@ -97,6 +97,22 @@ class MinetestApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         self.enable()
+
+    def force_upgrade(self, packages):
+        """Force upgrade minetest to resolve conffile prompt."""
+        if 'minetest-server' not in packages:
+            return False
+
+        # Allow upgrade from 5.3.0 to 5.6.1
+        package = packages['minetest-server']
+        if Version(package['new_version']) > Version('5.7~'):
+            return False
+
+        config = get_configuration()
+        install(['minetest-server'], force_configuration='new')
+        privileged.configure(**config)
+
+        return True
 
 
 def load_augeas():
