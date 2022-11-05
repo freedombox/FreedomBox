@@ -20,7 +20,7 @@ freedombox binary: web-application-works-only-with-apache
 # is no equivalent for this in sysvinit. Sometimes, FreedomBox provide service
 # files for packages that do not provide them. FreedomBox does not support
 # sysvinit so no init.d equivalent is provided.
-freedombox: package-supports-alternative-init-but-no-init.d-script usr/lib/systemd/system/*
+freedombox: package-supports-alternative-init-but-no-init.d-script [usr/lib/systemd/system/*]
 
 # Not documentation
-freedombox: package-contains-documentation-outside-usr-share-doc usr/share/plinth/static/jslicense.html
+freedombox: package-contains-documentation-outside-usr-share-doc [usr/share/plinth/static/jslicense.html]
