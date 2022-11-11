@@ -11,7 +11,8 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
@@ -50,7 +51,7 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
-    _version = 4
+    _version = 5
 
     DAEMON = 'transmission-daemon'
 
@@ -90,6 +91,10 @@ class TransmissionApp(app_module.App):
                             ports=['http', 'https',
                                    'transmission-client'], is_external=True)
         self.add(firewall)
+
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-transmission', ['9091'])
+        self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-transmission', 'transmission-plinth',
                               urls=['https://{host}/transmission'])
