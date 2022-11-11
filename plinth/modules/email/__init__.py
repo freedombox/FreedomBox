@@ -12,7 +12,8 @@ from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.config import get_domainname
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages, uninstall
 from plinth.privileged import service as service_privileged
@@ -51,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Initialize the email app."""
@@ -129,6 +130,10 @@ class EmailApp(plinth.app.App):
         firewall = Firewall('firewall-email', info.name, ports=port_names,
                             is_external=True)
         self.add(firewall)
+
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-email', ['11334'])
+        self.add(firewall_local_protection)
 
         # /rspamd location
         webserver = Webserver(
