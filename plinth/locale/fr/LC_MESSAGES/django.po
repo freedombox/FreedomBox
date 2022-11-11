@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-24 20:15-0400\n"
-"PO-Revision-Date: 2022-09-14 17:19+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2022-11-07 20:13-0500\n"
+"PO-Revision-Date: 2022-10-30 11:00+0000\n"
+"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -177,7 +177,7 @@ msgstr "Activer la planification des sauvegardes"
 
 #: plinth/modules/backups/__init__.py:176
 #: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
-#: plinth/modules/storage/__init__.py:313
+#: plinth/modules/storage/__init__.py:312
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Aller à {app_name}"
@@ -1869,8 +1869,8 @@ msgstr ""
 "Pour communiquer, vous pouvez utiliser le <a href=\"{jsxc_url}\">client web</"
 "a> ou tout autre <a href=\"https://xmpp.org/software/clients\" target="
 "\"_blank\">client XMPP</a> de votre choix. Une fois activé, ejabberd est "
-"accessible par tout <a href=\"{users_url}\">utilisateur disposant d’un "
-"compte sur la {box_name}</a>."
+"accessible par tout <a href=\"{users_url}\">utilisatrice ou utilisateur "
+"disposant d’un compte sur la {box_name}</a>."
 
 #: plinth/modules/ejabberd/__init__.py:40
 #, python-brace-format
@@ -5068,12 +5068,7 @@ msgid "Profile"
 msgstr "Profil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
@@ -5082,14 +5077,12 @@ msgid ""
 msgstr ""
 "Pour vous connecter au réseau privé virtuel VPN de la %(box_name)s, vous "
 "devez télécharger un profil et le fournir à un client OpenVPN sur votre "
-"mobile ou sur votre ordinateur.  Les clients OpenVPN sont disponibles pour "
-"de nombreuses plate-formes. Cliquez sur « Application clientes » ci-dessus "
-"pour connaître les clients recommandés et leurs instructions de "
-"configuration."
+"mobile ou sur votre ordinateur. Les clients OpenVPN sont disponibles pour de "
+"nombreuses plate-formes. Cliquez sur « Application clientes » ci-dessus pour "
+"connaître les clients recommandés et leurs instructions de configuration."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
 "Le profil est propre à chaque utilisateur de la %(box_name)s. Gardez-le "
@@ -5409,25 +5402,23 @@ msgstr "Éteindre immédiatement"
 
 #: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Gérér les paramètres de confidentialité globaux."
 
 #: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Confidentialité"
 
 #: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
-msgstr ""
+msgstr "Veuillez vérifier les paramètres de confidentialité."
 
 #: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Paramètres de confidentialité"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Envoyer périodiquement la liste des applis utilisées (recommandé)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5439,6 +5430,13 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Aider les développeuses et développeurs Debian/{box_name} en participant au "
+"concours de popularité. En activant cette option la liste des applis "
+"utilisées sur ce système sera soumis de manière anonyme au projet Debian "
+"chaque semaine. Les statistiques construites à partir de ces données sont "
+"accessibles publiquement à l’adresse <a href=\"https://popcon.debian.org/\" "
+"target=\"_blank\">popcon.debian.org</a>. Pour plus de confidentialité, la "
+"transmission a lieu au travers du réseau Tor lorsque l’appli Tor est activée."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -5697,9 +5695,9 @@ msgid ""
 "When enabled, text box for server input is removed from login page and users "
 "can only read and send mails from this {box_name}."
 msgstr ""
-"Masque le choix du serveur de la page de connexion. Lorsque cette option est "
-"cochée, les utilisateurs ne peuvent envoyer et recevoir des courriels que "
-"depuis cette {box_name}."
+"En activant cette option le champ de saisie d’un serveur sera supprimé de la "
+"page de connexion, et les utilisatrices et utilisateurs ne pourront plus "
+"envoyer et recevoir des courriels que depuis cette {box_name}."
 
 #: plinth/modules/rssbridge/__init__.py:20
 msgid ""
@@ -5707,7 +5705,8 @@ msgid ""
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
 "RSS-Bridge génère des fils RSS et Atom pour les sites qui n’en ont pas. Les "
-"fils générés peuvent être consommés par n’importe quelle liseuse de fil."
+"fils générés peuvent être consommés par n’importe quelle liseuse de fils "
+"d’actualités."
 
 #: plinth/modules/rssbridge/__init__.py:23
 #, python-brace-format
@@ -5716,8 +5715,8 @@ msgid ""
 "user</a> belonging to the feed-reader group."
 msgstr ""
 "Une fois activé, RSS-Bridge peut être consulté par <a href="
-"\"{users_url}\">n’importe quel utilisateur</a> appartenant au groupe de "
-"lecteur de fil."
+"\"{users_url}\">n’importe quel utilisateur</a> appartenant au groupe des "
+"lecteurs de fils d’actualités."
 
 #: plinth/modules/rssbridge/__init__.py:27
 #, python-brace-format
@@ -6650,109 +6649,109 @@ msgstr ""
 "d’utilisation, monter et démonter des médias amovibles, étendre la partition "
 "racine, etc."
 
-#: plinth/modules/storage/__init__.py:45 plinth/modules/storage/__init__.py:306
-#: plinth/modules/storage/__init__.py:337
+#: plinth/modules/storage/__init__.py:45 plinth/modules/storage/__init__.py:305
+#: plinth/modules/storage/__init__.py:336
 msgid "Storage"
 msgstr "Stockage"
 
-#: plinth/modules/storage/__init__.py:214
+#: plinth/modules/storage/__init__.py:213
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} octets"
 
-#: plinth/modules/storage/__init__.py:218
+#: plinth/modules/storage/__init__.py:217
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} Kio"
 
-#: plinth/modules/storage/__init__.py:222
+#: plinth/modules/storage/__init__.py:221
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} Mio"
 
-#: plinth/modules/storage/__init__.py:226
+#: plinth/modules/storage/__init__.py:225
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} Gio"
 
-#: plinth/modules/storage/__init__.py:229
+#: plinth/modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} Tio"
 
-#: plinth/modules/storage/__init__.py:241
+#: plinth/modules/storage/__init__.py:240
 msgid "The operation failed."
 msgstr "L’opération a échoué."
 
-#: plinth/modules/storage/__init__.py:243
+#: plinth/modules/storage/__init__.py:242
 msgid "The operation was cancelled."
 msgstr "L’opération a été annulée."
 
-#: plinth/modules/storage/__init__.py:245
+#: plinth/modules/storage/__init__.py:244
 msgid "The device is already unmounting."
 msgstr "Le périphérique est déjà en train d’être démonté."
 
-#: plinth/modules/storage/__init__.py:247
+#: plinth/modules/storage/__init__.py:246
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "L’opération n’est pas disponible par manque d’un pilote ou d’un outil adapté."
 
-#: plinth/modules/storage/__init__.py:250
+#: plinth/modules/storage/__init__.py:249
 msgid "The operation timed out."
 msgstr "L’opération ne s’est pas terminée."
 
-#: plinth/modules/storage/__init__.py:252
+#: plinth/modules/storage/__init__.py:251
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "L’opération réveillerait un disque qui se trouve dans un état de veille "
 "profond."
 
-#: plinth/modules/storage/__init__.py:255
+#: plinth/modules/storage/__init__.py:254
 msgid "Attempting to unmount a device that is busy."
 msgstr "Tentative de démontage d’un périphérique en cours d’utilisation."
 
-#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:256
 msgid "The operation has already been cancelled."
 msgstr "L’opération a déjà été annulée."
 
-#: plinth/modules/storage/__init__.py:259
-#: plinth/modules/storage/__init__.py:261
-#: plinth/modules/storage/__init__.py:263
+#: plinth/modules/storage/__init__.py:258
+#: plinth/modules/storage/__init__.py:260
+#: plinth/modules/storage/__init__.py:262
 msgid "Not authorized to perform the requested operation."
 msgstr "Vous n’êtes pas autorisé à effectuer l’opération demandée."
 
-#: plinth/modules/storage/__init__.py:265
+#: plinth/modules/storage/__init__.py:264
 msgid "The device is already mounted."
 msgstr "Le périphérique est déjà monté."
 
-#: plinth/modules/storage/__init__.py:267
+#: plinth/modules/storage/__init__.py:266
 msgid "The device is not mounted."
 msgstr "Le périphérique n’est pas monté."
 
-#: plinth/modules/storage/__init__.py:269
+#: plinth/modules/storage/__init__.py:268
 msgid "Not permitted to use the requested option."
 msgstr "Vous n’êtes pas autorisé à utiliser l’option demandée."
 
-#: plinth/modules/storage/__init__.py:271
+#: plinth/modules/storage/__init__.py:270
 msgid "The device is mounted by another user."
 msgstr "Le périphérique est monté par un autre utilisateur."
 
-#: plinth/modules/storage/__init__.py:301
+#: plinth/modules/storage/__init__.py:300
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Espace disque faible sur la partition système : {percent_used}% utilisés, "
 "{free_space} libres."
 
-#: plinth/modules/storage/__init__.py:303
+#: plinth/modules/storage/__init__.py:302
 msgid "Low disk space"
 msgstr "Espace disque faible"
 
-#: plinth/modules/storage/__init__.py:331
+#: plinth/modules/storage/__init__.py:330
 msgid "Disk failure imminent"
 msgstr "Panne de disque imminente"
 
-#: plinth/modules/storage/__init__.py:333
+#: plinth/modules/storage/__init__.py:332
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7177,7 +7176,7 @@ msgid ""
 "allow reading news from any location, while feeling as close to a real "
 "desktop application as possible."
 msgstr ""
-"Tiny Tiny RSS est un lecteur et un agrégateur de flux d’actualités (RSS/"
+"Tiny Tiny RSS est un lecteur et un agrégateur de fils d’actualités (RSS/"
 "Atom). Il est conçu pour permettre la lecture des actualités depuis "
 "n’importe quel appareil tout en restant au plus près du design d’une "
 "application de bureau complète."
@@ -7189,8 +7188,8 @@ msgid ""
 "user</a> belonging to the feed-reader group."
 msgstr ""
 "Une fois activé, Tiny Tiny RSS peut être consulté par <a href="
-"\"{users_url}\">n’importe quel utilisateur</a> appartenant au groupe de "
-"lecteur de fil."
+"\"{users_url}\">n’importe quel utilisatrice ou utilisateur</a> appartenant "
+"au groupe des lecteurs de fils d’actualités."
 
 #: plinth/modules/ttrss/__init__.py:29
 msgid ""
@@ -7207,7 +7206,7 @@ msgstr "Tiny Tiny RSS"
 
 #: plinth/modules/ttrss/__init__.py:49
 msgid "News Feed Reader"
-msgstr "Lecteur de flux d’informations"
+msgstr "Lecteur de fils d’actualités"
 
 #: plinth/modules/ttrss/manifest.py:9
 msgid "Tiny Tiny RSS (Fork)"
@@ -7691,13 +7690,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "Les comptes administrateurs suivants sont présents sur le système."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7707,10 +7700,10 @@ msgid ""
 msgstr ""
 "Veuillez supprimer ces comptes depuis la ligne de commande et rafraîchir "
 "cette page pour pouvoir créer un compte utilisable avec la %(box_name)s. "
-"Depuis la ligne de commande, exécutez la commande 'echo \"{password}\" | /"
-"usr/share/plinth/actions/users remove-user {username}'. Si vous disposez "
-"déjà d’un compte utilisable avec la %(box_name)s, vous pouvez passer cette "
-"étape."
+"Depuis la ligne de commande, exécutez la commande \"echo '{\"args\": "
+"[\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
+"actions/actions users remove_user\". Si vous disposez déjà d’un compte "
+"utilisable avec la %(box_name)s, vous pouvez passer cette étape."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8242,9 +8235,9 @@ msgid ""
 "When enabled, requests will be made to OpenStreetMap servers from user's "
 "browser. This impacts privacy."
 msgstr ""
-"Lorsque cette option est activée, le navigateur des utilisatrices et "
-"utilisateurs fait des requêtes aux serveurs OpenStreetMap. Cela peut "
-"impacter la protection de leur vie privée."
+"En activant cette option, le navigateur des utilisatrices et utilisateursde "
+"l’appli fera des requêtes aux serveurs d’OpenStreetMap. Cela peut impacter "
+"la protection de leur vie privée."
 
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:15
 #: plinth/modules/zoph/templates/zoph-pre-setup.html:28
@@ -8434,6 +8427,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox est un serveur personnel conçu autour du respect de la vie privé "
+"et de la maîtrise de vos données. C’est un logiciel libre qui vous laisse "
+"installer et gérer facilement des applis de serveur."
 
 #: plinth/templates/base.html:110
 msgid " Home"

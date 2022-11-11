@@ -52,8 +52,7 @@ class StorageApp(app_module.App):
         self.add(menu_item)
 
         packages = Packages('packages-storage',
-                            ['parted', 'udisks2', 'gir1.2-udisks-2.0'],
-                            skip_recommends=True)
+                            ['parted', 'udisks2', 'gir1.2-udisks-2.0'])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-storage',

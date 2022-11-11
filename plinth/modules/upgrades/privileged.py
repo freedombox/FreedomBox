@@ -83,8 +83,8 @@ Pin-Priority: 500
 DIST_UPGRADE_OBSOLETE_PACKAGES: List[str] = []
 
 DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
-    'firewalld', 'janus', 'mumble-server', 'radicale', 'roundcube-core',
-    'tt-rss'
+    'bind9', 'firewalld', 'janus', 'minetest-server', 'minidlna',
+    'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
 ]
 
 DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
