@@ -8,7 +8,8 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users import privileged as users_privileged
 from plinth.modules.users.components import UsersAndGroups
@@ -41,7 +42,7 @@ class SyncthingApp(app_module.App):
 
     app_id = 'syncthing'
 
-    _version = 5
+    _version = 6
 
     DAEMON = 'syncthing@syncthing'
 
@@ -85,6 +86,10 @@ class SyncthingApp(app_module.App):
         firewall = Firewall('firewall-syncthing-ports', info.name,
                             ports=['syncthing'], is_external=True)
         self.add(firewall)
+
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-syncthing', ['8384'])
+        self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-syncthing', 'syncthing-plinth',
                               urls=['https://{host}/syncthing/'])
