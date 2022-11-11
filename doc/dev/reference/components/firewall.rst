@@ -5,3 +5,6 @@ Firewall
 
 .. autoclass:: plinth.modules.firewall.components.Firewall
    :members:
+
+.. autoclass:: plinth.modules.firewall.components.FirewallLocalProtection
+   :members:

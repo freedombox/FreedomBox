@@ -9,7 +9,9 @@ https://davidz25.blogspot.com/2012/06/authorization-rules-in-polkit.html
 
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.fedoraproject.FirewallD1.config.info" ||
-         action.id == "org.fedoraproject.FirewallD1.config") &&
+         action.id == "org.fedoraproject.FirewallD1.config" ||
+         action.id == "org.fedoraproject.FirewallD1.direct.info" ||
+         action.id == "org.fedoraproject.FirewallD1.direct") &&
         subject.user == "plinth") {
         return polkit.Result.YES;
     }

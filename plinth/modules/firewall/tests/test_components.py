@@ -7,7 +7,9 @@ from unittest.mock import call, patch
 
 import pytest
 
-from plinth.modules.firewall.components import Firewall
+from plinth.app import App
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 
 
 @pytest.fixture(name='empty_firewall_list', autouse=True)
@@ -65,6 +67,7 @@ def test_port_details(get_port_details):
 @patch('plinth.modules.firewall.get_enabled_services')
 def test_enable(get_enabled_services, add_service):
     """Test enabling a firewall component."""
+
     def get_enabled_services_side_effect(zone):
         return {'internal': ['test-port1'], 'external': ['test-port2']}[zone]
 
@@ -130,6 +133,7 @@ def test_disable(get_enabled_services, add_service, remove_service):
 @patch('plinth.modules.firewall.get_enabled_services')
 def test_diagnose(get_enabled_services, get_port_details):
     """Test diagnosing open/closed firewall ports."""
+
     def get_port_details_side_effect(port):
         return {
             'test-port1': [(1234, 'tcp'), (1234, 'udp')],
@@ -180,3 +184,75 @@ def test_diagnose(get_enabled_services, get_port_details):
     ], [
         'Port test-port4 (4567/udp) available for external networks', 'failed'
     ]]
+
+
+def test_local_protection_init():
+    """Test initializing the local protection component."""
+    component = FirewallLocalProtection('test-component', ['1234', '4567'])
+    assert component.component_id == 'test-component'
+    assert component.tcp_ports == ['1234', '4567']
+
+
+@patch('plinth.modules.firewall.add_passthrough')
+def test_local_protection_enable(add_passthrough):
+    """Test enabling local protection component."""
+    component = FirewallLocalProtection('test-component', ['1234', '4567'])
+    component.enable()
+
+    calls = [
+        call('ipv6', '-A', 'INPUT', '-p', 'tcp', '--dport', '1234', '-j',
+             'REJECT'),
+        call('ipv4', '-A', 'INPUT', '-p', 'tcp', '--dport', '1234', '-j',
+             'REJECT'),
+        call('ipv6', '-A', 'INPUT', '-p', 'tcp', '--dport', '4567', '-j',
+             'REJECT'),
+        call('ipv4', '-A', 'INPUT', '-p', 'tcp', '--dport', '4567', '-j',
+             'REJECT')
+    ]
+    add_passthrough.assert_has_calls(calls)
+
+
+@patch('plinth.modules.firewall.remove_passthrough')
+def test_local_protection_disable(remove_passthrough):
+    """Test disabling local protection component."""
+    component = FirewallLocalProtection('test-component', ['1234', '4567'])
+    component.disable()
+
+    calls = [
+        call('ipv6', '-A', 'INPUT', '-p', 'tcp', '--dport', '1234', '-j',
+             'REJECT'),
+        call('ipv4', '-A', 'INPUT', '-p', 'tcp', '--dport', '1234', '-j',
+             'REJECT'),
+        call('ipv6', '-A', 'INPUT', '-p', 'tcp', '--dport', '4567', '-j',
+             'REJECT'),
+        call('ipv4', '-A', 'INPUT', '-p', 'tcp', '--dport', '4567', '-j',
+             'REJECT')
+    ]
+    remove_passthrough.assert_has_calls(calls)
+
+
+@patch('plinth.modules.firewall.components.FirewallLocalProtection.enable')
+def test_local_protection_setup(enable):
+    """Test setting up protection when updating the app."""
+
+    class TestApp(App):
+        app_id = 'test-app'
+        enabled = True
+
+        def is_enabled(self):
+            return self.enabled
+
+    app = TestApp()
+    component = FirewallLocalProtection('test-component', ['1234', '4567'])
+    app.add(component)
+
+    component.setup(old_version=0)
+    enable.assert_not_called()
+
+    app.enabled = False
+    component.setup(old_version=1)
+    enable.assert_not_called()
+
+    app.enabled = True
+    component.setup(old_version=1)
+    enable.assert_has_calls([call()])
