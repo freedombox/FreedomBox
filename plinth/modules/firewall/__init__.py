@@ -45,7 +45,7 @@ class FirewallApp(app_module.App):
 
     app_id = 'firewall'
 
-    _version = 2
+    _version = 3
 
     can_be_disabled = False
 
