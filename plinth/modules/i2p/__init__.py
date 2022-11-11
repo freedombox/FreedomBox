@@ -8,7 +8,8 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.i2p.resources import FAVORITES
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
@@ -38,7 +39,7 @@ class I2PApp(app_module.App):
 
     app_id = 'i2p'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -78,6 +79,10 @@ class I2PApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-i2p', ['7657'])
+        self.add(firewall_local_protection)
+
         webserver = Webserver('webserver-i2p', 'i2p-freedombox',
                               urls=['https://{host}/i2p/'])
         self.add(webserver)
@@ -96,14 +101,16 @@ class I2PApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
 
-        self.disable()
-        # Add favorites to the configuration
-        for fav in FAVORITES:
-            privileged.add_favorite(fav['name'], fav['url'],
-                                    fav.get('description'), fav.get('icon'))
+        if not old_version:
+            self.disable()
+            # Add favorites to the configuration
+            for fav in FAVORITES:
+                privileged.add_favorite(fav['name'], fav['url'],
+                                        fav.get('description'),
+                                        fav.get('icon'))
 
-        # Tunnels to all interfaces
-        for tunnel in tunnels_to_manage:
-            privileged.set_tunnel_property(tunnel, 'interface', '0.0.0.0')
+            # Tunnels to all interfaces
+            for tunnel in tunnels_to_manage:
+                privileged.set_tunnel_property(tunnel, 'interface', '0.0.0.0')
 
-        self.enable()
+            self.enable()
