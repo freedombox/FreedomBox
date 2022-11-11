@@ -9,7 +9,8 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version
@@ -33,7 +34,7 @@ class MiniDLNAApp(app_module.App):
 
     app_id = 'minidlna'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Initialize the app components."""
@@ -73,6 +74,10 @@ class MiniDLNAApp(app_module.App):
         firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
                             is_external=False)
         self.add(firewall)
+
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-minidlna', ['8200'])
+        self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
                               urls=['https://{host}/_minidlna/'])
