@@ -63,28 +63,6 @@ def iter_apt_uris(aug):
         [aug.match(path) for path in APT_SOURCES_URI_PATHS])
 
 
-def get_real_apt_uri_path(aug, path):
-    """Return the actual path which contains APT URL.
-
-    XXX: This is a workaround for Augeas bug parsing Apt source files
-    with '[options]'.  Remove this workaround after Augeas lens is
-    fixed.
-    """
-    uri = aug.get(path)
-    if uri[0] == '[':
-        parent_path = path.rsplit('/', maxsplit=1)[0]
-        skipped = False
-        for child_path in aug.match(parent_path + '/*')[1:]:
-            if skipped:
-                return child_path
-
-            value = aug.get(child_path)
-            if value[-1] == ']':
-                skipped = True
-
-    return path
-
-
 def get_augeas():
     """Return an instance of Augeaus for processing APT configuration."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
@@ -121,7 +99,6 @@ def is_apt_transport_tor_enabled():
         return False
 
     for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
         if not uri.startswith(APT_TOR_PREFIX) and \
            (uri.startswith('http://') or uri.startswith('https://')):
