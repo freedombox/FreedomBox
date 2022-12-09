@@ -152,6 +152,59 @@ class Firewall(app.FollowerComponent):
         return results
 
 
+class FirewallLocalProtection(app.FollowerComponent):
+    """Component to protect local services from access by local users.
+
+    Local service protection means that only administrators and Apache web
+    server should be able to access certain services and not other users who
+    have logged into the system. This is needed because some of the services
+    are protected with authentication and authorization provided by Apache web
+    server. If services are contacted directly then auth can be bypassed by all
+    local users.
+
+    `component_id` should be a unique ID across all components of an app and
+    across all components.
+
+    `tcp_ports` is list of all local TCP ports on which daemons of this app are
+    listening. Administrators and Apache web server will be allowed to connect
+    and all other connections to these ports will be rejected.
+    """
+
+    def __init__(self, component_id: str, tcp_ports: list[str]):
+        """Initialize the firewall component."""
+        super().__init__(component_id)
+
+        self.tcp_ports = tcp_ports
+
+    def enable(self):
+        """Block traffic to local service from local users."""
+        super().enable()
+        for port in self.tcp_ports:
+            firewall.add_passthrough('ipv6', '-A', 'INPUT', '-p', 'tcp',
+                                     '--dport', port, '-j', 'REJECT')
+            firewall.add_passthrough('ipv4', '-A', 'INPUT', '-p', 'tcp',
+                                     '--dport', port, '-j', 'REJECT')
+
+    def disable(self):
+        """Unblock traffic to local service from local users."""
+        super().disable()
+        for port in self.tcp_ports:
+            firewall.remove_passthrough('ipv6', '-A', 'INPUT', '-p', 'tcp',
+                                        '--dport', port, '-j', 'REJECT')
+            firewall.remove_passthrough('ipv4', '-A', 'INPUT', '-p', 'tcp',
+                                        '--dport', port, '-j', 'REJECT')
+
+    def setup(self, old_version):
+        """Protect services of an app that newly introduced the feature."""
+        if not old_version:
+            # Fresh installation of an app. app.enable() will run at the end.
+            return
+
+        if self.app.is_enabled():
+            # Don't enable if the app is being updated but is disabled.
+            self.enable()
+
+
 def get_port_forwarding_info(app_):
     """Return a list of ports to be forwarded for this app to work."""
     from plinth.modules import networks

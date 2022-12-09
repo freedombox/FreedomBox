@@ -50,7 +50,7 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
-    _version = 4
+    _version = 5
 
     def __init__(self):
         """Create components for the app."""

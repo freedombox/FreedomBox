@@ -3,6 +3,7 @@
 
 import grp
 import os
+import pathlib
 import pwd
 import shutil
 import stat
@@ -12,6 +13,8 @@ import augeas
 
 from plinth import action_utils, utils
 from plinth.actions import privileged
+
+config_file = pathlib.Path('/etc/ssh/sshd_config.d/freedombox.conf')
 
 
 def _validate_user(username, password, must_be_admin=True):
@@ -51,6 +54,23 @@ def setup():
     reconfigure on the openssh-server package does not regenerate them.
     """
     action_utils.dpkg_reconfigure('openssh-server', {})
+
+
+@privileged
+def restrict_users(should_restrict: bool):
+    """Restrict SSH logins to groups root, admin and freedombox-ssh."""
+    if not should_restrict:
+        config_file.unlink(missing_ok=True)
+    else:
+        config_file.write_text('AllowGroups root admin freedombox-ssh\n',
+                               encoding='utf-8')
+
+    action_utils.service_reload('sshd')
+
+
+def are_users_restricted() -> bool:
+    """Return whether only restricted groups of users are allowed."""
+    return config_file.exists()
 
 
 def get_user_homedir(username):

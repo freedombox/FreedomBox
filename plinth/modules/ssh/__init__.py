@@ -12,6 +12,7 @@ from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 
 from . import manifest, privileged
@@ -29,7 +30,7 @@ class SSHApp(app_module.App):
 
     app_id = 'ssh'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -56,6 +57,13 @@ class SSHApp(app_module.App):
         daemon = Daemon('daemon-ssh', 'ssh')
         self.add(daemon)
 
+        groups = {
+            'freedombox-ssh': _('Remotely login using Secure Shell (SSH)')
+        }
+        users_and_groups = UsersAndGroups('users-and-groups-ssh',
+                                          groups=groups)
+        self.add(users_and_groups)
+
         backup_restore = BackupRestore('backup-restore-ssh', **manifest.backup)
         self.add(backup_restore)
 
@@ -63,7 +71,10 @@ class SSHApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
+        elif old_version == 1:
+            privileged.restrict_users(True)
 
 
 def get_host_keys():

@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 FreedomBox Service setup file.
+
+isort:skip_file
 """
 
 import collections
@@ -55,6 +57,8 @@ REMOVED_FILES = [
     '/etc/apt/preferences.d/50freedombox3.pref',
     '/etc/apache2/sites-available/plinth.conf',
     '/etc/apache2/sites-available/plinth-ssl.conf',
+    '/etc/security/access.d/10freedombox-performance.conf',
+    '/etc/security/access.d/10freedombox-security.conf',
 ]
 
 LOCALE_PATHS = ['plinth/locale']

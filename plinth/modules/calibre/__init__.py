@@ -10,7 +10,8 @@ from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
@@ -40,7 +41,7 @@ class CalibreApp(app_module.App):
 
     app_id = 'calibre'
 
-    _version = 1
+    _version = 2
 
     DAEMON = 'calibre-server-freedombox'
 
@@ -78,6 +79,10 @@ class CalibreApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-calibre', ['8844'])
+        self.add(firewall_local_protection)
+
         webserver = Webserver('webserver-calibre', 'calibre-freedombox',
                               urls=['https://{host}/calibre'])
         self.add(webserver)
@@ -98,7 +103,8 @@ class CalibreApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        self.enable()
+        if not old_version:
+            self.enable()
 
 
 def validate_library_name(library_name):

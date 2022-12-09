@@ -34,10 +34,12 @@ _DBUS_NAME = 'org.fedoraproject.FirewallD1'
 _FIREWALLD_OBJECT = '/org/fedoraproject/FirewallD1'
 _FIREWALLD_INTERFACE = 'org.fedoraproject.FirewallD1'
 _ZONE_INTERFACE = 'org.fedoraproject.FirewallD1.zone'
+_DIRECT_INTERFACE = 'org.fedoraproject.FirewallD1.direct'
 _CONFIG_OBJECT = '/org/fedoraproject/FirewallD1/config'
 _CONFIG_INTERFACE = 'org.fedoraproject.FirewallD1.config'
 _CONFIG_SERVICE_INTERFACE = 'org.fedoraproject.FirewallD1.config.service'
 _CONFIG_ZONE_INTERFACE = 'org.fedoraproject.FirewallD1.config.zone'
+_CONFIG_DIRECT_INTERFACE = 'org.fedoraproject.FirewallD1.config.direct'
 
 
 class FirewallApp(app_module.App):
@@ -45,7 +47,7 @@ class FirewallApp(app_module.App):
 
     app_id = 'firewall'
 
-    _version = 2
+    _version = 3
 
     can_be_disabled = False
 
@@ -228,3 +230,25 @@ def remove_service(port, zone):
         config_zone = _get_dbus_proxy(zone_path, _CONFIG_ZONE_INTERFACE)
         with ignore_dbus_error(service_error='NOT_ENABLED'):
             config_zone.removeService('(s)', port)
+
+
+def add_passthrough(ipv, *args):
+    """Add a direct rule with passthrough to ip(6)tables."""
+    direct_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _DIRECT_INTERFACE)
+    if not direct_proxy.queryPassthrough('(sas)', ipv, args):
+        direct_proxy.addPassthrough('(sas)', ipv, args)
+
+    config_direct = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_DIRECT_INTERFACE)
+    if not config_direct.queryPassthrough('(sas)', ipv, args):
+        config_direct.addPassthrough('(sas)', ipv, args)
+
+
+def remove_passthrough(ipv, *args):
+    """Add a direct rule with passthrough to ip(6)tables."""
+    direct_proxy = _get_dbus_proxy(_FIREWALLD_OBJECT, _DIRECT_INTERFACE)
+    if direct_proxy.queryPassthrough('(sas)', ipv, args):
+        direct_proxy.removePassthrough('(sas)', ipv, args)
+
+    config_direct = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_DIRECT_INTERFACE)
+    if config_direct.queryPassthrough('(sas)', ipv, args):
+        config_direct.removePassthrough('(sas)', ipv, args)

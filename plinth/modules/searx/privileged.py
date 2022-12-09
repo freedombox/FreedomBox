@@ -44,6 +44,8 @@ def _update_uwsgi_configuration():
     aug.load()
     aug.set('/files/etc/uwsgi/apps-available/searx.ini/uwsgi/autoload',
             'false')
+    aug.set('/files/etc/uwsgi/apps-available/searx.ini/uwsgi/chmod-socket',
+            '660')
     aug.save()
 
 

@@ -22,7 +22,7 @@ class SecurityApp(app_module.App):
 
     app_id = 'security'
 
-    _version = 7
+    _version = 8
 
     can_be_disabled = False
 
@@ -57,25 +57,14 @@ class SecurityApp(app_module.App):
 
         service_privileged.reload('fail2ban')
 
-        # Migrate to new config file.
-        enabled = privileged.get_restricted_access_enabled()
-        set_restricted_access(False)
-        if enabled:
-            set_restricted_access(True)
+        # Drop the legacy restriction access configuration
+        privileged.disable_restricted_access()
 
 
 def enable_fail2ban():
     """Unmask, enable and run the fail2ban service."""
     service_privileged.unmask('fail2ban')
     service_privileged.enable('fail2ban')
-
-
-def set_restricted_access(enabled):
-    """Enable or disable restricted access."""
-    if enabled:
-        privileged.enable_restricted_access()
-    else:
-        privileged.disable_restricted_access()
 
 
 def get_apps_report():

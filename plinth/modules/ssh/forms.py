@@ -16,3 +16,11 @@ class SSHServerForm(forms.Form):
                     'administrator user account before enabling this option.'),
         required=False,
     )
+
+    allow_all = forms.BooleanField(
+        label=_('Allow all users to login remotely'),
+        help_text=_('Allow all users who have a valid account to login '
+                    'remotely via SSH. When disabled, only users of groups '
+                    'root, admin and freedombox-ssh can login via SSH.'),
+        required=False,
+    )

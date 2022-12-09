@@ -4,6 +4,9 @@ Application manifest for ssh.
 """
 
 backup = {
+    'config': {
+        'files': ['/etc/ssh/sshd_config.d/freedombox.conf']
+    },
     'secrets': {
         'files': [
             '/etc/ssh/ssh_host_ecdsa_key', '/etc/ssh/ssh_host_ecdsa_key.pub',

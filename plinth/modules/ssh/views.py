@@ -32,6 +32,8 @@ class SshAppView(AppView):
         initial.update({
             'password_auth_disabled':
                 not privileged.is_password_authentication_enabled(),
+            'allow_all':
+                not privileged.are_users_restricted()
         })
 
         return initial
@@ -40,6 +42,7 @@ class SshAppView(AppView):
         """Apply changes from the form."""
         old_config = self.get_initial()
         new_config = form.cleaned_data
+        updated = False
 
         def is_field_changed(field):
             return old_config[field] != new_config[field]
@@ -49,6 +52,13 @@ class SshAppView(AppView):
             privileged.set_password_authentication(
                 not new_config['password_auth_disabled'])
             service_privileged.reload('ssh')
+            updated = True
+
+        if is_field_changed('allow_all'):
+            privileged.restrict_users(not new_config['allow_all'])
+            updated = True
+
+        if updated:
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)

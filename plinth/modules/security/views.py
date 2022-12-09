@@ -11,7 +11,6 @@ from plinth.modules.upgrades import is_backports_requested
 from plinth.privileged import service as service_privileged
 from plinth.views import AppView
 
-from . import privileged
 from .forms import SecurityForm
 
 
@@ -43,30 +42,18 @@ class SecurityAppView(AppView):
 
 def get_status(request):
     """Return the current status."""
-    return {
-        'restricted_access': privileged.get_restricted_access_enabled(),
-        'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')
-    }
+    return {'fail2ban_enabled': action_utils.service_is_enabled('fail2ban')}
 
 
 def _apply_changes(request, old_status, new_status):
     """Apply the form changes."""
-    if old_status['restricted_access'] != new_status['restricted_access']:
-        try:
-            security.set_restricted_access(new_status['restricted_access'])
-        except Exception as exception:
-            messages.error(
-                request,
-                _('Error setting restricted access: {exception}').format(
-                    exception=exception))
-        else:
-            messages.success(request, _('Updated security configuration'))
-
     if old_status['fail2ban_enabled'] != new_status['fail2ban_enabled']:
         if new_status['fail2ban_enabled']:
             service_privileged.enable('fail2ban')
         else:
             service_privileged.disable('fail2ban')
+
+        messages.success(request, _('Configuration updated.'))
 
 
 def report(request):

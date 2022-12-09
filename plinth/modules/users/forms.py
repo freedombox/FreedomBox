@@ -18,7 +18,6 @@ from django.utils.translation import gettext_lazy
 import plinth.forms
 import plinth.modules.ssh.privileged as ssh_privileged
 from plinth.modules import first_boot
-from plinth.modules.security import set_restricted_access
 from plinth.utils import is_user_admin
 
 from . import get_last_admin_user, privileged
@@ -391,15 +390,6 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
 
             self.login_user(self.cleaned_data['username'],
                             self.cleaned_data['password1'])
-
-            # Restrict console login to users in admin or sudo group
-            try:
-                set_restricted_access(True)
-            except Exception as error:
-                messages.error(
-                    self.request,
-                    _('Failed to restrict console access: {error}'.format(
-                        error=error)))
 
         return user
 

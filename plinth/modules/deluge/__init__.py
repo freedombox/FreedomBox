@@ -8,7 +8,8 @@ from plinth import frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import Firewall
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
@@ -29,7 +30,7 @@ class DelugeApp(app_module.App):
 
     app_id = 'deluge'
 
-    _version = 6
+    _version = 7
 
     def __init__(self):
         """Create components for the app."""
@@ -67,6 +68,10 @@ class DelugeApp(app_module.App):
         firewall = Firewall('firewall-deluge', info.name,
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
+
+        firewall_local_protection = FirewallLocalProtection(
+            'firewall-local-protection-deluge', ['8112'])
+        self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-deluge', 'deluge-plinth',
                               urls=['https://{host}/deluge'])

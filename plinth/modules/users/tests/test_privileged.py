@@ -13,7 +13,6 @@ import subprocess
 import pytest
 
 from plinth import action_utils
-from plinth.modules.security import privileged as security_privileged
 from plinth.modules.users import privileged
 from plinth.tests import config as test_config
 
@@ -85,18 +84,6 @@ def _try_login_to_ssh(username, password, returncode=0):
     process = subprocess.run(command, stdout=subprocess.DEVNULL,
                              stderr=subprocess.DEVNULL, check=False)
     return process.returncode == returncode
-
-
-@pytest.fixture(name='disable_restricted_access', autouse=True)
-def fixture_disable_restricted_access(needs_root, load_cfg):
-    """Disable console login restrictions."""
-    restricted_access = security_privileged.get_restricted_access_enabled()
-    if restricted_access:
-        security_privileged.disable_restricted_access()
-        yield
-        security_privileged.enable_restricted_access()
-    else:
-        yield
 
 
 @pytest.fixture(name='auto_cleanup_users_groups', autouse=True)
