@@ -246,7 +246,7 @@ def test_change_other_users_password_as_non_admin():
     username2, _ = _create_user()
     new_password = 'pass $123'
 
-    with pytest.raises(subprocess.CalledProcessError):
+    with pytest.raises(PermissionError):
         privileged.set_user_password(username2, new_password, username1,
                                      password1)
 
@@ -326,8 +326,7 @@ def test_groups():
     groupname = _random_string()
 
     _create_group(groupname)
-    with pytest.raises(subprocess.CalledProcessError):
-        subprocess.run(['ldapgid', groupname], check=True)
+    subprocess.run(['ldapgid', groupname], check=True)
 
     # create-group is idempotent
     privileged.create_group(groupname)
