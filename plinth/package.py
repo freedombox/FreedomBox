@@ -170,6 +170,13 @@ class Packages(app.FollowerComponent):
 
     def setup(self, old_version):
         """Install the packages."""
+        packages_to_remove = self.find_conflicts()
+        if packages_to_remove and \
+           self.conflicts_action not in (None, self.ConflictsAction.IGNORE):
+            logger.info('Removing conflicting packages: %s',
+                        packages_to_remove)
+            uninstall(packages_to_remove)
+
         install(self.get_actual_packages(),
                 skip_recommends=self.skip_recommends)
 

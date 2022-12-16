@@ -114,6 +114,36 @@ def test_packages_setup(install):
     install.assert_has_calls([call(['python3'], skip_recommends=False)])
 
 
+@patch('plinth.package.packages_installed')
+@patch('plinth.package.uninstall')
+@patch('plinth.package.install')
+def test_packages_setup_with_conflicts(install, uninstall, packages_installed):
+    """Test setting up packages with conflicts."""
+    packages_installed.return_value = ['exim4-base']
+
+    component = Packages('test-component', ['bash'], conflicts=['exim4-base'],
+                         conflicts_action=Packages.ConflictsAction.REMOVE)
+    component.setup(old_version=0)
+    uninstall.assert_has_calls([call(['exim4-base'])])
+    install.assert_has_calls([call(['bash'], skip_recommends=False)])
+
+    uninstall.reset_mock()
+    install.reset_mock()
+    component = Packages('test-component', ['bash'], conflicts=['exim4-base'])
+    component.setup(old_version=0)
+    uninstall.assert_not_called()
+    install.assert_has_calls([call(['bash'], skip_recommends=False)])
+
+    uninstall.reset_mock()
+    install.reset_mock()
+    component = Packages('test-component', ['bash'],
+                         conflicts=['exim4-base', 'not-installed-package'],
+                         conflicts_action=Packages.ConflictsAction.IGNORE)
+    component.setup(old_version=0)
+    uninstall.assert_not_called()
+    install.assert_has_calls([call(['bash'], skip_recommends=False)])
+
+
 @patch('plinth.package.uninstall')
 def test_packages_uninstall(uninstall):
     """Test uninstalling packages component."""
