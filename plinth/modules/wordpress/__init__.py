@@ -81,7 +81,9 @@ class WordPressApp(app_module.App):
                 'php-zip',
                 # WordPress only supports MySQL/MariaDB as DB
                 'default-mysql-server',
-            ])
+            ],
+            conflicts=['libpam-tmpdir'],
+            conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
 
         firewall = Firewall('firewall-wordpress', info.name,
