@@ -379,15 +379,11 @@ def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
 
     with open(SOURCES_LIST, 'w', encoding='utf-8') as sources_list:
         for line in lines:
-            # E.g. replace 'buster' with 'bullseye'.
+            # E.g. replace 'bullseye' with 'bookworm'.
             new_line = line.replace(dist, codename)
             if check_dist == 'testing':
-                # E.g. replace 'stable' with 'bullseye'.
+                # E.g. replace 'stable' with 'bookworm'.
                 new_line = new_line.replace('stable', codename)
-
-            # Security suite name renamed starting with bullseye
-            if 'security' in new_line:
-                new_line = new_line.replace('/updates', '-security')
 
             sources_list.write(new_line)
 
