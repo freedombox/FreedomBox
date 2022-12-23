@@ -7,10 +7,10 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
+from plinth.modules import firewall
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.firewall.components import (Firewall,
-                                                FirewallLocalProtection)
+from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version
@@ -34,7 +34,7 @@ class MiniDLNAApp(app_module.App):
 
     app_id = 'minidlna'
 
-    _version = 3
+    _version = 4
 
     def __init__(self):
         """Initialize the app components."""
@@ -75,10 +75,6 @@ class MiniDLNAApp(app_module.App):
                             is_external=False)
         self.add(firewall)
 
-        firewall_local_protection = FirewallLocalProtection(
-            'firewall-local-protection-minidlna', ['8200'])
-        self.add(firewall_local_protection)
-
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
                               urls=['https://{host}/_minidlna/'])
         self.add(webserver)
@@ -98,6 +94,14 @@ class MiniDLNAApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup()
+        if old_version == 3:
+            # Version 3 of the app incorrectly declared port 8200 for firewall
+            # local protection.
+            firewall.remove_passthrough('ipv6', '-A', 'INPUT', '-p', 'tcp',
+                                        '--dport', '8200', '-j', 'REJECT')
+            firewall.remove_passthrough('ipv4', '-A', 'INPUT', '-p', 'tcp',
+                                        '--dport', '8200', '-j', 'REJECT')
+
         if not old_version:
             self.enable()
 

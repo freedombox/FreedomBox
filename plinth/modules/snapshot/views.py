@@ -58,6 +58,13 @@ class SnapshotAppView(AppView):
     template_name = 'snapshot.html'
     form_class = SnapshotForm
 
+    def dispatch(self, request, *args, **kwargs):
+        """If snapshots are not supported, use a different view."""
+        if not snapshot_module.is_supported():
+            return not_supported_view(request)
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()

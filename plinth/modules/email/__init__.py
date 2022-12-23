@@ -15,7 +15,7 @@ from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 from plinth.modules.letsencrypt.components import LetsEncrypt
-from plinth.package import Packages, uninstall
+from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
@@ -97,7 +97,7 @@ class EmailApp(plinth.app.App):
                 'dovecot-lmtpd', 'dovecot-managesieved', 'dovecot-ldap',
                 'rspamd', 'redis-server', 'openssl'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
-            conflicts_action=Packages.ConflictsAction.IGNORE)
+            conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
@@ -171,17 +171,7 @@ class EmailApp(plinth.app.App):
 
     def setup(self, old_version):
         """Install and configure the app."""
-
-        def _clear_conflicts():
-            component = self.get_component('packages-email')
-            packages_to_remove = component.find_conflicts()
-            if packages_to_remove:
-                logger.info('Removing conflicting packages: %s',
-                            packages_to_remove)
-                uninstall(packages_to_remove)
-
         # Install
-        _clear_conflicts()
         super().setup(old_version)
 
         # Setup
