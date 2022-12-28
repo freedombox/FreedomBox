@@ -13,7 +13,7 @@ from typing import Any, Optional
 from plinth import action_utils
 from plinth.actions import privileged
 from plinth.modules.gitweb.forms import RepositoryValidator, get_name_from_url
-from plinth.modules.gitweb.manifest import GIT_REPO_PATH
+from plinth.modules.gitweb.manifest import GIT_REPO_PATH, REPO_DIR_OWNER
 
 logger = logging.getLogger(__name__)
 
@@ -166,8 +166,9 @@ def _clone_repo(url: str, description: str, owner: str, keep_ownership: bool):
 
     shutil.rmtree(repo_temp_path)
     if not keep_ownership:
-        subprocess.check_call(['chown', '-R', 'www-data:www-data', repo],
-                              cwd=GIT_REPO_PATH)
+        subprocess.check_call(
+            ['chown', '-R', f'{REPO_DIR_OWNER}:{REPO_DIR_OWNER}', repo],
+            cwd=GIT_REPO_PATH)
 
     _set_repo_description(repo, description)
     _set_repo_owner(repo, owner)
@@ -180,8 +181,9 @@ def _create_repo(repo: str, description: str, owner: str, is_private: bool,
         subprocess.check_call(['git', 'init', '-q', '--bare', repo],
                               cwd=GIT_REPO_PATH)
         if not keep_ownership:
-            subprocess.check_call(['chown', '-R', 'www-data:www-data', repo],
-                                  cwd=GIT_REPO_PATH)
+            subprocess.check_call(
+                ['chown', '-R', f'{REPO_DIR_OWNER}:{REPO_DIR_OWNER}', repo],
+                cwd=GIT_REPO_PATH)
         _set_repo_description(repo, description)
         _set_repo_owner(repo, owner)
         if is_private:
