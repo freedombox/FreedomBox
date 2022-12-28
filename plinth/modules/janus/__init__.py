@@ -97,9 +97,9 @@ class JanusApp(app_module.App):
         if 'janus' not in packages:
             return False
 
-        # Allow upgrades within 1.0.*
+        # Allow upgrades within 1.0.* and 1.1.*
         package = packages['janus']
-        if Version(package['new_version']) > Version('1.1~'):
+        if Version(package['new_version']) > Version('1.2~'):
             return False
 
         install(['janus'], force_configuration='new')
