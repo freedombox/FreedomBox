@@ -12,7 +12,7 @@ from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 import plinth.privileged.packages as privileged
-from plinth import app
+from plinth import app as app_module
 from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
@@ -94,7 +94,7 @@ class PackageOr(PackageExpression):
             return self.package2.actual()
 
 
-class Packages(app.FollowerComponent):
+class Packages(app_module.FollowerComponent):
     """Component to manage the packages of an app.
 
     This component is responsible for installation, upgrades and uninstallation
@@ -182,7 +182,23 @@ class Packages(app.FollowerComponent):
 
     def uninstall(self):
         """Uninstall and purge the packages."""
-        uninstall(self.get_actual_packages())
+        packages = self.get_actual_packages()
+        packages_set = set(packages)
+        for app in app_module.App.list():
+            # uninstall() will be called on Packages of this app separately
+            # for uninstalling this app.
+            if app == self.app:
+                continue
+
+            if app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP:
+                continue
+
+            # Remove packages used by other installed apps
+            for component in app.get_components_of_type(Packages):
+                packages_set -= set(component.get_actual_packages())
+
+        # Preserve order of packages for ease of testing
+        uninstall([package for package in packages if package in packages_set])
 
     def diagnose(self):
         """Run diagnostics and return results."""

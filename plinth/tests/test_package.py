@@ -13,6 +13,12 @@ from plinth.errors import MissingPackageError
 from plinth.package import Package, Packages, packages_installed
 
 
+@pytest.fixture(autouse=True)
+def fixture_clean_apps():
+    """Fixture to ensure clean set of global apps."""
+    App._all_apps = {}
+
+
 class TestPackageExpressions(unittest.TestCase):
 
     def test_package(self):
@@ -157,6 +163,64 @@ def test_packages_uninstall(uninstall):
     app.add(component)
     app.uninstall()
     uninstall.assert_has_calls([call(['python3', 'bash'])])
+
+
+@patch('plinth.package.uninstall')
+@patch('apt.Cache')
+def test_packages_uninstall_exclusion(cache, uninstall):
+    """Test excluding packages from other installed apps when uninstalling."""
+    cache.return_value = {
+        'package11': Mock(candidate=Mock(version='2.0', is_installed=True)),
+        'package12': Mock(candidate=Mock(version='3.0', is_installed=False)),
+        'package2': Mock(candidate=Mock(version='4.0', is_installed=True)),
+        'package3': Mock(candidate=Mock(version='5.0', is_installed=True)),
+    }
+
+    class TestApp1(App):
+        """Test app."""
+        app_id = 'test-app1'
+
+        def __init__(self):
+            super().__init__()
+            component = Packages('test-component11',
+                                 ['package11', 'package2', 'package3'])
+            self.add(component)
+
+            component = Packages('test-component12',
+                                 ['package12', 'package2', 'package3'])
+            self.add(component)
+
+    class TestApp2(App):
+        """Test app."""
+        app_id = 'test-app2'
+
+        def __init__(self):
+            super().__init__()
+            component = Packages('test-component2', ['package2'])
+            self.add(component)
+
+        def get_setup_state(self):
+            return App.SetupState.UP_TO_DATE
+
+    class TestApp3(App):
+        """Test app."""
+        app_id = 'test-app3'
+
+        def __init__(self):
+            super().__init__()
+            component = Packages('test-component3', ['package3'])
+            self.add(component)
+
+        def get_setup_state(self):
+            return App.SetupState.NEEDS_SETUP
+
+    app1 = TestApp1()
+    TestApp2()
+    TestApp3()
+    app1.uninstall()
+    uninstall.assert_has_calls(
+        [call(['package11', 'package3']),
+         call(['package12', 'package3'])])
 
 
 @patch('apt.Cache')
