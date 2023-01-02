@@ -67,7 +67,7 @@ class ZophApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-zoph', ['zoph'],
+        packages = Packages('packages-zoph', ['zoph', 'default-mysql-server'],
                             conflicts=['libpam-tmpdir'],
                             conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
