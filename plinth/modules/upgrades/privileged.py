@@ -12,7 +12,8 @@ from typing import List, Tuple, Union
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
                                  is_package_manager_busy, run_apt_command,
-                                 service_daemon_reload, service_restart)
+                                 service_daemon_reload, service_is_running,
+                                 service_restart, service_start, service_stop)
 from plinth.actions import privileged
 from plinth.modules.apache.components import check_url
 from plinth.modules.snapshot import is_apt_snapshots_enabled
@@ -469,6 +470,15 @@ def _perform_dist_upgrade():
     reenable_snapshots = _take_snapshot_and_disable()
     reenable_searx = _disable_searx()
 
+    # If quassel is running during dist upgrade, it may be restarted
+    # several times. This causes IRC users to rapidly leave/join
+    # channels. Stop quassel for the duration of the dist upgrade.
+    quassel_service = 'quasselcore'
+    quassel_was_running = service_is_running(quassel_service)
+    if quassel_was_running:
+        print('Stopping quassel service before dist upgrade...', flush=True)
+        service_stop(quassel_service)
+
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
     with apt_hold_freedombox():
@@ -511,6 +521,11 @@ def _perform_dist_upgrade():
             run_apt_command(['full-upgrade'])
 
         _update_searx(reenable_searx)
+
+        if quassel_was_running:
+            print('Re-starting quassel service after dist upgrade...',
+                  flush=True)
+            service_start(quassel_service)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
