@@ -58,11 +58,11 @@ def setup():
 
 @privileged
 def restrict_users(should_restrict: bool):
-    """Restrict SSH logins to groups root, admin and freedombox-ssh."""
+    """Restrict SSH logins to groups root, sudo, admin and freedombox-ssh."""
     if not should_restrict:
         config_file.unlink(missing_ok=True)
     else:
-        config_file.write_text('AllowGroups root admin freedombox-ssh\n',
+        config_file.write_text('AllowGroups root sudo admin freedombox-ssh\n',
                                encoding='utf-8')
 
     action_utils.service_reload('sshd')
