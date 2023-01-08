@@ -14,7 +14,7 @@ from ..notification import Notification
 from ..operation import Operation, OperationsManager
 
 
-class TestApp(app.App):
+class AppTest(app.App):
     app_id = 'testapp'
 
     def __init__(self):
@@ -207,7 +207,7 @@ def test_message(app_get):
 @pytest.mark.django_db
 def test_update_notification(app_get):
     """Test that operation notification is created."""
-    app_get.return_value = TestApp()
+    app_get.return_value = AppTest()
     operation = Operation('testapp', 'op1', Mock(), show_notification=True)
     note = Notification.get('testapp-operation')
     assert note.id == 'testapp-operation'

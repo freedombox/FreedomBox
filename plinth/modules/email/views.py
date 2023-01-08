@@ -25,14 +25,22 @@ class EmailAppView(AppView):
     def get_context_data(self, **kwargs):
         """Add additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['dns_entries'] = dns.get_entries()
+        try:  # Handle error during uninstall of app
+            context['dns_entries'] = dns.get_entries()
+        except FileNotFoundError:
+            pass
+
         return context
 
     def get_initial(self):
         """Return the initial values to populate in the form."""
         initial = super().get_initial()
-        domains = privileged.domain.get_domains()
-        initial['primary_domain'] = domains['primary_domain']
+        try:  # Handle error during uninstall of app
+            domains = privileged.domain.get_domains()
+            initial['primary_domain'] = domains['primary_domain']
+        except FileNotFoundError:
+            pass
+
         return initial
 
     def form_valid(self, form):

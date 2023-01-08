@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 CONFIG_FILE = '/etc/gitweb-freedombox.conf'
 GIT_REPO_PATH = '/var/lib/git'
+REPO_DIR_OWNER = 'www-data'
 
 clients = [
     {

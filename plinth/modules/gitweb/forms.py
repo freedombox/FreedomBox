@@ -14,11 +14,12 @@ from django.utils.translation import gettext_lazy as _
 from plinth.modules import gitweb
 
 from . import privileged
+from .manifest import REPO_DIR_OWNER
 
 
 def _get_branches(repo):
     """Get all the branches in the repository."""
-    branch_data = privileged.get_branches(repo)
+    branch_data = privileged.get_branches(repo, _run_as_user=REPO_DIR_OWNER)
     default_branch = branch_data['default_branch']
     branches = branch_data['branches']
 

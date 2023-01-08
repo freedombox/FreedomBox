@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-19 20:15-0500\n"
-"PO-Revision-Date: 2022-09-14 17:19+0000\n"
-"Last-Translator: ikmaak <info@ikmaak.nl>\n"
+"POT-Creation-Date: 2023-01-03 10:41-0500\n"
+"PO-Revision-Date: 2023-01-01 18:49+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -54,17 +54,17 @@ msgstr "No se pudo conectar a {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "Copia de seguridad de la aplicación antes de desinstalarla"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
 msgstr ""
+"La restauración desde la copia de seguridad restaurará los datos de la "
+"aplicación."
 
 #: plinth/forms.py:39
-#, fuzzy
-#| msgid "Repository not found"
 msgid "Repository to backup to"
-msgstr "Repositorio no encontrado"
+msgstr "Repositorio en el que hacer la copia de seguridad"
 
 #: plinth/forms.py:56
 msgid "Select a domain name to be used with this application"
@@ -489,9 +489,9 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"Las credenciales para este repositorio están almacenadas en su %(box_name)s. "
-"<br> Para restaurar una copia de respaldo en una nueva %(box_name)s "
-"necesitas las credenciales SSH, y opcionalmente la contraseña de cifrado."
+"Las credenciales para este archivo se almacenan en sus %(box_name)s. <br> "
+"Para restaurar una copia de seguridad a un nuevo %(box_name)s, necesita las "
+"credenciales SSH y, si se selecciona, la frase de contraseña de cifrado."
 
 #: plinth/modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -910,7 +910,7 @@ msgstr "Admin"
 msgid "Configuration updated."
 msgstr "Configuración actualizada."
 
-#: plinth/modules/bepasty/views.py:91 plinth/modules/email/views.py:48
+#: plinth/modules/bepasty/views.py:91 plinth/modules/email/views.py:56
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:38
 #: plinth/modules/searx/views.py:49 plinth/modules/zoph/views.py:74
 msgid "An error occurred during configuration."
@@ -1001,7 +1001,7 @@ msgstr "Actualizar direcciones IP y dominios"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:128
+#: plinth/modules/email/views.py:53 plinth/modules/matrixsynapse/views.py:128
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1389,7 +1389,7 @@ msgstr "Asistente VoIP"
 
 #: plinth/modules/coturn/forms.py:22
 msgid "Invalid list of STUN/TURN Server URIs"
-msgstr "Lista de URIs de servidores STUN/TURN inválidas"
+msgstr "Lista de URIS del servidor Stun/Turn no válida"
 
 #: plinth/modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
@@ -1559,7 +1559,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"          App: %(app_name)s\n"
+"          Aplicación: %(app_name)s\n"
 "        "
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
@@ -1755,7 +1755,7 @@ msgstr "Use IPv6 en vez de IPv4"
 
 #: plinth/modules/dynamicdns/forms.py:123
 msgid "This field is required."
-msgstr "Este campo es obligatorio."
+msgstr "Este es un campo obligatorio."
 
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:11
 #: plinth/modules/ejabberd/templates/ejabberd.html:13
@@ -1919,7 +1919,7 @@ msgstr "Secreto compartido para resolver contraseñas para el servidor TURN."
 
 #: plinth/modules/ejabberd/manifest.py:10
 msgid "Conversations"
-msgstr "Conversations"
+msgstr "Conversaciones"
 
 #: plinth/modules/ejabberd/manifest.py:24
 msgid "Xabber"
@@ -2130,7 +2130,7 @@ msgstr "TTL"
 
 #: plinth/modules/email/templates/email.html:37
 msgid "Class"
-msgstr "Class"
+msgstr "Clase"
 
 #: plinth/modules/email/templates/email.html:39
 msgid "Priority"
@@ -2313,7 +2313,7 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Acceso de lectura y escritura para repositorios Git"
 
-#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:10
+#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "Gitweb"
 
@@ -2321,60 +2321,60 @@ msgstr "Gitweb"
 msgid "Simple Git Hosting"
 msgstr "Alojamiento simple para Git"
 
-#: plinth/modules/gitweb/forms.py:58
+#: plinth/modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
 msgstr "URL de repositorio no válida."
 
-#: plinth/modules/gitweb/forms.py:68
+#: plinth/modules/gitweb/forms.py:69
 msgid "Invalid repository name."
 msgstr "Nombre de repositorio no válido."
 
-#: plinth/modules/gitweb/forms.py:76
+#: plinth/modules/gitweb/forms.py:77
 msgid "Name of a new repository or URL to import an existing repository."
 msgstr ""
 "Nombre de un nuevo repositorio o URL para importar un repositorio existente."
 
-#: plinth/modules/gitweb/forms.py:82
+#: plinth/modules/gitweb/forms.py:83
 msgid "Description of the repository"
 msgstr "Descripción del repositorio"
 
-#: plinth/modules/gitweb/forms.py:83 plinth/modules/gitweb/forms.py:87
+#: plinth/modules/gitweb/forms.py:84 plinth/modules/gitweb/forms.py:88
 msgid "Optional, for displaying on Gitweb."
 msgstr "Opcional, para mostrar en Gitweb."
 
-#: plinth/modules/gitweb/forms.py:85
+#: plinth/modules/gitweb/forms.py:86
 msgid "Repository's owner name"
 msgstr "Nombre del dueño del repositorio"
 
-#: plinth/modules/gitweb/forms.py:90
+#: plinth/modules/gitweb/forms.py:91
 msgid "Private repository"
 msgstr "Repositorio privado"
 
-#: plinth/modules/gitweb/forms.py:91
+#: plinth/modules/gitweb/forms.py:92
 msgid "Allow only authorized users to access this repository."
 msgstr "Permitir acceder a este repositorio sólo a usuarios autorizados."
 
-#: plinth/modules/gitweb/forms.py:112 plinth/modules/gitweb/forms.py:154
+#: plinth/modules/gitweb/forms.py:113 plinth/modules/gitweb/forms.py:155
 msgid "A repository with this name already exists."
 msgstr "Ya existe un repositorio con este nombre."
 
-#: plinth/modules/gitweb/forms.py:125
+#: plinth/modules/gitweb/forms.py:126
 msgid "Name of the repository"
 msgstr "Nombre del repositorio"
 
-#: plinth/modules/gitweb/forms.py:129
+#: plinth/modules/gitweb/forms.py:130
 msgid "An alpha-numeric string that uniquely identifies a repository."
 msgstr "Una cadena alfanumérica que identifica unívocamente un repositorio."
 
-#: plinth/modules/gitweb/forms.py:133
+#: plinth/modules/gitweb/forms.py:134
 msgid "Default branch"
 msgstr "Rama por omisión"
 
-#: plinth/modules/gitweb/forms.py:134
+#: plinth/modules/gitweb/forms.py:135
 msgid "Gitweb displays this as a default branch."
 msgstr "Gitweb muestra esta rama por omisión."
 
-#: plinth/modules/gitweb/manifest.py:18
+#: plinth/modules/gitweb/manifest.py:19
 msgid "Git"
 msgstr "Git"
 
@@ -4929,12 +4929,11 @@ msgid ""
 "You can also access the rest of the Internet via {box_name} for added "
 "security and anonymity."
 msgstr ""
-"Una red privada virtual (VPN, Virtual Private Network) es una tecnología que "
-"permite conectar de forma segura dos dispositivos para acceder de forma "
-"protegida a una red privada. Al estar lejos de casa puede conectarse a su "
-"{box_name} para acceder a su red local y a los servicios de {box_name} de "
-"forma privada. También puede acceder a Internet a través de su {box_name} "
-"para añadir protección y anonimato."
+"La red privada virtual (VPN) es una técnica para conectar de forma segura "
+"dos dispositivos para acceder a los recursos de una red privada. Mientras "
+"esté fuera de casa, puede conectarse a su {box_name} para acceder a su red "
+"local y a los servicios proporcionados por {box_name}. También puede acceder "
+"al resto de Internet a través de {box_name} para mayor seguridad y anonimato."
 
 #: plinth/modules/openvpn/__init__.py:43
 msgid "Connect to VPN services"
@@ -4965,30 +4964,24 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: plinth/modules/openvpn/templates/openvpn.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "To connect to %(box_name)s's VPN, you need to download a profile and feed "
-#| "it to an OpenVPN client on your mobile or desktop machine.  OpenVPN "
-#| "Clients are available for most platforms.  Click \"Learn more...\" above "
-#| "for recommended clients and instructions on how to configure them."
+#, python-format
 msgid ""
 "To connect to %(box_name)s's VPN, you need to download a profile and feed it "
 "to an OpenVPN client on your mobile or desktop machine. OpenVPN Clients are "
 "available for most platforms. Click \"Learn more...\" above for recommended "
 "clients and instructions on how to configure them."
 msgstr ""
-"Para conectar a la VPN de %(box_name)s necesita descargar un perfil y "
-"añadirlo a un cliente OpenVPN en su ordenador de escritorio o móvil.  Hay "
-"clientes OpenVPN para la mayoría de las plataformas.  Haga clic en "
-"\"Aprender más...\" para  información sobre los clientes recomendados y cómo "
-"configurarlos."
+"Para conectarse a la VPN de %(box_name)s, debe descargar un archivo de "
+"configuración y proporcionarlo al cliente OpenVPN en su computadora de "
+"escritorio o móvil. Los clientes de OpenVPN están disponibles para la "
+"mayoría de las plataformas. Para ver los clientes recomendados y las "
+"instrucciones de configuración, haga clic en \"Más información...\" arriba."
 
 #: plinth/modules/openvpn/templates/openvpn.html:24
-#, fuzzy, python-format
-#| msgid "Profile is specific to each user of %(box_name)s.  Keep it a secret."
+#, python-format
 msgid "Profile is specific to each user of %(box_name)s. Keep it a secret."
 msgstr ""
-"El perfil es específico de cada usuaria/o de %(box_name)s. Manténgalo en "
+"El perfil es específico para cada usuario de %(box_name)s. Manténgalo en "
 "secreto."
 
 #: plinth/modules/openvpn/templates/openvpn.html:34
@@ -5300,25 +5293,24 @@ msgstr "Apagar ahora"
 
 #: plinth/modules/privacy/__init__.py:14
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Gestionar la configuración de la privacidad de todo el sistema."
 
 #: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
-#, fuzzy
-#| msgid "Privoxy"
 msgid "Privacy"
-msgstr "Privoxy"
+msgstr "Privacidad"
 
 #: plinth/modules/privacy/__init__.py:61
 msgid "Please update privacy settings to match your preferences."
-msgstr ""
+msgstr "Por favor, compruebe la configuración de privacidad."
 
 #: plinth/modules/privacy/__init__.py:66
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Revisar la configuración de la privacidad"
 
 #: plinth/modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
 msgstr ""
+"Presentar periódicamente una lista de las aplicaciones utilizadas (sugerido)"
 
 #: plinth/modules/privacy/forms.py:17
 #, python-brace-format
@@ -5330,6 +5322,13 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Ayude a los desarrolladores de Debian/{box_name} participando en el programa "
+"de encuestas del paquete Popularity Contest. Si está habilitado, una lista "
+"de las aplicaciones utilizadas en este sistema se envía de forma anónima a "
+"Debian cada semana. Las estadísticas de los datos recopilados están "
+"disponibles públicamente en <a href=\"https://popcon.debian.org/\" target="
+"\"_blank\">popcon.debian.org</a>. La transmisión se realiza a través de la "
+"red Tor para mayor anonimato cuando la aplicación Tor está habilitada."
 
 #: plinth/modules/privoxy/__init__.py:23
 msgid ""
@@ -6434,10 +6433,8 @@ msgid "Secure Shell (SSH) Server"
 msgstr "Servidor de intérprete de órdenes seguro (SSH)"
 
 #: plinth/modules/ssh/__init__.py:61
-#, fuzzy
-#| msgid "Secure Shell (SSH)"
 msgid "Remotely login using Secure Shell (SSH)"
-msgstr "Intérprete de órdenes seguro (SSH)"
+msgstr "Inicio de sesión remoto mediante Secure Shell (SSH)"
 
 #: plinth/modules/ssh/forms.py:13
 msgid "Disable password authentication"
@@ -6455,7 +6452,7 @@ msgstr ""
 
 #: plinth/modules/ssh/forms.py:21
 msgid "Allow all users to login remotely"
-msgstr ""
+msgstr "Permitir a todos los usuarios iniciar sesión de forma remota"
 
 #: plinth/modules/ssh/forms.py:22
 msgid ""
@@ -6463,6 +6460,9 @@ msgid ""
 "disabled, only users of groups root, admin and freedombox-ssh can login via "
 "SSH."
 msgstr ""
+"Permita que todos los usuarios que tengan una cuenta válida inicien sesión "
+"de forma remota a través de SSH. Si está deshabilitado, solo los usuarios "
+"root, admin y freedombox-ssh pueden iniciar sesión a través de SSH."
 
 #: plinth/modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
@@ -6814,24 +6814,24 @@ msgstr "Proxy Socks para Tor"
 msgid "Tor Bridge Relay"
 msgstr "Puente de retransmisión Tor"
 
-#: plinth/modules/tor/__init__.py:127
+#: plinth/modules/tor/__init__.py:131
 msgid "Tor relay port available"
 msgstr "Puerto de servidor Tor disponible"
 
-#: plinth/modules/tor/__init__.py:137
+#: plinth/modules/tor/__init__.py:141
 msgid "Obfs3 transport registered"
 msgstr "Transporte Obfs3 registrado"
 
-#: plinth/modules/tor/__init__.py:147
+#: plinth/modules/tor/__init__.py:151
 msgid "Obfs4 transport registered"
 msgstr "Transporte Obfs4 registrado"
 
-#: plinth/modules/tor/__init__.py:212
+#: plinth/modules/tor/__init__.py:228
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Acceso a URL {url} sobre tcp {kind} vía Tor"
 
-#: plinth/modules/tor/__init__.py:223
+#: plinth/modules/tor/__init__.py:239
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Confirmar uso de Tor en {url} sobre tcp {kind}"
@@ -6936,11 +6936,11 @@ msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
 "Especifique al menos un puente de subida para usar los puentes de subida."
 
-#: plinth/modules/tor/manifest.py:13
+#: plinth/modules/tor/manifest.py:15
 msgid "Tor Browser"
 msgstr "Navegador Tor"
 
-#: plinth/modules/tor/manifest.py:29
+#: plinth/modules/tor/manifest.py:31
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Proxy con Tor"
 
@@ -6953,16 +6953,13 @@ msgid "Ports"
 msgstr "Puertos"
 
 #: plinth/modules/tor/views.py:53
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "Updating configuration"
-msgstr "Ha habido un error en la configuración."
+msgstr "Actualizando la configuración"
 
 #: plinth/modules/tor/views.py:70
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error configuring app: {error}"
-msgstr "Error al actualizar la app: {error}"
+msgstr "Error al configurar la aplicación: {error}"
 
 #: plinth/modules/transmission/__init__.py:24
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7275,22 +7272,20 @@ msgid "Show recent update logs"
 msgstr "Mostrar los registros de las actualizaciones recientes"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:138
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test Distribution Upgrade"
-msgstr "Actualización automática de distibución activada"
+msgstr "Prueba de la actualización de la distribución"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:140
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
+"Esto intentará actualizar el sistema de estable a prueba. <strong>Está "
+"destinado únicamente a fines de desarrollo.</strong>"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:150
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Test distribution upgrade now"
-msgstr "Actualización automática de distibución activada"
+msgstr "Pruebe la actualización de distribución ahora"
 
 #: plinth/modules/upgrades/views.py:71
 #, python-brace-format
@@ -7326,10 +7321,8 @@ msgid "Frequent feature updates activated."
 msgstr "Las actualizaciones funcionales frecuentes están activadas."
 
 #: plinth/modules/upgrades/views.py:224
-#, fuzzy
-#| msgid "Distribution upgrade enabled"
 msgid "Starting distribution upgrade test."
-msgstr "Actualización automática de distibución activada"
+msgstr "Comenzando la prueba de la actualización de la distribución."
 
 #: plinth/modules/users/__init__.py:28
 msgid ""
@@ -7527,13 +7520,7 @@ msgid "The following administrator accounts exist in the system."
 msgstr "La siguiente cuenta de administración existe en el sistema."
 
 #: plinth/modules/users/templates/users_firstboot.html:50
-#, fuzzy, python-format
-#| msgid ""
-#| "Delete these accounts from command line and refresh the page to create an "
-#| "account that is usable with %(box_name)s. On the command line run the "
-#| "command 'echo \"{password}\" | /usr/share/plinth/actions/users remove-"
-#| "user {username}'. If an account is already usable with %(box_name)s, skip "
-#| "this step."
+#, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
 "account that is usable with %(box_name)s. On the command line run the "
@@ -7541,11 +7528,12 @@ msgid ""
 "sudo /usr/share/plinth/actions/actions users remove_user\". If an account is "
 "already usable with %(box_name)s, skip this step."
 msgstr ""
-"Si ya hay una cuenta usable con %(box_name)s sáltese este paso: Si no, "
-"elimine estas cuentas desde la línea de órdenes y refresque la página para "
-"crear una cuenta usable con %(box_name)s. Ejecute la órden 'echo "
-"\"{password}\" | /usr/share/plinth/actions/users remove-user {username}' en "
-"la línea de órdenes."
+"Elimine estas cuentas desde la línea de comando y actualice la página para "
+"crear una cuenta que se pueda usar con %(box_name)s. Desde la línea de "
+"comando, ejecute el comando: \"echo '{\"args\": [\"NOMBRE DE USUARIO\", "
+"\"CONTRASEÑA\"], \"kwargs\": {}}' | sudo /usr/share/plinth/actions/actions "
+"users remove_user\" . Si una cuenta ya se puede usar con %(box_name)s, omita "
+"este paso."
 
 #: plinth/modules/users/templates/users_list.html:11
 #: plinth/modules/users/views.py:64
@@ -8105,34 +8093,34 @@ msgstr "Esperando a empezar: {name}"
 msgid "Finished: {name}"
 msgstr "Terminó: {name}"
 
-#: plinth/package.py:195
+#: plinth/package.py:211
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr "El paquete {expression} no está disponible para instalar"
 
-#: plinth/package.py:208
+#: plinth/package.py:224
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "El paquete {package_name} es la última versión ({latest_version})"
 
-#: plinth/package.py:355
+#: plinth/package.py:371
 msgid "installing"
 msgstr "instalando"
 
-#: plinth/package.py:357
+#: plinth/package.py:373
 msgid "downloading"
 msgstr "descargando"
 
-#: plinth/package.py:359
+#: plinth/package.py:375
 msgid "media change"
 msgstr "cambio de medio"
 
-#: plinth/package.py:361
+#: plinth/package.py:377
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "archivo de configuración: {file}"
 
-#: plinth/package.py:389 plinth/package.py:414
+#: plinth/package.py:405 plinth/package.py:430
 msgid "Timeout waiting for package manager"
 msgstr "Tiempo máximo esperando al administrador de paquetes"
 
@@ -8177,22 +8165,18 @@ msgid "Uninstalling app"
 msgstr "Instalando app"
 
 #: plinth/setup.py:123
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {string} {details}"
+#, python-brace-format
 msgid "Error uninstalling app: {string} {details}"
-msgstr "Error al instalar la app: {string} {details}"
+msgstr "Error al desinstalar la aplicación: {string} {details}"
 
 #: plinth/setup.py:129
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {error}"
+#, python-brace-format
 msgid "Error uninstalling app: {error}"
-msgstr "Error al instalar la app: {error}"
+msgstr "Error desinstalando la aplicación: {error}"
 
 #: plinth/setup.py:132
-#, fuzzy
-#| msgid "App installed."
 msgid "App uninstalled."
-msgstr "App instalada."
+msgstr "Aplicación desinstalada."
 
 #: plinth/setup.py:452
 msgid "Updating app packages"
@@ -8259,6 +8243,9 @@ msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
+"FreedomBox es un servidor personal diseñado para la privacidad y la "
+"propiedad de los datos. Es un software gratuito que te permite instalar y "
+"gestionar aplicaciones de un servidor con facilidad."
 
 #: plinth/templates/base.html:110
 msgid " Home"
@@ -8556,26 +8543,25 @@ msgstr "Actualización"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 #: plinth/templates/uninstall.html:36
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Instalar"
+msgstr "Desinstalar"
 
 #: plinth/templates/uninstall.html:11
-#, fuzzy, python-format
-#| msgid "Edit User <em>%(username)s</em>"
+#, python-format
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "Editar el usuario <em>%(username)s</em>"
+msgstr "¿Desinstalar la aplicación <em>%(app_name)s</em>?"
 
 #: plinth/templates/uninstall.html:17
 msgid "Uninstalling an app is an exprimental feature."
-msgstr ""
+msgstr "Desinstalar una aplicación es una función experimental."
 
 #: plinth/templates/uninstall.html:23
 msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"Todos los datos de la aplicación y la configuración se perderán "
+"permanentemente. La aplicación se puede instalar de nuevo."
 
 #: plinth/views.py:221
 msgid "Setting unchanged"
@@ -8584,7 +8570,7 @@ msgstr "Configuración sin cambio"
 #: plinth/views.py:401
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "antes de desinstalar {app_id}"
 
 #: plinth/web_framework.py:114
 msgid "Gujarati"

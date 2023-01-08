@@ -8,7 +8,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
-from plinth.modules.apache.components import diagnose_url
+from plinth.modules.apache.components import Webserver, diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
@@ -37,7 +37,7 @@ class TorApp(app_module.App):
 
     app_id = 'tor'
 
-    _version = 5
+    _version = 6
 
     def __init__(self):
         """Create components for the app."""
@@ -80,6 +80,10 @@ class TorApp(app_module.App):
             listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
                           (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
         self.add(daemon)
+
+        webserver = Webserver('webserver-onion-location',
+                              'onion-location-freedombox')
+        self.add(webserver)
 
         users_and_groups = UsersAndGroups('users-and-groups-tor',
                                           reserved_usernames=['debian-tor'])
@@ -168,8 +172,20 @@ class TorApp(app_module.App):
         if not old_version:
             privileged.configure(apt_transport_tor=True)
 
-        update_hidden_service_domain()
-        self.enable()
+        update_hidden_service_domain(utils.get_status())
+
+        # Enable/disable Onion-Location component based on app status.
+        # Component was introduced in version 6.
+        if old_version and old_version < 6:
+            daemon_component = self.get_component('daemon-tor')
+            component = self.get_component('webserver-onion-location')
+            if daemon_component.is_enabled():
+                component.enable()
+            else:
+                component.disable()
+
+        if not old_version:
+            self.enable()
 
 
 def update_hidden_service_domain(status=None):
