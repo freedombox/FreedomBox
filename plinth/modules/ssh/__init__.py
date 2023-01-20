@@ -30,7 +30,7 @@ class SSHApp(app_module.App):
 
     app_id = 'ssh'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -73,6 +73,8 @@ class SSHApp(app_module.App):
         privileged.setup()
         if not old_version:
             self.enable()
+        elif old_version == 2 and privileged.are_users_restricted():
+            privileged.restrict_users(True)
         elif old_version == 1:
             privileged.restrict_users(True)
 
