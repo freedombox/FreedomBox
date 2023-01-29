@@ -4,6 +4,7 @@ Functional, browser based tests for upgrades app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.system, pytest.mark.essential, pytest.mark.upgrades]
@@ -51,8 +52,7 @@ def _enable_automatic(browser, should_enable):
     else:
         checkbox_element.uncheck()
 
-    update_setup = browser.find_by_css('.btn-primary')
-    functional.submit(browser, element=update_setup)
+    functional.submit(browser, form_class='form-configuration')
 
 
 def _get_automatic(browser):
