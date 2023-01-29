@@ -76,7 +76,7 @@ def test_domainname_field():
 def test_homepage_mapping():
     """Basic tests for homepage functions."""
     func = home_page_url2scid
-    assert func(None) is None
+    assert func(None) == 'plinth'
     assert func('/unknown/url') is None
     assert func('/plinth/') == 'plinth'
     assert func('/plinth') == 'plinth'

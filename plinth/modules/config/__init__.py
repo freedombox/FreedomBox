@@ -105,6 +105,12 @@ def get_hostname():
 
 def home_page_url2scid(url):
     """Return the shortcut ID of the given home page url."""
+    # url is None when the freedombox-apache-homepage configuration file does
+    # not exist. In this case, the default redirect in /plinth from the shipped
+    # configuration file is effective.
+    if url is None:
+        return 'plinth'
+
     if url in ('/plinth/', '/plinth', 'plinth'):
         return 'plinth'
 
