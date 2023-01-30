@@ -91,11 +91,11 @@ def make_request(request, view, **kwargs):
 
 def test_samba_shares_view(rf):
     """Test that a share list has correct view data."""
-    with patch('plinth.views.AppView.get_context_data', return_value={
-            'is_enabled': True
-    }), patch('plinth.modules.samba.get_users',
-              return_value=USERS), patch('plinth.modules.storage.get_mounts',
-                                         return_value=DISKS):
+    with (patch('plinth.views.AppView.get_context_data',
+                return_value={'is_enabled': True}),
+          patch('plinth.modules.samba.get_users', return_value=USERS),
+          patch('plinth.modules.storage.get_mounts', return_value=DISKS),
+          patch('plinth.views.AppView.app', return_value=None)):
         view = views.SambaAppView.as_view()
         response, _ = make_request(rf.get(''), view)
 

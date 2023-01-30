@@ -84,8 +84,9 @@ def make_request(request, view, as_admin=True, **kwargs):
 
 def test_users_list_view(rf):
     """Test that users list view has correct view data."""
-    with patch('plinth.views.AppView.get_context_data',
-               return_value={'is_enabled': True}):
+    with (patch('plinth.views.AppView.get_context_data',
+                return_value={'is_enabled': True}),
+          patch('plinth.views.AppView.app', return_value=None)):
         view = views.UserList.as_view()
         response, messages = make_request(rf.get('/'), view)
 

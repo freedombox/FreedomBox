@@ -162,6 +162,15 @@ class AppView(FormView):
         super().__init__(*args, **kwargs)
         self._common_status = None
 
+    def dispatch(self, request, *args, **kwargs):
+        """If operations are running on the app, use a different view."""
+        operations = operation.manager.filter(self.app.app_id)
+        if operations:
+            view = AppOperationsView.as_view(app_id=self.app.app_id)
+            return view(request, *args, **kwargs)
+
+        return super().dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         """Handle app enable/disable button separately."""
         if 'app_enable_disable_button' not in request.POST:
@@ -258,13 +267,36 @@ class AppView(FormView):
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
         context['show_uninstall'] = not self.app.info.is_essential
-        context['operations'] = operation.manager.filter(self.app.app_id)
         context['refresh_page_sec'] = None
-        if context['operations']:
-            context['refresh_page_sec'] = 3
 
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
+
+        return context
+
+
+class AppOperationsView(TemplateView):
+    """View to show app page when some app operations are running."""
+    app_id = None  # Set when app is instantiated.
+    template_name = "app-operations.html"
+
+    @property
+    def app(self):
+        """Return the app for which this view is configured."""
+        if not self.app_id:
+            raise ImproperlyConfigured('Missing attribute: app_id')
+
+        return app_module.App.get(self.app_id)
+
+    def get_context_data(self, *args, **kwargs):
+        """Add additional context data for template."""
+        context = super().get_context_data(*args, **kwargs)
+        context['app_id'] = self.app.app_id
+        context['app_info'] = self.app.info
+        context['operations'] = operation.manager.filter(self.app.app_id)
+        context['refresh_page_sec'] = 0
+        if context['operations']:
+            context['refresh_page_sec'] = 3
 
         return context
 
