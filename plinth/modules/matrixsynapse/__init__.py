@@ -70,8 +70,11 @@ class MatrixSynapseApp(app_module.App):
             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-matrixsynapse',
-                            ['matrix-synapse', 'matrix-synapse-ldap3'])
+        # Include python3-psycopg2 to prevent accidental uninstall
+        # (see issue #2298).
+        packages = Packages(
+            'packages-matrixsynapse',
+            ['matrix-synapse', 'matrix-synapse-ldap3', 'python3-psycopg2'])
         self.add(packages)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
