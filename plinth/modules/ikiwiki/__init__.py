@@ -74,8 +74,8 @@ class IkiwikiApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
-        backup_restore = BackupRestore('backup-restore-ikiwiki',
-                                       **manifest.backup)
+        backup_restore = IkiwikiBackupRestore('backup-restore-ikiwiki',
+                                              **manifest.backup)
         self.add(backup_restore)
 
     def post_init(self):
@@ -111,3 +111,14 @@ class IkiwikiApp(app_module.App):
         super().setup(old_version)
         privileged.setup()
         self.enable()
+
+
+class IkiwikiBackupRestore(BackupRestore):
+    """Component to handle Ikiwiki restore"""
+
+    def restore_post(self, packet):
+        """Re-run setup for each wiki after restore."""
+        super().restore_post(packet)
+        sites = privileged.get_sites()
+        for site in sites:
+            privileged.setup_site(site[0])
