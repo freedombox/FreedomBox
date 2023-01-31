@@ -57,7 +57,9 @@ class SearxApp(app_module.App):
             allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-searx', ['searx'])
+        # Include libjs-bootstrap to prevent accidental uninstall (see
+        # issue #2298).
+        packages = Packages('packages-searx', ['searx', 'libjs-bootstrap'])
         self.add(packages)
 
         firewall = Firewall('firewall-searx', info.name,
