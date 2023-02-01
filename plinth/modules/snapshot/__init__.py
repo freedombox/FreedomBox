@@ -38,7 +38,7 @@ class SnapshotApp(app_module.App):
 
     app_id = 'snapshot'
 
-    _version = 4
+    _version = 5
 
     can_be_disabled = False
 

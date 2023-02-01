@@ -2,16 +2,17 @@
 """Configuration helper for filesystem snapshots."""
 
 import os
+import pathlib
 import signal
 import subprocess
 
 import augeas
 import dbus
 
+from plinth import action_utils
 from plinth.actions import privileged
 
 FSTAB = '/etc/fstab'
-AUG_FSTAB = '/files/etc/fstab'
 DEFAULT_FILE = '/etc/default/snapper'
 
 
@@ -28,7 +29,11 @@ def setup(old_version: int):
         command = ['snapper', 'create-config', '/']
         subprocess.run(command, check=True)
 
-    _add_fstab_entry('/')
+    if old_version and old_version <= 4:
+        _remove_fstab_entry('/')
+
+    _add_automount_unit('/')
+
     if old_version == 0:
         _set_default_config()
     elif old_version <= 3:
@@ -96,35 +101,116 @@ def _set_default_config():
     subprocess.run(command, check=True)
 
 
-def _add_fstab_entry(mount_point):
-    """Add mountpoint for subvolumes."""
+def _remove_fstab_entry(mount_point):
+    """Remove mountpoint for subvolumes that was added by previous versions.
+
+    The .snapshots mount is not needed, at least for the recent versions of
+    snapper. This removal code can be dropped after release of Debian Bullseye
+    + 1.
+    """
     snapshots_mount_point = os.path.join(mount_point, '.snapshots')
 
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.set('/augeas/load/Fstab/lens', 'Fstab.lns')
-    aug.set('/augeas/load/Fstab/incl[last() + 1]', FSTAB)
+    aug.transform('Fstab', '/etc/fstab')
+    aug.set('/augeas/context', '/files/etc/fstab')
     aug.load()
 
     spec = None
-    for entry in aug.match(AUG_FSTAB + '/*'):
+    for entry in aug.match('*'):
         entry_mount_point = aug.get(entry + '/file')
-        if entry_mount_point == snapshots_mount_point:
-            return
-
         if entry_mount_point == mount_point and \
            aug.get(entry + '/vfstype') == 'btrfs':
             spec = aug.get(entry + '/spec')
 
     if spec:
-        aug.set(AUG_FSTAB + '/01/spec', spec)
-        aug.set(AUG_FSTAB + '/01/file', snapshots_mount_point)
-        aug.set(AUG_FSTAB + '/01/vfstype', 'btrfs')
-        aug.set(AUG_FSTAB + '/01/opt', 'subvol')
-        aug.set(AUG_FSTAB + '/01/opt/value', '.snapshots')
-        aug.set(AUG_FSTAB + '/01/dump', '0')
-        aug.set(AUG_FSTAB + '/01/passno', '1')
+        for entry in aug.match('*'):
+            if (aug.get(entry + '/spec') == spec
+                    and aug.get(entry + '/file') == snapshots_mount_point
+                    and aug.get(entry + '/vfstype') == 'btrfs'
+                    and aug.get(entry + '/opt') == 'subvol'
+                    and aug.get(entry + '/opt/value') == '.snapshots'):
+                aug.remove(entry)
+
         aug.save()
+
+
+def _systemd_path_escape(path):
+    """Escape a string using systemd path rules."""
+    process = subprocess.run(['systemd-escape', '--path', path],
+                             stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode().strip()
+
+
+def _get_subvolume_path(mount_point):
+    """Return the subvolume path for .snapshots in a filesystem."""
+    # -o causes the list of subvolumes directly under the given mount point
+    process = subprocess.run(['btrfs', 'subvolume', 'list', '-o', mount_point],
+                             stdout=subprocess.PIPE, check=True)
+    for line in process.stdout.decode().splitlines():
+        entry = line.split()
+
+        # -o also causes the full path of the subvolume to be listed. This can
+        # -be used directly for mounting.
+        subvolume_path = entry[-1]
+        if '/' in subvolume_path:
+            path_parts = subvolume_path.split('/')
+            if len(path_parts) != 2 or path_parts[1] != '.snapshots':
+                continue
+        elif subvolume_path != '.snapshots':
+            continue
+
+        return subvolume_path
+
+    raise KeyError(f'.snapshots subvolume not found in {mount_point}')
+
+
+def _add_automount_unit(mount_point):
+    """Add a systemd automount unit for mounting .snapshots subvolume."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Fstab', '/etc/fstab')
+    aug.set('/augeas/context', '/files/etc/fstab')
+    aug.load()
+
+    what = None
+    for entry in aug.match('*'):
+        entry_mount_point = aug.get(entry + '/file')
+        if (entry_mount_point == mount_point
+                and aug.get(entry + '/vfstype') == 'btrfs'):
+            what = aug.get(entry + '/spec')
+
+    snapshots_mount_point = os.path.join(mount_point, '.snapshots')
+    unit_name = _systemd_path_escape(snapshots_mount_point)
+    subvolume = _get_subvolume_path(mount_point)
+    mount_file = pathlib.Path(f'/etc/systemd/system/{unit_name}.mount')
+    mount_file.write_text(f'''# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[Unit]
+Description=Mount for Snapshots Subvolume (FreedomBox)
+Documentation=man:snapper(8)
+
+[Mount]
+What={what}
+Where={snapshots_mount_point}
+Type=btrfs
+Options=subvol={subvolume}
+''')
+    mount_file = pathlib.Path(f'/etc/systemd/system/{unit_name}.automount')
+    mount_file.write_text(f'''# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[Unit]
+Description=Automount for Snapshots Subvolume (FreedomBox)
+Documentation=man:snapper(8)
+
+[Automount]
+Where={snapshots_mount_point}
+
+[Install]
+WantedBy=local-fs.target
+''')
+    action_utils.service_daemon_reload()
+    action_utils.service_enable(f'{unit_name}.automount')
 
 
 def _parse_number(number):
