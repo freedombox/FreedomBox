@@ -251,7 +251,12 @@ def kill_daemon():
 @privileged
 def rollback(number: str):
     """Rollback to snapshot."""
-    command = [
-        'snapper', 'rollback', '--description', 'created by rollback', number
-    ]
+    # "ambit" is not very well documented by snapper. Default ambit is "auto"
+    # which errors out if default subvolume is not yet set on the filesystem.
+    # If set, then it acts as "transactional" ambit if the default snapshot is
+    # readonly, otherwise it acts as "classic". The "classic" behavior is the
+    # one described snapper(8) man page for rollback behavior. The classic
+    # behavior when a snapshot number to rollback to is provided is the
+    # behavior that we desire.
+    command = ['snapper', '--ambit', 'classic', 'rollback', number]
     subprocess.run(command, check=True)
