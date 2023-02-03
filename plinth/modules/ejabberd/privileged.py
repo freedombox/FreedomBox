@@ -292,7 +292,6 @@ def _generate_service(uri: str) -> dict:
         "port": int(port),
         "type": typ,
         "transport": transport,
-        "restricted": False
     }
 
 
