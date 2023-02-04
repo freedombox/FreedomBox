@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Tor utility functions."""
 
-import glob
 import itertools
 
 import augeas
@@ -13,7 +12,8 @@ from plinth.modules.names.components import DomainName
 from . import privileged
 
 APT_SOURCES_URI_PATHS = ('/files/etc/apt/sources.list/*/uri',
-                         '/files/etc/apt/sources.list.d/*/*/uri')
+                         '/files/etc/apt/sources.list.d/*/*/uri',
+                         '/files/etc/apt/sources.list.d/*/*/URIs/*')
 APT_TOR_PREFIX = 'tor+'
 
 
@@ -63,28 +63,6 @@ def iter_apt_uris(aug):
         [aug.match(path) for path in APT_SOURCES_URI_PATHS])
 
 
-def get_real_apt_uri_path(aug, path):
-    """Return the actual path which contains APT URL.
-
-    XXX: This is a workaround for Augeas bug parsing Apt source files
-    with '[options]'.  Remove this workaround after Augeas lens is
-    fixed.
-    """
-    uri = aug.get(path)
-    if uri[0] == '[':
-        parent_path = path.rsplit('/', maxsplit=1)[0]
-        skipped = False
-        for child_path in aug.match(parent_path + '/*')[1:]:
-            if skipped:
-                return child_path
-
-            value = aug.get(child_path)
-            if value[-1] == ']':
-                skipped = True
-
-    return path
-
-
 def get_augeas():
     """Return an instance of Augeaus for processing APT configuration."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
@@ -94,19 +72,15 @@ def get_augeas():
             '/etc/apt/sources.list')
     aug.set('/augeas/load/Aptsources/incl[last() + 1]',
             '/etc/apt/sources.list.d/*.list')
+    aug.set('/augeas/load/Aptsources822/lens', 'Aptsources822.lns')
+    aug.set('/augeas/load/Aptsources822/incl[last() + 1]',
+            '/etc/apt/sources.list.d/*.sources')
     aug.load()
 
-    # Currently, augeas does not handle Deb822 format, it error out.
+    # Check for any errors in parsing sources lists.
     if aug.match('/augeas/files/etc/apt/sources.list/error') or \
        aug.match('/augeas/files/etc/apt/sources.list.d//error'):
         raise Exception('Error parsing sources list')
-
-    # Starting with Apt 1.1, /etc/apt/sources.list.d/*.sources will
-    # contain files with Deb822 format.  If they are found, error out
-    # for now.  XXX: Provide proper support Deb822 format with a new
-    # Augeas lens.
-    if glob.glob('/etc/apt/sources.list.d/*.sources'):
-        raise Exception('Can not handle Deb822 source files')
 
     return aug
 
@@ -116,12 +90,10 @@ def is_apt_transport_tor_enabled():
     try:
         aug = get_augeas()
     except Exception:
-        # If there was an error with parsing or there are Deb822
-        # files.
+        # If there was an error with parsing.
         return False
 
     for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
         if not uri.startswith(APT_TOR_PREFIX) and \
            (uri.startswith('http://') or uri.startswith('https://')):

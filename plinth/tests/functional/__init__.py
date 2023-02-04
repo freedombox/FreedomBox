@@ -441,8 +441,7 @@ def app_can_be_disabled(browser, app_name):
 def set_domain_name(browser, domain_name):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_domainname').fill(domain_name)
-    update_setup = browser.find_by_css('.btn-primary[type="submit"]')
-    submit(browser, element=update_setup)
+    submit(browser, form_class='form-configuration')
 
 
 ########################
@@ -493,8 +492,7 @@ def running_inside_container():
 def set_hostname(browser, hostname):
     nav_to_module(browser, 'config')
     browser.find_by_id('id_hostname').fill(hostname)
-    update_setup = browser.find_by_css('.btn-primary')
-    submit(browser, element=update_setup)
+    submit(browser, form_class='form-configuration')
 
 
 def set_advanced_mode(browser, mode):
@@ -505,8 +503,7 @@ def set_advanced_mode(browser, mode):
     else:
         advanced_mode.uncheck()
 
-    update_setup = browser.find_by_css('.btn-primary')
-    submit(browser, element=update_setup)
+    submit(browser, form_class='form-configuration')
 
 
 ####################

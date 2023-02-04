@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Test module for gitweb module operations."""
 
+import pathlib
+
 import pytest
 from django.forms import ValidationError
 
@@ -16,6 +18,8 @@ REPO_DATA = {
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.modules.gitweb.privileged']
+git_installed = pytest.mark.skipif(not pathlib.Path('/usr/bin/git').exists(),
+                                   reason='git is not installed')
 
 
 @pytest.fixture(autouse=True)
@@ -36,6 +40,7 @@ def fixture_existing_repo():
                            keep_ownership=True, is_private=True)
 
 
+@git_installed
 def test_create_repo():
     """Test creating a repository."""
     privileged.create_repo(name=REPO_NAME, description='', owner='',
@@ -47,6 +52,7 @@ def test_create_repo():
     assert default_branch
 
 
+@git_installed
 def test_change_repo_medatada(existing_repo):
     """Test change a metadata of the repository."""
     new_data = {
@@ -65,6 +71,7 @@ def test_change_repo_medatada(existing_repo):
     assert repo == new_data
 
 
+@git_installed
 def test_rename_repository(existing_repo):
     """Test renaming a repository."""
     new_name = 'Test-repo_2'
@@ -77,6 +84,7 @@ def test_rename_repository(existing_repo):
     assert repo['name'] == new_name
 
 
+@git_installed
 def test_get_branches(existing_repo):
     """Test  getting all the branches of the repository."""
     result = privileged.get_branches(REPO_NAME)
@@ -85,6 +93,7 @@ def test_get_branches(existing_repo):
     assert result['branches'] == []
 
 
+@git_installed
 def test_delete_repository(existing_repo):
     """Test deleting a repository."""
     privileged.delete_repo(REPO_NAME)

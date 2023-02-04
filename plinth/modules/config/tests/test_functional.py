@@ -4,6 +4,7 @@ Functional, browser based tests for config app.
 """
 
 import pytest
+
 from plinth.tests import functional
 
 pytestmark = [
@@ -61,8 +62,7 @@ def _set_home_page(browser, home_page):
     functional.nav_to_module(browser, 'config')
     drop_down = browser.find_by_id('id_homepage')
     drop_down.select(home_page)
-    update_setup = browser.find_by_css('.btn-primary')
-    functional.submit(browser, element=update_setup)
+    functional.submit(browser, form_class='form-configuration')
 
 
 def _check_home_page_redirect(browser, app_name):

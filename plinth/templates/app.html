@@ -14,53 +14,49 @@
 
   {% include "app-header.html" %}
 
-  {% if not operations %}
-    {% include "toolbar.html" with enabled=is_enabled %}
+  {% include "toolbar.html" with enabled=is_enabled %}
 
-    {% block subsubmenu %}
-      {% if subsubmenu %}
-        {% show_subsubmenu subsubmenu %}
-      {% endif %}
-    {% endblock %}
+  {% block subsubmenu %}
+    {% if subsubmenu %}
+      {% show_subsubmenu subsubmenu %}
+    {% endif %}
+  {% endblock %}
 
-    {% block status %}
-      {% if is_running is not None and not is_running %}
-        <div id='service-not-running' role="alert"
-             class="alert alert-danger {{ is_enabled|yesno:',d-none' }}">
-          {% blocktrans trimmed with service_name=app_info.name %}
-            Service <em>{{ service_name }}</em> is not running.
-          {% endblocktrans %}
-        </div>
-      {% endif %}
-    {% endblock %}
+  {% block status %}
+    {% if is_running is not None and not is_running %}
+      <div id='service-not-running' role="alert"
+           class="alert alert-danger {{ is_enabled|yesno:',d-none' }}">
+        {% blocktrans trimmed with service_name=app_info.name %}
+          Service <em>{{ service_name }}</em> is not running.
+        {% endblocktrans %}
+      </div>
+    {% endif %}
+  {% endblock %}
 
-    {% block internal_zone %}
-      {% include "internal-zone.html" %}
-    {% endblock %}
+  {% block internal_zone %}
+    {% include "internal-zone.html" %}
+  {% endblock %}
 
-    {% block port_forwarding_info %}
-      {% include "port-forwarding-info.html" with service_name=app_info.name %}
-    {% endblock %}
+  {% block port_forwarding_info %}
+    {% include "port-forwarding-info.html" with service_name=app_info.name %}
+  {% endblock %}
 
-    {% block configuration %}
-      {% if form %}
-        <h3>{% trans "Configuration" %}</h3>
+  {% block configuration %}
+    {% if form %}
+      <h3>{% trans "Configuration" %}</h3>
 
-        <form id="app-form" class="form form-configuration" method="post">
-          {% csrf_token %}
+      <form id="app-form" class="form form-configuration" method="post">
+        {% csrf_token %}
 
-          {{ form|bootstrap }}
+        {{ form|bootstrap }}
 
-          <input type="submit" class="btn btn-primary"
-                value="{% trans "Update setup" %}"/>
-        </form>
-      {% endif %}
-    {% endblock %}
+        <input type="submit" class="btn btn-primary"
+              value="{% trans "Update setup" %}"/>
+      </form>
+    {% endif %}
+  {% endblock %}
 
-    {% block extra_content %}
-    {% endblock %}
-  {% else %}
-    {% include "operations.html" %}
-  {% endif %}
+  {% block extra_content %}
+  {% endblock %}
 
 {% endblock %}

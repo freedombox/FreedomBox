@@ -14,8 +14,7 @@ import augeas
 
 from plinth import action_utils
 from plinth.actions import privileged
-from plinth.modules.tor.utils import (APT_TOR_PREFIX, get_augeas,
-                                      get_real_apt_uri_path, iter_apt_uris)
+from plinth.modules.tor.utils import APT_TOR_PREFIX, get_augeas, iter_apt_uris
 
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
 TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
@@ -415,7 +414,6 @@ def _enable_apt_transport_tor():
     """Enable package download over Tor."""
     aug = get_augeas()
     for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
         if uri.startswith('http://') or uri.startswith('https://'):
             aug.set(uri_path, APT_TOR_PREFIX + uri)
@@ -432,7 +430,6 @@ def _disable_apt_transport_tor():
         pass
 
     for uri_path in iter_apt_uris(aug):
-        uri_path = get_real_apt_uri_path(aug, uri_path)
         uri = aug.get(uri_path)
         if uri.startswith(APT_TOR_PREFIX):
             aug.set(uri_path, uri[len(APT_TOR_PREFIX):])
