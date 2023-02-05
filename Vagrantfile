@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "freedombox/freedombox-testing-dev"
   config.vm.network "forwarded_port", guest: 443, host: 4430
   config.vm.network "forwarded_port", guest: 445, host: 4450
-  config.vm.synced_folder ".", "/vagrant", owner: "plinth", group: "plinth"
+  config.vm.synced_folder ".", "/freedombox", owner: "plinth", group: "plinth"
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = Etc.nprocessors
     vb.memory = 2048
@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     systemctl disable plinth
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    cd /vagrant/
+    cd /freedombox/
     ./setup.py install
     systemctl daemon-reload
     # Stop any ongoing upgrade
@@ -36,14 +36,14 @@ Vagrant.configure(2) do |config|
     apt-mark unhold freedombox
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
-    echo 'alias run-develop="sudo -u plinth /vagrant/run --develop"' >> /home/vagrant/.bashrc
+    echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' >> /home/vagrant/.bashrc
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
 for development. You can run the development version of Plinth using
 the following command.
 $ vagrant ssh
-$ sudo -u plinth /vagrant/run --develop
+$ freedombox-develop
 Plinth will be available at https://localhost:4430/plinth (with
 an invalid SSL certificate).
 "
