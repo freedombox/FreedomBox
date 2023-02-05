@@ -54,11 +54,5 @@ an invalid SSL certificate).
       path: "vagrant-scripts/plinth-user-permissions.py"
     }
   end
-  config.trigger.before :destroy do |trigger|
-    trigger.warn = "Performing cleanup steps"
-    trigger.run = {
-      path: "vagrant-scripts/post-box-destroy.py"
-    }
-  end
   config.vm.boot_timeout=1200
 end
