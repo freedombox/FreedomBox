@@ -36,7 +36,7 @@ Vagrant.configure(2) do |config|
     apt-mark unhold freedombox
     # Install ncurses-term
     DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
-    echo 'alias freedombox-develop="sudo -u plinth /freedombox/run --develop"' >> /home/vagrant/.bashrc
+    echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' >> /home/vagrant/.bashrc
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
   config.vm.post_up_message = "FreedomBox virtual machine is ready
