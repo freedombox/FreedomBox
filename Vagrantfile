@@ -51,7 +51,7 @@ an invalid SSL certificate).
   config.trigger.after [:up, :resume, :reload] do |trigger|
     trigger.info = "Set plinth user permissions for development environment"
     trigger.run_remote = {
-      path: "vagrant-scripts/plinth-user-permissions.py"
+      path: ".vagrant-scripts/plinth-user-permissions.py"
     }
   end
   config.vm.boot_timeout=1200
