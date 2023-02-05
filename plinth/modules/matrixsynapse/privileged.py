@@ -49,7 +49,7 @@ def post_install():
 
     # start with listener config from original homeserver.yaml
     with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
-        orig_config = yaml.load(orig_conf_file)
+        orig_config = yaml.safe_load(orig_conf_file)
 
     listeners = orig_config['listeners']
     for listener in listeners:
@@ -77,11 +77,11 @@ def public_registration(command: str) -> Optional[bool]:
 
     try:
         with open(REGISTRATION_CONF_PATH, encoding='utf-8') as reg_conf_file:
-            config = yaml.load(reg_conf_file)
+            config = yaml.safe_load(reg_conf_file)
     except FileNotFoundError:
         # Check if its set in original conffile.
         with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
-            orig_config = yaml.load(orig_conf_file)
+            orig_config = yaml.safe_load(orig_conf_file)
             config = {
                 'enable_registration':
                     orig_config.get('enable_registration', False)
