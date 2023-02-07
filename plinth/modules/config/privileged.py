@@ -85,14 +85,13 @@ def set_logging_mode(mode: str):
     aug = load_augeas()
     aug.set('Journal/Storage', mode)
     if mode == 'volatile':
-        aug.set('Journal/RuntimeMaxUse', '5%')
         aug.set('Journal/MaxFileSec', '6h')
         aug.set('Journal/MaxRetentionSec', '2day')
     else:
-        aug.remove('Journal/RuntimeMaxUse')
         aug.remove('Journal/MaxFileSec')
         aug.remove('Journal/MaxRetentionSec')
 
+    aug.remove('Journal/RuntimeMaxUse')
     JOURNALD_FILE.parent.mkdir(exist_ok=True)
     aug.save()
 
