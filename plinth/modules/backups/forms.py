@@ -110,9 +110,10 @@ class CreateArchiveForm(forms.Form):
         components = api.get_all_components_for_backup()
         choices = _get_app_choices(components)
         self.fields['selected_apps'].choices = choices
-        self.fields['selected_apps'].initial = [
-            choice[0] for choice in choices
-        ]
+        if not self.initial or 'selected_apps' not in self.initial:
+            self.fields['selected_apps'].initial = [
+                choice[0] for choice in choices
+            ]
         self.fields['repository'].choices = _get_repository_choices()
 
 

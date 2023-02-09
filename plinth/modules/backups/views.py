@@ -116,6 +116,14 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
         context['title'] = _('Create a new backup')
         return context
 
+    def get_initial(self):
+        """Return initialization arguments to the form."""
+        initial = super().get_initial()
+        if 'app_id' in self.kwargs:
+            initial['selected_apps'] = [self.kwargs['app_id']]
+
+        return initial
+
     def form_valid(self, form):
         """Create the archive on valid form submission."""
         repository = get_instance(form.cleaned_data['repository'])
