@@ -5,6 +5,14 @@
 
 {% load i18n %}
 
+{% block title %}
+  <title>
+    {% blocktrans trimmed %}
+      Page not found - {{ box_name }}
+    {% endblocktrans %}
+  </title>
+{% endblock %}
+
 {% block content %}
 
   <h2>{% trans "404" %}</h2>
