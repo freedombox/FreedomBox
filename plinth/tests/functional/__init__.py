@@ -641,6 +641,7 @@ class BaseAppTests:
     # TODO: Check the components of the app instead of configuring here.
     has_service = False
     has_web = True
+    can_uninstall = True
     check_diagnostics = True
     diagnostics_delay = 0
     disable_after_tests = True
@@ -706,6 +707,9 @@ class BaseAppTests:
 
     def test_uninstall(self, session_browser):
         """Test that app can be uninstalled and installed back again."""
+        if not self.can_uninstall:
+            pytest.skip(f'Skipping uninstall test for {self.app_name}.')
+
         uninstall(session_browser, self.app_name)
         assert not is_installed(session_browser, self.app_name)
         install(session_browser, self.app_name)
