@@ -79,15 +79,25 @@ def get_config():
         with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
             config = yaml.safe_load(orig_conf_file)
 
+    if config.get('enable_registration_without_verification'):
+        registration_verification = 'disabled'
+    else:
+        registration_verification = None
+
     return {
         'public_registration': bool(config.get('enable_registration', False)),
+        'registration_verification': registration_verification,
     }
 
 
 @privileged
-def set_config(public_registration: bool):
+def set_config(public_registration: bool,
+               registration_verification: Optional[str] = None):
     """Enable/disable public user registration."""
     config = {'enable_registration': public_registration}
+    if public_registration and registration_verification in ('disabled', None):
+        config['enable_registration_without_verification'] = True
+
     with open(REGISTRATION_CONF_PATH, 'w', encoding='utf-8') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
@@ -135,3 +145,13 @@ def configure_turn(managed: bool, conf: str):
         _set_turn_config(OVERRIDDEN_TURN_CONF_PATH, conf)
 
     action_utils.service_try_restart('matrix-synapse')
+
+
+@privileged
+def fix_public_registrations():
+    """If public registrations are enabled, set validation mechanism."""
+    config = get_config()
+    if (config['public_registration']
+            and config['registration_verification'] is None):
+        set_config(public_registration=True,
+                   registration_verification='disabled')

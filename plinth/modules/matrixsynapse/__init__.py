@@ -44,7 +44,7 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
-    _version = 7
+    _version = 8
 
     def __init__(self):
         """Create components for the app."""
@@ -113,6 +113,9 @@ class MatrixSynapseApp(app_module.App):
             upgrade()
         else:
             privileged.post_install()
+
+        if old_version and old_version <= 7:
+            privileged.fix_public_registrations()
 
         if not old_version:
             self.enable()
