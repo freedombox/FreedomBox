@@ -69,36 +69,29 @@ def setup(domain_name: str):
                                   {'server-name': domain_name})
 
 
-@privileged
-def public_registration(command: str) -> Optional[bool]:
-    """Enable/Disable/Status public user registration."""
-    if command not in ('enable', 'disable', 'status'):
-        raise ValueError('Invalid command')
-
+def get_config():
+    """Return the current configuration of matrix-synapse."""
     try:
         with open(REGISTRATION_CONF_PATH, encoding='utf-8') as reg_conf_file:
             config = yaml.safe_load(reg_conf_file)
     except FileNotFoundError:
         # Check if its set in original conffile.
         with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
-            orig_config = yaml.safe_load(orig_conf_file)
-            config = {
-                'enable_registration':
-                    orig_config.get('enable_registration', False)
-            }
+            config = yaml.safe_load(orig_conf_file)
 
-    if command == 'status':
-        return bool(config['enable_registration'])
-    elif command == 'enable':
-        config['enable_registration'] = True
-    elif command == 'disable':
-        config['enable_registration'] = False
+    return {
+        'public_registration': bool(config.get('enable_registration', False)),
+    }
 
+
+@privileged
+def set_config(public_registration: bool):
+    """Enable/disable public user registration."""
+    config = {'enable_registration': public_registration}
     with open(REGISTRATION_CONF_PATH, 'w', encoding='utf-8') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
     action_utils.service_try_restart('matrix-synapse')
-    return None
 
 
 @privileged

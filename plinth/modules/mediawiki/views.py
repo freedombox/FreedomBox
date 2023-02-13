@@ -28,7 +28,7 @@ class MediaWikiAppView(views.AppView):
         initial = super().get_initial()
         initial.update({
             'enable_public_registrations':
-                privileged.public_registrations('status'),
+                privileged.get_config()['public_registration'],
             'enable_private_mode':
                 privileged.private_mode('status'),
             'default_skin':

@@ -134,13 +134,12 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
 
 def upgrade():
     """Upgrade matrix-synapse configuration to avoid conffile prompt."""
-    public_registration_status = privileged.public_registration('status')
+    config = privileged.get_config()
     privileged.move_old_conf()
     install(['matrix-synapse'], force_configuration='new', reinstall=True,
             force_missing_configuration=True)
     privileged.post_install()
-    if public_registration_status:
-        privileged.public_registration('enable')
+    privileged.set_config(**config)
 
 
 def setup_domain(domain_name):
