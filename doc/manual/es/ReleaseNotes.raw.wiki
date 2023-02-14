@@ -8,6 +8,36 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 23.4 (2023-02-13) ==
+
+=== Highlights ===
+
+ * ejabberd: Fix making call connections when using TURN
+ * matrixsynapse: Disable verification to fix public registrations
+ * snapshot: Fix issue with snapshot rollbacks
+
+=== Other Changes ===
+
+ * app: Add backup and restore menu items to toolbar menu
+ * backups: Allow selecting a single app from URL when creating backup
+ * config: Drop !RuntimeMaxUse=5% for journal logging
+ * dynamicdns: Skip uninstall test
+ * ejabberd: Add Monal and Siskin for iOS and remove !ChatSecure
+ * email: Redirect to the app page if roundcube isn't installed
+ * ikiwiki: Re-run setup for each site after restore
+ * locale: Update translations for Bulgarian, Spanish
+ * matrixsnapse: Minor refactor in getting/setting public registrations
+ * matrixsynapse: Add python3-psycopg2 to packages
+ * matrixsynapse: Use yaml.safe_load
+ * searx: Add libjs-bootstrap to packages
+ * snapshot: Fix mounting /.snapshots subvolume and use automounting
+ * templates: Show better title for 404 page
+ * uninstall: Fix spelling in warning message
+ * vagrant: Drop unnecessary script that deletes sqlite file
+ * vagrant: Hide the vagrant-script directory
+ * vagrant: Mount source in /freedombox instead of /vagrant
+ * vagrant: Switch to /freedombox before running service with alias
+
 == FreedomBox 23.3 (2023-01-30) ==
 
  * config: Fix showing the value of the default home page
