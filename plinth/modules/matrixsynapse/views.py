@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Views for the Matrix Synapse module."""
 
+import datetime
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -61,21 +63,33 @@ class MatrixSynapseAppView(AppView):
         context = super().get_context_data(*args, **kwargs)
         context['domain_name'] = matrixsynapse.get_configured_domain_name()
         context['certificate_status'] = matrixsynapse.get_certificate_status()
+        context['config'] = privileged.get_config()
+        tokens = privileged.list_registration_tokens()
+        for token in tokens:
+            if token['expiry_time']:
+                date = datetime.datetime.utcfromtimestamp(
+                    token['expiry_time'] / 1000)
+                token['expiry_time'] = date
+
+        context['registration_tokens'] = tokens
         return context
 
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        config, managed = get_turn_configuration()
+        turn_config, managed = get_turn_configuration()
+        config = privileged.get_config()
         initial.update({
             'enable_public_registration':
-                privileged.get_config()['public_registration'],
+                config['public_registration'],
+            'registration_verification':
+                config['registration_verification'] or 'disabled',
             'enable_managed_turn':
                 managed,
             'turn_uris':
-                '\n'.join(config.uris),
+                '\n'.join(turn_config.uris),
             'shared_secret':
-                config.shared_secret
+                turn_config.shared_secret
         })
         return initial
 
@@ -107,10 +121,21 @@ class MatrixSynapseAppView(AppView):
             return old_config[prop] != new_config[prop]
 
         is_changed = False
-        if changed('enable_public_registration'):
-            privileged.set_config(
-                public_registration=new_config['enable_public_registration'])
-            is_changed = True
+        if (changed('enable_public_registration')
+                or changed('registration_verification')):
+            try:
+                privileged.set_config(
+                    public_registration=new_config[
+                        'enable_public_registration'],
+                    registration_verification=new_config[
+                        'registration_verification'])
+                is_changed = True
+            except ProcessLookupError:
+                # Matrix Synapse server is not running
+                messages.error(
+                    self.request,
+                    _('Registration configuration cannot be updated when app '
+                      'is disabled.'))
 
         if changed('enable_managed_turn') or changed('turn_uris') or \
            changed('shared_secret'):

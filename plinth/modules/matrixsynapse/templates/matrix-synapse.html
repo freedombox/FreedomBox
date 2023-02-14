@@ -24,6 +24,50 @@
       enabled.
     {% endblocktrans %}
   </p>
+  {% if config.public_registration and config.registration_verification == 'token' and registration_tokens %}
+    <p>
+      {% blocktrans trimmed %}
+        New users must use one of the following tokens for verification during
+        account registration:
+      {% endblocktrans %}
+    </p>
+    <div class="table-responsive table-registration-tokens">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Registration Token" %}</th>
+            <th>{% trans "Uses Allowed" %}</th>
+            <th>{% trans "Pending Registrations" %}</th>
+            <th>{% trans "Completed Registrations" %}</th>
+            <th>{% trans "Expiry Time" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for token in registration_tokens %}
+            <tr>
+              <td>{{ token.token }}</td>
+              <td>
+                {% if token.uses_allowed is None %}
+                  {% trans "Unlimited" %}
+                {% else %}
+                  {{ token.uses_allowed }}
+                {% endif %}
+              </td>
+              <td>{{ token.pending }}</td>
+              <td>{{ token.completed }}</td>
+              <td>
+                {% if token.expiry_time %}
+                  {{ token.expiry_time|date:"DATETIME_FORMAT" }}
+                {% else %}
+                  {% trans "None" %}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
 
   {% if certificate_status != "valid" %}
     <div class="alert alert-warning" role="alert">

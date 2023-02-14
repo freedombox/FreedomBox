@@ -10,6 +10,17 @@ from django.utils.translation import gettext_lazy as _
 from plinth.modules.coturn.forms import turn_uris_validator
 from plinth.utils import format_lazy
 
+_registration_verification_choices = [
+    ('disabled',
+     _('Disabled. This could lead to adversaries registering many spam '
+       'accounts on your server with automated scripts.')),
+    ('token',
+     _('Require users creating a new account to use a registration token. A '
+       'token will be created automatically. Pass this token to your '
+       'potential new users. They will be asked for the token during '
+       'registration. (recommended)')),
+]
+
 
 class MatrixSynapseForm(forms.Form):
     enable_public_registration = forms.BooleanField(
@@ -17,6 +28,11 @@ class MatrixSynapseForm(forms.Form):
             'Enabling public registration means that anyone on the Internet '
             'can register a new account on your Matrix server. Disable this '
             'if you only want existing users to be able to use it.'))
+
+    registration_verification = forms.ChoiceField(
+        label=_('Verification method for registration'),
+        choices=_registration_verification_choices, required=True,
+        widget=forms.RadioSelect)
 
     enable_managed_turn = forms.BooleanField(
         label=_('Automatically manage audio/video call setup'), required=False,
