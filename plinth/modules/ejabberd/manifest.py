@@ -52,20 +52,21 @@ _clients = [{
     }]
 }, {
     'name':
-        _('ChatSecure'),
-    'description':
-        _('ChatSecure is a free and open source '
-          'messaging app that features OTR encryption '
-          'over XMPP. You can connect to an existing '
-          'Google account, create new accounts on '
-          'public XMPP servers (including via Tor), '
-          'or even connect to your own server for '
-          'extra security.'),
+        _('Monal - XMPP Chat'),
     'platforms': [{
         'type': 'store',
         'os': 'ios',
         'store_name': 'app-store',
-        'url': 'https://apps.apple.com/us/app/chatsecure/id464200063'
+        'url': 'https://apps.apple.com/us/app/monal-xmpp-chat/id317711500'
+    }]
+}, {
+    'name':
+        _('Siskin IM'),
+    'platforms': [{
+        'type': 'store',
+        'os': 'ios',
+        'store_name': 'app-store',
+        'url': 'https://apps.apple.com/us/app/tigase-messenger/id1153516838'
     }]
 }, {
     'name':
