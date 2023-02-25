@@ -74,7 +74,8 @@ def fixture_samba_urls():
 def samba_patch_privileged():
     """Patch privileged scripts runner."""
     with patch('plinth.modules.samba.privileged.get_shares') as get_shares, \
-         patch('plinth.modules.samba.privileged.delete_share'):
+         patch('plinth.modules.samba.privileged.delete_share'), \
+         patch('plinth.modules.samba.privileged.add_share'):
         get_shares.return_value = SHARES
         yield
 
