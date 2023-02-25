@@ -20,6 +20,24 @@ Minetest is a multiplayer infinite-world block sandbox. This module enables the 
 If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Minetest:
  * UDP 30000
 
+=== Install and enable mods ===
+
+After SSHing into your !FreedomBox server, install (unzip or {{{git clone}}}) mods in {{{/var/games/minetest-server/.minetest/mods}}} (for example, for the mobs_animal mod, you'd have the new {{{/var/games/minetest-server/.minetest/mods/mobs_animal/}}} directory).
+
+To enable a mod, first restart minetest:
+
+{{{
+sudo systemctl restart minetest-server.service
+}}}
+
+This will update the world config file, located in {{{/var/games/minetest-server/.minetest/worlds/world/world.mt}}}, with a line related to the added mod. Set that line from {{{false}}} to {{{true}}} in order to enable the new mod in your minetest instance. For example:
+
+{{{
+load_mod_mobs_animal = true
+}}}
+
+After that, save your changes, restart minetest one more time, then you should be all set.
+
 
 === External links ===
 

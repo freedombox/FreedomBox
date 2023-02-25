@@ -283,10 +283,10 @@ and requires about 4.5 GB of disk space.
 #### Using the Virtual Machine
 
 After logging into the virtual machine (VM), the source code is available in
-/vagrant directory:
+/freedombox directory:
 
 ```bash
-vm$ cd /vagrant
+vm$ cd /freedombox
 ```
 
 Run the development version of FreedomBox Service (Plinth) from your source
@@ -295,7 +295,7 @@ continuously deploys your code changes into the virtual machine providing a
 quick feedback cycle during development.
 
 ```bash
-vm$ sudo -u plinth /vagrant/run --develop
+vm$ freedombox-develop
 ```
 
 If you have changed any system configuration files during your development,

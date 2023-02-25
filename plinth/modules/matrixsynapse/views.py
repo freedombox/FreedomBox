@@ -69,7 +69,7 @@ class MatrixSynapseAppView(AppView):
         config, managed = get_turn_configuration()
         initial.update({
             'enable_public_registration':
-                privileged.public_registration('status'),
+                privileged.get_config()['public_registration'],
             'enable_managed_turn':
                 managed,
             'turn_uris':
@@ -78,14 +78,6 @@ class MatrixSynapseAppView(AppView):
                 config.shared_secret
         })
         return initial
-
-    @staticmethod
-    def _handle_public_registrations(new_config):
-
-        if new_config['enable_public_registration']:
-            privileged.public_registration('enable')
-        else:
-            privileged.public_registration('disable')
 
     @staticmethod
     def _handle_turn_configuration(old_config, new_config):
@@ -116,7 +108,8 @@ class MatrixSynapseAppView(AppView):
 
         is_changed = False
         if changed('enable_public_registration'):
-            self._handle_public_registrations(new_config)
+            privileged.set_config(
+                public_registration=new_config['enable_public_registration'])
             is_changed = True
 
         if changed('enable_managed_turn') or changed('turn_uris') or \

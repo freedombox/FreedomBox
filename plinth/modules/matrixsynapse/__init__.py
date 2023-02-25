@@ -44,7 +44,7 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
-    _version = 7
+    _version = 8
 
     def __init__(self):
         """Create components for the app."""
@@ -70,8 +70,11 @@ class MatrixSynapseApp(app_module.App):
             clients=info.clients, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-matrixsynapse',
-                            ['matrix-synapse', 'matrix-synapse-ldap3'])
+        # Include python3-psycopg2 to prevent accidental uninstall
+        # (see issue #2298).
+        packages = Packages(
+            'packages-matrixsynapse',
+            ['matrix-synapse', 'matrix-synapse-ldap3', 'python3-psycopg2'])
         self.add(packages)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
@@ -111,6 +114,9 @@ class MatrixSynapseApp(app_module.App):
         else:
             privileged.post_install()
 
+        if old_version and old_version <= 7:
+            privileged.fix_public_registrations()
+
         if not old_version:
             self.enable()
 
@@ -131,13 +137,12 @@ class MatrixSynapseTurnConsumer(TurnConsumer):
 
 def upgrade():
     """Upgrade matrix-synapse configuration to avoid conffile prompt."""
-    public_registration_status = privileged.public_registration('status')
+    config = privileged.get_config()
     privileged.move_old_conf()
     install(['matrix-synapse'], force_configuration='new', reinstall=True,
             force_missing_configuration=True)
     privileged.post_install()
-    if public_registration_status:
-        privileged.public_registration('enable')
+    privileged.set_config(**config)
 
 
 def setup_domain(domain_name):

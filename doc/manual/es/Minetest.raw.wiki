@@ -18,6 +18,23 @@
 Si tu !FreedomBox está detrás de un router necesitarás configurar la redirección de puertos en tu router para los siguientes puertos de Minetest:
  * UDP 30000
 
+=== Instalar y habilitar módulos (mods) ===
+
+Accediendo mediante SSH a servidor !FreedomBox, instalar los mods (mediante {{{unzip}}} o {{{git clone}}}) en {{{/var/games/minetest-server/.minetest/mods}}} (Por ejemplo, para el mod ''mobs_animal'' mod se tendría el directorio {{{/var/games/minetest-server/.minetest/mods/mobs_animal/}}}.
+
+Para habilitar el mod primero reinicia minetest:
+
+{{{
+sudo systemctl restart minetest-server.service
+}}}
+
+Esto actualizará el fichero de configuración del mundo, situado en {{{/var/games/minetest-server/.minetest/worlds/world/world.mt}}}, con una línea relativa al mod recientemente añadido. Para habilitar el nuevo mod en tu instancia de minetest cambia el estado de la línea de {{{false}}} a {{{true}}} . Por ejemplo:
+
+{{{
+load_mod_mobs_animal = true
+}}}
+
+Después, guarda los cambios, vuelve a reiniciar minetest y ya lo deberías tener disponible.
 
 === Enlaces externos ===
 

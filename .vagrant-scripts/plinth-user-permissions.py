@@ -6,7 +6,7 @@
 import pathlib
 
 content = '''
-Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/actions/actions, /vagrant/actions/actions
+Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/actions/actions, /freedombox/actions/actions
 Defaults!FREEDOMBOX_ACTION_DEV closefrom_override
 plinth ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV
 fbx    ALL=(ALL:ALL) NOPASSWD : ALL

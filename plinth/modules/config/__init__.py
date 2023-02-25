@@ -31,7 +31,7 @@ class ConfigApp(app_module.App):
 
     app_id = 'config'
 
-    _version = 4
+    _version = 5
 
     can_be_disabled = False
 
@@ -79,6 +79,8 @@ class ConfigApp(app_module.App):
 
         if old_version <= 3:
             privileged.set_logging_mode('volatile')
+        elif old_version == 4:
+            privileged.set_logging_mode(privileged.get_logging_mode())
 
         # systemd-journald is socket activated, it may not be running and it
         # does not support reload.

@@ -272,6 +272,12 @@ class AppView(FormView):
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
 
+        from plinth.modules.backups.components import BackupRestore
+        context['has_backup_restore'] = any([
+            component.has_data
+            for component in self.app.get_components_of_type(BackupRestore)
+        ])
+
         return context
 
 

@@ -49,7 +49,7 @@ def post_install():
 
     # start with listener config from original homeserver.yaml
     with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
-        orig_config = yaml.load(orig_conf_file)
+        orig_config = yaml.safe_load(orig_conf_file)
 
     listeners = orig_config['listeners']
     for listener in listeners:
@@ -69,36 +69,39 @@ def setup(domain_name: str):
                                   {'server-name': domain_name})
 
 
-@privileged
-def public_registration(command: str) -> Optional[bool]:
-    """Enable/Disable/Status public user registration."""
-    if command not in ('enable', 'disable', 'status'):
-        raise ValueError('Invalid command')
-
+def get_config():
+    """Return the current configuration of matrix-synapse."""
     try:
         with open(REGISTRATION_CONF_PATH, encoding='utf-8') as reg_conf_file:
-            config = yaml.load(reg_conf_file)
+            config = yaml.safe_load(reg_conf_file)
     except FileNotFoundError:
         # Check if its set in original conffile.
         with open(ORIG_CONF_PATH, encoding='utf-8') as orig_conf_file:
-            orig_config = yaml.load(orig_conf_file)
-            config = {
-                'enable_registration':
-                    orig_config.get('enable_registration', False)
-            }
+            config = yaml.safe_load(orig_conf_file)
 
-    if command == 'status':
-        return bool(config['enable_registration'])
-    elif command == 'enable':
-        config['enable_registration'] = True
-    elif command == 'disable':
-        config['enable_registration'] = False
+    if config.get('enable_registration_without_verification'):
+        registration_verification = 'disabled'
+    else:
+        registration_verification = None
+
+    return {
+        'public_registration': bool(config.get('enable_registration', False)),
+        'registration_verification': registration_verification,
+    }
+
+
+@privileged
+def set_config(public_registration: bool,
+               registration_verification: Optional[str] = None):
+    """Enable/disable public user registration."""
+    config = {'enable_registration': public_registration}
+    if public_registration and registration_verification in ('disabled', None):
+        config['enable_registration_without_verification'] = True
 
     with open(REGISTRATION_CONF_PATH, 'w', encoding='utf-8') as reg_conf_file:
         yaml.dump(config, reg_conf_file)
 
     action_utils.service_try_restart('matrix-synapse')
-    return None
 
 
 @privileged
@@ -142,3 +145,13 @@ def configure_turn(managed: bool, conf: str):
         _set_turn_config(OVERRIDDEN_TURN_CONF_PATH, conf)
 
     action_utils.service_try_restart('matrix-synapse')
+
+
+@privileged
+def fix_public_registrations():
+    """If public registrations are enabled, set validation mechanism."""
+    config = get_config()
+    if (config['public_registration']
+            and config['registration_verification'] is None):
+        set_config(public_registration=True,
+                   registration_verification='disabled')

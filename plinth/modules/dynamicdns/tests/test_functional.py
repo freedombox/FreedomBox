@@ -75,6 +75,7 @@ class TestDynamicDNSApp(functional.BaseAppTests):
     app_name = 'dynamicdns'
     has_service = False
     has_web = False
+    can_uninstall = False
     check_diagnostics = False
 
     @staticmethod

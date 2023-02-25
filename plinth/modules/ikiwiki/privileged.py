@@ -79,6 +79,13 @@ def create_blog(blog_name: str, admin_name: str, admin_password: str):
 
 
 @privileged
+def setup_site(site_name: str):
+    """Run setup for a site."""
+    setup_path = os.path.join(WIKI_PATH, site_name + '.setup')
+    subprocess.run(['ikiwiki', '-setup', setup_path], check=True)
+
+
+@privileged
 def delete(name: str):
     """Delete a wiki or blog."""
     html_folder = os.path.join(SITE_PATH, name)
