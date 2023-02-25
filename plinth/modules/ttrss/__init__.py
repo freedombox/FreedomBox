@@ -27,7 +27,8 @@ _description = [
         users_url=reverse_lazy('users:index')),
     format_lazy(
         _('When using a mobile or desktop application for Tiny Tiny RSS, use '
-          'the URL <a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
+          'the URL <a href="/tt-rss/">/tt-rss</a> or '
+          '<a href="/tt-rss-app/">/tt-rss-app</a> for connecting.'))
 ]
 
 
@@ -36,7 +37,7 @@ class TTRSSApp(app_module.App):
 
     app_id = 'ttrss'
 
-    _version = 4
+    _version = 5
 
     def __init__(self):
         """Create components for the app."""
