@@ -967,7 +967,7 @@ def _get_ssh_command(ip_address, distribution):
 
 def _wait_for(method):
     """Wait until a condition is satisfied or finally give up."""
-    for _ in range(10):
+    for _ in range(60):
         return_value = method()
         if return_value:
             return return_value
