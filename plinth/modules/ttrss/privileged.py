@@ -113,7 +113,10 @@ def dump_database():
     """Dump database to file."""
     os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
     with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
-        _run_as_postgres(['pg_dump', 'ttrss'], stdout=db_backup_file)
+        # XXX: Currently, ttrss is the only app that uses
+        # PostgreSQL. If another app was using it, then its data would
+        # be included in the backup here.
+        _run_as_postgres(['pg_dumpall'], stdout=db_backup_file)
 
 
 @privileged
