@@ -10,7 +10,8 @@ from plinth import app as app_module
 from plinth import views
 from plinth.modules import mediawiki
 
-from . import get_default_skin, get_server_url, get_site_name, privileged
+from . import (get_default_skin,
+               get_server_url, get_site_name, get_default_language, privileged)
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -36,7 +37,9 @@ class MediaWikiAppView(views.AppView):
             'domain':
                 get_server_url(),
             'site_name':
-                get_site_name()
+                get_site_name(),
+            'default_lang':
+                get_default_language()
         })
         return initial
 
@@ -101,5 +104,9 @@ class MediaWikiAppView(views.AppView):
         if is_changed('site_name'):
             privileged.set_site_name(new_config['site_name'])
             messages.success(self.request, _('Site name updated'))
+
+        if is_changed('default_lang'):
+            privileged.set_default_language(new_config['default_lang'])
+            messages.success(self.request, _('Default language changed'))
 
         return super().form_valid(form)

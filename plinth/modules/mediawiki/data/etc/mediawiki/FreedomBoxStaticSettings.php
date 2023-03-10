@@ -45,6 +45,9 @@ $wgServer = "https://freedombox.local";
 # Site Name
 $wgSitename = "Wiki";
 
+# Default language
+$wgLanguageCode = "en";
+
 # Enable default extensions
 wfLoadExtension( 'Cite' );
 wfLoadExtension( 'Interwiki' );

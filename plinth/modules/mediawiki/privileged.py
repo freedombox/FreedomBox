@@ -205,3 +205,18 @@ def set_server_url(server_url: str):
 def set_site_name(site_name: str):
     """Set the value of $wgSitename for this MediaWiki server."""
     _update_setting('$wgSitename', f'$wgSitename = "{site_name}";\n')
+
+
+@privileged
+def set_default_language(language: str):
+    """Set the value of $wgLanguageCode for this MediaWiki server."""
+    _update_setting('$wgLanguageCode ', f'$wgLanguageCode = "{language}";\n')
+    # In MediaWiki 1.8 or older, if you change this after installation, you
+    # should run the maintenance/rebuildmessages.php script to rebuild the
+    # user interface messages (MediaWiki namespace). Otherwise, you will not
+    # see the interface in the new language, or a mix of the old and new
+    # languages.
+    rebuild_messages_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
+                                           'rebuildmessages.php')
+    subprocess.check_call([
+        _get_php_command(), rebuild_messages_script])

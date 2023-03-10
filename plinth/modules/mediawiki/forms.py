@@ -4,6 +4,7 @@ FreedomBox app for configuring MediaWiki.
 """
 
 import pathlib
+import re
 
 from django import forms
 from django.core import validators
@@ -18,6 +19,17 @@ def get_skins():
 
     return [(skin.name.lower(), skin.name) for skin in skins_dir.iterdir()
             if skin.is_dir()]
+
+
+def get_languages():
+    """Return a list of available languages as choice field values."""
+    with open('/var/lib/mediawiki/includes/languages/data/Names.php',
+              'r') as lang_file:
+        content = lang_file.read()
+    matches = re.findall(r"'([a-z_-]+)' => '(.+)', # .+", content)
+    language_choices = [(code, name) for code, name in matches]
+
+    return language_choices
 
 
 class MediaWikiForm(forms.Form):  # pylint: disable=W0232
@@ -58,3 +70,10 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
         help_text=_('Choose a default skin for your MediaWiki installation. '
                     'Users have the option to select their preferred skin.'),
         choices=get_skins)
+
+    default_lang = forms.ChoiceField(
+        label=_('Default Language'), required=False,
+        help_text=_('Choose a default language for your MediaWiki '
+                    'installation. Users have the option to select '
+                    'their preferred language.'),
+        choices=get_languages)
