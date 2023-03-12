@@ -34,7 +34,6 @@
     - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password && echo "tester:password" | chpasswd
   script:
     - cp -r . /home/tester/freedombox && chown -R tester:tester /home/tester/freedombox
-    - sudo -u tester bash -c 'pip3 install --user selenium==4.2.0 splinter==0.17.0 pytest-splinter pytest-reporter-html1'
     - |
       sudo FREEDOMBOX_URL="https://$APP_SERVER_IP" -u tester bash -c \
         'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless --template=html1/index.html --report=functional-tests.html'
