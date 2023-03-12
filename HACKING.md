@@ -450,12 +450,12 @@ host$ vagrant provision --provision-with tests
 
 Follow the instructions below to run the tests on host machine. If you wish
 perform the tests on host machine, the host machine must be based on Debian
-Buster (or later).
+Bookworm (or later).
 
 ```bash
-host$ pip3 install splinter
-host$ pip3 install pytest-splinter
-host$ pip3 install pytest-xdist  # optional, to run tests in parallel
+host$ pip3 install --break-system-packages splinter
+host$ pip3 install --break-system-packages pytest-splinter
+host$ pip3 install --break-system-packages pytest-xdist  # optional, to run tests in parallel
 host$ sudo apt install firefox
 host$ sudo apt install smbclient  # optional, to test samba
 ```
