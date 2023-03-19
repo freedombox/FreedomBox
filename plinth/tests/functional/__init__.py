@@ -555,7 +555,10 @@ def backup_restore(browser, app_name, archive_name=None):
 def networks_set_firewall_zone(browser, zone):
     """"Set the network device firewall zone as internal or external."""
     nav_to_module(browser, 'networks')
+    # First active Ethernet connection
     device = browser.find_by_xpath(
+        '//span[contains(@class, "connection-type-label") and '
+        'contains(., "Ethernet") ]/../..'
         '//span[contains(@class, "badge-success") '
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
