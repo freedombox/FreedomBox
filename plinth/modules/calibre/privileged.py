@@ -45,3 +45,9 @@ def delete_library(name: str):
     library = LIBRARIES_PATH / name
     shutil.rmtree(library)
     action_utils.service_try_restart(calibre.CalibreApp.DAEMON)
+
+
+@privileged
+def uninstall():
+    """Remove all libraries during uninstall."""
+    shutil.rmtree(LIBRARIES_PATH)

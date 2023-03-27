@@ -16,7 +16,7 @@ from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.utils import format_lazy
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     format_lazy(
@@ -105,6 +105,11 @@ class CalibreApp(app_module.App):
         super().setup(old_version)
         if not old_version:
             self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
 
 
 def validate_library_name(library_name):
