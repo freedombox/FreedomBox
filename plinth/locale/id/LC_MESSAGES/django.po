@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 20:23-0400\n"
+"POT-Creation-Date: 2023-03-13 21:32-0400\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -328,9 +328,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Kunci dalam repositori"
 
-#: plinth/modules/backups/forms.py:177
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
-#: plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Tidak ada"
 
@@ -989,7 +987,7 @@ msgstr "Refresh Alamat IP dan Domain"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1780,7 +1778,7 @@ msgstr "Status"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "Domain"
 
@@ -1904,7 +1902,7 @@ msgstr ""
 "riwayat ruang obrolan multi-pengguna. Itu tergantung pada pengaturan klien "
 "apakah historis disimpan sebagai teks biasa atau. dienkripsi."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "Secara otomatis mengelola pengaturan panggilan audio / video"
 
@@ -1919,19 +1917,19 @@ msgstr ""
 "server STUN/TURN untuk ejabberd. Nonaktifkan ini jika Anda ingin menggunakan "
 "server STUN/TURN yang berbeda."
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "Star / Turn Server URIS"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "Daftar URI PUBLIK DI STUM / TALU SERVER, satu di setiap baris."
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "Rahasia Otentikasi Bersama"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 "Rahasia Bersama digunakan untuk menghitung kata sandi untuk server belok."
@@ -3252,24 +3250,11 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Sinaps Matrix"
 
-#: plinth/modules/matrixsynapse/forms.py:15
-msgid ""
-"Disabled. This could lead to adversaries registering many spam accounts on "
-"your server with automated scripts."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:18
-msgid ""
-"Require users creating a new account to use a registration token. A token "
-"will be created automatically. Pass this token to your potential new users. "
-"They will be asked for the token during registration. (recommended)"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:27
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
 msgstr "Aktifkan pendaftaran publik"
 
-#: plinth/modules/matrixsynapse/forms.py:28
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3279,11 +3264,7 @@ msgstr ""
 "mendaftarkan akun baru di server matriks Anda. Nonaktifkan ini jika Anda "
 "hanya ingin pengguna yang ada dapat menggunakannya."
 
-#: plinth/modules/matrixsynapse/forms.py:33
-msgid "Verification method for registration"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:40
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3344,52 +3325,12 @@ msgid ""
 "enabled."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
-msgid ""
-"New users must use one of the following tokens for verification during "
-"account registration:"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Registration Token"
-msgstr "Batalkan Pendaftaran"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-msgid "Uses Allowed"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Pending Registrations"
-msgstr "Batalkan Pendaftaran"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Completed Registrations"
-msgstr "Batalkan Pendaftaran"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
-msgid "Expiry Time"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
-msgid "Unlimited"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/views.py:137
-msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
@@ -3424,11 +3365,11 @@ msgstr "MediaWiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:38
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "Kata Sandi Administrator"
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3436,70 +3377,58 @@ msgid ""
 "password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
 "onion\"."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:53
+#: plinth/modules/mediawiki/forms.py:41
 #, fuzzy
 #| msgid "Kite name"
 msgid "Site Name"
 msgstr "nama Kite"
 
-#: plinth/modules/mediawiki/forms.py:54
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
 msgstr "Aktifkan pendaftaran publik"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:63
+#: plinth/modules/mediawiki/forms.py:51
 msgid "Enable private mode"
 msgstr "Aktifkan mode pribadi"
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:52
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:57
 msgid "Default Skin"
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:58
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:75
-#, fuzzy
-#| msgid "Select language"
-msgid "Default Language"
-msgstr "Pilih bahasa"
-
-#: plinth/modules/mediawiki/forms.py:76
-msgid ""
-"Choose a default language for your MediaWiki installation. Users have the "
-"option to select their preferred language."
-msgstr ""
-
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:54
 msgid "Password updated"
 msgstr "Kata sandi diperbarui"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:59
 #, fuzzy
 #| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
@@ -3507,43 +3436,37 @@ msgstr ""
 "Kata sandi yang digunakan untuk mengenkripsi data. Harus mencocokkan kata "
 "sandi server."
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:68
 msgid "Public registrations enabled"
 msgstr "Pendaftaran publik diaktifkan"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "Pendaftaran publik dinonaktifkan"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "Mode privat diaktifkan"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "Mode privat dinonaktifkan"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:99
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Domain name updated"
 msgstr "Set nama domain"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:103
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Site name updated"
 msgstr "Set nama domain"
-
-#: plinth/modules/mediawiki/views.py:110
-#, fuzzy
-#| msgid "Language changed"
-msgid "Default language changed"
-msgstr "Bahasa telah dipilih"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -8634,6 +8557,9 @@ msgstr "Bahasa Gujarat"
 #~ msgid "Register"
 #~ msgstr "Pendaftaran"
 
+#~ msgid "Skip Registration"
+#~ msgstr "Batalkan Pendaftaran"
+
 #~ msgid "Save Services"
 #~ msgstr "Simpan Layanan"
 
@@ -8760,6 +8686,9 @@ msgstr "Bahasa Gujarat"
 
 #~ msgid "Services and Applications"
 #~ msgstr "Layanan dan Aplikasi"
+
+#~ msgid "Language changed"
+#~ msgstr "Bahasa telah dipilih"
 
 #, fuzzy
 #~| msgid "General Configuration"

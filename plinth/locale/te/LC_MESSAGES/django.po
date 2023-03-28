@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 20:23-0400\n"
+"POT-Creation-Date: 2023-03-13 21:32-0400\n"
 "PO-Revision-Date: 2022-03-02 12:27+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -327,9 +327,7 @@ msgstr "\"కీ ఇన్ రిపోజిటరీ\" అంటే పాస�
 msgid "Key in Repository"
 msgstr "రిపోజిటరీలో కీ"
 
-#: plinth/modules/backups/forms.py:177
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
-#: plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "ఏమీ లేదు"
 
@@ -973,7 +971,7 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1724,7 +1722,7 @@ msgstr "స్థితి"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "డొమైన్"
 
@@ -1831,7 +1829,7 @@ msgstr ""
 "సంభాషణల సమకాలీకరణను అనుమతిస్తుంది మరియు బహుళ వినియోగదారు చాట్ రూమ్ చరిత్రను చదవగలదు. చరిత్రలు "
 "సాదా టెక్స్ట్ లేదా గుప్తీకరించబడినాయినా లేదో క్లయింట్ సెట్టింగ్లపై ఆధారపడి ఉంటుంది."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "ఆడియో/వీడియో కాల్ స్వయంచాలకంగా నిర్వహించండి"
 
@@ -1845,19 +1843,19 @@ msgstr ""
 "ejjabred కోసం స్థానిక  కార్యక్షేత్రం stun /turn  సేవికగా రూపకరణ చెయ్యండి. మీరు వేరే stun /turn "
 "సేవికాని ఉపయోగలించాలనుకుంటే దీన్ని నిలిపివేయండి {coturn_url}"
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "స్టన్/టర్న్ సర్వర్ యు ఆర్ ఎల్"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "stun /turn సేవిక యొక్క ప్రజా యూరిన్ జాబితా , ప్రతి లైన్లో ఒకటి ."
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "భాగస్వామ్య ప్రమాణీకరణ రహస్యం"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr "TURN సర్వర్ కోసం పాస్‌వర్డ్‌లను గణించడానికి ఉపయోగించే భాగస్వామ్య రహస్యం."
 
@@ -3138,24 +3136,11 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "మ్యాట్రిక్స్ సినాప్స్"
 
-#: plinth/modules/matrixsynapse/forms.py:15
-msgid ""
-"Disabled. This could lead to adversaries registering many spam accounts on "
-"your server with automated scripts."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:18
-msgid ""
-"Require users creating a new account to use a registration token. A token "
-"will be created automatically. Pass this token to your potential new users. "
-"They will be asked for the token during registration. (recommended)"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:27
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్ ప్రారంభించండి"
 
-#: plinth/modules/matrixsynapse/forms.py:28
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3164,11 +3149,7 @@ msgstr ""
 "ప్రజా నమోదును సశక్త పరచడం అంటే అంతర్జాలం లో ఉన్న ఎవరైనా కూడా మీ మాట్రిక్స్ సర్వర్ మీద ఖాతాను "
 "సృష్టించుకోగలరు. ప్రస్తుతం ఉండే వినియోగదారులు మాత్రమే వినియోగించాలి అనుకుంటే దీనిని నిర్వీర్యం చేయగలరు."
 
-#: plinth/modules/matrixsynapse/forms.py:33
-msgid "Verification method for registration"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:40
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3240,45 +3221,7 @@ msgid ""
 "enabled."
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్ ప్రారంభించబడితే ఏదైనా క్లయింట్ నుండి క్రొత్త వినియోగదారులను నమోదు చేసుకోవచ్చు."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
-msgid ""
-"New users must use one of the following tokens for verification during "
-"account registration:"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Registration Token"
-msgstr "నమోదు చేసుకొనుట దాటి వేయండి"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-#, fuzzy
-#| msgid "Allowed IPs"
-msgid "Uses Allowed"
-msgstr "అనుమతించబడిన ఐపిలు"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Pending Registrations"
-msgstr "నమోదు చేసుకొనుట దాటి వేయండి"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Completed Registrations"
-msgstr "నమోదు చేసుకొనుట దాటి వేయండి"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
-msgid "Expiry Time"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
-msgid "Unlimited"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3288,10 +3231,6 @@ msgstr ""
 "కాన్ఫిగర్ చేయబడిన డొమైన్ పేరు స్వీయ సంతకం చేసిన ప్రమాణపత్రాన్ని ఉపయోగిస్తోంది. ఇతర మ్యాట్రిక్స్ సినాప్స్ ఉదంతాలతో "
 "కూడిన ఫెడరేషన్‌కు చెల్లుబాటు అయ్యే TLS ప్రమాణపత్రం అవసరం. దయచేసి ఒకదాన్ని పొందడానికి <a "
 "href=\"%(letsencrypt_url)s\">లెట్స్ ఎన్‌క్రిప్ట్</a>కి వెళ్లండి."
-
-#: plinth/modules/matrixsynapse/views.py:137
-msgid "Registration configuration cannot be updated when app is disabled."
-msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3333,11 +3272,11 @@ msgstr "మీడియావికీ"
 msgid "Wiki"
 msgstr "వికీ"
 
-#: plinth/modules/mediawiki/forms.py:38
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "నిర్వాహకుని రహస్యపదం"
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:27
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -3351,7 +3290,7 @@ msgstr ""
 "మీడియావికీ యొక్క అడ్మినిస్ట్రేటర్ ఖాతా (admin) కోసం ఒక కొత్త రహస్యపదాన్ని సెట్ చెయ్యండి. ప్రస్తుత రహస్యపదాన్ని "
 "ఉంచాలనుకుంటే ఈ ఫీల్డ్ ను ఖాళీగా వదిలేయండి."
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:35
 #, fuzzy
 #| msgid ""
 #| "Used by MediaWiki to generate URLs that point to the wiki such as in "
@@ -3364,31 +3303,31 @@ msgstr ""
 "ఫుటర్, ఫీడ్‌లు మరియు ఇమెయిల్‌లు వంటి వికీని సూచించే URLలను రూపొందించడానికి MediaWiki ద్వారా "
 "ఉపయోగించబడుతుంది."
 
-#: plinth/modules/mediawiki/forms.py:53
+#: plinth/modules/mediawiki/forms.py:41
 #, fuzzy
 #| msgid "Kite name"
 msgid "Site Name"
 msgstr "కైట్ పేరు"
 
-#: plinth/modules/mediawiki/forms.py:54
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr "ఇది సశక్త పరిచినట్లయితే, అంతర్జాలంలో ఉన్న ఎవరైనా మీ మీడియావికీ ఉదాహరణ మీద ఖాతాను సృజించుకోగలరు."
 
-#: plinth/modules/mediawiki/forms.py:63
+#: plinth/modules/mediawiki/forms.py:51
 msgid "Enable private mode"
 msgstr "ప్రైవేట్ మోడ్‌ను ప్రారంభించండి"
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:52
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3396,11 +3335,11 @@ msgstr ""
 "ప్రారంభించబడితే, సాంగత్యం పరిమితం చేయబడుతుంది. ఖాతాలు ఉన్నవారు మాత్రమే వికీలో చదవగలరు/వ్రాయగలరు. "
 "ప్రజా రిజిస్ట్రేషన్లు కూడా నిలిపివేయబడతాయి."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:57
 msgid "Default Skin"
 msgstr "డిఫాల్ట్ చర్మం"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:58
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3408,71 +3347,47 @@ msgstr ""
 "మీ మీడియావికీ ఇన్‌స్టాలేషన్ కోసం డిఫాల్ట్ చర్మాన్ని ఎంచుకోండి. వినియోగదారులు తమకు నచ్చిన చర్మాన్ని ఎంచుకునే "
 "అవకాశం ఉంటుంది."
 
-#: plinth/modules/mediawiki/forms.py:75
-#, fuzzy
-#| msgid "Select language"
-msgid "Default Language"
-msgstr "బాషను ఎంచుకోండి"
-
-#: plinth/modules/mediawiki/forms.py:76
-#, fuzzy
-#| msgid ""
-#| "Choose a default skin for your MediaWiki installation. Users have the "
-#| "option to select their preferred skin."
-msgid ""
-"Choose a default language for your MediaWiki installation. Users have the "
-"option to select their preferred language."
-msgstr ""
-"మీ మీడియావికీ ఇన్‌స్టాలేషన్ కోసం డిఫాల్ట్ చర్మాన్ని ఎంచుకోండి. వినియోగదారులు తమకు నచ్చిన చర్మాన్ని ఎంచుకునే "
-"అవకాశం ఉంటుంది."
-
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:54
 msgid "Password updated"
 msgstr "అనుమతిపదం నవీకరించబడింది"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:59
 #, fuzzy
 #| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
 msgstr "సమాచారాన్ని గుప్తీకరించాడానికి ఉపయోగించబడిన పాస్వర్డ్. తప్పకుండ సర్వర్ పాస్వర్డ్ తో సరిపోలాలి."
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:68
 msgid "Public registrations enabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు ప్రారంభించబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "పబ్లిక్ రిజిస్ట్రేషన్లు నిలిపివేయబడ్డాయి"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "ప్రైవేట్ మోడ్ ప్రారంభించబడింది"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "ప్రైవేట్ మోడ్ నిలిపివేయబడింది"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "డిఫాల్ట్ చర్మం మార్చబడింది"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:99
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Domain name updated"
 msgstr "అధికారక్షేత్రం పేరు అమర్పు"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:103
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Site name updated"
 msgstr "అధికారక్షేత్రం పేరు అమర్పు"
-
-#: plinth/modules/mediawiki/views.py:110
-#, fuzzy
-#| msgid "Default skin changed"
-msgid "Default language changed"
-msgstr "డిఫాల్ట్ చర్మం మార్చబడింది"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -9361,6 +9276,9 @@ msgstr "గుజరాతీ"
 
 #~ msgid "Register"
 #~ msgstr "నమోదు చేసుకోండి"
+
+#~ msgid "Skip Registration"
+#~ msgstr "నమోదు చేసుకొనుట దాటి వేయండి"
 
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>హెచ్చరిక</b><br/>"

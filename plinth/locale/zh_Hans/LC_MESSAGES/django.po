@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 20:23-0400\n"
+"POT-Creation-Date: 2023-03-13 21:32-0400\n"
 "PO-Revision-Date: 2022-12-07 20:48+0000\n"
 "Last-Translator: Eric <hamburger1024@duck.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -316,9 +316,7 @@ msgstr "\"存储库中的密钥\"表示受密码保护的密钥与备份一起�
 msgid "Key in Repository"
 msgstr "存储库中的密钥"
 
-#: plinth/modules/backups/forms.py:177
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
-#: plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "空"
 
@@ -953,7 +951,7 @@ msgstr "刷新 IP 地址和域"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1682,7 +1680,7 @@ msgstr "状态"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "域名"
 
@@ -1787,7 +1785,7 @@ msgstr ""
 "并读取多用户聊天室的历史。聊天记录是以纯文本还是加密形式存储，这取决于客户端"
 "的设置。"
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "自动管理音频/视频通话设置"
 
@@ -1801,19 +1799,19 @@ msgstr ""
 "将本地<a href=\"{coturn_url}\">coturn</a>应用程序配置为ejabberd的STUN/TURN服"
 "务器。如果你想使用一个不同的STUN/TURN服务器，请禁用此功能。"
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "STUN/TURN服务器URI"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "STUN/TURN服务器的公共URI列表，每行一个。"
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "共享的身份验证 Secret"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -3009,35 +3007,18 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:15
-msgid ""
-"Disabled. This could lead to adversaries registering many spam accounts on "
-"your server with automated scripts."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:18
-msgid ""
-"Require users creating a new account to use a registration token. A token "
-"will be created automatically. Pass this token to your potential new users. "
-"They will be asked for the token during registration. (recommended)"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:27
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
 msgstr "启用公开注册"
 
-#: plinth/modules/matrixsynapse/forms.py:28
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
 "users to be able to use it."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/forms.py:33
-msgid "Verification method for registration"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:40
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3097,52 +3078,12 @@ msgid ""
 "enabled."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
-msgid ""
-"New users must use one of the following tokens for verification during "
-"account registration:"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Registration Token"
-msgstr "跳过注册"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-msgid "Uses Allowed"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Pending Registrations"
-msgstr "跳过注册"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Completed Registrations"
-msgstr "跳过注册"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
-msgid "Expiry Time"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
-msgid "Unlimited"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
 "with other Matrix Synapse instances requires a valid TLS certificate. Please "
 "go to <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> to obtain one."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/views.py:137
-msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
@@ -3177,11 +3118,11 @@ msgstr ""
 msgid "Wiki"
 msgstr "共笔文档"
 
-#: plinth/modules/mediawiki/forms.py:38
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "管理员密码"
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3189,104 +3130,86 @@ msgid ""
 "password."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
 "onion\"."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:53
+#: plinth/modules/mediawiki/forms.py:41
 msgid "Site Name"
 msgstr "站点名"
 
-#: plinth/modules/mediawiki/forms.py:54
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
 msgstr "允许公开注册"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:63
+#: plinth/modules/mediawiki/forms.py:51
 msgid "Enable private mode"
 msgstr "启用私密模式"
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:52
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:57
 msgid "Default Skin"
 msgstr "默认皮肤"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:58
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:75
-#, fuzzy
-#| msgid "Select language"
-msgid "Default Language"
-msgstr "选择语言"
-
-#: plinth/modules/mediawiki/forms.py:76
-msgid ""
-"Choose a default language for your MediaWiki installation. Users have the "
-"option to select their preferred language."
-msgstr ""
-
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:54
 msgid "Password updated"
 msgstr "密码已更新"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:59
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:68
 msgid "Public registrations enabled"
 msgstr "公开注册已启用"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "已禁用公开注册"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "已启用私密模式"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "已禁用私密模式"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "默认皮肤已更改"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:99
 msgid "Domain name updated"
 msgstr "域名已更新"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:103
 msgid "Site name updated"
 msgstr "站点名已更新"
-
-#: plinth/modules/mediawiki/views.py:110
-#, fuzzy
-#| msgid "Default skin changed"
-msgid "Default language changed"
-msgstr "默认皮肤已更改"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -8531,6 +8454,9 @@ msgstr "古吉拉特语"
 
 #~ msgid "Register"
 #~ msgstr "注册"
+
+#~ msgid "Skip Registration"
+#~ msgstr "跳过注册"
 
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>警告：</b> <br/>"

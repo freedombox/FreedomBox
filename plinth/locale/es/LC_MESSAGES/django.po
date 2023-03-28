@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 20:23-0400\n"
+"POT-Creation-Date: 2023-03-13 21:32-0400\n"
 "PO-Revision-Date: 2023-02-16 19:39+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -337,9 +337,7 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Clave en repositorio"
 
-#: plinth/modules/backups/forms.py:177
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
-#: plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Ninguno"
 
@@ -1005,7 +1003,7 @@ msgstr "Actualizar direcciones IP y dominios"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1779,7 +1777,7 @@ msgstr "Estado"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:34
 msgid "Domain"
 msgstr "Dominio"
 
@@ -1891,7 +1889,7 @@ msgstr ""
 "multiusuario. La configuración de la aplicación cliente determina si el "
 "histórico se guarda cifrado o como texto plano."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
 msgid "Automatically manage audio/video call setup"
 msgstr "Administrar la configuración de llamada de audio/video automáticamente"
 
@@ -1906,19 +1904,19 @@ msgstr ""
 "STUN/TURN para Matrix Synapse. Deshabilita esto si quieres usar algun otro "
 "servidor STUN/TURN diferente."
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
 msgid "STUN/TURN Server URIs"
 msgstr "URIs de servidor STUN/TURN"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "Lista de URIs públicas de servidor STUN/TURN, una en cada línea."
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
 msgid "Shared Authentication Secret"
 msgstr "Secreto compartido de autenticación"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr "Secreto compartido para resolver contraseñas para el servidor TURN."
 
@@ -3246,24 +3244,11 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:15
-msgid ""
-"Disabled. This could lead to adversaries registering many spam accounts on "
-"your server with automated scripts."
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:18
-msgid ""
-"Require users creating a new account to use a registration token. A token "
-"will be created automatically. Pass this token to your potential new users. "
-"They will be asked for the token during registration. (recommended)"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:27
+#: plinth/modules/matrixsynapse/forms.py:16
 msgid "Enable Public Registration"
 msgstr "Activar el registro público"
 
-#: plinth/modules/matrixsynapse/forms.py:28
+#: plinth/modules/matrixsynapse/forms.py:17
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3273,11 +3258,7 @@ msgstr ""
 "crear una cuenta nueva en su servidor Matrix. Desactive esta opción si "
 "prefiere que solo las/los usuarias/os existentes puedan usarla."
 
-#: plinth/modules/matrixsynapse/forms.py:33
-msgid "Verification method for registration"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/forms.py:40
+#: plinth/modules/matrixsynapse/forms.py:24
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3354,45 +3335,7 @@ msgstr ""
 "Si el registro público está habilitado se pueden registrar nuevas/os "
 "usuarias/os desde cualquier cliente."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
-msgid ""
-"New users must use one of the following tokens for verification during "
-"account registration:"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Registration Token"
-msgstr "Omitir registro"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-#, fuzzy
-#| msgid "Allowed IPs"
-msgid "Uses Allowed"
-msgstr "IP permitidas"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Pending Registrations"
-msgstr "Omitir registro"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
-msgid "Completed Registrations"
-msgstr "Omitir registro"
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
-msgid "Expiry Time"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
-msgid "Unlimited"
-msgstr ""
-
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3403,10 +3346,6 @@ msgstr ""
 "federación con otras instancias de Matrix Synapse requiere un certificado "
 "TLS válido. Vaya a <a href=\"%(letsencrypt_url)s\">Let's Encrypt</a> para "
 "obtener uno."
-
-#: plinth/modules/matrixsynapse/views.py:137
-msgid "Registration configuration cannot be updated when app is disabled."
-msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3451,11 +3390,11 @@ msgstr "MediaWiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:38
+#: plinth/modules/mediawiki/forms.py:26
 msgid "Administrator Password"
 msgstr "Clave de Administración"
 
-#: plinth/modules/mediawiki/forms.py:39
+#: plinth/modules/mediawiki/forms.py:27
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3467,7 +3406,7 @@ msgstr ""
 "mínima de <strong>10 caracteres</strong>. Déjala en blanco para conservar la "
 "contraseña actual."
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:35
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
@@ -3477,19 +3416,19 @@ msgstr ""
 "feeds y enlaces desde e-mail. Ejemplos: \"myfreedombox.ejemplo.org\" o "
 "\"ejemplo.onion\"."
 
-#: plinth/modules/mediawiki/forms.py:53
+#: plinth/modules/mediawiki/forms.py:41
 msgid "Site Name"
 msgstr "Nombre del sitio"
 
-#: plinth/modules/mediawiki/forms.py:54
+#: plinth/modules/mediawiki/forms.py:42
 msgid "Name of the site as displayed throughout the wiki."
 msgstr "Nombre del sitio tal como se muestra en el wiki."
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Enable public registrations"
 msgstr "Habilitar el registro público"
 
-#: plinth/modules/mediawiki/forms.py:59
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3497,11 +3436,11 @@ msgstr ""
 "Si está habilitado, cualquiera en internet podrá crear una cuenta en su "
 "instancia de MediaWiki."
 
-#: plinth/modules/mediawiki/forms.py:63
+#: plinth/modules/mediawiki/forms.py:51
 msgid "Enable private mode"
 msgstr "Activar modo privado"
 
-#: plinth/modules/mediawiki/forms.py:64
+#: plinth/modules/mediawiki/forms.py:52
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3510,11 +3449,11 @@ msgstr ""
 "una cuenta pueden leer/escribir en el wiki. El registro público también será "
 "desactivado."
 
-#: plinth/modules/mediawiki/forms.py:69
+#: plinth/modules/mediawiki/forms.py:57
 msgid "Default Skin"
 msgstr "Tema por defecto"
 
-#: plinth/modules/mediawiki/forms.py:70
+#: plinth/modules/mediawiki/forms.py:58
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3522,66 +3461,42 @@ msgstr ""
 "Elija un tema por defecto para su instalación de MediaWiki. Los usuarios "
 "podrán elegir su propio tema."
 
-#: plinth/modules/mediawiki/forms.py:75
-#, fuzzy
-#| msgid "Select language"
-msgid "Default Language"
-msgstr "Seleccionar idioma"
-
-#: plinth/modules/mediawiki/forms.py:76
-#, fuzzy
-#| msgid ""
-#| "Choose a default skin for your MediaWiki installation. Users have the "
-#| "option to select their preferred skin."
-msgid ""
-"Choose a default language for your MediaWiki installation. Users have the "
-"option to select their preferred language."
-msgstr ""
-"Elija un tema por defecto para su instalación de MediaWiki. Los usuarios "
-"podrán elegir su propio tema."
-
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:54
 msgid "Password updated"
 msgstr "Clave actualizada"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:59
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
 "Falló la actualización de la contraseña. Use otra contraseña más fuerte"
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:68
 msgid "Public registrations enabled"
 msgstr "Habilitado el registro público"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:76
 msgid "Public registrations disabled"
 msgstr "Inhabilitado el registro público"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:81
 msgid "Private mode enabled"
 msgstr "Activado el modo privado"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:87
 msgid "Private mode disabled"
 msgstr "Desactivado el modo privado"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:95
 msgid "Default skin changed"
 msgstr "Tema por defecto cambiado"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:99
 msgid "Domain name updated"
 msgstr "Nombre de dominio actualizado"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:103
 msgid "Site name updated"
 msgstr "Nombre de sitio actulizado"
-
-#: plinth/modules/mediawiki/views.py:110
-#, fuzzy
-#| msgid "Default skin changed"
-msgid "Default language changed"
-msgstr "Tema por defecto cambiado"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -9640,6 +9555,9 @@ msgstr "Gujarati"
 
 #~ msgid "Register"
 #~ msgstr "Registro"
+
+#~ msgid "Skip Registration"
+#~ msgstr "Omitir registro"
 
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>Aviso:</b><br/>"
