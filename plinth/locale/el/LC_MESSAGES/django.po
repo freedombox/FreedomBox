@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:32-0400\n"
+"POT-Creation-Date: 2023-03-27 20:23-0400\n"
 "PO-Revision-Date: 2022-09-14 17:20+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -335,7 +335,9 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Κλειδί στο αποθετήριο"
 
-#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
+#: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Κανένα"
 
@@ -1037,7 +1039,7 @@ msgstr ""
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1833,7 +1835,7 @@ msgstr "Κατάσταση"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Domain"
 msgstr "Όνομα διαδικτύου"
 
@@ -1956,7 +1958,7 @@ msgstr ""
 "χρηστών. Εξαρτάται από τις ρυθμίσεις του πελάτη αν τα μηνύματα αποθηκεύονται "
 "ως απλό κείμενο ή κρυπτογραφούνται."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr ""
 
@@ -1968,21 +1970,21 @@ msgid ""
 "server."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
 #, fuzzy
 #| msgid "Authentication Mode"
 msgid "Shared Authentication Secret"
 msgstr "Λειτουργία ελέγχου ταυτότητας"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -3344,11 +3346,24 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:15
+msgid ""
+"Disabled. This could lead to adversaries registering many spam accounts on "
+"your server with automated scripts."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:18
+msgid ""
+"Require users creating a new account to use a registration token. A token "
+"will be created automatically. Pass this token to your potential new users. "
+"They will be asked for the token during registration. (recommended)"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
 msgstr "Ενεργοποίηση εγγραφών νέων χρηστών"
 
-#: plinth/modules/matrixsynapse/forms.py:17
+#: plinth/modules/matrixsynapse/forms.py:28
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3359,7 +3374,11 @@ msgstr ""
 "Απενεργοποιήστε αυτήν την επιλογή, εάν θέλετε μόνο οι υπάρχοντες χρήστες να "
 "μπορούν να χρησιμοποιήσουν το διακομιστή σας."
 
-#: plinth/modules/matrixsynapse/forms.py:24
+#: plinth/modules/matrixsynapse/forms.py:33
+msgid "Verification method for registration"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3436,7 +3455,43 @@ msgstr ""
 "Οι νέοι χρήστες μπορούν να καταχωρούνται από οποιονδήποτε υπολογιστή-πελάτη, "
 "εάν είναι ενεργοποιημένη η δημόσια εγγραφή."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
+msgid ""
+"New users must use one of the following tokens for verification during "
+"account registration:"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Registration Token"
+msgstr "Παράλειψη εγγραφής"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
+msgid "Uses Allowed"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Pending Registrations"
+msgstr "Παράλειψη εγγραφής"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Completed Registrations"
+msgstr "Παράλειψη εγγραφής"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
+msgid "Expiry Time"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
+msgid "Unlimited"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3447,6 +3502,10 @@ msgstr ""
 "αυτόματα. Η ομοσπονδία με άλλους διακομιστές Synapse Matrix απαιτεί έγκυρο "
 "TLS πιστοποιητικό. Μεταβείτε στη διεύθυνση <a href=\"%(letsencrypt_url)s\"> "
 "Lets Encrypt </a> για να αποκτήσετε ένα."
+
+#: plinth/modules/matrixsynapse/views.py:137
+msgid "Registration configuration cannot be updated when app is disabled."
+msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3493,11 +3552,11 @@ msgstr "Mediawiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:38
 msgid "Administrator Password"
 msgstr "Κωδικός Πρόσβασης Διαχειριστή"
 
-#: plinth/modules/mediawiki/forms.py:27
+#: plinth/modules/mediawiki/forms.py:39
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -3512,28 +3571,28 @@ msgstr ""
 "wiki. Αφήστε αυτό το πεδίο κενό για να διατηρήσετε τον τρέχοντα κωδικό "
 "πρόσβασης."
 
-#: plinth/modules/mediawiki/forms.py:35
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
 "onion\"."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:53
 #, fuzzy
 #| msgid "Kite name"
 msgid "Site Name"
 msgstr "Kite όνομα"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:54
 msgid "Name of the site as displayed throughout the wiki."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:58
 msgid "Enable public registrations"
 msgstr "Ενεργοποίηση εγγραφών νέων χρηστών"
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:59
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3541,11 +3600,11 @@ msgstr ""
 "Εάν ενεργοποιηθεί, οποιοσδήποτε στο Internet θα μπορεί να δημιουργήσει ένα "
 "λογαριασμό στον διακομιστή σας wiki."
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:63
 msgid "Enable private mode"
 msgstr "Ενεργοποίηση ιδιωτικής λειτουργίας"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:64
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3554,11 +3613,11 @@ msgstr ""
 "που έχουν λογαριασμούς μπορεί να διαβάσουν/γράψουν στο wiki. Δημόσιες "
 "εγγραφές θα είναι επίσης απενεργοποιημένες."
 
-#: plinth/modules/mediawiki/forms.py:57
+#: plinth/modules/mediawiki/forms.py:69
 msgid "Default Skin"
 msgstr "Προεπιλεγμένη εμφάνιση"
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:70
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3566,11 +3625,29 @@ msgstr ""
 "Επιλέξτε μια προκαθορισμένη εμφάνιση για την εγκατάσταση του wiki σας. Οι "
 "χρήστες έχουν την επιλογή να επιλέξουν την εμφάνιση που προτιμούν."
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/forms.py:75
+#, fuzzy
+#| msgid "Select language"
+msgid "Default Language"
+msgstr "Επιλογή γλώσσας"
+
+#: plinth/modules/mediawiki/forms.py:76
+#, fuzzy
+#| msgid ""
+#| "Choose a default skin for your MediaWiki installation. Users have the "
+#| "option to select their preferred skin."
+msgid ""
+"Choose a default language for your MediaWiki installation. Users have the "
+"option to select their preferred language."
+msgstr ""
+"Επιλέξτε μια προκαθορισμένη εμφάνιση για την εγκατάσταση του wiki σας. Οι "
+"χρήστες έχουν την επιλογή να επιλέξουν την εμφάνιση που προτιμούν."
+
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password updated"
 msgstr "Ενημερώθηκε ο κωδικός πρόσβασης"
 
-#: plinth/modules/mediawiki/views.py:59
+#: plinth/modules/mediawiki/views.py:62
 #, fuzzy
 #| msgid "Password used to encrypt data. Must match server password."
 msgid "Password update failed. Please choose a stronger password"
@@ -3578,37 +3655,43 @@ msgstr ""
 "Κωδικός πρόσβασης που χρησιμοποιείται για την κρυπτογράφηση δεδομένων. "
 "Πρέπει να ταιριάζει με τον κωδικό πρόσβασης του διακομιστή."
 
-#: plinth/modules/mediawiki/views.py:68
+#: plinth/modules/mediawiki/views.py:71
 msgid "Public registrations enabled"
 msgstr "Η δημόσια εγγραφή ενεργοποιήθηκε"
 
-#: plinth/modules/mediawiki/views.py:76
+#: plinth/modules/mediawiki/views.py:79
 msgid "Public registrations disabled"
 msgstr "Οι δημόσιες εγγραφές είναι απενεργοποιημένες"
 
-#: plinth/modules/mediawiki/views.py:81
+#: plinth/modules/mediawiki/views.py:84
 msgid "Private mode enabled"
 msgstr "Η ιδιωτική λειτουργία είναι ενεργοποιημένη"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:90
 msgid "Private mode disabled"
 msgstr "Η ιδιωτική λειτουργία απενεργοποιήθηκε"
 
-#: plinth/modules/mediawiki/views.py:95
+#: plinth/modules/mediawiki/views.py:98
 msgid "Default skin changed"
 msgstr "Η προεπιλεγμένη εμφάνιση άλλαξε"
 
-#: plinth/modules/mediawiki/views.py:99
+#: plinth/modules/mediawiki/views.py:102
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Domain name updated"
 msgstr "To όνομα διαδικτύου ρυθμίστηκε επιτυχώς"
 
-#: plinth/modules/mediawiki/views.py:103
+#: plinth/modules/mediawiki/views.py:106
 #, fuzzy
 #| msgid "Domain name set"
 msgid "Site name updated"
 msgstr "To όνομα διαδικτύου ρυθμίστηκε επιτυχώς"
+
+#: plinth/modules/mediawiki/views.py:110
+#, fuzzy
+#| msgid "Default skin changed"
+msgid "Default language changed"
+msgstr "Η προεπιλεγμένη εμφάνιση άλλαξε"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -9829,9 +9912,6 @@ msgstr "Gujarati"
 
 #~ msgid "Register"
 #~ msgstr "Εγγραφή"
-
-#~ msgid "Skip Registration"
-#~ msgstr "Παράλειψη εγγραφής"
 
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>Προειδοποίηση:</b><br/>"

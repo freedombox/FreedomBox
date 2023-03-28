@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:32-0400\n"
+"POT-Creation-Date: 2023-03-27 20:23-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -333,7 +333,9 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Kulcs a tárolóban"
 
-#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
+#: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Nincs"
 
@@ -998,7 +1000,7 @@ msgstr "IP-címek és tartományok frissítése"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1781,7 +1783,7 @@ msgstr "Állapot"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:46
 msgid "Domain"
 msgstr "Domain"
 
@@ -1895,7 +1897,7 @@ msgstr ""
 "kliens beállításaitól függ, hogy az előzmények egyszerű szövegként vagy "
 "titkosítva lesznek eltárolva."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr "Automatikusan kezelje az audió/videóhívás beállítását"
 
@@ -1910,20 +1912,20 @@ msgstr ""
 "ejabberd STUN/TURN-szervereként. Kapcsold ki, ha más STUN/TURN-szervert "
 "szeretnél használni."
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr "STUN/TURN-szerver URI-k"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 "A STUN/TURN-szerver nyilvános URI-információinak listája, minden sorban egy."
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
 msgstr "Nyilvános hitelesítési titkosítás"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 "A TURN-szerver jelszavainak kiszámításához használt nyilvános titkosítás."
@@ -3265,11 +3267,24 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:15
+msgid ""
+"Disabled. This could lead to adversaries registering many spam accounts on "
+"your server with automated scripts."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:18
+msgid ""
+"Require users creating a new account to use a registration token. A token "
+"will be created automatically. Pass this token to your potential new users. "
+"They will be asked for the token during registration. (recommended)"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
 msgstr "Szabad regisztráció engedélyezése"
 
-#: plinth/modules/matrixsynapse/forms.py:17
+#: plinth/modules/matrixsynapse/forms.py:28
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3279,7 +3294,11 @@ msgstr ""
 "felhasználói fiókot létrehozni a te Matrix-szervereden. Tiltsd le, ha azt "
 "szeretnéd, hogy csak a már meglévő felhasználók használhassák."
 
-#: plinth/modules/matrixsynapse/forms.py:24
+#: plinth/modules/matrixsynapse/forms.py:33
+msgid "Verification method for registration"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3357,7 +3376,45 @@ msgstr ""
 "Ha a szabad regisztráció engedélyezett, bármely kliensről lehet új "
 "felhasználót regisztrálni."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
+msgid ""
+"New users must use one of the following tokens for verification during "
+"account registration:"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Registration Token"
+msgstr "Regisztráció kihagyása"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
+#, fuzzy
+#| msgid "Allowed IPs"
+msgid "Uses Allowed"
+msgstr "Engedélyezett IP-címek"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Pending Registrations"
+msgstr "Regisztráció kihagyása"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Completed Registrations"
+msgstr "Regisztráció kihagyása"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
+msgid "Expiry Time"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
+msgid "Unlimited"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3368,6 +3425,10 @@ msgstr ""
 "Synapse példányokkal való szövetséghez egy érvényes TLS-tanúsítványra lesz "
 "szükséged. Kérlek, látogasd meg a <a href=\"%(letsencrypt_url)s\">Let's "
 "Encrypt</a> weboldalát ahhoz, hogy beszerezz egyet."
+
+#: plinth/modules/matrixsynapse/views.py:137
+msgid "Registration configuration cannot be updated when app is disabled."
+msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3412,11 +3473,11 @@ msgstr "MediaWiki"
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:38
 msgid "Administrator Password"
 msgstr "Rendszergazdai jelszó"
 
-#: plinth/modules/mediawiki/forms.py:27
+#: plinth/modules/mediawiki/forms.py:39
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3428,7 +3489,7 @@ msgstr ""
 "karakterből</strong> kell állnia. Hagyd üresen ezt a mezőt, ha meg szeretnéd "
 "tartani a jelenlegi jelszót."
 
-#: plinth/modules/mediawiki/forms.py:35
+#: plinth/modules/mediawiki/forms.py:47
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
@@ -3438,21 +3499,21 @@ msgstr ""
 "láblécben, hírcsatornákban és e-mailekben. Példa: \"freedomboxom.pelda.org\" "
 "or \"pelda.onion\"."
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:53
 #, fuzzy
 #| msgid "Kite name"
 msgid "Site Name"
 msgstr "Kite név"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:54
 msgid "Name of the site as displayed throughout the wiki."
 msgstr "Az oldal neve, ahogyan az a wikiben megjelenik."
 
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:58
 msgid "Enable public registrations"
 msgstr "Szabad regisztráció engedélyezése"
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:59
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3460,11 +3521,11 @@ msgstr ""
 "Ha engedélyezett, az interneten bárki létrehozhat egy fiókot ebben a "
 "MediaWiki példányban."
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:63
 msgid "Enable private mode"
 msgstr "Privát mód engedélyezése"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:64
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3473,11 +3534,11 @@ msgstr ""
 "rendelkező emberek fogják tudni olvasni/írni a wiki-t. A szabad regisztráció "
 "is le lesz tiltva."
 
-#: plinth/modules/mediawiki/forms.py:57
+#: plinth/modules/mediawiki/forms.py:69
 msgid "Default Skin"
 msgstr "Alapértelmezett felszín"
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:70
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3485,41 +3546,65 @@ msgstr ""
 "Válassz alapértelmezett felszínt a MediaWiki telepítéséhez. A "
 "felhasználóknak lehetőségük van kiválasztani a saját kedvelt felszínüket."
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/forms.py:75
+#, fuzzy
+#| msgid "Select language"
+msgid "Default Language"
+msgstr "Válassz nyelvet"
+
+#: plinth/modules/mediawiki/forms.py:76
+#, fuzzy
+#| msgid ""
+#| "Choose a default skin for your MediaWiki installation. Users have the "
+#| "option to select their preferred skin."
+msgid ""
+"Choose a default language for your MediaWiki installation. Users have the "
+"option to select their preferred language."
+msgstr ""
+"Válassz alapértelmezett felszínt a MediaWiki telepítéséhez. A "
+"felhasználóknak lehetőségük van kiválasztani a saját kedvelt felszínüket."
+
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password updated"
 msgstr "Jelszó frissítve"
 
-#: plinth/modules/mediawiki/views.py:59
+#: plinth/modules/mediawiki/views.py:62
 msgid "Password update failed. Please choose a stronger password"
 msgstr "A jlszó frisítése nem sikerült. Kérlek válassz egy erősebb jelszót"
 
-#: plinth/modules/mediawiki/views.py:68
+#: plinth/modules/mediawiki/views.py:71
 msgid "Public registrations enabled"
 msgstr "Szabad regisztráció engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:76
+#: plinth/modules/mediawiki/views.py:79
 msgid "Public registrations disabled"
 msgstr "Szabad regisztráció letiltva"
 
-#: plinth/modules/mediawiki/views.py:81
+#: plinth/modules/mediawiki/views.py:84
 msgid "Private mode enabled"
 msgstr "Privát mód engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:90
 msgid "Private mode disabled"
 msgstr "Privát mód letiltva"
 
-#: plinth/modules/mediawiki/views.py:95
+#: plinth/modules/mediawiki/views.py:98
 msgid "Default skin changed"
 msgstr "Az alapértelmezett felszín megváltozott"
 
-#: plinth/modules/mediawiki/views.py:99
+#: plinth/modules/mediawiki/views.py:102
 msgid "Domain name updated"
 msgstr "Domainnév frissítve"
 
-#: plinth/modules/mediawiki/views.py:103
+#: plinth/modules/mediawiki/views.py:106
 msgid "Site name updated"
 msgstr "Az oldal neve frissítve"
+
+#: plinth/modules/mediawiki/views.py:110
+#, fuzzy
+#| msgid "Default skin changed"
+msgid "Default language changed"
+msgstr "Az alapértelmezett felszín megváltozott"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -9668,9 +9753,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Register"
 #~ msgstr "Regisztráció"
-
-#~ msgid "Skip Registration"
-#~ msgstr "Regisztráció kihagyása"
 
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>Figyelmeztetés:</b><br/>"
