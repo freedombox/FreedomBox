@@ -114,6 +114,11 @@ class CoturnApp(app_module.App):
         self.get_component('letsencrypt-coturn').setup_certificates()
         notify_configuration_change()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 def get_available_domains():
     """Return an iterator with all domains able to have a certificate."""

@@ -89,3 +89,9 @@ def augeas_load():
     aug.load()
 
     return aug
+
+
+@privileged
+def uninstall():
+    """Remove configuration file."""
+    CONFIG_FILE.unlink(missing_ok=True)
