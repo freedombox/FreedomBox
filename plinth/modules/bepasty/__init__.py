@@ -99,3 +99,8 @@ class BepastyApp(app_module.App):
             # Upgrade to a better default only if user hasn't changed the
             # value.
             privileged.set_default(['read'])
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()

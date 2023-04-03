@@ -168,3 +168,12 @@ def _generate_password():
     """Generate a random password."""
     alphabet = string.ascii_letters + string.digits
     return ''.join(secrets.choice(alphabet) for _ in range(PASSWORD_LENGTH))
+
+
+@privileged
+def uninstall():
+    """Remove bepasty user, group and data."""
+    shutil.rmtree(DATA_DIR, ignore_errors=True)
+    CONF_FILE.unlink(missing_ok=True)
+    subprocess.run(['deluser', 'bepasty'], check=False)
+    subprocess.run(['delgroup', 'bepasty'], check=False)
