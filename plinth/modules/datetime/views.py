@@ -2,7 +2,7 @@
 """FreedomBox app for configuring date and time."""
 
 import logging
-import pathlib
+import subprocess
 
 from django.contrib import messages
 from django.utils.translation import gettext as _
@@ -24,15 +24,19 @@ class DateTimeAppView(AppView):
     def get_initial(self):
         """Return the values to fill in the form."""
         status = super().get_initial()
-        status['time_zone'] = self.get_current_time_zone()
+        status['time_zone'] = self.get_current_time_zone() or 'none'
         return status
 
     @staticmethod
     def get_current_time_zone():
         """Get current time zone."""
-        path = pathlib.Path('/etc/timezone')
-        time_zone = path.read_text(encoding='utf-8').rstrip()
-        return time_zone or 'none'
+        try:
+            process = subprocess.run(
+                ['timedatectl', 'show', '--property', 'Timezone', '--value'],
+                stdout=subprocess.PIPE, check=True)
+            return process.stdout.decode().strip()
+        except subprocess.CalledProcessError:
+            return None
 
     def form_valid(self, form):
         """Change the timezone."""
