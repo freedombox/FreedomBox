@@ -59,7 +59,9 @@ class CoturnApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-coturn', ['coturn'])
+        # Include sqlite3 to prevent removal of coturn from removal of
+        # roundcube.
+        packages = Packages('packages-coturn', ['coturn', 'sqlite3'])
         self.add(packages)
 
         firewall = Firewall('firewall-coturn', info.name,
