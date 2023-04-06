@@ -4,6 +4,7 @@
 import configparser
 import logging
 import os
+import pathlib
 import re
 import shutil
 import subprocess
@@ -386,3 +387,10 @@ def delete_repo(name: str):
     repo = validate_repo_name(name)
     repo_path = os.path.join(GIT_REPO_PATH, repo)
     shutil.rmtree(repo_path)
+
+
+@privileged
+def uninstall():
+    """Remove git repositories."""
+    for item in pathlib.Path(GIT_REPO_PATH).glob('*'):
+        shutil.rmtree(item, ignore_errors=True)

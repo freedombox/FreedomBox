@@ -127,6 +127,11 @@ class GitwebApp(app_module.App):
         privileged.setup()
         self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 class GitwebWebserverAuth(Webserver):
     """Component to handle Gitweb authentication webserver configuration."""
