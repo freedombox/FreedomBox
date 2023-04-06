@@ -2,6 +2,7 @@
 """Configure ikiwiki."""
 
 import os
+import pathlib
 import re
 import shutil
 import subprocess
@@ -96,10 +97,14 @@ def delete(name: str):
         raise ValueError(
             'Error: {0} is not a correct wiki/blog name.'.format(name))
 
-    try:
-        shutil.rmtree(html_folder)
-        shutil.rmtree(wiki_folder)
-        shutil.rmtree(wiki_folder + '.git')
-        os.remove(wiki_folder + '.setup')
-    except FileNotFoundError:
-        raise RuntimeError('Unable to delete wiki/blog')
+    shutil.rmtree(html_folder, ignore_errors=True)
+    shutil.rmtree(wiki_folder, ignore_errors=True)
+    shutil.rmtree(wiki_folder + '.git', ignore_errors=True)
+    pathlib.Path(wiki_folder + '.setup').unlink(missing_ok=True)
+
+
+@privileged
+def uninstall():
+    """Remove all ikiwiki sites."""
+    for site in get_sites():
+        delete(site[0])

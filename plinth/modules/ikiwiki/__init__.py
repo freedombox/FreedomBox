@@ -112,6 +112,11 @@ class IkiwikiApp(app_module.App):
         privileged.setup()
         self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 class IkiwikiBackupRestore(BackupRestore):
     """Component to handle Ikiwiki restore"""
