@@ -2,6 +2,7 @@
 """Configuration helper for BitTorrent web client."""
 
 import pathlib
+import shutil
 import subprocess
 import time
 
@@ -154,3 +155,12 @@ def _wait_for_configuration(service, file_name):
 
     if not is_running:
         action_utils.service_stop(service)
+
+
+@privileged
+def uninstall():
+    """Remove configuration and service files."""
+    for item in DELUGED_DEFAULT_FILE, DELUGE_WEB_SYSTEMD_SERVICE_PATH:
+        pathlib.Path(item).unlink(missing_ok=True)
+
+    shutil.rmtree(DELUGE_CONF_DIR, ignore_errors=True)

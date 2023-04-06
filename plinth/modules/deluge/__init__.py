@@ -100,3 +100,8 @@ class DelugeApp(app_module.App):
         add_user_to_share_group(SYSTEM_USER)
         privileged.setup()
         self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
