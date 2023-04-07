@@ -75,7 +75,8 @@ class DateTimeApp(app_module.App):
         packages = Packages('packages-datetime', ['systemd-timesyncd'])
         self.add(packages)
 
-        daemon = RelatedDaemon('daemon-datetime', 'systemd-timedated')
+        daemon = RelatedDaemon('daemon-datetime-timedated',
+                               'systemd-timedated')
         self.add(daemon)
 
         if self._is_time_managed():
