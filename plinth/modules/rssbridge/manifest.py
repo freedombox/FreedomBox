@@ -14,4 +14,8 @@ clients = [{
     }]
 }]
 
-backup = {}
+backup = {
+        'data': {
+            'files': ['/etc/rss-bridge/is_public']
+        }
+}
