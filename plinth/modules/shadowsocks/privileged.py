@@ -95,3 +95,10 @@ def merge_config(config: dict[str, Union[int, str]]):
     from . import ShadowsocksApp
     if action_utils.service_is_enabled(ShadowsocksApp.DAEMON):
         action_utils.service_restart(ShadowsocksApp.DAEMON)
+
+
+@privileged
+def uninstall():
+    """Remove configuration files."""
+    for path in SHADOWSOCKS_CONFIG_SYMLINK, SHADOWSOCKS_CONFIG_ACTUAL:
+        pathlib.Path(path).unlink(missing_ok=True)

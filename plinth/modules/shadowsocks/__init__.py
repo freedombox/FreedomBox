@@ -84,3 +84,8 @@ class ShadowsocksApp(app_module.App):
         super().setup(old_version)
         privileged.setup()
         self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
