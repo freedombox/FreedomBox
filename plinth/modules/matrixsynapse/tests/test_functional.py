@@ -24,3 +24,9 @@ class TestMatrixSynapseApp(functional.BaseAppTests):
         functional.install(session_browser, self.app_name)
         functional.app_select_domain_name(session_browser, self.app_name,
                                           'mydomain.example')
+
+    def test_uninstall(self, session_browser):
+        """After uninstall test, after installing select the domain again."""
+        super().test_uninstall(session_browser)
+        functional.app_select_domain_name(session_browser, self.app_name,
+                                          'mydomain.example')

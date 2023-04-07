@@ -126,6 +126,11 @@ class MatrixSynapseApp(app_module.App):
         config = self.get_component('turn-matrixsynapse').get_configuration()
         update_turn_configuration(config, force=True)
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 class MatrixSynapseTurnConsumer(TurnConsumer):
     """Component to manage Coturn configuration for Matrix Synapse."""

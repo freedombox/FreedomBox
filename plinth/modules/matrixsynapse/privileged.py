@@ -339,3 +339,10 @@ def _generate_mac(shared_secret: str, nonce: str, user: str, password: str,
         mac.update(user_type.encode('utf8'))
 
     return mac.hexdigest()
+
+
+@privileged
+def uninstall():
+    """Delete configuration and data directories."""
+    for item in ['/etc/matrix-synapse/conf.d', '/var/lib/matrix-synapse']:
+        shutil.rmtree(item, ignore_errors=True)
