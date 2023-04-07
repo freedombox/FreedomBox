@@ -100,6 +100,11 @@ class SearxApp(app_module.App):
             self.enable()
             self.set_shortcut_login_required(True)
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.unininstall()
+
 
 class SearxWebserverAuth(Webserver):
     """Component to handle Searx authentication webserver configuration."""

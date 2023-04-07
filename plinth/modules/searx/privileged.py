@@ -153,3 +153,10 @@ def disable_public_access():
     """Disable public access to the SearX application."""
     if os.path.exists(PUBLIC_ACCESS_SETTING_FILE):
         os.remove(PUBLIC_ACCESS_SETTING_FILE)
+
+
+@privileged
+def unininstall():
+    """Remove configuration uWSGI file."""
+    shutil.rmtree('/etc/searx', ignore_errors=True)
+    pathlib.Path(UWSGI_FILE).unlink(missing_ok=True)
