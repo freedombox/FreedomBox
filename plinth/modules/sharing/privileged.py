@@ -173,3 +173,9 @@ def _list(aug=None):
 def list_shares() -> list[dict[str, object]]:
     """List all Apache configuration shares and print as JSON."""
     return _list()
+
+
+@privileged
+def uninstall():
+    """Remove apache config when app is uninstalled."""
+    pathlib.Path(APACHE_CONFIGURATION).unlink(missing_ok=True)
