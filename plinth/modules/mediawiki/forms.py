@@ -23,8 +23,15 @@ def get_skins():
 
 def get_languages():
     """Return a list of available languages as choice field values."""
-    with open('/var/lib/mediawiki/includes/languages/data/Names.php',
-              'r') as lang_file:
+    # Names.php has different locations on Bullseye Bookworm
+    names_old = pathlib.Path('/usr/share/mediawiki/languages/data/Names.php')
+    names_new = pathlib.Path('/usr/share/mediawiki/includes/languages/'
+                             'data/Names.php')
+    names_file = names_old
+    if not names_old.exists():
+        names_file = names_new
+
+    with open(names_file, 'r') as lang_file:
         content = lang_file.read()
     matches = re.findall(r"'([a-z_-]+)' => '(.+)', # .+", content)
     language_choices = [(code, name) for code, name in matches]
@@ -75,5 +82,4 @@ class MediaWikiForm(forms.Form):  # pylint: disable=W0232
         label=_('Default Language'), required=False,
         help_text=_('Choose a default language for your MediaWiki '
                     'installation. Users have the option to select '
-                    'their preferred language.'),
-        choices=get_languages)
+                    'their preferred language.'), choices=get_languages)
