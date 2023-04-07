@@ -111,6 +111,11 @@ class WordPressApp(app_module.App):
             # Apply changes to Apache configuration from v2 to v3.
             service_privileged.reload('apache2')
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 class WordPressBackupRestore(BackupRestore):
     """Component to backup/restore WordPress."""

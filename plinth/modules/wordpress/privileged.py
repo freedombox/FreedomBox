@@ -13,8 +13,7 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged
 
-PUBLIC_ACCESS_FILE = '/etc/wordpress/is_public'
-
+_public_access_file = pathlib.Path('/etc/wordpress/is_public')
 _config_file_path = pathlib.Path('/etc/wordpress/config-default.php')
 _static_config_file_path = pathlib.Path('/etc/wordpress/freedombox-static.php')
 _db_file_path = pathlib.Path('/etc/wordpress/database.php')
@@ -127,18 +126,17 @@ def _upgrade_config_file():
 @privileged
 def set_public(enable: bool):
     """Allow/disallow public access."""
-    public_access_file = pathlib.Path(PUBLIC_ACCESS_FILE)
     if enable:
-        public_access_file.touch()
+        _public_access_file.touch()
     else:
-        public_access_file.unlink(missing_ok=True)
+        _public_access_file.unlink(missing_ok=True)
 
     action_utils.service_reload('apache2')
 
 
 def is_public() -> bool:
     """Return whether public access is enabled."""
-    return pathlib.Path(PUBLIC_ACCESS_FILE).exists()
+    return _public_access_file.exists()
 
 
 @privileged
@@ -177,3 +175,18 @@ def _load_augeas():
     aug.load()
 
     return aug
+
+
+@privileged
+def uninstall():
+    """Remove config files and drop database."""
+    _drop_database()
+    for file_ in [_public_access_file, _config_file_path, _db_file_path]:
+        file_.unlink(missing_ok=True)
+
+
+def _drop_database():
+    """Drop the mysql database that was created during install."""
+    query = f'''DROP DATABASE {DB_NAME};'''
+    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                   check=True)

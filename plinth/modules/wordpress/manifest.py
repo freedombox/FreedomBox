@@ -12,7 +12,8 @@ clients = [{
 
 backup = {
     'data': {
-        'files': ['/var/lib/plinth/backups-data/wordpress-database.sql'],
+        'files': ['/var/lib/plinth/backups-data/wordpress-database.sql',
+                  '/etc/wordpress/is_public'],
         'directories': ['/var/lib/wordpress/']
     },
     'secrets': {
