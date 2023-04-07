@@ -74,3 +74,8 @@ class TestShaarliApp(functional.BaseAppTests):
         assert len(links) > 0
 
     # TODO: Test deleting bookmarks.
+
+    def test_uninstall(self, session_browser):
+        """After uninstall test, after installing run initial setup."""
+        super().test_uninstall(session_browser)
+        self._shaarli_is_setup(session_browser)

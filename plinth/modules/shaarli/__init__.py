@@ -12,7 +12,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest
+from . import manifest, privileged
 
 _description = [
     _('Shaarli allows you to save and share bookmarks.'),
@@ -69,3 +69,8 @@ class ShaarliApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
