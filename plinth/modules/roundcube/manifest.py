@@ -10,4 +10,9 @@ clients = [{
     }]
 }]
 
-backup = {}
+backup = {
+        'data': {
+            'files': ['/etc/roundcube/freedombox-config.php',
+                      '/var/lib/dbconfig-common/sqlite3/roundcube/roundcube']
+        }
+}

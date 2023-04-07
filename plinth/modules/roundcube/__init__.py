@@ -95,6 +95,11 @@ class RoundcubeApp(app_module.App):
             privileged.set_config(local_only=True)
             self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
     def force_upgrade(self, packages):
         """Force upgrade package to resolve conffile prompts."""
         if 'roundcube-core' not in packages:

@@ -8,6 +8,8 @@ from plinth import action_utils
 from plinth.actions import privileged
 
 _config_file = pathlib.Path('/etc/roundcube/freedombox-config.php')
+_rc_db_file = pathlib.Path('/var/lib/dbconfig-common/sqlite3/'
+                           'roundcube/roundcube')
 
 
 @privileged
@@ -68,3 +70,10 @@ $config['smtp_helo_host'] = 'localhost';
 '''
 
     _config_file.write_text(config, encoding='utf-8')
+
+
+@privileged
+def uninstall():
+    """Remove config file and database."""
+    for item in _config_file, _rc_db_file:
+        item.unlink(missing_ok=True)
