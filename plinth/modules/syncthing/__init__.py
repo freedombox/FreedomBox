@@ -143,3 +143,8 @@ class SyncthingApp(app_module.App):
                     sharing.remove_share(name)
                     sharing.add_share(name, share['path'], new_groups,
                                       share['is_public'])
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()

@@ -3,6 +3,7 @@
 
 import grp
 import os
+import pathlib
 import pwd
 import shutil
 import subprocess
@@ -80,3 +81,9 @@ def setup_config():
 
     if conf_changed:
         action_utils.service_try_restart('syncthing@syncthing')
+
+
+@privileged
+def uninstall():
+    """Remove configuration file when app is uninstalled."""
+    shutil.rmtree(DATA_DIR + '/.config', ignore_errors=True)
