@@ -14,7 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import forms, manifest, privileged
+from . import manifest, privileged
 
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
@@ -155,10 +155,4 @@ def get_site_name():
 
 def get_default_language():
     """Return the value of MediaWiki's default language"""
-    default_lang_key = _get_config_value('$wgLanguageCode')
-    language_choices = forms.get_languages()
-    for code, name in language_choices:
-        if code == default_lang_key:
-            return code
-
-    return None
+    return _get_config_value('$wgLanguageCode') or None
