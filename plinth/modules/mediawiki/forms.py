@@ -3,12 +3,16 @@
 FreedomBox app for configuring MediaWiki.
 """
 
+import json
+import logging
 import pathlib
-import re
+import subprocess
 
 from django import forms
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
+
+from . import privileged
 
 
 def get_skins():
@@ -31,12 +35,19 @@ def get_languages():
     if not names_old.exists():
         names_file = names_new
 
-    with open(names_file, 'r') as lang_file:
-        content = lang_file.read()
-    matches = re.findall(r"'([a-z_-]+)' => '(.+)', # .+", content)
-    language_choices = [(code, name) for code, name in matches]
-
-    return language_choices
+    script = rf'''<?php
+    require_once('{names_file}');
+    print(json_encode(Mediawiki\Languages\Data\Names::$names));'''
+    try:
+        process = subprocess.run([privileged.get_php_command()],
+                                 input=script.encode(), stdout=subprocess.PIPE,
+                                 check=True)
+        languages_dict = json.loads(process.stdout.decode())
+        return list(languages_dict.items())
+    except Exception as exception:
+        logging.exception('Unable read list of Mediawiki languages.',
+                          exception)
+        return [('en', 'English')]
 
 
 class MediaWikiForm(forms.Form):  # pylint: disable=W0232
