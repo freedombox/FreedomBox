@@ -36,7 +36,7 @@ class TTRSSApp(app_module.App):
 
     app_id = 'ttrss'
 
-    _version = 3
+    _version = 4
 
     def __init__(self):
         """Create components for the app."""

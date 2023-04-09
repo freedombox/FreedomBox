@@ -20,7 +20,10 @@ DB_BACKUP_FILE = '/var/lib/plinth/backups-data/ttrss-database.sql'
 def pre_setup():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections(
-        ['tt-rss tt-rss/database-type string pgsql'])
+        ['tt-rss tt-rss/database-type string pgsql',
+         'tt-rss tt-rss/purge boolean true',
+         'tt-rss tt-rss/dbconfig-remove boolean true',
+         'tt-rss tt-rss/dbconfig-reinstall boolean true'])
 
 
 @privileged
