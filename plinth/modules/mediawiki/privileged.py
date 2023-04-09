@@ -16,7 +16,7 @@ CONF_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 LOCAL_SETTINGS_CONF = '/etc/mediawiki/LocalSettings.php'
 
 
-def _get_php_command():
+def get_php_command():
     """Return the PHP command that should be used on CLI.
 
     This is workaround for /usr/bin/php pointing to a different version than
@@ -53,10 +53,10 @@ def setup():
             password_file_handle.write(password.encode())
             password_file_handle.flush()
             subprocess.check_call([
-                _get_php_command(), install_script,
-                '--confpath=/etc/mediawiki', '--dbtype=sqlite',
-                '--dbpath=' + data_dir, '--scriptpath=/mediawiki',
-                '--passfile', password_file_handle.name, 'Wiki', 'admin'
+                get_php_command(), install_script, '--confpath=/etc/mediawiki',
+                '--dbtype=sqlite', '--dbpath=' + data_dir,
+                '--scriptpath=/mediawiki', '--passfile',
+                password_file_handle.name, 'Wiki', 'admin'
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
@@ -97,7 +97,7 @@ def change_password(username: str, password: str):
                                           'changePassword.php')
 
     subprocess.check_call([
-        _get_php_command(), change_password_script, '--user', username,
+        get_php_command(), change_password_script, '--user', username,
         '--password', password
     ])
 
@@ -106,7 +106,7 @@ def change_password(username: str, password: str):
 def update():
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
-    subprocess.check_call([_get_php_command(), update_script, '--quick'])
+    subprocess.check_call([get_php_command(), update_script, '--quick'])
 
 
 @privileged
@@ -220,7 +220,7 @@ def set_default_language(language: str):
     # languages.
     rebuild_messages_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                            'rebuildmessages.php')
-    subprocess.check_call([_get_php_command(), rebuild_messages_script])
+    subprocess.check_call([get_php_command(), rebuild_messages_script])
 
 
 @privileged
