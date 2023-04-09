@@ -14,7 +14,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import manifest, privileged, forms
+from . import forms, manifest, privileged
 
 _description = [
     _('MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia '
@@ -96,6 +96,11 @@ class MediaWikiApp(app_module.App):
         privileged.setup()
         privileged.update()
         self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
 
 
 class Shortcut(frontpage.Shortcut):

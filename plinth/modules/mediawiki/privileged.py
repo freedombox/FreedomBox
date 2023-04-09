@@ -2,6 +2,8 @@
 """Configure MediaWiki."""
 
 import os
+import pathlib
+import shutil
 import subprocess
 import tempfile
 from typing import Optional
@@ -218,5 +220,11 @@ def set_default_language(language: str):
     # languages.
     rebuild_messages_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                            'rebuildmessages.php')
-    subprocess.check_call([
-        _get_php_command(), rebuild_messages_script])
+    subprocess.check_call([_get_php_command(), rebuild_messages_script])
+
+
+@privileged
+def uninstall():
+    """Remove Mediawiki's database and local config file."""
+    shutil.rmtree('/var/lib/mediawiki-db', ignore_errors=True)
+    pathlib.Path(LOCAL_SETTINGS_CONF).unlink(missing_ok=True)

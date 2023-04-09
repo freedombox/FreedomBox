@@ -100,6 +100,12 @@ class TestMediawikiApp(functional.BaseAppTests):
         assert _image_exists(session_browser, 'Noise.png')
         _verify_create_account_link(session_browser)
 
+    def test_uninstall(self, session_browser):
+        """Setup the app configuration again after a re-install."""
+        super().test_uninstall(session_browser)
+        _set_domain(session_browser)
+        _set_admin_password(session_browser, 'whatever123')
+
 
 def _enable_public_registrations(browser):
     """Enable public registrations in MediaWiki."""
@@ -213,6 +219,10 @@ def _delete_image(browser, username, password, image):
     path = f'/mediawiki/index.php?title=File:{image}&action=delete'
     functional.visit(browser, path)
     delete_button = browser.find_by_id('mw-filedelete-submit')
+    if not delete_button:
+        # On bookworm and higher
+        delete_button = browser.find_by_id('wpConfirmB')
+
     functional.submit(browser, element=delete_button)
 
 
