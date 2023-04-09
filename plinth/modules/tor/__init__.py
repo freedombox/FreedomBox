@@ -187,6 +187,11 @@ class TorApp(app_module.App):
         if not old_version:
             self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 def update_hidden_service_domain(status=None):
     """Update HS domain with Name Services module."""

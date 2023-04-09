@@ -5,6 +5,7 @@ import codecs
 import os
 import pathlib
 import re
+import shutil
 import socket
 import subprocess
 import time
@@ -507,3 +508,14 @@ def _set_onion_header(hidden_service):
                                encoding='utf-8')
 
     action_utils.service_reload('apache2')
+
+
+@privileged
+def uninstall():
+    """Remove create instances."""
+    directories = [
+        '/etc/tor/instances/', '/var/lib/tor-instances/',
+        '/var/run/tor-instances/'
+    ]
+    for directory in directories:
+        shutil.rmtree(directory, ignore_errors=True)
