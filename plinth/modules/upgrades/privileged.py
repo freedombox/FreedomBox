@@ -518,7 +518,13 @@ def _perform_dist_upgrade():
             ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
         with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
             print('Running apt full-upgrade...', flush=True)
-            run_apt_command(['full-upgrade'])
+            returncode = run_apt_command(['full-upgrade'])
+
+        # Check if apt upgrade was successful.
+        if returncode:
+            raise RuntimeError(
+                'Apt full-upgrade was not successful. Distribution upgrade '
+                'will be retried at a later time.')
 
         _update_searx(reenable_searx)
 
