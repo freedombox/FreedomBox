@@ -3,6 +3,7 @@
 
 import grp
 import os
+import pathlib
 import pwd
 import shutil
 import subprocess
@@ -167,3 +168,13 @@ def setup():
                  group='infinoted')
 
     action_utils.service_enable('infinoted')
+
+
+@privileged
+def uninstall():
+    """Remove data, certs, config and systemd unit files."""
+    for directory in DATA_DIR, KEY_DIR:
+        shutil.rmtree(directory, ignore_errors=True)
+
+    for file_ in CONF_PATH, SYSTEMD_SERVICE_PATH:
+        pathlib.Path(file_).unlink(missing_ok=True)
