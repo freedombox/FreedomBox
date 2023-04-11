@@ -102,6 +102,11 @@ class SambaApp(app_module.App):
         if not old_version:
             self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        super().uninstall()
+        privileged.uninstall()
+
 
 class SambaBackupRestore(BackupRestore):
     """Component to backup/restore Samba."""

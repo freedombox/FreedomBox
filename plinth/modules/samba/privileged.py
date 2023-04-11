@@ -306,3 +306,9 @@ def restore_shares():
             'Backup file {0} does not exist.'.format(SHARES_CONF_BACKUP_FILE))
     _conf_command(['drop'])
     _conf_command(['import', SHARES_CONF_BACKUP_FILE])
+
+
+@privileged
+def uninstall():
+    """Drop all Samba shares."""
+    _conf_command(['drop'])
