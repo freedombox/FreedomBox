@@ -36,9 +36,26 @@ Tu nombre de usuario y contraseña se cifrarán. Quien monitorize el tráfico de
 '''Para usuarios de GNOME (Avanzado)'''
 La utilidad "Contraseñas y claves" de GNOME se puede emplear para almacenar el usuario y su contraseña. Más detalles de cómo hacerlo en esta [[https://stackoverflow.com/questions/36585496/error-when-using-git-credential-helper-with-gnome-keyring-as-sudo/40312117#40312117|respuesta en StackOverflow]].
 
-=== Réplicas Espejo ===
+=== Réplicas espejo ===
 
 Aunque tus repositorios se albergan principalmente en tu propia !FreedomBox puedes configurar un repositorio en otro servicio de alojamiento Git como GitLab a modo de copia espejo.
+
+=== (Des)habilitar funciones ===
+
+Algunas funciones que en gitweb vienen de serie se han cambiado en !FreedomBox:
+ * Habilitada: Funcionalidad ''blame'' para mostrar qué quién y en qué revisión modificó cada línea de un fichero.
+ * Habilitada: Funcionalidad ''pickaxe'' para listar los commits que introdujeron o eliminaron una cadena de texto dada.
+ * Habilitada: Funcionalidad de resaltado de sintaxis para los blobs.
+ * Deshabilitada: Funcionalidad de instantánea que descarga un fichero comprimido tar con una revisión dada (por su alto consumo de recursos).
+
+Un administrador puede ajustar estas selecciones editando el fichero de configuration de git de cada repositorio en !FreedomBox. Más detalles de sintaxis y funciones en la página man de gitweb.conf(5).
+Por ejemplo, para rehabilitar las instantánes en el repositorio `mirepo`, ingresa como administrador al terminal de !FreedomBox por SSH o consola web y edita el fichero `/var/lib/git/mirepo/config`
+para que contenga la sección siguiente:
+
+  {{{
+[gitweb]
+snapshot = tgz
+}}}
 
 === Enlaces externos ===
 
