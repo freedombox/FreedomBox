@@ -3,7 +3,6 @@
 
 import grp
 import os
-import pathlib
 import pwd
 import shutil
 import subprocess
