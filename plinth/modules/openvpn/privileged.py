@@ -2,6 +2,7 @@
 """Configure OpenVPN server."""
 
 import os
+import shutil
 import subprocess
 
 import augeas
@@ -222,3 +223,9 @@ def load_augeas():
     aug.set('/augeas/load/Simplevars/incl[last() + 1]', ATTR_FILE)
     aug.load()
     return aug
+
+
+@privileged
+def uninstall():
+    """Remove configuration directory for OpenVPN."""
+    shutil.rmtree('/etc/openvpn', ignore_errors=True)
