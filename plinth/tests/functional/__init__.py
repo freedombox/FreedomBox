@@ -94,7 +94,7 @@ class _PageLoaded():
         is_stale = False
         try:
             self.element.has_class('whatever_class')
-        except StaleElementReferenceException:
+        except (StaleElementReferenceException, TypeError):
             # After a domain name change, Let's Encrypt will restart the web
             # server and could cause a connection failure.
             if driver.find_by_id('netErrorButtonContainer'):
