@@ -33,10 +33,6 @@ logger = logging.getLogger(__name__)
 
 base_url = config['DEFAULT']['url']
 
-_app_checkbox_id = {
-    'openvpn': 'id_openvpn-enabled',
-}
-
 # unlisted sites just use '/' + site_name as url
 _site_url = {
     'wiki': '/ikiwiki',
@@ -398,17 +394,14 @@ def uninstall(browser, app_name):
 def _change_app_status(browser, app_name, change_status_to='enabled'):
     """Enable or disable application."""
     button = browser.find_by_css('button[name="app_enable_disable_button"]')
+    if not button:
+        raise RuntimeError('App enable/disable button not found')
 
-    if button:
-        should_enable_field = browser.find_by_id('id_should_enable')
-        if (should_enable_field.value == 'False' and change_status_to
-                == 'disabled') or (should_enable_field.value == 'True'
-                                   and change_status_to == 'enabled'):
-            submit(browser, element=button)
-    else:
-        checkbox_id = _app_checkbox_id[app_name]
-        change_checkbox_status(browser, app_name, checkbox_id,
-                               change_status_to)
+    should_enable_field = browser.find_by_id('id_should_enable')
+    if (should_enable_field.value == 'False' and change_status_to
+            == 'disabled') or (should_enable_field.value == 'True'
+                               and change_status_to == 'enabled'):
+        submit(browser, element=button)
 
 
 def app_enable(browser, app_name):
