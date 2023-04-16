@@ -87,9 +87,7 @@ class SearxApp(app_module.App):
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
-        shortcut = self.remove('shortcut-searx')
-        shortcut.login_required = login_required
-        self.add(shortcut)
+        self.get_component('shortcut-searx').login_required = login_required
 
     def setup(self, old_version):
         """Install and configure the app."""
