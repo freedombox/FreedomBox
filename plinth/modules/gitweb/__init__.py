@@ -95,9 +95,7 @@ class GitwebApp(app_module.App):
 
     def set_shortcut_login_required(self, login_required):
         """Change the login_required property of shortcut."""
-        shortcut = self.remove('shortcut-gitweb')
-        shortcut.login_required = login_required
-        self.add(shortcut)
+        self.get_component('shortcut-gitweb').login_required = login_required
 
     def update_service_access(self):
         """Update the frontpage shortcut and webserver auth requirement."""
