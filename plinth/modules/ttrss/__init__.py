@@ -94,7 +94,6 @@ class TTRSSApp(app_module.App):
 
     def enable(self):
         """Enable components and API access."""
-        super().enable()
         privileged.enable_api_access()
 
         # Try to set the domain to one of the available TLS domains
@@ -103,6 +102,8 @@ class TTRSSApp(app_module.App):
             from plinth.modules import names
             domain = next(names.get_available_tls_domains(), None)
             privileged.set_domain(domain)
+
+        super().enable()
 
     def setup(self, old_version):
         """Install and configure the app."""
