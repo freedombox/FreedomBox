@@ -8,6 +8,7 @@ from unittest.mock import call, patch
 
 import pytest
 
+from plinth import app
 from plinth.modules.apache.components import (Uwsgi, Webserver, check_url,
                                               diagnose_url,
                                               diagnose_url_on_all)
@@ -93,6 +94,51 @@ def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     results = webserver2.diagnose()
     diagnose_url_on_all.assert_has_calls(
         [call('{host}url1', check_certificate=False, expect_redirects=False)])
+
+
+@patch('plinth.privileged.service.restart')
+@patch('plinth.privileged.service.reload')
+def test_webserver_setup(service_reload, service_restart):
+    """Test that component restart/reloads web server during app upgrades."""
+
+    class AppTest(app.App):
+        app_id = 'testapp'
+        enabled = False
+
+        def is_enabled(self):
+            return self.enabled
+
+    app1 = AppTest()
+    webserver1 = Webserver('test-webserver1', 'test-config',
+                           last_updated_version=5)
+    for version in (0, 5, 6):
+        webserver1.setup(old_version=version)
+        service_reload.assert_not_called()
+        service_restart.assert_not_called()
+
+    app1.enabled = False
+    webserver2 = Webserver('test-webserver2', 'test-config',
+                           last_updated_version=5)
+    app1.add(webserver2)
+    webserver2.setup(old_version=3)
+    service_reload.assert_not_called()
+    service_restart.assert_not_called()
+
+    app1.enabled = True
+    webserver3 = Webserver('test-webserver3', 'test-config',
+                           last_updated_version=5)
+    app1.add(webserver3)
+    webserver3.setup(old_version=3)
+    service_reload.assert_has_calls([call('apache2')])
+    service_restart.assert_not_called()
+    service_reload.reset_mock()
+
+    webserver4 = Webserver('test-webserver', 'test-module', 'module',
+                           last_updated_version=5)
+    app1.add(webserver4)
+    webserver4.setup(old_version=3)
+    service_restart.assert_has_calls([call('apache2')])
+    service_reload.assert_not_called()
 
 
 def test_uwsgi_init():

@@ -8,6 +8,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy
 
 from plinth import action_utils, app
+from plinth.privileged import service as service_privileged
 
 from . import privileged
 
@@ -16,7 +17,7 @@ class Webserver(app.LeaderComponent):
     """Component to enable/disable Apache configuration."""
 
     def __init__(self, component_id, web_name, kind='config', urls=None,
-                 expect_redirects=False):
+                 expect_redirects=False, last_updated_version=None):
         """Initialize the web server component.
 
         component_id should be a unique ID across all components of an app and
@@ -33,6 +34,9 @@ class Webserver(app.LeaderComponent):
         urls is a list of URLs over which a HTTP services will be available due
         to this component. This list is only used for running diagnostics.
 
+        last_updated_version is the app version in which the web server
+        configuration/site/module file was updated. Using this, web server will
+        be automatically reloaded or restarted as necessary during app upgrade.
         """
         super().__init__(component_id)
 
@@ -40,6 +44,7 @@ class Webserver(app.LeaderComponent):
         self.kind = kind
         self.urls = urls or []
         self.expect_redirects = expect_redirects
+        self.last_updated_version = last_updated_version
 
     def is_enabled(self):
         """Return whether the Apache configuration is enabled."""
@@ -70,6 +75,28 @@ class Webserver(app.LeaderComponent):
                 results.append(diagnose_url(url, check_certificate=False))
 
         return results
+
+    def setup(self, old_version):
+        """Restart/reload web server if configuration files changed."""
+        if not old_version:
+            # App is being freshly setup. After setup, app will be enabled
+            # which will result in reload/restart of web server.
+            return
+
+        if old_version >= self.last_updated_version:
+            # Already using the latest configuration. Web server reload/restart
+            # is not necessary.
+            return
+
+        if not self.app.is_enabled():
+            # App is currently disabled, web server will reloaded/restarted
+            # when the app is enabled.
+            return
+
+        if self.kind == 'module':
+            service_privileged.restart('apache2')
+        else:
+            service_privileged.reload('apache2')
 
 
 class Uwsgi(app.LeaderComponent):
