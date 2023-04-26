@@ -34,6 +34,12 @@ _description = [
           '{box_name} belonging to the bit-torrent group.'),
         box_name=_(cfg.box_name), users_url=reverse_lazy('users:index')),
     format_lazy(
+        _('In addition to the web interface, mobile and desktop apps can also '
+          'be used to remotely control Transmission on {box_name}. To '
+          'configure remote control apps, use the URL '
+          '<a href="/transmission-remote/rpc">/transmission-remote/rpc</a>.'),
+        box_name=_(cfg.box_name)),
+    format_lazy(
         _('<a href="{samba_url}">Samba</a> shares can be set as the '
           'default download directory from the dropdown menu below.'),
         samba_url=reverse_lazy('samba:index')),
@@ -51,7 +57,7 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
-    _version = 5
+    _version = 6
 
     DAEMON = 'transmission-daemon'
 
@@ -97,7 +103,8 @@ class TransmissionApp(app_module.App):
         self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-transmission', 'transmission-plinth',
-                              urls=['https://{host}/transmission'])
+                              urls=['https://{host}/transmission'],
+                              last_updated_version=6)
         self.add(webserver)
 
         daemon = Daemon(
@@ -131,4 +138,6 @@ class TransmissionApp(app_module.App):
         }
         privileged.merge_configuration(new_configuration)
         add_user_to_share_group(SYSTEM_USER, TransmissionApp.DAEMON)
-        self.enable()
+
+        if not old_version:
+            self.enable()
