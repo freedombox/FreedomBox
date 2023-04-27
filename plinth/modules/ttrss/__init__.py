@@ -78,7 +78,8 @@ class TTRSSApp(app_module.App):
         self.add(firewall)
 
         webserver = Webserver('webserver-ttrss', 'tt-rss-plinth',
-                              urls=['https://{host}/tt-rss'])
+                              urls=['https://{host}/tt-rss'],
+                              last_updated_version=5)
         self.add(webserver)
 
         daemon = Daemon('daemon-ttrss', 'tt-rss')

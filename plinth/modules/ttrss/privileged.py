@@ -81,8 +81,6 @@ def setup():
 
     if action_utils.service_is_enabled('tt-rss'):
         action_utils.service_restart('tt-rss')
-        # Accommodate changes in Apache configuration file.
-        action_utils.service_reload('apache2')
 
 
 @privileged
