@@ -66,6 +66,15 @@ def _get_redirect_url_from_param(request):
     return reverse('index')
 
 
+def _has_backup_restore(app):
+    """Return whether an app implements backup/restore."""
+    from plinth.modules.backups.components import BackupRestore
+    return any([
+        component.has_data
+        for component in app.get_components_of_type(BackupRestore)
+    ])
+
+
 @public
 def index(request):
     """Serve the main index page."""
@@ -272,11 +281,7 @@ class AppView(FormView):
         from plinth.modules.firewall.components import Firewall
         context['firewall'] = self.app.get_components_of_type(Firewall)
 
-        from plinth.modules.backups.components import BackupRestore
-        context['has_backup_restore'] = any([
-            component.has_data
-            for component in self.app.get_components_of_type(BackupRestore)
-        ])
+        context['has_backup_restore'] = _has_backup_restore(self.app)
 
         return context
 
@@ -400,21 +405,35 @@ class UninstallView(FormView):
     form_class = forms.UninstallForm
     template_name = 'uninstall.html'
 
+    def __init__(self, **kwargs):
+        """Initialize extra instance members."""
+        super().__init__(**kwargs)
+        self.app = None
+
+    def setup(self, request, *args, **kwargs):
+        """Initialize attributes shared by all view methods."""
+        super().setup(request, *args, **kwargs)
+        app_id = self.kwargs['app_id']
+        self.app = app_module.App.get(app_id)
+        self.has_backup_restore = _has_backup_restore(self.app)
+
     def dispatch(self, request, *args, **kwargs):
         """Don't allow the view to be used on essential apps."""
-        app_id = self.kwargs['app_id']
-        app = app_module.App.get(app_id)
-        if app.info.is_essential:
+        if self.app.info.is_essential:
             raise Http404
 
         return super().dispatch(request, *args, **kwargs)
 
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['has_backup_restore'] = self.has_backup_restore
+        return kwargs
+
     def get_context_data(self, *args, **kwargs):
         """Add app information to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        app_id = self.kwargs['app_id']
-        app = app_module.App.get(app_id)
-        context['app_info'] = app.info
+        context['app_info'] = self.app.info
         return context
 
     def get_success_url(self):
@@ -423,10 +442,8 @@ class UninstallView(FormView):
 
     def form_valid(self, form):
         """Uninstall the app."""
-        app_id = self.kwargs['app_id']
-
         # Backup the app
-        if form.cleaned_data['should_backup']:
+        if self.has_backup_restore and form.cleaned_data['should_backup']:
             repository_id = form.cleaned_data['repository']
 
             import plinth.modules.backups.repository as repository_module
@@ -436,11 +453,12 @@ class UninstallView(FormView):
 
             name = datetime.datetime.now().strftime(
                 '%Y-%m-%d:%H:%M:%S') + ' ' + str(
-                    _('before uninstall of {app_id}')).format(app_id=app_id)
-            repository.create_archive(name, [app_id])
+                    _('before uninstall of {app_id}')).format(
+                        app_id=self.app.app_id)
+            repository.create_archive(name, [self.app.app_id])
 
         # Uninstall
-        setup.run_uninstall_on_app(app_id)
+        setup.run_uninstall_on_app(self.app.app_id)
 
         return super().form_valid(form)
 

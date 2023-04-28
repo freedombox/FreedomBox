@@ -39,6 +39,14 @@ class UninstallForm(forms.Form):
     repository = forms.ChoiceField(label=_('Repository to backup to'),
                                    choices=_get_repository_choices)
 
+    def __init__(self, **kwargs):
+        """Determine if backup fields must be used."""
+        has_backup_restore = kwargs.pop('has_backup_restore', True)
+        super().__init__(**kwargs)
+        if not has_backup_restore:
+            del self.fields['should_backup']
+            del self.fields['repository']
+
 
 class DomainSelectionForm(forms.Form):
     """Form for selecting a domain name to be used for
