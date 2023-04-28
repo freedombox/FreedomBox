@@ -90,11 +90,15 @@ def set_configuration(enable_osm: Optional[bool] = None,
 
 
 @privileged
-def is_configured() -> bool:
+def is_configured() -> Optional[bool]:
     """Return whether zoph app is configured."""
-    process = subprocess.run(['zoph', '--get-config', 'interface.user.remote'],
-                             stdout=subprocess.PIPE, check=True)
-    return process.stdout.decode().strip() == 'true'
+    try:
+        process = subprocess.run(
+            ['zoph', '--get-config', 'interface.user.remote'],
+            stdout=subprocess.PIPE, check=True)
+        return process.stdout.decode().strip() == 'true'
+    except FileNotFoundError:
+        return None
 
 
 @privileged

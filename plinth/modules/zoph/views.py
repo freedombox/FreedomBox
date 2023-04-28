@@ -48,9 +48,12 @@ class ZophAppView(views.AppView):
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""
-        if not privileged.is_configured():
+        is_configured = privileged.is_configured()
+        if is_configured is False:
             return redirect('zoph:setup')
 
+        # During operations such as uninstall, zoph command may not be
+        # available, let the base class show operations view instead.
         return super().dispatch(request, *args, **kwargs)
 
     def get_initial(self):
