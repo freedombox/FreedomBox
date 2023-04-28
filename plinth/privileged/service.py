@@ -113,6 +113,6 @@ def _assert_service_is_managed_by_plinth(service_name):
     managed_services = _get_managed_services()
     if service_name not in managed_services:
         msg = ("The service '%s' is not managed by FreedomBox. Access is only "
-               "permitted for services listed in the 'managed_services' "
-               "variable of any FreedomBox app.") % service_name
+               "permitted for services listed in the Daemon and RelatedDaemon "
+               "components of any FreedomBox app.") % service_name
         raise ValueError(msg)
