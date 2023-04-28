@@ -196,14 +196,14 @@ def _mount(object_path):
     try:
         privileged.mount(block_device.preferred_device, _log_error=False)
     except Exception as exception:
-        parts = exception.args[2].split(':')
-        if parts[1].strip() != 'GDBus.Error':
+        stderr = exception.args[3].decode()
+        if 'GDBus.Error' not in stderr:
             raise
 
-        if parts[2].strip() == _ERRORS['AlreadyMounted']:
+        if _ERRORS['AlreadyMounted'] in stderr:
             logger.warning('Device is already mounted: %s %s', block_device.id,
                            block_device.preferred_device)
-        elif parts[2].strip() == _ERRORS['Failed']:
+        elif _ERRORS['Failed'] in stderr:
             logger.warning('Mount operation failed: %s %s: %s',
                            block_device.id, block_device.preferred_device,
                            exception)
