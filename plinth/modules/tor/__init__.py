@@ -159,6 +159,13 @@ class TorApp(app_module.App):
                 results.append(
                     diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
 
+        if status['hs_enabled']:
+            hs_hostname = status['hs_hostname'].split('.onion')[0]
+            results.append([
+                _('Hidden service is version 3'),
+                'passed' if len(hs_hostname) == 56 else 'failed'
+            ])
+
         results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
         results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
 
