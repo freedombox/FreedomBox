@@ -124,38 +124,40 @@ class TorApp(app_module.App):
 
         results.extend(_diagnose_control_port())
 
-        status = privileged.get_status()
+        status = utils.get_status()
         ports = status['ports']
 
-        results.append([
-            _('Tor relay port available'),
-            'passed' if 'orport' in ports else 'failed'
-        ])
-        if 'orport' in ports:
-            results.append(
-                diagnose_port_listening(int(ports['orport']), 'tcp4'))
-            results.append(
-                diagnose_port_listening(int(ports['orport']), 'tcp6'))
+        if status['relay_enabled']:
+            results.append([
+                _('Tor relay port available'),
+                'passed' if 'orport' in ports else 'failed'
+            ])
+            if 'orport' in ports:
+                results.append(
+                    diagnose_port_listening(int(ports['orport']), 'tcp4'))
+                results.append(
+                    diagnose_port_listening(int(ports['orport']), 'tcp6'))
 
-        results.append([
-            _('Obfs3 transport registered'),
-            'passed' if 'obfs3' in ports else 'failed'
-        ])
-        if 'obfs3' in ports:
-            results.append(diagnose_port_listening(int(ports['obfs3']),
-                                                   'tcp4'))
-            results.append(diagnose_port_listening(int(ports['obfs3']),
-                                                   'tcp6'))
+        if status['bridge_relay_enabled']:
+            results.append([
+                _('Obfs3 transport registered'),
+                'passed' if 'obfs3' in ports else 'failed'
+            ])
+            if 'obfs3' in ports:
+                results.append(
+                    diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
+                results.append(
+                    diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
 
-        results.append([
-            _('Obfs4 transport registered'),
-            'passed' if 'obfs4' in ports else 'failed'
-        ])
-        if 'obfs4' in ports:
-            results.append(diagnose_port_listening(int(ports['obfs4']),
-                                                   'tcp4'))
-            results.append(diagnose_port_listening(int(ports['obfs4']),
-                                                   'tcp6'))
+            results.append([
+                _('Obfs4 transport registered'),
+                'passed' if 'obfs4' in ports else 'failed'
+            ])
+            if 'obfs4' in ports:
+                results.append(
+                    diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
+                results.append(
+                    diagnose_port_listening(int(ports['obfs4']), 'tcp6'))
 
         results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
         results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
