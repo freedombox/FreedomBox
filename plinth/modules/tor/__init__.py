@@ -94,7 +94,7 @@ class TorApp(app_module.App):
 
     def post_init(self):
         """Perform post initialization operations."""
-        # Register hidden service name with Name Services module.
+        # Register onion service name with Name Services module.
         if (not self.needs_setup() and self.is_enabled()
                 and app_is_running(self)):
             status = utils.get_status(initialized=False)
@@ -162,7 +162,7 @@ class TorApp(app_module.App):
         if status['hs_enabled']:
             hs_hostname = status['hs_hostname'].split('.onion')[0]
             results.append([
-                _('Hidden service is version 3'),
+                _('Onion service is version 3'),
                 'passed' if len(hs_hostname) == 56 else 'failed'
             ])
 
@@ -203,7 +203,7 @@ class TorApp(app_module.App):
 
 
 def update_hidden_service_domain(status=None):
-    """Update HS domain with Name Services module."""
+    """Update onion service domain with Name Services module."""
     if not status:
         status = utils.get_status()
 

@@ -101,9 +101,9 @@ class TorForm(forms.Form):  # pylint: disable=W0232
               'to censor this node. This helps others circumvent censorship.'),
             box_name=_(cfg.box_name)))
     hs_enabled = forms.BooleanField(
-        label=_('Enable Tor Hidden Service'), required=False,
+        label=_('Enable Tor Onion Service'), required=False,
         help_text=format_lazy(
-            _('A hidden service will allow {box_name} to provide selected '
+            _('An onion service will allow {box_name} to provide selected '
               'services (such as wiki or chat) without revealing its '
               'location. Do not use this for strong anonymity yet.'),
             box_name=_(cfg.box_name)))
