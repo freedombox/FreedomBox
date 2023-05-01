@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -74,6 +74,10 @@ class DateTimeApp(app_module.App):
 
         packages = Packages('packages-datetime', ['systemd-timesyncd'])
         self.add(packages)
+
+        daemon = RelatedDaemon('daemon-datetime-timedated',
+                               'systemd-timedated')
+        self.add(daemon)
 
         if self._is_time_managed():
             daemon = Daemon('daemon-datetime', 'systemd-timesyncd')

@@ -13,15 +13,16 @@ import pytest
 
 try:
     importlib.import_module('splinter')
-    _splinter_available = True
+    importlib.import_module('selenium')
+    _functional_libs_available = True
 except ImportError:
-    _splinter_available = False
+    _functional_libs_available = False
 
 
 def pytest_ignore_collect(path, config):
     """Ignore functional tests when splinter is not available."""
     if path.basename == 'test_functional.py':
-        return not _splinter_available
+        return not _functional_libs_available
 
 
 def pytest_addoption(parser):

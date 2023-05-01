@@ -3,4 +3,9 @@
 Application manifest for datetime.
 """
 
-backup = {'data': {'files': ['/etc/timezone']}}
+backup = {
+    'data': {
+        'files': ['/etc/localtime']
+    },
+    'services': ['systemd-timedated'],
+}

@@ -50,6 +50,20 @@ GNOME "Passwords and Keys" utility can be used to store the username and passwor
 Though your repositories are primarily hosted on your own !FreedomBox, you can
 configure a repository on another Git hosting system like GitLab as a mirror.
 
+=== Enabling/Disabling Features ===
+
+In !FreedomBox, some of the default features of gitweb have been changed:
+ * Enabled: Blame feature to show what revision and author last modified each line of a file
+ * Enabled: Pickaxe feature to list the commits that introduced or removed a given string
+ * Enabled: Highlight feature to perform syntax highlighting on blobs
+ * Disabled: Snapshot feature that provides a download of a compressed tar file for a given revision (due to high resource usage).
+
+These features can be changed on a per-repository bases by an administrator by editing the git configuration file for the repository on !FreedomBox. See manual page for gitweb.conf(5) for more details on syntax and features. For example, to re-enable the snapshot feature on `myrepo` repository, login to a !FreedomBox terminal via SSH or web console as administrator and edit the file `/var/lib/git/myrepo/config` to contain the following section:
+
+{{{
+[gitweb]
+snapshot = tgz
+}}}
 
 === External links ===
 

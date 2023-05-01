@@ -368,6 +368,7 @@ def _verify_dependencies():
         'gpg': 'gpg',
         'xz': 'xz-utils',
         'parted': 'parted',
+        'sgdisk': 'gdisk',
         'btrfs': 'btrfs-progs',
         'nmcli': 'network-manager',
         'ssh': 'openssh-client',
@@ -522,6 +523,21 @@ def _download_disk_image(distribution, force=False):
     return _extract_image(target_file)
 
 
+def _get_partition_info(image_file):
+    """Return the number of the final partition in the image file."""
+    process = subprocess.run(
+        ['sudo', 'parted', '--script',
+         str(image_file), 'print'], stdout=subprocess.PIPE, check=True)
+    lines = process.stdout.decode().splitlines()
+    last_partition_number = lines[-2].split()[0]
+    partition_table_type = 'msdos'
+    for line in lines:
+        if line.startswith('Partition Table:'):
+            partition_table_type = line.partition(': ')[2]
+
+    return partition_table_type, last_partition_number
+
+
 def _resize_disk_image(image_file, new_size):
     """Resize the disk image if has not already been."""
     if new_size[-1] != 'G':
@@ -542,14 +558,22 @@ def _resize_disk_image(image_file, new_size):
         ['truncate', '--size',
          str(new_size_bytes),
          str(image_file)], check=True)
+    partition_table_type, last_partition_number = _get_partition_info(
+        image_file)
+    if partition_table_type == 'gpt':
+        subprocess.run(
+            ['sudo', 'sgdisk', '--move-second-header',
+             str(image_file)], check=True)
+
     subprocess.run([
         'sudo', 'parted', '--align=optimal', '--script',
-        str(image_file), 'resizepart', '1', '100%'
+        str(image_file), 'resizepart', last_partition_number, '100%'
     ], check=True)
     process = subprocess.run(
         ['sudo', 'kpartx', '-avs', str(image_file)], stdout=subprocess.PIPE,
         check=True)
-    partition = '/dev/mapper/' + process.stdout.decode().split()[2]
+    last_line = process.stdout.decode().splitlines()[-1]
+    partition = '/dev/mapper/' + last_line.split()[2]
     subprocess.run(['sudo', 'btrfstune', '-uf', partition], check=True)
 
     with tempfile.TemporaryDirectory(
@@ -943,7 +967,7 @@ def _get_ssh_command(ip_address, distribution):
 
 def _wait_for(method):
     """Wait until a condition is satisfied or finally give up."""
-    for _ in range(10):
+    for _ in range(60):
         return_value = method()
         if return_value:
             return return_value
