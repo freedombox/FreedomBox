@@ -50,7 +50,7 @@ def _get_shortcut_data(shortcut):
         'name': shortcut.name,
         'short_description': shortcut.short_description,
         'description': shortcut.description,
-        'icon_url': _get_icon_url(shortcut.icon),
+        'icon_url': _get_icon_url(shortcut.app_id, shortcut.icon),
         'clients': copy.deepcopy(shortcut.clients),
     }
     # XXX: Fix the hardcoding
@@ -60,9 +60,12 @@ def _get_shortcut_data(shortcut):
     return shortcut_data
 
 
-def _get_icon_url(icon_name):
-    """Return icon path given icon name."""
+def _get_icon_url(app_id, icon_name):
+    """Return icon path given app's ID and icon name."""
     if not icon_name:
         return None
 
-    return static('theme/icons/{}.png'.format(icon_name))
+    if app_id:
+        return static(f'{app_id}') + f'/icons/{icon_name}.png'
+
+    return static(f'theme/icons/{icon_name}.png')

@@ -23,11 +23,12 @@ class Menu(app.FollowerComponent):
         name of a glyphicon from the Fork Awesome font's icon set:
         https://forkawesome.github.io/Fork-Awesome/icons/. In this case, the
         icon name starts with the string 'fa-'. Alternatively, the icon can
-        also be a file under the directory static/theme/icons/, provided
-        without an extension. SVG icons are preferred. Currently, both PNG and
-        SVG icons with the same name are used. For example, if the value of
-        icon is 'myapp', then two icons files static/theme/icons/myapp.svg and
-        static/theme/icons/myapp.png are used in the interface.
+        also be a file under the directory plinth/modules/<app>/static/icons/,
+        provided without an extension. SVG icons are preferred. Currently, both
+        PNG and SVG icons with the same name are used. For example, if the
+        value of icon is 'myicon' and app_id in App class is 'myapp', then two
+        icons files plinth/modules/myapp/static/icons/myicon.svg and
+        plinth/modules/myapp/static/icons/myicon.png are used in the interface.
 
         url_name is the name of url location that will be activated when the
         menu item is selected. This is not optional. url_args and url_kwargs

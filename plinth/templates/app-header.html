@@ -10,7 +10,11 @@
 
   {% if app_info.icon_filename %}
 
-    <img src="{% static 'theme/icons/' %}{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
+    {% if app_info.app_id %}
+      <img src="{% static app_info.app_id %}/icons/{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
+    {% else %}
+      <img src="{% static 'theme/icons/' %}{{ app_info.icon_filename }}.svg" alt="{{ app_info.name  }}"/>
+    {% endif %}
 
   {% endif %}
 

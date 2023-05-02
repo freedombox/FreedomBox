@@ -64,8 +64,8 @@ menu item we want to present.
 * The third parameter is a short description for the menu item.
 
 * The fourth parameter is the name of the icon to use when showing the menu
-  item. An SVG file and a PNG should be created in the ``static/theme/icons/``
-  directory.
+  item. An SVG file and a PNG should be created in the
+  ``plinth/modules/transmission/static/icons/`` directory.
 
 * The fifth parameter is the URL that the user should be directed to when the
   menu item is clicked. This is a Django URL name and we have already created a

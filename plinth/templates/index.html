@@ -68,7 +68,11 @@
                           {% if "custom" in shortcut.icon %}
                             <img src="{{ shortcut.icon }}"/>
                           {% else %}
-                            <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
+                            {% if shortcut.app_id %}
+                              <img src="{% static shortcut.app_id %}/icons/{{ shortcut.icon }}.svg"/>
+                            {% else %}
+                              <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
+                            {% endif %}
                           {% endif %}
                         </div>
                         <div class="card-description">

@@ -11,7 +11,11 @@
       {% if 'fa-' in item.icon %}
         <span class="fa {{ item.icon }}"></span>
       {% else %}
-        <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
+        {% if item.app_id %}
+          <img src="{% static item.app_id %}/icons/{{ item.icon }}.svg"/>
+        {% else %}
+          <img src="{% static 'theme/icons/' %}{{ item.icon }}.svg"/>
+        {% endif %}
       {% endif %}
     </div>
     <div class="card-description">{{ item.short_description|default:'' }}</div>
