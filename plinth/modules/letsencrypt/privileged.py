@@ -17,7 +17,7 @@ import configobj
 
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import cfg
+from plinth import module_loader
 from plinth.actions import privileged
 from plinth.modules import letsencrypt as le
 
@@ -302,10 +302,7 @@ def _get_managed_path(path):
 
 def _assert_managed_path(module, path):
     """Check that path is in fact managed by module."""
-    cfg.read()
-    module_file = pathlib.Path(cfg.config_dir) / 'modules-enabled' / module
-    module_path = module_file.read_text().strip()
-
+    module_path = module_loader.get_module_import_path(module)
     module = importlib.import_module(module_path)
     module_classes = inspect.getmembers(module, inspect.isclass)
     app_classes = [

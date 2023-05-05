@@ -61,30 +61,51 @@ def _include_module_urls(module_import_path, module_name):
             raise
 
 
+def _get_modules_enabled_paths():
+    """Return list of paths from which enabled modules list must be read."""
+    return [
+        pathlib.Path('/usr/share/freedombox/modules-enabled/'),
+        pathlib.Path('/etc/plinth/modules-enabled/'),  # For compatibility
+        pathlib.Path('/etc/freedombox/modules-enabled/'),
+    ]
+
+
+def _get_modules_enabled_files_to_read():
+    """Return the list of files containing modules import paths."""
+    module_files = {}
+    for path in _get_modules_enabled_paths():
+        directory = pathlib.Path(path)
+        files = list(directory.glob('*'))
+        for file_ in files:
+            # Omit hidden or backup files
+            if file_.name.startswith('.') or '.dpkg' in file_.name:
+                continue
+
+            if file_.is_symlink() and str(file_.resolve()) == '/dev/null':
+                module_files.pop(file_.name, None)
+                continue
+
+            module_files[file_.name] = file_
+
+    if module_files:
+        return module_files.values()
+
+    # './setup.py install' has not been executed yet. Pickup files to load
+    # from local module directories.
+    directory = pathlib.Path(__file__).parent
+    glob_pattern = 'modules/*/data/usr/share/freedombox/modules-enabled/*'
+    return list(directory.glob(glob_pattern))
+
+
 def get_modules_to_load():
     """Get the list of modules to be loaded"""
     global _modules_to_load
     if _modules_to_load is not None:
         return _modules_to_load
 
-    directory = pathlib.Path(cfg.config_dir) / 'modules-enabled'
-    files = list(directory.glob('*'))
-    if not files:
-        # './setup.py install' has not been executed yet. Pickup files to load
-        # from local module directories.
-        directory = pathlib.Path(__file__).parent
-        files = list(
-            directory.glob('modules/*/data/etc/plinth/modules-enabled/*'))
-
-    # Omit hidden files
-    files = [
-        file_ for file_ in files
-        if not file_.name.startswith('.') and '.dpkg' not in file_.name
-    ]
-
     modules = []
-    for file_ in files:
-        module = _get_module_import_paths_from_file(file_)
+    for file_ in _get_modules_enabled_files_to_read():
+        module = _read_module_import_paths_from_file(file_)
         if module:
             modules.append(module)
 
@@ -94,11 +115,35 @@ def get_modules_to_load():
 
 def get_module_import_path(module_name: str) -> str:
     """Return the import path for a module."""
-    file_path = pathlib.Path(cfg.config_dir) / 'modules-enabled' / module_name
-    return _get_module_import_paths_from_file(file_path)
+    import_path_file = None
+    for path in _get_modules_enabled_paths():
+        file_ = path / module_name
+        if file_.exists():
+            import_path_file = file_
+
+        if file_.is_symlink() and str(file_.resolve()) == '/dev/null':
+            import_path_file = None
+
+    if not import_path_file:
+        # './setup.py install' has not been executed yet. Pickup files to load
+        # from local module directories.
+        directory = pathlib.Path(__file__).parent
+        import_path_file = (directory /
+                            f'modules/{module_name}/data/usr/share/'
+                            f'freedombox/modules-enabled/{module_name}')
+
+    if not import_path_file:
+        raise ValueError('Unknown module')
+
+    import_path = _read_module_import_paths_from_file(import_path_file)
+    if not import_path:
+        raise ValueError('Module disabled')
+
+    return import_path
 
 
-def _get_module_import_paths_from_file(file_path: str) -> Optional[str]:
+def _read_module_import_paths_from_file(
+        file_path: pathlib.Path) -> Optional[str]:
     """Read a module's import path from a file."""
     with file_path.open() as file_handle:
         for line in file_handle:

@@ -22,13 +22,15 @@ in a step-by-step manner::
           ├─ urls.py
           ├─ views.py
           ├─┬ data/
-          │ └─┬ etc/
-          │   ├─┬ plinth/
-          │   │ └─┬ modules-enabled/
-          │   │   └─ transmission
-          │   └─┬ apache2/
-          │     └─┬ conf-available/
-          │       └─ transmission-freedombox.conf
+          │ ├─┬ etc/
+          │ │ └─┬ apache2/
+          │ │   └─┬ conf-available/
+          │ │     └─ transmission-freedombox.conf
+          │ └─┬ usr/
+          │   └─┬ share/
+          │     └─┬ freedombox/
+          │       └─┬ modules-enabled/
+          │         └─ transmission
           └─┬ tests
             └─ __init__.py
 
@@ -50,19 +52,20 @@ Tell FreedomBox that our app exists
 
 The first thing to do is tell FreedomBox that our app exists. This is done by
 writing a small file with the Python import path to our app and placing it in
-``plinth/modules/transmission/data/etc/plinth/modules-enabled/``. Let us create
-this file ``transmission``:
+``plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/``. Let
+us create this file ``transmission``:
 
 .. code-block:: text
-  :caption: ``plinth/modules/transmission/data/etc/plinth/modules-enabled/transmission``
+  :caption: ``plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission``
 
   plinth.modules.transmission
 
-This file is automatically installed to ``/etc/plinth/modules-enabled/`` by
-FreedomBox's installation script ``setup.py``. If we are writing a module that
-resides independently outside the FreedomBox's source code, the setup script
-will need to copy it to the target location. Further, it is not necessary for
-the app to be part of the ``plinth.modules`` namespace. It can, for example, be
+This file is automatically installed to
+``/usr/share/freedombox/modules-enabled/`` by FreedomBox's installation script
+``setup.py``. If we are writing a module that resides independently outside the
+FreedomBox's source code, the setup script will need to copy it to the target
+location. Further, it is not necessary for the app to be part of the
+``plinth.modules`` namespace. It can, for example, be
 ``freedombox_transmission``.
 
 Creating the App class

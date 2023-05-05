@@ -42,10 +42,10 @@ plinth/modules/transmission/views.py
 .. literalinclude:: ../../../plinth/modules/transmission/views.py
    :language: python3
 
-plinth/modules/transmission/data/etc/plinth/modules-enabled/transmission
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/data/etc/plinth/modules-enabled/transmission
+.. literalinclude:: ../../../plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
    :language: text
 
 plinth/modules/transmission/data/etc/apache2/conf-available/transmission-plinth.conf

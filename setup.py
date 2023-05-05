@@ -35,7 +35,7 @@ DIRECTORIES_TO_COPY = [
     ('/usr/share/plinth/static', 'static'),
 ]
 
-ENABLED_APPS_PATH = "/etc/plinth/modules-enabled/"
+ENABLED_APPS_PATH = "/usr/share/freedombox/modules-enabled/"
 
 DISABLED_APPS_TO_REMOVE = [
     'apps',

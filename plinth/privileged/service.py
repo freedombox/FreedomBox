@@ -1,16 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """List and handle system services."""
 
-import os
-
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import cfg, module_loader
+from plinth import module_loader
 from plinth.actions import privileged
 from plinth.daemon import Daemon, RelatedDaemon
-
-cfg.read()
-module_config_path = os.path.join(cfg.config_dir, 'modules-enabled')
 
 
 @privileged
