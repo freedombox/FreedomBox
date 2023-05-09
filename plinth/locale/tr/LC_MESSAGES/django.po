@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-08 20:38-0400\n"
-"PO-Revision-Date: 2023-02-16 19:39+0000\n"
+"PO-Revision-Date: 2023-05-10 14:49+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -2526,6 +2526,13 @@ msgid ""
 "href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
+"%(box_name)s, GNU Affero Genel Kamu Lisansı altında lisanslanan özgür bir "
+"yazılımdır. Kaynak kodu çevrimiçi olarak <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox\"> %(box_name)s deposunda</a> mevcuttur. Ayrıca, "
+"bir terminalde (Cockpit veya SSH kullanarak) herhangi bir Debian paketinin "
+"kaynak kodu <a href=\"https://sources.debian.org/\">Debian Sources</a> "
+"sitesinden veya \"apt source <i>package_name</i>\" çalıştırılarak elde "
+"edilebilir."
 
 #: plinth/modules/help/templates/help_about.html:82
 #, python-format
@@ -3247,6 +3254,8 @@ msgid ""
 "Disabled. This could lead to adversaries registering many spam accounts on "
 "your server with automated scripts."
 msgstr ""
+"Etkisizleştirildi. Bu, kötü niyetlilerin sunucunuza otomatikleştirilmiş "
+"komut kodlarıyla birçok istenmeyen mesaj hesabı kaydettirmesine yol açabilir."
 
 #: plinth/modules/matrixsynapse/forms.py:18
 msgid ""
@@ -3254,6 +3263,10 @@ msgid ""
 "will be created automatically. Pass this token to your potential new users. "
 "They will be asked for the token during registration. (recommended)"
 msgstr ""
+"Yeni bir hesap oluşturan kullanıcıların bir kayıt belirteci kullanmasını "
+"zorunlu kılın. Bir belirteç otomatik olarak oluşturulacaktır. Bu belirteci "
+"olası yeni kullanıcılarınıza iletin. Kayıt sırasında belirteç istenecektir. "
+"(önerilir)"
 
 #: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
@@ -3271,7 +3284,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/forms.py:33
 msgid "Verification method for registration"
-msgstr ""
+msgstr "Kayıt için doğrulama yöntemi"
 
 #: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
@@ -3355,38 +3368,32 @@ msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
 msgstr ""
+"Yeni kullanıcılar, hesap kaydı sırasında doğrulama için aşağıdaki "
+"belirteçlerden birini kullanmak zorundadır:"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Registration Token"
-msgstr "Kaydı Atla"
+msgstr "Kayıt Belirteci"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-#, fuzzy
-#| msgid "Allowed IPs"
 msgid "Uses Allowed"
-msgstr "İzin verilen IP'ler"
+msgstr "İzin Verilen Kullanımlar"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Pending Registrations"
-msgstr "Kaydı Atla"
+msgstr "Bekleyen Kayıtlar"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Completed Registrations"
-msgstr "Kaydı Atla"
+msgstr "Tamamlanan Kayıtlar"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
 msgid "Expiry Time"
-msgstr ""
+msgstr "Sona Erme Zamanı"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
 msgid "Unlimited"
-msgstr ""
+msgstr "Sınırsız"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
@@ -3402,7 +3409,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/views.py:137
 msgid "Registration configuration cannot be updated when app is disabled."
-msgstr ""
+msgstr "Uygulama etkisizleştirildiğinde kayıt yapılandırması güncellenemez."
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3520,22 +3527,16 @@ msgstr ""
 "ettikleri kaplamayı seçmek için seçeneğe sahiptir."
 
 #: plinth/modules/mediawiki/forms.py:93
-#, fuzzy
-#| msgid "Select language"
 msgid "Default Language"
-msgstr "Dil seçin"
+msgstr "Varsayılan Dil"
 
 #: plinth/modules/mediawiki/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "Choose a default skin for your MediaWiki installation. Users have the "
-#| "option to select their preferred skin."
 msgid ""
 "Choose a default language for your MediaWiki installation. Users have the "
 "option to select their preferred language."
 msgstr ""
-"MediaWiki kurulumunuz için varsayılan bir kaplama seçin. Kullanıcılar tercih "
-"ettikleri kaplamayı seçmek için seçeneğe sahiptir."
+"MediaWiki kurulumunuz için varsayılan bir dil seçin. Kullanıcılar tercih "
+"ettikleri dili seçmek için seçeneğe sahiptir."
 
 #: plinth/modules/mediawiki/views.py:57
 msgid "Password updated"
@@ -3574,10 +3575,8 @@ msgid "Site name updated"
 msgstr "Site adı güncellendi"
 
 #: plinth/modules/mediawiki/views.py:110
-#, fuzzy
-#| msgid "Default skin changed"
 msgid "Default language changed"
-msgstr "Varsayılan kaplama değiştirildi"
+msgstr "Varsayılan dil değiştirildi"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -6911,10 +6910,8 @@ msgid "Obfs4 transport registered"
 msgstr "Obfs4 taşıma kayıtlı"
 
 #: plinth/modules/tor/__init__.py:165
-#, fuzzy
-#| msgid "Onion Service"
 msgid "Onion service is version 3"
-msgstr "Onion Hizmeti"
+msgstr "Onion hizmeti sürüm 3'tür"
 
 #: plinth/modules/tor/__init__.py:242
 #, python-brace-format
@@ -6991,23 +6988,17 @@ msgstr ""
 "veritabanında yayınlanır. Bu, başkalarının sansürü atlatmasına yardımcı olur."
 
 #: plinth/modules/tor/forms.py:104
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Tor Gizli Hizmetini etkinleştir"
+msgstr "Tor Onion Hizmetini etkinleştir"
 
 #: plinth/modules/tor/forms.py:106
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Gizli bir hizmet, {box_name} cihazına konumunu açıklamadan seçilen "
+"Bir onion hizmeti, {box_name} cihazına konumunu açıklamadan seçilen "
 "hizmetleri (viki veya sohbet gibi) sağlaması için izin verecektir. Bunu "
 "henüz güçlü bir isim gizliliği için kullanmayın."
 
@@ -7100,6 +7091,10 @@ msgid ""
 "apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
 "rpc</a>."
 msgstr ""
+"Web arayüzüne ek olarak, {box_name}'ta Transmission'ı uzaktan denetlemek "
+"için mobil ve masaüstü uygulamalar da kullanılabilir. Uzaktan denetim "
+"uygulamalarını yapılandırmak için <a href=\"/transmission-remote/rpc\""
+">/transmission-remote/rpc</a> URL'sini kullanın."
 
 #: plinth/modules/transmission/__init__.py:43
 #, python-brace-format
@@ -7127,7 +7122,7 @@ msgstr "Transmission"
 
 #: plinth/modules/transmission/manifest.py:15
 msgid "Tremotesf"
-msgstr ""
+msgstr "Tremotesf"
 
 #: plinth/modules/ttrss/__init__.py:20
 msgid ""
@@ -7149,17 +7144,14 @@ msgstr ""
 "href=\"{users_url}\">herhangi bir kullanıcı</a> tarafından erişilebilir."
 
 #: plinth/modules/ttrss/__init__.py:29
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
 "for connecting."
 msgstr ""
 "Tiny Tiny RSS için bir mobil veya masaüstü uygulaması kullanırken, bağlanmak "
-"için <a href=\"/tt-rss-app/\">/tt-rss-app</a> URL'sini kullanın."
+"için <a href=\"/tt-rss/\">/tt-rss</a> veya <a href=\"/tt-rss-app/\">/tt-rss-"
+"app</a> URL'sini kullanın."
 
 #: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
@@ -7170,20 +7162,16 @@ msgid "News Feed Reader"
 msgstr "Haber Bildirim Okuyucusu"
 
 #: plinth/modules/ttrss/manifest.py:10
-#, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
 msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #: plinth/modules/ttrss/manifest.py:20
-#, fuzzy
-#| msgid "TT-RSS Reader"
 msgid "TTRSS-Reader"
-msgstr "TT-RSS Okuyucu"
+msgstr "TTRSS Okuyucu"
 
 #: plinth/modules/ttrss/manifest.py:35
 msgid "Geekttrss"
-msgstr ""
+msgstr "Geekttrss"
 
 #: plinth/modules/upgrades/__init__.py:35
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
