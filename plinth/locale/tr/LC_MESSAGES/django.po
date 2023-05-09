@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:32-0400\n"
+"POT-Creation-Date: 2023-05-08 20:38-0400\n"
 "PO-Revision-Date: 2023-02-16 19:39+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Sayfa kaynağı"
 
-#: plinth/context_processors.py:23 plinth/views.py:83
+#: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -64,11 +64,11 @@ msgstr "Yedekten geri yükleme, uygulama verilerini geri yükleyecek."
 msgid "Repository to backup to"
 msgstr "Yedeklenecek depo"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:64
 msgid "Select a domain name to be used with this application"
 msgstr "Bu uygulama ile kullanılacak bir etki alanı adı seçin"
 
-#: plinth/forms.py:58
+#: plinth/forms.py:66
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
@@ -76,12 +76,12 @@ msgstr ""
 "Uyarı! Etki alan adı daha sonra değiştirilirse uygulama düzgün olarak "
 "çalışmayabilir."
 
-#: plinth/forms.py:72 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS etki alanı"
 
-#: plinth/forms.py:74 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -90,15 +90,15 @@ msgstr ""
 "TLS ile kullanmak için bir etki alanı seçin. Eğer liste boşsa, lütfen en az "
 "bir etki alanını sertifikalarla yapılandırın."
 
-#: plinth/forms.py:84
+#: plinth/forms.py:92
 msgid "Language"
 msgstr "Dil"
 
-#: plinth/forms.py:85
+#: plinth/forms.py:93
 msgid "Language to use for presenting this web interface"
 msgstr "Bu web arayüzünü sunmak için kullanılacak dil"
 
-#: plinth/forms.py:92
+#: plinth/forms.py:100
 msgid "Use the language preference set in the browser"
 msgstr "Tarayıcıda ayarlanan dil tercihini kullan"
 
@@ -115,12 +115,12 @@ msgstr "Web Sunucusu"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web Arayüzü (Plinth)"
 
-#: plinth/modules/apache/components.py:121
+#: plinth/modules/apache/components.py:148
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde erişim URL'si {url}"
 
-#: plinth/modules/apache/components.py:124
+#: plinth/modules/apache/components.py:151
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Erişim URL'si {url}"
@@ -330,7 +330,9 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Anahtar Depoda"
 
-#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
+#: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Yok"
 
@@ -892,13 +894,13 @@ msgstr "Yönetici"
 
 #: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
 #: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:71
+#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Yapılandırma güncellendi."
 
 #: plinth/modules/bepasty/views.py:91 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:38
-#: plinth/modules/searx/views.py:49 plinth/modules/zoph/views.py:74
+#: plinth/modules/searx/views.py:49 plinth/modules/zoph/views.py:77
 msgid "An error occurred during configuration."
 msgstr "Yapılandırma sırasında bir hata meydana geldi."
 
@@ -986,7 +988,7 @@ msgstr "IP adresi ve etki alanlarını yenile"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1393,7 +1395,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr "Tarih ve Saat"
 
-#: plinth/modules/datetime/__init__.py:115
+#: plinth/modules/datetime/__init__.py:119
 msgid "Time synchronized to NTP server"
 msgstr "NTP sunucusu ile zaman eşitlendi"
 
@@ -1435,7 +1437,7 @@ msgstr ""
 "sonra oturum açmalı ve parolayı değiştirmelisiniz."
 
 #: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:63
+#: plinth/modules/transmission/__init__.py:69
 msgid "Download files using BitTorrent applications"
 msgstr "BitTorrent uygulamalarını kullanarak dosyaları indir"
 
@@ -1444,7 +1446,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/transmission/__init__.py:75
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent Web İstemcisi"
 
@@ -1760,7 +1762,7 @@ msgstr "Durum"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Etki Alanı"
 
@@ -1872,7 +1874,7 @@ msgstr ""
 "düz metin olarak mı yoksa şifrelenmiş olarak mı saklanacağı istemci "
 "ayarlarına bağlıdır."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr "Sesli/görüntülü arama kurulumunu otomatik olarak yönetin"
 
@@ -1887,21 +1889,21 @@ msgstr ""
 "TURN sunucusu olarak yapılandırır. Farklı bir STUN/TURN sunucusu kullanmak "
 "istiyorsanız bunu etkisizleştirin."
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr "STUN/TURN Sunucu URI'leri"
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 "Her satırda bir tane olmak üzere STUN/TURN sunucusunun ortak URI'lerinin "
 "listesi."
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
 msgstr "Paylaşılan Kimlik Doğrulama Gizli Anahtarı"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 "TURN sunucusu için parolaları hesaplamak amacıyla kullanılan paylaşılan "
@@ -2417,7 +2419,7 @@ msgid "Documentation"
 msgstr "Belgeler"
 
 #: plinth/modules/help/__init__.py:37 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:124
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Kılavuz"
@@ -2517,13 +2519,24 @@ msgstr ""
 #: plinth/modules/help/templates/help_about.html:69
 #, python-format
 msgid ""
+"%(box_name)s is free software, licensed under the GNU Affero General Public "
+"License. The source code is available online at the <a href=\"https://salsa."
+"debian.org/freedombox-team/freedombox\"> %(box_name)s repository</a>.  In "
+"addition, the source code of any Debian package can be obtained from the <a "
+"href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
+"\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
+msgstr ""
+
+#: plinth/modules/help/templates/help_about.html:82
+#, python-format
+msgid ""
 "For more information about the %(box_name)s project, see the <a "
 "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
 "%(box_name)s projesi hakkında daha fazla bilgi için <a href=\"https://wiki."
 "debian.org/FreedomBox\">%(box_name)s Viki</a>'ye bakın."
 
-#: plinth/modules/help/templates/help_about.html:78
+#: plinth/modules/help/templates/help_about.html:91
 msgid "Learn more"
 msgstr "Daha fazla bilgi edinin"
 
@@ -2573,7 +2586,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:42
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
-#: plinth/templates/app-header.html:53
+#: plinth/templates/app-header.html:57
 msgid "Learn more..."
 msgstr "Daha fazla bilgi edinin..."
 
@@ -3229,11 +3242,24 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:15
+msgid ""
+"Disabled. This could lead to adversaries registering many spam accounts on "
+"your server with automated scripts."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:18
+msgid ""
+"Require users creating a new account to use a registration token. A token "
+"will be created automatically. Pass this token to your potential new users. "
+"They will be asked for the token during registration. (recommended)"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
 msgstr "Herkese Açık Kaydı etkinleştir"
 
-#: plinth/modules/matrixsynapse/forms.py:17
+#: plinth/modules/matrixsynapse/forms.py:28
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3243,7 +3269,11 @@ msgstr ""
 "yeni bir hesap açabileceği anlamına gelir. Sadece varolan kullanıcıların "
 "kullanabilmesini istiyorsanız bunu etkisizleştirin."
 
-#: plinth/modules/matrixsynapse/forms.py:24
+#: plinth/modules/matrixsynapse/forms.py:33
+msgid "Verification method for registration"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3320,7 +3350,45 @@ msgstr ""
 "Herkese açık kayıt etkinleştirilirse, herhangi bir istemciden yeni "
 "kullanıcılar kaydedilebilir."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
+msgid ""
+"New users must use one of the following tokens for verification during "
+"account registration:"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Registration Token"
+msgstr "Kaydı Atla"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
+#, fuzzy
+#| msgid "Allowed IPs"
+msgid "Uses Allowed"
+msgstr "İzin verilen IP'ler"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Pending Registrations"
+msgstr "Kaydı Atla"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Completed Registrations"
+msgstr "Kaydı Atla"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
+msgid "Expiry Time"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
+msgid "Unlimited"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3331,6 +3399,10 @@ msgstr ""
 "Diğer Matrix Synapse örnekleriyle federasyon için geçerli bir TLS "
 "sertifikası gerekir. Bir tane edinmek için lütfen <a "
 "href=\"%(letsencrypt_url)s\">Let's Encrypt</a>'a gidin."
+
+#: plinth/modules/matrixsynapse/views.py:137
+msgid "Registration configuration cannot be updated when app is disabled."
+msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3373,15 +3445,15 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:52 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:52 plinth/templates/index.html:128
 msgid "Wiki"
 msgstr "Viki"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Administrator Password"
 msgstr "Yönetici Parolası"
 
-#: plinth/modules/mediawiki/forms.py:27
+#: plinth/modules/mediawiki/forms.py:57
 msgid ""
 "Set a new password for MediaWiki's administrator account (admin). The "
 "password cannot be a common one and the minimum required length is "
@@ -3392,7 +3464,7 @@ msgstr ""
 "ortak bir parola olamaz ve gereken en az uzunluk <strong>10 karakterdir</"
 "strong>. Şu anki parolayı korumak için bu alanı boş bırakın."
 
-#: plinth/modules/mediawiki/forms.py:35
+#: plinth/modules/mediawiki/forms.py:65
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
@@ -3402,19 +3474,19 @@ msgstr ""
 "işaret eden URL'ler oluşturmak için kullanılır. Örnekler: \"benimfreedombox."
 "ornek.org\" veya \"ornek.onion\"."
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:71
 msgid "Site Name"
 msgstr "Site Adı"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:72
 msgid "Name of the site as displayed throughout the wiki."
 msgstr "Viki boyunca görüntülenen sitenin adı."
 
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:76
 msgid "Enable public registrations"
 msgstr "Herkese açık kaydı etkinleştir"
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:77
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3422,11 +3494,11 @@ msgstr ""
 "Eğer etkinleştirildiyse, İnternet'teki herkes MediaWiki örneğinizde bir "
 "hesap oluşturabilecektir."
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:81
 msgid "Enable private mode"
 msgstr "Özel kipi etkinleştir"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:82
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3435,11 +3507,11 @@ msgstr ""
 "viki'yi okuyabilir/yazabilir. Herkese açık kayıtlar da "
 "etkisizleştirilecektir."
 
-#: plinth/modules/mediawiki/forms.py:57
+#: plinth/modules/mediawiki/forms.py:87
 msgid "Default Skin"
 msgstr "Varsayılan Kaplama"
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:88
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3447,41 +3519,65 @@ msgstr ""
 "MediaWiki kurulumunuz için varsayılan bir kaplama seçin. Kullanıcılar tercih "
 "ettikleri kaplamayı seçmek için seçeneğe sahiptir."
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/forms.py:93
+#, fuzzy
+#| msgid "Select language"
+msgid "Default Language"
+msgstr "Dil seçin"
+
+#: plinth/modules/mediawiki/forms.py:94
+#, fuzzy
+#| msgid ""
+#| "Choose a default skin for your MediaWiki installation. Users have the "
+#| "option to select their preferred skin."
+msgid ""
+"Choose a default language for your MediaWiki installation. Users have the "
+"option to select their preferred language."
+msgstr ""
+"MediaWiki kurulumunuz için varsayılan bir kaplama seçin. Kullanıcılar tercih "
+"ettikleri kaplamayı seçmek için seçeneğe sahiptir."
+
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password updated"
 msgstr "Parola güncellendi"
 
-#: plinth/modules/mediawiki/views.py:59
+#: plinth/modules/mediawiki/views.py:62
 msgid "Password update failed. Please choose a stronger password"
 msgstr "Parola güncelleme başarısız oldu. Lütfen daha güçlü bir parola seçin"
 
-#: plinth/modules/mediawiki/views.py:68
+#: plinth/modules/mediawiki/views.py:71
 msgid "Public registrations enabled"
 msgstr "Herkese açık kayıtlar etkinleştirildi"
 
-#: plinth/modules/mediawiki/views.py:76
+#: plinth/modules/mediawiki/views.py:79
 msgid "Public registrations disabled"
 msgstr "Herkese açık kayıtlar etkisizleştirildi"
 
-#: plinth/modules/mediawiki/views.py:81
+#: plinth/modules/mediawiki/views.py:84
 msgid "Private mode enabled"
 msgstr "Özel kip etkinleştirildi"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:90
 msgid "Private mode disabled"
 msgstr "Özel kip etkisizleştirildi"
 
-#: plinth/modules/mediawiki/views.py:95
+#: plinth/modules/mediawiki/views.py:98
 msgid "Default skin changed"
 msgstr "Varsayılan kaplama değiştirildi"
 
-#: plinth/modules/mediawiki/views.py:99
+#: plinth/modules/mediawiki/views.py:102
 msgid "Domain name updated"
 msgstr "Etki alanı adı güncellendi"
 
-#: plinth/modules/mediawiki/views.py:103
+#: plinth/modules/mediawiki/views.py:106
 msgid "Site name updated"
 msgstr "Site adı güncellendi"
+
+#: plinth/modules/mediawiki/views.py:110
+#, fuzzy
+#| msgid "Default skin changed"
+msgid "Default language changed"
+msgstr "Varsayılan kaplama değiştirildi"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -5600,7 +5696,7 @@ msgstr ""
 "RSS</a> ile RSS-Bridge'i kullanabilirsiniz. Bir bildirim eklerken, kimlik "
 "doğrulamayı etkinleştirin ve {box_name} kimlik bilgilerinizi kullanın."
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:45
+#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
 msgid "Read and subscribe to news feeds"
 msgstr "Haber bildirimlerini oku ve abone ol"
 
@@ -6802,24 +6898,30 @@ msgstr "Tor Socks Vekil Sunucusu"
 msgid "Tor Bridge Relay"
 msgstr "Tor Köprüsü Aktarımı"
 
-#: plinth/modules/tor/__init__.py:131
+#: plinth/modules/tor/__init__.py:132
 msgid "Tor relay port available"
 msgstr "Tor aktarımı bağlantı noktası kullanılabilir"
 
-#: plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 taşıma kayıtlı"
 
-#: plinth/modules/tor/__init__.py:151
+#: plinth/modules/tor/__init__.py:153
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 taşıma kayıtlı"
 
-#: plinth/modules/tor/__init__.py:228
+#: plinth/modules/tor/__init__.py:165
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion service is version 3"
+msgstr "Onion Hizmeti"
+
+#: plinth/modules/tor/__init__.py:242
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tor aracılığıyla tcp{kind} üzerinde erişim URL'si {url}"
 
-#: plinth/modules/tor/__init__.py:239
+#: plinth/modules/tor/__init__.py:253
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde {url} adresinde Tor kullanımını onaylama"
@@ -6889,13 +6991,19 @@ msgstr ""
 "veritabanında yayınlanır. Bu, başkalarının sansürü atlatmasına yardımcı olur."
 
 #: plinth/modules/tor/forms.py:104
-msgid "Enable Tor Hidden Service"
+#, fuzzy
+#| msgid "Enable Tor Hidden Service"
+msgid "Enable Tor Onion Service"
 msgstr "Tor Gizli Hizmetini etkinleştir"
 
 #: plinth/modules/tor/forms.py:106
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as wiki or chat) without revealing its location. Do not use this for "
+#| "strong anonymity yet."
 msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
+"An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
@@ -6987,13 +7095,22 @@ msgstr ""
 #: plinth/modules/transmission/__init__.py:37
 #, python-brace-format
 msgid ""
+"In addition to the web interface, mobile and desktop apps can also be used "
+"to remotely control Transmission on {box_name}. To configure remote control "
+"apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
+"rpc</a>."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
 "<a href=\"{samba_url}\">Samba</a> paylaşımları, aşağıdaki açılır menüden "
 "varsayılan indirme dizini olarak ayarlanabilir."
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:47
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -7003,10 +7120,14 @@ msgstr ""
 "href=\"{sharing_url}\">Paylaşım</a> uygulamasını kullanarak da "
 "erişebilirsiniz."
 
-#: plinth/modules/transmission/__init__.py:67
-#: plinth/modules/transmission/manifest.py:6
+#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
+
+#: plinth/modules/transmission/manifest.py:15
+msgid "Tremotesf"
+msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:20
 msgid ""
@@ -7028,24 +7149,41 @@ msgstr ""
 "href=\"{users_url}\">herhangi bir kullanıcı</a> tarafından erişilebilir."
 
 #: plinth/modules/ttrss/__init__.py:29
+#, fuzzy
+#| msgid ""
+#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
+#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+"href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
+"for connecting."
 msgstr ""
 "Tiny Tiny RSS için bir mobil veya masaüstü uygulaması kullanırken, bağlanmak "
 "için <a href=\"/tt-rss-app/\">/tt-rss-app</a> URL'sini kullanın."
 
-#: plinth/modules/ttrss/__init__.py:48 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:49
+#: plinth/modules/ttrss/__init__.py:50
 msgid "News Feed Reader"
 msgstr "Haber Bildirim Okuyucusu"
 
-#: plinth/modules/ttrss/manifest.py:9
-msgid "Tiny Tiny RSS (Fork)"
+#: plinth/modules/ttrss/manifest.py:10
+#, fuzzy
+#| msgid "Tiny Tiny RSS (Fork)"
+msgid "Tiny Tiny RSS (TTTRSS)"
 msgstr "Tiny Tiny RSS (Fork)"
+
+#: plinth/modules/ttrss/manifest.py:20
+#, fuzzy
+#| msgid "TT-RSS Reader"
+msgid "TTRSS-Reader"
+msgstr "TT-RSS Okuyucu"
+
+#: plinth/modules/ttrss/manifest.py:35
+msgid "Geekttrss"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:35
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
@@ -7188,7 +7326,7 @@ msgstr ""
 "duyurusuna</a> bakın."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
-#: plinth/templates/notifications.html:44
+#: plinth/templates/notifications.html:50
 #: plinth/templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "Yoksay"
@@ -8219,7 +8357,7 @@ msgstr ""
 "Ayrıca, lütfen hata raporuna <a href=\"%(status_log_url)s\">durum günlüğünü</"
 "a> ekleyin."
 
-#: plinth/templates/app-header.html:22
+#: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "Kurulum"
 
@@ -8360,7 +8498,7 @@ msgstr ""
 "Bu sayfaya kısayollar eklemek için bazı <a "
 "href=\"%(apps_url)s\">uygulamaları</a> etkinleştirin."
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:104
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -8372,7 +8510,7 @@ msgstr ""
 "sunucusudur. Gizliliğinize ve veri sahipliğinize saygı duyan çevrimiçi "
 "iletişim araçları sağlar."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:113
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -8383,31 +8521,31 @@ msgstr ""
 "Affero Genel Kamu Lisansı, Sürüm 3 veya üzeri altında dağıtılan özgür bir "
 "yazılımdır."
 
-#: plinth/templates/index.html:127
+#: plinth/templates/index.html:131
 msgid "Source Code"
 msgstr "Kaynak Kodu"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:136
 msgid "Homepage"
 msgstr "Ana Sayfa"
 
-#: plinth/templates/index.html:135 plinth/templates/toolbar.html:19
+#: plinth/templates/index.html:139 plinth/templates/toolbar.html:19
 msgid "Donate"
 msgstr "Bağış"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:143
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox Vakfı"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:150
 msgid "Forum"
 msgstr "Forum"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:155
 msgid "IRC Chatroom"
 msgstr "IRC Sohbet Odası"
 
-#: plinth/templates/index.html:156
+#: plinth/templates/index.html:160
 msgid "Mailing list"
 msgstr "Posta listesi"
 
@@ -8557,11 +8695,11 @@ msgstr ""
 "Tüm uygulama verileri ve yapılandırması kalıcı olarak kaybolacaktır. "
 "Uygulama tekrar yeni olarak yüklenebilir."
 
-#: plinth/views.py:230
+#: plinth/views.py:239
 msgid "Setting unchanged"
 msgstr "Ayar değişmedi"
 
-#: plinth/views.py:439
+#: plinth/views.py:456
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} kaldırılmadan önce"
@@ -9520,9 +9658,6 @@ msgstr "Gujarati"
 #~ msgid "Register"
 #~ msgstr "Kaydet"
 
-#~ msgid "Skip Registration"
-#~ msgstr "Kaydı Atla"
-
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>İkaz:</b><br/>"
 
@@ -10222,9 +10357,6 @@ msgstr "Gujarati"
 #~ msgstr ""
 #~ "Seçenekler %(box_name)s kutusunu en genel düzeyde etkiler, bu nedenle "
 #~ "dikkatli olun!"
-
-#~ msgid "TT-RSS Reader"
-#~ msgstr "TT-RSS Okuyucu"
 
 #~ msgid "Language changed"
 #~ msgstr "Dil değiştirildi"

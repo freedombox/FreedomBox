@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-13 21:32-0400\n"
+"POT-Creation-Date: 2023-05-08 20:38-0400\n"
 "PO-Revision-Date: 2022-11-07 10:05+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Sidekilde"
 
-#: plinth/context_processors.py:23 plinth/views.py:83
+#: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -72,23 +72,23 @@ msgstr "Tilbakeføring av sikkerhetskopi vil tilbakestille programdata."
 msgid "Repository to backup to"
 msgstr "Depot å sikkerhetskopiere til"
 
-#: plinth/forms.py:56
+#: plinth/forms.py:64
 msgid "Select a domain name to be used with this application"
 msgstr "Velg et domenenavn som skal brukes med dette programmet"
 
-#: plinth/forms.py:58
+#: plinth/forms.py:66
 msgid ""
 "Warning! The application may not work properly if domain name is changed "
 "later."
 msgstr ""
 "ADVARSEL! Programmet kan slutte å virke rett hvis domenenavnet endres senere."
 
-#: plinth/forms.py:72 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS-domene"
 
-#: plinth/forms.py:74 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -97,15 +97,15 @@ msgstr ""
 "Velg et domene å bruke TLS med. Hvis listen er tom, sett opp minst ett "
 "domene med sertifikater."
 
-#: plinth/forms.py:84
+#: plinth/forms.py:92
 msgid "Language"
 msgstr "Språk"
 
-#: plinth/forms.py:85
+#: plinth/forms.py:93
 msgid "Language to use for presenting this web interface"
 msgstr "Språk som skal brukes i dette nettgrensesnittet"
 
-#: plinth/forms.py:92
+#: plinth/forms.py:100
 msgid "Use the language preference set in the browser"
 msgstr "Bruk språkforvalg satt i nettleseren"
 
@@ -122,12 +122,12 @@ msgstr "Nett-tjener"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Vev-grensesnitt (Plinth)"
 
-#: plinth/modules/apache/components.py:121
+#: plinth/modules/apache/components.py:148
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Kontakt nettadressen {url} på tcp{kind}"
 
-#: plinth/modules/apache/components.py:124
+#: plinth/modules/apache/components.py:151
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Kontakt nettadressen {url}"
@@ -335,7 +335,9 @@ msgstr ""
 msgid "Key in Repository"
 msgstr "Nøkkel i kodelager"
 
-#: plinth/modules/backups/forms.py:177 plinth/modules/searx/forms.py:14
+#: plinth/modules/backups/forms.py:177
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:62
+#: plinth/modules/searx/forms.py:14
 msgid "None"
 msgstr "Ingen"
 
@@ -915,13 +917,13 @@ msgstr "admin"
 
 #: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
 #: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:71
+#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
 
 #: plinth/modules/bepasty/views.py:91 plinth/modules/email/views.py:48
 #: plinth/modules/gitweb/views.py:117 plinth/modules/searx/views.py:38
-#: plinth/modules/searx/views.py:49 plinth/modules/zoph/views.py:74
+#: plinth/modules/searx/views.py:49 plinth/modules/zoph/views.py:77
 msgid "An error occurred during configuration."
 msgstr "En feil oppsto under konfigureringen."
 
@@ -1010,7 +1012,7 @@ msgstr "Oppdater IP-adresse og domener"
 #: plinth/modules/bind/views.py:61 plinth/modules/config/views.py:98
 #: plinth/modules/coturn/views.py:40 plinth/modules/deluge/views.py:35
 #: plinth/modules/dynamicdns/views.py:78 plinth/modules/ejabberd/views.py:95
-#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:121
+#: plinth/modules/email/views.py:45 plinth/modules/matrixsynapse/views.py:146
 #: plinth/modules/minetest/views.py:55 plinth/modules/mumble/views.py:37
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
@@ -1415,7 +1417,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr "Dato og tid"
 
-#: plinth/modules/datetime/__init__.py:115
+#: plinth/modules/datetime/__init__.py:119
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkronisert til NTP-tjener"
 
@@ -1457,7 +1459,7 @@ msgstr ""
 "etter at denne tjenesten er aktivert."
 
 #: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:63
+#: plinth/modules/transmission/__init__.py:69
 msgid "Download files using BitTorrent applications"
 msgstr "Last ned filer ved bruk av BitTorrent-programmer"
 
@@ -1466,7 +1468,7 @@ msgid "Deluge"
 msgstr "Deluge"
 
 #: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/transmission/__init__.py:75
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent nett-klient"
 
@@ -1798,7 +1800,7 @@ msgstr "Status"
 #: plinth/modules/dynamicdns/templates/dynamicdns.html:18
 #: plinth/modules/email/templates/email.html:35
 #: plinth/modules/letsencrypt/templates/letsencrypt.html:24
-#: plinth/modules/mediawiki/forms.py:34
+#: plinth/modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Domene"
 
@@ -1919,7 +1921,7 @@ msgstr ""
 "historien til et fler-bruker nettpratrom. Det avhenger av "
 "klientinnstillingene om historiene er lagret som ren tekst eller kryptert."
 
-#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:22
+#: plinth/modules/ejabberd/forms.py:35 plinth/modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr ""
 
@@ -1931,21 +1933,21 @@ msgid ""
 "server."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:31
+#: plinth/modules/ejabberd/forms.py:44 plinth/modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:33
+#: plinth/modules/ejabberd/forms.py:46 plinth/modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 
-#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:37
+#: plinth/modules/ejabberd/forms.py:50 plinth/modules/matrixsynapse/forms.py:53
 #, fuzzy
 #| msgid "Authentication Mode"
 msgid "Shared Authentication Secret"
 msgstr "Autentiseringsmodus"
 
-#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:38
+#: plinth/modules/ejabberd/forms.py:51 plinth/modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -2476,7 +2478,7 @@ msgid "Documentation"
 msgstr "Dokumentasjon"
 
 #: plinth/modules/help/__init__.py:37 plinth/templates/help-menu.html:20
-#: plinth/templates/help-menu.html:21 plinth/templates/index.html:120
+#: plinth/templates/help-menu.html:21 plinth/templates/index.html:124
 #, fuzzy
 #| msgid "Manual"
 msgctxt "User guide"
@@ -2580,13 +2582,24 @@ msgstr ""
 #: plinth/modules/help/templates/help_about.html:69
 #, python-format
 msgid ""
+"%(box_name)s is free software, licensed under the GNU Affero General Public "
+"License. The source code is available online at the <a href=\"https://salsa."
+"debian.org/freedombox-team/freedombox\"> %(box_name)s repository</a>.  In "
+"addition, the source code of any Debian package can be obtained from the <a "
+"href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
+"\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
+msgstr ""
+
+#: plinth/modules/help/templates/help_about.html:82
+#, python-format
+msgid ""
 "For more information about the %(box_name)s project, see the <a "
 "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
 "For mer info om %(box_name)s-prosjektet, sjekk <a href=\"https://wiki.debian."
 "org/FreedomBox\">%(box_name)s wiki</a>."
 
-#: plinth/modules/help/templates/help_about.html:78
+#: plinth/modules/help/templates/help_about.html:91
 msgid "Learn more"
 msgstr "Lær mer"
 
@@ -2635,7 +2648,7 @@ msgstr ""
 #: plinth/modules/help/templates/help_contribute.html:42
 #: plinth/modules/power/templates/power_restart.html:27
 #: plinth/modules/power/templates/power_shutdown.html:26
-#: plinth/templates/app-header.html:53
+#: plinth/templates/app-header.html:57
 msgid "Learn more..."
 msgstr "Lær mer…"
 
@@ -3290,11 +3303,24 @@ msgstr ""
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
-#: plinth/modules/matrixsynapse/forms.py:16
+#: plinth/modules/matrixsynapse/forms.py:15
+msgid ""
+"Disabled. This could lead to adversaries registering many spam accounts on "
+"your server with automated scripts."
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:18
+msgid ""
+"Require users creating a new account to use a registration token. A token "
+"will be created automatically. Pass this token to your potential new users. "
+"They will be asked for the token during registration. (recommended)"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
 msgstr "Skru på offentlig registrering"
 
-#: plinth/modules/matrixsynapse/forms.py:17
+#: plinth/modules/matrixsynapse/forms.py:28
 msgid ""
 "Enabling public registration means that anyone on the Internet can register "
 "a new account on your Matrix server. Disable this if you only want existing "
@@ -3304,7 +3330,11 @@ msgstr ""
 "en ny konto på din Matrix-tjener. Skru dette av hvis du vil at kun "
 "eksisterende brukere skal kunne bruke den."
 
-#: plinth/modules/matrixsynapse/forms.py:24
+#: plinth/modules/matrixsynapse/forms.py:33
+msgid "Verification method for registration"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -3377,7 +3407,45 @@ msgstr ""
 "Nye brukere kan registrere seg fra enhver klient hvis offentlig registrering "
 "er påskrudd."
 
-#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:31
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:29
+msgid ""
+"New users must use one of the following tokens for verification during "
+"account registration:"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Registration Token"
+msgstr "Sløyf registering (Registration)"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
+#, fuzzy
+#| msgid "Allowed IPs"
+msgid "Uses Allowed"
+msgstr "Tillatte IP-er"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Pending Registrations"
+msgstr "Sløyf registering (Registration)"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
+#, fuzzy
+#| msgid "Skip Registration"
+msgid "Completed Registrations"
+msgstr "Sløyf registering (Registration)"
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
+msgid "Expiry Time"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
+msgid "Unlimited"
+msgstr ""
+
+#: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -3387,6 +3455,10 @@ msgstr ""
 "Oppsatt domene bruker et selv-signert sertifikat. Samhørighet med andre "
 "Matrix Synapse-instanser krever et gyldig TLS-sertifikat. Gå til <a "
 "href=\"%(letsencrypt_url)s\">Let's Encrypt</a> for å skaffe deg det."
+
+#: plinth/modules/matrixsynapse/views.py:137
+msgid "Registration configuration cannot be updated when app is disabled."
+msgstr ""
 
 #: plinth/modules/mediawiki/__init__.py:20
 msgid ""
@@ -3428,15 +3500,15 @@ msgstr ""
 msgid "MediaWiki"
 msgstr "MediaWiki"
 
-#: plinth/modules/mediawiki/__init__.py:52 plinth/templates/index.html:124
+#: plinth/modules/mediawiki/__init__.py:52 plinth/templates/index.html:128
 msgid "Wiki"
 msgstr "Wiki"
 
-#: plinth/modules/mediawiki/forms.py:26
+#: plinth/modules/mediawiki/forms.py:56
 msgid "Administrator Password"
 msgstr "Administratorpassord"
 
-#: plinth/modules/mediawiki/forms.py:27
+#: plinth/modules/mediawiki/forms.py:57
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -3450,28 +3522,28 @@ msgstr ""
 "Sett et nytt passord for MediaWikis administratorkonto (admin). La dette "
 "feltet stå tomt for å beholde gjeldende passord."
 
-#: plinth/modules/mediawiki/forms.py:35
+#: plinth/modules/mediawiki/forms.py:65
 msgid ""
 "Used by MediaWiki to generate URLs that point to the wiki such as in footer, "
 "feeds and emails. Examples: \"myfreedombox.example.org\" or \"example."
 "onion\"."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:41
+#: plinth/modules/mediawiki/forms.py:71
 #, fuzzy
 #| msgid "Kite name"
 msgid "Site Name"
 msgstr "«Kite»-navn"
 
-#: plinth/modules/mediawiki/forms.py:42
+#: plinth/modules/mediawiki/forms.py:72
 msgid "Name of the site as displayed throughout the wiki."
 msgstr ""
 
-#: plinth/modules/mediawiki/forms.py:46
+#: plinth/modules/mediawiki/forms.py:76
 msgid "Enable public registrations"
 msgstr "Aktiver offentlig registrering"
 
-#: plinth/modules/mediawiki/forms.py:47
+#: plinth/modules/mediawiki/forms.py:77
 msgid ""
 "If enabled, anyone on the internet will be able to create an account on your "
 "MediaWiki instance."
@@ -3479,11 +3551,11 @@ msgstr ""
 "Hvis påskrudd, vil alle på Internett kunne opprette en konto på din "
 "MediaWiki-instans."
 
-#: plinth/modules/mediawiki/forms.py:51
+#: plinth/modules/mediawiki/forms.py:81
 msgid "Enable private mode"
 msgstr "Skru på privat modus"
 
-#: plinth/modules/mediawiki/forms.py:52
+#: plinth/modules/mediawiki/forms.py:82
 msgid ""
 "If enabled, access will be restricted. Only people who have accounts can "
 "read/write to the wiki. Public registrations will also be disabled."
@@ -3491,11 +3563,11 @@ msgstr ""
 "Hvis påskrudd, vil tilgang begrenses. Kun folk som har kontoer kan lese/"
 "skrive på wiki-en. Offentlige registreringer vil også bli avskrudd."
 
-#: plinth/modules/mediawiki/forms.py:57
+#: plinth/modules/mediawiki/forms.py:87
 msgid "Default Skin"
 msgstr "Forvalgt drakt"
 
-#: plinth/modules/mediawiki/forms.py:58
+#: plinth/modules/mediawiki/forms.py:88
 msgid ""
 "Choose a default skin for your MediaWiki installation. Users have the option "
 "to select their preferred skin."
@@ -3503,41 +3575,65 @@ msgstr ""
 "Velg forvalgsdrakt for din MediaWiki-installasjon. Brukere kan velge egen "
 "drakt."
 
-#: plinth/modules/mediawiki/views.py:54
+#: plinth/modules/mediawiki/forms.py:93
+#, fuzzy
+#| msgid "Select language"
+msgid "Default Language"
+msgstr "Velg språk"
+
+#: plinth/modules/mediawiki/forms.py:94
+#, fuzzy
+#| msgid ""
+#| "Choose a default skin for your MediaWiki installation. Users have the "
+#| "option to select their preferred skin."
+msgid ""
+"Choose a default language for your MediaWiki installation. Users have the "
+"option to select their preferred language."
+msgstr ""
+"Velg forvalgsdrakt for din MediaWiki-installasjon. Brukere kan velge egen "
+"drakt."
+
+#: plinth/modules/mediawiki/views.py:57
 msgid "Password updated"
 msgstr "Passord oppdatert"
 
-#: plinth/modules/mediawiki/views.py:59
+#: plinth/modules/mediawiki/views.py:62
 msgid "Password update failed. Please choose a stronger password"
 msgstr "Passordoppdatering feilet. Vennligst bruk ett sterkere passord"
 
-#: plinth/modules/mediawiki/views.py:68
+#: plinth/modules/mediawiki/views.py:71
 msgid "Public registrations enabled"
 msgstr "Offentlig registrering aktivert"
 
-#: plinth/modules/mediawiki/views.py:76
+#: plinth/modules/mediawiki/views.py:79
 msgid "Public registrations disabled"
 msgstr "Offentlig registrering avskrudd"
 
-#: plinth/modules/mediawiki/views.py:81
+#: plinth/modules/mediawiki/views.py:84
 msgid "Private mode enabled"
 msgstr "Privat modus påskrudd"
 
-#: plinth/modules/mediawiki/views.py:87
+#: plinth/modules/mediawiki/views.py:90
 msgid "Private mode disabled"
 msgstr "Privat modus avskrudd"
 
-#: plinth/modules/mediawiki/views.py:95
+#: plinth/modules/mediawiki/views.py:98
 msgid "Default skin changed"
 msgstr "Forvalgt drakt endret"
 
-#: plinth/modules/mediawiki/views.py:99
+#: plinth/modules/mediawiki/views.py:102
 msgid "Domain name updated"
 msgstr "Domenenavn oppdatert"
 
-#: plinth/modules/mediawiki/views.py:103
+#: plinth/modules/mediawiki/views.py:106
 msgid "Site name updated"
 msgstr "Stedsnavn oppdatert"
+
+#: plinth/modules/mediawiki/views.py:110
+#, fuzzy
+#| msgid "Default skin changed"
+msgid "Default language changed"
+msgstr "Forvalgt drakt endret"
 
 #: plinth/modules/minetest/__init__.py:33
 #, fuzzy, python-brace-format
@@ -5661,7 +5757,7 @@ msgid ""
 "your {box_name} credentials."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:45
+#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
 msgid "Read and subscribe to news feeds"
 msgstr "Les og abonner på nyhetsstrømmer"
 
@@ -6886,24 +6982,30 @@ msgstr "Tor Socks-mellomtjener"
 msgid "Tor Bridge Relay"
 msgstr "Tor bro-stafettvideresendingsoppsett"
 
-#: plinth/modules/tor/__init__.py:131
+#: plinth/modules/tor/__init__.py:132
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:141
+#: plinth/modules/tor/__init__.py:143
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:151
+#: plinth/modules/tor/__init__.py:153
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:228
+#: plinth/modules/tor/__init__.py:165
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion service is version 3"
+msgstr "Løktjeneste"
+
+#: plinth/modules/tor/__init__.py:242
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Adgang til URL {url} på tcp{kind} via Tor"
 
-#: plinth/modules/tor/__init__.py:239
+#: plinth/modules/tor/__init__.py:253
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
@@ -6973,13 +7075,19 @@ msgstr ""
 "vanskeligere å sensurere denne noden. Dette hjelper andre å unngå sensur."
 
 #: plinth/modules/tor/forms.py:104
-msgid "Enable Tor Hidden Service"
+#, fuzzy
+#| msgid "Enable Tor Hidden Service"
+msgid "Enable Tor Onion Service"
 msgstr "Aktiver skjult Tor-tjeneste"
 
 #: plinth/modules/tor/forms.py:106
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "A hidden service will allow {box_name} to provide selected services (such "
+#| "as wiki or chat) without revealing its location. Do not use this for "
+#| "strong anonymity yet."
 msgid ""
-"A hidden service will allow {box_name} to provide selected services (such as "
+"An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
@@ -7069,21 +7177,34 @@ msgstr ""
 #: plinth/modules/transmission/__init__.py:37
 #, python-brace-format
 msgid ""
+"In addition to the web interface, mobile and desktop apps can also be used "
+"to remotely control Transmission on {box_name}. To configure remote control "
+"apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
+"rpc</a>."
+msgstr ""
+
+#: plinth/modules/transmission/__init__.py:43
+#, python-brace-format
+msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:41
+#: plinth/modules/transmission/__init__.py:47
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:67
-#: plinth/modules/transmission/manifest.py:6
+#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
+
+#: plinth/modules/transmission/manifest.py:15
+msgid "Tremotesf"
+msgstr ""
 
 #: plinth/modules/ttrss/__init__.py:20
 msgid ""
@@ -7111,22 +7232,35 @@ msgstr ""
 #| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
-"href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
+"href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
+"for connecting."
 msgstr ""
 "Når du bruker et mobilbasert- eller skrivebords-program for Tiny Tiny RSS, "
 "bruk nettadressen <a href=\"/tt-rss-app/\">/tt-rss-app</a>for å koble til."
 
-#: plinth/modules/ttrss/__init__.py:48 plinth/modules/ttrss/manifest.py:18
+#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:49
+#: plinth/modules/ttrss/__init__.py:50
 msgid "News Feed Reader"
 msgstr "Nyhetstrøm-leser"
 
-#: plinth/modules/ttrss/manifest.py:9
-msgid "Tiny Tiny RSS (Fork)"
+#: plinth/modules/ttrss/manifest.py:10
+#, fuzzy
+#| msgid "Tiny Tiny RSS (Fork)"
+msgid "Tiny Tiny RSS (TTTRSS)"
 msgstr "Tiny Tiny RSS (avgreining)"
+
+#: plinth/modules/ttrss/manifest.py:20
+#, fuzzy
+#| msgid "TT-RSS Reader"
+msgid "TTRSS-Reader"
+msgstr "TT-RSS kildeleser"
+
+#: plinth/modules/ttrss/manifest.py:35
+msgid "Geekttrss"
+msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:35
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
@@ -7266,7 +7400,7 @@ msgstr ""
 "href=\"%(url)s\">slippkunngjøringen</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-new-release.html:22
-#: plinth/templates/notifications.html:44
+#: plinth/templates/notifications.html:50
 #: plinth/templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "Forkast"
@@ -8317,7 +8451,7 @@ msgstr ""
 "er veldig fint om du legger til <a href=\"%(status_log_url)s\">statusloggen</"
 "a> i feilrapporten."
 
-#: plinth/templates/app-header.html:22
+#: plinth/templates/app-header.html:26
 msgid "Installation"
 msgstr "Installasjon"
 
@@ -8455,7 +8589,7 @@ msgstr ""
 "Aktiver noen <a href=\"%(apps_url)s\">programmer</a> for å legge til "
 "snarveier på denne siden."
 
-#: plinth/templates/index.html:100
+#: plinth/templates/index.html:104
 #, python-format
 msgid ""
 "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
@@ -8467,7 +8601,7 @@ msgstr ""
 "på små maskiner. Den tilbyr nettbaserte kommunikasjonsverktøy som "
 "respekterer din privatsfære og ditt dataeierskap."
 
-#: plinth/templates/index.html:109
+#: plinth/templates/index.html:113
 #, python-format
 msgid ""
 "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
@@ -8478,31 +8612,31 @@ msgstr ""
 "programvare, og distribuert i henhold til GNU Affero General Public License "
 "versjon 3 eller senere."
 
-#: plinth/templates/index.html:127
+#: plinth/templates/index.html:131
 msgid "Source Code"
 msgstr "Kildekode"
 
-#: plinth/templates/index.html:132
+#: plinth/templates/index.html:136
 msgid "Homepage"
 msgstr "Hjemmeside"
 
-#: plinth/templates/index.html:135 plinth/templates/toolbar.html:19
+#: plinth/templates/index.html:139 plinth/templates/toolbar.html:19
 msgid "Donate"
 msgstr "Doner"
 
-#: plinth/templates/index.html:139
+#: plinth/templates/index.html:143
 msgid "FreedomBox Foundation"
 msgstr "FreedomBox-stiftelsen"
 
-#: plinth/templates/index.html:146
+#: plinth/templates/index.html:150
 msgid "Forum"
 msgstr "Forum"
 
-#: plinth/templates/index.html:151
+#: plinth/templates/index.html:155
 msgid "IRC Chatroom"
 msgstr "IRC-nettpratrom"
 
-#: plinth/templates/index.html:156
+#: plinth/templates/index.html:160
 msgid "Mailing list"
 msgstr "Adresseliste"
 
@@ -8657,11 +8791,11 @@ msgstr ""
 "All programdata og oppsett blir permanent borte. Programmet kan installeres "
 "på nytt igjen."
 
-#: plinth/views.py:230
+#: plinth/views.py:239
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
-#: plinth/views.py:439
+#: plinth/views.py:456
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "før avinstallering av {app_id}"
@@ -9606,9 +9740,6 @@ msgstr "Gujarati"
 #~ msgid "Register"
 #~ msgstr "Registrer"
 
-#~ msgid "Skip Registration"
-#~ msgstr "Sløyf registering (Registration)"
-
 #~ msgid "<b>Warning:</b><br/>"
 #~ msgstr "<b>Advarsel:</b><br/>"
 
@@ -10313,9 +10444,6 @@ msgstr "Gujarati"
 #~ msgstr ""
 #~ "Valgene som berører %(box_name)s er på det mest grunnleggende nivået, så "
 #~ "vær forsiktig!"
-
-#~ msgid "TT-RSS Reader"
-#~ msgstr "TT-RSS kildeleser"
 
 #~ msgid "Language changed"
 #~ msgstr "Språk endret"
