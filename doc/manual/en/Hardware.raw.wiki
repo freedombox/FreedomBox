@@ -160,8 +160,38 @@ All !FreedomBox disk images for different hardware is built by the project using
 === Status of Software Used ===
 
  * All the software present in !FreedomBox images is from Debian repositories. There are some minor tweaks done by the [[FreedomBox/Maker|Freedom Maker]] script.
- * All software present in the images is DFSG compliant free software except in case of Raspberry Pi images where the firmware package is non-free software.
  * All images use the Linux kernel from Debian which is in turn based on the mainline Linux kernel.
+ * A few images include non-free firmware from Debian's '''non-free-firmware''' component (see [[Firmware]]). Other than firmware, all software present in the images is DFSG compliant free software. The table below lists the components included in each image. (Note: this work is in progress, planned for images built after Debian 12 (bookworm) release.)
+
+|| '''Image''' || '''Includes main?''' || '''Includes non-free-firmware?''' || '''Non-free firmware included''' ||
+|| 32-bit ARM (armhf) || (./) || || ||
+|| 32-bit x86 (i386) || (./) || (./) || DebianPkg:amd64-microcode, DebianPkg:intel-microcode (see [[Microcode]]) ||
+|| 64-bit ARM (arm64) || (./) || || ||
+|| 64-bit x86 (amd64) || (./) || (./) || DebianPkg:amd64-microcode, DebianPkg:intel-microcode (see [[Microcode]]) ||
+|| A20 OLinuXino Lime || (./) || || ||
+|| A20 OLinuXino Lime 2 || (./) || || ||
+|| A20 OLinuXino MICRO || (./) || || ||
+|| Beagle Bone Black || (./) || || ||
+|| Cubieboard 2 || (./) || || ||
+|| Cubietruck (Cubieboard 3) || (./) || || ||
+|| Lamobo R1 || (./) || || ||
+|| !LeMaker Banana Pro || (./) || || ||
+|| !LinkSprite pcDuino3S || (./) || || ||
+|| Orange Pi Zero || (./) || || ||
+|| PC Engines APU 1D || (./) || || ||
+|| Pine A64 LTS || (./) || || ||
+|| Pine A64+ || (./) || || ||
+|| Pioneer Edition !FreedomBox || (./) || || ||
+|| QEMU/KVM amd64 || (./) || || ||
+|| QEMU/KVM i386 || (./) || || ||
+|| Raspberry Pi 2 || (./) || (./) || DebianPkg:raspi-firmware ||
+|| Raspberry Pi 3 Model B || (./) || (./) || DebianPkg:raspi-firmware, DebianPkg:firmware-brcm80211 ||
+|| Raspberry Pi 3 Model B+ || (./) || (./) || DebianPkg:raspi-firmware, DebianPkg:firmware-brcm80211 ||
+|| Raspberry Pi 4 Model B || (./) || (./) || DebianPkg:raspi-firmware, DebianPkg:firmware-brcm80211 ||
+|| Rock64 || (./) || || ||
+|| !RockPro64 || (./) || || ||
+|| !VirtualBox for amd64 || (./) || || ||
+|| !VirtualBox for i386 || (./) || || ||
 
 ## END_INCLUDE
 

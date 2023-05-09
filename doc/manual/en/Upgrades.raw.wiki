@@ -75,17 +75,8 @@ If you decide to stay on an older release, you should check DebianReleases#Produ
 
 Auto-update is recommended for most users. However if you want to do the update manually, here are some tips:
 
-General:
+ * Take backups of your apps' data before performing the update.
  * Create a system snapshot before you begin.
- * Consider placing a temporary hold (using `apt-mark`) on the freedombox package, to prevent its removal when other packages are being updated. Remember to remove the hold later, so that `freedombox` package can be updated.
-
-Updating from Debian 10 (Buster) to Debian 11 (Bullseye):
- * If Searx is installed, after the package is updated, you will need to update its list of search engines.
- * You may need to configure `grub-pc` package (using `dpkg-reconfigure`) so that it does not require to install `grub` again.
- * You may need to remove the obsolete package `libgcc1`.
- * Consider placing temporary holds on the following packages, and let !FreedomBox handle updating them later:
-   * `firewalld`, `mumble-server`, `radicale`, `roundcube-core`, `tt-rss`
-
 
 ## END_INCLUDE
 
