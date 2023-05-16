@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
+from plinth.config import DropinConfigs
 from plinth.package import Packages
 
 from . import privileged
@@ -45,7 +46,7 @@ class NetworksApp(app_module.App):
 
     app_id = 'networks'
 
-    _version = 1
+    _version = 2
 
     can_be_disabled = False
 
@@ -65,6 +66,11 @@ class NetworksApp(app_module.App):
 
         packages = Packages('packages-networks', ['network-manager', 'batctl'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-networks', [
+            '/etc/NetworkManager/dispatcher.d/10-freedombox-batman',
+        ])
+        self.add(dropin_configs)
 
     def diagnose(self):
         """Run diagnostics and return the results."""
