@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules import firewall
 from plinth.modules.apache.components import Webserver
@@ -34,7 +35,7 @@ class MiniDLNAApp(app_module.App):
 
     app_id = 'minidlna'
 
-    _version = 4
+    _version = 5
 
     def __init__(self):
         """Initialize the app components."""
@@ -70,6 +71,11 @@ class MiniDLNAApp(app_module.App):
 
         packages = Packages('packages-minidlna', ['minidlna'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs(
+            'dropin-configs-minidlna',
+            ['/etc/apache2/conf-available/minidlna-freedombox.conf'])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
                             is_external=False)

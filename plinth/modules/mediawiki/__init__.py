@@ -154,7 +154,6 @@ def get_config():
     create_permission = _get_config_value(
         "$wgGroupPermissions['*']['createaccount']")
     read_permission = _get_config_value("$wgGroupPermissions['*']['read']")
-    print('=====', create_permission, read_permission)
     return {
         'default_skin': _get_config_value('$wgDefaultSkin'),
         'domain': urlparse(server_url).netloc,
