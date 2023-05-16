@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.config import DropinConfigs
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
@@ -44,7 +45,7 @@ class LetsEncryptApp(app_module.App):
 
     app_id = 'letsencrypt'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 
@@ -68,6 +69,11 @@ class LetsEncryptApp(app_module.App):
 
         packages = Packages('packages-letsencrypt', ['certbot'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-letsencrypt', [
+            '/etc/letsencrypt/renewal-hooks/deploy/50-freedombox',
+        ])
+        self.add(dropin_configs)
 
         backup_restore = BackupRestore('backup-restore-letsencrypt',
                                        **manifest.backup)
