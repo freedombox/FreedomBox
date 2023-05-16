@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -42,7 +43,7 @@ class WordPressApp(app_module.App):
 
     app_id = 'wordpress'
 
-    _version = 3
+    _version = 4
 
     def __init__(self):
         """Create components for the app."""
@@ -85,6 +86,14 @@ class WordPressApp(app_module.App):
             conflicts=['libpam-tmpdir'],
             conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-wordpress', [
+            '/etc/apache2/conf-available/wordpress-freedombox.conf',
+            '/etc/fail2ban/jail.d/wordpress-freedombox.conf',
+            '/etc/fail2ban/filter.d/wordpress-freedombox.conf',
+            '/etc/wordpress/freedombox-static.php',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-wordpress', info.name,
                             ports=['http', 'https'], is_external=True)
