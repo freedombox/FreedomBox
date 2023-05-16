@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -57,7 +58,7 @@ class TransmissionApp(app_module.App):
 
     app_id = 'transmission'
 
-    _version = 6
+    _version = 7
 
     DAEMON = 'transmission-daemon'
 
@@ -92,6 +93,11 @@ class TransmissionApp(app_module.App):
 
         packages = Packages('packages-transmission', ['transmission-daemon'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-transmission', [
+            '/etc/apache2/conf-available/transmission-plinth.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-transmission', info.name,
                             ports=['http', 'https',
