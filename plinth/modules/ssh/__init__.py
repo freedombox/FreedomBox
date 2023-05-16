@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -30,7 +31,7 @@ class SSHApp(app_module.App):
 
     app_id = 'ssh'
 
-    _version = 3
+    _version = 4
 
     def __init__(self):
         """Create components for the app."""
@@ -49,6 +50,17 @@ class SSHApp(app_module.App):
 
         packages = Packages('packages-ssh', ['openssh-server'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-ssh', [
+            '/etc/fail2ban/jail.d/ssh-freedombox.conf',
+        ])
+        self.add(dropin_configs)
+
+        dropin_configs = DropinConfigs('dropin-config-ssh-avahi', [
+            '/etc/avahi/services/sftp-ssh.service',
+            '/etc/avahi/services/ssh.service',
+        ], copy_only=True)
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-ssh', info.name, ports=['ssh'],
                             is_external=True)
