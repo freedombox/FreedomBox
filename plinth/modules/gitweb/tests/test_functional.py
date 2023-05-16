@@ -121,7 +121,7 @@ def _create_local_repo(path):
     create_repo_commands = [
         'git init -q', 'git config http.sslVerify false',
         'git -c "user.name=Tester" -c "user.email=tester" '
-        'commit -q --allow-empty -m "test"'
+        'commit -q --allow-empty --no-gpg-sign -m "test"'
     ]
     for command in create_repo_commands:
         subprocess.check_call(command, shell=True, cwd=path)
@@ -155,7 +155,8 @@ def _create_branch(repo, branch):
                                [
                                    'git', '-c', 'user.name=Tester', '-c',
                                    'user.email=tester', 'commit', '-q',
-                                   '--allow-empty', '-m', 'test_branch1'
+                                   '--allow-empty', '--no-gpg-sign', '-m',
+                                   'test_branch1'
                                ],
                                ['git', 'push', '-q', '-f', repo_url, branch]]
         for command in add_branch_commands:
