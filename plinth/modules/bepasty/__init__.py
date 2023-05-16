@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -47,7 +48,7 @@ class BepastyApp(app_module.App):
 
     app_id = 'bepasty'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -73,6 +74,12 @@ class BepastyApp(app_module.App):
 
         packages = Packages('packages-bepasty', ['bepasty'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-bepasty', [
+            '/etc/apache2/conf-available/bepasty-freedombox.conf',
+            '/etc/uwsgi/apps-available/bepasty-freedombox.ini'
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-bepasty', info.name,
                             ports=['http', 'https'], is_external=True)
