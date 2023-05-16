@@ -4,6 +4,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
+from plinth.config import DropinConfigs
 from plinth.package import Packages
 
 from . import privileged
@@ -14,7 +15,7 @@ class SSOApp(app_module.App):
 
     app_id = 'sso'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -30,6 +31,11 @@ class SSOApp(app_module.App):
             'libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl', 'flite'
         ])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-sso', [
+            '/etc/apache2/includes/freedombox-single-sign-on.conf',
+        ])
+        self.add(dropin_configs)
 
     def setup(self, old_version):
         """Install and configure the app."""
