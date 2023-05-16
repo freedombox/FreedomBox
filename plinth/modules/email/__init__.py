@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 import plinth.app
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -52,7 +53,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Initialize the email app."""
@@ -99,6 +100,27 @@ class EmailApp(plinth.app.App):
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
             conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-email', [
+            '/etc/apache2/conf-available/email-freedombox.conf',
+            '/etc/dovecot/conf.d/05-freedombox-passdb.conf',
+            '/etc/dovecot/conf.d/05-freedombox-userdb.conf',
+            '/etc/dovecot/conf.d/15-freedombox-auth.conf',
+            '/etc/dovecot/conf.d/15-freedombox-mail.conf',
+            '/etc/dovecot/conf.d/90-freedombox-lmtp.conf',
+            '/etc/dovecot/conf.d/90-freedombox-mailboxes.conf',
+            '/etc/dovecot/conf.d/90-freedombox-master.conf',
+            '/etc/dovecot/conf.d/90-freedombox-tls.conf',
+            '/etc/dovecot/conf.d/95-freedombox-sieve.conf',
+            '/etc/dovecot/conf.d/freedombox-ldap.conf.ext',
+            '/etc/dovecot/freedombox-sieve-after/sort-spam.sieve',
+            '/etc/fail2ban/jail.d/dovecot-freedombox.conf',
+            '/etc/postfix/freedombox-aliases.cf',
+            '/etc/rspamd/local.d/freedombox-logging.inc',
+            '/etc/rspamd/local.d/freedombox-milter-headers.conf',
+            '/etc/rspamd/local.d/freedombox-redis.conf',
+        ])
+        self.add(dropin_configs)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
                         (465, 'tcp6'), (587, 'tcp4'), (587, 'tcp6')]
