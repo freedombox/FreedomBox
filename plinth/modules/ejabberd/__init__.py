@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules import config
 from plinth.modules.apache.components import Webserver
@@ -50,7 +51,7 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
-    _version = 6
+    _version = 7
 
     def __init__(self):
         """Create components for the app."""
@@ -78,6 +79,16 @@ class EjabberdApp(app_module.App):
 
         packages = Packages('packages-ejabberd', ['ejabberd'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-ejabberd', [
+            '/etc/apache2/conf-available/jwchat-plinth.conf',
+        ])
+        self.add(dropin_configs)
+
+        dropin_configs = DropinConfigs('dropin-config-ejabberd-avahi', [
+            '/etc/avahi/services/xmpp-server.service',
+        ], copy_only=True)
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-ejabberd', info.name,
                             ports=['xmpp-client', 'xmpp-server',
