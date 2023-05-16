@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.utils import format_lazy
@@ -24,7 +25,7 @@ class SharingApp(app_module.App):
 
     app_id = 'sharing'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -38,6 +39,11 @@ class SharingApp(app_module.App):
                               info.icon_filename, 'sharing:index',
                               parent_url_name='apps')
         self.add(menu_item)
+
+        dropin_configs = DropinConfigs('dropin-configs-sharing', [
+            '/etc/apache2/includes/freedombox-sharing.conf',
+        ])
+        self.add(dropin_configs)
 
         webserver = Webserver('webserver-sharing', 'sharing-freedombox')
         self.add(webserver)
