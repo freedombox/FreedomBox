@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -42,7 +43,7 @@ class RadicaleApp(app_module.App):
 
     app_id = 'radicale'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -70,6 +71,11 @@ class RadicaleApp(app_module.App):
 
         packages = Packages('packages-radicale', ['radicale'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-radicale', [
+            '/etc/apache2/conf-available/radicale2-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-radicale', info.name,
                             ports=['http', 'https'], is_external=True)
