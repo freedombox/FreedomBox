@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
@@ -22,7 +23,7 @@ class SecurityApp(app_module.App):
 
     app_id = 'security'
 
-    _version = 8
+    _version = 9
 
     can_be_disabled = False
 
@@ -41,6 +42,12 @@ class SecurityApp(app_module.App):
 
         packages = Packages('packages-security', ['fail2ban', 'debsecan'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-security', [
+            '/etc/fail2ban/fail2ban.d/freedombox.conf',
+            '/etc/fail2ban/jail.d/freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         daemon = RelatedDaemon('related-daemon-fail2ban', 'fail2ban')
         self.add(daemon)
