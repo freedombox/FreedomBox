@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -41,7 +42,7 @@ class CockpitApp(app_module.App):
 
     app_id = 'cockpit'
 
-    _version = 2
+    _version = 3
 
     def __init__(self):
         """Create components for the app."""
@@ -71,6 +72,11 @@ class CockpitApp(app_module.App):
 
         packages = Packages('packages-cockpit', ['cockpit'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-cockpit', [
+            '/etc/apache2/conf-available/cockpit-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-cockpit', info.name,
                             ports=['http', 'https'], is_external=True)
