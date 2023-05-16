@@ -170,18 +170,55 @@ The first argument to instantiate the
 :class:`~plinth.modules.apache.components.Webserver` class is a unique ID. The
 second is the name of the Apache2 web server configuration snippet that contains
 the directives to proxy Transmission web interface via Apache2. We then need to
-create the configuration file itself in ``tranmission-freedombox.conf``. The
+create the configuration file itself in ``transmission-plinth.conf``. The
 final argument is the list of URLs that the app exposes to the users of the app.
 This information is used to check if the URLs are accessible as expected when
 the user requests diagnostic tests on the app.
 
+Simply creating and shipping a configuration file into ``/etc`` folder creates
+some hassles. Consider the following scenario: a debian package, either
+freedombox or the app's separate debian package ships a file in ``/etc``. Then
+the user deliberately or accidentally modifies the configuration file. Then the
+debian package provides a newer version of the configuration file with, say,
+more tweaks. As a result, a configuration file prompt is shown to the user
+during package upgrade process. In case of unattended upgrades, the package is
+not upgraded at all. To avoid such problems, FreedomBox provides the
+:class:`~plinth.config.DropinConfigs` component. Let us add it in our app's
+class.
+
+.. code-block:: python3
+  :caption: ``__init__.py``
+
+  from plinth.config import DropinConfigs
+
+  class TransmissionApp(app_module.App):
+      ...
+
+      def __init__(self):
+        ...
+
+        dropin_configs = DropinConfigs('dropin-configs-transmission', [
+            '/etc/apache2/conf-available/transmission-plinth.conf',
+        ])
+        self.add(dropin_configs)
+
+The first argument to instantiate the :class:`~plinth.config.DropinConfigs`
+class is the unique ID. The second argument is the list of configuration files
+as paths is ``/etc/``. The :class:`~plinth.config.DropinConfigs` component
+requires that a file be shipped into ``/usr/share/freedombox/etc`` instead of
+``/etc``. The component will handle the creation of a symlink from ``/usr`` path
+to ``/etc`` path. To ship the file, we can simply create file in the ``data/``
+directory of the app and let the FreedomBox setup script handling the
+installation and shipping.
+
 .. code-block:: apache
-  :caption: ``data/etc/apache2/conf-available/transmission-freedombox.conf``
+  :caption: ``data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf``
 
   ## On all sites, provide Transmission on a default path: /transmission
   <Location /transmission>
       ProxyPass        http://localhost:9091/transmission
   </Location>
+
 
 Managing the firewall
 ^^^^^^^^^^^^^^^^^^^^^
@@ -249,10 +286,10 @@ with the FreedomBox framework in ``__init.py__``.
 
 Then in the Apache configuration snippet, we can mandate that only users of this
 group (and, of course, admin users) should be allowed to access our app. In the
-file ``tranmission-freedombox.conf``, add the following.
+file ``transmission-plinth.conf``, add the following.
 
 .. code-block:: apache
-  :caption: ``data/etc/apache2/conf-available/transmission-freedombox.conf``
+  :caption: ``data/etc/apache2/conf-available/transmission-plinth.conf``
 
   <Location /transmission>
       ...

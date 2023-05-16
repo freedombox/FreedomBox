@@ -48,10 +48,10 @@ plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmissi
 .. literalinclude:: ../../../plinth/modules/transmission/data/usr/share/freedombox/modules-enabled/transmission
    :language: text
 
-plinth/modules/transmission/data/etc/apache2/conf-available/transmission-plinth.conf
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+plinth/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: ../../../plinth/modules/transmission/data/etc/apache2/conf-available/transmission-plinth.conf
+.. literalinclude:: ../../../plinth/modules/transmission/data/usr/share/freedombox/etc/apache2/conf-available/transmission-plinth.conf
    :language: apache
 
 plinth/modules/transmission/tests/__init__.py

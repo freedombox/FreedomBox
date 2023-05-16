@@ -22,10 +22,13 @@ in a step-by-step manner::
           ├─ urls.py
           ├─ views.py
           ├─┬ data/
-          │ ├─┬ etc/
-          │ │ └─┬ apache2/
-          │ │   └─┬ conf-available/
-          │ │     └─ transmission-freedombox.conf
+          │ ├─┬ usr/
+          │ │ └─┬ share/
+          │ │   └─┬ freedombox/
+          │ │     └─┬ etc/
+          │ │       └─┬ apache2/
+          │ │         └─┬ conf-available/
+          │ │           └─ transmission-plinth.conf
           │ └─┬ usr/
           │   └─┬ share/
           │     └─┬ freedombox/

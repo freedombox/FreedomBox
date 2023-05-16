@@ -10,6 +10,7 @@ Components
    enablestate
    menu
    packages
+   config
    daemon
    firewall
    webserver
