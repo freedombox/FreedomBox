@@ -10,8 +10,7 @@ from plinth import app as app_module
 from plinth import views
 from plinth.modules import mediawiki
 
-from . import (get_default_skin,
-               get_server_url, get_site_name, get_default_language, privileged)
+from . import privileged
 from .forms import MediaWikiForm
 
 logger = logging.getLogger(__name__)
@@ -27,20 +26,7 @@ class MediaWikiAppView(views.AppView):
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial.update({
-            'enable_public_registrations':
-                privileged.public_registrations('status'),
-            'enable_private_mode':
-                privileged.private_mode('status'),
-            'default_skin':
-                get_default_skin(),
-            'domain':
-                get_server_url(),
-            'site_name':
-                get_site_name(),
-            'default_lang':
-                get_default_language()
-        })
+        initial.update(mediawiki.get_config())
         return initial
 
     def form_valid(self, form):
@@ -66,7 +52,7 @@ class MediaWikiAppView(views.AppView):
             # note action public-registration restarts, if running now
             if new_config['enable_public_registrations']:
                 if not new_config['enable_private_mode']:
-                    privileged.public_registrations('enable')
+                    privileged.set_public_registrations(True)
                     messages.success(self.request,
                                      _('Public registrations enabled'))
                 else:
@@ -74,19 +60,19 @@ class MediaWikiAppView(views.AppView):
                         self.request, 'Public registrations ' +
                         'cannot be enabled when private mode is enabled')
             else:
-                privileged.public_registrations('disable')
+                privileged.set_public_registrations(False)
                 messages.success(self.request,
                                  _('Public registrations disabled'))
 
         if is_changed('enable_private_mode'):
             if new_config['enable_private_mode']:
-                privileged.private_mode('enable')
+                privileged.set_private_mode(True)
                 messages.success(self.request, _('Private mode enabled'))
                 if new_config['enable_public_registrations']:
                     # If public registrations are enabled, then disable it
-                    privileged.public_registrations('disable')
+                    privileged.set_public_registrations(False)
             else:
-                privileged.private_mode('disable')
+                privileged.set_private_mode(False)
                 messages.success(self.request, _('Private mode disabled'))
 
             app = app_module.App.get('mediawiki')

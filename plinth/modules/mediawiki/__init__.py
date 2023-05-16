@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure MediaWiki."""
 
-import re
+import pathlib
 from urllib.parse import urlparse
 
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -31,7 +32,6 @@ _description = [
       'logged in can make changes to the content.')
 ]
 
-STATIC_CONFIG_FILE = '/etc/mediawiki/FreedomBoxStaticSettings.php'
 USER_CONFIG_FILE = '/etc/mediawiki/FreedomBoxSettings.php'
 
 
@@ -40,7 +40,7 @@ class MediaWikiApp(app_module.App):
 
     app_id = 'mediawiki'
 
-    _version = 10
+    _version = 11
 
     def __init__(self):
         """Create components for the app."""
@@ -69,6 +69,12 @@ class MediaWikiApp(app_module.App):
         packages = Packages('packages-mediawiki',
                             ['mediawiki', 'imagemagick', 'php-sqlite3'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-mediawiki', [
+            '/etc/apache2/conf-available/mediawiki-freedombox.conf',
+            '/etc/mediawiki/FreedomBoxStaticSettings.php',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-mediawiki', info.name,
                             ports=['http', 'https'], is_external=True)
@@ -109,7 +115,7 @@ class Shortcut(frontpage.Shortcut):
     def enable(self):
         """When enabled, check if MediaWiki is in private mode."""
         super().enable()
-        self.login_required = privileged.private_mode('status')
+        self.login_required = get_config()['enable_private_mode']
 
 
 def _get_config_value_in_file(setting_name, config_file):
@@ -117,26 +123,46 @@ def _get_config_value_in_file(setting_name, config_file):
     with open(config_file, 'r', encoding='utf-8') as config:
         for line in config:
             if line.startswith(setting_name):
-                return re.findall(r'["\'][^"\']*["\']', line)[0].strip('"\'')
+                return line.partition('=')[2].strip('\n ;\'"')
 
         return None
+
+
+def _get_static_config_file():
+    """Return the path for the file containing static settings."""
+    base_path = ('/usr/share/freedombox/etc/'
+                 'mediawiki/FreedomBoxStaticSettings.php')
+    for path in [
+            pathlib.Path(base_path),
+            pathlib.Path(__file__).parent / 'data' / base_path.lstrip('/')
+    ]:
+        if path.exists():
+            return path
+
+    raise RuntimeError('Unable to find static config file')
 
 
 def _get_config_value(setting_name):
     """Return a configuration value from multiple configuration files."""
     return _get_config_value_in_file(setting_name, USER_CONFIG_FILE) or \
-        _get_config_value_in_file(setting_name, STATIC_CONFIG_FILE)
+        _get_config_value_in_file(setting_name, _get_static_config_file())
 
 
-def get_default_skin():
-    """Return the value of the default skin."""
-    return _get_config_value('$wgDefaultSkin')
-
-
-def get_server_url():
-    """Return the value of the server URL."""
+def get_config():
+    """Return all the configuration settings."""
     server_url = _get_config_value('$wgServer')
-    return urlparse(server_url).netloc
+    create_permission = _get_config_value(
+        "$wgGroupPermissions['*']['createaccount']")
+    read_permission = _get_config_value("$wgGroupPermissions['*']['read']")
+    print('=====', create_permission, read_permission)
+    return {
+        'default_skin': _get_config_value('$wgDefaultSkin'),
+        'domain': urlparse(server_url).netloc,
+        'site_name': _get_config_value('$wgSitename') or 'Wiki',
+        'default_lang': _get_config_value('$wgLanguageCode') or None,
+        'enable_public_registrations': 'true' in create_permission,
+        'enable_private_mode': 'false' in read_permission,
+    }
 
 
 def set_server_url(domain):
@@ -146,13 +172,3 @@ def set_server_url(domain):
         protocol = 'http'
 
     privileged.set_server_url(f'{protocol}://{domain}')
-
-
-def get_site_name():
-    """Return the value of MediaWiki's site name."""
-    return _get_config_value('$wgSitename') or 'Wiki'
-
-
-def get_default_language():
-    """Return the value of MediaWiki's default language"""
-    return _get_config_value('$wgLanguageCode') or None

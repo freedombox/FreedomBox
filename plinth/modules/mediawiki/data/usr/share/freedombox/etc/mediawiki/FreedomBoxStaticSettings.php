@@ -3,9 +3,8 @@
  This file is shipped by FreedomBox to manage static settings. Newer versions of
  this file are shipped by FreedomBox and are expected to override this file
  without any user prompts. It should not be modified by the system
- administrator. Additional setting modified by FreedomBox at placed in
- FreedomBoxSettings.php. No newer version of that file is ever shipped by
- FreedomBox.
+ administrator. Additional setting modified by FreedomBox are placed in
+ FreedomBoxSettings.php.
 */
 
 # Default logo

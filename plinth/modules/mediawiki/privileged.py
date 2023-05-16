@@ -6,7 +6,6 @@ import pathlib
 import shutil
 import subprocess
 import tempfile
-from typing import Optional
 
 from plinth.actions import privileged
 from plinth.utils import generate_password
@@ -60,6 +59,11 @@ def setup():
             ])
     subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
+
+    conf_file = pathlib.Path(CONF_FILE)
+    if not conf_file.exists():
+        conf_file.write_text('<?php\n')
+
     _include_custom_config()
 
 
@@ -109,68 +113,6 @@ def update():
     subprocess.check_call([get_php_command(), update_script, '--quick'])
 
 
-@privileged
-def public_registrations(command: str) -> Optional[bool]:
-    """Enable or Disable public registrations for MediaWiki."""
-    if command not in ('enable', 'disable', 'status'):
-        raise ValueError('Invalid command')
-
-    with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
-        lines = conf_file.readlines()
-
-    def is_pub_reg_line(line):
-        return line.startswith("$wgGroupPermissions['*']['createaccount']")
-
-    if command == 'status':
-        conf_lines = list(filter(is_pub_reg_line, lines))
-        return bool(conf_lines and 'true' in conf_lines[0])
-
-    with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
-        for line in lines:
-            if is_pub_reg_line(line):
-                words = line.split()
-                if command == 'enable':
-                    words[-1] = 'true;'
-                else:
-                    words[-1] = 'false;'
-                conf_file.write(" ".join(words) + '\n')
-            else:
-                conf_file.write(line)
-
-    return None
-
-
-@privileged
-def private_mode(command: str):
-    """Enable or Disable Private mode for wiki."""
-    if command not in ('enable', 'disable', 'status'):
-        raise ValueError('Invalid command')
-
-    with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
-        lines = conf_file.readlines()
-
-    def is_read_line(line):
-        return line.startswith("$wgGroupPermissions['*']['read']")
-
-    read_conf_lines = list(filter(is_read_line, lines))
-    if command == 'status':
-        return (read_conf_lines and 'false' in read_conf_lines[0])
-
-    with open(CONF_FILE, 'w', encoding='utf-8') as conf_file:
-        conf_value = 'false;' if command == 'enable' else 'true;'
-        for line in lines:
-            if is_read_line(line):
-                words = line.split()
-                words[-1] = conf_value
-                conf_file.write(" ".join(words) + '\n')
-            else:
-                conf_file.write(line)
-
-        if not read_conf_lines:
-            conf_file.write("$wgGroupPermissions['*']['read'] = " +
-                            conf_value + '\n')
-
-
 def _update_setting(setting_name, setting_line):
     """Update the value of one setting in the config file."""
     with open(CONF_FILE, 'r', encoding='utf-8') as conf_file:
@@ -191,9 +133,25 @@ def _update_setting(setting_name, setting_line):
 
 
 @privileged
+def set_public_registrations(should_enable: bool):
+    """Enable or Disable public registrations for MediaWiki."""
+    setting = "$wgGroupPermissions['*']['createaccount']"
+    conf_value = 'true' if should_enable else 'false'
+    _update_setting(setting, f'{setting} = {conf_value};\n')
+
+
+@privileged
+def set_private_mode(should_enable: bool):
+    """Enable or Disable Private mode for wiki."""
+    setting = "$wgGroupPermissions['*']['read']"
+    conf_value = 'false' if should_enable else 'true'
+    _update_setting(setting, f'{setting} = {conf_value};\n')
+
+
+@privileged
 def set_default_skin(skin: str):
     """Set a default skin."""
-    _update_setting('$wgDefaultSkin ', f'$wgDefaultSkin = "{skin}";\n')
+    _update_setting('$wgDefaultSkin', f'$wgDefaultSkin = "{skin}";\n')
 
 
 @privileged
@@ -228,3 +186,4 @@ def uninstall():
     """Remove Mediawiki's database and local config file."""
     shutil.rmtree('/var/lib/mediawiki-db', ignore_errors=True)
     pathlib.Path(LOCAL_SETTINGS_CONF).unlink(missing_ok=True)
+    pathlib.Path(CONF_FILE).unlink(missing_ok=True)
