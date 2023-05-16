@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -36,7 +37,7 @@ class RSSBridgeApp(app_module.App):
 
     app_id = 'rssbridge'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -66,6 +67,11 @@ class RSSBridgeApp(app_module.App):
 
         packages = Packages('packages-rssbridge', ['rss-bridge'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-rssbridge', [
+            '/etc/apache2/conf-available/rss-bridge.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-rssbridge', info.name,
                             ports=['http', 'https'], is_external=True)
