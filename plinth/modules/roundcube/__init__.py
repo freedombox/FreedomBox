@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -39,7 +40,7 @@ class RoundcubeApp(app_module.App):
 
     app_id = 'roundcube'
 
-    _version = 3
+    _version = 4
 
     def __init__(self):
         """Create components for the app."""
@@ -69,6 +70,12 @@ class RoundcubeApp(app_module.App):
             'packages-roundcube',
             ['sqlite3', 'roundcube', 'roundcube-core', 'roundcube-sqlite3'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-roundcube', [
+            '/etc/apache2/conf-available/roundcube-freedombox.conf',
+            '/etc/fail2ban/jail.d/roundcube-auth-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-roundcube', info.name,
                             ports=['http', 'https'], is_external=True)
