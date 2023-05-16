@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -34,7 +35,7 @@ class IkiwikiApp(app_module.App):
 
     app_id = 'ikiwiki'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -60,6 +61,13 @@ class IkiwikiApp(app_module.App):
             'libcgi-formbuilder-perl', 'libc6-dev'
         ])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-ikiwiki', [
+            '/etc/ikiwiki/plinth-blog.setup',
+            '/etc/ikiwiki/plinth-wiki.setup',
+            '/etc/apache2/conf-available/ikiwiki-plinth.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-ikiwiki', info.name,
                             ports=['http', 'https'], is_external=True)
