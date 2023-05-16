@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -30,7 +31,7 @@ class DelugeApp(app_module.App):
 
     app_id = 'deluge'
 
-    _version = 7
+    _version = 8
 
     def __init__(self):
         """Create components for the app."""
@@ -64,6 +65,11 @@ class DelugeApp(app_module.App):
 
         packages = Packages('packages-deluge', ['deluged', 'deluge-web'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs(
+            'dropin-configs-deluge',
+            ['/etc/apache2/conf-available/deluge-plinth.conf'])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-deluge', info.name,
                             ports=['http', 'https'], is_external=True)
