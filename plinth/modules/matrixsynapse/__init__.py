@@ -11,6 +11,7 @@ from ruamel.yaml.util import load_yaml_guess_indent
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -44,7 +45,7 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
-    _version = 8
+    _version = 9
 
     def __init__(self):
         """Create components for the app."""
@@ -76,6 +77,13 @@ class MatrixSynapseApp(app_module.App):
             'packages-matrixsynapse',
             ['matrix-synapse', 'matrix-synapse-ldap3', 'python3-psycopg2'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-matrixsynapse', [
+            '/etc/apache2/conf-available/matrix-synapse-plinth.conf',
+            '/etc/fail2ban/jail.d/matrix-auth-freedombox.conf',
+            '/etc/fail2ban/filter.d/matrix-auth-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-matrixsynapse', info.name,
                             ports=['matrix-synapse-plinth'], is_external=True)
