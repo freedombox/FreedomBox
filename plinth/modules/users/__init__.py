@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
@@ -42,7 +43,7 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
-    _version = 4
+    _version = 5
 
     can_be_disabled = False
 
@@ -65,6 +66,11 @@ class UsersApp(app_module.App):
             'nscd', 'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
         ])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-users', [
+            '/etc/apache2/includes/freedombox-auth-ldap.conf',
+        ])
+        self.add(dropin_configs)
 
         daemon = Daemon('daemon-users', 'slapd', listen_ports=[(389, 'tcp4'),
                                                                (389, 'tcp6')])
