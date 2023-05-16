@@ -6,6 +6,7 @@ from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import menu
+from plinth.config import DropinConfigs
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -19,7 +20,7 @@ class PrivacyApp(app_module.App):
 
     app_id = 'privacy'
 
-    _version = 1
+    _version = 2
 
     can_be_disabled = False
 
@@ -40,6 +41,11 @@ class PrivacyApp(app_module.App):
 
         packages = Packages('packages-privacy', ['popularity-contest', 'gpg'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-privacy', [
+            '/etc/dpkg/origins/freedombox',
+        ])
+        self.add(dropin_configs)
 
         backup_restore = BackupRestore('backup-restore-privacy',
                                        **manifest.backup)
