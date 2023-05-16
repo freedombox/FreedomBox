@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Uwsgi, Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -28,7 +29,7 @@ class SearxApp(app_module.App):
 
     app_id = 'searx'
 
-    _version = 5
+    _version = 6
 
     def __init__(self):
         """Create components for the app."""
@@ -61,6 +62,12 @@ class SearxApp(app_module.App):
         # issue #2298).
         packages = Packages('packages-searx', ['searx', 'libjs-bootstrap'])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-searx', [
+            '/etc/apache2/conf-available/searx-freedombox-auth.conf',
+            '/etc/apache2/conf-available/searx-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-searx', info.name,
                             ports=['http', 'https'], is_external=True)
