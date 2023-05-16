@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
@@ -32,7 +33,7 @@ class JanusApp(app_module.App):
 
     app_id = 'janus'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -63,6 +64,11 @@ class JanusApp(app_module.App):
             'libjs-toastr', 'libjs-webrtc-adapter'
         ])
         self.add(packages)
+
+        dropin_configs = DropinConfigs('dropin-configs-janus', [
+            '/etc/apache2/conf-available/janus-freedombox.conf',
+        ])
+        self.add(dropin_configs)
 
         firewall = Firewall('firewall-janus', info.name,
                             ports=['http', 'https',
