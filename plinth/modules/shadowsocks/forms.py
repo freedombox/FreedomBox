@@ -1,22 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""FreedomBox app for configuring Shadowsocks."""
+"""FreedomBox app for configuring Shadowsocks Client."""
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from plinth.utils import format_lazy
-
-METHODS = [('chacha20-ietf-poly1305',
-            format_lazy('chacha20-ietf-poly1305 ({})', _('Recommended'))),
-           ('aes-256-gcm', format_lazy('aes-256-gcm ({})', _('Recommended'))),
-           ('aes-192-gcm', 'aes-192-gcm'), ('aes-128-gcm', 'aes-128-gcm'),
-           ('aes-128-ctr', 'aes-128-ctr'), ('aes-192-ctr', 'aes-192-ctr'),
-           ('aes-256-ctr', 'aes-256-ctr'), ('aes-128-cfb', 'aes-128-cfb'),
-           ('aes-192-cfb', 'aes-192-cfb'), ('aes-256-cfb', 'aes-256-cfb'),
-           ('camellia-128-cfb', 'camellia-128-cfb'),
-           ('camellia-192-cfb', 'camellia-192-cfb'),
-           ('camellia-256-cfb', 'camellia-256-cfb'),
-           ('chacha20-ietf', 'chacha20-ietf')]
+from plinth.modules.shadowsocksserver.forms import METHODS
 
 
 class TrimmedCharField(forms.CharField):
@@ -31,7 +19,7 @@ class TrimmedCharField(forms.CharField):
 
 
 class ShadowsocksForm(forms.Form):
-    """Shadowsocks configuration form."""
+    """Shadowsocks Client configuration form."""
 
     server = TrimmedCharField(label=_('Server'),
                               help_text=_('Server hostname or IP address'))

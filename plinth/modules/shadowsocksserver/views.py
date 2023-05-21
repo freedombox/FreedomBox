@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""FreedomBox app for configuring Shadowsocks Client."""
+"""FreedomBox app for configuring Shadowsocks Server."""
+
+import random
+import string
 
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -7,14 +10,14 @@ from django.utils.translation import gettext_lazy as _
 from plinth import views
 
 from . import privileged
-from .forms import ShadowsocksForm
+from .forms import ShadowsocksServerForm
 
 
-class ShadowsocksAppView(views.AppView):
-    """Configuration view for Shadowsocks Client and SOCKS5 proxy."""
+class ShadowsocksServerAppView(views.AppView):
+    """Configuration view for Shadowsocks Server."""
 
-    app_id = 'shadowsocks'
-    form_class = ShadowsocksForm
+    app_id = 'shadowsocksserver'
+    form_class = ShadowsocksServerForm
 
     def get_initial(self, *args, **kwargs):
         """Get initial values for form."""
@@ -22,29 +25,25 @@ class ShadowsocksAppView(views.AppView):
         try:
             status.update(privileged.get_config())
         except Exception:
+            # If we cannot read the configuration for some reason, generate a
+            # new random password.
+            password = ''.join(
+                random.choice(string.ascii_letters) for _ in range(12))
             status.update({
-                'server': '',
-                'server_port': 8388,
-                'password': '',
+                'password': password,
                 'method': 'chacha20-ietf-poly1305',
             })
 
         return status
 
     def form_valid(self, form):
-        """Configure Shadowsocks."""
+        """Configure Shadowsocks Server."""
         old_status = form.initial
         new_status = form.cleaned_data
 
-        if old_status['server'] != new_status['server'] or \
-           old_status['server_port'] != new_status['server_port'] or \
-           old_status['password'] != new_status['password'] or \
+        if old_status['password'] != new_status['password'] or \
            old_status['method'] != new_status['method']:
             new_config = {
-                'local_address': '::0',
-                'local_port': 1080,
-                'server': new_status['server'],
-                'server_port': new_status['server_port'],
                 'password': new_status['password'],
                 'method': new_status['method'],
             }

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""FreedomBox app to configure Shadowsocks Client."""
+"""FreedomBox app to configure Shadowsocks Server."""
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -23,63 +23,63 @@ _description = [
       'location where it can freely access the Internet, without '
       'filtering.'),
     format_lazy(
-        _('Your {box_name} can run a Shadowsocks client, that can connect to '
-          'a Shadowsocks server. It will also run a SOCKS5 proxy. Local '
-          'devices can connect to this proxy, and their data will be '
-          'encrypted and proxied through the Shadowsocks server.'),
+        _('Your {box_name} can run a Shadowsocks server, that allows '
+          'Shadowsocks clients to connect to it. Clients\' data will be '
+          'encrypted and proxied through this server.'),
         box_name=_(cfg.box_name)),
-    _('To use Shadowsocks after setup, set the SOCKS5 proxy URL in your '
-      'device, browser or application to http://freedombox_address:1080/')
 ]
 
 
-class ShadowsocksApp(app_module.App):
-    """FreedomBox app for Shadowsocks Client."""
+class ShadowsocksServerApp(app_module.App):
+    """FreedomBox app for Shadowsocks Server."""
 
-    app_id = 'shadowsocks'
+    app_id = 'shadowsocksserver'
 
-    _version = 3
+    _version = 1
 
-    DAEMON = 'shadowsocks-libev-local@freedombox'
+    DAEMON = 'shadowsocks-libev-server@fbxserver'
 
     def __init__(self):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(app_id=self.app_id, version=self._version,
-                               name=_('Shadowsocks Client'),
-                               icon_filename='shadowsocks',
-                               short_description=_('Bypass Censorship'),
-                               description=_description,
-                               manual_page='Shadowsocks')
+        info = app_module.Info(
+            app_id=self.app_id, version=self._version,
+            name=_('Shadowsocks Server'), icon_filename='shadowsocks',
+            short_description=_('Help Others Bypass Censorship'),
+            description=_description, manual_page='ShadowsocksServer')
         self.add(info)
 
-        menu_item = menu.Menu('menu-shadowsocks', info.name,
+        menu_item = menu.Menu('menu-shadowsocks-server', info.name,
                               info.short_description, info.icon_filename,
-                              'shadowsocks:index', parent_url_name='apps')
+                              'shadowsocksserver:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-shadowsocks', info.name,
+            'shortcut-shadowsocks-server', info.name,
             short_description=info.short_description, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            configure_url=reverse_lazy('shadowsocks:index'),
+            configure_url=reverse_lazy('shadowsocksserver:index'),
             login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-shadowsocks', ['shadowsocks-libev'])
+        packages = Packages('packages-shadowsocks-server',
+                            ['shadowsocks-libev'])
         self.add(packages)
 
-        firewall = Firewall('firewall-shadowsocks', info.name,
-                            ports=['shadowsocks-local-plinth'],
-                            is_external=False)
+        firewall = Firewall('firewall-shadowsocks-server', info.name,
+                            ports=['shadowsocks-server-freedombox'],
+                            is_external=True)
         self.add(firewall)
 
-        daemon = Daemon('daemon-shadowsocks', self.DAEMON,
-                        listen_ports=[(1080, 'tcp4'), (1080, 'tcp6')])
+        daemon = Daemon(
+            'daemon-shadowsocks-server', self.DAEMON,
+            listen_ports=[(8388, 'tcp4'), (8388, 'tcp6'), (8388, 'udp4'),
+                          (8388, 'udp6')])
         self.add(daemon)
 
-        backup_restore = BackupRestore('backup-restore-shadowsocks',
+        backup_restore = BackupRestore('backup-restore-shadowsocks-server',
                                        **manifest.backup)
         self.add(backup_restore)
 
