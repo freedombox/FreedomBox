@@ -223,7 +223,7 @@ Example for Buster:
 
 1. Install Git, Vagrant and VirtualBox using your favourite package manager.
 
-#### For macOS
+#### For macOS (Intel CPUs)
 
 1. Install [Homebrew](https://brew.sh/).
 
@@ -234,6 +234,62 @@ Example for Buster:
    $ brew cask install virtualbox
    $ brew cask install vagrant
    ```
+
+#### For macOS (Apple Silicon CPUs)
+
+1. Install [Homebrew](https://brew.sh/) for macOS.
+
+2. Install UTM (as an alternative to VirtualBox) for macOS.
+
+    ```bash
+    $ brew install --cask utm
+    ```
+
+Vagrant does not support UTM yet.
+
+Apple's M1 and M2 chips should be powerful enough to virtualize/emulate an AMD64
+Debian virtual machine. In this approach, we setup an entire development
+environment in the virtual machine itself, not just the FreedomBox application.
+
+##### Virtualization (fast)
+
+You can install one of the pre-configured Debian images from the UTM gallery.
+After downloading the zip file from the gallery, extract it to find a .utm file
+that can be opened using UTM.
+
+###### Emulation (slow)
+
+Emulation allows you to run an AMD64 Debian image on UTM, but is significantly
+slower and expensive on system resources.
+
+1. [Download](https://www.debian.org/distrib/) a copy of the latest Debian
+   distribution in ISO format.
+2. Create a new virtual machine in UTM for FreedomBox development using the image.
+   1. When creating the new VM, select "Emulate" and provide the path to the
+      downloaded Debian image.
+   2. Emulation will be very slow. Allocating 8 to 10 CPU cores and 8 to 12 GB of
+      memory is recommended.
+3. After installing Debian, shut down the machine and eject the image from the
+   virtual CD-ROM drive.
+4. The container script needs root priviliges to run. To give permissions to
+   your user, run the following:
+
+   ```bash
+   $ su -
+   # usermod -aG sudo <username>
+   ```
+
+**Tips**:
+1. Refer to the [documentation](https://docs.getutm.app/guest-support/linux/)
+   from UTM on how to enable clipboard sharing, dynamic screen resolution and
+   shared folders.
+2. Consider using Gnome Web as an alternative if Firefox runs into a crash loop
+   inside the VM.
+
+Once the Debian virtual machine is set up, the instructions to setup a
+FreedomBox development environment inside it are the same as setting up on a
+physical Debian machine (i.e. using a systemd-nspawn container).
+
 
 #### For Windows
 
