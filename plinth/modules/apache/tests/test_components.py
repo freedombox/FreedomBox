@@ -109,6 +109,14 @@ def test_webserver_setup(service_reload, service_restart):
             return self.enabled
 
     app1 = AppTest()
+
+    # Don't fail when last_updated_version is not provided.
+    webserver1 = Webserver('test-webserver1', 'test-config')
+    assert webserver1.last_updated_version == 0
+    webserver1.setup(old_version=10)
+    service_reload.assert_not_called()
+    service_restart.assert_not_called()
+
     webserver1 = Webserver('test-webserver1', 'test-config',
                            last_updated_version=5)
     for version in (0, 5, 6):

@@ -44,7 +44,7 @@ class Webserver(app.LeaderComponent):
         self.kind = kind
         self.urls = urls or []
         self.expect_redirects = expect_redirects
-        self.last_updated_version = last_updated_version
+        self.last_updated_version = last_updated_version or 0
 
     def is_enabled(self):
         """Return whether the Apache configuration is enabled."""
