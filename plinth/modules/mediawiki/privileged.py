@@ -185,5 +185,4 @@ def set_default_language(language: str):
 def uninstall():
     """Remove Mediawiki's database and local config file."""
     shutil.rmtree('/var/lib/mediawiki-db', ignore_errors=True)
-    pathlib.Path(LOCAL_SETTINGS_CONF).unlink(missing_ok=True)
-    pathlib.Path(CONF_FILE).unlink(missing_ok=True)
+    # /etc/mediawiki is removed on purge of mediawiki package
