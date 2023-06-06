@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-08 20:38-0400\n"
+"POT-Creation-Date: 2023-06-05 21:39-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -22,6 +22,11 @@ msgstr ""
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "Oldal forrása"
+
+#: plinth/config.py:117
+#, python-brace-format
+msgid "Static configuration {etc_path} is setup properly"
+msgstr ""
 
 #: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
@@ -102,15 +107,15 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
 
-#: plinth/modules/apache/__init__.py:31
+#: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
 msgstr "Apache HTTP szerver"
 
-#: plinth/modules/apache/__init__.py:39
+#: plinth/modules/apache/__init__.py:46
 msgid "Web Server"
 msgstr "Webszerver"
 
-#: plinth/modules/apache/__init__.py:45
+#: plinth/modules/apache/__init__.py:52
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} webes felület (Plinth)"
@@ -172,7 +177,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Ütemezett biztonsági mentés engedélyezése"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:76
 #: plinth/modules/storage/__init__.py:312
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -740,7 +745,7 @@ msgstr "Lecsatolás sikertelen!"
 msgid "Mounting failed"
 msgstr "Felcsatolás sikertelen"
 
-#: plinth/modules/bepasty/__init__.py:16
+#: plinth/modules/bepasty/__init__.py:17
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -753,7 +758,7 @@ msgstr ""
 "megtekinthetők. A megosztott fájlok beállíthatók úgy, hogy egy bizonyos idő "
 "után lejárjanak."
 
-#: plinth/modules/bepasty/__init__.py:20
+#: plinth/modules/bepasty/__init__.py:21
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -765,7 +770,7 @@ msgstr ""
 "létrehoztál egy jelszót, megoszthatod azokkal a felhasználókkal, akik "
 "rendelkeznek a kapcsolódó jogosultságokkal."
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -777,39 +782,39 @@ msgstr ""
 "teszi, hogy később visszavond egy adott személy vagy csoport hozzáférését "
 "azáltal, hogy az adott jelszót eltávolítod a listáról."
 
-#: plinth/modules/bepasty/__init__.py:31 plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:32 plinth/modules/bepasty/__init__.py:41
 msgid "Read a file, if a web link to the file is available"
 msgstr "Fájl olvasása, ha a fájlhoz tartozó webes hivatkozás elérhető"
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid "Create or upload files"
 msgstr "Fájlok létrehozása vagy feltöltése"
 
-#: plinth/modules/bepasty/__init__.py:33
+#: plinth/modules/bepasty/__init__.py:34
 msgid "List all files and their web links"
 msgstr "Fájlok és a hozzájuk tartozó weblinkek listázása"
 
-#: plinth/modules/bepasty/__init__.py:34
+#: plinth/modules/bepasty/__init__.py:35
 msgid "Delete files"
 msgstr "Fájlok törlése"
 
-#: plinth/modules/bepasty/__init__.py:35
+#: plinth/modules/bepasty/__init__.py:36
 msgid "Administer files: lock/unlock files"
 msgstr "Fájlok adminisztrációja: fájlok zárolása / feloldása"
 
-#: plinth/modules/bepasty/__init__.py:39
+#: plinth/modules/bepasty/__init__.py:40
 msgid "None, password is always required"
 msgstr "Nincs, jelszó mindig szükséges"
 
-#: plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:42
 msgid "List and read all files"
 msgstr "Az összes fájl listázása és olvasása"
 
-#: plinth/modules/bepasty/__init__.py:56 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:57 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:58
+#: plinth/modules/bepasty/__init__.py:59
 msgid "File & Snippet Sharing"
 msgstr "Fájl és kódrészlet megosztása"
 
@@ -859,7 +864,8 @@ msgstr "Jelenleg nincs beállítva jelszó."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
+#: plinth/modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Jelszó"
 
@@ -1005,12 +1011,13 @@ msgstr "IP-címek és tartományok frissítése"
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
 #: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
-#: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/shadowsocksserver/views.py:52 plinth/modules/ssh/views.py:62
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "A beállítások frissültek"
 
-#: plinth/modules/calibre/__init__.py:23
+#: plinth/modules/calibre/__init__.py:24
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -1021,7 +1028,7 @@ msgstr ""
 "{box_name} eszközödön tárolhatod e-könyveidet, olvashatod online vagy "
 "bármely eszközödről."
 
-#: plinth/modules/calibre/__init__.py:26
+#: plinth/modules/calibre/__init__.py:27
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -1036,7 +1043,7 @@ msgstr ""
 "utolsó olvasási helyet, a könyvjelzőket és a kiemelt szövegeket. Az OPDS "
 "segítségével történő tartalomterjesztés jelenleg nem támogatott."
 
-#: plinth/modules/calibre/__init__.py:32
+#: plinth/modules/calibre/__init__.py:33
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
@@ -1045,15 +1052,15 @@ msgstr ""
 "alkalmazáshoz. Minden hozzáféréssel rendelkező felhasználó használhatja az "
 "összes könyvtárat."
 
-#: plinth/modules/calibre/__init__.py:52
+#: plinth/modules/calibre/__init__.py:53
 msgid "Use calibre e-book libraries"
 msgstr "Calibre e-könyvtárak használata"
 
-#: plinth/modules/calibre/__init__.py:55 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:56 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:56
+#: plinth/modules/calibre/__init__.py:57
 msgid "E-book Library"
 msgstr "E-könyvtár"
 
@@ -1139,7 +1146,7 @@ msgstr "{name} törölve."
 msgid "Could not delete {name}: {error}"
 msgstr "{name} nem törölhető: {error}"
 
-#: plinth/modules/cockpit/__init__.py:22
+#: plinth/modules/cockpit/__init__.py:23
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1152,7 +1159,7 @@ msgstr ""
 "ritkábban használt haladó funkcióhoz érhetők el vezérlők. Egy web alapú "
 "terminál szintén elérhető a konzolos műveletekhez."
 
-#: plinth/modules/cockpit/__init__.py:28
+#: plinth/modules/cockpit/__init__.py:29
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1164,7 +1171,7 @@ msgstr ""
 "tűzfalportok nyitására és olyan haladó hálózati funkciókhoz, mint az "
 "aggregált interfészek, hidalás és VLAN-kezelés."
 
-#: plinth/modules/cockpit/__init__.py:33
+#: plinth/modules/cockpit/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1173,12 +1180,12 @@ msgstr ""
 "A {box_name} bármely adminisztrátori csoportba tartozó <a "
 "href=\"{users_url}\">felhasználója</a> hozzáférhet."
 
-#: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:53 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:54
+#: plinth/modules/cockpit/__init__.py:55
 msgid "Server Administration"
 msgstr "Szerver adminisztráció"
 
@@ -1442,11 +1449,11 @@ msgstr "Hiba az időzóna beállítása során: {exception}"
 msgid "Time zone set"
 msgstr "Időzóna beállítva"
 
-#: plinth/modules/deluge/__init__.py:20
+#: plinth/modules/deluge/__init__.py:21
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "A Deluge egy webes felülettel rendelkező BitTorrent-kliens."
 
-#: plinth/modules/deluge/__init__.py:21
+#: plinth/modules/deluge/__init__.py:22
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
@@ -1454,17 +1461,17 @@ msgstr ""
 "Az alapértelmezett jelszó 'deluge', de a szolgáltatás engedélyezése után "
 "jelentkezz be és azonnal változtasd meg."
 
-#: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "Fájlok letöltése BitTorrent-alkalmazások használatával"
 
-#: plinth/modules/deluge/__init__.py:44 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:45 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:75
+#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "Webes BitTorrent-kliens"
 
@@ -1823,7 +1830,7 @@ msgstr "A szerver visszautasította a kapcsolatot"
 msgid "Already up-to-date"
 msgstr "Már frissítve"
 
-#: plinth/modules/ejabberd/__init__.py:29
+#: plinth/modules/ejabberd/__init__.py:30
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1831,7 +1838,7 @@ msgstr ""
 "Az XMPP egy nyílt és szabványos kommunikációs protokoll. Itt tudod futtatni "
 "és konfigurálni az XMPP-szerveredet, amit ejabberd-nek neveznek."
 
-#: plinth/modules/ejabberd/__init__.py:32
+#: plinth/modules/ejabberd/__init__.py:33
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1845,7 +1852,7 @@ msgstr ""
 "lesz bármely <a href=\"{users_url}\"> felhasználó számára {box_name} "
 "felhasználónéven</a>."
 
-#: plinth/modules/ejabberd/__init__.py:40
+#: plinth/modules/ejabberd/__init__.py:41
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1855,12 +1862,12 @@ msgstr ""
 "videóhívásokhoz. Telepítsd a <a href=\"{coturn_url}\">Coturn</a> alkalmazást "
 "vagy állíts be egy külső szervert."
 
-#: plinth/modules/ejabberd/__init__.py:61
+#: plinth/modules/ejabberd/__init__.py:62
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:62
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/ejabberd/__init__.py:63
+#: plinth/modules/matrixsynapse/__init__.py:57
 msgid "Chat Server"
 msgstr "Chat szerver"
 
@@ -1977,7 +1984,7 @@ msgstr ""
 "fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a rendszered "
 "domainnevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
 
-#: plinth/modules/email/__init__.py:26
+#: plinth/modules/email/__init__.py:27
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -1988,7 +1995,7 @@ msgstr ""
 "lehetővé teszi az e-mail kliensek hozzáférését a leveleidhez az IMAP és POP3 "
 "protokollokat használva, az Rspamd pedig a kéretlen levelek szűrését végzi."
 
-#: plinth/modules/email/__init__.py:30
+#: plinth/modules/email/__init__.py:31
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2001,7 +2008,7 @@ msgstr ""
 "internetszolgáltató kifejezett kérés után feloldja a korlátozást. További "
 "információkért lásd a kézikönyv oldalát."
 
-#: plinth/modules/email/__init__.py:35
+#: plinth/modules/email/__init__.py:36
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2017,7 +2024,7 @@ msgstr ""
 "álnevek, mint pl. a \"postmaster\" az első admin felhasználóhoz tartozva "
 "automatikusan létrejönnek az alkalmazás telepítése során."
 
-#: plinth/modules/email/__init__.py:41
+#: plinth/modules/email/__init__.py:42
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2025,26 +2032,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube alkalmazás</a> webes felületet "
 "biztosít a felhasználók számára e-mail eléréséhez."
 
-#: plinth/modules/email/__init__.py:43
+#: plinth/modules/email/__init__.py:44
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "A telepítés során a rendszeren lévő összes egyéb e-mail-szerver törlődni fog."
 
-#: plinth/modules/email/__init__.py:62
+#: plinth/modules/email/__init__.py:63
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: plinth/modules/email/__init__.py:64
+#: plinth/modules/email/__init__.py:65
 msgid "Email Server"
 msgstr "E-mail-szerver"
 
-#: plinth/modules/email/__init__.py:84
+#: plinth/modules/email/__init__.py:85
 msgid "My Email Aliases"
 msgstr "E-mail álneveim"
 
-#: plinth/modules/email/__init__.py:85
+#: plinth/modules/email/__init__.py:86
 msgid "Manage Aliases for Mailbox"
 msgstr "A Mailbox álneveinek kezelése"
 
@@ -2080,7 +2087,7 @@ msgstr "Nem lehet szám"
 msgid "Aliases"
 msgstr "Álnevek"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:49
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:50
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2287,7 +2294,7 @@ msgstr "Beállítás elkezdése"
 msgid "Setup Complete"
 msgstr "Beállítás kész"
 
-#: plinth/modules/gitweb/__init__.py:21
+#: plinth/modules/gitweb/__init__.py:22
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2306,7 +2313,7 @@ msgstr ""
 "valamelyikével. Ezek mellett megoszthatod a kódodat az emberekkel szerte a "
 "világon."
 
-#: plinth/modules/gitweb/__init__.py:28
+#: plinth/modules/gitweb/__init__.py:29
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -2315,15 +2322,15 @@ msgstr ""
 "href=\"https://git-scm.com/docs/gittutorial\">Git gyorstalpalót (angolul)</"
 "a>."
 
-#: plinth/modules/gitweb/__init__.py:44
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Read-write access to Git repositories"
 msgstr "Olvasási-írási hozzáférés a Git-tárolókhoz"
 
-#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:11
+#: plinth/modules/gitweb/__init__.py:50 plinth/modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:50
+#: plinth/modules/gitweb/__init__.py:51
 msgid "Simple Git Hosting"
 msgstr "Egyszerű Git-hoszting"
 
@@ -2815,7 +2822,7 @@ msgstr "A {box_name} projektről"
 msgid "{box_name} Manual"
 msgstr "{box_name} kézikönyv"
 
-#: plinth/modules/i2p/__init__.py:20
+#: plinth/modules/i2p/__init__.py:21
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -2827,7 +2834,7 @@ msgstr ""
 "biztosít anonimitást, hogy a titkosított adatforgalmat egy világszerte "
 "önkéntesek által üzemeltetett hálózaton küldi keresztül."
 
-#: plinth/modules/i2p/__init__.py:24
+#: plinth/modules/i2p/__init__.py:25
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p."
 "net\" target=\"_blank\">homepage</a>."
@@ -2835,7 +2842,7 @@ msgstr ""
 "További információk az I2P-ről a projekt <a href=\"https://geti2p.net\" "
 "target=\"_blank\">weboldalán</a>."
 
-#: plinth/modules/i2p/__init__.py:26
+#: plinth/modules/i2p/__init__.py:27
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
@@ -2843,19 +2850,19 @@ msgstr ""
 "Az első látogatás a megadott webes felületen elindítja a konfigurálási "
 "folyamatot."
 
-#: plinth/modules/i2p/__init__.py:48
+#: plinth/modules/i2p/__init__.py:49
 msgid "Manage I2P application"
 msgstr "I2P alkalmazás kezelése"
 
-#: plinth/modules/i2p/__init__.py:51 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:52 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:52 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
 msgid "Anonymity Network"
 msgstr "Anonim hálózat"
 
-#: plinth/modules/i2p/__init__.py:77
+#: plinth/modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
@@ -2900,7 +2907,7 @@ msgstr ""
 "le egy peer-to-peer hálózatban. Torrentek hozzáadásával tölthetsz le "
 "fájlokat, vagy új torrentet hozhatsz létre egy fájl megosztásához."
 
-#: plinth/modules/ikiwiki/__init__.py:19
+#: plinth/modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -2910,7 +2917,7 @@ msgstr ""
 "leírónyelvet támogat, beleértve a Markdown-t és olyan általános bloggolási "
 "funkciókat, mint például a kommentek és az RSS-hírcsatornák."
 
-#: plinth/modules/ikiwiki/__init__.py:23
+#: plinth/modules/ikiwiki/__init__.py:24
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2924,15 +2931,15 @@ msgstr ""
 "meglévőket. A <a href=\"{users_url}\">Felhasználók beállítása</a> oldalon "
 "tudod módosítani ezeket a jogosultságokat vagy hozzáadni új felhasználókat."
 
-#: plinth/modules/ikiwiki/__init__.py:44 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:45 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:45
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid "Wiki and Blog"
 msgstr "Wiki és blog"
 
-#: plinth/modules/ikiwiki/__init__.py:72
+#: plinth/modules/ikiwiki/__init__.py:80
 msgid "View and edit wiki applications"
 msgstr "Wiki alkalmazások megtekintése és szerkesztése"
 
@@ -3060,26 +3067,26 @@ msgstr ""
 "Indítsd el a Gobby-t majd válaszd a \"Csatlakozás a szerverhez\" lehetőséget "
 "(\"Connect to Server\") és írd be a {box_name} eszközöd domainnevét."
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr "A Janus egy alacsony teljesítményigényű videokonferencia szerver."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr "Egy egyszerű videokonferencia-terem rendelkezésre áll."
 
-#: plinth/modules/janus/__init__.py:25
+#: plinth/modules/janus/__init__.py:26
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 "A Janus használatához szükség van a <a href=\"{coturn_url}\">Coturn</a> "
 "alkalmazásra."
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:42
 msgid "Janus"
 msgstr "Janus"
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:44
 msgid "Video Room"
 msgstr "Videószoba"
 
@@ -3109,7 +3116,7 @@ msgstr "JSXC"
 msgid "Chat Client"
 msgstr "Chat kliens"
 
-#: plinth/modules/letsencrypt/__init__.py:24
+#: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -3125,7 +3132,7 @@ msgstr ""
 "úgy éri el, hogy a Let's Encryptnek, egy hitelesítésszolgáltatónak (CA) "
 "igazolja, hogy ő a domain tulajdonosa."
 
-#: plinth/modules/letsencrypt/__init__.py:30
+#: plinth/modules/letsencrypt/__init__.py:31
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -3138,15 +3145,15 @@ msgstr ""
 "letsencrypt.org/repository/\">Let's Encrypt aláírási megállapodását</a> "
 "mielőtt használnád ezt a szolgáltatást."
 
-#: plinth/modules/letsencrypt/__init__.py:57
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:58
+#: plinth/modules/letsencrypt/__init__.py:59
 msgid "Certificates"
 msgstr "Tanúsítványok"
 
-#: plinth/modules/letsencrypt/__init__.py:94
+#: plinth/modules/letsencrypt/__init__.py:100
 msgid "Cannot test: No domains are configured."
 msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
 
@@ -3247,7 +3254,7 @@ msgstr "{domain} domain tanúsítványa sikeresen törölve"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "{domain} domain tanúsítványát nem sikerült kitörölni: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:26
+#: plinth/modules/matrixsynapse/__init__.py:27
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3264,7 +3271,7 @@ msgstr ""
 "adott Matrix-szerveren lévő felhasználók föderáción keresztül "
 "beszélgethetnek az összes többi Matrix-szerver felhasználóival."
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:35
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
@@ -3274,7 +3281,7 @@ msgstr ""
 "videóhívásokhoz. Telepítsd a <a href=\"{coturn_url}\">Coturn</a> "
 "alkalmazást, vagy konfigurálj egy külső szervert."
 
-#: plinth/modules/matrixsynapse/__init__.py:55
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3441,7 +3448,7 @@ msgstr ""
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:20
+#: plinth/modules/mediawiki/__init__.py:21
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3453,7 +3460,7 @@ msgstr ""
 "létrehozni. A MediaWiki segítségével wikiszerű weboldalt üzemeltethetsz, "
 "jegyzeteket készíthetsz, vagy barátaiddal együtt dolgozhatsz projekteken."
 
-#: plinth/modules/mediawiki/__init__.py:24
+#: plinth/modules/mediawiki/__init__.py:25
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3467,7 +3474,7 @@ msgstr ""
 "létrehozhatsz további felhasználói fiókokat a MediaWiki <a href=\"/mediawiki/"
 "index.php/Special:CreateAccount\">Special:CreateAccount</a> oldalán."
 
-#: plinth/modules/mediawiki/__init__.py:30
+#: plinth/modules/mediawiki/__init__.py:31
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3575,43 +3582,43 @@ msgstr ""
 "Válassz alapértelmezett felszínt a MediaWiki telepítéséhez. A "
 "felhasználóknak lehetőségük van kiválasztani a saját kedvelt felszínüket."
 
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
 msgstr "Jelszó frissítve"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:48
 msgid "Password update failed. Please choose a stronger password"
 msgstr "A jlszó frisítése nem sikerült. Kérlek válassz egy erősebb jelszót"
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:57
 msgid "Public registrations enabled"
 msgstr "Szabad regisztráció engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:65
 msgid "Public registrations disabled"
 msgstr "Szabad regisztráció letiltva"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:70
 msgid "Private mode enabled"
 msgstr "Privát mód engedélyezve"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:76
 msgid "Private mode disabled"
 msgstr "Privát mód letiltva"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:84
 msgid "Default skin changed"
 msgstr "Az alapértelmezett felszín megváltozott"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:88
 msgid "Domain name updated"
 msgstr "Domainnév frissítve"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:92
 msgid "Site name updated"
 msgstr "Az oldal neve frissítve"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:96
 #, fuzzy
 #| msgid "Default skin changed"
 msgid "Default language changed"
@@ -3684,7 +3691,7 @@ msgstr "Ha le van tiltva, a játékosok nem fognak meghalni, ill. megsérülni."
 msgid "Address"
 msgstr "Cím"
 
-#: plinth/modules/minidlna/__init__.py:21
+#: plinth/modules/minidlna/__init__.py:22
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3702,15 +3709,15 @@ msgstr ""
 "médialejátszók, okostelefonok, televíziók és játékkonzolok (például "
 "PlayStation és Xbox), vagy olyan alkalmazásokkal mint a totem és a Kodi."
 
-#: plinth/modules/minidlna/__init__.py:43
+#: plinth/modules/minidlna/__init__.py:44
 msgid "Media streaming server"
 msgstr "Média streaming szerver"
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:47
+#: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
 msgstr "Egyszerű médiaszerver"
 
@@ -3872,7 +3879,7 @@ msgstr "Secure Shell (Biztonságos parancsértelmező)"
 msgid "Services"
 msgstr "Szolgáltatások"
 
-#: plinth/modules/networks/__init__.py:34
+#: plinth/modules/networks/__init__.py:35
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3881,7 +3888,7 @@ msgstr ""
 "vagy PPPoE segítségével. Oszd meg ezt a kapcsolatot a hálózaton lévő más "
 "eszközökkel."
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:37
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3889,7 +3896,7 @@ msgstr ""
 "Előfordulhat, hogy más módszerekkel felügyelt eszközök itt nem lesznek a "
 "konfigurálhatók."
 
-#: plinth/modules/networks/__init__.py:57
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "Hálózatok"
 
@@ -4430,7 +4437,8 @@ msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:175
 #: plinth/modules/networks/templates/connection_show.html:218
-#: plinth/modules/shadowsocks/forms.py:48
+#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "Módszer"
 
@@ -4459,7 +4467,7 @@ msgid "This connection is not active."
 msgstr "Ez a kapcsolat nem aktív."
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:34
+#: plinth/modules/security/__init__.py:35
 msgid "Security"
 msgstr "Biztonság"
 
@@ -5208,7 +5216,7 @@ msgstr ""
 "Válaszd ki a pagekite szerveredet. Állítsd „pagekite.net” -re, ha az "
 "alapértelmezett pagekite.net szervert szeretnéd használni."
 
-#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:39
+#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:27
 msgid "Server port"
 msgstr "Szerver port"
 
@@ -5431,23 +5439,23 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Leállítás most"
 
-#: plinth/modules/privacy/__init__.py:14
+#: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
 msgstr "Rendszerszintű adatvédelmi beállítások kezelése."
 
-#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
+#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:69
 #, fuzzy
 #| msgid "Privoxy"
 msgid "Privacy"
 msgstr "Privoxy"
 
-#: plinth/modules/privacy/__init__.py:61
+#: plinth/modules/privacy/__init__.py:67
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Kérjük, frissítsd az adatvédelmi beállításokat, a preferenciáidnak "
 "megfelelően."
 
-#: plinth/modules/privacy/__init__.py:66
+#: plinth/modules/privacy/__init__.py:72
 msgid "Review privacy setting"
 msgstr "Adatvédelmi beállítások kezelése"
 
@@ -5554,7 +5562,7 @@ msgstr "IRC-kliens"
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:24
+#: plinth/modules/radicale/__init__.py:25
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5570,7 +5578,7 @@ msgstr ""
 "alkalmazásra</a> is. A Radicale elérhető bármely felhasználó számára a "
 "{box_name} eszközön."
 
-#: plinth/modules/radicale/__init__.py:30
+#: plinth/modules/radicale/__init__.py:31
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -5580,12 +5588,12 @@ msgstr ""
 "címjegyzékek létrehozását támogatja. Nem támogatja az események vagy "
 "kapcsolatok hozzáadását, ezeket külön kliens segítségével kell elvégezni."
 
-#: plinth/modules/radicale/__init__.py:52
+#: plinth/modules/radicale/__init__.py:53
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:53
+#: plinth/modules/radicale/__init__.py:54
 msgid "Calendar and Addressbook"
 msgstr "Naptár és címjegyzék"
 
@@ -5662,7 +5670,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Hozzáférési jogok beállításai frissítve"
 
-#: plinth/modules/roundcube/__init__.py:18
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5674,7 +5682,7 @@ msgstr ""
 "teljes funkcionalitást biztosítja, beleértve a MIME-támogatást, "
 "címjegyzéket, mappakezelést, üzenetkeresést és helyesírás-ellenőrzést."
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5688,7 +5696,7 @@ msgstr ""
 "SSL-en kersztüli IMAP-hez (ez az ajánlott), töltsd ki a kiszolgáló mezőt "
 "ezen minta alapján: <code>imaps://imap.pelda.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5705,7 +5713,7 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:50
+#: plinth/modules/roundcube/__init__.py:51
 msgid "Email Client"
 msgstr "E-mail kliens"
 
@@ -5723,13 +5731,13 @@ msgstr ""
 "a bejelentkezési oldalról, és a felhasználók csak erről a {box_name}ról "
 "olvashatnak és küldhetnek leveleket."
 
-#: plinth/modules/rssbridge/__init__.py:20
+#: plinth/modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:23
+#: plinth/modules/rssbridge/__init__.py:24
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS can be accessed by any <a "
@@ -5742,7 +5750,7 @@ msgstr ""
 "href=\"{users_url}\">felhasználó elérheti, aki {box_name} bejelentkezéssel "
 "rendelkezik</a>."
 
-#: plinth/modules/rssbridge/__init__.py:27
+#: plinth/modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
@@ -5750,16 +5758,16 @@ msgid ""
 "your {box_name} credentials."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
+#: plinth/modules/rssbridge/__init__.py:46 plinth/modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Hírcsatornák olvasása és feliratkozás"
 
-#: plinth/modules/rssbridge/__init__.py:48
+#: plinth/modules/rssbridge/__init__.py:49
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: plinth/modules/rssbridge/__init__.py:49
+#: plinth/modules/rssbridge/__init__.py:50
 msgid "RSS Feed Generator"
 msgstr "RSS-hírfolyam generátor"
 
@@ -5944,7 +5952,7 @@ msgstr "Megosztás letiltva."
 msgid "Error disabling share: {error_message}"
 msgstr "Hiba történt a megosztás letiltásakor: {error_message}"
 
-#: plinth/modules/searx/__init__.py:19
+#: plinth/modules/searx/__init__.py:20
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -5952,7 +5960,7 @@ msgstr ""
 "A Searx egy magánszférát tiszteletben tartó internetes metakereső. Több "
 "keresőmotor eredményeit gyűjti össze és jeleníti meg."
 
-#: plinth/modules/searx/__init__.py:21
+#: plinth/modules/searx/__init__.py:22
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -5960,15 +5968,15 @@ msgstr ""
 "A Searx segítségével elkerülhető, hogy a keresőmotorok nyomon kövessék és "
 "profilozzák a felhasználót. Sütiket eleve nem tárol."
 
-#: plinth/modules/searx/__init__.py:37
+#: plinth/modules/searx/__init__.py:38
 msgid "Search the web"
 msgstr "Keresés a weben"
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:41 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:41
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Webes keresés"
 
@@ -6147,16 +6155,22 @@ msgid "Shaarlier"
 msgstr "Shaarlier"
 
 #: plinth/modules/shadowsocks/__init__.py:18
+#: plinth/modules/shadowsocksserver/__init__.py:18
 msgid ""
-"Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
-"your Internet traffic. It can be used to bypass Internet filtering and "
-"censorship."
+"Shadowsocks is a tool for securely forwarding network requests to a remote "
+"server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
+"Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
-"A Shadowsocks egy könnyűsúlyú, biztonságos SOCKS5 proxy, amelyet az "
-"internetes forgalmad védelmére terveztek. Felhasználható az internetes "
-"szűrők és cenzúra megkerülésére."
 
-#: plinth/modules/shadowsocks/__init__.py:22
+#: plinth/modules/shadowsocks/__init__.py:21
+#: plinth/modules/shadowsocksserver/__init__.py:21
+msgid ""
+"Shadowsocks can be used to bypass Internet filtering and censorship. This "
+"requires that the Shadowsocks server is in a location where it can freely "
+"access the Internet, without filtering."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -6169,7 +6183,7 @@ msgstr ""
 "Helyi eszközeiddel csatlakozhatsz erre a proxy-ra, és az adataik titkosítva "
 "és proxizva lesznek a Shadowsocks-szerveren keresztül."
 
-#: plinth/modules/shadowsocks/__init__.py:27
+#: plinth/modules/shadowsocks/__init__.py:31
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -6178,41 +6192,83 @@ msgstr ""
 "címét a készülékeden, böngésződben vagy alkalmazásodban a http://"
 "freedombox_eszkozod_cime:1080/ címre"
 
-#: plinth/modules/shadowsocks/__init__.py:46
-msgid "Shadowsocks"
+#: plinth/modules/shadowsocks/__init__.py:50
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Client"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:48
-msgid "Socks5 Proxy"
-msgstr "Socks5 Proxy"
+#: plinth/modules/shadowsocks/__init__.py:52
+msgid "Bypass Censorship"
+msgstr ""
 
-#: plinth/modules/shadowsocks/forms.py:10
-#: plinth/modules/shadowsocks/forms.py:11
-msgid "Recommended"
-msgstr "Ajánlott"
-
-#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
 msgstr "Szerver"
 
-#: plinth/modules/shadowsocks/forms.py:37
+#: plinth/modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "A szerver állomásneve vagy IP-címe"
 
-#: plinth/modules/shadowsocks/forms.py:41
+#: plinth/modules/shadowsocks/forms.py:29
 msgid "Server port number"
 msgstr "A szerver portja"
 
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
 msgid "Password used to encrypt data. Must match server password."
 msgstr ""
 "Az adattitkosításra használt jelszó. A szerver jelszavával meg kell egyeznie."
 
-#: plinth/modules/shadowsocks/forms.py:49
+#: plinth/modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Titkosítási módszer. A szerver beállításával meg kell egyeznie."
 
-#: plinth/modules/sharing/__init__.py:16
+#: plinth/modules/shadowsocksserver/__init__.py:26
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Your {box_name} can run a Shadowsocks client, that can connect to a "
+#| "Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
+#| "connect to this proxy, and their data will be encrypted and proxied "
+#| "through the Shadowsocks server."
+msgid ""
+"Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
+"clients to connect to it. Clients' data will be encrypted and proxied "
+"through this server."
+msgstr ""
+"A {box_name} eszközöd futtathat egy Shadowsocks-klienst, ami csatlakozhat "
+"egy Shadowsocks-szerverhez. Továbbá egy SOCKS5 proxy-t is fog futtatni. "
+"Helyi eszközeiddel csatlakozhatsz erre a proxy-ra, és az adataik titkosítva "
+"és proxizva lesznek a Shadowsocks-szerveren keresztül."
+
+#: plinth/modules/shadowsocksserver/__init__.py:48
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Server"
+msgstr "Shadowsocks"
+
+#: plinth/modules/shadowsocksserver/__init__.py:49
+msgid "Help Others Bypass Censorship"
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:10
+#: plinth/modules/shadowsocksserver/forms.py:11
+msgid "Recommended"
+msgstr "Ajánlott"
+
+#: plinth/modules/shadowsocksserver/forms.py:38
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password used to encrypt data. Clients must use the same password."
+msgstr ""
+"Az adattitkosításra használt jelszó. A szerver jelszavával meg kell egyeznie."
+
+#: plinth/modules/shadowsocksserver/forms.py:43
+#, fuzzy
+#| msgid "Encryption method. Must match setting on server."
+msgid "Encryption method. Clients must use the same setting."
+msgstr "Titkosítási módszer. A szerver beállításával meg kell egyeznie."
+
+#: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -6221,7 +6277,7 @@ msgstr ""
 "Megosztás lehetővé teszi számodra hogy fájlokat és mappákat ossz meg a weben "
 "keresztül felhasználók kiválasztott csoportjaival a {box_name} eszközödön."
 
-#: plinth/modules/sharing/__init__.py:33
+#: plinth/modules/sharing/__init__.py:34
 msgid "Sharing"
 msgstr "Megosztás"
 
@@ -6566,7 +6622,7 @@ msgstr "A visszaállítás befejezéséhez a rendszert újra kell indítani."
 msgid "Rollback to Snapshot"
 msgstr "Visszaállítás pillanatképre"
 
-#: plinth/modules/ssh/__init__.py:21
+#: plinth/modules/ssh/__init__.py:22
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -6578,11 +6634,11 @@ msgstr ""
 "számítógép felügyeleti feladatokat hajthat végre, fájlokat másolhat vagy "
 "egyéb szolgáltatásokat futtathat ilyen kapcsolat használatával."
 
-#: plinth/modules/ssh/__init__.py:41
+#: plinth/modules/ssh/__init__.py:42
 msgid "Secure Shell (SSH) Server"
 msgstr "SSH-szerver"
 
-#: plinth/modules/ssh/__init__.py:61
+#: plinth/modules/ssh/__init__.py:73
 #, fuzzy
 #| msgid "Secure Shell (SSH)"
 msgid "Remotely login using Secure Shell (SSH)"
@@ -6633,7 +6689,7 @@ msgstr "Algoritmus"
 msgid "Fingerprint"
 msgstr "Ujjlenyomat"
 
-#: plinth/modules/sso/__init__.py:26
+#: plinth/modules/sso/__init__.py:27
 msgid "Single Sign On"
 msgstr "Egyszeri bejelentkezés"
 
@@ -6882,7 +6938,7 @@ msgstr "Az eszköz biztonságosan kivehető."
 msgid "Error ejecting device: {error_message}"
 msgstr "Hiba történt az eszköz kiadása során: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:22
+#: plinth/modules/syncthing/__init__.py:23
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -6894,7 +6950,7 @@ msgstr ""
 "fájljain végzett módosítások a többi eszközön is automatikusan jelentkeznek, "
 "amennyiben telepítve van a szolgáltatás."
 
-#: plinth/modules/syncthing/__init__.py:27
+#: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -6914,16 +6970,16 @@ msgstr ""
 "felület csak az \"admin\" vagy a \"syncthing-access\" csoporthoz tartozó "
 "felhasználók számára hozzáférhető."
 
-#: plinth/modules/syncthing/__init__.py:54
+#: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
 msgstr "A Syncthing alkalmazás beállítása"
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:59
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Fájlszinkronizáció"
 
@@ -7125,11 +7181,11 @@ msgstr "Beállítások frissítése"
 msgid "Error configuring app: {error}"
 msgstr "Hiba lépett fel az alkalmazás konfigurációja során: {error}"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "A Transmission egy webes felülettel rendelkező BitTorrent-kliens."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:26
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -7137,19 +7193,19 @@ msgstr ""
 "A BitTorrent egy peer-to-peer fájlmegosztó protokoll. Vedd figyelembe, hogy "
 "a BitTorrent nem biztosít névtelenséget."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:28
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 "Kérlek, ne változtasd meg a Transmission daemon alapértelmezett portját."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
 "lightweight but is less customizable."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:33
+#: plinth/modules/transmission/__init__.py:34
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -7161,7 +7217,7 @@ msgstr ""
 "A {box_name} bármely adminisztrátori csoportba tartozó <a "
 "href=\"{users_url}\">felhasználója</a> hozzáférhet."
 
-#: plinth/modules/transmission/__init__.py:37
+#: plinth/modules/transmission/__init__.py:38
 #, python-brace-format
 msgid ""
 "In addition to the web interface, mobile and desktop apps can also be used "
@@ -7170,21 +7226,21 @@ msgid ""
 "rpc</a>."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:48
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:74
 #: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
@@ -7193,7 +7249,7 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:20
+#: plinth/modules/ttrss/__init__.py:21
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -7203,7 +7259,7 @@ msgstr ""
 "tervezve, hogy elérhetővé tegye a hírolvasást bárhonnan, miközben igyekszik "
 "egy valódi asztali alkalmazás érzetét kelteni."
 
-#: plinth/modules/ttrss/__init__.py:24
+#: plinth/modules/ttrss/__init__.py:25
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "When enabled, Tiny Tiny RSS can be accessed by any <a "
@@ -7216,7 +7272,7 @@ msgstr ""
 "href=\"{users_url}\">felhasználó elérheti, aki {box_name} bejelentkezéssel "
 "rendelkezik</a>."
 
-#: plinth/modules/ttrss/__init__.py:29
+#: plinth/modules/ttrss/__init__.py:30
 #, fuzzy
 #| msgid ""
 #| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
@@ -7230,11 +7286,11 @@ msgstr ""
 "hez, használd a <a href=\"/tt-rss-app/\">/tt-rss-app</a> URL-t a "
 "csatlakozáshoz."
 
-#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
+#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "Hírcsatorna-olvasó"
 
@@ -7252,13 +7308,13 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:35
+#: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "A legfrissebb szoftver- és biztonsági frissítések ellenőrzése és alkalmazása."
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7271,22 +7327,22 @@ msgstr ""
 "újraindítása szükségesnek bizonyul, akkor a rendszer automatikusan 02:00-kor "
 "újraindul, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
 
-#: plinth/modules/upgrades/__init__.py:64
-#: plinth/modules/upgrades/__init__.py:119
+#: plinth/modules/upgrades/__init__.py:65
+#: plinth/modules/upgrades/__init__.py:128
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Szoftverfrissítések"
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox frissítve"
 
-#: plinth/modules/upgrades/__init__.py:190
+#: plinth/modules/upgrades/__init__.py:199
 msgid "Could not start distribution update"
 msgstr "A disztribúció frissítése nem tudott elindulni"
 
-#: plinth/modules/upgrades/__init__.py:192
+#: plinth/modules/upgrades/__init__.py:201
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7297,11 +7353,11 @@ msgstr ""
 "disztribúció frissítését a rendszer 24 óra múlva újrapróbálja, ha "
 "engedélyezve van."
 
-#: plinth/modules/upgrades/__init__.py:203
+#: plinth/modules/upgrades/__init__.py:212
 msgid "Distribution update started"
 msgstr "A disztribúció frissítése elindult"
 
-#: plinth/modules/upgrades/__init__.py:205
+#: plinth/modules/upgrades/__init__.py:214
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7519,7 +7575,7 @@ msgstr "Gyakori funkciófrissítések aktiválva."
 msgid "Starting distribution upgrade test."
 msgstr "Disztribúció frissítés engedélyezve"
 
-#: plinth/modules/users/__init__.py:28
+#: plinth/modules/users/__init__.py:29
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7530,7 +7586,7 @@ msgstr ""
 "alkalmazások megkövetelik továbbá, hogy a felhasználói fiók egy csoport "
 "tagja legyen, hogy a felhasználó hozzáférhessen az alkalmazáshoz."
 
-#: plinth/modules/users/__init__.py:33
+#: plinth/modules/users/__init__.py:34
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7542,15 +7598,15 @@ msgstr ""
 "az <em>admin</em> csoport felhasználói módosíthatják az alkalmazásokat vagy "
 "a rendszerbeállításokat."
 
-#: plinth/modules/users/__init__.py:54
+#: plinth/modules/users/__init__.py:55
 msgid "Users and Groups"
 msgstr "Felhasználók és csoportok"
 
-#: plinth/modules/users/__init__.py:74
+#: plinth/modules/users/__init__.py:80
 msgid "Access to all services and system settings"
 msgstr "Hozzáférés az összes szolgáltatáshoz és rendszerbeállításhoz"
 
-#: plinth/modules/users/__init__.py:110
+#: plinth/modules/users/__init__.py:116
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP-bejegyzés ellenőrzése: \"{search_item}\""
@@ -8138,7 +8194,7 @@ msgstr "Szerverrel létesített kapcsolat törlése"
 msgid "Server deleted."
 msgstr "Szerver törölve."
 
-#: plinth/modules/wordpress/__init__.py:19
+#: plinth/modules/wordpress/__init__.py:20
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -8152,7 +8208,7 @@ msgstr ""
 "témák segítségével választható. Az adminisztrációs felület és az előállított "
 "weboldalak alkalmasak a mobileszközök számára."
 
-#: plinth/modules/wordpress/__init__.py:25
+#: plinth/modules/wordpress/__init__.py:26
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -8166,7 +8222,7 @@ msgstr ""
 "futtatni. Engedélyezd a permalinkeket a rendszergazdai felületen az oldalak "
 "és bejegyzések jobb URL-jeihez."
 
-#: plinth/modules/wordpress/__init__.py:30
+#: plinth/modules/wordpress/__init__.py:31
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
@@ -8177,7 +8233,7 @@ msgstr ""
 "elérése érdekében mentsd el a könyvjelzőid közé az <a href=\"/wordpress/wp-"
 "admin/\">admin lapot</a>."
 
-#: plinth/modules/wordpress/__init__.py:34
+#: plinth/modules/wordpress/__init__.py:35
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
@@ -8187,12 +8243,12 @@ msgstr ""
 "frissítését a rendszergazdai felületről. További bővítmények vagy témák "
 "telepítése és frissítése saját felelősségre történhet."
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:53
+#: plinth/modules/wordpress/__init__.py:54
 msgid "Website and Blog"
 msgstr "Weboldal és blog"
 
@@ -8817,6 +8873,18 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid ""
+#~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
+#~ "your Internet traffic. It can be used to bypass Internet filtering and "
+#~ "censorship."
+#~ msgstr ""
+#~ "A Shadowsocks egy könnyűsúlyú, biztonságos SOCKS5 proxy, amelyet az "
+#~ "internetes forgalmad védelmére terveztek. Felhasználható az internetes "
+#~ "szűrők és cenzúra megkerülésére."
+
+#~ msgid "Socks5 Proxy"
+#~ msgstr "Socks5 Proxy"
 
 #~ msgid "ChatSecure"
 #~ msgstr "ChatSecure"

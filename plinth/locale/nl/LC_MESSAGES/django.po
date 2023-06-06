@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-08 20:38-0400\n"
+"POT-Creation-Date: 2023-06-05 21:39-0400\n"
 "PO-Revision-Date: 2023-05-22 15:50+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -24,6 +24,11 @@ msgstr ""
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "Paginabron"
+
+#: plinth/config.py:117
+#, python-brace-format
+msgid "Static configuration {etc_path} is setup properly"
+msgstr ""
 
 #: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
@@ -105,15 +110,15 @@ msgstr "Te gebruiken taal voor de weergave van deze webinterface"
 msgid "Use the language preference set in the browser"
 msgstr "Gebruik de taalvoorkeuren die zijn ingesteld in de browser"
 
-#: plinth/modules/apache/__init__.py:31
+#: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
 msgstr "Apache HTTP Server"
 
-#: plinth/modules/apache/__init__.py:39
+#: plinth/modules/apache/__init__.py:46
 msgid "Web Server"
 msgstr "Webserver"
 
-#: plinth/modules/apache/__init__.py:45
+#: plinth/modules/apache/__init__.py:52
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web Interface (Plinth)"
@@ -176,7 +181,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Een back-upschema inschakelen"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:76
 #: plinth/modules/storage/__init__.py:312
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -743,7 +748,7 @@ msgstr "Ontkoppelen is mislukt!"
 msgid "Mounting failed"
 msgstr "Aankoppelen is mislukt"
 
-#: plinth/modules/bepasty/__init__.py:16
+#: plinth/modules/bepasty/__init__.py:17
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -756,7 +761,7 @@ msgstr ""
 "worden bekeken in de browser. Gedeelde bestanden kunnen zo ingesteld worden "
 "dat ze na bepaalde tijd verlopen."
 
-#: plinth/modules/bepasty/__init__.py:20
+#: plinth/modules/bepasty/__init__.py:21
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -768,7 +773,7 @@ msgstr ""
 "ingesteld. Nadat een wachtwoord is aangemaakt kan dit gedeeld worden met de "
 "gebruikers die de ingestelde permissies moeten krijgen."
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -780,39 +785,39 @@ msgstr ""
 "manier kan later de toegang voor individuele personen of groepen ingetrokken "
 "worden door hun wachtwoord te verwijderen van de lijst."
 
-#: plinth/modules/bepasty/__init__.py:31 plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:32 plinth/modules/bepasty/__init__.py:41
 msgid "Read a file, if a web link to the file is available"
 msgstr "Een bestand lezen als er een weblink naar het bestand beschikbaar is"
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid "Create or upload files"
 msgstr "Maak of upload bestanden"
 
-#: plinth/modules/bepasty/__init__.py:33
+#: plinth/modules/bepasty/__init__.py:34
 msgid "List all files and their web links"
 msgstr "Maak een lijst van alle bestanden en hun weblinks"
 
-#: plinth/modules/bepasty/__init__.py:34
+#: plinth/modules/bepasty/__init__.py:35
 msgid "Delete files"
 msgstr "Bestanden verwijderen"
 
-#: plinth/modules/bepasty/__init__.py:35
+#: plinth/modules/bepasty/__init__.py:36
 msgid "Administer files: lock/unlock files"
 msgstr "Beheer bestanden: vergrendel / ontgrendel bestanden"
 
-#: plinth/modules/bepasty/__init__.py:39
+#: plinth/modules/bepasty/__init__.py:40
 msgid "None, password is always required"
 msgstr "Geen, wachtwoord is altijd vereist"
 
-#: plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:42
 msgid "List and read all files"
 msgstr "Alle bestanden aanbieden om te lezen"
 
-#: plinth/modules/bepasty/__init__.py:56 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:57 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:58
+#: plinth/modules/bepasty/__init__.py:59
 msgid "File & Snippet Sharing"
 msgstr "Delen van bestanden en fragmenten"
 
@@ -862,7 +867,8 @@ msgstr "Er zijn momenteel geen wachwoorden ingesteld."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
+#: plinth/modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -1007,12 +1013,13 @@ msgstr "IP adressen en domeinen verversen"
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
 #: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
-#: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/shadowsocksserver/views.py:52 plinth/modules/ssh/views.py:62
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Configuratie bijgewerkt"
 
-#: plinth/modules/calibre/__init__.py:23
+#: plinth/modules/calibre/__init__.py:24
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -1023,7 +1030,7 @@ msgstr ""
 "worden opgeslagen op de {box_name}, en online of vanaf een ander apparaat "
 "worden gelezen."
 
-#: plinth/modules/calibre/__init__.py:26
+#: plinth/modules/calibre/__init__.py:27
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -1038,7 +1045,7 @@ msgstr ""
 "laatst gelezen locatie, bladwijzers en gemarkeerde tekst. OPDS distributie "
 "wordt momenteel niet ondersteund."
 
-#: plinth/modules/calibre/__init__.py:32
+#: plinth/modules/calibre/__init__.py:33
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
@@ -1047,15 +1054,15 @@ msgstr ""
 "tot deze toepassing. Alle gebruikers met toegang kunnen alle bibliotheken "
 "gebruiken."
 
-#: plinth/modules/calibre/__init__.py:52
+#: plinth/modules/calibre/__init__.py:53
 msgid "Use calibre e-book libraries"
 msgstr "Gebruik calibre e-book bibliotheken"
 
-#: plinth/modules/calibre/__init__.py:55 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:56 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:56
+#: plinth/modules/calibre/__init__.py:57
 msgid "E-book Library"
 msgstr "E-boek bibliotheek"
 
@@ -1137,7 +1144,7 @@ msgstr "{name} verwijderd."
 msgid "Could not delete {name}: {error}"
 msgstr "Verwijderen van {name} mislukt: {error}"
 
-#: plinth/modules/cockpit/__init__.py:22
+#: plinth/modules/cockpit/__init__.py:23
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1150,7 +1157,7 @@ msgstr ""
 "beschikbaar voor veel geavanceerde functies die vaak niet gebruikt worden. "
 "Er is ook een webgebaseerde terminal beschikbaar voor consoleactiviteiten."
 
-#: plinth/modules/cockpit/__init__.py:28
+#: plinth/modules/cockpit/__init__.py:29
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1162,7 +1169,7 @@ msgstr ""
 "gebruikt voor het openen van aangepaste firewallpoorten en geavanceerde "
 "netwerkentechnieken zoals bonding, bridging en VLAN-beheer."
 
-#: plinth/modules/cockpit/__init__.py:33
+#: plinth/modules/cockpit/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1171,12 +1178,12 @@ msgstr ""
 "Het kan geraadpleegd worden door <a href=\"{users_url}\">iedere gebruiker</"
 "a> op {box_name} die lid is van de systeembeheerdergroep (admin)."
 
-#: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:53 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:54
+#: plinth/modules/cockpit/__init__.py:55
 msgid "Server Administration"
 msgstr "Serverbeheer"
 
@@ -1440,11 +1447,11 @@ msgstr "Fout bij tijdzone instellen: {exception}"
 msgid "Time zone set"
 msgstr "Tijdzone ingesteld"
 
-#: plinth/modules/deluge/__init__.py:20
+#: plinth/modules/deluge/__init__.py:21
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge is een BitTorrent Cliënt met web-bediening."
 
-#: plinth/modules/deluge/__init__.py:21
+#: plinth/modules/deluge/__init__.py:22
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
@@ -1452,17 +1459,17 @@ msgstr ""
 "Het standaardwachtwoord is 'deluge', maar dit moet zo snel mogelijk na "
 "activering gewijzigd worden."
 
-#: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "Download bestanden met BitTorrent toepassingen"
 
-#: plinth/modules/deluge/__init__.py:44 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:45 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:75
+#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent-webclient"
 
@@ -1819,7 +1826,7 @@ msgstr "Server weigert verbinding"
 msgid "Already up-to-date"
 msgstr "Al bijgewerkt"
 
-#: plinth/modules/ejabberd/__init__.py:29
+#: plinth/modules/ejabberd/__init__.py:30
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1827,7 +1834,7 @@ msgstr ""
 "XMPP is een open en gestandaardiseerd communicatie protocol. Hiermee kan een "
 "XMPP server met de naam ejabberd worden ingesteld."
 
-#: plinth/modules/ejabberd/__init__.py:32
+#: plinth/modules/ejabberd/__init__.py:33
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1841,7 +1848,7 @@ msgstr ""
 "kan elke <a href=\"{users_url}\">gebruiker van {box_name}</a> daartoe "
 "toegang krijgen."
 
-#: plinth/modules/ejabberd/__init__.py:40
+#: plinth/modules/ejabberd/__init__.py:41
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1851,12 +1858,12 @@ msgstr ""
 "Installeer de <a href=\"{coturn_url}\">Coturn</a> toepassing of configureer "
 "een externe server."
 
-#: plinth/modules/ejabberd/__init__.py:61
+#: plinth/modules/ejabberd/__init__.py:62
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:62
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/ejabberd/__init__.py:63
+#: plinth/modules/matrixsynapse/__init__.py:57
 msgid "Chat Server"
 msgstr "Chatserver"
 
@@ -1970,7 +1977,7 @@ msgstr ""
 "eruit als <i>username@%(domainname)s</i>. Het domein kan worden ingesteld op "
 "de <a href=\"%(index_url)s\">Instellingen</a> pagina."
 
-#: plinth/modules/email/__init__.py:26
+#: plinth/modules/email/__init__.py:27
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -1980,7 +1987,7 @@ msgstr ""
 "Rspamd. Postfix verstuurt en ontvangt e-mails. Met Dovecot hebben e-"
 "mailclients toegang tot uw mailbox via IMAP en POP3. Rspamd filtert op spam."
 
-#: plinth/modules/email/__init__.py:30
+#: plinth/modules/email/__init__.py:31
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -1992,7 +1999,7 @@ msgstr ""
 "uitgaande e-mail. Sommige heffen de restrictie op na een expliciet verzoek. "
 "Zie de handleiding pagina voor meer informatie."
 
-#: plinth/modules/email/__init__.py:35
+#: plinth/modules/email/__init__.py:36
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2007,7 +2014,7 @@ msgstr ""
 "adres. Noodzakelijke aliassen zoals \"postmaster\" worden automatisch "
 "aangemaakt en wijzen naar de eerste admin gebruiker."
 
-#: plinth/modules/email/__init__.py:41
+#: plinth/modules/email/__init__.py:42
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2015,7 +2022,7 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> biedt gebruikers een "
 "webinterface om toegang te krijgen tot e-mail."
 
-#: plinth/modules/email/__init__.py:43
+#: plinth/modules/email/__init__.py:44
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
@@ -2023,19 +2030,19 @@ msgstr ""
 "Tijdens de installatie worden alle andere e-mailservers in het systeem "
 "verwijderd."
 
-#: plinth/modules/email/__init__.py:62
+#: plinth/modules/email/__init__.py:63
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: plinth/modules/email/__init__.py:64
+#: plinth/modules/email/__init__.py:65
 msgid "Email Server"
 msgstr "E-mailserver"
 
-#: plinth/modules/email/__init__.py:84
+#: plinth/modules/email/__init__.py:85
 msgid "My Email Aliases"
 msgstr "Mijn e-mail aliassen"
 
-#: plinth/modules/email/__init__.py:85
+#: plinth/modules/email/__init__.py:86
 msgid "Manage Aliases for Mailbox"
 msgstr "Aliassen voor postvak beheren"
 
@@ -2071,7 +2078,7 @@ msgstr "Kan geen getal zijn"
 msgid "Aliases"
 msgstr "Aliassen"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:49
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:50
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2278,7 +2285,7 @@ msgstr "Setup starten"
 msgid "Setup Complete"
 msgstr "Instelling voltooid"
 
-#: plinth/modules/gitweb/__init__.py:21
+#: plinth/modules/gitweb/__init__.py:22
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2297,7 +2304,7 @@ msgstr ""
 "line als grafische versies beschikbaar). En je kan je broncode delen met "
 "mensen over de hele wereld."
 
-#: plinth/modules/gitweb/__init__.py:28
+#: plinth/modules/gitweb/__init__.py:29
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -2305,15 +2312,15 @@ msgstr ""
 "Bezoek <a href=\"https://git-scm.com/docs/gittutorial\">Git tutorial</a> "
 "voor meer informatie over het gebruik van Git."
 
-#: plinth/modules/gitweb/__init__.py:44
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Read-write access to Git repositories"
 msgstr "Lees- en schrijftoegang tot Git-repositories"
 
-#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:11
+#: plinth/modules/gitweb/__init__.py:50 plinth/modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:50
+#: plinth/modules/gitweb/__init__.py:51
 msgid "Simple Git Hosting"
 msgstr "Eenvoudige Git Hosting"
 
@@ -2546,12 +2553,12 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 "%(box_name)s is vrije software, gelicenseerd onder de GNU Affero General "
-"Public License. De broncode is online beschikbaar op de <a href=\"https"
-"://salsa.debian.org/freedombox-team/freedombox\"> %(box_name)s repository</"
-"a>.  Bovendien kan de broncode van elk Debian-pakket worden verkregen van de "
-"site <a href=\"https://sources.debian.org/\">Debian Sources</a>, of door "
-"\"apt source <i>package_name</i>\" uit te voeren in een terminal (met behulp "
-"van Cockpit of SSH)."
+"Public License. De broncode is online beschikbaar op de <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox\"> %(box_name)s repository</a>.  "
+"Bovendien kan de broncode van elk Debian-pakket worden verkregen van de site "
+"<a href=\"https://sources.debian.org/\">Debian Sources</a>, of door \"apt "
+"source <i>package_name</i>\" uit te voeren in een terminal (met behulp van "
+"Cockpit of SSH)."
 
 #: plinth/modules/help/templates/help_about.html:82
 #, python-format
@@ -2811,7 +2818,7 @@ msgstr "Over {box_name}"
 msgid "{box_name} Manual"
 msgstr "{box_name} Handleiding"
 
-#: plinth/modules/i2p/__init__.py:20
+#: plinth/modules/i2p/__init__.py:21
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -2823,7 +2830,7 @@ msgstr ""
 "voor anonimiteit door gecodeerd verkeer te sturen via een netwerk dat door "
 "vrijwilligers over de hele wereld wordt verspreid."
 
-#: plinth/modules/i2p/__init__.py:24
+#: plinth/modules/i2p/__init__.py:25
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p."
 "net\" target=\"_blank\">homepage</a>."
@@ -2831,7 +2838,7 @@ msgstr ""
 "Vind meer informatie over I2P op hun project <a href=\"https://geti2p.net\" "
 "target=\"_blank\">homepage</a>."
 
-#: plinth/modules/i2p/__init__.py:26
+#: plinth/modules/i2p/__init__.py:27
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
@@ -2839,19 +2846,19 @@ msgstr ""
 "Bij het eerste bezoek aan de meegeleverde webinterface wordt het "
 "configuratieproces gestart."
 
-#: plinth/modules/i2p/__init__.py:48
+#: plinth/modules/i2p/__init__.py:49
 msgid "Manage I2P application"
 msgstr "I2P-toepassing beheren"
 
-#: plinth/modules/i2p/__init__.py:51 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:52 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:52 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
 msgid "Anonymity Network"
 msgstr "Anonimiteitsnetwerk"
 
-#: plinth/modules/i2p/__init__.py:77
+#: plinth/modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "I2P proxy"
 
@@ -2897,7 +2904,7 @@ msgstr ""
 "peer netwerk. Download bestanden door torrents toe te voegen of maak een "
 "nieuwe torrent om een bestand te delen."
 
-#: plinth/modules/ikiwiki/__init__.py:19
+#: plinth/modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -2907,7 +2914,7 @@ msgstr ""
 "verschillende lichtgewicht markup-talen, met inbegrip van Markdown, en "
 "algemene blogging functionaliteit zoals reacties en RSS-feeds."
 
-#: plinth/modules/ikiwiki/__init__.py:23
+#: plinth/modules/ikiwiki/__init__.py:24
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2921,15 +2928,15 @@ msgstr ""
 "Configuratie</a> kan je deze instellingen wijzigen en nieuwe gebruikers "
 "registreren."
 
-#: plinth/modules/ikiwiki/__init__.py:44 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:45 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:45
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid "Wiki and Blog"
 msgstr "Wiki en Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:72
+#: plinth/modules/ikiwiki/__init__.py:80
 msgid "View and edit wiki applications"
 msgstr "Bekijken en bewerken van wiki toepassingen"
 
@@ -3057,24 +3064,24 @@ msgstr ""
 "Start Gobby en selecteer vervolgens \"Verbinden met Server\" en voer de "
 "{box_name} domeinnaam in."
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr "Janus is een lichtgewicht WebRTC server."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr "Er is ook een eenvoudige videoconferentieruimte."
 
-#: plinth/modules/janus/__init__.py:25
+#: plinth/modules/janus/__init__.py:26
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr "Om Janus te gebruiken is <a href=\"{coturn_url}\">Coturn</a> nodig."
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:42
 msgid "Janus"
 msgstr "Janus"
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:44
 msgid "Video Room"
 msgstr "Video Ruimte"
 
@@ -3104,7 +3111,7 @@ msgstr "JSXC"
 msgid "Chat Client"
 msgstr "Chat Cliënt"
 
-#: plinth/modules/letsencrypt/__init__.py:24
+#: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -3120,7 +3127,7 @@ msgstr ""
 "van een domein te zijn tegenover Let's Encrypt, een certificaatwaarmerker "
 "(CA)."
 
-#: plinth/modules/letsencrypt/__init__.py:30
+#: plinth/modules/letsencrypt/__init__.py:31
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -3133,15 +3140,15 @@ msgstr ""
 "href=\"https://letsencrypt.org/repository/\">Let's Encrypt Subscriber "
 "Agreement</a> vóór het gebruik van deze dienst."
 
-#: plinth/modules/letsencrypt/__init__.py:57
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:58
+#: plinth/modules/letsencrypt/__init__.py:59
 msgid "Certificates"
 msgstr "Certificaten"
 
-#: plinth/modules/letsencrypt/__init__.py:94
+#: plinth/modules/letsencrypt/__init__.py:100
 msgid "Cannot test: No domains are configured."
 msgstr "Kan niet testen: Er zijn geen domeinen ingesteld."
 
@@ -3242,7 +3249,7 @@ msgstr "Certificaat met succes verwijderd voor domein {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "Verwijderen certificaat voor domein {domain} mislukt: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:26
+#: plinth/modules/matrixsynapse/__init__.py:27
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3259,7 +3266,7 @@ msgstr ""
 "Matrix server kunnen gesprekken aangaan met gebruikers op alle andere Matrix "
 "servers door federatie (gedecentraliseerd netwerk)."
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:35
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
@@ -3269,7 +3276,7 @@ msgstr ""
 "videogesprekken. Installeer de <a href=\"{coturn_url}\">Coturn</a> "
 "toepassing of configureer een externe server."
 
-#: plinth/modules/matrixsynapse/__init__.py:55
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3438,7 +3445,7 @@ msgstr ""
 "De registratieconfiguratie kan niet worden bijgewerkt wanneer de applicatie "
 "is uitgeschakeld."
 
-#: plinth/modules/mediawiki/__init__.py:20
+#: plinth/modules/mediawiki/__init__.py:21
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3451,7 +3458,7 @@ msgstr ""
 "gebruiken om een wiki website aan te bieden, persoonlijke aantekeningen bij "
 "te houden of met vrienden aan een gezamenlijke website te werken."
 
-#: plinth/modules/mediawiki/__init__.py:24
+#: plinth/modules/mediawiki/__init__.py:25
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3465,7 +3472,7 @@ msgstr ""
 "vanuit MediaWiki op de <a href=\"/mediawiki/index.php/Special:"
 "CreateAccount\">Speciaal:GebruikerRegistreren</a> pagina."
 
-#: plinth/modules/mediawiki/__init__.py:30
+#: plinth/modules/mediawiki/__init__.py:31
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3564,43 +3571,43 @@ msgstr ""
 "Kies een standaardtaal voor de MediaWiki-installatie. Gebruikers hebben de "
 "mogelijkheid om hun favoriete taal te kiezen."
 
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
 msgstr "Wachtwoord bijgewerkt"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:48
 msgid "Password update failed. Please choose a stronger password"
 msgstr "Wachtwoordupdate mislukt. Kies een sterker wachtwoord"
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:57
 msgid "Public registrations enabled"
 msgstr "Openbare registraties ingeschakeld"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:65
 msgid "Public registrations disabled"
 msgstr "Openbare registraties uitgeschakeld"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:70
 msgid "Private mode enabled"
 msgstr "Privé-modus ingeschakeld"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:76
 msgid "Private mode disabled"
 msgstr "Privé-modus uitgeschakeld"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:84
 msgid "Default skin changed"
 msgstr "Standaard uiterlijk veranderd"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:88
 msgid "Domain name updated"
 msgstr "Domeinnaam bijgewerkt"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:92
 msgid "Site name updated"
 msgstr "Sitenaam bijgewerkt"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:96
 msgid "Default language changed"
 msgstr "Standaardtaal veranderd"
 
@@ -3673,7 +3680,7 @@ msgstr "Indien uitgeschakeld, kunnen spelers niet sterven of schade oplopen."
 msgid "Address"
 msgstr "Adres"
 
-#: plinth/modules/minidlna/__init__.py:21
+#: plinth/modules/minidlna/__init__.py:22
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3691,15 +3698,15 @@ msgstr ""
 "mediaspelers, smartphones, televisies en spelsystemen (zoals PS3 en Xbox "
 "360) of programma's zoals totem en Kodi."
 
-#: plinth/modules/minidlna/__init__.py:43
+#: plinth/modules/minidlna/__init__.py:44
 msgid "Media streaming server"
 msgstr "Mediastreaming server"
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:47
+#: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
 msgstr "Simple Media Server"
 
@@ -3861,7 +3868,7 @@ msgstr "Secure Shell"
 msgid "Services"
 msgstr "Diensten"
 
-#: plinth/modules/networks/__init__.py:34
+#: plinth/modules/networks/__init__.py:35
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3869,7 +3876,7 @@ msgstr ""
 "Stel netwerkapparaten in. Maak verbinding met internet via Ethernet, Wi-Fi "
 "of PPPoE. Deel die verbinding met andere apparaten op het netwerk."
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:37
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3877,7 +3884,7 @@ msgstr ""
 "Apparaten die via andere methoden worden beheerd, zijn hier mogelijk niet "
 "beschikbaar voor configuratie."
 
-#: plinth/modules/networks/__init__.py:57
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "Netwerken"
 
@@ -4419,7 +4426,8 @@ msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:175
 #: plinth/modules/networks/templates/connection_show.html:218
-#: plinth/modules/shadowsocks/forms.py:48
+#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "Methode"
 
@@ -4448,7 +4456,7 @@ msgid "This connection is not active."
 msgstr "Deze verbinding is niet actief."
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:34
+#: plinth/modules/security/__init__.py:35
 msgid "Security"
 msgstr "Security"
 
@@ -5187,7 +5195,7 @@ msgstr ""
 "Selecteer een pagekite server. Gebruik \"pagekite.net\" om de standaard "
 "pagekite.net server te gebruiken."
 
-#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:39
+#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:27
 msgid "Server port"
 msgstr "Serverpoort"
 
@@ -5412,20 +5420,20 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Nu Uitschakelen"
 
-#: plinth/modules/privacy/__init__.py:14
+#: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
 msgstr "Beheer de privacy-instellingen voor het hele systeem."
 
-#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
+#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:69
 msgid "Privacy"
 msgstr "Privacy"
 
-#: plinth/modules/privacy/__init__.py:61
+#: plinth/modules/privacy/__init__.py:67
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Werk de privacy-instellingen bij zodat ze overeenkomen met uw voorkeuren."
 
-#: plinth/modules/privacy/__init__.py:66
+#: plinth/modules/privacy/__init__.py:72
 msgid "Review privacy setting"
 msgstr "Privacy-instelling bekijken"
 
@@ -5533,7 +5541,7 @@ msgstr "IRC Cliënt"
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:24
+#: plinth/modules/radicale/__init__.py:25
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5548,7 +5556,7 @@ msgstr ""
 "clients\">ondersteunde clienttoepassing</a> nodig. Radicale kan worden "
 "benaderd door elke {box_name} gebruiker."
 
-#: plinth/modules/radicale/__init__.py:30
+#: plinth/modules/radicale/__init__.py:31
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -5559,12 +5567,12 @@ msgstr ""
 "gebeurtenissen of contactpersonen, die moeten worden gedaan met behulp van "
 "een aparte client."
 
-#: plinth/modules/radicale/__init__.py:52
+#: plinth/modules/radicale/__init__.py:53
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:53
+#: plinth/modules/radicale/__init__.py:54
 msgid "Calendar and Addressbook"
 msgstr "Agenda en Adresboek"
 
@@ -5642,7 +5650,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Configuratie van de toegangsrechten is bijgewerkt"
 
-#: plinth/modules/roundcube/__init__.py:18
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5654,7 +5662,7 @@ msgstr ""
 "een email toepassing verwacht kan worden, inclusief MIME ondersteuning, een "
 "adresboek, het beheren van mappen, zoeken in berichten en spellingscontrole."
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5668,7 +5676,7 @@ msgstr ""
 "example.com</code>.  Voor IMAP over SSL (aanbevolen): vul het serverveld in, "
 "bijvoorbeeld <code>imaps://imap.example.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5683,7 +5691,7 @@ msgstr ""
 "(<a href=\"https://www.google.com/settings/security/lesssecureapps\">https://"
 "www.google.com/settings/security/lesssecureapps</a>)."
 
-#: plinth/modules/roundcube/__init__.py:50
+#: plinth/modules/roundcube/__init__.py:51
 msgid "Email Client"
 msgstr "Email Cliënt"
 
@@ -5701,7 +5709,7 @@ msgstr ""
 "inlogpagina en kunnen gebruikers alleen e-mails lezen en verzenden vanaf "
 "deze {box_name}."
 
-#: plinth/modules/rssbridge/__init__.py:20
+#: plinth/modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
@@ -5709,7 +5717,7 @@ msgstr ""
 "RSS-Bridge genereert RSS- en Atom-feeds voor websites die er geen hebben. "
 "Gegenereerde feeds kunnen door elke feedlezer worden gebruikt."
 
-#: plinth/modules/rssbridge/__init__.py:23
+#: plinth/modules/rssbridge/__init__.py:24
 #, python-brace-format
 msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
@@ -5718,7 +5726,7 @@ msgstr ""
 "Indien ingeschakeld, kan RSS-Bridge worden geopend door <a "
 "href=\"{users_url}\">elke gebruiker</a> die tot de feed-reader groep behoort."
 
-#: plinth/modules/rssbridge/__init__.py:27
+#: plinth/modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
@@ -5729,16 +5737,16 @@ msgstr ""
 "verschillende websites te volgen. Schakel bij het toevoegen van een feed "
 "authenticatie in en gebruik de {box_name}-inloggegevens."
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
+#: plinth/modules/rssbridge/__init__.py:46 plinth/modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Lezen en abonneren op nieuwsfeeds"
 
-#: plinth/modules/rssbridge/__init__.py:48
+#: plinth/modules/rssbridge/__init__.py:49
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: plinth/modules/rssbridge/__init__.py:49
+#: plinth/modules/rssbridge/__init__.py:50
 msgid "RSS Feed Generator"
 msgstr "RSS Feed Generator"
 
@@ -5925,7 +5933,7 @@ msgstr "Gedeelde map uitgeschakeld."
 msgid "Error disabling share: {error_message}"
 msgstr "Fout bij het uitschakelen van de gedeelde map: {error_message}"
 
-#: plinth/modules/searx/__init__.py:19
+#: plinth/modules/searx/__init__.py:20
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -5933,7 +5941,7 @@ msgstr ""
 "Searx is een privacy-respecterende internet metasearch engine. Het "
 "aggregeert en toont resultaten van meerdere zoekmachines."
 
-#: plinth/modules/searx/__init__.py:21
+#: plinth/modules/searx/__init__.py:22
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -5941,15 +5949,15 @@ msgstr ""
 "Searx kan worden gebruikt om tracking en profilering door zoekmachines te "
 "voorkomen. Het slaat standaard geen cookies op."
 
-#: plinth/modules/searx/__init__.py:37
+#: plinth/modules/searx/__init__.py:38
 msgid "Search the web"
 msgstr "Zoeken op internet"
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:41 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:41
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Zoeken op het Internet"
 
@@ -6122,16 +6130,22 @@ msgid "Shaarlier"
 msgstr "Shaarlier"
 
 #: plinth/modules/shadowsocks/__init__.py:18
+#: plinth/modules/shadowsocksserver/__init__.py:18
 msgid ""
-"Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
-"your Internet traffic. It can be used to bypass Internet filtering and "
-"censorship."
+"Shadowsocks is a tool for securely forwarding network requests to a remote "
+"server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
+"Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
-"Shadowsocks is een veilige SOCKS5 proxy, gemaakt om internetcommunicatie te "
-"beschermen. Het kan gebruikt worden om censuur en het filteren van Internet "
-"te omzeilen."
 
-#: plinth/modules/shadowsocks/__init__.py:22
+#: plinth/modules/shadowsocks/__init__.py:21
+#: plinth/modules/shadowsocksserver/__init__.py:21
+msgid ""
+"Shadowsocks can be used to bypass Internet filtering and censorship. This "
+"requires that the Shadowsocks server is in a location where it can freely "
+"access the Internet, without filtering."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -6144,7 +6158,7 @@ msgstr ""
 "Apparaten in het lokale netwerk kunnen met deze proxy verbinden, en hun data "
 "zal versleuteld via de Shadowsocks server verstuurd worden."
 
-#: plinth/modules/shadowsocks/__init__.py:27
+#: plinth/modules/shadowsocks/__init__.py:31
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -6153,42 +6167,85 @@ msgstr ""
 "proxy in op het apparaat, webbrowser of toepassing naar http://"
 "adres_van_de_freedombox:1080/"
 
-#: plinth/modules/shadowsocks/__init__.py:46
-msgid "Shadowsocks"
+#: plinth/modules/shadowsocks/__init__.py:50
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Client"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:48
-msgid "Socks5 Proxy"
-msgstr "Socks5 Proxy"
+#: plinth/modules/shadowsocks/__init__.py:52
+msgid "Bypass Censorship"
+msgstr ""
 
-#: plinth/modules/shadowsocks/forms.py:10
-#: plinth/modules/shadowsocks/forms.py:11
-msgid "Recommended"
-msgstr "Aanbevolen"
-
-#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
 msgstr "Server"
 
-#: plinth/modules/shadowsocks/forms.py:37
+#: plinth/modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Server hostnaam of IP adres"
 
-#: plinth/modules/shadowsocks/forms.py:41
+#: plinth/modules/shadowsocks/forms.py:29
 msgid "Server port number"
 msgstr "Server poortnummer"
 
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
 msgid "Password used to encrypt data. Must match server password."
 msgstr ""
 "Wachtwoord dat wordt gebruikt om gegevens te coderen. Moet overeenkomen met "
 "serverwachtwoord."
 
-#: plinth/modules/shadowsocks/forms.py:49
+#: plinth/modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Encryptie methode. Moet overeenkomen met de instelling van de server."
 
-#: plinth/modules/sharing/__init__.py:16
+#: plinth/modules/shadowsocksserver/__init__.py:26
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Your {box_name} can run a Shadowsocks client, that can connect to a "
+#| "Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
+#| "connect to this proxy, and their data will be encrypted and proxied "
+#| "through the Shadowsocks server."
+msgid ""
+"Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
+"clients to connect to it. Clients' data will be encrypted and proxied "
+"through this server."
+msgstr ""
+"Uw {box_name} kan een Shadowsocks applicatie draaien, die met een "
+"Shadowsocks server verbindt. Het zal ook een SOCKS5 proxy activeren. "
+"Apparaten in het lokale netwerk kunnen met deze proxy verbinden, en hun data "
+"zal versleuteld via de Shadowsocks server verstuurd worden."
+
+#: plinth/modules/shadowsocksserver/__init__.py:48
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Server"
+msgstr "Shadowsocks"
+
+#: plinth/modules/shadowsocksserver/__init__.py:49
+msgid "Help Others Bypass Censorship"
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:10
+#: plinth/modules/shadowsocksserver/forms.py:11
+msgid "Recommended"
+msgstr "Aanbevolen"
+
+#: plinth/modules/shadowsocksserver/forms.py:38
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password used to encrypt data. Clients must use the same password."
+msgstr ""
+"Wachtwoord dat wordt gebruikt om gegevens te coderen. Moet overeenkomen met "
+"serverwachtwoord."
+
+#: plinth/modules/shadowsocksserver/forms.py:43
+#, fuzzy
+#| msgid "Encryption method. Must match setting on server."
+msgid "Encryption method. Clients must use the same setting."
+msgstr "Encryptie methode. Moet overeenkomen met de instelling van de server."
+
+#: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -6197,7 +6254,7 @@ msgstr ""
 "Delen maakt het mogelijk om bestanden en mappen op {box_name} te delen via "
 "het Internet met door jou bepaalde gebruikers."
 
-#: plinth/modules/sharing/__init__.py:33
+#: plinth/modules/sharing/__init__.py:34
 msgid "Sharing"
 msgstr "Delen"
 
@@ -6534,7 +6591,7 @@ msgstr ""
 msgid "Rollback to Snapshot"
 msgstr "Terugdraaien naar Snapshot"
 
-#: plinth/modules/ssh/__init__.py:21
+#: plinth/modules/ssh/__init__.py:22
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -6546,11 +6603,11 @@ msgstr ""
 "andere locatie die daarvoor geautoriseerd is, kan beheerdertaken uitvoeren, "
 "bestanden kopiëren en andere taken verrichten door zulk een verbinding."
 
-#: plinth/modules/ssh/__init__.py:41
+#: plinth/modules/ssh/__init__.py:42
 msgid "Secure Shell (SSH) Server"
 msgstr "Secure Shell (SSH) Server"
 
-#: plinth/modules/ssh/__init__.py:61
+#: plinth/modules/ssh/__init__.py:73
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Op afstand inloggen met Secure Shell (SSH)"
 
@@ -6602,7 +6659,7 @@ msgstr "Algoritme"
 msgid "Fingerprint"
 msgstr "Vingerafdruk"
 
-#: plinth/modules/sso/__init__.py:26
+#: plinth/modules/sso/__init__.py:27
 msgid "Single Sign On"
 msgstr "Eenmalige aanmelding"
 
@@ -6852,7 +6909,7 @@ msgstr "Het apparaat kan veilig worden losgekoppeld."
 msgid "Error ejecting device: {error_message}"
 msgstr "Fout bij verwijderen van apparaat: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:22
+#: plinth/modules/syncthing/__init__.py:23
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -6865,7 +6922,7 @@ msgstr ""
 "zullen automatisch dezelfde veranderingen ondergaan op de andere apparaten "
 "waarop Syncthing draait."
 
-#: plinth/modules/syncthing/__init__.py:27
+#: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -6883,16 +6940,16 @@ msgstr ""
 "{box_name} is alleen beschikbaar voor gebruikers die tot de \"admin\"- of de "
 "\"syncthing-access\"-groep behoren."
 
-#: plinth/modules/syncthing/__init__.py:54
+#: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
 msgstr "Beheer Syncthing toepassing"
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:59
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Bestandssynchronisatie"
 
@@ -7039,8 +7096,8 @@ msgid ""
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Een \"onion service\" zorgt ervoor dat {box_name} geselecteerde diensten ("
-"zoals wiki of chat) kan aanbieden zonder de locatie te onthullen. Deze "
+"Een \"onion service\" zorgt ervoor dat {box_name} geselecteerde diensten "
+"(zoals wiki of chat) kan aanbieden zonder de locatie te onthullen. Deze "
 "dienst nog niet gebruiken als sterke anonimiteit vereist is."
 
 #: plinth/modules/tor/forms.py:111
@@ -7088,11 +7145,11 @@ msgstr "Configuratie bijwerken"
 msgid "Error configuring app: {error}"
 msgstr "Fout bij het configureren van de toepassing: {error}"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission is een BitTorrent-client met een webinterface."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:26
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -7100,11 +7157,11 @@ msgstr ""
 "BitTorrent is een peer-to-peer bestandsdeling protocol. Houd in gedachten "
 "dat BitTorrent gebruik niet anoniem is."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:28
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Wijzig de standaardpoort van de Transmission daemon niet."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
@@ -7113,7 +7170,7 @@ msgstr ""
 "Vergeleken met <a href=\"{deluge_url}\">Deluge</a> is Transmission "
 "eenvoudiger en lichter, maar minder aanpasbaar."
 
-#: plinth/modules/transmission/__init__.py:33
+#: plinth/modules/transmission/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -7122,7 +7179,7 @@ msgstr ""
 "Het kan geraadpleegd worden door <a href=\"{users_url}\">iedere gebruiker</"
 "a> op {box_name} die lid is van de bit-torrent groep (admin)."
 
-#: plinth/modules/transmission/__init__.py:37
+#: plinth/modules/transmission/__init__.py:38
 #, python-brace-format
 msgid ""
 "In addition to the web interface, mobile and desktop apps can also be used "
@@ -7135,7 +7192,7 @@ msgstr ""
 "URL <a href=\"/transmission-remote/rpc\">/transmission-remote/rpc</a> om "
 "applicaties voor afstandsbediening te configureren."
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
@@ -7144,7 +7201,7 @@ msgstr ""
 "<a href=\"{samba_url}\">Samba-shares</a> kunnen worden ingesteld als de "
 "standaard downloadmap in het keuzemenu hieronder."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:48
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -7153,7 +7210,7 @@ msgstr ""
 "Nadat een download is voltooid, is toegang tot de bestanden ook mogelijk met "
 "behulp van de app <a href=\"{sharing_url}\">Sharing</a>."
 
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:74
 #: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
@@ -7162,7 +7219,7 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr "Tremotesf"
 
-#: plinth/modules/ttrss/__init__.py:20
+#: plinth/modules/ttrss/__init__.py:21
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -7172,7 +7229,7 @@ msgstr ""
 "om het lezen van nieuws vanaf iedere locatie mogelijk te maken, terwijl het "
 "zoveel mogelijk als een echte desktoptoepassing wil werken."
 
-#: plinth/modules/ttrss/__init__.py:24
+#: plinth/modules/ttrss/__init__.py:25
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
@@ -7181,7 +7238,7 @@ msgstr ""
 "Indien ingeschakeld, kan Tiny Tiny RSS worden geopend door <a "
 "href=\"{users_url}\">elke gebruiker</a> die tot de feed-reader groep behoort."
 
-#: plinth/modules/ttrss/__init__.py:29
+#: plinth/modules/ttrss/__init__.py:30
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
@@ -7190,11 +7247,11 @@ msgstr ""
 "Gebruik de URL <a href=\"/tt-rss/\">/tt-rss</a> of /tt-rss-app in om te "
 "verbinden met een mobiele- of desktoptoepassing voor Tiny Tiny RSS."
 
-#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
+#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "News Feed Reader"
 
@@ -7210,13 +7267,13 @@ msgstr "TTRSS-lezer"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: plinth/modules/upgrades/__init__.py:35
+#: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Controleer de nieuwste software- en beveiligingsupdates en pas deze toe."
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7229,22 +7286,22 @@ msgstr ""
 "het systeem opnieuw moet worden opgestart, gebeurt dit automatisch om 02:00 "
 "uur, waardoor alle toepassingen even niet beschikbaar zijn."
 
-#: plinth/modules/upgrades/__init__.py:64
-#: plinth/modules/upgrades/__init__.py:119
+#: plinth/modules/upgrades/__init__.py:65
+#: plinth/modules/upgrades/__init__.py:128
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Software bijwerken"
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox geaktualiseerd"
 
-#: plinth/modules/upgrades/__init__.py:190
+#: plinth/modules/upgrades/__init__.py:199
 msgid "Could not start distribution update"
 msgstr "Kan distributie-update niet starten"
 
-#: plinth/modules/upgrades/__init__.py:192
+#: plinth/modules/upgrades/__init__.py:201
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7254,11 +7311,11 @@ msgstr ""
 "te starten. Zorg ervoor dat ten minste 5 GB ruimte vrij is. Als "
 "ingeschakeld, wordt de distributie-update na 24 uur opnieuw geprobeerd."
 
-#: plinth/modules/upgrades/__init__.py:203
+#: plinth/modules/upgrades/__init__.py:212
 msgid "Distribution update started"
 msgstr "Distributie-update gestart"
 
-#: plinth/modules/upgrades/__init__.py:205
+#: plinth/modules/upgrades/__init__.py:214
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr "Update naar volgende stabiele release gestart. Dit kan lang duren."
@@ -7473,7 +7530,7 @@ msgstr "Tussentijdse Software Updates zijn ingeschakeld."
 msgid "Starting distribution upgrade test."
 msgstr "Start de distributie upgrade test."
 
-#: plinth/modules/users/__init__.py:28
+#: plinth/modules/users/__init__.py:29
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7484,7 +7541,7 @@ msgstr ""
 "apps moet een gebruikersaccount deel uitmaken van een groep om de gebruiker "
 "toegang te geven tot de toepassing."
 
-#: plinth/modules/users/__init__.py:33
+#: plinth/modules/users/__init__.py:34
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7496,15 +7553,15 @@ msgstr ""
 "die lid zijn van de <em>admin</em> -groep mogen toepassings- of "
 "systeeminstellingen wijzigen."
 
-#: plinth/modules/users/__init__.py:54
+#: plinth/modules/users/__init__.py:55
 msgid "Users and Groups"
 msgstr "Gebruikers en Groepen"
 
-#: plinth/modules/users/__init__.py:74
+#: plinth/modules/users/__init__.py:80
 msgid "Access to all services and system settings"
 msgstr "Toegang tot alle diensten en systeeminstellingen"
 
-#: plinth/modules/users/__init__.py:110
+#: plinth/modules/users/__init__.py:116
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Zoek LDAP item \"{search_item}\""
@@ -8087,7 +8144,7 @@ msgstr "Verwijder verbinding met server"
 msgid "Server deleted."
 msgstr "Server verwijderd."
 
-#: plinth/modules/wordpress/__init__.py:19
+#: plinth/modules/wordpress/__init__.py:20
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -8101,7 +8158,7 @@ msgstr ""
 "met thema's. De website en het beheer ervan is bruikbaar met een mobiel "
 "apparaat."
 
-#: plinth/modules/wordpress/__init__.py:25
+#: plinth/modules/wordpress/__init__.py:26
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -8114,7 +8171,7 @@ msgstr ""
 "{box_name} opent met de juiste domeinnaam. Schakel permalinks in de "
 "beheerdersinterface in voor betere URL's naar uw pagina's en berichten."
 
-#: plinth/modules/wordpress/__init__.py:30
+#: plinth/modules/wordpress/__init__.py:31
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
@@ -8125,7 +8182,7 @@ msgstr ""
 "href=\"/wordpress/wp-admin/\">administratie pagina</a> om in de toekomst de "
 "administratie interface te bereiken."
 
-#: plinth/modules/wordpress/__init__.py:34
+#: plinth/modules/wordpress/__init__.py:35
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
@@ -8135,12 +8192,12 @@ msgstr ""
 "vanuit de beheerdersinterface. Extra plug-ins of thema's kunnen op eigen "
 "risico worden geïnstalleerd en geüpgraded."
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:53
+#: plinth/modules/wordpress/__init__.py:54
 msgid "Website and Blog"
 msgstr "Website en Blog"
 
@@ -8740,6 +8797,18 @@ msgstr "voor het verwijderen van {app_id}"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
+#~ "your Internet traffic. It can be used to bypass Internet filtering and "
+#~ "censorship."
+#~ msgstr ""
+#~ "Shadowsocks is een veilige SOCKS5 proxy, gemaakt om internetcommunicatie "
+#~ "te beschermen. Het kan gebruikt worden om censuur en het filteren van "
+#~ "Internet te omzeilen."
+
+#~ msgid "Socks5 Proxy"
+#~ msgstr "Socks5 Proxy"
 
 #~ msgid "ChatSecure"
 #~ msgstr "ChatSecure"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-08 20:38-0400\n"
+"POT-Creation-Date: 2023-06-05 21:39-0400\n"
 "PO-Revision-Date: 2023-02-25 11:36+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -22,6 +22,11 @@ msgstr ""
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "Burim faqeje"
+
+#: plinth/config.py:117
+#, python-brace-format
+msgid "Static configuration {etc_path} is setup properly"
+msgstr ""
 
 #: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
@@ -102,15 +107,15 @@ msgstr "Gjuhë për t’u përdorur për të paraqitur këtë ndërfaqe web"
 msgid "Use the language preference set in the browser"
 msgstr "Përdor parapëlqim gjuhe të caktuar te shfletuesi"
 
-#: plinth/modules/apache/__init__.py:31
+#: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
 msgstr "Shërbyes HTTP Apache"
 
-#: plinth/modules/apache/__init__.py:39
+#: plinth/modules/apache/__init__.py:46
 msgid "Web Server"
 msgstr "Shërbyes"
 
-#: plinth/modules/apache/__init__.py:45
+#: plinth/modules/apache/__init__.py:52
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Ndërfaqe Web e {box_name} (Plinth)"
@@ -173,7 +178,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Aktivizoni një Plan Kopjeruajtjesh"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:76
 #: plinth/modules/storage/__init__.py:312
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -739,7 +744,7 @@ msgstr "Çmontimi dështoi!"
 msgid "Mounting failed"
 msgstr "Montimi dështoi"
 
-#: plinth/modules/bepasty/__init__.py:16
+#: plinth/modules/bepasty/__init__.py:17
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -751,7 +756,7 @@ msgstr ""
 "audio, video dhe dokumente PDF mund të bëhet paraparje te shfletuesi. "
 "Kartelave që ndahen me të tjerë mund t’u caktohet skadim pas një periudhe."
 
-#: plinth/modules/bepasty/__init__.py:20
+#: plinth/modules/bepasty/__init__.py:21
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -763,7 +768,7 @@ msgstr ""
 "një fjalëkalim, mund t’ua jepni përdoruesve të cilët duhet të kenë lejet "
 "përkatëse."
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -775,39 +780,39 @@ msgstr ""
 "t’ju lejojë të shfuqizoni më vonë hyrje për një persona apo një grup, duke "
 "hequr nga lista fjalëkalimin përkatës."
 
-#: plinth/modules/bepasty/__init__.py:31 plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:32 plinth/modules/bepasty/__init__.py:41
 msgid "Read a file, if a web link to the file is available"
 msgstr "Lexoni një kartelë, nëse zotëroni një lidhje web për te kartela"
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid "Create or upload files"
 msgstr "Krijoni ose ngarkoni kartela"
 
-#: plinth/modules/bepasty/__init__.py:33
+#: plinth/modules/bepasty/__init__.py:34
 msgid "List all files and their web links"
 msgstr "Paraqit krejt kartelat dhe lidhjet e tyre"
 
-#: plinth/modules/bepasty/__init__.py:34
+#: plinth/modules/bepasty/__init__.py:35
 msgid "Delete files"
 msgstr "Fshini kartela"
 
-#: plinth/modules/bepasty/__init__.py:35
+#: plinth/modules/bepasty/__init__.py:36
 msgid "Administer files: lock/unlock files"
 msgstr "Administroni kartela: kyçni/shkyçni kartela"
 
-#: plinth/modules/bepasty/__init__.py:39
+#: plinth/modules/bepasty/__init__.py:40
 msgid "None, password is always required"
 msgstr "Askush, fjalëkalimi është përherë i domosdoshëm"
 
-#: plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:42
 msgid "List and read all files"
 msgstr "Shfaqni dhe lexoni krejt kartelat"
 
-#: plinth/modules/bepasty/__init__.py:56 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:57 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:58
+#: plinth/modules/bepasty/__init__.py:59
 msgid "File & Snippet Sharing"
 msgstr "Dhënie Kartelash &amp; Copëzash"
 
@@ -855,7 +860,8 @@ msgstr "S’ka fjalëkalime aktualisht të formësuar."
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
+#: plinth/modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Fjalëkalim"
 
@@ -1001,12 +1007,13 @@ msgstr "Rifresko adresë IP dhe përkatësi"
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
 #: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
-#: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/shadowsocksserver/views.py:52 plinth/modules/ssh/views.py:62
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Formësimi u përditësua"
 
-#: plinth/modules/calibre/__init__.py:23
+#: plinth/modules/calibre/__init__.py:24
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -1017,7 +1024,7 @@ msgstr ""
 "koleksioni juaj i e-librave. E-librat mund t’i depozitoni në {box_name} "
 "tuaj, t’i lexoni që nga interneti ose nga cilado pajisje juaj."
 
-#: plinth/modules/calibre/__init__.py:26
+#: plinth/modules/calibre/__init__.py:27
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -1033,7 +1040,7 @@ msgstr ""
 "fundit të leximit, faqerojtës, dhe tekst të theksuar. Aktualisht nuk "
 "mbulohet shpërndarje lënde duke përdorur OPDS."
 
-#: plinth/modules/calibre/__init__.py:32
+#: plinth/modules/calibre/__init__.py:33
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
@@ -1042,15 +1049,15 @@ msgstr ""
 "gjendje të përdorin aplikacionin. Krejt përdoruesit e lejuar mund të hyjnë "
 "në të gjitha bibliotekat."
 
-#: plinth/modules/calibre/__init__.py:52
+#: plinth/modules/calibre/__init__.py:53
 msgid "Use calibre e-book libraries"
 msgstr "Përdorni biblioteka calibre e-librash"
 
-#: plinth/modules/calibre/__init__.py:55 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:56 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:56
+#: plinth/modules/calibre/__init__.py:57
 msgid "E-book Library"
 msgstr "Bibliotekë E-librash"
 
@@ -1132,7 +1139,7 @@ msgstr "{name} u fshi."
 msgid "Could not delete {name}: {error}"
 msgstr "S’u fshi dot {name}: {error}"
 
-#: plinth/modules/cockpit/__init__.py:22
+#: plinth/modules/cockpit/__init__.py:23
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1146,7 +1153,7 @@ msgstr ""
 "domosdoshme. Ka gjithashtu edhe një terminal me bazë web, për veprime që nga "
 "një konsol."
 
-#: plinth/modules/cockpit/__init__.py:28
+#: plinth/modules/cockpit/__init__.py:29
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1159,7 +1166,7 @@ msgstr ""
 "fjala &lt;em&gt;bonding&lt;/em&gt;, &lt;em&gt;bridging&lt;/em&gt; dhe "
 "administrmi VLAN-i."
 
-#: plinth/modules/cockpit/__init__.py:33
+#: plinth/modules/cockpit/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1168,12 +1175,12 @@ msgstr ""
 "Mund të përdoret nga <a href=\"{users_url}\">cilido përdorues</a> në "
 "{box_name} që është pjesë e grupit të përgjegjësve."
 
-#: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:53 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:54
+#: plinth/modules/cockpit/__init__.py:55
 msgid "Server Administration"
 msgstr "Administrim Shërbyesi"
 
@@ -1437,11 +1444,11 @@ msgstr "Gabim në ujdisje zone kohore: {exception}"
 msgid "Time zone set"
 msgstr "Zona kohore u caktua"
 
-#: plinth/modules/deluge/__init__.py:20
+#: plinth/modules/deluge/__init__.py:21
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge është një klient BitTorrent që përmban një UI Web."
 
-#: plinth/modules/deluge/__init__.py:21
+#: plinth/modules/deluge/__init__.py:22
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
@@ -1449,17 +1456,17 @@ msgstr ""
 "Fjalëkalimi parazgjedhje është “deluge”, por duhet të bëni hyrjen me të dhe "
 "ta ndryshoni menjëherë pas aktivizimit të këtij shërbimi."
 
-#: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "Shkarkoni kartela duke përdorur aplikacione BitTorrent"
 
-#: plinth/modules/deluge/__init__.py:44 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:45 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:75
+#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "Klient Web BitTorrent"
 
@@ -1819,7 +1826,7 @@ msgstr "Shërbyesi hodhi poshtë lidhjen"
 msgid "Already up-to-date"
 msgstr "I përditësuar tashmë"
 
-#: plinth/modules/ejabberd/__init__.py:29
+#: plinth/modules/ejabberd/__init__.py:30
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1827,7 +1834,7 @@ msgstr ""
 "XMPP është një protokoll i hapët dhe i standardizuar komunikimesh. Këtu mund "
 "të vini në punë dhe formësoni shërbyesin tuaj XMPP, të quajtur ejabberd."
 
-#: plinth/modules/ejabberd/__init__.py:32
+#: plinth/modules/ejabberd/__init__.py:33
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1841,7 +1848,7 @@ msgstr ""
 "aktivizohet, ejabberd mund të përdoret nga cilido përdorues <a "
 "href=\"{users_url}\"> me hyrje {box_name}</a>."
 
-#: plinth/modules/ejabberd/__init__.py:40
+#: plinth/modules/ejabberd/__init__.py:41
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1851,12 +1858,12 @@ msgstr ""
 "aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
 "të jashtëm."
 
-#: plinth/modules/ejabberd/__init__.py:61
+#: plinth/modules/ejabberd/__init__.py:62
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:62
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/ejabberd/__init__.py:63
+#: plinth/modules/matrixsynapse/__init__.py:57
 msgid "Chat Server"
 msgstr "Shërbyes Fjalosjesh"
 
@@ -1973,7 +1980,7 @@ msgstr ""
 "Përkatësinë tuaj mund ta ujdisni te faqja <a "
 "href=\"%(index_url)s\">Formësoni</a> e sistemit."
 
-#: plinth/modules/email/__init__.py:26
+#: plinth/modules/email/__init__.py:27
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -1984,7 +1991,7 @@ msgstr ""
 "të përdorin kutinë tuaj postare përmes IMAP apo POP3. Rspamd trajton "
 "mesazhet e padëshiruar."
 
-#: plinth/modules/email/__init__.py:30
+#: plinth/modules/email/__init__.py:31
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -1997,7 +2004,7 @@ msgstr ""
 "kërkese shprehimisht për këtë. Për më tepër hollësi, shihni faqen e "
 "doracakut."
 
-#: plinth/modules/email/__init__.py:35
+#: plinth/modules/email/__init__.py:36
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2013,7 +2020,7 @@ msgstr ""
 "“postmaster” krijohen automatikisht dhe shpien te i pari përdorues "
 "përgjegjës."
 
-#: plinth/modules/email/__init__.py:41
+#: plinth/modules/email/__init__.py:42
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2021,26 +2028,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Aplikacioni Roundcube</a> furnizon "
 "ndërfaqe web për përdoruesit për të përdorur email-in."
 
-#: plinth/modules/email/__init__.py:43
+#: plinth/modules/email/__init__.py:44
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Gjatë instalimit, çfarëdo shërbyesi tjetër email në sistem do të çinstalohet."
 
-#: plinth/modules/email/__init__.py:62
+#: plinth/modules/email/__init__.py:63
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: plinth/modules/email/__init__.py:64
+#: plinth/modules/email/__init__.py:65
 msgid "Email Server"
 msgstr "Shërbyes Email-i"
 
-#: plinth/modules/email/__init__.py:84
+#: plinth/modules/email/__init__.py:85
 msgid "My Email Aliases"
 msgstr "Aliaset e Mi Email"
 
-#: plinth/modules/email/__init__.py:85
+#: plinth/modules/email/__init__.py:86
 msgid "Manage Aliases for Mailbox"
 msgstr "Administroni Aliase për Kuti postare"
 
@@ -2076,7 +2083,7 @@ msgstr "S’mund të jetë një numër"
 msgid "Aliases"
 msgstr "Aliase"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:49
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:50
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2284,7 +2291,7 @@ msgstr "Nis Ujdisjen"
 msgid "Setup Complete"
 msgstr "Ujdisje e Plotësuar"
 
-#: plinth/modules/gitweb/__init__.py:21
+#: plinth/modules/gitweb/__init__.py:22
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2302,7 +2309,7 @@ msgstr ""
 "rreshti urdhrash ose përmes klientësh të shumta grafikë të gatshëm. Dhe mund "
 "ta ndani kodin tuaj me njerëz anembanë botës."
 
-#: plinth/modules/gitweb/__init__.py:28
+#: plinth/modules/gitweb/__init__.py:29
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
@@ -2310,15 +2317,15 @@ msgstr ""
 "Për të mësuar më tepër se si të përdoret Git, vizitoni <a href=\"https://git-"
 "scm.com/docs/gittutorial\">përkujdesore Git-i</a>."
 
-#: plinth/modules/gitweb/__init__.py:44
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Read-write access to Git repositories"
 msgstr "Hyrje për shkrim-lexim në depo Git"
 
-#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:11
+#: plinth/modules/gitweb/__init__.py:50 plinth/modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: plinth/modules/gitweb/__init__.py:50
+#: plinth/modules/gitweb/__init__.py:51
 msgid "Simple Git Hosting"
 msgstr "Strehim i Thjeshtë Git"
 
@@ -2805,7 +2812,7 @@ msgstr "Mbi {box_name}"
 msgid "{box_name} Manual"
 msgstr "Doracak për {box_name}"
 
-#: plinth/modules/i2p/__init__.py:20
+#: plinth/modules/i2p/__init__.py:21
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -2817,7 +2824,7 @@ msgstr ""
 "dërguar trafik të fshehtëzuar, përmes një rrjeti të mbajtur në këmbë nga "
 "vullnetarë, të shpërndarë anembanë botës."
 
-#: plinth/modules/i2p/__init__.py:24
+#: plinth/modules/i2p/__init__.py:25
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p."
 "net\" target=\"_blank\">homepage</a>."
@@ -2825,26 +2832,26 @@ msgstr ""
 "Më më tepër informacion rreth I2P-së mund të gjeni që nga <a href=\"https://"
 "geti2p.net\" target=\"_blank\"> faqja hyrëse</a> e vetë projektit."
 
-#: plinth/modules/i2p/__init__.py:26
+#: plinth/modules/i2p/__init__.py:27
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
 msgstr ""
 "Vizita e parë te ndërfaqja web e dhënë do të fillojë procesin e formësimit."
 
-#: plinth/modules/i2p/__init__.py:48
+#: plinth/modules/i2p/__init__.py:49
 msgid "Manage I2P application"
 msgstr "Administroni aplikacion I2P"
 
-#: plinth/modules/i2p/__init__.py:51 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:52 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:52 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
 msgid "Anonymity Network"
 msgstr "Rrjet Anonimiteti"
 
-#: plinth/modules/i2p/__init__.py:77
+#: plinth/modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "Ndërmjetës I2P"
 
@@ -2890,7 +2897,7 @@ msgstr ""
 "një rrjet “peer-to-peer”. Shkarkoni kartela duke shtuar rrëkeza, ose krijoni "
 "një rrëkezë të re për të ndarë një kartelë me të tjerët."
 
-#: plinth/modules/ikiwiki/__init__.py:19
+#: plinth/modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -2900,7 +2907,7 @@ msgstr ""
 "markup-i të lehta, përfshi Markdown, dhe funksione të rëndomtë blogimi, bie "
 "fjala, komente dhe prurje RSS."
 
-#: plinth/modules/ikiwiki/__init__.py:23
+#: plinth/modules/ikiwiki/__init__.py:24
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2914,15 +2921,15 @@ msgstr ""
 "ekzistueset. Te <a href=\"{users_url}\">Formësim Përdoruesish</a> mund të "
 "ndryshoni këto leje ose të shtoni përdorues të rinj."
 
-#: plinth/modules/ikiwiki/__init__.py:44 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:45 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:45
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid "Wiki and Blog"
 msgstr "Wiki dhe Blog"
 
-#: plinth/modules/ikiwiki/__init__.py:72
+#: plinth/modules/ikiwiki/__init__.py:80
 msgid "View and edit wiki applications"
 msgstr "Shihni dhe përpunoni aplikacione wiki"
 
@@ -3050,26 +3057,26 @@ msgstr ""
 "Niseni Gobby-n dhe përzgjidhni “Lidhu me Shërbyes” dhe jepni emrin e "
 "përkatësisë tuaj {box_name}."
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr "Janus është një shërbyes WebRTC i peshës së lehtë."
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr "Përfshihet një dhomë e thjeshtë konferencash me video."
 
-#: plinth/modules/janus/__init__.py:25
+#: plinth/modules/janus/__init__.py:26
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 "<a href=\"{coturn_url}\">Coturn</a> është i domosdoshëm për të përdorur "
 "Janus-in."
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:42
 msgid "Janus"
 msgstr "Janus"
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:44
 msgid "Video Room"
 msgstr "Dhomë Me Video"
 
@@ -3099,7 +3106,7 @@ msgstr "JSXC"
 msgid "Chat Client"
 msgstr "Klient Fjalosjesh"
 
-#: plinth/modules/letsencrypt/__init__.py:24
+#: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -3114,7 +3121,7 @@ msgstr ""
 "përkatësi të pranishme.  Këtë e bën duke dëshmuar për veten se është i zoti "
 "i një përkatësie nga Let’s Encrypt, një autoritet dëshmish (AD)."
 
-#: plinth/modules/letsencrypt/__init__.py:30
+#: plinth/modules/letsencrypt/__init__.py:31
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -3127,15 +3134,15 @@ msgstr ""
 "pajtohuni me <a href=\"https://letsencrypt.org/repository/\">Marrëveshje "
 "Pajtimtari Let’s Encrypt</a> before using this service."
 
-#: plinth/modules/letsencrypt/__init__.py:57
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:58
+#: plinth/modules/letsencrypt/__init__.py:59
 msgid "Certificates"
 msgstr "Dëshmi"
 
-#: plinth/modules/letsencrypt/__init__.py:94
+#: plinth/modules/letsencrypt/__init__.py:100
 msgid "Cannot test: No domains are configured."
 msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
 
@@ -3236,7 +3243,7 @@ msgstr "Dëshmi e fshirë me sukses për përkatësinë {domain}"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "S’u arrit të fshihet dëshmi për përkatësinë {domain}: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:26
+#: plinth/modules/matrixsynapse/__init__.py:27
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3253,7 +3260,7 @@ msgstr ""
 "funksionojë. Përmes federimi, përdoruesit në një shërbyes të dhënë Matrix "
 "mund të bisedojnë me përdorues në krejt shërbyesit e tjerë Matrix."
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:35
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
@@ -3263,7 +3270,7 @@ msgstr ""
 "aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
 "të jashtëm."
 
-#: plinth/modules/matrixsynapse/__init__.py:55
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3430,7 +3437,7 @@ msgstr ""
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:20
+#: plinth/modules/mediawiki/__init__.py:21
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3443,7 +3450,7 @@ msgstr ""
 "strehuar sajt të llojit wiki, për të mbajtur shënime ose për të bashkëpunuar "
 "me shokë në projekte."
 
-#: plinth/modules/mediawiki/__init__.py:24
+#: plinth/modules/mediawiki/__init__.py:25
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3458,7 +3465,7 @@ msgstr ""
 "href=\"/mediawiki/index.php/Special:CreateAccount\">Special:CreateAccount</"
 "a>."
 
-#: plinth/modules/mediawiki/__init__.py:30
+#: plinth/modules/mediawiki/__init__.py:31
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3564,45 +3571,45 @@ msgstr ""
 "Zgjidhni një lëkurçe parazgjedhje për instalimin tuaj MediaWiki. Përdoruesit "
 "kanë mundësi të përzgjedhin lëkurçen e tyre të parapëlqyer."
 
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
 msgstr "Fjalëkalimi u përditësua"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:48
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
 "Përditësimi i fjalëkalimit dështoi. Ju lutemi, zgjidhni një fjalëkalim më të "
 "fortë"
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:57
 msgid "Public registrations enabled"
 msgstr "Regjistrimet publike u aktivizuan"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:65
 msgid "Public registrations disabled"
 msgstr "Regjistrimet publike u çaktivizuan"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:70
 msgid "Private mode enabled"
 msgstr "Mënyra private u aktivizua"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:76
 msgid "Private mode disabled"
 msgstr "Mënyra private u çaktivizua"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:84
 msgid "Default skin changed"
 msgstr "Lëkurçja parazgjedhje u ndryshua"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:88
 msgid "Domain name updated"
 msgstr "Emri i përkatësisë u përditësua"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:92
 msgid "Site name updated"
 msgstr "Emri i sajtit u përditësua"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:96
 #, fuzzy
 #| msgid "Default skin changed"
 msgid "Default language changed"
@@ -3679,7 +3686,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adresë"
 
-#: plinth/modules/minidlna/__init__.py:21
+#: plinth/modules/minidlna/__init__.py:22
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3697,15 +3704,15 @@ msgstr ""
 "telefona të mençur, televizorë, dhe sisteme lojërash (të tillë si PS3 dhe "
 "Xbox 360), ose aplikacione të tillë si totem dhe Kodi."
 
-#: plinth/modules/minidlna/__init__.py:43
+#: plinth/modules/minidlna/__init__.py:44
 msgid "Media streaming server"
 msgstr "Shërbyes transmetimi mediash"
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: plinth/modules/minidlna/__init__.py:47
+#: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
 msgstr "Shërbyes i Thjeshtë Mediash"
 
@@ -3867,7 +3874,7 @@ msgstr "Shell i Sigurt"
 msgid "Services"
 msgstr "Shërbime"
 
-#: plinth/modules/networks/__init__.py:34
+#: plinth/modules/networks/__init__.py:35
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3875,7 +3882,7 @@ msgstr ""
 "Formësoni pajisje rrjeti. Lidhuni në Internet përmes Ethernet-i, Wi-Fi ose "
 "PPPoE. Ndajeni atë lidhje me pajisje të tjera në rrjet."
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:37
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -3883,7 +3890,7 @@ msgstr ""
 "Pajisjet e administruara përmes metodash të tjera mund të mos jenë të "
 "pranishme për formësim këtu."
 
-#: plinth/modules/networks/__init__.py:57
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "Rrjete"
 
@@ -4423,7 +4430,8 @@ msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:175
 #: plinth/modules/networks/templates/connection_show.html:218
-#: plinth/modules/shadowsocks/forms.py:48
+#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "Metodë"
 
@@ -4452,7 +4460,7 @@ msgid "This connection is not active."
 msgstr "Kjo lidhje s’është aktive."
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:34
+#: plinth/modules/security/__init__.py:35
 msgid "Security"
 msgstr "Siguri"
 
@@ -5191,7 +5199,7 @@ msgstr ""
 "Përzgjidhni shërbyesin tuaj &lt;em&gt;pagekite&lt;/em&gt;. Vëreni si "
 "“pagekite.net”, që të përdorni shërbyesin parazgjedhje pagekite.net."
 
-#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:39
+#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:27
 msgid "Server port"
 msgstr "Portë shërbyesi"
 
@@ -5416,21 +5424,21 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "Fike Tani"
 
-#: plinth/modules/privacy/__init__.py:14
+#: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
 msgstr "Administroni rregullime privatësie për krejt sistemin."
 
-#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
+#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:69
 msgid "Privacy"
 msgstr "Privatësi"
 
-#: plinth/modules/privacy/__init__.py:61
+#: plinth/modules/privacy/__init__.py:67
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Ju lutemi, përditësoni rregullime privatësie që të përputhen me parapëlqimet "
 "tuaja."
 
-#: plinth/modules/privacy/__init__.py:66
+#: plinth/modules/privacy/__init__.py:72
 msgid "Review privacy setting"
 msgstr "Shqyrtoni rregullim privatësie"
 
@@ -5540,7 +5548,7 @@ msgstr "Klient IRC"
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
-#: plinth/modules/radicale/__init__.py:24
+#: plinth/modules/radicale/__init__.py:25
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5556,7 +5564,7 @@ msgstr ""
 "Radicale mund të hyhet nga cilido përdorues me kredenciale hyrjeje në "
 "{box_name}."
 
-#: plinth/modules/radicale/__init__.py:30
+#: plinth/modules/radicale/__init__.py:31
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
@@ -5566,12 +5574,12 @@ msgstr ""
 "të ri dhe librash adresash. Nuk mbulon shtim veprimtarish ose kontaktesh, "
 "çka duhen bërë duke përdorur një tjetër klient."
 
-#: plinth/modules/radicale/__init__.py:52
+#: plinth/modules/radicale/__init__.py:53
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
 
-#: plinth/modules/radicale/__init__.py:53
+#: plinth/modules/radicale/__init__.py:54
 msgid "Calendar and Addressbook"
 msgstr "Kalendar dhe Libër adresash"
 
@@ -5649,7 +5657,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "Formësimi i të drejtave për hyrje u përditësua"
 
-#: plinth/modules/roundcube/__init__.py:18
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5662,7 +5670,7 @@ msgstr ""
 "për MIME, libër adresash, manipulim dosjesh, kërkim në mesazhe dhe kontroll "
 "drejtshkrimi."
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5676,7 +5684,7 @@ msgstr ""
 "IMAP përmes SSL (e rekomanduar), plotësoni fushën e shërbyesit, bie fjala, "
 "<code>imaps://imap.shembull.com</code>."
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5693,7 +5701,7 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: plinth/modules/roundcube/__init__.py:50
+#: plinth/modules/roundcube/__init__.py:51
 msgid "Email Client"
 msgstr "Klient Email"
 
@@ -5711,7 +5719,7 @@ msgstr ""
 "kundrejt shërbyesit dhe përdoruesit mund të lexojnë dhe dërgojnë email-e "
 "vetëm prej këtij {box_name}."
 
-#: plinth/modules/rssbridge/__init__.py:20
+#: plinth/modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
@@ -5719,7 +5727,7 @@ msgstr ""
 "RSS-Bridge prodhon prurje RSS dhe Atom për sajte që s’kanë të tillë. Prurjet "
 "e prodhuara mund të përdoren nga çfarëdo lexuesi prurjesh."
 
-#: plinth/modules/rssbridge/__init__.py:23
+#: plinth/modules/rssbridge/__init__.py:24
 #, python-brace-format
 msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
@@ -5729,7 +5737,7 @@ msgstr ""
 "href=\"{users_url}\">cilido përdorues</a> pjesë e grupit të leximit të "
 "prurjeve."
 
-#: plinth/modules/rssbridge/__init__.py:27
+#: plinth/modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
@@ -5740,16 +5748,16 @@ msgstr ""
 "për të ndjekur sajte të ndryshëm. Kur shtohet një prurje, aktivizoni "
 "mirëfilltësimin dhe përdorni kredencialet tuaj për {box_name}."
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
+#: plinth/modules/rssbridge/__init__.py:46 plinth/modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
 
-#: plinth/modules/rssbridge/__init__.py:48
+#: plinth/modules/rssbridge/__init__.py:49
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: plinth/modules/rssbridge/__init__.py:49
+#: plinth/modules/rssbridge/__init__.py:50
 msgid "RSS Feed Generator"
 msgstr "Prodhues Prurjesh RSS"
 
@@ -5933,7 +5941,7 @@ msgstr "Pjesa u çaktivizua."
 msgid "Error disabling share: {error_message}"
 msgstr "Gabim teksa çaktivizohej pjesë: {error_message}"
 
-#: plinth/modules/searx/__init__.py:19
+#: plinth/modules/searx/__init__.py:20
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
@@ -5941,7 +5949,7 @@ msgstr ""
 "Searx është një motor tejkërkimesh Internet që respekton privatësinë. "
 "Grumbullon dhe shfaq përfundime prej shumë motorësh kërkimi."
 
-#: plinth/modules/searx/__init__.py:21
+#: plinth/modules/searx/__init__.py:22
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
@@ -5949,15 +5957,15 @@ msgstr ""
 "Searx mund të përdoret për të shmangur gjurmim dhe profilizim nga motorë "
 "kërkimesh. Si parazgjedhje, nuk depoziton cookies."
 
-#: plinth/modules/searx/__init__.py:37
+#: plinth/modules/searx/__init__.py:38
 msgid "Search the web"
 msgstr "Kërkoni në internet"
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:41 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr "Searx"
 
-#: plinth/modules/searx/__init__.py:41
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Kërkim në Web"
 
@@ -6134,16 +6142,22 @@ msgid "Shaarlier"
 msgstr "Shaarlier"
 
 #: plinth/modules/shadowsocks/__init__.py:18
+#: plinth/modules/shadowsocksserver/__init__.py:18
 msgid ""
-"Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
-"your Internet traffic. It can be used to bypass Internet filtering and "
-"censorship."
+"Shadowsocks is a tool for securely forwarding network requests to a remote "
+"server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
+"Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
-"Shadowsocks është një ndërmjetës SOCKS5 i peshës së lehtë dhe i sigurt, i "
-"konceptuar të mbrojë trafikun tuaj Internet. Mund të përdoret për të "
-"anashkaluar filtrim dhe censurim Interneti."
 
-#: plinth/modules/shadowsocks/__init__.py:22
+#: plinth/modules/shadowsocks/__init__.py:21
+#: plinth/modules/shadowsocksserver/__init__.py:21
+msgid ""
+"Shadowsocks can be used to bypass Internet filtering and censorship. This "
+"requires that the Shadowsocks server is in a location where it can freely "
+"access the Internet, without filtering."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -6156,7 +6170,7 @@ msgstr ""
 "Pajisjet vendore mund të lidhen te ky ndërmjetës, dhe të dhënat e tyre do të "
 "fshehtëzohen dhe ndërmjetësohen përmes shërbyesit Shadowsocks."
 
-#: plinth/modules/shadowsocks/__init__.py:27
+#: plinth/modules/shadowsocks/__init__.py:31
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
@@ -6165,42 +6179,85 @@ msgstr ""
 "pajisjen, shfletuesin ose aplikacionin tuaj caktoni http://"
 "freedombox_address:1080/"
 
-#: plinth/modules/shadowsocks/__init__.py:46
-msgid "Shadowsocks"
+#: plinth/modules/shadowsocks/__init__.py:50
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Client"
 msgstr "Shadowsocks"
 
-#: plinth/modules/shadowsocks/__init__.py:48
-msgid "Socks5 Proxy"
-msgstr "Ndërmjetës SOCKS5"
+#: plinth/modules/shadowsocks/__init__.py:52
+msgid "Bypass Censorship"
+msgstr ""
 
-#: plinth/modules/shadowsocks/forms.py:10
-#: plinth/modules/shadowsocks/forms.py:11
-msgid "Recommended"
-msgstr "E këshilluar"
-
-#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
 msgstr "Shërbyes"
 
-#: plinth/modules/shadowsocks/forms.py:37
+#: plinth/modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Strehëemër ose adresë IP shërbyesi"
 
-#: plinth/modules/shadowsocks/forms.py:41
+#: plinth/modules/shadowsocks/forms.py:29
 msgid "Server port number"
 msgstr "Numër porte shërbyesi"
 
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
 msgid "Password used to encrypt data. Must match server password."
 msgstr ""
 "Fjalëkalim i përdorur për të fshehtëzuar të dhëna. Duhet të përputhet me "
 "fjalëkalimin e shërbyesit."
 
-#: plinth/modules/shadowsocks/forms.py:49
+#: plinth/modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Metodë fshehtëzimi. Duhet të përputhet me atë të caktuar te shërbyesi."
 
-#: plinth/modules/sharing/__init__.py:16
+#: plinth/modules/shadowsocksserver/__init__.py:26
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Your {box_name} can run a Shadowsocks client, that can connect to a "
+#| "Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
+#| "connect to this proxy, and their data will be encrypted and proxied "
+#| "through the Shadowsocks server."
+msgid ""
+"Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
+"clients to connect to it. Clients' data will be encrypted and proxied "
+"through this server."
+msgstr ""
+"{box_name} juaj mund të xhirojë një klient Shadowsocks, që mund të lidhet te "
+"një shërbyes Shadowsocks. Do të xhirojë gjithashtu një ndërmjetës SOCKS5. "
+"Pajisjet vendore mund të lidhen te ky ndërmjetës, dhe të dhënat e tyre do të "
+"fshehtëzohen dhe ndërmjetësohen përmes shërbyesit Shadowsocks."
+
+#: plinth/modules/shadowsocksserver/__init__.py:48
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks Server"
+msgstr "Shadowsocks"
+
+#: plinth/modules/shadowsocksserver/__init__.py:49
+msgid "Help Others Bypass Censorship"
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:10
+#: plinth/modules/shadowsocksserver/forms.py:11
+msgid "Recommended"
+msgstr "E këshilluar"
+
+#: plinth/modules/shadowsocksserver/forms.py:38
+#, fuzzy
+#| msgid "Password used to encrypt data. Must match server password."
+msgid "Password used to encrypt data. Clients must use the same password."
+msgstr ""
+"Fjalëkalim i përdorur për të fshehtëzuar të dhëna. Duhet të përputhet me "
+"fjalëkalimin e shërbyesit."
+
+#: plinth/modules/shadowsocksserver/forms.py:43
+#, fuzzy
+#| msgid "Encryption method. Must match setting on server."
+msgid "Encryption method. Clients must use the same setting."
+msgstr "Metodë fshehtëzimi. Duhet të përputhet me atë të caktuar te shërbyesi."
+
+#: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
@@ -6209,7 +6266,7 @@ msgstr ""
 "Dhënia ju lejon të ndani nëpër internet kartela dhe dosje në {box_name}-in "
 "tuaj me grupe dhe përdorues të zgjedhur nga ju."
 
-#: plinth/modules/sharing/__init__.py:33
+#: plinth/modules/sharing/__init__.py:34
 msgid "Sharing"
 msgstr "Dhënie"
 
@@ -6548,7 +6605,7 @@ msgstr "Që të plotësohet prapakthimi, duhet rinisur sistemi."
 msgid "Rollback to Snapshot"
 msgstr "Prapaktheje te Fotografim"
 
-#: plinth/modules/ssh/__init__.py:21
+#: plinth/modules/ssh/__init__.py:22
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -6560,11 +6617,11 @@ msgstr ""
 "një kompjuter i largët i autorizuar mund të kryejë punë administrimi, të "
 "kopjojë kartela ose të xhirojë shërbime të tjera."
 
-#: plinth/modules/ssh/__init__.py:41
+#: plinth/modules/ssh/__init__.py:42
 msgid "Secure Shell (SSH) Server"
 msgstr "Shërbyes Shelli të Sigurt (SSH)"
 
-#: plinth/modules/ssh/__init__.py:61
+#: plinth/modules/ssh/__init__.py:73
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "Hyrje së largëti duke përdorur Shell të Sigurt (SSH)"
 
@@ -6616,7 +6673,7 @@ msgstr "Algoritëm"
 msgid "Fingerprint"
 msgstr "Shenja gishtash"
 
-#: plinth/modules/sso/__init__.py:26
+#: plinth/modules/sso/__init__.py:27
 msgid "Single Sign On"
 msgstr "Hyrje Njëshe"
 
@@ -6864,7 +6921,7 @@ msgstr "Pajisja mund të hiqet pa rrezik."
 msgid "Error ejecting device: {error_message}"
 msgstr "Gabim në nxjerrje pajisjeje: {error_message}"
 
-#: plinth/modules/syncthing/__init__.py:22
+#: plinth/modules/syncthing/__init__.py:23
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -6876,7 +6933,7 @@ msgstr ""
 "ndryshimi, ose fshirja e kartelave në një pajisje do të përsëritet vetvetiu "
 "në krejt pajisjet e tjera që xhirojnë gjithashtu Syncthing-un."
 
-#: plinth/modules/syncthing/__init__.py:27
+#: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -6895,16 +6952,16 @@ msgstr ""
 "Ndërfaqja web te {box_name} është e përdorshme vetëm nga përdorues që i "
 "përkasin grupit “përgjegjës”, ose atij “syncthing-access”."
 
-#: plinth/modules/syncthing/__init__.py:54
+#: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
 msgstr "Administroni aplikacionin Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: plinth/modules/syncthing/__init__.py:59
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Njëkohësim Kartelash"
 
@@ -7107,11 +7164,11 @@ msgstr "Po përditësohet formësimi"
 msgid "Error configuring app: {error}"
 msgstr "Gabim në formësimin e aplikacionit: {error}"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission është një klient BitTorrent me një ndërfaqe web."
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:26
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
@@ -7119,11 +7176,11 @@ msgstr ""
 "BitTorrent është një protokoll shkëmbimi kartelash tek-për-tek. Kini "
 "parasysh se BitTorrent s’është anonim."
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:28
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr "Ju lutemi, mos ndryshoni portën parazgjedhje të demonit Transmission."
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
@@ -7133,7 +7190,7 @@ msgstr ""
 "thjeshtë dhe i peshës së lehtë, por mund të përshtatet në shkallë më të "
 "vogël."
 
-#: plinth/modules/transmission/__init__.py:33
+#: plinth/modules/transmission/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -7142,7 +7199,7 @@ msgstr ""
 "Mund të përdoret nga <a href=\"{users_url}\">cilido përdorues</a> në "
 "{box_name} që është pjesë e grupit bit-torrent."
 
-#: plinth/modules/transmission/__init__.py:37
+#: plinth/modules/transmission/__init__.py:38
 #, python-brace-format
 msgid ""
 "In addition to the web interface, mobile and desktop apps can also be used "
@@ -7151,7 +7208,7 @@ msgid ""
 "rpc</a>."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
@@ -7160,7 +7217,7 @@ msgstr ""
 "Pjesë <a href=\"{samba_url}\">Samba</a> mund të caktohen si drejtori "
 "parazgjedhje shkarkimesh që nga menuja hapmbyll më poshtë."
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:48
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
@@ -7169,7 +7226,7 @@ msgstr ""
 "Pasi të jetë plotësuar një shkarkim, te kartelat tuaja mund të hyni edhe "
 "duke përdorur aplikacionin <a href=\"{sharing_url}\">Ndarje Me të Tjerë</a>."
 
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:74
 #: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
@@ -7178,7 +7235,7 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:20
+#: plinth/modules/ttrss/__init__.py:21
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -7188,7 +7245,7 @@ msgstr ""
 "i konceptuar të lejojë lexim lajmesh prej çfarëdo vendndodhjeje, ndërkohë që "
 "duket si një aplikacion desktop, aq afër kësaj sa mundet."
 
-#: plinth/modules/ttrss/__init__.py:24
+#: plinth/modules/ttrss/__init__.py:25
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
@@ -7198,7 +7255,7 @@ msgstr ""
 "href=\"{users_url}\">cilido përdorues</a> pjesëtar i grupit të leximit të "
 "prurjeve."
 
-#: plinth/modules/ttrss/__init__.py:29
+#: plinth/modules/ttrss/__init__.py:30
 #, fuzzy
 #| msgid ""
 #| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
@@ -7212,11 +7269,11 @@ msgstr ""
 "dekstop, përdorni URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> për t’u "
 "lidhur."
 
-#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
+#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "Lexues Prurjesh Lajmesh"
 
@@ -7234,13 +7291,13 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:35
+#: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Kontrolloni dhe aplikoni përditësimet më të reja software-i dhe sigurie."
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7253,22 +7310,22 @@ msgstr ""
 "rinisja e sistemit shihet si e domosdoshme, bëhet automatikisht më 02:00, "
 "duke bërë që krejt aplikacionet të jenë jashtë funksionimi për ca çaste."
 
-#: plinth/modules/upgrades/__init__.py:64
-#: plinth/modules/upgrades/__init__.py:119
+#: plinth/modules/upgrades/__init__.py:65
+#: plinth/modules/upgrades/__init__.py:128
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Përditësim Software-i"
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox-i u Përditësua"
 
-#: plinth/modules/upgrades/__init__.py:190
+#: plinth/modules/upgrades/__init__.py:199
 msgid "Could not start distribution update"
 msgstr "S’u fillua dot përditësim shpërndarjeje"
 
-#: plinth/modules/upgrades/__init__.py:192
+#: plinth/modules/upgrades/__init__.py:201
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7279,11 +7336,11 @@ msgstr ""
 "Përditësimi i shpërndarjes do të riprovohet pas 24 orësh, nëse kjo është "
 "aktivizuar."
 
-#: plinth/modules/upgrades/__init__.py:203
+#: plinth/modules/upgrades/__init__.py:212
 msgid "Distribution update started"
 msgstr "Përditësimi i shpërndarjes filloi"
 
-#: plinth/modules/upgrades/__init__.py:205
+#: plinth/modules/upgrades/__init__.py:214
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7501,7 +7558,7 @@ msgstr "Përditësime të shpeshta veçorish të aktivizuara."
 msgid "Starting distribution upgrade test."
 msgstr "Po fillohet provë përmirësimi shpërndarjeje."
 
-#: plinth/modules/users/__init__.py:28
+#: plinth/modules/users/__init__.py:29
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7512,7 +7569,7 @@ msgstr ""
 "aplikacione kërkojnë doemos një llogari përdoruesi, për të qenë pjesë e një "
 "grupi që autorizon përdoruesin të përdorë aplikacionin."
 
-#: plinth/modules/users/__init__.py:33
+#: plinth/modules/users/__init__.py:34
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7524,15 +7581,15 @@ msgstr ""
 "vetëm përdoruesit e grupit <em>përgjegjës</em> mund të ndryshojnë "
 "aplikacionet, apo rregullimet e sistemit."
 
-#: plinth/modules/users/__init__.py:54
+#: plinth/modules/users/__init__.py:55
 msgid "Users and Groups"
 msgstr "Përdorues dhe Grupe"
 
-#: plinth/modules/users/__init__.py:74
+#: plinth/modules/users/__init__.py:80
 msgid "Access to all services and system settings"
 msgstr "Hyrje te krejt shërbimet dhe rregullime të sistemit"
 
-#: plinth/modules/users/__init__.py:110
+#: plinth/modules/users/__init__.py:116
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Kontrolloni zërin LDAP \"{search_item}\""
@@ -8116,7 +8173,7 @@ msgstr "Fshije Lidhjen me Shërbyesin"
 msgid "Server deleted."
 msgstr "Shërbyesi u fshi."
 
-#: plinth/modules/wordpress/__init__.py:19
+#: plinth/modules/wordpress/__init__.py:20
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -8130,7 +8187,7 @@ msgstr ""
 "zgjidhet përmes përdorimit të temave. Ndërfaqja e administrimit dhe faqet "
 "web të prodhuara janë të përshtatshme për pajisje celulare."
 
-#: plinth/modules/wordpress/__init__.py:25
+#: plinth/modules/wordpress/__init__.py:26
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -8143,7 +8200,7 @@ msgstr ""
 "{box_name} me emrin e saktë të përkatësisë. Aktivizoni permalidhje te "
 "ndërfaqja e përgjegjësit, për URL më të mira për te faqet dhe postimet tuaja."
 
-#: plinth/modules/wordpress/__init__.py:30
+#: plinth/modules/wordpress/__init__.py:31
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
@@ -8154,7 +8211,7 @@ msgstr ""
 "\">faqen e përgjegjësit</a>, që të mund të përdorni ndërfaqen e përgjegjësit "
 "në të ardhmen."
 
-#: plinth/modules/wordpress/__init__.py:34
+#: plinth/modules/wordpress/__init__.py:35
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
@@ -8165,12 +8222,12 @@ msgstr ""
 "ose tema shtesë mund të instalohet dhe përmirësohen duke e marrë ju përsipër "
 "rrezikun."
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:53
+#: plinth/modules/wordpress/__init__.py:54
 msgid "Website and Blog"
 msgstr "Sajt dhe Blog"
 
@@ -8769,6 +8826,18 @@ msgstr "para çinstalimit të {app_id}"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid ""
+#~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
+#~ "your Internet traffic. It can be used to bypass Internet filtering and "
+#~ "censorship."
+#~ msgstr ""
+#~ "Shadowsocks është një ndërmjetës SOCKS5 i peshës së lehtë dhe i sigurt, i "
+#~ "konceptuar të mbrojë trafikun tuaj Internet. Mund të përdoret për të "
+#~ "anashkaluar filtrim dhe censurim Interneti."
+
+#~ msgid "Socks5 Proxy"
+#~ msgstr "Ndërmjetës SOCKS5"
 
 #~ msgid "ChatSecure"
 #~ msgstr "ChatSecure"

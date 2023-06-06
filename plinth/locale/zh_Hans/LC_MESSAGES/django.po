@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-08 20:38-0400\n"
+"POT-Creation-Date: 2023-06-05 21:39-0400\n"
 "PO-Revision-Date: 2022-12-07 20:48+0000\n"
 "Last-Translator: Eric <hamburger1024@duck.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -22,6 +22,11 @@ msgstr ""
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
 msgstr "来源页面"
+
+#: plinth/config.py:117
+#, python-brace-format
+msgid "Static configuration {etc_path} is setup properly"
+msgstr ""
 
 #: plinth/context_processors.py:23 plinth/views.py:92
 msgid "FreedomBox"
@@ -98,15 +103,15 @@ msgstr "此 web 管理界面的语言"
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
 
-#: plinth/modules/apache/__init__.py:31
+#: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
 msgstr "Apache HTTP 服务"
 
-#: plinth/modules/apache/__init__.py:39
+#: plinth/modules/apache/__init__.py:46
 msgid "Web Server"
 msgstr "Web 服务器"
 
-#: plinth/modules/apache/__init__.py:45
+#: plinth/modules/apache/__init__.py:52
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web 界面（Plinth）"
@@ -164,7 +169,7 @@ msgid "Enable a Backup Schedule"
 msgstr "启用备份计划"
 
 #: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:70
+#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:76
 #: plinth/modules/storage/__init__.py:312
 #, python-brace-format
 msgid "Go to {app_name}"
@@ -706,7 +711,7 @@ msgstr "卸载失败！"
 msgid "Mounting failed"
 msgstr "安装失败"
 
-#: plinth/modules/bepasty/__init__.py:16
+#: plinth/modules/bepasty/__init__.py:17
 msgid ""
 "bepasty is a web application that allows large files to be uploaded and "
 "shared. Text and code snippets can also be pasted and shared. Text, image, "
@@ -717,7 +722,7 @@ msgstr ""
 "享。文本、图像、音频、视频和PDF文件可以在浏览器中预览。共享的文件可以设置为在"
 "一段时间后过期。"
 
-#: plinth/modules/bepasty/__init__.py:20
+#: plinth/modules/bepasty/__init__.py:21
 msgid ""
 "bepasty does not use usernames for login. It only uses passwords. For each "
 "password, a set of permissions can be selected. Once you have created a "
@@ -727,7 +732,7 @@ msgstr ""
 "bepasty不使用用户名进行登录。它只使用密码。对于每个密码，都可以选择一组权限。"
 "一旦你创建了一个密码，你就可以与应该拥有相关权限的用户分享它。"
 
-#: plinth/modules/bepasty/__init__.py:24
+#: plinth/modules/bepasty/__init__.py:25
 msgid ""
 "You can also create multiple passwords with the same set of privileges, and "
 "distribute them to different people or groups. This will allow you to later "
@@ -737,39 +742,39 @@ msgstr ""
 "你也可以创建具有相同权限的多个密码，并将它们分配给不同的人或团体。这将使你以"
 "后可以通过从列表中删除某个人或团体的密码来撤销其访问权。"
 
-#: plinth/modules/bepasty/__init__.py:31 plinth/modules/bepasty/__init__.py:40
+#: plinth/modules/bepasty/__init__.py:32 plinth/modules/bepasty/__init__.py:41
 msgid "Read a file, if a web link to the file is available"
 msgstr "读取文，如果文件的 Web 链接可用"
 
-#: plinth/modules/bepasty/__init__.py:32
+#: plinth/modules/bepasty/__init__.py:33
 msgid "Create or upload files"
 msgstr "创建或上传文件"
 
-#: plinth/modules/bepasty/__init__.py:33
+#: plinth/modules/bepasty/__init__.py:34
 msgid "List all files and their web links"
 msgstr "列出所有文件及其 Web 链接"
 
-#: plinth/modules/bepasty/__init__.py:34
+#: plinth/modules/bepasty/__init__.py:35
 msgid "Delete files"
 msgstr "删除文件"
 
-#: plinth/modules/bepasty/__init__.py:35
+#: plinth/modules/bepasty/__init__.py:36
 msgid "Administer files: lock/unlock files"
 msgstr "管理文件：锁定/解锁文件"
 
-#: plinth/modules/bepasty/__init__.py:39
+#: plinth/modules/bepasty/__init__.py:40
 msgid "None, password is always required"
 msgstr "无，总是需要密码"
 
-#: plinth/modules/bepasty/__init__.py:41
+#: plinth/modules/bepasty/__init__.py:42
 msgid "List and read all files"
 msgstr "列出并阅读所有文件"
 
-#: plinth/modules/bepasty/__init__.py:56 plinth/modules/bepasty/manifest.py:6
+#: plinth/modules/bepasty/__init__.py:57 plinth/modules/bepasty/manifest.py:6
 msgid "bepasty"
 msgstr "bepasty"
 
-#: plinth/modules/bepasty/__init__.py:58
+#: plinth/modules/bepasty/__init__.py:59
 msgid "File & Snippet Sharing"
 msgstr "文件和片段共享"
 
@@ -816,7 +821,8 @@ msgstr "目前没有配置密码。"
 
 #: plinth/modules/bepasty/templates/bepasty.html:29
 #: plinth/modules/dynamicdns/forms.py:91 plinth/modules/networks/forms.py:213
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
+#: plinth/modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "密码"
 
@@ -958,12 +964,13 @@ msgstr "刷新 IP 地址和域"
 #: plinth/modules/pagekite/forms.py:74 plinth/modules/privacy/views.py:36
 #: plinth/modules/quassel/views.py:29 plinth/modules/roundcube/views.py:32
 #: plinth/modules/rssbridge/views.py:31 plinth/modules/shadowsocks/views.py:53
-#: plinth/modules/ssh/views.py:62 plinth/modules/transmission/views.py:43
-#: plinth/modules/ttrss/views.py:31 plinth/modules/wordpress/views.py:31
+#: plinth/modules/shadowsocksserver/views.py:52 plinth/modules/ssh/views.py:62
+#: plinth/modules/transmission/views.py:43 plinth/modules/ttrss/views.py:31
+#: plinth/modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "配置已更新"
 
-#: plinth/modules/calibre/__init__.py:23
+#: plinth/modules/calibre/__init__.py:24
 #, python-brace-format
 msgid ""
 "calibre server provides online access to your e-book collection. You can "
@@ -973,7 +980,7 @@ msgstr ""
 "calibre服务器提供对你的电子书收藏的在线访问。你可以在你的{box_name}上存储你的"
 "电子书，在线阅读或从你的任何设备上阅读它们。"
 
-#: plinth/modules/calibre/__init__.py:26
+#: plinth/modules/calibre/__init__.py:27
 msgid ""
 "You can organize your e-books, extract and edit their metadata, and perform "
 "advanced search. calibre can import, export, or convert across a wide range "
@@ -986,7 +993,7 @@ msgstr ""
 "读器。它能记住你上次阅读的位置、书签和突出显示的文本。目前不支持使用OPDS的内"
 "容分发。"
 
-#: plinth/modules/calibre/__init__.py:32
+#: plinth/modules/calibre/__init__.py:33
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
@@ -994,15 +1001,15 @@ msgstr ""
 "只有属于<em>calibre</em>组的用户才能够访问该应用程序。所有有权限的用户都可以"
 "使用所有的图书馆。"
 
-#: plinth/modules/calibre/__init__.py:52
+#: plinth/modules/calibre/__init__.py:53
 msgid "Use calibre e-book libraries"
 msgstr "使用 calibre 电子书库"
 
-#: plinth/modules/calibre/__init__.py:55 plinth/modules/calibre/manifest.py:6
+#: plinth/modules/calibre/__init__.py:56 plinth/modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
 
-#: plinth/modules/calibre/__init__.py:56
+#: plinth/modules/calibre/__init__.py:57
 msgid "E-book Library"
 msgstr "电子书库"
 
@@ -1080,7 +1087,7 @@ msgstr "{name} 已删除。"
 msgid "Could not delete {name}: {error}"
 msgstr "不能删除 {name}：{error}"
 
-#: plinth/modules/cockpit/__init__.py:22
+#: plinth/modules/cockpit/__init__.py:23
 #, python-brace-format
 msgid ""
 "Cockpit is a server manager that makes it easy to administer GNU/Linux "
@@ -1092,7 +1099,7 @@ msgstr ""
 "个 {box_name} 上，许多通常不会需要的高级功能也可被控制。您也可以使用基于网页"
 "的终端来进行控制台操作。"
 
-#: plinth/modules/cockpit/__init__.py:28
+#: plinth/modules/cockpit/__init__.py:29
 msgid ""
 "Cockpit can be used to perform advanced storage operations such as disk "
 "partitioning and RAID management. It can also be used for opening custom "
@@ -1102,7 +1109,7 @@ msgstr ""
 "Cockpit可以用来执行高级存储操作，如磁盘分区和RAID管理。它还可以用来打开自定义"
 "防火墙端口和高级网络，如绑定、桥接和VLAN管理。"
 
-#: plinth/modules/cockpit/__init__.py:33
+#: plinth/modules/cockpit/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -1110,12 +1117,12 @@ msgid ""
 msgstr ""
 "它可以由<a href=\"{users_url}\">属于管理组的{box_name}上的任何用户</a>访问。"
 
-#: plinth/modules/cockpit/__init__.py:52 plinth/modules/cockpit/manifest.py:9
+#: plinth/modules/cockpit/__init__.py:53 plinth/modules/cockpit/manifest.py:9
 #: plinth/modules/performance/manifest.py:9
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: plinth/modules/cockpit/__init__.py:54
+#: plinth/modules/cockpit/__init__.py:55
 msgid "Server Administration"
 msgstr "服务器管理"
 
@@ -1360,27 +1367,27 @@ msgstr "设置时区错误：{exception}"
 msgid "Time zone set"
 msgstr "时区设置"
 
-#: plinth/modules/deluge/__init__.py:20
+#: plinth/modules/deluge/__init__.py:21
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge 是一个有网页界面的 BitTorrent 客户端。"
 
-#: plinth/modules/deluge/__init__.py:21
+#: plinth/modules/deluge/__init__.py:22
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr "默认密码是“deluge”，但是你需要在启用此服务以后立刻登录并修改它。"
 
-#: plinth/modules/deluge/__init__.py:40
-#: plinth/modules/transmission/__init__.py:69
+#: plinth/modules/deluge/__init__.py:41
+#: plinth/modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "使用BitTorrent应用程序下载文件"
 
-#: plinth/modules/deluge/__init__.py:44 plinth/modules/deluge/manifest.py:6
+#: plinth/modules/deluge/__init__.py:45 plinth/modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "启用 Deluge"
 
-#: plinth/modules/deluge/__init__.py:46
-#: plinth/modules/transmission/__init__.py:75
+#: plinth/modules/deluge/__init__.py:47
+#: plinth/modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent 网页客户端"
 
@@ -1722,7 +1729,7 @@ msgstr "服务器拒绝连接"
 msgid "Already up-to-date"
 msgstr "已是最新"
 
-#: plinth/modules/ejabberd/__init__.py:29
+#: plinth/modules/ejabberd/__init__.py:30
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1730,7 +1737,7 @@ msgstr ""
 "XMPP 是一种开放标准的通信协议。在这里你可以运行并配置您的 XMPP 服务器，称为 "
 "ejabberd。"
 
-#: plinth/modules/ejabberd/__init__.py:32
+#: plinth/modules/ejabberd/__init__.py:33
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1743,7 +1750,7 @@ msgstr ""
 "a>。启用后，任何有 <a href=\"{users_url}\"> {box_name} 登录的用户</a>均可访"
 "问 ejabberd。"
 
-#: plinth/modules/ejabberd/__init__.py:40
+#: plinth/modules/ejabberd/__init__.py:41
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1752,12 +1759,12 @@ msgstr ""
 "ejabberd需要一个STUN/TURN服务器用于音频/视频呼叫。安装<a "
 "href=\"{coturn_url}\">Coturn</a>应用程序或配置一个外部服务器。"
 
-#: plinth/modules/ejabberd/__init__.py:61
+#: plinth/modules/ejabberd/__init__.py:62
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:62
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/ejabberd/__init__.py:63
+#: plinth/modules/matrixsynapse/__init__.py:57
 msgid "Chat Server"
 msgstr "聊天服务器"
 
@@ -1862,14 +1869,14 @@ msgstr ""
 "<i>username@%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置"
 "</a>中设置你的域名。"
 
-#: plinth/modules/email/__init__.py:26
+#: plinth/modules/email/__init__.py:27
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:30
+#: plinth/modules/email/__init__.py:31
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -1877,7 +1884,7 @@ msgid ""
 "request. See manual page for more information."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:35
+#: plinth/modules/email/__init__.py:36
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -1887,31 +1894,31 @@ msgid ""
 "pointing to the first admin user."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:41
+#: plinth/modules/email/__init__.py:42
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:43
+#: plinth/modules/email/__init__.py:44
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: plinth/modules/email/__init__.py:62
+#: plinth/modules/email/__init__.py:63
 msgid "Postfix/Dovecot"
 msgstr ""
 
-#: plinth/modules/email/__init__.py:64
+#: plinth/modules/email/__init__.py:65
 msgid "Email Server"
 msgstr "邮件服务器"
 
-#: plinth/modules/email/__init__.py:84
+#: plinth/modules/email/__init__.py:85
 msgid "My Email Aliases"
 msgstr "我的邮箱别名"
 
-#: plinth/modules/email/__init__.py:85
+#: plinth/modules/email/__init__.py:86
 msgid "Manage Aliases for Mailbox"
 msgstr "管理邮箱别名"
 
@@ -1945,7 +1952,7 @@ msgstr ""
 msgid "Aliases"
 msgstr "别名"
 
-#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:49
+#: plinth/modules/email/manifest.py:12 plinth/modules/roundcube/__init__.py:50
 #: plinth/modules/roundcube/manifest.py:6
 msgid "Roundcube"
 msgstr "Roundcube"
@@ -2141,7 +2148,7 @@ msgstr "启动安装程序"
 msgid "Setup Complete"
 msgstr "安装完成"
 
-#: plinth/modules/gitweb/__init__.py:21
+#: plinth/modules/gitweb/__init__.py:22
 msgid ""
 "Git is a distributed version-control system for tracking changes in source "
 "code during software development. Gitweb provides a web interface to Git "
@@ -2152,21 +2159,21 @@ msgid ""
 "the world."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:28
+#: plinth/modules/gitweb/__init__.py:29
 msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:44
+#: plinth/modules/gitweb/__init__.py:45
 msgid "Read-write access to Git repositories"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:49 plinth/modules/gitweb/manifest.py:11
+#: plinth/modules/gitweb/__init__.py:50 plinth/modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr ""
 
-#: plinth/modules/gitweb/__init__.py:50
+#: plinth/modules/gitweb/__init__.py:51
 msgid "Simple Git Hosting"
 msgstr ""
 
@@ -2604,7 +2611,7 @@ msgstr "关于 {box_name}"
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
 
-#: plinth/modules/i2p/__init__.py:20
+#: plinth/modules/i2p/__init__.py:21
 msgid ""
 "The Invisible Internet Project is an anonymous network layer intended to "
 "protect communication from censorship and surveillance. I2P provides "
@@ -2612,7 +2619,7 @@ msgid ""
 "distributed around the world."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:24
+#: plinth/modules/i2p/__init__.py:25
 msgid ""
 "Find more information about I2P on their project <a href=\"https://geti2p."
 "net\" target=\"_blank\">homepage</a>."
@@ -2620,25 +2627,25 @@ msgstr ""
 "I2P 项目的更多信息，请参阅 <a href=\"https://geti2p.net\" target=\"_blank\">"
 "主页</a>。"
 
-#: plinth/modules/i2p/__init__.py:26
+#: plinth/modules/i2p/__init__.py:27
 msgid ""
 "The first visit to the provided web interface will initiate the "
 "configuration process."
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:48
+#: plinth/modules/i2p/__init__.py:49
 msgid "Manage I2P application"
 msgstr "管理 I2P 应用程序"
 
-#: plinth/modules/i2p/__init__.py:51 plinth/modules/i2p/manifest.py:13
+#: plinth/modules/i2p/__init__.py:52 plinth/modules/i2p/manifest.py:13
 msgid "I2P"
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:52 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
 msgid "Anonymity Network"
 msgstr "匿名网络"
 
-#: plinth/modules/i2p/__init__.py:77
+#: plinth/modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "I2P 代理"
 
@@ -2675,7 +2682,7 @@ msgid ""
 "a file."
 msgstr ""
 
-#: plinth/modules/ikiwiki/__init__.py:19
+#: plinth/modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
 "lightweight markup languages, including Markdown, and common blogging "
@@ -2684,7 +2691,7 @@ msgstr ""
 "ikiwiki是一个简单的 wiki 和博客应用程序。它支持几种轻量级标记语言，包括 "
 "Markdown 和常见的博客功能，如评论和 RSS 源。"
 
-#: plinth/modules/ikiwiki/__init__.py:23
+#: plinth/modules/ikiwiki/__init__.py:24
 #, python-brace-format
 msgid ""
 "Only {box_name} users in the <b>admin</b> group can <i>create</i> and "
@@ -2693,15 +2700,15 @@ msgid ""
 "Configuration</a> you can change these permissions or add new users."
 msgstr ""
 
-#: plinth/modules/ikiwiki/__init__.py:44 plinth/modules/ikiwiki/manifest.py:6
+#: plinth/modules/ikiwiki/__init__.py:45 plinth/modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: plinth/modules/ikiwiki/__init__.py:45
+#: plinth/modules/ikiwiki/__init__.py:46
 msgid "Wiki and Blog"
 msgstr "Wiki 和博客"
 
-#: plinth/modules/ikiwiki/__init__.py:72
+#: plinth/modules/ikiwiki/__init__.py:80
 msgid "View and edit wiki applications"
 msgstr "查看和编辑 wiki 应用程序"
 
@@ -2823,24 +2830,24 @@ msgid ""
 "domain name."
 msgstr "启动 Gobby ，选择“连接到服务器”并输入你的 {box_name} 域名。"
 
-#: plinth/modules/janus/__init__.py:22
+#: plinth/modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:23
+#: plinth/modules/janus/__init__.py:24
 msgid "A simple video conference room is included."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:25
+#: plinth/modules/janus/__init__.py:26
 #, python-brace-format
 msgid "<a href=\"{coturn_url}\">Coturn</a> is required to use Janus."
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:41
+#: plinth/modules/janus/__init__.py:42
 msgid "Janus"
 msgstr ""
 
-#: plinth/modules/janus/__init__.py:43
+#: plinth/modules/janus/__init__.py:44
 msgid "Video Room"
 msgstr ""
 
@@ -2868,7 +2875,7 @@ msgstr ""
 msgid "Chat Client"
 msgstr "聊天客户端"
 
-#: plinth/modules/letsencrypt/__init__.py:24
+#: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
@@ -2881,7 +2888,7 @@ msgstr ""
 "动获取和设置每个可用域名的数字证书。它通过向 Let's Encrypt 证明自己是一个域名"
 "的所有者。Let's Encrypt 是一个证书颁发机构（CA）。"
 
-#: plinth/modules/letsencrypt/__init__.py:30
+#: plinth/modules/letsencrypt/__init__.py:31
 msgid ""
 "Let's Encrypt is a free, automated, and open certificate authority, run for "
 "the public's benefit by the Internet Security Research Group (ISRG).  Please "
@@ -2892,15 +2899,15 @@ msgstr ""
 "（ISRG）为公众利益而设立。请在使用此服务之前阅读并同意 <a href=\"https://"
 "letsencrypt.org/repository/\">Let's Encypt 订阅者协议</a>。"
 
-#: plinth/modules/letsencrypt/__init__.py:57
+#: plinth/modules/letsencrypt/__init__.py:58
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: plinth/modules/letsencrypt/__init__.py:58
+#: plinth/modules/letsencrypt/__init__.py:59
 msgid "Certificates"
 msgstr "证书"
 
-#: plinth/modules/letsencrypt/__init__.py:94
+#: plinth/modules/letsencrypt/__init__.py:100
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -2999,7 +3006,7 @@ msgstr "成功删除域名 {domain} 的证书"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "删除 {domain} 域名证书失败：{error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:26
+#: plinth/modules/matrixsynapse/__init__.py:27
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3009,14 +3016,14 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:34
+#: plinth/modules/matrixsynapse/__init__.py:35
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:55
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3156,7 +3163,7 @@ msgstr ""
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:20
+#: plinth/modules/mediawiki/__init__.py:21
 msgid ""
 "MediaWiki is the wiki engine that powers Wikipedia and other WikiMedia "
 "projects. A wiki engine is a program for creating a collaboratively edited "
@@ -3164,7 +3171,7 @@ msgid ""
 "collaborate with friends on projects."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:24
+#: plinth/modules/mediawiki/__init__.py:25
 msgid ""
 "This MediaWiki instance comes with a randomly generated administrator "
 "password. You can set a new password in the \"Configuration\" section and "
@@ -3173,7 +3180,7 @@ msgid ""
 "CreateAccount\">Special:CreateAccount</a> page."
 msgstr ""
 
-#: plinth/modules/mediawiki/__init__.py:30
+#: plinth/modules/mediawiki/__init__.py:31
 msgid ""
 "Anyone with a link to this wiki can read it. Only users that are logged in "
 "can make changes to the content."
@@ -3257,43 +3264,43 @@ msgid ""
 "option to select their preferred language."
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:57
+#: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
 msgstr "密码已更新"
 
-#: plinth/modules/mediawiki/views.py:62
+#: plinth/modules/mediawiki/views.py:48
 msgid "Password update failed. Please choose a stronger password"
 msgstr ""
 
-#: plinth/modules/mediawiki/views.py:71
+#: plinth/modules/mediawiki/views.py:57
 msgid "Public registrations enabled"
 msgstr "公开注册已启用"
 
-#: plinth/modules/mediawiki/views.py:79
+#: plinth/modules/mediawiki/views.py:65
 msgid "Public registrations disabled"
 msgstr "已禁用公开注册"
 
-#: plinth/modules/mediawiki/views.py:84
+#: plinth/modules/mediawiki/views.py:70
 msgid "Private mode enabled"
 msgstr "已启用私密模式"
 
-#: plinth/modules/mediawiki/views.py:90
+#: plinth/modules/mediawiki/views.py:76
 msgid "Private mode disabled"
 msgstr "已禁用私密模式"
 
-#: plinth/modules/mediawiki/views.py:98
+#: plinth/modules/mediawiki/views.py:84
 msgid "Default skin changed"
 msgstr "默认皮肤已更改"
 
-#: plinth/modules/mediawiki/views.py:102
+#: plinth/modules/mediawiki/views.py:88
 msgid "Domain name updated"
 msgstr "域名已更新"
 
-#: plinth/modules/mediawiki/views.py:106
+#: plinth/modules/mediawiki/views.py:92
 msgid "Site name updated"
 msgstr "站点名已更新"
 
-#: plinth/modules/mediawiki/views.py:110
+#: plinth/modules/mediawiki/views.py:96
 #, fuzzy
 #| msgid "Default skin changed"
 msgid "Default language changed"
@@ -3360,7 +3367,7 @@ msgstr "禁用后，玩家不能死或受到任何伤害。"
 msgid "Address"
 msgstr "地址"
 
-#: plinth/modules/minidlna/__init__.py:21
+#: plinth/modules/minidlna/__init__.py:22
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3371,15 +3378,15 @@ msgid ""
 "Kodi."
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:43
+#: plinth/modules/minidlna/__init__.py:44
 msgid "Media streaming server"
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:46
+#: plinth/modules/minidlna/__init__.py:47
 msgid "MiniDLNA"
 msgstr ""
 
-#: plinth/modules/minidlna/__init__.py:47
+#: plinth/modules/minidlna/__init__.py:48
 msgid "Simple Media Server"
 msgstr "简单媒体服务器"
 
@@ -3521,19 +3528,19 @@ msgstr "安全 Shell"
 msgid "Services"
 msgstr "服务"
 
-#: plinth/modules/networks/__init__.py:34
+#: plinth/modules/networks/__init__.py:35
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:36
+#: plinth/modules/networks/__init__.py:37
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: plinth/modules/networks/__init__.py:57
+#: plinth/modules/networks/__init__.py:58
 msgid "Networks"
 msgstr "网络"
 
@@ -3994,7 +4001,8 @@ msgstr "IPv4"
 
 #: plinth/modules/networks/templates/connection_show.html:175
 #: plinth/modules/networks/templates/connection_show.html:218
-#: plinth/modules/shadowsocks/forms.py:48
+#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "方法"
 
@@ -4023,7 +4031,7 @@ msgid "This connection is not active."
 msgstr "此连接未处于激活状态。"
 
 #: plinth/modules/networks/templates/connection_show.html:259
-#: plinth/modules/security/__init__.py:34
+#: plinth/modules/security/__init__.py:35
 msgid "Security"
 msgstr "安全"
 
@@ -4700,7 +4708,7 @@ msgstr ""
 "选择您的 pagekite 服务器。设置\"pagekite.net\"以便使用默认的 pagekite.net 服"
 "务器。"
 
-#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:39
+#: plinth/modules/pagekite/forms.py:35 plinth/modules/shadowsocks/forms.py:27
 msgid "Server port"
 msgstr "服务器端口"
 
@@ -4904,19 +4912,19 @@ msgstr ""
 msgid "Shut Down Now"
 msgstr "现在关闭"
 
-#: plinth/modules/privacy/__init__.py:14
+#: plinth/modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
 msgstr ""
 
-#: plinth/modules/privacy/__init__.py:31 plinth/modules/privacy/__init__.py:63
+#: plinth/modules/privacy/__init__.py:32 plinth/modules/privacy/__init__.py:69
 msgid "Privacy"
 msgstr "隐私"
 
-#: plinth/modules/privacy/__init__.py:61
+#: plinth/modules/privacy/__init__.py:67
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 
-#: plinth/modules/privacy/__init__.py:66
+#: plinth/modules/privacy/__init__.py:72
 msgid "Review privacy setting"
 msgstr ""
 
@@ -5010,7 +5018,7 @@ msgstr "IRC 客户端"
 msgid "Quasseldroid"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:24
+#: plinth/modules/radicale/__init__.py:25
 #, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
@@ -5024,19 +5032,19 @@ msgstr ""
 "html#documentation/#idcaldav-and-carddavsupported-clients\">支持的客户端应用"
 "程序</a>。任何拥有 {box_name} 登录名的用户都可以访问 Radicale。"
 
-#: plinth/modules/radicale/__init__.py:30
+#: plinth/modules/radicale/__init__.py:31
 msgid ""
 "Radicale provides a basic web interface, which only supports creating new "
 "calendars and addressbooks. It does not support adding events or contacts, "
 "which must be done using a separate client."
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:52
+#: plinth/modules/radicale/__init__.py:53
 #: plinth/modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr ""
 
-#: plinth/modules/radicale/__init__.py:53
+#: plinth/modules/radicale/__init__.py:54
 msgid "Calendar and Addressbook"
 msgstr "日历和通讯录"
 
@@ -5101,7 +5109,7 @@ msgstr ""
 msgid "Access rights configuration updated"
 msgstr "访问权配置已更新"
 
-#: plinth/modules/roundcube/__init__.py:18
+#: plinth/modules/roundcube/__init__.py:19
 msgid ""
 "Roundcube webmail is a browser-based multilingual IMAP client with an "
 "application-like user interface. It provides full functionality you expect "
@@ -5112,7 +5120,7 @@ msgstr ""
 "户界面。它提供您需要的从电子邮件客户端、MIME支持、地址簿、文件夹操作、消息搜"
 "索到拼写检查的完整功能。"
 
-#: plinth/modules/roundcube/__init__.py:23
+#: plinth/modules/roundcube/__init__.py:24
 msgid ""
 "You can use it by providing the username and password of the email account "
 "you wish to access followed by the domain name of the IMAP server for your "
@@ -5124,7 +5132,7 @@ msgstr ""
 "IMAP 服务器域名，像是 <code>imap.example.com</code>。对于 IMAP over SSL （推"
 "荐），应该填入类似 <code>imaps://imap.example.com</code> 的地址。"
 
-#: plinth/modules/roundcube/__init__.py:28
+#: plinth/modules/roundcube/__init__.py:29
 msgid ""
 "For Gmail, username will be your Gmail address, password will be your Google "
 "account password and server will be <code>imaps://imap.gmail.com</code>.  "
@@ -5138,7 +5146,7 @@ msgstr ""
 "href=\"https://www.google.com/settings/security/lesssecureapps\">https://www."
 "google.com/settings/security/lesssecureapps</a>)中启用“安全性较低的应用”。"
 
-#: plinth/modules/roundcube/__init__.py:50
+#: plinth/modules/roundcube/__init__.py:51
 msgid "Email Client"
 msgstr "邮件客户端"
 
@@ -5153,13 +5161,13 @@ msgid ""
 "can only read and send mails from this {box_name}."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:20
+#: plinth/modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:23
+#: plinth/modules/rssbridge/__init__.py:24
 #, python-brace-format
 msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
@@ -5168,7 +5176,7 @@ msgstr ""
 "启用后，属于该订阅源阅读器群的 <a href=\"{users_url}\">任何用户</a>均可访问"
 "RSS-Bridge。"
 
-#: plinth/modules/rssbridge/__init__.py:27
+#: plinth/modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
@@ -5176,16 +5184,16 @@ msgid ""
 "your {box_name} credentials."
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:45 plinth/modules/ttrss/__init__.py:46
+#: plinth/modules/rssbridge/__init__.py:46 plinth/modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: plinth/modules/rssbridge/__init__.py:48
+#: plinth/modules/rssbridge/__init__.py:49
 #: plinth/modules/rssbridge/manifest.py:10
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: plinth/modules/rssbridge/__init__.py:49
+#: plinth/modules/rssbridge/__init__.py:50
 msgid "RSS Feed Generator"
 msgstr ""
 
@@ -5348,27 +5356,27 @@ msgstr "已禁用共享。"
 msgid "Error disabling share: {error_message}"
 msgstr "禁用共享出错：{error_message}"
 
-#: plinth/modules/searx/__init__.py:19
+#: plinth/modules/searx/__init__.py:20
 msgid ""
 "Searx is a privacy-respecting Internet metasearch engine. It aggregrates and "
 "displays results from multiple search engines."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:21
+#: plinth/modules/searx/__init__.py:22
 msgid ""
 "Searx can be used to avoid tracking and profiling by search engines. It "
 "stores no cookies by default."
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:37
+#: plinth/modules/searx/__init__.py:38
 msgid "Search the web"
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:40 plinth/modules/searx/manifest.py:6
+#: plinth/modules/searx/__init__.py:41 plinth/modules/searx/manifest.py:6
 msgid "Searx"
 msgstr ""
 
-#: plinth/modules/searx/__init__.py:41
+#: plinth/modules/searx/__init__.py:42
 msgid "Web Search"
 msgstr "Web 搜索"
 
@@ -5518,13 +5526,22 @@ msgid "Shaarlier"
 msgstr "Shaarlier"
 
 #: plinth/modules/shadowsocks/__init__.py:18
+#: plinth/modules/shadowsocksserver/__init__.py:18
 msgid ""
-"Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
-"your Internet traffic. It can be used to bypass Internet filtering and "
-"censorship."
+"Shadowsocks is a tool for securely forwarding network requests to a remote "
+"server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
+"Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
 
-#: plinth/modules/shadowsocks/__init__.py:22
+#: plinth/modules/shadowsocks/__init__.py:21
+#: plinth/modules/shadowsocksserver/__init__.py:21
+msgid ""
+"Shadowsocks can be used to bypass Internet filtering and censorship. This "
+"requires that the Shadowsocks server is in a location where it can freely "
+"access the Internet, without filtering."
+msgstr ""
+
+#: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks client, that can connect to a "
@@ -5533,53 +5550,81 @@ msgid ""
 "the Shadowsocks server."
 msgstr ""
 
-#: plinth/modules/shadowsocks/__init__.py:27
+#: plinth/modules/shadowsocks/__init__.py:31
 msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
 
-#: plinth/modules/shadowsocks/__init__.py:46
-msgid "Shadowsocks"
+#: plinth/modules/shadowsocks/__init__.py:50
+#, fuzzy
+#| msgid "Chat Client"
+msgid "Shadowsocks Client"
+msgstr "聊天客户端"
+
+#: plinth/modules/shadowsocks/__init__.py:52
+msgid "Bypass Censorship"
 msgstr ""
 
-#: plinth/modules/shadowsocks/__init__.py:48
-msgid "Socks5 Proxy"
-msgstr ""
-
-#: plinth/modules/shadowsocks/forms.py:10
-#: plinth/modules/shadowsocks/forms.py:11
-msgid "Recommended"
-msgstr ""
-
-#: plinth/modules/shadowsocks/forms.py:36
+#: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
 msgstr "服务器"
 
-#: plinth/modules/shadowsocks/forms.py:37
+#: plinth/modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr ""
 
-#: plinth/modules/shadowsocks/forms.py:41
+#: plinth/modules/shadowsocks/forms.py:29
 msgid "Server port number"
 msgstr "服务器端口"
 
-#: plinth/modules/shadowsocks/forms.py:44
+#: plinth/modules/shadowsocks/forms.py:32
 msgid "Password used to encrypt data. Must match server password."
 msgstr ""
 
-#: plinth/modules/shadowsocks/forms.py:49
+#: plinth/modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr ""
 
-#: plinth/modules/sharing/__init__.py:16
+#: plinth/modules/shadowsocksserver/__init__.py:26
+#, python-brace-format
+msgid ""
+"Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
+"clients to connect to it. Clients' data will be encrypted and proxied "
+"through this server."
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/__init__.py:48
+#, fuzzy
+#| msgid "Chat Server"
+msgid "Shadowsocks Server"
+msgstr "聊天服务器"
+
+#: plinth/modules/shadowsocksserver/__init__.py:49
+msgid "Help Others Bypass Censorship"
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:10
+#: plinth/modules/shadowsocksserver/forms.py:11
+msgid "Recommended"
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:38
+msgid "Password used to encrypt data. Clients must use the same password."
+msgstr ""
+
+#: plinth/modules/shadowsocksserver/forms.py:43
+msgid "Encryption method. Clients must use the same setting."
+msgstr ""
+
+#: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
 "Sharing allows you to share files and folders on your {box_name} over the "
 "web with chosen groups of users."
 msgstr ""
 
-#: plinth/modules/sharing/__init__.py:33
+#: plinth/modules/sharing/__init__.py:34
 msgid "Sharing"
 msgstr "共享"
 
@@ -5890,7 +5935,7 @@ msgstr "系统需要重启以完成完全回滚。"
 msgid "Rollback to Snapshot"
 msgstr "回滚到快照"
 
-#: plinth/modules/ssh/__init__.py:21
+#: plinth/modules/ssh/__init__.py:22
 msgid ""
 "A Secure Shell server uses the secure shell protocol to accept connections "
 "from remote computers. An authorized remote computer can perform "
@@ -5898,11 +5943,11 @@ msgid ""
 "connections."
 msgstr ""
 
-#: plinth/modules/ssh/__init__.py:41
+#: plinth/modules/ssh/__init__.py:42
 msgid "Secure Shell (SSH) Server"
 msgstr "安全 Shell（SSH）服务器"
 
-#: plinth/modules/ssh/__init__.py:61
+#: plinth/modules/ssh/__init__.py:73
 msgid "Remotely login using Secure Shell (SSH)"
 msgstr "使用 Secure Shell（SSH 远程登录"
 
@@ -5946,7 +5991,7 @@ msgstr ""
 msgid "Fingerprint"
 msgstr "指纹"
 
-#: plinth/modules/sso/__init__.py:26
+#: plinth/modules/sso/__init__.py:27
 msgid "Single Sign On"
 msgstr ""
 
@@ -6181,7 +6226,7 @@ msgstr ""
 msgid "Error ejecting device: {error_message}"
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:22
+#: plinth/modules/syncthing/__init__.py:23
 msgid ""
 "Syncthing is an application to synchronize files across multiple devices, e."
 "g. your desktop computer and mobile phone.  Creation, modification, or "
@@ -6189,7 +6234,7 @@ msgid ""
 "other devices that also run Syncthing."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:27
+#: plinth/modules/syncthing/__init__.py:28
 #, python-brace-format
 msgid ""
 "Running Syncthing on {box_name} provides an extra synchronization point for "
@@ -6201,16 +6246,16 @@ msgid ""
 "\"syncthing-access\" group."
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:54
+#: plinth/modules/syncthing/__init__.py:55
 msgid "Administer Syncthing application"
 msgstr "管理 Syncthing 程序"
 
-#: plinth/modules/syncthing/__init__.py:58
+#: plinth/modules/syncthing/__init__.py:59
 #: plinth/modules/syncthing/manifest.py:12
 msgid "Syncthing"
 msgstr ""
 
-#: plinth/modules/syncthing/__init__.py:59
+#: plinth/modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr ""
 
@@ -6394,28 +6439,28 @@ msgstr "更新配置"
 msgid "Error configuring app: {error}"
 msgstr "配置应用出错：{error}"
 
-#: plinth/modules/transmission/__init__.py:24
+#: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
 msgstr "Transmission 是一个有网页界面的 BitTorrent 客户端。"
 
-#: plinth/modules/transmission/__init__.py:25
+#: plinth/modules/transmission/__init__.py:26
 msgid ""
 "BitTorrent is a peer-to-peer file sharing protocol. Note that BitTorrent is "
 "not anonymous."
 msgstr "BitTorrent 是一种点对点文件共享协议。 请注意，BitTorrent 不是匿名的。"
 
-#: plinth/modules/transmission/__init__.py:27
+#: plinth/modules/transmission/__init__.py:28
 msgid "Please do not change the default port of the Transmission daemon."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:29
+#: plinth/modules/transmission/__init__.py:30
 #, python-brace-format
 msgid ""
 "Compared to <a href=\"{deluge_url}\">Deluge</a>, Transmission is simpler and "
 "lightweight but is less customizable."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:33
+#: plinth/modules/transmission/__init__.py:34
 #, python-brace-format
 msgid ""
 "It can be accessed by <a href=\"{users_url}\">any user</a> on {box_name} "
@@ -6424,7 +6469,7 @@ msgstr ""
 "它可以由<a href=\"{users_url}\">属于 bit-torrent 组的{box_name}上的任何用户</"
 "a>访问。"
 
-#: plinth/modules/transmission/__init__.py:37
+#: plinth/modules/transmission/__init__.py:38
 #, python-brace-format
 msgid ""
 "In addition to the web interface, mobile and desktop apps can also be used "
@@ -6433,21 +6478,21 @@ msgid ""
 "rpc</a>."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:43
+#: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
 msgid ""
 "<a href=\"{samba_url}\">Samba</a> shares can be set as the default download "
 "directory from the dropdown menu below."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:47
+#: plinth/modules/transmission/__init__.py:48
 #, python-brace-format
 msgid ""
 "After a download has completed, you can also access your files using the <a "
 "href=\"{sharing_url}\">Sharing</a> app."
 msgstr ""
 
-#: plinth/modules/transmission/__init__.py:73
+#: plinth/modules/transmission/__init__.py:74
 #: plinth/modules/transmission/manifest.py:8
 msgid "Transmission"
 msgstr "Transmission"
@@ -6456,7 +6501,7 @@ msgstr "Transmission"
 msgid "Tremotesf"
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:20
+#: plinth/modules/ttrss/__init__.py:21
 msgid ""
 "Tiny Tiny RSS is a news feed (RSS/Atom) reader and aggregator, designed to "
 "allow reading news from any location, while feeling as close to a real "
@@ -6465,7 +6510,7 @@ msgstr ""
 "Tiny Tiny RSS是一个新闻源（RSS / Atom）阅读器和聚合器，旨在允许从任何位置读取"
 "新闻，同时提供尽可能接近真实的桌面应用程序体验。"
 
-#: plinth/modules/ttrss/__init__.py:24
+#: plinth/modules/ttrss/__init__.py:25
 #, python-brace-format
 msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
@@ -6474,18 +6519,18 @@ msgstr ""
 "启用后，属于该订阅源阅读器群的 <a href=\"{users_url}\">任何用户</a>均可访问 "
 "Tiny Tiny RSS。"
 
-#: plinth/modules/ttrss/__init__.py:29
+#: plinth/modules/ttrss/__init__.py:30
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
 "for connecting."
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:49 plinth/modules/ttrss/manifest.py:44
+#: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr ""
 
-#: plinth/modules/ttrss/__init__.py:50
+#: plinth/modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "新闻源阅读器"
 
@@ -6501,12 +6546,12 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:35
+#: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "检查并应用最新软件和安全更新。"
 
-#: plinth/modules/upgrades/__init__.py:36
+#: plinth/modules/upgrades/__init__.py:37
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -6514,33 +6559,33 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:64
-#: plinth/modules/upgrades/__init__.py:119
+#: plinth/modules/upgrades/__init__.py:65
+#: plinth/modules/upgrades/__init__.py:128
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "软件更新"
 
-#: plinth/modules/upgrades/__init__.py:122
+#: plinth/modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox 已更新"
 
-#: plinth/modules/upgrades/__init__.py:190
+#: plinth/modules/upgrades/__init__.py:199
 msgid "Could not start distribution update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:192
+#: plinth/modules/upgrades/__init__.py:201
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:203
+#: plinth/modules/upgrades/__init__.py:212
 msgid "Distribution update started"
 msgstr "已启动分发更新"
 
-#: plinth/modules/upgrades/__init__.py:205
+#: plinth/modules/upgrades/__init__.py:214
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -6732,14 +6777,14 @@ msgstr ""
 msgid "Starting distribution upgrade test."
 msgstr "启动分发升级测试。"
 
-#: plinth/modules/users/__init__.py:28
+#: plinth/modules/users/__init__.py:29
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:33
+#: plinth/modules/users/__init__.py:34
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -6747,15 +6792,15 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:54
+#: plinth/modules/users/__init__.py:55
 msgid "Users and Groups"
 msgstr "用户和组"
 
-#: plinth/modules/users/__init__.py:74
+#: plinth/modules/users/__init__.py:80
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/__init__.py:110
+#: plinth/modules/users/__init__.py:116
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "请检查 LDAP 条目“{search_item}”"
@@ -7290,7 +7335,7 @@ msgstr "删除与服务器的连接"
 msgid "Server deleted."
 msgstr "服务器已删除。"
 
-#: plinth/modules/wordpress/__init__.py:19
+#: plinth/modules/wordpress/__init__.py:20
 msgid ""
 "WordPress is a popular way to create and manage websites and blogs. Content "
 "can be managed using a visual interface. Layout and functionality of the web "
@@ -7299,7 +7344,7 @@ msgid ""
 "devices."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:25
+#: plinth/modules/wordpress/__init__.py:26
 #, python-brace-format
 msgid ""
 "You need to run WordPress setup by visiting the app before making the site "
@@ -7308,26 +7353,26 @@ msgid ""
 "better URLs to your pages and posts."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:30
+#: plinth/modules/wordpress/__init__.py:31
 msgid ""
 "WordPress has its own user accounts. First administrator account is created "
 "during setup. Bookmark the <a href=\"/wordpress/wp-admin/\">admin page</a> "
 "to reach administration interface in the future."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:34
+#: plinth/modules/wordpress/__init__.py:35
 msgid ""
 "After a major version upgrade, you need to manually run database upgrade "
 "from administrator interface. Additional plugins or themes may be installed "
 "and upgraded at your own risk."
 msgstr ""
 
-#: plinth/modules/wordpress/__init__.py:52
+#: plinth/modules/wordpress/__init__.py:53
 #: plinth/modules/wordpress/manifest.py:6
 msgid "WordPress"
 msgstr "WordPress"
 
-#: plinth/modules/wordpress/__init__.py:53
+#: plinth/modules/wordpress/__init__.py:54
 msgid "Website and Blog"
 msgstr "网站和博客"
 
