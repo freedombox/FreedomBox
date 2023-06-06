@@ -3,6 +3,7 @@
 
 import configparser
 import os
+import pathlib
 import shutil
 import subprocess
 
@@ -312,3 +313,6 @@ def restore_shares():
 def uninstall():
     """Drop all Samba shares."""
     _conf_command(['drop'])
+    for path in [CONF_PATH, DEFAULT_FILE]:
+        # Both files are typically created on setup()
+        pathlib.Path(path).unlink(missing_ok=True)
