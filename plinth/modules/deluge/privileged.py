@@ -160,7 +160,6 @@ def _wait_for_configuration(service, file_name):
 @privileged
 def uninstall():
     """Remove configuration and service files."""
-    for item in DELUGED_DEFAULT_FILE, DELUGE_WEB_SYSTEMD_SERVICE_PATH:
-        pathlib.Path(item).unlink(missing_ok=True)
-
+    # /etc/default/deluged is removed on purge
+    pathlib.Path(DELUGE_WEB_SYSTEMD_SERVICE_PATH).unlink(missing_ok=True)
     shutil.rmtree(DELUGE_CONF_DIR, ignore_errors=True)
