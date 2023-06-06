@@ -156,7 +156,7 @@ def disable_public_access():
 
 
 @privileged
-def unininstall():
+def uninstall():
     """Remove configuration uWSGI file."""
     shutil.rmtree('/etc/searx', ignore_errors=True)
     pathlib.Path(UWSGI_FILE).unlink(missing_ok=True)

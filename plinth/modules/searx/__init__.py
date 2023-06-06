@@ -108,7 +108,7 @@ class SearxApp(app_module.App):
     def uninstall(self):
         """De-configure and uninstall the app."""
         super().uninstall()
-        privileged.unininstall()
+        privileged.uninstall()
 
 
 class SearxWebserverAuth(Webserver):
