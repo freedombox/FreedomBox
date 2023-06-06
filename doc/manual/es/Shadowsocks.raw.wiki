@@ -6,33 +6,52 @@
 
 ## BEGIN_INCLUDE
 
-== Shadowsocks (Proxy SOCKS5) ==
+== Shadowsocks (Eludir censura) ==
 ||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Shadowsocks/Shadowsocks-icon_en_V01.png|icono de Shadowsocks}} ||
 
 '''Disponible desde''': versión 0.18.0
 
 === ¿Qué es Shadowsocks? ===
-[[https://shadowsocks.org/en/index.html|Shadowsocks]] es un proxy SOCKS5 ligero y seguro, diseñado para proteger tu tráfico Internet. Se puede usar para eludir la censura y los filtros de Internet. Tu !FreedomBox puede ejecutar un cliente Shadowsocks que puede conectar con un servidor Shadowsocks. También ejecutará un proxy SOCKS5. Los dispositivos locales pueden conectar con este proxy y sus datos serán cifrados y retransmitidos a través del sevidor Shadowsocks.
+[[https://shadowsocks.org/en/index.html|Shadowsocks]] es una herramienta para reenviar peticiones de red a un servidor remoto de forma segura. Consiste de dos partes: (1) un servidor Shadowsocks y (2) un cliente Shadowsocks con un proxy SOCKS5.
 
 '''Nota:''' Shadowsocks está disponible en !FreedomBox a partir de la versión 0.18.
 
-=== Usar el cliente Shadowsocks ===
+Se puede emplear Shadowsocks para eludir el filtrado de Internet y con ello la censura. Esto requiere un servidor Shadowsocks situado donde pueda acceder con libertad a Internet, sin filtros.
 
-La implementación actual de Shadowsocks en !FreedomBox solo soporta configurar !FreedomBox como cliente Shadowsocks. Este caso de uso sería así:
- * El client de Shadowsocks (!FreedomBox) está en una región en la que partes de Internet están bloqueadas o censuradas.
+Tu !FreedomBox puede ejecutar un cliente Shadowsocks que puede conectar con el servidor Shadowsocks. Ejecutará también un proxy SOCKS5. Los dispositivos locales pueden conectar con este proxy, y sus datos se cifrarán y enrutarán a través del servidor Shadowsocks.
+
+O bien tu !FreedomBox puede ejecutar un servidor Shadowsocks para que los clientes Shadowsocks conecten con él. Los datos de estos clientes se cifrarán y enrutarán a través de este servidor.
+
+=== Usar Shadowsocks ===
+
+El uso de Shadowsocks sería así:
+ * El cliente de Shadowsocks (!FreedomBox) está en una región en la que partes de Internet están bloqueadas o censuradas.
  * El servidor de Shadowsocks está en una región diferente que no tiene esos bloqueos.
  * !FreedomBox proporciona un servicio de proxy SOCKS en la red local para que otros dispositivos hagan uso de la conexión Shadowsocks.
 
-En el futuro será posible configurar !FreedomBox como servidor Shadowsocks.
+{{attachment:FreedomBox/Manual/Shadowsocks/Shadowsocks-diagram_en_V01.png|Diagrama de conexión de Shadowsocks|width=500}}
 
 === Configurar tu FreedomBox para el cliente Shadowsocks ===
 
-Para habilitar Shadowsocks primero navega a la página Proxy Socks5 (Shadowsocks) e instalalo. 
+Para habilitar el cliente Shadowsocks primero navega a la página del cliente Shadowsocks (Eludir censura) e instalalo. 
 
 Servidor: el servidor Shadowsocks no es la IP o la URL de !FreedomBox, sino que será otro servidor o VPS configurado como tal (servidor Shadowsocks). También hay algunos servidores Shadowsocks públicos listados en la web, pero sé consciente de que quienquiera que opere el servidor puede ver a dónde van las peticiones y cualquier dato no cifrado que se transmita.
 
 Para usar Shadowsocks una vez instalado configura la URL del proxy SOCKS5 en tu dispositivo, navegador o aplicación como `http://<tu_freedombox>:1080/`.
 
+=== Configurar tu FreedomBox para el servidor Shadowsocks ===
+
+Para habilitar el servidor Shadowsocks ve a su página (Ayudar a otros a eludir la censura) e instalalo.
+
+'''Nota''': En general, una !FreedomBox se configuraría bien como servidor Shadowsocks o bien como cliente, ¡pero no como ambos!
+
+Para que otros clientes Shadowsocks se conecten a tu servidor necesitarán conocer tu nombre de dominio, la contraseña y el método de cifrado.
+
+==== Redirección de puertos ====
+
+Si tu FreedomBox está detrás de un router, necesitarás configurar la redirección de los siguientes puertos para el servidor Shadowsocks:
+ * TCP 8388
+ * UDP 8388
 
 === Enlaces externos ===
 

@@ -8,32 +8,51 @@
 
 ## BEGIN_INCLUDE
 
-== Shadowsocks (SOCKS5 proxy) ==
+== Shadowsocks (Bypass Censorship) ==
 ||<tablestyle="float: right;"> {{attachment:Shadowsocks-icon_en_V01.png|Shadowsocks icon}} ||
 
 '''Available since''': version 0.18.0
 
 === What is Shadowsocks? ===
 
-Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect your Internet traffic. It can be used to bypass Internet filtering and censorship. Your !FreedomBox can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server.
+Shadowsocks is a tool for securely forwarding network requests to a remote server. It consists of two parts: (1) a Shadowsocks server, and (2) a Shadowsocks client with a SOCKS5 proxy.
 
-=== Using the Shadowsocks client? ===
+Shadowsocks can be used to bypass Internet filtering and censorship. This requires that the Shadowsocks server is in a location where it can freely access the Internet, without filtering.
 
-The current implementation of Shadowsocks in !FreedomBox only supports configuring !FreedomBox as a Shadowsocks client. The current use case for Shadowsocks is as follows:
- * Shadowsocks client (!FreedomBox) is in a region where some parts of the Internet are blocked or censored.
- * Shadowsocks server is in a different region, which doesn't have these blocks.
- * The !FreedomBox provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection.
+Your !FreedomBox can run a Shadowsocks client which can connect to a Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can connect to this proxy, and their data will be encrypted and proxied through the Shadowsocks server.
 
-At a future date it will be possible to configure !FreedomBox as Shadowsocks server.
+Alternatively, your !FreedomBox can run a Shadowsocks server, that allows Shadowsocks clients to connect to it. Clients' data will be encrypted and proxied through this server.
 
-=== Configuring your FreedomBox for the Shadowsocks client ===
+=== Using Shadowsocks? ===
 
-To enable Shadowsocks, first navigate to the Socks5 Proxy (Shadowsocks) page and install it. 
+Shadowsocks can be used as follows:
+ * Shadowsocks Client (a !FreedomBox) is in a region where some parts of the Internet are blocked or censored.
+ * Shadowsocks Server (a different !FreedomBox, or another server) is in a different region, which doesn't have these blocks.
+ * The !FreedomBox running Shadowsocks Client provides SOCKS proxy service on the local network for other devices to make use of its Shadowsocks connection to the server.
 
-Server: the Shadowsocks server is not the !FreedomBox IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them.
+{{attachment:Shadowsocks-diagram_en_V01.png|Shadowsocks connection diagram|width=500}}
 
-To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, browser or application to http://freedombox_address:1080/
+=== Configuring your FreedomBox for Shadowsocks Client ===
 
+To enable Shadowsocks Client, first navigate to the Shadowsocks Client (Bypass Censorship) page, and install it. 
+
+Server: the Shadowsocks server is not this !FreedomBox's IP or URL; rather, it will be another server or VPS that has been configured as a Shadowsocks server. There are also some public Shadowsocks servers listed on the web, but be aware that whoever operates the server can see where requests are going, and any non-encrypted data will be visible to them.
+
+To use Shadowsocks Client after setup, set the SOCKS5 proxy URL in your device, browser or application to http://freedombox_address:1080/
+
+=== Configuring your FreedomBox for Shadowsocks Server ===
+
+To enable Shadowsocks Server, first navigate to the Shadowsocks Server (Help Others Bypass Censorship) page, and install it.
+
+'''Note''': In general, a !FreedomBox should be set up as either a Shadowsocks Server, or a Shadowsocks Client, but not both!
+
+For Shadowsocks Clients to connect to your server, they will need to know your domain name, the password, and the encryption method.
+
+==== Port Forwarding ====
+
+If your !FreedomBox is behind a router, you will need to set up port forwarding on your router. You should forward the following ports for Shadowsocks Server:
+ * TCP 8388
+ * UDP 8388
 
 === External links ===
 
