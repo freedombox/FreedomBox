@@ -175,7 +175,7 @@ class Packages(app_module.FollowerComponent):
            self.conflicts_action not in (None, self.ConflictsAction.IGNORE):
             logger.info('Removing conflicting packages: %s',
                         packages_to_remove)
-            uninstall(packages_to_remove)
+            uninstall(packages_to_remove, purge=False)
 
         install(self.get_actual_packages(),
                 skip_recommends=self.skip_recommends)
@@ -198,7 +198,8 @@ class Packages(app_module.FollowerComponent):
                 packages_set -= set(component.get_actual_packages())
 
         # Preserve order of packages for ease of testing
-        uninstall([package for package in packages if package in packages_set])
+        uninstall([package for package in packages if package in packages_set],
+                  purge=True)
 
     def diagnose(self):
         """Run diagnostics and return results."""
@@ -341,10 +342,11 @@ class Transaction:
             logger.exception('Error installing package: %s', exception)
             raise
 
-    def uninstall(self):
+    def uninstall(self, purge):
         """Run an apt-get transaction to uninstall given packages."""
         try:
-            privileged.remove(app_id=self.app_id, packages=self.package_names)
+            privileged.remove(app_id=self.app_id, packages=self.package_names,
+                              purge=purge)
         except Exception as exception:
             logger.exception('Error uninstalling package: %s', exception)
             raise
@@ -416,7 +418,7 @@ def install(package_names, skip_recommends=False, force_configuration=None,
                         force_missing_configuration)
 
 
-def uninstall(package_names):
+def uninstall(package_names, purge):
     """Uninstall a set of packages."""
     try:
         operation = operation_module.Operation.get_operation()
@@ -437,7 +439,7 @@ def uninstall(package_names):
     from . import package
     transaction = package.Transaction(operation.app_id, package_names)
     operation.thread_data['transaction'] = transaction
-    transaction.uninstall()
+    transaction.uninstall(purge)
 
 
 def is_package_manager_busy():

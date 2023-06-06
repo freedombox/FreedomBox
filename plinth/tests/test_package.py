@@ -130,7 +130,7 @@ def test_packages_setup_with_conflicts(install, uninstall, packages_installed):
     component = Packages('test-component', ['bash'], conflicts=['exim4-base'],
                          conflicts_action=Packages.ConflictsAction.REMOVE)
     component.setup(old_version=0)
-    uninstall.assert_has_calls([call(['exim4-base'])])
+    uninstall.assert_has_calls([call(['exim4-base'], purge=False)])
     install.assert_has_calls([call(['bash'], skip_recommends=False)])
 
     uninstall.reset_mock()
@@ -162,7 +162,7 @@ def test_packages_uninstall(uninstall):
     app = TestApp()
     app.add(component)
     app.uninstall()
-    uninstall.assert_has_calls([call(['python3', 'bash'])])
+    uninstall.assert_has_calls([call(['python3', 'bash'], purge=True)])
 
 
 @patch('plinth.package.uninstall')
@@ -218,9 +218,10 @@ def test_packages_uninstall_exclusion(cache, uninstall):
     TestApp2()
     TestApp3()
     app1.uninstall()
-    uninstall.assert_has_calls(
-        [call(['package11', 'package3']),
-         call(['package12', 'package3'])])
+    uninstall.assert_has_calls([
+        call(['package11', 'package3'], purge=True),
+        call(['package12', 'package3'], purge=True)
+    ])
 
 
 @patch('apt.Cache')

@@ -71,7 +71,7 @@ def install(app_id: str, packages: list[str], skip_recommends: bool = False,
 
 
 @privileged
-def remove(app_id: str, packages: list[str]):
+def remove(app_id: str, packages: list[str], purge: bool):
     """Remove packages using apt-get."""
     try:
         _assert_managed_packages(app_id, packages)
@@ -81,7 +81,8 @@ def remove(app_id: str, packages: list[str]):
     subprocess.run(['dpkg', '--configure', '-a'], check=False)
     with action_utils.apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
-        returncode = run_apt_command(['remove'] + packages)
+        options = [] if not purge else ['--purge']
+        returncode = run_apt_command(['remove'] + options + packages)
 
     if returncode:
         raise RuntimeError(
