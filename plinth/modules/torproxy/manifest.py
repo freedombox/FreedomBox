@@ -1,13 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""App manifest for Tor Proxy."""
 
 from django.utils.translation import gettext_lazy as _
 
 from plinth.clients import store_url
 
-from . import privileged
-
-_orbot_package_id = 'org.torproject.android'
-_tor_browser_download_url = \
+_ORBOT_PACKAGE_ID = 'org.torproject.android'
+_TOR_BROWSER_DOWNLOAD_URL = \
     'https://www.torproject.org/download/download-easy.html'
 
 clients = [{
@@ -16,15 +15,15 @@ clients = [{
     'platforms': [{
         'type': 'download',
         'os': 'windows',
-        'url': _tor_browser_download_url,
+        'url': _TOR_BROWSER_DOWNLOAD_URL,
     }, {
         'type': 'download',
         'os': 'gnu-linux',
-        'url': _tor_browser_download_url,
+        'url': _TOR_BROWSER_DOWNLOAD_URL,
     }, {
         'type': 'download',
         'os': 'macos',
-        'url': _tor_browser_download_url,
+        'url': _TOR_BROWSER_DOWNLOAD_URL,
     }]
 }, {
     'name':
@@ -33,22 +32,21 @@ clients = [{
         'type': 'store',
         'os': 'android',
         'store_name': 'google-play',
-        'url': store_url('google-play', _orbot_package_id)
+        'url': store_url('google-play', _ORBOT_PACKAGE_ID)
     }, {
         'type': 'store',
         'os': 'android',
         'store_name': 'f-droid',
-        'url': store_url('f-droid', _orbot_package_id)
+        'url': store_url('f-droid', _ORBOT_PACKAGE_ID)
     }]
 }]
 
 backup = {
     'config': {
-        'directories': ['/etc/tor/instances/plinth/'],
-        'files': [str(privileged.TOR_APACHE_SITE)]
+        'directories': ['/etc/tor/instances/fbxproxy/'],
     },
     'secrets': {
-        'directories': ['/var/lib/tor-instances/plinth/']
+        'directories': ['/var/lib/tor-instances/fbxproxy/']
     },
-    'services': ['tor@plinth']
+    'services': ['tor@fbxproxy']
 }

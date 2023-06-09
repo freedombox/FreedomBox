@@ -15,21 +15,13 @@ class TestTor:
     """Test cases for testing the Tor module."""
 
     @staticmethod
-    @pytest.mark.usefixtures('needs_root')
-    def test_is_apt_transport_tor_enabled():
-        """Test that is_apt_transport_tor_enabled does not raise any unhandled
-        exceptions.
-        """
-        utils.is_apt_transport_tor_enabled()
-
-    @staticmethod
     @patch('plinth.app.App.get')
     @pytest.mark.usefixtures('needs_root', 'load_cfg')
     def test_get_status(_app_get):
         """Test that get_status does not raise any unhandled exceptions.
 
         This should work regardless of whether tor is installed, or
-        /etc/tor/torrc exists.
+        /etc/tor/instances/plinth/torrc exists.
         """
         utils.get_status()
 

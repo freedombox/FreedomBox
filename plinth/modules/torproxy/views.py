@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""FreedomBox app for configuring Tor."""
+"""FreedomBox app for configuring Tor Proxy."""
 
 import logging
 
@@ -8,24 +8,22 @@ from django.views.generic.edit import FormView
 
 from plinth import app as app_module
 from plinth import operation as operation_module
-from plinth.modules import tor
 from plinth.views import AppView
 
 from . import privileged
 from . import utils as tor_utils
-from .forms import TorForm
+from .forms import TorProxyForm
 
-config_process = None
 logger = logging.getLogger(__name__)
 
 
-class TorAppView(AppView):
-    """Show Tor app main page."""
+class TorProxyAppView(AppView):
+    """Show Tor Proxy app main page."""
 
-    app_id = 'tor'
-    template_name = 'tor.html'
-    form_class = TorForm
-    prefix = 'tor'
+    app_id = 'torproxy'
+    template_name = 'torproxy.html'
+    form_class = TorProxyForm
+    prefix = 'torproxy'
 
     status = None
 
@@ -60,7 +58,7 @@ class TorAppView(AppView):
 
 def _apply_changes(old_status, new_status):
     """Try to apply changes and handle errors."""
-    logger.info('tor: applying configuration changes')
+    logger.info('torproxy: applying configuration changes')
     exception_to_update = None
     message = None
     try:
@@ -72,7 +70,7 @@ def _apply_changes(old_status, new_status):
     else:
         message = gettext_noop('Configuration updated.')
 
-    logger.info('tor: configuration changes completed')
+    logger.info('torproxy: configuration changes completed')
     operation = operation_module.Operation.get_operation()
     operation.on_update(message, exception_to_update)
 
@@ -82,21 +80,13 @@ def __apply_changes(old_status, new_status):
     needs_restart = False
     arguments = {}
 
-    app = app_module.App.get('tor')
+    app = app_module.App.get('torproxy')
     is_enabled = app.is_enabled()
 
-    if old_status['relay_enabled'] != new_status['relay_enabled']:
-        arguments['relay'] = new_status['relay_enabled']
-        needs_restart = True
-
-    if old_status['bridge_relay_enabled'] != \
-       new_status['bridge_relay_enabled']:
-        arguments['bridge_relay'] = new_status['bridge_relay_enabled']
-        needs_restart = True
-
-    if old_status['hs_enabled'] != new_status['hs_enabled']:
-        arguments['hidden_service'] = new_status['hs_enabled']
-        needs_restart = True
+    if old_status['apt_transport_tor_enabled'] != \
+       new_status['apt_transport_tor_enabled']:
+        arguments['apt_transport_tor'] = (
+            is_enabled and new_status['apt_transport_tor_enabled'])
 
     if old_status['use_upstream_bridges'] != \
        new_status['use_upstream_bridges']:
@@ -112,5 +102,3 @@ def __apply_changes(old_status, new_status):
 
     if needs_restart and is_enabled:
         privileged.restart()
-        status = tor_utils.get_status()
-        tor.update_hidden_service_domain(status)
