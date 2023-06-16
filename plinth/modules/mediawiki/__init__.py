@@ -40,7 +40,7 @@ class MediaWikiApp(app_module.App):
 
     app_id = 'mediawiki'
 
-    _version = 11
+    _version = 12
 
     def __init__(self):
         """Create components for the app."""
