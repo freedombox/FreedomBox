@@ -58,6 +58,15 @@ Alternatively you may choose to build it yourself, by gathering all the componen
 
      . {{attachment:ui_insecure_connection.png|Self-signed certificate warning|width=600}}
      . {{attachment:ui_add_security_exception.png|Add Security Exception|width=400}}
+
+    If the domain name you are using already has a valid certificate from a recognised Certificate Authority, such as from Let's Encrypt, you may not be able to access the web interface. This means that the option to continue will not be offered. This might occur, for example, if you are reinstalling your !FreedomBox or are otherwise reusing a domain name that has an associated certificate.
+
+    This is normal, because your browser has a record of having visited the site and knows about the valid official certificate. The browser will not subsequently accept a self-signed certificate and you will be blocked. There are two ways to get beyond this hurdle.
+
+    The first method is to access your !FreedomBox by its IP address instead of by its domain name. So, instead of using something https://example.com, you would use something like https://198.51.100.2 (substitute your own IP address).
+
+    The second method is to create a fresh profile for your browser and access your !FreedomBox from the new profile. The new profile will have no memory of having visited the site nor memory of an official certificate. Once your !FreedomBox has a new Let's Encrypt certificate, you can go back to using the old browser profile.
+
   1. The first time you access the !FreedomBox web interface, you will see a welcome page. Click the "Start Setup" button to continue.
      . {{attachment:ui_firstboot_welcome.png|Welcome|width=500}}
 

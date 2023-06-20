@@ -48,6 +48,8 @@ $ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C36
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
 # This is the FreedomBox CI server's key
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+# This is the new FreedomBox CI server's key
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
 }}}
   * Next, verify the fingerprint of the public keys:
   {{{
@@ -71,17 +73,23 @@ pub   rsa4096 2018-06-06 [SC]
       013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
 uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
 sub   rsa4096 2018-06-06 [E]
+
+$ gpg --fingerprint D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
+pub   rsa4096 2022-03-09 [SC]
+      D4B0 6912 4FCF 43AA 1FCD  7FBC 2ACF C1E1 5AF8 2D8C
+uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
+sub   rsa4096 2022-03-09 [E]
 }}}
   * Finally, verify your downloaded image with its signature file `.sig`. For example:
   {{{
-$ gpg --verify freedombox-stable-free_buster_cubietruck-armhf.img.xz.sig 
-gpg: assuming signed data in 'freedombox-stable-free_buster_cubietruck-armhf.img.xz'
-gpg: Signature made Sat 09 May 2020 11:54:01 AM EDT
-gpg:                using RSA key 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-gpg: Good signature from "FreedomBox CI (Continuous Integration server) <admin@freedombox.org>" [undefined]
+$ $ gpg --verify freedombox-bookworm_all-amd64.img.xz.sig
+gpg: assuming signed data in 'freedombox-bookworm_all-amd64.img.xz'
+gpg: Signature made Wed 14 Jun 2023 03:22:04 PM PDT
+gpg:                using RSA key D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
+gpg: Good signature from "FreedomBox CI (Continuous Integration server) <admin@freedombox.org>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
-Primary key fingerprint: 013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+Primary key fingerprint: D4B0 6912 4FCF 43AA 1FCD  7FBC 2ACF C1E1 5AF8 2D8C
 }}}
 
 === Installation ===
