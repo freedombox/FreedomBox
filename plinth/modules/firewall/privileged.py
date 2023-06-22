@@ -129,3 +129,10 @@ def setup():
     set_firewall_backend('nftables')
 
     _setup_local_service_protection()
+
+
+@privileged
+def get_default_zone():
+    """Return the firewalld default zone."""
+    output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])
+    return output.decode().strip()

@@ -4,6 +4,7 @@
 import contextlib
 import logging
 
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
@@ -93,6 +94,12 @@ class FirewallApp(app_module.App):
         install(['firewalld'], force_configuration='new')
         _run_setup()
         return True
+
+    def diagnose(self):
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(_diagnose_default_zone())
+        return results
 
 
 def _run_setup():
@@ -252,3 +259,11 @@ def remove_passthrough(ipv, *args):
     config_direct = _get_dbus_proxy(_CONFIG_OBJECT, _CONFIG_DIRECT_INTERFACE)
     if config_direct.queryPassthrough('(sas)', ipv, args):
         config_direct.removePassthrough('(sas)', ipv, args)
+
+
+def _diagnose_default_zone():
+    """Diagnose whether the default zone is external."""
+    default_zone = privileged.get_default_zone()
+    testname = gettext('Default zone is external')
+    result = 'passed' if default_zone == 'external' else 'failed'
+    return [testname, result]
