@@ -136,9 +136,11 @@ def get_config():
     """Return firewalld configuration for diagnostics."""
     config = {}
 
+    # Get the default zone.
     output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])
     config['default_zone'] = output.decode().strip()
 
+    # Load Augeas lens.
     conf_file = '/etc/firewalld/firewalld.conf'
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
@@ -146,6 +148,12 @@ def get_config():
     aug.set('/augeas/context', '/files' + conf_file)
     aug.load()
 
+    # Get the firewall backend.
     config['backend'] = aug.get('FirewallBackend')
+
+    # Get the list of direct passthroughs.
+    output = subprocess.check_output(
+        ['firewall-cmd', '--direct', '--get-all-passthroughs'])
+    config['passthroughs'] = output.decode().strip().split('\n')
 
     return config

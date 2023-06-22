@@ -101,6 +101,7 @@ class FirewallApp(app_module.App):
         config = privileged.get_config()
         results.append(_diagnose_default_zone(config))
         results.append(_diagnose_firewall_backend(config))
+        results.append(_diagnose_direct_passthroughs(config))
         return results
 
 
@@ -274,4 +275,15 @@ def _diagnose_firewall_backend(config):
     """Diagnose whether the firewall backend is nftables."""
     testname = gettext('Firewall backend is nftables')
     result = 'passed' if config['backend'] == 'nftables' else 'failed'
+    return [testname, result]
+
+
+def _diagnose_direct_passthroughs(config):
+    """Diagnose direct passthroughs for local service protection.
+
+    Currently, we just check that the number of passthroughs is at least 12,
+    which are the number that are added by firewall's setup.
+    """
+    testname = gettext('Direct passthrough rules exist')
+    result = 'passed' if len(config['passthroughs']) >= 12 else 'failed'
     return [testname, result]
