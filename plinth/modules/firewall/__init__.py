@@ -98,7 +98,9 @@ class FirewallApp(app_module.App):
     def diagnose(self):
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(_diagnose_default_zone())
+        config = privileged.get_config()
+        results.append(_diagnose_default_zone(config))
+        results.append(_diagnose_firewall_backend(config))
         return results
 
 
@@ -261,9 +263,15 @@ def remove_passthrough(ipv, *args):
         config_direct.removePassthrough('(sas)', ipv, args)
 
 
-def _diagnose_default_zone():
+def _diagnose_default_zone(config):
     """Diagnose whether the default zone is external."""
-    default_zone = privileged.get_default_zone()
     testname = gettext('Default zone is external')
-    result = 'passed' if default_zone == 'external' else 'failed'
+    result = 'passed' if config['default_zone'] == 'external' else 'failed'
+    return [testname, result]
+
+
+def _diagnose_firewall_backend(config):
+    """Diagnose whether the firewall backend is nftables."""
+    testname = gettext('Firewall backend is nftables')
+    result = 'passed' if config['backend'] == 'nftables' else 'failed'
     return [testname, result]

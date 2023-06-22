@@ -132,7 +132,20 @@ def setup():
 
 
 @privileged
-def get_default_zone():
-    """Return the firewalld default zone."""
+def get_config():
+    """Return firewalld configuration for diagnostics."""
+    config = {}
+
     output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])
-    return output.decode().strip()
+    config['default_zone'] = output.decode().strip()
+
+    conf_file = '/etc/firewalld/firewalld.conf'
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Shellvars', conf_file)
+    aug.set('/augeas/context', '/files' + conf_file)
+    aug.load()
+
+    config['backend'] = aug.get('FirewallBackend')
+
+    return config
