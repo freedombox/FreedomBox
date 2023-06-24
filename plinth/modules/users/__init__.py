@@ -90,6 +90,11 @@ class UsersApp(app_module.App):
         results.append(_diagnose_ldap_entry('ou=people'))
         results.append(_diagnose_ldap_entry('ou=groups'))
 
+        config = privileged.get_nslcd_config()
+        results.append(_diagnose_nslcd_config(config, 'uri', 'ldapi:///'))
+        results.append(_diagnose_nslcd_config(config, 'base', 'dc=thisbox'))
+        results.append(_diagnose_nslcd_config(config, 'sasl_mech', 'EXTERNAL'))
+
         return results
 
     def setup(self, old_version):
@@ -115,6 +120,19 @@ def _diagnose_ldap_entry(search_item):
 
     template = _('Check LDAP entry "{search_item}"')
     testname = format_lazy(template, search_item=search_item)
+
+    return [testname, result]
+
+
+def _diagnose_nslcd_config(config, key, value):
+    """Diagnose that nslcd has a configuration."""
+    try:
+        result = 'passed' if config[key] == value else 'failed'
+    except KeyError:
+        result = 'failed'
+
+    template = _('Check nslcd config "{key} {value}"')
+    testname = format_lazy(template, key=key, value=value)
 
     return [testname, result]
 
