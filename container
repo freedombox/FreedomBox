@@ -151,9 +151,11 @@ URLS = URLS_AMD64
 
 TRUSTED_KEYS = ['D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C']
 KEY_SERVER = 'keyserver.ubuntu.com'
+KEY_SERVER_HTTPS_API = \
+    'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x{key_id}'
 
 PROVISION_SCRIPT = '''
-set -x
+set -xe pipefail
 
 cd /freedombox/
 
@@ -185,8 +187,8 @@ sudo chmod a+rw geckodriver.log
 sudo mkdir -p .pytest_cache/
 sudo chmod --recursive a+rw .pytest_cache/
 sudo chmod a+w /freedombox
-sudo chmod --recursive --silent a+w htmlcov
-sudo chmod --silent a+w .coverage
+sudo chmod --recursive --silent a+w htmlcov || true
+sudo chmod --silent a+w .coverage || true
 
 exit 0
 ''' # noqa
@@ -290,6 +292,8 @@ def parse_arguments():
         help='Distribution of the image to download and setup')
     subparser.add_argument('--image-size', default='16G',
                            help='Disk image size to resize to after download')
+    subparser.add_argument('--hkp-client', choices=('gpg', 'wget'),
+                           default='gpg', help='Client for key retrieval')
 
     # Print IP address
     subparser = subparsers.add_parser(
@@ -339,6 +343,8 @@ def parse_arguments():
     subparser.add_argument('--distribution', choices=distributions,
                            default=default_distribution,
                            help='Distribution of the image to update')
+    subparser.add_argument('--hkp-client', choices=('gpg', 'wget'),
+                           default='gpg', help='Client for key retrieval')
 
     # Display help message when no args are passed
     if len(sys.argv) == 1:
@@ -383,6 +389,7 @@ def _verify_dependencies():
         'sgdisk': 'gdisk',
         'btrfs': 'btrfs-progs',
         'nmcli': 'network-manager',
+        'dnsmasq': 'dnsmasq',
         'ssh': 'openssh-client',
         'ssh-keygen': 'openssh-client',
     }
@@ -405,8 +412,8 @@ def _verify_dependencies():
         sys.exit(1)
 
     logger.info('Running apt for missing packages: %s',
-                ' '.join(missing_commands))
-    subprocess.run(['sudo', 'apt', 'install'] + missing_packages, check=False)
+                ' '.join(missing_packages))
+    subprocess.run(['sudo', 'apt', 'install'] + missing_packages, check=True)
 
 
 def _get_systemd_nspawn_version():
@@ -440,7 +447,30 @@ def _download_file(url, target_file, force=False):
     partial_file.rename(target_file)
 
 
-def _verify_signature(data_file, signature_file):
+def _receive_keys_with_gpg(gpg_home, key_ids):
+    """Use gpg to retrieve and import a list of keys."""
+    subprocess.run([
+        'gpg', '--quiet', '--homedir',
+        str(gpg_home), '--keyserver', KEY_SERVER, '--recv-keys'
+    ] + key_ids, check=True)
+
+
+def _receive_keys_with_wget(gpg_home, key_ids):
+    """Use wget to retrieve a list of keys and import them."""
+    for key_id in key_ids:
+        # Download public key
+        logger.info('Getting public key %s', key_id)
+        url = KEY_SERVER_HTTPS_API.format(key_id=key_id)
+        wget_result = subprocess.run(
+            ['wget', '--quiet', '--output-document=-', url], check=True,
+            capture_output=True)
+        public_key = wget_result.stdout
+        subprocess.run(
+            ['gpg', '--quiet', '--homedir',
+             str(gpg_home), '--import=-'], input=public_key, check=True)
+
+
+def _verify_signature(hkp_client, data_file, signature_file):
     """Verify the detached signature on a file using GPG."""
     verified_file = signature_file.with_suffix(signature_file.suffix +
                                                '.verified')
@@ -452,10 +482,11 @@ def _verify_signature(data_file, signature_file):
     gpg_home.chmod(0o700)
 
     logger.info('Receiving GPG keys')
-    subprocess.run([
-        'gpg', '--quiet', '--homedir',
-        str(gpg_home), '--keyserver', KEY_SERVER, '--recv-keys'
-    ] + TRUSTED_KEYS, check=True)
+    if hkp_client == 'wget':
+        _receive_keys_with_wget(gpg_home, TRUSTED_KEYS)
+    else:
+        _receive_keys_with_gpg(gpg_home, TRUSTED_KEYS)
+
     process = subprocess.run(
         ['gpg', '--quiet', '--homedir',
          str(gpg_home), '--armor', '--export'] + TRUSTED_KEYS, check=True,
@@ -518,7 +549,7 @@ def _get_overlay_folder(distribution):
     return folder.resolve()
 
 
-def _download_disk_image(distribution, force=False):
+def _download_disk_image(distribution, hkp_client, force=False):
     """Download and unpack FreedomBox disk image."""
     work_directory.mkdir(exist_ok=True)
 
@@ -530,7 +561,7 @@ def _download_disk_image(distribution, force=False):
     signature_file = target_file.with_suffix(target_file.suffix + '.sig')
     _download_file(url + '.sig', signature_file, force=force)
 
-    _verify_signature(target_file, signature_file)
+    _verify_signature(hkp_client, target_file, signature_file)
 
     return _extract_image(target_file)
 
@@ -547,6 +578,7 @@ def _get_partition_info(image_file):
         if line.startswith('Partition Table:'):
             partition_table_type = line.partition(': ')[2]
 
+    logger.info('Main partition: %s', last_partition_number)
     return partition_table_type, last_partition_number
 
 
@@ -750,6 +782,7 @@ def _setup(image_file, distribution):
     _setup_nm_connection(distribution)
 
     setup_file.touch()
+    logger.info('Setup completed')
 
 
 def _create_nspawn_machine(image_file, distribution):
@@ -820,9 +853,10 @@ def _launch(image_file, distribution):
 
     logger.info('Bringing up host network connection: %s',
                 f'fbx-{distribution}-shared')
+    # This command requires dnsmasq
     subprocess.run(
         ['sudo', 'nmcli', 'connection', 'up', f'fbx-{distribution}-shared'],
-        stdout=subprocess.DEVNULL, check=False)
+        stdout=subprocess.DEVNULL, check=True)
 
 
 def _stop(distribution):
@@ -907,6 +941,7 @@ def _provision(image_file, distribution):
                    input=PROVISION_SCRIPT.encode())
 
     provision_file.touch()
+    logger.info('Provision completed')
 
 
 def _print_banner(distribution):
@@ -1023,7 +1058,8 @@ def subcommand_up(arguments):
 
     _verify_dependencies()
     _get_systemd_nspawn_version()
-    image_file = _download_disk_image(arguments.distribution)
+    image_file = _download_disk_image(arguments.distribution,
+                                      arguments.hkp_client)
     _resize_disk_image(image_file, arguments.image_size)
     _setup(image_file, arguments.distribution)
     _launch(image_file, arguments.distribution)
@@ -1077,7 +1113,8 @@ def subcommand_update(arguments):
     """Update the disk image."""
     if _is_update_required(arguments.distribution):
         logger.info("Updating...")
-        _download_disk_image(arguments.distribution, force=True)
+        _download_disk_image(arguments.distribution, arguments.hkp_client,
+                             force=True)
     else:
         logger.info("Already using the latest image")
 
