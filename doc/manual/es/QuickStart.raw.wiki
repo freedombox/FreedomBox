@@ -55,6 +55,12 @@ Alternativamente podrías optar por montarlo tu mismo reuniendo todas las piezas
 
      . {{attachment:ui_insecure_connection-es.png|Aviso de certificado autofirmado|width=600}}
      . {{attachment:ui_add_security_exception-es.png|Añadir excepción de seguridad|width=400}}
+
+     Si el nombre de dominio que usas tiene un certificado válido de una authoridad de certificación reconocida, como ''Let's Encrypt'' no podrás acceder al interfaz web. Por ello no se te ofrecerá la opción de continuar. Esto podría ocurrir, por ejemplo, si estás reinstalando tu FreedomBox o estás reutilizande de algón modo un nombre de dominio con un certificado asociado. Esto es normal, porque tu navegador recuerda haber visitado el sitio con el certificado oficial válido. En consecuancia el navegador no aceptará un certificado autofirmado y te verás bloqueado. Hay dos maneras de superar este obstáculo.
+
+     El primer método es acceder a tu !FreedomBox por su dirección IP en vez de por el dominio. Así, en vez de usar algo como https://ejemplo.com usarías algo como https://198.51.100.2 (substituyendo tu priopia dirección IP).
+
+     El segundo método es crear un perfil nuevo en tu navegador y acceder a tu !FreedomBox con él. El perfil nuevo no recordará ni el sitio ni el certificado. Una vez tu !FreedomBox tenga su nuevo certificado ''Let's Encrypt'' puedes volver a usar el perfil antiguo en el navegador. 
   1. La primera vez que accedes al interfaz web de tu !FreedomBox verás una página de bienvenida. Haz clic en el botón "Iniciar configuración" para continuar.
      . {{attachment:ui_firstboot_welcome-es.png|Bienvenida|width=500}}
 

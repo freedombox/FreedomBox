@@ -15,6 +15,14 @@
 
 Roundcube es un cliente de correo electrónico (''email'') para navegador con un interfaz de usuario parecido a una aplicación de escritorio. Admite varios lenguajes. Roundcube usa el protocolo de acceso a mensajes de Internet (IMAP = ''Internet Message Access Protocol'') para acceder a los correos en un servidor remoto. Soporta MIME para enviar archivos adjuntos y en particular proporciona libreta de contactos, gestión de carpetas, búsquedas de mensajes y verificación ortográfica.
 
+Roundcube se puede usar para leer y enviar correos electrónicos de una de dos maneras: Usando una cuenta de correo alojada fuera de !FreedomBox, como Riseup o Gmail, o bien con una cuenta alojada en !FreedomBox. La segunda es posible si se despliega una app de servidor de correo como [[es/FreedomBox/Manual/Roundcube|Postfix/Dovecot/Rspamd]] en !FreedomBox. Actualmente Roundcube solo se puede configurar en uno de estos modos ('''no''' con ambos coexistiendo). Esto se controla con la opción ''Usar solo el servidor de correo local mail'' de la página de configuración de la app de Roundcube.
+
+=== Privacidad con Correo Electrónico ===
+
+En el primer caso solo obtienes privacidad sobre tus borradores. Una vez envías el correo una copia reside en el servicio externo (Riseup, Gmail, etc), salvo que la borres expresamente. En cualquier caso tu tráfico transita a través de ellos.
+
+En el segundo caso (autoalojando) tu copia del correo reside en tu servidor !FreedomBox. Pero solo mantienes privacidad mientras el destinatario también use un sistema privado y no revele tu contenido.
+
 === Usar Roundcube ===
 
 Tras instalar Roundcube se puede acceder a él en {{{https://<tu_freedombox>/roundcube}}}. Introduce tu usuario y contraseña. El usuario de muchos servicios de correo electrónico suele ser la propia dirección completa, como ''usuario_de_ejemplo@servicio_de_ejemplo.org'', no solo el usuario ''usuario_de_ejemplo''. Introduce la dirección del servidor IMAP de tu servicio de correo electrónico en el campo ''Servidor''. Puedes probar a poner aquí tu nombre de dominio como ''servicio_de_ejemplo.org'' si la dirección es ''usuario_de_ejemplo@servicio_de_ejemplo.org'' y si esto no funciona consulta la dirección del servidor IMAP en la documentación de tu proveedor de correo electrónico. Se recomienda encarecidamente usar una conexión cifrada a tu servidor IMAP. Para ello inserta el prefijo  "imaps://" al principio de la dirección del servidor IMAP. Por ejemplo, `imaps://imap.servicio_de_ejemplo.org`.
