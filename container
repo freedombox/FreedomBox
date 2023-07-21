@@ -119,6 +119,7 @@ import json
 import logging
 import os
 import pathlib
+import platform
 import re
 import shutil
 import subprocess
@@ -128,7 +129,7 @@ import time
 import urllib.parse
 from urllib.request import urlopen
 
-URLS = {
+URLS_AMD64 = {
     'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
               'amd64/bullseye/freedombox-bullseye-free_all-amd64.img.xz',
     'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
@@ -136,6 +137,17 @@ URLS = {
     'unstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
                 'amd64/nightly/freedombox-unstable_dev_all-amd64.img.xz',
 }
+
+URLS_ARM64 = {
+    'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+              'arm64/bullseye/freedombox-bullseye-free_all-arm64.img.xz',
+    'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+               'arm64/testing/freedombox-testing_dev_all-arm64.img.xz',
+    'unstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+                'arm64/nightly/freedombox-unstable_dev_all-arm64.img.xz',
+}
+
+URLS = URLS_AMD64
 
 TRUSTED_KEYS = ['013D86D8BA32EAB4A6691BF85D4153D6FE188FC8']
 KEY_SERVER = 'keyserver.ubuntu.com'
@@ -1070,10 +1082,23 @@ def subcommand_update(arguments):
         logger.info("Already using the latest image")
 
 
+def set_URLs():
+    global URLS
+    arch = platform.machine()
+    if arch == 'x86_64' or arch == 'amd64':
+        URLS = URLS_AMD64
+    elif arch == 'aarch64' or arch == 'arm64':
+        URLS = URLS_ARM64
+    else:
+        logger.error('Unsupported architecture:', arch)
+        sys.exit(1)
+
+
 def main():
     """Parse arguments and perform operations."""
-    logging.basicConfig(level='INFO', format='> %(message)s')
+    set_URLs()
 
+    logging.basicConfig(level='INFO', format='> %(message)s')
     arguments = parse_arguments()
 
     global work_directory

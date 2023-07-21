@@ -14,13 +14,19 @@
 
 === What is Roundcube? ===
 
-Roundcube is a browser-based multilingual email client with an application-like user interface. Roundcube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching and spell checking.
+Roundcube is a browser-based multilingual email client with an application-like user interface. Roundcube is using the Internet Message Access Protocol (IMAP) to access e-mail on a remote mail server. It supports MIME to send files, and provides particularly address book, folder management, message searching, and spell checking.
 
-Roundcube app can be used in one of the two ways. First way to use Roundcube is as a mail client application for an email account you have elsewhere (other than !FreedomBox). For example, if you have a Riseup or Gmail account you can use Roundcube to read and send emails for those accounts. Second way to use to use Roundcube is as a mail client application for an email account on !FreedomBox. This is possible if an email server app, such as Postfix/Dovecot/Rspamd, is setup and enabled on !FreedomBox. Your mails reside on the !FreedomBox server and Roundcube (or other desktop/mobile mail clients) can be used to read and send mails. At present, Roundcube can only be setup for one of these two ways. This is controlled by the ''Use only the local mail server'' option in Roundcube app configuration page.
+Roundcube app can be used to read and send emails in one of the two ways: using an email account you have elsewhere (other than !FreedomBox), like in Riseup or in Gmail, or an account on !FreedomBox. The latter is possible if an email server app, such as [[FreedomBox/Manual/Email|Postfix/Dovecot/Rspamd]], is setup and enabled on !FreedomBox. At present, Roundcube can only be setup for one of these two ways. This is controlled by the ''Use only the local mail server'' option in Roundcube app configuration page.
+
+=== Email privacy ===
+
+In the first case, you only get privacy over your drafts. Once you send the email, a copy will reside in the external services (Riseup, Gmail, etc) unless you explicitly remove it. In any case, your traffic transits through them.
+
+In the second (self-hosted) case, your mail copies reside on your !FreedomBox server. But you only keep privacy as long as the recipient also uses a private system and doesn't disclose your content.  
 
 === Using Roundcube ===
 
-After Roundcube is installed, it can be accessed at {{{https://<your freedombox>/roundcube}}}. Enter your username and password. The username for many mail services will be the full email address such as ''exampleuser@example.org'' and not just the username like ''exampleuser''. Enter the address of your email service's IMAP server address in the ''Server'' field. You can try providing your domain name here such as ''example.org'' for email address ''exampleuser@example.org'' and if this does not work, consult your email provider's documentation for the address of the IMAP server. Using encrypted connection to your IMAP server is strongly recommended. To do this, prepend 'imaps://' at the beginning of your IMAP server address. For example, ''imaps://imap.example.org''.
+After Roundcube is installed, it can be accessed at {{{https://<your freedombox>/roundcube}}}. Enter your username and password. The username for many mail services will be the full email address such as ''exampleuser@example.org'' and not just the username like ''exampleuser''. Enter the address of your email service's IMAP server address in the ''Server'' field. You can try providing your domain name here, such as ''example.org'' for email address ''exampleuser@example.org'' and if this does not work, consult your email provider's documentation for the address of the IMAP server. Using encrypted connection to your IMAP server is strongly recommended. To do this, prepend 'imaps://' at the beginning of your IMAP server address. For example, ''imaps://imap.example.org''.
 
 {{attachment:roundcube-riseup.png|Logging into your IMAP server|width=606}}
 
