@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import menu
+from plinth import cfg, menu
 from plinth import setup as setup_module
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
@@ -19,6 +19,7 @@ from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
+from plinth.utils import format_lazy
 
 from . import manifest, privileged, utils
 
@@ -31,6 +32,13 @@ _description = [
       'Tor Project recommends that you use the '
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
       'Tor Browser</a>.'),
+    _('This app provides relay services to contribute to Tor network and help '
+      'others overcome censorship.'),
+    format_lazy(
+        _('This app provides an onion domain to expose {box_name} services '
+          'via the Tor network. Using Tor browser, one can access {box_name} '
+          'from the internet even when using an ISP that limits servers at '
+          'home.'), box_name=_(cfg.box_name)),
 ]
 
 

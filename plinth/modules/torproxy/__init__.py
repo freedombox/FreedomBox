@@ -28,8 +28,11 @@ _description = [
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
       'Tor Browser</a>.'),
     format_lazy(
-        _('A Tor SOCKS port is available on your {box_name} for internal '
-          'networks on TCP port 9050.'), box_name=_(cfg.box_name))
+        _('This app provides a web proxy on your {box_name} for internal '
+          'networks on TCP port 9050 using the SOCKS protocol. This can be '
+          'used by various apps to access the internet via the Tor network. '
+          'ISP censorship can be circumvented using upstream bridges.'),
+        box_name=_(cfg.box_name))
 ]
 
 
