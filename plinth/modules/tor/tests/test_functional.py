@@ -18,7 +18,7 @@ pytestmark = [pytest.mark.apps, pytest.mark.domain, pytest.mark.tor]
 
 class TestTorApp(functional.BaseAppTests):
     app_name = 'tor'
-    has_service = False
+    has_service = True
     has_web = False
 
     def test_set_tor_relay_configuration(self, session_browser):
