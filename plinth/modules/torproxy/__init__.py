@@ -3,10 +3,11 @@
 
 import logging
 
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
@@ -56,6 +57,13 @@ class TorProxyApp(app_module.App):
                               info.short_description, info.icon_filename,
                               'torproxy:index', parent_url_name='apps')
         self.add(menu_item)
+
+        shortcut = frontpage.Shortcut(
+            'shortcut-torproxy', info.name,
+            short_description=info.short_description, icon=info.icon_filename,
+            description=info.description, manual_page=info.manual_page,
+            configure_url=reverse_lazy('torproxy:index'), login_required=True)
+        self.add(shortcut)
 
         packages = Packages('packages-torproxy', [
             'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
