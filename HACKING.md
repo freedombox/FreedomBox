@@ -167,6 +167,16 @@ Note: This development container has automatic upgrades disabled by default.
   host$ sudo find -iname '__pycache__' | sudo xargs rm -rf {} ;
   ```
 
+#### Using Containers On 64-bit Raspberry Pi
+
+The container script can be used (as described above) on a Raspberry Pi 3 or 4
+running a 64-bit operating system.
+
+If you are running Raspberry Pi OS 64-bit, you will first need to enable Network
+Manager. To do this, run `sudo raspi-config`, go to "5 Advanced Options", and
+then to "A4 Network Config". Select "NetworkManager", and then reboot as
+prompted.
+
 [back to index](#hacking)
 
 [DebianNetworkManager]: https://wiki.debian.org/NetworkManager#Wired_Networks_are_Unmanaged
