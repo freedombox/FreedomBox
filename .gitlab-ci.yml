@@ -18,6 +18,16 @@ code-quality:
   script:
     - python3 -m flake8 container plinth actions/*
 
+static-type-check:
+  stage: test
+  allow_failure: true
+  needs: []
+  before_script:
+    - apt-get update
+    - apt-get install -y mypy
+  script:
+    - mypy --ignore-missing-imports .
+
 unit-tests:
   stage: test
   needs: []
