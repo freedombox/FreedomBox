@@ -52,8 +52,6 @@ def _first_time_setup():
 
     aug.set(TORPROXY_CONFIG_AUG + '/SocksPort[1]', '[::]:9050')
     aug.set(TORPROXY_CONFIG_AUG + '/SocksPort[2]', '0.0.0.0:9050')
-    aug.set(TORPROXY_CONFIG_AUG + '/ExitPolicy[1]', 'reject *:*')
-    aug.set(TORPROXY_CONFIG_AUG + '/ExitPolicy[2]', 'reject6 *:*')
     aug.set(TORPROXY_CONFIG_AUG + '/VirtualAddrNetworkIPv4', '10.192.0.0/10')
     aug.set(TORPROXY_CONFIG_AUG + '/AutomapHostsOnResolve', '1')
     aug.set(TORPROXY_CONFIG_AUG + '/TransPort[1]', '127.0.0.1:9040')
