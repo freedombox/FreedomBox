@@ -6,6 +6,7 @@ Test module for key/value store.
 import pytest
 
 from plinth import kvstore
+from plinth.models import KVStore
 
 pytestmark = pytest.mark.django_db
 
@@ -41,3 +42,19 @@ def test_get_default():
     expected = 'default'
     actual = kvstore.get_default('bad_key', expected)
     assert expected == actual
+
+
+def test_delete():
+    """Test that deleting key works."""
+    with pytest.raises(KVStore.DoesNotExist):
+        kvstore.delete('nonexistant_key')
+
+    with pytest.raises(KVStore.DoesNotExist):
+        kvstore.delete('nonexistant_key', ignore_missing=False)
+
+    kvstore.delete('nonexistant_key', ignore_missing=True)
+
+    kvstore.set('test-set-key', 'test-value')
+    kvstore.delete('test-set-key')
+    with pytest.raises(KVStore.DoesNotExist):
+        kvstore.delete('test-set-key')
