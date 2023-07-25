@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure Tor Proxy."""
 
+import json
 import logging
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
-from plinth import cfg, frontpage, menu
+from plinth import cfg, frontpage, kvstore, menu
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
@@ -19,6 +20,8 @@ from plinth.utils import format_lazy
 from . import manifest, privileged
 
 logger = logging.getLogger(__name__)
+
+PREINSTALL_CONFIG_KEY = 'torproxy_preinstall_config'
 
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
@@ -111,9 +114,17 @@ class TorProxyApp(app_module.App):
         privileged.setup(old_version)
         if not old_version:
             logger.info('Enabling apt-transport-tor')
-            privileged.configure(apt_transport_tor=True)
+            config = kvstore.get_default(PREINSTALL_CONFIG_KEY, '{}')
+            config = json.loads(config)
+            config = {
+                'use_upstream_bridges': config.get('use_upstream_bridges'),
+                'upstream_bridges': config.get('upstream_bridges'),
+                'apt_transport_tor': config.get('apt_transport_tor', True),
+            }
+            privileged.configure(**config)
             logger.info('Enabling Tor Proxy app')
             self.enable()
+            kvstore.delete(PREINSTALL_CONFIG_KEY, ignore_missing=True)
 
     def uninstall(self):
         """De-configure and uninstall the app."""

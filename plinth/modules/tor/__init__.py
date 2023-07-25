@@ -1,16 +1,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure Tor."""
 
+import json
 import logging
 
 from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, kvstore, menu
 from plinth import setup as setup_module
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
+from plinth.modules import torproxy
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -173,7 +175,8 @@ class TorApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup(old_version)
-        update_hidden_service_domain(utils.get_status())
+        status = utils.get_status()
+        update_hidden_service_domain(status)
 
         # Enable/disable Onion-Location component based on app status.
         # Component was introduced in version 6.
@@ -188,16 +191,20 @@ class TorApp(app_module.App):
                 component.disable()
 
         # The SOCKS proxy and "Download software packages using Tor" features
-        # were moved into a new app, Tor Proxy, in version 7. If the "Download
-        # software packages using Tor" option was enabled, then install and
-        # enable Tor Proxy, to avoid any issues for apt.
-        if old_version and old_version < 7:
-            if self.is_enabled() and is_apt_transport_tor_enabled():
-                logger.info(
-                    'Tor Proxy app will be installed for apt-transport-tor')
-                # This creates the operation, which will run after the current
-                # operation (Tor setup) is completed.
-                setup_module.run_setup_on_app('torproxy')
+        # were moved into a new app, Tor Proxy, in version 7. If Tor is
+        # enabled, then store the relevant configuration, and install Tor
+        # Proxy.
+        if old_version and old_version < 7 and self.is_enabled():
+            logger.info('Tor Proxy app will be installed')
+            config = {
+                'use_upstream_bridges': status['use_upstream_bridges'],
+                'upstream_bridges': status['upstream_bridges'],
+                'apt_transport_tor': is_apt_transport_tor_enabled()
+            }
+            kvstore.set(torproxy.PREINSTALL_CONFIG_KEY, json.dumps(config))
+            # This creates the operation, which will run after the current
+            # operation (Tor setup) is completed.
+            setup_module.run_setup_on_app('torproxy')
 
         if not old_version:
             logger.info('Enabling Tor app')
