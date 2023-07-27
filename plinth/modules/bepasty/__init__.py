@@ -100,7 +100,9 @@ class BepastyApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup('freedombox.local')
-        self.enable()
+        if not old_version:
+            self.enable()
+
         if old_version == 1 and not privileged.get_configuration().get(
                 'DEFAULT_PERMISSIONS'):
             # Upgrade to a better default only if user hasn't changed the
