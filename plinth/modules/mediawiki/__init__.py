@@ -101,7 +101,8 @@ class MediaWikiApp(app_module.App):
         super().setup(old_version)
         privileged.setup()
         privileged.update()
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def uninstall(self):
         """De-configure and uninstall the app."""
