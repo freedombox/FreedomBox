@@ -29,12 +29,12 @@ _is_shutting_down = False
 _force_upgrader = None
 
 
-def run_setup_on_app(app_id, allow_install=True):
+def run_setup_on_app(app_id, allow_install=True, rerun=False):
     """Execute the setup process in a thread."""
     # App is already up-to-date
     app = app_module.App.get(app_id)
     current_version = app.get_setup_version()
-    if current_version >= app.info.version:
+    if not rerun and current_version >= app.info.version:
         return
 
     if not current_version:

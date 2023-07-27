@@ -45,6 +45,14 @@
                 {% trans "Restore" %}
               </a>
             {% endif %}
+            {% if show_rerun_setup %}
+              <form class="form form-rerun-setup-button" method="post"
+                    action="{% url 'rerun-setup' app_id=app_id %}">
+                {% csrf_token %}
+                <input type="submit" class="dropdown-item no-running-status"
+                       name="rerun-setup" value="{% trans "Re-run setup" %}"/>
+              </form>
+            {% endif %}
             {% if show_uninstall %}
               <a class="dropdown-item uninstall-item"
                  href="{% url 'uninstall' app_id=app_id %}"
