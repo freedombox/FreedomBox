@@ -67,7 +67,8 @@ class BindApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup(old_version)
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def force_upgrade(self, _packages):
         """Force upgrade the managed packages to resolve conffile prompt."""
