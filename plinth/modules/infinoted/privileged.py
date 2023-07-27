@@ -9,7 +9,6 @@ import shutil
 import subprocess
 import time
 
-from plinth import action_utils
 from plinth.actions import privileged
 
 DATA_DIR = '/var/lib/infinoted'
@@ -166,8 +165,6 @@ def setup():
                  group='infinoted')
     shutil.chown(KEY_DIR + '/infinoted-key.pem', user='infinoted',
                  group='infinoted')
-
-    action_utils.service_enable('infinoted')
 
 
 @privileged
