@@ -33,7 +33,7 @@ APT_PREFERENCES_FREEDOMBOX = \
     '''Explanation: This file is managed by FreedomBox, do not edit.
 Explanation: Allow carefully selected updates to 'freedombox' from backports.
 Package: src:freedombox
-Pin: release a={}-backports
+Pin: release n={}-backports
 Pin-Priority: 500
 '''
 
