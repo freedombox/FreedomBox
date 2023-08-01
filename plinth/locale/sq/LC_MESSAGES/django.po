@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 20:15-0400\n"
+"POT-Creation-Date: 2023-07-31 20:04-0400\n"
 "PO-Revision-Date: 2023-02-25 11:36+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -28,7 +28,7 @@ msgstr "Burim faqeje"
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:92
+#: plinth/context_processors.py:23 plinth/views.py:94
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -907,7 +907,8 @@ msgstr "Përgjegjës"
 
 #: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
 #: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:74
+#: plinth/modules/tor/views.py:73 plinth/modules/torproxy/views.py:71
+#: plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Formësimi u përditësua."
 
@@ -2158,7 +2159,7 @@ msgstr "Portë"
 msgid "Host/Target/Value"
 msgstr "Strehë/Objektiv/Vlerë"
 
-#: plinth/modules/firewall/__init__.py:23
+#: plinth/modules/firewall/__init__.py:24
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2169,9 +2170,21 @@ msgstr ""
 "në rrjet te {box_name} juaj. Mbajta e një firewall-i të aktivizuar dhe të "
 "formësuar si duhet ul rrezikun e kërcënimeve të sigurisë nga Interneti."
 
-#: plinth/modules/firewall/__init__.py:59
+#: plinth/modules/firewall/__init__.py:60
 msgid "Firewall"
 msgstr "Firewall"
+
+#: plinth/modules/firewall/__init__.py:269
+msgid "Default zone is external"
+msgstr ""
+
+#: plinth/modules/firewall/__init__.py:276
+msgid "Firewall backend is nftables"
+msgstr ""
+
+#: plinth/modules/firewall/__init__.py:287
+msgid "Direct passthrough rules exist"
+msgstr ""
 
 #: plinth/modules/firewall/components.py:134
 #, python-brace-format
@@ -2847,7 +2860,8 @@ msgstr "Administroni aplikacion I2P"
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:61
+#: plinth/modules/torproxy/__init__.py:55
 msgid "Anonymity Network"
 msgstr "Rrjet Anonimiteti"
 
@@ -5502,7 +5516,7 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Ndërmjetës Web"
 
-#: plinth/modules/privoxy/__init__.py:113
+#: plinth/modules/privoxy/__init__.py:114
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Hapni {url} me ndërmjetësin {proxy} në tcp{kind}"
@@ -6964,7 +6978,7 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Njëkohësim Kartelash"
 
-#: plinth/modules/tor/__init__.py:23
+#: plinth/modules/tor/__init__.py:31 plinth/modules/torproxy/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -6978,58 +6992,49 @@ msgstr ""
 "përdorni <a href=\"https://www.torproject.org/download/download-easy.html."
 "en\">Shfletuesin Tor</a>."
 
-#: plinth/modules/tor/__init__.py:30
+#: plinth/modules/tor/__init__.py:37
+msgid ""
+"This app provides relay services to contribute to Tor network and help "
+"others overcome censorship."
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:40
 #, python-brace-format
 msgid ""
-"A Tor SOCKS port is available on your {box_name} for internal networks on "
-"TCP port 9050."
+"This app provides an onion domain to expose {box_name} services via the Tor "
+"network. Using Tor browser, one can access {box_name} from the internet even "
+"when using an ISP that limits servers at home."
 msgstr ""
-"Një portë SOCKS Tor-i për rrjete të brendshëm në {box_name} tuaj gjendet në "
-"portën TCP 9050."
 
-#: plinth/modules/tor/__init__.py:48
+#: plinth/modules/tor/__init__.py:60
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:65
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Onion Service"
 msgstr "Shërbim Onion Tor"
 
-#: plinth/modules/tor/__init__.py:69
-msgid "Tor Socks Proxy"
-msgstr "Ndërmjetës SOCKS Tor"
-
-#: plinth/modules/tor/__init__.py:73
+#: plinth/modules/tor/__init__.py:80
 msgid "Tor Bridge Relay"
 msgstr "Rele Ure Tor"
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:135
 msgid "Tor relay port available"
 msgstr "Portë releje Tor e gatshme"
 
-#: plinth/modules/tor/__init__.py:143
+#: plinth/modules/tor/__init__.py:146
 msgid "Obfs3 transport registered"
 msgstr "U regjistruar transport Obfs3"
 
-#: plinth/modules/tor/__init__.py:153
+#: plinth/modules/tor/__init__.py:156
 msgid "Obfs4 transport registered"
 msgstr "U regjistruar transport Obfs3"
 
-#: plinth/modules/tor/__init__.py:165
+#: plinth/modules/tor/__init__.py:168
 #, fuzzy
 #| msgid "Onion Service"
 msgid "Onion service is version 3"
 msgstr "Shërbim Onion"
-
-#: plinth/modules/tor/__init__.py:242
-#, python-brace-format
-msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr "URL hyrjesh {url} në tcp{kind} përmes Tor-i"
-
-#: plinth/modules/tor/__init__.py:253
-#, python-brace-format
-msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr "Ripohoni përdorim Tor-i te {url} në tcp{kind}"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -7068,11 +7073,11 @@ msgstr ""
 "em&gt;obfs3&lt;/em&gt;, &lt;em&gt;obfs4&lt;/em&gt; dhe &lt;em&gt;"
 "scamblesuit&lt;/em&gt;."
 
-#: plinth/modules/tor/forms.py:91
+#: plinth/modules/tor/forms.py:95
 msgid "Enable Tor relay"
 msgstr "Aktivizo rele Tor"
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:96
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -7083,11 +7088,11 @@ msgstr ""
 "dhurojë gjerësi bande për rrjetin Tor. Bëjeni këtë nëse keni gjerësi bande "
 "ngarkimesh dhe shkarkimesh më tepër se 2 megabite/s."
 
-#: plinth/modules/tor/forms.py:97
+#: plinth/modules/tor/forms.py:101
 msgid "Enable Tor bridge relay"
 msgstr "Aktivizo rele ure Tor"
 
-#: plinth/modules/tor/forms.py:99
+#: plinth/modules/tor/forms.py:103
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -7098,13 +7103,13 @@ msgstr ""
 "më të vështirë censurimin e kësaj nyjeje. Kjo i ndihmon të tjerët të "
 "anashkalojnë censurimin."
 
-#: plinth/modules/tor/forms.py:104
+#: plinth/modules/tor/forms.py:108
 #, fuzzy
 #| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
 msgstr "Aktivizo Shërbim Tor të Fshehur"
 
-#: plinth/modules/tor/forms.py:106
+#: plinth/modules/tor/forms.py:110
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "A hidden service will allow {box_name} to provide selected services (such "
@@ -7119,30 +7124,16 @@ msgstr ""
 "përzgjedhura (bie fjala, wiki, ose fjalosje) pa treguar vendndodhjen e tyre. "
 "Mos e përdorni këtë ende për anonimitet të fortë."
 
-#: plinth/modules/tor/forms.py:111
-msgid "Download software packages over Tor"
-msgstr "Shkarkoni paketa software përmes Tor-i"
-
-#: plinth/modules/tor/forms.py:112
-msgid ""
-"When enabled, software will be downloaded over the Tor network for "
-"installations and upgrades. This adds a degree of privacy and security "
-"during software downloads."
-msgstr ""
-"Kur aktivizohet, për instalime dhe përmirësime software-i do të shkarkohet "
-"përmes rrjeti Tor. Kjo shton një shkallë privatësie dhe sigurie gjatë "
-"shkarkimit të software-it."
-
-#: plinth/modules/tor/forms.py:127
+#: plinth/modules/tor/forms.py:125
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr ""
 "Që të përdoren ura “upstream”, përcaktoni të paktën një urë “upstream”."
 
-#: plinth/modules/tor/manifest.py:15
+#: plinth/modules/tor/manifest.py:15 plinth/modules/torproxy/manifest.py:14
 msgid "Tor Browser"
 msgstr "Shfletuesi Tor"
 
-#: plinth/modules/tor/manifest.py:31
+#: plinth/modules/tor/manifest.py:31 plinth/modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Ndërmjetës me Tor"
 
@@ -7154,14 +7145,57 @@ msgstr "Shërbim Onion"
 msgid "Ports"
 msgstr "Porta"
 
-#: plinth/modules/tor/views.py:53
+#: plinth/modules/tor/views.py:53 plinth/modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Po përditësohet formësimi"
 
-#: plinth/modules/tor/views.py:70
+#: plinth/modules/tor/views.py:70 plinth/modules/torproxy/views.py:68
 #, python-brace-format
 msgid "Error configuring app: {error}"
 msgstr "Gabim në formësimin e aplikacionit: {error}"
+
+#: plinth/modules/torproxy/__init__.py:34
+#, python-brace-format
+msgid ""
+"This app provides a web proxy on your {box_name} for internal networks on "
+"TCP port 9050 using the SOCKS protocol. This can be used by various apps to "
+"access the internet via the Tor network. ISP censorship can be circumvented "
+"using upstream bridges."
+msgstr ""
+
+#: plinth/modules/torproxy/__init__.py:54
+#, fuzzy
+#| msgid "Tor Socks Proxy"
+msgid "Tor Proxy"
+msgstr "Ndërmjetës SOCKS Tor"
+
+#: plinth/modules/torproxy/__init__.py:79
+msgid "Tor Socks Proxy"
+msgstr "Ndërmjetës SOCKS Tor"
+
+#: plinth/modules/torproxy/__init__.py:138
+#, python-brace-format
+msgid "Access URL {url} on tcp{kind} via Tor"
+msgstr "URL hyrjesh {url} në tcp{kind} përmes Tor-i"
+
+#: plinth/modules/torproxy/__init__.py:149
+#, python-brace-format
+msgid "Confirm Tor usage at {url} on tcp{kind}"
+msgstr "Ripohoni përdorim Tor-i te {url} në tcp{kind}"
+
+#: plinth/modules/torproxy/forms.py:15
+msgid "Download software packages over Tor"
+msgstr "Shkarkoni paketa software përmes Tor-i"
+
+#: plinth/modules/torproxy/forms.py:16
+msgid ""
+"When enabled, software will be downloaded over the Tor network for "
+"installations and upgrades. This adds a degree of privacy and security "
+"during software downloads."
+msgstr ""
+"Kur aktivizohet, për instalime dhe përmirësime software-i do të shkarkohet "
+"përmes rrjeti Tor. Kjo shton një shkallë privatësie dhe sigurie gjatë "
+"shkarkimit të software-it."
 
 #: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7557,7 +7591,7 @@ msgstr "Përditësime të shpeshta veçorish të aktivizuara."
 msgid "Starting distribution upgrade test."
 msgstr "Po fillohet provë përmirësimi shpërndarjeje."
 
-#: plinth/modules/users/__init__.py:29
+#: plinth/modules/users/__init__.py:30
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7568,7 +7602,7 @@ msgstr ""
 "aplikacione kërkojnë doemos një llogari përdoruesi, për të qenë pjesë e një "
 "grupi që autorizon përdoruesin të përdorë aplikacionin."
 
-#: plinth/modules/users/__init__.py:34
+#: plinth/modules/users/__init__.py:35
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7580,18 +7614,28 @@ msgstr ""
 "vetëm përdoruesit e grupit <em>përgjegjës</em> mund të ndryshojnë "
 "aplikacionet, apo rregullimet e sistemit."
 
-#: plinth/modules/users/__init__.py:55
+#: plinth/modules/users/__init__.py:56
 msgid "Users and Groups"
 msgstr "Përdorues dhe Grupe"
 
-#: plinth/modules/users/__init__.py:80
+#: plinth/modules/users/__init__.py:81
 msgid "Access to all services and system settings"
 msgstr "Hyrje te krejt shërbimet dhe rregullime të sistemit"
 
-#: plinth/modules/users/__init__.py:116
+#: plinth/modules/users/__init__.py:124
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Kontrolloni zërin LDAP \"{search_item}\""
+
+#: plinth/modules/users/__init__.py:137
+#, python-brace-format
+msgid "Check nslcd config \"{key} {value}\""
+msgstr ""
+
+#: plinth/modules/users/__init__.py:166
+#, python-brace-format
+msgid "Check nsswitch config \"{database}\""
+msgstr ""
 
 #: plinth/modules/users/forms.py:35
 msgid "Username is taken or is reserved."
@@ -8791,7 +8835,11 @@ msgstr "Përditësoje"
 msgid "Backup"
 msgstr "Kopjeruajtje"
 
-#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
+#: plinth/templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr ""
+
+#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30
 msgid "Uninstall"
 msgstr "Çinstaloje"
@@ -8809,11 +8857,11 @@ msgstr ""
 "Krejt të dhënat dhe formësimi i aplikacionit do të humbin përgjithnjë. "
 "Aplikacioni mund të instalohet sërish nga e para."
 
-#: plinth/views.py:239
+#: plinth/views.py:241
 msgid "Setting unchanged"
 msgstr "Rregullim i pandryshuar"
 
-#: plinth/views.py:456
+#: plinth/views.py:478
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "para çinstalimit të {app_id}"
@@ -8821,6 +8869,14 @@ msgstr "para çinstalimit të {app_id}"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#, python-brace-format
+#~ msgid ""
+#~ "A Tor SOCKS port is available on your {box_name} for internal networks on "
+#~ "TCP port 9050."
+#~ msgstr ""
+#~ "Një portë SOCKS Tor-i për rrjete të brendshëm në {box_name} tuaj gjendet "
+#~ "në portën TCP 9050."
 
 #, python-brace-format
 #~ msgid ""

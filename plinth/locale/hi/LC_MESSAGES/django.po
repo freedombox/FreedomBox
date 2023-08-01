@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 20:15-0400\n"
+"POT-Creation-Date: 2023-07-31 20:04-0400\n"
 "PO-Revision-Date: 2021-01-18 12:32+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:92
+#: plinth/context_processors.py:23 plinth/views.py:94
 msgid "FreedomBox"
 msgstr "फ्रीडमबोएक्स"
 
@@ -934,7 +934,8 @@ msgstr ""
 
 #: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
 #: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:74
+#: plinth/modules/tor/views.py:73 plinth/modules/torproxy/views.py:71
+#: plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "कॉन्फ़िगरेशन अपडेट किया."
 
@@ -2206,7 +2207,7 @@ msgstr "पोर्ट"
 msgid "Host/Target/Value"
 msgstr ""
 
-#: plinth/modules/firewall/__init__.py:23
+#: plinth/modules/firewall/__init__.py:24
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2217,9 +2218,23 @@ msgstr ""
 "को नियंत्रित करता है. फ़ायरवॉल सक्षम और ठीक से कॉंफ़िगर रखते हुए इंटरनेट से सुरक्षा खतरे का "
 "जोखिम कम कर देता है."
 
-#: plinth/modules/firewall/__init__.py:59
+#: plinth/modules/firewall/__init__.py:60
 msgid "Firewall"
 msgstr "फ़ायरवॉल"
+
+#: plinth/modules/firewall/__init__.py:269
+#, fuzzy
+#| msgid "Default app set"
+msgid "Default zone is external"
+msgstr "डिफ़ॉल्ट एेप सेट"
+
+#: plinth/modules/firewall/__init__.py:276
+msgid "Firewall backend is nftables"
+msgstr ""
+
+#: plinth/modules/firewall/__init__.py:287
+msgid "Direct passthrough rules exist"
+msgstr ""
 
 #: plinth/modules/firewall/components.py:134
 #, fuzzy, python-brace-format
@@ -2884,7 +2899,8 @@ msgstr "एप्लिकेशन सक्षम करें"
 msgid "I2P"
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:61
+#: plinth/modules/torproxy/__init__.py:55
 msgid "Anonymity Network"
 msgstr "गुमनामी नेटवर्क"
 
@@ -5455,7 +5471,7 @@ msgstr "प्रिवोक्सी"
 msgid "Web Proxy"
 msgstr "वेब प्रॉक्सी"
 
-#: plinth/modules/privoxy/__init__.py:113
+#: plinth/modules/privoxy/__init__.py:114
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "{url} ऐकसेस करें प्रॉक्सी लेकर {proxy} टीसीपी पर{kind}"
@@ -6938,7 +6954,7 @@ msgstr "सिंकतिन्ग"
 msgid "File Synchronization"
 msgstr "फ़ाइल सिंक्रनाइज़ेशन"
 
-#: plinth/modules/tor/__init__.py:23
+#: plinth/modules/tor/__init__.py:31 plinth/modules/torproxy/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -6951,59 +6967,51 @@ msgstr ""
 "टो प्रोजेक्ट सिफारिश की है कि आप <a href=\"https://www.torproject.org/download/"
 "download-easy.html.en\">टो ब्राउज़र </a> उपयोग करें."
 
-#: plinth/modules/tor/__init__.py:30
-#, fuzzy, python-brace-format
-#| msgid "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#: plinth/modules/tor/__init__.py:37
 msgid ""
-"A Tor SOCKS port is available on your {box_name} for internal networks on "
-"TCP port 9050."
-msgstr "एक टोर सॉक्स पोर्ट आपका %(box_name)s र उपलब्ध है, TCP पोर्ट ९०५० पर."
+"This app provides relay services to contribute to Tor network and help "
+"others overcome censorship."
+msgstr ""
 
-#: plinth/modules/tor/__init__.py:48
+#: plinth/modules/tor/__init__.py:40
+#, python-brace-format
+msgid ""
+"This app provides an onion domain to expose {box_name} services via the Tor "
+"network. Using Tor browser, one can access {box_name} from the internet even "
+"when using an ISP that limits servers at home."
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:60
 msgid "Tor"
 msgstr "टोर"
 
-#: plinth/modules/tor/__init__.py:65
+#: plinth/modules/tor/__init__.py:76
 #, fuzzy
 #| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
 msgstr "टोर हिडन सर्विस"
 
-#: plinth/modules/tor/__init__.py:69
-msgid "Tor Socks Proxy"
-msgstr "टोर सोक्स प्रॉक्सी"
-
-#: plinth/modules/tor/__init__.py:73
+#: plinth/modules/tor/__init__.py:80
 msgid "Tor Bridge Relay"
 msgstr "टो ब्रिज रीले"
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:135
 msgid "Tor relay port available"
 msgstr "टोर रीले पोर्ट उपलब्ध है"
 
-#: plinth/modules/tor/__init__.py:143
+#: plinth/modules/tor/__init__.py:146
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:153
+#: plinth/modules/tor/__init__.py:156
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 ट्रांसपोर्ट पंजीकृत"
 
-#: plinth/modules/tor/__init__.py:165
+#: plinth/modules/tor/__init__.py:168
 #, fuzzy
 #| msgid "Hidden Service"
 msgid "Onion service is version 3"
 msgstr "हिडन सर्विस"
-
-#: plinth/modules/tor/__init__.py:242
-#, python-brace-format
-msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr "यूआरएल एक्सेस करें {url} टीसीपी पर {kind} टोर के माध्यम से"
-
-#: plinth/modules/tor/__init__.py:253
-#, python-brace-format
-msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr "टोर उपयोग की पुष्टि करें {url} पर टीसीपी पर {kind}"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -7039,11 +7047,11 @@ msgstr ""
 "\">https://bridges.torproject.org/</a> और ब्रिज जानकारी यहाॅं से कॉपी/पेस्ट कर सकते "
 "हैं. वर्तमान में समर्थित ट्रांसपोर्ट्स कोई नहीं, obfs3, obfs4 और scamblesuit हैं."
 
-#: plinth/modules/tor/forms.py:91
+#: plinth/modules/tor/forms.py:95
 msgid "Enable Tor relay"
 msgstr "टोर रीले सक्षम करें"
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:96
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -7054,11 +7062,11 @@ msgstr ""
 "अगर आपके पास दो से अधिक मेगाबिट से अपलोड \n"
 "आैर डाउनलोड बैंडविड्थ है यह करें."
 
-#: plinth/modules/tor/forms.py:97
+#: plinth/modules/tor/forms.py:101
 msgid "Enable Tor bridge relay"
 msgstr "टोर ब्रिज रीले सक्षम करें"
 
-#: plinth/modules/tor/forms.py:99
+#: plinth/modules/tor/forms.py:103
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -7068,13 +7076,13 @@ msgstr ""
 "और इस नोड सेंसर करने के लिए और मुश्किल होगा. यह दूसरों को सेंसरशिप से टाल करने के लिये मदद "
 "करता है."
 
-#: plinth/modules/tor/forms.py:104
+#: plinth/modules/tor/forms.py:108
 #, fuzzy
 #| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
 msgstr "टोर हिडन सर्विस सक्षम करें"
 
-#: plinth/modules/tor/forms.py:106
+#: plinth/modules/tor/forms.py:110
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "A hidden service will allow {box_name} to provide selected services (such "
@@ -7088,28 +7096,15 @@ msgstr ""
 "हिडन सर्विस {box_name} को इसके स्थान को प्रकट किए बिना चयनित सर्विसस प्रदान करने की "
 "अनुमति देगी. स्ट्रॉन्ग गुमनामी के लिए इससे अभी न करें."
 
-#: plinth/modules/tor/forms.py:111
-msgid "Download software packages over Tor"
-msgstr "टो पर  सॉफ्टवेयर पैकेजस डाउनलोड करें"
-
-#: plinth/modules/tor/forms.py:112
-msgid ""
-"When enabled, software will be downloaded over the Tor network for "
-"installations and upgrades. This adds a degree of privacy and security "
-"during software downloads."
-msgstr ""
-"सक्षम होने पर सॉफ्टवेयर इंस्टालेशन और अपग्रेड के लिए टो नेटवर्क पर डाउनलोड किया जाएगा. "
-"यह सॉफ़्टवेयर डाउनलोड के दौरान एकांत और सुरक्षा जोड़ता है."
-
-#: plinth/modules/tor/forms.py:127
+#: plinth/modules/tor/forms.py:125
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr "अपस्ट्रीम ब्रिजस उपयोग करने के लिए एक अपस्ट्रीम ब्रिजस निर्दिष्ट करें."
 
-#: plinth/modules/tor/manifest.py:15
+#: plinth/modules/tor/manifest.py:15 plinth/modules/torproxy/manifest.py:14
 msgid "Tor Browser"
 msgstr "टोर ब्राउजर"
 
-#: plinth/modules/tor/manifest.py:31
+#: plinth/modules/tor/manifest.py:31 plinth/modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "अोरबोट: टोर के साथ प्रॉक्सी"
 
@@ -7123,17 +7118,59 @@ msgstr "हिडन सर्विस"
 msgid "Ports"
 msgstr "पोर्टस"
 
-#: plinth/modules/tor/views.py:53
+#: plinth/modules/tor/views.py:53 plinth/modules/torproxy/views.py:51
 #, fuzzy
 #| msgid "An error occurred during configuration."
 msgid "Updating configuration"
 msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
 
-#: plinth/modules/tor/views.py:70
+#: plinth/modules/tor/views.py:70 plinth/modules/torproxy/views.py:68
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error configuring app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+
+#: plinth/modules/torproxy/__init__.py:34
+#, python-brace-format
+msgid ""
+"This app provides a web proxy on your {box_name} for internal networks on "
+"TCP port 9050 using the SOCKS protocol. This can be used by various apps to "
+"access the internet via the Tor network. ISP censorship can be circumvented "
+"using upstream bridges."
+msgstr ""
+
+#: plinth/modules/torproxy/__init__.py:54
+#, fuzzy
+#| msgid "Tor Socks Proxy"
+msgid "Tor Proxy"
+msgstr "टोर सोक्स प्रॉक्सी"
+
+#: plinth/modules/torproxy/__init__.py:79
+msgid "Tor Socks Proxy"
+msgstr "टोर सोक्स प्रॉक्सी"
+
+#: plinth/modules/torproxy/__init__.py:138
+#, python-brace-format
+msgid "Access URL {url} on tcp{kind} via Tor"
+msgstr "यूआरएल एक्सेस करें {url} टीसीपी पर {kind} टोर के माध्यम से"
+
+#: plinth/modules/torproxy/__init__.py:149
+#, python-brace-format
+msgid "Confirm Tor usage at {url} on tcp{kind}"
+msgstr "टोर उपयोग की पुष्टि करें {url} पर टीसीपी पर {kind}"
+
+#: plinth/modules/torproxy/forms.py:15
+msgid "Download software packages over Tor"
+msgstr "टो पर  सॉफ्टवेयर पैकेजस डाउनलोड करें"
+
+#: plinth/modules/torproxy/forms.py:16
+msgid ""
+"When enabled, software will be downloaded over the Tor network for "
+"installations and upgrades. This adds a degree of privacy and security "
+"during software downloads."
+msgstr ""
+"सक्षम होने पर सॉफ्टवेयर इंस्टालेशन और अपग्रेड के लिए टो नेटवर्क पर डाउनलोड किया जाएगा. "
+"यह सॉफ़्टवेयर डाउनलोड के दौरान एकांत और सुरक्षा जोड़ता है."
 
 #: plinth/modules/transmission/__init__.py:25
 #, fuzzy
@@ -7543,14 +7580,14 @@ msgstr ""
 msgid "Starting distribution upgrade test."
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: plinth/modules/users/__init__.py:29
+#: plinth/modules/users/__init__.py:30
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:34
+#: plinth/modules/users/__init__.py:35
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7558,18 +7595,28 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:55
+#: plinth/modules/users/__init__.py:56
 msgid "Users and Groups"
 msgstr "यूसरस और समूह"
 
-#: plinth/modules/users/__init__.py:80
+#: plinth/modules/users/__init__.py:81
 msgid "Access to all services and system settings"
 msgstr "सब सर्विसस और सिस्टम सेटिंग्स तक पहुंच"
 
-#: plinth/modules/users/__init__.py:116
+#: plinth/modules/users/__init__.py:124
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "एलडीएपी प्रविष्टि चेक करें \"{search_item}\""
+
+#: plinth/modules/users/__init__.py:137
+#, python-brace-format
+msgid "Check nslcd config \"{key} {value}\""
+msgstr ""
+
+#: plinth/modules/users/__init__.py:166
+#, python-brace-format
+msgid "Check nsswitch config \"{database}\""
+msgstr ""
 
 #: plinth/modules/users/forms.py:35
 msgid "Username is taken or is reserved."
@@ -8802,7 +8849,13 @@ msgstr "अपडेट"
 msgid "Backup"
 msgstr "बैकअप"
 
-#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
+#: plinth/templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "सटअप शुरु करें"
+
+#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30
 #, fuzzy
 #| msgid "Install"
@@ -8821,11 +8874,11 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:239
+#: plinth/views.py:241
 msgid "Setting unchanged"
 msgstr "सेटिंग स्थिर है"
 
-#: plinth/views.py:456
+#: plinth/views.py:478
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -8833,6 +8886,14 @@ msgstr ""
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy, python-brace-format
+#~| msgid ""
+#~| "A Tor SOCKS port is available on your %(box_name)s on TCP port 9050."
+#~ msgid ""
+#~ "A Tor SOCKS port is available on your {box_name} for internal networks on "
+#~ "TCP port 9050."
+#~ msgstr "एक टोर सॉक्स पोर्ट आपका %(box_name)s र उपलब्ध है, TCP पोर्ट ९०५० पर."
 
 #~ msgid ""
 #~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
@@ -9529,9 +9590,6 @@ msgstr ""
 #~ "होगा. इस पर निर्भर करता है कि आपका%(box_name)s कितना तेज़ है, ये घंटों भी लग सकते. "
 #~ "अगर सेटअप बाधित हो गया, फिर से शरु कर सकता है."
 
-#~ msgid "Start setup"
-#~ msgstr "सटअप शुरु करें"
-
 #~ msgid "OpenVPN setup is running"
 #~ msgstr "ओपनवीपीएन सेटअप चल रहा है"
 
@@ -10182,9 +10240,6 @@ msgstr ""
 
 #~ msgid "Error setting default app: {exception}"
 #~ msgstr "{exception}: डिफ़ॉल्ट एेप सेट करने में एरर"
-
-#~ msgid "Default app set"
-#~ msgstr "डिफ़ॉल्ट एेप सेट"
 
 #, fuzzy
 #~| msgid "NTP client in contact with servers"
