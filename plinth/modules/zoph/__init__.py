@@ -89,7 +89,8 @@ class ZophApp(app_module.App):
         privileged.pre_install()
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
 
 
 class ZophBackupRestore(BackupRestore):

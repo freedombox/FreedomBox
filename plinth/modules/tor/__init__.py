@@ -1,23 +1,31 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure Tor."""
 
+import json
+import logging
+
 from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, kvstore, menu
+from plinth import setup as setup_module
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
-from plinth.modules.apache.components import Webserver, diagnose_url
+from plinth.modules import torproxy
+from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
+from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
 from . import manifest, privileged, utils
+
+logger = logging.getLogger(__name__)
 
 _description = [
     _('Tor is an anonymous communication system. You can learn more '
@@ -26,9 +34,13 @@ _description = [
       'Tor Project recommends that you use the '
       '<a href="https://www.torproject.org/download/download-easy.html.en">'
       'Tor Browser</a>.'),
+    _('This app provides relay services to contribute to Tor network and help '
+      'others overcome censorship.'),
     format_lazy(
-        _('A Tor SOCKS port is available on your {box_name} for internal '
-          'networks on TCP port 9050.'), box_name=_(cfg.box_name))
+        _('This app provides an onion domain to expose {box_name} services '
+          'via the Tor network. Using Tor browser, one can access {box_name} '
+          'from the internet even when using an ISP that limits servers at '
+          'home.'), box_name=_(cfg.box_name)),
 ]
 
 
@@ -37,7 +49,7 @@ class TorApp(app_module.App):
 
     app_id = 'tor'
 
-    _version = 6
+    _version = 7
 
     def __init__(self):
         """Create components for the app."""
@@ -57,28 +69,20 @@ class TorApp(app_module.App):
                               parent_url_name='apps')
         self.add(menu_item)
 
-        packages = Packages('packages-tor', [
-            'tor', 'tor-geoipdb', 'torsocks', 'obfs4proxy', 'apt-transport-tor'
-        ])
+        packages = Packages('packages-tor',
+                            ['tor', 'tor-geoipdb', 'obfs4proxy'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
                                  'tor:index', can_have_certificate=False)
         self.add(domain_type)
 
-        firewall = Firewall('firewall-tor-socks', _('Tor Socks Proxy'),
-                            ports=['tor-socks'], is_external=False)
-        self.add(firewall)
-
         firewall = Firewall('firewall-tor-relay', _('Tor Bridge Relay'),
                             ports=['tor-orport', 'tor-obfs3',
                                    'tor-obfs4'], is_external=True)
         self.add(firewall)
 
-        daemon = Daemon(
-            'daemon-tor', 'tor@plinth', strict_check=True,
-            listen_ports=[(9050, 'tcp4'), (9050, 'tcp6'), (9040, 'tcp4'),
-                          (9040, 'tcp6'), (9053, 'udp4'), (9053, 'udp6')])
+        daemon = Daemon('daemon-tor', 'tor@plinth', strict_check=True)
         self.add(daemon)
 
         webserver = Webserver('webserver-onion-location',
@@ -113,8 +117,7 @@ class TorApp(app_module.App):
         update_hidden_service_domain()
 
     def disable(self):
-        """Disable APT use of Tor before disabling."""
-        privileged.configure(apt_transport_tor=False)
+        """Disable the app and remove HS domain."""
         super().disable()
         update_hidden_service_domain()
 
@@ -166,22 +169,14 @@ class TorApp(app_module.App):
                 'passed' if len(hs_hostname) == 56 else 'failed'
             ])
 
-        results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
-        results.append(_diagnose_url_via_tor('http://www.debian.org', '6'))
-
-        results.append(_diagnose_tor_use('https://check.torproject.org', '4'))
-        results.append(_diagnose_tor_use('https://check.torproject.org', '6'))
-
         return results
 
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup(old_version)
-        if not old_version:
-            privileged.configure(apt_transport_tor=True)
-
-        update_hidden_service_domain(utils.get_status())
+        status = utils.get_status()
+        update_hidden_service_domain(status)
 
         # Enable/disable Onion-Location component based on app status.
         # Component was introduced in version 6.
@@ -189,11 +184,30 @@ class TorApp(app_module.App):
             daemon_component = self.get_component('daemon-tor')
             component = self.get_component('webserver-onion-location')
             if daemon_component.is_enabled():
+                logger.info('Enabling Onion-Location component')
                 component.enable()
             else:
+                logger.info('Disabling Onion-Location component')
                 component.disable()
 
+        # The SOCKS proxy and "Download software packages using Tor" features
+        # were moved into a new app, Tor Proxy, in version 7. If Tor is
+        # enabled, then store the relevant configuration, and install Tor
+        # Proxy.
+        if old_version and old_version < 7 and self.is_enabled():
+            logger.info('Tor Proxy app will be installed')
+            config = {
+                'use_upstream_bridges': status['use_upstream_bridges'],
+                'upstream_bridges': status['upstream_bridges'],
+                'apt_transport_tor': is_apt_transport_tor_enabled()
+            }
+            kvstore.set(torproxy.PREINSTALL_CONFIG_KEY, json.dumps(config))
+            # This creates the operation, which will run after the current
+            # operation (Tor setup) is completed.
+            setup_module.run_setup_on_app('torproxy')
+
         if not old_version:
+            logger.info('Enabling Tor app')
             self.enable()
 
     def uninstall(self):
@@ -234,23 +248,3 @@ def _diagnose_control_port():
                             negate=negate))
 
     return results
-
-
-def _diagnose_url_via_tor(url, kind=None):
-    """Diagnose whether a URL is reachable via Tor."""
-    result = diagnose_url(url, kind=kind, wrapper='torsocks')
-    result[0] = _('Access URL {url} on tcp{kind} via Tor') \
-        .format(url=url, kind=kind)
-
-    return result
-
-
-def _diagnose_tor_use(url, kind=None):
-    """Diagnose whether webpage at URL reports that we are using Tor."""
-    expected_output = 'Congratulations. This browser is configured to use Tor.'
-    result = diagnose_url(url, kind=kind, wrapper='torsocks',
-                          expected_output=expected_output)
-    result[0] = _('Confirm Tor usage at {url} on tcp{kind}') \
-        .format(url=url, kind=kind)
-
-    return result

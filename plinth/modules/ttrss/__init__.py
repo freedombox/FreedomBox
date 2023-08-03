@@ -117,7 +117,8 @@ class TTRSSApp(app_module.App):
         privileged.pre_setup()
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def force_upgrade(self, packages):
         """Force update package to resolve conffile prompts."""

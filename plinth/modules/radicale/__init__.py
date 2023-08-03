@@ -104,7 +104,8 @@ class RadicaleApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def force_upgrade(self, packages):
         """Force upgrade radicale to resolve conffile prompt."""

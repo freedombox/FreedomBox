@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 20:15-0400\n"
+"POT-Creation-Date: 2023-07-31 20:04-0400\n"
 "PO-Revision-Date: 2022-11-07 10:05+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -36,7 +36,7 @@ msgstr "Sidekilde"
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:92
+#: plinth/context_processors.py:23 plinth/views.py:94
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -923,7 +923,8 @@ msgstr "admin"
 
 #: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
 #: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/zoph/views.py:74
+#: plinth/modules/tor/views.py:73 plinth/modules/torproxy/views.py:71
+#: plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
 
@@ -2185,7 +2186,7 @@ msgstr "Port"
 msgid "Host/Target/Value"
 msgstr ""
 
-#: plinth/modules/firewall/__init__.py:23
+#: plinth/modules/firewall/__init__.py:24
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2196,9 +2197,23 @@ msgstr ""
 "utgående nettverkstrafikk på din {box_name}. Å holde en brannmur aktivert og "
 "riktig konfigurert, reduserer risikoen for sikkerhetstrusler fra Internett."
 
-#: plinth/modules/firewall/__init__.py:59
+#: plinth/modules/firewall/__init__.py:60
 msgid "Firewall"
 msgstr "Brannmur"
+
+#: plinth/modules/firewall/__init__.py:269
+#, fuzzy
+#| msgid "Default app set"
+msgid "Default zone is external"
+msgstr "Forvalgsprogram satt"
+
+#: plinth/modules/firewall/__init__.py:276
+msgid "Firewall backend is nftables"
+msgstr ""
+
+#: plinth/modules/firewall/__init__.py:287
+msgid "Direct passthrough rules exist"
+msgstr ""
 
 #: plinth/modules/firewall/components.py:134
 #, python-brace-format
@@ -2892,7 +2907,8 @@ msgstr "Håndter I2P-program"
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:49
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:61
+#: plinth/modules/torproxy/__init__.py:55
 msgid "Anonymity Network"
 msgstr "Anonymitetsnettverk"
 
@@ -5526,7 +5542,7 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Mellomtjener for nettet"
 
-#: plinth/modules/privoxy/__init__.py:113
+#: plinth/modules/privoxy/__init__.py:114
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgang {url} med mellomtjener {proxy} på tcp{kind}"
@@ -7000,7 +7016,7 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Filsynkronisering"
 
-#: plinth/modules/tor/__init__.py:23
+#: plinth/modules/tor/__init__.py:31 plinth/modules/torproxy/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7014,58 +7030,49 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html.en\">Tor "
 "Browser</a>."
 
-#: plinth/modules/tor/__init__.py:30
+#: plinth/modules/tor/__init__.py:37
+msgid ""
+"This app provides relay services to contribute to Tor network and help "
+"others overcome censorship."
+msgstr ""
+
+#: plinth/modules/tor/__init__.py:40
 #, python-brace-format
 msgid ""
-"A Tor SOCKS port is available on your {box_name} for internal networks on "
-"TCP port 9050."
+"This app provides an onion domain to expose {box_name} services via the Tor "
+"network. Using Tor browser, one can access {box_name} from the internet even "
+"when using an ISP that limits servers at home."
 msgstr ""
-"En Tor SOCKS-port er tilgjengelig på din {box_name} for interne nettverk på "
-"TCP port 9050."
 
-#: plinth/modules/tor/__init__.py:48
+#: plinth/modules/tor/__init__.py:60
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:65
+#: plinth/modules/tor/__init__.py:76
 msgid "Tor Onion Service"
 msgstr "Tor-løktjeneste"
 
-#: plinth/modules/tor/__init__.py:69
-msgid "Tor Socks Proxy"
-msgstr "Tor Socks-mellomtjener"
-
-#: plinth/modules/tor/__init__.py:73
+#: plinth/modules/tor/__init__.py:80
 msgid "Tor Bridge Relay"
 msgstr "Tor bro-stafettvideresendingsoppsett"
 
-#: plinth/modules/tor/__init__.py:132
+#: plinth/modules/tor/__init__.py:135
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:143
+#: plinth/modules/tor/__init__.py:146
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:153
+#: plinth/modules/tor/__init__.py:156
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:165
+#: plinth/modules/tor/__init__.py:168
 #, fuzzy
 #| msgid "Onion Service"
 msgid "Onion service is version 3"
 msgstr "Løktjeneste"
-
-#: plinth/modules/tor/__init__.py:242
-#, python-brace-format
-msgid "Access URL {url} on tcp{kind} via Tor"
-msgstr "Adgang til URL {url} på tcp{kind} via Tor"
-
-#: plinth/modules/tor/__init__.py:253
-#, python-brace-format
-msgid "Confirm Tor usage at {url} on tcp{kind}"
-msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -7102,11 +7109,11 @@ msgstr ""
 "bridges.torproject.org/</a> og kopiere/lime inn broinfoen her. For "
 "øyeblikket støttes ingen transporter, obfs3, obfs4 og scamblesuit."
 
-#: plinth/modules/tor/forms.py:91
+#: plinth/modules/tor/forms.py:95
 msgid "Enable Tor relay"
 msgstr "Aktiver Tor-videresending"
 
-#: plinth/modules/tor/forms.py:92
+#: plinth/modules/tor/forms.py:96
 #, python-brace-format
 msgid ""
 "When enabled, your {box_name} will run a Tor relay and donate bandwidth to "
@@ -7117,11 +7124,11 @@ msgstr ""
 "båndbredde til Tor-nettverket. Gjør dette hvis båndbredden din for "
 "opplasting og nestlasting er mer enn 2 Mbits/s."
 
-#: plinth/modules/tor/forms.py:97
+#: plinth/modules/tor/forms.py:101
 msgid "Enable Tor bridge relay"
 msgstr "Aktiver Tor-bru-videresending"
 
-#: plinth/modules/tor/forms.py:99
+#: plinth/modules/tor/forms.py:103
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
@@ -7131,13 +7138,13 @@ msgstr ""
 "stedet for den offentlige databasen over Tor-videresendere, hvilket gjør det "
 "vanskeligere å sensurere denne noden. Dette hjelper andre å unngå sensur."
 
-#: plinth/modules/tor/forms.py:104
+#: plinth/modules/tor/forms.py:108
 #, fuzzy
 #| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
 msgstr "Aktiver skjult Tor-tjeneste"
 
-#: plinth/modules/tor/forms.py:106
+#: plinth/modules/tor/forms.py:110
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "A hidden service will allow {box_name} to provide selected services (such "
@@ -7152,29 +7159,15 @@ msgstr ""
 "eller nettprat) uten å avsløre sin beliggenhet. Ikke bruk dette for å oppnå "
 "sterk anonymitet enda."
 
-#: plinth/modules/tor/forms.py:111
-msgid "Download software packages over Tor"
-msgstr "Last ned programpakker via Tor"
-
-#: plinth/modules/tor/forms.py:112
-msgid ""
-"When enabled, software will be downloaded over the Tor network for "
-"installations and upgrades. This adds a degree of privacy and security "
-"during software downloads."
-msgstr ""
-"Når den er aktivert, vil programvaren lastes ned over Tor-nettverket for "
-"installasjoner og oppgraderinger. Dette legger til en viss grad privatliv "
-"(personvern) og sikkerhet under nedlasting av programvare."
-
-#: plinth/modules/tor/forms.py:127
+#: plinth/modules/tor/forms.py:125
 msgid "Specify at least one upstream bridge to use upstream bridges."
 msgstr "Angi minst én oppstrøms bro for å bruke oppstrøms broer."
 
-#: plinth/modules/tor/manifest.py:15
+#: plinth/modules/tor/manifest.py:15 plinth/modules/torproxy/manifest.py:14
 msgid "Tor Browser"
 msgstr "Tor-nettleseren"
 
-#: plinth/modules/tor/manifest.py:31
+#: plinth/modules/tor/manifest.py:31 plinth/modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Mellomtjener med Tor"
 
@@ -7186,15 +7179,58 @@ msgstr "Løktjeneste"
 msgid "Ports"
 msgstr "Porter"
 
-#: plinth/modules/tor/views.py:53
+#: plinth/modules/tor/views.py:53 plinth/modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Oppdaterer oppsett"
 
-#: plinth/modules/tor/views.py:70
+#: plinth/modules/tor/views.py:70 plinth/modules/torproxy/views.py:68
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error configuring app: {error}"
 msgstr "Feil ved programinstallering: {error}"
+
+#: plinth/modules/torproxy/__init__.py:34
+#, python-brace-format
+msgid ""
+"This app provides a web proxy on your {box_name} for internal networks on "
+"TCP port 9050 using the SOCKS protocol. This can be used by various apps to "
+"access the internet via the Tor network. ISP censorship can be circumvented "
+"using upstream bridges."
+msgstr ""
+
+#: plinth/modules/torproxy/__init__.py:54
+#, fuzzy
+#| msgid "Tor Socks Proxy"
+msgid "Tor Proxy"
+msgstr "Tor Socks-mellomtjener"
+
+#: plinth/modules/torproxy/__init__.py:79
+msgid "Tor Socks Proxy"
+msgstr "Tor Socks-mellomtjener"
+
+#: plinth/modules/torproxy/__init__.py:138
+#, python-brace-format
+msgid "Access URL {url} on tcp{kind} via Tor"
+msgstr "Adgang til URL {url} på tcp{kind} via Tor"
+
+#: plinth/modules/torproxy/__init__.py:149
+#, python-brace-format
+msgid "Confirm Tor usage at {url} on tcp{kind}"
+msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
+
+#: plinth/modules/torproxy/forms.py:15
+msgid "Download software packages over Tor"
+msgstr "Last ned programpakker via Tor"
+
+#: plinth/modules/torproxy/forms.py:16
+msgid ""
+"When enabled, software will be downloaded over the Tor network for "
+"installations and upgrades. This adds a degree of privacy and security "
+"during software downloads."
+msgstr ""
+"Når den er aktivert, vil programvaren lastes ned over Tor-nettverket for "
+"installasjoner og oppgraderinger. Dette legger til en viss grad privatliv "
+"(personvern) og sikkerhet under nedlasting av programvare."
 
 #: plinth/modules/transmission/__init__.py:25
 msgid "Transmission is a BitTorrent client with a web interface."
@@ -7587,7 +7623,7 @@ msgstr ""
 msgid "Starting distribution upgrade test."
 msgstr "Starter test av distribusjonsoppgradering."
 
-#: plinth/modules/users/__init__.py:29
+#: plinth/modules/users/__init__.py:30
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7598,7 +7634,7 @@ msgstr ""
 "kan kreve at en brukerkonto er medlem av en gruppe for å gi brukeren tilgang "
 "til programmet."
 
-#: plinth/modules/users/__init__.py:34
+#: plinth/modules/users/__init__.py:35
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7609,18 +7645,28 @@ msgstr ""
 "liste over programmer som er relevante for dem på hjemmesiden. Dog kan kun "
 "brukere av <em>admin</em>-gruppen endre programmer eller systeminnstillinger."
 
-#: plinth/modules/users/__init__.py:55
+#: plinth/modules/users/__init__.py:56
 msgid "Users and Groups"
 msgstr "Brukere og grupper"
 
-#: plinth/modules/users/__init__.py:80
+#: plinth/modules/users/__init__.py:81
 msgid "Access to all services and system settings"
 msgstr "Tilgang til alle tjenester og systeminnstillinger"
 
-#: plinth/modules/users/__init__.py:116
+#: plinth/modules/users/__init__.py:124
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Sjekk LDAP-oppføring «{search_item}»"
+
+#: plinth/modules/users/__init__.py:137
+#, python-brace-format
+msgid "Check nslcd config \"{key} {value}\""
+msgstr ""
+
+#: plinth/modules/users/__init__.py:166
+#, python-brace-format
+msgid "Check nsswitch config \"{database}\""
+msgstr ""
 
 #: plinth/modules/users/forms.py:35
 msgid "Username is taken or is reserved."
@@ -8824,7 +8870,13 @@ msgstr "Oppdater"
 msgid "Backup"
 msgstr "Sikkerhetskopier"
 
-#: plinth/templates/toolbar.html:51 plinth/templates/toolbar.html:52
+#: plinth/templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "Start oppsett"
+
+#: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30
 #, fuzzy
 #| msgid "Install"
@@ -8844,11 +8896,11 @@ msgstr ""
 "All programdata og oppsett blir permanent borte. Programmet kan installeres "
 "på nytt igjen."
 
-#: plinth/views.py:239
+#: plinth/views.py:241
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
-#: plinth/views.py:456
+#: plinth/views.py:478
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "før avinstallering av {app_id}"
@@ -8856,6 +8908,14 @@ msgstr "før avinstallering av {app_id}"
 #: plinth/web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-brace-format
+#~ msgid ""
+#~ "A Tor SOCKS port is available on your {box_name} for internal networks on "
+#~ "TCP port 9050."
+#~ msgstr ""
+#~ "En Tor SOCKS-port er tilgjengelig på din {box_name} for interne nettverk "
+#~ "på TCP port 9050."
 
 #~ msgid ""
 #~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
@@ -9613,9 +9673,6 @@ msgstr "Gujarati"
 #~ "tid. Avhengig av hvor fort din %(box_name)s er, kan det hende at det tar "
 #~ "timer. Hvis oppsettingen blir avbrutt, kan du starte den igjen."
 
-#~ msgid "Start setup"
-#~ msgstr "Start oppsett"
-
 #~ msgid "OpenVPN setup is running"
 #~ msgstr "OpenVPN-oppsett kjører"
 
@@ -10259,9 +10316,6 @@ msgstr "Gujarati"
 
 #~ msgid "Error setting default app: {exception}"
 #~ msgstr "Feil ved endring av forvalgsprogram: {exception}"
-
-#~ msgid "Default app set"
-#~ msgstr "Forvalgsprogram satt"
 
 #~ msgid "Abort"
 #~ msgstr "Anuller"

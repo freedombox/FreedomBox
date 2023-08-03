@@ -44,11 +44,11 @@ clients = [{
 
 backup = {
     'config': {
-        'directories': ['/etc/tor/'],
+        'directories': ['/etc/tor/instances/plinth/'],
         'files': [str(privileged.TOR_APACHE_SITE)]
     },
     'secrets': {
-        'directories': ['/var/lib/tor/', '/var/lib/tor-instances/']
+        'directories': ['/var/lib/tor-instances/plinth/']
     },
     'services': ['tor@plinth']
 }

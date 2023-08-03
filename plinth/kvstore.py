@@ -27,7 +27,11 @@ def set(key, value):  # pylint: disable-msg=W0622
     store.save()
 
 
-def delete(key):
+def delete(key, ignore_missing=False):
     """Delete a key"""
     from plinth.models import KVStore
-    return KVStore.objects.get(key=key).delete()
+    try:
+        return KVStore.objects.get(key=key).delete()
+    except KVStore.DoesNotExist:
+        if not ignore_missing:
+            raise

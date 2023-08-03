@@ -4,6 +4,7 @@
 import grp
 import subprocess
 
+import augeas
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -90,6 +91,13 @@ class UsersApp(app_module.App):
         results.append(_diagnose_ldap_entry('ou=people'))
         results.append(_diagnose_ldap_entry('ou=groups'))
 
+        config = privileged.get_nslcd_config()
+        results.append(_diagnose_nslcd_config(config, 'uri', 'ldapi:///'))
+        results.append(_diagnose_nslcd_config(config, 'base', 'dc=thisbox'))
+        results.append(_diagnose_nslcd_config(config, 'sasl_mech', 'EXTERNAL'))
+
+        results.extend(_diagnose_nsswitch_config())
+
         return results
 
     def setup(self, old_version):
@@ -117,6 +125,50 @@ def _diagnose_ldap_entry(search_item):
     testname = format_lazy(template, search_item=search_item)
 
     return [testname, result]
+
+
+def _diagnose_nslcd_config(config, key, value):
+    """Diagnose that nslcd has a configuration."""
+    try:
+        result = 'passed' if config[key] == value else 'failed'
+    except KeyError:
+        result = 'failed'
+
+    template = _('Check nslcd config "{key} {value}"')
+    testname = format_lazy(template, key=key, value=value)
+
+    return [testname, result]
+
+
+def _diagnose_nsswitch_config():
+    """Diagnose that Name Service Switch is configured to use LDAP."""
+    nsswitch_conf = '/etc/nsswitch.conf'
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Nsswitch', nsswitch_conf)
+    aug.set('/augeas/context', '/files' + nsswitch_conf)
+    aug.load()
+
+    results = []
+    for database in ['passwd', 'group', 'shadow']:
+        result = 'failed'
+        for match in aug.match('database'):
+            if aug.get(match) != database:
+                continue
+
+            for service_match in aug.match(match + '/service'):
+                if 'ldap' == aug.get(service_match):
+                    result = 'passed'
+                    break
+
+            break
+
+        template = _('Check nsswitch config "{database}"')
+        testname = format_lazy(template, database=database)
+
+        results.append([testname, result])
+
+    return results
 
 
 def get_last_admin_user():

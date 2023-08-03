@@ -97,7 +97,8 @@ class PrivoxyApp(app_module.App):
         privileged.pre_install()
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
 
 
 def diagnose_url_with_proxy():

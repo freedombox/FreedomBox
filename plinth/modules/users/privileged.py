@@ -178,6 +178,23 @@ def _configure_ldapscripts():
     aug.save()
 
 
+@privileged
+def get_nslcd_config():
+    """Get nslcd configuration for diagnostics."""
+    nslcd_conf = '/etc/nslcd.conf'
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Nslcd', nslcd_conf)
+    aug.set('/augeas/context', '/files' + nslcd_conf)
+    aug.load()
+
+    return {
+        'uri': aug.get('uri/1'),
+        'base': aug.get('base'),
+        'sasl_mech': aug.get('sasl_mech')
+    }
+
+
 def _get_samba_users():
     """Get users from the Samba user database."""
     # 'pdbedit -L' is better for listing users but is installed only with samba

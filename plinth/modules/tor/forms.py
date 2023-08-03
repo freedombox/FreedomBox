@@ -70,8 +70,8 @@ def bridges_validator(bridges):
                 raise validation_error
 
 
-class TorForm(forms.Form):  # pylint: disable=W0232
-    """Tor configuration form."""
+class TorCommonForm(forms.Form):
+    """Tor common configuration form."""
     use_upstream_bridges = forms.BooleanField(
         label=_('Use upstream bridges to connect to Tor network'),
         required=False, help_text=_(
@@ -87,6 +87,10 @@ class TorForm(forms.Form):  # pylint: disable=W0232
             'https://bridges.torproject.org/</a> and copy/paste the bridge '
             'information here. Currently supported transports are none, '
             'obfs3, obfs4 and scamblesuit.'), validators=[bridges_validator])
+
+
+class TorForm(TorCommonForm):
+    """Tor configuration form."""
     relay_enabled = forms.BooleanField(
         label=_('Enable Tor relay'), required=False, help_text=format_lazy(
             _('When enabled, your {box_name} will run a Tor relay and donate '
@@ -107,12 +111,6 @@ class TorForm(forms.Form):  # pylint: disable=W0232
               'services (such as wiki or chat) without revealing its '
               'location. Do not use this for strong anonymity yet.'),
             box_name=_(cfg.box_name)))
-    apt_transport_tor_enabled = forms.BooleanField(
-        label=_('Download software packages over Tor'), required=False,
-        help_text=_('When enabled, software will be downloaded over the Tor '
-                    'network for installations and upgrades. This adds a '
-                    'degree of privacy and security during software '
-                    'downloads.'))
 
     def clean(self):
         """Validate the form for cross-field integrity."""

@@ -17,6 +17,8 @@ urlpatterns = [
     re_path(r'^sys/$', views.system_index, name='system'),
     re_path(r'^uninstall/(?P<app_id>[1-9a-z\-_]+)/$',
             views.UninstallView.as_view(), name='uninstall'),
+    re_path(r'^rerun-setup/(?P<app_id>[1-9a-z\-_]+)/$', views.rerun_setup_view,
+            name='rerun-setup'),
 
     # captcha urls are public
     re_path(r'^captcha/image/(?P<key>\w+)/$', public(cviews.captcha_image),

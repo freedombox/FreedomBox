@@ -118,7 +118,8 @@ class IkiwikiApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def uninstall(self):
         """De-configure and uninstall the app."""

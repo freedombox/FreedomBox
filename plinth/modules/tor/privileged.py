@@ -2,6 +2,7 @@
 """Configure Tor service."""
 
 import codecs
+import logging
 import os
 import pathlib
 import re
@@ -15,20 +16,29 @@ import augeas
 
 from plinth import action_utils
 from plinth.actions import privileged
-from plinth.modules.tor.utils import APT_TOR_PREFIX, get_augeas, iter_apt_uris
 
+INSTANCE_NAME = 'plinth'
 SERVICE_FILE = '/etc/firewalld/services/tor-{0}.xml'
-TOR_CONFIG = '/files/etc/tor/instances/plinth/torrc'
-TOR_STATE_FILE = '/var/lib/tor-instances/plinth/state'
-TOR_AUTH_COOKIE = '/var/run/tor-instances/plinth/control.authcookie'
+SERVICE_NAME = f'tor@{INSTANCE_NAME}'
+TOR_CONFIG = f'/etc/tor/instances/{INSTANCE_NAME}/torrc'
+TOR_CONFIG_AUG = f'/files/{TOR_CONFIG}'
+TOR_STATE_FILE = f'/var/lib/tor-instances/{INSTANCE_NAME}/state'
+TOR_AUTH_COOKIE = f'/var/run/tor-instances/{INSTANCE_NAME}/control.authcookie'
 TOR_APACHE_SITE = '/etc/apache2/conf-available/onion-location-freedombox.conf'
+
+logger = logging.getLogger(__name__)
 
 
 @privileged
 def setup(old_version: int):
     """Setup Tor configuration after installing it."""
-    if old_version and old_version <= 4:
-        _upgrade_orport_value()
+    if old_version:
+        if old_version <= 4:
+            _upgrade_orport_value()
+
+        if old_version <= 6:
+            _remove_proxy()
+
         return
 
     _first_time_setup()
@@ -37,50 +47,39 @@ def setup(old_version: int):
 
 def _first_time_setup():
     """Setup Tor configuration for the first time setting defaults."""
+    logger.info('Performing first time setup for Tor')
     # Disable default tor service. We will use tor@plinth instance
     # instead.
-    _disable_apt_transport_tor()
-    action_utils.service_disable('tor')
+    action_utils.service_disable('tor@default')
 
-    subprocess.run(['tor-instance-create', 'plinth'], check=True)
+    subprocess.run(['tor-instance-create', INSTANCE_NAME], check=True)
 
     # Remove line starting with +SocksPort, since our augeas lens
     # doesn't handle it correctly.
-    with open('/etc/tor/instances/plinth/torrc', 'r',
-              encoding='utf-8') as torrc:
+    with open(TOR_CONFIG, 'r', encoding='utf-8') as torrc:
         torrc_lines = torrc.readlines()
-    with open('/etc/tor/instances/plinth/torrc', 'w',
-              encoding='utf-8') as torrc:
+    with open(TOR_CONFIG, 'w', encoding='utf-8') as torrc:
         for line in torrc_lines:
             if not line.startswith('+'):
                 torrc.write(line)
 
     aug = augeas_load()
 
-    aug.set(TOR_CONFIG + '/SocksPort[1]', '[::]:9050')
-    aug.set(TOR_CONFIG + '/SocksPort[2]', '0.0.0.0:9050')
-    aug.set(TOR_CONFIG + '/ControlPort', '9051')
+    aug.set(TOR_CONFIG_AUG + '/ControlPort', '9051')
     _enable_relay(relay=True, bridge=True, aug=aug)
-    aug.set(TOR_CONFIG + '/ExitPolicy[1]', 'reject *:*')
-    aug.set(TOR_CONFIG + '/ExitPolicy[2]', 'reject6 *:*')
+    aug.set(TOR_CONFIG_AUG + '/ExitPolicy[1]', 'reject *:*')
+    aug.set(TOR_CONFIG_AUG + '/ExitPolicy[2]', 'reject6 *:*')
 
-    aug.set(TOR_CONFIG + '/VirtualAddrNetworkIPv4', '10.192.0.0/10')
-    aug.set(TOR_CONFIG + '/AutomapHostsOnResolve', '1')
-    aug.set(TOR_CONFIG + '/TransPort[1]', '127.0.0.1:9040')
-    aug.set(TOR_CONFIG + '/TransPort[2]', '[::1]:9040')
-    aug.set(TOR_CONFIG + '/DNSPort[1]', '127.0.0.1:9053')
-    aug.set(TOR_CONFIG + '/DNSPort[2]', '[::1]:9053')
-
-    aug.set(TOR_CONFIG + '/HiddenServiceDir',
-            '/var/lib/tor-instances/plinth/hidden_service')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServiceDir',
+            f'/var/lib/tor-instances/{INSTANCE_NAME}/hidden_service')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
 
     aug.save()
 
-    action_utils.service_enable('tor@plinth')
-    action_utils.service_restart('tor@plinth')
+    action_utils.service_enable(SERVICE_NAME)
+    action_utils.service_restart(SERVICE_NAME)
     _update_ports()
 
     # wait until hidden service information is available
@@ -110,19 +109,37 @@ def _upgrade_orport_value():
     443 is not possible in FreedomBox due it is use for other purposes.
 
     """
+    logger.info('Upgrading ORPort value for Tor')
     aug = augeas_load()
 
     if _is_relay_enabled(aug):
-        aug.set(TOR_CONFIG + '/ORPort[1]', '9001')
-        aug.set(TOR_CONFIG + '/ORPort[2]', '[::]:9001')
+        aug.set(TOR_CONFIG_AUG + '/ORPort[1]', '9001')
+        aug.set(TOR_CONFIG_AUG + '/ORPort[2]', '[::]:9001')
 
     aug.save()
 
-    action_utils.service_try_restart('tor@plinth')
+    action_utils.service_try_restart(SERVICE_NAME)
 
     # Tor may not be running, don't try to read/update all ports
     _update_port('orport', 9001)
     action_utils.service_restart('firewalld')
+
+
+def _remove_proxy():
+    """Remove SocksProxy from configuration.
+
+    This functionality was split off to a separate app, Tor Proxy.
+    """
+    logger.info('Removing SocksProxy from Tor configuration')
+    aug = augeas_load()
+    for config in [
+            'SocksPort', 'VirtualAddrNetworkIPv4', 'AutomapHostsOnResolve',
+            'TransPort', 'DNSPort'
+    ]:
+        aug.remove(TOR_CONFIG_AUG + '/' + config)
+
+    aug.save()
+    action_utils.service_try_restart(SERVICE_NAME)
 
 
 @privileged
@@ -130,8 +147,7 @@ def configure(use_upstream_bridges: Optional[bool] = None,
               upstream_bridges: Optional[str] = None,
               relay: Optional[bool] = None,
               bridge_relay: Optional[bool] = None,
-              hidden_service: Optional[bool] = None,
-              apt_transport_tor: Optional[bool] = None):
+              hidden_service: Optional[bool] = None):
     """Configure Tor."""
     aug = augeas_load()
 
@@ -151,11 +167,6 @@ def configure(use_upstream_bridges: Optional[bool] = None,
     elif hidden_service is not None:
         _disable_hs(aug=aug)
 
-    if apt_transport_tor:
-        _enable_apt_transport_tor()
-    elif apt_transport_tor is not None:
-        _disable_apt_transport_tor()
-
 
 @privileged
 def update_ports():
@@ -166,12 +177,12 @@ def update_ports():
 @privileged
 def restart():
     """Restart Tor."""
-    if (action_utils.service_is_enabled('tor@plinth', strict_check=True)
-            and action_utils.service_is_running('tor@plinth')):
-        action_utils.service_restart('tor@plinth')
+    if (action_utils.service_is_enabled(SERVICE_NAME, strict_check=True)
+            and action_utils.service_is_running(SERVICE_NAME)):
+        action_utils.service_restart(SERVICE_NAME)
 
         aug = augeas_load()
-        if aug.get(TOR_CONFIG + '/HiddenServiceDir'):
+        if aug.get(TOR_CONFIG_AUG + '/HiddenServiceDir'):
             # wait until hidden service information is available
             tries = 0
             while not _get_hidden_service()['enabled']:
@@ -197,26 +208,26 @@ def get_status() -> dict[str, Union[bool, str, dict[str, Any]]]:
 
 def _are_upstream_bridges_enabled(aug) -> bool:
     """Return whether upstream bridges are being used."""
-    use_bridges = aug.get(TOR_CONFIG + '/UseBridges')
+    use_bridges = aug.get(TOR_CONFIG_AUG + '/UseBridges')
     return use_bridges == '1'
 
 
 def _get_upstream_bridges(aug) -> str:
     """Return upstream bridges separated by newlines."""
-    matches = aug.match(TOR_CONFIG + '/Bridge')
+    matches = aug.match(TOR_CONFIG_AUG + '/Bridge')
     bridges = [aug.get(match) for match in matches]
     return '\n'.join(bridges)
 
 
 def _is_relay_enabled(aug) -> bool:
     """Return whether a relay is enabled."""
-    orport = aug.get(TOR_CONFIG + '/ORPort[1]')
+    orport = aug.get(TOR_CONFIG_AUG + '/ORPort[1]')
     return bool(orport) and orport != '0'
 
 
 def _is_bridge_relay_enabled(aug) -> bool:
     """Return whether bridge relay is enabled."""
-    bridge = aug.get(TOR_CONFIG + '/BridgeRelay')
+    bridge = aug.get(TOR_CONFIG_AUG + '/BridgeRelay')
     return bridge == '1'
 
 
@@ -272,8 +283,8 @@ def _get_hidden_service(aug=None) -> dict[str, Any]:
     if not aug:
         aug = augeas_load()
 
-    hs_dir = aug.get(TOR_CONFIG + '/HiddenServiceDir')
-    hs_port_paths = aug.match(TOR_CONFIG + '/HiddenServicePort')
+    hs_dir = aug.get(TOR_CONFIG_AUG + '/HiddenServiceDir')
+    hs_port_paths = aug.match(TOR_CONFIG_AUG + '/HiddenServicePort')
 
     for hs_port_path in hs_port_paths:
         port_info = aug.get(hs_port_path).split()
@@ -300,14 +311,13 @@ def _get_hidden_service(aug=None) -> dict[str, Any]:
 
 def _enable():
     """Enable and start the service."""
-    action_utils.service_enable('tor@plinth')
+    action_utils.service_enable(SERVICE_NAME)
     _update_ports()
 
 
 def _disable():
     """Disable and stop the service."""
-    _disable_apt_transport_tor()
-    action_utils.service_disable('tor@plinth')
+    action_utils.service_disable(SERVICE_NAME)
 
 
 def _use_upstream_bridges(use_upstream_bridges: Optional[bool] = None,
@@ -320,9 +330,9 @@ def _use_upstream_bridges(use_upstream_bridges: Optional[bool] = None,
         aug = augeas_load()
 
     if use_upstream_bridges:
-        aug.set(TOR_CONFIG + '/UseBridges', '1')
+        aug.set(TOR_CONFIG_AUG + '/UseBridges', '1')
     else:
-        aug.set(TOR_CONFIG + '/UseBridges', '0')
+        aug.set(TOR_CONFIG_AUG + '/UseBridges', '0')
 
     aug.save()
 
@@ -335,16 +345,16 @@ def _set_upstream_bridges(upstream_bridges=None, aug=None):
     if not aug:
         aug = augeas_load()
 
-    aug.remove(TOR_CONFIG + '/Bridge')
+    aug.remove(TOR_CONFIG_AUG + '/Bridge')
     if upstream_bridges:
         bridges = [bridge.strip() for bridge in upstream_bridges.split('\n')]
         bridges = [bridge for bridge in bridges if bridge]
         for bridge in bridges:
             parts = [part for part in bridge.split() if part]
             bridge = ' '.join(parts)
-            aug.set(TOR_CONFIG + '/Bridge[last() + 1]', bridge.strip())
+            aug.set(TOR_CONFIG_AUG + '/Bridge[last() + 1]', bridge.strip())
 
-    aug.set(TOR_CONFIG + '/ClientTransportPlugin',
+    aug.set(TOR_CONFIG_AUG + '/ClientTransportPlugin',
             'obfs3,scramblesuit,obfs4 exec /usr/bin/obfs4proxy')
 
     aug.save()
@@ -362,20 +372,20 @@ def _enable_relay(relay: Optional[bool], bridge: Optional[bool],
     use_upstream_bridges = _are_upstream_bridges_enabled(aug)
 
     if relay and not use_upstream_bridges:
-        aug.set(TOR_CONFIG + '/ORPort[1]', '9001')
-        aug.set(TOR_CONFIG + '/ORPort[2]', '[::]:9001')
+        aug.set(TOR_CONFIG_AUG + '/ORPort[1]', '9001')
+        aug.set(TOR_CONFIG_AUG + '/ORPort[2]', '[::]:9001')
     elif relay is not None:
-        aug.remove(TOR_CONFIG + '/ORPort')
+        aug.remove(TOR_CONFIG_AUG + '/ORPort')
 
     if bridge and not use_upstream_bridges:
-        aug.set(TOR_CONFIG + '/BridgeRelay', '1')
-        aug.set(TOR_CONFIG + '/ServerTransportPlugin',
+        aug.set(TOR_CONFIG_AUG + '/BridgeRelay', '1')
+        aug.set(TOR_CONFIG_AUG + '/ServerTransportPlugin',
                 'obfs3,obfs4 exec /usr/bin/obfs4proxy')
-        aug.set(TOR_CONFIG + '/ExtORPort', 'auto')
+        aug.set(TOR_CONFIG_AUG + '/ExtORPort', 'auto')
     elif bridge is not None:
-        aug.remove(TOR_CONFIG + '/BridgeRelay')
-        aug.remove(TOR_CONFIG + '/ServerTransportPlugin')
-        aug.remove(TOR_CONFIG + '/ExtORPort')
+        aug.remove(TOR_CONFIG_AUG + '/BridgeRelay')
+        aug.remove(TOR_CONFIG_AUG + '/ServerTransportPlugin')
+        aug.remove(TOR_CONFIG_AUG + '/ExtORPort')
 
     aug.save()
 
@@ -388,11 +398,11 @@ def _enable_hs(aug=None):
     if _get_hidden_service(aug)['enabled']:
         return
 
-    aug.set(TOR_CONFIG + '/HiddenServiceDir',
-            '/var/lib/tor-instances/plinth/hidden_service')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
-    aug.set(TOR_CONFIG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServiceDir',
+            f'/var/lib/tor-instances/{INSTANCE_NAME}/hidden_service')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[1]', '22 127.0.0.1:22')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[2]', '80 127.0.0.1:80')
+    aug.set(TOR_CONFIG_AUG + '/HiddenServicePort[3]', '443 127.0.0.1:443')
     aug.save()
     _set_onion_header(_get_hidden_service(aug))
 
@@ -405,37 +415,10 @@ def _disable_hs(aug=None):
     if not _get_hidden_service(aug)['enabled']:
         return
 
-    aug.remove(TOR_CONFIG + '/HiddenServiceDir')
-    aug.remove(TOR_CONFIG + '/HiddenServicePort')
+    aug.remove(TOR_CONFIG_AUG + '/HiddenServiceDir')
+    aug.remove(TOR_CONFIG_AUG + '/HiddenServicePort')
     aug.save()
     _set_onion_header(None)
-
-
-def _enable_apt_transport_tor():
-    """Enable package download over Tor."""
-    aug = get_augeas()
-    for uri_path in iter_apt_uris(aug):
-        uri = aug.get(uri_path)
-        if uri.startswith('http://') or uri.startswith('https://'):
-            aug.set(uri_path, APT_TOR_PREFIX + uri)
-
-    aug.save()
-
-
-def _disable_apt_transport_tor():
-    """Disable package download over Tor."""
-    try:
-        aug = get_augeas()
-    except Exception:
-        # Disable what we can, so APT is not unusable.
-        pass
-
-    for uri_path in iter_apt_uris(aug):
-        uri = aug.get(uri_path)
-        if uri.startswith(APT_TOR_PREFIX):
-            aug.set(uri_path, uri[len(APT_TOR_PREFIX):])
-
-    aug.save()
 
 
 def _update_port(name, number):
@@ -485,14 +468,14 @@ def augeas_load():
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Tor/lens', 'Tor.lns')
-    aug.set('/augeas/load/Tor/incl[last() + 1]',
-            '/etc/tor/instances/plinth/torrc')
+    aug.set('/augeas/load/Tor/incl[last() + 1]', TOR_CONFIG)
     aug.load()
     return aug
 
 
 def _set_onion_header(hidden_service):
     """Set Apache configuration for the Onion-Location header."""
+    logger.info('Setting Onion-Location header for Apache')
     config_file = pathlib.Path(TOR_APACHE_SITE)
     if hidden_service and hidden_service['enabled']:
         # https://community.torproject.org/onion-services/advanced/onion-location/
@@ -512,10 +495,13 @@ def _set_onion_header(hidden_service):
 
 @privileged
 def uninstall():
-    """Remove create instances."""
+    """Remove plinth instance."""
     directories = [
-        '/etc/tor/instances/', '/var/lib/tor-instances/',
-        '/var/run/tor-instances/'
+        f'/etc/tor/instances/{INSTANCE_NAME}/',
+        f'/var/lib/tor-instances/{INSTANCE_NAME}/',
+        f'/var/run/tor-instances/{INSTANCE_NAME}/'
     ]
     for directory in directories:
         shutil.rmtree(directory, ignore_errors=True)
+
+    os.unlink(f'/var/run/tor-instances/{INSTANCE_NAME}.defaults')

@@ -146,7 +146,8 @@ class EjabberdApp(app_module.App):
         self.get_component('letsencrypt-ejabberd').setup_certificates(
             [domainname])
         privileged.setup(domainname)
-        self.enable()
+        if not old_version:
+            self.enable()
 
         # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
         configuration = self.get_component('turn-ejabberd').get_configuration()

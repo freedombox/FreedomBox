@@ -10,9 +10,11 @@ import urllib.parse
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from stronghold.decorators import public
@@ -275,6 +277,7 @@ class AppView(FormView):
         context['has_diagnostics'] = self.app.has_diagnostics()
         context['port_forwarding_info'] = get_port_forwarding_info(self.app)
         context['app_enable_disable_form'] = self.get_enable_disable_form()
+        context['show_rerun_setup'] = True
         context['show_uninstall'] = not self.app.info.is_essential
         context['refresh_page_sec'] = None
 
@@ -335,6 +338,7 @@ class SetupView(TemplateView):
         setup_state = app.get_setup_state()
         context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
+        context['show_rerun_setup'] = False
         context['show_uninstall'] = (
             not app.info.is_essential
             and setup_state != app_module.App.SetupState.NEEDS_SETUP)
@@ -397,6 +401,24 @@ class SetupView(TemplateView):
         components = app_.get_components_of_type(Packages)
         return any(component for component in components
                    if component.has_unavailable_packages())
+
+
+@require_POST
+def rerun_setup_view(request, app_id):
+    """Re-run setup on an app.
+
+    This should be safe to perform on an already setup/running app. This may be
+    useful in situations where the app is broken for unknown reason as notified
+    by the diagnostics tests.
+    """
+    # Start the application setup, and refresh the page every few seconds to
+    # keep displaying the status.
+    setup.run_setup_on_app(app_id, rerun=True)
+
+    # Give a moment for the setup process to start and show meaningful status.
+    time.sleep(1)
+
+    return redirect(reverse(f'{app_id}:index'))
 
 
 class UninstallView(FormView):

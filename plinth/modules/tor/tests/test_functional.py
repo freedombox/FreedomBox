@@ -11,7 +11,6 @@ _TOR_FEATURE_TO_ELEMENT = {
     'relay': 'tor-relay_enabled',
     'bridge-relay': 'tor-bridge_relay_enabled',
     'hidden-services': 'tor-hs_enabled',
-    'software': 'tor-apt_transport_tor_enabled'
 }
 
 pytestmark = [pytest.mark.apps, pytest.mark.domain, pytest.mark.tor]
@@ -21,9 +20,6 @@ class TestTorApp(functional.BaseAppTests):
     app_name = 'tor'
     has_service = True
     has_web = False
-    # TODO: Investigate why accessing IPv6 sites through Tor fails in
-    # container.
-    check_diagnostics = False
 
     def test_set_tor_relay_configuration(self, session_browser):
         """Test setting Tor relay configuration."""
@@ -51,13 +47,6 @@ class TestTorApp(functional.BaseAppTests):
         _assert_feature_enabled(session_browser, 'hidden-services',
                                 enabled=True)
         _assert_hidden_services(session_browser)
-
-    def test_set_download_software_packages_over_tor(self, session_browser):
-        """Test setting download software packages over Tor."""
-        functional.app_enable(session_browser, 'tor')
-        _feature_enable(session_browser, 'software', should_enable=True)
-        _feature_enable(session_browser, 'software', should_enable=False)
-        _assert_feature_enabled(session_browser, 'software', enabled=False)
 
     # TODO: Test more thoroughly by checking same hidden service is restored
     # and by actually connecting using Tor.

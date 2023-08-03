@@ -79,43 +79,31 @@ def _apply_changes(old_status, new_status):
 
 def __apply_changes(old_status, new_status):
     """Apply the changes."""
-    needs_restart = False
     arguments = {}
-
     app = app_module.App.get('tor')
     is_enabled = app.is_enabled()
 
     if old_status['relay_enabled'] != new_status['relay_enabled']:
         arguments['relay'] = new_status['relay_enabled']
-        needs_restart = True
 
     if old_status['bridge_relay_enabled'] != \
        new_status['bridge_relay_enabled']:
         arguments['bridge_relay'] = new_status['bridge_relay_enabled']
-        needs_restart = True
 
     if old_status['hs_enabled'] != new_status['hs_enabled']:
         arguments['hidden_service'] = new_status['hs_enabled']
-        needs_restart = True
-
-    if old_status['apt_transport_tor_enabled'] != \
-       new_status['apt_transport_tor_enabled']:
-        arguments['apt_transport_tor'] = (
-            is_enabled and new_status['apt_transport_tor_enabled'])
 
     if old_status['use_upstream_bridges'] != \
        new_status['use_upstream_bridges']:
         arguments['use_upstream_bridges'] = new_status['use_upstream_bridges']
-        needs_restart = True
 
     if old_status['upstream_bridges'] != new_status['upstream_bridges']:
         arguments['upstream_bridges'] = new_status['upstream_bridges']
-        needs_restart = True
 
     if arguments:
         privileged.configure(**arguments)
 
-    if needs_restart and is_enabled:
-        privileged.restart()
-        status = tor_utils.get_status()
-        tor.update_hidden_service_domain(status)
+        if is_enabled:
+            privileged.restart()
+            status = tor_utils.get_status()
+            tor.update_hidden_service_domain(status)

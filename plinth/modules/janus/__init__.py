@@ -96,7 +96,8 @@ class JanusApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup()
-        self.enable()
+        if not old_version:
+            self.enable()
 
     def force_upgrade(self, packages):
         """Force upgrade janus to resolve conffile prompts."""
