@@ -139,8 +139,6 @@ PASSWORD_HASHERS = [
 
 ROOT_URLCONF = 'plinth.urls'
 
-SECURE_BROWSER_XSS_FILTER = True
-
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # Overridden based configuration key secure_proxy_ssl_header
