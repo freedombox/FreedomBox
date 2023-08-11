@@ -209,7 +209,6 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
         super().__init__(*args, **kwargs)
         self.is_last_admin_user = get_last_admin_user() == self.username
         self.fields['username'].widget.attrs.update({
-            'autofocus': 'autofocus',
             'autocapitalize': 'none',
             'autocomplete': 'username'
         })
@@ -356,7 +355,10 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'autofocus': 'autofocus'})
+        # The wizard step has text to be read before entering the username.
+        # Don't confuse screen readers by jumping directly to the username
+        # field.
+        self.fields['username'].widget.attrs.pop('autofocus', None)
 
     def save(self, commit=True):
         """Create and log the user in."""
