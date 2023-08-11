@@ -13,7 +13,7 @@
   <form class="form" method="post">
     {% csrf_token %}
 
-    {% if form.ssh_public_key|length_is:"0" %}
+    {% if form.ssh_public_key|length == 0 %}
       <p>
         {% blocktrans trimmed %}
           Could not reach SSH host {{ hostname }}. Please verify that the host
