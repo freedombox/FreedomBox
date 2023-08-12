@@ -14,6 +14,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
 
 from plinth import translation, utils, web_framework
 
@@ -92,6 +93,7 @@ class CaptchaLoginView(LoginView):
         return set_ticket_cookie(request.user, response)
 
 
+@require_POST
 def logout(request):
     """Logout an authenticated user, remove SSO cookie and redirect to home."""
     auth_logout(request)

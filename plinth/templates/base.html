@@ -184,10 +184,12 @@
                       <li class="dropdown-divider d-none d-md-block"></li>
                     {% endif %}
                     <li>
-                      <a class="dropdown-item" href="{% url 'users:logout' %}"
-                         title="{% trans "Log out" %}">
-                        {% trans "Log out" %}
-                      </a>
+                      <form class="form form-logout" method="post"
+                            action="{% url 'users:logout' %}">
+                        {% csrf_token %}
+                        <input type="submit" class="dropdown-item no-running-status" 
+                               value="{% trans "Log out" %}"/>
+                      </form>
                     </li>
                   </ul>
                 </li>
@@ -211,12 +213,12 @@
               {% endif %}
 
               {% if user.is_authenticated %}
-                <li id="logout-nojs" class="nav-item">
-                  <a class="nav-link" href="{% url 'users:logout' %}"
-                     title="{% trans "Log out" %}">
-                    <i class="fa fa-times-circle nav-icon"></i>
-                    {% trans "Log out" %}</a>
-                </li>
+                <form id="logout-nojs" class="form form-inline form-logout"
+                      method="post" action="{% url 'users:logout' %}">
+                  {% csrf_token %}
+                  <input type="submit" class="nav-link no-running-status btn btn-link"
+                         value="{% trans "Log out" %}"/>
+                </form>
               {% endif %}
             {% endblock %}
           </ul>
