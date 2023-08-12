@@ -14,6 +14,7 @@ from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, daemon, glib, menu
+from plinth import operation as operation_module
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
@@ -32,6 +33,7 @@ running_task = None
 current_results = {}
 
 results_lock = threading.Lock()
+running_task_lock = threading.Lock()
 
 
 class DiagnosticsApp(app_module.App):
@@ -67,6 +69,10 @@ class DiagnosticsApp(app_module.App):
         interval = 180 if cfg.develop else 3600
         glib.schedule(interval, _warn_about_low_ram_space)
 
+        # Run diagnostics once a day
+        interval = 180 if cfg.develop else 86400
+        glib.schedule(interval, _start_background_diagnostics)
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -86,10 +92,12 @@ class DiagnosticsApp(app_module.App):
 def start_task():
     """Start the run task in a separate thread."""
     global running_task
-    if running_task:
-        raise Exception('Task already running')
+    with running_task_lock:
+        if running_task:
+            raise Exception('Task already running')
 
-    running_task = threading.Thread(target=run_on_all_enabled_modules)
+        running_task = threading.Thread(target=run_on_all_enabled_modules)
+
     running_task.start()
 
 
@@ -150,7 +158,8 @@ def run_on_all_enabled_modules():
                 int((current_index + 1) * 100 / len(apps))
 
     global running_task
-    running_task = None
+    with running_task_lock:
+        running_task = None
 
 
 def _get_memory_info_from_cgroups():
@@ -249,3 +258,115 @@ def _warn_about_low_ram_space(request):
                                   app_id='diagnostics', severity=severity,
                                   title=title, message=message,
                                   actions=actions, data=data, group='admin')
+
+
+def _start_background_diagnostics(request):
+    """Start daily diagnostics as a background operation."""
+    operation = operation_module.manager.new(
+        'diagnostics', gettext_noop('Running background diagnostics'),
+        _run_background_diagnostics, [], show_message=False,
+        show_notification=False)
+    operation.join()
+
+
+def _run_background_diagnostics():
+    """Run diagnostics and notify for failures."""
+    from plinth.notification import Notification
+
+    # In case diagnostics are already running, skip the background run for
+    # today.
+    global running_task
+    with running_task_lock:
+        if running_task:
+            logger.warning('Diagnostics are already running, skip background '
+                           'diagnostics for today.')
+            return
+
+        # Set something in the global so we won't be interrupted.
+        running_task = 'background'
+
+    run_on_all_enabled_modules()
+    with results_lock:
+        results = current_results['results']
+
+    with running_task_lock:
+        running_task = None
+
+    exception_count = 0
+    error_count = 0
+    failure_count = 0
+    warning_count = 0
+    for _app_id, app_data in results.items():
+        if app_data['exception']:
+            exception_count += 1
+
+        for _test, result in app_data['diagnosis']:
+            if result == 'error':
+                error_count += 1
+            elif result == 'failed':
+                failure_count += 1
+            elif cfg.develop and result == 'warning':
+                warning_count += 1
+
+    notification_id = 'diagnostics-background'
+    if exception_count > 0:
+        severity = 'error'
+        issue_count = exception_count
+        if exception_count > 1:
+            issue_type = 'translate:exceptions'
+        else:
+            issue_type = 'translate:exception'
+
+    elif error_count > 0:
+        severity = 'error'
+        issue_count = error_count
+        if error_count > 1:
+            issue_type = 'translate:errors'
+        else:
+            issue_type = 'translate:error'
+
+    elif failure_count > 0:
+        severity = 'error'
+        issue_count = failure_count
+        if failure_count > 1:
+            issue_type = 'translate:failures'
+        else:
+            issue_type = 'translate:failure'
+
+    elif warning_count > 0:
+        severity = 'warning'
+        issue_count = warning_count
+        if warning_count > 1:
+            issue_type = 'translate:warnings'
+        else:
+            issue_type = 'translate:warning'
+
+    else:
+        # Don't display a notification if there are no issues.
+        return
+
+    message = gettext_noop(
+        # xgettext:no-python-format
+        'Background diagnostics completed with {issue_count} {issue_type}')
+    title = gettext_noop(
+        # xgettext:no-python-format
+        'Background diagnostics results')
+    data = {
+        'app_icon': 'fa-heartbeat',
+        'issue_count': issue_count,
+        'issue_type': issue_type,
+    }
+    actions = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': gettext_noop('Go to diagnostics results'),
+        'url': 'diagnostics:index'
+    }, {
+        'type': 'dismiss'
+    }]
+    note = Notification.update_or_create(id=notification_id,
+                                         app_id='diagnostics',
+                                         severity=severity, title=title,
+                                         message=message, actions=actions,
+                                         data=data, group='admin')
+    note.dismiss(False)

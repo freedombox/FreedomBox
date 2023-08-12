@@ -26,14 +26,17 @@ class DiagnosticsView(AppView):
 
     def post(self, request):
         """Start diagnostics."""
-        if not diagnostics.running_task:
-            diagnostics.start_task()
+        with diagnostics.running_task_lock:
+            if not diagnostics.running_task:
+                diagnostics.start_task()
 
         return HttpResponseRedirect(reverse('diagnostics:index'))
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
-        is_task_running = diagnostics.running_task is not None
+        with diagnostics.running_task_lock:
+            is_task_running = diagnostics.running_task is not None
+
         with diagnostics.results_lock:
             results = diagnostics.current_results
 
