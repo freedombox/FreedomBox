@@ -398,7 +398,9 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
     def login_user(self, username, password):
         """Try to login the user with the credentials provided"""
         try:
-            user = auth.authenticate(username=username, password=password)
+            # Django axes requires the request attribute
+            user = auth.authenticate(request=self.request, username=username,
+                                     password=password)
             auth.login(self.request, user)
         except Exception:
             pass

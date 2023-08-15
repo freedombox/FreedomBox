@@ -4,8 +4,10 @@ Forms for the Single Sign On app of FreedomBox.
 """
 
 from captcha.fields import CaptchaField
+from django import forms
 from django.contrib.auth.forms import \
     AuthenticationForm as DjangoAuthenticationForm
+from django.utils.translation import gettext_lazy as _
 
 
 class AuthenticationForm(DjangoAuthenticationForm):
@@ -20,6 +22,7 @@ class AuthenticationForm(DjangoAuthenticationForm):
         })
 
 
-class CaptchaAuthenticationForm(AuthenticationForm):
-    """Authentication form with an additional Captcha field."""
-    captcha = CaptchaField()
+class CaptchaForm(forms.Form):
+    """Form with a CAPTCHA field to use after 3 invalid login attempts."""
+    captcha = CaptchaField(
+        label=_('Enter the letters in the image to proceed to the login page'))

@@ -14,7 +14,7 @@ import markupsafe
 import ruamel.yaml
 from django.utils.functional import lazy
 
-from plinth.version import Version
+from plinth.version import Version  # noqa
 
 
 def import_from_gi(library, version):
@@ -167,23 +167,6 @@ def gunzip(gzip_file, output_file):
 
 def is_non_empty_file(file_path):
     return os.path.isfile(file_path) and os.path.getsize(file_path) > 0
-
-
-def is_axes_old():
-    """Return true if using django-axes version strictly less than 5.0.0.
-
-    XXX: Remove this method and allow code that uses it after django-axes >=
-    5.0.0 becomes available in Debian stable.
-
-    """
-    import axes
-    try:
-        version = axes.get_version()
-    except AttributeError:
-        # axes.get_version() was removed in 5.0.13
-        return False
-
-    return Version(version) < Version('5.0')
 
 
 def is_authenticated_user(username, password):

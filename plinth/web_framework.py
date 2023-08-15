@@ -129,14 +129,3 @@ def get_wsgi_application():
 def get_static_url():
     """Return Django static URL."""
     return django.conf.settings.STATIC_URL
-
-
-def get_ip_address_from_request(request):
-    """Return the IP address of the original client."""
-    if cfg.use_x_forwarded_for:
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        ip_address = x_forwarded_for.split(',')[0]
-    else:
-        ip_address = request.META.get('REMOTE_ADDR')
-
-    return ip_address
