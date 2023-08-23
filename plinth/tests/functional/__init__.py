@@ -566,7 +566,7 @@ def networks_set_firewall_zone(browser, zone):
     edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
     browser.links.find_by_href(edit_url).first.click()
     browser.select('zone', zone)
-    browser.find_by_tag("form").first.find_by_tag('input')[-1].click()
+    submit(browser, form_class='form-connection-edit')
 
 
 ##################
