@@ -162,10 +162,6 @@ def _create_certificates():
     subprocess.check_call([easy_rsa, 'build-ca', 'nopass'], **COMMON_ARGS)
     subprocess.check_call([easy_rsa, 'build-server-full', 'server', 'nopass'],
                           **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'gen-req', 'server', 'nopass'],
-                          **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'sign-req', 'server', 'server'],
-                          **COMMON_ARGS)
 
 
 @privileged
