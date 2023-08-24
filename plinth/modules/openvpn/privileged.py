@@ -144,10 +144,10 @@ def _setup_firewall():
         action_utils.service_restart('firewalld')
 
 
-def _init_pki():
-    """Initialize easy-rsa PKI directory to create configuration file."""
-    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'init-pki'],
-                          **COMMON_ARGS)
+def _run_easy_rsa(args):
+    """Execute easy-rsa command with some default arguments."""
+    return subprocess.run(['/usr/share/easy-rsa/easyrsa'] + args,
+                          cwd=KEYS_DIRECTORY, check=True)
 
 
 def _create_certificates():
@@ -157,11 +157,9 @@ def _create_certificates():
     except FileExistsError:
         pass
 
-    _init_pki()
-    easy_rsa = '/usr/share/easy-rsa/easyrsa'
-    subprocess.check_call([easy_rsa, 'build-ca', 'nopass'], **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'build-server-full', 'server', 'nopass'],
-                          **COMMON_ARGS)
+    _run_easy_rsa(['init-pki'])
+    _run_easy_rsa(['build-ca', 'nopass'])
+    _run_easy_rsa(['build-server-full', 'server', 'nopass'])
 
 
 @privileged
@@ -176,10 +174,7 @@ def get_profile(username: str, remote_server: str) -> str:
     if not _is_non_empty_file(user_certificate) or \
        not _is_non_empty_file(user_key):
         set_unique_subject('no')  # Set unique subject in attribute file to no
-        subprocess.check_call([
-            '/usr/share/easy-rsa/easyrsa', 'build-client-full', username,
-            'nopass'
-        ], env=CERTIFICATE_CONFIGURATION, cwd=KEYS_DIRECTORY)
+        _run_easy_rsa(['build-client-full', username, 'nopass'])
 
     user_certificate_string = _read_file(user_certificate)
     user_key_string = _read_file(user_key)
