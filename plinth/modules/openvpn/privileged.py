@@ -2,6 +2,7 @@
 """Configure OpenVPN server."""
 
 import os
+import pathlib
 import shutil
 import subprocess
 
@@ -10,22 +11,15 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged
 
-KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
-
-DH_PARAMS = f'{KEYS_DIRECTORY}/pki/dh.pem'
-
-EC_PARAMS_DIR = f'{KEYS_DIRECTORY}/pki/ecparams'
+KEYS_DIRECTORY = pathlib.Path('/etc/openvpn/freedombox-keys')
+CA_CERTIFICATE_PATH = KEYS_DIRECTORY / 'pki' / 'ca.crt'
+USER_CERTIFICATE_PATH = KEYS_DIRECTORY / 'pki' / 'issued' / '{username}.crt'
+USER_KEY_PATH = KEYS_DIRECTORY / 'pki' / 'private' / '{username}.key'
+ATTR_FILE = KEYS_DIRECTORY / 'pki' / 'index.txt.attr'
 
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 
 SERVICE_NAME = 'openvpn-server@freedombox'
-
-CA_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'ca.crt')
-USER_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'issued',
-                                     '{username}.crt')
-USER_KEY_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'private',
-                             '{username}.key')
-ATTR_FILE = os.path.join(KEYS_DIRECTORY, 'pki', 'index.txt.attr')
 
 SERVER_CONFIGURATION = '''
 port 1194
@@ -69,13 +63,10 @@ verb 3
 <key>
 {key}</key>'''
 
-CERTIFICATE_CONFIGURATION = {
+_EASY_RSA_CONFIGURATION = {
     'EASYRSA_ALGO': 'ec',
     'EASYRSA_BATCH': '1',
     'EASYRSA_DIGEST': 'sha512',
-    'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
-    'KEY_DIR': KEYS_DIRECTORY,
-    'EASYRSA_OPENSSL': 'openssl',
     'EASYRSA_CA_EXPIRE': '3650',
     'EASYRSA_CERT_EXPIRE': '3650',
     'EASYRSA_REQ_COUNTRY': 'US',
@@ -84,10 +75,7 @@ CERTIFICATE_CONFIGURATION = {
     'EASYRSA_REQ_ORG': 'FreedomBox',
     'EASYRSA_REQ_EMAIL': 'me@freedombox',
     'EASYRSA_REQ_OU': 'Home',
-    'EASYRSA_REQ_NAME': 'FreedomBox'
 }
-
-COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
 
 
 @privileged
@@ -150,14 +138,19 @@ def _run_easy_rsa(args):
                           cwd=KEYS_DIRECTORY, check=True)
 
 
+def _write_easy_rsa_config():
+    """Write easy-rsa 'vars' file."""
+    with (KEYS_DIRECTORY / 'pki' / 'vars').open('w') as file_handle:
+        for key, value in _EASY_RSA_CONFIGURATION.items():
+            file_handle.write(f'set_var {key} "{value}"\n')
+
+
 def _create_certificates():
     """Generate CA and server certificates."""
-    try:
-        os.mkdir(KEYS_DIRECTORY, 0o700)
-    except FileExistsError:
-        pass
+    KEYS_DIRECTORY.mkdir(mode=0o700, exist_ok=True)
 
     _run_easy_rsa(['init-pki'])
+    _write_easy_rsa_config()
     _run_easy_rsa(['build-ca', 'nopass'])
     _run_easy_rsa(['build-server-full', 'server', 'nopass'])
 
@@ -168,8 +161,8 @@ def get_profile(username: str, remote_server: str) -> str:
     if username == 'ca' or username == 'server':
         raise Exception('Invalid username')
 
-    user_certificate = USER_CERTIFICATE_PATH.format(username=username)
-    user_key = USER_KEY_PATH.format(username=username)
+    user_certificate = str(USER_CERTIFICATE_PATH).format(username=username)
+    user_key = str(USER_KEY_PATH).format(username=username)
 
     if not _is_non_empty_file(user_certificate) or \
        not _is_non_empty_file(user_key):
@@ -189,7 +182,7 @@ def get_profile(username: str, remote_server: str) -> str:
 def set_unique_subject(value):
     """Set the unique_subject value to a particular value."""
     aug = load_augeas()
-    aug.set('/files' + ATTR_FILE + '/unique_subject', value)
+    aug.set('/files' + str(ATTR_FILE) + '/unique_subject', value)
     aug.save()
 
 
@@ -211,7 +204,7 @@ def load_augeas():
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
-    aug.set('/augeas/load/Simplevars/incl[last() + 1]', ATTR_FILE)
+    aug.set('/augeas/load/Simplevars/incl[last() + 1]', str(ATTR_FILE))
     aug.load()
     return aug
 
