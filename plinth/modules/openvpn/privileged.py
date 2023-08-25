@@ -84,8 +84,7 @@ def setup():
     _write_server_config()
     _create_certificates()
     _setup_firewall()
-    action_utils.service_enable(SERVICE_NAME)
-    action_utils.service_restart(SERVICE_NAME)
+    action_utils.service_try_restart(SERVICE_NAME)
 
 
 def _write_server_config():
@@ -145,14 +144,34 @@ def _write_easy_rsa_config():
             file_handle.write(f'set_var {key} "{value}"\n')
 
 
+def _is_renewable(cert_name):
+    """Return whether a certificate is within configured renewable days."""
+    try:
+        _run_easy_rsa(['renewable', cert_name])
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+
 def _create_certificates():
     """Generate CA and server certificates."""
     KEYS_DIRECTORY.mkdir(mode=0o700, exist_ok=True)
 
-    _run_easy_rsa(['init-pki'])
+    # Don't re-initialize PKI if it already exists. This will lead to wiping of
+    # all existing certificates and downloaded profiles.
+    if not (KEYS_DIRECTORY / 'pki').is_dir():
+        _run_easy_rsa(['init-pki'])
+
     _write_easy_rsa_config()
-    _run_easy_rsa(['build-ca', 'nopass'])
-    _run_easy_rsa(['build-server-full', 'server', 'nopass'])
+
+    # Don't reinitialize the CA certificates. This will invalidate all existing
+    # server/client certificates and downloaded client profiles.
+    if not CA_CERTIFICATE_PATH.exists():
+        _run_easy_rsa(['build-ca', 'nopass'])
+
+    server_cert = KEYS_DIRECTORY / 'pki' / 'issued' / 'server.crt'
+    if not server_cert.exists():
+        _run_easy_rsa(['build-server-full', 'server', 'nopass'])
 
 
 @privileged
