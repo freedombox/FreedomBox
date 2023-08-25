@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure OpenVPN server."""
 
+import datetime
 import os
 import pathlib
 import shutil
@@ -64,11 +65,12 @@ verb 3
 {key}</key>'''
 
 _EASY_RSA_CONFIGURATION = {
-    'EASYRSA_ALGO': 'ec',
-    'EASYRSA_BATCH': '1',
+    'EASYRSA_ALGO': 'ec',  # Use Elliptic Curve Cryptography by default
+    'EASYRSA_BATCH': '1',  # Prevent prompting
     'EASYRSA_DIGEST': 'sha512',
-    'EASYRSA_CA_EXPIRE': '3650',
-    'EASYRSA_CERT_EXPIRE': '3650',
+    'EASYRSA_CA_EXPIRE': '3650',  # 10 years expiry for CA root certificate
+    'EASYRSA_CERT_EXPIRE': '3650',  # 10 years expiry for server/client certs
+    'EASYRSA_CERT_RENEW': '1095',  # Renew cert if expiry less than 3 years
     'EASYRSA_REQ_COUNTRY': 'US',
     'EASYRSA_REQ_PROVINCE': 'NY',
     'EASYRSA_REQ_CITY': 'New York',
@@ -145,12 +147,45 @@ def _write_easy_rsa_config():
 
 
 def _is_renewable(cert_name):
-    """Return whether a certificate is within configured renewable days."""
-    try:
-        _run_easy_rsa(['renewable', cert_name])
-        return True
-    except subprocess.CalledProcessError:
+    """Return whether a certificate is within configured renewable days.
+
+    'easy-rsa renewable' command could be used to perform the check. However,
+    the script fetches the expiry date of the certificate from the index.txt
+    file. When this file has multiple entries for the same certificate base
+    name, the results of the command are undesirable. Multiple entries for the
+    same certificate base name can occur in the index.txt file in some unusual
+    cases. For example, earlier versions of FreedomBox ran build-server-full
+    followed by gen-req/sign-req. This approach created such entries. So,
+    determine expiry here without using easy-rsa script.
+    """
+    cert_path = KEYS_DIRECTORY / 'pki' / 'issued' / (cert_name + '.crt')
+    if not cert_path.exists():
         return False
+
+    process = subprocess.run(
+        ['openssl', 'x509', '-noout', '-enddate', '-in',
+         str(cert_path)], check=True, stdout=subprocess.PIPE)
+    date_string = process.stdout.decode().strip().partition('=')[2]
+    cert_expiry_time = datetime.datetime.strptime(date_string,
+                                                  '%b %d %H:%M:%S %Y GMT')
+    cert_expiry_time = cert_expiry_time.replace(tzinfo=datetime.timezone.utc)
+
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    renew_period = datetime.timedelta(
+        days=int(_EASY_RSA_CONFIGURATION['EASYRSA_CERT_RENEW']))
+    return (cert_expiry_time - now) < renew_period
+
+
+def _renew(cert_name):
+    """Renew a certificate and revoke the old certificate.
+
+    Without revoking the old certificate, another renewal is not possible due
+    to safety checks in easy-rsa script.
+    """
+    _run_easy_rsa(['renew', cert_name, 'nopass'])
+
+    # Remove the old certificate so that more renewals can work
+    _run_easy_rsa(['revoke-renewed', cert_name])
 
 
 def _create_certificates():
@@ -169,9 +204,13 @@ def _create_certificates():
     if not CA_CERTIFICATE_PATH.exists():
         _run_easy_rsa(['build-ca', 'nopass'])
 
+    # Renew server certificate if already exists. Already downloaded profiles
+    # don't change.
     server_cert = KEYS_DIRECTORY / 'pki' / 'issued' / 'server.crt'
     if not server_cert.exists():
         _run_easy_rsa(['build-server-full', 'server', 'nopass'])
+    elif _is_renewable('server'):
+        _renew('server')
 
 
 @privileged
@@ -187,6 +226,8 @@ def get_profile(username: str, remote_server: str) -> str:
        not _is_non_empty_file(user_key):
         set_unique_subject('no')  # Set unique subject in attribute file to no
         _run_easy_rsa(['build-client-full', username, 'nopass'])
+    elif _is_renewable(username):
+        _renew(username)
 
     user_certificate_string = _read_file(user_certificate)
     user_key_string = _read_file(user_key)
