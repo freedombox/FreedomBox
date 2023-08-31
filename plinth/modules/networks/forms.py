@@ -17,11 +17,6 @@ class ConnectionTypeSelectForm(forms.Form):
         choices=[(key, value)
                  for key, value in network.CONNECTION_TYPE_NAMES.items()])
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['connection_type'].widget.attrs.update(
-            {'autofocus': 'autofocus'})
-
 
 class ConnectionForm(forms.Form):
     """Base form to create/edit a connection."""

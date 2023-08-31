@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure OpenVPN server."""
 
+import datetime
 import os
+import pathlib
 import shutil
 import subprocess
 
@@ -10,22 +12,15 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged
 
-KEYS_DIRECTORY = '/etc/openvpn/freedombox-keys'
-
-DH_PARAMS = f'{KEYS_DIRECTORY}/pki/dh.pem'
-
-EC_PARAMS_DIR = f'{KEYS_DIRECTORY}/pki/ecparams'
+KEYS_DIRECTORY = pathlib.Path('/etc/openvpn/freedombox-keys')
+CA_CERTIFICATE_PATH = KEYS_DIRECTORY / 'pki' / 'ca.crt'
+USER_CERTIFICATE_PATH = KEYS_DIRECTORY / 'pki' / 'issued' / '{username}.crt'
+USER_KEY_PATH = KEYS_DIRECTORY / 'pki' / 'private' / '{username}.key'
+ATTR_FILE = KEYS_DIRECTORY / 'pki' / 'index.txt.attr'
 
 SERVER_CONFIGURATION_PATH = '/etc/openvpn/server/freedombox.conf'
 
 SERVICE_NAME = 'openvpn-server@freedombox'
-
-CA_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'ca.crt')
-USER_CERTIFICATE_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'issued',
-                                     '{username}.crt')
-USER_KEY_PATH = os.path.join(KEYS_DIRECTORY, 'pki', 'private',
-                             '{username}.key')
-ATTR_FILE = os.path.join(KEYS_DIRECTORY, 'pki', 'index.txt.attr')
 
 SERVER_CONFIGURATION = '''
 port 1194
@@ -69,25 +64,20 @@ verb 3
 <key>
 {key}</key>'''
 
-CERTIFICATE_CONFIGURATION = {
-    'EASYRSA_ALGO': 'ec',
-    'EASYRSA_BATCH': '1',
+_EASY_RSA_CONFIGURATION = {
+    'EASYRSA_ALGO': 'ec',  # Use Elliptic Curve Cryptography by default
+    'EASYRSA_BATCH': '1',  # Prevent prompting
     'EASYRSA_DIGEST': 'sha512',
-    'KEY_CONFIG': '/usr/share/easy-rsa/openssl-easyrsa.cnf',
-    'KEY_DIR': KEYS_DIRECTORY,
-    'EASYRSA_OPENSSL': 'openssl',
-    'EASYRSA_CA_EXPIRE': '3650',
-    'EASYRSA_REQ_EXPIRE': '3650',
+    'EASYRSA_CA_EXPIRE': '3650',  # 10 years expiry for CA root certificate
+    'EASYRSA_CERT_EXPIRE': '3650',  # 10 years expiry for server/client certs
+    'EASYRSA_CERT_RENEW': '1095',  # Renew cert if expiry less than 3 years
     'EASYRSA_REQ_COUNTRY': 'US',
     'EASYRSA_REQ_PROVINCE': 'NY',
     'EASYRSA_REQ_CITY': 'New York',
     'EASYRSA_REQ_ORG': 'FreedomBox',
     'EASYRSA_REQ_EMAIL': 'me@freedombox',
     'EASYRSA_REQ_OU': 'Home',
-    'EASYRSA_REQ_NAME': 'FreedomBox'
 }
-
-COMMON_ARGS = {'env': CERTIFICATE_CONFIGURATION, 'cwd': KEYS_DIRECTORY}
 
 
 @privileged
@@ -96,8 +86,7 @@ def setup():
     _write_server_config()
     _create_certificates()
     _setup_firewall()
-    action_utils.service_enable(SERVICE_NAME)
-    action_utils.service_restart(SERVICE_NAME)
+    action_utils.service_try_restart(SERVICE_NAME)
 
 
 def _write_server_config():
@@ -144,28 +133,84 @@ def _setup_firewall():
         action_utils.service_restart('firewalld')
 
 
-def _init_pki():
-    """Initialize easy-rsa PKI directory to create configuration file."""
-    subprocess.check_call(['/usr/share/easy-rsa/easyrsa', 'init-pki'],
-                          **COMMON_ARGS)
+def _run_easy_rsa(args):
+    """Execute easy-rsa command with some default arguments."""
+    return subprocess.run(['/usr/share/easy-rsa/easyrsa'] + args,
+                          cwd=KEYS_DIRECTORY, check=True)
+
+
+def _write_easy_rsa_config():
+    """Write easy-rsa 'vars' file."""
+    with (KEYS_DIRECTORY / 'pki' / 'vars').open('w') as file_handle:
+        for key, value in _EASY_RSA_CONFIGURATION.items():
+            file_handle.write(f'set_var {key} "{value}"\n')
+
+
+def _is_renewable(cert_name):
+    """Return whether a certificate is within configured renewable days.
+
+    'easy-rsa renewable' command could be used to perform the check. However,
+    the script fetches the expiry date of the certificate from the index.txt
+    file. When this file has multiple entries for the same certificate base
+    name, the results of the command are undesirable. Multiple entries for the
+    same certificate base name can occur in the index.txt file in some unusual
+    cases. For example, earlier versions of FreedomBox ran build-server-full
+    followed by gen-req/sign-req. This approach created such entries. So,
+    determine expiry here without using easy-rsa script.
+    """
+    cert_path = KEYS_DIRECTORY / 'pki' / 'issued' / (cert_name + '.crt')
+    if not cert_path.exists():
+        return False
+
+    process = subprocess.run(
+        ['openssl', 'x509', '-noout', '-enddate', '-in',
+         str(cert_path)], check=True, stdout=subprocess.PIPE)
+    date_string = process.stdout.decode().strip().partition('=')[2]
+    cert_expiry_time = datetime.datetime.strptime(date_string,
+                                                  '%b %d %H:%M:%S %Y GMT')
+    cert_expiry_time = cert_expiry_time.replace(tzinfo=datetime.timezone.utc)
+
+    now = datetime.datetime.now(tz=datetime.timezone.utc)
+    renew_period = datetime.timedelta(
+        days=int(_EASY_RSA_CONFIGURATION['EASYRSA_CERT_RENEW']))
+    return (cert_expiry_time - now) < renew_period
+
+
+def _renew(cert_name):
+    """Renew a certificate and revoke the old certificate.
+
+    Without revoking the old certificate, another renewal is not possible due
+    to safety checks in easy-rsa script.
+    """
+    _run_easy_rsa(['renew', cert_name, 'nopass'])
+
+    # Remove the old certificate so that more renewals can work
+    _run_easy_rsa(['revoke-renewed', cert_name])
 
 
 def _create_certificates():
     """Generate CA and server certificates."""
-    try:
-        os.mkdir(KEYS_DIRECTORY, 0o700)
-    except FileExistsError:
-        pass
+    KEYS_DIRECTORY.mkdir(mode=0o700, exist_ok=True)
 
-    _init_pki()
-    easy_rsa = '/usr/share/easy-rsa/easyrsa'
-    subprocess.check_call([easy_rsa, 'build-ca', 'nopass'], **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'build-server-full', 'server', 'nopass'],
-                          **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'gen-req', 'server', 'nopass'],
-                          **COMMON_ARGS)
-    subprocess.check_call([easy_rsa, 'sign-req', 'server', 'server'],
-                          **COMMON_ARGS)
+    # Don't re-initialize PKI if it already exists. This will lead to wiping of
+    # all existing certificates and downloaded profiles.
+    if not (KEYS_DIRECTORY / 'pki').is_dir():
+        _run_easy_rsa(['init-pki'])
+
+    _write_easy_rsa_config()
+
+    # Don't reinitialize the CA certificates. This will invalidate all existing
+    # server/client certificates and downloaded client profiles.
+    if not CA_CERTIFICATE_PATH.exists():
+        _run_easy_rsa(['build-ca', 'nopass'])
+
+    # Renew server certificate if already exists. Already downloaded profiles
+    # don't change.
+    server_cert = KEYS_DIRECTORY / 'pki' / 'issued' / 'server.crt'
+    if not server_cert.exists():
+        _run_easy_rsa(['build-server-full', 'server', 'nopass'])
+    elif _is_renewable('server'):
+        _renew('server')
 
 
 @privileged
@@ -174,16 +219,15 @@ def get_profile(username: str, remote_server: str) -> str:
     if username == 'ca' or username == 'server':
         raise Exception('Invalid username')
 
-    user_certificate = USER_CERTIFICATE_PATH.format(username=username)
-    user_key = USER_KEY_PATH.format(username=username)
+    user_certificate = str(USER_CERTIFICATE_PATH).format(username=username)
+    user_key = str(USER_KEY_PATH).format(username=username)
 
     if not _is_non_empty_file(user_certificate) or \
        not _is_non_empty_file(user_key):
         set_unique_subject('no')  # Set unique subject in attribute file to no
-        subprocess.check_call([
-            '/usr/share/easy-rsa/easyrsa', 'build-client-full', username,
-            'nopass'
-        ], env=CERTIFICATE_CONFIGURATION, cwd=KEYS_DIRECTORY)
+        _run_easy_rsa(['build-client-full', username, 'nopass'])
+    elif _is_renewable(username):
+        _renew(username)
 
     user_certificate_string = _read_file(user_certificate)
     user_key_string = _read_file(user_key)
@@ -198,7 +242,7 @@ def get_profile(username: str, remote_server: str) -> str:
 def set_unique_subject(value):
     """Set the unique_subject value to a particular value."""
     aug = load_augeas()
-    aug.set('/files' + ATTR_FILE + '/unique_subject', value)
+    aug.set('/files' + str(ATTR_FILE) + '/unique_subject', value)
     aug.save()
 
 
@@ -220,7 +264,7 @@ def load_augeas():
 
     # shell-script config file lens
     aug.set('/augeas/load/Simplevars/lens', 'Simplevars.lns')
-    aug.set('/augeas/load/Simplevars/incl[last() + 1]', ATTR_FILE)
+    aug.set('/augeas/load/Simplevars/incl[last() + 1]', str(ATTR_FILE))
     aug.load()
     return aug
 

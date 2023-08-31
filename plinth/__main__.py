@@ -7,12 +7,8 @@ import sys
 
 from . import __version__
 from . import app as app_module
-from . import (cfg, frontpage, glib, log, menu, module_loader, setup, utils,
+from . import (cfg, frontpage, glib, log, menu, module_loader, setup,
                web_framework, web_server)
-
-if utils.is_axes_old():
-    import axes
-    axes.default_app_config = 'plinth.axes_app_config.AppConfig'
 
 precedence_commandline_arguments = ["server_dir", "develop"]
 

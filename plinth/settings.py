@@ -48,9 +48,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend. If the user is locked
+    # out due to too many attempts, the backend denies further attempts untill
+    # unlocked by a CAPTCHA form.
+    'axes.backends.AxesStandaloneBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 AXES_LOCKOUT_URL = 'locked/'
 
-AXES_RESET_ON_SUCCESS = True  # Only used with axes >= 4.4.3
+AXES_RESET_ON_SUCCESS = True
+
+AXES_VERBOSE = False
 
 CACHES = {
     'default': {
@@ -128,6 +140,11 @@ MIDDLEWARE = (
     'plinth.middleware.FirstSetupMiddleware',
     'plinth.modules.first_boot.middleware.FirstBootMiddleware',
     'plinth.middleware.SetupMiddleware',
+
+    # AxesMiddleware should be the last middleware. It only formats user
+    # lockout messages and renders Axes lockout responses on failed user
+    # authentication attempts from login views.
+    'axes.middleware.AxesMiddleware',
 )
 
 PASSWORD_HASHERS = [
@@ -138,8 +155,6 @@ PASSWORD_HASHERS = [
 ]
 
 ROOT_URLCONF = 'plinth.urls'
-
-SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 

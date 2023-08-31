@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  <form class="form form-captcha" method="post">
+
+    <div class="row">
+      {% csrf_token %}
+      <div class="col-md-4 offset-md-4">
+        {{ form|bootstrap }}
+
+        <div class="text-center">
+          <input type="submit" class="btn btn-primary"
+                 value="{% trans "Proceed to Login" %}" />
+        </div>
+     </div>
+    </div>
+
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+{% endblock %}

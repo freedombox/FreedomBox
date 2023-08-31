@@ -125,6 +125,9 @@ def get_configuration():
         'loggers': {
             'django.db.backends': {
                 'level': 'INFO'  # Set to 'DEBUG' to log database queries
+            },
+            'axes': {
+                'level': 'INFO'  # Too verbose during DEBUG
             }
         }
     }

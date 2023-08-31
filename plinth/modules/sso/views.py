@@ -6,7 +6,6 @@ import os
 import urllib
 
 import axes.utils
-from axes.decorators import axes_form_invalid
 from django import shortcuts
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -14,11 +13,13 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
+from django.views.decorators.http import require_POST
+from django.views.generic.edit import FormView
 
-from plinth import translation, utils, web_framework
+from plinth import translation
 
 from . import privileged
-from .forms import AuthenticationForm, CaptchaAuthenticationForm
+from .forms import AuthenticationForm, CaptchaForm
 
 PRIVATE_KEY_FILE_NAME = 'privkey.pem'
 SSO_COOKIE_NAME = 'auth_pubtkt'
@@ -57,41 +58,26 @@ class SSOLoginView(LoginView):
 
         return response
 
-    # XXX: Use axes middleware and authentication backend instead of
-    # axes_form_invalid when axes >= 5.0.0 becomes available in Debian stable.
-    @axes_form_invalid
-    def form_invalid(self, *args, **kwargs):
-        """Trigger django-axes logic to deal with too many attempts."""
-        return super().form_invalid(*args, **kwargs)
+
+class CaptchaView(FormView):
+    """A simple form view with a CAPTCHA image.
+
+    When a user performs too many login attempts, they will no longer be able
+    to login with the typical login view. They will be redirected to this view.
+    On successfully solving the CAPTCHA in this form, their ability to use the
+    login form will be reset.
+    """
+
+    template_name = 'captcha.html'
+    form_class = CaptchaForm
+
+    def form_valid(self, form):
+        """Reset login attempts and redirect to login page."""
+        axes.utils.reset_request(self.request)
+        return shortcuts.redirect('users:login')
 
 
-class CaptchaLoginView(LoginView):
-    """A login view with mandatory CAPTCHA image."""
-
-    redirect_authenticated_user = True
-    template_name = 'login.html'
-    form_class = CaptchaAuthenticationForm
-
-    def dispatch(self, request, *args, **kwargs):
-        """Handle a request and return a HTTP response."""
-        response = super().dispatch(request, *args, **kwargs)
-        if not request.POST:
-            return response
-
-        if not request.user.is_authenticated:
-            return response
-
-        # Successful authentication
-        if utils.is_axes_old():
-            ip_address = web_framework.get_ip_address_from_request(request)
-            axes.utils.reset(ip=ip_address)
-            logger.info(
-                'Login attempts reset for IP after successful login: %s',
-                ip_address)
-
-        return set_ticket_cookie(request.user, response)
-
-
+@require_POST
 def logout(request):
     """Logout an authenticated user, remove SSO cookie and redirect to home."""
     auth_logout(request)

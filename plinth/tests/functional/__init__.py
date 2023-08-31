@@ -277,7 +277,7 @@ def login_with_account(browser, url, username, password=None):
         if user_menu.text == username:
             return
 
-        visit(browser, '/plinth/accounts/logout/')
+        logout(browser)
 
     login_button = browser.links.find_by_href('/plinth/accounts/login/')
     if login_button:
@@ -306,7 +306,14 @@ def login_with_account(browser, url, username, password=None):
 
 def logout(browser):
     """Log out of the FreedomBox interface."""
-    visit(browser, '/plinth/accounts/logout/')
+    # Navigate to the home page if logout form is not found
+    if not browser.find_by_css('.form-logout'):
+        visit(browser, '/plinth/')
+
+    # We are not logged in if the home page does not contain logout form
+    if browser.find_by_css('.form-logout'):
+        browser.find_by_id('id_user_menu').click()
+        submit(browser, form_class='form-logout')
 
 
 #################
@@ -559,7 +566,7 @@ def networks_set_firewall_zone(browser, zone):
     edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
     browser.links.find_by_href(edit_url).first.click()
     browser.select('zone', zone)
-    browser.find_by_tag("form").first.find_by_tag('input')[-1].click()
+    submit(browser, form_class='form-connection-edit')
 
 
 ##################
