@@ -243,11 +243,13 @@ def test_diagnose_url(get_addresses, check):
     }
     check.return_value = 'passed'
     result = diagnose_url(**args)
-    assert result == ['Access URL https://localhost/test on tcp4', 'passed']
+    assert result.description == 'Access URL https://localhost/test on tcp4'
+    assert result.result == 'passed'
 
     check.return_value = 'failed'
     result = diagnose_url(**args)
-    assert result == ['Access URL https://localhost/test on tcp4', 'failed']
+    assert result.description == 'Access URL https://localhost/test on tcp4'
+    assert result.result == 'failed'
 
     del args['kind']
     args['url'] = 'https://{host}/test'
@@ -264,10 +266,12 @@ def test_diagnose_url(get_addresses, check):
         'url_address': 'test-host-2'
     }]
     result = diagnose_url_on_all(**args)
-    assert result == [
-        ['Access URL https://test-host-1/test on tcp4', 'passed'],
-        ['Access URL https://test-host-2/test on tcp6', 'passed'],
-    ]
+    assert result[
+        0].description == 'Access URL https://test-host-1/test on tcp4'
+    assert result[0].result == 'passed'
+    assert result[
+        1].description == 'Access URL https://test-host-2/test on tcp6'
+    assert result[1].result == 'passed'
 
 
 @patch('subprocess.run')

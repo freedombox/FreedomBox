@@ -10,6 +10,7 @@ import pytest
 
 from plinth.app import (App, Component, EnableState, FollowerComponent, Info,
                         LeaderComponent, apps_init)
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 # pylint: disable=protected-access
 
@@ -35,7 +36,10 @@ class LeaderTest(FollowerComponent):
 
     def diagnose(self):
         """Return diagnostic results."""
-        return [('test-result-' + self.component_id, 'success')]
+        return [
+            DiagnosticCheck('test-result-' + self.component_id,
+                            'test-result-' + self.component_id, Result.PASSED)
+        ]
 
 
 @pytest.fixture(name='app_with_components')
@@ -245,8 +249,12 @@ def test_app_set_enabled(app_with_components):
 def test_app_diagnose(app_with_components):
     """Test running diagnostics on an app."""
     results = app_with_components.diagnose()
-    assert results == [('test-result-test-leader-1', 'success'),
-                       ('test-result-test-leader-2', 'success')]
+    assert results[0].check_id == 'test-result-test-leader-1'
+    assert results[0].description == 'test-result-test-leader-1'
+    assert results[0].result == Result.PASSED
+    assert results[1].check_id == 'test-result-test-leader-2'
+    assert results[1].description == 'test-result-test-leader-2'
+    assert results[1].result == Result.PASSED
 
 
 def test_app_has_diagnostics(app_with_components):
@@ -262,7 +270,9 @@ def test_app_has_diagnostics(app_with_components):
     assert not app.has_diagnostics()
 
     # App with app-level diagnostics
-    with patch.object(AppTest, 'diagnose', return_value=[('test1', 'passed')]):
+    with patch.object(
+            AppTest, 'diagnose',
+            return_value=[DiagnosticCheck('test1', 'test1', Result.PASSED)]):
         assert app.has_diagnostics()
 
 

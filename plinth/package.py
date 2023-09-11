@@ -202,30 +202,36 @@ class Packages(app_module.FollowerComponent):
 
     def diagnose(self):
         """Run diagnostics and return results."""
+        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+
         results = super().diagnose()
         cache = apt.Cache()
         for package_expression in self.package_expressions:
             try:
                 package_name = package_expression.actual()
             except MissingPackageError:
-                message = _('Package {expression} is not available for '
-                            'install').format(expression=package_expression)
-                results.append([message, 'failed'])
+                check_id = f'package-{package_expression}'
+                description = _(
+                    'Package {expression} is not available for '
+                    'install').format(expression=package_expression)
+                results.append(
+                    DiagnosticCheck(check_id, description, Result.FAILED))
                 continue
 
-            result = 'warning'
+            result = Result.WARNING
             latest_version = '?'
             if package_name in cache:
                 package = cache[package_name]
                 latest_version = package.candidate.version
                 if package.candidate.is_installed:
-                    result = 'passed'
+                    result = Result.PASSED
 
-            message = _('Package {package_name} is the latest version '
-                        '({latest_version})').format(
-                            package_name=package_name,
-                            latest_version=latest_version)
-            results.append([message, result])
+            check_id = f'package-{package_name}'
+            description = _('Package {package_name} is the latest version '
+                            '({latest_version})').format(
+                                package_name=package_name,
+                                latest_version=latest_version)
+            results.append(DiagnosticCheck(check_id, description, result))
 
         return results
 

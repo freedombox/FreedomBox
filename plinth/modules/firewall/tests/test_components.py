@@ -153,37 +153,34 @@ def test_diagnose(get_enabled_services, get_port_details):
     firewall = Firewall('test-firewall-1', ports=['test-port1', 'test-port2'],
                         is_external=False)
     results = firewall.diagnose()
-    assert results == [
-        [
-            'Port test-port1 (1234/tcp, 1234/udp) available for internal '
-            'networks', 'passed'
-        ],
-        [
-            'Port test-port1 (1234/tcp, 1234/udp) unavailable for external '
-            'networks', 'passed'
-        ],
-        [
-            'Port test-port2 (2345/udp) available for internal networks',
-            'failed'
-        ],
-        [
-            'Port test-port2 (2345/udp) unavailable for external networks',
-            'failed'
-        ]
-    ]
+    assert (results[0].description == 'Port test-port1 (1234/tcp, 1234/udp) '
+            'available for internal networks')
+    assert results[0].result == 'passed'
+    assert (results[1].description == 'Port test-port1 (1234/tcp, 1234/udp) '
+            'unavailable for external networks')
+    assert results[1].result == 'passed'
+    assert (results[2].description == 'Port test-port2 (2345/udp) available '
+            'for internal networks')
+    assert results[2].result == 'failed'
+    assert (results[3].description == 'Port test-port2 (2345/udp) unavailable '
+            'for external networks')
+    assert results[3].result == 'failed'
 
     firewall = Firewall('test-firewall-1', ports=['test-port3', 'test-port4'],
                         is_external=True)
     results = firewall.diagnose()
-    assert results == [[
-        'Port test-port3 (3456/tcp) available for internal networks', 'passed'
-    ], [
-        'Port test-port3 (3456/tcp) available for external networks', 'passed'
-    ], [
-        'Port test-port4 (4567/udp) available for internal networks', 'failed'
-    ], [
-        'Port test-port4 (4567/udp) available for external networks', 'failed'
-    ]]
+    assert (results[0].description == 'Port test-port3 (3456/tcp) available '
+            'for internal networks')
+    assert results[0].result == 'passed'
+    assert (results[1].description == 'Port test-port3 (3456/tcp) available '
+            'for external networks')
+    assert results[1].result == 'passed'
+    assert (results[2].description == 'Port test-port4 (4567/udp) available '
+            'for internal networks')
+    assert results[2].result == 'failed'
+    assert (results[3].description == 'Port test-port4 (4567/udp) available '
+            'for external networks')
+    assert results[3].result == 'failed'
 
 
 def test_local_protection_init():

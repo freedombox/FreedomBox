@@ -160,32 +160,32 @@ def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
     with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
         # Nothing exists
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
-        assert results[1][1] == 'failed'
+        assert results[0].result == 'failed'
+        assert results[1].result == 'failed'
 
         # Proper symlinks exist
         dropin_configs.enable()
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'passed'
-        assert results[1][1] == 'passed'
+        assert results[0].result == 'passed'
+        assert results[1].result == 'passed'
 
         # A file exists instead of symlink
         dropin_configs.disable()
         etc_path = DropinConfigs._get_etc_path('/etc/test/path1')
         etc_path.touch()
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
+        assert results[0].result == 'failed'
 
         # Symlink points to wrong location
         dropin_configs.disable()
         etc_path.symlink_to('/blah')
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
+        assert results[0].result == 'failed'
 
         # Symlink is recreated
         dropin_configs.enable()
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'passed'
+        assert results[0].result == 'passed'
 
 
 def test_dropin_config_diagnose_copy_only(dropin_configs, tmp_path):
@@ -199,24 +199,24 @@ def test_dropin_config_diagnose_copy_only(dropin_configs, tmp_path):
 
         # Nothing exists
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
-        assert results[1][1] == 'failed'
+        assert results[0].result == 'failed'
+        assert results[1].result == 'failed'
 
         # Proper copies exist
         dropin_configs.enable()
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'passed'
-        assert results[1][1] == 'passed'
+        assert results[0].result == 'passed'
+        assert results[1].result == 'passed'
 
         # A symlink exists instead of a copied file
         dropin_configs.disable()
         etc_path = DropinConfigs._get_etc_path('/etc/test/path1')
         etc_path.symlink_to('/blah')
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
+        assert results[0].result == 'failed'
 
         # Copied file contains wrong contents
         dropin_configs.disable()
         etc_path.write_text('x-invalid-contents')
         results = dropin_configs.diagnose()
-        assert results[0][1] == 'failed'
+        assert results[0].result == 'failed'

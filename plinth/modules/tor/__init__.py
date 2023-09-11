@@ -15,6 +15,7 @@ from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
 from plinth.modules import torproxy
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
@@ -131,10 +132,10 @@ class TorApp(app_module.App):
         ports = status['ports']
 
         if status['relay_enabled']:
-            results.append([
-                _('Tor relay port available'),
-                'passed' if 'orport' in ports else 'failed'
-            ])
+            results.append(
+                DiagnosticCheck(
+                    'tor-port-relay', _('Tor relay port available'),
+                    Result.PASSED if 'orport' in ports else Result.FAILED))
             if 'orport' in ports:
                 results.append(
                     diagnose_port_listening(int(ports['orport']), 'tcp4'))
@@ -142,20 +143,20 @@ class TorApp(app_module.App):
                     diagnose_port_listening(int(ports['orport']), 'tcp6'))
 
         if status['bridge_relay_enabled']:
-            results.append([
-                _('Obfs3 transport registered'),
-                'passed' if 'obfs3' in ports else 'failed'
-            ])
+            results.append(
+                DiagnosticCheck(
+                    'tor-port-obfs3', _('Obfs3 transport registered'),
+                    Result.PASSED if 'obfs3' in ports else Result.FAILED))
             if 'obfs3' in ports:
                 results.append(
                     diagnose_port_listening(int(ports['obfs3']), 'tcp4'))
                 results.append(
                     diagnose_port_listening(int(ports['obfs3']), 'tcp6'))
 
-            results.append([
-                _('Obfs4 transport registered'),
-                'passed' if 'obfs4' in ports else 'failed'
-            ])
+            results.append(
+                DiagnosticCheck(
+                    'tor-port-obfs4', _('Obfs4 transport registered'),
+                    Result.PASSED if 'obfs4' in ports else Result.FAILED))
             if 'obfs4' in ports:
                 results.append(
                     diagnose_port_listening(int(ports['obfs4']), 'tcp4'))
@@ -164,10 +165,11 @@ class TorApp(app_module.App):
 
         if status['hs_enabled']:
             hs_hostname = status['hs_hostname'].split('.onion')[0]
-            results.append([
-                _('Onion service is version 3'),
-                'passed' if len(hs_hostname) == 56 else 'failed'
-            ])
+            results.append(
+                DiagnosticCheck(
+                    'tor-onion-version', _('Onion service is version 3'),
+                    Result.PASSED
+                    if len(hs_hostname) == 56 else Result.FAILED))
 
         return results
 

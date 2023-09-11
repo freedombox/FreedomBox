@@ -238,16 +238,16 @@ def test_diagnose(cache):
         Package('package6') | Package('package7')
     ])
     results = component.diagnose()
-    assert 'not available for install' in results[0][0]
-    assert results[0][1] == 'failed'
-    assert '(2.0)' in results[1][0]
-    assert results[1][1] == 'passed'
-    assert '(3.0)' in results[2][0]
-    assert results[2][1] == 'warning'
-    assert 'not available for install' in results[3][0]
-    assert results[3][1] == 'failed'
-    assert '(4.0)' in results[4][0]
-    assert results[4][1] == 'passed'
+    assert 'not available for install' in results[0].description
+    assert results[0].result == 'failed'
+    assert '(2.0)' in results[1].description
+    assert results[1].result == 'passed'
+    assert '(3.0)' in results[2].description
+    assert results[2].result == 'warning'
+    assert 'not available for install' in results[3].description
+    assert results[3].result == 'failed'
+    assert '(4.0)' in results[4].description
+    assert results[4].result == 'passed'
 
 
 @patch('plinth.package.packages_installed')

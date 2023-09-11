@@ -135,7 +135,7 @@ class TorProxyApp(app_module.App):
 def _diagnose_url_via_tor(url, kind=None):
     """Diagnose whether a URL is reachable via Tor."""
     result = diagnose_url(url, kind=kind, wrapper='torsocks')
-    result[0] = _('Access URL {url} on tcp{kind} via Tor') \
+    result.description = _('Access URL {url} on tcp{kind} via Tor') \
         .format(url=url, kind=kind)
 
     return result
@@ -146,7 +146,7 @@ def _diagnose_tor_use(url, kind=None):
     expected_output = 'Congratulations. This browser is configured to use Tor.'
     result = diagnose_url(url, kind=kind, wrapper='torsocks',
                           expected_output=expected_output)
-    result[0] = _('Confirm Tor usage at {url} on tcp{kind}') \
+    result.description = _('Confirm Tor usage at {url} on tcp{kind}') \
         .format(url=url, kind=kind)
 
     return result

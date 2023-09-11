@@ -13,18 +13,18 @@
       </tr>
     </thead>
     <tbody>
-      {% for test, result in results %}
+      {% for result in results %}
         <tr>
-          <td>{{ test }}</td>
+          <td>{{ result.description }}</td>
           <td class="diagnostics-result">
-            {% if result == 'passed' %}
-              <span class="badge badge-success">{% trans result %}</span>
-            {% elif result == 'failed' %}
-              <span class="badge badge-danger">{% trans result %}</span>
-            {% elif result == 'error' or result == 'warning' %}
-              <span class="badge badge-warning">{% trans result %}</span>
+            {% if result.result == 'passed' %}
+              <span class="badge badge-success">{% trans result.result %}</span>
+            {% elif result.result == 'failed' %}
+              <span class="badge badge-danger">{% trans result.result %}</span>
+            {% elif result.result == 'error' or result.result == 'warning' %}
+              <span class="badge badge-warning">{% trans result.result %}</span>
             {% else %}
-              {{ result }}
+              {{ result.result }}
             {% endif %}
           </td>
         </tr>

@@ -19,6 +19,7 @@ from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
+from .check import Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -299,13 +300,14 @@ def _run_background_diagnostics():
     for _app_id, app_data in results.items():
         if app_data['exception']:
             exception_count += 1
+            continue
 
-        for _test, result in app_data['diagnosis']:
-            if result == 'error':
+        for check in app_data['diagnosis']:
+            if check.result == Result.ERROR:
                 error_count += 1
-            elif result == 'failed':
+            elif check.result == Result.FAILED:
                 failure_count += 1
-            elif cfg.develop and result == 'warning':
+            elif check.result == Result.WARNING:
                 warning_count += 1
 
     notification_id = 'diagnostics-background'

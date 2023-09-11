@@ -11,6 +11,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy, import_from_gi
 
@@ -266,16 +267,20 @@ def remove_passthrough(ipv, *args):
 
 def _diagnose_default_zone(config):
     """Diagnose whether the default zone is external."""
-    testname = gettext('Default zone is external')
-    result = 'passed' if config['default_zone'] == 'external' else 'failed'
-    return [testname, result]
+    check_id = 'firewall-default-zone'
+    description = gettext('Default zone is external')
+    result = Result.PASSED if config[
+        'default_zone'] == 'external' else Result.FAILED
+    return DiagnosticCheck(check_id, description, result)
 
 
 def _diagnose_firewall_backend(config):
     """Diagnose whether the firewall backend is nftables."""
-    testname = gettext('Firewall backend is nftables')
-    result = 'passed' if config['backend'] == 'nftables' else 'failed'
-    return [testname, result]
+    check_id = 'firewall-backend'
+    description = gettext('Firewall backend is nftables')
+    result = Result.PASSED if config['backend'] == 'nftables' \
+        else Result.FAILED
+    return DiagnosticCheck(check_id, description, result)
 
 
 def _diagnose_direct_passthroughs(config):
@@ -284,6 +289,8 @@ def _diagnose_direct_passthroughs(config):
     Currently, we just check that the number of passthroughs is at least 12,
     which are the number that are added by firewall's setup.
     """
-    testname = gettext('Direct passthrough rules exist')
-    result = 'passed' if len(config['passthroughs']) >= 12 else 'failed'
-    return [testname, result]
+    check_id = 'firewall-direct-passthroughs'
+    description = gettext('Direct passthrough rules exist')
+    result = Result.PASSED if len(
+        config['passthroughs']) >= 12 else Result.FAILED
+    return DiagnosticCheck(check_id, description, result)

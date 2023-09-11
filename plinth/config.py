@@ -102,6 +102,8 @@ class DropinConfigs(app_module.FollowerComponent):
 
     def diagnose(self):
         """Check all links/copies and return generate diagnostic results."""
+        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+
         results = []
         for path in self.etc_paths:
             etc_path = self._get_etc_path(path)
@@ -113,10 +115,12 @@ class DropinConfigs(app_module.FollowerComponent):
                 result = (etc_path.is_symlink()
                           and etc_path.readlink() == target)
 
-            result_string = 'passed' if result else 'failed'
+            check_id = f'config-{etc_path}'
+            result_string = Result.PASSED if result else Result.FAILED
             template = _('Static configuration {etc_path} is setup properly')
-            test_name = format_lazy(template, etc_path=str(etc_path))
-            results.append([test_name, result_string])
+            description = format_lazy(template, etc_path=str(etc_path))
+            results.append(
+                DiagnosticCheck(check_id, description, result_string))
 
         return results
 

@@ -99,12 +99,15 @@ class Daemon(app.LeaderComponent):
 
     def _diagnose_unit_is_running(self):
         """Check if a daemon is running."""
-        result = 'passed' if self.is_running() else 'failed'
+        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+
+        check_id = f'daemon-{self.unit}-running'
+        result = Result.PASSED if self.is_running() else Result.FAILED
 
         template = gettext_lazy('Service {service_name} is running')
-        testname = format_lazy(template, service_name=self.unit)
+        description = format_lazy(template, service_name=self.unit)
 
-        return [testname, result]
+        return DiagnosticCheck(check_id, description, result)
 
 
 class RelatedDaemon(app.FollowerComponent):
@@ -151,18 +154,23 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     information.
 
     """
+    from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+
     result = _check_port(port, kind, listen_address)
 
     if listen_address:
+        check_id = f'daemon-{kind}-{port}-{listen_address}'
         template = gettext_lazy(
             'Listening on {kind} port {listen_address}:{port}')
-        testname = format_lazy(template, kind=kind,
-                               listen_address=listen_address, port=port)
+        description = format_lazy(template, kind=kind,
+                                  listen_address=listen_address, port=port)
     else:
+        check_id = f'daemon-{kind}-{port}'
         template = gettext_lazy('Listening on {kind} port {port}')
-        testname = format_lazy(template, kind=kind, port=port)
+        description = format_lazy(template, kind=kind, port=port)
 
-    return [testname, 'passed' if result else 'failed']
+    return DiagnosticCheck(check_id, description,
+                           Result.PASSED if result else Result.FAILED)
 
 
 def _check_port(port, kind='tcp', listen_address=None):
@@ -211,6 +219,8 @@ def _check_port(port, kind='tcp', listen_address=None):
 
 def diagnose_netcat(host, port, input='', negate=False):
     """Run a diagnostic using netcat."""
+    from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+
     try:
         process = subprocess.Popen(['nc', host, str(port)],
                                    stdin=subprocess.PIPE,
@@ -218,17 +228,22 @@ def diagnose_netcat(host, port, input='', negate=False):
                                    stderr=subprocess.PIPE)
         process.communicate(input=input.encode())
         if process.returncode != 0:
-            result = 'failed'
+            result = Result.FAILED
+            if negate:
+                result = Result.PASSED
+
         else:
-            result = 'passed'
+            result = Result.PASSED
+            if negate:
+                result = Result.FAILED
 
-        if negate:
-            result = 'failed' if result == 'passed' else 'passed'
     except Exception:
-        result = 'failed'
+        result = Result.FAILED
 
-    test = _('Connect to {host}:{port}')
+    check_id = f'daemon-netcat-{host}-{port}'
+    description = _('Connect to {host}:{port}')
     if negate:
-        test = _('Cannot connect to {host}:{port}')
+        description = _('Cannot connect to {host}:{port}')
 
-    return [test.format(host=host, port=port), result]
+    return DiagnosticCheck(check_id, description.format(host=host, port=port),
+                           result)
