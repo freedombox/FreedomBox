@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-28 20:05-0400\n"
-"PO-Revision-Date: 2023-08-28 12:50+0000\n"
-"Last-Translator: Michael Breidenbach <leahc@tutanota.com>\n"
+"PO-Revision-Date: 2023-09-08 18:24+0000\n"
+"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sv/>\n"
 "Language: sv\n"
@@ -2546,6 +2546,12 @@ msgid ""
 "href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
+"%(box_name)s är fri programvara, licenserad under GNU Affero General Public "
+"License. Källkoden är tillgänglig online på <a href=\"https://salsa.debian."
+"org/freedombox-team/freedombox\"> %(box_name)s arkiv</a>. Dessutom kan "
+"källkoden för alla Debianpaket erhållas från webbplatsen <a href=\"https"
+"://sources.debian.org/\">Debian Källkod</a> eller genom att köra \"apt "
+"source <i>paketnamn\" </i>\" i en terminal (med Cockpit eller SSH)."
 
 #: plinth/modules/help/templates/help_about.html:82
 #, python-format
@@ -3265,6 +3271,8 @@ msgid ""
 "Disabled. This could lead to adversaries registering many spam accounts on "
 "your server with automated scripts."
 msgstr ""
+"Inaktiverad. Detta kan leda till att motståndare registrerar många "
+"skräppostkonton på din server med automatiserade skript."
 
 #: plinth/modules/matrixsynapse/forms.py:18
 msgid ""
@@ -3272,6 +3280,10 @@ msgid ""
 "will be created automatically. Pass this token to your potential new users. "
 "They will be asked for the token during registration. (recommended)"
 msgstr ""
+"Kräv att användare skapar ett nytt konto för att använda en "
+"registreringstoken. En token kommer att skapas automatiskt. Skicka denna "
+"token till dina potentiella nya användare. De kommer att tillfrågas om token "
+"under registreringen. (rekommenderas)"
 
 #: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
@@ -3289,7 +3301,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/forms.py:33
 msgid "Verification method for registration"
-msgstr ""
+msgstr "Verifieringsmetod för registrering"
 
 #: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
@@ -3371,38 +3383,32 @@ msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
 msgstr ""
+"Nya användare måste använda en av följande tokens för verifiering under "
+"kontoregistrering:"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Registration Token"
-msgstr "Hoppa över registrering"
+msgstr "Registreringstoken"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-#, fuzzy
-#| msgid "Allowed IPs"
 msgid "Uses Allowed"
-msgstr "Tillåtna IPs"
+msgstr "Tillåten användning"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Pending Registrations"
-msgstr "Hoppa över registrering"
+msgstr "Pågående registreringar"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Completed Registrations"
-msgstr "Hoppa över registrering"
+msgstr "Genomförda registreringar"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
 msgid "Expiry Time"
-msgstr ""
+msgstr "Utgångstid"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
 msgid "Unlimited"
-msgstr ""
+msgstr "Obegränsat"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
@@ -3419,6 +3425,7 @@ msgstr ""
 #: plinth/modules/matrixsynapse/views.py:137
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
+"Registreringskonfigurationen kan inte uppdateras när appen är inaktiverad."
 
 #: plinth/modules/mediawiki/__init__.py:21
 msgid ""
@@ -3535,22 +3542,16 @@ msgstr ""
 "möjlighet att välja önskad utseendet."
 
 #: plinth/modules/mediawiki/forms.py:93
-#, fuzzy
-#| msgid "Select language"
 msgid "Default Language"
-msgstr "Välj språk"
+msgstr "Standard språk"
 
 #: plinth/modules/mediawiki/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "Choose a default skin for your MediaWiki installation. Users have the "
-#| "option to select their preferred skin."
 msgid ""
 "Choose a default language for your MediaWiki installation. Users have the "
 "option to select their preferred language."
 msgstr ""
-"Välj ett standardskal för din MediaWiki-installation. Användare har "
-"möjlighet att välja önskad utseendet."
+"Välj ett standardspråk för din MediaWiki-installation. Användare har "
+"möjlighet att välja önskat språk."
 
 #: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
@@ -3589,10 +3590,8 @@ msgid "Site name updated"
 msgstr "Sidnamnet har uppdaterats"
 
 #: plinth/modules/mediawiki/views.py:96
-#, fuzzy
-#| msgid "Default skin changed"
 msgid "Default language changed"
-msgstr "Standardskal ändrat"
+msgstr "Standardspråk ändrat"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -5679,6 +5678,11 @@ msgid ""
 "uncheck this option. When unchecked, a text entry field is added to the "
 "login page so the user can specify to which account they wish to connect."
 msgstr ""
+"När det är aktiverat kan användare bara läsa och skicka e-post via denna "
+"{box_name}. Om du vill använda Roundcube med ett externt e-postkonto, som "
+"Gmail, måste du avmarkera det här alternativet. När avmarkerat läggs ett "
+"textinmatningsfält till på inloggningssidan så att användaren kan ange "
+"vilket konto de vill ansluta till."
 
 #: plinth/modules/rssbridge/__init__.py:21
 msgid ""
@@ -6102,6 +6106,9 @@ msgid ""
 "server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
 "Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
+"Shadowsocks är ett verktyg för att säkert vidarebefordra "
+"nätverksförfrågningar till en fjärrserver. Det består av två delar: (1) en "
+"Shadowsocks-server och (2) en Shadowsocks-klient med en SOCKS5-proxy."
 
 #: plinth/modules/shadowsocks/__init__.py:21
 #: plinth/modules/shadowsocksserver/__init__.py:21
@@ -6110,6 +6117,9 @@ msgid ""
 "requires that the Shadowsocks server is in a location where it can freely "
 "access the Internet, without filtering."
 msgstr ""
+"Shadowsocks kan användas för att kringgå Internetfiltrering och censur. "
+"Detta kräver att Shadowsocks-servern är på en plats där den fritt kan komma "
+"åt Internet, utan filtrering."
 
 #: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
@@ -6133,14 +6143,12 @@ msgstr ""
 "din anordning, beter eller applicering till http://freedombox_address: 1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:50
-#, fuzzy
-#| msgid "Shadowsocks"
 msgid "Shadowsocks Client"
-msgstr "Shadowsocks"
+msgstr "Shadowsocks klient"
 
 #: plinth/modules/shadowsocks/__init__.py:52
 msgid "Bypass Censorship"
-msgstr ""
+msgstr "Förbigå censur"
 
 #: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
@@ -6164,31 +6172,23 @@ msgid "Encryption method. Must match setting on server."
 msgstr "Krypteringsmetod. Måste matcha inställningen på servern."
 
 #: plinth/modules/shadowsocksserver/__init__.py:26
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Your {box_name} can run a Shadowsocks client, that can connect to a "
-#| "Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
-#| "connect to this proxy, and their data will be encrypted and proxied "
-#| "through the Shadowsocks server."
+#, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
 "clients to connect to it. Clients' data will be encrypted and proxied "
 "through this server."
 msgstr ""
-"Din {box_name} kan köra en Shadowsocks-klient, som kan ansluta till en "
-"Shadowsocks-Server. Det kommer också att köra en SOCKS5 proxy. Lokala "
-"enheter kan ansluta till denna proxy och deras data kommer att krypteras och "
-"proxied via Shadowsocks-servern."
+"Din {box_name} kan köra en Shadowsocks-server som tillåter Shadowsocks-"
+"klienter att ansluta till den. Klienters data kommer att krypteras och "
+"skickas via proxy via denna server."
 
 #: plinth/modules/shadowsocksserver/__init__.py:48
-#, fuzzy
-#| msgid "Shadowsocks"
 msgid "Shadowsocks Server"
-msgstr "Shadowsocks"
+msgstr "Shadowsocks Server"
 
 #: plinth/modules/shadowsocksserver/__init__.py:49
 msgid "Help Others Bypass Censorship"
-msgstr ""
+msgstr "Hjälp andra att kringgå censur"
 
 #: plinth/modules/shadowsocksserver/forms.py:10
 #: plinth/modules/shadowsocksserver/forms.py:11
@@ -6196,17 +6196,14 @@ msgid "Recommended"
 msgstr "Rekommenderas"
 
 #: plinth/modules/shadowsocksserver/forms.py:38
-#, fuzzy
-#| msgid "Password used to encrypt data. Must match server password."
 msgid "Password used to encrypt data. Clients must use the same password."
 msgstr ""
-"Lösenord som används för att kryptera data. Måste matcha serverns lösenord."
+"Lösenord som används för att kryptera data. Klienter måste använda samma "
+"lösenord."
 
 #: plinth/modules/shadowsocksserver/forms.py:43
-#, fuzzy
-#| msgid "Encryption method. Must match setting on server."
 msgid "Encryption method. Clients must use the same setting."
-msgstr "Krypteringsmetod. Måste matcha inställningen på servern."
+msgstr "Krypteringsmetod. Klienter måste använda samma inställning."
 
 #: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
@@ -6627,11 +6624,11 @@ msgstr "Enkel inloggning på"
 
 #: plinth/modules/sso/forms.py:28
 msgid "Enter the letters in the image to proceed to the login page"
-msgstr ""
+msgstr "Skriv in bokstäverna i bilden för att gå vidare till inloggningssidan"
 
 #: plinth/modules/sso/templates/captcha.html:20
 msgid "Proceed to Login"
-msgstr ""
+msgstr "Fortsätt till inloggning"
 
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
@@ -6938,6 +6935,8 @@ msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
+"Denna app tillhandahåller relätjänster för att bidra till Tor-nätverket och "
+"hjälpa andra att övervinna censur."
 
 #: plinth/modules/tor/__init__.py:40
 #, python-brace-format
@@ -6946,6 +6945,10 @@ msgid ""
 "network. Using Tor browser, one can access {box_name} from the internet even "
 "when using an ISP that limits servers at home."
 msgstr ""
+"Denna app tillhandahåller en oniondomän för att exponera {box_name}-tjänster "
+"via Tor-nätverket. Med webbläsaren Tor kan man komma åt {box_name} från "
+"internet även när man använder en internetleverantör som begränsar servrar "
+"hemma."
 
 #: plinth/modules/tor/__init__.py:60
 msgid "Tor"
@@ -6972,10 +6975,8 @@ msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registrerad"
 
 #: plinth/modules/tor/__init__.py:168
-#, fuzzy
-#| msgid "Onion Service"
 msgid "Onion service is version 3"
-msgstr "Onion tjänst"
+msgstr "Onion tjänst är version 3"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -7044,23 +7045,17 @@ msgstr ""
 "den här noden. Detta hjälper andra att kringgå censur."
 
 #: plinth/modules/tor/forms.py:108
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Aktivera Tor Hidden service"
+msgstr "Aktivera Tor Onion tjänst"
 
 #: plinth/modules/tor/forms.py:110
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"En dold tjänst kommer att tillåta {box_name} att tillhandahålla utvalda "
+"En onion tjänst kommer att tillåta {box_name} att tillhandahålla utvalda "
 "tjänster (till exempel wiki eller chatt) utan att avslöja dess plats. Använd "
 "inte detta för stark anonymitet ännu."
 
@@ -7101,12 +7096,14 @@ msgid ""
 "access the internet via the Tor network. ISP censorship can be circumvented "
 "using upstream bridges."
 msgstr ""
+"Den här appen tillhandahåller en webbproxy på din {box_name} för interna "
+"nätverk på TCP-port 9050 med SOCKS-protokollet. Detta kan användas av olika "
+"appar för att komma åt internet via Tor-nätverket. ISP-censur kan kringgås "
+"med hjälp av uppströms broar."
 
 #: plinth/modules/torproxy/__init__.py:54
-#, fuzzy
-#| msgid "Tor Socks Proxy"
 msgid "Tor Proxy"
-msgstr "Tor SOCKS-proxy"
+msgstr "Tor Proxy"
 
 #: plinth/modules/torproxy/__init__.py:79
 msgid "Tor Socks Proxy"
@@ -7180,6 +7177,10 @@ msgid ""
 "apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
 "rpc</a>."
 msgstr ""
+"Utöver webbgränssnittet kan mobila och stationära appar också användas för "
+"att fjärrstyra överföring på {box_name}. För att konfigurera "
+"fjärrkontrollappar, använd URL:en <a href=\"/transmission-remote/rpc\""
+">/transmission-remote/rpc</a>."
 
 #: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
@@ -7206,7 +7207,7 @@ msgstr "Transmission"
 
 #: plinth/modules/transmission/manifest.py:15
 msgid "Tremotesf"
-msgstr ""
+msgstr "Tremotesf"
 
 #: plinth/modules/ttrss/__init__.py:21
 msgid ""
@@ -7228,17 +7229,14 @@ msgstr ""
 "användare</a> som tillhör gruppen feed-reader."
 
 #: plinth/modules/ttrss/__init__.py:30
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
 "for connecting."
 msgstr ""
 "När du använder en mobil eller stationär applikation för Tiny Tiny RSS, "
-"Använd URL<a href=\"/tt-rss-app/\">/tt-rss-app/\"</a> för att ansluta."
+"Använd URL<a href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-"
+"rss-app</a> för att ansluta."
 
 #: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
@@ -7249,18 +7247,16 @@ msgid "News Feed Reader"
 msgstr "Läsare för nyhetsflödet"
 
 #: plinth/modules/ttrss/manifest.py:10
-#, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
 msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #: plinth/modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
-msgstr ""
+msgstr "TTRSS-Reader"
 
 #: plinth/modules/ttrss/manifest.py:35
 msgid "Geekttrss"
-msgstr ""
+msgstr "Geekttrss"
 
 #: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
@@ -7563,12 +7559,12 @@ msgstr "Kontrollera LDAP-posten \"{search_item}\""
 #: plinth/modules/users/__init__.py:137
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
-msgstr ""
+msgstr "Kontrollera nslcd-konfigurationen \"{key}{value}\""
 
 #: plinth/modules/users/__init__.py:166
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
-msgstr ""
+msgstr "Kontrollera nsswitch-konfigurationen \"{database}\""
 
 #: plinth/modules/users/forms.py:35
 msgid "Username is taken or is reserved."
@@ -8764,10 +8760,8 @@ msgid "Backup"
 msgstr "Säkerhetskopia"
 
 #: plinth/templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
 msgid "Re-run setup"
-msgstr "Starta installation"
+msgstr "Kör installation igen"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30
