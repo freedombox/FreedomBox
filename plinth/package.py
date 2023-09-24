@@ -5,7 +5,6 @@ import enum
 import logging
 import pathlib
 import time
-from typing import Optional, Union
 
 import apt.cache
 from django.utils.translation import gettext as _
@@ -42,11 +41,11 @@ class Package(PackageExpression):
             self,
             name,
             optional: bool = False,
-            version: Optional[str] = None,  # ">=1.0,<2.0"
-            distribution: Optional[str] = None,  # Debian, Ubuntu
-            suite: Optional[str] = None,  # stable, testing
-            codename: Optional[str] = None,  # bullseye-backports
-            architecture: Optional[str] = None):  # arm64
+            version: str | None = None,  # ">=1.0,<2.0"
+            distribution: str | None = None,  # Debian, Ubuntu
+            suite: str | None = None,  # stable, testing
+            codename: str | None = None,  # bullseye-backports
+            architecture: str | None = None):  # arm64
         self.name = name
         self.optional = optional
         self.version = version
@@ -108,10 +107,10 @@ class Packages(app_module.FollowerComponent):
         REMOVE = 'remove'  # Remove the packages before installing the app
 
     def __init__(self, component_id: str,
-                 packages: list[Union[str, PackageExpression]],
+                 packages: list[str | PackageExpression],
                  skip_recommends: bool = False,
-                 conflicts: Optional[list[str]] = None,
-                 conflicts_action: Optional[ConflictsAction] = None):
+                 conflicts: list[str] | None = None,
+                 conflicts_action: ConflictsAction | None = None):
         """Initialize a new packages component.
 
         'component_id' should be a unique ID across all components of an app
@@ -230,14 +229,14 @@ class Packages(app_module.FollowerComponent):
 
         return results
 
-    def find_conflicts(self) -> Optional[list[str]]:
+    def find_conflicts(self) -> list[str] | None:
         """Return list of conflicting packages installed on the system."""
         if not self.conflicts:
             return None
 
         return packages_installed(self.conflicts)
 
-    def has_unavailable_packages(self) -> Optional[bool]:
+    def has_unavailable_packages(self) -> bool | None:
         """Return whether any of the packages are not available.
 
         Returns True if one or more of the packages is not available in the
@@ -465,7 +464,7 @@ def filter_conffile_prompt_packages(packages):
     return privileged.filter_conffile_packages(list(packages))
 
 
-def packages_installed(candidates: Union[list, tuple]) -> list:
+def packages_installed(candidates: list | tuple) -> list:
     """Check which candidates are installed on the system.
 
     :param candidates: A list of package names.

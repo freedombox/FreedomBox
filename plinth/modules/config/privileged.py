@@ -4,7 +4,6 @@
 import os
 import pathlib
 import subprocess
-from typing import Optional
 
 import augeas
 
@@ -29,7 +28,7 @@ def set_hostname(hostname: str):
 
 
 @privileged
-def set_domainname(domainname: Optional[str] = None):
+def set_domainname(domainname: str | None = None):
     """Set system domainname in /etc/hosts."""
     hostname = subprocess.check_output(['hostname']).decode().strip()
     hosts_path = pathlib.Path('/etc/hosts')

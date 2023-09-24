@@ -147,9 +147,9 @@ def test_assert_valid_type(actions_module):
 
     # Invalid values for int, str, float and Optional
     values = [[1, bool], ['foo', int], [1, str], [1, float],
-              [1, typing.Optional[str]], [1.1, typing.Union[int, str]],
-              [1, list], [1, dict], [[1], list[str]],
-              [{
+              [1, typing.Optional[str]], [1, str | None],
+              [1.1, typing.Union[int, str]], [1.1, int | str], [1, list],
+              [1, dict], [[1], list[str]], [{
                   'a': 'b'
               }, dict[int, str]], [{
                   1: 2
@@ -165,8 +165,12 @@ def test_assert_valid_type(actions_module):
     assert_valid('arg', 1.1, float)
     assert_valid('arg', None, typing.Optional[int])
     assert_valid('arg', 1, typing.Optional[int])
+    assert_valid('arg', None, int | None)
+    assert_valid('arg', 1, int | None)
     assert_valid('arg', 1, typing.Union[int, str])
     assert_valid('arg', '1', typing.Union[int, str])
+    assert_valid('arg', 1, int | str)
+    assert_valid('arg', '1', int | str)
     assert_valid('arg', [], list[int])
     assert_valid('arg', ['foo'], list[str])
     assert_valid('arg', {}, dict[int, str])

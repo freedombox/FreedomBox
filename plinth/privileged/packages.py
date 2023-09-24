@@ -5,7 +5,7 @@ import logging
 import os
 import subprocess
 from collections import defaultdict
-from typing import Any, Optional
+from typing import Any
 
 import apt.cache
 import apt_inst
@@ -31,7 +31,7 @@ def update():
 
 @privileged
 def install(app_id: str, packages: list[str], skip_recommends: bool = False,
-            force_configuration: Optional[str] = None, reinstall: bool = False,
+            force_configuration: str | None = None, reinstall: bool = False,
             force_missing_configuration: bool = False):
     """Install packages using apt-get."""
     if force_configuration not in ('old', 'new', None):

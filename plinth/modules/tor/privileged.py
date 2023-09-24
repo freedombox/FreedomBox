@@ -10,7 +10,7 @@ import shutil
 import socket
 import subprocess
 import time
-from typing import Any, Optional, Union
+from typing import Any
 
 import augeas
 
@@ -143,11 +143,10 @@ def _remove_proxy():
 
 
 @privileged
-def configure(use_upstream_bridges: Optional[bool] = None,
-              upstream_bridges: Optional[str] = None,
-              relay: Optional[bool] = None,
-              bridge_relay: Optional[bool] = None,
-              hidden_service: Optional[bool] = None):
+def configure(use_upstream_bridges: bool | None = None,
+              upstream_bridges: str | None = None, relay: bool | None = None,
+              bridge_relay: bool | None = None,
+              hidden_service: bool | None = None):
     """Configure Tor."""
     aug = augeas_load()
 
@@ -193,7 +192,7 @@ def restart():
 
 
 @privileged
-def get_status() -> dict[str, Union[bool, str, dict[str, Any]]]:
+def get_status() -> dict[str, bool | str | dict[str, Any]]:
     """Return dict with Tor status."""
     aug = augeas_load()
     return {
@@ -323,8 +322,7 @@ def _disable():
     action_utils.service_disable(SERVICE_NAME)
 
 
-def _use_upstream_bridges(use_upstream_bridges: Optional[bool] = None,
-                          aug=None):
+def _use_upstream_bridges(use_upstream_bridges: bool | None = None, aug=None):
     """Enable use of upstream bridges."""
     if use_upstream_bridges is None:
         return
@@ -363,8 +361,7 @@ def _set_upstream_bridges(upstream_bridges=None, aug=None):
     aug.save()
 
 
-def _enable_relay(relay: Optional[bool], bridge: Optional[bool],
-                  aug: augeas.Augeas):
+def _enable_relay(relay: bool | None, bridge: bool | None, aug: augeas.Augeas):
     """Enable Tor bridge relay."""
     if relay is None and bridge is None:
         return

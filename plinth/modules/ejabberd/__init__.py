@@ -3,7 +3,6 @@
 
 import json
 import logging
-from typing import Tuple
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -226,7 +225,7 @@ def update_turn_configuration(config: TurnConfiguration, managed=True,
     privileged.configure_turn(json.loads(config.to_json()), managed)
 
 
-def get_turn_configuration() -> Tuple[TurnConfiguration, bool]:
+def get_turn_configuration() -> tuple[TurnConfiguration, bool]:
     """Get the latest STUN/TURN configuration."""
     tc, managed = privileged.get_turn_config()
     return TurnConfiguration(tc['domain'], tc['uris'],

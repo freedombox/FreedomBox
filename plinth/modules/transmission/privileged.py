@@ -5,7 +5,6 @@ Configuration helper for Transmission daemon.
 
 import json
 import pathlib
-from typing import Union
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -20,7 +19,7 @@ def get_configuration() -> dict[str, str]:
 
 
 @privileged
-def merge_configuration(configuration: dict[str, Union[str, bool]]):
+def merge_configuration(configuration: dict[str, str | bool]):
     """Merge given JSON configuration with existing configuration."""
     current_configuration_bytes = _transmission_config.read_bytes()
     current_configuration = json.loads(current_configuration_bytes)

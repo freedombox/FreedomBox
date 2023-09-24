@@ -9,7 +9,7 @@ import re
 import shutil
 import subprocess
 import time
-from typing import Any, Optional
+from typing import Any
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -347,7 +347,7 @@ def repo_info(name: str) -> dict[str, str]:
 
 
 @privileged
-def create_repo(url: Optional[str] = None, name: Optional[str] = None,
+def create_repo(url: str | None = None, name: str | None = None,
                 description: str = '', owner: str = '',
                 keep_ownership: bool = False, is_private: bool = False,
                 skip_prepare: bool = False, prepare_only: bool = False):

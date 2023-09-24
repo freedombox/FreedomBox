@@ -10,7 +10,6 @@ See: https://rspamd.com/doc/modules/dkim_signing.html
 """
 
 from dataclasses import dataclass
-from typing import Union
 
 
 @dataclass
@@ -19,12 +18,12 @@ class Entry:  # pylint: disable=too-many-instance-attributes
 
     type_: str
     value: str
-    domain: Union[str, None] = None
+    domain: str | None = None
     class_: str = 'IN'
     ttl: int = 60
     priority: int = 10
-    weight: Union[int, None] = None
-    port: Union[int, None] = None
+    weight: int | None = None
+    port: int | None = None
 
     def get_split_value(self):
         """If the record is TXT and value > 255, split it."""

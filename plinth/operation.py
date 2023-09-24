@@ -4,7 +4,7 @@
 import enum
 import logging
 import threading
-from typing import Callable, Optional
+from typing import Callable
 
 from . import app as app_module
 
@@ -22,10 +22,10 @@ class Operation:
         COMPLETED: str = 'completed'
 
     def __init__(self, app_id: str, name: str, target: Callable,
-                 args: Optional[list] = None, kwargs: Optional[dict] = None,
+                 args: list | None = None, kwargs: dict | None = None,
                  show_message: bool = True, show_notification: bool = False,
-                 thread_data: Optional[dict] = None,
-                 on_complete: Callable = None):
+                 thread_data: dict | None = None,
+                 on_complete: Callable | None = None):
         """Initialize to no operation."""
         self.app_id = app_id
         self.name = name
@@ -39,8 +39,8 @@ class Operation:
 
         self.state = Operation.State.WAITING
         self.return_value = None
-        self._message: Optional[str] = None
-        self.exception: Optional[Exception] = None
+        self._message: str | None = None
+        self.exception: Exception | None = None
 
         # Operation specific data
         self.thread_data: dict = thread_data or {}
@@ -94,8 +94,8 @@ class Operation:
         thread = threading.current_thread()
         return thread._operation  # type: ignore [attr-defined]
 
-    def on_update(self, message: Optional[str] = None,
-                  exception: Optional[Exception] = None):
+    def on_update(self, message: str | None = None,
+                  exception: Exception | None = None):
         """Call from within the thread to update the progress of operation."""
         if message:
             self._message = message
@@ -172,7 +172,7 @@ class OperationsManager:
     def __init__(self):
         """Initialize the object."""
         self._operations: list[Operation] = []
-        self._current_operation: Optional[Operation] = None
+        self._current_operation: Operation | None = None
 
         # Assume that operations manager will be called from various threads
         # including the callback called from the threads it creates. Ensure

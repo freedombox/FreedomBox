@@ -6,7 +6,6 @@ import pathlib
 import re
 import shutil
 import subprocess
-from typing import Tuple
 
 from plinth.actions import privileged
 
@@ -43,7 +42,7 @@ def _get_title(site):
 
 
 @privileged
-def get_sites() -> list[Tuple[str, str]]:
+def get_sites() -> list[tuple[str, str]]:
     """Get wikis and blogs."""
     sites = []
     if os.path.exists(SITE_PATH):

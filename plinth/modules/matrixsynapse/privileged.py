@@ -7,7 +7,6 @@ import json
 import os
 import pathlib
 import shutil
-from typing import Dict, List, Optional, Union
 
 import requests
 import yaml
@@ -102,7 +101,7 @@ def get_config():
 
 @privileged
 def set_config(public_registration: bool,
-               registration_verification: Optional[str] = None):
+               registration_verification: str | None = None):
     """Enable/disable public user registration."""
     if registration_verification == 'token':
         _create_registration_token()
@@ -243,7 +242,7 @@ def _get_access_token() -> str:
 
 
 @privileged
-def list_registration_tokens() -> List[Dict[str, Optional[Union[str, int]]]]:
+def list_registration_tokens() -> list[dict[str, str | int | None]]:
     """Return the current list of registration tokens."""
     if not action_utils.service_is_running('matrix-synapse'):
         return []
@@ -262,7 +261,7 @@ def _get_headers(access_token: str):
 
 
 def _list_registration_tokens(
-        access_token: str) -> List[Dict[str, Optional[Union[str, int]]]]:
+        access_token: str) -> list[dict[str, str | int | None]]:
     """Use Admin API to fetch the list of registration tokens.
 
     For details on registration tokens API, see:

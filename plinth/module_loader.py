@@ -8,7 +8,6 @@ import importlib
 import logging
 import pathlib
 import re
-from typing import Optional
 
 import django
 
@@ -142,8 +141,7 @@ def get_module_import_path(module_name: str) -> str:
     return import_path
 
 
-def _read_module_import_paths_from_file(
-        file_path: pathlib.Path) -> Optional[str]:
+def _read_module_import_paths_from_file(file_path: pathlib.Path) -> str | None:
     """Read a module's import path from a file."""
     with file_path.open() as file_handle:
         for line in file_handle:

@@ -11,7 +11,6 @@ import secrets
 import shutil
 import string
 import subprocess
-from typing import Optional
 
 import augeas
 
@@ -124,7 +123,7 @@ def get_configuration() -> dict[str, object]:
 
 
 @privileged
-def add_password(permissions: list[str], comment: Optional[str] = None):
+def add_password(permissions: list[str], comment: str | None = None):
     """Generate a password with given permissions."""
     conf = conf_file_read()
     permissions = _format_permissions(permissions)

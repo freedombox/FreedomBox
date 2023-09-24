@@ -8,7 +8,7 @@ import shutil
 import socket
 import subprocess
 from pathlib import Path
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from ruamel.yaml import YAML, scalarstring
 
@@ -240,7 +240,7 @@ def set_domains(domains: list[str]):
 
 
 @privileged
-def mam(command: str) -> Optional[bool]:
+def mam(command: str) -> bool | None:
     """Enable, disable, or get status of Message Archive Management (MAM)."""
     if command not in ('enable', 'disable', 'status'):
         raise ValueError('Invalid command')
@@ -308,7 +308,7 @@ def _generate_uris(services: list[dict]) -> list[str]:
 
 
 @privileged
-def get_turn_config() -> Tuple[dict[str, Any], bool]:
+def get_turn_config() -> tuple[dict[str, Any], bool]:
     """Get the latest STUN/TURN configuration in JSON format."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)

@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure I2P."""
 
-from typing import Optional
-
 from plinth.actions import privileged
 from plinth.modules.i2p.helpers import RouterEditor, TunnelEditor
 
@@ -19,8 +17,8 @@ def set_tunnel_property(name: str, property_: str, value: str):
 
 
 @privileged
-def add_favorite(name: str, url: str, description: Optional[str],
-                 icon: Optional[str]):
+def add_favorite(name: str, url: str, description: str | None,
+                 icon: str | None):
     """Add a favorite to router.config."""
     editor = RouterEditor()
     editor.read_conf().add_favorite(name, url, description, icon).write_conf()

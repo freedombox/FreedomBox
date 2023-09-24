@@ -7,7 +7,6 @@ import pathlib
 import random
 import string
 from shutil import move
-from typing import Union
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -64,7 +63,7 @@ def setup():
 
 
 @privileged
-def get_config() -> dict[str, Union[int, str]]:
+def get_config() -> dict[str, int | str]:
     """Read and print Shadowsocks configuration."""
     config = open(SHADOWSOCKS_CONFIG_SYMLINK, 'r', encoding='utf-8').read()
     return json.loads(config)
@@ -86,7 +85,7 @@ def _merge_config(config):
 
 
 @privileged
-def merge_config(config: dict[str, Union[int, str]]):
+def merge_config(config: dict[str, int | str]):
     """Configure Shadowsocks Client."""
     _merge_config(config)
 
