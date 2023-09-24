@@ -23,7 +23,7 @@ class Service:  # NOQA, pylint: disable=too-many-instance-attributes
     wakeup: str
     maxproc: str
     command: str
-    options: str
+    options: dict[str, str]
 
     def __str__(self) -> str:
         parts = [
@@ -49,7 +49,8 @@ def get_config(keys: list) -> dict:
 
     output = _run(args)
     result = {}
-    for line in filter(None, output.split('\n')):
+    lines: list[str] = list(filter(None, output.split('\n')))
+    for line in lines:
         key, sep, value = line.partition('=')
         if not sep:
             raise ValueError('Invalid output detected')

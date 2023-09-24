@@ -16,11 +16,6 @@ from plinth import action_utils
 from plinth.modules.users import privileged
 from plinth.tests import config as test_config
 
-pytestmark = pytest.mark.usefixtures('mock_privileged')
-privileged_modules_to_mock = [
-    'plinth.modules.users.privileged', 'plinth.modules.security.privileged'
-]
-
 _cleanup_users = None
 _cleanup_groups = None
 
@@ -39,9 +34,12 @@ def _is_ldap_set_up():
         return False
 
 
-pytestmark = [
-    pytest.mark.usefixtures('needs_root', 'load_cfg'),
+pytestmark: list[pytest.MarkDecorator] = [
+    pytest.mark.usefixtures('needs_root', 'load_cfg', 'mock_privileged'),
     pytest.mark.skipif(not _is_ldap_set_up(), reason="LDAP is not configured")
+]
+privileged_modules_to_mock = [
+    'plinth.modules.users.privileged', 'plinth.modules.security.privileged'
 ]
 
 

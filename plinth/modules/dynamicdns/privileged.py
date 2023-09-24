@@ -3,6 +3,7 @@
 
 import pathlib
 import urllib
+from typing import Any
 
 from plinth.actions import privileged
 
@@ -30,7 +31,7 @@ def _read_configuration(path, separator='='):
 
 
 @privileged
-def export_config() -> dict[str, object]:
+def export_config() -> dict[str, bool | dict[str, dict[str, str | None]]]:
     """Return the old ez-ipupdate configuration in JSON format."""
     input_config = {}
     if _active_config.exists():
@@ -68,12 +69,12 @@ def export_config() -> dict[str, object]:
         update_url = domain['update_url']
         try:
             server = urllib.parse.urlparse(update_url).netloc
-            service_types = {
+            service_types: dict[str, str] = {
                 'dynupdate.noip.com': 'noip.com',
                 'dynupdate.no-ip.com': 'noip.com',
                 'freedns.afraid.org': 'freedns.afraid.org'
             }
-            domain['service_type'] = service_types.get(server, 'other')
+            domain['service_type'] = service_types.get(str(server), 'other')
         except ValueError:
             pass
 
@@ -86,7 +87,7 @@ def export_config() -> dict[str, object]:
                               and _active_config.exists()):
         enabled = True
 
-    output_config = {'enabled': enabled, 'domains': {}}
+    output_config: dict[str, Any] = {'enabled': enabled, 'domains': {}}
     if domain['domain']:
         output_config['domains'][domain['domain']] = domain
 

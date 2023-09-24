@@ -7,4 +7,4 @@ Application manifest for avahi.
 # /etc/avahi/services. Currently, we don't intend to make that customizable.
 # There is no necessity for backup and restore. This manifest will ensure that
 # avahi enable/disable setting is preserved.
-backup = {}
+backup: dict = {}

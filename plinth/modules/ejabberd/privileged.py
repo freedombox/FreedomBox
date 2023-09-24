@@ -28,7 +28,7 @@ MOD_IRC_DEPRECATED_VERSION = Version('18.06')
 
 yaml = YAML()
 yaml.allow_duplicate_keys = True
-yaml.preserve_quotes = True
+yaml.preserve_quotes = True  # type: ignore [assignment]
 
 TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
 
@@ -286,7 +286,11 @@ def mam(command: str) -> Optional[bool]:
 def _generate_service(uri: str) -> dict:
     """Generate ejabberd mod_stun_disco service config from Coturn URI."""
     pattern = re.compile(TURN_URI_REGEX)
-    typ, domain, port, transport = pattern.match(uri).groups()
+    match = pattern.match(uri)
+    if not match:
+        raise ValueError('URL does not match TURN URI')
+
+    typ, domain, port, transport = match.groups()
     return {
         "host": domain,
         "port": int(port),

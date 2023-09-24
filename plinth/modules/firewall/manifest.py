@@ -3,4 +3,4 @@
 Application manifest for firewall.
 """
 
-backup = {}
+backup: dict = {}

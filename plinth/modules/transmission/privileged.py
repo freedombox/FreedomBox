@@ -22,12 +22,13 @@ def get_configuration() -> dict[str, str]:
 @privileged
 def merge_configuration(configuration: dict[str, Union[str, bool]]):
     """Merge given JSON configuration with existing configuration."""
-    current_configuration = _transmission_config.read_bytes()
-    current_configuration = json.loads(current_configuration)
+    current_configuration_bytes = _transmission_config.read_bytes()
+    current_configuration = json.loads(current_configuration_bytes)
 
     new_configuration = current_configuration
     new_configuration.update(configuration)
-    new_configuration = json.dumps(new_configuration, indent=4, sort_keys=True)
+    new_configuration_bytes = json.dumps(new_configuration, indent=4,
+                                         sort_keys=True)
 
-    _transmission_config.write_text(new_configuration, encoding='utf-8')
+    _transmission_config.write_text(new_configuration_bytes, encoding='utf-8')
     action_utils.service_reload('transmission-daemon')

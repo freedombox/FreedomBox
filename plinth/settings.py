@@ -124,7 +124,7 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'index'
 
 # Overridden before initialization
-MESSAGE_TAGS = {}
+MESSAGE_TAGS: dict = {}
 
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',

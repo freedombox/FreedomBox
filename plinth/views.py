@@ -9,6 +9,7 @@ import urllib.parse
 
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import Form
 from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -164,9 +165,9 @@ class AppView(FormView):
     instead of the simple appearance provided by default.
 
     """
-    form_class = None
-    app_id = None
-    template_name = 'app.html'
+    form_class: Form | None = None
+    app_id: str | None = None
+    template_name: str = 'app.html'
 
     def __init__(self, *args, **kwargs):
         """Initialize the view."""

@@ -31,7 +31,7 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: Optional[str] = None,
     except AlreadyMountedError:
         return
 
-    kwargs = {}
+    input_ = None
     # the shell would expand ~/ to the local home directory
     remote_path = remote_path.replace('~/', '').replace('~', '')
     # 'reconnect', 'ServerAliveInternal' and 'ServerAliveCountMax' allow the
@@ -55,9 +55,9 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: Optional[str] = None,
         if not password:
             raise ValueError('mount requires either a password or ssh_keyfile')
         cmd += ['-o', 'password_stdin']
-        kwargs['input'] = password.encode()
+        input_ = password.encode()
 
-    subprocess.run(cmd, check=True, timeout=TIMEOUT, **kwargs)
+    subprocess.run(cmd, check=True, timeout=TIMEOUT, input=input_)
 
 
 @privileged
@@ -266,7 +266,12 @@ def get_exported_archive_apps(path: str) -> list[str]:
         for name in filenames:
             if 'var/lib/plinth/backups-manifests/' in name \
                and name.endswith('.json'):
-                manifest_data = tar_handle.extractfile(name).read()
+                file_handle = tar_handle.extractfile(name)
+                if not file_handle:
+                    raise RuntimeError(
+                        'Unable to extract app manifest from backup file.')
+
+                manifest_data = file_handle.read()
                 manifest = json.loads(manifest_data)
                 break
 

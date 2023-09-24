@@ -2,8 +2,6 @@
 """App component for other apps to manage their STUN/TURN server configuration.
 """
 
-from __future__ import annotations  # Can be removed in Python 3.10
-
 import base64
 import hashlib
 import hmac
@@ -11,6 +9,7 @@ import json
 import re
 from dataclasses import dataclass, field
 from time import time
+from typing import ClassVar, Iterable
 
 from plinth import app
 
@@ -36,9 +35,9 @@ class TurnConfiguration:
     that must be used by a STUN/TURN client after advice from the server.
 
     """
-    domain: str = None
+    domain: str | None = None
     uris: list[str] = field(default_factory=list)
-    shared_secret: str = None
+    shared_secret: str | None = None
 
     def __post_init__(self):
         """Generate URIs after object initialization if necessary."""
@@ -76,8 +75,8 @@ class UserTurnConfiguration(TurnConfiguration):
     time.
 
     """
-    username: str = None
-    credential: str = None
+    username: str | None = None
+    credential: str | None = None
 
     def to_json(self) -> str:
         """Return a JSON representation of the configuration."""
@@ -102,7 +101,7 @@ class TurnConsumer(app.FollowerComponent):
 
     """
 
-    _all = {}
+    _all: ClassVar[dict[str, 'TurnConsumer']] = {}
 
     def __init__(self, component_id):
         """Initialize the component.
@@ -115,7 +114,7 @@ class TurnConsumer(app.FollowerComponent):
         self._all[component_id] = self
 
     @classmethod
-    def list(cls) -> list[TurnConsumer]:  # noqa
+    def list(cls) -> Iterable['TurnConsumer']:
         """Return a list of all Coturn components."""
         return cls._all.values()
 

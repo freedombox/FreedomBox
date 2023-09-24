@@ -2,7 +2,6 @@
 """Configure PageKite."""
 
 import os
-from typing import Union
 
 import augeas
 
@@ -118,7 +117,7 @@ def set_config(frontend: str, kite_name: str, kite_secret: str):
 
 
 @privileged
-def remove_service(service: dict[str, Union[str, bool]]):
+def remove_service(service: dict[str, str]):
     """Search and remove the service(s) that match all given parameters."""
     aug = _augeas_load()
     service = utils.load_service(service)
@@ -171,7 +170,7 @@ def _add_service(aug, service):
 
 
 @privileged
-def add_service(service: dict[str, Union[str, bool]]):
+def add_service(service: dict[str, str]):
     """Add one service."""
     aug = _augeas_load()
     service = utils.load_service(service)

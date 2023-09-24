@@ -254,8 +254,8 @@ def _get_ports() -> dict[str, str]:
 
 def _get_orport() -> str:
     """Return the ORPort by querying running instance."""
-    cookie = open(TOR_AUTH_COOKIE, 'rb').read()
-    cookie = codecs.encode(cookie, 'hex').decode()
+    cookie_bytes = open(TOR_AUTH_COOKIE, 'rb').read()
+    cookie = codecs.encode(cookie_bytes, 'hex').decode()
 
     commands = '''AUTHENTICATE {cookie}
 GETINFO net/listeners/or
@@ -270,6 +270,9 @@ QUIT
 
     line = response.split(b'\r\n')[1].decode()
     matches = re.match(r'.*=".+:(\d+)"', line)
+    if not matches:
+        raise ValueError('Invalid orport value returned by Tor')
+
     return matches.group(1)
 
 

@@ -89,10 +89,10 @@ class Operation:
         return self.return_value
 
     @staticmethod
-    def get_operation():
+    def get_operation() -> 'Operation':
         """Return the operation associated with this thread."""
         thread = threading.current_thread()
-        return thread._operation
+        return thread._operation  # type: ignore [attr-defined]
 
     def on_update(self, message: Optional[str] = None,
                   exception: Optional[Exception] = None):
@@ -106,7 +106,7 @@ class Operation:
         self._update_notification()
 
     @property
-    def message(self):
+    def message(self) -> str | None:
         """Return a message about status of the operation."""
         from django.utils.translation import gettext_noop
         if self._message:  # Progress has been set by the operation itself
@@ -123,6 +123,8 @@ class Operation:
 
         if self.state == Operation.State.COMPLETED:
             return gettext_noop('Finished: {name}')
+
+        return None
 
     @property
     def translated_message(self):
@@ -183,8 +185,8 @@ class OperationsManager:
     def new(self, *args, **kwargs):
         """Create a new operation instance and add to global list."""
         with self._lock:
-            operation = Operation(*args, **kwargs,
-                                  on_complete=self._on_operation_complete)
+            kwargs['on_complete'] = self._on_operation_complete
+            operation = Operation(*args, **kwargs)
             self._operations.append(operation)
             logger.info('%s: added', operation)
             self._schedule_next()

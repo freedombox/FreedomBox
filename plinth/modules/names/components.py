@@ -3,6 +3,8 @@
 App component to introduce a new domain type.
 """
 
+from typing import ClassVar
+
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app
@@ -39,7 +41,7 @@ class DomainType(app.FollowerComponent):
 
     """
 
-    _all = {}
+    _all: ClassVar[dict[str, 'DomainType']] = {}
 
     def __init__(self, component_id, display_name, configuration_url,
                  can_have_certificate=True):
@@ -90,7 +92,7 @@ class DomainName(app.FollowerComponent):
     primary reason for making a domain name available as a component.
 
     """
-    _all = {}
+    _all: ClassVar[dict[str, 'DomainName']] = {}
 
     def __init__(self, component_id, name, domain_type, services):
         """Initialize a domain name.

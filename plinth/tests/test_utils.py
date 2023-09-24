@@ -92,7 +92,7 @@ class TestYAMLFileUtil:
     kv_pair = {'key': 'value'}
 
     yaml = ruamel.yaml.YAML()
-    yaml.preserve_quotes = True
+    yaml.preserve_quotes = True  # type: ignore [assignment]
 
     def test_update_empty_yaml_file(self):
         """

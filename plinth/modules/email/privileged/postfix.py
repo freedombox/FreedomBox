@@ -32,7 +32,7 @@ default_config = {
         ])
 }
 
-submission_options = {
+submission_options: dict[str, str] = {
     'syslog_name': 'postfix/submission',
     'smtpd_tls_security_level': 'encrypt',
     'smtpd_client_restrictions': 'permit_sasl_authenticated,reject',
@@ -43,7 +43,7 @@ submission_service = postconf.Service(service='submission', type_='inet',
                                       wakeup='-', maxproc='-', command='smtpd',
                                       options=submission_options)
 
-smtps_options = {
+smtps_options: dict[str, str] = {
     'syslog_name': 'postfix/smtps',
     'smtpd_tls_wrappermode': 'yes',
     'smtpd_sasl_auth_enable': 'yes',

@@ -7,6 +7,7 @@ import logging
 import os
 import sys
 import warnings
+from typing import ClassVar
 
 import cherrypy
 
@@ -104,7 +105,7 @@ class StaticFiles(app_module.FollowerComponent):
 
     """
 
-    _all_instances = {}
+    _all_instances: ClassVar[dict[str, 'StaticFiles']] = {}
 
     def __init__(self, component_id, directory_map=None):
         """Initialize the component.

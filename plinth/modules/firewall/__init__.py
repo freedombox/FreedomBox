@@ -27,7 +27,7 @@ _description = [
           'security threat from the Internet.'), box_name=cfg.box_name)
 ]
 
-_port_details = {}
+_port_details: dict[str, list[str]] = {}
 
 logger = logging.getLogger(__name__)
 
