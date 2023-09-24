@@ -198,7 +198,7 @@ def get_log() -> str:
 def _get_protocol() -> str:
     """Return the protocol to use for newly added repository sources."""
     try:
-        from plinth.modules.tor import utils
+        from plinth.modules.torproxy import utils
         if utils.is_apt_transport_tor_enabled():
             return 'tor+http'
     except Exception:
