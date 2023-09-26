@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 20:05-0400\n"
+"POT-Creation-Date: 2023-09-25 20:14-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -28,7 +28,7 @@ msgstr "Oldal forrása"
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:94
+#: plinth/context_processors.py:23 plinth/views.py:95
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -106,6 +106,10 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 #: plinth/forms.py:100
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
+
+#: plinth/middleware.py:130
+msgid "System is possibly under heavy load. Please retry later."
+msgstr ""
 
 #: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1831,7 +1835,7 @@ msgstr "A szerver visszautasította a kapcsolatot"
 msgid "Already up-to-date"
 msgstr "Már frissítve"
 
-#: plinth/modules/ejabberd/__init__.py:30
+#: plinth/modules/ejabberd/__init__.py:29
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1839,7 +1843,7 @@ msgstr ""
 "Az XMPP egy nyílt és szabványos kommunikációs protokoll. Itt tudod futtatni "
 "és konfigurálni az XMPP-szerveredet, amit ejabberd-nek neveznek."
 
-#: plinth/modules/ejabberd/__init__.py:33
+#: plinth/modules/ejabberd/__init__.py:32
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1853,7 +1857,7 @@ msgstr ""
 "lesz bármely <a href=\"{users_url}\"> felhasználó számára {box_name} "
 "felhasználónéven</a>."
 
-#: plinth/modules/ejabberd/__init__.py:41
+#: plinth/modules/ejabberd/__init__.py:40
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1863,12 +1867,12 @@ msgstr ""
 "videóhívásokhoz. Telepítsd a <a href=\"{coturn_url}\">Coturn</a> alkalmazást "
 "vagy állíts be egy külső szervert."
 
-#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/ejabberd/__init__.py:61
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:63
-#: plinth/modules/matrixsynapse/__init__.py:57
+#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Chat Server"
 msgstr "Chat szerver"
 
@@ -2192,17 +2196,17 @@ msgstr ""
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:134
+#: plinth/modules/firewall/components.py:135
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "{name} port ({details}) elérhető a belső hálózaton"
 
-#: plinth/modules/firewall/components.py:142
+#: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "{name} port ({details}) elérhető a külső hálózaton"
 
-#: plinth/modules/firewall/components.py:147
+#: plinth/modules/firewall/components.py:148
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "{name} port ({details}) nem érhető el külső hálózaton"
@@ -3270,7 +3274,7 @@ msgstr "{domain} domain tanúsítványa sikeresen törölve"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "{domain} domain tanúsítványát nem sikerült kitörölni: {error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:27
+#: plinth/modules/matrixsynapse/__init__.py:26
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3287,7 +3291,7 @@ msgstr ""
 "adott Matrix-szerveren lévő felhasználók föderáción keresztül "
 "beszélgethetnek az összes többi Matrix-szerver felhasználóival."
 
-#: plinth/modules/matrixsynapse/__init__.py:35
+#: plinth/modules/matrixsynapse/__init__.py:34
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
@@ -3297,7 +3301,7 @@ msgstr ""
 "videóhívásokhoz. Telepítsd a <a href=\"{coturn_url}\">Coturn</a> "
 "alkalmazást, vagy konfigurálj egy külső szervert."
 
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3879,15 +3883,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "Névszolgáltatások"
 
-#: plinth/modules/names/components.py:12
+#: plinth/modules/names/components.py:14
 msgid "All"
 msgstr "Összes"
 
-#: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
+#: plinth/modules/names/components.py:18 plinth/modules/names/components.py:22
 msgid "All web apps"
 msgstr "Összes webalkalmazás"
 
-#: plinth/modules/names/components.py:24
+#: plinth/modules/names/components.py:26
 msgid "Secure Shell"
 msgstr "Secure Shell (Biztonságos parancsértelmező)"
 
@@ -8411,34 +8415,34 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "Szolgáltatás letiltva: {name}"
 
-#: plinth/package.py:212
+#: plinth/package.py:211
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:225
+#: plinth/package.py:224
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "A(z) {package_name} a legfrissebb verzió ({latest_version})"
 
-#: plinth/package.py:373
+#: plinth/package.py:372
 msgid "installing"
 msgstr "telepítés"
 
-#: plinth/package.py:375
+#: plinth/package.py:374
 msgid "downloading"
 msgstr "letöltés"
 
-#: plinth/package.py:377
+#: plinth/package.py:376
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: plinth/package.py:379
+#: plinth/package.py:378
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
 
-#: plinth/package.py:407 plinth/package.py:432
+#: plinth/package.py:406 plinth/package.py:431
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -8691,6 +8695,12 @@ msgstr "Homebrew:"
 msgid "RPM:"
 msgstr "RPM:"
 
+#: plinth/templates/error.html:10
+#, fuzzy
+#| msgid "error"
+msgid "Error"
+msgstr "hiba"
+
 #: plinth/templates/first_setup.html:18
 #, python-format
 msgid ""
@@ -8915,11 +8925,11 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:241
+#: plinth/views.py:242
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
-#: plinth/views.py:478
+#: plinth/views.py:479
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
