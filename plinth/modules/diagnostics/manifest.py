@@ -3,4 +3,4 @@
 Application manifest for diagnostics.
 """
 
-backup = {}
+backup: dict = {}

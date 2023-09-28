@@ -2,7 +2,6 @@
 """Configure Privacy App."""
 
 import pathlib
-from typing import Optional
 
 import augeas
 
@@ -30,7 +29,7 @@ def setup():
 
 
 @privileged
-def set_configuration(enable_popcon: Optional[bool] = None):
+def set_configuration(enable_popcon: bool | None = None):
     """Update popcon configuration."""
     aug = _load_augeas()
     if enable_popcon:

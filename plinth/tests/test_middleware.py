@@ -8,12 +8,14 @@ from unittest.mock import MagicMock, Mock, call, patch
 import pytest
 from django.contrib.auth.models import AnonymousUser, Group, User
 from django.core.exceptions import PermissionDenied
+from django.db.utils import OperationalError
 from django.http import HttpResponse
 from django.test.client import RequestFactory
 from stronghold.decorators import public
 
 from plinth import app as app_module
-from plinth.middleware import AdminRequiredMiddleware, SetupMiddleware
+from plinth.middleware import (AdminRequiredMiddleware, CommonErrorMiddleware,
+                               SetupMiddleware)
 
 setup_helper = None
 
@@ -254,4 +256,45 @@ class TestAdminMiddleware:
         kwargs['view_func'] = public(HttpResponse)
 
         response = middleware.process_view(web_request, **kwargs)
+        assert response is None
+
+
+class TestCommonErrorMiddleware:
+    """Test cases for common error middleware."""
+
+    @staticmethod
+    @pytest.fixture(name='middleware')
+    def fixture_middleware(load_cfg):
+        """Fixture for returning middleware."""
+        return CommonErrorMiddleware(True)
+
+    @staticmethod
+    @pytest.fixture(name='web_request')
+    def fixture_web_request():
+        """Fixture for returning web request."""
+        web_request = RequestFactory().get('/plinth/mockapp')
+        web_request.user = Mock()
+        return web_request
+
+    @staticmethod
+    @pytest.fixture(name='operational_error')
+    def fixture_operational_error():
+        """Fixture for returning an OperationalError."""
+        return OperationalError()
+
+    @staticmethod
+    @pytest.fixture(name='other_error')
+    def fixture_other_error():
+        """Fixture for returning a different type of error."""
+        return IndexError()
+
+    @staticmethod
+    def test_operational_error(middleware, web_request, operational_error):
+        response = middleware.process_exception(web_request, operational_error)
+        assert response.template_name == 'error.html'
+        assert 'message' in response.context_data
+
+    @staticmethod
+    def test_other_error(middleware, web_request, other_error):
+        response = middleware.process_exception(web_request, other_error)
         assert response is None

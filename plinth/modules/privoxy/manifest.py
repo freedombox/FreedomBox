@@ -3,4 +3,4 @@
 Application manifest for privoxy.
 """
 
-backup = {}
+backup: dict = {}

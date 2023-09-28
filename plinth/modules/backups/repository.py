@@ -72,9 +72,9 @@ KNOWN_ERRORS = [
 
 class BaseBorgRepository(abc.ABC):
     """Base class for all kinds of Borg repositories."""
-    flags = {}
+    flags: dict[str, bool] = {}
     is_mounted = True
-    known_credentials = []
+    known_credentials: list[str] = []
 
     def __init__(self, path, credentials=None, uuid=None, schedule=None,
                  **kwargs):

@@ -5,7 +5,6 @@ Configure Mumble server.
 
 import pathlib
 import subprocess
-from typing import Optional
 
 import augeas
 
@@ -33,7 +32,7 @@ def set_super_user_password(password: str):
 
 
 @privileged
-def get_domain() -> Optional[str]:
+def get_domain() -> str | None:
     """Return domain name set in mumble or empty string."""
     domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
     try:
@@ -43,7 +42,7 @@ def get_domain() -> Optional[str]:
 
 
 @privileged
-def set_domain(domain_name: Optional[str]):
+def set_domain(domain_name: str | None):
     """Write a file containing domain name."""
     if domain_name:
         domain_file = pathlib.Path('/var/lib/mumble-server/domain-freedombox')
@@ -69,7 +68,7 @@ def change_root_channel_name(root_channel_name: str):
 
 
 @privileged
-def get_root_channel_name() -> Optional[str]:
+def get_root_channel_name() -> str | None:
     """Return the currently configured Root channel name."""
     aug = _load_augeas()
     name = aug.get('.anon/registerName')

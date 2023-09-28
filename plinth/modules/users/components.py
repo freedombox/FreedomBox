@@ -4,6 +4,7 @@ App component to manage users and groups.
 """
 
 import itertools
+from typing import ClassVar
 
 from plinth import app
 
@@ -12,7 +13,7 @@ class UsersAndGroups(app.FollowerComponent):
     """Component to manage users and groups of an app."""
 
     # Class variable to hold a list of user groups for apps
-    _all_components = set()
+    _all_components: ClassVar[set['UsersAndGroups']] = set()
 
     def __init__(self, component_id, reserved_usernames=[], groups={}):
         """Store reserved_usernames and groups of the app.

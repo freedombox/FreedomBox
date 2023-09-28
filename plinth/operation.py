@@ -4,7 +4,7 @@
 import enum
 import logging
 import threading
-from typing import Callable, Optional
+from typing import Callable
 
 from . import app as app_module
 
@@ -22,10 +22,10 @@ class Operation:
         COMPLETED: str = 'completed'
 
     def __init__(self, app_id: str, name: str, target: Callable,
-                 args: Optional[list] = None, kwargs: Optional[dict] = None,
+                 args: list | None = None, kwargs: dict | None = None,
                  show_message: bool = True, show_notification: bool = False,
-                 thread_data: Optional[dict] = None,
-                 on_complete: Callable = None):
+                 thread_data: dict | None = None,
+                 on_complete: Callable | None = None):
         """Initialize to no operation."""
         self.app_id = app_id
         self.name = name
@@ -39,8 +39,8 @@ class Operation:
 
         self.state = Operation.State.WAITING
         self.return_value = None
-        self._message: Optional[str] = None
-        self.exception: Optional[Exception] = None
+        self._message: str | None = None
+        self.exception: Exception | None = None
 
         # Operation specific data
         self.thread_data: dict = thread_data or {}
@@ -89,13 +89,13 @@ class Operation:
         return self.return_value
 
     @staticmethod
-    def get_operation():
+    def get_operation() -> 'Operation':
         """Return the operation associated with this thread."""
         thread = threading.current_thread()
-        return thread._operation
+        return thread._operation  # type: ignore [attr-defined]
 
-    def on_update(self, message: Optional[str] = None,
-                  exception: Optional[Exception] = None):
+    def on_update(self, message: str | None = None,
+                  exception: Exception | None = None):
         """Call from within the thread to update the progress of operation."""
         if message:
             self._message = message
@@ -106,7 +106,7 @@ class Operation:
         self._update_notification()
 
     @property
-    def message(self):
+    def message(self) -> str | None:
         """Return a message about status of the operation."""
         from django.utils.translation import gettext_noop
         if self._message:  # Progress has been set by the operation itself
@@ -124,8 +124,10 @@ class Operation:
         if self.state == Operation.State.COMPLETED:
             return gettext_noop('Finished: {name}')
 
+        return None
+
     @property
-    def translated_message(self):
+    def translated_message(self) -> str:
         """Return a message about status of operation after translating.
 
         Must be called from a web request (UI) thread with user language set so
@@ -141,7 +143,7 @@ class Operation:
 
         return message
 
-    def _update_notification(self):
+    def _update_notification(self) -> None:
         """Show an updated notification if needed."""
         if not self.show_notification:
             return
@@ -167,10 +169,10 @@ class Operation:
 class OperationsManager:
     """Global handler for all operations and their results."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the object."""
         self._operations: list[Operation] = []
-        self._current_operation: Optional[Operation] = None
+        self._current_operation: Operation | None = None
 
         # Assume that operations manager will be called from various threads
         # including the callback called from the threads it creates. Ensure
@@ -180,17 +182,17 @@ class OperationsManager:
         # when done from the same thread which holds the lock.
         self._lock = threading.RLock()
 
-    def new(self, *args, **kwargs):
+    def new(self, *args, **kwargs) -> Operation:
         """Create a new operation instance and add to global list."""
         with self._lock:
-            operation = Operation(*args, **kwargs,
-                                  on_complete=self._on_operation_complete)
+            kwargs['on_complete'] = self._on_operation_complete
+            operation = Operation(*args, **kwargs)
             self._operations.append(operation)
             logger.info('%s: added', operation)
             self._schedule_next()
             return operation
 
-    def _on_operation_complete(self, operation):
+    def _on_operation_complete(self, operation: Operation):
         """Trigger next operation. Called from within previous thread."""
         logger.debug('%s: on_complete called', operation)
         with self._lock:
@@ -201,7 +203,7 @@ class OperationsManager:
 
             self._schedule_next()
 
-    def _schedule_next(self):
+    def _schedule_next(self) -> None:
         """Schedule the next available operation."""
         with self._lock:
             if self._current_operation:
@@ -214,7 +216,7 @@ class OperationsManager:
                     operation.run()
                     break
 
-    def filter(self, app_id):
+    def filter(self, app_id: str) -> list[Operation]:
         """Return operations matching a pattern."""
         with self._lock:
             return [
@@ -222,7 +224,7 @@ class OperationsManager:
                 if operation.app_id == app_id
             ]
 
-    def collect_results(self, app_id):
+    def collect_results(self, app_id: str) -> list[Operation]:
         """Return the finished operations for an app."""
         results: list[Operation] = []
         remaining: list[Operation] = []

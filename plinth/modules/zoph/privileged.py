@@ -5,7 +5,6 @@ import configparser
 import os
 import re
 import subprocess
-from typing import Optional
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -65,8 +64,8 @@ def _get_db_name():
 
 
 @privileged
-def set_configuration(enable_osm: Optional[bool] = None,
-                      admin_user: Optional[str] = None):
+def set_configuration(enable_osm: bool | None = None,
+                      admin_user: str | None = None):
     """Setup Zoph Apache configuration."""
     _zoph_configure('interface.user.remote', 'true')
 
@@ -90,7 +89,7 @@ def set_configuration(enable_osm: Optional[bool] = None,
 
 
 @privileged
-def is_configured() -> Optional[bool]:
+def is_configured() -> bool | None:
     """Return whether zoph app is configured."""
     try:
         process = subprocess.run(

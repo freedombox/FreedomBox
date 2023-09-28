@@ -5,6 +5,7 @@ App component for other apps to use firewall functionality.
 
 import logging
 import re
+from typing import ClassVar
 
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
@@ -18,7 +19,7 @@ logger = logging.getLogger(__name__)
 class Firewall(app.FollowerComponent):
     """Component to open/close firewall ports for an app."""
 
-    _all_firewall_components = {}
+    _all_firewall_components: ClassVar[dict[str, 'Firewall']] = {}
 
     def __init__(self, component_id, name=None, ports=None, is_external=False):
         """Initialize the firewall component."""

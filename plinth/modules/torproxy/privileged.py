@@ -5,7 +5,7 @@ import logging
 import os
 import shutil
 import subprocess
-from typing import Any, Optional, Union
+from typing import Any
 
 import augeas
 
@@ -66,9 +66,9 @@ def _first_time_setup():
 
 
 @privileged
-def configure(use_upstream_bridges: Optional[bool] = None,
-              upstream_bridges: Optional[str] = None,
-              apt_transport_tor: Optional[bool] = None):
+def configure(use_upstream_bridges: bool | None = None,
+              upstream_bridges: str | None = None,
+              apt_transport_tor: bool | None = None):
     """Configure Tor."""
     aug = augeas_load()
 
@@ -92,7 +92,7 @@ def restart():
 
 
 @privileged
-def get_status() -> dict[str, Union[bool, str, dict[str, Any]]]:
+def get_status() -> dict[str, bool | str | dict[str, Any]]:
     """Return dict with Tor Proxy status."""
     aug = augeas_load()
     return {
@@ -125,8 +125,7 @@ def _disable():
     action_utils.service_disable(SERVICE_NAME)
 
 
-def _use_upstream_bridges(use_upstream_bridges: Optional[bool] = None,
-                          aug=None):
+def _use_upstream_bridges(use_upstream_bridges: bool | None = None, aug=None):
     """Enable use of upstream bridges."""
     if use_upstream_bridges is None:
         return

@@ -20,13 +20,12 @@ code-quality:
 
 static-type-check:
   stage: test
-  allow_failure: true
   needs: []
   before_script:
     - apt-get update
     - apt-get install -y mypy
   script:
-    - mypy --ignore-missing-imports .
+    - mypy .
 
 unit-tests:
   stage: test
@@ -120,7 +119,7 @@ build:
 build-backports:
     extends: .build-package
     variables:
-      RELEASE: bullseye-backports
+      RELEASE: bookworm-backports
 
 build i386:
     extends: .build-package-i386

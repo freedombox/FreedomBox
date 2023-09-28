@@ -3,4 +3,4 @@
 Application manifest for storage.
 """
 
-backup = {}
+backup: dict = {}

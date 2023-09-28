@@ -3,7 +3,6 @@
 
 import logging
 import os
-from typing import List
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -191,7 +190,7 @@ def get_configured_domain_name():
     return config['server_name']
 
 
-def get_turn_configuration() -> (List[str], str, bool):
+def get_turn_configuration() -> tuple[TurnConfiguration, bool]:
     """Return TurnConfiguration if setup else empty."""
     for file_path, managed in ((privileged.OVERRIDDEN_TURN_CONF_PATH, False),
                                (privileged.TURN_CONF_PATH, True)):

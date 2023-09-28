@@ -81,3 +81,27 @@ disable = [
     "too-many-arguments",  # Has not resulted in a refactoring
     "too-many-ancestors",  # Easy to hit when using Django
 ]
+
+# Ignore missing type stubs for some libraries. Try to keep this list minimal
+# and use type annotations where available.
+[[tool.mypy.overrides]]
+module = [
+  "aptsources.*",
+  "augeas.*",
+  "axes.*",
+  "captcha.*",
+  "cherrypy.*",
+  "configobj.*",
+  "dbus.*",
+  "django.*",
+  "gi.*",
+  "pam.*",
+  "pgi.*",
+  "plinth.tests.config_local",
+  "pytest_splinter.*",
+  "ruamel.*",
+  "selenium.*",
+  "splinter.*",
+  "stronghold.*",
+]
+ignore_missing_imports = true

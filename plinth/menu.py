@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+from typing import ClassVar
+
 from django.urls import reverse_lazy
 
 from plinth import app
@@ -8,7 +10,7 @@ from plinth import app
 class Menu(app.FollowerComponent):
     """Component to manage a single menu item."""
 
-    _all_menus = set()
+    _all_menus: ClassVar[set['Menu']] = set()
 
     def __init__(self, component_id, name=None, short_description=None,
                  icon=None, url_name=None, url_args=None, url_kwargs=None,

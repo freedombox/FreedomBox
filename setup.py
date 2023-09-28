@@ -66,7 +66,7 @@ LOCALE_PATHS = ['plinth/locale']
 
 class DjangoCommand(Command):
     """Setup command to run a Django management command."""
-    user_options = []
+    user_options: list = []
 
     def initialize_options(self):
         """Declare the options for this command."""

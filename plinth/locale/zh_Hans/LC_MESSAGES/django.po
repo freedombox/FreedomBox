@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 20:05-0400\n"
+"POT-Creation-Date: 2023-09-25 20:14-0400\n"
 "PO-Revision-Date: 2022-12-07 20:48+0000\n"
 "Last-Translator: Eric <hamburger1024@duck.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -28,7 +28,7 @@ msgstr "来源页面"
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:94
+#: plinth/context_processors.py:23 plinth/views.py:95
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -102,6 +102,10 @@ msgstr "此 web 管理界面的语言"
 #: plinth/forms.py:100
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
+
+#: plinth/middleware.py:130
+msgid "System is possibly under heavy load. Please retry later."
+msgstr ""
 
 #: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1730,7 +1734,7 @@ msgstr "服务器拒绝连接"
 msgid "Already up-to-date"
 msgstr "已是最新"
 
-#: plinth/modules/ejabberd/__init__.py:30
+#: plinth/modules/ejabberd/__init__.py:29
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
@@ -1738,7 +1742,7 @@ msgstr ""
 "XMPP 是一种开放标准的通信协议。在这里你可以运行并配置您的 XMPP 服务器，称为 "
 "ejabberd。"
 
-#: plinth/modules/ejabberd/__init__.py:33
+#: plinth/modules/ejabberd/__init__.py:32
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1751,7 +1755,7 @@ msgstr ""
 "a>。启用后，任何有 <a href=\"{users_url}\"> {box_name} 登录的用户</a>均可访"
 "问 ejabberd。"
 
-#: plinth/modules/ejabberd/__init__.py:41
+#: plinth/modules/ejabberd/__init__.py:40
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
@@ -1760,12 +1764,12 @@ msgstr ""
 "ejabberd需要一个STUN/TURN服务器用于音频/视频呼叫。安装<a "
 "href=\"{coturn_url}\">Coturn</a>应用程序或配置一个外部服务器。"
 
-#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/ejabberd/__init__.py:61
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:63
-#: plinth/modules/matrixsynapse/__init__.py:57
+#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Chat Server"
 msgstr "聊天服务器"
 
@@ -2054,17 +2058,17 @@ msgstr ""
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:134
+#: plinth/modules/firewall/components.py:135
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "内网端口 {name}（{details}）可用"
 
-#: plinth/modules/firewall/components.py:142
+#: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "外网端口 {name}（{details}）可用"
 
-#: plinth/modules/firewall/components.py:147
+#: plinth/modules/firewall/components.py:148
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -3022,7 +3026,7 @@ msgstr "成功删除域名 {domain} 的证书"
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr "删除 {domain} 域名证书失败：{error}"
 
-#: plinth/modules/matrixsynapse/__init__.py:27
+#: plinth/modules/matrixsynapse/__init__.py:26
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3032,14 +3036,14 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:35
+#: plinth/modules/matrixsynapse/__init__.py:34
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3528,15 +3532,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "名称服务"
 
-#: plinth/modules/names/components.py:12
+#: plinth/modules/names/components.py:14
 msgid "All"
 msgstr ""
 
-#: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
+#: plinth/modules/names/components.py:18 plinth/modules/names/components.py:22
 msgid "All web apps"
 msgstr ""
 
-#: plinth/modules/names/components.py:24
+#: plinth/modules/names/components.py:26
 msgid "Secure Shell"
 msgstr "安全 Shell"
 
@@ -7518,34 +7522,34 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "已完成：{name}"
 
-#: plinth/package.py:212
+#: plinth/package.py:211
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:225
+#: plinth/package.py:224
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: plinth/package.py:373
+#: plinth/package.py:372
 msgid "installing"
 msgstr "安装"
 
-#: plinth/package.py:375
+#: plinth/package.py:374
 msgid "downloading"
 msgstr "下载中"
 
-#: plinth/package.py:377
+#: plinth/package.py:376
 msgid "media change"
 msgstr "媒体改变"
 
-#: plinth/package.py:379
+#: plinth/package.py:378
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
 
-#: plinth/package.py:407 plinth/package.py:432
+#: plinth/package.py:406 plinth/package.py:431
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -7776,6 +7780,12 @@ msgstr ""
 msgid "RPM:"
 msgstr ""
 
+#: plinth/templates/error.html:10
+#, fuzzy
+#| msgid "error"
+msgid "Error"
+msgstr "错误"
+
 #: plinth/templates/first_setup.html:18
 #, python-format
 msgid ""
@@ -7974,11 +7984,11 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: plinth/views.py:241
+#: plinth/views.py:242
 msgid "Setting unchanged"
 msgstr "设置未改变"
 
-#: plinth/views.py:478
+#: plinth/views.py:479
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""

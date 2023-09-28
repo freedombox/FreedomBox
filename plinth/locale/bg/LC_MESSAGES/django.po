@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 20:05-0400\n"
-"PO-Revision-Date: 2023-04-19 09:52+0000\n"
+"POT-Creation-Date: 2023-09-25 20:14-0400\n"
+"PO-Revision-Date: 2023-09-18 19:00+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0.2\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -28,7 +28,7 @@ msgstr "Изходен код на страницата"
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: plinth/context_processors.py:23 plinth/views.py:94
+#: plinth/context_processors.py:23 plinth/views.py:95
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -59,7 +59,7 @@ msgstr "Не може да се свърже с {host}:{port}"
 
 #: plinth/forms.py:36
 msgid "Backup app before uninstall"
-msgstr "Направете резерено копие преди да премахнете приложението"
+msgstr "Резервно копие преди премахване на приложението"
 
 #: plinth/forms.py:37
 msgid "Restoring from the backup will restore app data."
@@ -107,6 +107,10 @@ msgstr "Език на интерфейса"
 #: plinth/forms.py:100
 msgid "Use the language preference set in the browser"
 msgstr "Използване на предпочитания от четеца език"
+
+#: plinth/middleware.py:130
+msgid "System is possibly under heavy load. Please retry later."
+msgstr ""
 
 #: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1739,13 +1743,13 @@ msgstr ""
 msgid "Already up-to-date"
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:30
+#: plinth/modules/ejabberd/__init__.py:29
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:33
+#: plinth/modules/ejabberd/__init__.py:32
 #, python-brace-format
 msgid ""
 "To actually communicate, you can use the <a href=\"{jsxc_url}\">web client</"
@@ -1759,19 +1763,19 @@ msgstr ""
 "отметнато, до ejabberd ще има достъп всеки <a href=\"{users_url}\"> "
 "потребител с вход в {box_name}</a>."
 
-#: plinth/modules/ejabberd/__init__.py:41
+#: plinth/modules/ejabberd/__init__.py:40
 #, python-brace-format
 msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/ejabberd/__init__.py:61
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: plinth/modules/ejabberd/__init__.py:63
-#: plinth/modules/matrixsynapse/__init__.py:57
+#: plinth/modules/ejabberd/__init__.py:62
+#: plinth/modules/matrixsynapse/__init__.py:56
 msgid "Chat Server"
 msgstr ""
 
@@ -2053,17 +2057,17 @@ msgstr ""
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:134
+#: plinth/modules/firewall/components.py:135
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Порт {name} ({details}) достъпен за вътрешните мрежи"
 
-#: plinth/modules/firewall/components.py:142
+#: plinth/modules/firewall/components.py:143
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Порт {name} ({details}) достъпен за външните мрежи"
 
-#: plinth/modules/firewall/components.py:147
+#: plinth/modules/firewall/components.py:148
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Порт {name} ({details}) недостъпен за външните мрежи"
@@ -2999,7 +3003,7 @@ msgstr ""
 msgid "Failed to delete certificate for domain {domain}: {error}"
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:27
+#: plinth/modules/matrixsynapse/__init__.py:26
 msgid ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a> is an new "
 "ecosystem for open, federated instant messaging and VoIP. Synapse is a "
@@ -3009,14 +3013,14 @@ msgid ""
 "converse with users on all other Matrix servers via federation."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:35
+#: plinth/modules/matrixsynapse/__init__.py:34
 #, python-brace-format
 msgid ""
 "Matrix Synapse needs a STUN/TURN server for audio/video calls. Install the "
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: plinth/modules/matrixsynapse/__init__.py:56
+#: plinth/modules/matrixsynapse/__init__.py:55
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3241,10 +3245,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/mediawiki/forms.py:93
-#, fuzzy
-#| msgid "Select language"
 msgid "Default Language"
-msgstr "Избор на език"
+msgstr "Подразбиран език"
 
 #: plinth/modules/mediawiki/forms.py:94
 msgid ""
@@ -3289,10 +3291,8 @@ msgid "Site name updated"
 msgstr "Името на страницата е променено"
 
 #: plinth/modules/mediawiki/views.py:96
-#, fuzzy
-#| msgid "Select language"
 msgid "Default language changed"
-msgstr "Избор на език"
+msgstr "Подразбираният език е променен"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -3508,15 +3508,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "Услуги за имена"
 
-#: plinth/modules/names/components.py:12
+#: plinth/modules/names/components.py:14
 msgid "All"
 msgstr "Всички"
 
-#: plinth/modules/names/components.py:16 plinth/modules/names/components.py:20
+#: plinth/modules/names/components.py:18 plinth/modules/names/components.py:22
 msgid "All web apps"
 msgstr "Всички приложения за уеб"
 
-#: plinth/modules/names/components.py:24
+#: plinth/modules/names/components.py:26
 msgid "Secure Shell"
 msgstr "Secure Shell"
 
@@ -4015,7 +4015,7 @@ msgstr ""
 #: plinth/modules/snapshot/templates/snapshot_manage.html:29
 #: plinth/modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: plinth/modules/networks/templates/connection_show.html:109
 msgid "Physical Link"
@@ -4907,7 +4907,7 @@ msgstr ""
 #: plinth/modules/power/templates/power.html:22 plinth/templates/base.html:174
 #: plinth/templates/base.html:175
 msgid "Restart"
-msgstr "Рестарт"
+msgstr "Рестартиране"
 
 #: plinth/modules/power/templates/power.html:25
 msgid "Shut Down"
@@ -4932,7 +4932,7 @@ msgstr ""
 #: plinth/modules/power/templates/power_restart.html:48
 #: plinth/modules/power/templates/power_restart.html:51
 msgid "Restart Now"
-msgstr "Рестарт"
+msgstr "Рестартиране"
 
 #: plinth/modules/power/templates/power_shutdown.html:17
 msgid ""
@@ -5454,7 +5454,7 @@ msgstr "Често обновяване на възможности"
 #: plinth/modules/security/templates/security.html:21
 #: plinth/modules/upgrades/templates/upgrades_configure.html:52
 msgid "Frequent feature updates are activated."
-msgstr "Честото обновяване на възможности е включено."
+msgstr "Честото обновяване на пакети е включено."
 
 #: plinth/modules/security/templates/security.html:26
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
@@ -5957,7 +5957,7 @@ msgstr "Настройките на моментните снимки на хр�
 #: plinth/modules/snapshot/views.py:162
 #, python-brace-format
 msgid "Action error: {0} [{1}] [{2}]"
-msgstr ""
+msgstr "Грешка при действие: {0} [{1}] [{2}]"
 
 #: plinth/modules/snapshot/views.py:188
 msgid "Deleted selected snapshots"
@@ -6380,10 +6380,8 @@ msgid "Obfs4 transport registered"
 msgstr "Транспортът Obfs4 е регистриран"
 
 #: plinth/modules/tor/__init__.py:168
-#, fuzzy
-#| msgid "Onion Service"
 msgid "Onion service is version 3"
-msgstr "Услуга на Onion"
+msgstr "Услугата на Onion е версия 3"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -6442,33 +6440,30 @@ msgid "Enable Tor bridge relay"
 msgstr ""
 
 #: plinth/modules/tor/forms.py:103
-#, fuzzy
 msgid ""
 "When enabled, relay information is published in the Tor bridge database "
 "instead of public Tor relay database making it harder to censor this node. "
 "This helps others circumvent censorship."
-msgstr "Когато е отметнато,"
+msgstr ""
+"Когато е отметнато, информацията за препращанията ще бъде публикувана в "
+"базата от данни с мостове на Тор вместо в публичната база от данни с "
+"препращания на Тор като по този начин прави възела по-труден за цензуриране. "
+"Помага на другите да заобиколят цензурата."
 
 #: plinth/modules/tor/forms.py:108
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Включване на скритата услуга на Тор"
+msgstr "Включване на услугата Tor Onion"
 
 #: plinth/modules/tor/forms.py:110
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"Скрита услуга дава възможност на {box_name} да предоставя избрани ислуги "
-"(като енциклопедия или бързи съобщения) без да разкрива местоположението си. "
-"Не използвайте, за да криете самоличността си, все още."
+"Услугата Tor Onion дава възможност на {box_name} да предоставя избрани "
+"услуги (като енциклопедия или бързи съобщения) без да разкрива "
+"местоположението си. Не използвайте, за да криете самоличността си, все още."
 
 #: plinth/modules/tor/forms.py:125
 msgid "Specify at least one upstream bridge to use upstream bridges."
@@ -6492,7 +6487,7 @@ msgstr "Портове"
 
 #: plinth/modules/tor/views.py:53 plinth/modules/torproxy/views.py:51
 msgid "Updating configuration"
-msgstr "Настройките са променени"
+msgstr "Запазване на настройки"
 
 #: plinth/modules/tor/views.py:70 plinth/modules/torproxy/views.py:68
 #, python-brace-format
@@ -6509,10 +6504,8 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/torproxy/__init__.py:54
-#, fuzzy
-#| msgid "Tor Socks Proxy"
 msgid "Tor Proxy"
-msgstr "Прокси сървър на Тор за SOCKS"
+msgstr "Прокси сървър на Тор"
 
 #: plinth/modules/torproxy/__init__.py:79
 msgid "Tor Socks Proxy"
@@ -6643,10 +6636,8 @@ msgid "News Feed Reader"
 msgstr "Четец на абонаменти за новини"
 
 #: plinth/modules/ttrss/manifest.py:10
-#, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
 msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #: plinth/modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
@@ -6792,7 +6783,7 @@ msgstr ""
 #: plinth/templates/notifications.html:50
 #: plinth/templates/operation-notification.html:23
 msgid "Dismiss"
-msgstr ""
+msgstr "Затваряне"
 
 #: plinth/modules/upgrades/templates/upgrades_configure.html:30
 #: plinth/modules/upgrades/templates/upgrades_configure.html:100
@@ -6904,7 +6895,7 @@ msgstr ""
 
 #: plinth/modules/upgrades/views.py:138
 msgid "Frequent feature updates activated."
-msgstr "Честото обновяване на възможности е включено."
+msgstr "Честото обновяване на пакети е включено."
 
 #: plinth/modules/upgrades/views.py:224
 msgid "Starting distribution upgrade test."
@@ -7625,34 +7616,34 @@ msgstr "Изчакване да започне: {name}"
 msgid "Finished: {name}"
 msgstr "Готово: {name}"
 
-#: plinth/package.py:212
+#: plinth/package.py:211
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr "Пакетът „{expression}“ е недостъпен за инсталиране"
 
-#: plinth/package.py:225
+#: plinth/package.py:224
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: plinth/package.py:373
+#: plinth/package.py:372
 msgid "installing"
 msgstr ""
 
-#: plinth/package.py:375
+#: plinth/package.py:374
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:377
+#: plinth/package.py:376
 msgid "media change"
 msgstr ""
 
-#: plinth/package.py:379
+#: plinth/package.py:378
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
 
-#: plinth/package.py:407 plinth/package.py:432
+#: plinth/package.py:406 plinth/package.py:431
 msgid "Timeout waiting for package manager"
 msgstr "Времето за изчакване на диспечера на пакети е изтекло"
 
@@ -7879,14 +7870,20 @@ msgstr "Homebrew:"
 msgid "RPM:"
 msgstr "RPM:"
 
+#: plinth/templates/error.html:10
+#, fuzzy
+#| msgid "error"
+msgid "Error"
+msgstr "грешка"
+
 #: plinth/templates/first_setup.html:18
 #, python-format
 msgid ""
 "Please wait for %(box_name)s to finish installation. You can start using "
 "your %(box_name)s once it is done."
 msgstr ""
-"Изчакайте да завърши инсталирането на %(box_name)s. След това можете да "
-"започнете употреба."
+"Изчакайте да завърши инсталирането на %(box_name)s. След това устройството "
+"%(box_name)s може да бъде въведено в употреба."
 
 #: plinth/templates/index.html:22
 #, python-format
@@ -8048,10 +8045,8 @@ msgid "Update"
 msgstr "Обновяване"
 
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
-#, fuzzy
-#| msgid "Backups"
 msgid "Backup"
-msgstr "Резервни копия"
+msgstr "Резервно копие"
 
 #: plinth/templates/toolbar.html:53
 msgid "Re-run setup"
@@ -8075,11 +8070,11 @@ msgstr ""
 "Всички данни и настройки на приложението ще бъдат загубени. Приложението "
 "може да бъде инсталирано отново."
 
-#: plinth/views.py:241
+#: plinth/views.py:242
 msgid "Setting unchanged"
 msgstr "Настройките не са променени"
 
-#: plinth/views.py:478
+#: plinth/views.py:479
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "преди премахване на {app_id}"

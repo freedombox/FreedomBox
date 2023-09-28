@@ -7,7 +7,6 @@ import pathlib
 import re
 import subprocess
 import tarfile
-from typing import Optional, Union
 
 from plinth.actions import privileged
 from plinth.utils import Version
@@ -22,8 +21,8 @@ class AlreadyMountedError(Exception):
 
 
 @privileged
-def mount(mountpoint: str, remote_path: str, ssh_keyfile: Optional[str] = None,
-          password: Optional[str] = None,
+def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
+          password: str | None = None,
           user_known_hosts_file: str = '/dev/null'):
     """Mount a remote ssh path via sshfs."""
     try:
@@ -31,7 +30,7 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: Optional[str] = None,
     except AlreadyMountedError:
         return
 
-    kwargs = {}
+    input_ = None
     # the shell would expand ~/ to the local home directory
     remote_path = remote_path.replace('~/', '').replace('~', '')
     # 'reconnect', 'ServerAliveInternal' and 'ServerAliveCountMax' allow the
@@ -55,9 +54,9 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: Optional[str] = None,
         if not password:
             raise ValueError('mount requires either a password or ssh_keyfile')
         cmd += ['-o', 'password_stdin']
-        kwargs['input'] = password.encode()
+        input_ = password.encode()
 
-    subprocess.run(cmd, check=True, timeout=TIMEOUT, **kwargs)
+    subprocess.run(cmd, check=True, timeout=TIMEOUT, input=input_)
 
 
 @privileged
@@ -110,7 +109,7 @@ def setup(path: str):
 
 
 def _init_repository(path: str, encryption: str,
-                     encryption_passphrase: Optional[str] = None):
+                     encryption_passphrase: str | None = None):
     """Initialize a local or remote borg repository."""
     if encryption != 'none':
         if not encryption_passphrase:
@@ -121,14 +120,13 @@ def _init_repository(path: str, encryption: str,
 
 
 @privileged
-def init(path: str, encryption: str,
-         encryption_passphrase: Optional[str] = None):
+def init(path: str, encryption: str, encryption_passphrase: str | None = None):
     """Initialize the borg repository."""
     _init_repository(path, encryption, encryption_passphrase)
 
 
 @privileged
-def info(path: str, encryption_passphrase: Optional[str] = None) -> dict:
+def info(path: str, encryption_passphrase: str | None = None) -> dict:
     """Show repository information."""
     process = _run(['borg', 'info', '--json', path], encryption_passphrase,
                    stdout=subprocess.PIPE)
@@ -136,7 +134,7 @@ def info(path: str, encryption_passphrase: Optional[str] = None) -> dict:
 
 
 @privileged
-def list_repo(path: str, encryption_passphrase: Optional[str] = None) -> dict:
+def list_repo(path: str, encryption_passphrase: str | None = None) -> dict:
     """List repository contents."""
     process = _run(['borg', 'list', '--json', '--format="{comment}"', path],
                    encryption_passphrase, stdout=subprocess.PIPE)
@@ -150,8 +148,8 @@ def _get_borg_version():
 
 
 @privileged
-def create_archive(path: str, paths: list[str], comment: Optional[str] = None,
-                   encryption_passphrase: Optional[str] = None):
+def create_archive(path: str, paths: list[str], comment: str | None = None,
+                   encryption_passphrase: str | None = None):
     """Create archive."""
     existing_paths = filter(os.path.exists, paths)
     command = ['borg', 'create', '--json']
@@ -169,7 +167,7 @@ def create_archive(path: str, paths: list[str], comment: Optional[str] = None,
 
 
 @privileged
-def delete_archive(path: str, encryption_passphrase: Optional[str] = None):
+def delete_archive(path: str, encryption_passphrase: str | None = None):
     """Delete archive."""
     _run(['borg', 'delete', path], encryption_passphrase)
 
@@ -199,7 +197,7 @@ def _extract(archive_path, destination, encryption_passphrase, locations=None):
 
 
 @privileged
-def export_tar(path: str, encryption_passphrase: Optional[str] = None):
+def export_tar(path: str, encryption_passphrase: str | None = None):
     """Export archive contents as tar stream on stdout."""
     _run(['borg', 'export-tar', path, '-', '--tar-filter=gzip'],
          encryption_passphrase)
@@ -214,7 +212,7 @@ def _read_archive_file(archive, filepath, encryption_passphrase):
 
 @privileged
 def get_archive_apps(path: str,
-                     encryption_passphrase: Optional[str] = None) -> list[str]:
+                     encryption_passphrase: str | None = None) -> list[str]:
     """Get list of apps included in archive."""
     manifest_folder = os.path.relpath(MANIFESTS_FOLDER, '/')
     borg_call = [
@@ -266,7 +264,12 @@ def get_exported_archive_apps(path: str) -> list[str]:
         for name in filenames:
             if 'var/lib/plinth/backups-manifests/' in name \
                and name.endswith('.json'):
-                manifest_data = tar_handle.extractfile(name).read()
+                file_handle = tar_handle.extractfile(name)
+                if not file_handle:
+                    raise RuntimeError(
+                        'Unable to extract app manifest from backup file.')
+
+                manifest_data = file_handle.read()
                 manifest = json.loads(manifest_data)
                 break
 
@@ -281,7 +284,7 @@ def get_exported_archive_apps(path: str) -> list[str]:
 @privileged
 def restore_archive(archive_path: str, destination: str,
                     directories: list[str], files: list[str],
-                    encryption_passphrase: Optional[str] = None):
+                    encryption_passphrase: str | None = None):
     """Restore files from an archive."""
     locations_all = directories + files
     locations_all = [
@@ -314,8 +317,7 @@ def _assert_app_id(app_id):
 
 
 @privileged
-def dump_settings(app_id: str, settings: dict[str, Union[int, float, bool,
-                                                         str]]):
+def dump_settings(app_id: str, settings: dict[str, int | float | bool | str]):
     """Dump an app's settings to a JSON file."""
     _assert_app_id(app_id)
     BACKUPS_DATA_PATH.mkdir(exist_ok=True)
@@ -324,7 +326,7 @@ def dump_settings(app_id: str, settings: dict[str, Union[int, float, bool,
 
 
 @privileged
-def load_settings(app_id: str) -> dict[str, Union[int, float, bool, str]]:
+def load_settings(app_id: str) -> dict[str, int | float | bool | str]:
     """Load an app's settings from a JSON file."""
     _assert_app_id(app_id)
     settings_path = BACKUPS_DATA_PATH / f'{app_id}-settings.json'
@@ -334,7 +336,7 @@ def load_settings(app_id: str) -> dict[str, Union[int, float, bool, str]]:
         return {}
 
 
-def _get_env(encryption_passphrase: Optional[str] = None):
+def _get_env(encryption_passphrase: str | None = None):
     """Create encryption and ssh kwargs out of given arguments."""
     env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes',
                LANG='C.UTF-8')

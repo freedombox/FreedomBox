@@ -6,4 +6,4 @@ Application manifest for backups.
 # Currently, backup application does not have any settings. However, settings
 # such as scheduler settings, backup location, secrets to connect to remove
 # servers need to be backed up.
-backup = {}
+backup: dict = {}

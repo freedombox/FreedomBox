@@ -3,4 +3,4 @@
 URLs for the Apache module.
 """
 
-urlpatterns = []
+urlpatterns: list = []

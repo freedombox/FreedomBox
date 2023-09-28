@@ -4,6 +4,7 @@
 import logging
 import pathlib
 import threading
+from typing import ClassVar
 
 from plinth import app
 from plinth.modules.names.components import DomainName
@@ -38,7 +39,7 @@ class LetsEncrypt(app.FollowerComponent):
 
     """
 
-    _all = {}
+    _all: ClassVar[dict[str, 'LetsEncrypt']] = {}
 
     def __init__(self, component_id, domains=None, daemons=None,
                  should_copy_certificates=False, private_key_path=None,

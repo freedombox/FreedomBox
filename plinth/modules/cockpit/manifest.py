@@ -17,4 +17,4 @@ clients = [{
 # triggered on every Plinth domain change (and cockpit application install) and
 # will set the value of allowed domains correctly. This is the only key the is
 # customized in cockpit.conf.
-backup = {}
+backup: dict = {}

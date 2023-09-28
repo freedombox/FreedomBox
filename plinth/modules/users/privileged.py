@@ -6,7 +6,6 @@ import os
 import re
 import shutil
 import subprocess
-from typing import Optional
 
 import augeas
 
@@ -220,8 +219,8 @@ def _disconnect_samba_user(username):
 
 
 @privileged
-def create_user(username: str, password: str, auth_user: Optional[str] = None,
-                auth_password: Optional[str] = None):
+def create_user(username: str, password: str, auth_user: str | None = None,
+                auth_password: str | None = None):
     """Create an LDAP user, set password and flush cache."""
     _validate_user(auth_user, auth_password)
 
@@ -232,7 +231,7 @@ def create_user(username: str, password: str, auth_user: Optional[str] = None,
 
 
 @privileged
-def remove_user(username: str, password: Optional[str] = None):
+def remove_user(username: str, password: str | None = None):
     """Remove an LDAP user."""
     groups = _get_user_groups(username)
 
@@ -424,8 +423,8 @@ def _add_user_to_group(username, groupname):
 
 @privileged
 def add_user_to_group(username: str, groupname: str,
-                      auth_user: Optional[str] = None,
-                      auth_password: Optional[str] = None):
+                      auth_user: str | None = None,
+                      auth_password: str | None = None):
     """Add an LDAP user to an LDAP group."""
     if groupname == 'admin':
         _validate_user(auth_user, auth_password)

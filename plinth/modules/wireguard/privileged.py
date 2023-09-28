@@ -19,7 +19,7 @@ def get_info() -> dict[str, dict]:
         if not line:
             continue
 
-        fields = [
+        fields: list = [
             field if field != '(none)' else None for field in line.split()
         ]
         interface_name = fields[0]

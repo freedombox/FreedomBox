@@ -7,6 +7,7 @@ import collections
 import enum
 import inspect
 import logging
+from typing import ClassVar
 
 from plinth import cfg
 from plinth.signals import post_app_loading
@@ -39,14 +40,15 @@ class App:
 
     """
 
-    app_id = None
+    app_id: str | None = None
 
-    can_be_disabled = True
+    can_be_disabled: bool = True
 
-    locked = False  # Whether user interaction with the app is allowed.
+    locked: bool = False  # Whether user interaction with the app is allowed.
     # XXX: Lockdown the application UI by implementing a middleware
 
-    _all_apps = collections.OrderedDict()
+    _all_apps: ClassVar[collections.OrderedDict[
+        str, 'App']] = collections.OrderedDict()
 
     class SetupState(enum.Enum):
         """Various states of app being setup."""

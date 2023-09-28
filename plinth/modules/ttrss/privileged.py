@@ -3,7 +3,6 @@
 
 import os
 import subprocess
-from typing import Optional
 
 import augeas
 
@@ -19,15 +18,16 @@ DB_BACKUP_FILE = '/var/lib/plinth/backups-data/ttrss-database.sql'
 @privileged
 def pre_setup():
     """Preseed debconf values before packages are installed."""
-    action_utils.debconf_set_selections(
-        ['tt-rss tt-rss/database-type string pgsql',
-         'tt-rss tt-rss/purge boolean true',
-         'tt-rss tt-rss/dbconfig-remove boolean true',
-         'tt-rss tt-rss/dbconfig-reinstall boolean true'])
+    action_utils.debconf_set_selections([
+        'tt-rss tt-rss/database-type string pgsql',
+        'tt-rss tt-rss/purge boolean true',
+        'tt-rss tt-rss/dbconfig-remove boolean true',
+        'tt-rss tt-rss/dbconfig-reinstall boolean true'
+    ])
 
 
 @privileged
-def get_domain() -> Optional[str]:
+def get_domain() -> str | None:
     """Get the domain set for Tiny Tiny RSS."""
     aug = load_augeas()
 
@@ -41,7 +41,7 @@ def get_domain() -> Optional[str]:
 
 
 @privileged
-def set_domain(domain_name: Optional[str]):
+def set_domain(domain_name: str | None):
     """Set the domain to be used by Tiny Tiny RSS."""
     if not domain_name:
         return

@@ -160,7 +160,6 @@ for transmission daemon. We will do this by creating a file ``privileged.py``.
 
   import json
   import pathlib
-  from typing import Union
 
   from plinth import action_utils
   from plinth.actions import privileged
@@ -175,7 +174,7 @@ for transmission daemon. We will do this by creating a file ``privileged.py``.
 
 
   @privileged
-  def merge_configuration(configuration: dict[str, Union[str, bool]]) -> None:
+  def merge_configuration(configuration: dict[str, str | bool]) -> None:
       """Merge given JSON configuration with existing configuration."""
       current_configuration = _transmission_config.read_bytes()
       current_configuration = json.loads(current_configuration)

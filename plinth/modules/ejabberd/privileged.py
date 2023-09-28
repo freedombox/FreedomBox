@@ -8,7 +8,7 @@ import shutil
 import socket
 import subprocess
 from pathlib import Path
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from ruamel.yaml import YAML, scalarstring
 
@@ -28,7 +28,7 @@ MOD_IRC_DEPRECATED_VERSION = Version('18.06')
 
 yaml = YAML()
 yaml.allow_duplicate_keys = True
-yaml.preserve_quotes = True
+yaml.preserve_quotes = True  # type: ignore [assignment]
 
 TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
 
@@ -240,7 +240,7 @@ def set_domains(domains: list[str]):
 
 
 @privileged
-def mam(command: str) -> Optional[bool]:
+def mam(command: str) -> bool | None:
     """Enable, disable, or get status of Message Archive Management (MAM)."""
     if command not in ('enable', 'disable', 'status'):
         raise ValueError('Invalid command')
@@ -286,7 +286,11 @@ def mam(command: str) -> Optional[bool]:
 def _generate_service(uri: str) -> dict:
     """Generate ejabberd mod_stun_disco service config from Coturn URI."""
     pattern = re.compile(TURN_URI_REGEX)
-    typ, domain, port, transport = pattern.match(uri).groups()
+    match = pattern.match(uri)
+    if not match:
+        raise ValueError('URL does not match TURN URI')
+
+    typ, domain, port, transport = match.groups()
     return {
         "host": domain,
         "port": int(port),
@@ -304,7 +308,7 @@ def _generate_uris(services: list[dict]) -> list[str]:
 
 
 @privileged
-def get_turn_config() -> Tuple[dict[str, Any], bool]:
+def get_turn_config() -> tuple[dict[str, Any], bool]:
     """Get the latest STUN/TURN configuration in JSON format."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)

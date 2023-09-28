@@ -9,6 +9,7 @@ import logging
 import os
 import sys
 import traceback
+import types
 import typing
 
 import plinth.log
@@ -166,10 +167,9 @@ def _assert_valid_type(arg_name, value, annotation):
 
         return
 
-    if not hasattr(annotation, '__origin__'):
-        raise TypeError('Unsupported annotation type')
-
-    if annotation.__origin__ == typing.Union:
+    # 'int | str' or 'typing.Union[int, str]'
+    if (isinstance(annotation, types.UnionType)
+            or getattr(annotation, '__origin__', None) == typing.Union):
         for arg in annotation.__args__:
             try:
                 _assert_valid_type(arg_name, value, arg)
@@ -179,7 +179,8 @@ def _assert_valid_type(arg_name, value, annotation):
 
         raise TypeError(f'Expected one of unioned types for {arg_name}')
 
-    if annotation.__origin__ == list:
+    # 'list[int]' or 'typing.List[int]'
+    if getattr(annotation, '__origin__', None) == list:
         if not isinstance(value, list):
             raise TypeError(f'Expected type list for {arg_name}')
 
@@ -189,7 +190,8 @@ def _assert_valid_type(arg_name, value, annotation):
 
         return
 
-    if annotation.__origin__ == dict:
+    # 'list[dict]' or 'typing.List[dict]'
+    if getattr(annotation, '__origin__', None) == dict:
         if not isinstance(value, dict):
             raise TypeError(f'Expected type dict for {arg_name}')
 

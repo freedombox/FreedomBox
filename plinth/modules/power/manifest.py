@@ -3,4 +3,4 @@
 Application manifest for power.
 """
 
-backup = {}
+backup: dict = {}

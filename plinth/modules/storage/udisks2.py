@@ -14,7 +14,7 @@ gio = import_from_gi('Gio', '2.0')
 
 _DBUS_NAME = 'org.freedesktop.UDisks2'
 
-_INTERFACES = {
+_INTERFACES: dict[str, str] = {
     'Ata': 'org.freedesktop.UDisks2.Drive.Ata',
     'Block': 'org.freedesktop.UDisks2.Block',
     'Drive': 'org.freedesktop.UDisks2.Drive',
@@ -28,14 +28,14 @@ _INTERFACES = {
     'UDisks2': 'org.freedesktop.UDisks2',
 }
 
-_OBJECTS = {
+_OBJECTS: dict[str, str] = {
     'drives': '/org/freedesktop/UDisks2/drives/',
     'jobs': '/org/freedesktop/UDisks2/jobs/',
     'Manager': '/org/freedesktop/UDisks2/Manager',
     'UDisks2': '/org/freedesktop/UDisks2',
 }
 
-_ERRORS = {
+_ERRORS: dict[str, str] = {
     'AlreadyMounted': 'org.freedesktop.UDisks2.Error.AlreadyMounted',
     'Failed': 'org.freedesktop.UDisks2.Error.Failed',
 }
@@ -54,8 +54,8 @@ def _get_dbus_proxy(object_, interface):
 
 class Proxy:
     """Base methods for abstraction over UDisks2 DBus proxy objects."""
-    interface = None
-    properties = {}
+    interface: str | None = None
+    properties: dict[str, tuple[str, str]] = {}
 
     def __init__(self, object_path):
         """Return an object instance."""

@@ -3,4 +3,4 @@
 Application manifest for names.
 """
 
-backup = {}
+backup: dict = {}

@@ -7,7 +7,6 @@ import pathlib
 import re
 import subprocess
 import time
-from typing import List, Tuple, Union
 
 from plinth.action_utils import (apt_hold, apt_hold_flag, apt_hold_freedombox,
                                  apt_unhold_freedombox, debconf_set_selections,
@@ -81,7 +80,7 @@ Pin: release a=bullseye-backports
 Pin-Priority: 500
 '''
 
-DIST_UPGRADE_OBSOLETE_PACKAGES: List[str] = []
+DIST_UPGRADE_OBSOLETE_PACKAGES: list[str] = []
 
 DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
     'bind9', 'firewalld', 'janus', 'minetest-server', 'minidlna',
@@ -90,7 +89,7 @@ DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
 
 DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
 
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: List[str] = [
+DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.
     'grub-pc grub-pc/install_devices_empty boolean true'
 ]
@@ -198,7 +197,7 @@ def get_log() -> str:
 def _get_protocol() -> str:
     """Return the protocol to use for newly added repository sources."""
     try:
-        from plinth.modules.tor import utils
+        from plinth.modules.torproxy import utils
         if utils.is_apt_transport_tor_enabled():
             return 'tor+http'
     except Exception:
@@ -317,7 +316,7 @@ def _is_sufficient_free_space() -> bool:
     return free_space >= DIST_UPGRADE_REQUIRED_FREE_SPACE
 
 
-def _check_dist_upgrade(test_upgrade=False) -> Tuple[bool, str]:
+def _check_dist_upgrade(test_upgrade=False) -> tuple[bool, str]:
     """Check if a distribution upgrade be performed.
 
     Check for new stable release, if updates are enabled, and if there is
@@ -589,7 +588,7 @@ def _start_dist_upgrade_service():
 
 
 @privileged
-def start_dist_upgrade(test: bool = False) -> dict[str, Union[str, bool]]:
+def start_dist_upgrade(test: bool = False) -> dict[str, str | bool]:
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process

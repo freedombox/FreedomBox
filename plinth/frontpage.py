@@ -4,6 +4,7 @@
 import json
 import logging
 import pathlib
+from typing import ClassVar
 
 from plinth import app, cfg
 from plinth.modules.users import privileged as users_privileged
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 class Shortcut(app.FollowerComponent):
     """An application component for handling shortcuts."""
 
-    _all_shortcuts = {}
+    _all_shortcuts: ClassVar[dict[str, 'Shortcut']] = {}
 
     def __init__(self, component_id, name, short_description=None, icon=None,
                  url=None, description=None, manual_page=None,
