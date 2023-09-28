@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-25 20:14-0400\n"
-"PO-Revision-Date: 2023-08-07 12:46+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2023-09-29 12:00+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -113,6 +113,8 @@ msgstr "Die im Browser festgelegte Sprache verwenden"
 #: plinth/middleware.py:130
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
+"Das System ist möglicherweise stark belastet. Bitte versuchen Sie es später "
+"erneut."
 
 #: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1958,7 +1960,7 @@ msgstr ""
 
 #: plinth/modules/ejabberd/manifest.py:10
 msgid "Conversations"
-msgstr "Konversationen"
+msgstr "Conversations"
 
 #: plinth/modules/ejabberd/manifest.py:24
 msgid "Xabber"
@@ -2597,6 +2599,12 @@ msgid ""
 "href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
+"%(box_name)s ist freie Software, lizenziert unter der GNU Affero General "
+"Public License. Der Quellcode ist online verfügbar im <a href=\"https://salsa"
+".debian.org/freedombox-team/freedombox\"> %(box_name)s Repository</a>. "
+"Darüber hinaus kann der Quellcode jedes Debian-Pakets von der <a href=\"https"
+"://sources.debian.org/\">Debian Sources</a> Seite oder durch Ausführen von "
+"\"apt source <i>Paketname</i>\" in einem Terminal (über Cockpit oder SSH)."
 
 #: plinth/modules/help/templates/help_about.html:82
 #, python-format
@@ -4320,7 +4328,7 @@ msgstr ""
 "Konfigurationseinstellung namens DMZ. Dadurch kann der Router den gesamten "
 "eingehenden Datenverkehr aus dem Internet an eine einzelne IP-Adresse "
 "weiterleiten, z. B. die IP-Adresse von {box_name}. Denken Sie zunächst "
-"daran, eine statische lokale IP-Adresse für Ihre box_name in der "
+"daran, eine statische lokale IP-Adresse für Ihre {box_name} in der "
 "Konfiguration Ihres Routers zu konfigurieren.</p>"
 
 #: plinth/modules/networks/forms.py:423
@@ -6210,6 +6218,9 @@ msgid ""
 "server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
 "Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
+"Shadowsocks ist ein Werkzeug zur sicheren Weiterleitung von Netzwerkanfragen "
+"an einen entfernten Server. Es besteht aus zwei Teilen: (1) einem "
+"Shadowsocks-Server, und (2) einem Shadowsocks-Client mit einem SOCKS5-Proxy."
 
 #: plinth/modules/shadowsocks/__init__.py:21
 #: plinth/modules/shadowsocksserver/__init__.py:21
@@ -6218,6 +6229,9 @@ msgid ""
 "requires that the Shadowsocks server is in a location where it can freely "
 "access the Internet, without filtering."
 msgstr ""
+"Shadowsocks kann verwendet werden, um Internetfilter und Zensur zu umgehen. "
+"Dies setzt voraus, dass sich der Shadowsocks-Server an einem Ort befindet, "
+"an dem er frei und ohne Filterung auf das Internet zugreifen kann."
 
 #: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
@@ -6739,10 +6753,11 @@ msgstr "Einmal-Anmeldung"
 #: plinth/modules/sso/forms.py:28
 msgid "Enter the letters in the image to proceed to the login page"
 msgstr ""
+"Geben Sie die Buchstaben aus dem Bild ein, um zur Anmeldeseite zu gelangen"
 
 #: plinth/modules/sso/templates/captcha.html:20
 msgid "Proceed to Login"
-msgstr ""
+msgstr "Weiter zum Login"
 
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
@@ -7067,6 +7082,10 @@ msgid ""
 "network. Using Tor browser, one can access {box_name} from the internet even "
 "when using an ISP that limits servers at home."
 msgstr ""
+"Diese App bietet eine Onion-Domäne, um {box_name} Dienste über das Tor-"
+"Netzwerk zugänglich zu machen. Mit dem Tor-Browser kann man vom Internet aus "
+"auf {box_name} zugreifen, auch wenn man einen ISP benutzt, der die Server zu "
+"Hause begrenzt."
 
 #: plinth/modules/tor/__init__.py:60
 msgid "Tor"
@@ -7297,6 +7316,10 @@ msgid ""
 "apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
 "rpc</a>."
 msgstr ""
+"Zusätzlich zur Weboberfläche können auch mobile und Desktop-Apps verwendet "
+"werden, um Transmission auf {box_name} fernzusteuern. Zum Konfigurieren von "
+"Fernsteuerungsanwendungen verwenden Sie die URL <a href=\"/transmission-"
+"remote/rpc\">/transmission-remote/rpc</a>."
 
 #: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
@@ -7344,18 +7367,14 @@ msgstr ""
 "Benutzer</a> der zur Feed-Reader-Gruppe gehört, aufgerufen werden."
 
 #: plinth/modules/ttrss/__init__.py:30
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
 "for connecting."
 msgstr ""
 "Wenn Sie eine Mobil- oder Desktop-Anwendung für Tiny Tiny RSS verwenden, "
-"verwenden Sie die URL <a href=\"/tt-rss-app/\">/tt-rss-app</a> für die "
-"Verbindung."
+"verwenden Sie die URL <a href=\"/tt-rss/\">/tt-rss</a> oder <a href=\"/tt-"
+"rss-app/\">/tt-rss-app</a> für die Verbindung."
 
 #: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
@@ -8714,8 +8733,6 @@ msgid "RPM:"
 msgstr "RPM:"
 
 #: plinth/templates/error.html:10
-#, fuzzy
-#| msgid "error"
 msgid "Error"
 msgstr "Fehler"
 
