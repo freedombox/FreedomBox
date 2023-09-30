@@ -339,6 +339,7 @@ def load_settings(app_id: str) -> dict[str, int | float | bool | str]:
 def _get_env(encryption_passphrase: str | None = None):
     """Create encryption and ssh kwargs out of given arguments."""
     env = dict(os.environ, BORG_RELOCATED_REPO_ACCESS_IS_OK='yes',
+               BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK='yes',
                LANG='C.UTF-8')
     # Always provide BORG_PASSPHRASE (also if empty) so borg does not get stuck
     # while asking for a passphrase.
