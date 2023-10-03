@@ -4,6 +4,7 @@
 import enum
 import logging
 import threading
+from collections import OrderedDict
 from typing import Callable
 
 from . import app as app_module
@@ -21,12 +22,13 @@ class Operation:
         RUNNING: str = 'running'
         COMPLETED: str = 'completed'
 
-    def __init__(self, app_id: str, name: str, target: Callable,
+    def __init__(self, op_id: str, app_id: str, name: str, target: Callable,
                  args: list | None = None, kwargs: dict | None = None,
                  show_message: bool = True, show_notification: bool = False,
                  thread_data: dict | None = None,
                  on_complete: Callable | None = None):
         """Initialize to no operation."""
+        self.op_id = op_id
         self.app_id = app_id
         self.name = name
         self.show_message = show_message
@@ -171,7 +173,7 @@ class OperationsManager:
 
     def __init__(self) -> None:
         """Initialize the object."""
-        self._operations: list[Operation] = []
+        self._operations: OrderedDict[str, Operation] = OrderedDict()
         self._current_operation: Operation | None = None
 
         # Assume that operations manager will be called from various threads
@@ -182,15 +184,23 @@ class OperationsManager:
         # when done from the same thread which holds the lock.
         self._lock = threading.RLock()
 
-    def new(self, *args, **kwargs) -> Operation:
+    def new(self, op_id: str, *args, **kwargs) -> Operation:
         """Create a new operation instance and add to global list."""
         with self._lock:
+            if op_id in self._operations:
+                raise KeyError('Operation in progress/scheduled')
+
             kwargs['on_complete'] = self._on_operation_complete
-            operation = Operation(*args, **kwargs)
-            self._operations.append(operation)
+            operation = Operation(op_id, *args, **kwargs)
+            self._operations[op_id] = operation
             logger.info('%s: added', operation)
             self._schedule_next()
             return operation
+
+    def get(self, op_id: str) -> Operation:
+        """Return an operation with given operation ID."""
+        with self._lock:
+            return self._operations[op_id]
 
     def _on_operation_complete(self, operation: Operation):
         """Trigger next operation. Called from within previous thread."""
@@ -199,7 +209,7 @@ class OperationsManager:
             self._current_operation = None
             if not operation.show_message:
                 # No need to keep it lingering for later collection
-                self._operations.remove(operation)
+                del self._operations[operation.op_id]
 
             self._schedule_next()
 
@@ -209,7 +219,7 @@ class OperationsManager:
             if self._current_operation:
                 return
 
-            for operation in self._operations:
+            for operation in self._operations.values():
                 if operation.state == Operation.State.WAITING:
                     logger.debug('%s: scheduling', operation)
                     self._current_operation = operation
@@ -220,22 +230,22 @@ class OperationsManager:
         """Return operations matching a pattern."""
         with self._lock:
             return [
-                operation for operation in self._operations
+                operation for operation in self._operations.values()
                 if operation.app_id == app_id
             ]
 
     def collect_results(self, app_id: str) -> list[Operation]:
         """Return the finished operations for an app."""
         results: list[Operation] = []
-        remaining: list[Operation] = []
+        remaining: OrderedDict[str, Operation] = OrderedDict()
 
         with self._lock:
-            for operation in self._operations:
+            for operation in self._operations.values():
                 if (operation.app_id == app_id
                         and operation.state == Operation.State.COMPLETED):
                     results.append(operation)
                 else:
-                    remaining.append(operation)
+                    remaining[operation.op_id] = operation
 
             if results:
                 self._operations = remaining

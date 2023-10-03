@@ -46,8 +46,9 @@ def run_setup_on_app(app_id, allow_install=True, rerun=False):
     show_notification = show_message = (current_version
                                         or not app.info.is_essential)
     return operation_module.manager.new(
-        app_id, name, _run_setup_on_app, [app, current_version],
-        show_message=show_message, show_notification=show_notification,
+        f'{app_id}-setup', app_id, name, _run_setup_on_app,
+        [app, current_version], show_message=show_message,
+        show_notification=show_notification,
         thread_data={'allow_install': allow_install})
 
 
@@ -101,7 +102,7 @@ def run_uninstall_on_app(app_id):
         return
 
     logger.debug('Creating operation to uninstall app: %s', app_id)
-    return operation_module.manager.new(app_id,
+    return operation_module.manager.new(f'{app_id}-uninstall', app_id,
                                         gettext_noop('Uninstalling app'),
                                         _run_uninstall_on_app, [app],
                                         show_notification=True)
@@ -450,7 +451,8 @@ class ForceUpgrader():
     def _run_force_upgrade_as_operation(self, app, packages):
         """Start an operation for force upgrading."""
         name = gettext_noop('Updating app packages')
-        operation = operation_module.manager.new(app.app_id, name,
+        operation = operation_module.manager.new(f'{app.app_id}-force-upgrade',
+                                                 app.app_id, name,
                                                  app.force_upgrade, [packages],
                                                  show_message=False,
                                                  show_notification=False)

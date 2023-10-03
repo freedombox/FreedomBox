@@ -264,8 +264,9 @@ def _warn_about_low_ram_space(request):
 def _start_background_diagnostics(request):
     """Start daily diagnostics as a background operation."""
     operation = operation_module.manager.new(
-        'diagnostics', gettext_noop('Running background diagnostics'),
-        _run_background_diagnostics, [], show_message=False,
+        op_id='diagnostics-full', app_id='diagnostics',
+        name=gettext_noop('Running background diagnostics'),
+        target=_run_background_diagnostics, [], show_message=False,
         show_notification=False)
     operation.join()
 
