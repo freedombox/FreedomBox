@@ -115,7 +115,7 @@ class DropinConfigs(app_module.FollowerComponent):
                 result = (etc_path.is_symlink()
                           and etc_path.readlink() == target)
 
-            check_id = f'config-{etc_path}'
+            check_id = f'dropin-config-{etc_path}'
             result_string = Result.PASSED if result else Result.FAILED
             template = _('Static configuration {etc_path} is setup properly')
             description = format_lazy(template, etc_path=str(etc_path))

@@ -263,11 +263,16 @@ def _warn_about_low_ram_space(request):
 
 def _start_background_diagnostics(request):
     """Start daily diagnostics as a background operation."""
-    operation = operation_module.manager.new(
-        op_id='diagnostics-full', app_id='diagnostics',
-        name=gettext_noop('Running background diagnostics'),
-        target=_run_background_diagnostics, [], show_message=False,
-        show_notification=False)
+    try:
+        operation = operation_module.manager.new(
+            op_id='diagnostics-full', app_id='diagnostics',
+            name=gettext_noop('Running background diagnostics'),
+            target=_run_background_diagnostics, [], show_message=False,
+            show_notification=False)
+    except KeyError:
+        logger.warning('Diagnostics are already running')
+        return
+
     operation.join()
 
 
@@ -294,71 +299,34 @@ def _run_background_diagnostics():
     with running_task_lock:
         running_task = None
 
-    exception_count = 0
-    error_count = 0
-    failure_count = 0
-    warning_count = 0
+    issue_count = 0
+    severity = 'warning'
     for _app_id, app_data in results.items():
         if app_data['exception']:
-            exception_count += 1
-            continue
-
-        for check in app_data['diagnosis']:
-            if check.result == Result.ERROR:
-                error_count += 1
-            elif check.result == Result.FAILED:
-                failure_count += 1
-            elif check.result == Result.WARNING:
-                warning_count += 1
-
-    notification_id = 'diagnostics-background'
-    if exception_count > 0:
-        severity = 'error'
-        issue_count = exception_count
-        if exception_count > 1:
-            issue_type = 'translate:exceptions'
+            issue_count += 1
+            severity = 'error'
         else:
-            issue_type = 'translate:exception'
+            for check in app_data['diagnosis']:
+                if check.result != Result.PASSED:
+                    if check.result != Result.WARNING:
+                        severity = 'error'
 
-    elif error_count > 0:
-        severity = 'error'
-        issue_count = error_count
-        if error_count > 1:
-            issue_type = 'translate:errors'
-        else:
-            issue_type = 'translate:error'
+                    issue_count += 1
 
-    elif failure_count > 0:
-        severity = 'error'
-        issue_count = failure_count
-        if failure_count > 1:
-            issue_type = 'translate:failures'
-        else:
-            issue_type = 'translate:failure'
+    if not issue_count:
+        # Remove any previous notifications if there are no issues.
+        try:
+            Notification.get('diagnostics-background').delete()
+        except KeyError:
+            pass
 
-    elif warning_count > 0:
-        severity = 'warning'
-        issue_count = warning_count
-        if warning_count > 1:
-            issue_type = 'translate:warnings'
-        else:
-            issue_type = 'translate:warning'
-
-    else:
-        # Don't display a notification if there are no issues.
         return
 
     message = gettext_noop(
         # xgettext:no-python-format
-        'Background diagnostics completed with {issue_count} {issue_type}')
-    title = gettext_noop(
-        # xgettext:no-python-format
-        'Background diagnostics results')
-    data = {
-        'app_icon': 'fa-heartbeat',
-        'issue_count': issue_count,
-        'issue_type': issue_type,
-    }
+        'Found {issue_count} issues during routine tests.')
+    title = gettext_noop('Diagnostics results')
+    data = {'app_icon': 'fa-heartbeat', 'issue_count': issue_count}
     actions = [{
         'type': 'link',
         'class': 'primary',
@@ -367,7 +335,7 @@ def _run_background_diagnostics():
     }, {
         'type': 'dismiss'
     }]
-    note = Notification.update_or_create(id=notification_id,
+    note = Notification.update_or_create(id='diagnostics-background',
                                          app_id='diagnostics',
                                          severity=severity, title=title,
                                          message=message, actions=actions,

@@ -249,12 +249,12 @@ def test_app_set_enabled(app_with_components):
 def test_app_diagnose(app_with_components):
     """Test running diagnostics on an app."""
     results = app_with_components.diagnose()
-    assert results[0].check_id == 'test-result-test-leader-1'
-    assert results[0].description == 'test-result-test-leader-1'
-    assert results[0].result == Result.PASSED
-    assert results[1].check_id == 'test-result-test-leader-2'
-    assert results[1].description == 'test-result-test-leader-2'
-    assert results[1].result == Result.PASSED
+    assert results == [
+        DiagnosticCheck('test-result-test-leader-1',
+                        'test-result-test-leader-1', Result.PASSED),
+        DiagnosticCheck('test-result-test-leader-2',
+                        'test-result-test-leader-2', Result.PASSED),
+    ]
 
 
 def test_app_has_diagnostics(app_with_components):

@@ -216,8 +216,10 @@ def _is_release_file_available(protocol: str, dist: str,
     if backports:
         dist += '-backports'
 
-    result = check_url(RELEASE_FILE_URL.format(dist), wrapper=wrapper)
-    return result == 'passed'
+    try:
+        return check_url(RELEASE_FILE_URL.format(dist), wrapper=wrapper)
+    except FileNotFoundError:
+        return False
 
 
 def _add_backports_sources(sources_list: str, protocol: str, dist: str):

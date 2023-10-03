@@ -210,7 +210,7 @@ class Packages(app_module.FollowerComponent):
             try:
                 package_name = package_expression.actual()
             except MissingPackageError:
-                check_id = f'package-{package_expression}'
+                check_id = f'package-available-{package_expression}'
                 description = _(
                     'Package {expression} is not available for '
                     'install').format(expression=package_expression)
@@ -226,7 +226,7 @@ class Packages(app_module.FollowerComponent):
                 if package.candidate.is_installed:
                     result = Result.PASSED
 
-            check_id = f'package-{package_name}'
+            check_id = f'package-latest-{package_name}'
             description = _('Package {package_name} is the latest version '
                             '({latest_version})').format(
                                 package_name=package_name,

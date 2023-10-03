@@ -131,7 +131,7 @@ class Firewall(app.FollowerComponent):
                  for port_number, protocol in port_detail['details']))
 
             # Internal zone
-            check_id = f'firewall-port-{port}-internal'
+            check_id = f'firewall-port-internal-{port}'
             result = Result.PASSED if port in internal_ports else Result.FAILED
             template = _(
                 'Port {name} ({details}) available for internal networks')
@@ -139,20 +139,22 @@ class Firewall(app.FollowerComponent):
             results.append(DiagnosticCheck(check_id, description, result))
 
             # External zone
-            check_id = f'firewall-port-{port}-external'
             if self.is_external:
+                check_id = f'firewall-port-external-available-{port}'
                 result = Result.PASSED \
                     if port in external_ports else Result.FAILED
                 template = _(
                     'Port {name} ({details}) available for external networks')
                 description = format_lazy(template, name=port, details=details)
             else:
+                check_id = f'firewall-port-external-unavailable-{port}'
                 result = Result.PASSED \
                     if port not in external_ports else Result.FAILED
                 template = _(
                     'Port {name} ({details}) unavailable for external networks'
                 )
                 description = format_lazy(template, name=port, details=details)
+
             results.append(DiagnosticCheck(check_id, description, result))
 
         return results

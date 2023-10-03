@@ -8,6 +8,7 @@ from unittest.mock import call, patch
 import pytest
 
 from plinth.app import App
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 
@@ -153,34 +154,46 @@ def test_diagnose(get_enabled_services, get_port_details):
     firewall = Firewall('test-firewall-1', ports=['test-port1', 'test-port2'],
                         is_external=False)
     results = firewall.diagnose()
-    assert (results[0].description == 'Port test-port1 (1234/tcp, 1234/udp) '
-            'available for internal networks')
-    assert results[0].result == 'passed'
-    assert (results[1].description == 'Port test-port1 (1234/tcp, 1234/udp) '
-            'unavailable for external networks')
-    assert results[1].result == 'passed'
-    assert (results[2].description == 'Port test-port2 (2345/udp) available '
-            'for internal networks')
-    assert results[2].result == 'failed'
-    assert (results[3].description == 'Port test-port2 (2345/udp) unavailable '
-            'for external networks')
-    assert results[3].result == 'failed'
+    assert results == [
+        DiagnosticCheck(
+            'firewall-port-internal-test-port1',
+            'Port test-port1 (1234/tcp, 1234/udp) available for internal '
+            'networks', Result.PASSED),
+        DiagnosticCheck(
+            'firewall-port-external-unavailable-test-port1',
+            'Port test-port1 (1234/tcp, 1234/udp) unavailable for external '
+            'networks', Result.PASSED),
+        DiagnosticCheck(
+            'firewall-port-internal-test-port2',
+            'Port test-port2 (2345/udp) available for internal networks',
+            Result.FAILED),
+        DiagnosticCheck(
+            'firewall-port-external-unavailable-test-port2',
+            'Port test-port2 (2345/udp) unavailable for external networks',
+            Result.FAILED),
+    ]
 
     firewall = Firewall('test-firewall-1', ports=['test-port3', 'test-port4'],
                         is_external=True)
     results = firewall.diagnose()
-    assert (results[0].description == 'Port test-port3 (3456/tcp) available '
-            'for internal networks')
-    assert results[0].result == 'passed'
-    assert (results[1].description == 'Port test-port3 (3456/tcp) available '
-            'for external networks')
-    assert results[1].result == 'passed'
-    assert (results[2].description == 'Port test-port4 (4567/udp) available '
-            'for internal networks')
-    assert results[2].result == 'failed'
-    assert (results[3].description == 'Port test-port4 (4567/udp) available '
-            'for external networks')
-    assert results[3].result == 'failed'
+    assert results == [
+        DiagnosticCheck(
+            'firewall-port-internal-test-port3',
+            'Port test-port3 (3456/tcp) available for internal networks',
+            Result.PASSED),
+        DiagnosticCheck(
+            'firewall-port-external-available-test-port3',
+            'Port test-port3 (3456/tcp) available for external networks',
+            Result.PASSED),
+        DiagnosticCheck(
+            'firewall-port-internal-test-port4',
+            'Port test-port4 (4567/udp) available for internal networks',
+            Result.FAILED),
+        DiagnosticCheck(
+            'firewall-port-external-available-test-port4',
+            'Port test-port4 (4567/udp) available for external networks',
+            Result.FAILED),
+    ]
 
 
 def test_local_protection_init():

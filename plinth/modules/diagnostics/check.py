@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Diagnostic check data type
-"""
+"""Diagnostic check data type."""
 
 from dataclasses import dataclass
 from enum import StrEnum
@@ -16,7 +14,6 @@ class Result(StrEnum):
     ERROR = 'error'
 
 
-# TODO: Add parameters for test.
 # TODO: Description should not be translated until we need to display it.
 
 

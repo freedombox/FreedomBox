@@ -101,7 +101,7 @@ class Daemon(app.LeaderComponent):
         """Check if a daemon is running."""
         from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
-        check_id = f'daemon-{self.unit}-running'
+        check_id = f'daemon-running-{self.unit}'
         result = Result.PASSED if self.is_running() else Result.FAILED
 
         template = gettext_lazy('Service {service_name} is running')
@@ -159,13 +159,13 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     result = _check_port(port, kind, listen_address)
 
     if listen_address:
-        check_id = f'daemon-{kind}-{port}-{listen_address}'
+        check_id = f'daemon-listening-address-{kind}-{port}-{listen_address}'
         template = gettext_lazy(
             'Listening on {kind} port {listen_address}:{port}')
         description = format_lazy(template, kind=kind,
                                   listen_address=listen_address, port=port)
     else:
-        check_id = f'daemon-{kind}-{port}'
+        check_id = f'daemon-listening-{kind}-{port}'
         template = gettext_lazy('Listening on {kind} port {port}')
         description = format_lazy(template, kind=kind, port=port)
 
@@ -228,21 +228,16 @@ def diagnose_netcat(host, port, input='', negate=False):
                                    stderr=subprocess.PIPE)
         process.communicate(input=input.encode())
         if process.returncode != 0:
-            result = Result.FAILED
-            if negate:
-                result = Result.PASSED
-
+            result = Result.FAILED if not negate else Result.PASSED
         else:
-            result = Result.PASSED
-            if negate:
-                result = Result.FAILED
-
+            result = Result.PASSED if not negate else Result.FAILED
     except Exception:
         result = Result.FAILED
 
     check_id = f'daemon-netcat-{host}-{port}'
     description = _('Connect to {host}:{port}')
     if negate:
+        check_id = f'daemon-netcat-negate-{host}-{port}'
         description = _('Cannot connect to {host}:{port}')
 
     return DiagnosticCheck(check_id, description.format(host=host, port=port),
