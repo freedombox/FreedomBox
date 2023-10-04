@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  {% if not is_task_running %}
+    <div class="btn-toolbar">
+      <form class="form form-diagnostics-full" method="post"
+            action="{% url 'diagnostics:full' %}">
+        {% csrf_token %}
+
+        <input type="submit" class="btn btn-primary"
+               value="{% trans "Re-run Diagnostics" %}"/>
+      </form>
+    </div>
+  {% else %}
+    <p>{% trans "Diagnostics test is currently running" %}</p>
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active
+                  w-{{ results.progress_percentage }}"
+           role="progressbar" aria-valuemin="0" aria-valuemax="100"
+           aria-valuenow="{{ results.progress_percentage }}">
+        {{ results.progress_percentage }}%
+      </div>
+    </div>
+
+  {% endif %}
+
+  {% if results %}
+    <h3>{% trans "Results" %}</h3>
+    {% for app_id, app_data in results.results.items %}
+      <h4>
+        {% blocktrans with app_name=app_data.name %}
+          App: {{app_name}}
+        {% endblocktrans %}
+      </h4>
+
+      {% if app_data.diagnosis %}
+        {% include "diagnostics_results.html" with results=app_data.diagnosis %}
+      {% elif app_data.exception %}
+        <div class="alert alert-danger" role="alert">
+          {{ app_data.exception }}
+        </div>
+      {% else %}
+        <p><span class="fa fa-hourglass-o"></span></p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}

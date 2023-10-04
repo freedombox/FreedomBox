@@ -29,12 +29,8 @@ _description = [
 
 logger = logging.Logger(__name__)
 
-running_task = None
-
 current_results = {}
-
 results_lock = threading.Lock()
-running_task_lock = threading.Lock()
 
 
 class DiagnosticsApp(app_module.App):
@@ -72,7 +68,7 @@ class DiagnosticsApp(app_module.App):
 
         # Run diagnostics once a day
         interval = 180 if cfg.develop else 86400
-        glib.schedule(interval, _start_background_diagnostics)
+        glib.schedule(interval, start_diagnostics, in_thread=False)
 
     def setup(self, old_version):
         """Install and configure the app."""
@@ -90,19 +86,7 @@ class DiagnosticsApp(app_module.App):
         return results
 
 
-def start_task():
-    """Start the run task in a separate thread."""
-    global running_task
-    with running_task_lock:
-        if running_task:
-            raise Exception('Task already running')
-
-        running_task = threading.Thread(target=run_on_all_enabled_modules)
-
-    running_task.start()
-
-
-def run_on_all_enabled_modules():
+def _run_on_all_enabled_modules():
     """Run diagnostics on all the enabled modules and store the result."""
     global current_results
 
@@ -157,10 +141,6 @@ def run_on_all_enabled_modules():
             current_results['results'][app_id].update(app_results)
             current_results['progress_percentage'] = \
                 int((current_index + 1) * 100 / len(apps))
-
-    global running_task
-    with running_task_lock:
-        running_task = None
 
 
 def _get_memory_info_from_cgroups():
@@ -261,43 +241,27 @@ def _warn_about_low_ram_space(request):
                                   actions=actions, data=data, group='admin')
 
 
-def _start_background_diagnostics(request):
-    """Start daily diagnostics as a background operation."""
+def start_diagnostics(data: None = None):
+    """Start full diagnostics as a background operation."""
+    logger.info('Running full diagnostics')
     try:
-        operation = operation_module.manager.new(
-            op_id='diagnostics-full', app_id='diagnostics',
-            name=gettext_noop('Running background diagnostics'),
-            target=_run_background_diagnostics, [], show_message=False,
-            show_notification=False)
+        operation_module.manager.new(op_id='diagnostics-full',
+                                     app_id='diagnostics',
+                                     name=gettext_noop('Running diagnostics'),
+                                     target=_run_diagnostics,
+                                     show_message=False,
+                                     show_notification=False)
     except KeyError:
         logger.warning('Diagnostics are already running')
-        return
-
-    operation.join()
 
 
-def _run_background_diagnostics():
+def _run_diagnostics():
     """Run diagnostics and notify for failures."""
     from plinth.notification import Notification
 
-    # In case diagnostics are already running, skip the background run for
-    # today.
-    global running_task
-    with running_task_lock:
-        if running_task:
-            logger.warning('Diagnostics are already running, skip background '
-                           'diagnostics for today.')
-            return
-
-        # Set something in the global so we won't be interrupted.
-        running_task = 'background'
-
-    run_on_all_enabled_modules()
+    _run_on_all_enabled_modules()
     with results_lock:
         results = current_results['results']
-
-    with running_task_lock:
-        running_task = None
 
     issue_count = 0
     severity = 'warning'
@@ -331,7 +295,7 @@ def _run_background_diagnostics():
         'type': 'link',
         'class': 'primary',
         'text': gettext_noop('Go to diagnostics results'),
-        'url': 'diagnostics:index'
+        'url': 'diagnostics:full'
     }, {
         'type': 'dismiss'
     }]

@@ -10,7 +10,9 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
+from django.views.generic import TemplateView
 
+from plinth import operation
 from plinth.app import App
 from plinth.modules import diagnostics
 from plinth.views import AppView
@@ -26,22 +28,41 @@ class DiagnosticsView(AppView):
 
     def post(self, request):
         """Start diagnostics."""
-        with diagnostics.running_task_lock:
-            if not diagnostics.running_task:
-                diagnostics.start_task()
-
+        diagnostics.start_diagnostics()
         return HttpResponseRedirect(reverse('diagnostics:index'))
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
-        with diagnostics.running_task_lock:
-            is_task_running = diagnostics.running_task is not None
-
         with diagnostics.results_lock:
             results = diagnostics.current_results
 
         context = super().get_context_data(**kwargs)
         context['has_diagnostics'] = False
+        context['results'] = results
+        return context
+
+
+class DiagnosticsFullView(TemplateView):
+    """View to run full diagnostics."""
+
+    template_name = 'diagnostics_full.html'
+
+    def post(self, request):
+        """Start diagnostics."""
+        diagnostics.start_diagnostics()
+        return self.get(self, request)
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        try:
+            is_task_running = bool(operation.manager.get('diagnostics-full'))
+        except KeyError:
+            is_task_running = False
+
+        with diagnostics.results_lock:
+            results = diagnostics.current_results
+
+        context = super().get_context_data(**kwargs)
         context['is_task_running'] = is_task_running
         context['results'] = results
         context['refresh_page_sec'] = 3 if is_task_running else None
