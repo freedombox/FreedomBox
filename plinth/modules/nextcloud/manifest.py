@@ -46,4 +46,14 @@ clients = [{
     }]
 }]
 
-backup = {}
+backup = {
+    'data': {
+        'directories': [
+            '/var/lib/containers/storage/volumes/nextcloud-volume-fbx/'
+        ],
+        'files': [
+            '/var/lib/plinth/backups-data/nextcloud-database.sql',
+            '/etc/redis/redis.conf'
+        ]
+    }
+}

@@ -4,6 +4,7 @@
 import os
 import pathlib
 import random
+import re
 import string
 import subprocess
 import time
@@ -31,6 +32,9 @@ NEXTCLOUD_CRON_SERVICE_FILE = pathlib.Path(
     f'{SYSTEMD_LOCATION}nextcloud-cron-fbx.service')
 NEXTCLOUD_CRON_TIMER_FILE = pathlib.Path(
     f'{SYSTEMD_LOCATION}nextcloud-cron-fbx.timer')
+
+DB_BACKUP_FILE = pathlib.Path(
+    '/var/lib/plinth/backups-data/nextcloud-database.sql')
 
 
 @privileged
@@ -146,11 +150,22 @@ def _create_database(db_password):
     _db_file_path = pathlib.Path('/var/lib/mysql/nextcloud_fbx')
     if _db_file_path.exists():
         return
-    query = f'''CREATE USER '{DB_USER}'@'{CONTAINER_IP}'
-IDENTIFIED BY'{db_password}';
-CREATE DATABASE {DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-GRANT ALL PRIVILEGES ON {DB_NAME}.* TO '{DB_USER}'@'{CONTAINER_IP}';
-FLUSH PRIVILEGES;'''
+
+    query = f'''CREATE DATABASE {DB_NAME} CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+'''
+    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                   check=True)
+    _set_db_privileges(db_password)
+
+
+def _set_db_privileges(db_password):
+    """Create user, set password and provide permissions on the database."""
+    query = f'''GRANT ALL PRIVILEGES ON {DB_NAME}.* TO
+  '{DB_USER}'@'{CONTAINER_IP}'
+  IDENTIFIED BY'{db_password}';
+FLUSH PRIVILEGES;
+'''
     subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
                    check=True)
 
@@ -261,10 +276,11 @@ def _remove_db_socket():
 
 def _drop_database():
     """Drop the mysql database that was created during install."""
-    query = f'''DROP DATABASE {DB_NAME};
-DROP User '{DB_USER}'@'{CONTAINER_IP}';'''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    with action_utils.service_ensure_running('mysql'):
+        query = f'''DROP DATABASE {DB_NAME};
+    DROP User '{DB_USER}'@'{CONTAINER_IP}';'''
+        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                       check=True)
 
 
 def _generate_secret_key(length=64, chars=None):
@@ -272,3 +288,62 @@ def _generate_secret_key(length=64, chars=None):
     chars = chars or (string.ascii_letters + string.digits)
     rand = random.SystemRandom()
     return ''.join(rand.choice(chars) for _ in range(length))
+
+
+def _set_maintenance_mode(on: bool):
+    """Turn maintenance mode on or off."""
+    _run_occ('maintenance:mode', '--on' if on else '--off')
+
+
+@privileged
+def dump_database():
+    """Dump database to file."""
+    _set_maintenance_mode(True)
+    DB_BACKUP_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with action_utils.service_ensure_running('mysql'):
+        with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
+            subprocess.run([
+                'mysqldump', '--add-drop-database', '--add-drop-table',
+                '--add-drop-trigger', '--single-transaction',
+                '--default-character-set=utf8mb4', '--user', 'root',
+                '--databases', DB_NAME
+            ], stdout=file_handle, check=True)
+    _set_maintenance_mode(False)
+
+
+@privileged
+def restore_database():
+    """Restore database from file."""
+    with action_utils.service_ensure_running('mysql'):
+        with DB_BACKUP_FILE.open('r', encoding='utf-8') as file_handle:
+            subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
+                           check=True)
+
+        _set_db_privileges(_get_dbpassword())
+
+    action_utils.service_restart('redis-server')
+    _set_maintenance_mode(False)
+
+    # Attempts to update UUIDs of user and group entries. By default,
+    # the command attempts to update UUIDs that have been invalidated by
+    # a migration step.
+    _run_occ('ldap:update-uuid')
+
+    # Update the systems data-fingerprint after a backup is restored
+    _run_occ('maintenance:data-fingerprint')
+
+
+def _get_dbpassword():
+    """Return the database password from config.php.
+
+    OCC cannot run unless Nextcloud can already connect to the database.
+    """
+    config_file = ('/var/lib/containers/storage/volumes/nextcloud-volume-fbx'
+                   '/_data/config/config.php')
+    with open(config_file, 'r', encoding='utf-8') as config:
+        config_contents = config.read()
+
+    pattern = r"'{}'\s*=>\s*'([^']*)'".format(re.escape('dbpassword'))
+    match = re.search(pattern, config_contents)
+
+    return match.group(1)

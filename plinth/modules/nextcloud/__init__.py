@@ -8,6 +8,7 @@ from plinth import frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon, SharedDaemon
 from plinth.modules.apache.components import Webserver, diagnose_url
+from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 from plinth.package import Packages
@@ -104,6 +105,10 @@ class NextcloudApp(app_module.App):
         daemon = SharedDaemon('shared-daemon-nextcloud-mysql', 'mysql')
         self.add(daemon)
 
+        backup_restore = NextcloudBackupRestore('backup-restore-nextcloud',
+                                                **manifest.backup)
+        self.add(backup_restore)
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -121,3 +126,17 @@ class NextcloudApp(app_module.App):
         results = super().diagnose()
         results.append(diagnose_url('docker.com'))
         return results
+
+
+class NextcloudBackupRestore(BackupRestore):
+    """Component to backup/restore Nextcloud."""
+
+    def backup_pre(self, packet):
+        """Save database contents."""
+        super().backup_pre(packet)
+        privileged.dump_database()
+
+    def restore_post(self, packet):
+        """Restore database contents."""
+        super().restore_post(packet)
+        privileged.restore_database()
