@@ -44,39 +44,10 @@ APT_PREFERENCES_APPS = \
 Explanation: matrix-synapse shall not be available in Debian stable but
 Explanation: only in backports. Upgrade priority of packages that have needed
 Explanation: versions only in backports.
-Explanation: matrix-synapse >= 1.47.0-2 requires python3-frozendict >= 1.2-3
-Package: python3-frozendict
-Pin: release a=bullseye-backports
-Pin-Priority: 500
-
-Explanation: matrix-synapse >= 1.55.0-1 requires
-Explanation: python3-typing-extensions >= 3.10
-Package: python3-typing-extensions
-Pin: release a=bullseye-backports
-Pin-Priority: 500
-
-Explanation: matrix-synapse >= 1.55.0-2 requires
-Explanation: python3-jinja2 >= 3.0~
-Package: python3-jinja2
-Pin: release a=bullseye-backports
-Pin-Priority: 500
-
-Explanation: python3-jinja2 >= 3.0~ requires
-Explanation: python3-markupsafe >= 2.0
-Package: python3-markupsafe
-Pin: release a=bullseye-backports
-Pin-Priority: 500
-
-Explanation: matrix-synapse >= 1.59.1-1 requires
-Explanation: python3-unpaddedbase64 >= 2.1.0~
-Package: python3-unpaddedbase64
-Pin: release a=bullseye-backports
-Pin-Priority: 500
-
-Explanation: matrix-synapse >= 1.65.0-1 requires
-Explanation: python3-canonicaljson >= 1.6.2~
+Explanation: matrix-synapse >= 1.92.0-3 requires
+Explanation: python3-canonicaljson >= 2.0.0~
 Package: python3-canonicaljson
-Pin: release a=bullseye-backports
+Pin: release n=bookworm-backports
 Pin-Priority: 500
 '''
 

@@ -53,7 +53,7 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
-    _version = 17
+    _version = 18
 
     can_be_disabled = False
 
