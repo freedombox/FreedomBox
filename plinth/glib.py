@@ -9,6 +9,8 @@ import threading
 from plinth import dbus, network
 from plinth.utils import import_from_gi
 
+from . import cfg
+
 glib = import_from_gi('GLib', '2.0')
 
 _thread = None
@@ -66,5 +68,10 @@ def schedule(interval, method, data=None, in_thread=True, repeat=True):
         thread = threading.Thread(target=_runner)
         thread.start()
         return repeat
+
+    # When running in development mode, reduce the interval for tasks so that
+    # they are triggered quickly and frequently to facilitate debugging.
+    if cfg.develop and interval > 180:
+        interval = 180
 
     glib.timeout_add(int(interval * 1000), _run_bare_or_thread, None)

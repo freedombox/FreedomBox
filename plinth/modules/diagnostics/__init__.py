@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, daemon, glib, menu
+from plinth import daemon, glib, menu
 from plinth import operation as operation_module
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
@@ -63,12 +63,10 @@ class DiagnosticsApp(app_module.App):
     def post_init():
         """Perform post initialization operations."""
         # Check periodically for low RAM space
-        interval = 180 if cfg.develop else 3600
-        glib.schedule(interval, _warn_about_low_ram_space)
+        glib.schedule(3600, _warn_about_low_ram_space)
 
         # Run diagnostics once a day
-        interval = 180 if cfg.develop else 86400
-        glib.schedule(interval, start_diagnostics, in_thread=False)
+        glib.schedule(24 * 3600, start_diagnostics, in_thread=False)
 
     def setup(self, old_version):
         """Install and configure the app."""
