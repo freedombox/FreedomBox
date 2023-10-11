@@ -4,6 +4,7 @@ Module to handle glib main loop and provide asynchronous utilities.
 """
 
 import logging
+import random
 import threading
 
 from plinth import dbus, network
@@ -49,7 +50,8 @@ def _run():
     logger.info('Glib main loop thread exited.')
 
 
-def schedule(interval, method, data=None, in_thread=True, repeat=True):
+def schedule(interval, method, data=None, in_thread=True, repeat=True,
+             add_jitter=True):
     """Schedule a recurring call to a method with fixed interval."""
 
     def _runner():
@@ -73,5 +75,11 @@ def schedule(interval, method, data=None, in_thread=True, repeat=True):
     # they are triggered quickly and frequently to facilitate debugging.
     if cfg.develop and interval > 180:
         interval = 180
+
+    if add_jitter:
+        # Add or subtract 5% random jitter to given interval to avoid many
+        # tasks running at exactly the same time (and competing for DB, disk,
+        # network, etc.).
+        interval *= 0.95 + (random.random() * 0.1)
 
     glib.timeout_add(int(interval * 1000), _run_bare_or_thread, None)
