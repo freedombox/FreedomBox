@@ -5,6 +5,17 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 
+def _get_phone_regions():
+    """Return choice field choices for phone regions."""
+    try:
+        from iso3166 import countries  # type: ignore
+        phone_regions = [(country.alpha2, country.name)
+                         for country in countries]
+        return sorted(phone_regions)
+    except ImportError:
+        return [('US', 'United States of America')]
+
+
 class NextcloudForm(forms.Form):
     """Nextcloud configuration form."""
 
@@ -19,3 +30,9 @@ class NextcloudForm(forms.Form):
             'and the minimum required length is <strong>10 characters'
             '</strong>. Leave this field blank to keep the current password.'),
         required=False, widget=forms.PasswordInput, min_length=10)
+
+    default_phone_region = forms.ChoiceField(
+        label=_('Default phone region'), required=False,
+        help_text=_('The default phone region is required to validate phone '
+                    'numbers in the profile settings without a country code.'),
+        choices=_get_phone_regions)

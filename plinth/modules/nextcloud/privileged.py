@@ -126,6 +126,24 @@ def set_admin_password(password: str):
     ], check=True)
 
 
+@privileged
+def get_default_phone_region():
+    """"Get the value of default_phone_region."""
+    try:
+        default_phone_region = _run_occ('config:system:get',
+                                        'default_phone_region',
+                                        capture_output=True)
+        return default_phone_region.stdout.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+
+@privileged
+def set_default_phone_region(region: str):
+    """"Set the value of default_phone_region."""
+    _run_occ('config:system:set', 'default_phone_region', '--value', region)
+
+
 def _configure_firewall(action, interface_name):
     subprocess.run([
         'firewall-cmd', '--permanent', '--zone=trusted',

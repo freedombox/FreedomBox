@@ -23,7 +23,10 @@ class NextcloudAppView(AppView):
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial.update({'domain': privileged.get_domain()})
+        initial.update({
+            'domain': privileged.get_domain(),
+            'default_phone_region': privileged.get_default_phone_region()
+        })
         return initial
 
     def form_valid(self, form):
@@ -49,6 +52,12 @@ class NextcloudAppView(AppView):
                     self.request,
                     _('Password update failed. Please choose a stronger '
                       'password.'))
+
+        if _value_changed('default_phone_region'):
+            privileged.set_default_phone_region(
+                new_config['default_phone_region'])
+            is_changed = True
+
         if is_changed:
             messages.success(self.request, _('Configuration updated.'))
 
