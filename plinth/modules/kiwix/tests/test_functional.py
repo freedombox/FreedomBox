@@ -3,94 +3,97 @@
 Functional, browser based tests for Kiwix app.
 """
 
-import pkg_resources
+import pathlib
+from time import sleep
+
 import pytest
 
-from time import sleep
-from plinth.modules.kiwix.tests.test_privileged import ZIM_ID
-
 from plinth.tests import functional
+
+from .test_privileged import ZIM_ID
 
 pytestmark = [pytest.mark.apps, pytest.mark.sso, pytest.mark.kiwix]
 
 _default_url = functional.config['DEFAULT']['url']
 
-ZIM_ID = 'bc4f8cdf-5626-2b13-3860-0033deddfbea'
+_data_dir = pathlib.Path(__file__).parent / 'data'
 
 
 class TestKiwixApp(functional.BaseAppTests):
+    """Basic functional tests for Kiwix app."""
+
     app_name = 'kiwix'
     has_service = True
     has_web = True
 
-    def test_add_delete_content_package(self, session_browser):
+    def test_add_delete_package(self, session_browser):
         """Test adding/deleting content package to the library."""
         functional.app_enable(session_browser, 'kiwix')
 
-        zim_file = pkg_resources.resource_filename(
-            'plinth.modules.kiwix.tests', 'data/FreedomBox.zim')
-        _add_content_package(session_browser, zim_file)
-        assert _is_content_package_listed(session_browser, 'freedombox')
-        assert _is_content_package_available(session_browser, 'FreedomBox')
+        zim_file = _data_dir / 'FreedomBox.zim'
+        _add_package(session_browser, str(zim_file))
+        assert _is_package_listed(session_browser, 'freedombox')
+        assert _is_package_available(session_browser, 'FreedomBox')
 
-        _delete_content_package(session_browser, ZIM_ID)
-        assert not _is_content_package_listed(session_browser, 'freedombox')
-        assert not _is_content_package_available(session_browser, 'FreedomBox')
+        _delete_package(session_browser, ZIM_ID)
+        assert not _is_package_listed(session_browser, 'freedombox')
+        assert not _is_package_available(session_browser, 'FreedomBox')
 
     @pytest.mark.backups
     def test_backup_restore(self, session_browser):
         """Test backing up and restoring."""
         functional.app_enable(session_browser, 'kiwix')
 
-        zim_file = pkg_resources.resource_filename(
-            'plinth.modules.kiwix.tests', 'data/FreedomBox.zim')
-        _add_content_package(session_browser, zim_file)
+        zim_file = _data_dir / 'FreedomBox.zim'
+        _add_package(session_browser, str(zim_file))
         functional.backup_create(session_browser, 'kiwix', 'test_kiwix')
 
-        _delete_content_package(session_browser, ZIM_ID)
+        _delete_package(session_browser, ZIM_ID)
         functional.backup_restore(session_browser, 'kiwix', 'test_kiwix')
 
-        assert _is_content_package_listed(session_browser, 'freedombox')
-        assert _is_content_package_available(session_browser, 'FreedomBox')
+        assert _is_package_listed(session_browser, 'freedombox')
+        assert _is_package_available(session_browser, 'FreedomBox')
 
     def test_add_invalid_zim_file(self, session_browser):
         """Test handling of invalid zim files."""
         functional.app_enable(session_browser, 'kiwix')
 
-        zim_file = pkg_resources.resource_filename(
-            'plinth.modules.kiwix.tests', 'data/invalid.zim')
-        _add_content_package(session_browser, zim_file)
+        zim_file = _data_dir / 'invalid.zim'
+        _add_package(session_browser, str(zim_file))
 
-        assert not _is_content_package_listed(session_browser, 'invalid')
+        assert not _is_package_listed(session_browser, 'invalid')
 
 
-def _add_content_package(browser, file_name):
-    browser.links.find_by_href('/plinth/apps/kiwix/content/add/').first.click()
+def _add_package(browser, file_name):
+    """Add a package by uploading the ZIM file in kiwix app page."""
+    browser.links.find_by_href('/plinth/apps/kiwix/package/add/').first.click()
     browser.attach_file('kiwix-file', file_name)
     functional.submit(browser, form_class='form-kiwix')
 
 
-def _is_content_package_available(browser, title) -> bool:
+def _is_package_available(browser, title) -> bool:
+    """Check whether a ZIM file is available in Kiwix web interface."""
     browser.visit(f'{_default_url}/kiwix')
     sleep(1)  # Allow time for the books to appear
     titles = browser.find_by_id('book__title')
-    print(len(titles))
-    print([title.value for title in titles])
-    return any(map(lambda e: e.value == title, titles))
+    return any(element.value == title for element in titles)
 
 
-def _is_content_package_listed(browser, name) -> bool:
+def _is_package_listed(browser, name) -> bool:
+    """Return whether a content package is list in kiwix app page."""
     functional.nav_to_module(browser, 'kiwix')
     links_found = browser.links.find_by_partial_href(f'/kiwix/viewer#{name}')
     return len(links_found) == 1
 
 
-def _delete_content_package(browser, zim_id):
+def _delete_package(browser, zim_id):
+    """Delete a content package from the kiwix app page."""
     functional.nav_to_module(browser, 'kiwix')
     link = browser.links.find_by_href(
-        f'/plinth/apps/kiwix/content/{zim_id}/delete/')
+        f'/plinth/apps/kiwix/package/{zim_id}/delete/')
     if not link:
         raise ValueError('ZIM file missing!')
+
     link.first.click()
     functional.submit(browser, form_class='form-delete')
 

@@ -5,13 +5,14 @@ FreedomBox app for Kiwix content server.
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import app as app_module, frontpage, menu, package
+from plinth import app as app_module
+from plinth import frontpage, menu, package
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.kiwix import manifest
-from plinth.modules.firewall.components import Firewall, FirewallLocalProtection
+from plinth.modules.firewall.components import (Firewall,
+                                                FirewallLocalProtection)
 from plinth.modules.users.components import UsersAndGroups
 
 from . import manifest, privileged
@@ -28,10 +29,12 @@ _description = [
       <li>Educational materials: PHET, TED Ed, Vikidia</li>
       <li>eBooks: Project Gutenberg</li>
       <li>Magazines: Low-tech Magazine</li>
-    </ul>''')
+    </ul>'''),
+    _('You can <a href="https://library.kiwix.org" target="_blank" '
+      'rel="noopener noreferrer">download</a> content packages from the Kiwix '
+      'project or <a href="https://openzim.org/wiki/Build_your_ZIM_file" '
+      'target="_blank" rel="noopener noreferrer">create</a> your own.'),
 ]
-
-SYSTEM_USER = 'kiwix'
 
 
 class KiwixApp(app_module.App):
@@ -116,6 +119,6 @@ class KiwixApp(app_module.App):
 
 
 def validate_file_name(file_name: str):
-    """Check if the content archive file has a valid extension."""
-    if not file_name.endswith(".zim"):
-        raise ValueError(f"Expected a ZIM file. Found {file_name}")
+    """Check if the content package file has a valid extension."""
+    if not file_name.endswith('.zim'):
+        raise ValueError(f'Expected a ZIM file. Found {file_name}')

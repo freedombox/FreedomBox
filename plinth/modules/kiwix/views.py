@@ -4,6 +4,7 @@ Views for the Kiwix module.
 """
 
 import logging
+import tempfile
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -27,21 +28,23 @@ logger = logging.getLogger(__name__)
 
 class KiwixAppView(views.AppView):
     """Serve configuration form."""
+
     app_id = 'kiwix'
     template_name = 'kiwix.html'
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['packages'] = privileged.list_content_packages()
+        context['packages'] = privileged.list_packages()
         return context
 
 
-class AddContentView(SuccessMessageMixin, FormView):
-    """View to add content in the form of ZIM files."""
-    form_class = forms.AddContentForm
+class AddPackageView(SuccessMessageMixin, FormView):
+    """View to add content package in the form of ZIM files."""
+
+    form_class = forms.AddPackageForm
     prefix = 'kiwix'
-    template_name = 'add-content-package.html'
+    template_name = 'kiwix-add-package.html'
     success_url = reverse_lazy('kiwix:index')
     success_message = _('Content package added.')
 
@@ -66,23 +69,26 @@ class AddContentView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Store the uploaded file."""
         multipart_file = self.request.FILES['kiwix-file']
-        zim_file_name = '/tmp/' + multipart_file.name
-        with open(zim_file_name, 'wb+') as zim_file:
-            for chunk in multipart_file.chunks():
-                zim_file.write(chunk)
 
-        try:
-            privileged.add_content(zim_file_name)
-        except Exception:
-            messages.error(self.request, _('Failed to add content package.'))
-            return redirect(reverse_lazy('kiwix:index'))
+        with tempfile.TemporaryDirectory() as temp_dir:
+            zim_file_name = temp_dir + '/' + multipart_file.name
+            with open(zim_file_name, 'wb+') as zim_file:
+                for chunk in multipart_file.chunks():
+                    zim_file.write(chunk)
+
+            try:
+                privileged.add_package(zim_file_name)
+            except Exception:
+                messages.error(self.request,
+                               _('Failed to add content package.'))
+                return redirect(reverse_lazy('kiwix:index'))
 
         return super().form_valid(form)
 
 
-def delete_content(request, zim_id):
+def delete_package(request, zim_id):
     """View to delete a library."""
-    packages = privileged.list_content_packages()
+    packages = privileged.list_packages()
     if zim_id not in packages:
         raise Http404
 
@@ -90,8 +96,8 @@ def delete_content(request, zim_id):
 
     if request.method == 'POST':
         try:
-            privileged.delete_content_package(zim_id)
-            messages.success(request, _(f'{name} deleted.'))
+            privileged.delete_package(zim_id)
+            messages.success(request, _('{name} deleted.').format(name=name))
         except Exception as error:
             messages.error(
                 request,
@@ -99,7 +105,7 @@ def delete_content(request, zim_id):
                     name=name, error=error))
         return redirect(reverse_lazy('kiwix:index'))
 
-    return TemplateResponse(request, 'delete-content-package.html', {
+    return TemplateResponse(request, 'kiwix-delete-package.html', {
         'title': app_module.App.get('kiwix').info.name,
         'name': name
     })

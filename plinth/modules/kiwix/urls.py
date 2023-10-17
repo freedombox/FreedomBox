@@ -9,8 +9,8 @@ from . import views
 
 urlpatterns = [
     re_path(r'^apps/kiwix/$', views.KiwixAppView.as_view(), name='index'),
-    re_path(r'^apps/kiwix/content/add/$', views.AddContentView.as_view(),
-            name='add-content'),
-    re_path(r'^apps/kiwix/content/(?P<zim_id>[a-zA-Z0-9-]+)/delete/$',
-            views.delete_content, name='delete-content'),
+    re_path(r'^apps/kiwix/package/add/$', views.AddPackageView.as_view(),
+            name='add-package'),
+    re_path(r'^apps/kiwix/package/(?P<zim_id>[a-zA-Z0-9-]+)/delete/$',
+            views.delete_package, name='delete-package'),
 ]

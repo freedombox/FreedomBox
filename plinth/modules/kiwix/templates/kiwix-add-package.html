@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      You can <a href="https://library.kiwix.org" target="_blank"
+      rel="noopener noreferrer">download</a> content packages from the Kiwix
+      project or <a href="https://openzim.org/wiki/Build_your_ZIM_file"
+      target="_blank" rel="noopener noreferrer">create</a> your own.
+    {% endblocktrans %}
+  </p>
+
+  {% if max_filesize %}
+    <div class="alert alert-warning" role="alert">
+      {% blocktrans trimmed %}
+        You have {{ max_filesize }} of free disk space available.
+      {% endblocktrans %}
+    </div>
+  {% endif %}
+
+  <form class="form form-kiwix" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Upload ZIM file" %}"/>
+  </form>
+
+{% endblock %}

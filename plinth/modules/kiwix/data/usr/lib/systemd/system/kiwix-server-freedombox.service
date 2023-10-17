@@ -13,7 +13,7 @@ Environment=HOME="/var/lib/kiwix-server-freedombox"
 Environment=LIBRARY_PATH="/var/lib/kiwix-server-freedombox/library_zim.xml"
 Environment=ARGS="--library --port=4201 --urlRootLocation=kiwix"
 ExecStartPre=sh -e -c "mkdir -p $HOME/content; library=$$(ls ${LIBRARY_PATH} 2>/dev/null || true); [ \"x$${library}\" = \"x\" ] && (mkdir -p \"${HOME}\" && echo '<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<library version=\"20110515\">\n</library>' > \"${LIBRARY_PATH}\") || true"
-ExecStart=sh -e -c "exec /usr/bin/kiwix-serve $ARGS $LIBRARY_PATH"
+ExecStart=/usr/bin/kiwix-serve $ARGS $LIBRARY_PATH
 Restart=on-failure
 ExecReload=/bin/kill -HUP $MAINPID
 DynamicUser=yes
