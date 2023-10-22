@@ -69,7 +69,7 @@ class KiwixApp(app_module.App):
                                       short_description=info.short_description,
                                       icon=info.icon_filename, url='/kiwix',
                                       clients=info.clients,
-                                      login_required=True,
+                                      login_required=False,
                                       allowed_groups=list(groups))
         self.add(shortcut)
 

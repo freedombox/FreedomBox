@@ -63,6 +63,14 @@ class TestKiwixApp(functional.BaseAppTests):
 
         assert not _is_package_listed(session_browser, 'invalid')
 
+    def test_anonymous_access(self, session_browser):
+        """Test anonymous access to Kiwix library."""
+        functional.app_enable(session_browser, 'kiwix')
+        functional.logout(session_browser)
+        assert functional.eventually(_shortcut_exists, args=[session_browser])
+        assert functional.eventually(_is_anonymous_read_allowed,
+                                     args=[session_browser])
+
 
 def _add_package(browser, file_name):
     """Add a package by uploading the ZIM file in kiwix app page."""
@@ -98,4 +106,14 @@ def _delete_package(browser, zim_id):
     functional.submit(browser, form_class='form-delete')
 
 
-# TODO Add test to check that Kiwix can be viewed without logging in.
+def _is_anonymous_read_allowed(browser) -> bool:
+    """Check if Kiwix library page can be accessed without logging in."""
+    functional.visit(browser, '/kiwix')
+    return browser.is_element_present_by_id('kiwixfooter')
+
+
+def _shortcut_exists(browser) -> bool:
+    """Check that the Kiwix shortcut exists on the front page."""
+    browser.visit(_default_url)
+    links_found = browser.links.find_by_href('/kiwix')
+    return len(links_found) == 1
