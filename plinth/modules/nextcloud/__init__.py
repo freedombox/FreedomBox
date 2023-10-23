@@ -63,10 +63,10 @@ class NextcloudApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-nextcloud',
-                            ['podman', 'default-mysql-server',
-                             'python3-iso3166'],
-                            conflicts=['libpam-tmpdir'],
+        packages = Packages('packages-nextcloud', [
+            'podman', 'default-mysql-server', 'python3-iso3166',
+            'redis-server', 'php-redis'
+        ], conflicts=['libpam-tmpdir'],
                             conflicts_action=Packages.ConflictsAction.REMOVE)
         self.add(packages)
 

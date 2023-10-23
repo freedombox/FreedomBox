@@ -5,9 +5,12 @@ import os
 import pathlib
 import random
 import re
+import shutil
 import string
 import subprocess
 import time
+
+import augeas
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -35,6 +38,9 @@ NEXTCLOUD_CRON_TIMER_FILE = pathlib.Path(
 
 DB_BACKUP_FILE = pathlib.Path(
     '/var/lib/plinth/backups-data/nextcloud-database.sql')
+
+REDIS_CONFIG = '/etc/redis/redis.conf'
+REDIS_CONFIG_AUG = f'/files{REDIS_CONFIG}'
 
 
 @privileged
@@ -65,6 +71,10 @@ def setup():
         time.sleep(1)
 
     _nextcloud_setup_wizard(database_password, administrator_password)
+    _bind_redis(f'127.0.0.1 -::1 {BRIDGE_IP}')
+    _set_redis_password(_generate_secret_key(16))
+    action_utils.service_restart('redis-server')
+    _create_redis_config(_get_redis_password())
     # Check if LDAP has already been configured. This is necessary because
     # if the setup proccess is rerun when updating the FredomBox app another
     # redundant LDAP config would be created.
@@ -275,6 +285,10 @@ WantedBy=timers.target
 @privileged
 def uninstall():
     """Uninstall Nextcloud"""
+    # Set bind setting back to default in case other apps
+    # are still using it
+    _bind_redis('127.0.0.1 -::1')
+    action_utils.service_restart('redis-server')
     _drop_database()
     _remove_db_socket()
     _configure_firewall(action='remove', interface_name=NETWORK_NAME)
@@ -365,3 +379,54 @@ def _get_dbpassword():
     match = re.search(pattern, config_contents)
 
     return match.group(1)
+
+
+def _create_redis_config(password):
+    """Create a php file for Redis configuration."""
+    config_file = pathlib.Path(
+        '/var/lib/containers/storage/volumes/nextcloud-volume-fbx/_data/'
+        'config/freedombox.config.php')
+    file_content = f'''<?php
+$CONFIG = [
+'filelocking.enabled' => true,
+'memcache.locking' => '\\\\OC\\\\Memcache\\\\Redis',
+'memcache.distributed' => '\\\\OC\\\\Memcache\\\\Redis',
+'redis' => [
+    'host' => '{BRIDGE_IP}',
+    'port' => '6379',
+    'password' => '{password}',
+    ],
+];
+'''
+    config_file.write_text(file_content)
+    shutil.chown(config_file, 'www-data', 'www-data')
+
+
+def _load_augeas():
+    """Initialize Augeas."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('Spacevars', REDIS_CONFIG)
+    aug.set('/augeas/context', REDIS_CONFIG_AUG)
+    aug.load()
+    return aug
+
+
+def _bind_redis(ip_address):
+    """Configure Redis to listen on the podman bridge adapter."""
+    aug = _load_augeas()
+    aug.set(REDIS_CONFIG_AUG + '/bind', ip_address)
+    aug.save()
+
+
+def _set_redis_password(password):
+    if _get_redis_password() is None:
+        aug = _load_augeas()
+        aug.set(REDIS_CONFIG_AUG + '/requirepass', password)
+        aug.save()
+
+
+def _get_redis_password() -> str:
+    aug = _load_augeas()
+    password = aug.get(REDIS_CONFIG_AUG + '/requirepass')
+    return password
