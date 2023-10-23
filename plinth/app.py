@@ -211,10 +211,11 @@ class App:
     def diagnose(self):
         """Run diagnostics and return results.
 
-        Return value must be a list of results. Each result is a two-tuple with
-        first value as user visible description of the test followed by the
+        Return value must be a list of results. Each result is a
+        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        unique check_id, a user visible description of the test, and the
         result. The test result is a string enumeration from 'failed',
-        'passed', 'error' and 'warning'.
+        'passed', 'error', 'warning' and 'not_done'.
 
         Results are typically collected by diagnosing each component of the app
         and then supplementing the results with any app level diagnostic tests.
@@ -303,10 +304,11 @@ class Component:
     def diagnose():
         """Run diagnostics and return results.
 
-        Return value must be a list of results. Each result is a two-tuple with
-        first value as user visible description of the test followed by the
-        result. The test result is a string enumeration from 'failed', 'passed'
-        and 'error'.
+        Return value must be a list of results. Each result is a
+        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        unique check_id, a user visible description of the test, and the
+        result. The test result is a string enumeration from 'failed',
+        'passed', 'error', 'warning' and 'not_done'.
 
         Also see :meth:`.has_diagnostics`.
 
