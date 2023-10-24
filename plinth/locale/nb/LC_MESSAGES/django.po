@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-25 20:14-0400\n"
+"POT-Creation-Date: 2023-10-23 20:05-0400\n"
 "PO-Revision-Date: 2023-08-16 06:52+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Page source"
 msgstr "Sidekilde"
 
-#: plinth/config.py:117
+#: plinth/config.py:120
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statisk oppsett {etc_path} er korrekt satt opp"
@@ -40,27 +40,27 @@ msgstr "Statisk oppsett {etc_path} er korrekt satt opp"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: plinth/daemon.py:104
+#: plinth/daemon.py:107
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Tjenesten {service_name} kjører"
 
-#: plinth/daemon.py:158
+#: plinth/daemon.py:164
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Lytter på {kind} port {listen_address}:{port}"
 
-#: plinth/daemon.py:162
+#: plinth/daemon.py:169
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Lytter på {kind} port {port}"
 
-#: plinth/daemon.py:230
+#: plinth/daemon.py:238
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Koble til {host}:{port}"
 
-#: plinth/daemon.py:232
+#: plinth/daemon.py:241
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Klarer ikke koble til {host}:{port}"
@@ -131,12 +131,12 @@ msgstr "Nett-tjener"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Vev-grensesnitt (Plinth)"
 
-#: plinth/modules/apache/components.py:148
+#: plinth/modules/apache/components.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Kontakt nettadressen {url} på tcp{kind}"
 
-#: plinth/modules/apache/components.py:151
+#: plinth/modules/apache/components.py:158
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Kontakt nettadressen {url}"
@@ -171,12 +171,12 @@ msgid "Backups allows creating and managing backup archives."
 msgstr ""
 "Sikkerhetskopier tillater opprettelse og behandling av sikkerhetskopiarkiver."
 
-#: plinth/modules/backups/__init__.py:44 plinth/modules/backups/__init__.py:169
-#: plinth/modules/backups/__init__.py:214
+#: plinth/modules/backups/__init__.py:44 plinth/modules/backups/__init__.py:167
+#: plinth/modules/backups/__init__.py:212
 msgid "Backups"
 msgstr "Sikkerhetskopier"
 
-#: plinth/modules/backups/__init__.py:166
+#: plinth/modules/backups/__init__.py:164
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -185,18 +185,18 @@ msgstr ""
 "Bruke helst et kryptert fjernlager eller en ekstern ekstradisk som "
 "sikkerhetslager."
 
-#: plinth/modules/backups/__init__.py:172
+#: plinth/modules/backups/__init__.py:170
 msgid "Enable a Backup Schedule"
 msgstr "Aktiver sikkerhetskopitidsplan"
 
-#: plinth/modules/backups/__init__.py:176
-#: plinth/modules/backups/__init__.py:223 plinth/modules/privacy/__init__.py:76
-#: plinth/modules/storage/__init__.py:312
+#: plinth/modules/backups/__init__.py:174
+#: plinth/modules/backups/__init__.py:221 plinth/modules/privacy/__init__.py:76
+#: plinth/modules/storage/__init__.py:311
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gå til {app_name}"
 
-#: plinth/modules/backups/__init__.py:211
+#: plinth/modules/backups/__init__.py:209
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -205,7 +205,7 @@ msgstr ""
 "En sikkerhetskopi på tidsplanen feilet. De {error_count} foregående "
 "forsøkene lyktes heller ikke. Den siste feilen er: {error_message}"
 
-#: plinth/modules/backups/__init__.py:219
+#: plinth/modules/backups/__init__.py:217
 msgid "Error During Backup"
 msgstr "Feil under sikkerhetskopiering"
 
@@ -297,7 +297,7 @@ msgstr "(Valgfritt) Sett navn på dette sikkerhetskopiarkivet"
 msgid "Select the apps you want to restore"
 msgstr "Velg app-ene du ønsker å tilbakeføre"
 
-#: plinth/modules/backups/forms.py:138
+#: plinth/modules/backups/forms.py:138 plinth/modules/kiwix/forms.py:21
 msgid "Upload File"
 msgstr "Last opp fil"
 
@@ -1109,6 +1109,7 @@ msgstr ""
 #: plinth/modules/calibre/templates/calibre-delete-library.html:27
 #: plinth/modules/gitweb/templates/gitweb_delete.html:27
 #: plinth/modules/ikiwiki/templates/ikiwiki_delete.html:29
+#: plinth/modules/kiwix/templates/kiwix-delete-package.html:27
 #: plinth/modules/networks/templates/connections_delete.html:23
 #, python-format
 msgid "Delete %(name)s"
@@ -1148,11 +1149,13 @@ msgid "An error occurred while creating the library."
 msgstr "En feil oppsto under konfigureringen."
 
 #: plinth/modules/calibre/views.py:63 plinth/modules/gitweb/views.py:139
+#: plinth/modules/kiwix/views.py:100
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "Slettet {name}."
 
 #: plinth/modules/calibre/views.py:67 plinth/modules/gitweb/views.py:143
+#: plinth/modules/kiwix/views.py:104
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Kunne ikke slette {name}: {error}"
@@ -1492,7 +1495,7 @@ msgstr "Last ned katalog"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "BitTorrent-klient skrevet i Python/PyGTK"
 
-#: plinth/modules/diagnostics/__init__.py:23
+#: plinth/modules/diagnostics/__init__.py:25
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1500,86 +1503,96 @@ msgstr ""
 "Systemets diagnostikktest vil kjøre en rekke kontroller på systemet for å få "
 "bekreftet at programmer og tjenester fungerer som forventet."
 
-#: plinth/modules/diagnostics/__init__.py:50
-#: plinth/modules/diagnostics/__init__.py:241
+#: plinth/modules/diagnostics/__init__.py:49
+#: plinth/modules/diagnostics/__init__.py:229
 msgid "Diagnostics"
 msgstr "Diagnostikk"
 
-#: plinth/modules/diagnostics/__init__.py:102
+#: plinth/modules/diagnostics/__init__.py:93
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: plinth/modules/diagnostics/__init__.py:103
+#: plinth/modules/diagnostics/__init__.py:94
 #: plinth/modules/networks/views.py:50
 msgid "failed"
 msgstr "feilet"
 
-#: plinth/modules/diagnostics/__init__.py:104
+#: plinth/modules/diagnostics/__init__.py:95
 msgid "error"
 msgstr "feil"
 
-#: plinth/modules/diagnostics/__init__.py:105
+#: plinth/modules/diagnostics/__init__.py:96
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:195
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:200
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: plinth/modules/diagnostics/__init__.py:219
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør skru av noen programmer for å redusere minnebruken."
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:212
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere noen nye programmer på dette systemet."
 
-#: plinth/modules/diagnostics/__init__.py:236
+#: plinth/modules/diagnostics/__init__.py:224
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:238
+#: plinth/modules/diagnostics/__init__.py:226
 msgid "Low Memory"
 msgstr "Lite minne"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:17
+#: plinth/modules/diagnostics/__init__.py:248
+#, fuzzy
+#| msgid "Run Diagnostics"
+msgid "Running diagnostics"
+msgstr "Kjør diagnostikk"
+
+#: plinth/modules/diagnostics/__init__.py:289
+#, no-python-format, python-brace-format
+msgid "Found {issue_count} issues during routine tests."
+msgstr ""
+
+#: plinth/modules/diagnostics/__init__.py:290
+#, fuzzy
+#| msgid "Diagnostic Results"
+msgid "Diagnostics results"
+msgstr "Diagnostikkresultater"
+
+#: plinth/modules/diagnostics/__init__.py:295
+#, fuzzy
+#| msgid "Diagnostic Results"
+msgid "Go to diagnostics results"
+msgstr "Diagnostikkresultater"
+
+#: plinth/modules/diagnostics/templates/diagnostics.html:16
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:11
 msgid "Run Diagnostics"
 msgstr "Kjør diagnostikk"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:20
-msgid "Diagnostics test is currently running"
-msgstr "Diagnostikktest kjører nå"
-
-#: plinth/modules/diagnostics/templates/diagnostics.html:33
-msgid "Results"
+#: plinth/modules/diagnostics/templates/diagnostics.html:21
+#, fuzzy
+#| msgid "Results"
+msgid "View Results"
 msgstr "Resultater"
-
-#: plinth/modules/diagnostics/templates/diagnostics.html:36
-#, python-format
-msgid ""
-"\n"
-"          App: %(app_name)s\n"
-"        "
-msgstr ""
-"\n"
-"          Program: %(app_name)s\n"
-"        "
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
@@ -1596,6 +1609,31 @@ msgstr "Program: %(app_name)s"
 msgid "This app does not support diagnostics"
 msgstr "Denne modulen støtter ikke diagnostikk"
 
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:17
+#, fuzzy
+#| msgid "Run Diagnostics"
+msgid "Re-run Diagnostics"
+msgstr "Kjør diagnostikk"
+
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:21
+msgid "Diagnostics test is currently running"
+msgstr "Diagnostikktest kjører nå"
+
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:34
+msgid "Results"
+msgstr "Resultater"
+
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
+#, python-format
+msgid ""
+"\n"
+"          App: %(app_name)s\n"
+"        "
+msgstr ""
+"\n"
+"          Program: %(app_name)s\n"
+"        "
+
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
 msgstr "Test"
@@ -1605,7 +1643,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/views.py:68
+#: plinth/modules/diagnostics/views.py:92
 msgid "Diagnostic Test"
 msgstr "Diagnostikktest"
 
@@ -2190,7 +2228,7 @@ msgstr "Port"
 msgid "Host/Target/Value"
 msgstr ""
 
-#: plinth/modules/firewall/__init__.py:24
+#: plinth/modules/firewall/__init__.py:25
 #, python-brace-format
 msgid ""
 "Firewall is a security system that controls the incoming and outgoing "
@@ -2201,35 +2239,35 @@ msgstr ""
 "utgående nettverkstrafikk på din {box_name}. Å holde en brannmur aktivert og "
 "riktig konfigurert, reduserer risikoen for sikkerhetstrusler fra Internett."
 
-#: plinth/modules/firewall/__init__.py:60
+#: plinth/modules/firewall/__init__.py:61
 msgid "Firewall"
 msgstr "Brannmur"
 
-#: plinth/modules/firewall/__init__.py:269
+#: plinth/modules/firewall/__init__.py:271
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default zone is external"
 msgstr "Forvalgsprogram satt"
 
-#: plinth/modules/firewall/__init__.py:276
+#: plinth/modules/firewall/__init__.py:280
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: plinth/modules/firewall/__init__.py:287
+#: plinth/modules/firewall/__init__.py:293
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:135
+#: plinth/modules/firewall/components.py:137
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Port {name} ({details}) tilgjengelig på interne nettverk"
 
-#: plinth/modules/firewall/components.py:143
+#: plinth/modules/firewall/components.py:147
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Port {name} ({details}) tilgjengelig på eksterne nettverk"
 
-#: plinth/modules/firewall/components.py:148
+#: plinth/modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details}) er utilgjengelig for eksterne nettverk"
@@ -2911,7 +2949,7 @@ msgstr "Håndter I2P-program"
 msgid "I2P"
 msgstr "I2P"
 
-#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:61
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:62
 #: plinth/modules/torproxy/__init__.py:55
 msgid "Anonymity Network"
 msgstr "Anonymitetsnettverk"
@@ -3167,6 +3205,128 @@ msgstr "JSXC"
 msgid "Chat Client"
 msgstr "Nettpratklient"
 
+#: plinth/modules/kiwix/__init__.py:21
+msgid ""
+"Kiwix is an offline reader for web content. It is software intended to make "
+"Wikipedia available without using the internet, but it is potentially "
+"suitable for all HTML content. Kiwix packages are in the ZIM file format."
+msgstr ""
+
+#: plinth/modules/kiwix/__init__.py:25
+msgid ""
+"Kiwix can host various kinds of content:\n"
+"    <ul>\n"
+"      <li>Offline versions of websites: Wikimedia projects, Stack Exchange</"
+"li>\n"
+"      <li>Video content: Khan Academy, TED Talks, Crash Course</li>\n"
+"      <li>Educational materials: PHET, TED Ed, Vikidia</li>\n"
+"      <li>eBooks: Project Gutenberg</li>\n"
+"      <li>Magazines: Low-tech Magazine</li>\n"
+"    </ul>"
+msgstr ""
+
+#: plinth/modules/kiwix/__init__.py:33
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:14
+msgid ""
+"You can <a href=\"https://library.kiwix.org\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">download</a> content packages from the Kiwix "
+"project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
+msgstr ""
+
+#: plinth/modules/kiwix/__init__.py:53
+msgid "Manage Kiwix content server"
+msgstr ""
+
+#: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
+msgid "Kiwix"
+msgstr ""
+
+#: plinth/modules/kiwix/__init__.py:57
+msgid "Offline Wikipedia"
+msgstr ""
+
+#: plinth/modules/kiwix/forms.py:23
+#, fuzzy
+#| msgid "Backup files have to be in .tar.gz format"
+msgid "Content packages have to be in .zim format"
+msgstr "Sikkerhetskopifiler må ha .tar.gz-format"
+
+#: plinth/modules/kiwix/forms.py:25
+#, python-brace-format
+msgid ""
+"Uploaded ZIM files will be stored under {kiwix_home}/content on your "
+"{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
+"to save disk space."
+msgstr ""
+
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:24
+#, python-format
+msgid "You have %(max_filesize)s of free disk space available."
+msgstr ""
+
+#: plinth/modules/kiwix/templates/kiwix-add-package.html:36
+#, fuzzy
+#| msgid "Upload file"
+msgid "Upload ZIM file"
+msgstr "Last opp fil"
+
+#: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete content package <em>%(name)s</em>"
+msgstr "Slett wiki eller blogg <em>%(name)s</em>"
+
+#: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
+msgid ""
+"Delete this package permanently? You may add it back later if you have a "
+"copy of the ZIM file."
+msgstr ""
+
+#: plinth/modules/kiwix/templates/kiwix.html:11
+msgid "Manage Content Packages"
+msgstr ""
+
+#: plinth/modules/kiwix/templates/kiwix.html:15
+#, fuzzy
+#| msgid "Add new introducer"
+msgid "Add a content package"
+msgstr "Legg til en ny introduserer"
+
+#: plinth/modules/kiwix/templates/kiwix.html:17
+#, fuzzy
+#| msgid "Package"
+msgid "Add Package"
+msgstr "Pakke"
+
+#: plinth/modules/kiwix/templates/kiwix.html:24
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No content packages available."
+msgstr "Intet bibliotek tilgjengelig."
+
+#: plinth/modules/kiwix/templates/kiwix.html:37
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete package %(title)s"
+msgstr "Slett nettstedet %(site)s"
+
+#: plinth/modules/kiwix/views.py:49
+msgid "Content package added."
+msgstr ""
+
+#: plinth/modules/kiwix/views.py:54
+#, fuzzy
+#| msgid "Add new introducer"
+msgid "Add a new content package"
+msgstr "Legg til en ny introduserer"
+
+#: plinth/modules/kiwix/views.py:83
+#, fuzzy
+#| msgid "Failed to add user to group."
+msgid "Failed to add content package."
+msgstr "Klarte ikke legge bruker til gruppe."
+
 #: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -3394,10 +3554,19 @@ msgstr ""
 "domenenavnet. Matrix bruker-ID-er som ligner <em>@username:domainname</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "      <strong>Warning!</strong> Changing the domain name after the "
+#| "initial\n"
+#| "      setup is currently not supported.\n"
+#| "    "
 msgid ""
 "\n"
-"      <strong>Warning!</strong> Changing the domain name after the initial\n"
-"      setup is currently not supported.\n"
+"      <strong>Warning!</strong> Changing the domain name after this step "
+"will\n"
+"      require uninstalling and reinstalling the app which will wipe app's "
+"data.\n"
 "    "
 msgstr ""
 "\n"
@@ -5546,7 +5715,7 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Mellomtjener for nettet"
 
-#: plinth/modules/privoxy/__init__.py:114
+#: plinth/modules/privoxy/__init__.py:116
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgang {url} med mellomtjener {proxy} på tcp{kind}"
@@ -6754,92 +6923,92 @@ msgstr ""
 "kan vise lagringsmedia som er i bruk, montere og avmontere flyttbare medium, "
 "utvide rotpartisjonen, osv."
 
-#: plinth/modules/storage/__init__.py:45 plinth/modules/storage/__init__.py:305
-#: plinth/modules/storage/__init__.py:336
+#: plinth/modules/storage/__init__.py:45 plinth/modules/storage/__init__.py:304
+#: plinth/modules/storage/__init__.py:335
 msgid "Storage"
 msgstr "Lager"
 
-#: plinth/modules/storage/__init__.py:213
+#: plinth/modules/storage/__init__.py:212
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: plinth/modules/storage/__init__.py:217
+#: plinth/modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: plinth/modules/storage/__init__.py:221
+#: plinth/modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: plinth/modules/storage/__init__.py:225
+#: plinth/modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: plinth/modules/storage/__init__.py:228
+#: plinth/modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: plinth/modules/storage/__init__.py:240
+#: plinth/modules/storage/__init__.py:239
 msgid "The operation failed."
 msgstr "Operasjonen mislyktes."
 
-#: plinth/modules/storage/__init__.py:242
+#: plinth/modules/storage/__init__.py:241
 msgid "The operation was cancelled."
 msgstr "Operasjonen ble avbrutt."
 
-#: plinth/modules/storage/__init__.py:244
+#: plinth/modules/storage/__init__.py:243
 msgid "The device is already unmounting."
 msgstr "Enheten avmonteres allerede."
 
-#: plinth/modules/storage/__init__.py:246
+#: plinth/modules/storage/__init__.py:245
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Denne aktiviteten støttes ikke på grunn av manglende driver-/verktøystøtte."
 
-#: plinth/modules/storage/__init__.py:249
+#: plinth/modules/storage/__init__.py:248
 msgid "The operation timed out."
 msgstr "Tidsavbrudd for operasjon."
 
-#: plinth/modules/storage/__init__.py:251
+#: plinth/modules/storage/__init__.py:250
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Operasjonen vil vekke en disk fra en tilstand av dyp søvn."
 
-#: plinth/modules/storage/__init__.py:254
+#: plinth/modules/storage/__init__.py:253
 msgid "Attempting to unmount a device that is busy."
 msgstr "Prøver å avmontere en opptatt enhet."
 
-#: plinth/modules/storage/__init__.py:256
+#: plinth/modules/storage/__init__.py:255
 msgid "The operation has already been cancelled."
 msgstr "Operasjonen har allerede blitt avbrutt."
 
-#: plinth/modules/storage/__init__.py:258
-#: plinth/modules/storage/__init__.py:260
-#: plinth/modules/storage/__init__.py:262
+#: plinth/modules/storage/__init__.py:257
+#: plinth/modules/storage/__init__.py:259
+#: plinth/modules/storage/__init__.py:261
 msgid "Not authorized to perform the requested operation."
 msgstr "Mangler rettigheter til utførelse av forespurt operasjon."
 
-#: plinth/modules/storage/__init__.py:264
+#: plinth/modules/storage/__init__.py:263
 msgid "The device is already mounted."
 msgstr "Denne enheten er allerede montert."
 
-#: plinth/modules/storage/__init__.py:266
+#: plinth/modules/storage/__init__.py:265
 msgid "The device is not mounted."
 msgstr "Enheten er ikke montert."
 
-#: plinth/modules/storage/__init__.py:268
+#: plinth/modules/storage/__init__.py:267
 msgid "Not permitted to use the requested option."
 msgstr "Mangler rettigheter til bruk av forespurt valg."
 
-#: plinth/modules/storage/__init__.py:270
+#: plinth/modules/storage/__init__.py:269
 msgid "The device is mounted by another user."
 msgstr "Enheten er montert av en annen bruker."
 
-#: plinth/modules/storage/__init__.py:300
+#: plinth/modules/storage/__init__.py:299
 #, fuzzy, no-python-format, python-brace-format
 #| msgid ""
 #| "Warning: Low space on system partition ({percent_used}% used, "
@@ -6849,15 +7018,15 @@ msgstr ""
 "Advarsel: Lite plass igjen på systempartisjon ({percent_used}% brukt, "
 "{free_space} ledig)."
 
-#: plinth/modules/storage/__init__.py:302
+#: plinth/modules/storage/__init__.py:301
 msgid "Low disk space"
 msgstr "Lite ledig diskplass"
 
-#: plinth/modules/storage/__init__.py:330
+#: plinth/modules/storage/__init__.py:329
 msgid "Disk failure imminent"
 msgstr "Diskfeil nært forestående"
 
-#: plinth/modules/storage/__init__.py:332
+#: plinth/modules/storage/__init__.py:331
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7028,7 +7197,7 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Filsynkronisering"
 
-#: plinth/modules/tor/__init__.py:31 plinth/modules/torproxy/__init__.py:27
+#: plinth/modules/tor/__init__.py:32 plinth/modules/torproxy/__init__.py:27
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7042,13 +7211,13 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html.en\">Tor "
 "Browser</a>."
 
-#: plinth/modules/tor/__init__.py:37
+#: plinth/modules/tor/__init__.py:38
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:40
+#: plinth/modules/tor/__init__.py:41
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -7056,31 +7225,31 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:60
+#: plinth/modules/tor/__init__.py:61
 msgid "Tor"
 msgstr "Tor"
 
-#: plinth/modules/tor/__init__.py:76
+#: plinth/modules/tor/__init__.py:77
 msgid "Tor Onion Service"
 msgstr "Tor-løktjeneste"
 
-#: plinth/modules/tor/__init__.py:80
+#: plinth/modules/tor/__init__.py:81
 msgid "Tor Bridge Relay"
 msgstr "Tor bro-stafettvideresendingsoppsett"
 
-#: plinth/modules/tor/__init__.py:135
+#: plinth/modules/tor/__init__.py:137
 msgid "Tor relay port available"
 msgstr "Tor relay-port tilgjengelig"
 
-#: plinth/modules/tor/__init__.py:146
+#: plinth/modules/tor/__init__.py:148
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-transport registrert"
 
-#: plinth/modules/tor/__init__.py:156
+#: plinth/modules/tor/__init__.py:158
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-transport registrert"
 
-#: plinth/modules/tor/__init__.py:168
+#: plinth/modules/tor/__init__.py:170
 #, fuzzy
 #| msgid "Onion Service"
 msgid "Onion service is version 3"
@@ -7220,12 +7389,12 @@ msgstr "Tor Socks-mellomtjener"
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks-mellomtjener"
 
-#: plinth/modules/torproxy/__init__.py:138
+#: plinth/modules/torproxy/__init__.py:139
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Adgang til URL {url} på tcp{kind} via Tor"
 
-#: plinth/modules/torproxy/__init__.py:149
+#: plinth/modules/torproxy/__init__.py:151
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekreft Tor-bruk på {url} via tcp{kind}"
@@ -7381,34 +7550,34 @@ msgid ""
 msgstr ""
 
 #: plinth/modules/upgrades/__init__.py:65
-#: plinth/modules/upgrades/__init__.py:128
+#: plinth/modules/upgrades/__init__.py:125
 #: plinth/modules/upgrades/templates/update-firstboot-progress.html:11
 #: plinth/modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Programvare-oppdatering"
 
-#: plinth/modules/upgrades/__init__.py:131
+#: plinth/modules/upgrades/__init__.py:128
 msgid "FreedomBox Updated"
 msgstr "FreedomBox oppdatert"
 
-#: plinth/modules/upgrades/__init__.py:199
+#: plinth/modules/upgrades/__init__.py:196
 msgid "Could not start distribution update"
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:201
+#: plinth/modules/upgrades/__init__.py:198
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: plinth/modules/upgrades/__init__.py:212
+#: plinth/modules/upgrades/__init__.py:209
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: plinth/modules/upgrades/__init__.py:214
+#: plinth/modules/upgrades/__init__.py:211
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7635,7 +7804,7 @@ msgstr ""
 msgid "Starting distribution upgrade test."
 msgstr "Starter test av distribusjonsoppgradering."
 
-#: plinth/modules/users/__init__.py:30
+#: plinth/modules/users/__init__.py:31
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7646,7 +7815,7 @@ msgstr ""
 "kan kreve at en brukerkonto er medlem av en gruppe for å gi brukeren tilgang "
 "til programmet."
 
-#: plinth/modules/users/__init__.py:35
+#: plinth/modules/users/__init__.py:36
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7657,25 +7826,25 @@ msgstr ""
 "liste over programmer som er relevante for dem på hjemmesiden. Dog kan kun "
 "brukere av <em>admin</em>-gruppen endre programmer eller systeminnstillinger."
 
-#: plinth/modules/users/__init__.py:56
+#: plinth/modules/users/__init__.py:57
 msgid "Users and Groups"
 msgstr "Brukere og grupper"
 
-#: plinth/modules/users/__init__.py:81
+#: plinth/modules/users/__init__.py:82
 msgid "Access to all services and system settings"
 msgstr "Tilgang til alle tjenester og systeminnstillinger"
 
-#: plinth/modules/users/__init__.py:124
+#: plinth/modules/users/__init__.py:126
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Sjekk LDAP-oppføring «{search_item}»"
 
-#: plinth/modules/users/__init__.py:137
+#: plinth/modules/users/__init__.py:140
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: plinth/modules/users/__init__.py:166
+#: plinth/modules/users/__init__.py:170
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -8392,50 +8561,50 @@ msgstr "PPPoE"
 msgid "Generic"
 msgstr "Generisk"
 
-#: plinth/operation.py:116
+#: plinth/operation.py:118
 #, python-brace-format
 msgid "Error: {name}: {exception_message}"
 msgstr "Feil: {name}: {exception_message}"
 
-#: plinth/operation.py:119
+#: plinth/operation.py:121
 #, python-brace-format
 msgid "Waiting to start: {name}"
 msgstr ""
 
-#: plinth/operation.py:125
+#: plinth/operation.py:127
 #, fuzzy, python-brace-format
 #| msgid "Service disabled: {name}"
 msgid "Finished: {name}"
 msgstr "Tjeneste deaktivert: {name}"
 
-#: plinth/package.py:211
+#: plinth/package.py:215
 #, python-brace-format
 msgid "Package {expression} is not available for install"
 msgstr "Pakke {expression} er ikke tilgjengelig for installasjon"
 
-#: plinth/package.py:224
+#: plinth/package.py:230
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Pakke {package_name} er siste versjon ({latest_version})"
 
-#: plinth/package.py:372
+#: plinth/package.py:378
 msgid "installing"
 msgstr "installering"
 
-#: plinth/package.py:374
+#: plinth/package.py:380
 msgid "downloading"
 msgstr "laster ned"
 
-#: plinth/package.py:376
+#: plinth/package.py:382
 msgid "media change"
 msgstr "mediaendring"
 
-#: plinth/package.py:378
+#: plinth/package.py:384
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "oppsettsfil: {file}"
 
-#: plinth/package.py:406 plinth/package.py:431
+#: plinth/package.py:412 plinth/package.py:437
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -8449,65 +8618,65 @@ msgstr "Installer App-er"
 msgid "Updating app"
 msgstr "Oppdaterer program"
 
-#: plinth/setup.py:69
+#: plinth/setup.py:70
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error installing app: {string} {details}"
 msgstr "Feil ved programinstallering: {string} {details}"
 
-#: plinth/setup.py:73
+#: plinth/setup.py:74
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error updating app: {string} {details}"
 msgstr "Feil ved programinstallering: {string} {details}"
 
-#: plinth/setup.py:79
+#: plinth/setup.py:80
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: plinth/setup.py:82
+#: plinth/setup.py:83
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: plinth/setup.py:86
+#: plinth/setup.py:87
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Program installert."
 
-#: plinth/setup.py:88
+#: plinth/setup.py:89
 msgid "App updated"
 msgstr "Program oppdatert"
 
-#: plinth/setup.py:105
+#: plinth/setup.py:106
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Installer App-er"
 
-#: plinth/setup.py:123
+#: plinth/setup.py:124
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {string} {details}"
 msgid "Error uninstalling app: {string} {details}"
 msgstr "Feil ved programinstallering: {string} {details}"
 
-#: plinth/setup.py:129
+#: plinth/setup.py:130
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: plinth/setup.py:132
+#: plinth/setup.py:133
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Program installert."
 
-#: plinth/setup.py:452
+#: plinth/setup.py:453
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
