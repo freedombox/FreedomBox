@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-23 20:05-0400\n"
-"PO-Revision-Date: 2023-09-27 10:59+0000\n"
+"PO-Revision-Date: 2023-10-25 12:01+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.1.1-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1560,27 +1560,22 @@ msgid "Low Memory"
 msgstr "Poca memoria libre"
 
 #: plinth/modules/diagnostics/__init__.py:248
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Running diagnostics"
-msgstr "Ejecutar diagnósticos"
+msgstr "Ejecutando los diagnósticos"
 
 #: plinth/modules/diagnostics/__init__.py:289
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
+"Se han encontrado {issue_count} problemas durante las pruebas rutinarias."
 
 #: plinth/modules/diagnostics/__init__.py:290
-#, fuzzy
-#| msgid "Diagnostic Results"
 msgid "Diagnostics results"
-msgstr "Resultado del diagnóstico"
+msgstr "Resultados de los diagnósticos"
 
 #: plinth/modules/diagnostics/__init__.py:295
-#, fuzzy
-#| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
-msgstr "Resultado del diagnóstico"
+msgstr "Ir a los resultados de los diagnósticos"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:16
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:11
@@ -1588,10 +1583,8 @@ msgid "Run Diagnostics"
 msgstr "Ejecutar diagnósticos"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:21
-#, fuzzy
-#| msgid "Results"
 msgid "View Results"
-msgstr "Resultados"
+msgstr "Ver los resultados"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
@@ -1607,10 +1600,8 @@ msgid "This app does not support diagnostics"
 msgstr "Esta aplicación no soporta diagnósticos"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:17
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Re-run Diagnostics"
-msgstr "Ejecutar diagnósticos"
+msgstr "Volver a ejecutar los diagnósticos"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:21
 msgid "Diagnostics test is currently running"
@@ -3167,6 +3158,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix es un lector sin conexión para contenidos web. Es un software pensado "
+"para que la Wikipedia esté disponible sin usar Internet, pero es "
+"potencialmente adecuado para todo el contenido HTML. Los paquetes Kiwix "
+"están en el formato ZIM."
 
 #: plinth/modules/kiwix/__init__.py:25
 msgid ""
@@ -3180,6 +3175,15 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix puede alojar varios tipos de contenido:\n"
+"    <ul>\n"
+"      <li>Versiones sin conexión de páginas web: proyectos Wikimedia, Stack "
+"Exchange</li>\n"
+"      <li>Contenidos de vídeo: Khan Academy, TED Talks, Crash Course</li>\n"
+"      <li>Materiales educativos: PHET, TED Ed, Vikidia</li>\n"
+"      <li>eBooks: Proyecto Gutenberg</li>\n"
+"      <li>Revistas: Low-tech Magazine</li>\n"
+"    </ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:14
@@ -3189,25 +3193,26 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Puede <a href=\"https://library.kiwix.org\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">descargar</a> paquetes de contenido del proyecto Kiwix o <a "
+"href=\"https://openzim.org/wiki/Build_your_ZIM_file\" target=\"_blank\" rel="
+"\"noopener noreferrer\">crear</a> los suyos propios."
 
 #: plinth/modules/kiwix/__init__.py:53
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Gestionar el servidor de contenido Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
+msgstr "Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Wikipedia sin conexión"
 
 #: plinth/modules/kiwix/forms.py:23
-#, fuzzy
-#| msgid "Backup files have to be in .tar.gz format"
 msgid "Content packages have to be in .zim format"
-msgstr ""
-"Los archivos de la copia de seguridad deben de estar en formato .tar.gz"
+msgstr "Los paquetes deben estar en formato .zim"
 
 #: plinth/modules/kiwix/forms.py:25
 #, python-brace-format
@@ -3216,73 +3221,64 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+"Los archivos ZIM cargados se almacenarán en {kiwix_home}/content en su "
+"{box_name}. Si Kiwix no consigue añadir el archivo, se eliminará "
+"inmediatamente para ahorrar espacio en disco."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "Dispone de %(max_filesize)s espacio libre en el disco."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:36
-#, fuzzy
-#| msgid "Upload file"
 msgid "Upload ZIM file"
-msgstr "Subir archivo"
+msgstr "Cargar el archivo ZIM"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete content package <em>%(name)s</em>"
-msgstr "Borrar Wiki o Blog <em>%(name)s</em>"
+msgstr "Eliminar el paquete de contenidos <em>%(name)s</em>"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
 msgid ""
 "Delete this package permanently? You may add it back later if you have a "
 "copy of the ZIM file."
 msgstr ""
+"¿Borrar este paquete definitivamente? Puedes volver a añadirlo más tarde si "
+"tienes una copia del archivo ZIM."
 
 #: plinth/modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "Gestionar los paquetes del contenido"
 
 #: plinth/modules/kiwix/templates/kiwix.html:15
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a content package"
-msgstr "Añadir nuevo par"
+msgstr "Añadir un paquete de contenidos"
 
 #: plinth/modules/kiwix/templates/kiwix.html:17
-#, fuzzy
-#| msgid "Package"
 msgid "Add Package"
-msgstr "Paquete"
+msgstr "Añadir un paquete"
 
 #: plinth/modules/kiwix/templates/kiwix.html:24
-#, fuzzy
-#| msgid "No status available."
 msgid "No content packages available."
-msgstr "Estado de actualización No disponible."
+msgstr "No hay paquetes de contenido disponibles."
 
 #: plinth/modules/kiwix/templates/kiwix.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete package %(title)s"
-msgstr "Eliminar sitio %(site)s"
+msgstr "Borrar el paquete %(title)s"
 
 #: plinth/modules/kiwix/views.py:49
 msgid "Content package added."
-msgstr ""
+msgstr "Se ha añadido un paquete de contenidos."
 
 #: plinth/modules/kiwix/views.py:54
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a new content package"
-msgstr "Añadir nuevo par"
+msgstr "Añadir un nuevo paquete de contenidos"
 
 #: plinth/modules/kiwix/views.py:83
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to add content package."
-msgstr "Ha fallado añadir al o la usuaria al grupo."
+msgstr "No se ha podido añadir el paquete de contenido."
 
 #: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
@@ -3526,13 +3522,6 @@ msgstr ""
 "<em>@username:domainname</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      <strong>Warning!</strong> Changing the domain name after the "
-#| "initial\n"
-#| "      setup is currently not supported.\n"
-#| "    "
 msgid ""
 "\n"
 "      <strong>Warning!</strong> Changing the domain name after this step "
@@ -3542,9 +3531,10 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      <strong>Atención!</strong> Actualmente no está soportado cambiar el "
-"nombre\n"
-"     de dominio una vez hecha la configuración inicial.\n"
+"      <strong>¡Atención!</strong> Cambiar el nombre del dominio después de "
+"este paso \n"
+"      requerirá desinstalar y volver a instalar la aplicación, lo que "
+"borrará los datos de la aplicación.\n"
 "    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
