@@ -8,6 +8,31 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 23.19 (2023-10-23) ==
+
+=== Highlights ===
+
+ * backup: Fix bug in adding existing unencrypted backup location
+ * diagnostics: Run daily check and notify on failures
+ * email: Fix issue with install caused by missing drop-in config file
+ * kiwix: Add app for Kiwix offline Wikipedia reader
+ * upgrades: Allow matrix-synapse to be installed from bookworm
+
+=== Other Changes ===
+
+ * db: Serialize most of the database queries using locks
+ * diagnostics: Add !DiagnosticCheck dataclass
+ * diagnostics: Refactor background diagnostics task
+ * diagnostics: Refactor check IDs, tests and background checks
+ * glib: Add a jitter to the interval by default when scheduling tasks
+ * glib: Refactor schedule debugging in a central place
+ * kiwix: Do not require login to access the app
+ * kiwix: Drop unnecessary file in /etc/plinth/modules-enabled
+ * kiwix: Fix various issues after review
+ * locale: Update translations for Arabic, Czech, Dutch, German, Hindi, Spanish, Swedish, Telugu, Turkish, Ukrainian
+ * matrix-synapse: Update warning on how to change domain name
+ * operation: Add unique ID for each operation
+
 == FreedomBox 23.18 (2023-09-25) ==
 
  * *: Fix all typing hint related errors
