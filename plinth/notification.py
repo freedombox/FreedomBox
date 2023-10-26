@@ -13,7 +13,7 @@ from django.utils.translation import gettext
 
 from plinth import cfg
 
-from . import models
+from . import db, models
 
 severities = {'exception': 5, 'error': 4, 'warning': 3, 'info': 2, 'debug': 1}
 logger = logging.getLogger(__name__)
@@ -176,7 +176,8 @@ class Notification(models.StoredNotification):
 
         """
         self.dismissed = should_dismiss
-        super().save()
+        with db.lock:
+            super().save()
 
     def clean(self):
         """Perform additional validations on the model."""
@@ -228,16 +229,19 @@ class Notification(models.StoredNotification):
 
         """
         id = kwargs.pop('id')
-        return Notification.objects.update_or_create(defaults=kwargs, id=id)[0]
+        with db.lock:
+            return Notification.objects.update_or_create(
+                defaults=kwargs, id=id)[0]
 
     @staticmethod
     def get(key):  # pylint: disable=redefined-builtin
         """Return a notification object with a matching ID."""
         # pylint: disable=no-member
-        try:
-            return Notification.objects.get(pk=key)
-        except Notification.DoesNotExist:
-            raise KeyError('No such notification')
+        with db.lock:
+            try:
+                return Notification.objects.get(pk=key)
+            except Notification.DoesNotExist:
+                raise KeyError('No such notification')
 
     @staticmethod
     def list(key=None, app_id=None, user=None, dismissed=False):
@@ -274,7 +278,8 @@ class Notification(models.StoredNotification):
         if dismissed is not None:
             filters.append(Q(dismissed=dismissed))
 
-        return Notification.objects.filter(*filters)[0:10]
+        with db.lock:
+            return Notification.objects.filter(*filters)[0:10]
 
     @staticmethod
     def _translate(string_, data=None):

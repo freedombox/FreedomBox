@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app
 from plinth.modules import firewall
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 logger = logging.getLogger(__name__)
 
@@ -130,25 +131,31 @@ class Firewall(app.FollowerComponent):
                  for port_number, protocol in port_detail['details']))
 
             # Internal zone
-            result = 'passed' if port in internal_ports else 'failed'
+            check_id = f'firewall-port-internal-{port}'
+            result = Result.PASSED if port in internal_ports else Result.FAILED
             template = _(
                 'Port {name} ({details}) available for internal networks')
-            testname = format_lazy(template, name=port, details=details)
-            results.append([testname, result])
+            description = format_lazy(template, name=port, details=details)
+            results.append(DiagnosticCheck(check_id, description, result))
 
             # External zone
             if self.is_external:
-                result = 'passed' if port in external_ports else 'failed'
+                check_id = f'firewall-port-external-available-{port}'
+                result = Result.PASSED \
+                    if port in external_ports else Result.FAILED
                 template = _(
                     'Port {name} ({details}) available for external networks')
-                testname = format_lazy(template, name=port, details=details)
+                description = format_lazy(template, name=port, details=details)
             else:
-                result = 'passed' if port not in external_ports else 'failed'
+                check_id = f'firewall-port-external-unavailable-{port}'
+                result = Result.PASSED \
+                    if port not in external_ports else Result.FAILED
                 template = _(
                     'Port {name} ({details}) unavailable for external networks'
                 )
-                testname = format_lazy(template, name=port, details=details)
-            results.append([testname, result])
+                description = format_lazy(template, name=port, details=details)
+
+            results.append(DiagnosticCheck(check_id, description, result))
 
         return results
 

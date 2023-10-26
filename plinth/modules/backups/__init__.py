@@ -56,10 +56,8 @@ class BackupsApp(app_module.App):
     @staticmethod
     def post_init():
         """Perform post initialization operations."""
-        # Check every hour (every 3 minutes in debug mode) to perform scheduled
-        # backups.
-        interval = 180 if cfg.develop else 3600
-        glib.schedule(interval, backup_by_schedule)
+        # Check every hour to perform scheduled backups
+        glib.schedule(3600, backup_by_schedule)
 
     def setup(self, old_version):
         """Install and configure the app."""

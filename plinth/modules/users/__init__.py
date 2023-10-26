@@ -12,6 +12,7 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 
@@ -112,32 +113,34 @@ class UsersApp(app_module.App):
 
 def _diagnose_ldap_entry(search_item):
     """Diagnose that an LDAP entry exists."""
-    result = 'failed'
+    check_id = f'users-ldap-entry-{search_item}'
+    result = Result.FAILED
 
     try:
         subprocess.check_output(
             ['ldapsearch', '-x', '-b', 'dc=thisbox', search_item])
-        result = 'passed'
+        result = Result.PASSED
     except subprocess.CalledProcessError:
         pass
 
     template = _('Check LDAP entry "{search_item}"')
-    testname = format_lazy(template, search_item=search_item)
+    description = format_lazy(template, search_item=search_item)
 
-    return [testname, result]
+    return DiagnosticCheck(check_id, description, result)
 
 
 def _diagnose_nslcd_config(config, key, value):
     """Diagnose that nslcd has a configuration."""
+    check_id = f'users-nslcd-config-{key}'
     try:
-        result = 'passed' if config[key] == value else 'failed'
+        result = Result.PASSED if config[key] == value else Result.FAILED
     except KeyError:
-        result = 'failed'
+        result = Result.FAILED
 
     template = _('Check nslcd config "{key} {value}"')
-    testname = format_lazy(template, key=key, value=value)
+    description = format_lazy(template, key=key, value=value)
 
-    return [testname, result]
+    return DiagnosticCheck(check_id, description, result)
 
 
 def _diagnose_nsswitch_config():
@@ -151,22 +154,23 @@ def _diagnose_nsswitch_config():
 
     results = []
     for database in ['passwd', 'group', 'shadow']:
-        result = 'failed'
+        check_id = f'users-nsswitch-config-{database}'
+        result = Result.FAILED
         for match in aug.match('database'):
             if aug.get(match) != database:
                 continue
 
             for service_match in aug.match(match + '/service'):
                 if 'ldap' == aug.get(service_match):
-                    result = 'passed'
+                    result = Result.PASSED
                     break
 
             break
 
         template = _('Check nsswitch config "{database}"')
-        testname = format_lazy(template, database=database)
+        description = format_lazy(template, database=database)
 
-        results.append([testname, result])
+        results.append(DiagnosticCheck(check_id, description, result))
 
     return results
 

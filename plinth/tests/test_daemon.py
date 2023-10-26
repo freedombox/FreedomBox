@@ -12,6 +12,7 @@ import pytest
 from plinth.app import App, FollowerComponent, Info
 from plinth.daemon import (Daemon, RelatedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 privileged_modules_to_mock = ['plinth.privileged.service']
 
@@ -140,22 +141,28 @@ def test_diagnose(port_listening, service_is_running, daemon):
     """Test running diagnostics."""
 
     def side_effect(port, kind):
-        return [f'test-result-{port}-{kind}', 'passed']
+        name = f'test-result-{port}-{kind}'
+        return DiagnosticCheck(name, name, Result.PASSED)
 
     daemon = Daemon('test-daemon', 'test-unit', listen_ports=[(8273, 'tcp4'),
                                                               (345, 'udp')])
     port_listening.side_effect = side_effect
     service_is_running.return_value = True
     results = daemon.diagnose()
-    assert results == [['Service test-unit is running', 'passed'],
-                       ['test-result-8273-tcp4', 'passed'],
-                       ['test-result-345-udp', 'passed']]
+    assert results == [
+        DiagnosticCheck('daemon-running-test-unit',
+                        'Service test-unit is running', Result.PASSED),
+        DiagnosticCheck('test-result-8273-tcp4', 'test-result-8273-tcp4',
+                        Result.PASSED),
+        DiagnosticCheck('test-result-345-udp', 'test-result-345-udp',
+                        Result.PASSED)
+    ]
     port_listening.assert_has_calls([call(8273, 'tcp4'), call(345, 'udp')])
     service_is_running.assert_has_calls([call('test-unit')])
 
     service_is_running.return_value = False
     results = daemon.diagnose()
-    assert results[0][1] == 'failed'
+    assert results[0].result == Result.FAILED
 
 
 @patch('plinth.action_utils.service_is_running')
@@ -207,15 +214,23 @@ def test_diagnose_port_listening(connections):
 
     # Check that message is correct
     results = diagnose_port_listening(1234)
-    assert results == ['Listening on tcp port 1234', 'passed']
+    assert results == DiagnosticCheck('daemon-listening-tcp-1234',
+                                      'Listening on tcp port 1234',
+                                      Result.PASSED)
     results = diagnose_port_listening(1234, 'tcp', '0.0.0.0')
-    assert results == ['Listening on tcp port 0.0.0.0:1234', 'passed']
+    assert results == DiagnosticCheck(
+        'daemon-listening-address-tcp-1234-0.0.0.0',
+        'Listening on tcp port 0.0.0.0:1234', Result.PASSED)
 
     # Failed results
     results = diagnose_port_listening(4321)
-    assert results == ['Listening on tcp port 4321', 'failed']
+    assert results == DiagnosticCheck('daemon-listening-tcp-4321',
+                                      'Listening on tcp port 4321',
+                                      Result.FAILED)
     results = diagnose_port_listening(4321, 'tcp', '0.0.0.0')
-    assert results == ['Listening on tcp port 0.0.0.0:4321', 'failed']
+    assert results == DiagnosticCheck(
+        'daemon-listening-address-tcp-4321-0.0.0.0',
+        'Listening on tcp port 0.0.0.0:4321', Result.FAILED)
 
     # Check if psutil call is being made with right argument
     results = diagnose_port_listening(1234, 'tcp')
@@ -232,26 +247,30 @@ def test_diagnose_port_listening(connections):
     connections.assert_called_with('udp6')
 
     # TCP
-    assert diagnose_port_listening(1234)[1] == 'passed'
-    assert diagnose_port_listening(1000)[1] == 'failed'
-    assert diagnose_port_listening(2345)[1] == 'failed'
-    assert diagnose_port_listening(1234, 'tcp', '0.0.0.0')[1] == 'passed'
-    assert diagnose_port_listening(1234, 'tcp', '1.1.1.1')[1] == 'failed'
-    assert diagnose_port_listening(1234, 'tcp6')[1] == 'passed'
-    assert diagnose_port_listening(1234, 'tcp4')[1] == 'passed'
-    assert diagnose_port_listening(6789, 'tcp4')[1] == 'passed'
-    assert diagnose_port_listening(5678, 'tcp4')[1] == 'failed'
+    assert diagnose_port_listening(1234).result == Result.PASSED
+    assert diagnose_port_listening(1000).result == Result.FAILED
+    assert diagnose_port_listening(2345).result == Result.FAILED
+    assert diagnose_port_listening(1234, 'tcp',
+                                   '0.0.0.0').result == Result.PASSED
+    assert diagnose_port_listening(1234, 'tcp',
+                                   '1.1.1.1').result == Result.FAILED
+    assert diagnose_port_listening(1234, 'tcp6').result == Result.PASSED
+    assert diagnose_port_listening(1234, 'tcp4').result == Result.PASSED
+    assert diagnose_port_listening(6789, 'tcp4').result == Result.PASSED
+    assert diagnose_port_listening(5678, 'tcp4').result == Result.FAILED
 
     # UDP
-    assert diagnose_port_listening(3456, 'udp')[1] == 'passed'
-    assert diagnose_port_listening(3000, 'udp')[1] == 'failed'
-    assert diagnose_port_listening(4567, 'udp')[1] == 'failed'
-    assert diagnose_port_listening(3456, 'udp', '0.0.0.0')[1] == 'passed'
-    assert diagnose_port_listening(3456, 'udp', '1.1.1.1')[1] == 'failed'
-    assert diagnose_port_listening(3456, 'udp6')[1] == 'passed'
-    assert diagnose_port_listening(3456, 'udp4')[1] == 'passed'
-    assert diagnose_port_listening(6789, 'udp4')[1] == 'passed'
-    assert diagnose_port_listening(5678, 'udp4')[1] == 'failed'
+    assert diagnose_port_listening(3456, 'udp').result == Result.PASSED
+    assert diagnose_port_listening(3000, 'udp').result == Result.FAILED
+    assert diagnose_port_listening(4567, 'udp').result == Result.FAILED
+    assert diagnose_port_listening(3456, 'udp',
+                                   '0.0.0.0').result == Result.PASSED
+    assert diagnose_port_listening(3456, 'udp',
+                                   '1.1.1.1').result == Result.FAILED
+    assert diagnose_port_listening(3456, 'udp6').result == Result.PASSED
+    assert diagnose_port_listening(3456, 'udp4').result == Result.PASSED
+    assert diagnose_port_listening(6789, 'udp4').result == Result.PASSED
+    assert diagnose_port_listening(5678, 'udp4').result == Result.FAILED
 
 
 @patch('subprocess.Popen')
@@ -259,21 +278,29 @@ def test_diagnose_netcat(popen):
     """Test running diagnostic test using netcat."""
     popen().returncode = 0
     result = diagnose_netcat('test-host', 3300, input='test-input')
-    assert result == ['Connect to test-host:3300', 'passed']
+    assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
+                                     'Connect to test-host:3300',
+                                     Result.PASSED)
     assert popen.mock_calls[1][1] == (['nc', 'test-host', '3300'], )
     assert popen.mock_calls[2] == call().communicate(input=b'test-input')
 
     result = diagnose_netcat('test-host', 3300, input='test-input',
                              negate=True)
-    assert result == ['Cannot connect to test-host:3300', 'failed']
+    assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
+                                     'Cannot connect to test-host:3300',
+                                     Result.FAILED)
 
     popen().returncode = 1
     result = diagnose_netcat('test-host', 3300, input='test-input')
-    assert result == ['Connect to test-host:3300', 'failed']
+    assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
+                                     'Connect to test-host:3300',
+                                     Result.FAILED)
 
     result = diagnose_netcat('test-host', 3300, input='test-input',
                              negate=True)
-    assert result == ['Cannot connect to test-host:3300', 'passed']
+    assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
+                                     'Cannot connect to test-host:3300',
+                                     Result.PASSED)
 
 
 def test_related_daemon_initialization():

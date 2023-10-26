@@ -111,7 +111,9 @@ def diagnose_url_with_proxy():
         env = {'https_proxy': proxy}
 
         result = diagnose_url(url, kind=address['kind'], env=env)
-        result[0] = _('Access {url} with proxy {proxy} on tcp{kind}') \
+        result.check_id = f'privoxy-url-proxy-kind-{url}-{address["kind"]}'
+        result.description = _(
+            'Access {url} with proxy {proxy} on tcp{kind}') \
             .format(url=url, proxy=proxy, kind=address['kind'])
         results.append(result)
 

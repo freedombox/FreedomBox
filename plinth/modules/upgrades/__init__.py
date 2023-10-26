@@ -53,7 +53,7 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
-    _version = 17
+    _version = 18
 
     can_be_disabled = False
 
@@ -95,16 +95,13 @@ class UpgradesApp(app_module.App):
         """Perform post initialization operations."""
         self._show_new_release_notification()
 
-        # Check every day (every 3 minutes in debug mode):
-        # - backports becomes available -> configure it if selected by user
-        interval = 180 if cfg.develop else 24 * 3600
-        glib.schedule(interval, setup_repositories)
+        # Check every day if backports becomes available, then configure it if
+        # selected by user.
+        glib.schedule(24 * 3600, setup_repositories)
 
-        # Check every day (every 3 minutes in debug mode):
-        # - new stable release becomes available -> perform dist-upgrade if
-        #   updates are enabled
-        interval = 180 if cfg.develop else 24 * 3600
-        glib.schedule(interval, check_dist_upgrade)
+        # Check every day if new stable release becomes available, then perform
+        # dist-upgrade if updates are enabled
+        glib.schedule(24 * 3600, check_dist_upgrade)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""

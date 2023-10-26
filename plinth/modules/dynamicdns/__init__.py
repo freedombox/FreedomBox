@@ -90,10 +90,8 @@ class DynamicDNSApp(app_module.App):
             for domain_name in config['domains']:
                 notify_domain_added(domain_name)
 
-        # Check every 5 minutes (every 3 minutes in debug mode) to perform
-        # dynamic DNS updates.
-        interval = 180 if cfg.develop else 300
-        glib.schedule(interval, update_dns)
+        # Check every 5 minutes to perform dynamic DNS updates.
+        glib.schedule(300, update_dns)
 
     def setup(self, old_version):
         """Install and configure the app."""

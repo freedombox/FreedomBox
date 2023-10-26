@@ -62,9 +62,8 @@ class StorageApp(app_module.App):
     @staticmethod
     def post_init():
         """Perform post initialization operations."""
-        # Check every hour for low disk space, every 3 minutes in debug mode
-        interval = 180 if cfg.develop else 3600
-        glib.schedule(interval, warn_about_low_disk_space)
+        # Check every hour for low disk space
+        glib.schedule(3600, warn_about_low_disk_space)
 
         # Schedule initialization of UDisks2 initialization
         glib.schedule(3, udisks2.init, repeat=False)

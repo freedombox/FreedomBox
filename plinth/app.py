@@ -13,6 +13,7 @@ from plinth import cfg
 from plinth.signals import post_app_loading
 
 from . import clients as clients_module
+from . import db
 
 logger = logging.getLogger(__name__)
 
@@ -157,8 +158,9 @@ class App:
         from . import models
 
         try:
-            app_entry = models.Module.objects.get(pk=self.app_id)
-            return app_entry.setup_version
+            with db.lock:
+                app_entry = models.Module.objects.get(pk=self.app_id)
+                return app_entry.setup_version
         except models.Module.DoesNotExist:
             return 0
 
@@ -173,8 +175,9 @@ class App:
         """Set the app's setup version."""
         from . import models
 
-        models.Module.objects.update_or_create(
-            pk=self.app_id, defaults={'setup_version': version})
+        with db.lock:
+            models.Module.objects.update_or_create(
+                pk=self.app_id, defaults={'setup_version': version})
 
     def enable(self):
         """Enable all the components of the app."""

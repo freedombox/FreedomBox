@@ -12,6 +12,7 @@ from plinth import app
 from plinth.modules.apache.components import (Uwsgi, Webserver, check_url,
                                               diagnose_url,
                                               diagnose_url_on_all)
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 
 def test_webserver_init():
@@ -241,17 +242,21 @@ def test_diagnose_url(get_addresses, check):
         'wrapper': 'test-wrapper',
         'expected_output': 'test-expected'
     }
-    check.return_value = 'passed'
+    check.return_value = True
     result = diagnose_url(**args)
-    assert result == ['Access URL https://localhost/test on tcp4', 'passed']
+    assert result == DiagnosticCheck(
+        'apache-url-kind-https://localhost/test-4',
+        'Access URL https://localhost/test on tcp4', Result.PASSED)
 
-    check.return_value = 'failed'
+    check.return_value = False
     result = diagnose_url(**args)
-    assert result == ['Access URL https://localhost/test on tcp4', 'failed']
+    assert result == DiagnosticCheck(
+        'apache-url-kind-https://localhost/test-4',
+        'Access URL https://localhost/test on tcp4', Result.FAILED)
 
     del args['kind']
     args['url'] = 'https://{host}/test'
-    check.return_value = 'passed'
+    check.return_value = True
     get_addresses.return_value = [{
         'kind': '4',
         'address': 'test-host-1',
@@ -263,10 +268,14 @@ def test_diagnose_url(get_addresses, check):
         'numeric': False,
         'url_address': 'test-host-2'
     }]
-    result = diagnose_url_on_all(**args)
-    assert result == [
-        ['Access URL https://test-host-1/test on tcp4', 'passed'],
-        ['Access URL https://test-host-2/test on tcp6', 'passed'],
+    results = diagnose_url_on_all(**args)
+    assert results == [
+        DiagnosticCheck('apache-url-kind-https://test-host-1/test-4',
+                        'Access URL https://test-host-1/test on tcp4',
+                        Result.PASSED),
+        DiagnosticCheck('apache-url-kind-https://test-host-2/test-6',
+                        'Access URL https://test-host-2/test on tcp6',
+                        Result.PASSED),
     ]
 
 
@@ -278,7 +287,7 @@ def test_check_url(run):
     extra_args = {'env': None, 'check': True, 'stdout': -1, 'stderr': -1}
 
     # Basic
-    assert check_url(url) == 'passed'
+    assert check_url(url)
     run.assert_called_with(basic_command + [url], **extra_args)
 
     # Wrapper
@@ -311,15 +320,16 @@ def test_check_url(run):
     exception = subprocess.CalledProcessError(returncode=1, cmd=['curl'])
     run.side_effect = exception
     run.side_effect.stdout = b'500'
-    assert check_url(url) == 'failed'
+    assert not check_url(url)
 
     # Return code 401, 405
     run.side_effect = exception
     run.side_effect.stdout = b' 401 '
-    assert check_url(url) == 'passed'
+    assert check_url(url)
     run.side_effect.stdout = b'405\n'
-    assert check_url(url) == 'passed'
+    assert check_url(url)
 
     # Error
     run.side_effect = FileNotFoundError()
-    assert check_url(url) == 'error'
+    with pytest.raises(FileNotFoundError):
+        assert check_url(url)

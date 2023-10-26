@@ -1,0 +1,47 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% block configuration %}
+  {{ block.super }}
+
+  <h3>{% trans "Manage Content Packages" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'kiwix:add-package' %}" class="btn btn-default"
+       role="button" title="{% trans 'Add a content package' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add Package' %}
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      {% if not packages %}
+        <p>{% trans 'No content packages available.' %}</p>
+      {% else %}
+        <div id="kiwix-packages" class="list-group list-group-two-column">
+          {% for id, package in packages.items %}
+            <div class="list-group-item">
+              <a id="{{ id }}" class="primary"
+                 href="/kiwix/viewer#{{ package.path }}"
+                 title="{{ package.description }}">
+                {{ package.title }}
+              </a>
+
+              <a href="{% url 'kiwix:delete-package' id %}"
+                 class="btn btn-default btn-sm secondary" role="button"
+                 title="{% blocktrans with title=package.title %}Delete package {{ title }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

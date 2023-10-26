@@ -3,6 +3,7 @@
 
 import threading
 import time
+from collections import OrderedDict
 from unittest.mock import Mock, call, patch
 
 import pytest
@@ -28,7 +29,8 @@ class AppTest(app.App):
 def test_operation_default_initialization(update_notification):
     """Test Operation initialization with default values."""
     target = Mock()
-    operation = Operation('testapp', 'op1', target)
+    operation = Operation('testid', 'testapp', 'op1', target)
+    assert operation.op_id == 'testid'
     assert operation.app_id == 'testapp'
     assert operation.name == 'op1'
     assert operation.show_message
@@ -50,7 +52,7 @@ def test_operation_default_initialization(update_notification):
 def test_operation_initialization(update_notification):
     """Test Operation initialization with explicit values."""
     on_complete = Mock()
-    operation = Operation('testapp', 'op1', Mock(), ['arg1'],
+    operation = Operation('testid', 'testapp', 'op1', Mock(), ['arg1'],
                           {'arg2': 'value2'}, False, True,
                           {'data1': 'datavalue1'}, on_complete)
     assert not operation.show_message
@@ -67,7 +69,7 @@ def test_operation_initialization(update_notification):
 
 def test_operation_str():
     """Test string representation of operation."""
-    operation = Operation('testapp', 'op1', Mock())
+    operation = Operation('testid', 'testapp', 'op1', Mock())
     assert str(operation) == 'Operation: testapp: op1'
 
 
@@ -77,7 +79,7 @@ def test_successful_operation(update_notification):
     target = Mock()
     target.return_value = 'test-return'
     on_complete = Mock()
-    operation = Operation('testapp', 'op1', target, ['arg1'],
+    operation = Operation('testid', 'testapp', 'op1', target, ['arg1'],
                           {'arg2': 'value2'}, on_complete=on_complete)
     operation.run()
     assert operation.join() == 'test-return'
@@ -94,7 +96,7 @@ def test_error_operation(update_notification):
     target = Mock()
     target.side_effect = RuntimeError('error1')
     on_complete = Mock()
-    operation = Operation('testapp', 'op1', target, ['arg1'],
+    operation = Operation('testid', 'testapp', 'op1', target, ['arg1'],
                           {'arg2': 'value2'}, on_complete=on_complete)
     operation.run()
     with pytest.raises(RuntimeError):
@@ -111,7 +113,7 @@ def test_error_operation(update_notification):
 def test_join_before_start(update_notification):
     """Test waiting until operation finishes.."""
     event = threading.Event()
-    operation = Operation('testapp', 'op1', Mock)
+    operation = Operation('testid', 'testapp', 'op1', Mock)
     success = []
 
     def _wait():
@@ -135,7 +137,7 @@ def test_join_raises_exception(update_notification):
     target = Mock()
     target.side_effect = RuntimeError('error1')
     on_complete = Mock()
-    operation = Operation('testapp', 'op1', target, ['arg1'],
+    operation = Operation('testid', 'testapp', 'op1', target, ['arg1'],
                           {'arg2': 'value2'}, on_complete=on_complete)
     operation.run()
     with pytest.raises(RuntimeError):
@@ -149,7 +151,7 @@ def test_getting_operation_from_thread():
         operation = Operation.get_operation()
         operation.thread_data['test_operation'] = operation
 
-    operation = Operation('testapp', 'op1', target)
+    operation = Operation('testid', 'testapp', 'op1', target)
     operation.run()
     operation.join()
     assert operation.thread_data['test_operation'] == operation
@@ -164,7 +166,7 @@ def test_updating_operation(update_notification):
         operation = Operation.get_operation()
         operation.on_update('message1', exception)
 
-    operation = Operation('testapp', 'op1', target)
+    operation = Operation('testid', 'testapp', 'op1', target)
     operation.run()
     with pytest.raises(RuntimeError):
         operation.join()
@@ -177,7 +179,7 @@ def test_updating_operation(update_notification):
 @patch('plinth.app.App.get')
 def test_message(app_get):
     """Test getting the operation's message."""
-    operation = Operation('testapp', 'op1', Mock())
+    operation = Operation('testid', 'testapp', 'op1', Mock())
     operation._message = 'message1'
     operation.exception = RuntimeError('error1')
     assert operation.message == 'message1'
@@ -208,7 +210,8 @@ def test_message(app_get):
 def test_update_notification(app_get):
     """Test that operation notification is created."""
     app_get.return_value = AppTest()
-    operation = Operation('testapp', 'op1', Mock(), show_notification=True)
+    operation = Operation('testid', 'testapp', 'op1', Mock(),
+                          show_notification=True)
     note = Notification.get('testapp-operation')
     assert note.id == 'testapp-operation'
     assert note.app_id == 'testapp'
@@ -239,7 +242,7 @@ def test_manager_global_instance():
 def test_manager_init():
     """Test initializing operations manager."""
     manager = OperationsManager()
-    assert manager._operations == []
+    assert manager._operations == {}
     assert manager._current_operation is None
     assert isinstance(manager._lock, threading.RLock().__class__)
 
@@ -252,14 +255,15 @@ def test_manager_new():
     def target():
         event.wait()
 
-    operation = manager.new('testapp', 'op1', target)
+    operation = manager.new('testop', 'testapp', 'op1', target)
     assert isinstance(operation, Operation)
     assert manager._current_operation == operation
-    assert manager._operations == [operation]
+    assert manager._operations == {'testop': operation}
+
     event.set()
     operation.join()
     assert manager._current_operation is None
-    assert manager._operations == [operation]
+    assert manager._operations == OrderedDict(testop=operation)
 
 
 def test_manager_new_without_show_message():
@@ -270,11 +274,28 @@ def test_manager_new_without_show_message():
     def target():
         event.wait()
 
-    operation = manager.new('testapp', 'op1', target, show_message=False)
+    operation = manager.new('testop', 'testapp', 'op1', target,
+                            show_message=False)
     event.set()
     operation.join()
     assert manager._current_operation is None
-    assert manager._operations == []
+    assert manager._operations == {}
+
+
+def test_manager_new_raises():
+    """Test that a new operation is always unique."""
+    manager = OperationsManager()
+    operation1 = manager.new('testop1', 'testapp', 'op1', Mock())
+
+    # Creating operation with same id throws exception
+    with pytest.raises(KeyError):
+        manager.new('testop1', 'testapp', 'op1', Mock())
+
+    # Creating operation with different ID works
+    operation2 = manager.new('testop2', 'testapp', 'op3', Mock())
+
+    assert manager._operations == OrderedDict(testop1=operation1,
+                                              testop2=operation2)
 
 
 def test_manager_scheduling():
@@ -284,13 +305,15 @@ def test_manager_scheduling():
     event2 = threading.Event()
     event3 = threading.Event()
 
-    operation1 = manager.new('testapp', 'op1', event1.wait)
-    operation2 = manager.new('testapp', 'op2', event2.wait)
-    operation3 = manager.new('testapp', 'op3', event3.wait)
+    operation1 = manager.new('testop1', 'testapp', 'op1', event1.wait)
+    operation2 = manager.new('testop2', 'testapp', 'op2', event2.wait)
+    operation3 = manager.new('testop3', 'testapp', 'op3', event3.wait)
 
     def _assert_is_running(current_operation):
         assert manager._current_operation == current_operation
-        assert manager._operations == [operation1, operation2, operation3]
+        assert manager._operations == OrderedDict(testop1=operation1,
+                                                  testop2=operation2,
+                                                  testop3=operation3)
         for operation in [operation1, operation2, operation3]:
             alive = (operation == current_operation)
             assert operation.thread.is_alive() == alive
@@ -311,9 +334,9 @@ def test_manager_scheduling():
 def test_manager_filter():
     """Test returning filtered operations."""
     manager = OperationsManager()
-    operation1 = manager.new('testapp1', 'op1', Mock())
-    operation2 = manager.new('testapp1', 'op2', Mock())
-    operation3 = manager.new('testapp2', 'op3', Mock())
+    operation1 = manager.new('testop1', 'testapp1', 'op1', Mock())
+    operation2 = manager.new('testop2', 'testapp1', 'op2', Mock())
+    operation3 = manager.new('testop3', 'testapp2', 'op3', Mock())
     manager.filter('testapp1') == [operation1, operation2]
     manager.filter('testapp2') == [operation3]
 
@@ -323,14 +346,15 @@ def test_manager_collect_results():
     manager = OperationsManager()
     event = threading.Event()
 
-    operation1 = manager.new('testapp1', 'op1', Mock())
-    operation2 = manager.new('testapp2', 'op2', Mock())
-    operation3 = manager.new('testapp1', 'op3', event.wait)
+    operation1 = manager.new('testop1', 'testapp1', 'op1', Mock())
+    operation2 = manager.new('testop2', 'testapp2', 'op2', Mock())
+    operation3 = manager.new('testop3', 'testapp1', 'op3', event.wait)
     operation1.join()
     operation2.join()
     assert manager.collect_results('testapp1') == [operation1]
-    assert manager._operations == [operation2, operation3]
+    assert manager._operations == OrderedDict(testop2=operation2,
+                                              testop3=operation3)
     event.set()
     operation3.join()
     assert manager.collect_results('testapp1') == [operation3]
-    assert manager._operations == [operation2]
+    assert manager._operations == OrderedDict(testop2=operation2)

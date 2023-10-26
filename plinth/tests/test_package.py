@@ -10,6 +10,7 @@ import pytest
 
 from plinth.app import App
 from plinth.errors import MissingPackageError
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Package, Packages, packages_installed
 
 
@@ -238,16 +239,24 @@ def test_diagnose(cache):
         Package('package6') | Package('package7')
     ])
     results = component.diagnose()
-    assert 'not available for install' in results[0][0]
-    assert results[0][1] == 'failed'
-    assert '(2.0)' in results[1][0]
-    assert results[1][1] == 'passed'
-    assert '(3.0)' in results[2][0]
-    assert results[2][1] == 'warning'
-    assert 'not available for install' in results[3][0]
-    assert results[3][1] == 'failed'
-    assert '(4.0)' in results[4][0]
-    assert results[4][1] == 'passed'
+    assert results == [
+        DiagnosticCheck('package-available-package1',
+                        'Package package1 is not available for install',
+                        Result.FAILED),
+        DiagnosticCheck('package-latest-package2',
+                        'Package package2 is the latest version (2.0)',
+                        Result.PASSED),
+        DiagnosticCheck('package-latest-package3',
+                        'Package package3 is the latest version (3.0)',
+                        Result.WARNING),
+        DiagnosticCheck(
+            'package-available-package4 | package5',
+            'Package package4 | package5 is not available for install',
+            Result.FAILED),
+        DiagnosticCheck('package-latest-package7',
+                        'Package package7 is the latest version (4.0)',
+                        Result.PASSED),
+    ]
 
 
 @patch('plinth.package.packages_installed')

@@ -8,6 +8,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy
 
 from plinth import action_utils, app
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.privileged import service as service_privileged
 
 from . import privileged
@@ -141,17 +142,23 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
 
     Kind can be '4' for IPv4 or '6' for IPv6.
     """
-    result = check_url(url, kind, env, check_certificate, extra_options,
-                       wrapper, expected_output)
+    try:
+        return_value = check_url(url, kind, env, check_certificate,
+                                 extra_options, wrapper, expected_output)
+        result = Result.PASSED if return_value else Result.FAILED
+    except FileNotFoundError:
+        result = Result.ERROR
 
     if kind:
+        check_id = f'apache-url-kind-{url}-{kind}'
         template = gettext_lazy('Access URL {url} on tcp{kind}')
-        testname = format_lazy(template, url=url, kind=kind)
+        description = format_lazy(template, url=url, kind=kind)
     else:
+        check_id = f'apache-url-{url}'
         template = gettext_lazy('Access URL {url}')
-        testname = format_lazy(template, url=url)
+        description = format_lazy(template, url=url)
 
-    return [testname, result]
+    return DiagnosticCheck(check_id, description, result)
 
 
 def diagnose_url_on_all(url, expect_redirects=False, **kwargs):
@@ -198,15 +205,13 @@ def check_url(url, kind=None, env=None, check_certificate=True,
         process = subprocess.run(command, env=env, check=True,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
-        result = 'passed'
+        result = True
         if expected_output and expected_output not in process.stdout.decode():
-            result = 'failed'
+            result = False
     except subprocess.CalledProcessError as exception:
-        result = 'failed'
+        result = False
         # Authorization failed is a success
         if exception.stdout.decode().strip() in ('401', '405'):
-            result = 'passed'
-    except FileNotFoundError:
-        result = 'error'
+            result = True
 
     return result

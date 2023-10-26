@@ -11,6 +11,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.dispatch import receiver
 
+from . import db
+
 
 class KVStore(models.Model):
     """Model to store retrieve key/value configuration"""
@@ -45,14 +47,16 @@ class UserProfile(models.Model):
 @receiver(models.signals.post_save, sender=User)
 def _on_user_post_save(sender, instance, **kwargs):
     """When the user model is saved, user profile too."""
-    if hasattr(instance, 'userprofile'):
-        instance.userprofile.save()
-    else:
-        UserProfile.objects.update_or_create(user=instance)
+    with db.lock:
+        if hasattr(instance, 'userprofile'):
+            instance.userprofile.save()
+        else:
+            UserProfile.objects.update_or_create(user=instance)
 
 
 class JSONField(models.TextField):
     """Store and retrieve JSON data into a TextField."""
+
     def to_python(self, value):
         """Deserialize a text string from form field to Python dict."""
         if not value:

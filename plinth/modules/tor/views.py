@@ -49,7 +49,7 @@ class TorAppView(AppView):
 
     def form_valid(self, form):
         """Configure tor app on successful form submission."""
-        operation_module.manager.new(self.app_id,
+        operation_module.manager.new('tor-configuration', self.app_id,
                                      gettext_noop('Updating configuration'),
                                      _apply_changes,
                                      [form.initial, form.cleaned_data],

@@ -13,11 +13,13 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, daemon, glib, menu
+from plinth import daemon, glib, menu
+from plinth import operation as operation_module
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
+from .check import Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -27,10 +29,7 @@ _description = [
 
 logger = logging.Logger(__name__)
 
-running_task = None
-
 current_results = {}
-
 results_lock = threading.Lock()
 
 
@@ -64,8 +63,10 @@ class DiagnosticsApp(app_module.App):
     def post_init():
         """Perform post initialization operations."""
         # Check periodically for low RAM space
-        interval = 180 if cfg.develop else 3600
-        glib.schedule(interval, _warn_about_low_ram_space)
+        glib.schedule(3600, _warn_about_low_ram_space)
+
+        # Run diagnostics once a day
+        glib.schedule(24 * 3600, start_diagnostics, in_thread=False)
 
     def setup(self, old_version):
         """Install and configure the app."""
@@ -83,17 +84,7 @@ class DiagnosticsApp(app_module.App):
         return results
 
 
-def start_task():
-    """Start the run task in a separate thread."""
-    global running_task
-    if running_task:
-        raise Exception('Task already running')
-
-    running_task = threading.Thread(target=run_on_all_enabled_modules)
-    running_task.start()
-
-
-def run_on_all_enabled_modules():
+def _run_on_all_enabled_modules():
     """Run diagnostics on all the enabled modules and store the result."""
     global current_results
 
@@ -148,9 +139,6 @@ def run_on_all_enabled_modules():
             current_results['results'][app_id].update(app_results)
             current_results['progress_percentage'] = \
                 int((current_index + 1) * 100 / len(apps))
-
-    global running_task
-    running_task = None
 
 
 def _get_memory_info_from_cgroups():
@@ -249,3 +237,69 @@ def _warn_about_low_ram_space(request):
                                   app_id='diagnostics', severity=severity,
                                   title=title, message=message,
                                   actions=actions, data=data, group='admin')
+
+
+def start_diagnostics(data: None = None):
+    """Start full diagnostics as a background operation."""
+    logger.info('Running full diagnostics')
+    try:
+        operation_module.manager.new(op_id='diagnostics-full',
+                                     app_id='diagnostics',
+                                     name=gettext_noop('Running diagnostics'),
+                                     target=_run_diagnostics,
+                                     show_message=False,
+                                     show_notification=False)
+    except KeyError:
+        logger.warning('Diagnostics are already running')
+
+
+def _run_diagnostics():
+    """Run diagnostics and notify for failures."""
+    from plinth.notification import Notification
+
+    _run_on_all_enabled_modules()
+    with results_lock:
+        results = current_results['results']
+
+    issue_count = 0
+    severity = 'warning'
+    for _app_id, app_data in results.items():
+        if app_data['exception']:
+            issue_count += 1
+            severity = 'error'
+        else:
+            for check in app_data['diagnosis']:
+                if check.result != Result.PASSED:
+                    if check.result != Result.WARNING:
+                        severity = 'error'
+
+                    issue_count += 1
+
+    if not issue_count:
+        # Remove any previous notifications if there are no issues.
+        try:
+            Notification.get('diagnostics-background').delete()
+        except KeyError:
+            pass
+
+        return
+
+    message = gettext_noop(
+        # xgettext:no-python-format
+        'Found {issue_count} issues during routine tests.')
+    title = gettext_noop('Diagnostics results')
+    data = {'app_icon': 'fa-heartbeat', 'issue_count': issue_count}
+    actions = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': gettext_noop('Go to diagnostics results'),
+        'url': 'diagnostics:full'
+    }, {
+        'type': 'dismiss'
+    }]
+    note = Notification.update_or_create(id='diagnostics-background',
+                                         app_id='diagnostics',
+                                         severity=severity, title=title,
+                                         message=message, actions=actions,
+                                         data=data, group='admin')
+    note.dismiss(False)
