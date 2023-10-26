@@ -126,6 +126,7 @@ def _run_on_all_enabled_modules():
         app_results = {
             'diagnosis': None,
             'exception': None,
+            'show_rerun_setup': False,
         }
 
         try:
@@ -134,6 +135,11 @@ def _run_on_all_enabled_modules():
             logger.exception('Error running %s diagnostics - %s', app_id,
                              exception)
             app_results['exception'] = str(exception)
+
+        for check in app_results['diagnosis']:
+            if check.result in [Result.FAILED, Result.WARNING]:
+                app_results['show_rerun_setup'] = True
+                break
 
         with results_lock:
             current_results['results'][app_id].update(app_results)
