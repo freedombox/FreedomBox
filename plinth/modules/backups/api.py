@@ -126,16 +126,17 @@ def backup_apps(backup_handler, path, app_ids=None, encryption_passphrase=None,
         backup_root = '/'
         snapshotted = False
 
-    packet = Packet('backup', 'apps', backup_root, components, path,
-                    archive_comment)
-    _run_operation(backup_handler, packet,
-                   encryption_passphrase=encryption_passphrase)
-
-    if snapshotted:
-        _delete_snapshot(snapshot)
-    else:
-        _restore_services(original_state)
-        _lockdown_apps(components, lockdown=False)
+    try:
+        packet = Packet('backup', 'apps', backup_root, components, path,
+                        archive_comment)
+        _run_operation(backup_handler, packet,
+                       encryption_passphrase=encryption_passphrase)
+    finally:
+        if snapshotted:
+            _delete_snapshot(snapshot)
+        else:
+            _restore_services(original_state)
+            _lockdown_apps(components, lockdown=False)
 
 
 def restore_apps(restore_handler, app_ids=None, create_subvolume=True,
@@ -157,15 +158,17 @@ def restore_apps(restore_handler, app_ids=None, create_subvolume=True,
         restore_root = '/'
         subvolume = False
 
-    packet = Packet('restore', 'apps', restore_root, components, backup_file)
-    _run_operation(restore_handler, packet,
-                   encryption_passphrase=encryption_passphrase)
-
-    if subvolume:
-        _switch_to_subvolume(subvolume)
-    else:
-        _restore_services(original_state)
-        _lockdown_apps(components, lockdown=False)
+    try:
+        packet = Packet('restore', 'apps', restore_root, components,
+                        backup_file)
+        _run_operation(restore_handler, packet,
+                       encryption_passphrase=encryption_passphrase)
+    finally:
+        if subvolume:
+            _switch_to_subvolume(subvolume)
+        else:
+            _restore_services(original_state)
+            _lockdown_apps(components, lockdown=False)
 
 
 def _install_apps_before_restore(components):
