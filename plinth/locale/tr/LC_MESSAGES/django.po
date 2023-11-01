@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-23 20:05-0400\n"
-"PO-Revision-Date: 2023-10-28 04:14+0000\n"
+"PO-Revision-Date: 2023-11-03 20:31+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -1544,7 +1544,7 @@ msgstr "Tanılama çalıştırılıyor"
 #: plinth/modules/diagnostics/__init__.py:289
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
-msgstr ""
+msgstr "Sıradan denemeler sırasında {issue_count} sorun bulundu."
 
 #: plinth/modules/diagnostics/__init__.py:290
 msgid "Diagnostics results"
@@ -3140,6 +3140,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix, web içeriği için çevrimdışı bir okuyucudur. Vikipedi’yi interneti "
+"kullanmadan kullanılabilir hale getirmeyi amaçlayan bir yazılımdır, ancak "
+"potansiyel olarak tüm HTML içeriği için uygundur. Kiwix paketleri ZIM "
+"dosyası biçimindedir."
 
 #: plinth/modules/kiwix/__init__.py:25
 msgid ""
@@ -3153,6 +3157,15 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix çeşitli içerik türlerini barındırabilir:\n"
+"    <ul>\n"
+"      <li>Web sitelerinin çevrimdışı sürümleri: Wikimedia projects, Stack "
+"Exchange</li>\n"
+"      <li>Video içeriği: Khan Academy, TED Talks, Crash Course</li>\n"
+"      <li>Eğitim materyalleri: PHET, TED Ed, Vikidia</li>\n"
+"      <li>eKitaplar: Project Gutenberg</li>\n"
+"      <li>Dergiler: Low-tech Magazine</li>\n"
+"    </ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:14
@@ -3162,24 +3175,26 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Kiwix projesinden içerik paketlerini <a href=\"https://library.kiwix.org\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">indirebilirsiniz</a> veya "
+"kendinizinkini <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">oluşturabilirsiniz</a>."
 
 #: plinth/modules/kiwix/__init__.py:53
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Kiwix içerik sunucusunu yönetin"
 
 #: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
+msgstr "Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Çevrimdışı Vikipedi"
 
 #: plinth/modules/kiwix/forms.py:23
-#, fuzzy
-#| msgid "Backup files have to be in .tar.gz format"
 msgid "Content packages have to be in .zim format"
-msgstr "Yedekleme dosyaları .tar.gz biçiminde olmak zorundadır"
+msgstr "İçerik paketleri .zim biçiminde olmak zorundadır"
 
 #: plinth/modules/kiwix/forms.py:25
 #, python-brace-format
@@ -3188,73 +3203,64 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+"Yüklenen ZIM dosyaları, {box_name} cihazınızda {kiwix_home}/content altında "
+"saklanacaktır. Eğer Kiwix dosyayı eklemek için başarısız olursa, disk "
+"alanından tasarruf etmek için dosya hemen silinecektir."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "Mevcut %(max_filesize)s boş disk alanınız var."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:36
-#, fuzzy
-#| msgid "Upload file"
 msgid "Upload ZIM file"
-msgstr "Dosya yükle"
+msgstr "ZIM dosyası yükle"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete content package <em>%(name)s</em>"
-msgstr "<em>%(name)s</em> Viki veya Blog'unu Sil"
+msgstr "<em>%(name)s</em> içerik paketini sil"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
 msgid ""
 "Delete this package permanently? You may add it back later if you have a "
 "copy of the ZIM file."
 msgstr ""
+"Bu paket kalıcı olarak silinsin mi? ZIM dosyasının bir kopyasına sahipseniz "
+"daha sonra tekrar ekleyebilirsiniz."
 
 #: plinth/modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "İçerik Paketlerini Yönet"
 
 #: plinth/modules/kiwix/templates/kiwix.html:15
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a content package"
-msgstr "Yeni bir kişi ekle"
+msgstr "İçerik paketi ekle"
 
 #: plinth/modules/kiwix/templates/kiwix.html:17
-#, fuzzy
-#| msgid "Package"
 msgid "Add Package"
-msgstr "Paket"
+msgstr "Paket Ekle"
 
 #: plinth/modules/kiwix/templates/kiwix.html:24
-#, fuzzy
-#| msgid "No status available."
 msgid "No content packages available."
-msgstr "Mevcut durum yok."
+msgstr "Mevcut içerik paketleri yok."
 
 #: plinth/modules/kiwix/templates/kiwix.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete package %(title)s"
-msgstr "%(site)s sitesini sil"
+msgstr "%(title)s paketini sil"
 
 #: plinth/modules/kiwix/views.py:49
 msgid "Content package added."
-msgstr ""
+msgstr "İçerik paketi eklendi."
 
 #: plinth/modules/kiwix/views.py:54
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a new content package"
-msgstr "Yeni bir kişi ekle"
+msgstr "Yeni bir içerik paketi ekle"
 
 #: plinth/modules/kiwix/views.py:83
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to add content package."
-msgstr "Kullanıcıyı gruba ekleme başarısız oldu."
+msgstr "İçerik paketi ekleme başarısız oldu."
 
 #: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
@@ -3498,13 +3504,6 @@ msgstr ""
 "etkialanıadı</em> şeklinde görünecektir."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      <strong>Warning!</strong> Changing the domain name after the "
-#| "initial\n"
-#| "      setup is currently not supported.\n"
-#| "    "
 msgid ""
 "\n"
 "      <strong>Warning!</strong> Changing the domain name after this step "
@@ -3514,8 +3513,10 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      <strong>Uyarı!</strong> İlk ayarlamadan sonra etki alanı adının\n"
-"      değiştirilmesi şu anda desteklenmiyor.\n"
+"      <strong>Uyarı!</strong> Bu adımdan sonra etki alanı adının "
+"değiştirilmesi, uygulamanın verilerini\n"
+"      silecek olan uygulamanın kaldırılmasını ve yeniden yüklenmesini "
+"gerektirecektir.\n"
 "    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
