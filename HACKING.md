@@ -136,7 +136,7 @@ you will need to run the following to install those files properly on to the
 system and their changes to reflect properly.
 
 ```bash
-guest$ sudo ./setup.py install
+guest$ sudo make build install
 ```
 
 Note: This development container has automatic upgrades disabled by default.
@@ -367,7 +367,7 @@ you will need to run the following to install those files properly on to the
 system and their changes to reflect properly.
 
 ```bash
-vm$ sudo ./setup.py install
+vm$ sudo make build install
 ```
 
 Note: This development virtual machine has automatic upgrades disabled by

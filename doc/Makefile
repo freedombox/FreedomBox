@@ -7,7 +7,6 @@ MANUAL_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=show
 MANUAL_URL_RAW="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=raw"
 MANUAL_PAGE_URL_RAW="https://wiki.debian.org/{page}?action=raw"
 
-DESTDIR=
 INSTALL_DIR=$(DESTDIR)/usr/share/freedombox
 MAN_INSTALL_DIR=$(DESTDIR)/usr/share/man
 SCRIPTS_DIR=scripts

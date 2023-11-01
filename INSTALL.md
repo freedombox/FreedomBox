@@ -24,7 +24,7 @@ FreedomBox [Manual](https://wiki.debian.org/FreedomBox/Manual/)'s
     install FreedomBox Service (Plinth) itself.
 
     ```
-    $ sudo python3 setup.py install
+    $ sudo make build install
     ```
 
 2.  Run FreedomBox Service (Plinth):

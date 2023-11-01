@@ -166,7 +166,7 @@ if [ $(lsb_release --release --short) != '10' ]; then
   --no-install-recommends --yes .
 fi
 
-sudo ./setup.py install
+sudo make build install
 sudo systemctl daemon-reload
 
 # In case new dependencies conflict with old dependencies

@@ -1,9 +1,8 @@
 [project]
-name = "FreedomBox"
+name = "plinth"
 description = "A web front end for administering FreedomBox"
-author = "FreedomBox Authors"
-author_email = "freedombox-discuss@lists.alioth.debian.org"
 license = {file = "COPYING.md"}
+dynamic = ["version"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: No Input/Output (Daemon)",
@@ -76,6 +75,10 @@ dependencies = [
     "ruamel.yaml",
 ]
 
+[[project.authors]]
+name = "FreedomBox Authors"
+email = "freedombox-discuss@lists.alioth.debian.org"
+
 [project.optional-dependencies]
 test = [
     "pytest",
@@ -94,6 +97,25 @@ documentation = "https://docs.freedombox.org/"
 changelog = "https://salsa.debian.org/freedombox-team/freedombox/-/blob/master/debian/changelog"
 readme = "https://salsa.debian.org/freedombox-team/freedombox/-/blob/master/README.md"
 support = "https://freedombox.org/#community"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+plinth = "plinth.__main__:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "plinth.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["plinth", "plinth.*"]
+
+[tool.setuptools.package-data]
+"*" = ["templates/*", "static/**", "locale/*/LC_MESSAGES/*.mo"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*/data/*"]
 
 [tool.isort]
 known_first_party = ["plinth"]

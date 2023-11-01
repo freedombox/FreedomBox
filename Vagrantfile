@@ -23,7 +23,9 @@ Vagrant.configure(2) do |config|
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
     cd /freedombox/
-    ./setup.py install
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get build-dep --no-install-recommends --yes .
+    make build install
     systemctl daemon-reload
     # Stop any ongoing upgrade
     killall -9 unattended-upgr
