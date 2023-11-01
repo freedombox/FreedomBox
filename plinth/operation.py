@@ -187,7 +187,8 @@ class OperationsManager:
     def new(self, op_id: str, *args, **kwargs) -> Operation:
         """Create a new operation instance and add to global list."""
         with self._lock:
-            if op_id in self._operations:
+            if (op_id in self._operations and self._operations[op_id].state !=
+                    Operation.State.COMPLETED):
                 raise KeyError('Operation in progress/scheduled')
 
             kwargs['on_complete'] = self._on_operation_complete
