@@ -3,6 +3,7 @@
 Tests for the Coturn app component.
 """
 
+import json
 from unittest.mock import call, patch
 
 import pytest
@@ -26,16 +27,15 @@ def fixture_empty_component_list():
     TurnConsumer._all = {}
 
 
-def test_configuration_init():
+def test_turn_configuration_init():
     """Test creating configuration object."""
     config = TurnConfiguration('test-domain.example', [], 'test-shared-secret')
     assert config.domain == 'test-domain.example'
     assert config.shared_secret == 'test-shared-secret'
     assert config.uris == [
-        "stun:test-domain.example:3478?transport=tcp",
-        "stun:test-domain.example:3478?transport=udp",
-        "turn:test-domain.example:3478?transport=tcp",
-        "turn:test-domain.example:3478?transport=udp",
+        'stun:test-domain.example:3478',
+        'turn:test-domain.example:3478?transport=tcp',
+        'turn:test-domain.example:3478?transport=udp',
     ]
 
     config = TurnConfiguration(None, ['test-uri1', 'test-uri2'],
@@ -57,6 +57,42 @@ def test_configuration_init():
     assert config.shared_secret is None
     assert config.username == 'test-username'
     assert config.credential == 'test-credential'
+
+
+def test_turn_configuration_to_json():
+    """Test exporting configuration to JSON."""
+    config = TurnConfiguration('test-domain.example', [], 'test-shared-secret')
+    assert json.loads(config.to_json()) == {
+        'domain': 'test-domain.example',
+        'uris': [
+            'stun:test-domain.example:3478',
+            'turn:test-domain.example:3478?transport=tcp',
+            'turn:test-domain.example:3478?transport=udp',
+        ],
+        'shared_secret': 'test-shared-secret'
+    }
+
+
+def test_turn_configuration_validate_turn_uris():
+    """Test validation method to check for STUN/TURN URIs."""
+    valid_uris = [
+        'stun:test-domain.example:3478',
+        'turn:test-domain.example:3478?transport=tcp',
+        'turn:test-domain.example:3478?transport=udp',
+    ]
+    invalid_uris = [
+        'x-invalid-uri',
+        'stun:',
+        'stun:domain-port-missing.example',
+        'stun:testing.example:1234invalid-append',
+        'turn:testing.example:1234',
+        'turn:testing.example:1234?invalid-param=value',
+        'turn:testing.example:1234?transport=invalid-value',
+        'turn:testing.example:1234?transport=tcp-invalid-append',
+    ]
+    assert TurnConfiguration().validate_turn_uris(valid_uris)
+    for uri in invalid_uris:
+        assert not TurnConfiguration().validate_turn_uris([uri])
 
 
 def test_component_init_and_list():
