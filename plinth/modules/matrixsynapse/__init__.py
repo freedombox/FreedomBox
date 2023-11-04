@@ -44,7 +44,7 @@ class MatrixSynapseApp(app_module.App):
 
     app_id = 'matrixsynapse'
 
-    _version = 9
+    _version = 10
 
     def __init__(self):
         """Create components for the app."""
@@ -129,9 +129,14 @@ class MatrixSynapseApp(app_module.App):
 
         self.get_component('letsencrypt-matrixsynapse').setup_certificates()
 
-        # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
-        config = self.get_component('turn-matrixsynapse').get_configuration()
-        update_turn_configuration(config, force=True)
+        if not old_version or get_turn_configuration()[1]:
+            # Configure STUN/TURN only if there's a valid TLS domain set for
+            # Coturn. Do this if app is being freshly installed or if it is
+            # previously installed and configured to use STUN/TURN
+            # auto-management.
+            config = self.get_component(
+                'turn-matrixsynapse').get_configuration()
+            update_turn_configuration(config, force=True)
 
     def uninstall(self):
         """De-configure and uninstall the app."""
