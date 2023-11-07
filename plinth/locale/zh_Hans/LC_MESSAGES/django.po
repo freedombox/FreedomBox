@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 20:05-0400\n"
+"POT-Creation-Date: 2023-11-06 20:16-0500\n"
 "PO-Revision-Date: 2022-12-07 20:48+0000\n"
 "Last-Translator: Eric <hamburger1024@duck.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -79,12 +79,12 @@ msgid ""
 "later."
 msgstr "警告！如果以后更改了域名, 应用程序可能无法正常工作。"
 
-#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:31
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS 域"
 
-#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:33
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1326,7 +1326,7 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "网络电话助手"
 
-#: plinth/modules/coturn/forms.py:22
+#: plinth/modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "无效的STUN/TURN服务器URI列表"
 
@@ -1338,17 +1338,17 @@ msgstr "使用以下 URL 来配置你的通信服务器："
 msgid "Use the following shared authentication secret:"
 msgstr "使用以下共享的身份验证 secret："
 
-#: plinth/modules/datetime/__init__.py:19
+#: plinth/modules/datetime/__init__.py:20
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
 msgstr "网络时间服务是与 Internet 上的服务器同步系统时间的一个程序。"
 
-#: plinth/modules/datetime/__init__.py:66
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "日期与时间"
 
-#: plinth/modules/datetime/__init__.py:119
+#: plinth/modules/datetime/__init__.py:121
 msgid "Time synchronized to NTP server"
 msgstr "时间同步到NTP服务器"
 
@@ -1415,7 +1415,7 @@ msgstr ""
 "系统诊断将运行测试程序检查您的系统以确认应用程序和服务正在按预期方式运行。"
 
 #: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:229
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Diagnostics"
 msgstr "诊断程序"
 
@@ -1438,25 +1438,25 @@ msgstr "警告"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:195
+#: plinth/modules/diagnostics/__init__.py:201
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:200
+#: plinth/modules/diagnostics/__init__.py:206
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:213
 msgid "You should disable some apps to reduce memory usage."
 msgstr "你应该禁用一些应用程序以减少内存的使用。"
 
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:218
 msgid "You should not install any new apps on this system."
 msgstr "你不应该在这个系统上安装任何新的应用程序。"
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:230
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1465,28 +1465,28 @@ msgstr ""
 "系统内存不足：已使用 {percent_used}，{memory_available} "
 "{memory_available_unit}可用。{advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "Low Memory"
 msgstr "低内存"
 
-#: plinth/modules/diagnostics/__init__.py:248
+#: plinth/modules/diagnostics/__init__.py:254
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "运行诊断程序"
 
-#: plinth/modules/diagnostics/__init__.py:289
+#: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:290
+#: plinth/modules/diagnostics/__init__.py:296
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "诊断结果"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:301
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1507,12 +1507,20 @@ msgstr "结果"
 msgid "Diagnostic Results"
 msgstr "诊断结果"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:13
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "应用程序。%(app_name)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:20
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:48
+#: plinth/templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "启动安装程序"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "此应用程序不支持诊断"
 
@@ -1530,12 +1538,16 @@ msgstr "当前正在运行诊断测试"
 msgid "Results"
 msgstr "结果"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:38
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "          App: %(app_name)s\n"
+#| "        "
 msgid ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 "\n"
 "          应用程序。%(app_name)s\n"
@@ -1550,7 +1562,7 @@ msgstr "测试"
 msgid "Result"
 msgstr "结果"
 
-#: plinth/modules/diagnostics/views.py:92
+#: plinth/modules/diagnostics/views.py:100
 msgid "Diagnostic Test"
 msgstr "诊断测试"
 
@@ -8119,12 +8131,6 @@ msgstr "更新"
 #| msgid "Backups"
 msgid "Backup"
 msgstr "备份"
-
-#: plinth/templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
-msgid "Re-run setup"
-msgstr "启动安装程序"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30

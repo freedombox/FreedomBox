@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 20:05-0400\n"
+"POT-Creation-Date: 2023-11-06 20:16-0500\n"
 "PO-Revision-Date: 2023-10-01 14:00+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -81,12 +81,12 @@ msgstr ""
 "Varování! Pokud později změníte doménový název, může se stát, že aplikace "
 "nebude správně fungovat."
 
-#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:31
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS doména"
 
-#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:33
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1382,7 +1382,7 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "Pomocník VoIP"
 
-#: plinth/modules/coturn/forms.py:22
+#: plinth/modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Neplatný seznam URI serverů STUN/TURN"
 
@@ -1394,7 +1394,7 @@ msgstr "Pro konfiguraci komunikačního serveru použijte následující adresy 
 msgid "Use the following shared authentication secret:"
 msgstr "Použijte následující sdílený ověřovací klíč:"
 
-#: plinth/modules/datetime/__init__.py:19
+#: plinth/modules/datetime/__init__.py:20
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1402,11 +1402,11 @@ msgstr ""
 "Server síťového času je program který udržuje systémový čas synchronní se "
 "servery na Internetu."
 
-#: plinth/modules/datetime/__init__.py:66
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Datum a čas"
 
-#: plinth/modules/datetime/__init__.py:119
+#: plinth/modules/datetime/__init__.py:121
 msgid "Time synchronized to NTP server"
 msgstr "Čas synchronizován s NTP serverem"
 
@@ -1479,7 +1479,7 @@ msgstr ""
 "a služby fungují tak, jak mají."
 
 #: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:229
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
@@ -1502,25 +1502,25 @@ msgstr "varování"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:195
+#: plinth/modules/diagnostics/__init__.py:201
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:200
+#: plinth/modules/diagnostics/__init__.py:206
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:213
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Měli byste zakázat některé aplikace, abyste snížili využití paměti."
 
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:218
 msgid "You should not install any new apps on this system."
 msgstr "Do tohoto systému byste neměli instalovat žádné nové aplikace."
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:230
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1529,28 +1529,28 @@ msgstr ""
 "Systém má málo paměti: {percent_used}% využité, {memory_available} "
 "{memory_available_unit} volné. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "Low Memory"
 msgstr "Málo paměti"
 
-#: plinth/modules/diagnostics/__init__.py:248
+#: plinth/modules/diagnostics/__init__.py:254
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Spustit diagnostiku"
 
-#: plinth/modules/diagnostics/__init__.py:289
+#: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:290
+#: plinth/modules/diagnostics/__init__.py:296
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Výsledky diagnostiky"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:301
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1571,12 +1571,18 @@ msgstr "Výsledky"
 msgid "Diagnostic Results"
 msgstr "Výsledky diagnostiky"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:13
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Aplikace: %(app_name)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:20
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:48
+#: plinth/templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Znovu spustit nastavení"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "Tato aplikace nepodporuje diagnostiku"
 
@@ -1594,12 +1600,16 @@ msgstr "Diagnostické testy právě probíhají"
 msgid "Results"
 msgstr "Výsledky"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:38
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "          App: %(app_name)s\n"
+#| "        "
 msgid ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 "\n"
 "          Aplikace: %(app_name)s\n"
@@ -1614,7 +1624,7 @@ msgstr "Vyzkoušet"
 msgid "Result"
 msgstr "Výsledek"
 
-#: plinth/modules/diagnostics/views.py:92
+#: plinth/modules/diagnostics/views.py:100
 msgid "Diagnostic Test"
 msgstr "Diagnostické testy"
 
@@ -8905,10 +8915,6 @@ msgstr "Aktualizovat"
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 msgid "Backup"
 msgstr "Záloha"
-
-#: plinth/templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Znovu spustit nastavení"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 20:05-0400\n"
+"POT-Creation-Date: 2023-11-06 20:16-0500\n"
 "PO-Revision-Date: 2023-09-27 10:59+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -84,12 +84,12 @@ msgstr ""
 "Waarschuwing! De toepassing werkt mogelijk niet correct als de domeinnaam "
 "later wordt gewijzigd."
 
-#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:31
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS domein"
 
-#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:33
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1402,7 +1402,7 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "VoIP helper"
 
-#: plinth/modules/coturn/forms.py:22
+#: plinth/modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Ongeldige lijst van STUN/TURN-server URI's"
 
@@ -1414,7 +1414,7 @@ msgstr "Gebruik de volgende URL's om de communicatieserver in te stellen:"
 msgid "Use the following shared authentication secret:"
 msgstr "Gebruik het volgende gedeelde authenticatie geheim:"
 
-#: plinth/modules/datetime/__init__.py:19
+#: plinth/modules/datetime/__init__.py:20
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1422,11 +1422,11 @@ msgstr ""
 "Netwerk Tijd Server is een programma dat de systeemtijd synchroniseert met "
 "servers op internet."
 
-#: plinth/modules/datetime/__init__.py:66
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Datum en Tijd"
 
-#: plinth/modules/datetime/__init__.py:119
+#: plinth/modules/datetime/__init__.py:121
 msgid "Time synchronized to NTP server"
 msgstr "Tijd gesynchroniseerd met NTP-server"
 
@@ -1498,7 +1498,7 @@ msgstr ""
 "bevestigen dat de toepassingen en diensten zoals verwacht functioneren."
 
 #: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:229
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Diagnostics"
 msgstr "Diagnose"
 
@@ -1521,26 +1521,26 @@ msgstr "waarschuwing"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:195
+#: plinth/modules/diagnostics/__init__.py:201
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:200
+#: plinth/modules/diagnostics/__init__.py:206
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:213
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Door toepassingen uit te schakelen kan het geheugengebruik worden verminderd."
 
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:218
 msgid "You should not install any new apps on this system."
 msgstr "Extra toepassingen installeren wordt afgeraden."
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:230
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1549,28 +1549,28 @@ msgstr ""
 "Systeem heeft weinig geheugen beschikbaar: {percent_used}% gebruikt, "
 "{memory_available} {memory_available_unit} vrij. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "Low Memory"
 msgstr "Geheugengebrek"
 
-#: plinth/modules/diagnostics/__init__.py:248
+#: plinth/modules/diagnostics/__init__.py:254
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Voer Diagnostische test uit"
 
-#: plinth/modules/diagnostics/__init__.py:289
+#: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:290
+#: plinth/modules/diagnostics/__init__.py:296
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Resultaten Diagnostische test"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:301
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1591,12 +1591,18 @@ msgstr "Resultaten"
 msgid "Diagnostic Results"
 msgstr "Resultaten Diagnostische test"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:13
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Toepassing: %(app_name)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:20
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:48
+#: plinth/templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Setup opnieuw uitvoeren"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "Deze toepassing heeft geen diagnosetests"
 
@@ -1614,12 +1620,16 @@ msgstr "Diagnosetests worden doorlopen"
 msgid "Results"
 msgstr "Resultaten"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:38
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "          App: %(app_name)s\n"
+#| "        "
 msgid ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 "\n"
 "          Toepassing: %(app_name)s\n"
@@ -1634,7 +1644,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultaat"
 
-#: plinth/modules/diagnostics/views.py:92
+#: plinth/modules/diagnostics/views.py:100
 msgid "Diagnostic Test"
 msgstr "Diagnostische test"
 
@@ -8995,10 +9005,6 @@ msgstr "Update"
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 msgid "Backup"
 msgstr "Back-up"
-
-#: plinth/templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Setup opnieuw uitvoeren"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30

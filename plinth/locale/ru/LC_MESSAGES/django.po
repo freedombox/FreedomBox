@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 20:05-0400\n"
+"POT-Creation-Date: 2023-11-06 20:16-0500\n"
 "PO-Revision-Date: 2022-10-10 18:05+0000\n"
 "Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -82,12 +82,12 @@ msgstr ""
 "Предупреждение! Приложение может не работать должным образом, если доменное "
 "имя будет изменено."
 
-#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:31
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "Домен TLS"
 
-#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:33
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1398,7 +1398,7 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "VoIP-помощник"
 
-#: plinth/modules/coturn/forms.py:22
+#: plinth/modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Неверный список URI серверов STUN/TURN"
 
@@ -1412,7 +1412,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Используйте следующий общий секрет аутентификации:"
 
-#: plinth/modules/datetime/__init__.py:19
+#: plinth/modules/datetime/__init__.py:20
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1420,11 +1420,11 @@ msgstr ""
 "Сервер сетевого времени это программа позволяющая системе синхронизировать "
 "время с серверами в Интернете."
 
-#: plinth/modules/datetime/__init__.py:66
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Дата и Время"
 
-#: plinth/modules/datetime/__init__.py:119
+#: plinth/modules/datetime/__init__.py:121
 msgid "Time synchronized to NTP server"
 msgstr "Время синхронизируется с NTP сервером"
 
@@ -1496,7 +1496,7 @@ msgstr ""
 "приложения и службы работают так, как ожидается."
 
 #: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:229
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Diagnostics"
 msgstr "Диагностика"
 
@@ -1519,27 +1519,27 @@ msgstr "предупреждение"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:195
+#: plinth/modules/diagnostics/__init__.py:201
 msgid "MiB"
 msgstr "МБ"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:200
+#: plinth/modules/diagnostics/__init__.py:206
 msgid "GiB"
 msgstr "ГБ"
 
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:213
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Вы должны отключить некоторые приложения, чтобы уменьшить использование "
 "памяти."
 
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:218
 msgid "You should not install any new apps on this system."
 msgstr "Вы не должны устанавливать никаких новых приложений в этой системе."
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:230
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1548,28 +1548,28 @@ msgstr ""
 "В системе мало памяти: использовано {percent_used}%, свободно "
 "{memory_available} {memory_available_unit}. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "Low Memory"
 msgstr "Мало памяти"
 
-#: plinth/modules/diagnostics/__init__.py:248
+#: plinth/modules/diagnostics/__init__.py:254
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Запустить диагностику"
 
-#: plinth/modules/diagnostics/__init__.py:289
+#: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:290
+#: plinth/modules/diagnostics/__init__.py:296
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Результаты диагностики"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:301
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1590,12 +1590,20 @@ msgstr "Результаты"
 msgid "Diagnostic Results"
 msgstr "Результаты диагностики"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:13
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Приложение: %(app_name)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:20
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:48
+#: plinth/templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "Запуск программы установки"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "Это приложение не поддерживает диагностику"
 
@@ -1613,12 +1621,16 @@ msgstr "В настоящее время запущен диагностичес
 msgid "Results"
 msgstr "Результаты"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:38
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "          App: %(app_name)s\n"
+#| "        "
 msgid ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 "\n"
 "          Приложение: %(app_name)s\n"
@@ -1633,7 +1645,7 @@ msgstr "Тест"
 msgid "Result"
 msgstr "Результат"
 
-#: plinth/modules/diagnostics/views.py:92
+#: plinth/modules/diagnostics/views.py:100
 msgid "Diagnostic Test"
 msgstr "Диагностический тест"
 
@@ -9013,12 +9025,6 @@ msgstr "Обновление"
 #| msgid "Backups"
 msgid "Backup"
 msgstr "Резервные копии"
-
-#: plinth/templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
-msgid "Re-run setup"
-msgstr "Запуск программы установки"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30
