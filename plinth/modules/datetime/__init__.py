@@ -11,6 +11,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Packages
 
 from . import manifest
@@ -107,13 +108,14 @@ class DateTimeApp(app_module.App):
 
 def _diagnose_time_synchronized():
     """Check whether time is synchronized to NTP server."""
-    result = 'failed'
+    result = Result.FAILED
     try:
         output = subprocess.check_output(
             ['timedatectl', 'show', '--property=NTPSynchronized', '--value'])
         if 'yes' in output.decode():
-            result = 'passed'
+            result = Result.PASSED
     except subprocess.CalledProcessError:
         pass
 
-    return [_('Time synchronized to NTP server'), result]
+    return DiagnosticCheck('datetime-ntp-sync',
+                           _('Time synchronized to NTP server'), result)

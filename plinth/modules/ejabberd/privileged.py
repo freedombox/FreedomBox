@@ -30,7 +30,7 @@ yaml = YAML()
 yaml.allow_duplicate_keys = True
 yaml.preserve_quotes = True  # type: ignore [assignment]
 
-TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
+TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})(?:\?transport=(tcp|udp))?'
 
 
 @privileged
@@ -290,7 +290,7 @@ def _generate_service(uri: str) -> dict:
     if not match:
         raise ValueError('URL does not match TURN URI')
 
-    typ, domain, port, transport = match.groups()
+    typ, domain, port, transport = match.groups('udp')
     return {
         "host": domain,
         "port": int(port),
@@ -301,10 +301,16 @@ def _generate_service(uri: str) -> dict:
 
 def _generate_uris(services: list[dict]) -> list[str]:
     """Generate STUN/TURN URIs from ejabberd mod_stun_disco service config."""
-    return [
-        f"{s['type']}:{s['host']}:{s['port']}?transport={s['transport']}"
-        for s in services
-    ]
+    uris = []
+    for s in services:
+        uri = f"{s['type']}:{s['host']}:{s['port']}"
+        if s['type'] != 'stun':
+            uri += f"?transport={s['transport']}"
+
+        if uri not in uris:
+            uris.append(uri)
+
+    return uris
 
 
 @privileged

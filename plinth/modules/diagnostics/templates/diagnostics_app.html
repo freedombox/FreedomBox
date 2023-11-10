@@ -9,7 +9,18 @@
 
   <h2>{% trans "Diagnostic Results" %}</h2>
 
-  <h3>{% blocktrans %}App: {{ app_name }}{% endblocktrans %}</h3>
+  <div class="row align-items-center justify-content-between">
+    <h3>{% blocktrans %}App: {{ app_name }}{% endblocktrans %}</h3>
+
+    {% if show_rerun_setup %}
+      <form class="form form-diagnostics-rerun-setup-button" method="post"
+            action="{% url 'rerun-setup' app_id=app_id %}">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-default"
+               name="rerun-setup" value="{% trans "Re-run setup" %}"/>
+      </form>
+    {% endif %}
+  </div>
 
   {% if results %}
     {% include "diagnostics_results.html" with results=results %}

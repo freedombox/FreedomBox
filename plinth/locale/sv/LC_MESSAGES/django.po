@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 20:05-0400\n"
+"POT-Creation-Date: 2023-11-06 20:16-0500\n"
 "PO-Revision-Date: 2023-10-10 08:00+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -81,12 +81,12 @@ msgstr ""
 "Varning! Programmet kanske inte fungerar korrekt om domännamnet ändras "
 "senare."
 
-#: plinth/forms.py:80 plinth/modules/coturn/forms.py:30
+#: plinth/forms.py:80 plinth/modules/coturn/forms.py:31
 #: plinth/modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS Domän"
 
-#: plinth/forms.py:82 plinth/modules/coturn/forms.py:32
+#: plinth/forms.py:82 plinth/modules/coturn/forms.py:33
 #: plinth/modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
@@ -1392,7 +1392,7 @@ msgstr "Coturn"
 msgid "VoIP Helper"
 msgstr "VoIP-hjälpare"
 
-#: plinth/modules/coturn/forms.py:22
+#: plinth/modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Ogiltig lista för URI:er för STUN/TURN-servrar"
 
@@ -1405,7 +1405,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "Använd följande delade autentiseringshemligheter:"
 
-#: plinth/modules/datetime/__init__.py:19
+#: plinth/modules/datetime/__init__.py:20
 msgid ""
 "Network time server is a program that maintains the system time in "
 "synchronization with servers on the Internet."
@@ -1413,11 +1413,11 @@ msgstr ""
 "Network time server är ett program som upprätthåller synkronisering av "
 "systemtiden med servrar på Internet."
 
-#: plinth/modules/datetime/__init__.py:66
+#: plinth/modules/datetime/__init__.py:67
 msgid "Date & Time"
 msgstr "Datum och Tid"
 
-#: plinth/modules/datetime/__init__.py:119
+#: plinth/modules/datetime/__init__.py:121
 msgid "Time synchronized to NTP server"
 msgstr "Tid synkroniserad till NTP-server"
 
@@ -1491,7 +1491,7 @@ msgstr ""
 "bekräfta att program och tjänster fungerar som de ska."
 
 #: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:229
+#: plinth/modules/diagnostics/__init__.py:235
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
@@ -1514,25 +1514,25 @@ msgstr "varning"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:195
+#: plinth/modules/diagnostics/__init__.py:201
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:200
+#: plinth/modules/diagnostics/__init__.py:206
 msgid "GiB"
 msgstr "GiB"
 
-#: plinth/modules/diagnostics/__init__.py:207
+#: plinth/modules/diagnostics/__init__.py:213
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bör inaktivera vissa appar för att minska minnesanvändningen."
 
-#: plinth/modules/diagnostics/__init__.py:212
+#: plinth/modules/diagnostics/__init__.py:218
 msgid "You should not install any new apps on this system."
 msgstr "Du bör inte installera några nya appar på det här systemet."
 
-#: plinth/modules/diagnostics/__init__.py:224
+#: plinth/modules/diagnostics/__init__.py:230
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1541,28 +1541,28 @@ msgstr ""
 "Systemet är ont om minne: {percent_used}% används, {memory_available}"
 "·{memory_available_unit} ledig. {advice_message}"
 
-#: plinth/modules/diagnostics/__init__.py:226
+#: plinth/modules/diagnostics/__init__.py:232
 msgid "Low Memory"
 msgstr "Låg minne"
 
-#: plinth/modules/diagnostics/__init__.py:248
+#: plinth/modules/diagnostics/__init__.py:254
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Utför diagnostik"
 
-#: plinth/modules/diagnostics/__init__.py:289
+#: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:290
+#: plinth/modules/diagnostics/__init__.py:296
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Diagnostikresultat"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:301
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1583,12 +1583,18 @@ msgstr "Resultat"
 msgid "Diagnostic Results"
 msgstr "Diagnostikresultat"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:12
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:13
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "App:%(app_name)s"
 
-#: plinth/modules/diagnostics/templates/diagnostics_app.html:21
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:20
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:48
+#: plinth/templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Kör installation igen"
+
+#: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "Den här appen stöder inte diagnostik"
 
@@ -1606,12 +1612,16 @@ msgstr "Diagnotiktest körs för närvarande"
 msgid "Results"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/templates/diagnostics_full.html:37
-#, python-format
+#: plinth/modules/diagnostics/templates/diagnostics_full.html:38
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "          App: %(app_name)s\n"
+#| "        "
 msgid ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 msgstr ""
 "\n"
 "          Appen: %(app_name)s\n"
@@ -1626,7 +1636,7 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: plinth/modules/diagnostics/views.py:92
+#: plinth/modules/diagnostics/views.py:100
 msgid "Diagnostic Test"
 msgstr "Diagnostiktest"
 
@@ -8935,10 +8945,6 @@ msgstr "Uppdatera"
 #: plinth/templates/toolbar.html:39 plinth/templates/toolbar.html:40
 msgid "Backup"
 msgstr "Säkerhetskopia"
-
-#: plinth/templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Kör installation igen"
 
 #: plinth/templates/toolbar.html:59 plinth/templates/toolbar.html:60
 #: plinth/templates/uninstall.html:30

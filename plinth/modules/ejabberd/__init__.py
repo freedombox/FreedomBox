@@ -50,7 +50,7 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
-    _version = 7
+    _version = 8
 
     def __init__(self):
         """Create components for the app."""
@@ -148,9 +148,14 @@ class EjabberdApp(app_module.App):
         if not old_version:
             self.enable()
 
-        # Configure STUN/TURN only if there's a valid TLS domain set for Coturn
-        configuration = self.get_component('turn-ejabberd').get_configuration()
-        update_turn_configuration(configuration, force=True)
+        if not old_version or get_turn_configuration()[1]:
+            # Configure STUN/TURN only if there's a valid TLS domain set for
+            # Coturn. Do this if app is being freshly installed or if it is
+            # previously installed and configured to use STUN/TURN
+            # auto-management.
+            configuration = self.get_component(
+                'turn-ejabberd').get_configuration()
+            update_turn_configuration(configuration, force=True)
 
 
 class EjabberdTurnConsumer(TurnConsumer):

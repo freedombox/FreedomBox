@@ -18,7 +18,8 @@ def get_domain_choices():
 
 def turn_uris_validator(turn_uris):
     """Validate list of STUN/TURN Server URIs."""
-    if not TurnConfiguration.validate_turn_uris(turn_uris.split("\n")):
+    uris = [uri for uri in turn_uris.split('\r\n') if uri]
+    if not TurnConfiguration.validate_turn_uris(uris):
         raise ValidationError(_('Invalid list of STUN/TURN Server URIs'))
 
 

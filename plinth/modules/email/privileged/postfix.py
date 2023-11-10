@@ -29,7 +29,9 @@ default_config = {
         ','.join([
             'permit_sasl_authenticated',
             'defer_unauth_destination',
-        ])
+        ]),
+    'message_size_limit':
+        '102400000',
 }
 
 submission_options: dict[str, str] = {

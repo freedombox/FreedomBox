@@ -73,18 +73,22 @@ def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     """Test running diagnostics."""
 
     def on_all_side_effect(url, check_certificate, expect_redirects):
-        return [('test-result-' + url, 'success')]
+        return [
+            DiagnosticCheck('test-all-id', 'test-result-' + url, 'success')
+        ]
 
     def side_effect(url, check_certificate):
-        return ('test-result-' + url, 'success')
+        return DiagnosticCheck('test-id', 'test-result-' + url, 'success')
 
     diagnose_url_on_all.side_effect = on_all_side_effect
     diagnose_url.side_effect = side_effect
     webserver1 = Webserver('test-webserver', 'test-config',
                            urls=['{host}url1', 'url2'], expect_redirects=True)
     results = webserver1.diagnose()
-    assert results == [('test-result-{host}url1', 'success'),
-                       ('test-result-url2', 'success')]
+    assert results == [
+        DiagnosticCheck('test-all-id', 'test-result-{host}url1', 'success'),
+        DiagnosticCheck('test-id', 'test-result-url2', 'success')
+    ]
     diagnose_url_on_all.assert_has_calls(
         [call('{host}url1', check_certificate=False, expect_redirects=True)])
     diagnose_url.assert_has_calls([call('url2', check_certificate=False)])

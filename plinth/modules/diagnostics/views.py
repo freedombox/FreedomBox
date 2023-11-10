@@ -17,6 +17,8 @@ from plinth.app import App
 from plinth.modules import diagnostics
 from plinth.views import AppView
 
+from .check import Result
+
 logger = logging.getLogger(__name__)
 
 
@@ -87,10 +89,18 @@ def diagnose_app(request, app_id):
                          exception)
         diagnosis_exception = str(exception)
 
+    show_rerun_setup = False
+    for check in diagnosis:
+        if check.result in [Result.FAILED, Result.WARNING]:
+            show_rerun_setup = True
+            break
+
     return TemplateResponse(
         request, 'diagnostics_app.html', {
             'title': _('Diagnostic Test'),
+            'app_id': app_id,
             'app_name': app_name,
             'results': diagnosis,
             'exception': diagnosis_exception,
+            'show_rerun_setup': show_rerun_setup,
         })

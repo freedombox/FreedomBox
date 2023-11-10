@@ -22,8 +22,17 @@ from selenium.webdriver.support.ui import WebDriverWait
 config = configparser.ConfigParser()
 config.read(pathlib.Path(__file__).with_name('config.ini'))
 
-config['DEFAULT']['url'] = os.environ.get('FREEDOMBOX_URL',
-                                          config['DEFAULT']['url']).rstrip('/')
+# Configuration to allow each pytest-xdist worker to hit a dedicated
+# app server. See .ci/functional-tests.yml for usage.
+worker = os.environ.get('PYTEST_XDIST_WORKER', 'master')
+if worker == 'master':
+    config['DEFAULT']['url'] = os.environ.get(
+        'FREEDOMBOX_URL', config['DEFAULT']['url']).rstrip('/')
+else:
+    # worker_ids are like gw0, gw1, ...
+    worker_number = int(worker.lstrip('gw')) + 1
+    config['DEFAULT']['url'] = os.environ[f'APP_SERVER_URL_{worker_number}']
+
 config['DEFAULT']['ssh_port'] = os.environ.get('FREEDOMBOX_SSH_PORT',
                                                config['DEFAULT']['ssh_port'])
 config['DEFAULT']['samba_port'] = os.environ.get(

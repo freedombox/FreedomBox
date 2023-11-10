@@ -11,8 +11,12 @@
     - export AWS_DEFAULT_REGION=us-east-1
     - |
       aws lambda invoke --function-name launch_app_server --payload '{"launch_template_name": "'"$LAUNCH_TEMPLATE_NAME"'", "instance_name": "'"$INSTANCE_NAME"'", "ci_project_id": "'"$CI_PROJECT_ID"'", "build_job_id": "'"$BUILD_JOB_ID"'"}' response.json
-    - echo "APP_SERVER_IP=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
-    - echo "INSTANCE_ID=$(jq -r '.instance_id' response.json)" >> app-servers.env
+    - echo "APP_SERVER_IP_1=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
+    - echo "INSTANCE_ID_1=$(jq -r '.instance_id' response.json)" >> app-servers.env
+    - |
+      aws lambda invoke --function-name launch_app_server --payload '{"launch_template_name": "'"$LAUNCH_TEMPLATE_NAME"'", "instance_name": "'"$INSTANCE_NAME"'", "ci_project_id": "'"$CI_PROJECT_ID"'", "build_job_id": "'"$BUILD_JOB_ID"'"}' response.json
+    - echo "APP_SERVER_IP_2=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
+    - echo "INSTANCE_ID_2=$(jq -r '.instance_id' response.json)" >> app-servers.env
   tags:
     - functional-tests
   artifacts:
@@ -22,7 +26,7 @@
 .run-functional-tests:
   stage: functional-tests
   timeout: 3h
-  # Need to find a way of running the cleanup step even on failure
+  # Need to find another way of running the cleanup step even on failure
   allow_failure: true
   when: delayed
   # Wait for the app-server to come up. Saves time for the CI runners.
@@ -35,10 +39,11 @@
   script:
     - cp -r . /home/tester/freedombox && chown -R tester:tester /home/tester/freedombox
     - |
-      sudo FREEDOMBOX_URL="https://$APP_SERVER_IP" -u tester bash -c \
-        'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless --template=html1/index.html --report=functional-tests.html'
+      sudo APP_SERVER_URL_1="https://$APP_SERVER_IP_1" APP_SERVER_URL_2="https://$APP_SERVER_IP_2" -u tester bash -c \
+        'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless -n 2 --dist=loadscope --template=html1/index.html --report=functional-tests.html'
   after_script:
-    - echo "INSTANCE_ID=$INSTANCE_ID" >> app-servers.env
+    - echo "INSTANCE_ID_1=$INSTANCE_ID_1" >> app-servers.env
+    - echo "INSTANCE_ID_2=$INSTANCE_ID_2" >> app-servers.env
     - cp /home/tester/freedombox/functional-tests.html .
     - cp -r /home/tester/freedombox/screenshots/ .
   artifacts:
@@ -55,6 +60,7 @@
   script:
     - export AWS_DEFAULT_REGION=us-east-1
     - |
-      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID"'"}' response.json
+      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID_1"'"}' response.json
+      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID_2"'"}' response.json
   tags:
     - functional-tests

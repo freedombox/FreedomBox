@@ -285,16 +285,29 @@ def test_manager_new_without_show_message():
 def test_manager_new_raises():
     """Test that a new operation is always unique."""
     manager = OperationsManager()
-    operation1 = manager.new('testop1', 'testapp', 'op1', Mock())
+    event1 = threading.Event()
+    event2 = threading.Event()
 
-    # Creating operation with same id throws exception
+    operation1 = manager.new('testop1', 'testapp', 'op1',
+                             lambda: event1.wait())
+
+    # Creating operation with different ID works
+    operation2 = manager.new('testop2', 'testapp', 'op3', lambda: event2.set())
+
+    assert manager._operations == OrderedDict(testop1=operation1,
+                                              testop2=operation2)
+
+    # Creating operation with same id while the operation is running/scheduled
+    # throws exception
     with pytest.raises(KeyError):
         manager.new('testop1', 'testapp', 'op1', Mock())
 
-    # Creating operation with different ID works
-    operation2 = manager.new('testop2', 'testapp', 'op3', Mock())
+    # Creating operation with same id after the operation is completed works.
+    event1.set()  # Allow the first operation to complete
+    event2.wait(10)  # Wait until the second operation has started
+    operation1_new = manager.new('testop1', 'testapp', 'op1', Mock())
 
-    assert manager._operations == OrderedDict(testop1=operation1,
+    assert manager._operations == OrderedDict(testop1=operation1_new,
                                               testop2=operation2)
 
 

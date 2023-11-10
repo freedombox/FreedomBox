@@ -33,3 +33,12 @@ Base Classes
 
 .. autoclass:: plinth.app.FollowerComponent
    :members:
+
+Other Classes
+^^^^^^^^^^^^^
+
+.. autoclass:: plinth.modules.diagnostics.check.DiagnosticCheck
+   :members:
+
+.. autoclass:: plinth.modules.diagnostics.check.Result
+   :members:

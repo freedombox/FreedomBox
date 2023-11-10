@@ -17,7 +17,8 @@ TURN_REST_TTL = 24 * 3600
 
 TURN_REST_USER = 'fbxturnuser'
 
-TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})\?transport=(tcp|udp)'
+TURN_URI_REGEX = \
+    r'(stun:(.*):([0-9]{4}))|(turn:(.*):([0-9]{4})\?transport=(tcp|udp))'
 
 
 @dataclass
@@ -43,8 +44,9 @@ class TurnConfiguration:
         """Generate URIs after object initialization if necessary."""
         if self.domain and not self.uris:
             self.uris = [
-                f'{typ}:{self.domain}:3478?transport={transport}'
-                for typ in ['stun', 'turn'] for transport in ['tcp', 'udp']
+                f'stun:{self.domain}:3478',
+                f'turn:{self.domain}:3478?transport=tcp',
+                f'turn:{self.domain}:3478?transport=udp'
             ]
 
     def to_json(self) -> str:
@@ -59,7 +61,7 @@ class TurnConfiguration:
     def validate_turn_uris(turn_uris: list[str]) -> bool:
         """Return whether the given TURN URI is valid."""
         pattern = re.compile(TURN_URI_REGEX)
-        return all(map(pattern.match, turn_uris))
+        return all(map(pattern.fullmatch, turn_uris))
 
 
 @dataclass
