@@ -149,7 +149,9 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     except FileNotFoundError:
         result = Result.ERROR
 
+    parameters = {'url': url}
     if kind:
+        parameters['kind'] = kind
         check_id = f'apache-url-kind-{url}-{kind}'
         template = gettext_lazy('Access URL {url} on tcp{kind}')
         description = format_lazy(template, url=url, kind=kind)
@@ -158,7 +160,7 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
         template = gettext_lazy('Access URL {url}')
         description = format_lazy(template, url=url)
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def diagnose_url_on_all(url, expect_redirects=False, **kwargs):

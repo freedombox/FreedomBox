@@ -106,8 +106,9 @@ class Daemon(app.LeaderComponent):
 
         template = gettext_lazy('Service {service_name} is running')
         description = format_lazy(template, service_name=self.unit)
+        parameters = {'service_name': self.unit}
 
-        return DiagnosticCheck(check_id, description, result)
+        return DiagnosticCheck(check_id, description, result, parameters)
 
 
 class RelatedDaemon(app.FollowerComponent):
@@ -158,7 +159,9 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
 
     result = _check_port(port, kind, listen_address)
 
+    parameters = {'kind': kind, 'port': port}
     if listen_address:
+        parameters['listen_address'] = listen_address
         check_id = f'daemon-listening-address-{kind}-{port}-{listen_address}'
         template = gettext_lazy(
             'Listening on {kind} port {listen_address}:{port}')
@@ -170,7 +173,8 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
         description = format_lazy(template, kind=kind, port=port)
 
     return DiagnosticCheck(check_id, description,
-                           Result.PASSED if result else Result.FAILED)
+                           Result.PASSED if result else Result.FAILED,
+                           parameters)
 
 
 def _check_port(port, kind='tcp', listen_address=None):
@@ -236,9 +240,10 @@ def diagnose_netcat(host, port, input='', negate=False):
 
     check_id = f'daemon-netcat-{host}-{port}'
     description = _('Connect to {host}:{port}')
+    parameters = {'host': host, 'port': port, 'negate': negate}
     if negate:
         check_id = f'daemon-netcat-negate-{host}-{port}'
         description = _('Cannot connect to {host}:{port}')
 
     return DiagnosticCheck(check_id, description.format(host=host, port=port),
-                           result)
+                           result, parameters)

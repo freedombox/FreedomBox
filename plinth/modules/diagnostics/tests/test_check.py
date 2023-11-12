@@ -26,5 +26,12 @@ def test_diagnostic_check():
     assert check.check_id == 'some-check-id'
     assert check.description == 'sample check'
     assert check.result == Result.NOT_DONE
+    assert not check.parameters
+
     check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
     assert check.result == Result.PASSED
+    assert not check.parameters
+
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED,
+                            {'key': 'value'})
+    assert check.parameters['key'] == 'value'

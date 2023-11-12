@@ -242,20 +242,23 @@ def test_diagnose(cache):
     assert results == [
         DiagnosticCheck('package-available-package1',
                         'Package package1 is not available for install',
-                        Result.FAILED),
+                        Result.FAILED, {'package_expression': 'package1'}),
         DiagnosticCheck('package-latest-package2',
                         'Package package2 is the latest version (2.0)',
-                        Result.PASSED),
+                        Result.PASSED,
+                        {'package_name': 'package2', 'latest_version': '2.0'}),
         DiagnosticCheck('package-latest-package3',
                         'Package package3 is the latest version (3.0)',
-                        Result.WARNING),
+                        Result.WARNING,
+                        {'package_name': 'package3', 'latest_version': '3.0'}),
         DiagnosticCheck(
             'package-available-package4 | package5',
             'Package package4 | package5 is not available for install',
-            Result.FAILED),
+            Result.FAILED, {'package_expression': 'package4 | package5'}),
         DiagnosticCheck('package-latest-package7',
                         'Package package7 is the latest version (4.0)',
-                        Result.PASSED),
+                        Result.PASSED,
+                        {'package_name': 'package7', 'latest_version': '4.0'}),
     ]
 
 

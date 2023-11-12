@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Diagnostic check data type."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import StrEnum
 
 
@@ -19,7 +19,8 @@ class Result(StrEnum):
 
 @dataclass
 class DiagnosticCheck:
-    """A diagnostic check and optional result."""
+    """A diagnostic check and optional result and parameters."""
     check_id: str
     description: str
     result: Result = Result.NOT_DONE
+    parameters: dict = field(default_factory=dict)

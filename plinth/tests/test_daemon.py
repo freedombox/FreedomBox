@@ -151,7 +151,8 @@ def test_diagnose(port_listening, service_is_running, daemon):
     results = daemon.diagnose()
     assert results == [
         DiagnosticCheck('daemon-running-test-unit',
-                        'Service test-unit is running', Result.PASSED),
+                        'Service test-unit is running', Result.PASSED,
+                        {'service_name': 'test-unit'}),
         DiagnosticCheck('test-result-8273-tcp4', 'test-result-8273-tcp4',
                         Result.PASSED),
         DiagnosticCheck('test-result-345-udp', 'test-result-345-udp',
@@ -216,21 +217,35 @@ def test_diagnose_port_listening(connections):
     results = diagnose_port_listening(1234)
     assert results == DiagnosticCheck('daemon-listening-tcp-1234',
                                       'Listening on tcp port 1234',
-                                      Result.PASSED)
+                                      Result.PASSED, {
+                                          'kind': 'tcp',
+                                          'port': 1234
+                                      })
     results = diagnose_port_listening(1234, 'tcp', '0.0.0.0')
     assert results == DiagnosticCheck(
         'daemon-listening-address-tcp-1234-0.0.0.0',
-        'Listening on tcp port 0.0.0.0:1234', Result.PASSED)
+        'Listening on tcp port 0.0.0.0:1234', Result.PASSED, {
+            'kind': 'tcp',
+            'port': 1234,
+            'listen_address': '0.0.0.0'
+        })
 
     # Failed results
     results = diagnose_port_listening(4321)
     assert results == DiagnosticCheck('daemon-listening-tcp-4321',
                                       'Listening on tcp port 4321',
-                                      Result.FAILED)
+                                      Result.FAILED, {
+                                          'kind': 'tcp',
+                                          'port': 4321
+                                      })
     results = diagnose_port_listening(4321, 'tcp', '0.0.0.0')
     assert results == DiagnosticCheck(
         'daemon-listening-address-tcp-4321-0.0.0.0',
-        'Listening on tcp port 0.0.0.0:4321', Result.FAILED)
+        'Listening on tcp port 0.0.0.0:4321', Result.FAILED, {
+            'kind': 'tcp',
+            'port': 4321,
+            'listen_address': '0.0.0.0'
+        })
 
     # Check if psutil call is being made with right argument
     results = diagnose_port_listening(1234, 'tcp')
@@ -278,29 +293,32 @@ def test_diagnose_netcat(popen):
     """Test running diagnostic test using netcat."""
     popen().returncode = 0
     result = diagnose_netcat('test-host', 3300, input='test-input')
+    parameters = {'host': 'test-host', 'port': 3300, 'negate': False}
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
                                      'Connect to test-host:3300',
-                                     Result.PASSED)
+                                     Result.PASSED, parameters)
     assert popen.mock_calls[1][1] == (['nc', 'test-host', '3300'], )
     assert popen.mock_calls[2] == call().communicate(input=b'test-input')
 
     result = diagnose_netcat('test-host', 3300, input='test-input',
                              negate=True)
+    parameters2 = parameters.copy()
+    parameters2['negate'] = True
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
                                      'Cannot connect to test-host:3300',
-                                     Result.FAILED)
+                                     Result.FAILED, parameters2)
 
     popen().returncode = 1
     result = diagnose_netcat('test-host', 3300, input='test-input')
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
                                      'Connect to test-host:3300',
-                                     Result.FAILED)
+                                     Result.FAILED, parameters)
 
     result = diagnose_netcat('test-host', 3300, input='test-input',
                              negate=True)
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
                                      'Cannot connect to test-host:3300',
-                                     Result.PASSED)
+                                     Result.PASSED, parameters2)
 
 
 def test_related_daemon_initialization():

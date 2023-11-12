@@ -125,8 +125,9 @@ def _diagnose_ldap_entry(search_item):
 
     template = _('Check LDAP entry "{search_item}"')
     description = format_lazy(template, search_item=search_item)
+    parameters = {'search_item': search_item}
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def _diagnose_nslcd_config(config, key, value):
@@ -139,8 +140,9 @@ def _diagnose_nslcd_config(config, key, value):
 
     template = _('Check nslcd config "{key} {value}"')
     description = format_lazy(template, key=key, value=value)
+    parameters = {'key': key, 'value': value}
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def _diagnose_nsswitch_config():
@@ -169,8 +171,10 @@ def _diagnose_nsswitch_config():
 
         template = _('Check nsswitch config "{database}"')
         description = format_lazy(template, database=database)
+        parameters = {'database': database}
 
-        results.append(DiagnosticCheck(check_id, description, result))
+        results.append(
+            DiagnosticCheck(check_id, description, result, parameters))
 
     return results
 

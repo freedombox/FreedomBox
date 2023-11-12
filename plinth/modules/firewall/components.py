@@ -136,7 +136,9 @@ class Firewall(app.FollowerComponent):
             template = _(
                 'Port {name} ({details}) available for internal networks')
             description = format_lazy(template, name=port, details=details)
-            results.append(DiagnosticCheck(check_id, description, result))
+            parameters = {'name': port, 'details': details}
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
             # External zone
             if self.is_external:
@@ -155,7 +157,9 @@ class Firewall(app.FollowerComponent):
                 )
                 description = format_lazy(template, name=port, details=details)
 
-            results.append(DiagnosticCheck(check_id, description, result))
+            parameters = {'name': port, 'details': details}
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
         return results
 

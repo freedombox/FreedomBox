@@ -119,8 +119,10 @@ class DropinConfigs(app_module.FollowerComponent):
             result_string = Result.PASSED if result else Result.FAILED
             template = _('Static configuration {etc_path} is setup properly')
             description = format_lazy(template, etc_path=str(etc_path))
+            parameters = {'etc_path': str(etc_path)}
             results.append(
-                DiagnosticCheck(check_id, description, result_string))
+                DiagnosticCheck(check_id, description, result_string,
+                                parameters))
 
         return results
 

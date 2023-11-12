@@ -246,17 +246,18 @@ def test_diagnose_url(get_addresses, check):
         'wrapper': 'test-wrapper',
         'expected_output': 'test-expected'
     }
+    parameters = {key: args[key] for key in ['url', 'kind']}
     check.return_value = True
     result = diagnose_url(**args)
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
-        'Access URL https://localhost/test on tcp4', Result.PASSED)
+        'Access URL https://localhost/test on tcp4', Result.PASSED, parameters)
 
     check.return_value = False
     result = diagnose_url(**args)
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
-        'Access URL https://localhost/test on tcp4', Result.FAILED)
+        'Access URL https://localhost/test on tcp4', Result.FAILED, parameters)
 
     del args['kind']
     args['url'] = 'https://{host}/test'
@@ -272,14 +273,24 @@ def test_diagnose_url(get_addresses, check):
         'numeric': False,
         'url_address': 'test-host-2'
     }]
+    parameters = [
+        {
+            'url': 'https://test-host-1/test',
+            'kind': '4'
+        },
+        {
+            'url': 'https://test-host-2/test',
+            'kind': '6'
+        },
+    ]
     results = diagnose_url_on_all(**args)
     assert results == [
         DiagnosticCheck('apache-url-kind-https://test-host-1/test-4',
                         'Access URL https://test-host-1/test on tcp4',
-                        Result.PASSED),
+                        Result.PASSED, parameters[0]),
         DiagnosticCheck('apache-url-kind-https://test-host-2/test-6',
                         'Access URL https://test-host-2/test on tcp6',
-                        Result.PASSED),
+                        Result.PASSED, parameters[1]),
     ]
 
 

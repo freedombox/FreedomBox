@@ -214,8 +214,10 @@ class Packages(app_module.FollowerComponent):
                 description = _(
                     'Package {expression} is not available for '
                     'install').format(expression=package_expression)
+                parameters = {'package_expression': str(package_expression)}
                 results.append(
-                    DiagnosticCheck(check_id, description, Result.FAILED))
+                    DiagnosticCheck(check_id, description, Result.FAILED,
+                                    parameters))
                 continue
 
             result = Result.WARNING
@@ -231,7 +233,12 @@ class Packages(app_module.FollowerComponent):
                             '({latest_version})').format(
                                 package_name=package_name,
                                 latest_version=latest_version)
-            results.append(DiagnosticCheck(check_id, description, result))
+            parameters = {
+                'package_name': package_name,
+                'latest_version': latest_version,
+            }
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
         return results
 
