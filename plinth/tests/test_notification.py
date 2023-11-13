@@ -10,7 +10,7 @@ import pytest
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 
-from plinth.notification import Notification, SafeFormatter
+from plinth.notification import Notification
 
 pytestmark = pytest.mark.django_db
 
@@ -413,15 +413,3 @@ def test_display_context_body_template(note, user, load_cfg, rf):
     context_note = context['notifications'][0]
     assert context_note['body'].content == \
         b'Test notification body /plinth/help/about/\n'
-
-
-@pytest.mark.parametrize('input_, output', (
-    (('', [], {}), ''),
-    (('{} {}', [10, 20], {}), '10 20'),
-    (('{1} {0} {key1}', [10, 20], dict(key1='value1')), '20 10 value1'),
-    (('{2} {1} {key1}', [10, 20], {}), '?2? 20 ?key1?'),
-))
-def test_safe_string_formatter(input_, output):
-    """Test the safe string formatter."""
-    formatter = SafeFormatter()
-    assert output == formatter.vformat(*input_)

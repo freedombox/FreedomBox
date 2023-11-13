@@ -174,3 +174,14 @@ def is_authenticated_user(username, password):
     import pam  # Minimize dependencies for running tests
     pam_authenticator = pam.pam()
     return bool(pam_authenticator.authenticate(username, password))
+
+
+class SafeFormatter(string.Formatter):
+    """A string.format() handler to deal with missing arguments."""
+
+    def get_value(self, key, args, kwargs):
+        """Retrieve a given field value."""
+        try:
+            return super().get_value(key, args, kwargs)
+        except (IndexError, KeyError):
+            return f'?{key}?'

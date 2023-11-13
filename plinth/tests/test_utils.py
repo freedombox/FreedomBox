@@ -11,7 +11,8 @@ import ruamel.yaml
 from django.test.client import RequestFactory
 from ruamel.yaml.compat import StringIO
 
-from plinth.utils import YAMLFile, is_user_admin, is_valid_user_name
+from plinth.utils import (SafeFormatter, YAMLFile, is_user_admin,
+                          is_valid_user_name)
 
 
 def test_is_valid_user_name():
@@ -139,3 +140,17 @@ class TestYAMLFileUtil:
                 raise ValueError('Test')
 
         assert open(test_file.name, 'r', encoding='utf-8').read() == ''
+
+
+@pytest.mark.parametrize('input_, output', (
+    (('', [], {}), ''),
+    (('{} {}', [10, 20], {}), '10 20'),
+    (('{1} {0} {key1}', [10, 20], {
+        'key1': 'value1'
+    }), '20 10 value1'),
+    (('{2} {1} {key1}', [10, 20], {}), '?2? 20 ?key1?'),
+))
+def test_safe_string_formatter(input_, output):
+    """Test the safe string formatter."""
+    formatter = SafeFormatter()
+    assert output == formatter.vformat(*input_)

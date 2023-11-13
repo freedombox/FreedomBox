@@ -3,7 +3,7 @@
 
 import pytest
 
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result, translate
 
 
 def test_result():
@@ -35,3 +35,25 @@ def test_diagnostic_check():
     check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED,
                             {'key': 'value'})
     assert check.parameters['key'] == 'value'
+
+
+def test_translate():
+    """Test formatting the translated description."""
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
+    translated = translate(check)
+    assert translated.check_id == 'some-check-id'
+    assert translated.description == 'sample check'
+    assert translated.result == Result.PASSED
+    assert not translated.parameters
+
+    check = DiagnosticCheck('some-check-id', 'sample check {key}',
+                            Result.FAILED, {'key': 'value'})
+    translated = translate(check)
+    assert translated.description == 'sample check value'
+    assert translated.result == Result.FAILED
+    assert translated.parameters == {'key': 'value'}
+
+    check = DiagnosticCheck('some-check-id', 'sample check {missing}',
+                            Result.PASSED, {'key': 'value'})
+    translated = translate(check)
+    assert translated.description == 'sample check ?missing?'
