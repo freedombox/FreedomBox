@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-06 20:16-0500\n"
-"PO-Revision-Date: 2023-10-01 14:00+0000\n"
+"PO-Revision-Date: 2023-11-16 22:03+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.2\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1562,10 +1562,8 @@ msgid "Run Diagnostics"
 msgstr "Spustit diagnostiku"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:21
-#, fuzzy
-#| msgid "Results"
 msgid "View Results"
-msgstr "Výsledky"
+msgstr "Zobrazit výsledky"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
@@ -1587,10 +1585,8 @@ msgid "This app does not support diagnostics"
 msgstr "Tato aplikace nepodporuje diagnostiku"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:17
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Re-run Diagnostics"
-msgstr "Spustit diagnostiku"
+msgstr "Znovu spustit diagnostiku"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:21
 msgid "Diagnostics test is currently running"
@@ -1601,19 +1597,15 @@ msgid "Results"
 msgstr "Výsledky"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:38
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          App: %(app_name)s\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "            App: %(app_name)s\n"
 "          "
 msgstr ""
 "\n"
-"          Aplikace: %(app_name)s\n"
-"        "
+"            Aplikace: %(app_name)s\n"
+"          "
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -3146,6 +3138,9 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix je offline čtečka webového obsahu. Jedná se o software určený ke "
+"zpřístupnění Wikipedie bez použití internetu, ale je potenciálně vhodný pro "
+"veškerý obsah HTML. Balíčky Kiwix jsou ve formátu ZIM."
 
 #: plinth/modules/kiwix/__init__.py:25
 msgid ""
@@ -3159,6 +3154,15 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix může hostit různé druhy obsahu:\n"
+"     <ul>\n"
+"       <li>Offline verze webových stránek: projekty Wikimedia, Stack "
+"Exchange</li>\n"
+"       <li>Videoobsah: Khan Academy, TED Talks, Crash Course</li>\n"
+"       <li>Vzdělávací materiály: PHET, TED Ed, Vikidia</li>\n"
+"       <li>eKnihy: Projekt Gutenberg</li>\n"
+"       <li>Časopisy: Low-tech Magazine</li>\n"
+"     </ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:14
@@ -3168,24 +3172,26 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Můžete si <a href=\"https://library.kiwix.org\" target=\"_blank\" rel="
+"\"noopener noreferrer\">stáhnout</a> obsahové balíčky z projektu Kiwix nebo "
+"<a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">vytvořit</a> vlastní."
 
 #: plinth/modules/kiwix/__init__.py:53
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Správa obsahového serveru Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
+msgstr "Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Offline Wikipedia"
 
 #: plinth/modules/kiwix/forms.py:23
-#, fuzzy
-#| msgid "Backup files have to be in .tar.gz format"
 msgid "Content packages have to be in .zim format"
-msgstr "Soubory se zálohou mají formát .tar.gz"
+msgstr "Balíčky s obsahem musí být ve formátu .zim"
 
 #: plinth/modules/kiwix/forms.py:25
 #, python-brace-format
@@ -3194,33 +3200,35 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+"Nahrané soubory ZIM budou uloženy pod {kiwix_home}/content na vaší {box_name}"
+". Pokud se Kiwixu nepodaří soubor přidat, bude okamžitě smazán, aby se "
+"ušetřilo místo na disku."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "Máte k dispozici %(max_filesize)s volného místa na disku."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:36
-#, fuzzy
-#| msgid "Upload file"
 msgid "Upload ZIM file"
-msgstr "Nahrát soubor"
+msgstr "Nahrát soubor ZIM"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete content package <em>%(name)s</em>"
-msgstr "Smazat wiki nebo blog <em>%(name)s</em>"
+msgstr "Smazat balíček obsahu <em>%(name)s</em>"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
 msgid ""
 "Delete this package permanently? You may add it back later if you have a "
 "copy of the ZIM file."
 msgstr ""
+"Trvale smazat tento balíček? Pokud máte kopii souboru ZIM, můžete jej "
+"později přidat zpět."
 
 #: plinth/modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "Správa obsahových balíčků"
 
 #: plinth/modules/kiwix/templates/kiwix.html:15
 #, fuzzy
