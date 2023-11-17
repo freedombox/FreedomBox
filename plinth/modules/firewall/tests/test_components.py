@@ -8,7 +8,8 @@ from unittest.mock import call, patch
 import pytest
 
 from plinth.app import App
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import (DiagnosticCheck, Result,
+                                              translate_checks)
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 
@@ -153,7 +154,7 @@ def test_diagnose(get_enabled_services, get_port_details):
     get_port_details.side_effect = get_port_details_side_effect
     firewall = Firewall('test-firewall-1', ports=['test-port1', 'test-port2'],
                         is_external=False)
-    results = firewall.diagnose()
+    results = translate_checks(firewall.diagnose())
     assert results == [
         DiagnosticCheck(
             'firewall-port-internal-test-port1',
@@ -187,7 +188,7 @@ def test_diagnose(get_enabled_services, get_port_details):
 
     firewall = Firewall('test-firewall-1', ports=['test-port3', 'test-port4'],
                         is_external=True)
-    results = firewall.diagnose()
+    results = translate_checks(firewall.diagnose())
     assert results == [
         DiagnosticCheck(
             'firewall-port-internal-test-port3',

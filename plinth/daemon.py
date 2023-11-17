@@ -5,9 +5,7 @@ import socket
 import subprocess
 
 import psutil
-from django.utils.text import format_lazy
-from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_noop
 
 from plinth import action_utils, app
 
@@ -104,8 +102,7 @@ class Daemon(app.LeaderComponent):
         check_id = f'daemon-running-{self.unit}'
         result = Result.PASSED if self.is_running() else Result.FAILED
 
-        template = gettext_lazy('Service {service_name} is running')
-        description = format_lazy(template, service_name=self.unit)
+        description = gettext_noop('Service {service_name} is running')
         parameters = {'service_name': self.unit}
 
         return DiagnosticCheck(check_id, description, result, parameters)
@@ -163,14 +160,11 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     if listen_address:
         parameters['listen_address'] = listen_address
         check_id = f'daemon-listening-address-{kind}-{port}-{listen_address}'
-        template = gettext_lazy(
+        description = gettext_noop(
             'Listening on {kind} port {listen_address}:{port}')
-        description = format_lazy(template, kind=kind,
-                                  listen_address=listen_address, port=port)
     else:
         check_id = f'daemon-listening-{kind}-{port}'
-        template = gettext_lazy('Listening on {kind} port {port}')
-        description = format_lazy(template, kind=kind, port=port)
+        description = gettext_noop('Listening on {kind} port {port}')
 
     return DiagnosticCheck(check_id, description,
                            Result.PASSED if result else Result.FAILED,
@@ -239,11 +233,11 @@ def diagnose_netcat(host, port, input='', negate=False):
         result = Result.FAILED
 
     check_id = f'daemon-netcat-{host}-{port}'
-    description = _('Connect to {host}:{port}')
+    description = gettext_noop('Connect to {host}:{port}')
     parameters = {'host': host, 'port': port, 'negate': negate}
     if negate:
         check_id = f'daemon-netcat-negate-{host}-{port}'
-        description = _('Cannot connect to {host}:{port}')
+        description = gettext_noop('Cannot connect to {host}:{port}')
 
     return DiagnosticCheck(check_id, description.format(host=host, port=port),
                            result, parameters)

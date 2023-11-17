@@ -5,6 +5,7 @@ FreedomBox app to configure Privoxy.
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import action_utils
 from plinth import app as app_module
@@ -112,9 +113,9 @@ def diagnose_url_with_proxy():
 
         result = diagnose_url(url, kind=address['kind'], env=env)
         result.check_id = f'privoxy-url-proxy-kind-{url}-{address["kind"]}'
-        result.description = _(
-            'Access {url} with proxy {proxy} on tcp{kind}') \
-            .format(url=url, proxy=proxy, kind=address['kind'])
+        result.description = gettext_noop(
+            'Access {url} with proxy {proxy} on tcp{kind}')
+        result.parameters['proxy'] = proxy
         results.append(result)
 
     return results

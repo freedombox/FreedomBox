@@ -12,7 +12,8 @@ import pytest
 from plinth.app import App, FollowerComponent, Info
 from plinth.daemon import (Daemon, RelatedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import (DiagnosticCheck, Result,
+                                              translate, translate_checks)
 
 privileged_modules_to_mock = ['plinth.privileged.service']
 
@@ -148,7 +149,7 @@ def test_diagnose(port_listening, service_is_running, daemon):
                                                               (345, 'udp')])
     port_listening.side_effect = side_effect
     service_is_running.return_value = True
-    results = daemon.diagnose()
+    results = translate_checks(daemon.diagnose())
     assert results == [
         DiagnosticCheck('daemon-running-test-unit',
                         'Service test-unit is running', Result.PASSED,
@@ -214,14 +215,14 @@ def test_diagnose_port_listening(connections):
     ]
 
     # Check that message is correct
-    results = diagnose_port_listening(1234)
+    results = translate(diagnose_port_listening(1234))
     assert results == DiagnosticCheck('daemon-listening-tcp-1234',
                                       'Listening on tcp port 1234',
                                       Result.PASSED, {
                                           'kind': 'tcp',
                                           'port': 1234
                                       })
-    results = diagnose_port_listening(1234, 'tcp', '0.0.0.0')
+    results = translate(diagnose_port_listening(1234, 'tcp', '0.0.0.0'))
     assert results == DiagnosticCheck(
         'daemon-listening-address-tcp-1234-0.0.0.0',
         'Listening on tcp port 0.0.0.0:1234', Result.PASSED, {
@@ -231,14 +232,14 @@ def test_diagnose_port_listening(connections):
         })
 
     # Failed results
-    results = diagnose_port_listening(4321)
+    results = translate(diagnose_port_listening(4321))
     assert results == DiagnosticCheck('daemon-listening-tcp-4321',
                                       'Listening on tcp port 4321',
                                       Result.FAILED, {
                                           'kind': 'tcp',
                                           'port': 4321
                                       })
-    results = diagnose_port_listening(4321, 'tcp', '0.0.0.0')
+    results = translate(diagnose_port_listening(4321, 'tcp', '0.0.0.0'))
     assert results == DiagnosticCheck(
         'daemon-listening-address-tcp-4321-0.0.0.0',
         'Listening on tcp port 0.0.0.0:4321', Result.FAILED, {

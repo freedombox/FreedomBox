@@ -12,7 +12,8 @@ from plinth import app
 from plinth.modules.apache.components import (Uwsgi, Webserver, check_url,
                                               diagnose_url,
                                               diagnose_url_on_all)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import (DiagnosticCheck, Result,
+                                              translate, translate_checks)
 
 
 def test_webserver_init():
@@ -248,13 +249,13 @@ def test_diagnose_url(get_addresses, check):
     }
     parameters = {key: args[key] for key in ['url', 'kind']}
     check.return_value = True
-    result = diagnose_url(**args)
+    result = translate(diagnose_url(**args))
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
         'Access URL https://localhost/test on tcp4', Result.PASSED, parameters)
 
     check.return_value = False
-    result = diagnose_url(**args)
+    result = translate(diagnose_url(**args))
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
         'Access URL https://localhost/test on tcp4', Result.FAILED, parameters)
@@ -283,7 +284,7 @@ def test_diagnose_url(get_addresses, check):
             'kind': '6'
         },
     ]
-    results = diagnose_url_on_all(**args)
+    results = translate_checks(diagnose_url_on_all(**args))
     assert results == [
         DiagnosticCheck('apache-url-kind-https://test-host-1/test-4',
                         'Access URL https://test-host-1/test on tcp4',

@@ -9,7 +9,8 @@ import pytest
 
 from plinth.app import App
 from plinth.config import DropinConfigs
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import (DiagnosticCheck, Result,
+                                              translate_checks)
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.privileged.config']
@@ -160,7 +161,7 @@ def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
     """Test diagnosing dropin configs for symlinks."""
     with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
         # Nothing exists
-        results = dropin_configs.diagnose()
+        results = translate_checks(dropin_configs.diagnose())
         assert results == [
             DiagnosticCheck(
                 f'dropin-config-{tmp_path}/etc/test/path1',

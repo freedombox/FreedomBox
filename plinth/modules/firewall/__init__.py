@@ -4,8 +4,8 @@
 import contextlib
 import logging
 
-from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, menu
@@ -268,7 +268,7 @@ def remove_passthrough(ipv, *args):
 def _diagnose_default_zone(config):
     """Diagnose whether the default zone is external."""
     check_id = 'firewall-default-zone'
-    description = gettext('Default zone is external')
+    description = gettext_noop('Default zone is external')
     result = Result.PASSED if config[
         'default_zone'] == 'external' else Result.FAILED
     return DiagnosticCheck(check_id, description, result)
@@ -277,7 +277,7 @@ def _diagnose_default_zone(config):
 def _diagnose_firewall_backend(config):
     """Diagnose whether the firewall backend is nftables."""
     check_id = 'firewall-backend'
-    description = gettext('Firewall backend is nftables')
+    description = gettext_noop('Firewall backend is nftables')
     result = Result.PASSED if config['backend'] == 'nftables' \
         else Result.FAILED
     return DiagnosticCheck(check_id, description, result)
@@ -290,7 +290,7 @@ def _diagnose_direct_passthroughs(config):
     which are the number that are added by firewall's setup.
     """
     check_id = 'firewall-direct-passthroughs'
-    description = gettext('Direct passthrough rules exist')
+    description = gettext_noop('Direct passthrough rules exist')
     result = Result.PASSED if len(
         config['passthroughs']) >= 12 else Result.FAILED
     return DiagnosticCheck(check_id, description, result)

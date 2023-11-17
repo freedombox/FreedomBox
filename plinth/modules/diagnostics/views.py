@@ -3,6 +3,7 @@
 FreedomBox app for running diagnostics.
 """
 
+from copy import deepcopy
 import logging
 
 from django.http import Http404, HttpResponseRedirect
@@ -17,7 +18,7 @@ from plinth.app import App
 from plinth.modules import diagnostics
 from plinth.views import AppView
 
-from .check import Result
+from .check import Result, translate_checks
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +63,14 @@ class DiagnosticsFullView(TemplateView):
             is_task_running = False
 
         with diagnostics.results_lock:
-            results = diagnostics.current_results
+            results = deepcopy(diagnostics.current_results)
+
+        # Translate and format diagnostic check descriptions for each app
+        for app_id in results['results']:
+            if 'diagnosis' in results['results'][app_id]:
+                diagnosis = results['results'][app_id]['diagnosis']
+                results['results'][app_id]['diagnosis'] = translate_checks(
+                    diagnosis)
 
         context = super().get_context_data(**kwargs)
         context['is_task_running'] = is_task_running
@@ -89,6 +97,8 @@ def diagnose_app(request, app_id):
                          exception)
         diagnosis_exception = str(exception)
 
+    # Translate and format diagnostic check descriptions
+    diagnosis = translate_checks(diagnosis)
     show_rerun_setup = False
     for check in diagnosis:
         if check.result in [Result.FAILED, Result.WARNING]:

@@ -6,6 +6,7 @@ FreedomBox app to configure system date and time.
 import subprocess
 
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import menu
@@ -118,4 +119,5 @@ def _diagnose_time_synchronized():
         pass
 
     return DiagnosticCheck('datetime-ntp-sync',
-                           _('Time synchronized to NTP server'), result)
+                           gettext_noop('Time synchronized to NTP server'),
+                           result)
