@@ -3,7 +3,6 @@
 FreedomBox app for running diagnostics.
 """
 
-from copy import deepcopy
 import logging
 
 from django.http import Http404, HttpResponseRedirect
@@ -36,12 +35,9 @@ class DiagnosticsView(AppView):
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
-        with diagnostics.results_lock:
-            results = diagnostics.current_results
-
         context = super().get_context_data(**kwargs)
         context['has_diagnostics'] = False
-        context['results'] = results
+        context['results_available'] = diagnostics.are_results_available()
         return context
 
 
@@ -62,19 +58,9 @@ class DiagnosticsFullView(TemplateView):
         except KeyError:
             is_task_running = False
 
-        with diagnostics.results_lock:
-            results = deepcopy(diagnostics.current_results)
-
-        # Translate and format diagnostic check descriptions for each app
-        for app_id in results['results']:
-            if 'diagnosis' in results['results'][app_id]:
-                diagnosis = results['results'][app_id]['diagnosis']
-                results['results'][app_id]['diagnosis'] = translate_checks(
-                    diagnosis)
-
         context = super().get_context_data(**kwargs)
         context['is_task_running'] = is_task_running
-        context['results'] = results
+        context['results'] = diagnostics.get_results()
         context['refresh_page_sec'] = 3 if is_task_running else None
         return context
 

@@ -4,22 +4,24 @@ FreedomBox app for system diagnostics.
 """
 
 import collections
+import json
 import logging
 import pathlib
 import threading
+from copy import deepcopy
 
 import psutil
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import daemon, glib, menu
+from plinth import daemon, glib, kvstore, menu
 from plinth import operation as operation_module
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-from .check import Result
+from .check import CheckJSONDecoder, CheckJSONEncoder, Result, translate_checks
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -117,8 +119,7 @@ def _run_on_all_enabled_modules():
                 continue
 
             apps.append((app.app_id, app))
-            app_name = app.info.name or app.app_id
-            current_results['results'][app.app_id] = {'name': app_name}
+            current_results['results'][app.app_id] = {'id': app.app_id}
 
         current_results['apps'] = apps
 
@@ -266,6 +267,9 @@ def _run_diagnostics():
     _run_on_all_enabled_modules()
     with results_lock:
         results = current_results['results']
+        # Store the most recent results in the database.
+        kvstore.set('diagnostics_results',
+                    json.dumps(results, cls=CheckJSONEncoder))
 
     issue_count = 0
     severity = 'warning'
@@ -309,3 +313,39 @@ def _run_diagnostics():
                                          message=message, actions=actions,
                                          data=data, group='admin')
     note.dismiss(False)
+
+
+def are_results_available():
+    """Return whether diagnostic results are available."""
+    with results_lock:
+        results = current_results
+
+    if not results:
+        results = kvstore.get_default('diagnostics_results', '{}')
+        results = json.loads(results)
+
+    return bool(results)
+
+
+def get_results():
+    """Return the latest results of full diagnostics."""
+    with results_lock:
+        results = deepcopy(current_results)
+
+    # If no results are available in memory, then load from database.
+    if not results:
+        results = kvstore.get_default('diagnostics_results', '{}')
+        results = json.loads(results, cls=CheckJSONDecoder)
+        results = {'results': results, 'progress_percentage': 100}
+
+    # Translate and format diagnostic check descriptions for each app
+    for app_id in results['results']:
+        app = app_module.App.get(app_id)
+        app_name = app.info.name or app_id
+        results['results'][app_id]['name'] = app_name
+        if 'diagnosis' in results['results'][app_id]:
+            diagnosis = results['results'][app_id]['diagnosis']
+            results['results'][app_id]['diagnosis'] = translate_checks(
+                diagnosis)
+
+    return results

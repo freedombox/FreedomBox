@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Diagnostic check data type."""
 
+import dataclasses
 from dataclasses import dataclass, field
 from enum import StrEnum
+import json
 
 from django.utils.translation import gettext
 
@@ -16,9 +18,6 @@ class Result(StrEnum):
     WARNING = 'warning'
     FAILED = 'failed'
     ERROR = 'error'
-
-
-# TODO: Description should not be translated until we need to display it.
 
 
 @dataclass
@@ -44,3 +43,32 @@ def translate(check: DiagnosticCheck) -> DiagnosticCheck:
 def translate_checks(checks: list[DiagnosticCheck]) -> list[DiagnosticCheck]:
     """Translate and format diagnostic checks."""
     return [translate(check) for check in checks]
+
+
+class CheckJSONEncoder(json.JSONEncoder):
+    """Encode objects that include DiagnosticChecks."""
+
+    def default(self, o):
+        """Add class tag to DiagnosticChecks."""
+        if isinstance(o, DiagnosticCheck):
+            o = dataclasses.asdict(o)
+            o.update({'__class__': 'DiagnosticCheck'})
+            return o
+
+        return super().default(o)
+
+
+class CheckJSONDecoder(json.JSONDecoder):
+    """Decode objects that include DiagnosticChecks."""
+
+    def __init__(self):
+        json.JSONDecoder.__init__(self, object_hook=CheckJSONDecoder.from_dict)
+
+    @staticmethod
+    def from_dict(data):
+        """Convert tagged data to DiagnosticCheck."""
+        if data.get('__class__') == 'DiagnosticCheck':
+            return DiagnosticCheck(data['check_id'], data['description'],
+                                   data['result'], data['parameters'])
+
+        return data

@@ -1,9 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Tests for diagnostic check data type."""
 
+import json
 import pytest
 
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result, translate
+from plinth.modules.diagnostics.check import (DiagnosticCheck,
+                                              CheckJSONEncoder,
+                                              CheckJSONDecoder, Result,
+                                              translate)
 
 
 def test_result():
@@ -57,3 +61,18 @@ def test_translate():
                             Result.PASSED, {'key': 'value'})
     translated = translate(check)
     assert translated.description == 'sample check ?missing?'
+
+
+def test_json_encoder_decoder():
+    """Test encoding and decoding as JSON."""
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
+    check_json = json.dumps(check, cls=CheckJSONEncoder)
+    for string in [
+            '"check_id": "some-check-id"', '"description": "sample check"',
+            '"result": "passed"', '"parameters": {}',
+            '"__class__": "DiagnosticCheck"'
+    ]:
+        assert string in check_json
+
+    decoded_check = json.loads(check_json, cls=CheckJSONDecoder)
+    assert decoded_check == check
