@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-01 20:19-0500\n"
-"PO-Revision-Date: 2023-04-07 23:10+0000\n"
-"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
+"PO-Revision-Date: 2024-01-05 07:09+0000\n"
+"Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
-msgstr "Code source de la page"
+msgstr "Source de la page"
 
 #: plinth/config.py:120
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
-msgstr ""
+msgstr "La configuration statique {etc_path} est correctement configurée"
 
 #: plinth/context_processors.py:23 plinth/views.py:95
 msgid "FreedomBox"
@@ -111,7 +111,7 @@ msgstr "Utiliser la langue du navigateur"
 
 #: plinth/middleware.py:130
 msgid "System is possibly under heavy load. Please retry later."
-msgstr ""
+msgstr "Le système est peut-être surchargé. Veuillez réessayer ultérieurement."
 
 #: plinth/modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1583,27 +1583,21 @@ msgid "Low Memory"
 msgstr "Mémoire disponible faible"
 
 #: plinth/modules/diagnostics/__init__.py:254
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Running diagnostics"
-msgstr "Lancer les diagnostics"
+msgstr "Diagnostics en cours"
 
 #: plinth/modules/diagnostics/__init__.py:295
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
-msgstr ""
+msgstr "{issue_count} problèmes trouvés lors des tests de routine."
 
 #: plinth/modules/diagnostics/__init__.py:296
-#, fuzzy
-#| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Résultats des diagnostics"
 
 #: plinth/modules/diagnostics/__init__.py:301
-#, fuzzy
-#| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
-msgstr "Résultats des diagnostics"
+msgstr "Aller aux résultats des diagnostics"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:16
 #: plinth/modules/diagnostics/templates/diagnostics_button.html:11
@@ -1611,10 +1605,8 @@ msgid "Run Diagnostics"
 msgstr "Lancer les diagnostics"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:21
-#, fuzzy
-#| msgid "Results"
 msgid "View Results"
-msgstr "Résultats"
+msgstr "Voir les résultats"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:10
 msgid "Diagnostic Results"
@@ -1628,20 +1620,16 @@ msgstr "Appli : %(app_name)s"
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:20
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:48
 #: plinth/templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
 msgid "Re-run setup"
-msgstr "Démarrer l’installation"
+msgstr "Exécuter à nouveau la configuration"
 
 #: plinth/modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
 msgstr "Cette application n’est pas compatible avec les tests de diagnostic"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:17
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Re-run Diagnostics"
-msgstr "Lancer les diagnostics"
+msgstr "Relancer les diagnostics"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:21
 msgid "Diagnostics test is currently running"
@@ -1652,19 +1640,15 @@ msgid "Results"
 msgstr "Résultats"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:38
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          App: %(app_name)s\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "            App: %(app_name)s\n"
 "          "
 msgstr ""
 "\n"
-"          Appli : %(app_name)s\n"
-"        "
+"            Application : %(app_name)s\n"
+"          "
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -2262,18 +2246,16 @@ msgid "Firewall"
 msgstr "Pare-feu"
 
 #: plinth/modules/firewall/__init__.py:271
-#, fuzzy
-#| msgid "Default"
 msgid "Default zone is external"
-msgstr "Défaut"
+msgstr "La zone par défaut est externe"
 
 #: plinth/modules/firewall/__init__.py:280
 msgid "Firewall backend is nftables"
-msgstr ""
+msgstr "La dorsale du pare-feu est nftables"
 
 #: plinth/modules/firewall/__init__.py:293
 msgid "Direct passthrough rules exist"
-msgstr ""
+msgstr "Des règles de passage direct existent"
 
 #: plinth/modules/firewall/components.py:137
 #, python-brace-format
@@ -2660,6 +2642,13 @@ msgid ""
 "href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
+"%(box_name)s est un logiciel libre, couvert par la licence publique générale "
+"Affero GNU. Le code source est disponible en ligne sur le <a href=\"https "
+"://salsa.debian.org/freedombox-team/freedombox\">dépôt  %(box_name)s</a>. En "
+"outre, le code source de tout paquet Debian peut être obtenu depuis le site "
+"<a href=\"https ://sources.debian.org/\">Debian Sources</a> ou bien en "
+"exécutant « apt source <i>nom_du_paquet</i> » dans un terminal (au moyen de "
+"Cockpit ou du SSH)."
 
 #: plinth/modules/help/templates/help_about.html:82
 #, python-format
@@ -3227,6 +3216,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix est une liseuse hors ligne pour le contenu de la Toile. C'est un "
+"logiciel conçu pour rendre Wikipédia disponible sans avoir à utiliser "
+"Internet mais elle convient à tout contenu HTML. Les paquets Kiwix sont au "
+"format de fichier ZIM."
 
 #: plinth/modules/kiwix/__init__.py:25
 msgid ""
@@ -3240,6 +3233,15 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix peut héberger divers type de contenu :\n"
+"    <ul>\n"
+"      <li>Versions hors ligne de sites de la Toile : projets Wikimédia, "
+"Stack Exchange</li>\n"
+"      <li>Les contenus vidéo : Khan Academy, TED Talks, Crash Course</li>\n"
+"      <li>Les matériels éducatifs : PHET, TED Ed, Vikidia</li>\n"
+"      <li>Les livres électroniques : Le projet Gutenberg</li>\n"
+"      <li>Les magazines : Low-tech Magazine</li>\n"
+"    </ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:14
@@ -3249,24 +3251,27 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Vous pouvez <a href=\"https ://library.kiwix.org\" target=\"_blank\" rel="
+"\"noopener noreferrer\">télécharger</a> des paquets de contenu depuis le "
+"projet Kiwix ou bien <a href=\"https ://openzim.org/wiki/"
+"Build_your_ZIM_file\" target=\"_blank\" rel=\"noopener noreferrer\">créer</"
+"a> les vôtres."
 
 #: plinth/modules/kiwix/__init__.py:53
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Gérer le serveur de contenu Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
+msgstr "Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Wikipédia hors ligne"
 
 #: plinth/modules/kiwix/forms.py:23
-#, fuzzy
-#| msgid "Backup files have to be in .tar.gz format"
 msgid "Content packages have to be in .zim format"
-msgstr "Les fichiers de sauvegarde doivent être au format .tar.gz"
+msgstr "Les paquets de contenu doivent être au format .zim"
 
 #: plinth/modules/kiwix/forms.py:25
 #, python-brace-format
@@ -3275,73 +3280,64 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+"Les fichiers ZIM téléversés seront stockés sous {kiwix_home}/content sur "
+"votre {box_name}. Si Kiwix échoue à ajouter le fichier, il sera "
+"immédiatement effacé pour économiser de l'espace disque."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "Vous avez %(max_filesize)s d'espace disque libre de disponible."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:36
-#, fuzzy
-#| msgid "Upload file"
 msgid "Upload ZIM file"
-msgstr "Téléverser le fichier"
+msgstr "Téléverser le fichier ZIM"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
-#, fuzzy, python-format
-#| msgid "Delete Connection <em>%(name)s</em>"
+#, python-format
 msgid "Delete content package <em>%(name)s</em>"
-msgstr "Supprimer Connexion <em>%(name)s</em>"
+msgstr "Supprimer le paquet de contenu <em>%(name)s</em>"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
 msgid ""
 "Delete this package permanently? You may add it back later if you have a "
 "copy of the ZIM file."
 msgstr ""
+"Effacer ce paquet définitivement ? Vous pouvez l'ajouter à nouveau plus tard "
+"si vous avez une copie du fichier ZIM."
 
 #: plinth/modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "Gérer les paquets de contenu"
 
 #: plinth/modules/kiwix/templates/kiwix.html:15
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a content package"
-msgstr "Ajouter un nouveau pair"
+msgstr "Ajouter un paquet de contenu"
 
 #: plinth/modules/kiwix/templates/kiwix.html:17
-#, fuzzy
-#| msgid "Package"
 msgid "Add Package"
-msgstr "Paquet"
+msgstr "Ajouter un paquet"
 
 #: plinth/modules/kiwix/templates/kiwix.html:24
-#, fuzzy
-#| msgid "No status available."
 msgid "No content packages available."
-msgstr "Aucun statut disponible."
+msgstr "Aucun paquet de contenu disponible."
 
 #: plinth/modules/kiwix/templates/kiwix.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete package %(title)s"
-msgstr "Supprimer le site %(site)s"
+msgstr "Supprimer le paquet %(title)s"
 
 #: plinth/modules/kiwix/views.py:49
 msgid "Content package added."
-msgstr ""
+msgstr "Paquet de contenu ajouté."
 
 #: plinth/modules/kiwix/views.py:54
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a new content package"
-msgstr "Ajouter un nouveau pair"
+msgstr "Ajouter un nouveau paquet de contenu"
 
 #: plinth/modules/kiwix/views.py:83
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to add content package."
-msgstr "Échec de l’ajout de l’utilisateur au groupe."
+msgstr "Échec de l’ajout du paquet de contenu."
 
 #: plinth/modules/letsencrypt/__init__.py:25
 #, python-brace-format
@@ -3520,6 +3516,9 @@ msgid ""
 "Disabled. This could lead to adversaries registering many spam accounts on "
 "your server with automated scripts."
 msgstr ""
+"Désactivé. Cela pourrait conduire à l'enregistrement par des adversaires de "
+"nombreux comptes de pourriel sur votre serveur au moyen de scripts "
+"automatisés."
 
 #: plinth/modules/matrixsynapse/forms.py:18
 msgid ""
@@ -3527,6 +3526,10 @@ msgid ""
 "will be created automatically. Pass this token to your potential new users. "
 "They will be asked for the token during registration. (recommended)"
 msgstr ""
+"Exiger des utilisateurs créant un nouveau compte l'utilisation d'un jeton "
+"d'enregistrement. Un jeton sera créé automatiquement. Transmettez ce jeton à "
+"vos nouveaux utilisateurs potentiels. Le jeton leur sera demandé pendant "
+"l'enregistrement. (recommandé)"
 
 #: plinth/modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
@@ -3544,7 +3547,7 @@ msgstr ""
 
 #: plinth/modules/matrixsynapse/forms.py:33
 msgid "Verification method for registration"
-msgstr ""
+msgstr "Méthode de vérification pour l'enregistrement"
 
 #: plinth/modules/matrixsynapse/forms.py:40
 #, python-brace-format
@@ -3583,13 +3586,6 @@ msgstr ""
 "utilisateur Matrix seront du type <em>@identifiant:nomdedomaine</em>."
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      <strong>Warning!</strong> Changing the domain name after the "
-#| "initial\n"
-#| "      setup is currently not supported.\n"
-#| "    "
 msgid ""
 "\n"
 "      <strong>Warning!</strong> Changing the domain name after this step "
@@ -3599,8 +3595,12 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"      <strong>Attention !</strong> Le changement de nom de domaine après\n"
-"      l’installation initiale n’est actuellement pas pris en charge.\n"
+"      <strong>Attention !</strong> Le changement du nom de domaine après\n"
+"\n"
+"      cette étape nécessitera la désinstallation et la réinstallation de "
+"l'application,\n"
+"\n"
+"      ce qui effacera les données de l'application.\n"
 "    "
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
@@ -3637,38 +3637,32 @@ msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
 msgstr ""
+"Les nouveaux utilisateurs doivent utiliser l'un des jetons suivants à des "
+"fins de vérification lors de l'enregistrement de leur compte :"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:38
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Registration Token"
-msgstr "Sauter l'inscription"
+msgstr "Jeton d'inscription"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:39
-#, fuzzy
-#| msgid "Allowed IPs"
 msgid "Uses Allowed"
-msgstr "IP autorisées"
+msgstr "Usages autorisés"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:40
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Pending Registrations"
-msgstr "Sauter l'inscription"
+msgstr "Inscriptions en attente"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:41
-#, fuzzy
-#| msgid "Skip Registration"
 msgid "Completed Registrations"
-msgstr "Sauter l'inscription"
+msgstr "Inscriptions terminées"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:42
 msgid "Expiry Time"
-msgstr ""
+msgstr "Date d'expiration"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:51
 msgid "Unlimited"
-msgstr ""
+msgstr "Illimité"
 
 #: plinth/modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
@@ -3685,6 +3679,8 @@ msgstr ""
 #: plinth/modules/matrixsynapse/views.py:137
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
+"La configuration de l'enregistrement ne peut être mise à jour lorsque "
+"l'application est désactivée."
 
 #: plinth/modules/mediawiki/__init__.py:21
 msgid ""
@@ -3804,22 +3800,16 @@ msgstr ""
 "utilisateurs peuvent sélectionner leur thème préféré."
 
 #: plinth/modules/mediawiki/forms.py:93
-#, fuzzy
-#| msgid "Select language"
 msgid "Default Language"
-msgstr "Choisir la langue"
+msgstr "La langue par défaut"
 
 #: plinth/modules/mediawiki/forms.py:94
-#, fuzzy
-#| msgid ""
-#| "Choose a default skin for your MediaWiki installation. Users have the "
-#| "option to select their preferred skin."
 msgid ""
 "Choose a default language for your MediaWiki installation. Users have the "
 "option to select their preferred language."
 msgstr ""
-"Choisissez un thème par défaut pour votre installation de MediaWiki. Les "
-"utilisateurs peuvent sélectionner leur thème préféré."
+"Choisissez une langue par défaut pour votre installation de MediaWiki. Les "
+"utilisateurs peuvent sélectionner leur langue préférée."
 
 #: plinth/modules/mediawiki/views.py:43
 msgid "Password updated"
@@ -3860,10 +3850,8 @@ msgid "Site name updated"
 msgstr "Nom de site modifié"
 
 #: plinth/modules/mediawiki/views.py:96
-#, fuzzy
-#| msgid "Default skin changed"
 msgid "Default language changed"
-msgstr "Thème par défaut modifié"
+msgstr "La langue par défaut a été modifiée"
 
 #: plinth/modules/minetest/__init__.py:33
 #, python-brace-format
@@ -5997,6 +5985,12 @@ msgid ""
 "uncheck this option. When unchecked, a text entry field is added to the "
 "login page so the user can specify to which account they wish to connect."
 msgstr ""
+"Lorsque l'option est activée, les utilisateurs ne peuvent que lire et "
+"envoyer des courriels par cette {box_name}. Si vous souhaitez utiliser "
+"Roundcube avec un compte de courriel externe tel que GMail, vous devez "
+"décocher cette option. Lorsqu'elle est décochée, un champ d'entrée de texte "
+"est ajouté à la page de connexion pour que l'utilisateur puisse indiquer à "
+"quel compte il veut se connecter."
 
 #: plinth/modules/rssbridge/__init__.py:21
 msgid ""
@@ -6435,6 +6429,9 @@ msgid ""
 "server. It consists of two parts: (1) a Shadowsocks server, and (2) a "
 "Shadowsocks client with a SOCKS5 proxy."
 msgstr ""
+"Shadowsocks est un outil pour faire suivre les requêtes réseau de manière "
+"sécurisée à un serveur distant. Il consiste en deux parties : (1) un serveur "
+"Sadowsocks et (2) un client Shadowsocks avec un mandataire SOCKS5."
 
 #: plinth/modules/shadowsocks/__init__.py:21
 #: plinth/modules/shadowsocksserver/__init__.py:21
@@ -6443,6 +6440,9 @@ msgid ""
 "requires that the Shadowsocks server is in a location where it can freely "
 "access the Internet, without filtering."
 msgstr ""
+"Shadowsocks peut être utilisé pour contourner le filtrage et la censure sur "
+"Internet. Cela exige que le serveur Shadowsocks soit dans un endroit d'où il "
+"peut accéder librement à Internet, sans filtrage."
 
 #: plinth/modules/shadowsocks/__init__.py:26
 #, python-brace-format
@@ -6468,14 +6468,12 @@ msgstr ""
 "avec l’URL http://adresse_freedombox:1080/"
 
 #: plinth/modules/shadowsocks/__init__.py:50
-#, fuzzy
-#| msgid "Shadowsocks"
 msgid "Shadowsocks Client"
-msgstr "Shadowsocks"
+msgstr "Client Shadowsocks"
 
 #: plinth/modules/shadowsocks/__init__.py:52
 msgid "Bypass Censorship"
-msgstr ""
+msgstr "Contourner la censure"
 
 #: plinth/modules/shadowsocks/forms.py:24
 msgid "Server"
@@ -6502,32 +6500,24 @@ msgstr ""
 "le serveur."
 
 #: plinth/modules/shadowsocksserver/__init__.py:26
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Your {box_name} can run a Shadowsocks client, that can connect to a "
-#| "Shadowsocks server. It will also run a SOCKS5 proxy. Local devices can "
-#| "connect to this proxy, and their data will be encrypted and proxied "
-#| "through the Shadowsocks server."
+#, python-brace-format
 msgid ""
 "Your {box_name} can run a Shadowsocks server, that allows Shadowsocks "
 "clients to connect to it. Clients' data will be encrypted and proxied "
 "through this server."
 msgstr ""
-"Votre {box_name} peut faire fonctionner un client Shadowsocks, qui se "
-"connectera à un serveur Shadowsocks. Il mettra également en place un "
-"mandataire SOCKS5. Les appareils du réseau local peuvent se connecter à ce "
-"mandataire, et leurs flux de données seront chiffrés et transmis vers "
-"l’extérieur au travers du serveur Shadowsocks."
+"Votre {box_name} peut faire fonctionner un serveur Shadowsocks, qui "
+"permettra aux clients Shadowsocks de s'y connecter. Les données des clients "
+"seront chiffrées et transmises vers l’extérieur au travers du serveur "
+"Shadowsocks."
 
 #: plinth/modules/shadowsocksserver/__init__.py:48
-#, fuzzy
-#| msgid "Shadowsocks"
 msgid "Shadowsocks Server"
-msgstr "Shadowsocks"
+msgstr "Serveur Shadowsocks"
 
 #: plinth/modules/shadowsocksserver/__init__.py:49
 msgid "Help Others Bypass Censorship"
-msgstr ""
+msgstr "Aider les autres à contourner la censure"
 
 #: plinth/modules/shadowsocksserver/forms.py:10
 #: plinth/modules/shadowsocksserver/forms.py:11
@@ -6535,20 +6525,15 @@ msgid "Recommended"
 msgstr "Recommandé"
 
 #: plinth/modules/shadowsocksserver/forms.py:38
-#, fuzzy
-#| msgid "Password used to encrypt data. Must match server password."
 msgid "Password used to encrypt data. Clients must use the same password."
 msgstr ""
-"Mot de passe utilisé pour chiffrer les données. Doit correspondre au mot de "
-"passe du serveur."
+"Mot de passe utilisé pour chiffrer les données. Les clients doivent utiliser "
+"le même mot de passe."
 
 #: plinth/modules/shadowsocksserver/forms.py:43
-#, fuzzy
-#| msgid "Encryption method. Must match setting on server."
 msgid "Encryption method. Clients must use the same setting."
 msgstr ""
-"Méthode de chiffrement. Doit correspondre à celle qui a été configurée sur "
-"le serveur."
+"Méthode de chiffrement. Les clients doivent utiliser la même configuration."
 
 #: plinth/modules/sharing/__init__.py:17
 #, python-brace-format
@@ -6978,10 +6963,11 @@ msgstr "Authentification unique"
 #: plinth/modules/sso/forms.py:28
 msgid "Enter the letters in the image to proceed to the login page"
 msgstr ""
+"Saisissez les lettres sur l'image pour continuer vers la page de connexion"
 
 #: plinth/modules/sso/templates/captcha.html:20
 msgid "Proceed to Login"
-msgstr ""
+msgstr "Continuer vers la page de connexion"
 
 #: plinth/modules/sso/templates/login.html:20
 msgid "Login"
@@ -7122,18 +7108,17 @@ msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
+"Vous ne pouvez pas enregistrer les modifications de configuration. Essayez "
+"de redémarrer le système. Si le problème persiste après un redémarrage, "
+"vérifiez le périphérique de stockage pour voir s'il n'y a pas d'erreurs."
 
 #: plinth/modules/storage/__init__.py:381
-#, fuzzy
-#| msgid "Root Filesystem"
 msgid "Read-only root filesystem"
-msgstr "Système de fichier racine"
+msgstr "Système de fichiers racine en lecture seule"
 
 #: plinth/modules/storage/__init__.py:391
-#, fuzzy
-#| msgid "Go to Networks"
 msgid "Go to Power"
-msgstr "Aller aux Réseaux"
+msgstr "Aller à l'alimentation"
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7316,6 +7301,8 @@ msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
+"Cette application fournit des services de relais pour contribuer au réseau "
+"Tor et aider les autres à venir à bout de la censure."
 
 #: plinth/modules/tor/__init__.py:41
 #, python-brace-format
@@ -7324,6 +7311,10 @@ msgid ""
 "network. Using Tor browser, one can access {box_name} from the internet even "
 "when using an ISP that limits servers at home."
 msgstr ""
+"Cette application fournit un domaine onion pour exposer les services de "
+"{box_name} par le réseau Tor. En utilisant le navigateur Tor, il sera "
+"possible d'accéder à {box_name} depuis Internet même en utilisant un FAI qui "
+"limite les serveurs à la maison."
 
 #: plinth/modules/tor/__init__.py:61
 msgid "Tor"
@@ -7350,10 +7341,8 @@ msgid "Obfs4 transport registered"
 msgstr "Abonné au transport obfs4"
 
 #: plinth/modules/tor/__init__.py:170
-#, fuzzy
-#| msgid "Onion Service"
 msgid "Onion service is version 3"
-msgstr "Service Onion"
+msgstr "Le service Onion est de version 3"
 
 #: plinth/modules/tor/forms.py:33
 msgid ""
@@ -7423,23 +7412,17 @@ msgstr ""
 "d’autres personnes à contourner la censure."
 
 #: plinth/modules/tor/forms.py:108
-#, fuzzy
-#| msgid "Enable Tor Hidden Service"
 msgid "Enable Tor Onion Service"
-msgstr "Activer le service Tor caché"
+msgstr "Activer le service Tor onion"
 
 #: plinth/modules/tor/forms.py:110
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "A hidden service will allow {box_name} to provide selected services (such "
-#| "as wiki or chat) without revealing its location. Do not use this for "
-#| "strong anonymity yet."
+#, python-brace-format
 msgid ""
 "An onion service will allow {box_name} to provide selected services (such as "
 "wiki or chat) without revealing its location. Do not use this for strong "
 "anonymity yet."
 msgstr ""
-"L’utilisation d’un service caché permet à la {box_name} de fournir les "
+"L’utilisation d’un service onion permet à la {box_name} de fournir les "
 "services sélectionnés (comme un wiki ou un tchat) sans révéler son "
 "emplacement. Ne pas utiliser pour l’instant pour de l’anonymisation forte."
 
@@ -7480,12 +7463,15 @@ msgid ""
 "access the internet via the Tor network. ISP censorship can be circumvented "
 "using upstream bridges."
 msgstr ""
+"Cette application fournit un mandataire pour la Toile sur votre {box_name} "
+"pour les réseaux internes sur le port TCP 9050 en utilisant le protocole "
+"SOCKS. Cela peut être utilisé par diverses applications pour accéder à "
+"Internet par le réseau Tor. La censure des FAI peut être contourné en "
+"utilisant des ponts en amont (upstream bridges)."
 
 #: plinth/modules/torproxy/__init__.py:54
-#, fuzzy
-#| msgid "Tor Socks Proxy"
 msgid "Tor Proxy"
-msgstr "Mandataire Socks Tor"
+msgstr "Mandataire Tor"
 
 #: plinth/modules/torproxy/__init__.py:79
 msgid "Tor Socks Proxy"
@@ -7559,6 +7545,10 @@ msgid ""
 "apps, use the URL <a href=\"/transmission-remote/rpc\">/transmission-remote/"
 "rpc</a>."
 msgstr ""
+"En plus de l'interface web, des applications mobiles et de bureau peuvent "
+"également être utilisées pour contrôler Transmission sur {box_name}. Afin de "
+"configurer les applications de contrôle à distance, utilisez l'URL <a href"
+"=\"/transmission-remote/rpc\">/transmission-remote/rpc</a>."
 
 #: plinth/modules/transmission/__init__.py:44
 #, python-brace-format
@@ -7586,7 +7576,7 @@ msgstr "Transmission"
 
 #: plinth/modules/transmission/manifest.py:15
 msgid "Tremotesf"
-msgstr ""
+msgstr "Tremotesf"
 
 #: plinth/modules/ttrss/__init__.py:21
 msgid ""
@@ -7610,18 +7600,14 @@ msgstr ""
 "appartenant au groupe des lecteurs de fils d’actualités."
 
 #: plinth/modules/ttrss/__init__.py:30
-#, fuzzy
-#| msgid ""
-#| "When using a mobile or desktop application for Tiny Tiny RSS, use the URL "
-#| "<a href=\"/tt-rss-app/\">/tt-rss-app</a> for connecting."
 msgid ""
 "When using a mobile or desktop application for Tiny Tiny RSS, use the URL <a "
 "href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-rss-app</a> "
 "for connecting."
 msgstr ""
-"Si vous utilisez Tiny Tiny RSS avec une application pour téléphone ou "
-"ordinateur, saisissez l’URL <a href=\"/tt-rss-app/\">tt-rss-app</a> pour "
-"vous connecter."
+"Si vous utilisez Tiny Tiny RSS avec une application pour téléphone ou "
+"ordinateur, saisissez l’URL <a href=\"/tt-rss/\">/tt-rss</a> ou bien <a href"
+"=\"/tt-rss-app/\">tt-rss-app</a> pour vous connecter."
 
 #: plinth/modules/ttrss/__init__.py:50 plinth/modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
@@ -7632,18 +7618,16 @@ msgid "News Feed Reader"
 msgstr "Lecteur de fils d’actualités"
 
 #: plinth/modules/ttrss/manifest.py:10
-#, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
 msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (Fork)"
+msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #: plinth/modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
-msgstr ""
+msgstr "Lecteur TTRSS"
 
 #: plinth/modules/ttrss/manifest.py:35
 msgid "Geekttrss"
-msgstr ""
+msgstr "Geekttrss"
 
 #: plinth/modules/upgrades/__init__.py:36
 #: plinth/modules/upgrades/templates/update-firstboot.html:14
@@ -7956,12 +7940,12 @@ msgstr "Vérification de l’entrée LDAP « {search_item} »"
 #: plinth/modules/users/__init__.py:140
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
-msgstr ""
+msgstr "Vérifier la configuration nslcd \"{key} {value}\""
 
 #: plinth/modules/users/__init__.py:170
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
-msgstr ""
+msgstr "Vérifier la configuration nsswitch \"{database}\""
 
 #: plinth/modules/users/forms.py:35
 msgid "Username is taken or is reserved."
@@ -8137,8 +8121,8 @@ msgid ""
 msgstr ""
 "Veuillez supprimer ces comptes depuis la ligne de commande et rafraîchir "
 "cette page pour pouvoir créer un compte utilisable avec la %(box_name)s. "
-"Depuis la ligne de commande, exécutez la commande \"echo '{\"args\": "
-"[\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
+"Depuis la ligne de commande, exécutez la commande \"echo '{\"args\" : ["
+"\"USERNAME\", \"PASSWORD\"], \"kwargs\" : {}}' | sudo /usr/share/plinth/"
 "actions/actions users remove_user\". Si vous disposez déjà d’un compte "
 "utilisable avec la %(box_name)s, vous pouvez passer cette étape."
 
@@ -8978,10 +8962,8 @@ msgid "RPM:"
 msgstr "RPM :"
 
 #: plinth/templates/error.html:10
-#, fuzzy
-#| msgid "error"
 msgid "Error"
-msgstr "erreur"
+msgstr "Erreur"
 
 #: plinth/templates/first_setup.html:18
 #, python-format
