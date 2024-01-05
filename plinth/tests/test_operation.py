@@ -45,7 +45,7 @@ def test_operation_default_initialization(update_notification):
     assert operation.thread_data == {}
     assert isinstance(operation.thread, threading.Thread)
     assert operation.thread._operation == operation
-    assert update_notification.has_calls([call()])
+    update_notification.assert_has_calls([call()])
 
 
 @patch('plinth.operation.Operation._update_notification')
@@ -64,7 +64,7 @@ def test_operation_initialization(update_notification):
     assert operation._message is None
     assert operation.exception is None
     assert operation.thread_data == {'data1': 'datavalue1'}
-    assert update_notification.has_calls([call()])
+    update_notification.assert_has_calls([call()])
 
 
 def test_operation_str():
@@ -87,7 +87,7 @@ def test_successful_operation(update_notification):
     assert operation.state == Operation.State.COMPLETED
     assert operation.return_value == 'test-return'
     on_complete.assert_has_calls([call(operation)])
-    assert update_notification.has_calls([call(), call()])
+    update_notification.assert_has_calls([call(), call()])
 
 
 @patch('plinth.operation.Operation._update_notification')
@@ -106,7 +106,7 @@ def test_error_operation(update_notification):
     assert operation.state == Operation.State.COMPLETED
     assert operation.exception == target.side_effect
     on_complete.assert_has_calls([call(operation)])
-    assert update_notification.has_calls([call(), call()])
+    update_notification.assert_has_calls([call(), call()])
 
 
 @patch('plinth.operation.Operation._update_notification')
@@ -173,7 +173,7 @@ def test_updating_operation(update_notification):
 
     assert operation._message == 'message1'
     assert operation.exception == exception
-    assert update_notification.has_calls([call(), call(), call()])
+    update_notification.assert_has_calls([call(), call(), call()])
 
 
 @patch('plinth.app.App.get')

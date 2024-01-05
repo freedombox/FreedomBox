@@ -7,9 +7,12 @@ import contextlib
 import re
 import subprocess
 import tempfile
+from unittest.mock import patch
 
+import psutil
 import pytest
 
+from plinth.modules import storage
 from plinth.modules.storage import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
@@ -343,3 +346,17 @@ def test_validate_directory_writable(path, error):
 def test_validate_directory_creatable(path, error):
     """Test that directory creatable validation returns expected output."""
     _assert_validate_directory(path, error, check_creatable=True)
+
+
+@patch('psutil.disk_partitions')
+def test_is_partition_read_only(disk_partitions):
+    """Test whether checking for ro partition works."""
+    partition = psutil._common.sdiskpart  # pylint: disable=protected-access
+    disk_partitions.return_value = [
+        partition('/dev/root', '/', 'btrfs', 'rw,nosuid', 42, 42),
+        partition('/dev/root', '/foo', 'btrfs', 'rw', 321, 321),
+        partition('/dev/foo', '/bar', 'extfs', 'ro', 123, 123)
+    ]
+    assert not storage.is_partition_read_only('/')
+    assert not storage.is_partition_read_only('/foo')
+    assert storage.is_partition_read_only('/bar')

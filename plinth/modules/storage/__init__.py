@@ -68,6 +68,9 @@ class StorageApp(app_module.App):
         # Schedule initialization of UDisks2 initialization
         glib.schedule(3, udisks2.init, repeat=False)
 
+        # Check periodically for a read-only root filesystem
+        glib.schedule(600, _warn_about_read_only_filesystem)
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -271,7 +274,7 @@ def get_error_message(error):
     return message_map.get(short_error, error)
 
 
-def warn_about_low_disk_space(request):
+def warn_about_low_disk_space(_data):
     """Warn about insufficient space on root partition."""
     from plinth.notification import Notification
 
@@ -341,3 +344,55 @@ def report_failing_drive(id, is_failing):
                                              'type': 'dismiss'
                                          }], data=data, group='admin')
     note.dismiss(should_dismiss=not is_failing)
+
+
+def is_partition_read_only(mount_point='/'):
+    """Return True if the partition is mounted read-only."""
+    for partition in psutil.disk_partitions(all=True):
+        if partition.mountpoint == mount_point:
+            return 'ro' in partition.opts.split(',')
+
+    raise ValueError('No such mount point')
+
+
+def _warn_about_read_only_filesystem(_data):
+    """Create a notification if the root filesystem is mounted read-only.
+
+    Remove the notification (if any) if the root filesystem is writable.
+    """
+    from plinth.notification import Notification
+
+    show = is_partition_read_only()
+    notification_id = 'storage-read-only-root-filesystem'
+
+    if not show:
+        try:
+            Notification.get(notification_id).delete()
+        except KeyError:
+            pass
+
+        return
+
+    message = gettext_noop(
+        # xgettext:no-python-format
+        'You cannot save configuration changes. Try rebooting the system. If '
+        'the problem persists after a reboot, check the storage device for '
+        'errors.')
+    title = gettext_noop('Read-only root filesystem')
+    data = {
+        'app_icon': 'fa-hdd-o',
+        'app_name': 'translate:' + gettext_noop('Storage'),
+    }
+
+    # This is a serious issue so the notification can't be dismissed.
+    actions = [{
+        'type': 'link',
+        'class': 'primary',
+        'text': gettext_noop('Go to Power'),
+        'url': 'power:index'
+    }]
+
+    Notification.update_or_create(id=notification_id, app_id='storage',
+                                  severity='error', title=title,
+                                  message=message, actions=actions, data=data,
+                                  group='admin')
