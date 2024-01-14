@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
+from plinth.config import DropinConfigs
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -42,7 +43,7 @@ class ZophApp(app_module.App):
 
     app_id = 'zoph'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -76,8 +77,16 @@ class ZophApp(app_module.App):
                             ports=['http', 'https'], is_external=True)
         self.add(firewall)
 
+        dropin_configs = DropinConfigs('dropin-configs-zoph', [
+            '/etc/apache2/conf-available/zoph-freedombox.conf',
+        ])
+        self.add(dropin_configs)
+
         webserver = Webserver('webserver-zoph', 'zoph',
                               urls=['https://{host}/zoph/'])
+        self.add(webserver)
+
+        webserver = Webserver('webserver-zoph-freedombox', 'zoph-freedombox')
         self.add(webserver)
 
         backup_restore = ZophBackupRestore('backup-restore-zoph',
@@ -91,6 +100,9 @@ class ZophApp(app_module.App):
         privileged.setup()
         if not old_version:
             self.enable()
+        elif old_version < 2:
+            if self.get_component('webserver-zoph').is_enabled():
+                self.enable()
 
 
 class ZophBackupRestore(BackupRestore):
