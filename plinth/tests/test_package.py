@@ -10,8 +10,7 @@ import pytest
 
 from plinth.app import App
 from plinth.errors import MissingPackageError
-from plinth.modules.diagnostics.check import (DiagnosticCheck, Result,
-                                              translate_checks)
+from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Package, Packages, packages_installed
 
 
@@ -239,33 +238,37 @@ def test_diagnose(cache):
         Package('package4') | Package('package5'),
         Package('package6') | Package('package7')
     ])
-    results = translate_checks(component.diagnose())
+    results = component.diagnose()
     assert results == [
-        DiagnosticCheck('package-available-package1',
-                        'Package package1 is not available for install',
-                        Result.FAILED, {'package_expression': 'package1'}),
-        DiagnosticCheck('package-latest-package2',
-                        'Package package2 is the latest version (2.0)',
-                        Result.PASSED, {
-                            'package_name': 'package2',
-                            'latest_version': '2.0'
-                        }),
-        DiagnosticCheck('package-latest-package3',
-                        'Package package3 is the latest version (3.0)',
-                        Result.WARNING, {
-                            'package_name': 'package3',
-                            'latest_version': '3.0'
-                        }),
+        DiagnosticCheck(
+            'package-available-package1',
+            'Package {package_expression} is not available for install',
+            Result.FAILED, {'package_expression': 'package1'}),
+        DiagnosticCheck(
+            'package-latest-package2',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.PASSED, {
+                'package_name': 'package2',
+                'latest_version': '2.0'
+            }),
+        DiagnosticCheck(
+            'package-latest-package3',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.WARNING, {
+                'package_name': 'package3',
+                'latest_version': '3.0'
+            }),
         DiagnosticCheck(
             'package-available-package4 | package5',
-            'Package package4 | package5 is not available for install',
+            'Package {package_expression} is not available for install',
             Result.FAILED, {'package_expression': 'package4 | package5'}),
-        DiagnosticCheck('package-latest-package7',
-                        'Package package7 is the latest version (4.0)',
-                        Result.PASSED, {
-                            'package_name': 'package7',
-                            'latest_version': '4.0'
-                        }),
+        DiagnosticCheck(
+            'package-latest-package7',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.PASSED, {
+                'package_name': 'package7',
+                'latest_version': '4.0'
+            }),
     ]
 
 

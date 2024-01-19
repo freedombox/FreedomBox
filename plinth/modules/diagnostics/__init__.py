@@ -21,7 +21,7 @@ from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-from .check import CheckJSONDecoder, CheckJSONEncoder, Result, translate_checks
+from .check import CheckJSONDecoder, CheckJSONEncoder, Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -338,14 +338,9 @@ def get_results():
         results = json.loads(results, cls=CheckJSONDecoder)
         results = {'results': results, 'progress_percentage': 100}
 
-    # Translate and format diagnostic check descriptions for each app
+    # Add a translated name for each app
     for app_id in results['results']:
         app = app_module.App.get(app_id)
-        app_name = app.info.name or app_id
-        results['results'][app_id]['name'] = app_name
-        if 'diagnosis' in results['results'][app_id]:
-            diagnosis = results['results'][app_id]['diagnosis']
-            results['results'][app_id]['diagnosis'] = translate_checks(
-                diagnosis)
+        results['results'][app_id]['name'] = app.info.name or app_id
 
     return results

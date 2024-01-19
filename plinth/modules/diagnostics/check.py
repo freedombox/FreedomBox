@@ -2,9 +2,9 @@
 """Diagnostic check data type."""
 
 import dataclasses
+import json
 from dataclasses import dataclass, field
 from enum import StrEnum
-import json
 
 from django.utils.translation import gettext
 
@@ -28,21 +28,14 @@ class DiagnosticCheck:
     result: Result = Result.NOT_DONE
     parameters: dict = field(default_factory=dict)
 
+    @property
+    def translated_description(self):
+        """Return translated string for description."""
+        description = gettext(self.description)
+        if self.parameters:
+            return SafeFormatter().vformat(description, [], self.parameters)
 
-def translate(check: DiagnosticCheck) -> DiagnosticCheck:
-    """Translate and format description using parameters."""
-    description = gettext(check.description)
-    if check.parameters:
-        description = SafeFormatter().vformat(description, [],
-                                              check.parameters)
-
-    return DiagnosticCheck(check.check_id, description, check.result,
-                           check.parameters)
-
-
-def translate_checks(checks: list[DiagnosticCheck]) -> list[DiagnosticCheck]:
-    """Translate and format diagnostic checks."""
-    return [translate(check) for check in checks]
+        return description
 
 
 class CheckJSONEncoder(json.JSONEncoder):

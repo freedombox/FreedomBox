@@ -2,12 +2,12 @@
 """Tests for diagnostic check data type."""
 
 import json
+
 import pytest
 
-from plinth.modules.diagnostics.check import (DiagnosticCheck,
+from plinth.modules.diagnostics.check import (CheckJSONDecoder,
                                               CheckJSONEncoder,
-                                              CheckJSONDecoder, Result,
-                                              translate)
+                                              DiagnosticCheck, Result)
 
 
 def test_result():
@@ -29,6 +29,7 @@ def test_diagnostic_check():
     check = DiagnosticCheck('some-check-id', 'sample check')
     assert check.check_id == 'some-check-id'
     assert check.description == 'sample check'
+    assert check.translated_description == 'sample check'
     assert check.result == Result.NOT_DONE
     assert not check.parameters
 
@@ -43,24 +44,13 @@ def test_diagnostic_check():
 
 def test_translate():
     """Test formatting the translated description."""
-    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
-    translated = translate(check)
-    assert translated.check_id == 'some-check-id'
-    assert translated.description == 'sample check'
-    assert translated.result == Result.PASSED
-    assert not translated.parameters
-
     check = DiagnosticCheck('some-check-id', 'sample check {key}',
                             Result.FAILED, {'key': 'value'})
-    translated = translate(check)
-    assert translated.description == 'sample check value'
-    assert translated.result == Result.FAILED
-    assert translated.parameters == {'key': 'value'}
+    assert check.translated_description == 'sample check value'
 
     check = DiagnosticCheck('some-check-id', 'sample check {missing}',
                             Result.PASSED, {'key': 'value'})
-    translated = translate(check)
-    assert translated.description == 'sample check ?missing?'
+    assert check.translated_description == 'sample check ?missing?'
 
 
 def test_json_encoder_decoder():

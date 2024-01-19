@@ -17,7 +17,7 @@ from plinth.app import App
 from plinth.modules import diagnostics
 from plinth.views import AppView
 
-from .check import Result, translate_checks
+from .check import Result
 
 logger = logging.getLogger(__name__)
 
@@ -83,8 +83,6 @@ def diagnose_app(request, app_id):
                          exception)
         diagnosis_exception = str(exception)
 
-    # Translate and format diagnostic check descriptions
-    diagnosis = translate_checks(diagnosis)
     show_rerun_setup = False
     for check in diagnosis:
         if check.result in [Result.FAILED, Result.WARNING]:
