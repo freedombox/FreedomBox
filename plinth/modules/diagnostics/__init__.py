@@ -125,7 +125,7 @@ def _run_on_all_enabled_modules():
 
     for current_index, (app_id, app) in enumerate(apps):
         app_results = {
-            'diagnosis': None,
+            'diagnosis': [],
             'exception': None,
             'show_rerun_setup': False,
         }
