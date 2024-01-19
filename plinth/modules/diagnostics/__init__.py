@@ -271,19 +271,18 @@ def _run_diagnostics():
         kvstore.set('diagnostics_results',
                     json.dumps(results, cls=CheckJSONEncoder))
 
-    issue_count = 0
-    severity = 'warning'
-    for _app_id, app_data in results.items():
-        if app_data['exception']:
-            issue_count += 1
-            severity = 'error'
-        else:
-            for check in app_data['diagnosis']:
-                if check.result != Result.PASSED:
-                    if check.result != Result.WARNING:
-                        severity = 'error'
-
-                    issue_count += 1
+        issue_count = 0
+        severity = 'warning'
+        for _app_id, app_data in results.items():
+            if app_data['exception']:
+                issue_count += 1
+                severity = 'error'
+            else:
+                for check in app_data['diagnosis']:
+                    if check.result != Result.PASSED:
+                        issue_count += 1
+                        if check.result != Result.WARNING:
+                            severity = 'error'
 
     if not issue_count:
         # Remove any previous notifications if there are no issues.
