@@ -68,7 +68,7 @@ class DiagnosticsApp(app_module.App):
         glib.schedule(3600, _warn_about_low_ram_space)
 
         # Run diagnostics once a day
-        glib.schedule(24 * 3600, start_diagnostics, in_thread=False)
+        glib.schedule(24 * 3600, _daily_diagnostics_run, in_thread=False)
 
     def setup(self, old_version):
         """Install and configure the app."""
@@ -246,6 +246,15 @@ def _warn_about_low_ram_space(request):
                                   actions=actions, data=data, group='admin')
 
 
+def _daily_diagnostics_run(data: None = None):
+    """Start daily run if enabled."""
+    if is_daily_run_enabled():
+        logger.info('Starting daily diagnostics run')
+        start_diagnostics()
+    else:
+        logger.info('Skipping daily diagnostics run (disabled)')
+
+
 def start_diagnostics(data: None = None):
     """Start full diagnostics as a background operation."""
     logger.info('Running full diagnostics')
@@ -343,3 +352,13 @@ def get_results():
         results['results'][app_id]['name'] = app.info.name or app_id
 
     return results
+
+
+def is_daily_run_enabled() -> bool:
+    """Return whether daily run is enabled."""
+    return kvstore.get_default('diagnostics_daily_run_enabled', True)
+
+
+def set_daily_run_enabled(enabled: bool):
+    """Enable or disable daily run."""
+    kvstore.set('diagnostics_daily_run_enabled', enabled)

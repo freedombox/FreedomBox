@@ -6,14 +6,15 @@
 {% load i18n %}
 {% load static %}
 
-{% block configuration %}
+{% block extra_content %}
 
+  <h3>{% trans "Diagnostics Run" %}</h3>
   <div class="btn-toolbar">
     <form class="form form-diagnostics-full" method="post"
           action="{% url 'diagnostics:full' %}">
       {% csrf_token %}
-      <input type="submit" class="btn btn-primary"
-             value="{% trans "Run Diagnostics" %}"/>
+      <input type="submit" class="btn btn-default"
+             value="{% trans "Run Diagnostics Now" %}"/>
     </form>
 
     {% if results_available %}
