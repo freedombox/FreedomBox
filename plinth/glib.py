@@ -65,7 +65,8 @@ def schedule(interval, method, data=None, in_thread=True, repeat=True,
     def _run_bare_or_thread(_user_data):
         """Run the target method in thread or directly (if async)."""
         if not in_thread:
-            return _runner()
+            _runner()
+            return repeat
 
         thread = threading.Thread(target=_runner)
         thread.start()
