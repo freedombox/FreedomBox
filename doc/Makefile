@@ -1,8 +1,6 @@
 #!/usr/bin/make -f
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-OUTPUTS=freedombox-manual.pdf plinth.1 manual-pages
-
 MANUAL_LANGUAGES=en es
 
 MANUAL_URL="https://wiki.debian.org/{lang-fragment}FreedomBox/Manual?action=show&mimetype=text%2Fdocbook"
@@ -11,11 +9,12 @@ MANUAL_PAGE_URL_RAW="https://wiki.debian.org/{page}?action=raw"
 
 DESTDIR=
 INSTALL_DIR=$(DESTDIR)/usr/share/freedombox
+MAN_INSTALL_DIR=$(DESTDIR)/usr/share/man
 SCRIPTS_DIR=scripts
 
 manual-pdfs=$(foreach lang,$(MANUAL_LANGUAGES),manual/$(lang)/freedombox-manual.pdf)
 manual-xmls=$(patsubst %.pdf,%.xml,$(manual-pdfs))
-OUTPUTS=$(manual-pdfs) plinth.1 manual-pages
+OUTPUTS=$(manual-pdfs) plinth.1
 
 INSTALL_OPTS=-D --mode=644
 
@@ -32,9 +31,10 @@ ifneq ($(DEBUG),)
 endif
 
 .PHONY: all install
-all: $(OUTPUTS)
+all: $(OUTPUTS) manual-pages
 
 install: all
+	install $(INSTALL_OPTS) -t $(MAN_INSTALL_DIR)/man1 plinth.1
 	for file in $(manual-pages-part-html) $(manual-pdfs); do \
 		install $(INSTALL_OPTS) -t $(INSTALL_DIR)/$$(dirname $${file}) \
 			$${file} ; \
@@ -67,7 +67,7 @@ fetch: $(fetch-main-list) $(fetch-pages-list)
 
 # Remove raw wiki pages and images before fetching to drop items deleted
 # upstream.
-featch-cleanup-%: lang = $*
+fetch-cleanup-%: lang = $*
 $(fetch-cleanup-list): fetch-cleanup-%:
 	rm -f manual/$(lang)/*.raw.wiki
 	rm -f manual/$(lang)/images/*.png manual/$(lang)/images/*.jpg
