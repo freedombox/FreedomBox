@@ -19,7 +19,7 @@ from django import urls
 from django.conf import settings
 from django.http import Http404
 
-from plinth import module_loader
+from plinth import cfg, module_loader
 from plinth.modules.help import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
@@ -40,6 +40,12 @@ def fixture_app_urls():
         modules.append('plinth.modules.help')
         module_loader.include_urls()
         yield
+
+
+@pytest.fixture(autouse=True, scope='module')
+def fixture_developer_configuration():
+    """Make sure docs are read from current directory instead of /usr."""
+    cfg.read_file(cfg.get_develop_config_path())
 
 
 @pytest.mark.parametrize("view_name, view", (
