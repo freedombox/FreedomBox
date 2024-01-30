@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-29 20:14-0500\n"
-"PO-Revision-Date: 2023-10-30 10:00+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-01-31 05:01+0000\n"
+"Last-Translator: Johannes Keyser <joke@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.4-dev\n"
 
 #: doc/dev/_templates/layout.html:11
 msgid "Page source"
@@ -1573,10 +1573,8 @@ msgid "Low Memory"
 msgstr "Wenig Speicher"
 
 #: plinth/modules/diagnostics/__init__.py:264
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Running diagnostics"
-msgstr "Laufende Diagnose"
+msgstr "Laufende Diagnosen"
 
 #: plinth/modules/diagnostics/__init__.py:307
 #, no-python-format, python-brace-format
@@ -1592,29 +1590,20 @@ msgid "Go to diagnostics results"
 msgstr "Zu Diagnose-Ergebnisse gehen"
 
 #: plinth/modules/diagnostics/forms.py:11
-#, fuzzy
-#| msgid "Enable Subdomains"
 msgid "Enable daily run"
-msgstr "Sub-Domainen einschalten"
+msgstr "Täglichen Lauf aktivieren"
 
 #: plinth/modules/diagnostics/forms.py:12
-#, fuzzy
-#| msgid "When enabled, FreedomBox automatically updates once a day."
 msgid "When enabled, diagnostic checks will run once a day."
-msgstr ""
-"Wenn aktiviert, aktualisiert sich FreedomBox automatisch einmal täglich."
+msgstr "Wenn aktiviert, laufen einmal täglich diagnostische Tests."
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:11
-#, fuzzy
-#| msgid "Diagnostics"
 msgid "Diagnostics Run"
-msgstr "Diagnose"
+msgstr "Diagnose-Lauf"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:17
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Run Diagnostics Now"
-msgstr "Diagnose starten"
+msgstr "Diagnose jetzt starten"
 
 #: plinth/modules/diagnostics/templates/diagnostics.html:22
 msgid "View Results"
@@ -1656,19 +1645,15 @@ msgid "Results"
 msgstr "Ergebnis"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:38
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          App: %(app_name)s\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "            App: %(app_name)s\n"
 "          "
 msgstr ""
 "\n"
-"          App: %(app_name)s\n"
-"        "
+"            App: %(app_name)s\n"
+"          "
 
 #: plinth/modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -3232,6 +3217,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix ist ein Offline-Leser für Webinhalte. Es handelt sich um eine "
+"Software, die Wikipedia auch ohne Internet zugänglich machen soll, die aber "
+"potenziell für alle HTML-Inhalte geeignet ist. Kiwix-Pakete liegen im ZIM-"
+"Dateiformat vor."
 
 #: plinth/modules/kiwix/__init__.py:25
 msgid ""
@@ -3245,6 +3234,15 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix kann verschiedene Arten von Inhalten anbieten:\n"
+"    <ul>\n"
+"      <li>Offline-Versionen von Webseiten: Wikimedia-Projekte, Stack "
+"Exchange</li>\n"
+"      <li>Video-Inhalt: Khan Academy, TED-Talks, Crash Course</li>\n"
+"      <li>Lernmaterialien: PHET, TED Ed, Vikidia</li>\n"
+"      <li>E-Books: Projekt Gutenberg</li>\n"
+"      <li>Magazine: Low-tech Magazine</li>\n"
+"    </ul>"
 
 #: plinth/modules/kiwix/__init__.py:33
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:14
@@ -3261,17 +3259,15 @@ msgstr ""
 
 #: plinth/modules/kiwix/__init__.py:56 plinth/modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
+msgstr "Kiwix"
 
 #: plinth/modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Wikipedia offline"
 
 #: plinth/modules/kiwix/forms.py:23
-#, fuzzy
-#| msgid "Backup files have to be in .tar.gz format"
 msgid "Content packages have to be in .zim format"
-msgstr "Sicherungs-Dateien müssen im Format .tar.gz vorliegen"
+msgstr "Inhaltspakete müssen im .zim-Format sein"
 
 #: plinth/modules/kiwix/forms.py:25
 #, python-brace-format
@@ -3284,69 +3280,57 @@ msgstr ""
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "Sie haben %(max_filesize)s freien Speicherplatz verfügbar."
 
 #: plinth/modules/kiwix/templates/kiwix-add-package.html:36
-#, fuzzy
-#| msgid "Upload file"
 msgid "Upload ZIM file"
-msgstr "Datei hochladen"
+msgstr "ZIM-Datei hochladen"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:11
-#, fuzzy, python-format
-#| msgid "Delete Connection <em>%(name)s</em>"
+#, python-format
 msgid "Delete content package <em>%(name)s</em>"
-msgstr "Lösche Verbindung <em>%(name)s</em>"
+msgstr "Lösche Inhaltspaket <em>%(name)s</em>"
 
 #: plinth/modules/kiwix/templates/kiwix-delete-package.html:17
 msgid ""
 "Delete this package permanently? You may add it back later if you have a "
 "copy of the ZIM file."
 msgstr ""
+"Dieses Paket dauerhaft löschen? Sie können es später wieder hinzufügen, "
+"falls Sie eine Kopie der ZIM-Datei haben."
 
 #: plinth/modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "Inhaltspakete verwalten"
 
 #: plinth/modules/kiwix/templates/kiwix.html:15
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a content package"
-msgstr "Hinzufügen eines neuen Peers"
+msgstr "Inhaltspaket hinzufügen"
 
 #: plinth/modules/kiwix/templates/kiwix.html:17
-#, fuzzy
-#| msgid "Package"
 msgid "Add Package"
-msgstr "Paket"
+msgstr "Paket hinzufügen"
 
 #: plinth/modules/kiwix/templates/kiwix.html:24
-#, fuzzy
-#| msgid "No status available."
 msgid "No content packages available."
-msgstr "Kein Status verfügbar."
+msgstr "Keine Inhaltspakete verfügbar."
 
 #: plinth/modules/kiwix/templates/kiwix.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete package %(title)s"
-msgstr "Seite %(site)s löschen"
+msgstr "Paket %(title)s löschen"
 
 #: plinth/modules/kiwix/views.py:49
 msgid "Content package added."
-msgstr ""
+msgstr "Inhaltspaket hinzugefügt."
 
 #: plinth/modules/kiwix/views.py:54
-#, fuzzy
-#| msgid "Add a new peer"
 msgid "Add a new content package"
-msgstr "Hinzufügen eines neuen Peers"
+msgstr "Ein neues Inhaltspaket hinzufügen"
 
 #: plinth/modules/kiwix/views.py:83
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to add content package."
-msgstr "Hinzufügen eines Benutzers zur Gruppe ist fehlgeschlagen."
+msgstr "Hinzufügen eines Inhaltspakets ist fehlgeschlagen."
 
 #: plinth/modules/letsencrypt/__init__.py:27
 #, python-brace-format
@@ -7094,18 +7078,19 @@ msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
+"Sie können Konfigurationsänderungen nicht speichern. Versuchen Sie, das "
+"System neu zu starten. Wenn das Problem nach einem Neustart anhält, "
+"überprüfen Sie das Speichergerät auf Fehler."
 
 #: plinth/modules/storage/__init__.py:381
-#, fuzzy
-#| msgid "Root Filesystem"
 msgid "Read-only root filesystem"
-msgstr "Wurzel-Dateisystem"
+msgstr "Schreibgeschütztes Root-Dateisystem"
 
 #: plinth/modules/storage/__init__.py:391
 #, fuzzy
 #| msgid "Go to Networks"
 msgid "Go to Power"
-msgstr "Zu den Netzwerken"
+msgstr "Zur Stromversorgung"
 
 #: plinth/modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7605,10 +7590,8 @@ msgid "Tiny Tiny RSS (TTTRSS)"
 msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #: plinth/modules/ttrss/manifest.py:20
-#, fuzzy
-#| msgid "TT-RSS Reader"
 msgid "TTRSS-Reader"
-msgstr "TT-RSS Feedreader"
+msgstr "TTRSS-Leser"
 
 #: plinth/modules/ttrss/manifest.py:35
 msgid "Geekttrss"
