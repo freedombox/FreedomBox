@@ -127,4 +127,35 @@ clean:
 	rm -rf Plinth.egg-info
 	find plinth/locale -name *.mo -delete
 
-.PHONY: update-translations configure build install check clean
+# Run basic setup for a developer environment (VM or container)
+provision-dev:
+	# Install newer build dependencies if any
+	apt-get update
+	DEBIAN_FRONTEND=noninteractive apt-get build-dep --yes .
+
+	# Install latest code over .deb
+	$(MAKE) build install
+
+	# Reload newer systemd units, ignore failure
+	-systemctl daemon-reload
+
+	# Stop any ongoing upgrade, ignore failure
+	-killall -9 unattended-upgr
+
+	# Fix any broken packages
+	dpkg --configure -a
+	apt-get -f install
+	apt-get update
+
+	# Install new packages needed by essential apps. Don't uninstall
+	# freedombox in case new dependencies conflict with old dependencies
+	apt-mark hold freedombox
+	DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
+	    $$(sudo -u plinth ./run --develop --list-dependencies)
+	apt-mark unhold freedombox
+
+	# Install additional packages
+	DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
+	    sshpass bash-completion
+
+.PHONY: update-translations configure build install check clean provision

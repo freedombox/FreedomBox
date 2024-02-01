@@ -23,21 +23,8 @@ Vagrant.configure(2) do |config|
   SHELL
   config.vm.provision "shell", inline: <<-SHELL
     cd /freedombox/
-    apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get build-dep --no-install-recommends --yes .
-    make build install
-    systemctl daemon-reload
-    # Stop any ongoing upgrade
-    killall -9 unattended-upgr
-    dpkg --configure -a
-    apt -f install
-    apt-get update
-    # In case new dependencies conflict with old dependencies
-    apt-mark hold freedombox
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade -y $(sudo -u plinth ./run --develop --list-dependencies)
-    apt-mark unhold freedombox
-    # Install ncurses-term
-    DEBIAN_FRONTEND=noninteractive apt-get install -y ncurses-term
+    make provision-dev
+
     echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' >> /home/vagrant/.bashrc
   SHELL
   config.vm.provision "tests", run: "never", type: "shell", path: "plinth/tests/functional/install.sh"
