@@ -7,7 +7,7 @@ export PYBUILD_CONFIGURE_ARGS=make configure
 export PYBUILD_BUILD_ARGS=make PYTHON={interpreter} build
 export PYBUILD_INSTALL_ARGS=make PYTHON={interpreter} DESTDIR={destdir} install
 export PYBUILD_CLEAN_ARGS=make clean
-export PYBUILD_TEST_ARGS=make PYTHON={interpreter} check
+export PYBUILD_TEST_ARGS=make PYTHON={interpreter} check-tests
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild

@@ -119,8 +119,28 @@ install:
 	# Documentation
 	$(MAKE) -C doc install
 
-check:
+check: check-type check-code check-doc check-tests
+
+# Run the main test suite
+check-tests:
 	$(PYTHON) -m pytest $(PYTEST_ARGS)
+
+# Tests with coverage report
+check-tests-cov:
+	$(PYTHON) -m pytest $(PYTEST_ARGS) --cov=plinth \
+	    --cov-report=html:./htmlcov --cov-report=term
+
+# Code quality checking using flake8
+check-code:
+	$(PYTHON) -m flake8 plinth actions/actions container
+
+# Static type checking using mypy
+check-type:
+	$(PYTHON) -m mypy .
+
+# Use doctest for check the wikiparser in doc directory
+check-doc:
+	$(PYTHON) -m doctest doc/scripts/wikiparser.py
 
 clean:
 	make -C doc clean
@@ -158,4 +178,16 @@ provision-dev:
 	DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
 	    sshpass bash-completion
 
-.PHONY: update-translations configure build install check clean provision
+.PHONY: \
+    build \
+    check \
+    check-code \
+    check-doc \
+    check-type \
+    check-tests \
+    check-tests-cov \
+    clean \
+    configure \
+    install \
+    provision \
+    update-translations

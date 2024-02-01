@@ -16,31 +16,25 @@ code-quality:
   stage: test
   needs: []
   script:
-    - python3 -m flake8 container plinth actions/*
+    - make check-code
 
 static-type-check:
   stage: test
   needs: []
-  before_script:
-    - apt-get update
-    - apt-get install -y mypy
   script:
-    - mypy .
+    - make check-type
 
 unit-tests:
   stage: test
   needs: []
   before_script:
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt-get update
-    - apt-get build-dep -y .  # Dependencies of the freedombox Debian package
-    - apt-get install -y $(./run --list-dependencies)  # Module dependencies
+    - make provision-dev
   script:
     - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
     - echo "tester:password" | chpasswd
     - cp -r . /home/tester/plinth
     - chown -R tester:tester /home/tester/plinth
-    - su -c "cd ~/plinth;PYTHONPATH='.' py.test-3 --cov=plinth --cov-report=html:/home/tester/plinth/htmlcov --cov-report=term" tester
+    - su -c "cd ~/plinth; make check-tests-cov" tester
     - cp -r /home/tester/plinth/htmlcov test-coverage-report
   coverage: '/^TOTAL\s+.*\s+(\d+\.\d+%)$/'
   artifacts:
@@ -51,7 +45,7 @@ doc-tests:
   stage: test
   needs: []
   script:
-    - doc/scripts/wikiparser.py
+    - make check-doc
 
 app-server-stable:
   variables:
