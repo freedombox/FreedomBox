@@ -4,22 +4,24 @@ FreedomBox app for system diagnostics.
 """
 
 import collections
+import json
 import logging
 import pathlib
 import threading
+from copy import deepcopy
 
 import psutil
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import daemon, glib, menu
+from plinth import daemon, glib, kvstore, menu
 from plinth import operation as operation_module
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-from .check import Result
+from .check import CheckJSONDecoder, CheckJSONEncoder, Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -66,7 +68,7 @@ class DiagnosticsApp(app_module.App):
         glib.schedule(3600, _warn_about_low_ram_space)
 
         # Run diagnostics once a day
-        glib.schedule(24 * 3600, start_diagnostics, in_thread=False)
+        glib.schedule(24 * 3600, _daily_diagnostics_run, in_thread=False)
 
     def setup(self, old_version):
         """Install and configure the app."""
@@ -117,14 +119,13 @@ def _run_on_all_enabled_modules():
                 continue
 
             apps.append((app.app_id, app))
-            app_name = app.info.name or app.app_id
-            current_results['results'][app.app_id] = {'name': app_name}
+            current_results['results'][app.app_id] = {'id': app.app_id}
 
         current_results['apps'] = apps
 
     for current_index, (app_id, app) in enumerate(apps):
         app_results = {
-            'diagnosis': None,
+            'diagnosis': [],
             'exception': None,
             'show_rerun_setup': False,
         }
@@ -245,6 +246,15 @@ def _warn_about_low_ram_space(request):
                                   actions=actions, data=data, group='admin')
 
 
+def _daily_diagnostics_run(data: None = None):
+    """Start daily run if enabled."""
+    if is_daily_run_enabled():
+        logger.info('Starting daily diagnostics run')
+        start_diagnostics()
+    else:
+        logger.info('Skipping daily diagnostics run (disabled)')
+
+
 def start_diagnostics(data: None = None):
     """Start full diagnostics as a background operation."""
     logger.info('Running full diagnostics')
@@ -266,20 +276,22 @@ def _run_diagnostics():
     _run_on_all_enabled_modules()
     with results_lock:
         results = current_results['results']
+        # Store the most recent results in the database.
+        kvstore.set('diagnostics_results',
+                    json.dumps(results, cls=CheckJSONEncoder))
 
-    issue_count = 0
-    severity = 'warning'
-    for _app_id, app_data in results.items():
-        if app_data['exception']:
-            issue_count += 1
-            severity = 'error'
-        else:
-            for check in app_data['diagnosis']:
-                if check.result != Result.PASSED:
-                    if check.result != Result.WARNING:
-                        severity = 'error'
-
-                    issue_count += 1
+        issue_count = 0
+        severity = 'warning'
+        for _app_id, app_data in results.items():
+            if app_data['exception']:
+                issue_count += 1
+                severity = 'error'
+            else:
+                for check in app_data['diagnosis']:
+                    if check.result != Result.PASSED:
+                        issue_count += 1
+                        if check.result != Result.WARNING:
+                            severity = 'error'
 
     if not issue_count:
         # Remove any previous notifications if there are no issues.
@@ -309,3 +321,44 @@ def _run_diagnostics():
                                          message=message, actions=actions,
                                          data=data, group='admin')
     note.dismiss(False)
+
+
+def are_results_available():
+    """Return whether diagnostic results are available."""
+    with results_lock:
+        results = current_results
+
+    if not results:
+        results = kvstore.get_default('diagnostics_results', '{}')
+        results = json.loads(results)
+
+    return bool(results)
+
+
+def get_results():
+    """Return the latest results of full diagnostics."""
+    with results_lock:
+        results = deepcopy(current_results)
+
+    # If no results are available in memory, then load from database.
+    if not results:
+        results = kvstore.get_default('diagnostics_results', '{}')
+        results = json.loads(results, cls=CheckJSONDecoder)
+        results = {'results': results, 'progress_percentage': 100}
+
+    # Add a translated name for each app
+    for app_id in results['results']:
+        app = app_module.App.get(app_id)
+        results['results'][app_id]['name'] = app.info.name or app_id
+
+    return results
+
+
+def is_daily_run_enabled() -> bool:
+    """Return whether daily run is enabled."""
+    return kvstore.get_default('diagnostics_daily_run_enabled', True)
+
+
+def set_daily_run_enabled(enabled: bool):
+    """Enable or disable daily run."""
+    kvstore.set('diagnostics_daily_run_enabled', enabled)

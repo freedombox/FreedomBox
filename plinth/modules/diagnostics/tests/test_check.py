@@ -1,9 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Tests for diagnostic check data type."""
 
+import json
+
 import pytest
 
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.modules.diagnostics.check import (CheckJSONDecoder,
+                                              CheckJSONEncoder,
+                                              DiagnosticCheck, Result)
 
 
 def test_result():
@@ -25,6 +29,40 @@ def test_diagnostic_check():
     check = DiagnosticCheck('some-check-id', 'sample check')
     assert check.check_id == 'some-check-id'
     assert check.description == 'sample check'
+    assert check.translated_description == 'sample check'
     assert check.result == Result.NOT_DONE
+    assert not check.parameters
+
     check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
     assert check.result == Result.PASSED
+    assert not check.parameters
+
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED,
+                            {'key': 'value'})
+    assert check.parameters['key'] == 'value'
+
+
+def test_translate():
+    """Test formatting the translated description."""
+    check = DiagnosticCheck('some-check-id', 'sample check {key}',
+                            Result.FAILED, {'key': 'value'})
+    assert check.translated_description == 'sample check value'
+
+    check = DiagnosticCheck('some-check-id', 'sample check {missing}',
+                            Result.PASSED, {'key': 'value'})
+    assert check.translated_description == 'sample check ?missing?'
+
+
+def test_json_encoder_decoder():
+    """Test encoding and decoding as JSON."""
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
+    check_json = json.dumps(check, cls=CheckJSONEncoder)
+    for string in [
+            '"check_id": "some-check-id"', '"description": "sample check"',
+            '"result": "passed"', '"parameters": {}',
+            '"__class__": "DiagnosticCheck"'
+    ]:
+        assert string in check_json
+
+    decoded_check = json.loads(check_json, cls=CheckJSONDecoder)
+    assert decoded_check == check

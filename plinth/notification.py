@@ -3,7 +3,6 @@
 
 import copy
 import logging
-import string
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -12,6 +11,7 @@ from django.template.response import SimpleTemplateResponse
 from django.utils.translation import gettext
 
 from plinth import cfg
+from plinth.utils import SafeFormatter
 
 from . import db, models
 
@@ -370,14 +370,3 @@ class Notification(models.StoredNotification):
             notes.append(note_context)
 
         return {'notifications': notes, 'max_severity': max_severity}
-
-
-class SafeFormatter(string.Formatter):
-    """A string.format() handler to deal with missing arguments."""
-
-    def get_value(self, key, args, kwargs):
-        """Retrieve a given field value."""
-        try:
-            return super().get_value(key, args, kwargs)
-        except (IndexError, KeyError):
-            return f'?{key}?'

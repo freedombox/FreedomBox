@@ -240,22 +240,35 @@ def test_diagnose(cache):
     ])
     results = component.diagnose()
     assert results == [
-        DiagnosticCheck('package-available-package1',
-                        'Package package1 is not available for install',
-                        Result.FAILED),
-        DiagnosticCheck('package-latest-package2',
-                        'Package package2 is the latest version (2.0)',
-                        Result.PASSED),
-        DiagnosticCheck('package-latest-package3',
-                        'Package package3 is the latest version (3.0)',
-                        Result.WARNING),
+        DiagnosticCheck(
+            'package-available-package1',
+            'Package {package_expression} is not available for install',
+            Result.FAILED, {'package_expression': 'package1'}),
+        DiagnosticCheck(
+            'package-latest-package2',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.PASSED, {
+                'package_name': 'package2',
+                'latest_version': '2.0'
+            }),
+        DiagnosticCheck(
+            'package-latest-package3',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.WARNING, {
+                'package_name': 'package3',
+                'latest_version': '3.0'
+            }),
         DiagnosticCheck(
             'package-available-package4 | package5',
-            'Package package4 | package5 is not available for install',
-            Result.FAILED),
-        DiagnosticCheck('package-latest-package7',
-                        'Package package7 is the latest version (4.0)',
-                        Result.PASSED),
+            'Package {package_expression} is not available for install',
+            Result.FAILED, {'package_expression': 'package4 | package5'}),
+        DiagnosticCheck(
+            'package-latest-package7',
+            'Package {package_name} is the latest version ({latest_version})',
+            Result.PASSED, {
+                'package_name': 'package7',
+                'latest_version': '4.0'
+            }),
     ]
 
 

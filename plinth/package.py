@@ -8,7 +8,7 @@ import time
 
 import apt.cache
 from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy, gettext_noop
 
 import plinth.privileged.packages as privileged
 from plinth import app as app_module
@@ -211,11 +211,12 @@ class Packages(app_module.FollowerComponent):
                 package_name = package_expression.actual()
             except MissingPackageError:
                 check_id = f'package-available-{package_expression}'
-                description = _(
-                    'Package {expression} is not available for '
-                    'install').format(expression=package_expression)
+                description = gettext_noop('Package {package_expression} is '
+                                           'not available for install')
+                parameters = {'package_expression': str(package_expression)}
                 results.append(
-                    DiagnosticCheck(check_id, description, Result.FAILED))
+                    DiagnosticCheck(check_id, description, Result.FAILED,
+                                    parameters))
                 continue
 
             result = Result.WARNING
@@ -227,11 +228,14 @@ class Packages(app_module.FollowerComponent):
                     result = Result.PASSED
 
             check_id = f'package-latest-{package_name}'
-            description = _('Package {package_name} is the latest version '
-                            '({latest_version})').format(
-                                package_name=package_name,
-                                latest_version=latest_version)
-            results.append(DiagnosticCheck(check_id, description, result))
+            description = gettext_noop('Package {package_name} is the latest '
+                                       'version ({latest_version})')
+            parameters = {
+                'package_name': package_name,
+                'latest_version': latest_version,
+            }
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
         return results
 

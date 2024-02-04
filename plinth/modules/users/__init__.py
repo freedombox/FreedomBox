@@ -7,6 +7,7 @@ import subprocess
 import augeas
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, menu
@@ -123,10 +124,10 @@ def _diagnose_ldap_entry(search_item):
     except subprocess.CalledProcessError:
         pass
 
-    template = _('Check LDAP entry "{search_item}"')
-    description = format_lazy(template, search_item=search_item)
+    description = gettext_noop('Check LDAP entry "{search_item}"')
+    parameters = {'search_item': search_item}
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def _diagnose_nslcd_config(config, key, value):
@@ -137,10 +138,10 @@ def _diagnose_nslcd_config(config, key, value):
     except KeyError:
         result = Result.FAILED
 
-    template = _('Check nslcd config "{key} {value}"')
-    description = format_lazy(template, key=key, value=value)
+    description = gettext_noop('Check nslcd config "{key} {value}"')
+    parameters = {'key': key, 'value': value}
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def _diagnose_nsswitch_config():
@@ -167,10 +168,11 @@ def _diagnose_nsswitch_config():
 
             break
 
-        template = _('Check nsswitch config "{database}"')
-        description = format_lazy(template, database=database)
+        description = gettext_noop('Check nsswitch config "{database}"')
+        parameters = {'database': database}
 
-        results.append(DiagnosticCheck(check_id, description, result))
+        results.append(
+            DiagnosticCheck(check_id, description, result, parameters))
 
     return results
 

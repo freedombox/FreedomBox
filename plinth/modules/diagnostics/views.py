@@ -5,9 +5,9 @@ FreedomBox app for running diagnostics.
 
 import logging
 
-from django.http import Http404, HttpResponseRedirect
+from django.contrib import messages
+from django.http import Http404
 from django.template.response import TemplateResponse
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -18,6 +18,7 @@ from plinth.modules import diagnostics
 from plinth.views import AppView
 
 from .check import Result
+from .forms import ConfigureForm
 
 logger = logging.getLogger(__name__)
 
@@ -26,22 +27,31 @@ class DiagnosticsView(AppView):
     """Diagnostics app page."""
 
     app_id = 'diagnostics'
+    form_class = ConfigureForm
     template_name = 'diagnostics.html'
-
-    def post(self, request):
-        """Start diagnostics."""
-        diagnostics.start_diagnostics()
-        return HttpResponseRedirect(reverse('diagnostics:index'))
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
-        with diagnostics.results_lock:
-            results = diagnostics.current_results
-
         context = super().get_context_data(**kwargs)
         context['has_diagnostics'] = False
-        context['results'] = results
+        context['results_available'] = diagnostics.are_results_available()
         return context
+
+    def get_initial(self):
+        """Return the initial values for the form."""
+        status = super().get_initial()
+        status['daily_run_enabled'] = diagnostics.is_daily_run_enabled()
+        return status
+
+    def form_valid(self, form):
+        """Apply the form changes."""
+        old_status = form.initial
+        new_status = form.cleaned_data
+        if old_status['daily_run_enabled'] != new_status['daily_run_enabled']:
+            diagnostics.set_daily_run_enabled(new_status['daily_run_enabled'])
+            messages.success(self.request, _('Configuration updated.'))
+
+        return super().form_valid(form)
 
 
 class DiagnosticsFullView(TemplateView):
@@ -61,12 +71,9 @@ class DiagnosticsFullView(TemplateView):
         except KeyError:
             is_task_running = False
 
-        with diagnostics.results_lock:
-            results = diagnostics.current_results
-
         context = super().get_context_data(**kwargs)
         context['is_task_running'] = is_task_running
-        context['results'] = results
+        context['results'] = diagnostics.get_results()
         context['refresh_page_sec'] = 3 if is_task_running else None
         return context
 

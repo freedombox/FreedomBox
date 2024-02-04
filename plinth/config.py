@@ -3,8 +3,7 @@
 import logging
 import pathlib
 
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth.privileged import config as privileged
 
@@ -117,10 +116,12 @@ class DropinConfigs(app_module.FollowerComponent):
 
             check_id = f'dropin-config-{etc_path}'
             result_string = Result.PASSED if result else Result.FAILED
-            template = _('Static configuration {etc_path} is setup properly')
-            description = format_lazy(template, etc_path=str(etc_path))
+            description = gettext_noop(
+                'Static configuration {etc_path} is setup properly')
+            parameters = {'etc_path': str(etc_path)}
             results.append(
-                DiagnosticCheck(check_id, description, result_string))
+                DiagnosticCheck(check_id, description, result_string,
+                                parameters))
 
         return results
 

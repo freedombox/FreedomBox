@@ -4,8 +4,7 @@
 import re
 import subprocess
 
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_noop
 
 from plinth import action_utils, app
 from plinth.modules.diagnostics.check import DiagnosticCheck, Result
@@ -149,16 +148,15 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     except FileNotFoundError:
         result = Result.ERROR
 
+    parameters = {'url': url, 'kind': kind}
     if kind:
         check_id = f'apache-url-kind-{url}-{kind}'
-        template = gettext_lazy('Access URL {url} on tcp{kind}')
-        description = format_lazy(template, url=url, kind=kind)
+        description = gettext_noop('Access URL {url} on tcp{kind}')
     else:
         check_id = f'apache-url-{url}'
-        template = gettext_lazy('Access URL {url}')
-        description = format_lazy(template, url=url)
+        description = gettext_noop('Access URL {url}')
 
-    return DiagnosticCheck(check_id, description, result)
+    return DiagnosticCheck(check_id, description, result, parameters)
 
 
 def diagnose_url_on_all(url, expect_redirects=False, **kwargs):

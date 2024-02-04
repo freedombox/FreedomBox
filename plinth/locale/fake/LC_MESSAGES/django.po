@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth 0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 20:19-0500\n"
+"POT-Creation-Date: 2024-01-29 20:14-0500\n"
 "PO-Revision-Date: 2016-01-31 22:24+0530\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Plinth Developers <freedombox-discuss@lists.alioth.debian."
@@ -31,7 +31,7 @@ msgstr ""
 msgid "FreedomBox"
 msgstr "FREEDOMBOX"
 
-#: plinth/daemon.py:107
+#: plinth/daemon.py:105
 #, fuzzy, python-brace-format
 #| msgid "Service discovery server is running"
 msgid "Service {service_name} is running"
@@ -43,17 +43,17 @@ msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "LISTENING ON {kind} PORT {listen_address}:{port}"
 
 # LISTENING ON {kind} PORT {port}
-#: plinth/daemon.py:169
+#: plinth/daemon.py:167
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "LISTENING ON {kind} PORT {port}"
 
-#: plinth/daemon.py:238
+#: plinth/daemon.py:236
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "CONNECT TO {host}:{port}"
 
-#: plinth/daemon.py:241
+#: plinth/daemon.py:240
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "CANNOT CONNECT TO {host}:{port}"
@@ -136,7 +136,7 @@ msgstr "{box_name} WEB INTERFACE (PLINTH)"
 msgid "Access URL {url} on tcp{kind}"
 msgstr "ACCESS URL {url} ON TCP{kind}"
 
-#: plinth/modules/apache/components.py:158
+#: plinth/modules/apache/components.py:157
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "ACCESS URL {url}"
@@ -956,10 +956,10 @@ msgstr "DELETE"
 msgid "Admin"
 msgstr "ADMIN"
 
-#: plinth/modules/bepasty/views.py:88 plinth/modules/searx/views.py:35
-#: plinth/modules/searx/views.py:46 plinth/modules/security/views.py:56
-#: plinth/modules/tor/views.py:73 plinth/modules/torproxy/views.py:71
-#: plinth/modules/zoph/views.py:74
+#: plinth/modules/bepasty/views.py:88 plinth/modules/diagnostics/views.py:52
+#: plinth/modules/searx/views.py:35 plinth/modules/searx/views.py:46
+#: plinth/modules/security/views.py:56 plinth/modules/tor/views.py:73
+#: plinth/modules/torproxy/views.py:71 plinth/modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "CONFIGURATION UPDATED."
 
@@ -1450,7 +1450,7 @@ msgstr ""
 msgid "Use the following shared authentication secret:"
 msgstr "THE FOLLOWING IS THE CURRENT STATUS:"
 
-#: plinth/modules/datetime/__init__.py:20
+#: plinth/modules/datetime/__init__.py:21
 #, fuzzy
 #| msgid ""
 #| "Network time server is a program that maintians the system time in "
@@ -1462,11 +1462,11 @@ msgstr ""
 "NETWORK TIME SERVER IS A PROGRAM THAT MAINTIANS THE SYSTEM TIME IN "
 "SYNCHRONIZATION WITH SERVERS ON THE INTERNET."
 
-#: plinth/modules/datetime/__init__.py:67
+#: plinth/modules/datetime/__init__.py:68
 msgid "Date & Time"
 msgstr "DATE & TIME"
 
-#: plinth/modules/datetime/__init__.py:121
+#: plinth/modules/datetime/__init__.py:122
 msgid "Time synchronized to NTP server"
 msgstr ""
 
@@ -1545,7 +1545,7 @@ msgstr "DOWNLOAD DIRECTORY"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:25
+#: plinth/modules/diagnostics/__init__.py:27
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1553,90 +1553,107 @@ msgstr ""
 "THE SYSTEM DIAGNOSTIC TEST WILL RUN A NUMBER OF CHECKS ON YOUR SYSTEM TO "
 "CONFIRM THAT APPLICATIONS AND SERVICES ARE WORKING AS EXPECTED."
 
-#: plinth/modules/diagnostics/__init__.py:49
-#: plinth/modules/diagnostics/__init__.py:235
+#: plinth/modules/diagnostics/__init__.py:51
+#: plinth/modules/diagnostics/__init__.py:236
 msgid "Diagnostics"
 msgstr "DIAGNOSTICS"
 
-#: plinth/modules/diagnostics/__init__.py:93
+#: plinth/modules/diagnostics/__init__.py:95
 msgid "passed"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:94
+#: plinth/modules/diagnostics/__init__.py:96
 #: plinth/modules/networks/views.py:50
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "SETUP FAILED."
 
-#: plinth/modules/diagnostics/__init__.py:95
+#: plinth/modules/diagnostics/__init__.py:97
 msgid "error"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:96
+#: plinth/modules/diagnostics/__init__.py:98
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: plinth/modules/diagnostics/__init__.py:201
+#: plinth/modules/diagnostics/__init__.py:202
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: plinth/modules/diagnostics/__init__.py:206
+#: plinth/modules/diagnostics/__init__.py:207
 msgid "GiB"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:213
+#: plinth/modules/diagnostics/__init__.py:214
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:218
+#: plinth/modules/diagnostics/__init__.py:219
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:230
+#: plinth/modules/diagnostics/__init__.py:231
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:232
+#: plinth/modules/diagnostics/__init__.py:233
 msgid "Low Memory"
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:254
+#: plinth/modules/diagnostics/__init__.py:264
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "RUN DIAGNOSTICS"
 
-#: plinth/modules/diagnostics/__init__.py:295
+#: plinth/modules/diagnostics/__init__.py:307
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: plinth/modules/diagnostics/__init__.py:296
+#: plinth/modules/diagnostics/__init__.py:308
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "DIAGNOSTIC RESULTS"
 
-#: plinth/modules/diagnostics/__init__.py:301
+#: plinth/modules/diagnostics/__init__.py:313
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
 msgstr "DIAGNOSTIC RESULTS"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:16
-#: plinth/modules/diagnostics/templates/diagnostics_button.html:11
-msgid "Run Diagnostics"
+#: plinth/modules/diagnostics/forms.py:11
+#, fuzzy
+#| msgid "Enable Subdomains"
+msgid "Enable daily run"
+msgstr "ENABLE SUBDOMAINS"
+
+#: plinth/modules/diagnostics/forms.py:12
+msgid "When enabled, diagnostic checks will run once a day."
+msgstr ""
+
+#: plinth/modules/diagnostics/templates/diagnostics.html:11
+#, fuzzy
+#| msgid "Diagnostics"
+msgid "Diagnostics Run"
+msgstr "DIAGNOSTICS"
+
+#: plinth/modules/diagnostics/templates/diagnostics.html:17
+#, fuzzy
+#| msgid "Run Diagnostics"
+msgid "Run Diagnostics Now"
 msgstr "RUN DIAGNOSTICS"
 
-#: plinth/modules/diagnostics/templates/diagnostics.html:21
+#: plinth/modules/diagnostics/templates/diagnostics.html:22
 #, fuzzy
 #| msgid "Results"
 msgid "View Results"
@@ -1664,6 +1681,10 @@ msgstr "START SETUP"
 #| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
 msgstr "THIS MODULE DOES NOT SUPPORT DIAGNOSTICS"
+
+#: plinth/modules/diagnostics/templates/diagnostics_button.html:11
+msgid "Run Diagnostics"
+msgstr "RUN DIAGNOSTICS"
 
 #: plinth/modules/diagnostics/templates/diagnostics_full.html:17
 #, fuzzy
@@ -1696,7 +1717,7 @@ msgstr "TEST"
 msgid "Result"
 msgstr "RESULT"
 
-#: plinth/modules/diagnostics/views.py:100
+#: plinth/modules/diagnostics/views.py:107
 msgid "Diagnostic Test"
 msgstr "DIAGNOSTIC TEST"
 
@@ -2338,7 +2359,7 @@ msgstr ""
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: plinth/modules/firewall/components.py:137
+#: plinth/modules/firewall/components.py:136
 #, fuzzy, python-brace-format
 #| msgid "Service discovery server is not running"
 msgid "Port {name} ({details}) available for internal networks"
@@ -2350,7 +2371,7 @@ msgstr "SERVICE DISCOVERY SERVER IS NOT RUNNING"
 msgid "Port {name} ({details}) available for external networks"
 msgstr "SERVICE DISCOVERY SERVER IS NOT RUNNING"
 
-#: plinth/modules/firewall/components.py:154
+#: plinth/modules/firewall/components.py:153
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -3009,8 +3030,8 @@ msgstr "APPLICATIONS"
 msgid "I2P"
 msgstr ""
 
-#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:62
-#: plinth/modules/torproxy/__init__.py:55
+#: plinth/modules/i2p/__init__.py:53 plinth/modules/tor/__init__.py:63
+#: plinth/modules/torproxy/__init__.py:56
 #, fuzzy
 #| msgid "Tor Anonymity Network"
 msgid "Anonymity Network"
@@ -3371,7 +3392,7 @@ msgstr ""
 msgid "Failed to add content package."
 msgstr "FAILED TO ADD USER TO GROUP."
 
-#: plinth/modules/letsencrypt/__init__.py:25
+#: plinth/modules/letsencrypt/__init__.py:27
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "A digital certficate allows users of a web service to verify the identity "
@@ -3392,7 +3413,7 @@ msgstr ""
 "DOMAIN.  IT DOES SO BY PROVING ITSELF TO BE THE OWNER OF A DOMAIN TO LET'S "
 "ENCRYPT, A CERTFICATE AUTHORITY (CA)."
 
-#: plinth/modules/letsencrypt/__init__.py:31
+#: plinth/modules/letsencrypt/__init__.py:33
 #, fuzzy
 #| msgid ""
 #| "Let's Encrypt is a free, automated, and open certificate authority, run "
@@ -3411,19 +3432,19 @@ msgstr ""
 "READ AND AGREE WITH THE <a href=\"https://letsencrypt.org/repository/"
 "\">LET'S ENCRYPT SUBSCRIBER AGREEMENT</a> BEFORE USING THIS SERVICE."
 
-#: plinth/modules/letsencrypt/__init__.py:58
+#: plinth/modules/letsencrypt/__init__.py:60
 #, fuzzy
 #| msgid "Certificates (Let's Encrypt)"
 msgid "Let's Encrypt"
 msgstr "CERTIFICATES (LET'S ENCRYPT)"
 
-#: plinth/modules/letsencrypt/__init__.py:59
+#: plinth/modules/letsencrypt/__init__.py:61
 #, fuzzy
 #| msgid "Certificate Status"
 msgid "Certificates"
 msgstr "CERTIFICATE STATUS"
 
-#: plinth/modules/letsencrypt/__init__.py:100
+#: plinth/modules/letsencrypt/__init__.py:104
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -5698,7 +5719,7 @@ msgid ""
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
 
-#: plinth/modules/privoxy/__init__.py:23
+#: plinth/modules/privoxy/__init__.py:24
 #, fuzzy
 #| msgid ""
 #| "Privoxy is a non-caching web proxy with advanced filtering capabilities "
@@ -5713,7 +5734,7 @@ msgstr ""
 "ENHANCING PRIVACY, MODIFYING WEB PAGE DATA AND HTTP HEADERS, CONTROLLING "
 "ACCESS, AND REMOVING ADS AND OTHER OBNOXIOUS INTERNET JUNK."
 
-#: plinth/modules/privoxy/__init__.py:28
+#: plinth/modules/privoxy/__init__.py:29
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "You can use Privoxy by modifying your browser proxy settings to your "
@@ -5735,19 +5756,19 @@ msgstr ""
 "config.privoxy.org\">HTTP://CONFIG.PRIVOXY.ORG/</a> OR <a href=\"http://p."
 "p\">HTTP://P.P</a>.\""
 
-#: plinth/modules/privoxy/__init__.py:51
+#: plinth/modules/privoxy/__init__.py:52
 #, fuzzy
 #| msgid "Enable Privoxy"
 msgid "Privoxy"
 msgstr "ENABLE PRIVOXY"
 
-#: plinth/modules/privoxy/__init__.py:52
+#: plinth/modules/privoxy/__init__.py:53
 #, fuzzy
 #| msgid "Privoxy Web Proxy"
 msgid "Web Proxy"
 msgstr "PRIVOXY WEB PROXY"
 
-#: plinth/modules/privoxy/__init__.py:116
+#: plinth/modules/privoxy/__init__.py:117
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "ACCESS {url} WITH PROXY {proxy} ON TCP{kind}"
@@ -7225,7 +7246,7 @@ msgstr ""
 msgid "File Synchronization"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:32 plinth/modules/torproxy/__init__.py:27
+#: plinth/modules/tor/__init__.py:33 plinth/modules/torproxy/__init__.py:28
 #, fuzzy
 #| msgid ""
 #| "Tor is an anonymous communication system. You can learn more about it "
@@ -7246,13 +7267,13 @@ msgstr ""
 "THE <a href=\"https://www.torproject.org/download/download-easy.html.en\"> "
 "TOR BROWSER</a>."
 
-#: plinth/modules/tor/__init__.py:38
+#: plinth/modules/tor/__init__.py:39
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:41
+#: plinth/modules/tor/__init__.py:42
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -7260,33 +7281,33 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:61
+#: plinth/modules/tor/__init__.py:62
 msgid "Tor"
 msgstr ""
 
-#: plinth/modules/tor/__init__.py:77
+#: plinth/modules/tor/__init__.py:78
 #, fuzzy
 #| msgid "Tor Hidden Service"
 msgid "Tor Onion Service"
 msgstr "TOR HIDDEN SERVICE"
 
-#: plinth/modules/tor/__init__.py:81
+#: plinth/modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
 msgstr "TOR BRIDGE RELAY"
 
-#: plinth/modules/tor/__init__.py:137
+#: plinth/modules/tor/__init__.py:138
 msgid "Tor relay port available"
 msgstr "TOR RELAY PORT AVAILABLE"
 
-#: plinth/modules/tor/__init__.py:148
+#: plinth/modules/tor/__init__.py:150
 msgid "Obfs3 transport registered"
 msgstr "OBFS3 TRANSPORT REGISTERED"
 
-#: plinth/modules/tor/__init__.py:158
+#: plinth/modules/tor/__init__.py:161
 msgid "Obfs4 transport registered"
 msgstr "OBFS4 TRANSPORT REGISTERED"
 
-#: plinth/modules/tor/__init__.py:170
+#: plinth/modules/tor/__init__.py:174
 #, fuzzy
 #| msgid "Hidden Service"
 msgid "Onion service is version 3"
@@ -7401,7 +7422,7 @@ msgstr "AN ERROR OCCURRED DURING CONFIGURATION."
 msgid "Error configuring app: {error}"
 msgstr "ERROR INSTALLING PACKAGES: {string} {details}"
 
-#: plinth/modules/torproxy/__init__.py:34
+#: plinth/modules/torproxy/__init__.py:35
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -7410,22 +7431,22 @@ msgid ""
 "using upstream bridges."
 msgstr ""
 
-#: plinth/modules/torproxy/__init__.py:54
+#: plinth/modules/torproxy/__init__.py:55
 #, fuzzy
 #| msgid "Privoxy Web Proxy"
 msgid "Tor Proxy"
 msgstr "PRIVOXY WEB PROXY"
 
-#: plinth/modules/torproxy/__init__.py:79
+#: plinth/modules/torproxy/__init__.py:80
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: plinth/modules/torproxy/__init__.py:139
+#: plinth/modules/torproxy/__init__.py:140
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "ACCESS URL {url} ON TCP{kind} VIA TOR"
 
-#: plinth/modules/torproxy/__init__.py:151
+#: plinth/modules/torproxy/__init__.py:152
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "CONFIRM TOR USAGE AT {url} ON TCP{kind}"
@@ -7837,14 +7858,14 @@ msgstr ""
 msgid "Starting distribution upgrade test."
 msgstr "AUTOMATIC UPGRADES ENABLED"
 
-#: plinth/modules/users/__init__.py:31
+#: plinth/modules/users/__init__.py:32
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
 "account to be part of a group to authorize the user to access the app."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:36
+#: plinth/modules/users/__init__.py:37
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7852,25 +7873,25 @@ msgid ""
 "group may alter apps or system settings."
 msgstr ""
 
-#: plinth/modules/users/__init__.py:57
+#: plinth/modules/users/__init__.py:58
 msgid "Users and Groups"
 msgstr "USERS AND GROUPS"
 
-#: plinth/modules/users/__init__.py:82
+#: plinth/modules/users/__init__.py:83
 msgid "Access to all services and system settings"
 msgstr ""
 
-#: plinth/modules/users/__init__.py:126
+#: plinth/modules/users/__init__.py:127
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "CHECK LDAP ENTRY \"{search_item}\""
 
-#: plinth/modules/users/__init__.py:140
+#: plinth/modules/users/__init__.py:141
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: plinth/modules/users/__init__.py:170
+#: plinth/modules/users/__init__.py:171
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -8542,7 +8563,7 @@ msgid ""
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:22
+#: plinth/modules/zoph/__init__.py:23
 #, python-brace-format
 msgid ""
 "Zoph manages your photo collection. Photos are stored on your {box_name}, "
@@ -8555,7 +8576,7 @@ msgid ""
 "shared with others by sending a direct link."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:33
+#: plinth/modules/zoph/__init__.py:34
 #, python-brace-format
 msgid ""
 "The {box_name} user who setup Zoph will also become the administrator in "
@@ -8563,11 +8584,11 @@ msgid ""
 "in Zoph with the same user name."
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:52 plinth/modules/zoph/manifest.py:6
+#: plinth/modules/zoph/__init__.py:53 plinth/modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr ""
 
-#: plinth/modules/zoph/__init__.py:53
+#: plinth/modules/zoph/__init__.py:54
 msgid "Photo Organizer"
 msgstr ""
 
@@ -8620,39 +8641,39 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "SERVICE DISABLED: {name}"
 
-#: plinth/package.py:215
+#: plinth/package.py:214
 #, python-brace-format
-msgid "Package {expression} is not available for install"
+msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: plinth/package.py:230
+#: plinth/package.py:231
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: plinth/package.py:378
+#: plinth/package.py:382
 #, fuzzy
 #| msgid "Installation"
 msgid "installing"
 msgstr "INSTALLATION"
 
-#: plinth/package.py:380
+#: plinth/package.py:384
 msgid "downloading"
 msgstr ""
 
-#: plinth/package.py:382
+#: plinth/package.py:386
 #, fuzzy
 #| msgid "Setting unchanged"
 msgid "media change"
 msgstr "SETTING UNCHANGED"
 
-#: plinth/package.py:384
+#: plinth/package.py:388
 #, fuzzy, python-brace-format
 #| msgid "Configuration"
 msgid "configuration file: {file}"
 msgstr "CONFIGURATION"
 
-#: plinth/package.py:412 plinth/package.py:437
+#: plinth/package.py:416 plinth/package.py:441
 msgid "Timeout waiting for package manager"
 msgstr ""
 

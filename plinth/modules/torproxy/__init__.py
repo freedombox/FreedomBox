@@ -6,6 +6,7 @@ import logging
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, frontpage, kvstore, menu
@@ -136,8 +137,7 @@ def _diagnose_url_via_tor(url, kind=None):
     """Diagnose whether a URL is reachable via Tor."""
     result = diagnose_url(url, kind=kind, wrapper='torsocks')
     result.check_id = 'torproxy-url'
-    result.description = _('Access URL {url} on tcp{kind} via Tor') \
-        .format(url=url, kind=kind)
+    result.description = gettext_noop('Access URL {url} on tcp{kind} via Tor')
 
     return result
 
@@ -148,7 +148,7 @@ def _diagnose_tor_use(url, kind=None):
     result = diagnose_url(url, kind=kind, wrapper='torsocks',
                           expected_output=expected_output)
     result.check_id = 'torproxy-using-tor'
-    result.description = _('Confirm Tor usage at {url} on tcp{kind}') \
-        .format(url=url, kind=kind)
+    result.description = gettext_noop(
+        'Confirm Tor usage at {url} on tcp{kind}')
 
     return result

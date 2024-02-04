@@ -5,6 +5,7 @@ import json
 import logging
 
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import action_utils
 from plinth import app as app_module
@@ -134,7 +135,7 @@ class TorApp(app_module.App):
         if status['relay_enabled']:
             results.append(
                 DiagnosticCheck(
-                    'tor-port-relay', _('Tor relay port available'),
+                    'tor-port-relay', gettext_noop('Tor relay port available'),
                     Result.PASSED if 'orport' in ports else Result.FAILED))
             if 'orport' in ports:
                 results.append(
@@ -145,7 +146,8 @@ class TorApp(app_module.App):
         if status['bridge_relay_enabled']:
             results.append(
                 DiagnosticCheck(
-                    'tor-port-obfs3', _('Obfs3 transport registered'),
+                    'tor-port-obfs3',
+                    gettext_noop('Obfs3 transport registered'),
                     Result.PASSED if 'obfs3' in ports else Result.FAILED))
             if 'obfs3' in ports:
                 results.append(
@@ -155,7 +157,8 @@ class TorApp(app_module.App):
 
             results.append(
                 DiagnosticCheck(
-                    'tor-port-obfs4', _('Obfs4 transport registered'),
+                    'tor-port-obfs4',
+                    gettext_noop('Obfs4 transport registered'),
                     Result.PASSED if 'obfs4' in ports else Result.FAILED))
             if 'obfs4' in ports:
                 results.append(
@@ -167,8 +170,8 @@ class TorApp(app_module.App):
             hs_hostname = status['hs_hostname'].split('.onion')[0]
             results.append(
                 DiagnosticCheck(
-                    'tor-onion-version', _('Onion service is version 3'),
-                    Result.PASSED
+                    'tor-onion-version',
+                    gettext_noop('Onion service is version 3'), Result.PASSED
                     if len(hs_hostname) == 56 else Result.FAILED))
 
         return results

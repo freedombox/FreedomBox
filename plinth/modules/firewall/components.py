@@ -7,8 +7,7 @@ import logging
 import re
 from typing import ClassVar
 
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app
 from plinth.modules import firewall
@@ -133,29 +132,30 @@ class Firewall(app.FollowerComponent):
             # Internal zone
             check_id = f'firewall-port-internal-{port}'
             result = Result.PASSED if port in internal_ports else Result.FAILED
-            template = _(
+            description = gettext_noop(
                 'Port {name} ({details}) available for internal networks')
-            description = format_lazy(template, name=port, details=details)
-            results.append(DiagnosticCheck(check_id, description, result))
+            parameters = {'name': port, 'details': details}
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
             # External zone
             if self.is_external:
                 check_id = f'firewall-port-external-available-{port}'
                 result = Result.PASSED \
                     if port in external_ports else Result.FAILED
-                template = _(
+                description = gettext_noop(
                     'Port {name} ({details}) available for external networks')
-                description = format_lazy(template, name=port, details=details)
             else:
                 check_id = f'firewall-port-external-unavailable-{port}'
                 result = Result.PASSED \
                     if port not in external_ports else Result.FAILED
-                template = _(
+                description = gettext_noop(
                     'Port {name} ({details}) unavailable for external networks'
                 )
-                description = format_lazy(template, name=port, details=details)
 
-            results.append(DiagnosticCheck(check_id, description, result))
+            parameters = {'name': port, 'details': details}
+            results.append(
+                DiagnosticCheck(check_id, description, result, parameters))
 
         return results
 
