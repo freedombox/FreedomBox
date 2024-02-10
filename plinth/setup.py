@@ -54,10 +54,19 @@ def run_setup_on_app(app_id, allow_install=True, rerun=False):
 
 def _run_setup_on_app(app, current_version):
     """Execute the setup process."""
+    global _force_upgrader
     logger.info('Setup run: %s', app.app_id)
     exception_to_update = None
     message = None
     try:
+        if not _force_upgrader:
+            _force_upgrader = ForceUpgrader()
+
+        # Check if this app needs force_upgrade. If it is needed, but not yet
+        # supported for the new version of the package, then an exception will
+        # be raised, so that we do not run setup.
+        _force_upgrader.attempt_upgrade_for_app(app.app_id)
+
         current_version = app.get_setup_version()
         app.setup(old_version=current_version)
         app.set_setup_version(app.info.version)
@@ -447,6 +456,50 @@ class ForceUpgrader():
 
         if need_retry:
             raise self.TemporaryFailure('Some apps failed to force upgrade.')
+
+    def attempt_upgrade_for_app(self, app_id):
+        """Attempt to perform an upgrade for specified app.
+
+        Raise TemporaryFailure if upgrade can't be performed now.
+
+        Raise PermanentFailure if upgrade can't be performed until something
+        with the system state changes. We don't want to try again until
+        notified of further package cache changes.
+
+        Return True if upgrade was performed successfully.
+
+        Return False if upgrade is not needed.
+
+        """
+        if _is_shutting_down:
+            raise self.PermanentFailure('Service is shutting down')
+
+        if packages_privileged.is_package_manager_busy():
+            raise self.TemporaryFailure('Package manager is busy')
+
+        apps = self._get_list_of_apps_to_force_upgrade()
+        if app_id not in apps:
+            logger.info('App %s does not need force upgrade', app_id)
+            return False
+
+        packages = apps[app_id]
+        app = app_module.App.get(app_id)
+        try:
+            logger.info('Force upgrading app: %s', app.info.name)
+            if app.force_upgrade(packages):
+                logger.info('Successfully force upgraded app: %s',
+                            app.info.name)
+                return True
+            else:
+                logger.warning('Ignored force upgrade for app: %s',
+                               app.info.name)
+                raise self.TemporaryFailure(
+                    'Force upgrade is needed, but not yet implemented for new '
+                    f'version of app: {app_id}')
+        except Exception as exception:
+            logger.exception('Error running force upgrade: %s', exception)
+            raise self.TemporaryFailure(
+                f'App {app_id} failed to force upgrade.')
 
     def _run_force_upgrade_as_operation(self, app, packages):
         """Start an operation for force upgrading."""
