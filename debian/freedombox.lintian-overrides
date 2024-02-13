@@ -16,12 +16,6 @@ freedombox binary: non-standard-apache2-configuration-name *
 # that requires significant effort.
 freedombox binary: web-application-works-only-with-apache
 
-# FreedomBox adds systemd security features for other daemons in Debian. There
-# is no equivalent for this in sysvinit. Sometimes, FreedomBox provide service
-# files for packages that do not provide them. FreedomBox does not support
-# sysvinit so no init.d equivalent is provided.
-freedombox: package-supports-alternative-init-but-no-init.d-script [usr/lib/systemd/system/*]
-
 # Not documentation
 freedombox: package-contains-documentation-outside-usr-share-doc [usr/share/plinth/static/jslicense.html]
 freedombox: package-contains-documentation-outside-usr-share-doc [usr/lib/python3/dist-packages/plinth-*.dist-info/top_level.txt]
