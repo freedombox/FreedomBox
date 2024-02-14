@@ -56,14 +56,15 @@ def _run_setup_on_app(app, current_version):
     exception_to_update = None
     message = None
     try:
-        force_upgrader = ForceUpgrader.get_instance()
-
-        # Check if this app needs force_upgrade. If it is needed, but not yet
-        # supported for the new version of the package, then an exception will
-        # be raised, so that we do not run setup.
-        force_upgrader.attempt_upgrade_for_app(app.app_id)
-
         current_version = app.get_setup_version()
+
+        if current_version != 0:
+            # Check if this app needs force_upgrade. If it is needed, but not
+            # yet supported for the new version of the package, then an
+            # exception will be raised, so that we do not run setup.
+            force_upgrader = ForceUpgrader.get_instance()
+            force_upgrader.attempt_upgrade_for_app(app.app_id)
+
         app.setup(old_version=current_version)
         app.set_setup_version(app.info.version)
         post_setup.send_robust(sender=app.__class__, module_name=app.app_id)
