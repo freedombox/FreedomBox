@@ -26,8 +26,6 @@ _is_first_setup = False
 is_first_setup_running = False
 _is_shutting_down = False
 
-_force_upgrader = None
-
 
 def run_setup_on_app(app_id, allow_install=True, rerun=False):
     """Execute the setup process in a thread."""
@@ -54,18 +52,16 @@ def run_setup_on_app(app_id, allow_install=True, rerun=False):
 
 def _run_setup_on_app(app, current_version):
     """Execute the setup process."""
-    global _force_upgrader
     logger.info('Setup run: %s', app.app_id)
     exception_to_update = None
     message = None
     try:
-        if not _force_upgrader:
-            _force_upgrader = ForceUpgrader()
+        force_upgrader = ForceUpgrader.get_instance()
 
         # Check if this app needs force_upgrade. If it is needed, but not yet
         # supported for the new version of the package, then an exception will
         # be raised, so that we do not run setup.
-        _force_upgrader.attempt_upgrade_for_app(app.app_id)
+        force_upgrader.attempt_upgrade_for_app(app.app_id)
 
         current_version = app.get_setup_version()
         app.setup(old_version=current_version)
@@ -152,8 +148,8 @@ def stop():
     global _is_shutting_down
     _is_shutting_down = True
 
-    if _force_upgrader:
-        _force_upgrader.shutdown()
+    force_upgrader = ForceUpgrader.get_instance()
+    force_upgrader.shutdown()
 
 
 def setup_apps(app_ids=None, essential=False, allow_install=True):
@@ -238,8 +234,8 @@ def _get_apps_for_regular_setup():
         1. essential apps that are not up-to-date
         2. non-essential app that are installed and need updates
         """
-        if (app.info.is_essential and
-                app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
+        if (app.info.is_essential and app.get_setup_state()
+                != app_module.App.SetupState.UP_TO_DATE):
             return True
 
         if app.get_setup_state() == app_module.App.SetupState.NEEDS_UPDATE:
@@ -344,6 +340,7 @@ class ForceUpgrader():
 
     """
 
+    _instance = None
     _run_lock = threading.Lock()
     _wait_event = threading.Event()
 
@@ -357,6 +354,14 @@ class ForceUpgrader():
     class PermanentFailure(Exception):
         """Raised when upgrade fails and there is nothing more we wish to do.
         """
+
+    @classmethod
+    def get_instance(cls):
+        """Return a single instance of a the class."""
+        if not cls._instance:
+            cls._instance = ForceUpgrader()
+
+        return cls._instance
 
     def __init__(self):
         """Initialize the force upgrader."""
@@ -410,7 +415,7 @@ class ForceUpgrader():
     def shutdown(self):
         """If we are sleeping for next attempt, cancel it.
 
-        If we are actually upgrading packages, don nothing.
+        If we are actually upgrading packages, do nothing.
         """
         self._wait_event.set()
 
@@ -576,8 +581,5 @@ class ForceUpgrader():
 
 def on_package_cache_updated():
     """Called by D-Bus service when apt package cache is updated."""
-    global _force_upgrader
-    if not _force_upgrader:
-        _force_upgrader = ForceUpgrader()
-
-    _force_upgrader.on_package_cache_updated()
+    force_upgrader = ForceUpgrader.get_instance()
+    force_upgrader.on_package_cache_updated()
