@@ -72,9 +72,9 @@ def make_request(request, view, as_admin=True, **kwargs):
     request.user = admin_user if as_admin else user
 
     with patch('plinth.modules.users.forms.is_user_admin',
-               return_value=as_admin),\
+               return_value=as_admin), \
             patch('plinth.modules.users.views.is_user_admin',
-                  return_value=as_admin),\
+                  return_value=as_admin), \
             patch('plinth.modules.users.views.update_session_auth_hash'):
 
         response = view(request, **kwargs)
