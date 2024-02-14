@@ -135,6 +135,41 @@ class RelatedDaemon(app.FollowerComponent):
         self.unit = unit
 
 
+class SharedDaemon(Daemon):
+    """Component to manage a daemon that is used by multiple apps.
+
+    Daemons such as a database server are a hard requirement for an app.
+    However, there may be multiple apps using that server. This component
+    ensures that server is enabled and running when app is enabled. It runs
+    diagnostics on the daemon when app is diagnosed. The primary difference
+    from the Daemon component is that when the app is disabled the daemon must
+    only be disabled if there is no other app using this daemon.
+    """
+
+    # A shared daemon may be running even when an app is disabled because
+    # another app might be using the daemon. Hence, the enabled/disabled state
+    # of this component can't be used to determine the enabled/disabled state
+    # of the app.
+    is_leader = False
+
+    def set_enabled(self, enabled):
+        """Do nothing. Enabled state is still determined by unit status."""
+
+    def disable(self):
+        """Disable the daemon iff this is the last app using the daemon."""
+        other_apps_enabled = False
+        for other_app in app.App.list():
+            if other_app.app_id == self.app_id:
+                continue
+
+            for component in other_app.get_components_of_type(SharedDaemon):
+                if component.unit == self.unit and other_app.is_enabled():
+                    other_apps_enabled = True
+
+        if not other_apps_enabled:
+            super().disable()
+
+
 def app_is_running(app_):
     """Return whether all the daemons in the app are running."""
     for component in app_.components.values():

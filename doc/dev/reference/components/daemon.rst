@@ -8,3 +8,6 @@ Daemon
 
 .. autoclass:: plinth.daemon.RelatedDaemon
    :members:
+
+.. autoclass:: plinth.daemon.SharedDaemon
+   :members:
