@@ -62,6 +62,7 @@ def _run_setup_on_app(app, current_version):
             # Check if this app needs force_upgrade. If it is needed, but not
             # yet supported for the new version of the package, then an
             # exception will be raised, so that we do not run setup.
+            package.refresh_package_lists()
             force_upgrader = ForceUpgrader.get_instance()
             force_upgrader.attempt_upgrade_for_app(app.app_id)
 
