@@ -10,7 +10,7 @@ from django.utils.translation import gettext_noop
 from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, kvstore, menu
-from plinth import setup as setup_module
+from plinth import setup as setup_module_  # Not setup_module, for pytest
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
 from plinth.modules import torproxy
@@ -209,7 +209,7 @@ class TorApp(app_module.App):
             kvstore.set(torproxy.PREINSTALL_CONFIG_KEY, json.dumps(config))
             # This creates the operation, which will run after the current
             # operation (Tor setup) is completed.
-            setup_module.run_setup_on_app('torproxy')
+            setup_module_.run_setup_on_app('torproxy')
 
         if not old_version:
             logger.info('Enabling Tor app')
