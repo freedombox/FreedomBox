@@ -77,10 +77,11 @@ def test_is_enabled(service_is_enabled, daemon):
     service_is_enabled.assert_has_calls([call('test-unit', strict_check=True)])
 
 
+@patch('plinth.app.apps_init')
 @patch('subprocess.run')
 @patch('subprocess.call')
-def test_enable(subprocess_call, subprocess_run, app_list, mock_privileged,
-                daemon):
+def test_enable(subprocess_call, subprocess_run, apps_init, app_list,
+                mock_privileged, daemon):
     """Test that enabling the daemon works."""
     daemon.enable()
     subprocess_call.assert_has_calls(
@@ -101,9 +102,11 @@ def test_enable(subprocess_call, subprocess_run, app_list, mock_privileged,
                                    stdout=subprocess.DEVNULL, check=False)
 
 
+@patch('plinth.app.apps_init')
 @patch('subprocess.run')
 @patch('subprocess.call')
-def test_disable(subprocess_call, subprocess_run, mock_privileged, daemon):
+def test_disable(subprocess_call, subprocess_run, apps_init, app_list,
+                 mock_privileged, daemon):
     """Test that disabling the daemon works."""
     daemon.disable()
     subprocess_call.assert_has_calls(
