@@ -2,6 +2,12 @@
 
 export DH_VERBOSE=1
 export PYBUILD_DESTDIR=debian/tmp
+export PYBUILD_SYSTEM=custom
+export PYBUILD_CONFIGURE_ARGS=make configure
+export PYBUILD_BUILD_ARGS=make PYTHON={interpreter} build
+export PYBUILD_INSTALL_ARGS=make PYTHON={interpreter} DESTDIR={destdir} install
+export PYBUILD_CLEAN_ARGS=make clean
+export PYBUILD_TEST_ARGS=make PYTHON={interpreter} check-tests
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
@@ -12,13 +18,6 @@ override_dh_auto_install-indep:
 		sed -e 's/^/freedombox:Depends=/' >> debian/freedombox.substvars
 	# Ensure the list of dependencies is not empty.
 	test -s debian/freedombox.substvars || exit 1
-
-# pybuild can run pytest. However, when the top level directory is included in
-# the path (done using manage.py), it results in import problems.
-# https://www.mail-archive.com/debian-python@lists.debian.org/msg17997.html
-override_dh_auto_test:
-	PYBUILD_SYSTEM=custom \
-	PYBUILD_TEST_ARGS="{interpreter} -m pytest" dh_auto_test
 
 override_dh_installsystemd:
 	# Do not enable or start any service other than FreedomBox service. Use

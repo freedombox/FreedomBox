@@ -7,7 +7,6 @@ import importlib
 import os
 import pathlib
 import sys
-from unittest.mock import patch
 
 import pytest
 

@@ -159,24 +159,7 @@ set -xe pipefail
 
 cd /freedombox/
 
-sudo apt-get update
-
-if [ $(lsb_release --release --short) != '10' ]; then
-  sudo DEBIAN_FRONTEND=noninteractive apt-get build-dep \
-  --no-install-recommends --yes .
-fi
-
-sudo ./setup.py install
-sudo systemctl daemon-reload
-
-# In case new dependencies conflict with old dependencies
-sudo apt-mark hold freedombox
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --no-upgrade --yes \
-  $(sudo -u plinth /freedombox/run --develop --list-dependencies)
-sudo apt-mark unhold freedombox
-# Install additional packages
-sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
-  sshpass bash-completion
+sudo make provision-dev
 
 echo 'alias freedombox-develop="cd /freedombox; sudo -u plinth /freedombox/run --develop"' \
   >> /home/fbx/.bashrc

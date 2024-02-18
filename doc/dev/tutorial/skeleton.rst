@@ -40,11 +40,11 @@ in a step-by-step manner::
 The file ``__init__.py`` indicates that the directory in which it is present is
 a Python module. For now, it is an empty file.
 
-FreedomBox's setup script ``setup.py`` will automatically install the
+FreedomBox's build system will automatically install the
 ``plinth/modules/transmission`` directory (along with other files described
 later) to an appropriate location. If you are creating an app that stays
-independent and outside of FreedomBox source tree, then ``setup.py`` script in
-your source tree will need to install it to a proper location on the system. The
+independent and outside of FreedomBox source tree, then build system in your
+source tree will need to install it to a proper location on the system. The
 ``plinth/modules/`` directory is a Python3 `namespace package
 <https://www.python.org/dev/peps/pep-0420/>`_. So, you can install it with the
 ``plinth/modules/`` directory structure into any Python path and still be
@@ -64,12 +64,11 @@ us create this file ``transmission``:
   plinth.modules.transmission
 
 This file is automatically installed to
-``/usr/share/freedombox/modules-enabled/`` by FreedomBox's installation script
-``setup.py``. If we are writing a module that resides independently outside the
-FreedomBox's source code, the setup script will need to copy it to the target
-location. Further, it is not necessary for the app to be part of the
-``plinth.modules`` namespace. It can, for example, be
-``freedombox_transmission``.
+``/usr/share/freedombox/modules-enabled/`` by FreedomBox's build system. If we
+are writing a module that resides independently outside the FreedomBox's source
+code, the setup script will need to copy it to the target location. Further, it
+is not necessary for the app to be part of the ``plinth.modules`` namespace. It
+can, for example, be ``freedombox_transmission``.
 
 Creating the App class
 ^^^^^^^^^^^^^^^^^^^^^^

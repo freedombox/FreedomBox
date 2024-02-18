@@ -89,8 +89,8 @@ def _get_modules_enabled_files_to_read():
     if module_files:
         return module_files.values()
 
-    # './setup.py install' has not been executed yet. Pickup files to load
-    # from local module directories.
+    # 'make build install' has not been executed yet. Pickup files to load from
+    # local module directories.
     directory = pathlib.Path(__file__).parent
     glob_pattern = 'modules/*/data/usr/share/freedombox/modules-enabled/*'
     return list(directory.glob(glob_pattern))
@@ -124,7 +124,7 @@ def get_module_import_path(module_name: str) -> str:
             import_path_file = None
 
     if not import_path_file:
-        # './setup.py install' has not been executed yet. Pickup files to load
+        # 'make build install' has not been executed yet. Pickup files to load
         # from local module directories.
         directory = pathlib.Path(__file__).parent
         import_path_file = (directory /
