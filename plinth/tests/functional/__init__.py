@@ -614,7 +614,8 @@ def create_user(browser, name, password=None, groups=[]):
     browser.find_by_id('id_password2').fill(password)
 
     for group in groups:
-        browser.find_by_id(f'id_groups_{group}').check()
+        browser.find_by_xpath(
+            f'//label[contains(text(), "({group})")]/input').check()
 
     browser.find_by_id('id_confirm_password').fill(
         config['DEFAULT']['password'])
