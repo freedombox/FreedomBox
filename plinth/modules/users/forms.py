@@ -50,6 +50,15 @@ class ValidNewUsernameCheckMixin:
         return True
 
 
+def _create_django_groups():
+    """Ensure that all groups are present in the Django's group table."""
+    group_choices = UsersAndGroups.get_group_choices()
+    for group_name, _label in group_choices:
+        Group.objects.get_or_create(name=group_name)
+
+    return group_choices
+
+
 class GroupsFieldMixin:
     """Mixin to set common properties for the group field."""
 
@@ -58,9 +67,7 @@ class GroupsFieldMixin:
 
         Also ensure that all the groups are created in django.
         """
-        group_choices = dict(UsersAndGroups.get_group_choices())
-        for group in group_choices:
-            Group.objects.get_or_create(name=group)
+        groups_dict = dict(_create_django_groups())
 
         super().__init__(*args, **kwargs)
 
@@ -74,8 +81,8 @@ class GroupsFieldMixin:
                 pass
 
             # Show choices only from groups declared by apps.
-            if group_name in group_choices:
-                label = group_choices[group_name]
+            if group_name in groups_dict:
+                label = groups_dict[group_name]
                 if group_name == 'admin' and self.is_last_admin_user:
                     label = {'label': label, 'disabled': True}
 
@@ -399,9 +406,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
                     _('Failed to add new user to admin group: {error}'.format(
                         error=error)))
 
-            # Create initial Django groups
-            for group_choice in UsersAndGroups.get_group_choices():
-                auth.models.Group.objects.get_or_create(name=group_choice[0])
+            _create_django_groups()
 
             admin_group = auth.models.Group.objects.get(name='admin')
             admin_group.user_set.add(user)
