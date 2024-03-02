@@ -146,11 +146,49 @@ def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
     exception = exception_class(*return_value['exception']['args'], output,
                                 error)
     if log_error:
-        logger.error('Error running action %s..%s(*%s, **%s): %s %s %s',
-                     module_name, action_name, args, kwargs, exception,
-                     exception.args, return_value['exception']['traceback'])
+        _log_error(module_name, action_name, args, kwargs, exception,
+                   return_value)
 
     raise exception
+
+
+def _log_error(module_name, action_name, args, kwargs, exception,
+               return_value):
+    """Log the exception in a readable manner."""
+    args = [json.dumps(arg) for arg in args]
+    kwargs = [f'{key}=' + json.dumps(value) for key, value in kwargs.items()]
+    full_args = ', '.join(args + kwargs)
+    exception_args = ', '.join(
+        [json.dumps(arg) for arg in exception.args[:-2]])
+
+    stdout = exception.args[-2].decode()
+    if stdout:
+        lines = stdout.split('\n')
+        lines = lines[:-1] if not lines[-1] else lines
+        stdout = '\n'.join(('│ ' + line for line in lines))
+        stdout = 'Stdout:\n' + stdout + '\n'
+
+    stderr = exception.args[-1].decode()
+    if stderr:
+        lines = stderr.split('\n')
+        lines = lines[:-1] if not lines[-1] else lines
+        stderr = '\n'.join(('║ ' + line for line in lines))
+        stderr = 'Stderr:\n' + stderr + '\n'
+
+    traceback = return_value['exception']['traceback']
+    if traceback:
+        all_lines = []
+        for entry in traceback:
+            lines = entry.split('\n')
+            all_lines += lines[:-1] if not lines[-1] else lines
+
+        traceback = '\n'.join(('╞ ' + line for line in all_lines))
+        traceback = 'Action traceback:\n' + traceback + '\n'
+
+    logger.error('Error running action %s..%s(%s): %s(%s)\n'
+                 '%s%s%s', module_name, action_name, full_args,
+                 exception.__class__.__name__, exception_args, stdout, stderr,
+                 traceback)
 
 
 def _thread_reader(read_fd, buffers):

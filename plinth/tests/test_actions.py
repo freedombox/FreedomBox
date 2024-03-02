@@ -32,7 +32,7 @@ def fixture_popen():
             popen.called_with_write_fd.append(write_fd)
             os.write(write_fd, bytes(popen.return_value, encoding='utf-8'))
             proc = Mock()
-            proc.communicate.return_value = ('', '')
+            proc.communicate.return_value = (b'', b'')
             proc.returncode = 0
             return proc
 
