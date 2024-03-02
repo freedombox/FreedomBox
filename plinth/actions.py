@@ -134,9 +134,8 @@ def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
     try:
         return_value = json.loads(b''.join(buffers))
     except json.JSONDecodeError:
-        logger.error(
-            'Error decoding action return value %s..%s(*%s, **%s): %s',
-            module_name, action_name, args, kwargs, return_value)
+        logger.error('Error decoding action return value %s..%s(*%s, **%s)',
+                     module_name, action_name, args, kwargs)
         raise
 
     if return_value['result'] == 'success':
