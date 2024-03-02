@@ -59,9 +59,8 @@ def fixture_create_temp_user(temp_home, password, needs_root):
     subprocess.check_call(['sudo', 'userdel', username])
 
 
-@pytest.mark.usefixtures('needs_sudo')
 @pytest.fixture(name='has_ssh_key', scope='module', autouse=True)
-def fixture_ssh_key(temp_home, temp_user, password, needs_root):
+def fixture_ssh_key(temp_home, temp_user, password, needs_root, needs_sudo):
     subprocess.check_call([
         'sudo', '-n', '-u', temp_user, 'ssh-keygen', '-t', 'rsa', '-b', '1024',
         '-N', '', '-f', f'{temp_home}/.ssh/id_rsa', '-q'

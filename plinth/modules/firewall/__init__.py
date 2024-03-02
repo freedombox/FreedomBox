@@ -87,9 +87,9 @@ class FirewallApp(app_module.App):
         if 'firewalld' not in packages:
             return False
 
-        # Allow upgrade from any version to any version below 2.0
+        # Allow upgrade from any version to any version below 3.0
         package = packages['firewalld']
-        if Version(package['new_version']) > Version('2~'):
+        if Version(package['new_version']) > Version('3~'):
             return False
 
         install(['firewalld'], force_configuration='new')

@@ -53,7 +53,7 @@ def gitweb_patch():
     with patch('plinth.modules.gitweb.get_repo_list') as get_repo_list, \
          patch('plinth.app.App.get') as app_get, \
          patch(f'{privileged}.create_repo'), \
-         patch(f'{privileged}.repo_exists') as repo_exists,\
+         patch(f'{privileged}.repo_exists') as repo_exists, \
          patch(f'{privileged}.repo_info') as repo_info, \
          patch(f'{privileged}.rename_repo'), \
          patch(f'{privileged}.set_repo_description'), \

@@ -10,7 +10,7 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App, FollowerComponent, Info
-from plinth.daemon import (Daemon, RelatedDaemon, app_is_running,
+from plinth.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
 from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
@@ -77,10 +77,11 @@ def test_is_enabled(service_is_enabled, daemon):
     service_is_enabled.assert_has_calls([call('test-unit', strict_check=True)])
 
 
+@patch('plinth.app.apps_init')
 @patch('subprocess.run')
 @patch('subprocess.call')
-def test_enable(subprocess_call, subprocess_run, app_list, mock_privileged,
-                daemon):
+def test_enable(subprocess_call, subprocess_run, apps_init, app_list,
+                mock_privileged, daemon):
     """Test that enabling the daemon works."""
     daemon.enable()
     subprocess_call.assert_has_calls(
@@ -101,9 +102,11 @@ def test_enable(subprocess_call, subprocess_run, app_list, mock_privileged,
                                    stdout=subprocess.DEVNULL, check=False)
 
 
+@patch('plinth.app.apps_init')
 @patch('subprocess.run')
 @patch('subprocess.call')
-def test_disable(subprocess_call, subprocess_run, mock_privileged, daemon):
+def test_disable(subprocess_call, subprocess_run, apps_init, app_list,
+                 mock_privileged, daemon):
     """Test that disabling the daemon works."""
     daemon.disable()
     subprocess_call.assert_has_calls(
@@ -329,3 +332,56 @@ def test_related_daemon_initialization():
 
     with pytest.raises(ValueError):
         RelatedDaemon(None, 'test-daemon')
+
+
+def test_shared_daemon_leader():
+    """Test that shared daemon is not a leader component."""
+    component1 = SharedDaemon('test-component1', 'test-daemon')
+    assert not component1.is_leader
+
+
+@patch('plinth.action_utils.service_is_enabled')
+def test_shared_daemon_set_enabled(service_is_enabled):
+    """Test that enabled status is determined by unit status."""
+    component = SharedDaemon('test-component', 'test-daemon')
+
+    service_is_enabled.return_value = False
+    component.set_enabled(False)
+    assert not component.is_enabled()
+    component.set_enabled(True)
+    assert not component.is_enabled()
+
+    service_is_enabled.return_value = True
+    component.set_enabled(False)
+    assert component.is_enabled()
+    component.set_enabled(True)
+    assert component.is_enabled()
+
+
+@patch('plinth.privileged.service.disable')
+def test_shared_daemon_disable(disable_method):
+    """Test that shared daemon disables service correctly."""
+
+    class AppTest2(App):
+        """Test application class."""
+        app_id = 'test-app-2'
+
+    component1 = SharedDaemon('test-component1', 'test-daemon')
+    app1 = AppTest()
+    app1.add(component1)
+    app1.is_enabled = Mock()
+
+    component2 = SharedDaemon('test-component2', 'test-daemon')
+    app2 = AppTest2()
+    app2.add(component2)
+
+    # When another app is enabled, service should not be disabled
+    app1.is_enabled.return_value = True
+    app2.disable()
+    assert disable_method.mock_calls == []
+
+    # When all other apps are disabled, service should be disabled
+    disable_method.reset_mock()
+    app1.is_enabled.return_value = False
+    app2.disable()
+    assert disable_method.mock_calls == [call('test-daemon')]

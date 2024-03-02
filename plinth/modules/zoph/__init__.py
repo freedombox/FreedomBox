@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
+from plinth.daemon import SharedDaemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -88,6 +89,9 @@ class ZophApp(app_module.App):
 
         webserver = Webserver('webserver-zoph-freedombox', 'zoph-freedombox')
         self.add(webserver)
+
+        daemon = SharedDaemon('shared-daemon-zoph-mysql', 'mysql')
+        self.add(daemon)
 
         backup_restore = ZophBackupRestore('backup-restore-zoph',
                                            **manifest.backup)
