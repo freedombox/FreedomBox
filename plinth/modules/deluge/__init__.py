@@ -33,7 +33,7 @@ class DelugeApp(app_module.App):
 
     _version = 8
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

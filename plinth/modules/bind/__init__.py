@@ -32,7 +32,7 @@ class BindApp(app_module.App):
 
     _version = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

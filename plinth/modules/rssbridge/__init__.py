@@ -39,7 +39,7 @@ class RSSBridgeApp(app_module.App):
 
     _version = 2
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

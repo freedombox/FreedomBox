@@ -46,7 +46,7 @@ class KiwixApp(app_module.App):
 
     DAEMON = 'kiwix-server-freedombox'
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

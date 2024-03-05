@@ -58,7 +58,7 @@ class App:
         NEEDS_UPDATE = 'needs-update'
         UP_TO_DATE = 'up-to-date'
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Build the app by adding components.
 
         App may be built just for the purpose for querying. For example, when
@@ -71,7 +71,7 @@ class App:
         if not self.app_id:
             raise ValueError('Invalid app ID configured')
 
-        self.components = collections.OrderedDict()
+        self.components: dict[str, Component] = collections.OrderedDict()
 
         # Add self to global list of apps
         self._all_apps[self.app_id] = self

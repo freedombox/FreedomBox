@@ -36,7 +36,7 @@ class OpenVPNApp(app_module.App):
 
     _version = 5
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

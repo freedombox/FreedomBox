@@ -37,7 +37,7 @@ class MiniDLNAApp(app_module.App):
 
     _version = 5
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the app components."""
         super().__init__()
 

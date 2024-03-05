@@ -38,13 +38,11 @@ class GitwebApp(app_module.App):
 
     _version = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
         groups = {'git-access': _('Read-write access to Git repositories')}
-
-        self.repos = []
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Gitweb'), icon_filename='gitweb',

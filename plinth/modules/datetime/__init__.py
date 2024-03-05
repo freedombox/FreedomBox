@@ -60,7 +60,7 @@ class DateTimeApp(app_module.App):
 
         return self._time_managed
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -77,9 +77,9 @@ class DateTimeApp(app_module.App):
         packages = Packages('packages-datetime', ['systemd-timesyncd'])
         self.add(packages)
 
-        daemon = RelatedDaemon('daemon-datetime-timedated',
-                               'systemd-timedated')
-        self.add(daemon)
+        related_daemon = RelatedDaemon('daemon-datetime-timedated',
+                                       'systemd-timedated')
+        self.add(related_daemon)
 
         if self._is_time_managed():
             daemon = Daemon('daemon-datetime', 'systemd-timesyncd')
