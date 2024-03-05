@@ -17,11 +17,12 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import daemon, glib, kvstore, menu
 from plinth import operation as operation_module
+from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
+                                     DiagnosticCheck, Result)
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-from .check import CheckJSONDecoder, CheckJSONEncoder, Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -75,7 +76,7 @@ class DiagnosticsApp(app_module.App):
         super().setup(old_version)
         self.enable()
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         results.append(daemon.diagnose_port_listening(8000, 'tcp4'))

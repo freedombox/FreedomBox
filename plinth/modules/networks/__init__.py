@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
 from plinth.config import DropinConfigs
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.package import Packages
 
 from . import privileged
@@ -72,7 +73,7 @@ class NetworksApp(app_module.App):
         ])
         self.add(dropin_configs)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
 

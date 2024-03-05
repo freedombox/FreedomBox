@@ -7,7 +7,8 @@ import subprocess
 from django.utils.translation import gettext_noop
 
 from plinth import action_utils, app
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.privileged import service as service_privileged
 
 from . import privileged
@@ -58,7 +59,7 @@ class Webserver(app.LeaderComponent):
         """Disable the Apache configuration."""
         privileged.disable(self.web_name, self.kind)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the web path is accessible by clients.
 
         See :py:meth:`plinth.app.Component.diagnose`.
@@ -135,8 +136,12 @@ class Uwsgi(app.LeaderComponent):
             and action_utils.service_is_running('uwsgi')
 
 
-def diagnose_url(url, kind=None, env=None, check_certificate=True,
-                 extra_options=None, wrapper=None, expected_output=None):
+def diagnose_url(url: str, kind: str | None = None,
+                 env: dict[str, str] | None = None,
+                 check_certificate: bool = True,
+                 extra_options: list[str] | None = None,
+                 wrapper: str | None = None,
+                 expected_output: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
@@ -148,7 +153,7 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     except FileNotFoundError:
         result = Result.ERROR
 
-    parameters = {'url': url, 'kind': kind}
+    parameters: DiagnosticCheckParameters = {'url': url, 'kind': kind}
     if kind:
         check_id = f'apache-url-kind-{url}-{kind}'
         description = gettext_noop('Access URL {url} on tcp{kind}')
@@ -159,7 +164,8 @@ def diagnose_url(url, kind=None, env=None, check_certificate=True,
     return DiagnosticCheck(check_id, description, result, parameters)
 
 
-def diagnose_url_on_all(url, expect_redirects=False, **kwargs):
+def diagnose_url_on_all(url: str, expect_redirects: bool = False,
+                        **kwargs) -> list[DiagnosticCheck]:
     """Run a diagnostic on whether a URL is accessible."""
     results = []
     for address in action_utils.get_addresses():
@@ -173,8 +179,12 @@ def diagnose_url_on_all(url, expect_redirects=False, **kwargs):
     return results
 
 
-def check_url(url, kind=None, env=None, check_certificate=True,
-              extra_options=None, wrapper=None, expected_output=None):
+def check_url(url: str, kind: str | None = None,
+              env: dict[str, str] | None = None,
+              check_certificate: bool = True,
+              extra_options: list[str] | None = None,
+              wrapper: str | None = None,
+              expected_output: str | None = None) -> bool:
     """Check whether a URL is accessible."""
     command = ['curl', '--location', '-f', '-w', '%{response_code}']
 

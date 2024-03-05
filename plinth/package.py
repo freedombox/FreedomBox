@@ -12,6 +12,8 @@ from django.utils.translation import gettext_lazy, gettext_noop
 
 import plinth.privileged.packages as privileged
 from plinth import app as app_module
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
@@ -200,10 +202,8 @@ class Packages(app_module.FollowerComponent):
         uninstall([package for package in packages if package in packages_set],
                   purge=True)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return results."""
-        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
         results = super().diagnose()
         cache = apt.Cache()
         for package_expression in self.package_expressions:
@@ -213,7 +213,9 @@ class Packages(app_module.FollowerComponent):
                 check_id = f'package-available-{package_expression}'
                 description = gettext_noop('Package {package_expression} is '
                                            'not available for install')
-                parameters = {'package_expression': str(package_expression)}
+                parameters: DiagnosticCheckParameters = {
+                    'package_expression': str(package_expression)
+                }
                 results.append(
                     DiagnosticCheck(check_id, description, Result.FAILED,
                                     parameters))
@@ -223,16 +225,17 @@ class Packages(app_module.FollowerComponent):
             latest_version = '?'
             if package_name in cache:
                 package = cache[package_name]
-                latest_version = package.candidate.version
-                if package.candidate.is_installed:
-                    result = Result.PASSED
+                if package.candidate:
+                    latest_version = package.candidate.version
+                    if package.candidate.is_installed:
+                        result = Result.PASSED
 
             check_id = f'package-latest-{package_name}'
             description = gettext_noop('Package {package_name} is the latest '
                                        'version ({latest_version})')
             parameters = {
-                'package_name': package_name,
-                'latest_version': latest_version,
+                'package_name': str(package_name),
+                'latest_version': str(latest_version)
             }
             results.append(
                 DiagnosticCheck(check_id, description, result, parameters))

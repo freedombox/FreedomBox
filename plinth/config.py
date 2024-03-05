@@ -5,6 +5,8 @@ import pathlib
 
 from django.utils.translation import gettext_noop
 
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.privileged import config as privileged
 
 from . import app as app_module
@@ -99,10 +101,8 @@ class DropinConfigs(app_module.FollowerComponent):
         for path in self.etc_paths:
             privileged.dropin_unlink(self.app_id, path, missing_ok=True)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Check all links/copies and return generate diagnostic results."""
-        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
         results = []
         for path in self.etc_paths:
             etc_path = self._get_etc_path(path)
@@ -118,7 +118,7 @@ class DropinConfigs(app_module.FollowerComponent):
             result_string = Result.PASSED if result else Result.FAILED
             description = gettext_noop(
                 'Static configuration {etc_path} is setup properly')
-            parameters = {'etc_path': str(etc_path)}
+            parameters: DiagnosticCheckParameters = {'etc_path': str(etc_path)}
             results.append(
                 DiagnosticCheck(check_id, description, result_string,
                                 parameters))

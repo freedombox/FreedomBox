@@ -13,7 +13,8 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 
@@ -85,7 +86,7 @@ class UsersApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
 
@@ -112,7 +113,7 @@ class UsersApp(app_module.App):
         privileged.create_group('freedombox-share')
 
 
-def _diagnose_ldap_entry(search_item):
+def _diagnose_ldap_entry(search_item: str) -> DiagnosticCheck:
     """Diagnose that an LDAP entry exists."""
     check_id = f'users-ldap-entry-{search_item}'
     result = Result.FAILED
@@ -125,12 +126,13 @@ def _diagnose_ldap_entry(search_item):
         pass
 
     description = gettext_noop('Check LDAP entry "{search_item}"')
-    parameters = {'search_item': search_item}
+    parameters: DiagnosticCheckParameters = {'search_item': search_item}
 
     return DiagnosticCheck(check_id, description, result, parameters)
 
 
-def _diagnose_nslcd_config(config, key, value):
+def _diagnose_nslcd_config(config: dict[str, str], key: str,
+                           value: str) -> DiagnosticCheck:
     """Diagnose that nslcd has a configuration."""
     check_id = f'users-nslcd-config-{key}'
     try:
@@ -139,12 +141,12 @@ def _diagnose_nslcd_config(config, key, value):
         result = Result.FAILED
 
     description = gettext_noop('Check nslcd config "{key} {value}"')
-    parameters = {'key': key, 'value': value}
+    parameters: DiagnosticCheckParameters = {'key': key, 'value': value}
 
     return DiagnosticCheck(check_id, description, result, parameters)
 
 
-def _diagnose_nsswitch_config():
+def _diagnose_nsswitch_config() -> list[DiagnosticCheck]:
     """Diagnose that Name Service Switch is configured to use LDAP."""
     nsswitch_conf = '/etc/nsswitch.conf'
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
@@ -169,7 +171,7 @@ def _diagnose_nsswitch_config():
             break
 
         description = gettext_noop('Check nsswitch config "{database}"')
-        parameters = {'database': database}
+        parameters: DiagnosticCheckParameters = {'database': database}
 
         results.append(
             DiagnosticCheck(check_id, description, result, parameters))

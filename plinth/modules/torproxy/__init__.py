@@ -11,6 +11,7 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import cfg, frontpage, kvstore, menu
 from plinth.daemon import Daemon
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -100,7 +101,7 @@ class TorProxyApp(app_module.App):
         privileged.configure(apt_transport_tor=False)
         super().disable()
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         results.append(_diagnose_url_via_tor('http://www.debian.org', '4'))
@@ -133,7 +134,8 @@ class TorProxyApp(app_module.App):
         privileged.uninstall()
 
 
-def _diagnose_url_via_tor(url, kind=None):
+def _diagnose_url_via_tor(url: str,
+                          kind: str | None = None) -> DiagnosticCheck:
     """Diagnose whether a URL is reachable via Tor."""
     result = diagnose_url(url, kind=kind, wrapper='torsocks')
     result.check_id = 'torproxy-url'
@@ -142,7 +144,7 @@ def _diagnose_url_via_tor(url, kind=None):
     return result
 
 
-def _diagnose_tor_use(url, kind=None):
+def _diagnose_tor_use(url: str, kind: str | None = None) -> DiagnosticCheck:
     """Diagnose whether webpage at URL reports that we are using Tor."""
     expected_output = 'Congratulations. This browser is configured to use Tor.'
     result = diagnose_url(url, kind=kind, wrapper='torsocks',

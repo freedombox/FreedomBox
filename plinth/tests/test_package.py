@@ -9,8 +9,8 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.errors import MissingPackageError
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Package, Packages, packages_installed
 
 

@@ -5,9 +5,8 @@ import json
 
 import pytest
 
-from plinth.modules.diagnostics.check import (CheckJSONDecoder,
-                                              CheckJSONEncoder,
-                                              DiagnosticCheck, Result)
+from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
+                                     DiagnosticCheck, Result)
 
 
 def test_result():

@@ -8,7 +8,7 @@ from unittest.mock import call, patch
 import pytest
 
 from plinth.app import App
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 

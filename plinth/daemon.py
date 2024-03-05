@@ -8,13 +8,17 @@ import psutil
 from django.utils.translation import gettext_noop
 
 from plinth import action_utils, app
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 
 
 class Daemon(app.LeaderComponent):
     """Component to manage a background daemon or any systemd unit."""
 
-    def __init__(self, component_id, unit, strict_check=False,
-                 listen_ports=None, alias=None):
+    def __init__(self, component_id: str, unit: str,
+                 strict_check: bool = False,
+                 listen_ports: list[tuple[int, str]] | None = None,
+                 alias: str | None = None):
         """Initialize a new daemon component.
 
         'component_id' must be a unique string across all apps and components
@@ -82,7 +86,7 @@ class Daemon(app.LeaderComponent):
         """Return whether the daemon/unit is running."""
         return action_utils.service_is_running(self.unit)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the daemon is running and listening on expected ports.
 
         See :py:meth:`plinth.app.Component.diagnose`.
@@ -95,15 +99,15 @@ class Daemon(app.LeaderComponent):
 
         return results
 
-    def _diagnose_unit_is_running(self):
+    def _diagnose_unit_is_running(self) -> DiagnosticCheck:
         """Check if a daemon is running."""
-        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
         check_id = f'daemon-running-{self.unit}'
         result = Result.PASSED if self.is_running() else Result.FAILED
 
         description = gettext_noop('Service {service_name} is running')
-        parameters = {'service_name': self.unit}
+        parameters: DiagnosticCheckParameters = {
+            'service_name': str(self.unit)
+        }
 
         return DiagnosticCheck(check_id, description, result, parameters)
 
@@ -179,7 +183,9 @@ def app_is_running(app_):
     return True
 
 
-def diagnose_port_listening(port, kind='tcp', listen_address=None):
+def diagnose_port_listening(
+        port: int, kind: str = 'tcp',
+        listen_address: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic on whether a port is being listened on.
 
     Kind must be one of inet, inet4, inet6, tcp, tcp4, tcp6, udp,
@@ -187,11 +193,9 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
     information.
 
     """
-    from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
     result = _check_port(port, kind, listen_address)
 
-    parameters = {'kind': kind, 'port': port}
+    parameters: DiagnosticCheckParameters = {'kind': kind, 'port': port}
     if listen_address:
         parameters['listen_address'] = listen_address
         check_id = f'daemon-listening-address-{kind}-{port}-{listen_address}'
@@ -206,7 +210,8 @@ def diagnose_port_listening(port, kind='tcp', listen_address=None):
                            parameters)
 
 
-def _check_port(port, kind='tcp', listen_address=None):
+def _check_port(port: int, kind: str = 'tcp',
+                listen_address: str | None = None) -> bool:
     """Return whether a port is being listened on."""
     run_kind = kind
 
@@ -228,11 +233,12 @@ def _check_port(port, kind='tcp', listen_address=None):
             continue
 
         # Port should match
-        if connection.laddr[1] != port:
+        if connection.laddr[1] != port:  # type: ignore[misc]
             continue
 
         # Listen address if requested should match
-        if listen_address and connection.laddr[0] != listen_address:
+        if listen_address and connection.laddr[
+                0] != listen_address:  # type: ignore[misc]
             continue
 
         # Special additional checks only for IPv4
@@ -244,22 +250,21 @@ def _check_port(port, kind='tcp', listen_address=None):
             return True
 
         # Full IPv6 address range includes mapped IPv4 address also
-        if connection.laddr[0] == '::':
+        if connection.laddr[0] == '::':  # type: ignore[misc]
             return True
 
     return False
 
 
-def diagnose_netcat(host, port, input='', negate=False):
+def diagnose_netcat(host: str, port: int, remote_input: str = '',
+                    negate: bool = False) -> DiagnosticCheck:
     """Run a diagnostic using netcat."""
-    from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
     try:
         process = subprocess.Popen(['nc', host, str(port)],
                                    stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
-        process.communicate(input=input.encode())
+        process.communicate(input=remote_input.encode())
         if process.returncode != 0:
             result = Result.FAILED if not negate else Result.PASSED
         else:
@@ -269,10 +274,13 @@ def diagnose_netcat(host, port, input='', negate=False):
 
     check_id = f'daemon-netcat-{host}-{port}'
     description = gettext_noop('Connect to {host}:{port}')
-    parameters = {'host': host, 'port': port, 'negate': negate}
+    parameters: DiagnosticCheckParameters = {
+        'host': host,
+        'port': port,
+        'negate': negate
+    }
     if negate:
         check_id = f'daemon-netcat-negate-{host}-{port}'
         description = gettext_noop('Cannot connect to {host}:{port}')
 
-    return DiagnosticCheck(check_id, description.format(host=host, port=port),
-                           result, parameters)
+    return DiagnosticCheck(check_id, description, result, parameters)

@@ -10,7 +10,7 @@ import pytest
 
 from plinth.app import (App, Component, EnableState, FollowerComponent, Info,
                         LeaderComponent, apps_init)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck, Result
 
 # pylint: disable=protected-access
 
@@ -34,7 +34,7 @@ class LeaderTest(FollowerComponent):
     """Test class for using LeaderComponent in tests."""
     is_leader = True
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Return diagnostic results."""
         return [
             DiagnosticCheck('test-result-' + self.component_id,

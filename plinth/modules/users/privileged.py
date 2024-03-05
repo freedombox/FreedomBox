@@ -178,7 +178,7 @@ def _configure_ldapscripts():
 
 
 @privileged
-def get_nslcd_config():
+def get_nslcd_config() -> dict[str, str]:
     """Get nslcd configuration for diagnostics."""
     nslcd_conf = '/etc/nslcd.conf'
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +

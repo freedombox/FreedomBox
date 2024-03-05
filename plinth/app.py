@@ -7,15 +7,18 @@ import collections
 import enum
 import inspect
 import logging
-from typing import ClassVar
+from typing import ClassVar, TypeAlias
 
 from plinth import cfg
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.signals import post_app_loading
 
 from . import clients as clients_module
 from . import db
 
 logger = logging.getLogger(__name__)
+
+_list_type: TypeAlias = list
 
 
 class App:
@@ -208,11 +211,11 @@ class App:
             if not component.is_leader:
                 component.set_enabled(enabled)
 
-    def diagnose(self):
+    def diagnose(self) -> _list_type[DiagnosticCheck]:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, and the
         result. The test result is a string enumeration from 'failed',
         'passed', 'error', 'warning' and 'not_done'.
@@ -300,12 +303,11 @@ class Component:
     def disable(self):
         """Run operations to disable the component."""
 
-    @staticmethod
-    def diagnose():
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, and the
         result. The test result is a string enumeration from 'failed',
         'passed', 'error', 'warning' and 'not_done'.

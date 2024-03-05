@@ -9,10 +9,10 @@ from unittest.mock import call, patch
 import pytest
 
 from plinth import app
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.apache.components import (Uwsgi, Webserver, check_url,
                                               diagnose_url,
                                               diagnose_url_on_all)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 
 def test_webserver_init():

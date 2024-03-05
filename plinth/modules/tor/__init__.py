@@ -13,10 +13,10 @@ from plinth import cfg, kvstore, menu
 from plinth import setup as setup_module_  # Not setup_module, for pytest
 from plinth.daemon import (Daemon, app_is_running, diagnose_netcat,
                            diagnose_port_listening)
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules import torproxy
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.names.components import DomainType
 from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
@@ -123,7 +123,7 @@ class TorApp(app_module.App):
         super().disable()
         update_hidden_service_domain()
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
 
@@ -235,7 +235,7 @@ def update_hidden_service_domain(status=None):
                                  name=status['hs_hostname'], services=services)
 
 
-def _diagnose_control_port():
+def _diagnose_control_port() -> list[DiagnosticCheck]:
     """Diagnose whether Tor control port is open on 127.0.0.1 only."""
     results = []
 
@@ -249,7 +249,7 @@ def _diagnose_control_port():
             negate = False
 
         results.append(
-            diagnose_netcat(address['address'], 9051, input='QUIT\n',
-                            negate=negate))
+            diagnose_netcat(str(address['address']), 9051,
+                            remote_input='QUIT\n', negate=negate))
 
     return results

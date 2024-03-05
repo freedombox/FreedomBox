@@ -275,7 +275,7 @@ def uwsgi_disable(config_name):
     service_start('uwsgi')
 
 
-def get_addresses():
+def get_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses and hostnames."""
     addresses = get_ip_addresses()
 
@@ -309,14 +309,14 @@ def get_addresses():
     return addresses
 
 
-def get_ip_addresses():
+def get_ip_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses assigned to the system."""
     addresses = []
 
     output = subprocess.check_output(['ip', '-o', 'addr'])
     for line in output.decode().splitlines():
         parts = line.split()
-        address = {
+        address: dict[str, str | bool] = {
             'kind': '4' if parts[2] == 'inet' else '6',
             'address': parts[3].split('/')[0],
             'url_address': parts[3].split('/')[0],

@@ -11,6 +11,7 @@ from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.daemon import Daemon
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -86,7 +87,7 @@ class PrivoxyApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         results.append(diagnose_url('https://www.debian.org'))
@@ -102,16 +103,16 @@ class PrivoxyApp(app_module.App):
             self.enable()
 
 
-def diagnose_url_with_proxy():
+def diagnose_url_with_proxy() -> list[DiagnosticCheck]:
     """Run a diagnostic on a URL with a proxy."""
     url = 'https://debian.org/'  # Gives a simple redirect to www.
 
     results = []
     for address in action_utils.get_addresses():
-        proxy = 'http://{host}:8118/'.format(host=address['url_address'])
+        proxy = f'http://{address["url_address"]}:8118/'
         env = {'https_proxy': proxy}
 
-        result = diagnose_url(url, kind=address['kind'], env=env)
+        result = diagnose_url(url, kind=str(address['kind']), env=env)
         result.check_id = f'privoxy-url-proxy-kind-{url}-{address["kind"]}'
         result.description = gettext_noop(
             'Access {url} with proxy {proxy} on tcp{kind}')

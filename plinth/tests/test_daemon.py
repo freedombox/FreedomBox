@@ -12,7 +12,7 @@ import pytest
 from plinth.app import App, FollowerComponent, Info
 from plinth.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck, Result
 
 privileged_modules_to_mock = ['plinth.privileged.service']
 
@@ -295,32 +295,32 @@ def test_diagnose_port_listening(connections):
 def test_diagnose_netcat(popen):
     """Test running diagnostic test using netcat."""
     popen().returncode = 0
-    result = diagnose_netcat('test-host', 3300, input='test-input')
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input')
     parameters = {'host': 'test-host', 'port': 3300, 'negate': False}
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
-                                     'Connect to test-host:3300',
-                                     Result.PASSED, parameters)
+                                     'Connect to {host}:{port}', Result.PASSED,
+                                     parameters)
     assert popen.mock_calls[1][1] == (['nc', 'test-host', '3300'], )
     assert popen.mock_calls[2] == call().communicate(input=b'test-input')
 
-    result = diagnose_netcat('test-host', 3300, input='test-input',
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input',
                              negate=True)
     parameters2 = parameters.copy()
     parameters2['negate'] = True
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
-                                     'Cannot connect to test-host:3300',
+                                     'Cannot connect to {host}:{port}',
                                      Result.FAILED, parameters2)
 
     popen().returncode = 1
-    result = diagnose_netcat('test-host', 3300, input='test-input')
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input')
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
-                                     'Connect to test-host:3300',
-                                     Result.FAILED, parameters)
+                                     'Connect to {host}:{port}', Result.FAILED,
+                                     parameters)
 
-    result = diagnose_netcat('test-host', 3300, input='test-input',
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input',
                              negate=True)
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
-                                     'Cannot connect to test-host:3300',
+                                     'Cannot connect to {host}:{port}',
                                      Result.PASSED, parameters2)
 
 
