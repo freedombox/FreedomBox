@@ -103,7 +103,8 @@ def _run_on_all_enabled_modules():
         current_results = {
             'apps': [],
             'results': collections.OrderedDict(),
-            'progress_percentage': 0
+            'progress_percentage': 0,
+            'exception': None,
         }
 
         for app in app_module.App.list():
@@ -335,15 +336,26 @@ def are_results_available():
     return bool(results)
 
 
-def get_results():
+def get_results() -> dict:
     """Return the latest results of full diagnostics."""
+    global current_results
+
     with results_lock:
-        results = deepcopy(current_results)
+        try:
+            results = deepcopy(current_results)
+        except TypeError as error:
+            # See #2410: cannot pickle 'dict_values' object
+            logger.error('Cannot get diagnostic results: %s - %s', error,
+                         current_results)
+            exception = str(error) + ' - ' + str(current_results)
+            # Clear the results that can't be used.
+            current_results = {}
+            return {'exception': exception}
 
     # If no results are available in memory, then load from database.
     if not results:
         results = kvstore.get_default('diagnostics_results', '{}')
-        results = json.loads(results, cls=CheckJSONDecoder)
+        results = json.loads(str(results), cls=CheckJSONDecoder)
         results = {'results': results, 'progress_percentage': 100}
 
     # Add a translated name for each app

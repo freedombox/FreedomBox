@@ -75,6 +75,10 @@ class DiagnosticsFullView(TemplateView):
         context['is_task_running'] = is_task_running
         context['results'] = diagnostics.get_results()
         context['refresh_page_sec'] = 3 if is_task_running else None
+        exception = context['results'].pop('exception', None)
+        if exception:
+            messages.error(self.request, exception)
+
         return context
 
 
