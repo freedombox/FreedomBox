@@ -144,21 +144,23 @@ def is_public() -> bool:
 def dump_database():
     """Dump database to file."""
     _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
-    with _db_backup_file.open('w', encoding='utf-8') as file_handle:
-        subprocess.run([
-            'mysqldump', '--add-drop-database', '--add-drop-table',
-            '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
-        ], stdout=file_handle, check=True)
+    with action_utils.service_ensure_running('mysql'):
+        with _db_backup_file.open('w', encoding='utf-8') as file_handle:
+            subprocess.run([
+                'mysqldump', '--add-drop-database', '--add-drop-table',
+                '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
+            ], stdout=file_handle, check=True)
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
-    with _db_backup_file.open('r', encoding='utf-8') as file_handle:
-        subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                       check=True)
+    with action_utils.service_ensure_running('mysql'):
+        with _db_backup_file.open('r', encoding='utf-8') as file_handle:
+            subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
+                           check=True)
 
-    _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
+            _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
 
 
 def _read_db_password():
@@ -188,6 +190,7 @@ def uninstall():
 
 def _drop_database():
     """Drop the mysql database that was created during install."""
-    query = f'''DROP DATABASE {DB_NAME};'''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    with action_utils.service_ensure_running('mysql'):
+        query = f'''DROP DATABASE {DB_NAME};'''
+        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                       check=True)
