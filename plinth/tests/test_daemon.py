@@ -138,6 +138,44 @@ def test_is_running(service_is_running, daemon):
     assert not daemon.is_running()
 
 
+@patch('plinth.app.apps_init')
+@patch('plinth.action_utils.service_is_running')
+@patch('subprocess.run')
+@patch('subprocess.call')
+def test_ensure_running(subprocess_call, subprocess_run, service_is_running,
+                        apps_init, app_list, mock_privileged, daemon):
+    """Test that checking that the daemon is running works."""
+    service_is_running.return_value = True
+    with daemon.ensure_running() as starting_state:
+        assert starting_state
+        assert not subprocess_call.called
+        assert not subprocess_run.called
+
+    assert not subprocess_call.called
+    assert not subprocess_run.called
+
+    service_is_running.return_value = False
+    with daemon.ensure_running() as starting_state:
+        assert not starting_state
+        assert subprocess_run.mock_calls == [
+            call(['systemctl', 'start', 'test-unit'],
+                 stdout=subprocess.DEVNULL, check=False)
+        ]
+        assert subprocess_call.mock_calls == [
+            call(['systemctl', 'enable', 'test-unit'])
+        ]
+        subprocess_run.reset_mock()
+        subprocess_call.reset_mock()
+
+    assert subprocess_run.mock_calls == [
+        call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
+             check=False)
+    ]
+    assert subprocess_call.mock_calls == [
+        call(['systemctl', 'disable', 'test-unit'])
+    ]
+
+
 @patch('plinth.action_utils.service_is_running')
 @patch('plinth.daemon.diagnose_port_listening')
 def test_diagnose(port_listening, service_is_running, daemon):

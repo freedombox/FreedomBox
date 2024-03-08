@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Component for managing a background daemon or any systemd unit."""
 
+import contextlib
 import socket
 import subprocess
 
@@ -85,6 +86,20 @@ class Daemon(app.LeaderComponent):
     def is_running(self):
         """Return whether the daemon/unit is running."""
         return action_utils.service_is_running(self.unit)
+
+    @contextlib.contextmanager
+    def ensure_running(self):
+        """Ensure a service is running and return to previous state."""
+        from plinth.privileged import service as service_privileged
+        starting_state = self.is_running()
+        if not starting_state:
+            service_privileged.enable(self.unit)
+
+        try:
+            yield starting_state
+        finally:
+            if not starting_state:
+                service_privileged.disable(self.unit)
 
     def diagnose(self) -> list[DiagnosticCheck]:
         """Check if the daemon is running and listening on expected ports.
