@@ -67,6 +67,9 @@ def test_app_instantiation():
     assert app.app_id == 'test-app'
     assert app._all_apps['test-app'] == app
     assert len(app._all_apps) == 1
+    assert app.can_be_disabled
+    assert not app.locked
+    assert app.configure_when_disabled
 
 
 def test_app_get():

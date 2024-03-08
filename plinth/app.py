@@ -42,6 +42,10 @@ class App:
     the app. This flag is currently set during backup and restore operations
     but UI changes are currently not implemented.
 
+    'configure_when_disabled' is a boolean indicating whether the app can
+    configured while it is disabled. Some apps such those whose configuration
+    is stored in a database can't be configured while they are disabled because
+    the database server may not be running when the app is disabled.
     """
 
     app_id: str | None = None
@@ -50,6 +54,8 @@ class App:
 
     locked: bool = False  # Whether user interaction with the app is allowed.
     # XXX: Lockdown the application UI by implementing a middleware
+
+    configure_when_disabled: bool = True
 
     _all_apps: ClassVar[collections.OrderedDict[
         str, 'App']] = collections.OrderedDict()

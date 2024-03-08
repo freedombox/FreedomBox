@@ -215,6 +215,11 @@ class AppView(FormView):
         if not self.form_class:
             return None
 
+        if not self.app.configure_when_disabled:
+            status = self.get_common_status()
+            if not status['is_enabled']:
+                return None
+
         return super().get_form(*args, **kwargs)
 
     def _get_common_status(self):
