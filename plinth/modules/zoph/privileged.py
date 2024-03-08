@@ -3,6 +3,7 @@
 
 import configparser
 import os
+import pathlib
 import re
 import subprocess
 
@@ -10,6 +11,7 @@ from plinth import action_utils
 from plinth.actions import privileged
 
 APACHE_CONF = '/etc/apache2/conf-available/zoph.conf'
+DB_CONF = pathlib.Path('/etc/zoph.ini')
 DB_BACKUP_FILE = '/var/lib/plinth/backups-data/zoph-database.sql'
 
 
@@ -18,7 +20,9 @@ def pre_install():
     """Preseed debconf values before packages are installed."""
     action_utils.debconf_set_selections([
         'zoph zoph/dbconfig-install boolean true',
-        'zoph zoph/mysql/admin-user string root'
+        'zoph zoph/dbconfig-upgrade boolean true',
+        'zoph zoph/dbconfig-remove boolean true',
+        'zoph zoph/mysql/admin-user string root',
     ])
 
 
@@ -58,13 +62,16 @@ def setup():
         _zoph_configure('maps.provider', 'osm')
 
 
-def _get_db_name():
+def _get_db_config():
     """Return the name of the database configured by dbconfig."""
     config = configparser.ConfigParser()
-    with open('/etc/zoph.ini', 'r', encoding='utf-8') as file_handle:
+    with DB_CONF.open('r', encoding='utf-8') as file_handle:
         config.read_file(file_handle)
 
-    return config['zoph']['db_name'].strip('"')
+    return {
+        'db_name': config['zoph']['db_name'].strip('"'),
+        'db_user': config['zoph']['db_user'].strip('"'),
+    }
 
 
 @privileged
@@ -88,8 +95,8 @@ def set_configuration(enable_osm: bool | None = None,
         query = f"UPDATE zoph_users SET user_name='{admin_user}' \
                  WHERE user_name='admin';"
 
-        subprocess.run(['mysql', _get_db_name()], input=query.encode(),
-                       check=True)
+        subprocess.run(['mysql', _get_db_config()['db_name']],
+                       input=query.encode(), check=True)
 
 
 @privileged
@@ -107,7 +114,7 @@ def dump_database():
     May be called when app is disabled.
     """
     with action_utils.service_ensure_running('mysql'):
-        db_name = _get_db_name()
+        db_name = _get_db_config()['db_name']
         os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
         with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
             subprocess.run(['mysqldump', db_name], stdout=db_backup_file,
@@ -121,9 +128,30 @@ def restore_database():
     May be called when app is disabled.
     """
     with action_utils.service_ensure_running('mysql'):
-        db_name = _get_db_name()
+        db_name = _get_db_config()['db_name']
         subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
         subprocess.run(['mysqladmin', 'create', db_name], check=True)
         with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
             subprocess.run(['mysql', db_name], stdin=db_restore_file,
                            check=True)
+
+
+@privileged
+def uninstall():
+    """Drop database, database user and database configuration.
+
+    May be called when app is disabled.
+    """
+    with action_utils.service_ensure_running('mysql'):
+        try:
+            config = _get_db_config()
+            subprocess.run(
+                ['mysqladmin', '--force', 'drop', config['db_name']],
+                check=False)
+
+            query = f'DROP USER IF EXISTS {config["db_user"]}@localhost;'
+            subprocess.run(['mysql'], input=query.encode(), check=False)
+        except FileNotFoundError:  # Database configuration not found
+            pass
+
+    DB_CONF.unlink(missing_ok=True)

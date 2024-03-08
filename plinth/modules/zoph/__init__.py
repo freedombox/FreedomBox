@@ -110,6 +110,12 @@ class ZophApp(app_module.App):
             if self.get_component('webserver-zoph').is_enabled():
                 self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        # Before package uninstall, so that config file is still available
+        privileged.uninstall()
+        super().uninstall()
+
 
 class ZophBackupRestore(BackupRestore):
     """Component to backup/restore Zoph database"""
