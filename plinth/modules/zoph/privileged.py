@@ -102,19 +102,28 @@ def is_configured() -> bool | None:
 
 @privileged
 def dump_database():
-    """Dump database to file."""
-    db_name = _get_db_name()
-    os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
-    with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
-        subprocess.run(['mysqldump', db_name], stdout=db_backup_file,
-                       check=True)
+    """Dump database to file.
+
+    May be called when app is disabled.
+    """
+    with action_utils.service_ensure_running('mysql'):
+        db_name = _get_db_name()
+        os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
+        with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
+            subprocess.run(['mysqldump', db_name], stdout=db_backup_file,
+                           check=True)
 
 
 @privileged
 def restore_database():
-    """Restore database from file."""
-    db_name = _get_db_name()
-    subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
-    subprocess.run(['mysqladmin', 'create', db_name], check=True)
-    with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
-        subprocess.run(['mysql', db_name], stdin=db_restore_file, check=True)
+    """Restore database from file.
+
+    May be called when app is disabled.
+    """
+    with action_utils.service_ensure_running('mysql'):
+        db_name = _get_db_name()
+        subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
+        subprocess.run(['mysqladmin', 'create', db_name], check=True)
+        with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
+            subprocess.run(['mysql', db_name], stdin=db_restore_file,
+                           check=True)
