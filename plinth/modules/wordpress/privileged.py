@@ -36,8 +36,9 @@ def setup():
     db_password = _generate_secret_key(16)
 
     _create_config_file(DB_HOST, DB_NAME, DB_USER, db_password)
-    _create_database(DB_NAME)
-    _set_privileges(DB_HOST, DB_NAME, DB_USER, db_password)
+    with action_utils.service_ensure_running('mysql'):
+        _create_database(DB_NAME)
+        _set_privileges(DB_HOST, DB_NAME, DB_USER, db_password)
 
 
 def _create_config_file(db_host, db_name, db_user, db_password):
