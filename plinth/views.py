@@ -222,7 +222,7 @@ class AppView(FormView):
 
         return super().get_form(*args, **kwargs)
 
-    def _get_common_status(self):
+    def get_common_status(self):
         """Return the status needed for form and template.
 
         Avoid multiple queries to expensive operations such as
@@ -238,7 +238,7 @@ class AppView(FormView):
     def get_initial(self):
         """Return the status of the app to fill in the form."""
         initial = super().get_initial()
-        initial.update(self._get_common_status())
+        initial.update(self.get_common_status())
         return initial
 
     def form_valid(self, form):
@@ -257,9 +257,7 @@ class AppView(FormView):
         if not self.app.can_be_disabled:
             return None
 
-        initial = {
-            'should_enable': not self._get_common_status()['is_enabled']
-        }
+        initial = {'should_enable': not self.get_common_status()['is_enabled']}
         return forms.AppEnableDisableForm(initial=initial)
 
     def enable_disable_form_valid(self, form):
@@ -276,7 +274,7 @@ class AppView(FormView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context.update(self._get_common_status())
+        context.update(self.get_common_status())
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
@@ -345,9 +343,8 @@ class SetupView(TemplateView):
         context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
         context['show_rerun_setup'] = False
-        context['show_uninstall'] = (
-            not app.info.is_essential
-            and setup_state != app_module.App.SetupState.NEEDS_SETUP)
+        context['show_uninstall'] = (not app.info.is_essential and setup_state
+                                     != app_module.App.SetupState.NEEDS_SETUP)
 
         # Perform expensive operation only if needed.
         if not context['operations']:
