@@ -102,7 +102,11 @@ class ZophApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         privileged.pre_install()
-        super().setup(old_version)
+        with self.get_component('shared-daemon-zoph-mysql').ensure_running():
+            # Database needs to be running for successful initialization or
+            # upgrade of zoph database.
+            super().setup(old_version)
+
         privileged.setup()
         if not old_version:
             self.enable()
