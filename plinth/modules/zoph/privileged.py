@@ -42,16 +42,20 @@ def _zoph_configure(key, value):
 
 @privileged
 def setup():
-    """Setup Zoph configuration."""
-    _zoph_configure('import.enable', 'true')
-    _zoph_configure('import.upload', 'true')
-    _zoph_configure('import.rotate', 'true')
-    _zoph_configure('path.unzip', 'unzip')
-    _zoph_configure('path.untar', 'tar xvf')
-    _zoph_configure('path.ungz', 'gunzip')
+    """Setup Zoph configuration.
 
-    # Maps using OpenStreetMap is enabled by default.
-    _zoph_configure('maps.provider', 'osm')
+    May be called when app is disabled.
+    """
+    with action_utils.service_ensure_running('mysql'):
+        _zoph_configure('import.enable', 'true')
+        _zoph_configure('import.upload', 'true')
+        _zoph_configure('import.rotate', 'true')
+        _zoph_configure('path.unzip', 'unzip')
+        _zoph_configure('path.untar', 'tar xvf')
+        _zoph_configure('path.ungz', 'gunzip')
+
+        # Maps using OpenStreetMap is enabled by default.
+        _zoph_configure('maps.provider', 'osm')
 
 
 def _get_db_name():
