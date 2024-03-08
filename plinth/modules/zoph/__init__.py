@@ -46,6 +46,8 @@ class ZophApp(app_module.App):
 
     _version = 2
 
+    configure_when_disabled = False
+
     def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
