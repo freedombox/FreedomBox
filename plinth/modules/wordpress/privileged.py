@@ -183,14 +183,18 @@ def _load_augeas():
 @privileged
 def uninstall():
     """Remove config files and drop database."""
-    _drop_database()
+    _drop_database(DB_HOST, DB_NAME, DB_USER)
     for file_ in [_public_access_file, _config_file_path, _db_file_path]:
         file_.unlink(missing_ok=True)
 
 
-def _drop_database():
+def _drop_database(db_host, db_name, db_user):
     """Drop the mysql database that was created during install."""
     with action_utils.service_ensure_running('mysql'):
-        query = f'''DROP DATABASE {DB_NAME};'''
+        query = f"DROP DATABASE {db_name};"
         subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                       check=True)
+                       check=False)
+
+        query = f"DROP USER IF EXISTS {db_user}@{db_host};"
+        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                       check=False)
