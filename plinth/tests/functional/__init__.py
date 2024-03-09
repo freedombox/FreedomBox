@@ -715,6 +715,9 @@ class BaseAppTests:
     def test_backup_restore(self, session_browser):
         """Test that backup and restore operations work on the app."""
         backup_create(session_browser, self.app_name, 'test_' + self.app_name)
+        if self.can_uninstall:
+            uninstall(session_browser, self.app_name)
+
         backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
         self.assert_app_running(session_browser)
 
