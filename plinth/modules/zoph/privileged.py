@@ -69,8 +69,10 @@ def _get_db_config():
         config.read_file(file_handle)
 
     return {
+        'db_host': config['zoph']['db_host'].strip('"'),
         'db_name': config['zoph']['db_name'].strip('"'),
         'db_user': config['zoph']['db_user'].strip('"'),
+        'db_pass': config['zoph']['db_pass'].strip('"'),
     }
 
 
@@ -129,11 +131,18 @@ def restore_database():
     """
     with action_utils.service_ensure_running('mysql'):
         db_name = _get_db_config()['db_name']
+        db_user = _get_db_config()['db_user']
+        db_host = _get_db_config()['db_host']
+        db_pass = _get_db_config()['db_pass']
         subprocess.run(['mysqladmin', '--force', 'drop', db_name], check=False)
         subprocess.run(['mysqladmin', 'create', db_name], check=True)
         with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
             subprocess.run(['mysql', db_name], stdin=db_restore_file,
                            check=True)
+
+        # Set the password for user from restored configuration
+        query = f'ALTER USER {db_user}@{db_host} IDENTIFIED BY "{db_pass}";'
+        subprocess.run(['mysql'], input=query.encode(), check=True)
 
 
 @privileged
