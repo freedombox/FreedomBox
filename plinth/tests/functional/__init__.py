@@ -675,11 +675,15 @@ class BaseAppTests:
         if self.has_web:
             assert not is_available(session_browser, self.app_name)
 
+    def install_and_setup(self, session_browser):
+        """Install the app and set it up if needed."""
+        install(session_browser, self.app_name)
+
     @pytest.fixture(autouse=True)
     def fixture_background(self, session_browser):
         """Login, install, and enable the app."""
         login(session_browser)
-        install(session_browser, self.app_name)
+        self.install_and_setup(session_browser)
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
@@ -728,4 +732,4 @@ class BaseAppTests:
 
         uninstall(session_browser, self.app_name)
         assert not is_installed(session_browser, self.app_name)
-        install(session_browser, self.app_name)
+        self.install_and_setup(session_browser)

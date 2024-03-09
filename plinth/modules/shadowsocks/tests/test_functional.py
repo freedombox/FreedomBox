@@ -15,11 +15,9 @@ class TestShadowsocksApp(functional.BaseAppTests):
     has_service = True
     has_web = False
 
-    @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
-        """Setup the app."""
-        functional.login(session_browser)
-        functional.install(session_browser, 'shadowsocks')
+    def install_and_setup(self, session_browser):
+        """Install the app and run setup."""
+        super().install_and_setup(session_browser)
         _configure(session_browser, 'example.com', 'fakepassword')
 
     @pytest.mark.backups

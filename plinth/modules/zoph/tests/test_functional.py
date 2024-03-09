@@ -15,17 +15,16 @@ class TestZophApp(functional.BaseAppTests):
     has_service = False
     has_web = True
 
-    @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
-        """Setup the app."""
-        functional.login(session_browser)
-        functional.install(session_browser, self.app_name)
+    def install_and_setup(self, session_browser):
+        """Install the app and run setup."""
+        super().install_and_setup(session_browser)
         self._zoph_is_setup(session_browser)
 
     def _zoph_is_setup(self, session_browser):
         """Click setup button on the setup page."""
         functional.nav_to_module(session_browser, self.app_name)
-        functional.submit(session_browser, form_class='form-configuration')
+        if session_browser.find_by_css('.form-configuration'):
+            functional.submit(session_browser, form_class='form-configuration')
 
     def assert_app_running(self, session_browser):
         assert functional.app_is_enabled(session_browser, self.app_name)

@@ -17,12 +17,9 @@ class TestShaarliApp(functional.BaseAppTests):
     has_service = False
     has_web = True
 
-    @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
-        """Setup the app."""
-        functional.login(session_browser)
-        functional.install(session_browser, self.app_name)
-        functional.app_enable(session_browser, self.app_name)
+    def install_and_setup(self, session_browser):
+        """Install the app and set it up if needed."""
+        super().install_and_setup(session_browser)
         self._shaarli_is_setup(session_browser)
 
     def _shaarli_is_setup(self, session_browser):
