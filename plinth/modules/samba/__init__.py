@@ -137,7 +137,11 @@ def get_users():
 
     allowed_users = []
     for group_user in group_users:
-        uid = pwd.getpwnam(group_user).pw_uid
+        try:
+            uid = pwd.getpwnam(group_user).pw_uid
+        except KeyError:  # User doesn't exist
+            continue
+
         if uid > 1000:
             allowed_users.append(group_user)
 
