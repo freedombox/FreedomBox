@@ -80,6 +80,7 @@ def test_backup(session_browser):
     _write_post(session_browser, 'FunctionalTest')
     functional.backup_create(session_browser, 'wordpress', 'test_wordpress')
     _delete_post(session_browser, 'FunctionalTest')
+    functional.uninstall(session_browser, 'wordpress')
     functional.backup_restore(session_browser, 'wordpress', 'test_wordpress')
     assert _get_post(session_browser, 'FunctionalTest')
 
