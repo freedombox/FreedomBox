@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 import pytest
 
-from plinth.actions import privileged
+from plinth import actions
 
 actions_name = 'actions'
 
@@ -17,10 +17,9 @@ actions_name = 'actions'
 @patch('importlib.import_module')
 @patch('plinth.module_loader.get_module_import_path')
 @patch('os.getuid')
-def test_call_syntax_checks(getuid, get_module_import_path, import_module,
-                            actions_module):
+def test_call_syntax_checks(getuid, get_module_import_path, import_module):
     """Test that calling a method results in proper syntax checks."""
-    call = actions_module._call
+    call = actions._privileged_call
 
     # Module name validation
     getuid.return_value = 0
@@ -53,7 +52,7 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
         call('test-module', 'func', {})
 
     # Argument validation
-    @privileged
+    @actions.privileged
     def func():
         return 'foo'
 
@@ -66,7 +65,7 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
     assert return_value == {'result': 'success', 'return': 'foo'}
 
     # Exception call
-    @privileged
+    @actions.privileged
     def exception_func():
         raise RuntimeError('foo exception')
 
@@ -81,9 +80,9 @@ def test_call_syntax_checks(getuid, get_module_import_path, import_module,
         assert isinstance(line, str)
 
 
-def test_assert_valid_arguments(actions_module):
+def test_assert_valid_arguments():
     """Test that checking valid arguments works."""
-    assert_valid = actions_module._assert_valid_arguments
+    assert_valid = actions._privileged_assert_valid_arguments
 
     values = [
         None, [], 10, {}, {
@@ -139,9 +138,9 @@ def test_assert_valid_arguments(actions_module):
         assert_valid(func, {'args': [1, '2'], 'kwargs': {'c': '3'}})
 
 
-def test_assert_valid_type(actions_module):
+def test_assert_valid_type():
     """Test that type validation works as expected."""
-    assert_valid = actions_module._assert_valid_type
+    assert_valid = actions._privileged_assert_valid_type
 
     assert_valid(None, None, typing.Any)
 
