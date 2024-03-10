@@ -133,21 +133,6 @@ def splinter_browser_load_condition():
     return _load_condition
 
 
-@pytest.fixture(name='actions_module', scope='module')
-def fixture_actions_module(request):
-    """Import and return an action module."""
-    actions_name = getattr(request.module, 'actions_name')
-    actions_file = str(
-        pathlib.Path(__file__).parent / 'actions' / actions_name)
-
-    loader = importlib.machinery.SourceFileLoader(actions_name, actions_file)
-    spec = importlib.util.spec_from_loader(actions_name, loader)
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[actions_name] = module
-    spec.loader.exec_module(module)
-    return module
-
-
 @pytest.fixture(name='mock_privileged')
 def fixture_mock_privileged(request):
     """Mock the privileged decorator to nullify its effects."""
