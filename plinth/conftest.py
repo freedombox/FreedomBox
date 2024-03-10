@@ -23,6 +23,15 @@ def pytest_ignore_collect(path, config):
         return not _functional_libs_available
 
 
+def pytest_configure(config):
+    """Register additional markers, one for each app."""
+    for app in (pathlib.Path(__file__).parent / 'modules').iterdir():
+        if not app.is_dir():
+            continue
+
+        config.addinivalue_line('markers', app.name)
+
+
 def pytest_collection_modifyitems(config, items):
     """Filter out specificly marked tests unless explicitly requested.
 
