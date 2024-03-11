@@ -275,18 +275,6 @@ class Packages(app_module.FollowerComponent):
 class PackageException(Exception):
     """A package operation has failed."""
 
-    def __init__(self, error_string=None, error_details=None, *args, **kwargs):
-        """Store apt-get error string and details."""
-        super().__init__(*args, **kwargs)
-
-        self.error_string = error_string
-        self.error_details = error_details
-
-    def __str__(self):
-        """Return the strin representation of the exception."""
-        return 'PackageException(error_string="{0}", error_details="{1}")' \
-            .format(self.error_string, self.error_details)
-
 
 class Transaction:
     """Information about an ongoing transaction."""
