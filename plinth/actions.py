@@ -155,6 +155,19 @@ def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
     exception.stdout = stdout
     exception.stderr = stderr
 
+    def _get_html_message():
+        """Return an HTML format error that can be shown in messages."""
+        from django.utils.html import format_html
+
+        full_args, exception_args, stdout, stderr, traceback = _format_error(
+            args, kwargs, exception, return_value)
+        return format_html('Error running action: {}..{}({}): {}({})\n{}{}{}',
+                           module_name, action_name, full_args,
+                           return_value['exception']['name'], exception_args,
+                           stdout, stderr, traceback)
+
+    exception.get_html_message = _get_html_message
+
     if log_error:
         full_args, exception_args, stdout, stderr, traceback = _format_error(
             args, kwargs, exception, return_value)
