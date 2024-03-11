@@ -160,7 +160,7 @@ def restore_database():
             subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
                            check=True)
 
-            _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
+        _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
 
 
 def _read_db_password():
