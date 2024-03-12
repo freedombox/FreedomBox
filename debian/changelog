@@ -1,3 +1,48 @@
+freedombox (24.6) unstable; urgency=medium
+
+  [ Veiko Aasa ]
+  * gitweb: Fix modifying git repositories when gitweb app is disabled
+  * users: tests: Do not remove LDAP user when testing views
+  * samba: Ignore non-existent users who are in freedombox-share group
+
+  [ ikmaak ]
+  * Translated using Weblate (Dutch)
+
+  [ James Valleroy ]
+  * diagnostics: Add tests for get_results
+  * diagnostics: Handle TypeError when copying results
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+  [ Sunil Mohan Adapa ]
+  * users: Fix creating users with initial set of groups
+  * users: Minor refactor when creating django groups
+  * log: Don't log with in color inside actions scripts
+  * actions: Fix log message when action return can't be decoded
+  * actions: When action errors out, log a better message
+  * *: Add type hints for app init methods
+  * *: Add type hints for diagnose method
+  * action_utils: Implement method for starting a service temporarily
+  * zoph: Don't fail setup if mysql installed but not running
+  * wordpress: Don't fail setup if mysql installed but not running
+  * app: Add ability to hide configuration form when app is disabled
+  * zoph: Hide configuration form when app is disabled
+  * app: views: Expose method to get enabled/disabled state and cache it
+  * zoph: Don't redirect to setup page when app is disabled
+  * zoph: Don't fail with backup/restore if app is disabled
+  * zoph: Uninstall fully so that reinstall works
+  * daemon: Added method to ensure a daemon is running in component
+  * zoph: Ensure that database server is running when setting up app
+  * wordpress: Fix backup, restore and uninstall when db is not running
+  * wordpress: Drop database user when app is uninstalled
+  * tests: functional: Uninstall app after backup and before restore
+  * zoph: Restore database password to old value after restore operation
+  * wordpress: tests: Uninstall app after backup and before restore
+  * tests: functional: Refactor install/setup fixture for apps
+  * wordpress: Fix minor issue in restoring database
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 11 Mar 2024 20:40:48 -0400
+
 freedombox (24.5) unstable; urgency=medium
 
   [ Sunil Mohan Adapa ]
