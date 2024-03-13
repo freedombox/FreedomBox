@@ -53,8 +53,11 @@ class MatrixSynapseAppView(AppView):
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect to setup page if setup is not done yet."""
-        if not matrixsynapse.is_setup():
-            return redirect('matrixsynapse:setup')
+        status = self.get_common_status()
+        if status['is_enabled']:
+            # App is disabled when uninstalling
+            if not matrixsynapse.is_setup():
+                return redirect('matrixsynapse:setup')
 
         return super().dispatch(request, *args, **kwargs)
 
