@@ -599,7 +599,7 @@ def get_forwarders(browser):
 ##############################
 
 
-def create_user(browser, name, password=None, groups=[]):
+def create_user(browser, name, password=None, groups=[], email=None):
     """Create a user with password and user groups."""
     nav_to_module(browser, 'users')
 
@@ -612,6 +612,8 @@ def create_user(browser, name, password=None, groups=[]):
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
+    if email:
+        browser.find_by_id('id_email').fill(email)
 
     for group in groups:
         browser.find_by_xpath(

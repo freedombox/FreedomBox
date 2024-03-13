@@ -59,6 +59,18 @@ def _create_django_groups():
     return group_choices
 
 
+class EmailFieldMixin:
+    """Mixin to set common properties for the email field."""
+
+    def __init__(self, *args, **kwargs):
+        """Set basic properties for the email field."""
+        super().__init__(*args, **kwargs)
+
+        self.fields['email'].help_text = _(
+            'Optional. Used to send emails to reset password and important '
+            'notifications.')
+
+
 class GroupsFieldMixin:
     """Mixin to set common properties for the group field."""
 
@@ -146,8 +158,8 @@ class PasswordConfirmForm(forms.Form):
         return confirm_password
 
 
-class CreateUserForm(ValidNewUsernameCheckMixin, GroupsFieldMixin,
-                     plinth.forms.LanguageSelectionFormMixin,
+class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
+                     GroupsFieldMixin, plinth.forms.LanguageSelectionFormMixin,
                      PasswordConfirmForm, UserCreationForm):
     """Custom user create form.
 
@@ -161,8 +173,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin, GroupsFieldMixin,
     class Meta(UserCreationForm.Meta):
         """Metadata to control automatic form building."""
 
-        fields = ('username', 'password1', 'password2', 'groups', 'language',
-                  'confirm_password')
+        fields = ('username', 'email', 'password1', 'password2', 'groups',
+                  'language', 'confirm_password')
         widgets = {
             'groups': plinth.forms.CheckboxSelectMultiple(),
         }
@@ -219,8 +231,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin, GroupsFieldMixin,
 
 
 class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
-                     GroupsFieldMixin, plinth.forms.LanguageSelectionFormMixin,
-                     forms.ModelForm):
+                     EmailFieldMixin, GroupsFieldMixin,
+                     plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
 
     username = USERNAME_FIELD
@@ -238,8 +250,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
     class Meta:
         """Metadata to control automatic form building."""
 
-        fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active',
-                  'confirm_password')
+        fields = ('username', 'email', 'groups', 'ssh_keys', 'language',
+                  'is_active', 'confirm_password')
         model = User
         widgets = {
             'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),

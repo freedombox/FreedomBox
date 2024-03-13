@@ -65,8 +65,9 @@ def test_create_user(session_browser):
     if functional.user_exists(session_browser, 'alice'):
         functional.delete_user(session_browser, 'alice')
 
-    functional.create_user(session_browser, 'alice')
+    functional.create_user(session_browser, 'alice', email='alice@example.com')
     assert functional.user_exists(session_browser, 'alice')
+    assert _get_email(session_browser, 'alice') == 'alice@example.com'
 
 
 def test_rename_user(session_browser):
@@ -131,6 +132,17 @@ def test_users_cannot_connect_passwordless_over_ssh(session_browser,
     _set_ssh_keys(session_browser, '')
     _should_not_connect_passwordless_over_ssh(session_browser,
                                               tmp_path_factory)
+
+
+def test_update_user(session_browser):
+    """Test changing properties of a user."""
+    functional.create_user(session_browser, 'alice', email='alice@example.com')
+
+    # Update email
+    _set_email(session_browser, 'alice', 'alice1@example.com')
+    assert _get_email(session_browser, 'alice') == 'alice1@example.com'
+    _set_email(session_browser, 'alice', 'alice2@example.com')
+    assert _get_email(session_browser, 'alice') == 'alice2@example.com'
 
 
 @pytest.mark.parametrize('language_code', _language_codes.values())
@@ -252,6 +264,20 @@ def _rename_user(browser, old_name, new_name):
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
+
+
+def _set_email(browser, username, email):
+    """Set the email field value for a user."""
+    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    browser.find_by_id('id_email').fill(email)
+    browser.find_by_id('id_confirm_password').fill(_admin_password)
+    functional.submit(browser, form_class='form-update')
+
+
+def _get_email(browser, username):
+    """Return the email field value for a user."""
+    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    return browser.find_by_id('id_email').value
 
 
 def _set_language(browser, language_code):
