@@ -382,10 +382,15 @@ class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
         return user
 
 
-class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
+class FirstBootForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
+                    auth.forms.UserCreationForm):
     """User module first boot step: create a new admin user."""
 
     username = USERNAME_FIELD
+
+    class Meta(UserCreationForm.Meta):
+        """Metadata to control automatic form building."""
+        fields = ('username', 'email', 'password1')
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
@@ -399,6 +404,8 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
         """Create and log the user in."""
         user = super().save(commit=commit)
         if commit:
+            self.save_m2m()  # Django 3.x does not call save_m2m()
+
             first_boot.mark_step_done('users_firstboot')
 
             try:
