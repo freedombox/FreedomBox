@@ -46,7 +46,8 @@ class NamesApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-names', info.name, None, info.icon,
-                              'names:index', parent_url_name='system')
+                              'names:index',
+                              parent_url_name='system:visibility', order=10)
         self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-names',

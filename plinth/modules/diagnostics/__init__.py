@@ -55,7 +55,9 @@ class DiagnosticsApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
-                              'diagnostics:index', parent_url_name='system')
+                              'diagnostics:index',
+                              parent_url_name='system:administration',
+                              order=30)
         self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-diagnostics',

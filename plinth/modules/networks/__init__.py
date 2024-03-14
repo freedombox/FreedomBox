@@ -62,7 +62,8 @@ class NetworksApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
-                              'networks:index', parent_url_name='system')
+                              'networks:index',
+                              parent_url_name='system:system', order=20)
         self.add(menu_item)
 
         packages = Packages('packages-networks', ['network-manager', 'batctl'])

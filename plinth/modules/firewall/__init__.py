@@ -64,7 +64,8 @@ class FirewallApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,
-                              'firewall:index', parent_url_name='system')
+                              'firewall:index',
+                              parent_url_name='system:security', order=30)
         self.add(menu_item)
 
         packages = Packages('packages-firewall', ['firewalld', 'nftables'])

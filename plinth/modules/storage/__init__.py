@@ -48,7 +48,8 @@ class StorageApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-storage', info.name, None, info.icon,
-                              'storage:index', parent_url_name='system')
+                              'storage:index', parent_url_name='system:data',
+                              order=30)
         self.add(menu_item)
 
         packages = Packages('packages-storage',

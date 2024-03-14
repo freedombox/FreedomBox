@@ -64,7 +64,8 @@ class DynamicDNSApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,
-                              'dynamicdns:index', parent_url_name='system')
+                              'dynamicdns:index',
+                              parent_url_name='system:visibility', order=20)
         self.add(menu_item)
 
         enable_state = app_module.EnableState('enable-state-dynamicdns')

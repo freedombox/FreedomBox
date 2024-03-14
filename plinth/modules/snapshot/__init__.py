@@ -53,7 +53,8 @@ class SnapshotApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-snapshot', info.name, None, info.icon,
-                              'snapshot:index', parent_url_name='system')
+                              'snapshot:index', parent_url_name='system:data',
+                              order=40)
         self.add(menu_item)
 
         packages = Packages('packages-snapshot', ['snapper'])

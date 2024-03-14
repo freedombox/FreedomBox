@@ -71,7 +71,8 @@ class DateTimeApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
-                              'datetime:index', parent_url_name='system')
+                              'datetime:index',
+                              parent_url_name='system:system', order=40)
         self.add(menu_item)
 
         packages = Packages('packages-datetime', ['systemd-timesyncd'])

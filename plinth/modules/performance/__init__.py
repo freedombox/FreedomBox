@@ -46,7 +46,9 @@ class PerformanceApp(app_module.App):
 
         menu_item = menu.Menu('menu-performance', info.name,
                               info.short_description, info.icon,
-                              'performance:index', parent_url_name='system')
+                              'performance:index',
+                              parent_url_name='system:administration',
+                              order=40)
         self.add(menu_item)
 
         packages = Packages('packages-performance', ['cockpit-pcp'])

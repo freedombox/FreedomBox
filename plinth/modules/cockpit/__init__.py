@@ -59,7 +59,9 @@ class CockpitApp(app_module.App):
 
         menu_item = menu.Menu('menu-cockpit', info.name,
                               info.short_description, info.icon,
-                              'cockpit:index', parent_url_name='system')
+                              'cockpit:index',
+                              parent_url_name='system:administration',
+                              order=20)
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-cockpit', info.name,

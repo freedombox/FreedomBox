@@ -62,7 +62,8 @@ class UsersApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-users', info.name, None, info.icon,
-                              'users:index', parent_url_name='system')
+                              'users:index', parent_url_name='system:system',
+                              order=10)
         self.add(menu_item)
 
         packages = Packages('packages-users', [

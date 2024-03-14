@@ -66,7 +66,8 @@ class LetsEncryptApp(app_module.App):
 
         menu_item = menu.Menu('menu-letsencrypt', info.name,
                               info.short_description, info.icon,
-                              'letsencrypt:index', parent_url_name='system')
+                              'letsencrypt:index',
+                              parent_url_name='system:security', order=20)
         self.add(menu_item)
 
         packages = Packages('packages-letsencrypt', ['certbot'])

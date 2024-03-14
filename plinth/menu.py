@@ -3,6 +3,7 @@
 from typing import ClassVar
 
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 from plinth import app
 
@@ -101,3 +102,14 @@ def init():
          parent_url_name='index')
     Menu('menu-system', icon='fa-cog', url_name='system',
          parent_url_name='index')
+
+    Menu('menu-system-visibility', name=_('Visibility'), icon='fa-cog',
+         url_name='system:visibility', parent_url_name='system', order=10)
+    Menu('menu-system-data', name=_('Data'), icon='fa-cog',
+         url_name='system:data', parent_url_name='system', order=20)
+    Menu('menu-system-system', name=_('System'), icon='fa-cog',
+         url_name='system:system', parent_url_name='system', order=30)
+    Menu('menu-system-security', name=_('Security'), icon='fa-cog',
+         url_name='system:security', parent_url_name='system', order=40)
+    Menu('menu-system-administration', name=_('Administration'), icon='fa-cog',
+         url_name='system:administration', parent_url_name='system', order=50)
