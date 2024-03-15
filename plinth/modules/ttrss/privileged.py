@@ -83,25 +83,34 @@ def setup():
         action_utils.service_restart('tt-rss')
 
 
+def _get_database_config():
+    """Return the database configuration."""
+    aug = load_augeas()
+
+    def _get_value(variable_name):
+        """Return the value of a variable from database configuration file."""
+        return aug.get('/files' + DATABASE_FILE + '/$' + variable_name) \
+            .strip("'\"")
+
+    return {
+        'user': _get_value('dbuser'),
+        'password': _get_value('dbpass'),
+        'database': _get_value('dbname'),
+        'host': _get_value('dbserver')
+    }
+
+
 @privileged
 def enable_api_access():
     """Enable API access so that tt-rss can be accessed through mobile app."""
     import psycopg2  # Only available post installation
 
-    aug = load_augeas()
+    config = _get_database_config()
 
-    def get_value(variable_name):
-        """Return the value of a variable from database configuration file."""
-        return aug.get('/files' + DATABASE_FILE + '/$' + variable_name) \
-            .strip("'\"")
-
-    user = get_value('dbuser')
-    password = get_value('dbpass')
-    database = get_value('dbname')
-    host = get_value('dbserver')
-
-    connection = psycopg2.connect(database=database, user=user,
-                                  password=password, host=host)
+    connection = psycopg2.connect(database=config['database'],
+                                  user=config['user'],
+                                  password=config['password'],
+                                  host=config['host'])
     cursor = connection.cursor()
 
     cursor.execute("UPDATE ttrss_prefs SET def_value=true "
@@ -114,27 +123,41 @@ def enable_api_access():
 @privileged
 def dump_database():
     """Dump database to file."""
+    config = _get_database_config()
     os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
     with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
-        # XXX: Currently, ttrss is the only app that uses
-        # PostgreSQL. If another app was using it, then its data would
-        # be included in the backup here.
-        _run_as_postgres(['pg_dumpall'], stdout=db_backup_file)
+        process = _run_as_postgres(['pg_dumpall', '--roles-only'],
+                                   stdout=subprocess.PIPE)
+        db_backup_file.write(f'DROP ROLE IF EXISTS {config["user"]};\n')
+        for line in process.stdout.decode().splitlines():
+            if config['user'] in line:
+                db_backup_file.write(line + '\n')
+
+    with open(DB_BACKUP_FILE, 'a', encoding='utf-8') as db_backup_file:
+        _run_as_postgres([
+            'pg_dump', '--create', '--clean', '--if-exists', config['database']
+        ], stdout=db_backup_file)
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
-    _run_as_postgres(['dropdb', 'ttrss'])
-    _run_as_postgres(['createdb', 'ttrss'])
+    config = _get_database_config()
+
+    # This is needed for old backups only. New backups include 'DROP DATABASE
+    # IF EXISTS' and 'CREATE DATABASE' statements.
+    _run_as_postgres(['dropdb', config['database']])
+    _run_as_postgres(['createdb', config['database']])
+
     with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
-        _run_as_postgres(['psql', '--dbname', 'ttrss'], stdin=db_restore_file)
+        _run_as_postgres(['psql', '--dbname', config['database']],
+                         stdin=db_restore_file)
 
 
 def _run_as_postgres(command, stdin=None, stdout=None):
     """Run a command as postgres user."""
     command = ['sudo', '--user', 'postgres'] + command
-    subprocess.run(command, stdin=stdin, stdout=stdout, check=True)
+    return subprocess.run(command, stdin=stdin, stdout=stdout, check=True)
 
 
 def load_augeas():
