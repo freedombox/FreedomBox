@@ -171,3 +171,11 @@ def load_augeas():
     aug.set('/augeas/load/Phpvars/incl[last() + 1]', DATABASE_FILE)
     aug.load()
     return aug
+
+
+@privileged
+def uninstall():
+    """Ensure that the database is removed."""
+    # This setting set before deb package installation is not retrained,
+    # somehow.
+    action_utils.debconf_set_selections(['tt-rss tt-rss/purge boolean true'])
