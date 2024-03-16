@@ -41,7 +41,7 @@ class SambaApp(app_module.App):
 
     app_id = 'samba'
 
-    _version = 3
+    _version = 4
 
     def __init__(self) -> None:
         """Create components for the app."""

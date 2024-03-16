@@ -45,8 +45,7 @@ CONF = r'''
    # https://en.wikipedia.org/wiki/Private_network
    # https://en.wikipedia.org/wiki/Link-local_address
    # https://en.wikipedia.org/wiki/Unique_local_address
-   access control = yes
-   hosts allow = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 [::1] [fc00::]/7 [fe80::]
+   hosts allow = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 ::1
    hosts deny = all
 '''  # noqa: E501
 
