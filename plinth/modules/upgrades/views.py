@@ -15,7 +15,7 @@ from django.views.generic.edit import FormView
 from plinth import __version__
 from plinth.modules import first_boot, upgrades
 from plinth.privileged import packages as packages_privileged
-from plinth.views import AppView
+from plinth.views import AppView, messages_error
 
 from . import privileged
 from .forms import BackportsFirstbootForm, ConfigureForm, UpdateFirstbootForm
@@ -56,6 +56,8 @@ class UpgradesConfigurationView(AppView):
         old_status = form.initial
         new_status = form.cleaned_data
 
+        is_changed = False
+
         if old_status['auto_upgrades_enabled'] \
            != new_status['auto_upgrades_enabled']:
 
@@ -64,29 +66,21 @@ class UpgradesConfigurationView(AppView):
                     privileged.enable_auto()
                 else:
                     privileged.disable_auto()
-            except Exception as exception:
-                error = exception.args[2]
-                messages.error(
-                    self.request,
-                    _('Error when configuring unattended-upgrades: {error}').
-                    format(error=error))
 
-            if new_status['auto_upgrades_enabled']:
-                messages.success(self.request, _('Automatic upgrades enabled'))
-            else:
-                messages.success(self.request,
-                                 _('Automatic upgrades disabled'))
+                is_changed = True
+            except Exception as exception:
+                messages_error(self.request,
+                               _('Error when configuring unattended-upgrades'),
+                               exception)
 
         if old_status['dist_upgrade_enabled'] \
            != new_status['dist_upgrade_enabled']:
             upgrades.set_dist_upgrade_enabled(
                 new_status['dist_upgrade_enabled'])
-            if new_status['dist_upgrade_enabled']:
-                messages.success(self.request,
-                                 _('Distribution upgrade enabled'))
-            else:
-                messages.success(self.request,
-                                 _('Distribution upgrade disabled'))
+            is_changed = True
+
+        if is_changed:
+            messages.success(self.request, _('Configuration updated.'))
 
         return super().form_valid(form)
 
