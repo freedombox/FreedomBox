@@ -4,6 +4,7 @@ Main FreedomBox views.
 """
 
 import datetime
+import random
 import time
 import urllib.parse
 
@@ -14,6 +15,7 @@ from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -57,6 +59,25 @@ def is_safe_url(url):
         return False
 
     return True
+
+
+def messages_error(request, message, exception):
+    """Show an error message using Django messages framework.
+
+    If an exception can show HTML message, handle is separately.
+    """
+    if hasattr(exception, 'get_html_message'):
+        collapse_id = 'error-details-' + str(random.randint(0, 10**9))
+        message = format_html(
+            '{message} <a href="#" class="dropdown-toggle" '
+            'data-toggle="collapse" data-target="#{collapse_id}" '
+            'aria-expanded="false" aria-controls="{collapse_id}">'
+            'Details</a><pre class="collapse" '
+            'id="{collapse_id}"><code>{html_message}</code></pre>',
+            message=message, html_message=exception.get_html_message(),
+            collapse_id=collapse_id)
+
+    messages.error(request, message)
 
 
 def _get_redirect_url_from_param(request):
