@@ -275,7 +275,9 @@ class BaseBorgRepository(abc.ABC):
     @staticmethod
     def reraise_known_error(err):
         """Look whether the caught error is known and reraise it accordingly"""
-        caught_error = str((err, err.args))
+        stdout = getattr(err, 'stdout', b'').decode()
+        stderr = getattr(err, 'stderr', b'').decode()
+        caught_error = str((err, err.args, stdout, stderr))
         for known_error in KNOWN_ERRORS:
             for error in known_error['errors']:
                 if re.search(error, caught_error):
