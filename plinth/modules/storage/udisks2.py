@@ -196,7 +196,7 @@ def _mount(object_path):
     try:
         privileged.mount(block_device.preferred_device, _log_error=False)
     except Exception as exception:
-        stderr = exception.args[3].decode()
+        stderr = getattr(exception, 'stderr', b'').decode()
         if 'GDBus.Error' not in stderr:
             raise
 
