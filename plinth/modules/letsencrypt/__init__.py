@@ -187,9 +187,8 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
             logger.info('Revoking certificate for %s', name)
             certificate_revoke(name, really_revoke=False)
         return True
-    except Exception as exception:
-        logger.warning('Failed to revoke certificate for %s: %s', name,
-                       exception.args[2])
+    except Exception:
+        logger.warning('Failed to revoke certificate for %s', name)
         return False
 
 
