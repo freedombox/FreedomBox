@@ -142,12 +142,7 @@ def revoke(domain: str):
         if TEST_MODE:
             command.append('--staging')
 
-        process = subprocess.Popen(command, stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE)
-        _, stderr = process.communicate()
-        if process.returncode:
-            raise RuntimeError('Error revoking certificate: {error}'.format(
-                error=stderr.decode()))
+        subprocess.run(command, check=True)
 
     action_utils.webserver_disable(domain, kind='site')
 
@@ -164,12 +159,7 @@ def obtain(domain: str):
     if TEST_MODE:
         command.append('--staging')
 
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    _, stderr = process.communicate()
-    if process.returncode:
-        raise RuntimeError('Error obtaining certificate: {error}'.format(
-            error=stderr.decode()))
+    subprocess.run(command, check=True)
 
     with action_utils.WebserverChange() as webserver_change:
         _setup_webserver_config(domain, webserver_change)
@@ -330,13 +320,7 @@ def _assert_managed_path(module, path):
 def delete(domain: str):
     """Disable a domain and delete the certificate."""
     command = ['certbot', 'delete', '--non-interactive', '--cert-name', domain]
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    _, stderr = process.communicate()
-    if process.returncode:
-        raise RuntimeError('Error deleting certificate: {error}'.format(
-            error=stderr.decode()))
-
+    subprocess.run(command, check=True)
     action_utils.webserver_disable(domain, kind='site')
 
 
