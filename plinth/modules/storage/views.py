@@ -14,7 +14,7 @@ from django.views.decorators.http import require_POST
 from plinth import views
 from plinth.modules import storage
 
-from . import get_error_message, privileged
+from . import privileged
 
 logger = logging.getLogger(__name__)
 
@@ -90,12 +90,6 @@ def eject(request, device_path):
         else:
             messages.success(request, _('Device can be safely unplugged.'))
     except Exception as exception:
-        message = get_error_message(exception.args[-2].decode())  # stdout
-
-        logger.error('Error ejecting device - %s', message)
-        messages.error(
-            request,
-            _('Error ejecting device: {error_message}').format(
-                error_message=message))
+        views.messages_error(request, _('Error ejecting device.'), exception)
 
     return redirect(reverse('storage:index'))
