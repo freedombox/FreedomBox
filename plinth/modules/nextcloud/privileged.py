@@ -18,7 +18,7 @@ from plinth.actions import privileged
 NETWORK_NAME = 'nextcloud-fbx'
 BRIDGE_IP = '172.16.16.1'
 CONTAINER_IP = '172.16.16.2'
-CONTAINER_NAME = 'nextcloud-fbx'
+CONTAINER_NAME = 'nextcloud-freedombox'
 VOLUME_NAME = 'nextcloud-volume-fbx'
 IMAGE_NAME = 'docker.io/library/nextcloud:stable-apache'
 
@@ -26,15 +26,13 @@ DB_HOST = 'localhost'
 DB_NAME = 'nextcloud_fbx'
 DB_USER = 'nextcloud_fbx'
 GUI_ADMIN = 'nextcloud-admin'
-SOCKET_CONFIG_FILE = pathlib.Path('/etc/mysql/mariadb.conf.d/'
-                                  '99-freedombox.cnf')
-SYSTEMD_LOCATION = '/etc/systemd/system/'
-NEXTCLOUD_CONTAINER_SYSTEMD_FILE = pathlib.Path(
-    f'{SYSTEMD_LOCATION}{CONTAINER_NAME}.service')
-NEXTCLOUD_CRON_SERVICE_FILE = pathlib.Path(
-    f'{SYSTEMD_LOCATION}nextcloud-cron-fbx.service')
-NEXTCLOUD_CRON_TIMER_FILE = pathlib.Path(
-    f'{SYSTEMD_LOCATION}nextcloud-cron-fbx.timer')
+
+_socket_config_file = pathlib.Path('/etc/mysql/mariadb.conf.d/'
+                                   '99-freedombox.cnf')
+_systemd_location = pathlib.Path('/etc/systemd/system/')
+_container_service_file = _systemd_location / f'{CONTAINER_NAME}.service'
+_cron_service_file = _systemd_location / 'nextcloud-cron-freedombox.service'
+_cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
 
 DB_BACKUP_FILE = pathlib.Path(
     '/var/lib/plinth/backups-data/nextcloud-database.sql')
@@ -122,7 +120,7 @@ def set_domain(domain_name: str):
         _run_occ('config:system:set', 'overwriteprotocol', '--value', protocol)
 
         # Restart to apply changes immediately
-        action_utils.service_restart('nextcloud-fbx')
+        action_utils.service_restart('nextcloud-freedombox')
 
 
 @privileged
@@ -168,7 +166,7 @@ def _configure_db_socket():
 [mysqld]
 bind-address            = {BRIDGE_IP}
 '''
-    SOCKET_CONFIG_FILE.write_text(file_content, encoding='utf-8')
+    _socket_config_file.write_text(file_content, encoding='utf-8')
     action_utils.service_restart('mariadb')
 
 
@@ -255,15 +253,14 @@ def _configure_systemd():
         ['podman', 'generate', 'systemd', '--new', CONTAINER_NAME],
         capture_output=True, check=True).stdout.decode()
     # Create service and timer for running periodic php jobs.
-    NEXTCLOUD_CONTAINER_SYSTEMD_FILE.write_text(systemd_content,
-                                                encoding='utf-8')
+    _container_service_file.write_text(systemd_content, encoding='utf-8')
     nextcloud_cron_service_content = '''
 [Unit]
 Description=Nextcloud cron.php job
 
 [Service]
-ExecCondition=/usr/bin/podman exec --user www-data nextcloud-fbx php occ status -e
-ExecStart=/usr/bin/podman exec --user www-data nextcloud-fbx php /var/www/html/cron.php
+ExecCondition=/usr/bin/podman exec --user www-data nextcloud-freedombox php occ status -e
+ExecStart=/usr/bin/podman exec --user www-data nextcloud-freedombox php /var/www/html/cron.php
 KillMode=process
 '''  # noqa: E501
     nextcloud_cron_timer_content = '''[Unit]
@@ -272,13 +269,14 @@ Description=Run Nextcloud cron.php every 5 minutes
 [Timer]
 OnBootSec=5min
 OnUnitActiveSec=5min
-Unit=nextcloud-cron-fbx.service
+Unit=nextcloud-cron-freedombox.service
 
 [Install]
 WantedBy=timers.target
 '''
-    NEXTCLOUD_CRON_SERVICE_FILE.write_text(nextcloud_cron_service_content)
-    NEXTCLOUD_CRON_TIMER_FILE.write_text(nextcloud_cron_timer_content)
+    _cron_service_file.write_text(nextcloud_cron_service_content)
+    _cron_timer_file.write_text(nextcloud_cron_timer_content)
+
     action_utils.service_daemon_reload()
 
 
@@ -296,13 +294,12 @@ def uninstall():
                                   network_name=NETWORK_NAME,
                                   volume_name=VOLUME_NAME,
                                   image_name=IMAGE_NAME)
-    files = [NEXTCLOUD_CRON_SERVICE_FILE, NEXTCLOUD_CRON_TIMER_FILE]
-    for file in files:
-        file.unlink(missing_ok=True)
+    for path in [_cron_service_file, _cron_timer_file]:
+        path.unlink(missing_ok=True)
 
 
 def _remove_db_socket():
-    SOCKET_CONFIG_FILE.unlink(missing_ok=True)
+    _socket_config_file.unlink(missing_ok=True)
     action_utils.service_restart('mariadb')
 
 

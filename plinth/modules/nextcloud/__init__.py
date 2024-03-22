@@ -89,10 +89,11 @@ class NextcloudApp(app_module.App):
                               urls=['https://{host}/nextcloud/login'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-nextcloud', 'nextcloud-fbx')
+        daemon = Daemon('daemon-nextcloud', 'nextcloud-freedombox')
         self.add(daemon)
 
-        daemon = Daemon('daemon-nextcloud-timer', 'nextcloud-cron-fbx.timer')
+        daemon = Daemon('daemon-nextcloud-timer',
+                        'nextcloud-cron-freedombox.timer')
         self.add(daemon)
 
         daemon = SharedDaemon('shared-daemon-podman-auto-update',
