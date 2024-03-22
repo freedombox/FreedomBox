@@ -285,6 +285,13 @@ def setup():
     _use_config_file(CONF_PATH)
     os.makedirs('/var/lib/freedombox', exist_ok=True)
     os.chmod('/var/lib/freedombox', 0o0755)
+
+    # Disable NetBIOS Service, used with now deprecated SMB1 protocol
+    if action_utils.service_is_running('nmbd'):
+        action_utils.service_stop('nmbd')
+    action_utils.service_disable('nmbd')
+    action_utils.service_mask('nmbd')
+
     if action_utils.service_is_running('smbd'):
         action_utils.service_restart('smbd')
 

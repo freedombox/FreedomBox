@@ -41,7 +41,7 @@ class SambaApp(app_module.App):
 
     app_id = 'samba'
 
-    _version = 4
+    _version = 5
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -81,11 +81,6 @@ class SambaApp(app_module.App):
                                                   (445, 'tcp4'),
                                                   (445, 'tcp6')])
         self.add(daemon)
-
-        daemon_nmbd = Daemon('daemon-samba-nmbd', 'nmbd',
-                             listen_ports=[(137, 'udp4'), (138, 'udp4')])
-
-        self.add(daemon_nmbd)
 
         users_and_groups = UsersAndGroups('users-and-groups-samba',
                                           groups=groups)

@@ -85,9 +85,4 @@ clients = [{
     }]
 }]
 
-backup = {
-    'data': {
-        'files': [SHARES_CONF_BACKUP_FILE]
-    },
-    'services': ['smbd', 'nmbd']
-}
+backup = {'data': {'files': [SHARES_CONF_BACKUP_FILE]}, 'services': ['smbd']}
