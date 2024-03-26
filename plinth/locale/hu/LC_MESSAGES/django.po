@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 20:10-0400\n"
+"POT-Creation-Date: 2024-03-25 20:44-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: context_processors.py:23 views.py:95
+#: context_processors.py:23 views.py:116
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -101,7 +101,32 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
 
-#: middleware.py:130
+#: menu.py:106
+#, fuzzy
+#| msgid "Public Visibility"
+msgid "Visibility"
+msgstr "Nyilvános láthatóság"
+
+#: menu.py:108
+msgid "Data"
+msgstr ""
+
+#: menu.py:110 templates/base.html:131
+msgid "System"
+msgstr "Rendszer"
+
+#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: modules/security/__init__.py:35
+msgid "Security"
+msgstr "Biztonság"
+
+#: menu.py:114
+#, fuzzy
+#| msgid "Server Administration"
+msgid "Administration"
+msgstr "Szerver adminisztráció"
+
+#: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
 
@@ -149,7 +174,7 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Szolgáltatásfelderítés"
 
-#: modules/avahi/__init__.py:60
+#: modules/avahi/__init__.py:61
 msgid "Local Network Domain"
 msgstr "Helyi hálózati domain"
 
@@ -157,12 +182,12 @@ msgstr "Helyi hálózati domain"
 msgid "Backups allows creating and managing backup archives."
 msgstr "Lehetővé teszi a biztonsági mentés létrehozását és kezelését."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:167
-#: modules/backups/__init__.py:212
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
+#: modules/backups/__init__.py:213
 msgid "Backups"
 msgstr "Biztonsági mentések"
 
-#: modules/backups/__init__.py:164
+#: modules/backups/__init__.py:165
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -170,17 +195,17 @@ msgstr ""
 "Automatikus biztonsági mentések ütemezésének engedélyezése. Ha lehet, "
 "használj egy titkosított távoli helyet, vagy egy extra külső lemezt."
 
-#: modules/backups/__init__.py:170
+#: modules/backups/__init__.py:171
 msgid "Enable a Backup Schedule"
 msgstr "Ütemezett biztonsági mentés engedélyezése"
 
-#: modules/backups/__init__.py:174 modules/backups/__init__.py:221
-#: modules/privacy/__init__.py:76 modules/storage/__init__.py:314
+#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Ugrás ide: {app_name}"
 
-#: modules/backups/__init__.py:209
+#: modules/backups/__init__.py:210
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -190,7 +215,7 @@ msgstr ""
 "mentésre tett próbálkozás nem sikerült. A legutóbbi hibaüzenet: "
 "{error_message}"
 
-#: modules/backups/__init__.py:217
+#: modules/backups/__init__.py:218
 msgid "Error During Backup"
 msgstr "Hiba történt a biztonsági mentés közben"
 
@@ -437,7 +462,7 @@ msgstr ""
 msgid "Existing repository is not encrypted."
 msgstr "A meglévő tároló nem titkosított."
 
-#: modules/backups/repository.py:335
+#: modules/backups/repository.py:337
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} Tárhely"
@@ -823,7 +848,7 @@ msgstr ""
 "Jogosultságok névtelen felhasználók számára, akik nem adtak meg jelszót."
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
-#: modules/users/forms.py:91
+#: modules/users/forms.py:103
 msgid "Permissions"
 msgstr "Engedélyek"
 
@@ -902,8 +927,9 @@ msgstr "Adminisztrál"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
 #: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/zoph/views.py:74
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:83 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
 
@@ -995,7 +1021,7 @@ msgstr "IP-címek és tartományok frissítése"
 #: modules/bind/views.py:61 modules/config/views.py:98
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
-#: modules/email/views.py:45 modules/matrixsynapse/views.py:146
+#: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
@@ -1199,7 +1225,7 @@ msgstr "Általános beállítások"
 msgid "Configure"
 msgstr "Beállítások"
 
-#: modules/config/__init__.py:62 modules/config/forms.py:68
+#: modules/config/__init__.py:63 modules/config/forms.py:68
 #: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Domainnév"
@@ -1410,7 +1436,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr "Dátum és idő"
 
-#: modules/datetime/__init__.py:122
+#: modules/datetime/__init__.py:123
 msgid "Time synchronized to NTP server"
 msgstr "Az idő szinkronizálva van az NTP-szerverrel"
 
@@ -1480,47 +1506,47 @@ msgstr ""
 "annak megerősítésére, hogy az alkalmazások és szolgáltatások az elvárt módon "
 "működnek."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
-#: modules/diagnostics/__init__.py:96
+#: modules/diagnostics/__init__.py:98
 msgid "passed"
 msgstr "sikerült"
 
-#: modules/diagnostics/__init__.py:97 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
 msgid "failed"
 msgstr "sikertelen"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:100
 msgid "error"
 msgstr "hiba"
 
-#: modules/diagnostics/__init__.py:99
+#: modules/diagnostics/__init__.py:101
 msgid "warning"
 msgstr "figyelmeztetés"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:206
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:211
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:218
 msgid "You should disable some apps to reduce memory usage."
 msgstr "A memóriahasználat csökkentése érdekében tilts le néhány alkalmazást."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:223
 msgid "You should not install any new apps on this system."
 msgstr "Ne telepíts további alkalmazásokat erre a rendszerre."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:235
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1529,28 +1555,28 @@ msgstr ""
 "A rendszerben kevés a memória: {percent_used}% használt, "
 "{memory_available} {memory_available_unit} szabad. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:237
 msgid "Low Memory"
 msgstr "Kevés a memória"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:268
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Ellenőrzés indítása"
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:310
+#: modules/diagnostics/__init__.py:312
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Az ellenőrzés eredménye"
 
-#: modules/diagnostics/__init__.py:315
+#: modules/diagnostics/__init__.py:317
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1701,7 +1727,7 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "Dinamikus DNS ügyfél"
 
-#: modules/dynamicdns/__init__.py:74
+#: modules/dynamicdns/__init__.py:75
 msgid "Dynamic Domain Name"
 msgstr "Dinamikus domainnév"
 
@@ -1809,7 +1835,7 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
 #: modules/dynamicdns/forms.py:88 modules/networks/forms.py:207
-#: modules/users/forms.py:117
+#: modules/users/forms.py:129
 msgid "Username"
 msgstr "Felhasználónév"
 
@@ -2232,17 +2258,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Tűzfal"
 
-#: modules/firewall/__init__.py:272
+#: modules/firewall/__init__.py:273
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default zone is external"
 msgstr "Alapértelmezett alkalmazás beállítva"
 
-#: modules/firewall/__init__.py:282
+#: modules/firewall/__init__.py:283
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: modules/firewall/__init__.py:296
+#: modules/firewall/__init__.py:297
 msgid "Direct passthrough rules exist"
 msgstr ""
 
@@ -3339,7 +3365,7 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Tanúsítványok"
 
-#: modules/letsencrypt/__init__.py:104
+#: modules/letsencrypt/__init__.py:105
 msgid "Cannot test: No domains are configured."
 msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
 
@@ -3414,28 +3440,31 @@ msgstr ""
 "pillanatig, mire életbe lép."
 
 #: modules/letsencrypt/views.py:46
-#, python-brace-format
-msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+msgid "Failed to revoke certificate for domain {domain}"
 msgstr "A {domain} domain tanúsítványát nem sikerült visszavonni: {error}"
 
-#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:76
+#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "A {domain} domain sikeresen megkapta a tanúsítványt"
 
-#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:81
-#, python-brace-format
-msgid "Failed to obtain certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
+#, fuzzy, python-brace-format
+#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgid "Failed to obtain certificate for domain {domain}"
 msgstr "A {domain} domain nem kapott tanúsítványt: {error}"
 
-#: modules/letsencrypt/views.py:93
+#: modules/letsencrypt/views.py:95
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "{domain} domain tanúsítványa sikeresen törölve"
 
-#: modules/letsencrypt/views.py:98
-#, python-brace-format
-msgid "Failed to delete certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Failed to delete certificate for domain {domain}: {error}"
+msgid "Failed to delete certificate for domain {domain}"
 msgstr "{domain} domain tanúsítványát nem sikerült kitörölni: {error}"
 
 #: modules/matrixsynapse/__init__.py:26
@@ -3636,7 +3665,7 @@ msgstr ""
 "szükséged. Kérlek, látogasd meg a <a href=\"%(letsencrypt_url)s\">Let's "
 "Encrypt</a> weboldalát ahhoz, hogy beszerezz egyet."
 
-#: modules/matrixsynapse/views.py:137
+#: modules/matrixsynapse/views.py:140
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
@@ -4656,11 +4685,6 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Ez a kapcsolat nem aktív."
 
-#: modules/networks/templates/connection_show.html:259
-#: modules/security/__init__.py:35
-msgid "Security"
-msgstr "Biztonság"
-
 #: modules/networks/templates/connection_show.html:264
 #: modules/networks/templates/connection_show.html:284
 #: modules/networks/templates/connection_show.html:303
@@ -5386,7 +5410,7 @@ msgstr "PageKite"
 msgid "Public Visibility"
 msgstr "Nyilvános láthatóság"
 
-#: modules/pagekite/__init__.py:73
+#: modules/pagekite/__init__.py:74
 msgid "PageKite Domain"
 msgstr "PageKite domain"
 
@@ -5628,19 +5652,19 @@ msgstr "Leállítás most"
 msgid "Manage system-wide privacy settings."
 msgstr "Rendszerszintű adatvédelmi beállítások kezelése."
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:69
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
 #, fuzzy
 #| msgid "Privoxy"
 msgid "Privacy"
 msgstr "Privoxy"
 
-#: modules/privacy/__init__.py:67
+#: modules/privacy/__init__.py:68
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Kérjük, frissítsd az adatvédelmi beállításokat, a preferenciáidnak "
 "megfelelően."
 
-#: modules/privacy/__init__.py:72
+#: modules/privacy/__init__.py:73
 msgid "Review privacy setting"
 msgstr "Adatvédelmi beállítások kezelése"
 
@@ -6695,7 +6719,7 @@ msgstr "Dátum"
 
 #: modules/snapshot/templates/snapshot_delete_selected.html:42
 #: modules/snapshot/templates/snapshot_manage.html:20
-#: modules/snapshot/views.py:201
+#: modules/snapshot/views.py:197
 msgid "Delete Snapshots"
 msgstr "Pillanatképek törlése"
 
@@ -6769,35 +6793,38 @@ msgstr "Pillanatképek kezelése"
 msgid "Created snapshot."
 msgstr "Pillanatkép létrehozva."
 
-#: modules/snapshot/views.py:158
-msgid "Storage snapshots configuration updated"
-msgstr "Tárhelypillanatképek konfigurációja frissítve"
+#: modules/snapshot/views.py:160
+#, fuzzy
+#| msgid "Configuration updated."
+msgid "Configuration update failed."
+msgstr "Beállítások frissítve."
 
-#: modules/snapshot/views.py:162
-#, python-brace-format
-msgid "Action error: {0} [{1}] [{2}]"
-msgstr "Hiba a művelet közben: {0} [{1}] [{2}]"
-
-#: modules/snapshot/views.py:188
+#: modules/snapshot/views.py:184
 msgid "Deleted selected snapshots"
 msgstr "Kiválasztott pillanatképek törölve"
 
-#: modules/snapshot/views.py:193
+#: modules/snapshot/views.py:186
+#, fuzzy
+#| msgid "Deleting LDAP user failed."
+msgid "Deleting snapshot failed."
+msgstr "LDAP-felhasználó törlése sikertelen."
+
+#: modules/snapshot/views.py:189
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 "A Tárhelypillanatképek funkció jelenleg is használatban van. Kérlek, próbáld "
 "újra később."
 
-#: modules/snapshot/views.py:212
+#: modules/snapshot/views.py:208
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "A {number} számú pillanatképre visszaállítva."
 
-#: modules/snapshot/views.py:215
+#: modules/snapshot/views.py:211
 msgid "The system must be restarted to complete the rollback."
 msgstr "A visszaállítás befejezéséhez a rendszert újra kell indítani."
 
-#: modules/snapshot/views.py:225
+#: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "Visszaállítás pillanatképre"
 
@@ -6817,7 +6844,7 @@ msgstr ""
 msgid "Secure Shell (SSH) Server"
 msgstr "SSH-szerver"
 
-#: modules/ssh/__init__.py:73
+#: modules/ssh/__init__.py:75
 #, fuzzy
 #| msgid "Secure Shell (SSH)"
 msgid "Remotely login using Secure Shell (SSH)"
@@ -6900,107 +6927,107 @@ msgstr ""
 "fel- és lecsatolhatsz cserélhető adathordozókat, kibővítheted a root "
 "partíciót, stb."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:307
-#: modules/storage/__init__.py:338 modules/storage/__init__.py:384
+#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
+#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
 msgid "Storage"
 msgstr "Tárhely"
 
-#: modules/storage/__init__.py:215
+#: modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} byte"
 
-#: modules/storage/__init__.py:219
+#: modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: modules/storage/__init__.py:223
+#: modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: modules/storage/__init__.py:227
+#: modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: modules/storage/__init__.py:230
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: modules/storage/__init__.py:242
+#: modules/storage/__init__.py:243
 msgid "The operation failed."
 msgstr "A művelet sikertelen."
 
-#: modules/storage/__init__.py:244
+#: modules/storage/__init__.py:245
 msgid "The operation was cancelled."
 msgstr "A művelet meg lett szakítva."
 
-#: modules/storage/__init__.py:246
+#: modules/storage/__init__.py:247
 msgid "The device is already unmounting."
 msgstr "Az eszköz leválasztása már folyamatban van."
 
-#: modules/storage/__init__.py:248
+#: modules/storage/__init__.py:249
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "A művelet nem támogatott a hiányzó illesztőprogram/eszköz támogatása miatt."
 
-#: modules/storage/__init__.py:251
+#: modules/storage/__init__.py:252
 msgid "The operation timed out."
 msgstr "A művelet túllépte az időkorlátot."
 
-#: modules/storage/__init__.py:253
+#: modules/storage/__init__.py:254
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "A művelet fel fogja ébreszteni a lemezt, amely mély-alvó állapotban van."
 
-#: modules/storage/__init__.py:256
+#: modules/storage/__init__.py:257
 msgid "Attempting to unmount a device that is busy."
 msgstr "Foglalt eszköz leválasztásának a kísérlete."
 
-#: modules/storage/__init__.py:258
+#: modules/storage/__init__.py:259
 msgid "The operation has already been cancelled."
 msgstr "A művelet már meg lett szakítva."
 
-#: modules/storage/__init__.py:260 modules/storage/__init__.py:262
-#: modules/storage/__init__.py:264
+#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
+#: modules/storage/__init__.py:265
 msgid "Not authorized to perform the requested operation."
 msgstr "Nem vagy jogosult végrehajtani a kért műveletet."
 
-#: modules/storage/__init__.py:266
+#: modules/storage/__init__.py:267
 msgid "The device is already mounted."
 msgstr "Az eszköz már fel lett csatolva."
 
-#: modules/storage/__init__.py:268
+#: modules/storage/__init__.py:269
 msgid "The device is not mounted."
 msgstr "Az eszköz nincs felcsatolva."
 
-#: modules/storage/__init__.py:270
+#: modules/storage/__init__.py:271
 msgid "Not permitted to use the requested option."
 msgstr "Nem használhatod a kért lehetőséget."
 
-#: modules/storage/__init__.py:272
+#: modules/storage/__init__.py:273
 msgid "The device is mounted by another user."
 msgstr "Az eszközt egy másik felhasználó felcsatolva."
 
-#: modules/storage/__init__.py:302
+#: modules/storage/__init__.py:303
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Kevés a szabad hely a rendszerpartíción: {percent_used}% felhasználva, "
 "{free_space} szabad."
 
-#: modules/storage/__init__.py:304
+#: modules/storage/__init__.py:305
 msgid "Low disk space"
 msgstr "Kevés tárhely"
 
-#: modules/storage/__init__.py:332
+#: modules/storage/__init__.py:333
 msgid "Disk failure imminent"
 msgstr "Lemezhiba várható"
 
-#: modules/storage/__init__.py:334
+#: modules/storage/__init__.py:335
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7009,20 +7036,20 @@ msgstr ""
 "A {id} lemez azt jelzi, hogy a közeljövőben valószínűleg meghibásodik. "
 "Másold át az adatokat, amíg még lehet, és cseréld ki a meghajtót."
 
-#: modules/storage/__init__.py:378
+#: modules/storage/__init__.py:379
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
 
-#: modules/storage/__init__.py:381
+#: modules/storage/__init__.py:382
 #, fuzzy
 #| msgid "Root Filesystem"
 msgid "Read-only root filesystem"
 msgstr "Gyökérfájlrendszer"
 
-#: modules/storage/__init__.py:391
+#: modules/storage/__init__.py:392
 #, fuzzy
 #| msgid "Power"
 msgid "Go to Power"
@@ -7137,9 +7164,10 @@ msgstr "{drive_vendor} {drive_model} biztonságosan kivehető."
 msgid "Device can be safely unplugged."
 msgstr "Az eszköz biztonságosan kivehető."
 
-#: modules/storage/views.py:98
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
+#: modules/storage/views.py:93
+#, fuzzy
+#| msgid "Error ejecting device: {error_message}"
+msgid "Error ejecting device."
 msgstr "Hiba történt az eszköz kiadása során: {error_message}"
 
 #: modules/syncthing/__init__.py:23
@@ -7549,21 +7577,21 @@ msgstr ""
 "újraindítása szükségesnek bizonyul, akkor a rendszer automatikusan 02:00-kor "
 "újraindul, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Szoftverfrissítések"
 
-#: modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:129
 msgid "FreedomBox Updated"
 msgstr "FreedomBox frissítve"
 
-#: modules/upgrades/__init__.py:196
+#: modules/upgrades/__init__.py:197
 msgid "Could not start distribution update"
 msgstr "A disztribúció frissítése nem tudott elindulni"
 
-#: modules/upgrades/__init__.py:198
+#: modules/upgrades/__init__.py:199
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7574,11 +7602,11 @@ msgstr ""
 "disztribúció frissítését a rendszer 24 óra múlva újrapróbálja, ha "
 "engedélyezve van."
 
-#: modules/upgrades/__init__.py:209
+#: modules/upgrades/__init__.py:210
 msgid "Distribution update started"
 msgstr "A disztribúció frissítése elindult"
 
-#: modules/upgrades/__init__.py:211
+#: modules/upgrades/__init__.py:212
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7756,40 +7784,25 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Disztribúció frissítés engedélyezve"
 
-#: modules/upgrades/views.py:71
-#, python-brace-format
-msgid "Error when configuring unattended-upgrades: {error}"
+#: modules/upgrades/views.py:73
+#, fuzzy
+#| msgid "Error when configuring unattended-upgrades: {error}"
+msgid "Error when configuring unattended-upgrades"
 msgstr "Hiba a nem felügyelt frissítések konfigurálása közben: {error}"
 
-#: modules/upgrades/views.py:75
-msgid "Automatic upgrades enabled"
-msgstr "Automatikus frissítések engedélyezve"
-
-#: modules/upgrades/views.py:78
-msgid "Automatic upgrades disabled"
-msgstr "Automatikus frissítések kikapcsolva"
-
-#: modules/upgrades/views.py:86
-msgid "Distribution upgrade enabled"
-msgstr "Disztribúció frissítés engedélyezve"
-
-#: modules/upgrades/views.py:89
-msgid "Distribution upgrade disabled"
-msgstr "Disztribúció frissítés letiltva"
-
-#: modules/upgrades/views.py:126
+#: modules/upgrades/views.py:120
 msgid "Upgrade process started."
 msgstr "A frissítési folyamat elkezdődött."
 
-#: modules/upgrades/views.py:128
+#: modules/upgrades/views.py:122
 msgid "Starting upgrade failed."
 msgstr "A frissítést nem sikerült elindítani."
 
-#: modules/upgrades/views.py:138
+#: modules/upgrades/views.py:132
 msgid "Frequent feature updates activated."
 msgstr "Gyakori funkciófrissítések aktiválva."
 
-#: modules/upgrades/views.py:224
+#: modules/upgrades/views.py:218
 #, fuzzy
 #| msgid "Distribution upgrade enabled"
 msgid "Starting distribution upgrade test."
@@ -7822,21 +7835,21 @@ msgstr ""
 msgid "Users and Groups"
 msgstr "Felhasználók és csoportok"
 
-#: modules/users/__init__.py:84
+#: modules/users/__init__.py:85
 msgid "Access to all services and system settings"
 msgstr "Hozzáférés az összes szolgáltatáshoz és rendszerbeállításhoz"
 
-#: modules/users/__init__.py:128
+#: modules/users/__init__.py:129
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP-bejegyzés ellenőrzése: \"{search_item}\""
 
-#: modules/users/__init__.py:143
+#: modules/users/__init__.py:144
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: modules/users/__init__.py:173
+#: modules/users/__init__.py:174
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -7845,7 +7858,12 @@ msgstr ""
 msgid "Username is taken or is reserved."
 msgstr "A felhasználónév foglalt."
 
-#: modules/users/forms.py:94
+#: modules/users/forms.py:70
+msgid ""
+"Optional. Used to send emails to reset password and important notifications."
+msgstr ""
+
+#: modules/users/forms.py:106
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7861,47 +7879,47 @@ msgstr ""
 "képesek bejelentkezni a rendszerbe, ahol adminisztrátori jogosultságokkal "
 "rendelkeznek (sudo)."
 
-#: modules/users/forms.py:112
+#: modules/users/forms.py:124
 msgid "Enter a valid username."
 msgstr "Adj meg egy érvényes felhasználónevet."
 
-#: modules/users/forms.py:119
+#: modules/users/forms.py:131
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 "Szükséges. Legfeljebb 150 karakter. Csak angol betűk, számjegyek és @/./-/_."
 
-#: modules/users/forms.py:128
+#: modules/users/forms.py:140
 msgid "Authorization Password"
 msgstr "Hitelesítési jelszó"
 
-#: modules/users/forms.py:135
+#: modules/users/forms.py:147
 #, python-brace-format
 msgid ""
 "Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
 "A fiókmódosítások engedélyezéséhez add meg \"{user}\" felhasználó jelszavát."
 
-#: modules/users/forms.py:144
+#: modules/users/forms.py:156
 msgid "Invalid password."
 msgstr "Érvénytelen jelszó."
 
-#: modules/users/forms.py:200 modules/users/forms.py:398
+#: modules/users/forms.py:212 modules/users/forms.py:417
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "LDAP-felhasználó létrehozása sikertelen: {error}"
 
-#: modules/users/forms.py:212
+#: modules/users/forms.py:224
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr ""
 "Az új felhasználó hozzáadása a(z) {group} csoporthoz nem sikerült: {error}"
 
-#: modules/users/forms.py:228
+#: modules/users/forms.py:240
 msgid "Authorized SSH Keys"
 msgstr "Engedélyezett SSH-kulcsok"
 
-#: modules/users/forms.py:230
+#: modules/users/forms.py:242
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7911,38 +7929,38 @@ msgstr ""
 "jelszó nélkül jelentkezzen be. Több kulcs is megadható; soronként egy. Az "
 "üres, illetve # jellel kezdődő sorok nem számítanak."
 
-#: modules/users/forms.py:286
+#: modules/users/forms.py:298
 msgid "Renaming LDAP user failed."
 msgstr "LDAP-felhasználó átnevezése sikertelen."
 
-#: modules/users/forms.py:297
+#: modules/users/forms.py:309
 msgid "Failed to remove user from group."
 msgstr "Nem sikerült eltávolítani a felhasználót a csoportból."
 
-#: modules/users/forms.py:307
+#: modules/users/forms.py:319
 msgid "Failed to add user to group."
 msgstr "Nem sikerült hozzáadni a felhasználót a csoporthoz."
 
-#: modules/users/forms.py:314
+#: modules/users/forms.py:326
 msgid "Unable to set SSH keys."
 msgstr "SSH-kulcsok beállítása sikertelen."
 
-#: modules/users/forms.py:327
+#: modules/users/forms.py:339
 msgid "Failed to change user status."
 msgstr "Nem sikerült a felhasználói állapot megváltoztatása."
 
-#: modules/users/forms.py:368
+#: modules/users/forms.py:380
 msgid "Changing LDAP user password failed."
 msgstr "LDAP-felhasználó jelszavának megváltoztatása sikertelen."
 
-#: modules/users/forms.py:406
+#: modules/users/forms.py:425
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr ""
 "Nem sikerült hozzáadni az új felhasználót a rendszergazdai csoporthoz: "
 "{error}"
 
-#: modules/users/forms.py:429
+#: modules/users/forms.py:448
 msgid "User account created, you are now logged in"
 msgstr "Felhasználói fiók létrehozva, bejelentkezés sikeres"
 
@@ -8582,34 +8600,34 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "Szolgáltatás letiltva: {name}"
 
-#: package.py:214
+#: package.py:206
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:234
+#: package.py:226
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "A(z) {package_name} a legfrissebb verzió ({latest_version})"
 
-#: package.py:385
+#: package.py:419
 msgid "installing"
 msgstr "telepítés"
 
-#: package.py:387
+#: package.py:421
 msgid "downloading"
 msgstr "letöltés"
 
-#: package.py:389
+#: package.py:423
 msgid "media change"
 msgstr "adathordozó csere"
 
-#: package.py:391
+#: package.py:425
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "konfigurációs fájl: {file}"
 
-#: package.py:419 package.py:444
+#: package.py:453 package.py:478
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -8625,67 +8643,49 @@ msgstr "Alkalmazások telepítése"
 msgid "Updating app"
 msgstr "Frissítés…"
 
-#: setup.py:77
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error installing app: {string} {details}"
-msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
-
-#: setup.py:81
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error updating app: {string} {details}"
-msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
-
-#: setup.py:87
+#: setup.py:75
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
-#: setup.py:90
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
-#: setup.py:94
+#: setup.py:82
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Alkalmazás telepítve."
 
-#: setup.py:96
+#: setup.py:84
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "Legutolsó frissítés"
 
-#: setup.py:113
+#: setup.py:101
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Alkalmazások telepítése"
 
-#: setup.py:131
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error uninstalling app: {string} {details}"
-msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
-
-#: setup.py:137
+#: setup.py:117
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Hiba lépett fel az alkalmazás telepítésekor: {error}"
 
-#: setup.py:140
+#: setup.py:120
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Alkalmazás telepítve."
 
-#: setup.py:513
+#: setup.py:493
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -8777,10 +8777,6 @@ msgstr "Alkalmazások"
 #: templates/base.html:127
 msgid " System"
 msgstr " Rendszer"
-
-#: templates/base.html:131
-msgid "System"
-msgstr "Rendszer"
 
 #: templates/base.html:166 templates/base.html:167
 msgid "Change password"
@@ -9086,11 +9082,11 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: views.py:247
+#: views.py:268
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
-#: views.py:481
+#: views.py:502
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9098,6 +9094,40 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "Storage snapshots configuration updated"
+#~ msgstr "Tárhelypillanatképek konfigurációja frissítve"
+
+#, python-brace-format
+#~ msgid "Action error: {0} [{1}] [{2}]"
+#~ msgstr "Hiba a művelet közben: {0} [{1}] [{2}]"
+
+#~ msgid "Automatic upgrades enabled"
+#~ msgstr "Automatikus frissítések engedélyezve"
+
+#~ msgid "Automatic upgrades disabled"
+#~ msgstr "Automatikus frissítések kikapcsolva"
+
+#~ msgid "Distribution upgrade enabled"
+#~ msgstr "Disztribúció frissítés engedélyezve"
+
+#~ msgid "Distribution upgrade disabled"
+#~ msgstr "Disztribúció frissítés letiltva"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error installing app: {string} {details}"
+#~ msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error updating app: {string} {details}"
+#~ msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error uninstalling app: {string} {details}"
+#~ msgstr "Hiba lépett fel az alkalmazás telepítésekor: {string} {details}"
 
 #~ msgid "Page source"
 #~ msgstr "Oldal forrása"
