@@ -145,6 +145,8 @@ def _clone_status_line_to_percent(line):
             total_progress = 10 + 0.6 * progress
         elif 'Resolving deltas' in text:
             total_progress = 70 + 0.3 * progress
+        else:
+            return None
 
         return str(int(total_progress))
 
