@@ -228,6 +228,11 @@ def get_connection_list():
     for connection in client.get_connections():
         # Display a friendly type name if known.
         connection_type = connection.get_connection_type()
+        # Do not show bridge adapter as it is not meant to
+        # be modified by the user.
+        if connection_type == 'bridge':
+            continue
+
         connection_type_name = CONNECTION_TYPE_NAMES.get(
             connection_type, connection_type)
 
