@@ -50,7 +50,7 @@ class PagekiteApp(app_module.App):
 
     _version = 2
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -64,7 +64,8 @@ class PagekiteApp(app_module.App):
 
         menu_item = menu.Menu('menu-pagekite', info.name,
                               info.short_description, info.icon,
-                              'pagekite:index', parent_url_name='system')
+                              'pagekite:index',
+                              parent_url_name='system:visibility', order=40)
         self.add(menu_item)
 
         packages = Packages('packages-pagekite', ['pagekite'])

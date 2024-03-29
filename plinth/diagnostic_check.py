@@ -5,10 +5,13 @@ import dataclasses
 import json
 from dataclasses import dataclass, field
 from enum import StrEnum
+from typing import TypeAlias
 
 from django.utils.translation import gettext
 
 from plinth.utils import SafeFormatter
+
+DiagnosticCheckParameters: TypeAlias = dict[str, str | int | bool | None]
 
 
 class Result(StrEnum):
@@ -26,7 +29,7 @@ class DiagnosticCheck:
     check_id: str
     description: str
     result: Result = Result.NOT_DONE
-    parameters: dict = field(default_factory=dict)
+    parameters: DiagnosticCheckParameters = field(default_factory=dict)
 
     @property
     def translated_description(self):

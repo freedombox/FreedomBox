@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 20:35-0500\n"
+"POT-Creation-Date: 2024-03-25 20:44-0400\n"
 "PO-Revision-Date: 2022-09-14 17:20+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -24,33 +24,33 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: context_processors.py:23 views.py:95
+#: context_processors.py:23 views.py:116
 msgid "FreedomBox"
 msgstr "Freedombox"
 
-#: daemon.py:105
+#: daemon.py:122
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Το πρόγραμμα {service_name} είναι ενεργοποιημένο"
 
-#: daemon.py:164
+#: daemon.py:218
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr ""
 "Το πρόγραμμα είναι προσβάσιμο στο πρωτόκολλο {kind} στη διεύθυνση "
 "{listen_address}:{port}"
 
-#: daemon.py:167
+#: daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Το πρόγραμμα είναι προσβάσιμο στο πρωτόκολλο {kind} στη θύρα {port}"
 
-#: daemon.py:236
+#: daemon.py:291
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Συνδεθείτε στη διεύθυνση {host}:{port}"
 
-#: daemon.py:240
+#: daemon.py:299
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Δεν είναι δυνατή η σύνδεση στη διεύθυνση {host}:{port}"
@@ -107,7 +107,32 @@ msgstr "Επιλέξτε γλώσσα που θα χρησιμοποιηθεί �
 msgid "Use the language preference set in the browser"
 msgstr "Χρήση της προεπιλεγμένης γλώσσας του περιηγητή διαδικτύου"
 
-#: middleware.py:130
+#: menu.py:106
+#, fuzzy
+#| msgid "Public Visibility"
+msgid "Visibility"
+msgstr "Δημόσια ορατότητα"
+
+#: menu.py:108
+msgid "Data"
+msgstr ""
+
+#: menu.py:110 templates/base.html:131
+msgid "System"
+msgstr "Σύστημα"
+
+#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: modules/security/__init__.py:35
+msgid "Security"
+msgstr "Ασφάλεια"
+
+#: menu.py:114
+#, fuzzy
+#| msgid "Server Administration"
+msgid "Administration"
+msgstr "Διαχείριση διακομιστή"
+
+#: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
 
@@ -126,12 +151,12 @@ msgstr "Διακομιστής Διαδικτύου (Web Server)"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Εφαρμογή Διαδικτύου (Πλίνθος)"
 
-#: modules/apache/components.py:154
+#: modules/apache/components.py:159
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Πρόσβαση διεύθυνσης {url} στο πρωτόκολλο tcp {kind}"
 
-#: modules/apache/components.py:157
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Πρόσβαση στη διεύθυνση URL {url}"
@@ -158,7 +183,7 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Εντοπισμός υπηρεσίας"
 
-#: modules/avahi/__init__.py:60
+#: modules/avahi/__init__.py:61
 msgid "Local Network Domain"
 msgstr "Τοπικός τομέας δικτύου"
 
@@ -168,36 +193,36 @@ msgstr ""
 "Τα αντίγραφα ασφαλείας επιτρέπουν τη δημιουργία και τη διαχείριση εφεδρικών "
 "αρχείων (backups)."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:167
-#: modules/backups/__init__.py:212
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
+#: modules/backups/__init__.py:213
 msgid "Backups"
 msgstr "Αντίγραφα ασφαλείας"
 
-#: modules/backups/__init__.py:164
+#: modules/backups/__init__.py:165
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr ""
 
-#: modules/backups/__init__.py:170
+#: modules/backups/__init__.py:171
 msgid "Enable a Backup Schedule"
 msgstr ""
 
-#: modules/backups/__init__.py:174 modules/backups/__init__.py:221
-#: modules/privacy/__init__.py:76 modules/storage/__init__.py:314
+#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
 #, fuzzy, python-brace-format
 #| msgid "About {box_name}"
 msgid "Go to {app_name}"
 msgstr "Σχετικά με το {box_name}"
 
-#: modules/backups/__init__.py:209
+#: modules/backups/__init__.py:210
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
 "succeed. The latest error is: {error_message}"
 msgstr ""
 
-#: modules/backups/__init__.py:217
+#: modules/backups/__init__.py:218
 #, fuzzy
 #| msgid "Existing Backups"
 msgid "Error During Backup"
@@ -440,7 +465,7 @@ msgstr ""
 msgid "Existing repository is not encrypted."
 msgstr "Το υπάρχον αποθετήριο δεν είναι κρυπτογραφημένο."
 
-#: modules/backups/repository.py:335
+#: modules/backups/repository.py:337
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Αποθηκευτικός χώρος {box_name}"
@@ -841,7 +866,7 @@ msgid "Permissions for anonymous users, who have not provided a password."
 msgstr ""
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
-#: modules/users/forms.py:110 modules/users/forms.py:233
+#: modules/users/forms.py:103
 msgid "Permissions"
 msgstr "Δικαιώματα"
 
@@ -926,8 +951,9 @@ msgstr ""
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
 #: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/zoph/views.py:74
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:83 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Η ρύθμιση παραμέτρων Ενημερώθηκε."
 
@@ -1034,7 +1060,7 @@ msgstr ""
 #: modules/bind/views.py:61 modules/config/views.py:98
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
-#: modules/email/views.py:45 modules/matrixsynapse/views.py:146
+#: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
@@ -1232,7 +1258,7 @@ msgstr "Γενικές ρυθμίσεις"
 msgid "Configure"
 msgstr "Ρυθμίσετε"
 
-#: modules/config/__init__.py:62 modules/config/forms.py:68
+#: modules/config/__init__.py:63 modules/config/forms.py:68
 #: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "Όνομα διαδικτύου"
@@ -1438,7 +1464,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr "Ημερομηνία και ώρα"
 
-#: modules/datetime/__init__.py:122
+#: modules/datetime/__init__.py:123
 msgid "Time synchronized to NTP server"
 msgstr "Η ώρα συγχρονίστηκε με τον διακομιστή NTP"
 
@@ -1502,7 +1528,7 @@ msgstr "Κατάλογος λήψεων"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Πελάτης BitTorrent γραμμένο σε Python/PyGTK"
 
-#: modules/diagnostics/__init__.py:27
+#: modules/diagnostics/__init__.py:28
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1511,81 +1537,81 @@ msgstr ""
 "σύστημά σας για να επιβεβαιώσει ότι οι εφαρμογές και οι υπηρεσίες "
 "λειτουργούν όπως αναμένεται."
 
-#: modules/diagnostics/__init__.py:51 modules/diagnostics/__init__.py:236
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
 msgid "Diagnostics"
 msgstr "Διαγνωστικά"
 
-#: modules/diagnostics/__init__.py:95
+#: modules/diagnostics/__init__.py:98
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:96 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
 #, fuzzy
 #| msgid "Setup failed."
 msgid "failed"
 msgstr "Η εγκατάσταση απέτυχε."
 
-#: modules/diagnostics/__init__.py:97
+#: modules/diagnostics/__init__.py:100
 msgid "error"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:101
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:202
+#: modules/diagnostics/__init__.py:206
 msgid "MiB"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:207
+#: modules/diagnostics/__init__.py:211
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: modules/diagnostics/__init__.py:214
+#: modules/diagnostics/__init__.py:218
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:219
+#: modules/diagnostics/__init__.py:223
 msgid "You should not install any new apps on this system."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:231
+#: modules/diagnostics/__init__.py:235
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:237
 msgid "Low Memory"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:264
+#: modules/diagnostics/__init__.py:268
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Εκτέλεση διαγνωστικών"
 
-#: modules/diagnostics/__init__.py:307
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:312
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Αποτελέσματα διαγνωστικών τεστ"
 
-#: modules/diagnostics/__init__.py:313
+#: modules/diagnostics/__init__.py:317
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1686,7 +1712,7 @@ msgstr "Τεστ"
 msgid "Result"
 msgstr "Αποτέλεσμα"
 
-#: modules/diagnostics/views.py:107
+#: modules/diagnostics/views.py:111
 msgid "Diagnostic Test"
 msgstr "Διαγνωστικός έλεγχος"
 
@@ -1744,7 +1770,7 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "Πελάτης δυναμικού DNS"
 
-#: modules/dynamicdns/__init__.py:74
+#: modules/dynamicdns/__init__.py:75
 msgid "Dynamic Domain Name"
 msgstr "Δυναμικό όνομα διαδικτύου"
 
@@ -1862,7 +1888,7 @@ msgid "Use HTTP basic authentication"
 msgstr "Χρήση βασικού ελέγχου ταυτότητας HTTP"
 
 #: modules/dynamicdns/forms.py:88 modules/networks/forms.py:207
-#: modules/users/forms.py:67
+#: modules/users/forms.py:129
 msgid "Username"
 msgstr "Όνομα χρήστη"
 
@@ -2289,29 +2315,29 @@ msgstr ""
 msgid "Firewall"
 msgstr "Firewall (τείχος προστασίας)"
 
-#: modules/firewall/__init__.py:271
+#: modules/firewall/__init__.py:273
 msgid "Default zone is external"
 msgstr ""
 
-#: modules/firewall/__init__.py:280
+#: modules/firewall/__init__.py:283
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: modules/firewall/__init__.py:293
+#: modules/firewall/__init__.py:297
 msgid "Direct passthrough rules exist"
 msgstr ""
 
-#: modules/firewall/components.py:136
+#: modules/firewall/components.py:139
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Θύρα {name} ({details}) διαθέσιμη για εσωτερικά δίκτυα"
 
-#: modules/firewall/components.py:147
+#: modules/firewall/components.py:153
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Η θύρα {name} ({details}) είναι διαθέσιμη για εξωτερικά δίκτυα"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:159
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Η θύρα {name} ({details}) δεν είναι διαθέσιμη για εξωτερικά δίκτυα"
@@ -2447,11 +2473,11 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Πρόσβαση ανάγνωσης και εγγραφής σε αποθετήρια Git"
 
-#: modules/gitweb/__init__.py:50 modules/gitweb/manifest.py:11
+#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "Gitweb"
 
-#: modules/gitweb/__init__.py:51
+#: modules/gitweb/__init__.py:49
 msgid "Simple Git Hosting"
 msgstr "Απλό Hosting Git"
 
@@ -2996,7 +3022,7 @@ msgid "I2P"
 msgstr "I2P"
 
 #: modules/i2p/__init__.py:53 modules/tor/__init__.py:63
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Anonymity Network"
 msgstr "Δίκτυο ανωνυμίας"
 
@@ -3419,7 +3445,7 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Πιστοποιητικά"
 
-#: modules/letsencrypt/__init__.py:104
+#: modules/letsencrypt/__init__.py:105
 msgid "Cannot test: No domains are configured."
 msgstr ""
 
@@ -3494,28 +3520,31 @@ msgstr ""
 "να διαρκέσει λίγα λεπτά για να τεθεί σε ισχύ."
 
 #: modules/letsencrypt/views.py:46
-#, python-brace-format
-msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+msgid "Failed to revoke certificate for domain {domain}"
 msgstr "Απέτυχε η ανάκληση του πιστοποιητικού για το όνομα {domain}: {error}"
 
-#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:76
+#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "Το πιστοποιητικό αποκτήθηκε με επιτυχία για το όνομα {domain}"
 
-#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:81
-#, python-brace-format
-msgid "Failed to obtain certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
+#, fuzzy, python-brace-format
+#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgid "Failed to obtain certificate for domain {domain}"
 msgstr "Αποτυχία λήψης πιστοποιητικού για το όνομα {domain} {error}"
 
-#: modules/letsencrypt/views.py:93
+#: modules/letsencrypt/views.py:95
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "Το πιστοποιητικό διαγράφηκε επιτυχώς για το όνομα {domain}"
 
-#: modules/letsencrypt/views.py:98
-#, python-brace-format
-msgid "Failed to delete certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Failed to delete certificate for domain {domain}: {error}"
+msgid "Failed to delete certificate for domain {domain}"
 msgstr "Αποτυχία διαγραφής πιστοποιητικού για το όνομα {domain}: {error}"
 
 #: modules/matrixsynapse/__init__.py:26
@@ -3712,7 +3741,7 @@ msgstr ""
 "TLS πιστοποιητικό. Μεταβείτε στη διεύθυνση <a href=\"%(letsencrypt_url)s\"> "
 "Lets Encrypt </a> για να αποκτήσετε ένα."
 
-#: modules/matrixsynapse/views.py:137
+#: modules/matrixsynapse/views.py:140
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
@@ -4173,7 +4202,7 @@ msgstr "Secure Shell"
 msgid "Services"
 msgstr "Υπηρεσία"
 
-#: modules/networks/__init__.py:35
+#: modules/networks/__init__.py:36
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4182,7 +4211,7 @@ msgstr ""
 "Ethernet, Wi-Fi ή PPPoE. Μοιραστείτε αυτήν τη σύνδεση με άλλες συσκευές στο "
 "δίκτυο."
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:38
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4190,7 +4219,7 @@ msgstr ""
 "Οι συσκευές που διαχειρίζονται μέσω άλλων μεθόδων ενδέχεται να μην είναι "
 "διαθέσιμες για ρύθμιση παραμέτρων εδώ."
 
-#: modules/networks/__init__.py:58
+#: modules/networks/__init__.py:59
 msgid "Networks"
 msgstr "Δίκτυα"
 
@@ -4696,11 +4725,6 @@ msgstr "IPv6"
 #: modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "Αυτή η σύνδεση δεν είναι ενεργή."
-
-#: modules/networks/templates/connection_show.html:259
-#: modules/security/__init__.py:35
-msgid "Security"
-msgstr "Ασφάλεια"
 
 #: modules/networks/templates/connection_show.html:264
 #: modules/networks/templates/connection_show.html:284
@@ -5447,7 +5471,7 @@ msgstr "PageKite"
 msgid "Public Visibility"
 msgstr "Δημόσια ορατότητα"
 
-#: modules/pagekite/__init__.py:73
+#: modules/pagekite/__init__.py:74
 msgid "PageKite Domain"
 msgstr "Όνομα διαδικτύου Pagekite"
 
@@ -5694,17 +5718,17 @@ msgstr "Τερματισμός τώρα"
 msgid "Manage system-wide privacy settings."
 msgstr ""
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:69
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
 #, fuzzy
 #| msgid "Privoxy"
 msgid "Privacy"
 msgstr "Privoxy"
 
-#: modules/privacy/__init__.py:67
+#: modules/privacy/__init__.py:68
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 
-#: modules/privacy/__init__.py:72
+#: modules/privacy/__init__.py:73
 msgid "Review privacy setting"
 msgstr ""
 
@@ -5723,7 +5747,7 @@ msgid ""
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
 
-#: modules/privoxy/__init__.py:24
+#: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -5735,7 +5759,7 @@ msgstr ""
 "τον έλεγχο της πρόσβασης και την κατάργηση διαφημίσεων και άλλων "
 "ανεπιθύμητων μηνυμάτων στο Internet. "
 
-#: modules/privoxy/__init__.py:29
+#: modules/privoxy/__init__.py:30
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "You can use Privoxy by modifying your browser proxy settings to your "
@@ -5758,15 +5782,15 @@ msgstr ""
 "href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> ή <a "
 "href=\"http://p.p\">http://p.p</a>."
 
-#: modules/privoxy/__init__.py:52
+#: modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:53
+#: modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr "Διακομιστής μεσολάβησης διαδικτύου"
 
-#: modules/privoxy/__init__.py:117
+#: modules/privoxy/__init__.py:118
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr ""
@@ -6821,7 +6845,7 @@ msgstr "Ημερομηνία"
 
 #: modules/snapshot/templates/snapshot_delete_selected.html:42
 #: modules/snapshot/templates/snapshot_manage.html:20
-#: modules/snapshot/views.py:201
+#: modules/snapshot/views.py:197
 msgid "Delete Snapshots"
 msgstr "Διαγραφή στιγμιότυπων"
 
@@ -6901,36 +6925,39 @@ msgstr "Διαχείριση στιγμιότυπων"
 msgid "Created snapshot."
 msgstr "Το στιγμιότυπο δημιουργήθηκε."
 
-#: modules/snapshot/views.py:158
-msgid "Storage snapshots configuration updated"
-msgstr "Η ρύθμιση παραμέτρων των στιγμιότυπων αποθήκευσης Ενημερώθηκε"
+#: modules/snapshot/views.py:160
+#, fuzzy
+#| msgid "Configuration updated."
+msgid "Configuration update failed."
+msgstr "Η ρύθμιση παραμέτρων Ενημερώθηκε."
 
-#: modules/snapshot/views.py:162
-#, python-brace-format
-msgid "Action error: {0} [{1}] [{2}]"
-msgstr "Σφάλμα ενέργειας: {0} [{1}] [{2}]"
-
-#: modules/snapshot/views.py:188
+#: modules/snapshot/views.py:184
 msgid "Deleted selected snapshots"
 msgstr "Διαγράφηκαν επιλεγμένα στιγμιότυπα"
 
-#: modules/snapshot/views.py:193
+#: modules/snapshot/views.py:186
+#, fuzzy
+#| msgid "Deleting LDAP user failed."
+msgid "Deleting snapshot failed."
+msgstr "Η διαγραφή του χρήστη LDAP απέτυχε."
+
+#: modules/snapshot/views.py:189
 msgid "Snapshot is currently in use. Please try again later."
 msgstr ""
 "Το στιγμιότυπο χρησιμοποιείται αυτήν τη στιγμή. Παρακαλώ προσπαθήστε ξανά "
 "αργότερα."
 
-#: modules/snapshot/views.py:212
+#: modules/snapshot/views.py:208
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "Πραγματοποιήθηκε επαναφορά στο στιγμιότυπο #{number}."
 
-#: modules/snapshot/views.py:215
+#: modules/snapshot/views.py:211
 msgid "The system must be restarted to complete the rollback."
 msgstr ""
 "Πρέπει να γίνει επανεκκίνηση του συστήματος για να ολοκληρωθεί η επαναφορά."
 
-#: modules/snapshot/views.py:225
+#: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "Επαναφορά σε στιγμιότυπο"
 
@@ -6951,7 +6978,7 @@ msgstr ""
 msgid "Secure Shell (SSH) Server"
 msgstr "Διακομιστής SSH"
 
-#: modules/ssh/__init__.py:73
+#: modules/ssh/__init__.py:75
 #, fuzzy
 #| msgid "Secure Shell (SSH)"
 msgid "Remotely login using Secure Shell (SSH)"
@@ -7037,91 +7064,91 @@ msgstr ""
 "χρησιμοποιούνται προς το παρόν, να προσθέσετε και να αφαιρέσετε αφαιρούμενα "
 "μέσα, επεκτείνετε το root διαμέρισμα κλπ."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:307
-#: modules/storage/__init__.py:338 modules/storage/__init__.py:384
+#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
+#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
 msgid "Storage"
 msgstr "Χώρος Αποθήκευσης"
 
-#: modules/storage/__init__.py:215
+#: modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bytes"
 
-#: modules/storage/__init__.py:219
+#: modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: modules/storage/__init__.py:223
+#: modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: modules/storage/__init__.py:227
+#: modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: modules/storage/__init__.py:230
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: modules/storage/__init__.py:242
+#: modules/storage/__init__.py:243
 msgid "The operation failed."
 msgstr "Η ενέργεια απέτυχε."
 
-#: modules/storage/__init__.py:244
+#: modules/storage/__init__.py:245
 msgid "The operation was cancelled."
 msgstr "Η ενέργεια ακυρώθηκε."
 
-#: modules/storage/__init__.py:246
+#: modules/storage/__init__.py:247
 msgid "The device is already unmounting."
 msgstr "Η συσκευή είναι ήδη προς αφαίρεση."
 
-#: modules/storage/__init__.py:248
+#: modules/storage/__init__.py:249
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "Η ενέργεια δεν υποστηρίζεται λόγω μη υποστήριξης προγραμματος οδηγού."
 
-#: modules/storage/__init__.py:251
+#: modules/storage/__init__.py:252
 msgid "The operation timed out."
 msgstr "Η ενέργεια απέτυχε επειδή διήρκησε πολύ χρόνο."
 
-#: modules/storage/__init__.py:253
+#: modules/storage/__init__.py:254
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr ""
 "Η ενέργεια θα ξυπνήσει ένα δίσκο που είναι σε μια βαθιά κατάσταση ύπνου."
 
-#: modules/storage/__init__.py:256
+#: modules/storage/__init__.py:257
 msgid "Attempting to unmount a device that is busy."
 msgstr "Γίνεται προσπάθεια αφαίρεσης μιας συσκευής που είναι απασχολημένη."
 
-#: modules/storage/__init__.py:258
+#: modules/storage/__init__.py:259
 msgid "The operation has already been cancelled."
 msgstr "Η ενέργια έχει ήδη ακυρωθεί."
 
-#: modules/storage/__init__.py:260 modules/storage/__init__.py:262
-#: modules/storage/__init__.py:264
+#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
+#: modules/storage/__init__.py:265
 msgid "Not authorized to perform the requested operation."
 msgstr "Δεν έχετε εξουσιοδότηση για την εκτέλεση της συγκεκριμένης ενέργειας."
 
-#: modules/storage/__init__.py:266
+#: modules/storage/__init__.py:267
 msgid "The device is already mounted."
 msgstr "Η συσκευή έχει ήδη προστεθεί."
 
-#: modules/storage/__init__.py:268
+#: modules/storage/__init__.py:269
 msgid "The device is not mounted."
 msgstr "Η συσκευή δεν είναι τοποθετημένη."
 
-#: modules/storage/__init__.py:270
+#: modules/storage/__init__.py:271
 msgid "Not permitted to use the requested option."
 msgstr "Δεν έχετε εξουσιοδότηση για την εκτέλεση της συγκεκριμένης ενέργειας."
 
-#: modules/storage/__init__.py:272
+#: modules/storage/__init__.py:273
 msgid "The device is mounted by another user."
 msgstr "Η συσκευή έχει ήδη προστεθεί από άλλο χρήστη."
 
-#: modules/storage/__init__.py:302
+#: modules/storage/__init__.py:303
 #, fuzzy, no-python-format, python-brace-format
 #| msgid ""
 #| "Warning: Low space on system partition ({percent_used}% used, "
@@ -7131,33 +7158,33 @@ msgstr ""
 "Προειδοποίηση: χαμηλός χώρος στο διαμέρισμα του συστήματος ({percent_used}% "
 "χρησιμοποιείται, {free_space} είναι ελεύθερος)."
 
-#: modules/storage/__init__.py:304
+#: modules/storage/__init__.py:305
 msgid "Low disk space"
 msgstr ""
 
-#: modules/storage/__init__.py:332
+#: modules/storage/__init__.py:333
 msgid "Disk failure imminent"
 msgstr ""
 
-#: modules/storage/__init__.py:334
+#: modules/storage/__init__.py:335
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
 "any data while you still can and replace the drive."
 msgstr ""
 
-#: modules/storage/__init__.py:378
+#: modules/storage/__init__.py:379
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
 
-#: modules/storage/__init__.py:381
+#: modules/storage/__init__.py:382
 msgid "Read-only root filesystem"
 msgstr ""
 
-#: modules/storage/__init__.py:391
+#: modules/storage/__init__.py:392
 #, fuzzy
 #| msgid "Power"
 msgid "Go to Power"
@@ -7270,9 +7297,10 @@ msgstr "{drive_vendor} {drive_model} μπορεί να αποσυνδεθεί μ
 msgid "Device can be safely unplugged."
 msgstr "Η συσκευή μπορεί να αποσυνδεθεί με ασφάλεια."
 
-#: modules/storage/views.py:98
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
+#: modules/storage/views.py:93
+#, fuzzy
+#| msgid "Error ejecting device: {error_message}"
+msgid "Error ejecting device."
 msgstr "Σφάλμα κατά την αφαίρεση της συσκευής: {error_message}"
 
 #: modules/syncthing/__init__.py:23
@@ -7326,7 +7354,7 @@ msgstr "Syncthing"
 msgid "File Synchronization"
 msgstr "Συγχρονισμός αρχείων"
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:28
+#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7506,7 +7534,7 @@ msgstr "Παρουσιάστηκε σφάλμα κατά τη ρύθμιση π�
 msgid "Error configuring app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: modules/torproxy/__init__.py:35
+#: modules/torproxy/__init__.py:36
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -7515,22 +7543,22 @@ msgid ""
 "using upstream bridges."
 msgstr ""
 
-#: modules/torproxy/__init__.py:55
+#: modules/torproxy/__init__.py:56
 #, fuzzy
 #| msgid "Tor Socks Proxy"
 msgid "Tor Proxy"
 msgstr "Tor διακομιστής μεσολάβησης τύπου socks5"
 
-#: modules/torproxy/__init__.py:80
+#: modules/torproxy/__init__.py:81
 msgid "Tor Socks Proxy"
 msgstr "Tor διακομιστής μεσολάβησης τύπου socks5"
 
-#: modules/torproxy/__init__.py:140
+#: modules/torproxy/__init__.py:142
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Πρόσβαση στη διεύθυνση URL {url} με tcp {kind} μέσω του Tor"
 
-#: modules/torproxy/__init__.py:152
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Επιβεβαίωση χρήσης του Tor στο {url} στο προτόκολλο TCP {kind}"
@@ -7690,7 +7718,7 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 #, fuzzy
@@ -7698,30 +7726,30 @@ msgstr ""
 msgid "Software Update"
 msgstr "Το μέρισμα διαγράφηκε."
 
-#: modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:129
 #, fuzzy
 #| msgid "FreedomBox Foundation"
 msgid "FreedomBox Updated"
 msgstr "Ίδρυμα FreedomBox"
 
-#: modules/upgrades/__init__.py:196
+#: modules/upgrades/__init__.py:197
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:198
+#: modules/upgrades/__init__.py:199
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:209
+#: modules/upgrades/__init__.py:210
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
 
-#: modules/upgrades/__init__.py:211
+#: modules/upgrades/__init__.py:212
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
@@ -7908,50 +7936,31 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
 
-#: modules/upgrades/views.py:71
-#, python-brace-format
-msgid "Error when configuring unattended-upgrades: {error}"
+#: modules/upgrades/views.py:73
+#, fuzzy
+#| msgid "Error when configuring unattended-upgrades: {error}"
+msgid "Error when configuring unattended-upgrades"
 msgstr "Σφάλμα κατά τη ρύθμιση των αυτόματων ενημερώσεων: {error}"
 
-#: modules/upgrades/views.py:75
-msgid "Automatic upgrades enabled"
-msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
-
-#: modules/upgrades/views.py:78
-msgid "Automatic upgrades disabled"
-msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
-
-#: modules/upgrades/views.py:86
-#, fuzzy
-#| msgid "Automatic upgrades enabled"
-msgid "Distribution upgrade enabled"
-msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
-
-#: modules/upgrades/views.py:89
-#, fuzzy
-#| msgid "Automatic upgrades disabled"
-msgid "Distribution upgrade disabled"
-msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
-
-#: modules/upgrades/views.py:126
+#: modules/upgrades/views.py:120
 msgid "Upgrade process started."
 msgstr "Ξεκίνησε η διαδικασία αναβάθμισης."
 
-#: modules/upgrades/views.py:128
+#: modules/upgrades/views.py:122
 msgid "Starting upgrade failed."
 msgstr "Η εκκίνηση της αναβάθμισης απέτυχε."
 
-#: modules/upgrades/views.py:138
+#: modules/upgrades/views.py:132
 msgid "Frequent feature updates activated."
 msgstr ""
 
-#: modules/upgrades/views.py:224
+#: modules/upgrades/views.py:218
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Starting distribution upgrade test."
 msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
 
-#: modules/users/__init__.py:32
+#: modules/users/__init__.py:33
 #, fuzzy
 #| msgid ""
 #| "Create and managed user accounts. These accounts serve as centralized "
@@ -7968,7 +7977,7 @@ msgstr ""
 "είναι μέρος μιας ομάδας για να εξουσιοδοτήσουν το χρήστη να αποκτήσει "
 "πρόσβαση στην εφαρμογή."
 
-#: modules/users/__init__.py:37
+#: modules/users/__init__.py:38
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7980,25 +7989,25 @@ msgstr ""
 "σελίδα. Ωστόσο, μόνο οι χρήστες της ομάδας <em>admin</em> μπορούν να "
 "τροποποιήσουν τις εφαρμογές ή τις ρυθμίσεις του συστήματος."
 
-#: modules/users/__init__.py:58
+#: modules/users/__init__.py:59
 msgid "Users and Groups"
 msgstr "Χρήστες και ομάδες"
 
-#: modules/users/__init__.py:83
+#: modules/users/__init__.py:85
 msgid "Access to all services and system settings"
 msgstr "Πρόσβαση σε όλες τις υπηρεσίες και τις ρυθμίσεις συστήματος"
 
-#: modules/users/__init__.py:127
+#: modules/users/__init__.py:129
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Ελέγξτε την καταχώρηση LDAP \"{search_item}\""
 
-#: modules/users/__init__.py:141
+#: modules/users/__init__.py:144
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: modules/users/__init__.py:171
+#: modules/users/__init__.py:174
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -8007,36 +8016,12 @@ msgstr ""
 msgid "Username is taken or is reserved."
 msgstr "Το όνομα χρήστη είναι δεσμευμένο."
 
-#: modules/users/forms.py:62
-#, fuzzy
-#| msgid "Invalid server name"
-msgid "Enter a valid username."
-msgstr "Μη έγκυρο όνομα διακομιστή"
-
-#: modules/users/forms.py:69
+#: modules/users/forms.py:70
 msgid ""
-"Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
+"Optional. Used to send emails to reset password and important notifications."
 msgstr ""
 
-#: modules/users/forms.py:78
-#, fuzzy
-#| msgid "Administrator Password"
-msgid "Authorization Password"
-msgstr "Κωδικός Πρόσβασης Διαχειριστή"
-
-#: modules/users/forms.py:85
-#, python-brace-format
-msgid ""
-"Enter the password for user \"{user}\" to authorize account modifications."
-msgstr ""
-
-#: modules/users/forms.py:94
-#, fuzzy
-#| msgid "Show password"
-msgid "Invalid password."
-msgstr "Εμφάνιση κωδικού"
-
-#: modules/users/forms.py:112
+#: modules/users/forms.py:106
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -8058,23 +8043,52 @@ msgstr ""
 "υπηρεσίες. Μπορούν επίσης να συνδεθούν στο σύστημα μέσω του SSH και να έχουν "
 "δικαιώματα διαχειριστή (sudo)."
 
-#: modules/users/forms.py:155 modules/users/forms.py:375
+#: modules/users/forms.py:124
+#, fuzzy
+#| msgid "Invalid server name"
+msgid "Enter a valid username."
+msgstr "Μη έγκυρο όνομα διακομιστή"
+
+#: modules/users/forms.py:131
+msgid ""
+"Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
+msgstr ""
+
+#: modules/users/forms.py:140
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Authorization Password"
+msgstr "Κωδικός Πρόσβασης Διαχειριστή"
+
+#: modules/users/forms.py:147
+#, python-brace-format
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
+msgstr ""
+
+#: modules/users/forms.py:156
+#, fuzzy
+#| msgid "Show password"
+msgid "Invalid password."
+msgstr "Εμφάνιση κωδικού"
+
+#: modules/users/forms.py:212 modules/users/forms.py:417
 #, fuzzy, python-brace-format
 #| msgid "Creating LDAP user failed."
 msgid "Creating LDAP user failed: {error}"
 msgstr "Η δημιουργία χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:166
+#: modules/users/forms.py:224
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to {group} group."
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Απέτυχε η προσθήκη νέου χρήστη στην ομάδα {group}."
 
-#: modules/users/forms.py:181
+#: modules/users/forms.py:240
 msgid "Authorized SSH Keys"
 msgstr "Εξουσιοδοτημένα κλειδιά SSH"
 
-#: modules/users/forms.py:183
+#: modules/users/forms.py:242
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -8085,37 +8099,37 @@ msgstr ""
 "Μπορείτε να εισαγάγετε πολλαπλά κλειδιά, ένα σε κάθε γραμμή. Οι κενές "
 "γραμμές και οι γραμμές που ξεκινούν με # θα αγνοηθούν."
 
-#: modules/users/forms.py:263
+#: modules/users/forms.py:298
 msgid "Renaming LDAP user failed."
 msgstr "Η μετονομασία του χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:274
+#: modules/users/forms.py:309
 msgid "Failed to remove user from group."
 msgstr "Απέτυχε η κατάργηση του χρήστη από την ομάδα."
 
-#: modules/users/forms.py:284
+#: modules/users/forms.py:319
 msgid "Failed to add user to group."
 msgstr "Απέτυχε η προσθήκη χρήστη στην ομάδα."
 
-#: modules/users/forms.py:291
+#: modules/users/forms.py:326
 msgid "Unable to set SSH keys."
 msgstr "Δεν ήταν δυνατό να προστεθούν τα κλειδιά SSH."
 
-#: modules/users/forms.py:304
+#: modules/users/forms.py:339
 msgid "Failed to change user status."
 msgstr "Απέτυχε η αλλαγή της κατάστασης χρήστη."
 
-#: modules/users/forms.py:345
+#: modules/users/forms.py:380
 msgid "Changing LDAP user password failed."
 msgstr "Η αλλαγή του κωδικού πρόσβασης χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:383
+#: modules/users/forms.py:425
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to admin group."
 msgid "Failed to add new user to admin group: {error}"
 msgstr "Αποτυχία προσθήκης νέου χρήστη στην ομάδα διαχειριστών."
 
-#: modules/users/forms.py:408
+#: modules/users/forms.py:448
 msgid "User account created, you are now logged in"
 msgstr "Ο λογαριασμός χρήστη δημιουργήθηκε, τώρα είστε συνδεδεμένοι"
 
@@ -8678,7 +8692,7 @@ msgid ""
 "WordPress site or blog. Enable only after performing initial WordPress setup."
 msgstr ""
 
-#: modules/zoph/__init__.py:23
+#: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
 "Zoph manages your photo collection. Photos are stored on your {box_name}, "
@@ -8691,7 +8705,7 @@ msgid ""
 "shared with others by sending a direct link."
 msgstr ""
 
-#: modules/zoph/__init__.py:34
+#: modules/zoph/__init__.py:35
 #, python-brace-format
 msgid ""
 "The {box_name} user who setup Zoph will also become the administrator in "
@@ -8699,11 +8713,11 @@ msgid ""
 "in Zoph with the same user name."
 msgstr ""
 
-#: modules/zoph/__init__.py:53 modules/zoph/manifest.py:6
+#: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr ""
 
-#: modules/zoph/__init__.py:54
+#: modules/zoph/__init__.py:57
 msgid "Photo Organizer"
 msgstr ""
 
@@ -8755,110 +8769,92 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr ""
 
-#: package.py:214
+#: package.py:206
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:231
+#: package.py:226
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:382
+#: package.py:419
 msgid "installing"
 msgstr "Εγκαθίσταται"
 
-#: package.py:384
+#: package.py:421
 msgid "downloading"
 msgstr "Λήψη"
 
-#: package.py:386
+#: package.py:423
 msgid "media change"
 msgstr "Αλλαγή μέσου"
 
-#: package.py:388
+#: package.py:425
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "αρχείο ρυθμίσεων: {file}"
 
-#: package.py:416 package.py:441
+#: package.py:453 package.py:478
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: setup.py:41
+#: setup.py:39
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "Εγκαταστήσετε Εφαρμογές"
 
-#: setup.py:43
+#: setup.py:41
 #, fuzzy
 #| msgid "Updating..."
 msgid "Updating app"
 msgstr "Eνημερώνεται..."
 
-#: setup.py:70
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error installing app: {string} {details}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
-
-#: setup.py:74
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error updating app: {string} {details}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
-
-#: setup.py:80
+#: setup.py:75
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:83
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:87
+#: setup.py:82
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Η εφαρμογή εγκαταστάθηκε."
 
-#: setup.py:89
+#: setup.py:84
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "Τελευταία ενημέρωση"
 
-#: setup.py:106
+#: setup.py:101
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Εγκαταστήσετε Εφαρμογές"
 
-#: setup.py:124
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error uninstalling app: {string} {details}"
-msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
-
-#: setup.py:130
+#: setup.py:117
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:133
+#: setup.py:120
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Η εφαρμογή εγκαταστάθηκε."
 
-#: setup.py:453
+#: setup.py:493
 msgid "Updating app packages"
 msgstr ""
 
@@ -8961,10 +8957,6 @@ msgstr "Εφαρμογές"
 #: templates/base.html:127
 msgid " System"
 msgstr " Σύστημα"
-
-#: templates/base.html:131
-msgid "System"
-msgstr "Σύστημα"
 
 #: templates/base.html:166 templates/base.html:167
 msgid "Change password"
@@ -9276,11 +9268,11 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: views.py:242
+#: views.py:268
 msgid "Setting unchanged"
 msgstr "Οι ρυθμίσεις δεν άλλαξαν"
 
-#: views.py:479
+#: views.py:502
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9288,6 +9280,44 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Storage snapshots configuration updated"
+#~ msgstr "Η ρύθμιση παραμέτρων των στιγμιότυπων αποθήκευσης Ενημερώθηκε"
+
+#, python-brace-format
+#~ msgid "Action error: {0} [{1}] [{2}]"
+#~ msgstr "Σφάλμα ενέργειας: {0} [{1}] [{2}]"
+
+#~ msgid "Automatic upgrades enabled"
+#~ msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
+
+#~ msgid "Automatic upgrades disabled"
+#~ msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
+
+#, fuzzy
+#~| msgid "Automatic upgrades enabled"
+#~ msgid "Distribution upgrade enabled"
+#~ msgstr "Oι αυτόματες ενημερώσεις ενεργοποιήθηκαν"
+
+#, fuzzy
+#~| msgid "Automatic upgrades disabled"
+#~ msgid "Distribution upgrade disabled"
+#~ msgstr "Oι αυτόματες ενημερώσεις απενεργοποιήθηκαν"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error installing app: {string} {details}"
+#~ msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error updating app: {string} {details}"
+#~ msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error uninstalling app: {string} {details}"
+#~ msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {string} {details}"
 
 #~ msgid "Page source"
 #~ msgstr "Πηγή της σελίδας"

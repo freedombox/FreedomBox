@@ -24,7 +24,7 @@ class PrivacyApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -36,7 +36,8 @@ class PrivacyApp(app_module.App):
 
         menu_item = menu.Menu('menu-privacy', info.name,
                               info.short_description, info.icon,
-                              'privacy:index', parent_url_name='system')
+                              'privacy:index', parent_url_name='system:data',
+                              order=10)
         self.add(menu_item)
 
         packages = Packages('packages-privacy', ['popularity-contest', 'gpg'])

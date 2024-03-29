@@ -11,8 +11,8 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon, RelatedDaemon
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Packages
 
 from . import manifest
@@ -60,7 +60,7 @@ class DateTimeApp(app_module.App):
 
         return self._time_managed
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -71,15 +71,16 @@ class DateTimeApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
-                              'datetime:index', parent_url_name='system')
+                              'datetime:index',
+                              parent_url_name='system:system', order=40)
         self.add(menu_item)
 
         packages = Packages('packages-datetime', ['systemd-timesyncd'])
         self.add(packages)
 
-        daemon = RelatedDaemon('daemon-datetime-timedated',
-                               'systemd-timedated')
-        self.add(daemon)
+        related_daemon = RelatedDaemon('daemon-datetime-timedated',
+                                       'systemd-timedated')
+        self.add(related_daemon)
 
         if self._is_time_managed():
             daemon = Daemon('daemon-datetime', 'systemd-timesyncd')
@@ -89,7 +90,7 @@ class DateTimeApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         if self._is_time_managed():
@@ -107,7 +108,7 @@ class DateTimeApp(app_module.App):
         self.enable()
 
 
-def _diagnose_time_synchronized():
+def _diagnose_time_synchronized() -> DiagnosticCheck:
     """Check whether time is synchronized to NTP server."""
     result = Result.FAILED
     try:

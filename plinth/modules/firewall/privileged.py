@@ -2,11 +2,14 @@
 """Configuration helper for FreedomBox firewall interface."""
 
 import subprocess
+from typing import TypeAlias
 
 import augeas
 
 from plinth import action_utils
 from plinth.actions import privileged
+
+FirewallConfig: TypeAlias = dict[str, str | list[str]]
 
 
 def _flush_iptables_rules():
@@ -132,9 +135,9 @@ def setup():
 
 
 @privileged
-def get_config():
+def get_config() -> FirewallConfig:
     """Return firewalld configuration for diagnostics."""
-    config = {}
+    config: FirewallConfig = {}
 
     # Get the default zone.
     output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])

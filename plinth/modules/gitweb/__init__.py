@@ -38,13 +38,11 @@ class GitwebApp(app_module.App):
 
     _version = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
         groups = {'git-access': _('Read-write access to Git repositories')}
-
-        self.repos = []
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Gitweb'), icon_filename='gitweb',
@@ -98,7 +96,7 @@ class GitwebApp(app_module.App):
 
     def post_init(self):
         """Perform post initialization operations."""
-        if not self.needs_setup() and self.is_enabled():
+        if not self.needs_setup():
             self.update_service_access()
 
     def set_shortcut_login_required(self, login_required):
@@ -122,7 +120,7 @@ class GitwebApp(app_module.App):
 
     def _disable_public_access(self):
         """Allow Gitweb app to be accessed by logged-in users only."""
-        if not self.auth_webserver.is_conf_enabled():
+        if self.is_enabled() and not self.auth_webserver.is_conf_enabled():
             self.auth_webserver.enable()
 
         self.set_shortcut_login_required(True)

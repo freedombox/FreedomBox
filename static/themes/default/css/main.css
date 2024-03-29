@@ -488,20 +488,16 @@ footer {
   justify-content: left;
 }
 
-.card-section-title {
+.card-section-title, .system-section-title {
     display: flex;
     font-weight: 800;
     font-size: 1.25rem;
-    padding: 0 2.875rem;
-    margin: 1.25rem 0;
+    margin-bottom: 1.25rem;
+    border-bottom: var(--neutral-dark-color) solid 2px;
 }
 
-.card-section-title:before, .card-section-title:after {
-    color: white;
-    content: '';
-    flex: 1;
-    border-bottom: var(--neutral-dark-color) solid 2px;
-    margin: auto 1.125rem;
+.card-section-title {
+    margin-top: 1.25rem;
 }
 
 a.menu_link {
@@ -605,7 +601,7 @@ a.menu_link_active {
 /* Button table - Tables with a list of actions as buttons on top */
 .index-page .card-list:before,
 .apps-page .card-list:before,
-.system-page .card-list:before {
+.system-page .system-section-title:first-child:before {
     position: relative;
     width: 25rem;
     height: 25rem;
@@ -627,7 +623,7 @@ a.menu_link_active {
     background-image: url('../img/apps-background.svg');
 }
 
-.system-page .card-list:before {
+.system-page .system-section-title:first-child:before {
     background-image: url('../img/system-background.svg');
 }
 

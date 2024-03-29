@@ -14,10 +14,10 @@ from django.views.generic import TemplateView
 
 from plinth import operation
 from plinth.app import App
+from plinth.diagnostic_check import Result
 from plinth.modules import diagnostics
 from plinth.views import AppView
 
-from .check import Result
 from .forms import ConfigureForm
 
 logger = logging.getLogger(__name__)
@@ -75,6 +75,10 @@ class DiagnosticsFullView(TemplateView):
         context['is_task_running'] = is_task_running
         context['results'] = diagnostics.get_results()
         context['refresh_page_sec'] = 3 if is_task_running else None
+        exception = context['results'].pop('exception', None)
+        if exception:
+            messages.error(self.request, exception)
+
         return context
 
 

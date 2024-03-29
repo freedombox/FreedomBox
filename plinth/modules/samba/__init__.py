@@ -41,9 +41,9 @@ class SambaApp(app_module.App):
 
     app_id = 'samba'
 
-    _version = 3
+    _version = 5
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -81,11 +81,6 @@ class SambaApp(app_module.App):
                                                   (445, 'tcp4'),
                                                   (445, 'tcp6')])
         self.add(daemon)
-
-        daemon_nmbd = Daemon('daemon-samba-nmbd', 'nmbd',
-                             listen_ports=[(137, 'udp4'), (138, 'udp4')])
-
-        self.add(daemon_nmbd)
 
         users_and_groups = UsersAndGroups('users-and-groups-samba',
                                           groups=groups)
@@ -137,7 +132,11 @@ def get_users():
 
     allowed_users = []
     for group_user in group_users:
-        uid = pwd.getpwnam(group_user).pw_uid
+        try:
+            uid = pwd.getpwnam(group_user).pw_uid
+        except KeyError:  # User doesn't exist
+            continue
+
         if uid > 1000:
             allowed_users.append(group_user)
 

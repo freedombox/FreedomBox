@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 20:35-0500\n"
+"POT-Creation-Date: 2024-03-25 20:44-0400\n"
 "PO-Revision-Date: 2024-02-11 20:14+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -26,31 +26,31 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "స్టాటిక్ కాన్ఫిగరేషన్ {etc_path} సరిగ్గా సెటప్ చేయబడింది"
 
-#: context_processors.py:23 views.py:95
+#: context_processors.py:23 views.py:116
 msgid "FreedomBox"
 msgstr "ఫ్రీడంబాక్స్"
 
-#: daemon.py:105
+#: daemon.py:122
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "సేవ {service_name} అమలవుతోంది"
 
-#: daemon.py:164
+#: daemon.py:218
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "{kind} పోర్ట్ {listen_address}:{port} పై వింటూ"
 
-#: daemon.py:167
+#: daemon.py:221
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "పోర్ట్ {port} పై ఆలకించమండి {kind}"
 
-#: daemon.py:236
+#: daemon.py:291
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "అనుసంధానించండి {host}:{port}"
 
-#: daemon.py:240
+#: daemon.py:299
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "అనుసంధానించండం సాధ్యంకాదు {host}:{port}"
@@ -101,7 +101,32 @@ msgstr "ఈ జాల అంతరవర్తి కోసం వాడాల�
 msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్లో ఉన్న భాషాప్రాధాన్యతనే ఉపయోగించు"
 
-#: middleware.py:130
+#: menu.py:106
+#, fuzzy
+#| msgid "Public Visibility"
+msgid "Visibility"
+msgstr "ప్రజా దృశ్యమానం"
+
+#: menu.py:108
+msgid "Data"
+msgstr ""
+
+#: menu.py:110 templates/base.html:131
+msgid "System"
+msgstr "వ్యవస్థ"
+
+#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: modules/security/__init__.py:35
+msgid "Security"
+msgstr "భద్రత"
+
+#: menu.py:114
+#, fuzzy
+#| msgid "Server Administration"
+msgid "Administration"
+msgstr "సేవిక పరిపాలన"
+
+#: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "సిస్టమ్ భారీ లోడ్‌లో ఉండవచ్చు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి."
 
@@ -118,12 +143,12 @@ msgstr "జాల సేవకం"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name}అంతర్జాల ముఖాంతరం (ఫ్లింథ్)"
 
-#: modules/apache/components.py:154
+#: modules/apache/components.py:159
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "{kind} పై URL {url} వాడుక"
 
-#: modules/apache/components.py:157
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "URL {url} ప్రవేశము"
@@ -148,7 +173,7 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "సేవా వెతుకులాట"
 
-#: modules/avahi/__init__.py:60
+#: modules/avahi/__init__.py:61
 msgid "Local Network Domain"
 msgstr "స్థానిక నెట్‌వర్క్ డొమైన్"
 
@@ -156,12 +181,12 @@ msgstr "స్థానిక నెట్‌వర్క్ డొమైన్"
 msgid "Backups allows creating and managing backup archives."
 msgstr "బ్యాకప్స్ అనేది బ్యాకప్ భాండాగారాలను సృష్టించడానికి మరియి నిర్వహించడానికి ఉపయోగపడుతుంది."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:167
-#: modules/backups/__init__.py:212
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
+#: modules/backups/__init__.py:213
 msgid "Backups"
 msgstr "బ్యాకప్స్"
 
-#: modules/backups/__init__.py:164
+#: modules/backups/__init__.py:165
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -169,17 +194,17 @@ msgstr ""
 "డేటా భద్రత కోసం ఆటోమేటిక్ బ్యాకప్ షెడ్యూల్‌ను ప్రారంభించండి. ఎన్‌క్రిప్టెడ్ రిమోట్ బ్యాకప్ లొకేషన్ లేదా అదనపు "
 "అటాచ్డ్ డిస్క్‌ని ప్రాధాన్యం చూపు."
 
-#: modules/backups/__init__.py:170
+#: modules/backups/__init__.py:171
 msgid "Enable a Backup Schedule"
 msgstr "బ్యాకప్ షెడ్యూల్‌ను ప్రారంభించండి"
 
-#: modules/backups/__init__.py:174 modules/backups/__init__.py:221
-#: modules/privacy/__init__.py:76 modules/storage/__init__.py:314
+#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "{app_name} కు వెళ్ళండి"
 
-#: modules/backups/__init__.py:209
+#: modules/backups/__init__.py:210
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -188,7 +213,7 @@ msgstr ""
 "షెడ్యూల్ చేయబడిన బ్యాకప్ విఫలమైంది. బ్యాకప్ కోసం గత {error_count} ప్రయత్నాలు విజయవంతం కాలేదు. తాజా "
 "లోపం: {error_message}"
 
-#: modules/backups/__init__.py:217
+#: modules/backups/__init__.py:218
 msgid "Error During Backup"
 msgstr "బ్యాకప్ సమయంలో లోపం"
 
@@ -425,7 +450,7 @@ msgstr "రిపోజిటరీ మార్గం ఖాళీగా లే
 msgid "Existing repository is not encrypted."
 msgstr "ఇప్పటికే ఉన్న రిపోజిటరీ గుప్తీకరించబడలేదు."
 
-#: modules/backups/repository.py:335
+#: modules/backups/repository.py:337
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} నిల్వ"
@@ -800,7 +825,7 @@ msgid "Permissions for anonymous users, who have not provided a password."
 msgstr "రహస్యపదం అందించని అనామక వినియోగదారులకు అనుమతులు."
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
-#: modules/users/forms.py:110 modules/users/forms.py:233
+#: modules/users/forms.py:103
 msgid "Permissions"
 msgstr "అనుమతులు"
 
@@ -878,8 +903,9 @@ msgstr "నిర్వాహకుడు"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
 #: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/zoph/views.py:74
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:83 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
@@ -968,7 +994,7 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: modules/bind/views.py:61 modules/config/views.py:98
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
-#: modules/email/views.py:45 modules/matrixsynapse/views.py:146
+#: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
@@ -1161,7 +1187,7 @@ msgstr "సాధారణ ఆకృతీకరణ"
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
-#: modules/config/__init__.py:62 modules/config/forms.py:68
+#: modules/config/__init__.py:63 modules/config/forms.py:68
 #: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
 msgid "Domain Name"
 msgstr "డొమైను పేరు"
@@ -1363,7 +1389,7 @@ msgstr ""
 msgid "Date & Time"
 msgstr "తేదీ &amp; సమయం"
 
-#: modules/datetime/__init__.py:122
+#: modules/datetime/__init__.py:123
 msgid "Time synchronized to NTP server"
 msgstr "సమయం NTP సర్వర్‌కి సమకాలీకరించబడింది"
 
@@ -1424,7 +1450,7 @@ msgstr "దిగుమతుల డైరెక్టరీ"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "పైథాన్ / పీవైజీటీకే లో బిట్ టోరెంట్ పై ఆధారపడిన వ్యక్తి వ్రాశారు"
 
-#: modules/diagnostics/__init__.py:27
+#: modules/diagnostics/__init__.py:28
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1432,47 +1458,47 @@ msgstr ""
 "వ్యవస్థ నిర్ధారణ పరీక్ష అనేది మీ కంప్యూటర్లో అన్ని సేవలు మరియు అప్లికేషన్లు అనుకున్న విధంగా పని "
 "చేస్తున్నాయో లేదో ధృవీకరించడం కోసం అనేక తనిఖీలు చేస్తుంది."
 
-#: modules/diagnostics/__init__.py:51 modules/diagnostics/__init__.py:236
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
 msgid "Diagnostics"
 msgstr "లక్షణాలు"
 
-#: modules/diagnostics/__init__.py:95
+#: modules/diagnostics/__init__.py:98
 msgid "passed"
 msgstr "ఉత్తీర్ణులయ్యారు"
 
-#: modules/diagnostics/__init__.py:96 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
 msgid "failed"
 msgstr "విఫలమయ్యారు"
 
-#: modules/diagnostics/__init__.py:97
+#: modules/diagnostics/__init__.py:100
 msgid "error"
 msgstr "లోపం"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:101
 msgid "warning"
 msgstr "హెచ్చరిక"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:202
+#: modules/diagnostics/__init__.py:206
 msgid "MiB"
 msgstr "నిర్వహణ సమాచార ఆధారం"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:207
+#: modules/diagnostics/__init__.py:211
 msgid "GiB"
 msgstr "గిబ్"
 
-#: modules/diagnostics/__init__.py:214
+#: modules/diagnostics/__init__.py:218
 msgid "You should disable some apps to reduce memory usage."
 msgstr "మెమరీ వినియోగాన్ని తగ్గించడానికి మీరు కొన్ని యాప్‌లను నిలిపివేయాలి."
 
-#: modules/diagnostics/__init__.py:219
+#: modules/diagnostics/__init__.py:223
 msgid "You should not install any new apps on this system."
 msgstr "మీరు ఈ సిస్టమ్‌లో ఏ కొత్త యాప్‌లను ఇన్‌స్టాల్ చేయకూడదు."
 
-#: modules/diagnostics/__init__.py:231
+#: modules/diagnostics/__init__.py:235
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1481,24 +1507,24 @@ msgstr ""
 "సిస్టమ్ మెమరీ తక్కువగా ఉంది: {percent_used}% ఉపయోగించబడింది, {memory_available} "
 "{memory_available_unit} ఉచితం. {advice_message}"
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:237
 msgid "Low Memory"
 msgstr "తక్కువ మెమరీ"
 
-#: modules/diagnostics/__init__.py:264
+#: modules/diagnostics/__init__.py:268
 msgid "Running diagnostics"
 msgstr "రన్నింగ్ డయాగ్నస్టిక్స్"
 
-#: modules/diagnostics/__init__.py:307
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "సాధారణ పరీక్షల సమయంలో {issue_count} సమస్యలు కనుగొనబడ్డాయి."
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:312
 msgid "Diagnostics results"
 msgstr "డయాగ్నోస్టిక్స్ ఫలితాలు"
 
-#: modules/diagnostics/__init__.py:313
+#: modules/diagnostics/__init__.py:317
 msgid "Go to diagnostics results"
 msgstr "డయాగ్నస్టిక్స్ ఫలితాలకు వెళ్లండి"
 
@@ -1581,7 +1607,7 @@ msgstr "పరీక్ష"
 msgid "Result"
 msgstr "ఫలితం"
 
-#: modules/diagnostics/views.py:107
+#: modules/diagnostics/views.py:111
 msgid "Diagnostic Test"
 msgstr "లక్షణాల పరీక్ష"
 
@@ -1629,7 +1655,7 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "గతిక DNS కక్షిదారు"
 
-#: modules/dynamicdns/__init__.py:74
+#: modules/dynamicdns/__init__.py:75
 msgid "Dynamic Domain Name"
 msgstr "డైనమిక్ డొమైన్ పేరు"
 
@@ -1729,7 +1755,7 @@ msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
 #: modules/dynamicdns/forms.py:88 modules/networks/forms.py:207
-#: modules/users/forms.py:67
+#: modules/users/forms.py:129
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
@@ -2133,29 +2159,29 @@ msgstr ""
 msgid "Firewall"
 msgstr "ఫైర్వాల్"
 
-#: modules/firewall/__init__.py:271
+#: modules/firewall/__init__.py:273
 msgid "Default zone is external"
 msgstr "డిఫాల్ట్ జోన్ ఐస్ ఎక్స్టర్నల్"
 
-#: modules/firewall/__init__.py:280
+#: modules/firewall/__init__.py:283
 msgid "Firewall backend is nftables"
 msgstr "ఫైర్వాల్ బక్కెను ఐస్ నాఫ్తాబ్ల్స్"
 
-#: modules/firewall/__init__.py:293
+#: modules/firewall/__init__.py:297
 msgid "Direct passthrough rules exist"
 msgstr "నిబంధనల ద్వారా డైరెక్ట్ పాస్ లు"
 
-#: modules/firewall/components.py:136
+#: modules/firewall/components.py:139
 #, python-brace-format
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "అంతర్గత నెట్‌వర్క్‌ల కోసం పోర్ట్ {name} ({details}) అందుబాటులో ఉంది"
 
-#: modules/firewall/components.py:147
+#: modules/firewall/components.py:153
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "అంతర్గత నెట్‌వర్క్‌ల కోసం పోర్ట్ {name} ({details}) అందుబాటులో ఉంది"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:159
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details})బాహ్య నెట్‌వర్క్‌లకు అందుబాటులో లేదు"
@@ -2289,11 +2315,11 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Git రిపోజిటరీలకు చదవడానికి-వ్రాయడానికి యాక్సెస్"
 
-#: modules/gitweb/__init__.py:50 modules/gitweb/manifest.py:11
+#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:11
 msgid "Gitweb"
 msgstr "గిట్వెబ్"
 
-#: modules/gitweb/__init__.py:51
+#: modules/gitweb/__init__.py:49
 msgid "Simple Git Hosting"
 msgstr "సాధారణ Git హోస్టింగ్"
 
@@ -2799,7 +2825,7 @@ msgid "I2P"
 msgstr "ఇ౨ప్"
 
 #: modules/i2p/__init__.py:53 modules/tor/__init__.py:63
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Anonymity Network"
 msgstr "అజ్ఞాత జాలిక"
 
@@ -3196,7 +3222,7 @@ msgstr "లెట్స్ ఎన్క్రిప్ట్"
 msgid "Certificates"
 msgstr "యోగ్యతాపత్రాలు"
 
-#: modules/letsencrypt/__init__.py:104
+#: modules/letsencrypt/__init__.py:105
 msgid "Cannot test: No domains are configured."
 msgstr "పరీక్షించడం సాధ్యం కాదు: డొమైన్‌లు ఏవీ కాన్ఫిగర్ చేయబడలేదు."
 
@@ -3271,28 +3297,31 @@ msgstr ""
 "పట్టవచ్చు."
 
 #: modules/letsencrypt/views.py:46
-#, python-brace-format
-msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+msgid "Failed to revoke certificate for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ ఉప్సంహరుంచుకొనడంలో విఫలం: {error}"
 
-#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:76
+#: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ సంపాదింపబడింది"
 
-#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:81
-#, python-brace-format
-msgid "Failed to obtain certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
+#, fuzzy, python-brace-format
+#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+msgid "Failed to obtain certificate for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ సంపాదించుటలో విఫలం: {error}"
 
-#: modules/letsencrypt/views.py:93
+#: modules/letsencrypt/views.py:95
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు సర్టిఫికేట్ తొలగించబడింది"
 
-#: modules/letsencrypt/views.py:98
-#, python-brace-format
-msgid "Failed to delete certificate for domain {domain}: {error}"
+#: modules/letsencrypt/views.py:100
+#, fuzzy, python-brace-format
+#| msgid "Failed to delete certificate for domain {domain}: {error}"
+msgid "Failed to delete certificate for domain {domain}"
 msgstr "{domain} డోమైన్ కొరకు ధృవీకరణపత్రం నిర్మూలించడంలో విఫలం: {error}"
 
 #: modules/matrixsynapse/__init__.py:26
@@ -3471,7 +3500,7 @@ msgstr ""
 "కూడిన ఫెడరేషన్‌కు చెల్లుబాటు అయ్యే TLS ప్రమాణపత్రం అవసరం. దయచేసి ఒకదాన్ని పొందడానికి <a "
 "href=\"%(letsencrypt_url)s\">లెట్స్ ఎన్‌క్రిప్ట్</a>కి వెళ్లండి."
 
-#: modules/matrixsynapse/views.py:137
+#: modules/matrixsynapse/views.py:140
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
 
@@ -3875,7 +3904,7 @@ msgstr "సెక్యూర్ షెల్"
 msgid "Services"
 msgstr "సేవలు"
 
-#: modules/networks/__init__.py:35
+#: modules/networks/__init__.py:36
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -3883,13 +3912,13 @@ msgstr ""
 "కాన్ఫిగర్ చేయగల నెట్‌వర్క్ పరికరాలు. ఈథర్నెట్ మరియు Wi-Fi లేదా PPPoE ద్వారా ఇంటర్నెట్‌తో కనెక్ట్ అవ్వండి. "
 "నెట్‌వర్క్‌లోని ఇతర పరికరాలతో ఆ కనెక్షన్‌ని భాగస్వామ్యం చేయండి."
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:38
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr "ఇతర పద్ధతుల ద్వారా నిర్వహించబడే పరికరాలు ఇక్కడ ఆకృతీకరణకు అందుబాటులో ఉండకపోవచ్చు."
 
-#: modules/networks/__init__.py:58
+#: modules/networks/__init__.py:59
 msgid "Networks"
 msgstr "అల్లికలు"
 
@@ -4429,11 +4458,6 @@ msgstr "IPv6"
 #: modules/networks/templates/connection_show.html:256
 msgid "This connection is not active."
 msgstr "ఈ అనుసంధానం చురుకుగాలేదు."
-
-#: modules/networks/templates/connection_show.html:259
-#: modules/security/__init__.py:35
-msgid "Security"
-msgstr "భద్రత"
 
 #: modules/networks/templates/connection_show.html:264
 #: modules/networks/templates/connection_show.html:284
@@ -5127,7 +5151,7 @@ msgstr "పేజ్‌కైట్"
 msgid "Public Visibility"
 msgstr "ప్రజా దృశ్యమానం"
 
-#: modules/pagekite/__init__.py:73
+#: modules/pagekite/__init__.py:74
 msgid "PageKite Domain"
 msgstr "పేజ్‌కైట్ అధికారక్షేత్రం"
 
@@ -5362,15 +5386,15 @@ msgstr "ఇపుడు మూసివేయండి"
 msgid "Manage system-wide privacy settings."
 msgstr "సిస్టమ్-వైడ్ గోప్యతా సెట్టింగ్‌లను నిర్వహించండి."
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:69
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
 msgid "Privacy"
 msgstr "అంతరంగికత"
 
-#: modules/privacy/__init__.py:67
+#: modules/privacy/__init__.py:68
 msgid "Please update privacy settings to match your preferences."
 msgstr "మీ అభిరుచులకు అనుగుణంగా అంతరంగిక సెట్టింగులను మార్చుకోండి."
 
-#: modules/privacy/__init__.py:72
+#: modules/privacy/__init__.py:73
 msgid "Review privacy setting"
 msgstr "అంతరంగిక సెట్టింగ్‌ని సమీక్షించండి"
 
@@ -5394,7 +5418,7 @@ msgstr ""
 "target=\"_blank\">popcon.debian.org</a>లో పబ్లిక్‌గా అందుబాటులో ఉన్నాయి. టోర్ యాప్ "
 "ప్రారంభించబడితే అదనపు అజ్ఞాతం కోసం టోర్ నెట్‌వర్క్ ద్వారా సమర్పణ జరుగుతుంది."
 
-#: modules/privoxy/__init__.py:24
+#: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
 "enhancing privacy, modifying web page data and HTTP headers, controlling "
@@ -5404,7 +5428,7 @@ msgstr ""
 "నియంత్రించడం మరియు ప్రకటనలను మరియు ఇతర చెడ్డ ఇంటర్నెట్ వ్యర్థాలను తొలగించడం కోసం ఆధునిక ఫిల్టరింగ్ "
 "సామర్థ్యాలతో ఒక కాని క్యాచింగ్ వెబ్ ప్రాక్సీ. "
 
-#: modules/privoxy/__init__.py:29
+#: modules/privoxy/__init__.py:30
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "You can use Privoxy by modifying your browser proxy settings to your "
@@ -5425,15 +5449,15 @@ msgstr ""
 "డాక్యుమెంటేషన్ <a href=\"http://config.privoxy.org\"> http://config.privoxy.org/</"
 "a> లేదా <a href=\"http://p.p\"> http://p.p</a> లో చూడవచ్చు."
 
-#: modules/privoxy/__init__.py:52
+#: modules/privoxy/__init__.py:53
 msgid "Privoxy"
 msgstr "ప్రివొక్సి"
 
-#: modules/privoxy/__init__.py:53
+#: modules/privoxy/__init__.py:54
 msgid "Web Proxy"
 msgstr "వెబ్ ప్రాక్సీ"
 
-#: modules/privoxy/__init__.py:117
+#: modules/privoxy/__init__.py:118
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "టీసీపీ{kind} పై{proxy} తో యాక్సిస్ {url} చేయండి"
@@ -6392,7 +6416,7 @@ msgstr "తేదీ"
 
 #: modules/snapshot/templates/snapshot_delete_selected.html:42
 #: modules/snapshot/templates/snapshot_manage.html:20
-#: modules/snapshot/views.py:201
+#: modules/snapshot/views.py:197
 msgid "Delete Snapshots"
 msgstr "స్నాప్షాట్‌లను తొలగించు"
 
@@ -6464,33 +6488,36 @@ msgstr "స్నాప్‌షాట్‌లను నిర్వహిం�
 msgid "Created snapshot."
 msgstr "స్నాప్షాట్‌ సృష్టించబడినది."
 
-#: modules/snapshot/views.py:158
-msgid "Storage snapshots configuration updated"
-msgstr "నిల్వ స్నాప్‌షాట్‌ల కాన్ఫిగరేషన్ నవీకరించబడింది"
+#: modules/snapshot/views.py:160
+#, fuzzy
+#| msgid "Configuration updated."
+msgid "Configuration update failed."
+msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
-#: modules/snapshot/views.py:162
-#, python-brace-format
-msgid "Action error: {0} [{1}] [{2}]"
-msgstr "చర్య లోపం:{0}{1}{2}"
-
-#: modules/snapshot/views.py:188
+#: modules/snapshot/views.py:184
 msgid "Deleted selected snapshots"
 msgstr "ఎంచుకున్న స్నాప్‌షాట్‌లు తొలగించబడ్డాయి"
 
-#: modules/snapshot/views.py:193
+#: modules/snapshot/views.py:186
+#, fuzzy
+#| msgid "Deleting LDAP user failed."
+msgid "Deleting snapshot failed."
+msgstr "ఎల్.డి.ఏ.పి వినియోగదారి తొలగింపు విఫలం."
+
+#: modules/snapshot/views.py:189
 msgid "Snapshot is currently in use. Please try again later."
 msgstr "స్నాప్‌షాట్ ప్రస్తుతం వాడుకలో ఉంది. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి."
 
-#: modules/snapshot/views.py:212
+#: modules/snapshot/views.py:208
 #, python-brace-format
 msgid "Rolled back to snapshot #{number}."
 msgstr "స్నాప్షాట్ #{number} కు తీస్కుని వెళ్ళబడింది."
 
-#: modules/snapshot/views.py:215
+#: modules/snapshot/views.py:211
 msgid "The system must be restarted to complete the rollback."
 msgstr "రొల్ల్బచ్క్ ని పూర్తి చేయడానికి వ్యవస్థను పునరుద్ధరించాలి."
 
-#: modules/snapshot/views.py:225
+#: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "చాయాచిత్రం కు రొల్ల్బచ్క్ చేయండి"
 
@@ -6509,7 +6536,7 @@ msgstr ""
 msgid "Secure Shell (SSH) Server"
 msgstr "సెక్యూర్ షెల్ (SSH) సర్వర్"
 
-#: modules/ssh/__init__.py:73
+#: modules/ssh/__init__.py:75
 #, fuzzy
 #| msgid "Secure Shell (SSH)"
 msgid "Remotely login using Secure Shell (SSH)"
@@ -6591,103 +6618,103 @@ msgstr ""
 "ప్రస్తుతం వాడుకలో ఉన్న స్టోరేజ్ మీడియాను వీక్షించవచ్చు, తొలగించగల మీడియాను మౌంట్ చేయవచ్చు మరియు అన్‌మౌంట్ "
 "చేయవచ్చు, రూట్ విభజనను విస్తరించవచ్చు మొదలైనవి."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:307
-#: modules/storage/__init__.py:338 modules/storage/__init__.py:384
+#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
+#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
 msgid "Storage"
 msgstr "నిల్వ"
 
-#: modules/storage/__init__.py:215
+#: modules/storage/__init__.py:216
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} బైట్లు"
 
-#: modules/storage/__init__.py:219
+#: modules/storage/__init__.py:220
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} కిలోబైట్లు"
 
-#: modules/storage/__init__.py:223
+#: modules/storage/__init__.py:224
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} మెగాబైట్లు"
 
-#: modules/storage/__init__.py:227
+#: modules/storage/__init__.py:228
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} గిగాబైట్లు"
 
-#: modules/storage/__init__.py:230
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} టెరాబైట్లు"
 
-#: modules/storage/__init__.py:242
+#: modules/storage/__init__.py:243
 msgid "The operation failed."
 msgstr "ఆపరేషన్ విఫలమైంది."
 
-#: modules/storage/__init__.py:244
+#: modules/storage/__init__.py:245
 msgid "The operation was cancelled."
 msgstr "ఆపరేషన్ రద్దు చేయబడింది."
 
-#: modules/storage/__init__.py:246
+#: modules/storage/__init__.py:247
 msgid "The device is already unmounting."
 msgstr "పరికరం ఇప్పటికే అన్‌మౌంట్ చేయబడుతోంది."
 
-#: modules/storage/__init__.py:248
+#: modules/storage/__init__.py:249
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "డ్రైవర్/టూల్ సపోర్ట్ తప్పిపోయినందున ఆపరేషన్‌కు మద్దతు లేదు."
 
-#: modules/storage/__init__.py:251
+#: modules/storage/__init__.py:252
 msgid "The operation timed out."
 msgstr "ఆపరేషన్ టైమవుట్ అయింది."
 
-#: modules/storage/__init__.py:253
+#: modules/storage/__init__.py:254
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "ఈ ఆపరేషన్ గాఢ నిద్రలో ఉన్న ఒక డిస్క్ ను మేల్కొలుపుతుంది."
 
-#: modules/storage/__init__.py:256
+#: modules/storage/__init__.py:257
 msgid "Attempting to unmount a device that is busy."
 msgstr "బిజీగా ఉన్న పరికరాన్ని అన్‌మౌంట్ చేయడానికి ప్రయత్నిస్తోంది."
 
-#: modules/storage/__init__.py:258
+#: modules/storage/__init__.py:259
 msgid "The operation has already been cancelled."
 msgstr "ఆపరేషన్ ఇప్పటికే రద్దు చేయబడింది."
 
-#: modules/storage/__init__.py:260 modules/storage/__init__.py:262
-#: modules/storage/__init__.py:264
+#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
+#: modules/storage/__init__.py:265
 msgid "Not authorized to perform the requested operation."
 msgstr "అభ్యర్థించిన ఆపరేషన్ చేయడానికి అధికారం లేదు."
 
-#: modules/storage/__init__.py:266
+#: modules/storage/__init__.py:267
 msgid "The device is already mounted."
 msgstr "పరికరం ఇప్పటికే మౌంట్ చేయబడింది."
 
-#: modules/storage/__init__.py:268
+#: modules/storage/__init__.py:269
 msgid "The device is not mounted."
 msgstr "పరికరం మౌంట్ చేయబడలేదు."
 
-#: modules/storage/__init__.py:270
+#: modules/storage/__init__.py:271
 msgid "Not permitted to use the requested option."
 msgstr "అభ్యర్థించిన ఎంపికను ఉపయోగించడానికి అనుమతి లేదు."
 
-#: modules/storage/__init__.py:272
+#: modules/storage/__init__.py:273
 msgid "The device is mounted by another user."
 msgstr "పరికరం మరొక వినియోగదారుచే మౌంట్ చేయబడింది."
 
-#: modules/storage/__init__.py:302
+#: modules/storage/__init__.py:303
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr "సిస్టమ్ విభజనలో తక్కువ స్థలం: {percent_used}% used, {free_space} ఉచితం."
 
-#: modules/storage/__init__.py:304
+#: modules/storage/__init__.py:305
 msgid "Low disk space"
 msgstr "తక్కువ ఖని స్థలం"
 
-#: modules/storage/__init__.py:332
+#: modules/storage/__init__.py:333
 msgid "Disk failure imminent"
 msgstr "ఖని వైఫల్యం ఆసన్నమైంది"
 
-#: modules/storage/__init__.py:334
+#: modules/storage/__init__.py:335
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6696,20 +6723,20 @@ msgstr ""
 "ఖని {id}సమీప భవిష్యత్తులో విఫలమయ్యే అవకాశం ఉందని నివేదిస్తోంది. మీరు చేయగలిగినప్పుడు ఏదైనా సమాచారంకాపీ "
 "చేసి, చోదకం భర్తీ చేయండి."
 
-#: modules/storage/__init__.py:378
+#: modules/storage/__init__.py:379
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
 
-#: modules/storage/__init__.py:381
+#: modules/storage/__init__.py:382
 #, fuzzy
 #| msgid "System"
 msgid "Read-only root filesystem"
 msgstr "వ్యవస్థ"
 
-#: modules/storage/__init__.py:391
+#: modules/storage/__init__.py:392
 #, fuzzy
 #| msgid "Go to Networks"
 msgid "Go to Power"
@@ -6823,9 +6850,10 @@ msgstr "{drive_vendor} {drive_model} ని సురక్షితంగా �
 msgid "Device can be safely unplugged."
 msgstr "పరికరాన్ని సురక్షితంగా తొలగించవచ్చు."
 
-#: modules/storage/views.py:98
-#, python-brace-format
-msgid "Error ejecting device: {error_message}"
+#: modules/storage/views.py:93
+#, fuzzy
+#| msgid "Error ejecting device: {error_message}"
+msgid "Error ejecting device."
 msgstr "పరికరాన్ని తొలగించడంలో లోపం: {error_message}"
 
 #: modules/syncthing/__init__.py:23
@@ -6868,7 +6896,7 @@ msgstr "సింక్ తింగ్"
 msgid "File Synchronization"
 msgstr "ఫైళ్ళ సమకాలీకరణ"
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:28
+#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7034,7 +7062,7 @@ msgstr "కాన్ఫిగరేషన్‌ను నవీకరిస్�
 msgid "Error configuring app: {error}"
 msgstr "యాప్‌ని కాన్ఫిగర్ చేయడంలో లోపం: {error}"
 
-#: modules/torproxy/__init__.py:35
+#: modules/torproxy/__init__.py:36
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -7046,20 +7074,20 @@ msgstr ""
 "ప్రాక్సీని అందిస్తుంది. Tor నెట్‌వర్క్ ద్వారా ఇంటర్నెట్‌ను యాక్సెస్ చేయడానికి వివిధ యాప్‌ల ద్వారా దీన్ని "
 "ఉపయోగించవచ్చు. ISP సెన్సార్‌షిప్‌ను అప్‌స్ట్రీమ్ వంతెనలను ఉపయోగించి తప్పించుకోవచ్చు."
 
-#: modules/torproxy/__init__.py:55
+#: modules/torproxy/__init__.py:56
 msgid "Tor Proxy"
 msgstr "టోర్ ప్రాక్సీ"
 
-#: modules/torproxy/__init__.py:80
+#: modules/torproxy/__init__.py:81
 msgid "Tor Socks Proxy"
 msgstr "టోర్ సాక్స్ ప్రాతినిధ్య"
 
-#: modules/torproxy/__init__.py:140
+#: modules/torproxy/__init__.py:142
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "టార్ ద్వారా {kind} లో {url} ను ఆక్సెస్ చెయ్యండి"
 
-#: modules/torproxy/__init__.py:152
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "టోర్ వాడుకను నిర్ధారించండి{url} టీ సి పి పై{kind}"
@@ -7210,21 +7238,21 @@ msgstr ""
 "అందుబాటులో ఉండవు. సిస్టమ్ రీబూట్ అవసరమని భావించినట్లయితే, అది స్వయంచాలకంగా 02:00కి చేయబడుతుంది, "
 "దీని వలన అన్ని యాప్‌లు క్లుప్తంగా అందుబాటులో ఉండవు."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "సాఫ్ట్‌వేర్ నవీకరణ"
 
-#: modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:129
 msgid "FreedomBox Updated"
 msgstr "స్వతంత్ర సాఫ్ట్వేర్ తాజా పరుచడం"
 
-#: modules/upgrades/__init__.py:196
+#: modules/upgrades/__init__.py:197
 msgid "Could not start distribution update"
 msgstr "పంపిణీ నవీకరణను ప్రారంభించడం సాధ్యపడలేదు"
 
-#: modules/upgrades/__init__.py:198
+#: modules/upgrades/__init__.py:199
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7233,11 +7261,11 @@ msgstr ""
 "పంపిణీ నవీకరణను ప్రారంభించడానికి రూట్ విభజనలో తగినంత ఖాళీ స్థలం లేదు. దయచేసి కనీసం 5 GB ఉచితంగా "
 "ఉండేలా చూసుకోండి. ప్రారంభించబడితే, పంపిణీ నవీకరణ 24 గంటల తర్వాత మళ్లీ ప్రయత్నించబడుతుంది."
 
-#: modules/upgrades/__init__.py:209
+#: modules/upgrades/__init__.py:210
 msgid "Distribution update started"
 msgstr "పంపిణీ నవీకరణ ప్రారంభమైంది"
 
-#: modules/upgrades/__init__.py:211
+#: modules/upgrades/__init__.py:212
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr "తదుపరి స్థిరమైన విడుదలకు నవీకరణ ప్రారంభించబడింది. ఇది పూర్తి కావడానికి చాలా సమయం పట్టవచ్చు."
@@ -7408,44 +7436,29 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "పంపిణీ మెరుగుపరుచడం ప్రారంభించబడింది"
 
-#: modules/upgrades/views.py:71
-#, python-brace-format
-msgid "Error when configuring unattended-upgrades: {error}"
+#: modules/upgrades/views.py:73
+#, fuzzy
+#| msgid "Error when configuring unattended-upgrades: {error}"
+msgid "Error when configuring unattended-upgrades"
 msgstr "గమనింపబడని-నవీకరణలు ఆకృతీకరించునప్పుడు దోషం: {error}"
 
-#: modules/upgrades/views.py:75
-msgid "Automatic upgrades enabled"
-msgstr "స్వయంచాలక నవీకరణలు ప్రారంభించబడ్డాయి"
-
-#: modules/upgrades/views.py:78
-msgid "Automatic upgrades disabled"
-msgstr "స్వయంచాలక నవీకరణలు నిలిపివేయబడ్డాయి"
-
-#: modules/upgrades/views.py:86
-msgid "Distribution upgrade enabled"
-msgstr "పంపిణీ మెరుగుపరుచడం ప్రారంభించబడింది"
-
-#: modules/upgrades/views.py:89
-msgid "Distribution upgrade disabled"
-msgstr "పంపిణీ మెరుగుపరుచడం నిలిపివేయబడింది"
-
-#: modules/upgrades/views.py:126
+#: modules/upgrades/views.py:120
 msgid "Upgrade process started."
 msgstr "అప్గ్రేడ్ ప్రక్రియ ప్రారంభించబడింది."
 
-#: modules/upgrades/views.py:128
+#: modules/upgrades/views.py:122
 msgid "Starting upgrade failed."
 msgstr "నవీకరణ ప్రారంభం విఫలమైంది."
 
-#: modules/upgrades/views.py:138
+#: modules/upgrades/views.py:132
 msgid "Frequent feature updates activated."
 msgstr "తరచుగా ఫీచర్ అప్‌డేట్‌లు యాక్టివేట్ చేయబడ్డాయి."
 
-#: modules/upgrades/views.py:224
+#: modules/upgrades/views.py:218
 msgid "Starting distribution upgrade test."
 msgstr "పంపిణీ మెరుగుపరిచే పరిక్ష ప్రారంభించబడింది."
 
-#: modules/users/__init__.py:32
+#: modules/users/__init__.py:33
 msgid ""
 "Create and manage user accounts. These accounts serve as centralized "
 "authentication mechanism for most apps. Some apps further require a user "
@@ -7455,7 +7468,7 @@ msgstr ""
 "విధానంగా పనిచేస్తాయి. కొన్ని యాప్‌లకు యాప్‌ను యాక్సెస్ చేయడానికి వినియోగదారుని ప్రామాణీకరించడానికి సమూహంలో భాగంగా "
 "వినియోగదారు ఖాతా అవసరం."
 
-#: modules/users/__init__.py:37
+#: modules/users/__init__.py:38
 #, python-brace-format
 msgid ""
 "Any user may login to {box_name} web interface to see a list of apps "
@@ -7466,25 +7479,25 @@ msgstr ""
 "చేయవచ్చు. అయినప్పటికీ, <em>అడ్మిన్</em> సమూహం యొక్క వినియోగదారులు మాత్రమే యాప్‌లు లేదా సిస్టమ్ "
 "సెట్టింగ్‌లను మార్చవచ్చు."
 
-#: modules/users/__init__.py:58
+#: modules/users/__init__.py:59
 msgid "Users and Groups"
 msgstr "వినియోగదారులు మరియు సమూహాలు"
 
-#: modules/users/__init__.py:83
+#: modules/users/__init__.py:85
 msgid "Access to all services and system settings"
 msgstr "అన్ని సేవలకు మరియు సిస్టమ్ అమరికలకు ప్రాప్యత"
 
-#: modules/users/__init__.py:127
+#: modules/users/__init__.py:129
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "LDAP నమోదు \"{search_item}\" తనిఖీ"
 
-#: modules/users/__init__.py:141
+#: modules/users/__init__.py:144
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: modules/users/__init__.py:171
+#: modules/users/__init__.py:174
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -7493,31 +7506,12 @@ msgstr ""
 msgid "Username is taken or is reserved."
 msgstr "యూజర్ పేరు తీసుకోబడింది లేదా రిజర్వ్ చేయబడింది."
 
-#: modules/users/forms.py:62
-msgid "Enter a valid username."
-msgstr "చెల్లుబాటు అయ్యే వినియోగదారు పేరును నమోదు చేయండి."
-
-#: modules/users/forms.py:69
+#: modules/users/forms.py:70
 msgid ""
-"Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
+"Optional. Used to send emails to reset password and important notifications."
 msgstr ""
-"అవసరం. 150 అక్షరాలు లేదా అంతకంటే తక్కువ. ఆంగ్ల అక్షరాలు, అంకెలు మరియు @/./-/_ మాత్రమే."
 
-#: modules/users/forms.py:78
-msgid "Authorization Password"
-msgstr "అధికార రహస్యపదం"
-
-#: modules/users/forms.py:85
-#, python-brace-format
-msgid ""
-"Enter the password for user \"{user}\" to authorize account modifications."
-msgstr "వినియోగదారు కోసం పాస్‌వర్డ్‌ను నమోదు చేయండి\"{user}\"ఖాతా సవరణలకు అధికారం ఇవ్వడానికి."
-
-#: modules/users/forms.py:94
-msgid "Invalid password."
-msgstr "చెల్లని రహస్యపదం."
-
-#: modules/users/forms.py:112
+#: modules/users/forms.py:106
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -7530,21 +7524,45 @@ msgstr ""
 "అన్ని సేవలకు లాగిన్ చేయగలరు. వారు SSH ద్వారా సిస్టమ్‌కి లాగిన్ అవ్వగలరు మరియు నిర్వాహక అధికారాలను (సూడో) "
 "కలిగి ఉంటారు."
 
-#: modules/users/forms.py:155 modules/users/forms.py:375
+#: modules/users/forms.py:124
+msgid "Enter a valid username."
+msgstr "చెల్లుబాటు అయ్యే వినియోగదారు పేరును నమోదు చేయండి."
+
+#: modules/users/forms.py:131
+msgid ""
+"Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
+msgstr ""
+"అవసరం. 150 అక్షరాలు లేదా అంతకంటే తక్కువ. ఆంగ్ల అక్షరాలు, అంకెలు మరియు @/./-/_ మాత్రమే."
+
+#: modules/users/forms.py:140
+msgid "Authorization Password"
+msgstr "అధికార రహస్యపదం"
+
+#: modules/users/forms.py:147
+#, python-brace-format
+msgid ""
+"Enter the password for user \"{user}\" to authorize account modifications."
+msgstr "వినియోగదారు కోసం పాస్‌వర్డ్‌ను నమోదు చేయండి\"{user}\"ఖాతా సవరణలకు అధికారం ఇవ్వడానికి."
+
+#: modules/users/forms.py:156
+msgid "Invalid password."
+msgstr "చెల్లని రహస్యపదం."
+
+#: modules/users/forms.py:212 modules/users/forms.py:417
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "ల్డప్ వినియోగదారుని సృష్టించడం విఫలమైంది: {error}"
 
-#: modules/users/forms.py:166
+#: modules/users/forms.py:224
 #, fuzzy, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "సమూహంసమూహానికి కొత్త వినియోగదారుని జోడించడంలో విఫలమైంది: {లోపం {group} {error}"
 
-#: modules/users/forms.py:181
+#: modules/users/forms.py:240
 msgid "Authorized SSH Keys"
 msgstr "అధీకృత SSH కీలు"
 
-#: modules/users/forms.py:183
+#: modules/users/forms.py:242
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -7554,36 +7572,36 @@ msgstr ""
 "అవ్వడానికి అనుమతిస్తుంది. మీరు బహుళ కీలను నమోదు చేయవచ్చు, ఒక్కో లైన్‌లో ఒకటి. #తో ప్రారంభమయ్యే ఖాళీ "
 "పంక్తులు మరియు పంక్తులు విస్మరించబడతాయి."
 
-#: modules/users/forms.py:263
+#: modules/users/forms.py:298
 msgid "Renaming LDAP user failed."
 msgstr "ఎల్.డి.ఏ.పి వాడుకరి పేరుమార్పులో విఫలం."
 
-#: modules/users/forms.py:274
+#: modules/users/forms.py:309
 msgid "Failed to remove user from group."
 msgstr "సమూహంలోంచి వినియోగదారుని తొలగించడంలో విఫలం."
 
-#: modules/users/forms.py:284
+#: modules/users/forms.py:319
 msgid "Failed to add user to group."
 msgstr "సమూహంలోకి వినియోగదారుని జోడించడంలో విఫలం."
 
-#: modules/users/forms.py:291
+#: modules/users/forms.py:326
 msgid "Unable to set SSH keys."
 msgstr "SSH కీలను సెట్ చేయడం సాధ్యం కాలేదు."
 
-#: modules/users/forms.py:304
+#: modules/users/forms.py:339
 msgid "Failed to change user status."
 msgstr "వినియోగదారు స్థితిని మార్చడంలో విఫలమైంది."
 
-#: modules/users/forms.py:345
+#: modules/users/forms.py:380
 msgid "Changing LDAP user password failed."
 msgstr "ఎల్.డి.ఏ.పి వాడుకరి పాస్‌వర్డ్ మార్పిడి విఫలం."
 
-#: modules/users/forms.py:383
+#: modules/users/forms.py:425
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr "నిర్వాహక సమూహానికి కొత్త వినియోగదారుని జోడించడంలో విఫలమైంది: {error}"
 
-#: modules/users/forms.py:408
+#: modules/users/forms.py:448
 msgid "User account created, you are now logged in"
 msgstr "వాడుకరి ఖాతా సృస్టించబడింది, మీరు లాగిన్ చేయబడ్డారు"
 
@@ -8113,7 +8131,7 @@ msgstr ""
 "సందర్శకులందరినీ అనుమతించండి. నిరుపయోగం చేయడం వలన వర్డుప్రెస్సు సైట్ లేదా బ్లాగును వీక్షించడానికి "
 "నిర్వాహకులు మాత్రమే అనుమతిస్తుంది. ప్రారంభ వర్డుప్రెస్సు సెటప్ చేసిన తర్వాత మాత్రమే ప్రారంభించండి."
 
-#: modules/zoph/__init__.py:23
+#: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
 "Zoph manages your photo collection. Photos are stored on your {box_name}, "
@@ -8132,7 +8150,7 @@ msgstr ""
 "వీక్షణలను ఉపయోగించి ఒక వ్యక్తిని కలిగి ఉన్న అన్ని ఫోటోలు లేదా తేదీలో తీసిన ఫోటోలు లేదా ఒక ప్రదేశంలో తీసిన "
 "ఫోటోలను కనుగొనడం సులభం. డైరెక్ట్ లింక్‌ని పంపడం ద్వారా వ్యక్తిగత ఫోటోలను ఇతరులతో పంచుకోవచ్చు."
 
-#: modules/zoph/__init__.py:34
+#: modules/zoph/__init__.py:35
 #, python-brace-format
 msgid ""
 "The {box_name} user who setup Zoph will also become the administrator in "
@@ -8142,11 +8160,11 @@ msgstr ""
 "జోఫ్ని సెటప్ చేసిన {box_name} వినియోగదారు కూడా Zophలో నిర్వాహకులు అవుతారు. అదనపు వినియోగదారుల "
 "కోసం, ఖాతాలు తప్పనిసరిగా {box_name}లో మరియు జోఫ్లో ఒకే వినియోగదారు పేరుతో సృష్టించబడాలి."
 
-#: modules/zoph/__init__.py:53 modules/zoph/manifest.py:6
+#: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "జోఫ్"
 
-#: modules/zoph/__init__.py:54
+#: modules/zoph/__init__.py:57
 msgid "Photo Organizer"
 msgstr "ఫోటో ఆర్గనైజర్"
 
@@ -8198,108 +8216,90 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "సేవ నిలిపివేయబడింది: {name}"
 
-#: package.py:214
+#: package.py:206
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:231
+#: package.py:226
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "ప్యాకేజీ {package_name} తాజా వెర్షన్ ({latest_version})"
 
-#: package.py:382
+#: package.py:419
 msgid "installing"
 msgstr "వ్యవస్థాపిస్తోంది"
 
-#: package.py:384
+#: package.py:421
 msgid "downloading"
 msgstr "దిగుమతి అవుతోంది"
 
-#: package.py:386
+#: package.py:423
 msgid "media change"
 msgstr "ప్రసార మాధ్యమం మార్పు"
 
-#: package.py:388
+#: package.py:425
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "ఆకృతీకరణ ఫైలు: {file}"
 
-#: package.py:416 package.py:441
+#: package.py:453 package.py:478
 msgid "Timeout waiting for package manager"
 msgstr "ప్యాకేజీ మేనేజర్ కోసం వేచి ఉన్న సమయం ముగిసింది"
 
-#: setup.py:41
+#: setup.py:39
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "అనువర్తనాలను నిక్షిప్తం చేద్దాం"
 
-#: setup.py:43
+#: setup.py:41
 msgid "Updating app"
 msgstr "అనువర్తనం నవీకరించబడుతున్నది"
 
-#: setup.py:70
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error installing app: {string} {details}"
-msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
-
-#: setup.py:74
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error updating app: {string} {details}"
-msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
-
-#: setup.py:80
+#: setup.py:75
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {error}"
 
-#: setup.py:83
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {error}"
 
-#: setup.py:87
+#: setup.py:82
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "అనువర్తనం స్థాపించబడింది."
 
-#: setup.py:89
+#: setup.py:84
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "చివరి నవీకరణ"
 
-#: setup.py:106
+#: setup.py:101
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "అనువర్తనాలను నిక్షిప్తం చేద్దాం"
 
-#: setup.py:124
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {string} {details}"
-msgid "Error uninstalling app: {string} {details}"
-msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
-
-#: setup.py:130
+#: setup.py:117
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "అనువర్తనం స్థాపించుటలో దోషం: {error}"
 
-#: setup.py:133
+#: setup.py:120
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "అనువర్తనం స్థాపించబడింది."
 
-#: setup.py:453
+#: setup.py:493
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -8391,10 +8391,6 @@ msgstr "అనువర్తనాలు"
 #: templates/base.html:127
 msgid " System"
 msgstr " కార్యవ్యవస్థ"
-
-#: templates/base.html:131
-msgid "System"
-msgstr "వ్యవస్థ"
 
 #: templates/base.html:166 templates/base.html:167
 msgid "Change password"
@@ -8693,11 +8689,11 @@ msgid ""
 "installed freshly again."
 msgstr "మొత్తం యాప్ డేటా మరియు కాన్ఫిగరేషన్ శాశ్వతంగా పోతాయి. యాప్ను మళ్లీ తాజాగా ఇన్‌స్టాల్ చేయవచ్చు."
 
-#: views.py:242
+#: views.py:268
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
-#: views.py:479
+#: views.py:502
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడానికి ముందు"
@@ -8706,6 +8702,40 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #, fuzzy
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Storage snapshots configuration updated"
+#~ msgstr "నిల్వ స్నాప్‌షాట్‌ల కాన్ఫిగరేషన్ నవీకరించబడింది"
+
+#, python-brace-format
+#~ msgid "Action error: {0} [{1}] [{2}]"
+#~ msgstr "చర్య లోపం:{0}{1}{2}"
+
+#~ msgid "Automatic upgrades enabled"
+#~ msgstr "స్వయంచాలక నవీకరణలు ప్రారంభించబడ్డాయి"
+
+#~ msgid "Automatic upgrades disabled"
+#~ msgstr "స్వయంచాలక నవీకరణలు నిలిపివేయబడ్డాయి"
+
+#~ msgid "Distribution upgrade enabled"
+#~ msgstr "పంపిణీ మెరుగుపరుచడం ప్రారంభించబడింది"
+
+#~ msgid "Distribution upgrade disabled"
+#~ msgstr "పంపిణీ మెరుగుపరుచడం నిలిపివేయబడింది"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error installing app: {string} {details}"
+#~ msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error updating app: {string} {details}"
+#~ msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
+
+#, fuzzy, python-brace-format
+#~| msgid "Error installing application: {string} {details}"
+#~ msgid "Error uninstalling app: {string} {details}"
+#~ msgstr "అనువర్తనం స్థాపించుటలో దోషం: {string}{details}"
 
 #~ msgid "Page source"
 #~ msgstr "పేజీ మూలం"

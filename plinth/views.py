@@ -4,6 +4,7 @@ Main FreedomBox views.
 """
 
 import datetime
+import random
 import time
 import urllib.parse
 
@@ -14,6 +15,7 @@ from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -57,6 +59,25 @@ def is_safe_url(url):
         return False
 
     return True
+
+
+def messages_error(request, message, exception):
+    """Show an error message using Django messages framework.
+
+    If an exception can show HTML message, handle is separately.
+    """
+    if hasattr(exception, 'get_html_message'):
+        collapse_id = 'error-details-' + str(random.randint(0, 10**9))
+        message = format_html(
+            '{message} <a href="#" class="dropdown-toggle" '
+            'data-toggle="collapse" data-target="#{collapse_id}" '
+            'aria-expanded="false" aria-controls="{collapse_id}">'
+            'Details</a><pre class="collapse" '
+            'id="{collapse_id}"><code>{html_message}</code></pre>',
+            message=message, html_message=exception.get_html_message(),
+            collapse_id=collapse_id)
+
+    messages.error(request, message)
 
 
 def _get_redirect_url_from_param(request):
@@ -215,9 +236,14 @@ class AppView(FormView):
         if not self.form_class:
             return None
 
+        if not self.app.configure_when_disabled:
+            status = self.get_common_status()
+            if not status['is_enabled']:
+                return None
+
         return super().get_form(*args, **kwargs)
 
-    def _get_common_status(self):
+    def get_common_status(self):
         """Return the status needed for form and template.
 
         Avoid multiple queries to expensive operations such as
@@ -233,7 +259,7 @@ class AppView(FormView):
     def get_initial(self):
         """Return the status of the app to fill in the form."""
         initial = super().get_initial()
-        initial.update(self._get_common_status())
+        initial.update(self.get_common_status())
         return initial
 
     def form_valid(self, form):
@@ -252,9 +278,7 @@ class AppView(FormView):
         if not self.app.can_be_disabled:
             return None
 
-        initial = {
-            'should_enable': not self._get_common_status()['is_enabled']
-        }
+        initial = {'should_enable': not self.get_common_status()['is_enabled']}
         return forms.AppEnableDisableForm(initial=initial)
 
     def enable_disable_form_valid(self, form):
@@ -271,7 +295,7 @@ class AppView(FormView):
     def get_context_data(self, *args, **kwargs):
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
-        context.update(self._get_common_status())
+        context.update(self.get_common_status())
         context['app_id'] = self.app.app_id
         context['is_running'] = app_is_running(self.app)
         context['app_info'] = self.app.info
@@ -340,9 +364,8 @@ class SetupView(TemplateView):
         context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
         context['show_rerun_setup'] = False
-        context['show_uninstall'] = (
-            not app.info.is_essential
-            and setup_state != app_module.App.SetupState.NEEDS_SETUP)
+        context['show_uninstall'] = (not app.info.is_essential and setup_state
+                                     != app_module.App.SetupState.NEEDS_SETUP)
 
         # Perform expensive operation only if needed.
         if not context['operations']:

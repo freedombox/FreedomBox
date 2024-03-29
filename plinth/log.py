@@ -76,7 +76,9 @@ def action_init():
     """Initialize logging for action scripts."""
     _capture_warnings()
 
-    logging.config.dictConfig(get_configuration())
+    configuration = get_configuration()
+    del configuration['handlers']['console']['formatter']
+    logging.config.dictConfig(configuration)
 
 
 def init():

@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy
 from plinth import app as app_module
 from plinth.modules import snapshot as snapshot_module
 from plinth.modules import storage
-from plinth.views import AppView
+from plinth.views import AppView, messages_error
 
 from . import get_configuration, privileged
 from .forms import SnapshotForm
@@ -155,13 +155,9 @@ def update_configuration(request, old_status, new_status):
 
     try:
         privileged.set_config(list(config))
-        messages.success(request, _('Storage snapshots configuration updated'))
+        messages.success(request, _('Configuration updated.'))
     except Exception as exception:
-        messages.error(
-            request,
-            _('Action error: {0} [{1}] [{2}]').format(exception.args[0],
-                                                      exception.args[1],
-                                                      exception.args[2]))
+        messages_error(request, _('Configuration update failed.'), exception)
 
 
 def delete_selected(request):
@@ -187,13 +183,13 @@ def delete_selected(request):
 
             messages.success(request, _('Deleted selected snapshots'))
         except Exception as exception:
-            if 'Config is in use.' in exception.args[2]:
-                messages.error(
-                    request,
-                    _('Snapshot is currently in use. '
-                      'Please try again later.'))
-            else:
-                raise
+            message = _('Deleting snapshot failed.')
+            stderr = getattr(exception, 'stderr', b'').decode()
+            if 'Config is in use.' in stderr:
+                message = _('Snapshot is currently in use. '
+                            'Please try again later.')
+
+            messages_error(request, message, exception)
 
         return redirect(reverse('snapshot:manage'))
 

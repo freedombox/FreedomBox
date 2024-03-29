@@ -23,7 +23,7 @@ class PowerApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -34,7 +34,9 @@ class PowerApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-power', info.name, None, info.icon,
-                              'power:index', parent_url_name='system')
+                              'power:index',
+                              parent_url_name='system:administration',
+                              order=50)
         self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-power',

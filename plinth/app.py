@@ -7,15 +7,18 @@ import collections
 import enum
 import inspect
 import logging
-from typing import ClassVar
+from typing import ClassVar, TypeAlias
 
 from plinth import cfg
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.signals import post_app_loading
 
 from . import clients as clients_module
 from . import db
 
 logger = logging.getLogger(__name__)
+
+_list_type: TypeAlias = list
 
 
 class App:
@@ -39,6 +42,10 @@ class App:
     the app. This flag is currently set during backup and restore operations
     but UI changes are currently not implemented.
 
+    'configure_when_disabled' is a boolean indicating whether the app can
+    configured while it is disabled. Some apps such those whose configuration
+    is stored in a database can't be configured while they are disabled because
+    the database server may not be running when the app is disabled.
     """
 
     app_id: str | None = None
@@ -47,6 +54,8 @@ class App:
 
     locked: bool = False  # Whether user interaction with the app is allowed.
     # XXX: Lockdown the application UI by implementing a middleware
+
+    configure_when_disabled: bool = True
 
     _all_apps: ClassVar[collections.OrderedDict[
         str, 'App']] = collections.OrderedDict()
@@ -58,7 +67,7 @@ class App:
         NEEDS_UPDATE = 'needs-update'
         UP_TO_DATE = 'up-to-date'
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Build the app by adding components.
 
         App may be built just for the purpose for querying. For example, when
@@ -71,7 +80,7 @@ class App:
         if not self.app_id:
             raise ValueError('Invalid app ID configured')
 
-        self.components = collections.OrderedDict()
+        self.components: dict[str, Component] = collections.OrderedDict()
 
         # Add self to global list of apps
         self._all_apps[self.app_id] = self
@@ -208,11 +217,11 @@ class App:
             if not component.is_leader:
                 component.set_enabled(enabled)
 
-    def diagnose(self):
+    def diagnose(self) -> _list_type[DiagnosticCheck]:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, and the
         result. The test result is a string enumeration from 'failed',
         'passed', 'error', 'warning' and 'not_done'.
@@ -300,12 +309,11 @@ class Component:
     def disable(self):
         """Run operations to disable the component."""
 
-    @staticmethod
-    def diagnose():
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return results.
 
         Return value must be a list of results. Each result is a
-        :class:`~plinth.modules.diagnostics.check.DiagnosticCheck` with a
+        :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
         unique check_id, a user visible description of the test, and the
         result. The test result is a string enumeration from 'failed',
         'passed', 'error', 'warning' and 'not_done'.

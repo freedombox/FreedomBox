@@ -9,7 +9,7 @@ import pytest
 
 from plinth.app import App
 from plinth.config import DropinConfigs
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck, Result
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.privileged.config']

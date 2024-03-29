@@ -57,7 +57,7 @@ class UpgradesApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -68,7 +68,8 @@ class UpgradesApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,
-                              'upgrades:index', parent_url_name='system')
+                              'upgrades:index',
+                              parent_url_name='system:system', order=50)
         self.add(menu_item)
 
         packages = Packages('packages-upgrades',

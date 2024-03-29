@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
 from plinth.config import DropinConfigs
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.package import Packages
 
 from . import privileged
@@ -50,7 +51,7 @@ class NetworksApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -61,7 +62,8 @@ class NetworksApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
-                              'networks:index', parent_url_name='system')
+                              'networks:index',
+                              parent_url_name='system:system', order=20)
         self.add(menu_item)
 
         packages = Packages('packages-networks', ['network-manager', 'batctl'])
@@ -72,7 +74,7 @@ class NetworksApp(app_module.App):
         ])
         self.add(dropin_configs)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
 

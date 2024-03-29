@@ -12,7 +12,7 @@ import pytest
 from plinth.app import App, FollowerComponent, Info
 from plinth.daemon import (Daemon, RelatedDaemon, SharedDaemon, app_is_running,
                            diagnose_netcat, diagnose_port_listening)
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck, Result
 
 privileged_modules_to_mock = ['plinth.privileged.service']
 
@@ -136,6 +136,44 @@ def test_is_running(service_is_running, daemon):
 
     service_is_running.return_value = False
     assert not daemon.is_running()
+
+
+@patch('plinth.app.apps_init')
+@patch('plinth.action_utils.service_is_running')
+@patch('subprocess.run')
+@patch('subprocess.call')
+def test_ensure_running(subprocess_call, subprocess_run, service_is_running,
+                        apps_init, app_list, mock_privileged, daemon):
+    """Test that checking that the daemon is running works."""
+    service_is_running.return_value = True
+    with daemon.ensure_running() as starting_state:
+        assert starting_state
+        assert not subprocess_call.called
+        assert not subprocess_run.called
+
+    assert not subprocess_call.called
+    assert not subprocess_run.called
+
+    service_is_running.return_value = False
+    with daemon.ensure_running() as starting_state:
+        assert not starting_state
+        assert subprocess_run.mock_calls == [
+            call(['systemctl', 'start', 'test-unit'],
+                 stdout=subprocess.DEVNULL, check=False)
+        ]
+        assert subprocess_call.mock_calls == [
+            call(['systemctl', 'enable', 'test-unit'])
+        ]
+        subprocess_run.reset_mock()
+        subprocess_call.reset_mock()
+
+    assert subprocess_run.mock_calls == [
+        call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
+             check=False)
+    ]
+    assert subprocess_call.mock_calls == [
+        call(['systemctl', 'disable', 'test-unit'])
+    ]
 
 
 @patch('plinth.action_utils.service_is_running')
@@ -295,32 +333,32 @@ def test_diagnose_port_listening(connections):
 def test_diagnose_netcat(popen):
     """Test running diagnostic test using netcat."""
     popen().returncode = 0
-    result = diagnose_netcat('test-host', 3300, input='test-input')
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input')
     parameters = {'host': 'test-host', 'port': 3300, 'negate': False}
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
-                                     'Connect to test-host:3300',
-                                     Result.PASSED, parameters)
+                                     'Connect to {host}:{port}', Result.PASSED,
+                                     parameters)
     assert popen.mock_calls[1][1] == (['nc', 'test-host', '3300'], )
     assert popen.mock_calls[2] == call().communicate(input=b'test-input')
 
-    result = diagnose_netcat('test-host', 3300, input='test-input',
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input',
                              negate=True)
     parameters2 = parameters.copy()
     parameters2['negate'] = True
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
-                                     'Cannot connect to test-host:3300',
+                                     'Cannot connect to {host}:{port}',
                                      Result.FAILED, parameters2)
 
     popen().returncode = 1
-    result = diagnose_netcat('test-host', 3300, input='test-input')
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input')
     assert result == DiagnosticCheck('daemon-netcat-test-host-3300',
-                                     'Connect to test-host:3300',
-                                     Result.FAILED, parameters)
+                                     'Connect to {host}:{port}', Result.FAILED,
+                                     parameters)
 
-    result = diagnose_netcat('test-host', 3300, input='test-input',
+    result = diagnose_netcat('test-host', 3300, remote_input='test-input',
                              negate=True)
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
-                                     'Cannot connect to test-host:3300',
+                                     'Cannot connect to {host}:{port}',
                                      Result.PASSED, parameters2)
 
 

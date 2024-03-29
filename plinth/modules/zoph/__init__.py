@@ -46,7 +46,9 @@ class ZophApp(app_module.App):
 
     _version = 2
 
-    def __init__(self):
+    configure_when_disabled = False
+
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -100,13 +102,23 @@ class ZophApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         privileged.pre_install()
-        super().setup(old_version)
+        with self.get_component('shared-daemon-zoph-mysql').ensure_running():
+            # Database needs to be running for successful initialization or
+            # upgrade of zoph database.
+            super().setup(old_version)
+
         privileged.setup()
         if not old_version:
             self.enable()
         elif old_version < 2:
             if self.get_component('webserver-zoph').is_enabled():
                 self.enable()
+
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        # Before package uninstall, so that config file is still available
+        privileged.uninstall()
+        super().uninstall()
 
 
 class ZophBackupRestore(BackupRestore):

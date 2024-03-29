@@ -40,17 +40,37 @@ The "fbx" user also has superuser privileges via ``sudo``.
 
 === Logging In ===
 
-==== Local ====
+==== Who can log in to FreedomBox by SSH? ====
+!FreedomBox administrative users may use SSH to to log in to !FreedomBox. The user 'fbx' is created by !FreedomBox and is an administrative super-user. There are options which allow ordinary users to log in:
+ * SSH access can be granted to specific users in the Edit User page by selecting the option, "Remotely login using Secure Shell (SSH) (freedombox-ssh)"
+ * SSH access can be granted globally to all users in the SSH configuration page by selecting the, "Allow all users to login remotely," option.
+
+With a new !FreedomBox you may log in as fbx using ssh, and other ordinary users will be able to log in after adjusting the user or Secure Shell settings above in this section. The root user account will have no password set and will not be able to log in.
+
+==== SSH Client Software ====
+SSH client in included in many operating systems including Linux, Microsoft Windows, and Apple MacOS. SSH is included in Chromebooks, but requires some configuration by the user. In most cases you can run SSH from a terminal or command prompt as shown here, using your !FreedomBox hostname or IP address:
+{{{
+$ ssh freedombox.local
+}}}
+
+If your client computer does not have SSH available, PuTTY is a popular free software client program which complies with the Debian Free Software Guidelines. PuTTY has a graphical interface to remember and manage your SSH connections. See External links below for more information about PuTTY.
+
+===== Cockpit as an SSH Alternative =====
+The Cockpit Server Administration Terminal app available from the Cockpit Tools menu is an alternative shell access tool to SSH. Like SSH your connection to a !FreedomBox terminal is secured. Cockpit is a good choice for users who do not wish to enable the SSH server or those who prefer to connect through a web browser. With either tool you will be presented with the !FreedomBox bash command line interface.
+
+Some users prefer to run SSH instead of, or in addition to, Cockpit. Command shell users tend to like SSH because it's something that they are already using. Users with Linux or Unix system administration experience tend to rely on this connection method because it is a simpler service which is thought to be more likely to be available if problems arise.
+
+Refer to the Let's Encrypt and Cockpit sections of this manual to configure Cockpit and SSL certificates for security.
+
+==== SSH over Local Network ====
 
 To login via SSH, to your !FreedomBox:
 
 {{{
-$ ssh fbx@freedombox
+$ ssh fbx@freedombox.local
 }}}
 
-Replace `fbx` with the name of the user you wish to login as.  `freedombox` should be replaced with the hostname or IP address of you !FreedomBox device as found in the [[FreedomBox/Manual/QuickStart|Quick Start]] process.
-
-`fbx` is the default user present on !FreedomBox with superuser privileges.  Any other user created using !FreedomBox and belonging to the group `admin` will be able to login.  The `root` account has no password set and will not be able to login.  Access will be denied to all other users.
+Replace `fbx` with the name of the user you wish to login as.  `freedombox` should be replaced with the hostname or IP address of you !FreedomBox device as found in the [[FreedomBox/Manual/QuickStart|Quick Start]] process. 
 
 `fbx` and users in `admin` group will also be able to login on the terminal directly.  Other users will be denied access.
 
@@ -145,11 +165,150 @@ $ passwd
 
 This will ask you for your current password before giving you the opportunity to set a new one.
 
+=== SSH Keys ===
+The next step for SSH security and convenience is to understand and use ssh keys. If you logged in to !FreedomBox the first time using ssh following the instructions above you specified a username and password to log in. In this section you'll learn about Server Fingerprints and host keys, authorized keys, and reasons to use these to make connection easier and more secure.
+
+By default SSH is configured to prefer to use keys while still allowing you to use a username and password to log in. At the end of this section you will be able to:
+ * Connect to !FreedomBox and know that you are connecting to the right computer.
+ * Connect instantly without giving a username and password.
+ * Further improve the security of your !FreedomBox by disabling SSH password authentication.
+
+==== SSH Public and Private Keys ====
+SSH keys are generated in pairs called a key pair. There is a public key and a private key for each key pair. The public key encrypts data which can only be read using the private key, and the private key encrypts data which can only be read using the public key. This is called an asymmetric cryptography system. SSH will distribute your public keys automatically to the other connected system while keeping your private keys safe. 
+
+Using SSH keys creates a powerful set of security features:
+ * You are assured that you are connected to your !FreedomBox.
+ * Nobody will be able to read or modify your ssh communication to !FreedomBox. 
+ * The !FreedomBox SSH server will know you are the remote user connected.
+ * Nobody will be able to read or modify your ssh communication from !FreedomBox.
+ * Connection is automatic with no username or password.
+ * Your !FreedomBox can block any password guessing attack.
+
+==== Create your personal SSH keys on your client computer using ssh-keygen ====
+You will create an SSH key pair on your client computer. We'll use the defaults and will not specify a password. Just press the Enter key when you are prompted for an SSH key password. This is very simple using the ssh-keygen command with no arguments. Here is how to run the command and a sample of the output the ssh-keygen program will give to you:
+{{{
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa): 
+Created directory '/home/username/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/username/.ssh/id_rsa
+Your public key has been saved in /home/username/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:nHcTP5DBKxBOgt8BFMyb2QUs//t8ge+8vw2zjOuE71U username@clientpc
+The key's randomart image is:
++---[RSA 3072]----+
+|     ==++o ..    |
+|    . +++ . .o   |
+|     . O.+  +.   |
+|      =.+.. .+   |
+|        S...o.o E|
+|         ..o...o |
+|          ....+. |
+|          .+ =o+.|
+|           +O+*++|
++----[SHA256]-----+
+}}}
+That's all you need to do. You now have a personal SSH key pair on your client computer.
+
+==== Verify your FreedomBox Server Fingerprint ====
+On your first time connecting to !FreedomBox using ssh you may have noticed a message similar to this:
+{{{
+$ ssh fbx@freedombox.local
+The authenticity of host 'freedombox.local (192.168.1.4)' can't be established.
+ED25519 key fingerprint is SHA256:TwJFdepq7OaTXcycoYfYE8/lRtuOxUGCrst0K/RUh4E.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+}}}
+There are a few things to understand about this message:
+ * SSH is telling you that you have never connected to this server before and SSH cannot guarantee that this server is safe for you to use.
+ * You have an opportunity to tell SSH that this new server is known to you and safe to use by indicating, 'yes.'  
+ * SSH has received an encryption key to communicate securely with this server (even if we're not certain which with server we're communicating with).
+ * SSH is giving you a piece of information that you will use to confirm that the remote SSH server is in fact your !FreedomBox.
+
+Go to !FreedomBox in your web browser. Click on the System menu, and then Secure Shell. The second section of this page is, Server Fingerprints. There is an ED25519 key entry on this page:
+||'''Algorithm'''||'''Fingerprint'''||
+||RSA||SHA256:ZGvgdxiDEpGKdw82Z6z0QRmDpT3Vgi07Ghba5IBJ4tQ||
+||ECDSA||SHA256:BLMMfPxNHpHF0sqCazAwE6ONdLtMY+W2yrgjP7AeXcQ||
+||ED25519||SHA256:TwJFdepq7OaTXcycoYfYE8/lRtuOxUGCrst0K/RUh4E||
+Compare the ED25519 fingerprint on the !FreedomBox Secure Shell page with the ED25519 fingerprint received by the ssh client in the first-connection example above. If these fingerprints are the same then you may be confident that you are connecting to your !FreedomBox.
+
+If you'd like to walk through these steps but you have already made the first connection, you can reset that. Issue this command on your ssh client computer.
+{{{
+$ ssh-keygen -R freedombox.local
+}}}
+This removes the record of your known connection to !FreedomBox. Now open your Secure Shell system configuration page on !FreedomBox to the Server Fingerprints section. Next connect to !FreedomBox with your ssh client and properly verify the server fingerprint before indicating yes to the host authenticity question. Having done this correctly you can be certain that when you make an SSH connection to !FreedomBox you are connecting to your server.
+
+Each time you connect to a new SSH server you will be given the opportunity to verify the server fingerprint. If you connect to !FreedomBox using different names or IP address (local IP, DNS name, Pagekite name, TOR .onion address...) you will be asked once for each name or address, but the fingerprint will not change.
+
+Your server fingerprints are not private information. The fingerprint is a summary of a public key shared by the server which is used encrypt information sent to the SSH server. Your server public key is also not private information. You could share fingerprints and public keys with the world and the security of your !FreedomBox will not be diminished.
+
+==== Share your personal SSH key with FreedomBox using ssh-copy-id ====
+By now you have a personal key pair, and you have verified the identity of !FreedomBox. !FreedomBox still does not know about your identity, and will ask you for your password when you try to log in by ssh. The ssh-copy-id program will tell !FreedomBox to accept your personal key as your password.
+{{{
+$ ssh-copy-id username@freedombox.local
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+username@freedombox.local's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'username@freedombox.local'"
+and check to make sure that only the key(s) you wanted were added.
+}}}
+This step adds your personal public key to your user account on !FreedomBox. With this step complete the !FreedomBox SSH server will compare the key sent by the client computer with the key stored on !FreedomBox. If these match then you will be logged in without the need to give a password. Try it now:
+{{{
+$ ssh freedombox.local
+Linux freedombox 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) x86_64
+
+                         .--._    _.--.
+                        (     \  /     )
+                         \     /\     /
+                          \_   \/   _/
+                           /        \
+                          (    /\    )
+                           `--'  `--'
+
+                           FreedomBox
+
+FreedomBox is a pure blend of Debian GNU/Linux. Web interface is available at
+https://localhost/ . FreedomBox manual is available in /usr/share/doc/freedombox
+and from the web interface.
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Sun Mar 17 14:27:03 2024 from 192.168.144.101
+username@freedombox:~$
+}}}
+
+Once you have added your client SSH key to !FreedomBox you will be able to connect using that one key by every method of addressing your !FreedomBox:
+ * Local network name
+ * Local network IP address
+ * ISP Public IP address
+ * DNS name if you are using Dynamic DNS
+ * Pagekite name if you are using Pagekite
+ * TOR .onion address if you are using TOR
+
+==== Block SSH password guessing attempts by disabling password authentication ====
+Once you are able to connect to !FreedomBox by ssh using a key and not entering a password you can take a step to improve the security of !FreedomBox. If your !FreedomBox is accessible from the internet you may notice that there are repeated attempts to log in to your !FreedomBox from the internet. A good password is your first line of defense, and !FreedomBox has additional features which protect you from these intrusion attempts. You can stop this nonsense completely by disabling password authentication for Secure Shell.
+
+Go to your !FreedomBox System menu. Click the Secure Shell configuration link. Look under '''Configuration''' and select, "Disable password authentication"
+ [x] Disable password authentication  
+
+Click the, "Update setup," button and it's done. This will stop all password guessing intrusion attempts using ssh. You can log in using your key, and nobody else will be able to log in by guessing a password.
 
 === External links ===
 
+ * Debian SSH wiki: https://wiki.debian.org/SSH
  * Upstream project: https://www.openssh.com
  * User documentation: https://www.openssh.com/manual.html
+ * PuTTY Client Software: https://www.chiark.greenend.org.uk/~sgtatham/putty/
 
 
 ## END_INCLUDE

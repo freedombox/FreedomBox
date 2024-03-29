@@ -6,12 +6,15 @@ import logging
 import pathlib
 import time
 
+import apt
 import apt.cache
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, gettext_noop
 
 import plinth.privileged.packages as privileged
 from plinth import app as app_module
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
@@ -181,29 +184,18 @@ class Packages(app_module.FollowerComponent):
 
     def uninstall(self):
         """Uninstall and purge the packages."""
+        # Ensure package list is update-to-date before looking at dependencies.
+        refresh_package_lists()
+
+        # List of packages to purge from the system
         packages = self.get_actual_packages()
-        packages_set = set(packages)
-        for app in app_module.App.list():
-            # uninstall() will be called on Packages of this app separately
-            # for uninstalling this app.
-            if app == self.app:
-                continue
+        logger.info('App\'s list of packages to remove: %s', packages)
 
-            if app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP:
-                continue
+        packages = self._filter_packages_to_keep(packages)
+        uninstall(packages, purge=True)
 
-            # Remove packages used by other installed apps
-            for component in app.get_components_of_type(Packages):
-                packages_set -= set(component.get_actual_packages())
-
-        # Preserve order of packages for ease of testing
-        uninstall([package for package in packages if package in packages_set],
-                  purge=True)
-
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return results."""
-        from plinth.modules.diagnostics.check import DiagnosticCheck, Result
-
         results = super().diagnose()
         cache = apt.Cache()
         for package_expression in self.package_expressions:
@@ -213,7 +205,9 @@ class Packages(app_module.FollowerComponent):
                 check_id = f'package-available-{package_expression}'
                 description = gettext_noop('Package {package_expression} is '
                                            'not available for install')
-                parameters = {'package_expression': str(package_expression)}
+                parameters: DiagnosticCheckParameters = {
+                    'package_expression': str(package_expression)
+                }
                 results.append(
                     DiagnosticCheck(check_id, description, Result.FAILED,
                                     parameters))
@@ -223,16 +217,17 @@ class Packages(app_module.FollowerComponent):
             latest_version = '?'
             if package_name in cache:
                 package = cache[package_name]
-                latest_version = package.candidate.version
-                if package.candidate.is_installed:
-                    result = Result.PASSED
+                if package.candidate:
+                    latest_version = package.candidate.version
+                    if package.candidate.is_installed:
+                        result = Result.PASSED
 
             check_id = f'package-latest-{package_name}'
             description = gettext_noop('Package {package_name} is the latest '
                                        'version ({latest_version})')
             parameters = {
-                'package_name': package_name,
-                'latest_version': latest_version,
+                'package_name': str(package_name),
+                'latest_version': str(latest_version)
             }
             results.append(
                 DiagnosticCheck(check_id, description, result, parameters))
@@ -268,21 +263,63 @@ class Packages(app_module.FollowerComponent):
 
         return False
 
+    def _filter_packages_to_keep(self, packages: list[str]) -> list[str]:
+        """Filter out the list of packages to keep from given list.
+
+        Packages to keep are packages needed by other installed apps and their
+        dependencies (PreDepends, Depends, Recommends).
+        """
+        packages_set: set[str] = set(packages)
+
+        # Get list of packages needed by other installed apps (packages to
+        # keep).
+        keep_packages: set[str] = set()
+        for app in app_module.App.list():
+            # uninstall() will be called on Packages of this app separately
+            # for uninstalling this app.
+            if app == self.app:
+                continue
+
+            if app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP:
+                continue
+
+            # Remove packages used by other installed apps
+            for component in app.get_components_of_type(Packages):
+                keep_packages |= set(component.get_actual_packages())
+
+        # Get list of all the dependencies of packages to keep.
+        keep_packages_with_deps: set[str] = set()
+        cache = apt.Cache()
+        while keep_packages:
+            package_name = keep_packages.pop()
+            if package_name in keep_packages_with_deps:
+                continue  # Already processed
+
+            keep_packages_with_deps.add(package_name)
+            if package_name not in cache:
+                continue  # Package is not available in sources
+
+            if not cache[package_name].is_installed:
+                continue  # Package is not installed
+
+            version = cache[package_name].installed
+            if not version:
+                continue
+
+            dependencies = version.dependencies + version.recommends
+            for dependency in dependencies:
+                for or_dependency in dependency.or_dependencies:
+                    keep_packages.add(or_dependency.name)
+
+        # Filter out any packages that are to be kept or their dependencies.
+        packages_set -= keep_packages_with_deps
+
+        # Preserve order of packages for ease of testing.
+        return [package for package in packages if package in packages_set]
+
 
 class PackageException(Exception):
     """A package operation has failed."""
-
-    def __init__(self, error_string=None, error_details=None, *args, **kwargs):
-        """Store apt-get error string and details."""
-        super().__init__(*args, **kwargs)
-
-        self.error_string = error_string
-        self.error_details = error_details
-
-    def __str__(self):
-        """Return the strin representation of the exception."""
-        return 'PackageException(error_string="{0}", error_details="{1}")' \
-            .format(self.error_string, self.error_details)
 
 
 class Transaction:

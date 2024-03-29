@@ -9,8 +9,8 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth.app import App
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.errors import MissingPackageError
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Package, Packages, packages_installed
 
 
@@ -151,8 +151,9 @@ def test_packages_setup_with_conflicts(install, uninstall, packages_installed):
     install.assert_has_calls([call(['bash'], skip_recommends=False)])
 
 
+@patch('plinth.package.refresh_package_lists')
 @patch('plinth.package.uninstall')
-def test_packages_uninstall(uninstall):
+def test_packages_uninstall(uninstall, _refresh_package_lists):
     """Test uninstalling packages component."""
 
     class TestApp(App):
@@ -166,15 +167,53 @@ def test_packages_uninstall(uninstall):
     uninstall.assert_has_calls([call(['python3', 'bash'], purge=True)])
 
 
+@patch('plinth.package.refresh_package_lists')
 @patch('plinth.package.uninstall')
 @patch('apt.Cache')
-def test_packages_uninstall_exclusion(cache, uninstall):
+def test_packages_uninstall_exclusion(cache, uninstall,
+                                      _refresh_package_lists):
     """Test excluding packages from other installed apps when uninstalling."""
+
+    def _get_mock_package(installed_version='1.0', dependencies=None,
+                          recommends=None):
+        mock_dependencies = []
+        for or_dependencies in (dependencies or []):
+            mock_or_dependency = Mock(or_dependencies=[])
+            mock_dependencies.append(mock_or_dependency)
+            for dependency in or_dependencies:
+                mock = Mock()
+                mock.name = dependency
+                mock_or_dependency.or_dependencies.append(mock)
+
+        mock_recommends = []
+        for or_dependencies in (recommends or []):
+            mock_or_dependency = Mock(or_dependencies=[])
+            mock_recommends.append(mock_or_dependency)
+            for dependency in or_dependencies:
+                mock = Mock()
+                mock.name = dependency
+                mock_or_dependency.or_dependencies.append(mock)
+
+        mock = Mock(
+            version=installed_version or '1.0',
+            is_installed=bool(installed_version),
+            installed=Mock(dependencies=mock_dependencies,
+                           recommends=mock_recommends))
+        return mock
+
+    package2 = _get_mock_package('4.0', [['dep1', 'dep2'], ['dep3'], ['dep4']],
+                                 [['dep5']])
     cache.return_value = {
-        'package11': Mock(candidate=Mock(version='2.0', is_installed=True)),
-        'package12': Mock(candidate=Mock(version='3.0', is_installed=False)),
-        'package2': Mock(candidate=Mock(version='4.0', is_installed=True)),
-        'package3': Mock(candidate=Mock(version='5.0', is_installed=True)),
+        'package11': _get_mock_package('2.0'),
+        'package12': _get_mock_package(None),
+        'package2': package2,
+        'package3': _get_mock_package('5.0', ['unknown-dep1']),
+        'dep1': _get_mock_package('6.0'),
+        'dep2': _get_mock_package('6.1'),
+        'dep3': _get_mock_package('6.2'),
+        'dep4': _get_mock_package(None),
+        'dep5': _get_mock_package('6.4'),
+        'dep6': _get_mock_package('6.5'),
     }
 
     class TestApp1(App):
@@ -183,8 +222,10 @@ def test_packages_uninstall_exclusion(cache, uninstall):
 
         def __init__(self):
             super().__init__()
-            component = Packages('test-component11',
-                                 ['package11', 'package2', 'package3'])
+            component = Packages('test-component11', [
+                'package11', 'package2', 'package3', 'dep1', 'dep2', 'dep3',
+                'dep4', 'dep6'
+            ])
             self.add(component)
 
             component = Packages('test-component12',
@@ -220,7 +261,7 @@ def test_packages_uninstall_exclusion(cache, uninstall):
     TestApp3()
     app1.uninstall()
     uninstall.assert_has_calls([
-        call(['package11', 'package3'], purge=True),
+        call(['package11', 'package3', 'dep6'], purge=True),
         call(['package12', 'package3'], purge=True)
     ])
 

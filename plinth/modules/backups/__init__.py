@@ -35,7 +35,7 @@ class BackupsApp(app_module.App):
 
     _version = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -47,7 +47,8 @@ class BackupsApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
-                              'backups:index', parent_url_name='system')
+                              'backups:index', parent_url_name='system:data',
+                              order=20)
         self.add(menu_item)
 
         packages = Packages('packages-backups', ['borgbackup', 'sshfs'])

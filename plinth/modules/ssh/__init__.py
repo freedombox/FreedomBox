@@ -33,7 +33,7 @@ class SSHApp(app_module.App):
 
     _version = 4
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -45,7 +45,9 @@ class SSHApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-ssh', info.name, None, info.icon,
-                              'ssh:index', parent_url_name='system')
+                              'ssh:index',
+                              parent_url_name='system:administration',
+                              order=10)
         self.add(menu_item)
 
         packages = Packages('packages-ssh', ['openssh-server'])

@@ -27,7 +27,7 @@ class SecurityApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -37,7 +37,8 @@ class SecurityApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-security', info.name, None, info.icon,
-                              'security:index', parent_url_name='system')
+                              'security:index',
+                              parent_url_name='system:security', order=10)
         self.add(menu_item)
 
         packages = Packages('packages-security', ['fail2ban', 'debsecan'])

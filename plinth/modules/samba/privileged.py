@@ -45,8 +45,7 @@ CONF = r'''
    # https://en.wikipedia.org/wiki/Private_network
    # https://en.wikipedia.org/wiki/Link-local_address
    # https://en.wikipedia.org/wiki/Unique_local_address
-   access control = yes
-   hosts allow = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 [::1] [fc00::]/7 [fe80::]
+   hosts allow = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 169.254.0.0/16 ::1
    hosts deny = all
 '''  # noqa: E501
 
@@ -286,6 +285,13 @@ def setup():
     _use_config_file(CONF_PATH)
     os.makedirs('/var/lib/freedombox', exist_ok=True)
     os.chmod('/var/lib/freedombox', 0o0755)
+
+    # Disable NetBIOS Service, used with now deprecated SMB1 protocol
+    if action_utils.service_is_running('nmbd'):
+        action_utils.service_stop('nmbd')
+    action_utils.service_disable('nmbd')
+    action_utils.service_mask('nmbd')
+
     if action_utils.service_is_running('smbd'):
         action_utils.service_restart('smbd')
 

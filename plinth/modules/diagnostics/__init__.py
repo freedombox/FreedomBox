@@ -17,11 +17,12 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import daemon, glib, kvstore, menu
 from plinth import operation as operation_module
+from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
+                                     DiagnosticCheck, Result)
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
 
 from . import manifest
-from .check import CheckJSONDecoder, CheckJSONEncoder, Result
 
 _description = [
     _('The system diagnostic test will run a number of checks on your '
@@ -44,7 +45,7 @@ class DiagnosticsApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=self._version,
@@ -54,7 +55,9 @@ class DiagnosticsApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
-                              'diagnostics:index', parent_url_name='system')
+                              'diagnostics:index',
+                              parent_url_name='system:administration',
+                              order=30)
         self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-diagnostics',
@@ -75,7 +78,7 @@ class DiagnosticsApp(app_module.App):
         super().setup(old_version)
         self.enable()
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         results.append(daemon.diagnose_port_listening(8000, 'tcp4'))
@@ -103,7 +106,8 @@ def _run_on_all_enabled_modules():
         current_results = {
             'apps': [],
             'results': collections.OrderedDict(),
-            'progress_percentage': 0
+            'progress_percentage': 0,
+            'exception': None,
         }
 
         for app in app_module.App.list():
@@ -335,15 +339,26 @@ def are_results_available():
     return bool(results)
 
 
-def get_results():
+def get_results() -> dict:
     """Return the latest results of full diagnostics."""
+    global current_results
+
     with results_lock:
-        results = deepcopy(current_results)
+        try:
+            results = deepcopy(current_results)
+        except TypeError as error:
+            # See #2410: cannot pickle 'dict_values' object
+            logger.error('Cannot get diagnostic results: %s - %s', error,
+                         current_results)
+            exception = str(error) + ' - ' + str(current_results)
+            # Clear the results that can't be used.
+            current_results = {}
+            return {'exception': exception}
 
     # If no results are available in memory, then load from database.
     if not results:
         results = kvstore.get_default('diagnostics_results', '{}')
-        results = json.loads(results, cls=CheckJSONDecoder)
+        results = json.loads(str(results), cls=CheckJSONDecoder)
         results = {'results': results, 'progress_percentage': 100}
 
     # Add a translated name for each app

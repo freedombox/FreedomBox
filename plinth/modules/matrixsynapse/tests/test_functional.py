@@ -21,7 +21,10 @@ class TestMatrixSynapseApp(functional.BaseAppTests):
         """Setup the app."""
         functional.login(session_browser)
         functional.set_domain_name(session_browser, 'mydomain.example')
-        functional.install(session_browser, self.app_name)
+
+    def install_and_setup(self, session_browser):
+        """Install the app and run setup."""
+        super().install_and_setup(session_browser)
         functional.app_select_domain_name(session_browser, self.app_name,
                                           'mydomain.example')
 

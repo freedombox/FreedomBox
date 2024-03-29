@@ -50,6 +50,68 @@ class ValidNewUsernameCheckMixin:
         return True
 
 
+def _create_django_groups():
+    """Ensure that all groups are present in the Django's group table."""
+    group_choices = UsersAndGroups.get_group_choices()
+    for group_name, _label in group_choices:
+        Group.objects.get_or_create(name=group_name)
+
+    return group_choices
+
+
+class EmailFieldMixin:
+    """Mixin to set common properties for the email field."""
+
+    def __init__(self, *args, **kwargs):
+        """Set basic properties for the email field."""
+        super().__init__(*args, **kwargs)
+
+        self.fields['email'].help_text = _(
+            'Optional. Used to send emails to reset password and important '
+            'notifications.')
+
+
+class GroupsFieldMixin:
+    """Mixin to set common properties for the group field."""
+
+    def __init__(self, *args, **kwargs):
+        """Set basic properties for the groups field.
+
+        Also ensure that all the groups are created in django.
+        """
+        groups_dict = dict(_create_django_groups())
+
+        super().__init__(*args, **kwargs)
+
+        choices = []
+        django_groups = sorted(self.fields['groups'].choices,
+                               key=lambda choice: choice[1])
+        for group_id, group_name in django_groups:
+            try:
+                group_id = group_id.value
+            except AttributeError:
+                pass
+
+            # Show choices only from groups declared by apps.
+            if group_name in groups_dict:
+                label = groups_dict[group_name]
+                if group_name == 'admin' and self.is_last_admin_user:
+                    label = {'label': label, 'disabled': True}
+
+                choices.append((group_id, label))
+
+        self.fields['groups'].label = _('Permissions')
+        self.fields['groups'].choices = choices
+        self.fields['groups'].help_text = _(
+            'Select which services should be available to the new '
+            'user. The user will be able to log in to services that '
+            'support single sign-on through LDAP, if they are in the '
+            'appropriate group.<br /><br />Users in the admin group '
+            'will be able to log in to all services. They can also '
+            'log in to the system through SSH and have '
+            'administrative privileges (sudo).')
+
+
 @deconstructible
 class UsernameValidator(validators.RegexValidator):
     """Username validator.
@@ -96,8 +158,8 @@ class PasswordConfirmForm(forms.Form):
         return confirm_password
 
 
-class CreateUserForm(ValidNewUsernameCheckMixin,
-                     plinth.forms.LanguageSelectionFormMixin,
+class CreateUserForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
+                     GroupsFieldMixin, plinth.forms.LanguageSelectionFormMixin,
                      PasswordConfirmForm, UserCreationForm):
     """Custom user create form.
 
@@ -105,29 +167,22 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
     """
 
     username = USERNAME_FIELD
-    groups = forms.MultipleChoiceField(
-        choices=UsersAndGroups.get_group_choices,
-        label=gettext_lazy('Permissions'), required=False,
-        widget=plinth.forms.CheckboxSelectMultiple, help_text=gettext_lazy(
-            'Select which services should be available to the new '
-            'user. The user will be able to log in to services that '
-            'support single sign-on through LDAP, if they are in the '
-            'appropriate group.<br /><br />Users in the admin group '
-            'will be able to log in to all services. They can also '
-            'log in to the system through SSH and have '
-            'administrative privileges (sudo).'))
 
     language = plinth.forms.LanguageSelectionFormMixin.language
 
     class Meta(UserCreationForm.Meta):
         """Metadata to control automatic form building."""
 
-        fields = ('username', 'password1', 'password2', 'groups', 'language',
-                  'confirm_password')
+        fields = ('username', 'email', 'password1', 'password2', 'groups',
+                  'language', 'confirm_password')
+        widgets = {
+            'groups': plinth.forms.CheckboxSelectMultiple(),
+        }
 
     def __init__(self, request, *args, **kwargs):
         """Initialize the form with extra request argument."""
         self.request = request
+        self.is_last_admin_user = False
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({
             'autofocus': 'autofocus',
@@ -140,6 +195,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
         user = super().save(commit)
 
         if commit:
+            self.save_m2m()  # Django 3.x does not call save_m2m()
+
             user.userprofile.language = self.cleaned_data['language']
             user.userprofile.save()
             auth_username = self.request.user.username
@@ -155,7 +212,8 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
                     _('Creating LDAP user failed: {error}'.format(
                         error=error)))
 
-            for group in self.cleaned_data['groups']:
+            groups = user.groups.values_list('name', flat=True)
+            for group in groups:
                 try:
                     privileged.add_user_to_group(user.get_username(), group,
                                                  auth_username,
@@ -173,6 +231,7 @@ class CreateUserForm(ValidNewUsernameCheckMixin,
 
 
 class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
+                     EmailFieldMixin, GroupsFieldMixin,
                      plinth.forms.LanguageSelectionFormMixin, forms.ModelForm):
     """When user info is changed, also updates LDAP user."""
 
@@ -191,8 +250,8 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
     class Meta:
         """Metadata to control automatic form building."""
 
-        fields = ('username', 'groups', 'ssh_keys', 'language', 'is_active',
-                  'confirm_password')
+        fields = ('username', 'email', 'groups', 'ssh_keys', 'language',
+                  'is_active', 'confirm_password')
         model = User
         widgets = {
             'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),
@@ -200,38 +259,14 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
     def __init__(self, request, username, *args, **kwargs):
         """Initialize the form with extra request argument."""
-        group_choices = dict(UsersAndGroups.get_group_choices())
-        for group in group_choices:
-            Group.objects.get_or_create(name=group)
-
         self.request = request
         self.username = username
-        super().__init__(*args, **kwargs)
         self.is_last_admin_user = get_last_admin_user() == self.username
+        super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({
             'autocapitalize': 'none',
             'autocomplete': 'username'
         })
-
-        choices = []
-        django_groups = sorted(self.fields['groups'].choices,
-                               key=lambda choice: choice[1])
-        for group_id, group_name in django_groups:
-            try:
-                group_id = group_id.value
-            except AttributeError:
-                pass
-
-            # Show choices only from groups declared by apps.
-            if group_name in group_choices:
-                label = group_choices[group_name]
-                if group_name == 'admin' and self.is_last_admin_user:
-                    label = {'label': label, 'disabled': True}
-
-                choices.append((group_id, label))
-
-        self.fields['groups'].label = _('Permissions')
-        self.fields['groups'].choices = choices
 
         if not is_user_admin(request):
             self.fields['is_active'].widget = forms.HiddenInput()
@@ -347,10 +382,15 @@ class UserChangePasswordForm(PasswordConfirmForm, SetPasswordForm):
         return user
 
 
-class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
+class FirstBootForm(ValidNewUsernameCheckMixin, EmailFieldMixin,
+                    auth.forms.UserCreationForm):
     """User module first boot step: create a new admin user."""
 
     username = USERNAME_FIELD
+
+    class Meta(UserCreationForm.Meta):
+        """Metadata to control automatic form building."""
+        fields = ('username', 'email', 'password1')
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
@@ -364,6 +404,8 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
         """Create and log the user in."""
         user = super().save(commit=commit)
         if commit:
+            self.save_m2m()  # Django 3.x does not call save_m2m()
+
             first_boot.mark_step_done('users_firstboot')
 
             try:
@@ -383,9 +425,7 @@ class FirstBootForm(ValidNewUsernameCheckMixin, auth.forms.UserCreationForm):
                     _('Failed to add new user to admin group: {error}'.format(
                         error=error)))
 
-            # Create initial Django groups
-            for group_choice in UsersAndGroups.get_group_choices():
-                auth.models.Group.objects.get_or_create(name=group_choice[0])
+            _create_django_groups()
 
             admin_group = auth.models.Group.objects.get(name='admin')
             admin_group.user_set.add(user)

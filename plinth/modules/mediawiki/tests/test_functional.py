@@ -20,12 +20,9 @@ class TestMediawikiApp(functional.BaseAppTests):
     has_service = False
     has_web = True
 
-    @pytest.fixture(scope='class', autouse=True)
-    def fixture_setup(self, session_browser):
-        """Setup the app."""
-        functional.login(session_browser)
-        functional.install(session_browser, 'mediawiki')
-        functional.app_enable(session_browser, 'mediawiki')
+    def install_and_setup(self, session_browser):
+        """Install the app and run setup."""
+        super().install_and_setup(session_browser)
         _set_domain(session_browser)
         _set_admin_password(session_browser, 'whatever123')
 

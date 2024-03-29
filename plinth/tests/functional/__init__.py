@@ -599,7 +599,7 @@ def get_forwarders(browser):
 ##############################
 
 
-def create_user(browser, name, password=None, groups=[]):
+def create_user(browser, name, password=None, groups=[], email=None):
     """Create a user with password and user groups."""
     nav_to_module(browser, 'users')
 
@@ -612,9 +612,12 @@ def create_user(browser, name, password=None, groups=[]):
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
     browser.find_by_id('id_password2').fill(password)
+    if email:
+        browser.find_by_id('id_email').fill(email)
 
     for group in groups:
-        browser.find_by_id(f'id_groups_{group}').check()
+        browser.find_by_xpath(
+            f'//label[contains(text(), "({group})")]/input').check()
 
     browser.find_by_id('id_confirm_password').fill(
         config['DEFAULT']['password'])
@@ -674,11 +677,15 @@ class BaseAppTests:
         if self.has_web:
             assert not is_available(session_browser, self.app_name)
 
+    def install_and_setup(self, session_browser):
+        """Install the app and set it up if needed."""
+        install(session_browser, self.app_name)
+
     @pytest.fixture(autouse=True)
     def fixture_background(self, session_browser):
         """Login, install, and enable the app."""
         login(session_browser)
-        install(session_browser, self.app_name)
+        self.install_and_setup(session_browser)
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
@@ -714,6 +721,9 @@ class BaseAppTests:
     def test_backup_restore(self, session_browser):
         """Test that backup and restore operations work on the app."""
         backup_create(session_browser, self.app_name, 'test_' + self.app_name)
+        if self.can_uninstall:
+            uninstall(session_browser, self.app_name)
+
         backup_restore(session_browser, self.app_name, 'test_' + self.app_name)
         self.assert_app_running(session_browser)
 
@@ -724,4 +734,4 @@ class BaseAppTests:
 
         uninstall(session_browser, self.app_name)
         assert not is_installed(session_browser, self.app_name)
-        install(session_browser, self.app_name)
+        self.install_and_setup(session_browser)

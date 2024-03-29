@@ -35,7 +35,7 @@ class ConfigApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=self._version,
@@ -47,7 +47,8 @@ class ConfigApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-config', _('Configure'), None, info.icon,
-                              'config:index', parent_url_name='system')
+                              'config:index', parent_url_name='system:system',
+                              order=30)
         self.add(menu_item)
 
         packages = Packages('packages-config', ['zram-tools'])

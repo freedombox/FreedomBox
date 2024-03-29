@@ -36,8 +36,9 @@ def setup():
     db_password = _generate_secret_key(16)
 
     _create_config_file(DB_HOST, DB_NAME, DB_USER, db_password)
-    _create_database(DB_NAME)
-    _set_privileges(DB_HOST, DB_NAME, DB_USER, db_password)
+    with action_utils.service_ensure_running('mysql'):
+        _create_database(DB_NAME)
+        _set_privileges(DB_HOST, DB_NAME, DB_USER, db_password)
 
 
 def _create_config_file(db_host, db_name, db_user, db_password):
@@ -143,21 +144,23 @@ def is_public() -> bool:
 def dump_database():
     """Dump database to file."""
     _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
-    with _db_backup_file.open('w', encoding='utf-8') as file_handle:
-        subprocess.run([
-            'mysqldump', '--add-drop-database', '--add-drop-table',
-            '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
-        ], stdout=file_handle, check=True)
+    with action_utils.service_ensure_running('mysql'):
+        with _db_backup_file.open('w', encoding='utf-8') as file_handle:
+            subprocess.run([
+                'mysqldump', '--add-drop-database', '--add-drop-table',
+                '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
+            ], stdout=file_handle, check=True)
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
-    with _db_backup_file.open('r', encoding='utf-8') as file_handle:
-        subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                       check=True)
+    with action_utils.service_ensure_running('mysql'):
+        with _db_backup_file.open('r', encoding='utf-8') as file_handle:
+            subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
+                           check=True)
 
-    _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
+        _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
 
 
 def _read_db_password():
@@ -180,13 +183,18 @@ def _load_augeas():
 @privileged
 def uninstall():
     """Remove config files and drop database."""
-    _drop_database()
+    _drop_database(DB_HOST, DB_NAME, DB_USER)
     for file_ in [_public_access_file, _config_file_path, _db_file_path]:
         file_.unlink(missing_ok=True)
 
 
-def _drop_database():
+def _drop_database(db_host, db_name, db_user):
     """Drop the mysql database that was created during install."""
-    query = f'''DROP DATABASE {DB_NAME};'''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    with action_utils.service_ensure_running('mysql'):
+        query = f"DROP DATABASE {db_name};"
+        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                       check=False)
+
+        query = f"DROP USER IF EXISTS {db_user}@{db_host};"
+        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
+                       check=False)

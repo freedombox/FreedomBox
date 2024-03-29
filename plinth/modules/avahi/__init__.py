@@ -38,7 +38,7 @@ class AvahiApp(app_module.App):
 
     _version = 1
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -50,7 +50,8 @@ class AvahiApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-avahi', info.name, None, info.icon,
-                              'avahi:index', parent_url_name='system')
+                              'avahi:index',
+                              parent_url_name='system:visibility', order=50)
         self.add(menu_item)
 
         packages = Packages('packages-avahi', ['avahi-daemon', 'avahi-utils'])

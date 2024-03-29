@@ -8,6 +8,81 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.7 (2024-03-25) ==
+
+=== Highlights ===
+
+ * package: Don't remove packages of other apps on uninstall
+ * samba: Fix Samba not accessible from IPv6 localhost ::1 address
+ * system: Organize items into sections
+ * users: Add email address field when creating/updating user accounts
+
+=== Other Changes ===
+
+ * actions: Minor refactor to action error logging
+ * actions: Move most of the privileged action code to main directory
+ * actions: Provide HTML error message with action error
+ * backups: Adjust to changes in privileged errors
+ * letsencrypt: Remove unnecessary processing of the error messages
+ * letsencrypt: Show better error messages
+ * letsencrypt: Simplify error warning when certificate revoke fails
+ * matrixsynapse: Prevent setup page from being shown during uninstall
+ * middleware: Show HTML exception message as extra detail in messages
+ * package: Drop special error message handling for package errors
+ * samba: Disable nmbd NetBIOS service
+ * snapshot: Show better error messages
+ * storage: Adjust to changes in privileged errors
+ * storage: Show better error message
+ * tests: Automatically create pytest marks for apps
+ * tests: Merge actions related test files
+ * tests: Move test configuration to plinth directory
+ * tests: Remove unused fixture for testing actions
+ * upgrades: Show better error messages
+ * users: Add email address field during first boot
+ * views: Fix alignment of close button in error messages
+ * views: Implement a utility to easily show error message
+
+== FreedomBox 24.6 (2024-03-11) ==
+
+=== Highlights ===
+
+ * gitweb: Fix modifying git repositories when gitweb app is disabled
+ * users: Fix creating users with initial set of groups
+ * wordpress:
+   * Don't fail setup if mysql installed but not running
+   * Drop database user when app is uninstalled
+   * Fix backup, restore and uninstall when db is not running
+ * zoph:
+   * Don't fail setup if mysql installed but not running
+   * Don't fail with backup/restore if app is disabled
+   * Don't redirect to setup page when app is disabled
+   * Ensure that database server is running when setting up app
+   * Hide configuration form when app is disabled
+   * Restore database password to old value after restore operation
+   * Uninstall fully so that reinstall works
+
+=== Other Changes ===
+
+ * *: Add type hints for app init methods
+ * *: Add type hints for diagnose method
+ * action_utils: Implement method for starting a service temporarily
+ * actions: Fix log message when action return can't be decoded
+ * actions: When action errors out, log a better message
+ * app: Add ability to hide configuration form when app is disabled
+ * app: views: Expose method to get enabled/disabled state and cache it
+ * daemon: Added method to ensure a daemon is running in component
+ * diagnostics: Add tests for get_results
+ * diagnostics: Handle !TypeError when copying results
+ * locale: Update translations for Dutch
+ * log: Don't log with in color inside actions scripts
+ * samba: Ignore non-existent users who are in freedombox-share group
+ * tests: functional: Refactor install/setup fixture for apps
+ * tests: functional: Uninstall app after backup and before restore
+ * users: Minor refactor when creating django groups
+ * users: tests: Do not remove LDAP user when testing views
+ * wordpress: Fix minor issue in restoring database
+ * wordpress: tests: Uninstall app after backup and before restore
+
 == FreedomBox 24.5 (2024-02-26) ==
 
  * backups: tests: Don't use pytest marks on fixtures

@@ -63,23 +63,30 @@ class TestGitwebApp(functional.BaseAppTests):
 
     @pytest.mark.parametrize('access', ['public', 'private'])
     @pytest.mark.parametrize('repo_name', ['Test-repo', 'Test-repo.git'])
-    def test_create_delete_repo(self, session_browser, access, repo_name):
+    @pytest.mark.parametrize('app_status', ['enabled', 'disabled'])
+    def test_create_delete_repo(self, session_browser, access, repo_name,
+                                app_status):
         """Test creating and deleting a repo and accessing with a git
         client."""
+        if app_status == "disabled":
+            functional.app_disable(session_browser, 'gitweb')
+
         _delete_repo(session_browser, repo_name, ignore_missing=True)
         _create_repo(session_browser, repo_name, access)
 
         assert _repo_exists(session_browser, repo_name, access)
-        assert _site_repo_exists(session_browser, repo_name)
 
-        if access == "public":
-            assert _repo_is_readable(repo_name)
-        else:
-            assert not _repo_is_readable(repo_name)
+        if app_status == "enabled":
+            assert _site_repo_exists(session_browser, repo_name)
 
-        assert not _repo_is_writable(repo_name)
-        assert _repo_is_readable(repo_name, with_auth=True)
-        assert _repo_is_writable(repo_name, with_auth=True)
+            if access == "public":
+                assert _repo_is_readable(repo_name)
+            else:
+                assert not _repo_is_readable(repo_name)
+
+            assert not _repo_is_writable(repo_name)
+            assert _repo_is_readable(repo_name, with_auth=True)
+            assert _repo_is_writable(repo_name, with_auth=True)
 
         _delete_repo(session_browser, repo_name)
         assert not _repo_exists(session_browser, repo_name)
@@ -93,8 +100,12 @@ class TestGitwebApp(functional.BaseAppTests):
         assert _site_repo_exists(session_browser, 'Test-repo')
         assert not _site_repo_exists(session_browser, 'Test-repo-private')
 
-    def test_edit_repo_metadata(self, session_browser):
+    @pytest.mark.parametrize('app_status', ['enabled', 'disabled'])
+    def test_edit_repo_metadata(self, session_browser, app_status):
         """Test edit repo metadata."""
+        if app_status == "disabled":
+            functional.app_disable(session_browser, 'gitweb')
+
         _create_repo(session_browser, 'Test-repo2', 'public',
                      ok_if_exists=True)
         _delete_repo(session_browser, 'Test-repo', ignore_missing=True)
@@ -108,10 +119,12 @@ class TestGitwebApp(functional.BaseAppTests):
         assert _get_repo_metadata(session_browser,
                                   "Test-repo") == repo_metadata
 
-        _create_branch('Test-repo', 'branch1')
-        _set_default_branch(session_browser, 'Test-repo', 'branch1')
-        assert _get_gitweb_site_default_repo_branch(session_browser,
-                                                    'Test-repo') == 'branch1'
+        if app_status == "enabled":
+            _create_branch('Test-repo', 'branch1')
+            _set_default_branch(session_browser, 'Test-repo', 'branch1')
+
+            assert _get_gitweb_site_default_repo_branch(
+                session_browser, 'Test-repo') == 'branch1'
 
 
 def _create_local_repo(path):

@@ -5,15 +5,18 @@ App component for other apps to use firewall functionality.
 
 import logging
 import re
-from typing import ClassVar
+from typing import ClassVar, TypeAlias
 
 from django.utils.translation import gettext_noop
 
 from plinth import app
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.modules import firewall
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 
 logger = logging.getLogger(__name__)
+
+_list_type: TypeAlias = list
 
 
 class Firewall(app.FollowerComponent):
@@ -114,7 +117,7 @@ class Firewall(app.FollowerComponent):
             if not re.fullmatch(r'tun\d+', interface)
         ]
 
-    def diagnose(self):
+    def diagnose(self) -> _list_type[DiagnosticCheck]:
         """Check if the firewall ports are open and only as expected.
 
         See :py:meth:`plinth.app.Component.diagnose`.
@@ -124,7 +127,7 @@ class Firewall(app.FollowerComponent):
         internal_ports = firewall.get_enabled_services(zone='internal')
         external_ports = firewall.get_enabled_services(zone='external')
         for port_detail in self.ports_details:
-            port = port_detail['name']
+            port = str(port_detail['name'])
             details = ', '.join(
                 (f'{port_number}/{protocol}'
                  for port_number, protocol in port_detail['details']))
@@ -134,7 +137,10 @@ class Firewall(app.FollowerComponent):
             result = Result.PASSED if port in internal_ports else Result.FAILED
             description = gettext_noop(
                 'Port {name} ({details}) available for internal networks')
-            parameters = {'name': port, 'details': details}
+            parameters: DiagnosticCheckParameters = {
+                'name': port,
+                'details': details
+            }
             results.append(
                 DiagnosticCheck(check_id, description, result, parameters))
 

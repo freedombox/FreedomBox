@@ -36,7 +36,7 @@ class NamesApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=self._version,
@@ -46,7 +46,8 @@ class NamesApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-names', info.name, None, info.icon,
-                              'names:index', parent_url_name='system')
+                              'names:index',
+                              parent_url_name='system:visibility', order=10)
         self.add(menu_item)
 
         backup_restore = BackupRestore('backup-restore-names',

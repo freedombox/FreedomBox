@@ -42,7 +42,7 @@ class MediaWikiApp(app_module.App):
 
     _version = 12
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
         self._private_mode = True

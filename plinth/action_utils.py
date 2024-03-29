@@ -48,6 +48,20 @@ def service_is_running(servicename):
         return False
 
 
+@contextmanager
+def service_ensure_running(service_name):
+    """Ensure a service is running and return to previous state."""
+    starting_state = service_is_running(service_name)
+    if not starting_state:
+        service_enable(service_name)
+
+    try:
+        yield starting_state
+    finally:
+        if not starting_state:
+            service_disable(service_name)
+
+
 def service_is_enabled(service_name, strict_check=False):
     """Check if service is enabled in systemd.
 
@@ -275,7 +289,7 @@ def uwsgi_disable(config_name):
     service_start('uwsgi')
 
 
-def get_addresses():
+def get_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses and hostnames."""
     addresses = get_ip_addresses()
 
@@ -309,14 +323,14 @@ def get_addresses():
     return addresses
 
 
-def get_ip_addresses():
+def get_ip_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses assigned to the system."""
     addresses = []
 
     output = subprocess.check_output(['ip', '-o', 'addr'])
     for line in output.decode().splitlines():
         parts = line.split()
-        address = {
+        address: dict[str, str | bool] = {
             'kind': '4' if parts[2] == 'inet' else '6',
             'address': parts[3].split('/')[0],
             'url_address': parts[3].split('/')[0],

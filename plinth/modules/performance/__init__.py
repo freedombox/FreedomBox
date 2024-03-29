@@ -32,7 +32,7 @@ class PerformanceApp(app_module.App):
 
     _version = 1
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -46,7 +46,9 @@ class PerformanceApp(app_module.App):
 
         menu_item = menu.Menu('menu-performance', info.name,
                               info.short_description, info.icon,
-                              'performance:index', parent_url_name='system')
+                              'performance:index',
+                              parent_url_name='system:administration',
+                              order=40)
         self.add(menu_item)
 
         packages = Packages('packages-performance', ['cockpit-pcp'])

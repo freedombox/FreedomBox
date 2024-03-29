@@ -38,8 +38,39 @@ Hay un script incluído en el programa `freedom-maker` que permite establecer la
 El usuario "fbx" también tiene privilegios de superusuario mediante ``sudo``.
 
 === Ingresando ===
+ 	
+==== ¿Quién puede ingresar a FreedomBox por SSH? ====
 
-==== Local ====
+Los usuarios administradores de !FreedomBox pueden usar SSH para ingresar. !FreedomBox crea el superusuario 'fbx'. Hay opciones que permiten ingresar a usuarios normales:
+ * Se puede otorgar individualmente permiso de acceso por SSH a usuarios concretos en la página Editar Usuario seleccionando la opción ''Ingreso remoto usando Secure Shell (SSH) (freedombox-ssh)''.
+ * Se puede otorgar permiso de acceso por SSH en masa a todos los usuarios en la página de configuración de SSH seleccionando la opción ''Permitir el ingreso remoto por SSH a todos los usuarios''.
+
+En una !FreedomBox nueva puedes ingresar con SSH como fbx y los demás usuarios normales podrán hacerlo tras ajustar sus cuentas o la configuración de la Shell Segura arriba en esta sección.
+La cuenta de usuario root no podrá ingresar al no tener contraseña.
+
+==== Software Cliente SSH ====
+
+Muchos sistemas operativos, incluyendo Linux, Windows de Microsoft y MacOS de Apple incluyen clientes SSH. SSH se incluye en ''Chromebooks'' pero requiere que el usuario lo configure.
+En la mayoría de los casos puedes ejecutar SSH desde la terminal o línea de órdenes como se muestra aquí, usando el nombre de la máquina de !FreedomBox o su dirección IP:
+{{{
+$ ssh freedombox.local
+}}}
+
+Si tu cliente no tiene SSH disponible, PuTTY es un cliente SSH popular y es software libre conforme a las Directrices de Debian para Software Libre.
+PuTTY tiene una interfaz gráfica para recordar y administrar tus conexiones SSH. Consulta los enlaces externos más abajo para amplisr información acerca de PuTTy.
+
+===== Cockpit como alternativa a SSH =====
+
+La aplicación ''Terminal de Administración de Servidor Cockpit'' disponible en el menú de ''Herramientas Cockpit'' es una herramienta de acceso por terminal alternativa a SSH.
+Como con SSH, su conexión al terminal !FreedomBox esta securizada. Cockpit es una buena opción para usuarios que no quieran habilitar el servidor SSH o que prefieran conectar mediante un navegador web.
+Com ambas herramientas se te presentará el interfaz de línea de órdenes bash de !FreedomBox.
+
+Algunos usuarios prefieren ejecutar SSH en vez de o junto a Cockpit. Los usuarios de la consola de órdenes suelen preferir SSH porque ya lo usan.
+Los usuarios con experiencia administrando sistemas Linux o Unix suelen preferir este método de conexión porque es un servicio más simple y se cree que es más propenso a permanecer disponible en caso de problemas.
+
+Para configurar Cockpit y los certificados SSL con seguridad lea las secciones del manual ''Cockpit'' y ''Let's Encrypt'', respectivamente.
+
+==== SSL en la Red Local ====
 
 Para ingresar mediante SSH a tu !FreedomBox:
 
@@ -114,11 +145,186 @@ $ passwd
 
 Esto te preguntará tu contraseña actual antes de darte la oportunidad de establecer la nueva.
 
+=== Claves SSH ===
+
+El siguiente paso para mejorar la seguridad y la comodidad es comprender y empleare las claves SSH. Si la primera vez ingresaste a tu !FreedomBox mediante SSH siguiendo las instrucciones anteriores diste un usuario y una contraseña.
+In esta sección aprenderás acerca de huellas de servidor, claves de máquina, claves autorizadas, y los motivos para usarlas securizando la conexión a la vez que la facilitas.
+
+SSH está configurada por omisión para preferir ingresar con claves mientras te sigue permitiendo emplear un nombre de usuario y contraseña. Al final de esta sección podrás:
+ * Conectar a !FreedomBox sabiendo que te conectas al ordenador deseado.
+ * Conectar instantáneamente sin tener que dar usuario y contraseña.
+ * Mejorar la seguridad de tu !FreedomBox deshabilitando la autenticación a SSH mediante cotraseña.
+
+==== Claves SSH Públicas y Privadas ====
+
+Las claves SSH se generan emparejadas. Cada par par consta de una clave pública y su clave privada correspondiente.
+Cada clave cifra los datos de modo que solo se pueden leer con la otra: lo que cifra la privada solo lo descifra la pública y viceversa.
+Esto se llama sistema de cifrado asimétrico. SSH mantendrá tus claves privadas seguras y comunicará automáticamente tus claves públicas al otro sistema. 
+
+Empplear claves SSH crea un conjunto potente de características de seguridad:
+ * Te aseguran que te conectas a tu !FreedomBox (y no a un impostor).
+ * Nadie más podrá leer ni modificar tu comunicación con !FreedomBox. 
+ * El servicio SSH de !FreedomBox SSH sabrá que eres tú (y no un impostor) el usuario conectado.
+ * Nadie más podrá leer ni modificar la comunicación de !FreedomBox destinada a tí. 
+ * La conexión es automática sin nombre de usuario ni contraseña.
+ * Tu !FreedomBox puede bloquear cualquier ataque basado en adivinar tu contraseña.
+
+==== Crea tus claves SSH personales en tu ordenador cliente usando ssh-keygen ====
+
+Crearemos un par de claves SSH tu ordenador cliente usando usando valores por omisión y sin dar una contraseña.
+Usa el comando {{{ssh-keygen}}} sin argumentos y cuando se te pida una contraseña introdúcela vacía.
+He aquí un ejemplo:
+
+{{{
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa): 
+Created directory '/home/username/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/username/.ssh/id_rsa
+Your public key has been saved in /home/username/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:nHcTP5DBKxBOgt8BFMyb2QUs//t8ge+8vw2zjOuE71U username@clientpc
+The key's randomart image is:
++---[RSA 3072]----+
+|     ==++o ..    |
+|    . +++ . .o   |
+|     . O.+  +.   |
+|      =.+.. .+   |
+|        S...o.o E|
+|         ..o...o |
+|          ....+. |
+|          .+ =o+.|
+|           +O+*++|
++----[SHA256]-----+
+}}}
+
+Ya tienes un par de claves SSH personales en tu ordenador cliente.
+
+==== Verificar la Huella de tu Servidor FreedomBox ====
+
+La primera vez que te conectes a !FreedomBox se te presentará un mensaje como este:
+
+{{{
+$ ssh fbx@freedombox.local
+No se puede asegurar la autenticidad de 'freedombox.local (192.168.1.4)'.
+Su huella ED25519 es SHA256:TwJFdepq7OaTXcycoYfYE8/lRtuOxUGCrst0K/RUh4E.
+Esta huella no consta asociada a ningún otro nombre.
+¿Seguro que quiere conectar (Si/No/[huella])? 
+}}}
+
+Hay varias partes que hay que entender en este mensaje:
+ * SSH te dice que nunca antes has conectado con este servidor por lo que no puede garantizarte que sea seguro.
+ * SSH te ofrece la oportunidad de validar este nuevo servidor indicando 'Si'.  
+ * SSH ha recibido una clave de cifrado para comunicar con seguridad con este servidor (aunque no tengamos certeza de a qué máquina nos conectamos).
+ * SSH te está dando información que usarás para confirmar que el servidor SSH remoto es tu !FreedomBox.
+
+Vé con tu navegador a !FreedomBox. Entra en el menú de Sistema y luego a Shell Segura. La segunda sección de esta página es Huellas de Servidor y tiene una entrada ED25519:
+||'''Algoritmo'''||'''Huella'''||
+||RSA||SHA256:ZGvgdxiDEpGKdw82Z6z0QRmDpT3Vgi07Ghba5IBJ4tQ||
+||ECDSA||SHA256:BLMMfPxNHpHF0sqCazAwE6ONdLtMY+W2yrgjP7AeXcQ||
+||ED25519||SHA256:TwJFdepq7OaTXcycoYfYE8/lRtuOxUGCrst0K/RUh4E||
+Compara la huella ED25519 de la página Shell Segura de tu !FreedomBox con la que ha recibido tu cliente SSH en su primera conexión. Si las huellas coinciden puedes confiar que estás conectando con tu !FreedomBox.
+
+Me gustaría acompañarte a dar estos pasos pero ... ¿ya has realizado tu primera conexión? Puedes reiniciar el proceso con esta orden en el ordenador de tu cliente SSH.
+{{{
+$ ssh-keygen -R freedombox.local
+}}}
+Esto borra el registro de tu conexión a !FreedomBox. Ahora abre la página de configuración de la Shell Segura en !FreedomBox por la sección de Huellas de Servidor.
+A continuación conecta a !FreedomBox con tu cliente SSH y verifica la huella de servidor antes de responder afirmativamente a la pregunta de authenticidad de la máquina.
+Hacer esto correctamente te garantiza que cuando conectes mediante SSH a !FreedomBox te conectas al tuyo (y no a otro).
+
+Cada vez que te conectes a un servidor SSH nuevo para tí se te dará la oportunidad de verificar su huella.
+Si te conectas a !FreedomBox usando nombres o direcciones IP diferentes (IP local, nombre DNS, nombre Pagekite, dirección .onion para TOR...) se te preguntará una vez por
+cada una pero la huella será siempre la misma.
+
+Las huellas de tu servidor no son secretas. La huella es una versión resumida de la clave pública que se comparte para que la usen para cifrar la comunicación que se te envía.
+Tu clave pública tampoco es secreta. Podrías publicar las huellas y las claves públicas sin afectar un ápice a la seguridad de tu !FreedomBox.
+
+==== Comparte tu clave SSH personal pública con FreedomBox usando ssh-copy-id ====
+
+Ahora que tienes una clave personal y has verificado la identidad de !FreedomBox, éste sigue sin conocer la tuya y te pedirá una contraseña al intentar ingresar mediante SSH.
+La orden {{{ssh-copy-id}}} le dirá a !FreedomBox que acepte tu clave personal en vez de tu contraseña.
+
+{{{
+$ ssh-copy-id username@freedombox.local
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+username@freedombox.local's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'username@freedombox.local'"
+and check to make sure that only the key(s) you wanted were added.
+}}}
+
+Estos pasos emparejan tu clave personal pública a tu cuenta de usuario en !FreedomBox. Al completar este paso el servidor SSH de !FreedomBox comparará la clave que le envía el
+ordenador cliente con la que ha guardado !FreedomBox. Si coinciden ingresarás sin necesidad de introducir una contraseña. Compruébalo ahora:
+
+{{{
+$ ssh freedombox.local
+Linux freedombox 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) x86_64
+
+                         .--._    _.--.
+                        (     \  /     )
+                         \     /\     /
+                          \_   \/   _/
+                           /        \
+                          (    /\    )
+                           `--'  `--'
+
+                           FreedomBox
+
+FreedomBox is a pure blend of Debian GNU/Linux. Web interface is available at
+https://localhost/ . FreedomBox manual is available in /usr/share/doc/freedombox
+and from the web interface.
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+You have new mail.
+Last login: Sun Mar 17 14:27:03 2024 from 192.168.144.101
+username@freedombox:~$
+}}}
+
+Una vez !FreedomBox conoce tu clave pública podrás conectar usándola sin importar cómo te refieras a !FreedomBox:
+ * Nombre en la red local
+ * Dirección IP en la red local
+ * Dirección IP pública de tu proveedor de internet
+ * Nombre DNS, si usas DNS dinámico
+ * Nombre Pagekite, si usas Pagekite
+ * Dirección .onion, si usas TOR
+
+==== Bloquear intentos de adivinar tu contraseña SSH deshabilitando la autenticación mediante contraseña ====
+
+Cuando ya puedas conectar a !FreedomBox por SSH mediante clave SSH sin introducir contraseña puedes dar otro paso para mejorar la seguridad de !FreedomBox.
+Si tienes tu !FreedomBox accesible desde internet quizá notes que se repiten intentos de ingreso desde internet. Una buena contraseña es tu primera linea de defensa,
+pero !FreedomBox tiene más características para protegerte de estos intentos de intrusión. Puedes atajar por completo este disparate deshabilitando la autenticación
+por contraseña para la Shell Segura.
+En el menú de ''Sistema'' de tu !FreedomBox elige la ''Configuración de Shell Segura'' y debajo de ''Configuración'' selecciona "Deshabilitar autenticación por contraseña":
+
+ [x] Deshabilitar autenticación por contraseña  
+
+Dale al botón "Actualizar Ajustes". Esto impide cualquier intento de intrusión que quiera adivinar tu contraseña. Podrás ingresar desde este ordenador cliente con tu clave.
+
+===== Conculsión acerca de la Huella de Servidor =====
+
+En esta sección hemos aprendido a encontrar las Huellas de Servidor de la Shell Segura de !FreedomBox.
+Hemos verificado la conexión con !FreedomBox comparando la huella recibida por el cliente SSH con la que hay en el servidor SSH de !FreedomBox.
+Estos pasos solo se necesitan la primera vez que conectamos con !FreedomBox.
+Quizá necesites repetirlos al conectar mediante la dirección IP o los nombres de la máquina en la red local o desde fuera de ella.
+En cada caso recibirás la misma Huella de Servidor que podrás verificar la primera vez.
 
 === Enlaces externos ===
 
  * Proyecto original: https://www.openssh.com
  * Documentación de uso: https://www.openssh.com/manual.html
+ * Software cliente PuTTY : https://www.chiark.greenend.org.uk/~sgtatham/putty/
+ * SSH en el wiki de Debian: https://wiki.debian.org/SSH
 
 
 ## END_INCLUDE

@@ -13,7 +13,7 @@ from django.utils.translation import gettext_noop
 
 import plinth
 from plinth import app as app_module
-from plinth.package import PackageException, Packages
+from plinth.package import Packages
 from plinth.signals import post_setup
 
 from . import operation as operation_module
@@ -69,18 +69,6 @@ def _run_setup_on_app(app, current_version):
         app.setup(old_version=current_version)
         app.set_setup_version(app.info.version)
         post_setup.send_robust(sender=app.__class__, module_name=app.app_id)
-    except PackageException as exception:
-        exception_to_update = exception
-        error_string = getattr(exception, 'error_string', str(exception))
-        error_details = getattr(exception, 'error_details', '')
-        if not current_version:
-            message = gettext_noop('Error installing app: {string} '
-                                   '{details}').format(string=error_string,
-                                                       details=error_details)
-        else:
-            message = gettext_noop('Error updating app: {string} '
-                                   '{details}').format(string=error_string,
-                                                       details=error_details)
     except Exception as exception:
         exception_to_update = exception
         if not current_version:
@@ -124,14 +112,6 @@ def _run_uninstall_on_app(app):
         app.disable()
         app.uninstall()
         app.set_setup_version(0)
-    except PackageException as exception:
-        exception_to_update = exception
-        error_string = getattr(exception, 'error_string', str(exception))
-        error_details = getattr(exception, 'error_details', '')
-        message = gettext_noop('Error uninstalling app: {string} '
-                               '{details}').format(string=error_string,
-                                                   details=error_details)
-
     except Exception as exception:
         exception_to_update = exception
         message = gettext_noop('Error uninstalling app: {error}').format(

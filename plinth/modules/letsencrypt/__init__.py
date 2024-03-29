@@ -11,10 +11,10 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.signals import domain_added, domain_removed, post_app_loading
@@ -51,7 +51,7 @@ class LetsEncryptApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -66,7 +66,8 @@ class LetsEncryptApp(app_module.App):
 
         menu_item = menu.Menu('menu-letsencrypt', info.name,
                               info.short_description, info.icon,
-                              'letsencrypt:index', parent_url_name='system')
+                              'letsencrypt:index',
+                              parent_url_name='system:security', order=20)
         self.add(menu_item)
 
         packages = Packages('packages-letsencrypt', ['certbot'])
@@ -89,7 +90,7 @@ class LetsEncryptApp(app_module.App):
 
         post_app_loading.connect(_certificate_handle_modified)
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
 
@@ -186,9 +187,8 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
             logger.info('Revoking certificate for %s', name)
             certificate_revoke(name, really_revoke=False)
         return True
-    except Exception as exception:
-        logger.warning('Failed to revoke certificate for %s: %s', name,
-                       exception.args[2])
+    except Exception:
+        logger.warning('Failed to revoke certificate for %s', name)
         return False
 
 

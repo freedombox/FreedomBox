@@ -37,8 +37,8 @@ Base Classes
 Other Classes
 ^^^^^^^^^^^^^
 
-.. autoclass:: plinth.modules.diagnostics.check.DiagnosticCheck
+.. autoclass:: plinth.diagnostic_check.DiagnosticCheck
    :members:
 
-.. autoclass:: plinth.modules.diagnostics.check.Result
+.. autoclass:: plinth.diagnostic_check.Result
    :members:

@@ -55,7 +55,7 @@ class EmailApp(plinth.app.App):
 
     _version = 4
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the email app."""
         super().__init__()
 

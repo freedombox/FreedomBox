@@ -24,7 +24,7 @@ class ApacheApp(app_module.App):
 
     _version = 12
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -61,8 +61,8 @@ class ApacheApp(app_module.App):
         daemon = Daemon('daemon-apache', 'apache2')
         self.add(daemon)
 
-        daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
-        self.add(daemon)
+        related_daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
+        self.add(related_daemon)
 
     def setup(self, old_version):
         """Install and configure the app."""

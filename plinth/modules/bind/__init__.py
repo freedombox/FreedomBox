@@ -32,7 +32,7 @@ class BindApp(app_module.App):
 
     _version = 3
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -44,7 +44,7 @@ class BindApp(app_module.App):
 
         menu_item = menu.Menu('menu-bind', info.name, info.short_description,
                               info.icon, 'bind:index',
-                              parent_url_name='system')
+                              parent_url_name='system:visibility', order=30)
         self.add(menu_item)
 
         packages = Packages('packages-bind', ['bind9'])

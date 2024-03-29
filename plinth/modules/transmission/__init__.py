@@ -62,7 +62,7 @@ class TransmissionApp(app_module.App):
 
     DAEMON = 'transmission-daemon'
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 

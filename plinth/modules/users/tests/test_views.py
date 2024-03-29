@@ -52,7 +52,8 @@ def module_patch():
          patch(f'{privileged}.get_group_users') as get_group_users, \
          patch('plinth.modules.ssh.privileged.set_keys'), \
          patch('plinth.modules.ssh.privileged.get_keys') as get_keys, \
-         patch(f'{privileged}.get_user_groups') as get_user_groups:
+         patch(f'{privileged}.get_user_groups') as get_user_groups, \
+         patch(f'{privileged}.remove_user'):
         get_group_users.return_value = ['admin']
         get_keys.return_value = []
         get_user_groups.return_value = []

@@ -10,8 +10,8 @@ from django.utils.translation import gettext_noop
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.diagnostics.check import DiagnosticCheck, Result
 from plinth.package import Packages, install
 from plinth.utils import Version, format_lazy, import_from_gi
 
@@ -53,7 +53,7 @@ class FirewallApp(app_module.App):
 
     can_be_disabled = False
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
@@ -64,7 +64,8 @@ class FirewallApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,
-                              'firewall:index', parent_url_name='system')
+                              'firewall:index',
+                              parent_url_name='system:security', order=30)
         self.add(menu_item)
 
         packages = Packages('packages-firewall', ['firewalld', 'nftables'])
@@ -96,7 +97,7 @@ class FirewallApp(app_module.App):
         _run_setup()
         return True
 
-    def diagnose(self):
+    def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
         config = privileged.get_config()
@@ -265,7 +266,8 @@ def remove_passthrough(ipv, *args):
         config_direct.removePassthrough('(sas)', ipv, args)
 
 
-def _diagnose_default_zone(config):
+def _diagnose_default_zone(
+        config: privileged.FirewallConfig) -> DiagnosticCheck:
     """Diagnose whether the default zone is external."""
     check_id = 'firewall-default-zone'
     description = gettext_noop('Default zone is external')
@@ -274,7 +276,8 @@ def _diagnose_default_zone(config):
     return DiagnosticCheck(check_id, description, result)
 
 
-def _diagnose_firewall_backend(config):
+def _diagnose_firewall_backend(
+        config: privileged.FirewallConfig) -> DiagnosticCheck:
     """Diagnose whether the firewall backend is nftables."""
     check_id = 'firewall-backend'
     description = gettext_noop('Firewall backend is nftables')
@@ -283,7 +286,8 @@ def _diagnose_firewall_backend(config):
     return DiagnosticCheck(check_id, description, result)
 
 
-def _diagnose_direct_passthroughs(config):
+def _diagnose_direct_passthroughs(
+        config: privileged.FirewallConfig) -> DiagnosticCheck:
     """Diagnose direct passthroughs for local service protection.
 
     Currently, we just check that the number of passthroughs is at least 12,

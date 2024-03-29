@@ -46,7 +46,7 @@ class CalibreApp(app_module.App):
 
     DAEMON = 'calibre-server-freedombox'
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Create components for the app."""
         super().__init__()
 
