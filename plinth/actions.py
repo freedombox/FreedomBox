@@ -331,7 +331,6 @@ def _privileged_call(module_name, action_name, arguments):
         return_values = func(*arguments['args'], **arguments['kwargs'])
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
-        logger.exception('Error executing action: %s', exception)
         return_value = {
             'result': 'exception',
             'exception': {
