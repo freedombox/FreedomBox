@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Nextcloud."""
 
-import os
 import pathlib
 import random
 import re
@@ -19,7 +18,7 @@ NETWORK_NAME = 'nextcloud-fbx'
 BRIDGE_IP = '172.16.16.1'
 CONTAINER_IP = '172.16.16.2'
 CONTAINER_NAME = 'nextcloud-freedombox'
-VOLUME_NAME = 'nextcloud-volume-fbx'
+VOLUME_NAME = 'nextcloud-volume-freedombox'
 IMAGE_NAME = 'docker.io/library/nextcloud:stable-apache'
 
 DB_HOST = 'localhost'
@@ -27,6 +26,8 @@ DB_NAME = 'nextcloud_fbx'
 DB_USER = 'nextcloud_fbx'
 GUI_ADMIN = 'nextcloud-admin'
 
+_volume_path = pathlib.Path(
+    '/var/lib/containers/storage/volumes/') / VOLUME_NAME
 _socket_config_file = pathlib.Path('/etc/mysql/mariadb.conf.d/'
                                    '99-freedombox.cnf')
 _systemd_location = pathlib.Path('/etc/systemd/system/')
@@ -63,9 +64,9 @@ def setup():
     # Wait until CAN_INSTALL file is available.
     timeout = 300
     while timeout > 0:
-        if os.path.exists('/var/lib/containers/storage/volumes/'
-                          'nextcloud-volume-fbx/_data/config/CAN_INSTALL'):
+        if (_volume_path / '_data/config/CAN_INSTALL').exists():
             break
+
         timeout = timeout - 1
         time.sleep(1)
 
@@ -198,9 +199,7 @@ FLUSH PRIVILEGES;
 
 
 def _nextcloud_setup_wizard(db_password, admin_password):
-    admin_data_dir = pathlib.Path(
-        '/var/lib/containers/storage/volumes/nextcloud-volume-fbx/'
-        f'_data/data/{GUI_ADMIN}')
+    admin_data_dir = _volume_path / '_data/data' / GUI_ADMIN
     if not admin_data_dir.exists():
         _run_occ('maintenance:install', '--database=mysql',
                  f'--database-name={DB_NAME}', f'--database-host={BRIDGE_IP}',
@@ -368,8 +367,7 @@ def _get_dbpassword():
 
     OCC cannot run unless Nextcloud can already connect to the database.
     """
-    config_file = ('/var/lib/containers/storage/volumes/nextcloud-volume-fbx'
-                   '/_data/config/config.php')
+    config_file = _volume_path / '_data/config/config.php'
     with open(config_file, 'r', encoding='utf-8') as config:
         config_contents = config.read()
 
@@ -381,9 +379,7 @@ def _get_dbpassword():
 
 def _create_redis_config(password):
     """Create a php file for Redis configuration."""
-    config_file = pathlib.Path(
-        '/var/lib/containers/storage/volumes/nextcloud-volume-fbx/_data/'
-        'config/freedombox.config.php')
+    config_file = _volume_path / '_data/config/freedombox.config.php'
     file_content = f'''<?php
 $CONFIG = [
 'filelocking.enabled' => true,
