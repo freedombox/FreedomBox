@@ -74,14 +74,8 @@ def setup():
     _set_redis_password(_generate_secret_key(16))
     action_utils.service_restart('redis-server')
     _create_redis_config(_get_redis_password())
-    # Check if LDAP has already been configured. This is necessary because
-    # if the setup proccess is rerun when updating the FredomBox app another
-    # redundant LDAP config would be created.
-    is_ldap_configured = _run_occ('ldap:test-config', 's01',
-                                  capture_output=True)
-    if is_ldap_configured != ('The configuration is valid and the connection '
-                              'could be established!'):
-        _configure_ldap()
+
+    _configure_ldap()
 
     _configure_systemd()
 
@@ -210,7 +204,14 @@ def _nextcloud_setup_wizard(db_password, admin_password):
 
 def _configure_ldap():
     _run_occ('app:enable', 'user_ldap')
-    _run_occ('ldap:create-empty-config')
+
+    # Check if LDAP has already been configured. This is necessary because
+    # if the setup proccess is rerun when updating the FredomBox app another
+    # redundant LDAP config would be created.
+    output = _run_occ('ldap:test-config', 's01', capture_output=True,
+                      check=False)
+    if 'Invalid configID' in output.stdout.decode():
+        _run_occ('ldap:create-empty-config')
 
     ldap_settings = {
         'ldapBase': 'dc=thisbox',
