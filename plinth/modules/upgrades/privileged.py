@@ -471,10 +471,12 @@ def _perform_dist_upgrade():
                 f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
             debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
-        # XXX: unattended-upgrade gets stuck here, see #2266.
         # This will upgrade most of the packages.
-        # print('Running unattended-upgrade...', flush=True)
-        # subprocess.run(['unattended-upgrade', '--verbose'], check=False)
+        # Previously, when dist-upgrading from bullseye to bookworm, there was
+        # an issue where unattended-upgrade gets stuck. See #2266.  However, it
+        # does not get stuck when dist-upgrading from bookworm to trixie.
+        print('Running unattended-upgrade...', flush=True)
+        subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.
