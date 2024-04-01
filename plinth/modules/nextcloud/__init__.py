@@ -89,13 +89,6 @@ class NextcloudApp(app_module.App):
                               urls=['https://{host}/nextcloud/login'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-nextcloud', 'nextcloud-freedombox')
-        self.add(daemon)
-
-        daemon = Daemon('daemon-nextcloud-timer',
-                        'nextcloud-cron-freedombox.timer')
-        self.add(daemon)
-
         daemon = SharedDaemon('shared-daemon-podman-auto-update',
                               'podman-auto-update.timer')
         self.add(daemon)
@@ -105,6 +98,13 @@ class NextcloudApp(app_module.App):
         self.add(daemon)
 
         daemon = SharedDaemon('shared-daemon-nextcloud-mysql', 'mysql')
+        self.add(daemon)
+
+        daemon = Daemon('daemon-nextcloud', 'nextcloud-freedombox')
+        self.add(daemon)
+
+        daemon = Daemon('daemon-nextcloud-timer',
+                        'nextcloud-cron-freedombox.timer')
         self.add(daemon)
 
         backup_restore = NextcloudBackupRestore('backup-restore-nextcloud',
