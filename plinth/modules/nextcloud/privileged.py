@@ -85,12 +85,13 @@ def setup():
     _configure_systemd()
 
 
-def _run_occ(*args, capture_output: bool = False):
+def _run_occ(*args, capture_output: bool = False,
+             check: bool = True) -> subprocess.CompletedProcess:
     """Run the Nextcloud occ command inside the container."""
     occ = [
         'podman', 'exec', '--user', 'www-data', CONTAINER_NAME, 'php', 'occ'
     ] + list(args)
-    return subprocess.run(occ, capture_output=capture_output, check=False)
+    return subprocess.run(occ, capture_output=capture_output, check=check)
 
 
 @privileged
