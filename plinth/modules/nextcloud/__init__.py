@@ -114,7 +114,12 @@ class NextcloudApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        privileged.setup()
+        with self.get_component(
+                'shared-daemon-nextcloud-mysql').ensure_running():
+            # Database needs to be running for successful initialization or
+            # upgrade of Nextcloud database.
+            privileged.setup()
+
         if not old_version:
             self.enable()
 
