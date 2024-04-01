@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Nextcloud."""
 
+import json
 import pathlib
 import random
 import re
@@ -187,9 +188,15 @@ FLUSH PRIVILEGES;
                    check=True)
 
 
+def _nextcloud_get_status():
+    """Return Nextcloud status such installed, in maintenance, etc."""
+    output = _run_occ('status', '--output=json', capture_output=True)
+    return json.loads(output.stdout)
+
+
 def _nextcloud_setup_wizard(db_password, admin_password):
-    admin_data_dir = _volume_path / '_data/data' / GUI_ADMIN
-    if not admin_data_dir.exists():
+    """Run the Nextcloud installation wizard and enable cron jobs."""
+    if not _nextcloud_get_status()['installed']:
         _run_occ('maintenance:install', '--database=mysql',
                  '--database-host=localhost:/run/mysqld/mysqld.sock',
                  f'--database-name={DB_NAME}', f'--database-user={DB_USER}',
