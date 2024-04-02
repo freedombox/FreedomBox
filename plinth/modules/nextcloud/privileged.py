@@ -36,9 +36,6 @@ _cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
 DB_BACKUP_FILE = pathlib.Path(
     '/var/lib/plinth/backups-data/nextcloud-database.sql')
 
-REDIS_CONFIG = '/etc/redis/redis.conf'
-REDIS_CONFIG_AUG = f'/files{REDIS_CONFIG}'
-
 
 @privileged
 def setup():
@@ -46,14 +43,23 @@ def setup():
     database_password = _generate_secret_key(16)
     administrator_password = _generate_secret_key(16)
 
+    # Setup database
     _create_database()
     _set_database_privileges(database_password)
+
+    # Setup redis for caching
+    _redis_listen_socket()
+    _set_redis_password(_generate_secret_key(16))
+    action_utils.service_restart('redis-server')
+
     action_utils.podman_run(
         network_name=NETWORK_NAME, subnet='172.16.16.0/24',
         bridge_ip=BRIDGE_IP, host_port='8181', container_port='80',
         container_ip=CONTAINER_IP, container_name=CONTAINER_NAME,
         image_name=IMAGE_NAME, extra_run_options=[
             '--volume=/run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock',
+            '--volume=/run/redis/redis-server.sock:'
+            '/run/redis/redis-server.sock',
             f'--volume={VOLUME_NAME}:/var/www/html',
             f'--env=TRUSTED_PROXIES={BRIDGE_IP}',
             '--env=OVERWRITEWEBROOT=/nextcloud'
@@ -71,9 +77,6 @@ def setup():
         time.sleep(1)
 
     _nextcloud_setup_wizard(database_password, administrator_password)
-    _bind_redis(f'127.0.0.1 -::1 {BRIDGE_IP}')
-    _set_redis_password(_generate_secret_key(16))
-    action_utils.service_restart('redis-server')
     _create_redis_config(_get_redis_password())
 
     _configure_ldap()
@@ -282,10 +285,6 @@ WantedBy=timers.target
 @privileged
 def uninstall():
     """Uninstall Nextcloud"""
-    # Set bind setting back to default in case other apps
-    # are still using it
-    _bind_redis('127.0.0.1 -::1')
-    action_utils.service_restart('redis-server')
     _drop_database()
     _configure_firewall(action='remove', interface_name=NETWORK_NAME)
     action_utils.podman_uninstall(container_name=CONTAINER_NAME,
@@ -378,8 +377,7 @@ $CONFIG = [
 'memcache.locking' => '\\\\OC\\\\Memcache\\\\Redis',
 'memcache.distributed' => '\\\\OC\\\\Memcache\\\\Redis',
 'redis' => [
-    'host' => '{BRIDGE_IP}',
-    'port' => '6379',
+    'host' => '/run/redis/redis-server.sock',
     'password' => '{password}',
     ],
 ];
@@ -392,27 +390,31 @@ def _load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.transform('Spacevars', REDIS_CONFIG)
-    aug.set('/augeas/context', REDIS_CONFIG_AUG)
+    redis_config = '/etc/redis/redis.conf'
+    aug.transform('Spacevars', redis_config)
+    aug.set('/augeas/context', '/files' + redis_config)
     aug.load()
     return aug
 
 
-def _bind_redis(ip_address):
-    """Configure Redis to listen on the podman bridge adapter."""
+def _redis_listen_socket():
+    """Configure Redis to listen on a UNIX socket."""
     aug = _load_augeas()
-    aug.set(REDIS_CONFIG_AUG + '/bind', ip_address)
+    value = '/etc/redis/conf.d/*.conf'
+    found = any((aug.get(match_) == value for match_ in aug.match('include')))
+    if not found:
+        aug.set('include[last() + 1]', value)
+
     aug.save()
 
 
-def _set_redis_password(password):
+def _set_redis_password(password: str):
     if _get_redis_password() is None:
         aug = _load_augeas()
-        aug.set(REDIS_CONFIG_AUG + '/requirepass', password)
+        aug.set('requirepass', password)
         aug.save()
 
 
 def _get_redis_password() -> str:
     aug = _load_augeas()
-    password = aug.get(REDIS_CONFIG_AUG + '/requirepass')
-    return password
+    return aug.get('requirepass')

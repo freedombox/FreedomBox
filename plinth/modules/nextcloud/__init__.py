@@ -74,6 +74,7 @@ class NextcloudApp(app_module.App):
             '/etc/apache2/conf-available/nextcloud-freedombox.conf',
             '/etc/fail2ban/jail.d/nextcloud-freedombox.conf',
             '/etc/fail2ban/filter.d/nextcloud-freedombox.conf',
+            '/etc/redis/conf.d/freedombox.conf',
         ])
         self.add(dropin_configs)
 
@@ -115,10 +116,15 @@ class NextcloudApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
         with self.get_component(
-                'shared-daemon-nextcloud-mysql').ensure_running():
-            # Database needs to be running for successful initialization or
-            # upgrade of Nextcloud database.
-            privileged.setup()
+                'shared-daemon-nextcloud-redis').ensure_running():
+            with self.get_component(
+                    'shared-daemon-nextcloud-mysql').ensure_running():
+                # Database needs to be running for successful initialization or
+                # upgrade of Nextcloud database.
+
+                # Drop-in configs need to be enabled for setup to succeed
+                self.get_component('dropin-configs-nextcloud').enable()
+                privileged.setup()
 
         if not old_version:
             self.enable()
