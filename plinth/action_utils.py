@@ -490,9 +490,8 @@ def is_package_manager_busy():
 
 
 def podman_run(network_name: str, subnet: str, bridge_ip: str, host_port: str,
-               container_port: str, container_ip: str, volume_name: str,
-               container_name: str, image_name: str,
-               extra_run_options: list[str] | None = None,
+               container_port: str, container_ip: str, container_name: str,
+               image_name: str, extra_run_options: list[str] | None = None,
                extra_network_options: list[str] | None = None):
     """Remove, recreate and run a podman container."""
     try:
@@ -513,8 +512,8 @@ def podman_run(network_name: str, subnet: str, bridge_ip: str, host_port: str,
 
     args = [
         'podman', 'run', '--detach', '--network', network_name, '--ip',
-        container_ip, '--volume', f'{volume_name}:/var/www/html', '--name',
-        container_name, '--restart', 'unless-stopped', '--quiet'
+        container_ip, '--name', container_name, '--restart', 'unless-stopped',
+        '--quiet'
     ]
     # Only listen on localhost. This is to prevent exposing the host port to
     # the internet.

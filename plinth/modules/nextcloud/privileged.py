@@ -50,10 +50,10 @@ def setup():
     action_utils.podman_run(
         network_name=NETWORK_NAME, subnet='172.16.16.0/24',
         bridge_ip=BRIDGE_IP, host_port='8181', container_port='80',
-        container_ip=CONTAINER_IP, volume_name=VOLUME_NAME,
-        container_name=CONTAINER_NAME, image_name=IMAGE_NAME,
-        extra_run_options=[
+        container_ip=CONTAINER_IP, container_name=CONTAINER_NAME,
+        image_name=IMAGE_NAME, extra_run_options=[
             '--volume=/run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock',
+            f'--volume={VOLUME_NAME}:/var/www/html',
             f'--env=TRUSTED_PROXIES={BRIDGE_IP}',
             '--env=OVERWRITEWEBROOT=/nextcloud'
         ])
