@@ -295,8 +295,8 @@ def uninstall():
 def _drop_database():
     """Drop the mysql database that was created during install."""
     with action_utils.service_ensure_running('mysql'):
-        query = f'''DROP DATABASE {DB_NAME};
-    DROP User '{DB_USER}'@'localhost';'''
+        query = f'''DROP DATABASE IF EXISTS {DB_NAME};
+    DROP USER IF EXISTS '{DB_USER}'@'localhost';'''
         subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
                        check=True)
 
