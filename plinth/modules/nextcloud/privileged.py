@@ -46,7 +46,8 @@ def setup():
     database_password = _generate_secret_key(16)
     administrator_password = _generate_secret_key(16)
 
-    _create_database(database_password)
+    _create_database()
+    _set_database_privileges(database_password)
     action_utils.podman_run(
         network_name=NETWORK_NAME, subnet='172.16.16.0/24',
         bridge_ip=BRIDGE_IP, host_port='8181', container_port='80',
@@ -156,7 +157,12 @@ def _configure_firewall(action, interface_name):
     action_utils.service_restart('firewalld')
 
 
-def _create_database(db_password):
+def _database_query(query: str):
+    """Run a database query."""
+    subprocess.run(['mysql'], input=query.encode(), check=True)
+
+
+def _create_database():
     """Create an empty MySQL database for Nextcloud."""
     # SQL injection is avoided due to known input.
     _db_file_path = pathlib.Path('/var/lib/mysql/nextcloud_fbx')
@@ -166,20 +172,18 @@ def _create_database(db_password):
     query = f'''CREATE DATABASE {DB_NAME} CHARACTER SET utf8mb4
   COLLATE utf8mb4_general_ci;
 '''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
-    _set_db_privileges(db_password)
+    _database_query(query)
 
 
-def _set_db_privileges(db_password):
+def _set_database_privileges(db_password: str):
     """Create user, set password and provide permissions on the database."""
-    query = f'''GRANT ALL PRIVILEGES ON {DB_NAME}.* TO
-  '{DB_USER}'@'localhost'
-  IDENTIFIED BY'{db_password}';
-FLUSH PRIVILEGES;
-'''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    queries = [
+        f"CREATE USER IF NOT EXISTS '{DB_USER}'@'localhost';",
+        f"GRANT ALL PRIVILEGES ON {DB_NAME}.* TO '{DB_USER}'@'localhost';",
+        f"ALTER USER '{DB_USER}'@'localhost' IDENTIFIED BY '{db_password}';",
+    ]
+    for query in queries:
+        _database_query(query)
 
 
 def _nextcloud_get_status():
@@ -293,12 +297,11 @@ def uninstall():
 
 
 def _drop_database():
-    """Drop the mysql database that was created during install."""
+    """Drop the database that was created during install."""
     with action_utils.service_ensure_running('mysql'):
         query = f'''DROP DATABASE IF EXISTS {DB_NAME};
     DROP USER IF EXISTS '{DB_USER}'@'localhost';'''
-        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                       check=True)
+        _database_query(query)
 
 
 def _generate_secret_key(length=64, chars=None):
@@ -337,7 +340,7 @@ def restore_database():
             subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
                            check=True)
 
-        _set_db_privileges(_get_dbpassword())
+        _set_database_privileges(_get_dbpassword())
 
     action_utils.service_restart('redis-server')
     _set_maintenance_mode(False)
