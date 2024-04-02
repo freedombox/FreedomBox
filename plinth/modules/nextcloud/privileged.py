@@ -60,6 +60,7 @@ def setup():
             '--volume=/run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock',
             '--volume=/run/redis/redis-server.sock:'
             '/run/redis/redis-server.sock',
+            '--volume=/run/slapd/ldapi:/run/slapd/ldapi',
             f'--volume={VOLUME_NAME}:/var/www/html',
             f'--env=TRUSTED_PROXIES={BRIDGE_IP}',
             '--env=OVERWRITEWEBROOT=/nextcloud'
@@ -230,14 +231,12 @@ def _configure_ldap():
         'ldapGroupFilterMode': '0',
         'ldapGroupFilterObjectclass': 'posixGroup',
         'ldapGroupMemberAssocAttr': 'memberUid',
-        'ldapHost': BRIDGE_IP,
+        'ldapHost': 'ldapi:///',
         'ldapLoginFilter': '(&(|(objectclass=posixAccount))(uid=%uid))',
         'ldapLoginFilterEmail': '0',
         'ldapLoginFilterMode': '0',
         'ldapLoginFilterUsername': '1',
         'ldapNestedGroups': '0',
-        'ldapPort': '389',
-        'ldapTLS': '0',
         'ldapUserDisplayName': 'cn',
         'ldapUserFilter': '(|(objectclass=posixAccount))',
         'ldapUserFilterMode': '0',
