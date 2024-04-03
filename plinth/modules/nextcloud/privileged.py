@@ -55,7 +55,7 @@ def setup():
         container_ip=CONTAINER_IP, volume_name=VOLUME_NAME,
         container_name=CONTAINER_NAME, image_name=IMAGE_NAME,
         extra_run_options=[
-            '--env=TRUSTED_PROXIES={BRIDGE_IP}',
+            f'--env=TRUSTED_PROXIES={BRIDGE_IP}',
             '--env=OVERWRITEWEBROOT=/nextcloud'
         ])
     _configure_firewall(action='add', interface_name=NETWORK_NAME)
