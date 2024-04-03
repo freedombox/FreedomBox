@@ -85,12 +85,12 @@ def setup():
     _configure_systemd()
 
 
-def _run_occ(*args, capture_output: bool = False,
-             check: bool = True) -> subprocess.CompletedProcess:
+def _run_occ(*args, capture_output: bool = False, check: bool = True,
+             env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
     """Run the Nextcloud occ command inside the container."""
-    occ = [
-        'podman', 'exec', '--user', 'www-data', CONTAINER_NAME, 'php', 'occ'
-    ] + list(args)
+    env_args = [f'--env={key}={value}' for key, value in (env or {}).items()]
+    occ = ['podman', 'exec', '--user', 'www-data'
+           ] + env_args + [CONTAINER_NAME, '/var/www/html/occ'] + list(args)
     return subprocess.run(occ, capture_output=capture_output, check=check)
 
 
@@ -127,12 +127,8 @@ def set_domain(domain_name: str):
 @privileged
 def set_admin_password(password: str):
     """Set password for owncloud-admin"""
-    subprocess.run([
-        'podman', 'exec', '--user', 'www-data', f'--env=OC_PASS={password}',
-        '-it', CONTAINER_NAME, 'sh', '-c',
-        ("/var/www/html/occ "
-         f"user:resetpassword --password-from-env {GUI_ADMIN}")
-    ], check=True)
+    _run_occ('user:resetpassword', '--password-from-env', GUI_ADMIN,
+             env={'OC_PASS': password})
 
 
 @privileged
