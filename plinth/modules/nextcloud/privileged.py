@@ -31,7 +31,6 @@ _volume_path = pathlib.Path(
 _socket_config_file = pathlib.Path('/etc/mysql/mariadb.conf.d/'
                                    '99-freedombox.cnf')
 _systemd_location = pathlib.Path('/etc/systemd/system/')
-_container_service_file = _systemd_location / f'{CONTAINER_NAME}.service'
 _cron_service_file = _systemd_location / 'nextcloud-cron-freedombox.service'
 _cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
 
@@ -249,11 +248,8 @@ def _configure_ldap():
 
 
 def _configure_systemd():
-    systemd_content = subprocess.run(
-        ['podman', 'generate', 'systemd', '--new', CONTAINER_NAME],
-        capture_output=True, check=True).stdout.decode()
+    """Create systemd units files for container and cron jobs."""
     # Create service and timer for running periodic php jobs.
-    _container_service_file.write_text(systemd_content, encoding='utf-8')
     nextcloud_cron_service_content = '''
 [Unit]
 Description=Nextcloud cron.php job
