@@ -47,7 +47,6 @@ def setup():
     database_password = _generate_secret_key(16)
     administrator_password = _generate_secret_key(16)
     _configure_db_socket()
-    _configure_firewall(action='add', interface_name=NETWORK_NAME)
     _create_database(database_password)
     action_utils.podman_run(
         network_name=NETWORK_NAME, subnet='172.16.16.0/24',
@@ -58,6 +57,8 @@ def setup():
             '--env=TRUSTED_PROXIES={BRIDGE_IP}',
             '--env=OVERWRITEWEBROOT=/nextcloud'
         ])
+    _configure_firewall(action='add', interface_name=NETWORK_NAME)
+
     # OCC isn't immediately available after the container is spun up.
     # Wait until CAN_INSTALL file is available.
     timeout = 300
