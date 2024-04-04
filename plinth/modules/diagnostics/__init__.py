@@ -104,7 +104,6 @@ def _run_on_all_enabled_modules():
 
     with results_lock:
         current_results = {
-            'apps': [],
             'results': collections.OrderedDict(),
             'progress_percentage': 0,
             'exception': None,
@@ -124,8 +123,6 @@ def _run_on_all_enabled_modules():
 
             apps.append((app.app_id, app))
             current_results['results'][app.app_id] = {'id': app.app_id}
-
-        current_results['apps'] = apps
 
     for current_index, (app_id, app) in enumerate(apps):
         app_results = {
@@ -330,7 +327,7 @@ def _run_diagnostics():
 def are_results_available():
     """Return whether diagnostic results are available."""
     with results_lock:
-        results = current_results
+        results = current_results.get('results')
 
     if not results:
         results = kvstore.get_default('diagnostics_results', '{}')
