@@ -4,7 +4,6 @@
 import json
 import pathlib
 import random
-import re
 import shutil
 import string
 import subprocess
@@ -85,13 +84,19 @@ def setup():
     _configure_systemd()
 
 
-def _run_occ(*args, capture_output: bool = False, check: bool = True,
-             env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
-    """Run the Nextcloud occ command inside the container."""
+def _run_in_container(
+        *args, capture_output: bool = False, check: bool = True,
+        env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
+    """Run a command inside the container."""
     env_args = [f'--env={key}={value}' for key, value in (env or {}).items()]
-    occ = ['podman', 'exec', '--user', 'www-data'
-           ] + env_args + [CONTAINER_NAME, '/var/www/html/occ'] + list(args)
-    return subprocess.run(occ, capture_output=capture_output, check=check)
+    command = ['podman', 'exec', '--user', 'www-data'
+               ] + env_args + [CONTAINER_NAME] + list(args)
+    return subprocess.run(command, capture_output=capture_output, check=check)
+
+
+def _run_occ(*args, **kwargs) -> subprocess.CompletedProcess:
+    """Run the Nextcloud occ command inside the container."""
+    return _run_in_container('/var/www/html/occ', *args, **kwargs)
 
 
 @privileged
@@ -352,14 +357,10 @@ def _get_dbpassword():
 
     OCC cannot run unless Nextcloud can already connect to the database.
     """
-    config_file = _volume_path / '_data/config/config.php'
-    with open(config_file, 'r', encoding='utf-8') as config:
-        config_contents = config.read()
-
-    pattern = r"'{}'\s*=>\s*'([^']*)'".format(re.escape('dbpassword'))
-    match = re.search(pattern, config_contents)
-
-    return match.group(1)
+    code = 'include_once("/var/www/html/config/config.php");' \
+        'print($CONFIG["dbpassword"]);'
+    return _run_in_container('php', '-r', code,
+                             capture_output=True).stdout.decode().strip()
 
 
 def _create_redis_config(password):
