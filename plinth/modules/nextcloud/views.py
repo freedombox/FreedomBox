@@ -25,7 +25,7 @@ class NextcloudAppView(AppView):
         initial = super().get_initial()
         initial.update({
             'domain': privileged.get_domain(),
-            'default_phone_region': privileged.get_default_phone_region()
+            'default_phone_region': privileged.get_default_phone_region() or ''
         })
         return initial
 
