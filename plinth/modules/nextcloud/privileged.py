@@ -48,8 +48,6 @@ def setup():
 
     # Setup redis for caching
     _redis_listen_socket()
-    _set_redis_password(_generate_secret_key(16))
-    action_utils.service_restart('redis-server')
 
     action_utils.podman_run(
         network_name=NETWORK_NAME, subnet='172.16.16.0/24',
@@ -77,7 +75,7 @@ def setup():
         time.sleep(1)
 
     _nextcloud_setup_wizard(database_password, administrator_password)
-    _create_redis_config(_get_redis_password())
+    _create_redis_config()
 
     _configure_ldap()
 
@@ -363,18 +361,14 @@ def _get_dbpassword():
                              capture_output=True).stdout.decode().strip()
 
 
-def _create_redis_config(password):
+def _create_redis_config():
     """Create a php file for Redis configuration."""
     config_file = _volume_path / '_data/config/freedombox.config.php'
-    file_content = f'''<?php
+    file_content = r'''<?php
 $CONFIG = [
-'filelocking.enabled' => true,
-'memcache.locking' => '\\\\OC\\\\Memcache\\\\Redis',
-'memcache.distributed' => '\\\\OC\\\\Memcache\\\\Redis',
-'redis' => [
-    'host' => '/run/redis/redis-server.sock',
-    'password' => '{password}',
-    ],
+'memcache.distributed' => '\OC\Memcache\Redis',
+'memcache.locking' => '\OC\Memcache\Redis',
+'redis' => ['host' => '/run/redis/redis-server.sock'],
 ];
 '''
     config_file.write_text(file_content)
@@ -399,17 +393,5 @@ def _redis_listen_socket():
     found = any((aug.get(match_) == value for match_ in aug.match('include')))
     if not found:
         aug.set('include[last() + 1]', value)
-
-    aug.save()
-
-
-def _set_redis_password(password: str):
-    if _get_redis_password() is None:
-        aug = _load_augeas()
-        aug.set('requirepass', password)
         aug.save()
-
-
-def _get_redis_password() -> str:
-    aug = _load_augeas()
-    return aug.get('requirepass')
+        action_utils.service_restart('redis-server')
