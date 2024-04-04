@@ -251,13 +251,13 @@ def _configure_ldap():
 def _configure_systemd():
     """Create systemd units files for container and cron jobs."""
     # Create service and timer for running periodic php jobs.
-    nextcloud_cron_service_content = '''
+    nextcloud_cron_service_content = f'''
 [Unit]
 Description=Nextcloud cron.php job
 
 [Service]
-ExecCondition=/usr/bin/podman exec --user www-data nextcloud-freedombox php occ status -e
-ExecStart=/usr/bin/podman exec --user www-data nextcloud-freedombox php /var/www/html/cron.php
+ExecCondition=/usr/bin/podman exec --user www-data {CONTAINER_NAME} /var/www/html/occ status -e
+ExecStart=/usr/bin/podman exec --user www-data {CONTAINER_NAME} php /var/www/html/cron.php
 KillMode=process
 '''  # noqa: E501
     nextcloud_cron_timer_content = '''[Unit]
@@ -293,9 +293,8 @@ def uninstall():
 def _drop_database():
     """Drop the database that was created during install."""
     with action_utils.service_ensure_running('mysql'):
-        query = f'''DROP DATABASE IF EXISTS {DB_NAME};
-    DROP USER IF EXISTS '{DB_USER}'@'localhost';'''
-        _database_query(query)
+        _database_query(f'DROP DATABASE IF EXISTS {DB_NAME};')
+        _database_query(f"DROP USER IF EXISTS '{DB_USER}'@'localhost';")
 
 
 def _generate_secret_key(length=64, chars=None):
