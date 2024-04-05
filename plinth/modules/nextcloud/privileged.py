@@ -3,7 +3,7 @@
 
 import json
 import pathlib
-import random
+import secrets
 import shutil
 import string
 import subprocess
@@ -304,8 +304,7 @@ def _drop_database():
 def _generate_secret_key(length=64, chars=None):
     """Generate a new random secret key for use with Nextcloud."""
     chars = chars or (string.ascii_letters + string.digits)
-    rand = random.SystemRandom()
-    return ''.join(rand.choice(chars) for _ in range(length))
+    return ''.join(secrets.choice(chars) for _ in range(length))
 
 
 def _set_maintenance_mode(on: bool):
