@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Nextcloud."""
 
+import contextlib
 import json
 import pathlib
 import secrets
@@ -316,20 +317,30 @@ def _set_maintenance_mode(on: bool):
     _run_occ('maintenance:mode', '--on' if on else '--off')
 
 
+@contextlib.contextmanager
+def _maintenance_mode():
+    """Context to set maintenance mode temporarily."""
+    try:
+        _set_maintenance_mode(True)
+        yield
+    finally:
+        _set_maintenance_mode(False)
+
+
 @privileged
 def dump_database():
     """Dump database to file."""
-    _set_maintenance_mode(True)
     DB_BACKUP_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with action_utils.service_ensure_running('mysql'):
-        with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
-            subprocess.run([
-                'mysqldump', '--add-drop-database', '--add-drop-table',
-                '--add-drop-trigger', '--single-transaction',
-                '--default-character-set=utf8mb4', '--user', 'root',
-                '--databases', DB_NAME
-            ], stdout=file_handle, check=True)
-    _set_maintenance_mode(False)
+
+    with _maintenance_mode():
+        with action_utils.service_ensure_running('mysql'):
+            with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
+                subprocess.run([
+                    'mysqldump', '--add-drop-database', '--add-drop-table',
+                    '--add-drop-trigger', '--single-transaction',
+                    '--default-character-set=utf8mb4', '--user', 'root',
+                    '--databases', DB_NAME
+                ], stdout=file_handle, check=True)
 
 
 @privileged
