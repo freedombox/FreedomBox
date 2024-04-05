@@ -4,7 +4,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
-from plinth import frontpage, menu
+from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon, SharedDaemon
 from plinth.modules.apache.components import Webserver, diagnose_url
@@ -12,6 +12,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 from plinth.package import Packages
+from plinth.utils import format_lazy
 
 from . import manifest, privileged
 
@@ -25,8 +26,12 @@ _description = [
     _('To perform administrative actions, use the '
       f'<strong>"{privileged.GUI_ADMIN}"</strong> user.'),
     _('You can set a new password in the "Configuration" section below.'),
-    _('Please note, that Nextcloud isn\'t maintained by Debian, which means '
-      'security and feature updates are applied independently.')
+    format_lazy(
+        _('Please note that Nextcloud is installed and run inside a container '
+          'provided by the Nextcloud project. Security, quality, privacy and '
+          'legal reviews are done by the upstream project and not by '
+          'Debian/{box_name}. Updates are performed following an independent '
+          'cycle.'), box_name=_(cfg.box_name)),
 ]
 
 
