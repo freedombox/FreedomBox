@@ -255,17 +255,21 @@ def _configure_ldap():
 def _configure_systemd():
     """Create systemd units files for container and cron jobs."""
     # Create service and timer for running periodic php jobs.
+    doc = 'https://docs.nextcloud.com/server/stable/admin_manual/' \
+        'configuration_server/background_jobs_configuration.html#systemd'
     nextcloud_cron_service_content = f'''
 [Unit]
 Description=Nextcloud cron.php job
+Documentation={doc}
 
 [Service]
 ExecCondition=/usr/bin/podman exec --user www-data {CONTAINER_NAME} /var/www/html/occ status -e
-ExecStart=/usr/bin/podman exec --user www-data {CONTAINER_NAME} php /var/www/html/cron.php
+ExecStart=/usr/bin/podman exec --user www-data {CONTAINER_NAME} php -f /var/www/html/cron.php
 KillMode=process
 '''  # noqa: E501
     nextcloud_cron_timer_content = '''[Unit]
 Description=Run Nextcloud cron.php every 5 minutes
+Documentation={doc}
 
 [Timer]
 OnBootSec=5min
