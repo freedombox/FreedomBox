@@ -72,8 +72,6 @@ class NextcloudApp(app_module.App):
 
         dropin_configs = DropinConfigs('dropin-configs-nextcloud', [
             '/etc/apache2/conf-available/nextcloud-freedombox.conf',
-            '/etc/fail2ban/jail.d/nextcloud-freedombox.conf',
-            '/etc/fail2ban/filter.d/nextcloud-freedombox.conf',
             '/etc/redis/conf.d/freedombox.conf',
         ])
         self.add(dropin_configs)
