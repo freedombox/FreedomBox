@@ -25,6 +25,7 @@ DB_HOST = 'localhost'
 DB_NAME = 'nextcloud_fbx'
 DB_USER = 'nextcloud_fbx'
 GUI_ADMIN = 'nextcloud-admin'
+REDIS_DB = 8  # Don't clash with other redis apps
 
 _volume_path = pathlib.Path(
     '/var/lib/containers/storage/volumes/') / VOLUME_NAME
@@ -338,7 +339,8 @@ def restore_database():
 
         _set_database_privileges(_get_dbpassword())
 
-    action_utils.service_restart('redis-server')
+    subprocess.run(['redis-cli', '-n', REDIS_DB, 'FLUSHDB', 'SYNC'],
+                   check=False)
     _set_maintenance_mode(False)
 
     # Attempts to update UUIDs of user and group entries. By default,
@@ -364,11 +366,11 @@ def _get_dbpassword():
 def _create_redis_config():
     """Create a php file for Redis configuration."""
     config_file = _volume_path / '_data/config/freedombox.config.php'
-    file_content = r'''<?php
+    file_content = fr'''<?php
 $CONFIG = [
 'memcache.distributed' => '\OC\Memcache\Redis',
 'memcache.locking' => '\OC\Memcache\Redis',
-'redis' => ['host' => '/run/redis/redis-server.sock'],
+'redis' => ['host' => '/run/redis/redis-server.sock', 'dbindex' => {REDIS_DB}],
 ];
 '''
     config_file.write_text(file_content)
