@@ -22,10 +22,9 @@ _description = [
       'and more. Nextcloud includes the Nextcloud server, client applications '
       'for desktop computers, and mobile clients. The Nextcloud server '
       'provides a well integrated web interface.'),
-    _('All users of FreedomBox can use Nextcloud.'),
-    _('To perform administrative actions, use the '
-      f'<strong>"{privileged.GUI_ADMIN}"</strong> user.'),
-    _('You can set a new password in the "Configuration" section below.'),
+    _('All users of FreedomBox can use Nextcloud. To perform administrative '
+      f'actions, use the <strong>"{privileged.GUI_ADMIN}"</strong> user after '
+      'setting a password here.'),
     format_lazy(
         _('Please note that Nextcloud is installed and run inside a container '
           'provided by the Nextcloud project. Security, quality, privacy and '
