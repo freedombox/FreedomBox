@@ -32,6 +32,8 @@ _description = [
           'legal reviews are done by the upstream project and not by '
           'Debian/{box_name}. Updates are performed following an independent '
           'cycle.'), box_name=_(cfg.box_name)),
+    format_lazy('<div class="alert alert-warning" role="alert">{}</div>',
+                _('This app is experimental.')),
 ]
 
 
