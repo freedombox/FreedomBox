@@ -19,6 +19,7 @@ NETWORK_NAME = 'nextcloud-fbx'
 BRIDGE_IP = '172.16.16.1'
 CONTAINER_IP = '172.16.16.2'
 CONTAINER_NAME = 'nextcloud-freedombox'
+SERVICE_NAME = 'nextcloud-freedombox'
 VOLUME_NAME = 'nextcloud-volume-freedombox'
 IMAGE_NAME = 'docker.io/library/nextcloud:stable-apache'
 
@@ -333,36 +334,39 @@ def dump_database():
     DB_BACKUP_FILE.parent.mkdir(parents=True, exist_ok=True)
 
     with _maintenance_mode():
-        with action_utils.service_ensure_running('mysql'):
-            with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
-                subprocess.run([
-                    'mysqldump', '--add-drop-database', '--add-drop-table',
-                    '--add-drop-trigger', '--single-transaction',
-                    '--default-character-set=utf8mb4', '--user', 'root',
-                    '--databases', DB_NAME
-                ], stdout=file_handle, check=True)
+        with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
+            subprocess.run([
+                'mysqldump', '--add-drop-database', '--add-drop-table',
+                '--add-drop-trigger', '--single-transaction',
+                '--default-character-set=utf8mb4', '--user', 'root',
+                '--databases', DB_NAME
+            ], stdout=file_handle, check=True)
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
-    with action_utils.service_ensure_running('mysql'):
-        with DB_BACKUP_FILE.open('r', encoding='utf-8') as file_handle:
-            subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                           check=True)
+    with DB_BACKUP_FILE.open('r', encoding='utf-8') as file_handle:
+        subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
+                       check=True)
 
-        _set_database_privileges(_get_dbpassword())
+    subprocess.run(['redis-cli', '-n',
+                    str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
 
-    subprocess.run(['redis-cli', '-n', REDIS_DB, 'FLUSHDB', 'SYNC'],
-                   check=False)
+    _set_database_privileges(_get_dbpassword())
+
+    # After updating the configuration, a restart seems to be required for the
+    # new DB password be used.
+    action_utils.service_try_restart(SERVICE_NAME)
+
     _set_maintenance_mode(False)
 
-    # Attempts to update UUIDs of user and group entries. By default,
-    # the command attempts to update UUIDs that have been invalidated by
-    # a migration step.
+    # Attempts to update UUIDs of user and group entries. By default, the
+    # command attempts to update UUIDs that have been invalidated by a
+    # migration step.
     _run_occ('ldap:update-uuid')
 
-    # Update the systems data-fingerprint after a backup is restored
+    # Update the systems data-fingerprint after a backup is restored.
     _run_occ('maintenance:data-fingerprint')
 
 

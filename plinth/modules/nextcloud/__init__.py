@@ -151,9 +151,23 @@ class NextcloudBackupRestore(BackupRestore):
     def backup_pre(self, packet):
         """Save database contents."""
         super().backup_pre(packet)
-        privileged.dump_database()
+        self.app.get_component('dropin-configs-nextcloud').enable()
+        mysql = self.app.get_component('shared-daemon-nextcloud-mysql')
+        redis = self.app.get_component('shared-daemon-nextcloud-redis')
+        container = self.app.get_component('daemon-nextcloud')
+        with mysql.ensure_running():
+            with redis.ensure_running():
+                with container.ensure_running():
+                    privileged.dump_database()
 
     def restore_post(self, packet):
         """Restore database contents."""
         super().restore_post(packet)
-        privileged.restore_database()
+        self.app.get_component('dropin-configs-nextcloud').enable()
+        mysql = self.app.get_component('shared-daemon-nextcloud-mysql')
+        redis = self.app.get_component('shared-daemon-nextcloud-redis')
+        container = self.app.get_component('daemon-nextcloud')
+        with mysql.ensure_running():
+            with redis.ensure_running():
+                with container.ensure_running():
+                    privileged.restore_database()
