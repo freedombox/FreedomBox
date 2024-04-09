@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
 "PO-Revision-Date: 2024-03-26 11:03+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
@@ -880,10 +880,11 @@ msgid "Admin"
 msgstr "管理员"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "配置已更新。"
 
@@ -1417,7 +1418,7 @@ msgid ""
 msgstr ""
 "系统诊断将运行测试程序检查您的系统以确认应用程序和服务正在按预期方式运行。"
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "诊断程序"
 
@@ -1439,25 +1440,25 @@ msgstr "警告"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr "你应该禁用一些应用程序以减少内存的使用。"
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr "你不应该在这个系统上安装任何新的应用程序。"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1466,24 +1467,24 @@ msgstr ""
 "系统内存不足：已使用 {percent_used}，{memory_available} "
 "{memory_available_unit}可用。{advice_message}"
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "低内存"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 msgid "Running diagnostics"
 msgstr "运行诊断程序"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 msgid "Diagnostics results"
 msgstr "诊断结果"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 msgid "Go to diagnostics results"
 msgstr "转到诊断结果"
 
@@ -1743,7 +1744,7 @@ msgstr "状态"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "域名"
 
@@ -4715,6 +4716,76 @@ msgstr "连接 {name} 已删除。"
 #: modules/networks/views.py:504 modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
+
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+msgid "Nextcloud"
+msgstr ""
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "管理员密码"
+
+#: modules/nextcloud/forms.py:28
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default zone is external"
+msgid "Default phone region"
+msgstr "默认区域是外部的"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+msgid "Password update failed. Please choose a stronger password."
+msgstr ""
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format

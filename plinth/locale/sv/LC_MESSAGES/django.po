@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
 "PO-Revision-Date: 2024-02-02 20:01+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -925,10 +925,11 @@ msgid "Admin"
 msgstr "Admin"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Konfiguration uppdaterad."
 
@@ -1496,7 +1497,7 @@ msgstr ""
 "Systemets diagnostiktest utför ett antal kontroller av ditt system för att "
 "bekräfta att program och tjänster fungerar som de ska."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
@@ -1518,25 +1519,25 @@ msgstr "varning"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bör inaktivera vissa appar för att minska minnesanvändningen."
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr "Du bör inte installera några nya appar på det här systemet."
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1545,24 +1546,24 @@ msgstr ""
 "Systemet är ont om minne: {percent_used}% används, {memory_available}"
 "·{memory_available_unit} ledig. {advice_message}"
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "Låg minne"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 msgid "Running diagnostics"
 msgstr "Kör diagnostik"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Hittade {issue_count} problem under rutintester."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 msgid "Diagnostics results"
 msgstr "Diagnostikresultat"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 msgid "Go to diagnostics results"
 msgstr "Gå till Diagnostikresultat"
 
@@ -1831,7 +1832,7 @@ msgstr "Status"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "Domän"
 
@@ -5185,6 +5186,90 @@ msgstr "Anslutning {name} borttagen."
 #: modules/networks/views.py:504 modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "Det gick inte att ta bort anslutning: Anslutning hittades inte."
+
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+#, fuzzy
+#| msgid "Next"
+msgid "Nextcloud"
+msgstr "Nästa"
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "Administratörs lösenord"
+
+#: modules/nextcloud/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). The "
+#| "password cannot be a common one and the minimum required length is "
+#| "<strong>10 characters</strong>. Leave this field blank to keep the "
+#| "current password."
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+"Ange ett nytt lösenord för MediaWiki's administratörskonto (admin). "
+"Lösenordet kan inte vara vanligt och den minsta längden är <strong>10 "
+"tecken</strong>. Lämna det här fältet tomt om du vill behålla det nuvarande "
+"lösenordet."
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default zone is external"
+msgid "Default phone region"
+msgstr "Standardzonen är extern"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+#, fuzzy
+#| msgid "Password update failed. Please choose a stronger password"
+msgid "Password update failed. Please choose a stronger password."
+msgstr "Lösenordsuppdateringen misslyckades. Välj ett starkare lösenord"
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format
