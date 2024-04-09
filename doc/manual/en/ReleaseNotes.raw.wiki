@@ -8,6 +8,32 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.8 (2024-04-08) ==
+
+=== Highlights ===
+
+ * gitweb: Fix an issue when cloning existing repository
+ * ttrss: Improve backup and restore of the database
+ * ttrss: Include dbconfig configuration file in backup
+ * zoph: Include dbconfig configuration file in backup
+
+=== Other Changes ===
+
+ * action_utils: Add generic utils for managing podman containers
+ * actions: Don't repeat action traceback in stderr
+ * diagnostics: Don't store list of app objects with results
+ * locale: Update translations for Albanian, Chinese (Simplified), Dutch, French, German, Norwegian Bokmål, Spanish, Turkish
+ * network: Skip bridge interfaces in connections list
+ * nextcloud: Add new app based on podman container
+   * Note: The Nextcloud app is currently disabled (not available to install). It will be made available after there has been more testing and review.
+   * Add backup/restore
+   * Add option to configure the default phone region
+   * Configure redis caching, create static PHP file
+ * ttrss: Ensure that database is removed after uninstall
+ * ttrss: tests: functional: Uninstall during backup/restore test
+ * upgrades: Re-enable unattended-upgrade during dist-upgrade
+ * zoph: Re-add a safety check when reading the setup state of the app
+
 == FreedomBox 24.7 (2024-03-25) ==
 
 === Highlights ===

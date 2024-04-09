@@ -41,6 +41,7 @@ The "fbx" user also has superuser privileges via ``sudo``.
 === Logging In ===
 
 ==== Who can log in to FreedomBox by SSH? ====
+
 !FreedomBox administrative users may use SSH to to log in to !FreedomBox. The user 'fbx' is created by !FreedomBox and is an administrative super-user. There are options which allow ordinary users to log in:
  * SSH access can be granted to specific users in the Edit User page by selecting the option, "Remotely login using Secure Shell (SSH) (freedombox-ssh)"
  * SSH access can be granted globally to all users in the SSH configuration page by selecting the, "Allow all users to login remotely," option.
@@ -48,6 +49,7 @@ The "fbx" user also has superuser privileges via ``sudo``.
 With a new !FreedomBox you may log in as fbx using ssh, and other ordinary users will be able to log in after adjusting the user or Secure Shell settings above in this section. The root user account will have no password set and will not be able to log in.
 
 ==== SSH Client Software ====
+
 SSH client in included in many operating systems including Linux, Microsoft Windows, and Apple MacOS. SSH is included in Chromebooks, but requires some configuration by the user. In most cases you can run SSH from a terminal or command prompt as shown here, using your !FreedomBox hostname or IP address:
 {{{
 $ ssh freedombox.local
@@ -56,6 +58,7 @@ $ ssh freedombox.local
 If your client computer does not have SSH available, PuTTY is a popular free software client program which complies with the Debian Free Software Guidelines. PuTTY has a graphical interface to remember and manage your SSH connections. See External links below for more information about PuTTY.
 
 ===== Cockpit as an SSH Alternative =====
+
 The Cockpit Server Administration Terminal app available from the Cockpit Tools menu is an alternative shell access tool to SSH. Like SSH your connection to a !FreedomBox terminal is secured. Cockpit is a good choice for users who do not wish to enable the SSH server or those who prefer to connect through a web browser. With either tool you will be presented with the !FreedomBox bash command line interface.
 
 Some users prefer to run SSH instead of, or in addition to, Cockpit. Command shell users tend to like SSH because it's something that they are already using. Users with Linux or Unix system administration experience tend to rely on this connection method because it is a simpler service which is thought to be more likely to be available if problems arise.
@@ -70,11 +73,29 @@ To login via SSH, to your !FreedomBox:
 $ ssh fbx@freedombox.local
 }}}
 
-Replace `fbx` with the name of the user you wish to login as.  `freedombox` should be replaced with the hostname or IP address of you !FreedomBox device as found in the [[FreedomBox/Manual/QuickStart|Quick Start]] process. 
+Replace `fbx` with the name of the user you wish to login as. `fbx` and users in `admin` group will be able to login on the terminal directly. Other users will be denied access.
 
-`fbx` and users in `admin` group will also be able to login on the terminal directly.  Other users will be denied access.
+`freedombox` should be replaced with the hostname. Alternatively, you can substitute the hostname by its IP address as found in the [[FreedomBox/Manual/QuickStart|Quick Start]] process:
+
+{{{
+$ ssh fbx@192.168.1.1
+}}} 
+
+If your !FreedomBox has a domain name you can also use it:
+
+{{{
+$ ssh fbx@myfreedombox.freedombox.rocks
+}}}
 
 If you repeatedly try to login as a user and fail, you will be blocked from logging in for some time.  This is due to `libpam-abl` package that !FreedomBox installs by default.  To control this behavior consult `libpam-abl` documentation.
+
+Here we've used a .local network name (using multicast DNS), a local network IP address, and a DNS name to connect to !FreedomBox using SSH.
+
+==== SSH over the Internet ====
+
+If your router is configured accordingly or your !FreedomBox is directly exposed to the internet, you can also use a public domain name or a public IP address in the same fashion we'd do for the local network. Multicast DNS won't work here, though. 
+
+Let's look at connecting by SSH to !FreedomBox using other networks now.
 
 ==== SSH over Tor ====
 
@@ -166,6 +187,7 @@ $ passwd
 This will ask you for your current password before giving you the opportunity to set a new one.
 
 === SSH Keys ===
+
 The next step for SSH security and convenience is to understand and use ssh keys. If you logged in to !FreedomBox the first time using ssh following the instructions above you specified a username and password to log in. In this section you'll learn about Server Fingerprints and host keys, authorized keys, and reasons to use these to make connection easier and more secure.
 
 By default SSH is configured to prefer to use keys while still allowing you to use a username and password to log in. At the end of this section you will be able to:
@@ -174,6 +196,7 @@ By default SSH is configured to prefer to use keys while still allowing you to u
  * Further improve the security of your !FreedomBox by disabling SSH password authentication.
 
 ==== SSH Public and Private Keys ====
+
 SSH keys are generated in pairs called a key pair. There is a public key and a private key for each key pair. The public key encrypts data which can only be read using the private key, and the private key encrypts data which can only be read using the public key. This is called an asymmetric cryptography system. SSH will distribute your public keys automatically to the other connected system while keeping your private keys safe. 
 
 Using SSH keys creates a powerful set of security features:
@@ -185,6 +208,7 @@ Using SSH keys creates a powerful set of security features:
  * Your !FreedomBox can block any password guessing attack.
 
 ==== Create your personal SSH keys on your client computer using ssh-keygen ====
+
 You will create an SSH key pair on your client computer. We'll use the defaults and will not specify a password. Just press the Enter key when you are prompted for an SSH key password. This is very simple using the ssh-keygen command with no arguments. Here is how to run the command and a sample of the output the ssh-keygen program will give to you:
 {{{
 $ ssh-keygen
@@ -213,6 +237,7 @@ The key's randomart image is:
 That's all you need to do. You now have a personal SSH key pair on your client computer.
 
 ==== Verify your FreedomBox Server Fingerprint ====
+
 On your first time connecting to !FreedomBox using ssh you may have noticed a message similar to this:
 {{{
 $ ssh fbx@freedombox.local
@@ -245,6 +270,7 @@ Each time you connect to a new SSH server you will be given the opportunity to v
 Your server fingerprints are not private information. The fingerprint is a summary of a public key shared by the server which is used encrypt information sent to the SSH server. Your server public key is also not private information. You could share fingerprints and public keys with the world and the security of your !FreedomBox will not be diminished.
 
 ==== Share your personal SSH key with FreedomBox using ssh-copy-id ====
+
 By now you have a personal key pair, and you have verified the identity of !FreedomBox. !FreedomBox still does not know about your identity, and will ask you for your password when you try to log in by ssh. The ssh-copy-id program will tell !FreedomBox to accept your personal key as your password.
 {{{
 $ ssh-copy-id username@freedombox.local
@@ -296,12 +322,55 @@ Once you have added your client SSH key to !FreedomBox you will be able to conne
  * TOR .onion address if you are using TOR
 
 ==== Block SSH password guessing attempts by disabling password authentication ====
+
 Once you are able to connect to !FreedomBox by ssh using a key and not entering a password you can take a step to improve the security of !FreedomBox. If your !FreedomBox is accessible from the internet you may notice that there are repeated attempts to log in to your !FreedomBox from the internet. A good password is your first line of defense, and !FreedomBox has additional features which protect you from these intrusion attempts. You can stop this nonsense completely by disabling password authentication for Secure Shell.
 
 Go to your !FreedomBox System menu. Click the Secure Shell configuration link. Look under '''Configuration''' and select, "Disable password authentication"
  [x] Disable password authentication  
 
 Click the, "Update setup," button and it's done. This will stop all password guessing intrusion attempts using ssh. You can log in using your key, and nobody else will be able to log in by guessing a password.
+
+==== Remote Host Identification has Changed : What it means and what to do ====
+
+You may eventually experience an alarming message when you try to log in to your !FreedomBox with SSH. You will see a message similar to this.
+
+{{{
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+SHA256:ZGvgdxiDEpGKdw82Z6z0QRmDpT3Vgi07Ghba5IBJ4tQ.
+Please contact your system administrator.
+Add correct host key in /home/username/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /home/username/.ssh/known_hosts:2
+  remove with:
+  ssh-keygen -f "/home/username/.ssh/known_hosts" -R "freedombox.freedombox.rocks"
+Host key for freedombox.freedombox.rocks has changed and you have requested strict checking.
+Host key verification failed.
+}}}
+
+This message tells you something important. It's usually not threatening, but there is the possibility that an attack could be made on a computer or network which can also produce this. What's important is that you'll do the same thing in either case. 
+
+The nature of this message is that the trust relationship you make with the SSH server through the fingerprint verification and key exchange with ssh-copy-id has been broken. Reading this error message closely, the issue is that the key fingerprint sent by !FreedomBox at connection time does not match the key stored on the SSH client at the time you did the fingerprint verification. This could mean a few different things:
+ * Your .ssh/known_hosts file on the client was modified or corrupted such that the stored fingerprint was altered.
+ * You generated new keys for the !FreedomBox SSH server.
+ * Your network has changed such that when you attempt SSH to !FreedomBox your connection goes elsewhere. This could happen if you change IP addresses on !FreedomBox and SSH to the old IP address, or it could happen by way of a sophisticated network attack.
+
+Fix this by removing the !FreedomBox entry from the client computer. On your laptop or desktop do the command as '''written exactly as in the the error message you receive''' (don't copy one from the message above!).
+
+{{{ 
+$ ssh-keygen -f /home/username/.ssh/known_hosts -R "freedombox.freedombox.rocks" 
+# Host freedombox.freedombox.rocks found: line 2
+# Host freedombox.freedombox.rocks found: line 3
+/home/username/.ssh/known_hosts updated.
+Original contents retained as /home/username/.ssh/known_hosts.old
+}}}
+
+In so doing you have removed the !FreedomBox fingerprint verification step we've done. Go back to the ''Verify your !FreedomBox Server Fingerprint'' section above and complete the steps again. For good measure, make an effort to see that you are connected to your own !FreedomBox in case you are being attacked. 
+
 
 === External links ===
 
