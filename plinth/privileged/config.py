@@ -31,12 +31,38 @@ def _assert_managed_dropin_config(app_id: str, path: str):
 
 
 @privileged
+def dropin_is_valid(app_id: str, path: str, copy_only: bool,
+                    unlink_invalid: bool = False) -> bool:
+    """Check if symlink from /etc/ to /usr/share/freedombox/etc is valid.
+
+    Optionally, drop the link if it is invalid.
+    """
+    _assert_managed_dropin_config(app_id, path)
+    from plinth.config import DropinConfigs
+    etc_path = DropinConfigs.get_etc_path(path)
+    target = DropinConfigs.get_target_path(path)
+    if etc_path.exists() or etc_path.is_symlink():
+        if (not copy_only and etc_path.is_symlink()
+                and etc_path.readlink() == target):
+            return True
+
+        if (copy_only and etc_path.is_file()
+                and etc_path.read_text() == target.read_text()):
+            return True
+
+        if unlink_invalid:
+            etc_path.unlink(missing_ok=True)
+
+    return False
+
+
+@privileged
 def dropin_link(app_id: str, path: str, copy_only: bool):
     """Create a symlink from /etc/ to /usr/share/freedombox/etc."""
     _assert_managed_dropin_config(app_id, path)
     from plinth.config import DropinConfigs
-    target = DropinConfigs._get_target_path(path)
-    etc_path = DropinConfigs._get_etc_path(path)
+    target = DropinConfigs.get_target_path(path)
+    etc_path = DropinConfigs.get_etc_path(path)
     etc_path.parent.mkdir(parents=True, exist_ok=True)
     if copy_only:
         shutil.copyfile(target, etc_path)
@@ -49,5 +75,5 @@ def dropin_unlink(app_id: str, path: str, missing_ok: bool = False):
     """Remove a symlink in /etc/."""
     _assert_managed_dropin_config(app_id, path)
     from plinth.config import DropinConfigs
-    etc_path = DropinConfigs._get_etc_path(path)
+    etc_path = DropinConfigs.get_etc_path(path)
     etc_path.unlink(missing_ok=missing_ok)
