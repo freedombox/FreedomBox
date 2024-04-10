@@ -489,50 +489,55 @@ def is_package_manager_busy():
         return False
 
 
-def podman_run(network_name: str, subnet: str, bridge_ip: str, host_port: str,
-               container_port: str, container_ip: str, container_name: str,
-               image_name: str, extra_run_options: list[str] | None = None,
-               extra_network_options: list[str] | None = None):
-    """Remove, recreate and run a podman container."""
+def podman_create(network_name: str, subnet: str, bridge_ip: str,
+                  host_port: str, container_port: str, container_ip: str,
+                  container_name: str, image_name: str,
+                  volumes: dict[str, str] | None = None,
+                  env: dict[str, str] | None = None,
+                  extra_network_options: list[str] | None = None):
+    """Remove and recreate a podman container."""
+    service_stop(container_name)
+
     try:
-        service_stop(container_name)
         subprocess.run(['podman', 'network', 'rm', '--force', network_name],
                        check=False)
     except subprocess.CalledProcessError:
         pass
 
+    # Create bridge network
     network_create_command = [
         'podman', 'network', 'create', '--driver', 'bridge', '--subnet',
         subnet, '--gateway', bridge_ip, '--dns', bridge_ip, '--interface-name',
         network_name, network_name
     ] + (extra_network_options or [])
-
-    # Create bridge network
     subprocess.run(network_create_command, check=True)
 
-    args = [
-        'podman', 'run', '--detach', '--network', network_name, '--ip',
-        container_ip, '--name', container_name, '--restart', 'unless-stopped',
-        '--quiet'
-    ]
-    # Only listen on localhost. This is to prevent exposing the host port to
-    # the internet.
-    args += ['--publish', f'127.0.0.1:{host_port}:{container_port}']
-    # Enable automatic updates.
-    args += ['--label', 'io.containers.autoupdate=registry']
-    # If another container with the same name already exists, replace and
-    # remove it.
-    args += ['--replace']
-    args += (extra_run_options or []) + [image_name]
-    subprocess.run(args, check=True)
+    directory = pathlib.Path('/etc/containers/systemd')
+    directory.mkdir(parents=True, exist_ok=True)
+    service_file = directory / f'{container_name}.container'
+    volume_lines = '\n'.join([
+        f'Volume={source}:{dest}' for source, dest in (volumes or {}).items()
+    ])
+    env_lines = '\n'.join(
+        [f'Environment={key}={value}' for key, value in (env or {}).items()])
+    contents = f'''[Container]
+AutoUpdate=registry
+ContainerName=%N
+{env_lines}
+Image={image_name}
+IP={container_ip}
+Network={network_name}
+PublishPort=127.0.0.1:{host_port}:{container_port}
+{volume_lines}
 
-    # Create service file for starting/stopping container using systemd
-    service_file = pathlib.Path(
-        '/etc/systemd/system') / f'{container_name}.service'
-    with service_file.open('wb') as file_handle:
-        subprocess.run(
-            ['podman', 'generate', 'systemd', '--new', container_name],
-            stdout=file_handle, check=True)
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
+'''
+    service_file.write_text(contents)
+    service_daemon_reload()
 
 
 def podman_uninstall(container_name: str, network_name: str, volume_name: str,
@@ -542,6 +547,6 @@ def podman_uninstall(container_name: str, network_name: str, volume_name: str,
     subprocess.run(['podman', 'volume', 'rm', volume_name], check=True)
     subprocess.run(['podman', 'image', 'rm', image_name], check=True)
     service_file = pathlib.Path(
-        '/etc/systemd/system/') / f'{container_name}.service'
+        '/etc/containers/systemd/') / f'{container_name}.container'
     service_file.unlink(missing_ok=True)
     service_daemon_reload()
