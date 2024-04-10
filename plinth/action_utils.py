@@ -493,34 +493,40 @@ def podman_create(network_name: str, subnet: str, bridge_ip: str,
                   host_port: str, container_port: str, container_ip: str,
                   container_name: str, image_name: str,
                   volumes: dict[str, str] | None = None,
-                  env: dict[str, str] | None = None,
-                  extra_network_options: list[str] | None = None):
+                  env: dict[str, str] | None = None):
     """Remove and recreate a podman container."""
+    service_stop(f'{network_name}-network.service')
     service_stop(container_name)
 
-    try:
-        subprocess.run(['podman', 'network', 'rm', '--force', network_name],
-                       check=False)
-    except subprocess.CalledProcessError:
-        pass
-
-    # Create bridge network
-    network_create_command = [
-        'podman', 'network', 'create', '--driver', 'bridge', '--subnet',
-        subnet, '--gateway', bridge_ip, '--dns', bridge_ip, '--interface-name',
-        network_name, network_name
-    ] + (extra_network_options or [])
-    subprocess.run(network_create_command, check=True)
+    subprocess.run(['podman', 'network', 'rm', '--force', network_name],
+                   check=False)
 
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
+
+    # Create bridge network
+    network_file = directory / f'{network_name}.network'
+    contents = f'''[Network]
+DNS={bridge_ip}
+Driver=bridge
+Gateway={bridge_ip}
+NetworkName={network_name}
+Subnet={subnet}
+PodmanArgs=--interface-name={network_name}
+'''
+    network_file.write_text(contents)
+
     service_file = directory / f'{container_name}.container'
     volume_lines = '\n'.join([
         f'Volume={source}:{dest}' for source, dest in (volumes or {}).items()
     ])
     env_lines = '\n'.join(
         [f'Environment={key}={value}' for key, value in (env or {}).items()])
-    contents = f'''[Container]
+    contents = f'''[Unit]
+Requires=nextcloud-fbx-network.service
+After=nextcloud-fbx-network.service
+
+[Container]
 AutoUpdate=registry
 ContainerName=%N
 {env_lines}
@@ -543,9 +549,13 @@ WantedBy=default.target
 def podman_uninstall(container_name: str, network_name: str, volume_name: str,
                      image_name: str):
     """Remove a podman container's components and systemd unit."""
-    subprocess.run(['podman', 'network', 'rm', network_name], check=True)
     subprocess.run(['podman', 'volume', 'rm', volume_name], check=True)
     subprocess.run(['podman', 'image', 'rm', image_name], check=True)
+    subprocess.run(['podman', 'network', 'rm', '--force', network_name],
+                   check=True)
+    network_file = pathlib.Path(
+        '/etc/containers/systemd/') / f'{network_name}.network'
+    network_file.unlink(missing_ok=True)
     service_file = pathlib.Path(
         '/etc/containers/systemd/') / f'{container_name}.container'
     service_file.unlink(missing_ok=True)
