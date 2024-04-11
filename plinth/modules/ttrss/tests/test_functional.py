@@ -26,7 +26,7 @@ class TestTTRSSApp(functional.BaseAppTests):
         _subscribe(session_browser)
         functional.backup_create(session_browser, APP_ID, 'test_ttrss')
 
-        _unsubscribe(session_browser)
+        functional.uninstall(session_browser, self.app_name)
         functional.backup_restore(session_browser, APP_ID, 'test_ttrss')
 
         assert functional.service_is_running(session_browser, APP_ID)
@@ -40,7 +40,16 @@ def _ttrss_load_main_interface(browser):
     functional.eventually(lambda: not overlay.visible)
 
 
+def _expand_nodes(browser):
+    """If interface has category nodes collapsed, expand them."""
+    nodes = browser.find_by_css('span.dijitTreeExpandoClosed')
+    for node in nodes:
+        node.click()
+
+
 def _is_feed_shown(browser, invert=False):
+    """Return whether the test feed is present."""
+    _expand_nodes(browser)
     return browser.is_text_present('Planet Debian') != invert
 
 
@@ -74,9 +83,7 @@ def _subscribe(browser):
 def _unsubscribe(browser):
     """Unsubscribe from a feed in TT-RSS."""
     _ttrss_load_main_interface(browser)
-    expand = browser.find_by_css('span.dijitTreeExpandoClosed')
-    if expand:
-        expand.first.click()
+    _expand_nodes(browser)
 
     browser.find_by_text('Planet Debian').click()
     _click_main_menu_item(browser, 'Unsubscribe')

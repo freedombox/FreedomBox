@@ -78,13 +78,29 @@ Para ingresar mediante SSH a tu !FreedomBox:
 $ ssh fbx@freedombox
 }}}
 
-Reemplaza `fbx` por el usuario con el que quieres ingresar.  Hay que reemplazar `freedombox` por el hostname o dirección IP de tu dispositivo !FreedomBox como se indica en el proceso de [[es/FreedomBox/Manual/QuickStart|Inicio rápido]].
+Reemplaza `fbx` por el usuario con el que quieres ingresar.  `fbx` es el usuario de !FreedomBox con privilegios de superusuario por defecto.  Cualquier otro usuario creado con !FreedomBox que pertenezca al grupo `admin` podrá ingresar.  La cuenta `root` no tiene contraseña configurada y no podrá ingresar.  A todos los demás usuarios se les denegará el acceso.
 
-`fbx` es el usuario de !FreedomBox con privilegios de superusuario por defecto.  Cualquier otro usuario creado con !FreedomBox que pertenezca al grupo `admin` podrá ingresar.  La cuenta `root` no tiene contraseña configurada y no podrá ingresar.  A todos los demás usuarios se les denegará el acceso.
+Hay que reemplazar `freedombox` por el hostname o dirección IP de tu dispositivo !FreedomBox como se indica en el proceso de [[es/FreedomBox/Manual/QuickStart|Inicio rápido]]:
 
-`fbx` y los otros usuarios del grupo `admin` podrán ingresar directamente por el terminal.  A todos los demás usuarios se les denegará el acceso.
+{{{
+$ ssh fbx@192.168.1.1
+}}} 
+
+Si tu !FreedomBox tiene un nombre de dominio asignado también puedes usarlo:
+
+{{{
+$ ssh fbx@mifreedombox.freedombox.rocks
+}}}
 
 Si fallas repetidamente intentando ingresar se te bloqueará el acceso por algún tiempo.  Esto se debe al paquete `libpam-abl` que !FreedomBox instala por defecto.  Para controlar este comportamiento consulta la documentación de `libpam-abl`.
+
+En esta seccion hemos usado el nombre de la máquina con la extensión `.local` (usando ''multicast DNS''), una dirección IP local, y un nombre de dominio para conectar a !FreedomBox por SSH.
+
+==== SSH desde Internet ====
+
+Si tu router está configurado al efecto para tu !FreedomBox o la tienes directamente expuesta a internet puedes usar también un nombre de dominio o dirección IP públicos del mismo modo que en la red local. Pero el ''Multicast DNS'' no funciona desde internet. 
+
+Veámos ahora cómo conectar a !FreedomBox por SSH usando otras redes.
 
 ==== SSH via Tor ====
 
@@ -318,6 +334,48 @@ Hemos verificado la conexión con !FreedomBox comparando la huella recibida por 
 Estos pasos solo se necesitan la primera vez que conectamos con !FreedomBox.
 Quizá necesites repetirlos al conectar mediante la dirección IP o los nombres de la máquina en la red local o desde fuera de ella.
 En cada caso recibirás la misma Huella de Servidor que podrás verificar la primera vez.
+
+==== La Identificación Remota de la Máquina ha Cambiado : ¿Qué Significa y Qué Hacer? ====
+
+En algún momento quizá te topes con un mensaje alarmante como este al intentar acceder a tu !FreedomBox con SSH:
+
+{{{
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the RSA key sent by the remote host is
+SHA256:ZGvgdxiDEpGKdw82Z6z0QRmDpT3Vgi07Ghba5IBJ4tQ.
+Please contact your system administrator.
+Add correct host key in /home/username/.ssh/known_hosts to get rid of this message.
+Offending RSA key in /home/username/.ssh/known_hosts:2
+  remove with:
+  ssh-keygen -f "/home/username/.ssh/known_hosts" -R "freedombox.freedombox.rocks"
+Host key for freedombox.freedombox.rocks has changed and you have requested strict checking.
+Host key verification failed.
+}}}
+
+Este mensaje es importante. Normalmente no es grave pero podría ser consecuencia de un ataque. Lo importante es que siempre actúes siempre con prudencia.
+
+Este mensaje viene a decir que la relación de confianza con el servidor SSH a través de la verificación de su huella y el intercambio de claves con `ssh-copy-id` se ha roto.
+Leyendo detenidamente el mensaje, dice que la huella enviada por !FreedomBox al conectar no coincide con la registrada en el cliente SSH cuando se verificó. Esto puede indicar cosas diferentes:
+ * El fichero `.ssh/known_hosts` de to cliente ha sido modificado se ha corrompido de tal modo que la huella se ha alterado.
+ * Has generado claves nuevas para tu servidor !FreedomBox SSH.
+ * Tu red ha cambiado de tal modo que al intentar acceder a tu !FreedomBox tu conexión se desvía y llega a otro sitio. Esto puede pasar si tras cambiar la dirección IP de tu !FreedomBox sigues inentando acceder a la antigua, o podría ser un ataque de red sofisticado.
+
+Aregla esto borrando el registro de tu !FreedomBox en el ordenador cliente. Ejecuta este comando '''con los datos del mensaje de error que recibes''' (¡No lo copies del ejemplo anterior!).
+
+{{{ 
+$ ssh-keygen -f /home/username/.ssh/known_hosts -R "freedombox.freedombox.rocks" 
+# Host freedombox.freedombox.rocks found: line 2
+# Host freedombox.freedombox.rocks found: line 3
+/home/username/.ssh/known_hosts updated.
+Original contents retained as /home/username/.ssh/known_hosts.old
+}}}
+
+Haciendo esto has anulado la verificación de huella de tu !FreedomBox. Vuelve a la sección ''Verificar la Huella de tu Servidor !FreedomBox'' y repitela. Asegúrate así de que te conectas a tu !FreedomBox en caso de ataque.
 
 === Enlaces externos ===
 

@@ -120,6 +120,11 @@ class TTRSSApp(app_module.App):
         if not old_version:
             self.enable()
 
+    def uninstall(self):
+        """De-configure and uninstall the app."""
+        privileged.uninstall()
+        super().uninstall()
+
     def force_upgrade(self, packages):
         """Force update package to resolve conffile prompts."""
         if 'tt-rss' not in packages:

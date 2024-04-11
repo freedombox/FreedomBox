@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -926,10 +926,11 @@ msgid "Admin"
 msgstr "Adminisztrál"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Beállítások frissítve."
 
@@ -1506,7 +1507,7 @@ msgstr ""
 "annak megerősítésére, hogy az alkalmazások és szolgáltatások az elvárt módon "
 "működnek."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "Hibaellenőrzés"
 
@@ -1528,25 +1529,25 @@ msgstr "figyelmeztetés"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr "A memóriahasználat csökkentése érdekében tilts le néhány alkalmazást."
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr "Ne telepíts további alkalmazásokat erre a rendszerre."
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1555,28 +1556,28 @@ msgstr ""
 "A rendszerben kevés a memória: {percent_used}% használt, "
 "{memory_available} {memory_available_unit} szabad. {advice_message}"
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "Kevés a memória"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Ellenőrzés indítása"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Az ellenőrzés eredménye"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1872,7 +1873,7 @@ msgstr "Állapot"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "Domain"
 
@@ -5266,6 +5267,90 @@ msgstr "Kapcsolat törölve: {name}."
 #: modules/networks/views.py:504 modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "A kapcsolat törlése sikertelen, mivel nem található."
+
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+#, fuzzy
+#| msgid "Next"
+msgid "Nextcloud"
+msgstr "Következő"
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "Rendszergazdai jelszó"
+
+#: modules/nextcloud/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). The "
+#| "password cannot be a common one and the minimum required length is "
+#| "<strong>10 characters</strong>. Leave this field blank to keep the "
+#| "current password."
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+"Új jelszó beállítása a MediaWiki 'admin' nevű felhasználója számára. A "
+"jelszó nem lehet gyakran használt kifejezés, továbbá legalább <strong>10 "
+"karakterből</strong> kell állnia. Hagyd üresen ezt a mezőt, ha meg szeretnéd "
+"tartani a jelenlegi jelszót."
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default app set"
+msgid "Default phone region"
+msgstr "Alapértelmezett alkalmazás beállítva"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+#, fuzzy
+#| msgid "Password update failed. Please choose a stronger password"
+msgid "Password update failed. Please choose a stronger password."
+msgstr "A jlszó frisítése nem sikerült. Kérlek válassz egy erősebb jelszót"
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format

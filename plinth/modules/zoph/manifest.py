@@ -16,6 +16,9 @@ backup = {
         'directories': ['/var/lib/zoph/']
     },
     'secrets': {
-        'files': ['/etc/zoph.ini'],
+        'files': [
+            '/etc/zoph.ini',
+            '/etc/dbconfig-common/zoph.conf',
+        ],
     }
 }

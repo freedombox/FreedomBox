@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
 "PO-Revision-Date: 2024-02-11 20:14+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -902,10 +902,11 @@ msgid "Admin"
 msgstr "నిర్వాహకుడు"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
@@ -1458,7 +1459,7 @@ msgstr ""
 "వ్యవస్థ నిర్ధారణ పరీక్ష అనేది మీ కంప్యూటర్లో అన్ని సేవలు మరియు అప్లికేషన్లు అనుకున్న విధంగా పని "
 "చేస్తున్నాయో లేదో ధృవీకరించడం కోసం అనేక తనిఖీలు చేస్తుంది."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "లక్షణాలు"
 
@@ -1480,25 +1481,25 @@ msgstr "హెచ్చరిక"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "నిర్వహణ సమాచార ఆధారం"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 msgid "GiB"
 msgstr "గిబ్"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr "మెమరీ వినియోగాన్ని తగ్గించడానికి మీరు కొన్ని యాప్‌లను నిలిపివేయాలి."
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr "మీరు ఈ సిస్టమ్‌లో ఏ కొత్త యాప్‌లను ఇన్‌స్టాల్ చేయకూడదు."
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1507,24 +1508,24 @@ msgstr ""
 "సిస్టమ్ మెమరీ తక్కువగా ఉంది: {percent_used}% ఉపయోగించబడింది, {memory_available} "
 "{memory_available_unit} ఉచితం. {advice_message}"
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "తక్కువ మెమరీ"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 msgid "Running diagnostics"
 msgstr "రన్నింగ్ డయాగ్నస్టిక్స్"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "సాధారణ పరీక్షల సమయంలో {issue_count} సమస్యలు కనుగొనబడ్డాయి."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 msgid "Diagnostics results"
 msgstr "డయాగ్నోస్టిక్స్ ఫలితాలు"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 msgid "Go to diagnostics results"
 msgstr "డయాగ్నస్టిక్స్ ఫలితాలకు వెళ్లండి"
 
@@ -1792,7 +1793,7 @@ msgstr "స్థితి"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "డొమైన్"
 
@@ -5023,6 +5024,88 @@ msgstr "{name} అనుసంధానం తొలగించబడింద�
 #: modules/networks/views.py:504 modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
+
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+#, fuzzy
+#| msgid "Next"
+msgid "Nextcloud"
+msgstr "తర్వాత"
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "నిర్వాహకుని రహస్యపదం"
+
+#: modules/nextcloud/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). The "
+#| "password cannot be a common one and the minimum required length is "
+#| "<strong>10 characters</strong>. Leave this field blank to keep the "
+#| "current password."
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+"మీడియావికీ యొక్క అడ్మినిస్ట్రేటర్ ఖాతా (admin) కోసం ఒక కొత్త పాస్వర్డ్ని సెట్ చెయ్యండి. ప్రస్తుత పాస్వర్డ్ని "
+"ఉంచాలనుకుంటే ఈ ప్రదేశాన్ని ఖాళీగా వదిలేయండి."
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default zone is external"
+msgid "Default phone region"
+msgstr "డిఫాల్ట్ జోన్ ఐస్ ఎక్స్టర్నల్"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+#, fuzzy
+#| msgid "Password update failed. Please choose a stronger password"
+msgid "Password update failed. Please choose a stronger password."
+msgstr "సమాచారాన్ని గుప్తీకరించాడానికి ఉపయోగించబడిన పాస్వర్డ్. తప్పకుండ సర్వర్ పాస్వర్డ్ తో సరిపోవాలి"
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format

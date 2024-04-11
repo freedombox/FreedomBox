@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
-"PO-Revision-Date: 2023-08-16 06:52+0000\n"
-"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
+"PO-Revision-Date: 2024-03-28 01:01+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
 "Language: nb\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: config.py:120
 #, python-brace-format
@@ -938,10 +938,11 @@ msgid "Admin"
 msgstr "admin"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
 
@@ -1509,7 +1510,7 @@ msgstr ""
 "Systemets diagnostikktest vil kjøre en rekke kontroller på systemet for å få "
 "bekreftet at programmer og tjenester fungerer som forventet."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "Diagnostikk"
 
@@ -1533,55 +1534,55 @@ msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør skru av noen programmer for å redusere minnebruken."
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere noen nye programmer på dette systemet."
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "Lite minne"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Kjør diagnostikk"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Diagnostikkresultater"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1888,7 +1889,7 @@ msgstr "Status"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "Domene"
 
@@ -2091,9 +2092,9 @@ msgid ""
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
-"Dette er en komplett eposttjenerløsning som bruker Postfix, Dovecot og "
+"Dette er en komplett e-posttjenerløsning som bruker Postfix, Dovecot og "
 "Rspamd. Postfix sender og mottar e-post. Dovecot gir e-postklienter tilgang "
-"til din postkasse ved hjelp av IMAP og POP3. Rspamd håndterer spam."
+"til din postkasse ved hjelp av IMAP og POP3. Rspamd håndterer søppelpost."
 
 #: modules/email/__init__.py:31
 msgid ""
@@ -2102,11 +2103,10 @@ msgid ""
 "restrict outgoing email. Some lift the restriction after an explicit "
 "request. See manual page for more information."
 msgstr ""
-"Eposttjeneren virker for øyeblikket ikke med mange gratis domenetjenester, "
+"E-posttjeneren virker for øyeblikket ikke med mange gratis domenetjenester, "
 "inkludert de som tilbys fra Freedombox-stiftelsen. Mange "
 "internettleverandører begrenser også utgående epost. Noen løfter på "
-"blokkeringen etter eksplisitte henvendelser. Se manualsiden for mer "
-"informasjon."
+"blokkeringen etter eksplisitte henvendelser. Se manualsiden for mer info."
 
 #: modules/email/__init__.py:36
 #, python-brace-format
@@ -2128,7 +2128,7 @@ msgstr ""
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
-msgstr "Enhver annen eposttjener vil bli avinstallert under installasjonen."
+msgstr "Enhver annen e-posttjener vil bli avinstallert under installasjonen."
 
 #: modules/email/__init__.py:63
 msgid "Postfix/Dovecot"
@@ -2136,7 +2136,7 @@ msgstr "Postfix/Dovecot"
 
 #: modules/email/__init__.py:65
 msgid "Email Server"
-msgstr "Eposttjener"
+msgstr "E-posttjener"
 
 #: modules/email/__init__.py:85
 #, fuzzy
@@ -5267,6 +5267,86 @@ msgstr "Tilkobling {name} slettet."
 #: modules/networks/views.py:504 modules/networks/views.py:514
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kunne ikke slette tilkobling: Tilkobling ikke funnet."
+
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+#, fuzzy
+#| msgid "Next"
+msgid "Nextcloud"
+msgstr "Neste"
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "Administratorpassord"
+
+#: modules/nextcloud/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). Leave "
+#| "this field blank to keep the current password."
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+"Sett et nytt passord for MediaWikis administratorkonto (admin). La dette "
+"feltet stå tomt for å beholde gjeldende passord."
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default app set"
+msgid "Default phone region"
+msgstr "Forvalgsprogram satt"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+#, fuzzy
+#| msgid "Password update failed. Please choose a stronger password"
+msgid "Password update failed. Please choose a stronger password."
+msgstr "Passordoppdatering feilet. Vennligst bruk ett sterkere passord"
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format

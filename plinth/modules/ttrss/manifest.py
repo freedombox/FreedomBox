@@ -54,7 +54,10 @@ backup = {
         'files': ['/var/lib/plinth/backups-data/ttrss-database.sql']
     },
     'secrets': {
-        'files': ['/etc/tt-rss/database.php']
+        'files': [
+            '/etc/tt-rss/database.php',
+            '/etc/dbconfig-common/tt-rss.conf',
+        ]
     },
     'services': ['tt-rss']
 }

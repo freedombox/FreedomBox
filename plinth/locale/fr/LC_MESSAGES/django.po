@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-25 20:44-0400\n"
-"PO-Revision-Date: 2024-01-05 07:09+0000\n"
+"POT-Creation-Date: 2024-04-08 20:47-0400\n"
+"PO-Revision-Date: 2024-04-02 18:01+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: config.py:120
 #, python-brace-format
@@ -104,14 +104,12 @@ msgid "Use the language preference set in the browser"
 msgstr "Utiliser la langue du navigateur"
 
 #: menu.py:106
-#, fuzzy
-#| msgid "Public Visibility"
 msgid "Visibility"
-msgstr "Visibilité publique"
+msgstr "Visibilité"
 
 #: menu.py:108
 msgid "Data"
-msgstr ""
+msgstr "Données"
 
 #: menu.py:110 templates/base.html:131
 msgid "System"
@@ -123,10 +121,8 @@ msgid "Security"
 msgstr "Sécurité"
 
 #: menu.py:114
-#, fuzzy
-#| msgid "Server Administration"
 msgid "Administration"
-msgstr "Administration du serveur"
+msgstr "Administration"
 
 #: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
@@ -938,10 +934,11 @@ msgid "Admin"
 msgstr "Admin"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
-#: modules/searx/views.py:35 modules/searx/views.py:46
-#: modules/security/views.py:56 modules/snapshot/views.py:158
-#: modules/tor/views.py:73 modules/torproxy/views.py:71
-#: modules/upgrades/views.py:83 modules/zoph/views.py:74
+#: modules/nextcloud/views.py:62 modules/searx/views.py:35
+#: modules/searx/views.py:46 modules/security/views.py:56
+#: modules/snapshot/views.py:158 modules/tor/views.py:73
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Configuration mise à jour."
 
@@ -1531,7 +1528,7 @@ msgstr ""
 "sur votre système pour confirmer que les applications et les services "
 "fonctionnent comme prévu."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:240
+#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
 msgid "Diagnostics"
 msgstr "Diagnostics"
 
@@ -1553,27 +1550,27 @@ msgstr "avertissement"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:206
+#: modules/diagnostics/__init__.py:203
 msgid "MiB"
 msgstr "Mio"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:211
+#: modules/diagnostics/__init__.py:208
 msgid "GiB"
 msgstr "Gio"
 
-#: modules/diagnostics/__init__.py:218
+#: modules/diagnostics/__init__.py:215
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Vous devriez désactiver certaines application pour libérer de la mémoire."
 
-#: modules/diagnostics/__init__.py:223
+#: modules/diagnostics/__init__.py:220
 msgid "You should not install any new apps on this system."
 msgstr ""
 "Il est déconseillé d’installer de nouvelles applications sur ce système."
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:232
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1582,52 +1579,43 @@ msgstr ""
 "Le système est bientôt à court de mémoire : {percent_used}% utilisés, "
 "{memory_available} {memory_available_unit} libres. {advice_message}"
 
-#: modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:234
 msgid "Low Memory"
 msgstr "Mémoire disponible faible"
 
-#: modules/diagnostics/__init__.py:268
+#: modules/diagnostics/__init__.py:265
 msgid "Running diagnostics"
 msgstr "Diagnostics en cours"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "{issue_count} problèmes trouvés lors des tests de routine."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:309
 msgid "Diagnostics results"
 msgstr "Résultats des diagnostics"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:314
 msgid "Go to diagnostics results"
 msgstr "Aller aux résultats des diagnostics"
 
 #: modules/diagnostics/forms.py:11
-#, fuzzy
-#| msgid "Enable Subdomains"
 msgid "Enable daily run"
-msgstr "Activer les sous-domaines"
+msgstr "Activer l'exécution quotidienne"
 
 #: modules/diagnostics/forms.py:12
-#, fuzzy
-#| msgid "When enabled, FreedomBox automatically updates once a day."
 msgid "When enabled, diagnostic checks will run once a day."
 msgstr ""
-"En activant cette option, la FreedomBox se mettra à jour automatiquement une "
-"fois par jour."
+"En activant cette option, les diagnostics s'exécuteront une fois par jour."
 
 #: modules/diagnostics/templates/diagnostics.html:11
-#, fuzzy
-#| msgid "Diagnostics"
 msgid "Diagnostics Run"
-msgstr "Diagnostics"
+msgstr "Exécution des diagnostics"
 
 #: modules/diagnostics/templates/diagnostics.html:17
-#, fuzzy
-#| msgid "Run Diagnostics"
 msgid "Run Diagnostics Now"
-msgstr "Lancer les diagnostics"
+msgstr "Lancer les diagnostics maintenant"
 
 #: modules/diagnostics/templates/diagnostics.html:22
 msgid "View Results"
@@ -1887,7 +1875,7 @@ msgstr "État"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
 msgid "Domain"
 msgstr "Domaine"
 
@@ -3472,11 +3460,9 @@ msgstr ""
 "nécessiter quelques instants avant de prendre effet."
 
 #: modules/letsencrypt/views.py:46
-#, fuzzy, python-brace-format
-#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}"
-msgstr ""
-"La révocation du certificat pour le domaine {domain} a échoué : {error}"
+msgstr "La révocation du certificat pour le domaine {domain} a échoué"
 
 #: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
@@ -3484,10 +3470,9 @@ msgid "Certificate successfully obtained for domain {domain}"
 msgstr "Le certificat pour le domaine {domain} a été obtenu avec succès"
 
 #: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
-#, fuzzy, python-brace-format
-#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}"
-msgstr "L’obtention du certificat pour le domaine {domain} a échoué : {error}"
+msgstr "L’obtention du certificat pour le domaine {domain} a échoué"
 
 #: modules/letsencrypt/views.py:95
 #, python-brace-format
@@ -3495,11 +3480,9 @@ msgid "Certificate successfully deleted for domain {domain}"
 msgstr "Le certificat pour le domaine {domain} a été supprimé"
 
 #: modules/letsencrypt/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Failed to delete certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to delete certificate for domain {domain}"
-msgstr ""
-"La suppression du certificat pour le domaine {domain} a échoué : {error}"
+msgstr "La suppression du certificat pour le domaine {domain} a échoué"
 
 #: modules/matrixsynapse/__init__.py:26
 msgid ""
@@ -5318,6 +5301,92 @@ msgstr "Connexion {name} supprimée."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Échec de suppression de la connexion : connexion introuvable."
 
+#: modules/nextcloud/__init__.py:19
+msgid ""
+"Nextcloud is a self-hosted productivity platform which provides private and "
+"secure functions for file sharing, collaborative work, and more. Nextcloud "
+"includes the Nextcloud server, client applications for desktop computers, "
+"and mobile clients. The Nextcloud server provides a well integrated web "
+"interface."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:24
+msgid "All users of FreedomBox can use Nextcloud."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:25
+msgid "To perform administrative actions, use the "
+msgstr ""
+
+#: modules/nextcloud/__init__.py:27
+msgid "You can set a new password in the \"Configuration\" section below."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:28
+msgid ""
+"Please note, that Nextcloud isn't maintained by Debian, which means security "
+"and feature updates are applied independently."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/manifest.py:18
+#, fuzzy
+#| msgid "Next"
+msgid "Nextcloud"
+msgstr "Suivant"
+
+#: modules/nextcloud/__init__.py:49
+msgid "File Storage & Collaboration"
+msgstr ""
+
+#: modules/nextcloud/forms.py:24
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid "Administrator Password"
+msgid "Administrator password"
+msgstr "Mot de passe administrateur"
+
+#: modules/nextcloud/forms.py:28
+#, fuzzy
+#| msgid ""
+#| "Set a new password for MediaWiki's administrator account (admin). The "
+#| "password cannot be a common one and the minimum required length is "
+#| "<strong>10 characters</strong>. Leave this field blank to keep the "
+#| "current password."
+msgid ""
+"Optional. Set a new password for Nextcloud's administrator account "
+"(nextcloud-admin). The password cannot be a common one and the minimum "
+"required length is <strong>10 characters</strong>. Leave this field blank to "
+"keep the current password."
+msgstr ""
+"Définir un nouveau mot de passe pour le compte d’administration de MediaWiki "
+"(admin). Le mot de passe ne peut pas être courant et la taille minimale "
+"requise est de <strong>10 caractères</strong>. Laissez ce champ vide pour "
+"conserver le mot de passe actuel."
+
+#: modules/nextcloud/forms.py:35
+#, fuzzy
+#| msgid "Default zone is external"
+msgid "Default phone region"
+msgstr "La zone par défaut est externe"
+
+#: modules/nextcloud/forms.py:36
+msgid ""
+"The default phone region is required to validate phone numbers in the "
+"profile settings without a country code."
+msgstr ""
+
+#: modules/nextcloud/views.py:53
+#, fuzzy
+#| msgid "Password update failed. Please choose a stronger password"
+msgid "Password update failed. Please choose a stronger password."
+msgstr ""
+"Échec de la mise à jour du mot passe. Veuillez choisir un mot de passe plus "
+"sûr"
+
 #: modules/openvpn/__init__.py:20
 #, python-brace-format
 msgid ""
@@ -6861,20 +6930,16 @@ msgid "Created snapshot."
 msgstr "Instantané créé."
 
 #: modules/snapshot/views.py:160
-#, fuzzy
-#| msgid "Configuration updated."
 msgid "Configuration update failed."
-msgstr "Configuration mise à jour."
+msgstr "Échec de la mise à jour de la configuration."
 
 #: modules/snapshot/views.py:184
 msgid "Deleted selected snapshots"
 msgstr "Supprimer les instantanés sélectionnés"
 
 #: modules/snapshot/views.py:186
-#, fuzzy
-#| msgid "Deleting LDAP user failed."
 msgid "Deleting snapshot failed."
-msgstr "La suppression de l’utilisateur LDAP a échoué."
+msgstr "La suppression de l’instantané a échoué."
 
 #: modules/snapshot/views.py:189
 msgid "Snapshot is currently in use. Please try again later."
@@ -7237,10 +7302,8 @@ msgid "Device can be safely unplugged."
 msgstr "Le périphérique peut être débranché en toute sécurité."
 
 #: modules/storage/views.py:93
-#, fuzzy
-#| msgid "Error ejecting device: {error_message}"
 msgid "Error ejecting device."
-msgstr "Erreur lors de l’éjection du périphérique : {error_message}"
+msgstr "Erreur lors de l’éjection du périphérique."
 
 #: modules/syncthing/__init__.py:23
 msgid ""
@@ -7864,12 +7927,10 @@ msgid "Test distribution upgrade now"
 msgstr "Lancer le test de mise à niveau de la distribution"
 
 #: modules/upgrades/views.py:73
-#, fuzzy
-#| msgid "Error when configuring unattended-upgrades: {error}"
 msgid "Error when configuring unattended-upgrades"
 msgstr ""
 "Erreur lors de la configuration du système de mise à jour automatique "
-"« unattended-upgrades » : {error}"
+"« unattended-upgrades »"
 
 #: modules/upgrades/views.py:120
 msgid "Upgrade process started."
@@ -7941,6 +8002,8 @@ msgstr "Le nom d’utilisateur est déjà pris ou est réservé."
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
 msgstr ""
+"Optionnel. Utilisé afin d'envoyer des courriels pour réinitialiser le mot de "
+"passe et pour les notifications importantes."
 
 #: modules/users/forms.py:106
 msgid ""
@@ -8683,10 +8746,9 @@ msgid "Finished: {name}"
 msgstr "Terminé : {name}"
 
 #: package.py:206
-#, fuzzy, python-brace-format
-#| msgid "Package {expression} is not available for install"
+#, python-brace-format
 msgid "Package {package_expression} is not available for install"
-msgstr "Le paquet {expression} n’est pas disponible à l’installation"
+msgstr "Le paquet {package_expression} n’est pas disponible à l’installation"
 
 #: package.py:226
 #, python-brace-format
