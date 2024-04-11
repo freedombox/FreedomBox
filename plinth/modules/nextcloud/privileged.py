@@ -17,8 +17,8 @@ from plinth.actions import privileged
 
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'
-VOLUME_NAME = 'nextcloud-volume-freedombox'
-IMAGE_NAME = 'docker.io/library/nextcloud:stable-apache'
+VOLUME_NAME = 'nextcloud-freedombox'
+IMAGE_NAME = 'docker.io/library/nextcloud:stable-fpm'
 
 DB_HOST = 'localhost'
 DB_NAME = 'nextcloud_fbx'
@@ -26,8 +26,7 @@ DB_USER = 'nextcloud_fbx'
 GUI_ADMIN = 'nextcloud-admin'
 REDIS_DB = 8  # Don't clash with other redis apps
 
-_volume_path = pathlib.Path(
-    '/var/lib/containers/storage/volumes/') / VOLUME_NAME
+_data_path = pathlib.Path('/var/lib/nextcloud/')
 _systemd_location = pathlib.Path('/etc/systemd/system/')
 _cron_service_file = _systemd_location / 'nextcloud-cron-freedombox.service'
 _cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
@@ -55,16 +54,18 @@ def setup():
         '/run/slapd/ldapi': '/run/slapd/ldapi',
         VOLUME_NAME: '/var/www/html'
     }
-    env = {'TRUSTED_PROXIES': '127.0.0.1', 'OVERWRITEWEBROOT': '/nextcloud'}
+    env = {'OVERWRITEWEBROOT': '/nextcloud'}
     action_utils.podman_create(container_name=CONTAINER_NAME,
-                               image_name=IMAGE_NAME, volumes=volumes, env=env)
+                               image_name=IMAGE_NAME, volume_name=VOLUME_NAME,
+                               volume_path=str(_data_path), volumes=volumes,
+                               env=env)
     action_utils.service_start(CONTAINER_NAME)
 
     # OCC isn't immediately available after the container is spun up.
     # Wait until CAN_INSTALL file is available.
     timeout = 300
     while timeout > 0:
-        if (_volume_path / '_data/config/CAN_INSTALL').exists():
+        if (_data_path / 'config/CAN_INSTALL').exists():
             break
 
         timeout = timeout - 1
@@ -278,7 +279,8 @@ def uninstall():
     _drop_database()
     action_utils.podman_uninstall(container_name=CONTAINER_NAME,
                                   volume_name=VOLUME_NAME,
-                                  image_name=IMAGE_NAME)
+                                  image_name=IMAGE_NAME,
+                                  volume_path=str(_data_path))
     for path in [_cron_service_file, _cron_timer_file]:
         path.unlink(missing_ok=True)
 
@@ -366,7 +368,7 @@ def _get_dbpassword():
 
 def _create_redis_config():
     """Create a php file for Redis configuration."""
-    config_file = _volume_path / '_data/config/freedombox.config.php'
+    config_file = _data_path / 'config/freedombox.config.php'
     file_content = fr'''<?php
 $CONFIG = [
 'memcache.distributed' => '\OC\Memcache\Redis',

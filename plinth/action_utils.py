@@ -489,14 +489,32 @@ def is_package_manager_busy():
         return False
 
 
-def podman_create(container_name: str, image_name: str,
-                  volumes: dict[str, str] | None = None,
+def podman_create(container_name: str, image_name: str, volume_name: str,
+                  volume_path: str, volumes: dict[str, str] | None = None,
                   env: dict[str, str] | None = None):
     """Remove and recreate a podman container."""
+    service_stop(f'{volume_name}-volume.service')
     service_stop(container_name)
 
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
+
+    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
+                   check=False)
+
+    directory = pathlib.Path('/etc/containers/systemd')
+    directory.mkdir(parents=True, exist_ok=True)
+
+    pathlib.Path(volume_path).mkdir(parents=True, exist_ok=True)
+    # Create storage volume
+    volume_file = directory / f'{volume_name}.volume'
+    contents = f'''[Volume]
+Device={volume_path}
+Driver=local
+VolumeName={volume_name}
+Options=bind
+'''
+    volume_file.write_text(contents)
 
     service_file = directory / f'{container_name}.container'
     volume_lines = '\n'.join([
@@ -504,7 +522,11 @@ def podman_create(container_name: str, image_name: str,
     ])
     env_lines = '\n'.join(
         [f'Environment={key}={value}' for key, value in (env or {}).items()])
-    contents = f'''[Container]
+    contents = f'''[Unit]
+Requires=nextcloud-freedombox-volume.service
+After=nextcloud-freedombox-volume.service
+
+[Container]
 AutoUpdate=registry
 ContainerName=%N
 {env_lines}
@@ -522,11 +544,18 @@ WantedBy=default.target
     service_daemon_reload()
 
 
-def podman_uninstall(container_name: str, volume_name: str, image_name: str):
+def podman_uninstall(container_name: str, volume_name: str, image_name: str,
+                     volume_path: str):
     """Remove a podman container's components and systemd unit."""
-    subprocess.run(['podman', 'volume', 'rm', volume_name], check=True)
-    subprocess.run(['podman', 'image', 'rm', image_name], check=True)
+    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
+                   check=True)
+    subprocess.run(['podman', 'image', 'rm', '--ignore', image_name],
+                   check=True)
+    volume_file = pathlib.Path(
+        '/etc/containers/systemd/') / f'{volume_name}.volume'
+    volume_file.unlink(missing_ok=True)
     service_file = pathlib.Path(
         '/etc/containers/systemd/') / f'{container_name}.container'
     service_file.unlink(missing_ok=True)
+    shutil.rmtree(volume_path, ignore_errors=True)
     service_daemon_reload()

@@ -87,7 +87,7 @@ class NextcloudApp(app_module.App):
         self.add(firewall)
 
         firewall_local_protection = FirewallLocalProtection(
-            'firewall-local-protection-nextcloud', ['8181'])
+            'firewall-local-protection-nextcloud', ['9000'])
         self.add(firewall_local_protection)
 
         webserver = Webserver('webserver-nextcloud', 'nextcloud-freedombox',
