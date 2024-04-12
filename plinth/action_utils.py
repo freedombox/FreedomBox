@@ -489,32 +489,14 @@ def is_package_manager_busy():
         return False
 
 
-def podman_create(network_name: str, subnet: str, bridge_ip: str,
-                  host_port: str, container_port: str, container_ip: str,
-                  container_name: str, image_name: str,
+def podman_create(container_name: str, image_name: str,
                   volumes: dict[str, str] | None = None,
                   env: dict[str, str] | None = None):
     """Remove and recreate a podman container."""
-    service_stop(f'{network_name}-network.service')
     service_stop(container_name)
-
-    subprocess.run(['podman', 'network', 'rm', '--force', network_name],
-                   check=False)
 
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
-
-    # Create bridge network
-    network_file = directory / f'{network_name}.network'
-    contents = f'''[Network]
-DNS={bridge_ip}
-Driver=bridge
-Gateway={bridge_ip}
-NetworkName={network_name}
-Subnet={subnet}
-PodmanArgs=--interface-name={network_name}
-'''
-    network_file.write_text(contents)
 
     service_file = directory / f'{container_name}.container'
     volume_lines = '\n'.join([
@@ -522,18 +504,12 @@ PodmanArgs=--interface-name={network_name}
     ])
     env_lines = '\n'.join(
         [f'Environment={key}={value}' for key, value in (env or {}).items()])
-    contents = f'''[Unit]
-Requires=nextcloud-fbx-network.service
-After=nextcloud-fbx-network.service
-
-[Container]
+    contents = f'''[Container]
 AutoUpdate=registry
 ContainerName=%N
 {env_lines}
 Image={image_name}
-IP={container_ip}
-Network={network_name}
-PublishPort=127.0.0.1:{host_port}:{container_port}
+Network=host
 {volume_lines}
 
 [Service]
@@ -546,16 +522,10 @@ WantedBy=default.target
     service_daemon_reload()
 
 
-def podman_uninstall(container_name: str, network_name: str, volume_name: str,
-                     image_name: str):
+def podman_uninstall(container_name: str, volume_name: str, image_name: str):
     """Remove a podman container's components and systemd unit."""
     subprocess.run(['podman', 'volume', 'rm', volume_name], check=True)
     subprocess.run(['podman', 'image', 'rm', image_name], check=True)
-    subprocess.run(['podman', 'network', 'rm', '--force', network_name],
-                   check=True)
-    network_file = pathlib.Path(
-        '/etc/containers/systemd/') / f'{network_name}.network'
-    network_file.unlink(missing_ok=True)
     service_file = pathlib.Path(
         '/etc/containers/systemd/') / f'{container_name}.container'
     service_file.unlink(missing_ok=True)

@@ -15,9 +15,6 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged
 
-NETWORK_NAME = 'nextcloud-fbx'
-BRIDGE_IP = '172.16.16.1'
-CONTAINER_IP = '172.16.16.2'
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'
 VOLUME_NAME = 'nextcloud-volume-freedombox'
@@ -58,15 +55,10 @@ def setup():
         '/run/slapd/ldapi': '/run/slapd/ldapi',
         VOLUME_NAME: '/var/www/html'
     }
-    env = {'TRUSTED_PROXIES': BRIDGE_IP, 'OVERWRITEWEBROOT': '/nextcloud'}
-    action_utils.podman_create(network_name=NETWORK_NAME,
-                               subnet='172.16.16.0/24', bridge_ip=BRIDGE_IP,
-                               host_port='8181', container_port='80',
-                               container_ip=CONTAINER_IP,
-                               container_name=CONTAINER_NAME,
+    env = {'TRUSTED_PROXIES': '127.0.0.1', 'OVERWRITEWEBROOT': '/nextcloud'}
+    action_utils.podman_create(container_name=CONTAINER_NAME,
                                image_name=IMAGE_NAME, volumes=volumes, env=env)
     action_utils.service_start(CONTAINER_NAME)
-    _configure_firewall(action='add', interface_name=NETWORK_NAME)
 
     # OCC isn't immediately available after the container is spun up.
     # Wait until CAN_INSTALL file is available.
@@ -154,14 +146,6 @@ def get_default_phone_region():
 def set_default_phone_region(region: str):
     """"Set the value of default_phone_region."""
     _run_occ('config:system:set', 'default_phone_region', '--value', region)
-
-
-def _configure_firewall(action, interface_name):
-    subprocess.run([
-        'firewall-cmd', '--permanent', '--zone=trusted',
-        f'--{action}-interface={interface_name}'
-    ], check=True)
-    action_utils.service_restart('firewalld')
 
 
 def _database_query(query: str):
@@ -292,9 +276,7 @@ WantedBy=timers.target
 def uninstall():
     """Uninstall Nextcloud"""
     _drop_database()
-    _configure_firewall(action='remove', interface_name=NETWORK_NAME)
     action_utils.podman_uninstall(container_name=CONTAINER_NAME,
-                                  network_name=NETWORK_NAME,
                                   volume_name=VOLUME_NAME,
                                   image_name=IMAGE_NAME)
     for path in [_cron_service_file, _cron_timer_file]:
