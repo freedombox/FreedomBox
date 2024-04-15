@@ -52,10 +52,11 @@ def setup():
         VOLUME_NAME: '/var/www/html'
     }
     env = {'OVERWRITEWEBROOT': '/nextcloud'}
+    binds_to = ['mariadb.service', 'redis-server.service', 'slapd.service']
     action_utils.podman_create(container_name=CONTAINER_NAME,
                                image_name=IMAGE_NAME, volume_name=VOLUME_NAME,
                                volume_path=str(_data_path), volumes=volumes,
-                               env=env)
+                               env=env, binds_to=binds_to)
     action_utils.service_start(CONTAINER_NAME)
 
     _nextcloud_wait_until_ready()

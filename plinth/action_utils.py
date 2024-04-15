@@ -491,7 +491,8 @@ def is_package_manager_busy():
 
 def podman_create(container_name: str, image_name: str, volume_name: str,
                   volume_path: str, volumes: dict[str, str] | None = None,
-                  env: dict[str, str] | None = None):
+                  env: dict[str, str] | None = None,
+                  binds_to: list[str] | None = None):
     """Remove and recreate a podman container."""
     service_stop(f'{volume_name}-volume.service')
     service_stop(container_name)
@@ -526,9 +527,12 @@ Options=bind
     ])
     env_lines = '\n'.join(
         [f'Environment={key}={value}' for key, value in (env or {}).items()])
+    bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
+                           for service in (binds_to or []))
     contents = f'''[Unit]
 Requires=nextcloud-freedombox-volume.service
 After=nextcloud-freedombox-volume.service
+{bind_lines}
 
 [Container]
 AutoUpdate=registry
