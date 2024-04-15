@@ -505,6 +505,10 @@ def podman_create(container_name: str, image_name: str, volume_name: str,
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
 
+    # Fetch the image before creating the container. The systemd service for
+    # the container won't timeout due to slow internet connectivity.
+    subprocess.run(['podman', 'image', 'pull', image_name], check=True)
+
     pathlib.Path(volume_path).mkdir(parents=True, exist_ok=True)
     # Create storage volume
     volume_file = directory / f'{volume_name}.volume'
