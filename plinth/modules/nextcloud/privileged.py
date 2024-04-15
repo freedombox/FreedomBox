@@ -61,16 +61,7 @@ def setup():
                                env=env)
     action_utils.service_start(CONTAINER_NAME)
 
-    # OCC isn't immediately available after the container is spun up.
-    # Wait until CAN_INSTALL file is available.
-    timeout = 300
-    while timeout > 0:
-        if (_data_path / 'config/CAN_INSTALL').exists():
-            break
-
-        timeout = timeout - 1
-        time.sleep(1)
-
+    _nextcloud_wait_until_ready()
     _nextcloud_setup_wizard(database_password, administrator_password)
     _create_redis_config()
 
@@ -176,6 +167,29 @@ def _set_database_privileges(db_password: str):
     ]
     for query in queries:
         _database_query(query)
+
+
+def _nextcloud_wait_until_ready():
+    """Wait for Nextcloud container to get ready."""
+    # Nextcloud copies sources from /usr/src/nextcloud to /var/www/html inside
+    # the container. Nextcloud is served from the latter location. This happens
+    # on first run of the container and when upgrade happen.
+    start_time = time.time()
+    while time.time() < start_time + 300:
+        if (_data_path / 'version.php').exists():
+            break
+
+        time.sleep(1)
+
+    # Wait while Nextcloud is syncing files, running install or performing an
+    # upgrade by trying to obtain an exclusive on its init-sync.lock. Wrap the
+    # echo command with the lock so that the lock is immediately released after
+    # obtaining. We are unable to obtain the lock for 5 minutes, fail and stop
+    # the setup process.
+    lock_file = _data_path / 'nextcloud-init-sync.lock'
+    subprocess.run(
+        ['flock', '--exclusive', '--wait', '300', lock_file, 'echo'],
+        check=True)
 
 
 def _nextcloud_get_status():
