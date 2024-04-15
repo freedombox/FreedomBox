@@ -27,9 +27,6 @@ GUI_ADMIN = 'nextcloud-admin'
 REDIS_DB = 8  # Don't clash with other redis apps
 
 _data_path = pathlib.Path('/var/lib/nextcloud/')
-_systemd_location = pathlib.Path('/etc/systemd/system/')
-_cron_service_file = _systemd_location / 'nextcloud-cron-freedombox.service'
-_cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
 
 DB_BACKUP_FILE = pathlib.Path(
     '/var/lib/plinth/backups-data/nextcloud-database.sql')
@@ -66,8 +63,6 @@ def setup():
     _create_redis_config()
 
     _configure_ldap()
-
-    _configure_systemd()
 
 
 def _run_in_container(
@@ -254,39 +249,6 @@ def _configure_ldap():
         _run_occ('ldap:set-config', 's01', key, value)
 
 
-def _configure_systemd():
-    """Create systemd units files for container and cron jobs."""
-    # Create service and timer for running periodic php jobs.
-    doc = 'https://docs.nextcloud.com/server/stable/admin_manual/' \
-        'configuration_server/background_jobs_configuration.html#systemd'
-    nextcloud_cron_service_content = f'''
-[Unit]
-Description=Nextcloud cron.php job
-Documentation={doc}
-
-[Service]
-ExecCondition=/usr/bin/podman exec --user www-data {CONTAINER_NAME} /var/www/html/occ status -e
-ExecStart=/usr/bin/podman exec --user www-data {CONTAINER_NAME} php -f /var/www/html/cron.php
-KillMode=process
-'''  # noqa: E501
-    nextcloud_cron_timer_content = '''[Unit]
-Description=Run Nextcloud cron.php every 5 minutes
-Documentation={doc}
-
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=5min
-Unit=nextcloud-cron-freedombox.service
-
-[Install]
-WantedBy=timers.target
-'''
-    _cron_service_file.write_text(nextcloud_cron_service_content)
-    _cron_timer_file.write_text(nextcloud_cron_timer_content)
-
-    action_utils.service_daemon_reload()
-
-
 @privileged
 def uninstall():
     """Uninstall Nextcloud"""
@@ -295,8 +257,6 @@ def uninstall():
                                   volume_name=VOLUME_NAME,
                                   image_name=IMAGE_NAME,
                                   volume_path=str(_data_path))
-    for path in [_cron_service_file, _cron_timer_file]:
-        path.unlink(missing_ok=True)
 
 
 def _drop_database():
