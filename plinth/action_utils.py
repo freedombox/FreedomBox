@@ -500,6 +500,7 @@ def podman_create(container_name: str, image_name: str, volume_name: str,
     directory = pathlib.Path('/etc/containers/systemd')
     directory.mkdir(parents=True, exist_ok=True)
 
+    # Data is kept
     subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
                    check=False)
 

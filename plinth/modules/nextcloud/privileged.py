@@ -35,13 +35,6 @@ DB_BACKUP_FILE = pathlib.Path(
 @privileged
 def setup():
     """Setup Nextcloud configuration."""
-    database_password = _generate_secret_key(16)
-    administrator_password = _generate_secret_key(16)
-
-    # Setup database
-    _create_database()
-    _set_database_privileges(database_password)
-
     # Setup redis for caching
     _redis_listen_socket()
 
@@ -60,9 +53,21 @@ def setup():
     action_utils.service_start(CONTAINER_NAME)
 
     _nextcloud_wait_until_ready()
-    _nextcloud_setup_wizard(database_password, administrator_password)
+
+    # Setup database
+    _create_database()
+    database_password = _get_database_password()
+    if not database_password:
+        database_password = _generate_secret_key(16)
+        _set_database_privileges(database_password)
+
+    # Setup redis configuration
     _create_redis_config()
 
+    # Run setup wizard
+    _nextcloud_setup_wizard(database_password)
+
+    # Setup LDAP configuraiton
     _configure_ldap()
 
 
@@ -148,9 +153,8 @@ def _create_database():
     if _db_file_path.exists():
         return
 
-    query = f'''CREATE DATABASE {DB_NAME} CHARACTER SET utf8mb4
-  COLLATE utf8mb4_general_ci;
-'''
+    query = f'CREATE DATABASE IF NOT EXISTS {DB_NAME} ' \
+        'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;'
     _database_query(query)
 
 
@@ -194,9 +198,10 @@ def _nextcloud_get_status():
     return json.loads(output.stdout)
 
 
-def _nextcloud_setup_wizard(db_password, admin_password):
+def _nextcloud_setup_wizard(db_password: str):
     """Run the Nextcloud installation wizard and enable cron jobs."""
     if not _nextcloud_get_status()['installed']:
+        admin_password = _generate_secret_key(16)
         _run_occ('maintenance:install', '--database=mysql',
                  '--database-host=localhost:/run/mysqld/mysqld.sock',
                  f'--database-name={DB_NAME}', f'--database-user={DB_USER}',
@@ -313,7 +318,7 @@ def restore_database():
     subprocess.run(['redis-cli', '-n',
                     str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
 
-    _set_database_privileges(_get_dbpassword())
+    _set_database_privileges(_get_database_password())
 
     # After updating the configuration, a restart seems to be required for the
     # new DB password be used.
@@ -330,13 +335,14 @@ def restore_database():
     _run_occ('maintenance:data-fingerprint')
 
 
-def _get_dbpassword():
-    """Return the database password from config.php.
+def _get_database_password():
+    """Return the database password from config.php or '' if not set.
 
     OCC cannot run unless Nextcloud can already connect to the database.
     """
-    code = 'include_once("/var/www/html/config/config.php");' \
-        'print($CONFIG["dbpassword"]);'
+    code = 'if (file_exists("/var/www/html/config/config.php")) {' \
+        'include_once("/var/www/html/config/config.php");' \
+        'print($CONFIG["dbpassword"] ?? ""); }'
     return _run_in_container('php', '-r', code,
                              capture_output=True).stdout.decode().strip()
 
