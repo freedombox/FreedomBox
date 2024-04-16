@@ -11,6 +11,8 @@ import subprocess
 import tempfile
 from contextlib import contextmanager
 
+import augeas
+
 logger = logging.getLogger(__name__)
 
 UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
@@ -551,6 +553,46 @@ WantedBy=default.target
 '''
     service_file.write_text(contents)
     service_daemon_reload()
+
+
+def _podman_augeus(container_name: str):
+    """Return an augues instance to edit container configuration file."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    container = f'/etc/containers/systemd/{container_name}.container'
+    aug.transform('Systemd', container)
+    aug.set('/augeas/context', '/files' + container)
+    aug.load()
+    return aug
+
+
+def podman_is_enabled(container_name: str) -> bool:
+    """Return whether the container to start on boot."""
+    aug = _podman_augeus(container_name)
+    aug = _podman_augeus(container_name)
+    value = 'default.target'
+    key = 'Install/WantedBy'
+    return any(
+        (aug.get(match_ + '/value') == value for match_ in aug.match(key)))
+
+
+def podman_enable(container_name: str):
+    """Enable container to start on boot."""
+    aug = _podman_augeus(container_name)
+    value = 'default.target'
+    key = 'Install/WantedBy'
+    found = any(
+        (aug.get(match_ + '/value') == value for match_ in aug.match(key)))
+    if not found:
+        aug.set(f'{key}[last() +1]/value', value)
+        aug.save()
+
+
+def podman_disable(container_name: str):
+    """Disable container to start on boot."""
+    aug = _podman_augeus(container_name)
+    aug.remove('Install/WantedBy')
+    aug.save()
 
 
 def podman_uninstall(container_name: str, volume_name: str, image_name: str,

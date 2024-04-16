@@ -87,6 +87,24 @@ def _run_occ(*args, **kwargs) -> subprocess.CompletedProcess:
 
 
 @privileged
+def is_enabled() -> bool:
+    """Return if the systemd container service is enabled."""
+    return action_utils.podman_is_enabled(CONTAINER_NAME)
+
+
+@privileged
+def enable():
+    """Enable the systemd container service."""
+    action_utils.podman_enable(CONTAINER_NAME)
+
+
+@privileged
+def disable():
+    """Disable the systemd container service."""
+    action_utils.podman_disable(CONTAINER_NAME)
+
+
+@privileged
 def get_domain():
     """Return domain name set in Nextcloud."""
     try:

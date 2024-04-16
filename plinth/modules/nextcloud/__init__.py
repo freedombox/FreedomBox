@@ -105,7 +105,7 @@ class NextcloudApp(app_module.App):
         daemon = SharedDaemon('shared-daemon-nextcloud-mysql', 'mysql')
         self.add(daemon)
 
-        daemon = Daemon('daemon-nextcloud', 'nextcloud-freedombox')
+        daemon = NextcloudDaemon('daemon-nextcloud', 'nextcloud-freedombox')
         self.add(daemon)
 
         daemon = Daemon('daemon-nextcloud-timer',
@@ -143,6 +143,24 @@ class NextcloudApp(app_module.App):
         results = super().diagnose()
         results.append(diagnose_url('docker.com'))
         return results
+
+
+class NextcloudDaemon(Daemon):
+    """Component to manage Nextcloud container service."""
+
+    def is_enabled(self):
+        """Return if the daemon/unit is enabled."""
+        return privileged.is_enabled()
+
+    def enable(self):
+        """Run operations to enable the daemon/unit."""
+        super().enable()
+        privileged.enable()
+
+    def disable(self):
+        """Run operations to disable the daemon/unit."""
+        super().disable()
+        privileged.disable()
 
 
 class NextcloudBackupRestore(BackupRestore):
