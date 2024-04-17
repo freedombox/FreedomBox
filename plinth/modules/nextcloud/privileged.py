@@ -230,6 +230,16 @@ def _nextcloud_setup_wizard(db_password: str):
     # jobs correctly. Cron is the recommended setting.
     _run_occ('background:cron')
 
+    # Enable pretty URLs without /index.php in them.
+    _run_occ('config:system:set', 'htaccess.RewriteBase', '--value',
+             '/nextcloud')
+    _run_occ('config:system:set', 'htaccess.IgnoreFrontController',
+             '--type=boolean', '--value=true')
+    # Update the .htaccess file to contain mod_rewrite rules needed for pretty
+    # URLs. This is automatically re-run by scripts when upgrading to next
+    # version.
+    _run_occ('maintenance:update:htaccess')
+
 
 def _configure_ldap():
     _run_occ('app:enable', 'user_ldap')
