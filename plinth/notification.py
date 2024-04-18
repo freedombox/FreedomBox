@@ -292,7 +292,7 @@ class Notification(models.StoredNotification):
             string_ = str(string_)
             if data:
                 string_ = SafeFormatter().vformat(string_, [], data)
-        except KeyError as error:
+        except (KeyError, AttributeError) as error:
             logger.warning(
                 'Notification missing required key during translation: %s',
                 error)
