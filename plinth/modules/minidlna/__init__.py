@@ -29,6 +29,8 @@ _description = [
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
 
+SYSTEM_USER = 'minidlna'
+
 
 class MiniDLNAApp(app_module.App):
     """Freedombox app managing miniDlna."""
