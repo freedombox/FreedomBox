@@ -89,11 +89,11 @@ class DirectorySelectForm(forms.Form):
     storage_subdir = forms.CharField(label=_('Subdirectory (optional)'),
                                      required=False)
 
-    def __init__(self, title=None, default='/', validator=DirectoryValidator,
-                 *args, **kwargs):
+    def __init__(self, title=None, help_text='', default='/',
+                 validator=DirectoryValidator, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if title:
-            self.fields['storage_dir'].label = title
+        self.fields['storage_dir'].label = title
+        self.fields['storage_dir'].help_text = help_text
         self.validator = validator
         self.default = default
         self.set_form_data()
