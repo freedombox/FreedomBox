@@ -79,9 +79,10 @@ class MiniDLNAApp(app_module.App):
             ['/etc/apache2/conf-available/minidlna-freedombox.conf'])
         self.add(dropin_configs)
 
-        firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
-                            is_external=False)
-        self.add(firewall)
+        firewall_minidlna = Firewall('firewall-minidlna', info.name,
+                                     ports=['minidlna',
+                                            'ssdp'], is_external=False)
+        self.add(firewall_minidlna)
 
         webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
                               urls=['https://{host}/_minidlna/'])
