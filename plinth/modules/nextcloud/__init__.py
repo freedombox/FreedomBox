@@ -119,16 +119,23 @@ class NextcloudApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        with self.get_component(
-                'shared-daemon-nextcloud-redis').ensure_running():
-            with self.get_component(
-                    'shared-daemon-nextcloud-mysql').ensure_running():
+        # Drop-in configs need to be enabled for setup to succeed
+        self.get_component('dropin-configs-nextcloud').enable()
+        redis = self.get_component('shared-daemon-nextcloud-redis')
+        mysql = self.get_component('shared-daemon-nextcloud-mysql')
+        nextcloud = self.get_component('daemon-nextcloud')
+
+        # Determine whether app should be disabled after setup
+        should_disable = old_version and not nextcloud.is_enabled()
+
+        with redis.ensure_running():
+            with mysql.ensure_running():
                 # Database needs to be running for successful initialization or
                 # upgrade of Nextcloud database.
-
-                # Drop-in configs need to be enabled for setup to succeed
-                self.get_component('dropin-configs-nextcloud').enable()
                 privileged.setup()
+
+        if should_disable:
+            self.disable()
 
         if not old_version:
             self.enable()
