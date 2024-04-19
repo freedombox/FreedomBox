@@ -22,9 +22,12 @@ def _get_phone_regions():
 class NextcloudForm(forms.Form):
     """Nextcloud configuration form."""
 
-    domain = forms.CharField(
-        label=_('Domain'), required=False, help_text=_(
-            'Examples: "myfreedombox.example.org" or "example.onion".'))
+    override_domain = forms.CharField(
+        label=_('Override domain'), required=False, help_text=_(
+            'Set to the domain or IP address that Nextcloud should be forced '
+            'to generate URLs with. Should not be needed if a valid domain is '
+            'used to access Nextcloud. Examples: "myfreedombox.example.org" '
+            'or "example.onion".'))
 
     admin_password = forms.CharField(
         label=_('Administrator password'), help_text=_(

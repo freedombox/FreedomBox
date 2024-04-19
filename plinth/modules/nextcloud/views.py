@@ -24,7 +24,7 @@ class NextcloudAppView(AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update({
-            'domain': privileged.get_domain(),
+            'override_domain': privileged.get_override_domain(),
             'default_phone_region': privileged.get_default_phone_region() or ''
         })
         return initial
@@ -39,8 +39,8 @@ class NextcloudAppView(AppView):
         def _value_changed(key):
             return old_config.get(key) != new_config.get(key)
 
-        if _value_changed('domain'):
-            privileged.set_domain(new_config['domain'])
+        if _value_changed('override_domain'):
+            privileged.set_override_domain(new_config['override_domain'])
             is_changed = True
 
         if new_config['admin_password']:

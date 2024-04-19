@@ -105,8 +105,8 @@ def disable():
 
 
 @privileged
-def get_domain():
-    """Return domain name set in Nextcloud."""
+def get_override_domain():
+    """Return the domain name that Nextcloud is configured to override with."""
     try:
         domain = _run_occ('config:system:get', 'overwritehost',
                           capture_output=True)
@@ -116,22 +116,33 @@ def get_domain():
 
 
 @privileged
-def set_domain(domain_name: str):
-    """Set Nextcloud domain name."""
+def set_override_domain(domain_name: str):
+    """Set the domain name that Nextcloud will use to override all domains."""
     protocol = 'https'
     if domain_name.endswith('.onion'):
         protocol = 'http'
 
     if domain_name:
         _run_occ('config:system:set', 'overwritehost', '--value', domain_name)
-
+        _run_occ('config:system:set', 'overwriteprotocol', '--value', protocol)
         _run_occ('config:system:set', 'overwrite.cli.url', '--value',
                  f'{protocol}://{domain_name}/nextcloud')
+    else:
+        _run_occ('config:system:delete', 'overwritehost')
+        _run_occ('config:system:delete', 'overwriteprotocol')
+        _run_occ('config:system:delete', 'overwrite.cli.url')
 
-        _run_occ('config:system:set', 'overwriteprotocol', '--value', protocol)
+    # Restart to apply changes immediately
+    action_utils.service_restart('nextcloud-freedombox')
 
-        # Restart to apply changes immediately
-        action_utils.service_restart('nextcloud-freedombox')
+
+@privileged
+def set_trusted_domains(domains: list[str]):
+    """Set the list of trusted domains."""
+    _run_occ('config:system:delete', 'trusted_domains')
+    for index, domain in enumerate(domains):
+        _run_occ('config:system:set', 'trusted_domains', str(index), '--value',
+                 domain)
 
 
 @privileged
