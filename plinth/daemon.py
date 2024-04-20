@@ -110,7 +110,9 @@ class Daemon(app.LeaderComponent):
         results = []
         results.append(self._diagnose_unit_is_running())
         for port in self.listen_ports:
-            results.append(diagnose_port_listening(port[0], port[1]))
+            results.append(
+                diagnose_port_listening(port[0], port[1], None,
+                                        self.component_id))
 
         return results
 
@@ -124,7 +126,8 @@ class Daemon(app.LeaderComponent):
             'service_name': str(self.unit)
         }
 
-        return DiagnosticCheck(check_id, description, result, parameters)
+        return DiagnosticCheck(check_id, description, result, parameters,
+                               self.component_id)
 
 
 class RelatedDaemon(app.FollowerComponent):
@@ -200,7 +203,8 @@ def app_is_running(app_):
 
 def diagnose_port_listening(
         port: int, kind: str = 'tcp',
-        listen_address: str | None = None) -> DiagnosticCheck:
+        listen_address: str | None = None,
+        component_id: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic on whether a port is being listened on.
 
     Kind must be one of inet, inet4, inet6, tcp, tcp4, tcp6, udp,
@@ -222,7 +226,7 @@ def diagnose_port_listening(
 
     return DiagnosticCheck(check_id, description,
                            Result.PASSED if result else Result.FAILED,
-                           parameters)
+                           parameters, component_id)
 
 
 def _check_port(port: int, kind: str = 'tcp',
@@ -272,7 +276,8 @@ def _check_port(port: int, kind: str = 'tcp',
 
 
 def diagnose_netcat(host: str, port: int, remote_input: str = '',
-                    negate: bool = False) -> DiagnosticCheck:
+                    negate: bool = False,
+                    component_id: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic using netcat."""
     try:
         process = subprocess.Popen(['nc', host, str(port)],
@@ -298,4 +303,5 @@ def diagnose_netcat(host: str, port: int, remote_input: str = '',
         check_id = f'daemon-netcat-negate-{host}-{port}'
         description = gettext_noop('Cannot connect to {host}:{port}')
 
-    return DiagnosticCheck(check_id, description, result, parameters)
+    return DiagnosticCheck(check_id, description, result, parameters,
+                           component_id)

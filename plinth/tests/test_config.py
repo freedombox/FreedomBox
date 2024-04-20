@@ -165,11 +165,13 @@ def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
             DiagnosticCheck(
                 f'dropin-config-{tmp_path}/etc/test/path1',
                 'Static configuration {etc_path} is setup properly',
-                Result.FAILED, {'etc_path': f'{tmp_path}/etc/test/path1'}),
+                Result.FAILED, {'etc_path': f'{tmp_path}/etc/test/path1'},
+                'test-component'),
             DiagnosticCheck(
                 f'dropin-config-{tmp_path}/etc/path2',
                 'Static configuration {etc_path} is setup properly',
-                Result.FAILED, {'etc_path': f'{tmp_path}/etc/path2'}),
+                Result.FAILED, {'etc_path': f'{tmp_path}/etc/path2'},
+                'test-component'),
         ]
 
         # Proper symlinks exist

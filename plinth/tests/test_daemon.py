@@ -181,9 +181,9 @@ def test_ensure_running(subprocess_call, subprocess_run, service_is_running,
 def test_diagnose(port_listening, service_is_running, daemon):
     """Test running diagnostics."""
 
-    def side_effect(port, kind):
+    def side_effect(port, kind, _listen_address, component_id):
         name = f'test-result-{port}-{kind}'
-        return DiagnosticCheck(name, name, Result.PASSED)
+        return DiagnosticCheck(name, name, Result.PASSED, {}, component_id)
 
     daemon = Daemon('test-daemon', 'test-unit', listen_ports=[(8273, 'tcp4'),
                                                               (345, 'udp')])
@@ -193,13 +193,16 @@ def test_diagnose(port_listening, service_is_running, daemon):
     assert results == [
         DiagnosticCheck('daemon-running-test-unit',
                         'Service {service_name} is running', Result.PASSED,
-                        {'service_name': 'test-unit'}),
+                        {'service_name': 'test-unit'}, 'test-daemon'),
         DiagnosticCheck('test-result-8273-tcp4', 'test-result-8273-tcp4',
-                        Result.PASSED),
+                        Result.PASSED, {}, 'test-daemon'),
         DiagnosticCheck('test-result-345-udp', 'test-result-345-udp',
-                        Result.PASSED)
+                        Result.PASSED, {}, 'test-daemon')
     ]
-    port_listening.assert_has_calls([call(8273, 'tcp4'), call(345, 'udp')])
+    port_listening.assert_has_calls([
+        call(8273, 'tcp4', None, 'test-daemon'),
+        call(345, 'udp', None, 'test-daemon')
+    ])
     service_is_running.assert_has_calls([call('test-unit')])
 
     service_is_running.return_value = False
@@ -342,12 +345,13 @@ def test_diagnose_netcat(popen):
     assert popen.mock_calls[2] == call().communicate(input=b'test-input')
 
     result = diagnose_netcat('test-host', 3300, remote_input='test-input',
-                             negate=True)
+                             negate=True, component_id='test-component')
     parameters2 = parameters.copy()
     parameters2['negate'] = True
     assert result == DiagnosticCheck('daemon-netcat-negate-test-host-3300',
                                      'Cannot connect to {host}:{port}',
-                                     Result.FAILED, parameters2)
+                                     Result.FAILED, parameters2,
+                                     'test-component')
 
     popen().returncode = 1
     result = diagnose_netcat('test-host', 3300, remote_input='test-input')

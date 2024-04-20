@@ -222,9 +222,9 @@ class App:
 
         Return value must be a list of results. Each result is a
         :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
-        unique check_id, a user visible description of the test, and the
-        result. The test result is a string enumeration from 'failed',
-        'passed', 'error', 'warning' and 'not_done'.
+        unique check_id, a user visible description of the test, the result,
+        test parameters, and the component ID. The test result is a string
+        enumeration from 'failed', 'passed', 'error', 'warning' and 'not_done'.
 
         Results are typically collected by diagnosing each component of the app
         and then supplementing the results with any app level diagnostic tests.
@@ -314,9 +314,9 @@ class Component:
 
         Return value must be a list of results. Each result is a
         :class:`~plinth.diagnostic_check.DiagnosticCheck` with a
-        unique check_id, a user visible description of the test, and the
-        result. The test result is a string enumeration from 'failed',
-        'passed', 'error', 'warning' and 'not_done'.
+        unique check_id, a user visible description of the test, the result,
+        test parameters, and the component ID. The test result is a string
+        enumeration from 'failed', 'passed', 'error', 'warning' and 'not_done'.
 
         Also see :meth:`.has_diagnostics`.
 

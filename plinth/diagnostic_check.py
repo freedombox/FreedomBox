@@ -30,6 +30,7 @@ class DiagnosticCheck:
     description: str
     result: Result = Result.NOT_DONE
     parameters: DiagnosticCheckParameters = field(default_factory=dict)
+    component_id: str | None = None
 
     @property
     def translated_description(self):
@@ -65,6 +66,7 @@ class CheckJSONDecoder(json.JSONDecoder):
         """Convert tagged data to DiagnosticCheck."""
         if data.get('__class__') == 'DiagnosticCheck':
             return DiagnosticCheck(data['check_id'], data['description'],
-                                   data['result'], data['parameters'])
+                                   data['result'], data['parameters'],
+                                   data.get('component_id'))
 
         return data

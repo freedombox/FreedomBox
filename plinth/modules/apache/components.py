@@ -69,11 +69,13 @@ class Webserver(app.LeaderComponent):
         for url in self.urls:
             if '{host}' in url:
                 results.extend(
-                    diagnose_url_on_all(
-                        url, check_certificate=False,
-                        expect_redirects=self.expect_redirects))
+                    diagnose_url_on_all(url, check_certificate=False,
+                                        expect_redirects=self.expect_redirects,
+                                        component_id=self.component_id))
             else:
-                results.append(diagnose_url(url, check_certificate=False))
+                results.append(
+                    diagnose_url(url, check_certificate=False,
+                                 component_id=self.component_id))
 
         return results
 
@@ -141,7 +143,8 @@ def diagnose_url(url: str, kind: str | None = None,
                  check_certificate: bool = True,
                  extra_options: list[str] | None = None,
                  wrapper: str | None = None,
-                 expected_output: str | None = None) -> DiagnosticCheck:
+                 expected_output: str | None = None,
+                 component_id: str | None = None) -> DiagnosticCheck:
     """Run a diagnostic on whether a URL is accessible.
 
     Kind can be '4' for IPv4 or '6' for IPv6.
@@ -161,10 +164,12 @@ def diagnose_url(url: str, kind: str | None = None,
         check_id = f'apache-url-{url}'
         description = gettext_noop('Access URL {url}')
 
-    return DiagnosticCheck(check_id, description, result, parameters)
+    return DiagnosticCheck(check_id, description, result, parameters,
+                           component_id)
 
 
 def diagnose_url_on_all(url: str, expect_redirects: bool = False,
+                        component_id: str | None = None,
                         **kwargs) -> list[DiagnosticCheck]:
     """Run a diagnostic on whether a URL is accessible."""
     results = []
@@ -174,7 +179,9 @@ def diagnose_url_on_all(url: str, expect_redirects: bool = False,
         if not expect_redirects:
             diagnose_kwargs.setdefault('kind', address['kind'])
 
-        results.append(diagnose_url(current_url, **diagnose_kwargs))
+        results.append(
+            diagnose_url(current_url, component_id=component_id,
+                         **diagnose_kwargs))
 
     return results
 
