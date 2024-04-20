@@ -13,6 +13,7 @@ from django.utils.translation import gettext_noop
 
 import plinth
 from plinth import app as app_module
+from plinth.diagnostic_check import Result
 from plinth.package import Packages
 from plinth.signals import post_setup
 
@@ -25,6 +26,8 @@ logger = logging.getLogger(__name__)
 _is_first_setup = False
 is_first_setup_running = False
 _is_shutting_down = False
+
+thread_local_storage = threading.local()
 
 
 def run_setup_on_app(app_id, allow_install=True, rerun=False):
@@ -50,10 +53,10 @@ def run_setup_on_app(app_id, allow_install=True, rerun=False):
         thread_data={'allow_install': allow_install})
 
 
-def _run_setup_on_app(app, current_version):
+def _run_setup_on_app(app, current_version, repair: bool = False):
     """Execute the setup process."""
     logger.info('Setup run: %s', app.app_id)
-    exception_to_update = None
+    exception_to_update: Exception | None = None
     message = None
     try:
         current_version = app.get_setup_version()
@@ -74,12 +77,17 @@ def _run_setup_on_app(app, current_version):
         if not current_version:
             message = gettext_noop('Error installing app: {error}').format(
                 error=exception)
+        elif repair:
+            message = gettext_noop('Error repairing app: {error}').format(
+                error=exception)
         else:
             message = gettext_noop('Error updating app: {error}').format(
                 error=exception)
     else:
         if not current_version:
             message = gettext_noop('App installed.')
+        elif repair:
+            return
         else:
             message = gettext_noop('App updated')
 
@@ -87,6 +95,86 @@ def _run_setup_on_app(app, current_version):
                 exception_to_update)
     operation = operation_module.Operation.get_operation()
     operation.on_update(message, exception_to_update)
+
+
+def run_repair_on_app(app_id):
+    """Execute the repair process in a thread."""
+    app = app_module.App.get(app_id)
+    current_version = app.get_setup_version()
+    if not current_version:
+        logger.warning('App %s is not installed, cannot repair', app_id)
+        return
+
+    logger.debug('Creating operation to repair app: %s', app_id)
+    return operation_module.manager.new(f'{app_id}-repair', app_id,
+                                        gettext_noop('Repairing app'),
+                                        _run_repair_on_app, [app],
+                                        show_message=True,
+                                        show_notification=True)
+
+
+def _run_repair_on_app(app: app_module.App):
+    """Execute the repair process."""
+    logger.info('Repair run: %s', app.app_id)
+    message = None
+    operation = operation_module.Operation.get_operation()
+
+    # Always re-run diagnostics first for this app, to ensure results are
+    # current.
+    checks = []
+    try:
+        checks = app.diagnose()
+    except Exception as exception:
+        logger.error('Error running %s diagnostics - %s', app.app_id,
+                     exception)
+        message = gettext_noop('Error running diagnostics: {error}').format(
+            error=exception)
+        operation.on_update(message, exception)
+        return
+
+    # Filter for checks that have failed.
+    failed_checks = []
+    for check in checks:
+        if check.result in [Result.FAILED, Result.WARNING]:
+            failed_checks.append(check)
+
+    if not failed_checks:
+        logger.warning('Skipping repair for %s: no failed checks', app.app_id)
+        message = gettext_noop('Skipping repair, no failed checks')
+        operation.on_update(message, None)
+        return
+
+    try:
+        should_rerun_setup = app.repair(failed_checks)
+    except Exception as exception:
+        logger.error('Repair error: %s: %s %s', app.app_id, message, exception)
+        message = gettext_noop('Error repairing app: {error}').format(
+            error=exception)
+        operation.on_update(message, exception)
+        return
+
+    if should_rerun_setup:
+        message = gettext_noop('Re-running setup to complete repairs')
+        operation.on_update(message, None)
+        current_version = app.get_setup_version()
+        _run_setup_on_app(app, current_version, True)
+
+    logger.info('Repair completed: %s', app.app_id)
+
+    # Check for errors in thread local storage
+    message = gettext_noop('App repaired.')
+    errors = retrieve_error_messages()
+    exceptions = None
+    if errors:
+        message = gettext_noop('App repair completed with errors:\n')
+        error_message = ''
+        for error in errors:
+            message += str(error) + '\n'
+            error_message += str(error) + '\n'
+
+        exceptions = Exception(error_message)
+
+    operation.on_update(message, exceptions)
 
 
 def run_uninstall_on_app(app_id):
@@ -565,3 +653,24 @@ def on_package_cache_updated():
     """Called by D-Bus service when apt package cache is updated."""
     force_upgrader = ForceUpgrader.get_instance()
     force_upgrader.on_package_cache_updated()
+
+
+def store_error_message(error_message: str):
+    """Add an error message to thread local storage."""
+    try:
+        thread_local_storage.errors.append(error_message)
+    except AttributeError:
+        thread_local_storage.errors = [error_message]
+
+
+def retrieve_error_messages() -> list[str]:
+    """Retrieve the error messages from thread local storage.
+
+    Errors are cleared after retrieval."""
+    try:
+        errors = thread_local_storage.errors
+        thread_local_storage.errors = []
+    except AttributeError:
+        errors = []
+
+    return errors
