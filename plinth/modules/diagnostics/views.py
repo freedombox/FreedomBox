@@ -7,7 +7,9 @@ import logging
 
 from django.contrib import messages
 from django.http import Http404
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.urls import NoReverseMatch, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.generic import TemplateView
@@ -16,6 +18,7 @@ from plinth import operation
 from plinth.app import App
 from plinth.diagnostic_check import Result
 from plinth.modules import diagnostics
+from plinth.setup import run_repair_on_app
 from plinth.views import AppView
 
 from .forms import ConfigureForm
@@ -100,10 +103,10 @@ def diagnose_app(request, app_id):
                          exception)
         diagnosis_exception = str(exception)
 
-    show_rerun_setup = False
+    show_repair = False
     for check in diagnosis:
         if check.result in [Result.FAILED, Result.WARNING]:
-            show_rerun_setup = True
+            show_repair = True
             break
 
     return TemplateResponse(
@@ -113,5 +116,34 @@ def diagnose_app(request, app_id):
             'app_name': app_name,
             'results': diagnosis,
             'exception': diagnosis_exception,
-            'show_rerun_setup': show_rerun_setup,
+            'show_repair': show_repair,
         })
+
+
+@require_POST
+def repair(request, app_id):
+    """Try to repair failed diagnostics on an app.
+
+    Allows apps and components to customize the repair method. Re-run setup is
+    the default if not specified.
+    """
+    try:
+        app = App.get(app_id)
+    except KeyError:
+        raise Http404('App does not exist')
+
+    try:
+        finish_url = reverse(f'{app_id}:index')
+    except NoReverseMatch:
+        # for apps like apache that don't have an index route
+        finish_url = reverse('diagnostics:index')
+
+    current_version = app.get_setup_version()
+    if not current_version:
+        logger.warning('App %s is not installed, cannot repair', app_id)
+        message = _('App {app_id} is not installed, cannot repair')
+        messages.error(request, str(message).format(app_id=app_id))
+        return redirect(finish_url)
+
+    run_repair_on_app(app_id)
+    return redirect(finish_url)
