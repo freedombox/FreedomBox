@@ -279,6 +279,38 @@ def test_app_has_diagnostics(app_with_components):
         assert app.has_diagnostics()
 
 
+@patch('plinth.setup.run_setup_on_app')
+def test_app_repair(_run_setup_on_app, app_with_components):
+    """Test running repair on an app."""
+    component = app_with_components.get_component('test-follower-1')
+    component.repair = Mock(return_value=True)
+
+    check1 = DiagnosticCheck('check1', 'check1', Result.FAILED, {})
+    check2 = DiagnosticCheck('check2', 'check2', Result.WARNING, {})
+    check3 = DiagnosticCheck('check3', 'check3', Result.FAILED, {},
+                             'test-follower-1')
+    should_rerun_setup = app_with_components.repair([])
+    assert not should_rerun_setup
+
+    should_rerun_setup = app_with_components.repair([check1])
+    assert should_rerun_setup
+
+    should_rerun_setup = app_with_components.repair([check2])
+    assert should_rerun_setup
+
+    should_rerun_setup = app_with_components.repair([check1, check2])
+    assert should_rerun_setup
+    component.repair.assert_not_called()
+
+    should_rerun_setup = app_with_components.repair([check3])
+    assert should_rerun_setup
+    assert component.repair.mock_calls == [call([check3])]
+
+    component.repair = Mock(return_value=False)
+    should_rerun_setup = app_with_components.repair([check3])
+    assert not should_rerun_setup
+
+
 def test_component_initialization():
     """Test that component is initialized properly."""
     with pytest.raises(ValueError):
@@ -338,6 +370,13 @@ def test_component_has_diagnostics():
 
     component = FollowerComponent('test-follower-1')
     assert not component.has_diagnostics()
+
+
+@patch('plinth.setup.run_setup_on_app')
+def test_component_repair(_run_setup_on_app):
+    """Test running repair on component."""
+    component = Component('test-component')
+    assert component.repair(['test-check'])
 
 
 def test_follower_component_initialization():

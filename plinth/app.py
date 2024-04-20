@@ -211,7 +211,6 @@ class App:
         """Update the status of all follower components.
 
         Do not query or update the status of the leader components.
-
         """
         for component in self.components.values():
             if not component.is_leader:
@@ -230,7 +229,6 @@ class App:
         and then supplementing the results with any app level diagnostic tests.
 
         Also see :meth:`.has_diagnostics`.
-
         """
         results = []
         for component in self.components.values():
@@ -255,7 +253,6 @@ class App:
         it is assumed that it is for implementing diagnostic tests and this
         method returns True for such an app. Override this method if this
         default behavior does not fit the needs.
-
         """
         # App implements some diagnostics
         if self.__class__.diagnose is not App.diagnose:
@@ -267,6 +264,40 @@ class App:
                 return True
 
         return False
+
+    def repair(self, failed_checks: _list_type) -> bool:
+        """Try to fix failed diagnostics.
+
+        The default implementation asks relevant components to repair, and then
+        requests re-run setup for the app.
+
+        failed_checks is a list of DiagnosticChecks that had failed or resulted
+        in a warning. The list will be split up by component_id, and passed to
+        the appropriate components. Remaining failed diagnostics do not have a
+        related component, and should be handled by the app.
+
+        Returns whether the app setup should be re-run.
+        """
+        should_rerun_setup = False
+
+        # Group the failed_checks by component
+        components_failed_checks = collections.defaultdict(list)
+        for failed_check in failed_checks:
+            if failed_check.component_id:
+                components_failed_checks[failed_check.component_id].append(
+                    failed_check)
+            else:
+                # There is a failed check with no related component.
+                should_rerun_setup = True
+
+        # Repair each component that has failed checks
+        for component_id, component in self.components.items():
+            if components_failed_checks[component_id]:
+                result = component.repair(
+                    components_failed_checks[component_id])
+                should_rerun_setup = should_rerun_setup or result
+
+        return should_rerun_setup
 
 
 class Component:
@@ -319,7 +350,6 @@ class Component:
         enumeration from 'failed', 'passed', 'error', 'warning' and 'not_done'.
 
         Also see :meth:`.has_diagnostics`.
-
         """
         return []
 
@@ -333,9 +363,24 @@ class Component:
         is assumed that it is for implementing diagnostic tests and this method
         returns True for such a component. Override this method if this default
         behavior does not fit the needs.
-
         """
         return self.__class__.diagnose is not Component.diagnose
+
+    def repair(self, failed_checks: list) -> bool:
+        """Try to fix failed diagnostics.
+
+        The default implementation only requests re-run setup for the app.
+
+        Returns whether the app setup should be re-run by the caller.
+
+        This method should be overridden by components that implement
+        diagnose(), if there is a known way to fix failed checks. The return
+        value can be changed to False to avoid causing a re-run setup.
+
+        failed_checks is a list of DiagnosticChecks related to this component
+        that had failed or warning result.
+        """
+        return True
 
 
 class FollowerComponent(Component):
