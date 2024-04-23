@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 20:47-0400\n"
+"POT-Creation-Date: 2024-04-22 20:02-0400\n"
 "PO-Revision-Date: 2024-04-10 04:54+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.5-dev\n"
 
-#: config.py:120
+#: config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "La configuración fija {etc_path} está configurada correctamente"
@@ -1845,7 +1845,7 @@ msgstr "Estado"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
 msgid "Domain"
 msgstr "Dominio"
 
@@ -5203,7 +5203,7 @@ msgstr "Conexión {name} eliminada."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Ha fallado la eliminación de la conexión: no se encontró."
 
-#: modules/nextcloud/__init__.py:19
+#: modules/nextcloud/__init__.py:20
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5217,45 +5217,51 @@ msgstr ""
 "aplicaciones cliente para ordenadores de sobremesa y clientes móviles. El "
 "servidor Nextcloud proporciona una interfaz web bien integrada."
 
-#: modules/nextcloud/__init__.py:24
-msgid "All users of FreedomBox can use Nextcloud."
+#: modules/nextcloud/__init__.py:25
+#, fuzzy
+#| msgid "All users of FreedomBox can use Nextcloud."
+msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr "Todos los usuarios de FreedomBox pueden utilizar Nextcloud."
 
-#: modules/nextcloud/__init__.py:25
-msgid "To perform administrative actions, use the "
-msgstr "Para realizar acciones administrativas, utilice "
-
-#: modules/nextcloud/__init__.py:27
-msgid "You can set a new password in the \"Configuration\" section below."
-msgstr "Puedes establecer una nueva contraseña en la sección \"Configuración\"."
-
-#: modules/nextcloud/__init__.py:28
+#: modules/nextcloud/__init__.py:29
+#, python-brace-format
 msgid ""
-"Please note, that Nextcloud isn't maintained by Debian, which means security "
-"and feature updates are applied independently."
+"Please note that Nextcloud is installed and run inside a container provided "
+"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"done by the upstream project and not by Debian/{box_name}. Updates are "
+"performed following an independent cycle."
 msgstr ""
-"Por favor, ten en cuenta que Debian no mantiene Nexcloud, lo que significa "
-"que las actualizaciones de seguridad y características se aplican de forma "
-"independiente."
 
-#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:35
+#, fuzzy
+#| msgid "Uninstalling an app is an experimental feature."
+msgid "This app is experimental."
+msgstr "Desinstalar una aplicación es una función experimental."
+
+#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:49
+#: modules/nextcloud/__init__.py:55
 msgid "File Storage & Collaboration"
 msgstr "Almacenamiento de archivos y colaboración"
 
-#: modules/nextcloud/forms.py:24
+#: modules/nextcloud/forms.py:19
+#, fuzzy
+#| msgid "Hostname set"
+msgid "Not set"
+msgstr "Asignar nombre de anfitrión"
+
+#: modules/nextcloud/forms.py:27
 msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr "Ejemplos: \"myfreedombox.example.org\" o \"example.onion\"."
 
-#: modules/nextcloud/forms.py:27
+#: modules/nextcloud/forms.py:30
 msgid "Administrator password"
 msgstr "Contraseña del administrador"
 
-#: modules/nextcloud/forms.py:28
+#: modules/nextcloud/forms.py:31
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
@@ -5267,11 +5273,11 @@ msgstr ""
 "mínima requerida es <strong>10 caracteres</strong>. Deje este campo en "
 "blanco para conservar la contraseña actual."
 
-#: modules/nextcloud/forms.py:35
+#: modules/nextcloud/forms.py:38
 msgid "Default phone region"
 msgstr "Región telefónica por defecto"
 
-#: modules/nextcloud/forms.py:36
+#: modules/nextcloud/forms.py:39
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -9040,6 +9046,21 @@ msgstr "antes de desinstalar {app_id}"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "To perform administrative actions, use the "
+#~ msgstr "Para realizar acciones administrativas, utilice "
+
+#~ msgid "You can set a new password in the \"Configuration\" section below."
+#~ msgstr ""
+#~ "Puedes establecer una nueva contraseña en la sección \"Configuración\"."
+
+#~ msgid ""
+#~ "Please note, that Nextcloud isn't maintained by Debian, which means "
+#~ "security and feature updates are applied independently."
+#~ msgstr ""
+#~ "Por favor, ten en cuenta que Debian no mantiene Nexcloud, lo que "
+#~ "significa que las actualizaciones de seguridad y características se "
+#~ "aplican de forma independiente."
+
 #~ msgid "Storage snapshots configuration updated"
 #~ msgstr "Configuración de instantáneas actualizada"
 
@@ -9090,9 +9111,6 @@ msgstr "Gujarati"
 #~ "Cuando está habilitado, el cuadro de texto para la entrada del servidor "
 #~ "se elimina de la página de inicio de sesión y los usuarios solo pueden "
 #~ "leer y enviar correos desde este {box_name}."
-
-#~ msgid "Uninstalling an app is an experimental feature."
-#~ msgstr "Desinstalar una aplicación es una función experimental."
 
 #~ msgid ""
 #~ "Shadowsocks is a lightweight and secure SOCKS5 proxy, designed to protect "
