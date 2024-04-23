@@ -8,6 +8,42 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.9 (2024-04-22) ==
+
+ * action_utils, nextcloud: Make podman util more generic
+ * config: Handle dropin config files with limited permissions
+ * locale: Update translations for Albanian, Chinese (Simplified), Chinese (Traditional), Russian, Spanish, Turkish
+ * nextcloud: (Note that this app is currently disabled, and not available to install.)
+   * Add network interface to firewall zone after creating it
+   * Add warning that the app is experimental
+   * Allow backup/restore when app is disabled
+   * Connect to mysql using socket instead of TCP
+   * Connect to redis using Unix socket
+   * Connect to slapd for LDAP using Unix socket
+   * Don't fail uninstall if DB or user do not exist
+   * Don't set password on redis server
+   * Don't show incorrect phone region when it is not set
+   * Drop a repeated creation of systemd service file
+   * Ensure that database is running when running setup
+   * Expand on the warning about container usage
+   * Fail on errors when configuring the app
+   * Fix configuring trusted proxies setting
+   * Improve check used to test if installation wizard is done
+   * Improve database permission granting
+   * Improve setting up LDAP configuration
+   * Minor changes to cron timer units
+   * Minor refactoring
+   * Minor update to description regarding users' usage
+   * Refactor container creation code
+   * Refactor setting admin password
+   * Remove fail2ban jail, brute force protection present
+   * Rename the systemd service names
+   * Retrieve database password in a more robust way
+   * Use a separate DB for redis
+   * Use secrets module generate passwords
+   * When backup fails, unset the maintenance mode
+ * tests: functional: Disable functional tests
+
 == FreedomBox 24.8 (2024-04-08) ==
 
 === Highlights ===
