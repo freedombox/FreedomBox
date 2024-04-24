@@ -101,6 +101,11 @@ class MiniDLNAApp(app_module.App):
             users_privileged.remove_group('minidlna')
             apache_privileged.disable('minidlna-freedombox', 'config')
 
+            # Restart app to reload firewall
+            if self.is_enabled():
+                self.disable()
+                self.enable()
+
         if not old_version:
             self.enable()
 
