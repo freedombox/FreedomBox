@@ -4,7 +4,7 @@
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
-from plinth import frontpage, menu
+from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon, SharedDaemon
 from plinth.modules.apache.components import Webserver, diagnose_url
@@ -12,6 +12,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 from plinth.package import Packages
+from plinth.utils import format_lazy
 
 from . import manifest, privileged
 
@@ -21,12 +22,17 @@ _description = [
       'and more. Nextcloud includes the Nextcloud server, client applications '
       'for desktop computers, and mobile clients. The Nextcloud server '
       'provides a well integrated web interface.'),
-    _('All users of FreedomBox can use Nextcloud.'),
-    _('To perform administrative actions, use the '
-      f'<strong>"{privileged.GUI_ADMIN}"</strong> user.'),
-    _('You can set a new password in the "Configuration" section below.'),
-    _('Please note, that Nextcloud isn\'t maintained by Debian, which means '
-      'security and feature updates are applied independently.')
+    _('All users of FreedomBox can use Nextcloud. To perform administrative '
+      f'actions, use the <strong>"{privileged.GUI_ADMIN}"</strong> user after '
+      'setting a password here.'),
+    format_lazy(
+        _('Please note that Nextcloud is installed and run inside a container '
+          'provided by the Nextcloud project. Security, quality, privacy and '
+          'legal reviews are done by the upstream project and not by '
+          'Debian/{box_name}. Updates are performed following an independent '
+          'cycle.'), box_name=_(cfg.box_name)),
+    format_lazy('<div class="alert alert-warning" role="alert">{}</div>',
+                _('This app is experimental.')),
 ]
 
 
@@ -72,8 +78,7 @@ class NextcloudApp(app_module.App):
 
         dropin_configs = DropinConfigs('dropin-configs-nextcloud', [
             '/etc/apache2/conf-available/nextcloud-freedombox.conf',
-            '/etc/fail2ban/jail.d/nextcloud-freedombox.conf',
-            '/etc/fail2ban/filter.d/nextcloud-freedombox.conf',
+            '/etc/redis/conf.d/freedombox.conf',
         ])
         self.add(dropin_configs)
 
@@ -89,12 +94,6 @@ class NextcloudApp(app_module.App):
                               urls=['https://{host}/nextcloud/login'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-nextcloud', 'nextcloud-fbx')
-        self.add(daemon)
-
-        daemon = Daemon('daemon-nextcloud-timer', 'nextcloud-cron-fbx.timer')
-        self.add(daemon)
-
         daemon = SharedDaemon('shared-daemon-podman-auto-update',
                               'podman-auto-update.timer')
         self.add(daemon)
@@ -106,6 +105,13 @@ class NextcloudApp(app_module.App):
         daemon = SharedDaemon('shared-daemon-nextcloud-mysql', 'mysql')
         self.add(daemon)
 
+        daemon = Daemon('daemon-nextcloud', 'nextcloud-freedombox')
+        self.add(daemon)
+
+        daemon = Daemon('daemon-nextcloud-timer',
+                        'nextcloud-cron-freedombox.timer')
+        self.add(daemon)
+
         backup_restore = NextcloudBackupRestore('backup-restore-nextcloud',
                                                 **manifest.backup)
         self.add(backup_restore)
@@ -113,7 +119,17 @@ class NextcloudApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        privileged.setup()
+        with self.get_component(
+                'shared-daemon-nextcloud-redis').ensure_running():
+            with self.get_component(
+                    'shared-daemon-nextcloud-mysql').ensure_running():
+                # Database needs to be running for successful initialization or
+                # upgrade of Nextcloud database.
+
+                # Drop-in configs need to be enabled for setup to succeed
+                self.get_component('dropin-configs-nextcloud').enable()
+                privileged.setup()
+
         if not old_version:
             self.enable()
 
@@ -135,9 +151,23 @@ class NextcloudBackupRestore(BackupRestore):
     def backup_pre(self, packet):
         """Save database contents."""
         super().backup_pre(packet)
-        privileged.dump_database()
+        self.app.get_component('dropin-configs-nextcloud').enable()
+        mysql = self.app.get_component('shared-daemon-nextcloud-mysql')
+        redis = self.app.get_component('shared-daemon-nextcloud-redis')
+        container = self.app.get_component('daemon-nextcloud')
+        with mysql.ensure_running():
+            with redis.ensure_running():
+                with container.ensure_running():
+                    privileged.dump_database()
 
     def restore_post(self, packet):
         """Restore database contents."""
         super().restore_post(packet)
-        privileged.restore_database()
+        self.app.get_component('dropin-configs-nextcloud').enable()
+        mysql = self.app.get_component('shared-daemon-nextcloud-mysql')
+        redis = self.app.get_component('shared-daemon-nextcloud-redis')
+        container = self.app.get_component('daemon-nextcloud')
+        with mysql.ensure_running():
+            with redis.ensure_running():
+                with container.ensure_running():
+                    privileged.restore_database()

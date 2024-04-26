@@ -49,11 +49,8 @@ clients = [{
 backup = {
     'data': {
         'directories': [
-            '/var/lib/containers/storage/volumes/nextcloud-volume-fbx/'
+            '/var/lib/containers/storage/volumes/nextcloud-volume-freedombox/'
         ],
-        'files': [
-            '/var/lib/plinth/backups-data/nextcloud-database.sql',
-            '/etc/redis/redis.conf'
-        ]
+        'files': ['/var/lib/plinth/backups-data/nextcloud-database.sql']
     }
 }

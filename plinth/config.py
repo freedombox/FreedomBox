@@ -80,21 +80,9 @@ class DropinConfigs(app_module.FollowerComponent):
     def enable(self):
         """Create a symlink or copy in /etc/ of the configuration file."""
         for path in self.etc_paths:
-            etc_path = self._get_etc_path(path)
-            target = self._get_target_path(path)
-            if etc_path.exists() or etc_path.is_symlink():
-                if (not self.copy_only and etc_path.is_symlink()
-                        and etc_path.readlink() == target):
-                    continue
-
-                if (self.copy_only and etc_path.is_file()
-                        and etc_path.read_text() == target.read_text()):
-                    continue
-
-                logger.warning('Removing dropin configuration: %s', path)
-                privileged.dropin_unlink(self.app_id, path)
-
-            privileged.dropin_link(self.app_id, path, self.copy_only)
+            if not privileged.dropin_is_valid(
+                    self.app_id, path, self.copy_only, unlink_invalid=True):
+                privileged.dropin_link(self.app_id, path, self.copy_only)
 
     def disable(self):
         """Remove the links/copies in /etc/ of the configuration files."""
@@ -105,15 +93,10 @@ class DropinConfigs(app_module.FollowerComponent):
         """Check all links/copies and return generate diagnostic results."""
         results = []
         for path in self.etc_paths:
-            etc_path = self._get_etc_path(path)
-            target = self._get_target_path(path)
-            if self.copy_only:
-                result = (etc_path.is_file()
-                          and etc_path.read_text() == target.read_text())
-            else:
-                result = (etc_path.is_symlink()
-                          and etc_path.readlink() == target)
+            result = privileged.dropin_is_valid(self.app_id, path,
+                                                self.copy_only)
 
+            etc_path = self.get_etc_path(path)
             check_id = f'dropin-config-{etc_path}'
             result_string = Result.PASSED if result else Result.FAILED
             description = gettext_noop(
@@ -126,13 +109,13 @@ class DropinConfigs(app_module.FollowerComponent):
         return results
 
     @staticmethod
-    def _get_target_path(path):
+    def get_target_path(path):
         """Return Path object for a target path."""
         target = pathlib.Path(DropinConfigs.ROOT)
         target /= DropinConfigs.DROPIN_CONFIG_ROOT.lstrip('/')
         return target / path.lstrip('/')
 
     @staticmethod
-    def _get_etc_path(path):
+    def get_etc_path(path):
         """Return Path object for etc path."""
         return pathlib.Path(DropinConfigs.ROOT) / path.lstrip('/')

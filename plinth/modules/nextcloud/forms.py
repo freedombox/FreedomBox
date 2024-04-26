@@ -11,9 +11,12 @@ def _get_phone_regions():
         from iso3166 import countries  # type: ignore
         phone_regions = [(country.alpha2, country.name)
                          for country in countries]
-        return sorted(phone_regions)
+        phone_regions = sorted(phone_regions)
     except ImportError:
-        return [('US', 'United States of America')]
+        # Allow users to set a non-empty value
+        phone_regions = [('US', 'United States of America')]
+
+    return [('', _('Not set'))] + phone_regions
 
 
 class NextcloudForm(forms.Form):

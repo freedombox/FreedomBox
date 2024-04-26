@@ -7,23 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 20:47-0400\n"
-"PO-Revision-Date: 2022-10-10 18:05+0000\n"
-"Last-Translator: Nikita Epifanov <nikgreens@protonmail.com>\n"
+"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"PO-Revision-Date: 2024-04-22 17:07+0000\n"
+"Last-Translator: Yurt Page <yurtpage@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.5-dev\n"
 
-#: config.py:120
+#: config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
-msgstr ""
+msgstr "Статическая конфигурация {etc_path} правильно настроена"
 
 #: context_processors.py:23 views.py:116
 msgid "FreedomBox"
@@ -110,7 +110,7 @@ msgstr "Публичная видимость"
 
 #: menu.py:108
 msgid "Data"
-msgstr ""
+msgstr "Данные"
 
 #: menu.py:110 templates/base.html:131
 msgid "System"
@@ -130,6 +130,8 @@ msgstr "Администрирование сервера"
 #: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
+"Система, возможно, находится под большой нагрузкой. Пожалуйста повторите "
+"позже."
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -1323,17 +1325,19 @@ msgstr "Отключить ведение журнала для обеспече
 
 #: modules/config/forms.py:107
 msgid "Keep some in memory until a restart, for performance"
-msgstr ""
+msgstr "Сохранить некоторые в памяти до перезапуска, для производительности"
 
 #: modules/config/forms.py:110
 msgid "Write to disk, useful for debugging"
-msgstr ""
+msgstr "Записать на диск, полезно для отладки"
 
 #: modules/config/forms.py:112
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
+"Журналы содержат информацию о том, кто получил доступ к системе и "
+"отлададочной информацию от различных служб"
 
 #: modules/config/views.py:49
 #, python-brace-format
@@ -1566,7 +1570,7 @@ msgstr "Запустить диагностику"
 #: modules/diagnostics/__init__.py:308
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
-msgstr ""
+msgstr "Найдены {issue_count} проблем во время обычных проверок."
 
 #: modules/diagnostics/__init__.py:309
 #, fuzzy
@@ -1865,7 +1869,7 @@ msgstr "Статус"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
 msgid "Domain"
 msgstr "Домен"
 
@@ -2026,7 +2030,7 @@ msgstr "Yaxim"
 
 #: modules/ejabberd/manifest.py:55
 msgid "Monal - XMPP Chat"
-msgstr ""
+msgstr "Monal - XMPP чат"
 
 #: modules/ejabberd/manifest.py:64
 msgid "Siskin IM"
@@ -2253,11 +2257,11 @@ msgstr "Приложение по умолчанию настроено"
 
 #: modules/firewall/__init__.py:283
 msgid "Firewall backend is nftables"
-msgstr ""
+msgstr "Бекендом фаервола является nftables"
 
 #: modules/firewall/__init__.py:297
 msgid "Direct passthrough rules exist"
-msgstr ""
+msgstr "Существуют правила прямого прохода"
 
 #: modules/firewall/components.py:139
 #, python-brace-format
@@ -2634,6 +2638,12 @@ msgid ""
 "href=\"https://sources.debian.org/\">Debian Sources</a> site, or by running "
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
+"%(box_name)s - это свободное ПО, лицензированное по лицензии GNU Affero "
+"General Public License. <a href=\"http://salsa.debian.org/freedombox-team/"
+"freedombox\"> %(box_name)s репозиторий</a>. Кроме того, исходный код любого "
+"пакета Debian может быть получен из <a href=\"https://sources.debian.org/"
+"\">Debian Sources</a> site, или путем запуска \"apt source <i>package_name</"
+"i>\" в терминале (с использованием Cockpit или SSH)."
 
 #: modules/help/templates/help_about.html:82
 #, python-format
@@ -2700,38 +2710,40 @@ msgstr "Подробнее..."
 
 #: modules/help/templates/help_contribute.html:46
 msgid "How can I help?"
-msgstr ""
+msgstr "Как я могу помочь?"
 
 #: modules/help/templates/help_contribute.html:48
 msgid ""
 "Below is a list of opportunities for contributing to Debian. It has been "
 "filtered to only show packages that are installed on this system."
 msgstr ""
+"Ниже приведен список возможностей для внесения вклада в Debian. Он был "
+"отфильтрован только для показа пакетов, которые установлены на этой системе."
 
 #: modules/help/templates/help_contribute.html:59
 msgid "Show issues"
-msgstr ""
+msgstr "Показать проблемы"
 
 #: modules/help/templates/help_contribute.html:63
 msgid "Packages that will be removed from Debian testing"
-msgstr ""
+msgstr "Пакеты которые будут удалены из Debian testing"
 
 #: modules/help/templates/help_contribute.html:69
 #: modules/help/templates/help_contribute.html:85
 msgid "source package:"
-msgstr ""
+msgstr "исходный пакет:"
 
 #: modules/help/templates/help_contribute.html:80
 msgid "Packages that are not in Debian testing"
-msgstr ""
+msgstr "Пакеты которые не находятся в Debian testing"
 
 #: modules/help/templates/help_contribute.html:92
 msgid "Good first issues for beginners"
-msgstr ""
+msgstr "Хорошие первые задачи для начинающих"
 
 #: modules/help/templates/help_contribute.html:104
 msgid "Issues for which the package maintainer has requested help"
-msgstr ""
+msgstr "Проблемы для которых сопровождающий пакета запросил помощь"
 
 #: modules/help/templates/help_feedback.html:12
 #, python-format
@@ -3186,6 +3198,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix является офлайн-читателкой для веб-контента. Это программа "
+"предназначенная для того,чтобы сделать Википедию доступной автономно без "
+"Интернета, но оно потенциально подходит для всего HTML-контента. Пакеты "
+"Kiwix находятся в формате ZIM."
 
 #: modules/kiwix/__init__.py:25
 msgid ""
@@ -3199,6 +3215,14 @@ msgid ""
 "      <li>Magazines: Low-tech Magazine</li>\n"
 "    </ul>"
 msgstr ""
+"Kiwix может хранить различные виды контента:\n"
+"<ul>\n"
+"<li>Автономные версии веб-сайтов: проекты Wikimedia, Stack Exchange</li>\n"
+"<li>Видео контент: Академия Хана, TED Talks, Crash Course</li>\n"
+"<li>Обучающие материалы: PHET, TED Ed, Vikidia</li>\n"
+"<li>Электронные книги: Проект «Гу́тенберг»</li>\n"
+"<li>Журналы: Low-tech Magazine</li>\n"
+"</ul>"
 
 #: modules/kiwix/__init__.py:33
 #: modules/kiwix/templates/kiwix-add-package.html:14
@@ -3208,10 +3232,15 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Вы можете <a href=\"https://library.kiwix.org\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">скачать</a> пакеты контента от проекта Kiwix или "
+"<a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">создать</a> свой собственный."
 
 #: modules/kiwix/__init__.py:53
+#, fuzzy
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Управление сервером контента Kiwix"
 
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
@@ -3219,7 +3248,7 @@ msgstr ""
 
 #: modules/kiwix/__init__.py:57
 msgid "Offline Wikipedia"
-msgstr ""
+msgstr "Локальная Википедия"
 
 #: modules/kiwix/forms.py:23
 #, fuzzy
@@ -3238,7 +3267,7 @@ msgstr ""
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
-msgstr ""
+msgstr "У вас %(max_filesize)s свободного дискового пространства."
 
 #: modules/kiwix/templates/kiwix-add-package.html:36
 #, fuzzy
@@ -3260,7 +3289,7 @@ msgstr ""
 
 #: modules/kiwix/templates/kiwix.html:11
 msgid "Manage Content Packages"
-msgstr ""
+msgstr "Управление пакетами контента"
 
 #: modules/kiwix/templates/kiwix.html:15
 #, fuzzy
@@ -3288,7 +3317,7 @@ msgstr "Удаление узла %(site)s"
 
 #: modules/kiwix/views.py:49
 msgid "Content package added."
-msgstr ""
+msgstr "Добавлен пакет контента."
 
 #: modules/kiwix/views.py:54
 #, fuzzy
@@ -3475,6 +3504,9 @@ msgid ""
 "Disabled. This could lead to adversaries registering many spam accounts on "
 "your server with automated scripts."
 msgstr ""
+"Отключено. Это может привести к тому что злоумышленники зарегистрируют много "
+"спамных учётных записей на вашем сервере с помощью автоматизированных "
+"скриптов."
 
 #: modules/matrixsynapse/forms.py:18
 msgid ""
@@ -3482,6 +3514,10 @@ msgid ""
 "will be created automatically. Pass this token to your potential new users. "
 "They will be asked for the token during registration. (recommended)"
 msgstr ""
+"Требуется чтобы пользователи создающие новую учетную запись использовали "
+"регистрационный токен. Токен будет создан автоматически. Передайте этот "
+"токен своим потенциальным новым пользователям. Во время регистрации их "
+"спросит токен. (рекомендуется)"
 
 #: modules/matrixsynapse/forms.py:27
 msgid "Enable Public Registration"
@@ -3500,7 +3536,7 @@ msgstr ""
 
 #: modules/matrixsynapse/forms.py:33
 msgid "Verification method for registration"
-msgstr ""
+msgstr "Метод проверки регистрации"
 
 #: modules/matrixsynapse/forms.py:40
 #, python-brace-format
@@ -3593,6 +3629,8 @@ msgid ""
 "New users must use one of the following tokens for verification during "
 "account registration:"
 msgstr ""
+"Новые пользователи должны использовать один из следующих токенов для "
+"проверки во время регистрации учетной записи:"
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:38
 #, fuzzy
@@ -3620,11 +3658,11 @@ msgstr "Пропустить регистрацию"
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:42
 msgid "Expiry Time"
-msgstr ""
+msgstr "Время истечения"
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:51
 msgid "Unlimited"
-msgstr ""
+msgstr "Неограниченное"
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:75
 #, python-format
@@ -3641,6 +3679,7 @@ msgstr ""
 #: modules/matrixsynapse/views.py:140
 msgid "Registration configuration cannot be updated when app is disabled."
 msgstr ""
+"Конфигурация регистрации не может быть обновлена когда приложение отключено."
 
 #: modules/mediawiki/__init__.py:21
 msgid ""
@@ -5234,7 +5273,7 @@ msgstr "Подключение {name} удалено."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Не удалось удалить подключение: соединение не найдено."
 
-#: modules/nextcloud/__init__.py:19
+#: modules/nextcloud/__init__.py:20
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5242,47 +5281,59 @@ msgid ""
 "and mobile clients. The Nextcloud server provides a well integrated web "
 "interface."
 msgstr ""
-
-#: modules/nextcloud/__init__.py:24
-msgid "All users of FreedomBox can use Nextcloud."
-msgstr ""
+"NextCloud это платформа производительности, которая обеспечивает приватные и "
+"безопасные функции для обмена файлами, совместной работы и многое другое. "
+"NextCloud включает в себя сервер NextCloud, клиентские приложения для "
+"настольных компьютеров и мобильных клиентов. Сервер NextCloud предоставляет "
+"хорошо интегрированный веб-интерфейс."
 
 #: modules/nextcloud/__init__.py:25
-msgid "To perform administrative actions, use the "
-msgstr ""
+#, fuzzy
+#| msgid "All users of FreedomBox can use Nextcloud."
+msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
+msgstr "Все пользователи FreedomBox могут использовать NextCloud."
 
-#: modules/nextcloud/__init__.py:27
-msgid "You can set a new password in the \"Configuration\" section below."
-msgstr ""
-
-#: modules/nextcloud/__init__.py:28
+#: modules/nextcloud/__init__.py:29
+#, python-brace-format
 msgid ""
-"Please note, that Nextcloud isn't maintained by Debian, which means security "
-"and feature updates are applied independently."
+"Please note that Nextcloud is installed and run inside a container provided "
+"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"done by the upstream project and not by Debian/{box_name}. Updates are "
+"performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:35
+msgid "This app is experimental."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 #, fuzzy
 #| msgid "Next"
 msgid "Nextcloud"
 msgstr "Следующий"
 
-#: modules/nextcloud/__init__.py:49
+#: modules/nextcloud/__init__.py:55
 msgid "File Storage & Collaboration"
-msgstr ""
+msgstr "Хранение файлов и сотрудничество"
 
-#: modules/nextcloud/forms.py:24
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
-msgstr ""
+#: modules/nextcloud/forms.py:19
+#, fuzzy
+#| msgid "Hostname set"
+msgid "Not set"
+msgstr "Смена имени хоста"
 
 #: modules/nextcloud/forms.py:27
+msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr "Примеры: «myfreedombox.example.org» или «example.onion»."
+
+#: modules/nextcloud/forms.py:30
 #, fuzzy
 #| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "Пароль администратора"
 
-#: modules/nextcloud/forms.py:28
+#: modules/nextcloud/forms.py:31
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). The "
@@ -5300,17 +5351,19 @@ msgstr ""
 "<strong>10 символов</strong>. Оставьте это поле пустым, чтобы сохранить "
 "текущий пароль."
 
-#: modules/nextcloud/forms.py:35
+#: modules/nextcloud/forms.py:38
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default phone region"
 msgstr "Приложение по умолчанию настроено"
 
-#: modules/nextcloud/forms.py:36
+#: modules/nextcloud/forms.py:39
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
 msgstr ""
+"Телефонная область по умолчанию необходима для проверки номера телефонов в "
+"настройках профиля без кода страны."
 
 #: modules/nextcloud/views.py:53
 #, fuzzy
@@ -5699,7 +5752,7 @@ msgstr "Завершить работу сейчас"
 
 #: modules/privacy/__init__.py:15
 msgid "Manage system-wide privacy settings."
-msgstr ""
+msgstr "Управление общесистемными настройками приватности."
 
 #: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
 #, fuzzy
@@ -5710,14 +5763,16 @@ msgstr "Privoxy"
 #: modules/privacy/__init__.py:68
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
+"Пожалуйста, обновляйте настройки приватности чтобы соответствовать вашим "
+"предпочтениям."
 
 #: modules/privacy/__init__.py:73
 msgid "Review privacy setting"
-msgstr ""
+msgstr "Проверьте настройки приватности"
 
 #: modules/privacy/forms.py:15
 msgid "Periodically submit a list of apps used (suggested)"
-msgstr ""
+msgstr "Периодически отсылать список используемых приложений (предлагаемых)"
 
 #: modules/privacy/forms.py:17
 #, python-brace-format
@@ -5729,6 +5784,12 @@ msgid ""
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
+"Помогите разработчикам Debian/{box_name} участвуя в программе опроса "
+"Конкурса Популярности. При включении список приложений используемых в этой "
+"системе будет анонимно отсылаться в Debian каждую неделю. Статистика "
+"собранных данных доступна на сайте <a href=\"https://popcon.debian.org/\" "
+"target=\"_blank\">popcon.debian.org</a>. Отправка происходит через сеть Tor "
+"для дополнительной анонимности, если приложение Tor включено."
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -5982,12 +6043,19 @@ msgid ""
 "uncheck this option. When unchecked, a text entry field is added to the "
 "login page so the user can specify to which account they wish to connect."
 msgstr ""
+"При включении пользователи могут только читать и отправлять почту через этот "
+"{box_name}. Если вы хотите использовать RoundCube с внешней почтовой учетной "
+"записью, такой как Gmail, вы должны отменить эту опцию. При непроверке на "
+"страницу входа в систему добавляется поле ввода текста, чтобы пользователь "
+"мог указать, к какой учетной записи он хочет подключиться."
 
 #: modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
 "Generated feeds can be consumed by any feed reader."
 msgstr ""
+"RSS-Bridge генерирует RSS и Atom-каналы для веб-сайтов у которых их нет. "
+"Генерированные каналы могут быть прочитаны любой читателкой."
 
 #: modules/rssbridge/__init__.py:24
 #, fuzzy, python-brace-format
@@ -9125,6 +9193,12 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "To perform administrative actions, use the "
+#~ msgstr "Для выполнения административных действий, используйте "
+
+#~ msgid "You can set a new password in the \"Configuration\" section below."
+#~ msgstr "Вы можете установить новый пароль в разделе «Конфигурация» ниже."
 
 #~ msgid "Storage snapshots configuration updated"
 #~ msgstr "Настройки хранения снапшотов обновлены"

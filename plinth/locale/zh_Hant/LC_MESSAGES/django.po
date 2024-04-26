@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-08 20:47-0400\n"
-"PO-Revision-Date: 2021-12-23 12:50+0000\n"
-"Last-Translator: pesder <j_h_liau@yahoo.com.tw>\n"
+"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"PO-Revision-Date: 2024-04-17 08:03+0000\n"
+"Last-Translator: Ray Kuo <ray20140811@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -17,9 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.5-dev\n"
 
-#: config.py:120
+#: config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
@@ -55,7 +55,7 @@ msgstr "無法連線到 {host}:{port}"
 
 #: forms.py:36
 msgid "Backup app before uninstall"
-msgstr ""
+msgstr "解除安裝前備份應用程式"
 
 #: forms.py:37
 msgid "Restoring from the backup will restore app data."
@@ -105,16 +105,16 @@ msgstr ""
 
 #: menu.py:108
 msgid "Data"
-msgstr ""
+msgstr "資料"
 
 #: menu.py:110 templates/base.html:131
 msgid "System"
-msgstr ""
+msgstr "系統"
 
 #: menu.py:112 modules/networks/templates/connection_show.html:259
 #: modules/security/__init__.py:35
 msgid "Security"
-msgstr ""
+msgstr "安全性"
 
 #: menu.py:114
 #, fuzzy
@@ -1732,7 +1732,7 @@ msgstr ""
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:23
+#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
 msgid "Domain"
 msgstr ""
 
@@ -2345,7 +2345,7 @@ msgstr ""
 
 #: modules/help/__init__.py:33
 msgid "Documentation"
-msgstr ""
+msgstr "文件"
 
 #: modules/help/__init__.py:37 templates/help-menu.html:20
 #: templates/help-menu.html:21 templates/index.html:124
@@ -4667,7 +4667,7 @@ msgstr ""
 msgid "Failed to delete connection: Connection not found."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:19
+#: modules/nextcloud/__init__.py:20
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -4676,44 +4676,49 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:24
-msgid "All users of FreedomBox can use Nextcloud."
-msgstr ""
-
 #: modules/nextcloud/__init__.py:25
-msgid "To perform administrative actions, use the "
+msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:27
-msgid "You can set a new password in the \"Configuration\" section below."
-msgstr ""
-
-#: modules/nextcloud/__init__.py:28
+#: modules/nextcloud/__init__.py:29
+#, python-brace-format
 msgid ""
-"Please note, that Nextcloud isn't maintained by Debian, which means security "
-"and feature updates are applied independently."
+"Please note that Nextcloud is installed and run inside a container provided "
+"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"done by the upstream project and not by Debian/{box_name}. Updates are "
+"performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:47 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:35
+msgid "This app is experimental."
+msgstr ""
+
+#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:49
+#: modules/nextcloud/__init__.py:55
 msgid "File Storage & Collaboration"
 msgstr ""
 
-#: modules/nextcloud/forms.py:24
+#: modules/nextcloud/forms.py:19
+#, fuzzy
+#| msgid "Hostname set"
+msgid "Not set"
+msgstr "主機名稱設定"
+
+#: modules/nextcloud/forms.py:27
 msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
 
-#: modules/nextcloud/forms.py:27
+#: modules/nextcloud/forms.py:30
 #, fuzzy
 #| msgid "Server Administration"
 msgid "Administrator password"
 msgstr "伺服器管理"
 
-#: modules/nextcloud/forms.py:28
+#: modules/nextcloud/forms.py:31
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
@@ -4721,11 +4726,11 @@ msgid ""
 "keep the current password."
 msgstr ""
 
-#: modules/nextcloud/forms.py:35
+#: modules/nextcloud/forms.py:38
 msgid "Default phone region"
 msgstr ""
 
-#: modules/nextcloud/forms.py:36
+#: modules/nextcloud/forms.py:39
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
