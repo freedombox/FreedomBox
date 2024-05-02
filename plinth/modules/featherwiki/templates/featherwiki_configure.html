@@ -1,0 +1,60 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+  {{ block.super }}
+
+  <h3>{% trans "Manage Wikis" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'featherwiki:create' %}" class="btn btn-default"
+       role="button" title="{% trans 'Create Wiki' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create Wiki' %}
+    </a>
+    <a href="{% url 'featherwiki:upload' %}" class="btn btn-default"
+       role="button" title="{% trans 'Upload Wiki' %}">
+      <span class="fa fa-upload" aria-hidden="true"></span>
+      {% trans 'Upload Wiki' %}
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      {% if not wikis %}
+        <p>{% trans 'No wikis available.' %}</p>
+      {% else %}
+        <div id="featherwiki-wiki-list" class="list-group list-group-two-column">
+          {% for wiki in wikis %}
+            <div class="list-group-item">
+              <a class="wiki-label" href="/featherwiki/{{ wiki }}" target="_blank"
+                 title="{% blocktrans %}Go to wiki {{ wiki }}{% endblocktrans %}">
+                {{ wiki }}
+              </a>
+
+              <a href="{% url 'featherwiki:rename' wiki %}"
+                 class="wiki-edit btn btn-default btn-sm secondary"
+                 role="button"
+                 title="{% blocktrans %}Rename wiki {{ wiki }}{% endblocktrans %}">
+                <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+              </a>
+
+              <a href="{% url 'featherwiki:delete' wiki %}"
+                 class="wiki-delete btn btn-default btn-sm secondary"
+                 role="button"
+                 title="{% blocktrans %}Delete wiki {{ wiki }}{% endblocktrans %}">
+                <span class="fa fa-trash-o" aria-hidden="true"></span>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
