@@ -6,12 +6,11 @@ import logging
 import pathlib
 
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
