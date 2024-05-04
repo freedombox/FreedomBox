@@ -32,8 +32,8 @@ _description = [
       'setting a password here.'),
     format_lazy(
         _('Please note that Nextcloud is installed and run inside a container '
-          'provided by the Nextcloud project. Security, quality, privacy and '
-          'legal reviews are done by the upstream project and not by '
+          'provided by the Nextcloud community. Security, quality, privacy '
+          'and legal reviews are done by the upstream project and not by '
           'Debian/{box_name}. Updates are performed following an independent '
           'cycle.'), box_name=_(cfg.box_name)),
     format_lazy('<div class="alert alert-warning" role="alert">{}</div>',
