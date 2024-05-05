@@ -499,9 +499,6 @@ def podman_create(container_name: str, image_name: str, volume_name: str,
     service_stop(f'{volume_name}-volume.service')
     service_stop(container_name)
 
-    directory = pathlib.Path('/etc/containers/systemd')
-    directory.mkdir(parents=True, exist_ok=True)
-
     # Data is kept
     subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
                    check=False)
@@ -533,8 +530,8 @@ Options=bind
     bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
                            for service in (binds_to or []))
     contents = f'''[Unit]
-Requires=nextcloud-freedombox-volume.service
-After=nextcloud-freedombox-volume.service
+Requires={volume_name}-volume.service
+After={volume_name}-volume.service
 {bind_lines}
 
 [Container]
@@ -552,6 +549,70 @@ Restart=always
 WantedBy=default.target
 '''
     service_file.write_text(contents)
+
+    # Remove the fallback service file when upgrading from bookworm to trixie.
+    # Re-running setup should be sufficient.
+    _podman_create_fallback_service_file(container_name, image_name,
+                                         volume_name, volume_path, volumes,
+                                         env, binds_to)
+
+    service_daemon_reload()
+
+
+def _podman_create_fallback_service_file(container_name: str, image_name: str,
+                                         volume_name: str, volume_path: str,
+                                         volumes: dict[str, str] | None = None,
+                                         env: dict[str, str] | None = None,
+                                         binds_to: list[str] | None = None):
+    """Create a systemd unit file if systemd generator is not available."""
+    service_file = pathlib.Path(
+        f'/etc/systemd/system/{container_name}.service')
+
+    generator = '/usr/lib/systemd/system-generators/podman-system-generator'
+    if pathlib.Path(generator).exists():
+        # If systemd generator is present, during an upgrade, remove the
+        # .service file (perhaps created when generator is not present).
+        service_file.unlink(missing_ok=True)
+        return
+
+    service_file.parent.mkdir(parents=True, exist_ok=True)
+    bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
+                           for service in (binds_to or []))
+    require_mounts_for = '\n'.join((f'RequiresMountsFor={host_path}'
+                                    for host_path in (volumes or {})
+                                    if host_path.startswith('/')))
+    env_args = ' '.join(
+        (f'--env {key}={value}' for key, value in (env or {}).items()))
+    volume_args = ' '.join(
+        (f'-v {host_path}:{container_path}'
+         for host_path, container_path in (volumes or {}).items()))
+
+    # Similar to the file quadlet systemd generator produces but with volume
+    # related commands merged.
+    contents = f'''[Unit]
+{bind_lines}
+RequiresMountsFor=%t/containers
+{require_mounts_for}
+
+[Service]
+Restart=always
+Environment=PODMAN_SYSTEMD_UNIT=%n
+KillMode=mixed
+ExecStop=/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+ExecStopPost=-/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+Delegate=yes
+Type=notify
+NotifyAccess=all
+SyslogIdentifier=%N
+ExecStartPre=/usr/bin/rm -f %t/%N.cid
+ExecStartPre=/usr/bin/podman volume rm --force {volume_name}
+ExecStartPre=/usr/bin/podman volume create --driver=local --opt device={volume_path} --opt o=bind {volume_name}
+ExecStart=/usr/bin/podman run --name=%N --cidfile=%t/%N.cid --replace --rm --cgroups=split --network=host --sdnotify=conmon --detach --label io.containers.autoupdate=registry {volume_args} {env_args} {image_name}
+
+[Install]
+WantedBy=default.target
+'''  # noqa: E501
+    service_file.write_text(contents, encoding='utf-8')
     service_daemon_reload()
 
 
@@ -607,6 +668,10 @@ def podman_uninstall(container_name: str, volume_name: str, image_name: str,
     volume_file.unlink(missing_ok=True)
     service_file = pathlib.Path(
         '/etc/containers/systemd/') / f'{container_name}.container'
+    service_file.unlink(missing_ok=True)
+    # Remove fallback service file
+    service_file = pathlib.Path(
+        '/etc/systemd/system/') / f'{container_name}.service'
     service_file.unlink(missing_ok=True)
     shutil.rmtree(volume_path, ignore_errors=True)
     service_daemon_reload()
