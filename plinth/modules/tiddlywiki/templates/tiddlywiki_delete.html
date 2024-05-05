@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  <h3>
+    {% blocktrans trimmed %}
+      Delete wiki <em>{{ name }}</em>
+    {% endblocktrans %}
+  </h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      <strong>Hint</strong>: You can download a copy of this wiki from within
+      TiddlyWiki before deleting it.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      Delete this wiki file permanently?</p>
+    {% endblocktrans %}
+  </p>
+
+  <form class="form form-delete" method="post">
+    {% csrf_token %}
+
+    <input type="submit" class="btn btn-md btn-danger"
+           value="{% blocktrans %}Delete{% endblocktrans %}"/>
+  </form>
+
+{% endblock %}

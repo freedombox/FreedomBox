@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <form class="form form-tiddlywiki" method="post"
+        enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <input type="submit" class="btn btn-primary"
+           value="{% trans "Upload" %}"/>
+  </form>
+
+{% endblock %}
