@@ -8,6 +8,43 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.10 (2024-05-06) ==
+
+=== Highlights ===
+
+ * nextcloud: Enable app with experimental warning
+ * minidlna: Add media directory selection form
+
+=== Other Changes ===
+
+ * app, component: Add repair method
+ * diagnostics: Add optional component_id to !DiagnosticCheck
+ * diagnostics: Change "Re-run setup" to "Try to repair"
+ * letsencrypt: Re-obtain certificates during repair
+ * letsencrypt: Remove unused imports
+ * locale: Update translations for Chinese (Simplified), Chinese (Traditional), Czech, Spanish, Turkish
+ * minidlna: Do not proxy minidlna web interface over Apache
+ * minidlna: Explicitly include ssdp service to firewall configuration
+ * minidlna: Restart app when upgrading to reconfigure firewall
+ * nextcloud: Add fallback for when quadlet is not available
+ * nextcloud: Allow re-running setup
+ * nextcloud: Allow re-running setup when app is disabled
+ * nextcloud: Create network using systemd generator
+ * nextcloud: Drop network namespacing in container, use host network
+ * nextcloud: Enable pretty URLs without /index.php in them
+ * nextcloud: Implement enable/disable container
+ * nextcloud: Populated and maintain a list of trusted domains
+ * nextcloud: Pull the image separately before starting systemd unit
+ * nextcloud: Restart container when dependent services are restarted
+ * nextcloud: Ship instead of create cron timer related units
+ * nextcloud: Use php-fpm container instead of apache container
+ * nextcloud: Use systemd generator for creating container service
+ * nextcloud: Wait on init sync lock
+ * nextcloud: Warn that community provides the container not team
+ * notification: Handle more formatting errors
+ * setup: Add method to run app repair
+ * storage: Add an option to include help text to directory selection form
+
 == FreedomBox 24.9 (2024-04-22) ==
 
  * action_utils, nextcloud: Make podman util more generic
