@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-06 20:18-0400\n"
-"PO-Revision-Date: 2024-04-24 07:07+0000\n"
+"PO-Revision-Date: 2024-05-08 11:07+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.1-dev\n"
+"X-Generator: Weblate 5.5.4-rc\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1612,7 +1612,7 @@ msgstr "Aplicación: %(app_name)s"
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
 msgid "Try to repair"
-msgstr ""
+msgstr "Intentar reparar"
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1661,7 +1661,7 @@ msgstr "Test de diagnóstico"
 #: modules/diagnostics/views.py:144
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
-msgstr ""
+msgstr "La aplicación {app_id} no está instalada, no se puede reparar"
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -3898,6 +3898,8 @@ msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
 "this will be also scanned for media files."
 msgstr ""
+"Directorio que el servidor MiniDLNA leerá en busca de contenido. Todos los "
+"subdirectorios de este también se escanearán en busca de archivos multimedia."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -5210,12 +5212,7 @@ msgstr ""
 "tareas administrativas "
 
 #: modules/nextcloud/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Please note that Nextcloud is installed and run inside a container "
-#| "provided by the Nextcloud project. Security, quality, privacy and legal "
-#| "reviews are done by the upstream project and not by Debian/{box_name}. "
-#| "Updates are performed following an independent cycle."
+#, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
 "by the Nextcloud community. Security, quality, privacy and legal reviews are "
@@ -5223,7 +5220,7 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 "Ten en cuenta que Nextcloud se instala y ejecuta dentro de un contenedor "
-"proporcionado por el proyecto Nextcloud. Las revisiones de seguridad, "
+"proporcionado por la comunidad Nextcloud. Las revisiones de seguridad, "
 "calidad, privacidad y legales las realiza el proyecto original y no Debian/"
 "{box_name} . Las actualizaciones se realizan siguiendo un ciclo "
 "independiente."
@@ -5246,25 +5243,19 @@ msgid "Not set"
 msgstr "No establecido"
 
 #: modules/nextcloud/forms.py:26
-#, fuzzy
-#| msgid "Server domain"
 msgid "Override domain"
-msgstr "Dominio del servidor"
+msgstr "Anular el dominio"
 
 #: modules/nextcloud/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
-#| "\"example.onion\"."
 msgid ""
 "Set to the domain or IP address that Nextcloud should be forced to generate "
 "URLs with. Should not be needed if a valid domain is used to access "
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
-"Lo usa MediaWiki para generar URLs que apunten al wiki como piés de página, "
-"feeds y enlaces desde e-mail. Ejemplos: \"myfreedombox.ejemplo.org\" o "
-"\"ejemplo.onion\"."
+"Establezca el dominio o la dirección IP con la que se debe forzar a "
+"Nextcloud a generar URL. No debería ser necesario si se utiliza un dominio "
+"válido para acceder a Nextcloud. Ejemplos: \"myfreedombox.example.org\" o "
+"\"example.onion\"."
 
 #: modules/nextcloud/forms.py:33
 msgid "Administrator password"
@@ -8627,10 +8618,9 @@ msgid "Error installing app: {error}"
 msgstr "Error al instalar la app: {error}"
 
 #: setup.py:81 setup.py:151
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error repairing app: {error}"
-msgstr "Error al actualizar la app: {error}"
+msgstr "Error al reparar la aplicación: {error}"
 
 #: setup.py:84
 #, python-brace-format
@@ -8646,34 +8636,29 @@ msgid "App updated"
 msgstr "App actualizada"
 
 #: setup.py:110
-#, fuzzy
-#| msgid "Updating app"
 msgid "Repairing app"
-msgstr "Actualizando app"
+msgstr "Reparando aplicación"
 
 #: setup.py:130
-#, fuzzy, python-brace-format
-#| msgid "Error uninstalling app: {error}"
+#, python-brace-format
 msgid "Error running diagnostics: {error}"
-msgstr "Error desinstalando la aplicación: {error}"
+msgstr "Se produjo un error al instalar la aplicación:{error}"
 
 #: setup.py:143
 msgid "Skipping repair, no failed checks"
-msgstr ""
+msgstr "Saltarse la reparación, no hay comprobaciones fallidas"
 
 #: setup.py:157
 msgid "Re-running setup to complete repairs"
-msgstr ""
+msgstr "Volver a ejecutar la configuración para completar las reparaciones"
 
 #: setup.py:165
-#, fuzzy
-#| msgid "App updated"
 msgid "App repaired."
-msgstr "App actualizada"
+msgstr "Aplicación reparada"
 
 #: setup.py:169
 msgid "App repair completed with errors:\n"
-msgstr ""
+msgstr "Reparación de la aplicación completada con errores:\n"
 
 #: setup.py:189
 msgid "Uninstalling app"
