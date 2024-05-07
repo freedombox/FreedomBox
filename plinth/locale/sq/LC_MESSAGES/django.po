@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
 "PO-Revision-Date: 2024-04-09 20:35+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -28,27 +28,27 @@ msgstr "Formësimi statik {etc_path} është ujdisur si duhet"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: daemon.py:122
+#: daemon.py:124
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Shërbimi {service_name} po xhiron"
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Po përgjohet në portë {kind} {listen_address}:{port}"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Po përgjohet në portë {kind} {port}"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Lidhu me {host}:{port}"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "S’lidhet dot me {host}:{port}"
@@ -140,12 +140,12 @@ msgstr "Shërbyes"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Ndërfaqe Web e {box_name} (Plinth)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "URL hyrjeje {url} në tcp{kind}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "URL Hyrjeje {url}"
@@ -918,7 +918,7 @@ msgstr "Fshije"
 msgid "Admin"
 msgstr "Përgjegjës"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1601,9 +1601,8 @@ msgstr "Aplikacion: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Ribëni ujdisjen"
+msgid "Try to repair"
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1645,9 +1644,14 @@ msgstr "Provë"
 msgid "Result"
 msgstr "Përfundim"
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
 msgstr "Test Diagnostikimesh"
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
+msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -1841,7 +1845,7 @@ msgstr "Gjendje"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Përkatësi"
 
@@ -2243,12 +2247,12 @@ msgstr "Ka rregulla të drejtpërdrejta “passthrough”"
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Portë {name} ({details}) e përdorshme për rrjete të brendshëm"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Portë {name} ({details}) e përdorshme për rrjete të jashtëm"
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Portë {name} ({details}) jo e përdorshme për rrjete të brendshëm"
@@ -3335,10 +3339,6 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Dëshmi"
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr "Gjendje Dëshmie"
@@ -3873,7 +3873,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adresë"
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3891,34 +3891,23 @@ msgstr ""
 "telefona të mençur, televizorë, dhe sisteme lojërash (të tillë si PS3 dhe "
 "Xbox 360), ose aplikacione të tillë si totem dhe Kodi."
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr "Shërbyes transmetimi mediash"
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr "Shërbyes i Thjeshtë Mediash"
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Drejtori Kartelash Media"
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
-"Drejtoria që Shërbyesi MiniDLNA do të lexojë për lëndë. Krejt nëndrejtoritë "
-"e saj do të skanohen gjithashtu për kartela media. Nëse ndryshoni "
-"parazgjedhjen, sigurohuni që drejtoria e re ekziston dhe se është e "
-"lexueshme nga përdoruesi “minidlna”. Çfarëdo drejtorish media përdoruesish "
-"(\"/home/emërpërdoruesi/\") zakonisht do të funksionojnë."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -3936,11 +3925,7 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr "Drejtoria e dhënë s’ekziston."
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr "U përditësua drejtori mediash"
 
@@ -5225,7 +5210,7 @@ msgstr "Lidhja {name} u fshi."
 msgid "Failed to delete connection: Connection not found."
 msgstr "S’u arrit të fshihet lidhje: S’u gjet lidhje."
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5239,33 +5224,33 @@ msgstr ""
 "klient për kompjutera desktop dhe klientë celulari. Shërbyesi Nextcloud "
 "furnizon një ndërfaqe web të integruar paq."
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:30
 #, fuzzy
 #| msgid "All users of FreedomBox can use Nextcloud."
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr "Nextcloud-in mund ta përdorin krejt përdoruesit e FreedomBox-it."
 
-#: modules/nextcloud/__init__.py:29
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:35
+#: modules/nextcloud/__init__.py:40
 #, fuzzy
 #| msgid "Uninstalling an app is an experimental feature."
 msgid "This app is experimental."
 msgstr "Çinstalimi i një aplikacioni është një veçori eksperimentale."
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr "Depozitim Kartelash &amp; Bashkëpunim"
 
@@ -5275,15 +5260,32 @@ msgstr "Depozitim Kartelash &amp; Bashkëpunim"
 msgid "Not set"
 msgstr "Strehëemri u caktua"
 
-#: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
-msgstr "Shembuj: “myfreedombox.example.org”, ose “example.onion”."
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Server domain"
+msgid "Override domain"
+msgstr "Përkatësi shërbyesi"
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid ""
+#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
+#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
+#| "\"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+"E përdorur nga MediaWiki për të prodhuar URL-ra që shpien te wiki, p.sh., te "
+"fundfaqja, prurjet ose email-e. Shembuj: “myfreedombox.example.org”, ose "
+"“example.onion”."
+
+#: modules/nextcloud/forms.py:33
 msgid "Administrator password"
 msgstr "Fjalëkalim përgjegjësi"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
@@ -5295,11 +5297,11 @@ msgstr ""
 "gjatësia më e pakët e domosdoshme është <strong>10 shenja</strong>. Që të "
 "mbani fjalëkalimin e tanishëm, lëreni të zbrazët këtë fushë."
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 msgid "Default phone region"
 msgstr "Zonë telefonike parazgjedhje"
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -8630,67 +8632,103 @@ msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 "Paketa {package_name} gjendet nën versionin më të ri ({latest_version})"
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr "po instalohet"
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr "po shkarkohet"
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr "ndryshim media"
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "kartelë formësimi: {file}"
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr "Mbaroi koha teksa pritej për përgjegjës paketash"
 
-#: setup.py:39
+#: setup.py:42
 msgid "Installing app"
 msgstr "Po instalohet aplikacioni"
 
-#: setup.py:41
+#: setup.py:44
 msgid "Updating app"
 msgstr "Po përditësohet aplikacioni"
 
-#: setup.py:75
+#: setup.py:78
 #, python-brace-format
 msgid "Error installing app: {error}"
 msgstr "Gabim në instalimin e aplikacionit: {error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error repairing app: {error}"
+msgstr "Gabim në përditësimin e aplikacionit: {error}"
+
+#: setup.py:84
 #, python-brace-format
 msgid "Error updating app: {error}"
 msgstr "Gabim në përditësimin e aplikacionit: {error}"
 
-#: setup.py:82
+#: setup.py:88
 msgid "App installed."
 msgstr "Aplikacioni u instalua."
 
-#: setup.py:84
+#: setup.py:92
 msgid "App updated"
 msgstr "Aplikacioni u përditësua"
 
-#: setup.py:101
+#: setup.py:110
+#, fuzzy
+#| msgid "Updating app"
+msgid "Repairing app"
+msgstr "Po përditësohet aplikacioni"
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error uninstalling app: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "Gabim në çinstalimin e aplikacionit: {error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+#, fuzzy
+#| msgid "App updated"
+msgid "App repaired."
+msgstr "Aplikacioni u përditësua"
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 msgid "Uninstalling app"
 msgstr "Po çinstalohet aplikacion"
 
-#: setup.py:117
+#: setup.py:205
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Gabim në çinstalimin e aplikacionit: {error}"
 
-#: setup.py:120
+#: setup.py:208
 msgid "App uninstalled."
 msgstr "Aplikacioni u çinstalua."
 
-#: setup.py:493
+#: setup.py:581
 msgid "Updating app packages"
 msgstr "Po përditësohet paketa aplikacioni"
 
@@ -9061,6 +9099,10 @@ msgstr "Përditësoje"
 msgid "Backup"
 msgstr "Kopjeruajtje"
 
+#: templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Ribëni ujdisjen"
+
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
 msgid "Uninstall"
@@ -9091,6 +9133,31 @@ msgstr "para çinstalimit të {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#~ msgid "Cannot test: No domains are configured."
+#~ msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
+
+#~ msgid "Media streaming server"
+#~ msgstr "Shërbyes transmetimi mediash"
+
+#~ msgid ""
+#~ "Directory that MiniDLNA Server will read for content. All sub-directories "
+#~ "of this will be also scanned for media files. If you change the default "
+#~ "ensure that the new directory exists and that is readable from the "
+#~ "\"minidlna\" user. Any user media directories (\"/home/username/\") will "
+#~ "usually work."
+#~ msgstr ""
+#~ "Drejtoria që Shërbyesi MiniDLNA do të lexojë për lëndë. Krejt "
+#~ "nëndrejtoritë e saj do të skanohen gjithashtu për kartela media. Nëse "
+#~ "ndryshoni parazgjedhjen, sigurohuni që drejtoria e re ekziston dhe se "
+#~ "është e lexueshme nga përdoruesi “minidlna”. Çfarëdo drejtorish media "
+#~ "përdoruesish (\"/home/emërpërdoruesi/\") zakonisht do të funksionojnë."
+
+#~ msgid "Specified directory does not exist."
+#~ msgstr "Drejtoria e dhënë s’ekziston."
+
+#~ msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+#~ msgstr "Shembuj: “myfreedombox.example.org”, ose “example.onion”."
 
 #~ msgid "To perform administrative actions, use the "
 #~ msgstr "Që të kryeni veprime administrative, përdorni "

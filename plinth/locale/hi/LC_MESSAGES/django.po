@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
 "PO-Revision-Date: 2023-10-19 06:30+0000\n"
 "Last-Translator: Shaik <arifashaik807@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -28,28 +28,28 @@ msgstr ""
 msgid "FreedomBox"
 msgstr "फ्रीडमबोएक्स"
 
-#: daemon.py:122
+#: daemon.py:124
 #, fuzzy, python-brace-format
 #| msgid "Service <em>%(service_name)s</em> is running."
 msgid "Service {service_name} is running"
 msgstr "सर्विस <em>%(service_name)s</em> चल रहा है."
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "{kind} में सुन कर पोर्ट {listen_address} :{port}"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "{kind} में सुन कर पोर्ट{port}"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "{host}:{port} से जुड़े"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "{host}:{port} से नहीं जोड़ सखता"
@@ -147,12 +147,12 @@ msgstr "वेब सर्वर"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} वेब इंटरफेस (प्लिंथ)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "इस यूआरएल का अपयोग करें {url} टीसीपी पर {kind}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "इस यूआरएल का अपयोग करें {url}"
@@ -948,7 +948,7 @@ msgstr "हटाईये"
 msgid "Admin"
 msgstr ""
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1657,11 +1657,8 @@ msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
-msgid "Re-run setup"
-msgstr "सटअप शुरु करें"
+msgid "Try to repair"
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 #, fuzzy
@@ -1704,9 +1701,14 @@ msgstr "परीक्षा"
 msgid "Result"
 msgstr "परिणाम"
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
 msgstr "निदान परिक्षा"
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
+msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -1907,7 +1909,7 @@ msgstr "स्थिति"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "डोमेन"
 
@@ -2316,13 +2318,13 @@ msgstr ""
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, fuzzy, python-brace-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid "Port {name} ({details}) available for external networks"
 msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -3378,10 +3380,6 @@ msgstr "लेटस एंक्रिप्ट"
 msgid "Certificates"
 msgstr "प्रमाण पत्र"
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr ""
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr "प्रमाणपत्र स्थिति"
@@ -3903,7 +3901,7 @@ msgstr "अक्षम होने पर खिलाड़ियों न�
 msgid "Address"
 msgstr "ऍड्रेस"
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3914,28 +3912,22 @@ msgid ""
 "Kodi."
 msgstr ""
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr ""
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr ""
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr ""
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr ""
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
 
 #: modules/minidlna/manifest.py:10
@@ -3954,11 +3946,7 @@ msgstr ""
 msgid "totem"
 msgstr ""
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr ""
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr ""
 
@@ -5195,7 +5183,7 @@ msgstr "कनेक्शन {name} हटाया गया."
 msgid "Failed to delete connection: Connection not found."
 msgstr "कनेक्शन हटाने में विफल: कनेक्शन नहीं मिला."
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5204,29 +5192,29 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:29
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:35
+#: modules/nextcloud/__init__.py:40
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -5236,17 +5224,26 @@ msgstr ""
 msgid "Not set"
 msgstr "होस्ट नाम सेट हो गया"
 
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Server domain"
+msgid "Override domain"
+msgstr "सर्वर डोमेन"
+
 #: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:33
 #, fuzzy
 #| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "व्यवस्थापक पासवर्ड"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -5260,13 +5257,13 @@ msgstr ""
 "मीडियाविकी एेडमिन अकाउंट के लिये नया पासवर्ड सेट करें  (एेडमिन). वर्तमान पासवर्ड रखने के "
 "लिए इस फ़ील्ड को रिक्त छोड़ें."
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default phone region"
 msgstr "डिफ़ॉल्ट एेप सेट"
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -8650,80 +8647,116 @@ msgstr ""
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: setup.py:39
+#: setup.py:42
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "ऐप्लिकेशन इंस्टॉल करें"
 
-#: setup.py:41
+#: setup.py:44
 msgid "Updating app"
 msgstr ""
 
-#: setup.py:75
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error repairing app: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+
+#: setup.py:84
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: setup.py:82
+#: setup.py:88
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "एप्लिकेशन इंस्टॉल हो गया."
 
-#: setup.py:84
+#: setup.py:92
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "अंतिम अपडेट"
 
-#: setup.py:101
+#: setup.py:110
+#, fuzzy
+#| msgid "Sharing"
+msgid "Repairing app"
+msgstr "शेयरिंग"
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+#, fuzzy
+#| msgid "Last update"
+msgid "App repaired."
+msgstr "अंतिम अपडेट"
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "ऐप्लिकेशन इंस्टॉल करें"
 
-#: setup.py:117
+#: setup.py:205
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
 
-#: setup.py:120
+#: setup.py:208
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "एप्लिकेशन इंस्टॉल हो गया."
 
-#: setup.py:493
+#: setup.py:581
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -9099,6 +9132,12 @@ msgstr "अपडेट"
 #| msgid "Backups"
 msgid "Backup"
 msgstr "बैकअप"
+
+#: templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "सटअप शुरु करें"
 
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30

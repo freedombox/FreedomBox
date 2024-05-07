@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
 "PO-Revision-Date: 2024-04-24 07:07+0000\n"
 "Last-Translator: Ray Kuo <ray20140811@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -28,27 +28,27 @@ msgstr "靜態配置 {etc_path} 已正確設置"
 msgid "FreedomBox"
 msgstr "自由盒子"
 
-#: daemon.py:122
+#: daemon.py:124
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "{service_name} 服務執行中"
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "正在聆聽 {kind} 埠 {listen_address}:{port}"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "正在聆聽 {kind} 埠 {port}"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "正在連線 {host}:{port}"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "無法連線到 {host}:{port}"
@@ -137,12 +137,12 @@ msgstr "網頁伺服器"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} 網頁介面 (Plinth)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "透過 TCP {kind} 開啟網址 {url}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "開啟網址 {url}"
@@ -489,8 +489,8 @@ msgid ""
 "To restore a backup on a new %(box_name)s you need the SSH credentials and, "
 "if chosen, the encryption passphrase."
 msgstr ""
-"此儲存庫的認證存在 %(box_name)s。<br> 如果要備份還原到新的 %(box_name)s "
-"您需要 SSH 認證和（如果您有設定）加密密碼。"
+"此儲存庫的認證存在 %(box_name)s。<br> 如果要備份還原到新的 %(box_name)s 您需"
+"要 SSH 認證和（如果您有設定）加密密碼。"
 
 #: modules/backups/templates/backups_add_remote_repository.html:28
 msgid "Create Location"
@@ -630,8 +630,8 @@ msgid ""
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
-"在 SSH 主機執行下列指令。輸出結果應該符合提供選項之一。您也可以使用 "
-"DSA、ECDSA、Ed25519 等等。要替換 RSA，可以選擇對應的檔案。"
+"在 SSH 主機執行下列指令。輸出結果應該符合提供選項之一。您也可以使用 DSA、"
+"ECDSA、Ed25519 等等。要替換 RSA，可以選擇對應的檔案。"
 
 #: modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
@@ -884,7 +884,7 @@ msgstr "刪除"
 msgid "Admin"
 msgstr "管理員"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1038,7 +1038,8 @@ msgstr "新圖書館名稱"
 msgid ""
 "Only letters of the English alphabet, numbers and the characters _ . and - "
 "without spaces or special characters. Example: My_Library_2000"
-msgstr "只有英文字母、數字和字符 _ . 和 - 不包含空格或特殊字符. 例如:My_Library_2000"
+msgstr ""
+"只有英文字母、數字和字符 _ . 和 - 不包含空格或特殊字符. 例如:My_Library_2000"
 
 #: modules/calibre/forms.py:28
 msgid "A library with this name already exists."
@@ -1523,8 +1524,7 @@ msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-msgid "Re-run setup"
+msgid "Try to repair"
 msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
@@ -1564,8 +1564,13 @@ msgstr ""
 msgid "Result"
 msgstr ""
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
+msgstr ""
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
 msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
@@ -1725,7 +1730,7 @@ msgstr ""
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr ""
 
@@ -2097,12 +2102,12 @@ msgstr ""
 msgid "Port {name} ({details}) available for internal networks"
 msgstr ""
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr ""
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
@@ -3028,10 +3033,6 @@ msgstr ""
 msgid "Certificates"
 msgstr ""
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr ""
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr ""
@@ -3479,7 +3480,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3490,28 +3491,22 @@ msgid ""
 "Kodi."
 msgstr ""
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr ""
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr ""
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr ""
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr ""
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
 
 #: modules/minidlna/manifest.py:10
@@ -3530,11 +3525,7 @@ msgstr ""
 msgid "totem"
 msgstr ""
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr ""
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr ""
 
@@ -4660,7 +4651,7 @@ msgstr ""
 msgid "Failed to delete connection: Connection not found."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -4669,29 +4660,29 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:29
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:35
+#: modules/nextcloud/__init__.py:40
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -4701,17 +4692,26 @@ msgstr ""
 msgid "Not set"
 msgstr "主機名稱設定"
 
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Invalid domain name"
+msgid "Override domain"
+msgstr "無效的網域名稱"
+
 #: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:33
 #, fuzzy
 #| msgid "Server Administration"
 msgid "Administrator password"
 msgstr "伺服器管理"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
@@ -4719,11 +4719,11 @@ msgid ""
 "keep the current password."
 msgstr ""
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 msgid "Default phone region"
 msgstr ""
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -7572,76 +7572,108 @@ msgstr ""
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr ""
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr ""
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr ""
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: setup.py:39
+#: setup.py:42
 msgid "Installing app"
 msgstr ""
 
-#: setup.py:41
+#: setup.py:44
 msgid "Updating app"
 msgstr ""
 
-#: setup.py:75
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error repairing app: {error}"
+msgstr "安裝應用遇到錯誤：{error}"
+
+#: setup.py:84
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:82
+#: setup.py:88
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "應用已完成安裝。"
 
-#: setup.py:84
+#: setup.py:92
 msgid "App updated"
 msgstr ""
 
-#: setup.py:101
+#: setup.py:110
+msgid "Repairing app"
+msgstr ""
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "安裝應用遇到錯誤：{error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+msgid "App repaired."
+msgstr ""
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 #, fuzzy
 #| msgid "Error installing application: {error}"
 msgid "Uninstalling app"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:117
+#: setup.py:205
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:120
+#: setup.py:208
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "應用已完成安裝。"
 
-#: setup.py:493
+#: setup.py:581
 msgid "Updating app packages"
 msgstr ""
 
@@ -7978,6 +8010,10 @@ msgstr ""
 msgid "Backup"
 msgstr "Backups 模組"
 
+#: templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr ""
+
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
 #, fuzzy
@@ -8060,11 +8096,6 @@ msgstr ""
 #~| msgid "Enable DNSSEC"
 #~ msgid "Enable"
 #~ msgstr "啟用域名系統安全擴充 DNSSEC"
-
-#, fuzzy
-#~| msgid "Invalid domain name"
-#~ msgid "Enter a valid domain"
-#~ msgstr "無效的網域名稱"
 
 #, fuzzy
 #~| msgid "Delete files"
