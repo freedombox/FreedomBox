@@ -23,13 +23,14 @@ def test_result():
 def test_diagnostic_check():
     """Test the diagnostic check data class."""
     with pytest.raises(TypeError):
-        DiagnosticCheck()
+        DiagnosticCheck()  # pylint: disable=E1120
 
     check = DiagnosticCheck('some-check-id', 'sample check')
     assert check.check_id == 'some-check-id'
     assert check.description == 'sample check'
     assert check.translated_description == 'sample check'
     assert check.result == Result.NOT_DONE
+    assert check.component_id is None
     assert not check.parameters
 
     check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED)
@@ -39,6 +40,10 @@ def test_diagnostic_check():
     check = DiagnosticCheck('some-check-id', 'sample check', Result.PASSED,
                             {'key': 'value'})
     assert check.parameters['key'] == 'value'
+
+    check = DiagnosticCheck('some-check-id', 'sample check', Result.FAILED, {},
+                            'some-component')
+    assert check.component_id == 'some-component'
 
 
 def test_translate():
@@ -58,7 +63,7 @@ def test_json_encoder_decoder():
     check_json = json.dumps(check, cls=CheckJSONEncoder)
     for string in [
             '"check_id": "some-check-id"', '"description": "sample check"',
-            '"result": "passed"', '"parameters": {}',
+            '"result": "passed"', '"parameters": {}', '"component_id": null',
             '"__class__": "DiagnosticCheck"'
     ]:
         assert string in check_json

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
 "PO-Revision-Date: 2022-09-14 17:20+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -28,29 +28,29 @@ msgstr ""
 msgid "FreedomBox"
 msgstr "Freedombox"
 
-#: daemon.py:122
+#: daemon.py:124
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Το πρόγραμμα {service_name} είναι ενεργοποιημένο"
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr ""
 "Το πρόγραμμα είναι προσβάσιμο στο πρωτόκολλο {kind} στη διεύθυνση "
 "{listen_address}:{port}"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Το πρόγραμμα είναι προσβάσιμο στο πρωτόκολλο {kind} στη θύρα {port}"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Συνδεθείτε στη διεύθυνση {host}:{port}"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Δεν είναι δυνατή η σύνδεση στη διεύθυνση {host}:{port}"
@@ -151,12 +151,12 @@ msgstr "Διακομιστής Διαδικτύου (Web Server)"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Εφαρμογή Διαδικτύου (Πλίνθος)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Πρόσβαση διεύθυνσης {url} στο πρωτόκολλο tcp {kind}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Πρόσβαση στη διεύθυνση URL {url}"
@@ -949,7 +949,7 @@ msgstr "Διαγραφή"
 msgid "Admin"
 msgstr ""
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1661,11 +1661,8 @@ msgstr "Εφαρμογή: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-#, fuzzy
-#| msgid "Start setup"
-msgid "Re-run setup"
-msgstr "Έναρξη εγκατάστασης"
+msgid "Try to repair"
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1713,9 +1710,14 @@ msgstr "Τεστ"
 msgid "Result"
 msgstr "Αποτέλεσμα"
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
 msgstr "Διαγνωστικός έλεγχος"
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
+msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -1926,7 +1928,7 @@ msgstr "Κατάσταση"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Όνομα διαδικτύου"
 
@@ -2333,12 +2335,12 @@ msgstr ""
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Θύρα {name} ({details}) διαθέσιμη για εσωτερικά δίκτυα"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Η θύρα {name} ({details}) είναι διαθέσιμη για εξωτερικά δίκτυα"
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Η θύρα {name} ({details}) δεν είναι διαθέσιμη για εξωτερικά δίκτυα"
@@ -3446,10 +3448,6 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Πιστοποιητικά"
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr ""
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr "Κατάσταση πιστοποιητικού"
@@ -4003,7 +4001,7 @@ msgstr ""
 msgid "Address"
 msgstr "Διεύθυνση"
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -4022,34 +4020,23 @@ msgstr ""
 "βίντεο παιχνιδιών (όπως το PS3 και το Xbox 360) ή εφαρμογές όπως το Totem "
 "και Kodi."
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr "Διακομιστής ροής πολυμέσων"
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr ""
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr "Απλός διακομιστής πολυμέσων"
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Κατάλογος αρχείων πολυμέσων"
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
-"Κατάλογος που o διακομιστής MiniDLNA θα διαβάσει για το περιεχόμενο. Όλοι οι "
-"δευτερεύοντες κατάλογοι αυτού του είδους θα σαρωθούν επίσης για αρχεία "
-"πολυμέσων. Εάν αλλάξετε την προεπιλογή, βεβαιωθείτε ότι ο νέος κατάλογος "
-"υπάρχει και είναι αναγνώσιμος από το χρήστη \"minidlna\". Οι κατάλογοι "
-"πολυμέσων χρήστών (\"/home/όνομα-χρήστη/\") συνήθως λειτουργούν."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -4067,11 +4054,7 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr "Ο καθορισμένος κατάλογος δεν υπάρχει."
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr "O κατάλογος πολυμέσων ενημερώθηκε"
 
@@ -5325,7 +5308,7 @@ msgstr "Η σύνδεση {name} διαγράφηκε."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Απέτυχε η διαγραφή της σύνδεσης: η σύνδεση δεν βρέθηκε."
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5334,31 +5317,31 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:29
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:35
+#: modules/nextcloud/__init__.py:40
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 #, fuzzy
 #| msgid "Next"
 msgid "Nextcloud"
 msgstr "Επόμενο"
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -5368,17 +5351,26 @@ msgstr ""
 msgid "Not set"
 msgstr "To όνομα του υπολογιστη ρυθμίστηκε επιτυχώς"
 
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Server domain"
+msgid "Override domain"
+msgstr "Όνομα διαδικτύου διακομιστή"
+
 #: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:33
 #, fuzzy
 #| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "Κωδικός Πρόσβασης Διαχειριστή"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). Leave "
@@ -5393,13 +5385,13 @@ msgstr ""
 "wiki. Αφήστε αυτό το πεδίο κενό για να διατηρήσετε τον τρέχοντα κωδικό "
 "πρόσβασης."
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 #, fuzzy
 #| msgid "Default Skin"
 msgid "Default phone region"
 msgstr "Προεπιλεγμένη εμφάνιση"
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -8868,82 +8860,118 @@ msgstr ""
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr "Εγκαθίσταται"
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr "Λήψη"
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr "Αλλαγή μέσου"
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "αρχείο ρυθμίσεων: {file}"
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: setup.py:39
+#: setup.py:42
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Installing app"
 msgstr "Εγκαταστήσετε Εφαρμογές"
 
-#: setup.py:41
+#: setup.py:44
 #, fuzzy
 #| msgid "Updating..."
 msgid "Updating app"
 msgstr "Eνημερώνεται..."
 
-#: setup.py:75
+#: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error installing app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error repairing app: {error}"
+msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
+
+#: setup.py:84
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error updating app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:82
+#: setup.py:88
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Η εφαρμογή εγκαταστάθηκε."
 
-#: setup.py:84
+#: setup.py:92
 #, fuzzy
 #| msgid "Last update"
 msgid "App updated"
 msgstr "Τελευταία ενημέρωση"
 
-#: setup.py:101
+#: setup.py:110
+#, fuzzy
+#| msgid "Updating..."
+msgid "Repairing app"
+msgstr "Eνημερώνεται..."
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+#, fuzzy
+#| msgid "Last update"
+msgid "App repaired."
+msgstr "Τελευταία ενημέρωση"
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Εγκαταστήσετε Εφαρμογές"
 
-#: setup.py:117
+#: setup.py:205
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Σφάλμα κατά την εγκατάσταση της εφαρμογής: {error}"
 
-#: setup.py:120
+#: setup.py:208
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Η εφαρμογή εγκαταστάθηκε."
 
-#: setup.py:493
+#: setup.py:581
 msgid "Updating app packages"
 msgstr ""
 
@@ -9338,6 +9366,12 @@ msgstr "Ενημερωμένη έκδοση"
 msgid "Backup"
 msgstr "Αντίγραφα ασφαλείας"
 
+#: templates/toolbar.html:53
+#, fuzzy
+#| msgid "Start setup"
+msgid "Re-run setup"
+msgstr "Έναρξη εγκατάστασης"
+
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
 #, fuzzy
@@ -9369,6 +9403,25 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Media streaming server"
+#~ msgstr "Διακομιστής ροής πολυμέσων"
+
+#~ msgid ""
+#~ "Directory that MiniDLNA Server will read for content. All sub-directories "
+#~ "of this will be also scanned for media files. If you change the default "
+#~ "ensure that the new directory exists and that is readable from the "
+#~ "\"minidlna\" user. Any user media directories (\"/home/username/\") will "
+#~ "usually work."
+#~ msgstr ""
+#~ "Κατάλογος που o διακομιστής MiniDLNA θα διαβάσει για το περιεχόμενο. Όλοι "
+#~ "οι δευτερεύοντες κατάλογοι αυτού του είδους θα σαρωθούν επίσης για αρχεία "
+#~ "πολυμέσων. Εάν αλλάξετε την προεπιλογή, βεβαιωθείτε ότι ο νέος κατάλογος "
+#~ "υπάρχει και είναι αναγνώσιμος από το χρήστη \"minidlna\". Οι κατάλογοι "
+#~ "πολυμέσων χρήστών (\"/home/όνομα-χρήστη/\") συνήθως λειτουργούν."
+
+#~ msgid "Specified directory does not exist."
+#~ msgstr "Ο καθορισμένος κατάλογος δεν υπάρχει."
 
 #~ msgid "Storage snapshots configuration updated"
 #~ msgstr "Η ρύθμιση παραμέτρων των στιγμιότυπων αποθήκευσης Ενημερώθηκε"

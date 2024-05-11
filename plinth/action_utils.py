@@ -11,6 +11,8 @@ import subprocess
 import tempfile
 from contextlib import contextmanager
 
+import augeas
+
 logger = logging.getLogger(__name__)
 
 UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
@@ -489,59 +491,187 @@ def is_package_manager_busy():
         return False
 
 
-def podman_run(network_name: str, subnet: str, bridge_ip: str, host_port: str,
-               container_port: str, container_ip: str, container_name: str,
-               image_name: str, extra_run_options: list[str] | None = None,
-               extra_network_options: list[str] | None = None):
-    """Remove, recreate and run a podman container."""
-    try:
-        service_stop(container_name)
-        subprocess.run(['podman', 'network', 'rm', '--force', network_name],
-                       check=False)
-    except subprocess.CalledProcessError:
-        pass
+def podman_create(container_name: str, image_name: str, volume_name: str,
+                  volume_path: str, volumes: dict[str, str] | None = None,
+                  env: dict[str, str] | None = None,
+                  binds_to: list[str] | None = None):
+    """Remove and recreate a podman container."""
+    service_stop(f'{volume_name}-volume.service')
+    service_stop(container_name)
 
-    network_create_command = [
-        'podman', 'network', 'create', '--driver', 'bridge', '--subnet',
-        subnet, '--gateway', bridge_ip, '--dns', bridge_ip, '--interface-name',
-        network_name, network_name
-    ] + (extra_network_options or [])
+    # Data is kept
+    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
+                   check=False)
 
-    # Create bridge network
-    subprocess.run(network_create_command, check=True)
+    directory = pathlib.Path('/etc/containers/systemd')
+    directory.mkdir(parents=True, exist_ok=True)
 
-    args = [
-        'podman', 'run', '--detach', '--network', network_name, '--ip',
-        container_ip, '--name', container_name, '--restart', 'unless-stopped',
-        '--quiet'
-    ]
-    # Only listen on localhost. This is to prevent exposing the host port to
-    # the internet.
-    args += ['--publish', f'127.0.0.1:{host_port}:{container_port}']
-    # Enable automatic updates.
-    args += ['--label', 'io.containers.autoupdate=registry']
-    # If another container with the same name already exists, replace and
-    # remove it.
-    args += ['--replace']
-    args += (extra_run_options or []) + [image_name]
-    subprocess.run(args, check=True)
+    # Fetch the image before creating the container. The systemd service for
+    # the container won't timeout due to slow internet connectivity.
+    subprocess.run(['podman', 'image', 'pull', image_name], check=True)
 
-    # Create service file for starting/stopping container using systemd
+    pathlib.Path(volume_path).mkdir(parents=True, exist_ok=True)
+    # Create storage volume
+    volume_file = directory / f'{volume_name}.volume'
+    contents = f'''[Volume]
+Device={volume_path}
+Driver=local
+VolumeName={volume_name}
+Options=bind
+'''
+    volume_file.write_text(contents)
+
+    service_file = directory / f'{container_name}.container'
+    volume_lines = '\n'.join([
+        f'Volume={source}:{dest}' for source, dest in (volumes or {}).items()
+    ])
+    env_lines = '\n'.join(
+        [f'Environment={key}={value}' for key, value in (env or {}).items()])
+    bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
+                           for service in (binds_to or []))
+    contents = f'''[Unit]
+Requires={volume_name}-volume.service
+After={volume_name}-volume.service
+{bind_lines}
+
+[Container]
+AutoUpdate=registry
+ContainerName=%N
+{env_lines}
+Image={image_name}
+Network=host
+{volume_lines}
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
+'''
+    service_file.write_text(contents)
+
+    # Remove the fallback service file when upgrading from bookworm to trixie.
+    # Re-running setup should be sufficient.
+    _podman_create_fallback_service_file(container_name, image_name,
+                                         volume_name, volume_path, volumes,
+                                         env, binds_to)
+
+    service_daemon_reload()
+
+
+def _podman_create_fallback_service_file(container_name: str, image_name: str,
+                                         volume_name: str, volume_path: str,
+                                         volumes: dict[str, str] | None = None,
+                                         env: dict[str, str] | None = None,
+                                         binds_to: list[str] | None = None):
+    """Create a systemd unit file if systemd generator is not available."""
     service_file = pathlib.Path(
-        '/etc/systemd/system') / f'{container_name}.service'
-    with service_file.open('wb') as file_handle:
-        subprocess.run(
-            ['podman', 'generate', 'systemd', '--new', container_name],
-            stdout=file_handle, check=True)
+        f'/etc/systemd/system/{container_name}.service')
+
+    generator = '/usr/lib/systemd/system-generators/podman-system-generator'
+    if pathlib.Path(generator).exists():
+        # If systemd generator is present, during an upgrade, remove the
+        # .service file (perhaps created when generator is not present).
+        service_file.unlink(missing_ok=True)
+        return
+
+    service_file.parent.mkdir(parents=True, exist_ok=True)
+    bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
+                           for service in (binds_to or []))
+    require_mounts_for = '\n'.join((f'RequiresMountsFor={host_path}'
+                                    for host_path in (volumes or {})
+                                    if host_path.startswith('/')))
+    env_args = ' '.join(
+        (f'--env {key}={value}' for key, value in (env or {}).items()))
+    volume_args = ' '.join(
+        (f'-v {host_path}:{container_path}'
+         for host_path, container_path in (volumes or {}).items()))
+
+    # Similar to the file quadlet systemd generator produces but with volume
+    # related commands merged.
+    contents = f'''[Unit]
+{bind_lines}
+RequiresMountsFor=%t/containers
+{require_mounts_for}
+
+[Service]
+Restart=always
+Environment=PODMAN_SYSTEMD_UNIT=%n
+KillMode=mixed
+ExecStop=/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+ExecStopPost=-/usr/bin/podman rm -v -f -i --cidfile=%t/%N.cid
+Delegate=yes
+Type=notify
+NotifyAccess=all
+SyslogIdentifier=%N
+ExecStartPre=/usr/bin/rm -f %t/%N.cid
+ExecStartPre=/usr/bin/podman volume rm --force {volume_name}
+ExecStartPre=/usr/bin/podman volume create --driver=local --opt device={volume_path} --opt o=bind {volume_name}
+ExecStart=/usr/bin/podman run --name=%N --cidfile=%t/%N.cid --replace --rm --cgroups=split --network=host --sdnotify=conmon --detach --label io.containers.autoupdate=registry {volume_args} {env_args} {image_name}
+
+[Install]
+WantedBy=default.target
+'''  # noqa: E501
+    service_file.write_text(contents, encoding='utf-8')
+    service_daemon_reload()
 
 
-def podman_uninstall(container_name: str, network_name: str, volume_name: str,
-                     image_name: str):
+def _podman_augeus(container_name: str):
+    """Return an augues instance to edit container configuration file."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    container = f'/etc/containers/systemd/{container_name}.container'
+    aug.transform('Systemd', container)
+    aug.set('/augeas/context', '/files' + container)
+    aug.load()
+    return aug
+
+
+def podman_is_enabled(container_name: str) -> bool:
+    """Return whether the container to start on boot."""
+    aug = _podman_augeus(container_name)
+    aug = _podman_augeus(container_name)
+    value = 'default.target'
+    key = 'Install/WantedBy'
+    return any(
+        (aug.get(match_ + '/value') == value for match_ in aug.match(key)))
+
+
+def podman_enable(container_name: str):
+    """Enable container to start on boot."""
+    aug = _podman_augeus(container_name)
+    value = 'default.target'
+    key = 'Install/WantedBy'
+    found = any(
+        (aug.get(match_ + '/value') == value for match_ in aug.match(key)))
+    if not found:
+        aug.set(f'{key}[last() +1]/value', value)
+        aug.save()
+
+
+def podman_disable(container_name: str):
+    """Disable container to start on boot."""
+    aug = _podman_augeus(container_name)
+    aug.remove('Install/WantedBy')
+    aug.save()
+
+
+def podman_uninstall(container_name: str, volume_name: str, image_name: str,
+                     volume_path: str):
     """Remove a podman container's components and systemd unit."""
-    subprocess.run(['podman', 'network', 'rm', network_name], check=True)
-    subprocess.run(['podman', 'volume', 'rm', volume_name], check=True)
-    subprocess.run(['podman', 'image', 'rm', image_name], check=True)
+    subprocess.run(['podman', 'volume', 'rm', '--force', volume_name],
+                   check=True)
+    subprocess.run(['podman', 'image', 'rm', '--ignore', image_name],
+                   check=True)
+    volume_file = pathlib.Path(
+        '/etc/containers/systemd/') / f'{volume_name}.volume'
+    volume_file.unlink(missing_ok=True)
+    service_file = pathlib.Path(
+        '/etc/containers/systemd/') / f'{container_name}.container'
+    service_file.unlink(missing_ok=True)
+    # Remove fallback service file
     service_file = pathlib.Path(
         '/etc/systemd/system/') / f'{container_name}.service'
     service_file.unlink(missing_ok=True)
+    shutil.rmtree(volume_path, ignore_errors=True)
     service_daemon_reload()

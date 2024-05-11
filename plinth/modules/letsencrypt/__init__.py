@@ -6,17 +6,17 @@ import logging
 import pathlib
 
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
-from plinth.diagnostic_check import DiagnosticCheck, Result
+from plinth.diagnostic_check import DiagnosticCheck
 from plinth.modules import names
 from plinth.modules.apache.components import diagnose_url
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
+from plinth.setup import store_error_message
 from plinth.signals import domain_added, domain_removed, post_app_loading
 from plinth.utils import format_lazy
 
@@ -96,16 +96,39 @@ class LetsEncryptApp(app_module.App):
 
         for domain in names.components.DomainName.list():
             if domain.domain_type.can_have_certificate:
-                results.append(diagnose_url('https://' + domain.name))
-
-        if not results:
-            results.append(
-                DiagnosticCheck(
-                    'letsencrypt-cannot-test',
-                    gettext_noop('Cannot test: No domains are configured.'),
-                    Result.WARNING))
+                result = diagnose_url('https://' + domain.name)
+                result.check_id = f'letsencrypt-domain-{domain.name}'
+                result.parameters['domain'] = domain.name
+                results.append(result)
 
         return results
+
+    def repair(self, failed_checks: list) -> bool:
+        """Try to repair failed diagnostics.
+
+        Returns whether the app setup should be re-run.
+        """
+        status = get_status()
+
+        # Obtain/re-obtain certificates for failing domains
+        for failed_check in failed_checks:
+            if not failed_check.check_id.startswith('letsencrypt-domain'):
+                continue
+
+            domain = failed_check.parameters['domain']
+            try:
+                domain_status = status['domains'][domain]
+                if domain_status.get('certificate_available', False):
+                    certificate_obtain(domain)
+                else:
+                    certificate_reobtain(domain)
+            except Exception as error:
+                # This happens if a non-functional domain is configured.
+                logger.error('Could not re-obtain certificate: %s', error)
+                # Add the error message to thread local storage
+                store_error_message(str(error))
+
+        return False
 
     def setup(self, old_version):
         """Install and configure the app."""

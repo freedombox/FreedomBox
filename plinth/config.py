@@ -104,7 +104,7 @@ class DropinConfigs(app_module.FollowerComponent):
             parameters: DiagnosticCheckParameters = {'etc_path': str(etc_path)}
             results.append(
                 DiagnosticCheck(check_id, description, result_string,
-                                parameters))
+                                parameters, self.component_id))
 
         return results
 

@@ -3,20 +3,21 @@
 FreedomBox configuration form for MiniDLNA server.
 """
 
-from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from plinth.modules.storage.forms import (DirectorySelectForm,
+                                          DirectoryValidator)
 
-class MiniDLNAServerForm(forms.Form):
+from . import SYSTEM_USER
+
+
+class MiniDLNAServerForm(DirectorySelectForm):
     """MiniDLNA server configuration form."""
-    media_dir = forms.CharField(
-        label=_('Media Files Directory'),
-        help_text=_('Directory that MiniDLNA Server will read for content. All'
-                    ' sub-directories of this will be also scanned for media '
-                    'files. '
-                    'If you change the default ensure that the new directory '
-                    'exists and that is readable from the "minidlna" user. '
-                    'Any user media directories ("/home/username/") will '
-                    'usually work.'),
-        required=False,
-    )
+
+    def __init__(self, *args, **kw):
+        validator = DirectoryValidator(username=SYSTEM_USER)
+        super().__init__(
+            title=_('Media Files Directory'), help_text=_(
+                'Directory that MiniDLNA Server will read for content. All '
+                'sub-directories of this will be also scanned for media files.'
+            ), default='/var/lib/minidlna', validator=validator, *args, **kw)

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
-"PO-Revision-Date: 2024-04-09 20:35+0000\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
+"PO-Revision-Date: 2024-04-24 07:07+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.5.1-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -27,28 +27,28 @@ msgstr "Sabit yapılandırma {etc_path} düzgün bir şekilde ayarlanmış"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: daemon.py:122
+#: daemon.py:124
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "{service_name} hizmeti çalışıyor"
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr ""
 "{kind} üzerinde {listen_address}:{port} nolu bağlantı noktasını dinleme"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "{kind} üzerinde {port} nolu bağlantı noktasını dinleme"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "{host}:{port} adresine bağlı"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "{host}:{port} adresine bağlanamıyor"
@@ -139,12 +139,12 @@ msgstr "Web Sunucusu"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Web Arayüzü (Plinth)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde erişim URL'si {url}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Erişim URL'si {url}"
@@ -910,7 +910,7 @@ msgstr "Sil"
 msgid "Admin"
 msgstr "Yönetici"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1587,9 +1587,8 @@ msgstr "Uygulama: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Ayarlamayı yeniden çalıştır"
+msgid "Try to repair"
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1631,9 +1630,14 @@ msgstr "Deneme"
 msgid "Result"
 msgstr "Sonuç"
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
 msgstr "Tanı Denemesi"
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
+msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -1824,7 +1828,7 @@ msgstr "Durum"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Etki Alanı"
 
@@ -2226,12 +2230,12 @@ msgstr "Doğrudan geçiş kuralları mevcut"
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Dahili ağlar için {name} ({details}) bağlantı noktası kullanılabilir"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılabilir"
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılamaz"
@@ -3313,10 +3317,6 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Sertifikalar"
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr "Denenemiyor: Hiçbir etki alanı yapılandırılmamış."
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr "Sertifika Durumu"
@@ -3844,7 +3844,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adres"
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3862,34 +3862,23 @@ msgstr ""
 "Xbox 360 gibi) gibi ya da totem ve Kodi gibi uygulamalar da dahil olmak "
 "üzere DLNA Sertifikası geçen tüm cihazlarla uyumludur."
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr "Ortam akış sunucusu"
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr "Basit Ortam Sunucusu"
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Ortam Dosyaları Dizini"
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
-"MiniDLNA Sunucusunun içerik için okuyacağı dizin. Bunun tüm alt dizinleri de "
-"ortam dosyaları için taranacaktır. Eğer varsayılanı değiştirirseniz, yeni "
-"dizinin var olduğundan ve \"minidlna\" kullanıcısının okuyabilir olduğundan "
-"emin olun. Herhangi bir kullanıcı ortam dizinleri (\"/home/kullanıcıadı/\") "
-"genellikle çalışacaktır."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -3907,11 +3896,7 @@ msgstr "yaacc"
 msgid "totem"
 msgstr "totem"
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr "Belirtilen dizin mevcut değil."
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr "Güncellenmiş ortam dizini"
 
@@ -5190,7 +5175,7 @@ msgstr "{name} bağlantısı silindi."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Bağlantının silinmesi başarısız oldu: Bağlantı bulunamadı."
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5204,51 +5189,74 @@ msgstr ""
 "istemci uygulamalarını ve mobil istemcileri içerir. Nextcloud sunucusu iyi "
 "bütünleştirilmiş bir web arayüzü sağlar."
 
-#: modules/nextcloud/__init__.py:25
-#, fuzzy
-#| msgid "All users of FreedomBox can use Nextcloud."
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
-msgstr "FreedomBox'ın tüm kullanıcıları Nextcloud'u kullanabilir."
+msgstr ""
+"FreedomBox'ın tüm kullanıcıları Nextcloud'u kullanabilir. Yönetimsel "
+"işlemleri gerçekleştirmek için "
 
-#: modules/nextcloud/__init__.py:29
-#, python-brace-format
+#: modules/nextcloud/__init__.py:34
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Please note that Nextcloud is installed and run inside a container "
+#| "provided by the Nextcloud project. Security, quality, privacy and legal "
+#| "reviews are done by the upstream project and not by Debian/{box_name}. "
+#| "Updates are performed following an independent cycle."
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
+"Lütfen Nextcloud'un Nextcloud projesi tarafından sağlanan bir kapsayıcı "
+"içine yüklendiğini ve çalıştırıldığını unutmayın. Güvenlik, kalite, gizlilik "
+"ve yasal incelemeler Debian/{box_name} tarafından değil, yukarı yöndeki "
+"proje tarafından yapılır. Güncellemeler bağımsız bir döngünün ardından "
+"gerçekleştirilir."
 
-#: modules/nextcloud/__init__.py:35
-#, fuzzy
-#| msgid "Uninstalling an app is an experimental feature."
+#: modules/nextcloud/__init__.py:40
 msgid "This app is experimental."
-msgstr "Bir uygulamayı kaldırmak, deneysel bir özelliktir."
+msgstr "Bu uygulama deneyseldir."
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr "Dosya Depolama ve İşbirliği"
 
 #: modules/nextcloud/forms.py:19
-#, fuzzy
-#| msgid "Hostname set"
 msgid "Not set"
-msgstr "Anamakine adı ayarlandı"
+msgstr "Ayarlı değil"
+
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Server domain"
+msgid "Override domain"
+msgstr "Sunucu etki alanı"
 
 #: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
-msgstr "Örnekler: \"freedomboxım.ornek.org\" veya \"ornek.onion\"."
+#, fuzzy
+#| msgid ""
+#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
+#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
+#| "\"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+"MediaWiki tarafından, altbilgi, bildirimler ve e-postalar gibi viki'yi "
+"işaret eden URL'ler oluşturmak için kullanılır. Örnekler: \"benimfreedombox."
+"ornek.org\" veya \"ornek.onion\"."
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:33
 msgid "Administrator password"
 msgstr "Yönetici parolası"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
@@ -5260,11 +5268,11 @@ msgstr ""
 "<strong>10 karakterdir</strong>. Şu anki parolayı korumak için bu alanı boş "
 "bırakın."
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 msgid "Default phone region"
 msgstr "Varsayılan telefon bölgesi"
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -8567,67 +8575,103 @@ msgstr "{package_expression} paketi yükleme için mevcut değil"
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "{package_name} paketi en son sürümdür ({latest_version})"
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr "yükleniyor"
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr "indiriliyor"
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr "ortam değiştirme"
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "yapılandırma dosyası: {file}"
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr "Paket yöneticisini beklerken zaman aşımı oldu"
 
-#: setup.py:39
+#: setup.py:42
 msgid "Installing app"
 msgstr "Uygulama yükleniyor"
 
-#: setup.py:41
+#: setup.py:44
 msgid "Updating app"
 msgstr "Uygulama güncelleniyor"
 
-#: setup.py:75
+#: setup.py:78
 #, python-brace-format
 msgid "Error installing app: {error}"
 msgstr "Uygulama yüklenirken hata oldu: {error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error repairing app: {error}"
+msgstr "Uygulama güncellenirken hata oldu: {error}"
+
+#: setup.py:84
 #, python-brace-format
 msgid "Error updating app: {error}"
 msgstr "Uygulama güncellenirken hata oldu: {error}"
 
-#: setup.py:82
+#: setup.py:88
 msgid "App installed."
 msgstr "Uygulama yüklendi."
 
-#: setup.py:84
+#: setup.py:92
 msgid "App updated"
 msgstr "Uygulama güncellendi"
 
-#: setup.py:101
+#: setup.py:110
+#, fuzzy
+#| msgid "Updating app"
+msgid "Repairing app"
+msgstr "Uygulama güncelleniyor"
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error uninstalling app: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "Uygulama kaldırılırken hata oldu: {error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+#, fuzzy
+#| msgid "App updated"
+msgid "App repaired."
+msgstr "Uygulama güncellendi"
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 msgid "Uninstalling app"
 msgstr "Uygulama kaldırılıyor"
 
-#: setup.py:117
+#: setup.py:205
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Uygulama kaldırılırken hata oldu: {error}"
 
-#: setup.py:120
+#: setup.py:208
 msgid "App uninstalled."
 msgstr "Uygulama kaldırıldı."
 
-#: setup.py:493
+#: setup.py:581
 msgid "Updating app packages"
 msgstr "Uygulama paketleri güncelleniyor"
 
@@ -8998,6 +9042,10 @@ msgstr "Güncelle"
 msgid "Backup"
 msgstr "Yedekle"
 
+#: templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Ayarlamayı yeniden çalıştır"
+
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
 msgid "Uninstall"
@@ -9028,6 +9076,31 @@ msgstr "{app_id} kaldırılmadan önce"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Cannot test: No domains are configured."
+#~ msgstr "Denenemiyor: Hiçbir etki alanı yapılandırılmamış."
+
+#~ msgid "Media streaming server"
+#~ msgstr "Ortam akış sunucusu"
+
+#~ msgid ""
+#~ "Directory that MiniDLNA Server will read for content. All sub-directories "
+#~ "of this will be also scanned for media files. If you change the default "
+#~ "ensure that the new directory exists and that is readable from the "
+#~ "\"minidlna\" user. Any user media directories (\"/home/username/\") will "
+#~ "usually work."
+#~ msgstr ""
+#~ "MiniDLNA Sunucusunun içerik için okuyacağı dizin. Bunun tüm alt dizinleri "
+#~ "de ortam dosyaları için taranacaktır. Eğer varsayılanı değiştirirseniz, "
+#~ "yeni dizinin var olduğundan ve \"minidlna\" kullanıcısının okuyabilir "
+#~ "olduğundan emin olun. Herhangi bir kullanıcı ortam dizinleri (\"/home/"
+#~ "kullanıcıadı/\") genellikle çalışacaktır."
+
+#~ msgid "Specified directory does not exist."
+#~ msgstr "Belirtilen dizin mevcut değil."
+
+#~ msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+#~ msgstr "Örnekler: \"freedomboxım.ornek.org\" veya \"ornek.onion\"."
 
 #~ msgid "To perform administrative actions, use the "
 #~ msgstr "Yönetimsel eylemleri gerçekleştirmek için şunu kullanın: "

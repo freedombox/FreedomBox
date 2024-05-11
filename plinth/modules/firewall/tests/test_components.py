@@ -161,28 +161,28 @@ def test_diagnose(get_enabled_services, get_port_details):
             'networks', Result.PASSED, {
                 'name': 'test-port1',
                 'details': '1234/tcp, 1234/udp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-external-unavailable-test-port1',
             'Port {name} ({details}) unavailable for external '
             'networks', Result.PASSED, {
                 'name': 'test-port1',
                 'details': '1234/tcp, 1234/udp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-internal-test-port2',
             'Port {name} ({details}) available for internal networks',
             Result.FAILED, {
                 'name': 'test-port2',
                 'details': '2345/udp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-external-unavailable-test-port2',
             'Port {name} ({details}) unavailable for external networks',
             Result.FAILED, {
                 'name': 'test-port2',
                 'details': '2345/udp'
-            }),
+            }, 'test-firewall-1'),
     ]
 
     firewall = Firewall('test-firewall-1', ports=['test-port3', 'test-port4'],
@@ -195,28 +195,28 @@ def test_diagnose(get_enabled_services, get_port_details):
             Result.PASSED, {
                 'name': 'test-port3',
                 'details': '3456/tcp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-external-available-test-port3',
             'Port {name} ({details}) available for external networks',
             Result.PASSED, {
                 'name': 'test-port3',
                 'details': '3456/tcp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-internal-test-port4',
             'Port {name} ({details}) available for internal networks',
             Result.FAILED, {
                 'name': 'test-port4',
                 'details': '4567/udp'
-            }),
+            }, 'test-firewall-1'),
         DiagnosticCheck(
             'firewall-port-external-available-test-port4',
             'Port {name} ({details}) available for external networks',
             Result.FAILED, {
                 'name': 'test-port4',
                 'details': '4567/udp'
-            }),
+            }, 'test-firewall-1'),
     ]
 
 

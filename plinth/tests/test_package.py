@@ -284,32 +284,34 @@ def test_diagnose(cache):
         DiagnosticCheck(
             'package-available-package1',
             'Package {package_expression} is not available for install',
-            Result.FAILED, {'package_expression': 'package1'}),
+            Result.FAILED, {'package_expression': 'package1'},
+            'test-component'),
         DiagnosticCheck(
             'package-latest-package2',
             'Package {package_name} is the latest version ({latest_version})',
             Result.PASSED, {
                 'package_name': 'package2',
                 'latest_version': '2.0'
-            }),
+            }, 'test-component'),
         DiagnosticCheck(
             'package-latest-package3',
             'Package {package_name} is the latest version ({latest_version})',
             Result.WARNING, {
                 'package_name': 'package3',
                 'latest_version': '3.0'
-            }),
+            }, 'test-component'),
         DiagnosticCheck(
             'package-available-package4 | package5',
             'Package {package_expression} is not available for install',
-            Result.FAILED, {'package_expression': 'package4 | package5'}),
+            Result.FAILED, {'package_expression': 'package4 | package5'},
+            'test-component'),
         DiagnosticCheck(
             'package-latest-package7',
             'Package {package_name} is the latest version ({latest_version})',
             Result.PASSED, {
                 'package_name': 'package7',
                 'latest_version': '4.0'
-            }),
+            }, 'test-component'),
     ]
 
 

@@ -1,0 +1,8 @@
+[Unit]
+Description=Nextcloud cron.php job
+Documentation=https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/background_jobs_configuration.html#systemd
+
+[Service]
+ExecCondition=/usr/bin/podman exec --user www-data nextcloud-freedombox /var/www/html/occ status -e
+ExecStart=/usr/bin/podman exec --user www-data nextcloud-freedombox php -f /var/www/html/cron.php
+KillMode=process

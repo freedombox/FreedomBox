@@ -210,7 +210,7 @@ class Packages(app_module.FollowerComponent):
                 }
                 results.append(
                     DiagnosticCheck(check_id, description, Result.FAILED,
-                                    parameters))
+                                    parameters, self.component_id))
                 continue
 
             result = Result.WARNING
@@ -230,7 +230,8 @@ class Packages(app_module.FollowerComponent):
                 'latest_version': str(latest_version)
             }
             results.append(
-                DiagnosticCheck(check_id, description, result, parameters))
+                DiagnosticCheck(check_id, description, result, parameters,
+                                self.component_id))
 
         return results
 

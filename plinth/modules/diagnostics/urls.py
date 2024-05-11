@@ -14,4 +14,6 @@ urlpatterns = [
             name='full'),
     re_path(r'^sys/diagnostics/(?P<app_id>[1-9a-z\-_]+)/$', views.diagnose_app,
             name='app'),
+    re_path(r'^sys/diagnostics/repair/(?P<app_id>[1-9a-z\-_]+)/$',
+            views.repair, name='repair'),
 ]

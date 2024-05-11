@@ -128,7 +128,7 @@ def _run_on_all_enabled_modules():
         app_results = {
             'diagnosis': [],
             'exception': None,
-            'show_rerun_setup': False,
+            'show_repair': False,
         }
 
         try:
@@ -140,7 +140,7 @@ def _run_on_all_enabled_modules():
 
         for check in app_results['diagnosis']:
             if check.result in [Result.FAILED, Result.WARNING]:
-                app_results['show_rerun_setup'] = True
+                app_results['show_repair'] = True
                 break
 
         with results_lock:

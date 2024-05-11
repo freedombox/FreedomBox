@@ -72,13 +72,16 @@ def test_webserver_disable(disable):
 def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
     """Test running diagnostics."""
 
-    def on_all_side_effect(url, check_certificate, expect_redirects):
+    def on_all_side_effect(url, check_certificate, expect_redirects,
+                           component_id):
         return [
-            DiagnosticCheck('test-all-id', 'test-result-' + url, 'success')
+            DiagnosticCheck('test-all-id', 'test-result-' + url, 'success', {},
+                            component_id)
         ]
 
-    def side_effect(url, check_certificate):
-        return DiagnosticCheck('test-id', 'test-result-' + url, 'success')
+    def side_effect(url, check_certificate, component_id):
+        return DiagnosticCheck('test-id', 'test-result-' + url, 'success', {},
+                               component_id)
 
     diagnose_url_on_all.side_effect = on_all_side_effect
     diagnose_url.side_effect = side_effect
@@ -86,19 +89,26 @@ def test_webserver_diagnose(diagnose_url_on_all, diagnose_url):
                            urls=['{host}url1', 'url2'], expect_redirects=True)
     results = webserver1.diagnose()
     assert results == [
-        DiagnosticCheck('test-all-id', 'test-result-{host}url1', 'success'),
-        DiagnosticCheck('test-id', 'test-result-url2', 'success')
+        DiagnosticCheck('test-all-id', 'test-result-{host}url1', 'success', {},
+                        'test-webserver'),
+        DiagnosticCheck('test-id', 'test-result-url2', 'success', {},
+                        'test-webserver')
     ]
-    diagnose_url_on_all.assert_has_calls(
-        [call('{host}url1', check_certificate=False, expect_redirects=True)])
-    diagnose_url.assert_has_calls([call('url2', check_certificate=False)])
+    diagnose_url_on_all.assert_has_calls([
+        call('{host}url1', check_certificate=False, expect_redirects=True,
+             component_id='test-webserver')
+    ])
+    diagnose_url.assert_has_calls(
+        [call('url2', check_certificate=False, component_id='test-webserver')])
 
     diagnose_url_on_all.reset_mock()
     webserver2 = Webserver('test-webserver', 'test-config',
                            urls=['{host}url1', 'url2'], expect_redirects=False)
     results = webserver2.diagnose()
-    diagnose_url_on_all.assert_has_calls(
-        [call('{host}url1', check_certificate=False, expect_redirects=False)])
+    diagnose_url_on_all.assert_has_calls([
+        call('{host}url1', check_certificate=False, expect_redirects=False,
+             component_id='test-webserver')
+    ])
 
 
 @patch('plinth.privileged.service.restart')
@@ -244,20 +254,23 @@ def test_diagnose_url(get_addresses, check):
             'test-1': 'value-1'
         },
         'wrapper': 'test-wrapper',
-        'expected_output': 'test-expected'
+        'expected_output': 'test-expected',
+        'component_id': 'test-component',
     }
     parameters = {key: args[key] for key in ['url', 'kind']}
     check.return_value = True
     result = diagnose_url(**args)
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
-        'Access URL {url} on tcp{kind}', Result.PASSED, parameters)
+        'Access URL {url} on tcp{kind}', Result.PASSED, parameters,
+        'test-component')
 
     check.return_value = False
     result = diagnose_url(**args)
     assert result == DiagnosticCheck(
         'apache-url-kind-https://localhost/test-4',
-        'Access URL {url} on tcp{kind}', Result.FAILED, parameters)
+        'Access URL {url} on tcp{kind}', Result.FAILED, parameters,
+        'test-component')
 
     del args['kind']
     args['url'] = 'https://{host}/test'
@@ -287,10 +300,10 @@ def test_diagnose_url(get_addresses, check):
     assert results == [
         DiagnosticCheck('apache-url-kind-https://test-host-1/test-4',
                         'Access URL {url} on tcp{kind}', Result.PASSED,
-                        parameters[0]),
+                        parameters[0], 'test-component'),
         DiagnosticCheck('apache-url-kind-https://test-host-2/test-6',
                         'Access URL {url} on tcp{kind}', Result.PASSED,
-                        parameters[1]),
+                        parameters[1], 'test-component'),
     ]
 
 

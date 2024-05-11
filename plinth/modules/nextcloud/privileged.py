@@ -15,13 +15,10 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged
 
-NETWORK_NAME = 'nextcloud-fbx'
-BRIDGE_IP = '172.16.16.1'
-CONTAINER_IP = '172.16.16.2'
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'
-VOLUME_NAME = 'nextcloud-volume-freedombox'
-IMAGE_NAME = 'docker.io/library/nextcloud:stable-apache'
+VOLUME_NAME = 'nextcloud-freedombox'
+IMAGE_NAME = 'docker.io/library/nextcloud:stable-fpm'
 
 DB_HOST = 'localhost'
 DB_NAME = 'nextcloud_fbx'
@@ -29,11 +26,7 @@ DB_USER = 'nextcloud_fbx'
 GUI_ADMIN = 'nextcloud-admin'
 REDIS_DB = 8  # Don't clash with other redis apps
 
-_volume_path = pathlib.Path(
-    '/var/lib/containers/storage/volumes/') / VOLUME_NAME
-_systemd_location = pathlib.Path('/etc/systemd/system/')
-_cron_service_file = _systemd_location / 'nextcloud-cron-freedombox.service'
-_cron_timer_file = _systemd_location / 'nextcloud-cron-freedombox.timer'
+_data_path = pathlib.Path('/var/lib/nextcloud/')
 
 DB_BACKUP_FILE = pathlib.Path(
     '/var/lib/plinth/backups-data/nextcloud-database.sql')
@@ -42,47 +35,40 @@ DB_BACKUP_FILE = pathlib.Path(
 @privileged
 def setup():
     """Setup Nextcloud configuration."""
-    database_password = _generate_secret_key(16)
-    administrator_password = _generate_secret_key(16)
-
-    # Setup database
-    _create_database()
-    _set_database_privileges(database_password)
-
     # Setup redis for caching
     _redis_listen_socket()
 
-    action_utils.podman_run(
-        network_name=NETWORK_NAME, subnet='172.16.16.0/24',
-        bridge_ip=BRIDGE_IP, host_port='8181', container_port='80',
-        container_ip=CONTAINER_IP, container_name=CONTAINER_NAME,
-        image_name=IMAGE_NAME, extra_run_options=[
-            '--volume=/run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock',
-            '--volume=/run/redis/redis-server.sock:'
-            '/run/redis/redis-server.sock',
-            '--volume=/run/slapd/ldapi:/run/slapd/ldapi',
-            f'--volume={VOLUME_NAME}:/var/www/html',
-            f'--env=TRUSTED_PROXIES={BRIDGE_IP}',
-            '--env=OVERWRITEWEBROOT=/nextcloud'
-        ])
-    _configure_firewall(action='add', interface_name=NETWORK_NAME)
+    volumes = {
+        '/run/mysqld/mysqld.sock': '/run/mysqld/mysqld.sock',
+        '/run/redis/redis-server.sock': '/run/redis/redis-server.sock',
+        '/run/slapd/ldapi': '/run/slapd/ldapi',
+        VOLUME_NAME: '/var/www/html'
+    }
+    env = {'OVERWRITEWEBROOT': '/nextcloud'}
+    binds_to = ['mariadb.service', 'redis-server.service', 'slapd.service']
+    action_utils.podman_create(container_name=CONTAINER_NAME,
+                               image_name=IMAGE_NAME, volume_name=VOLUME_NAME,
+                               volume_path=str(_data_path), volumes=volumes,
+                               env=env, binds_to=binds_to)
+    action_utils.service_start(CONTAINER_NAME)
 
-    # OCC isn't immediately available after the container is spun up.
-    # Wait until CAN_INSTALL file is available.
-    timeout = 300
-    while timeout > 0:
-        if (_volume_path / '_data/config/CAN_INSTALL').exists():
-            break
+    _nextcloud_wait_until_ready()
 
-        timeout = timeout - 1
-        time.sleep(1)
+    # Setup database
+    _create_database()
+    database_password = _get_database_password()
+    if not database_password:
+        database_password = _generate_secret_key(16)
+        _set_database_privileges(database_password)
 
-    _nextcloud_setup_wizard(database_password, administrator_password)
+    # Setup redis configuration
     _create_redis_config()
 
-    _configure_ldap()
+    # Run setup wizard
+    _nextcloud_setup_wizard(database_password)
 
-    _configure_systemd()
+    # Setup LDAP configuraiton
+    _configure_ldap()
 
 
 def _run_in_container(
@@ -101,8 +87,26 @@ def _run_occ(*args, **kwargs) -> subprocess.CompletedProcess:
 
 
 @privileged
-def get_domain():
-    """Return domain name set in Nextcloud."""
+def is_enabled() -> bool:
+    """Return if the systemd container service is enabled."""
+    return action_utils.podman_is_enabled(CONTAINER_NAME)
+
+
+@privileged
+def enable():
+    """Enable the systemd container service."""
+    action_utils.podman_enable(CONTAINER_NAME)
+
+
+@privileged
+def disable():
+    """Disable the systemd container service."""
+    action_utils.podman_disable(CONTAINER_NAME)
+
+
+@privileged
+def get_override_domain():
+    """Return the domain name that Nextcloud is configured to override with."""
     try:
         domain = _run_occ('config:system:get', 'overwritehost',
                           capture_output=True)
@@ -112,22 +116,33 @@ def get_domain():
 
 
 @privileged
-def set_domain(domain_name: str):
-    """Set Nextcloud domain name."""
+def set_override_domain(domain_name: str):
+    """Set the domain name that Nextcloud will use to override all domains."""
     protocol = 'https'
     if domain_name.endswith('.onion'):
         protocol = 'http'
 
     if domain_name:
         _run_occ('config:system:set', 'overwritehost', '--value', domain_name)
-
+        _run_occ('config:system:set', 'overwriteprotocol', '--value', protocol)
         _run_occ('config:system:set', 'overwrite.cli.url', '--value',
                  f'{protocol}://{domain_name}/nextcloud')
+    else:
+        _run_occ('config:system:delete', 'overwritehost')
+        _run_occ('config:system:delete', 'overwriteprotocol')
+        _run_occ('config:system:delete', 'overwrite.cli.url')
 
-        _run_occ('config:system:set', 'overwriteprotocol', '--value', protocol)
+    # Restart to apply changes immediately
+    action_utils.service_restart('nextcloud-freedombox')
 
-        # Restart to apply changes immediately
-        action_utils.service_restart('nextcloud-freedombox')
+
+@privileged
+def set_trusted_domains(domains: list[str]):
+    """Set the list of trusted domains."""
+    _run_occ('config:system:delete', 'trusted_domains')
+    for index, domain in enumerate(domains):
+        _run_occ('config:system:set', 'trusted_domains', str(index), '--value',
+                 domain)
 
 
 @privileged
@@ -155,14 +170,6 @@ def set_default_phone_region(region: str):
     _run_occ('config:system:set', 'default_phone_region', '--value', region)
 
 
-def _configure_firewall(action, interface_name):
-    subprocess.run([
-        'firewall-cmd', '--permanent', '--zone=trusted',
-        f'--{action}-interface={interface_name}'
-    ], check=True)
-    action_utils.service_restart('firewalld')
-
-
 def _database_query(query: str):
     """Run a database query."""
     subprocess.run(['mysql'], input=query.encode(), check=True)
@@ -175,9 +182,8 @@ def _create_database():
     if _db_file_path.exists():
         return
 
-    query = f'''CREATE DATABASE {DB_NAME} CHARACTER SET utf8mb4
-  COLLATE utf8mb4_general_ci;
-'''
+    query = f'CREATE DATABASE IF NOT EXISTS {DB_NAME} ' \
+        'CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;'
     _database_query(query)
 
 
@@ -192,15 +198,39 @@ def _set_database_privileges(db_password: str):
         _database_query(query)
 
 
+def _nextcloud_wait_until_ready():
+    """Wait for Nextcloud container to get ready."""
+    # Nextcloud copies sources from /usr/src/nextcloud to /var/www/html inside
+    # the container. Nextcloud is served from the latter location. This happens
+    # on first run of the container and when upgrade happen.
+    start_time = time.time()
+    while time.time() < start_time + 300:
+        if (_data_path / 'version.php').exists():
+            break
+
+        time.sleep(1)
+
+    # Wait while Nextcloud is syncing files, running install or performing an
+    # upgrade by trying to obtain an exclusive on its init-sync.lock. Wrap the
+    # echo command with the lock so that the lock is immediately released after
+    # obtaining. We are unable to obtain the lock for 5 minutes, fail and stop
+    # the setup process.
+    lock_file = _data_path / 'nextcloud-init-sync.lock'
+    subprocess.run(
+        ['flock', '--exclusive', '--wait', '300', lock_file, 'echo'],
+        check=True)
+
+
 def _nextcloud_get_status():
     """Return Nextcloud status such installed, in maintenance, etc."""
     output = _run_occ('status', '--output=json', capture_output=True)
     return json.loads(output.stdout)
 
 
-def _nextcloud_setup_wizard(db_password, admin_password):
+def _nextcloud_setup_wizard(db_password: str):
     """Run the Nextcloud installation wizard and enable cron jobs."""
     if not _nextcloud_get_status()['installed']:
+        admin_password = _generate_secret_key(16)
         _run_occ('maintenance:install', '--database=mysql',
                  '--database-host=localhost:/run/mysqld/mysqld.sock',
                  f'--database-name={DB_NAME}', f'--database-user={DB_USER}',
@@ -210,6 +240,16 @@ def _nextcloud_setup_wizard(db_password, admin_password):
     # For the server to work properly, it's important to configure background
     # jobs correctly. Cron is the recommended setting.
     _run_occ('background:cron')
+
+    # Enable pretty URLs without /index.php in them.
+    _run_occ('config:system:set', 'htaccess.RewriteBase', '--value',
+             '/nextcloud')
+    _run_occ('config:system:set', 'htaccess.IgnoreFrontController',
+             '--type=boolean', '--value=true')
+    # Update the .htaccess file to contain mod_rewrite rules needed for pretty
+    # URLs. This is automatically re-run by scripts when upgrading to next
+    # version.
+    _run_occ('maintenance:update:htaccess')
 
 
 def _configure_ldap():
@@ -254,50 +294,14 @@ def _configure_ldap():
         _run_occ('ldap:set-config', 's01', key, value)
 
 
-def _configure_systemd():
-    """Create systemd units files for container and cron jobs."""
-    # Create service and timer for running periodic php jobs.
-    doc = 'https://docs.nextcloud.com/server/stable/admin_manual/' \
-        'configuration_server/background_jobs_configuration.html#systemd'
-    nextcloud_cron_service_content = f'''
-[Unit]
-Description=Nextcloud cron.php job
-Documentation={doc}
-
-[Service]
-ExecCondition=/usr/bin/podman exec --user www-data {CONTAINER_NAME} /var/www/html/occ status -e
-ExecStart=/usr/bin/podman exec --user www-data {CONTAINER_NAME} php -f /var/www/html/cron.php
-KillMode=process
-'''  # noqa: E501
-    nextcloud_cron_timer_content = '''[Unit]
-Description=Run Nextcloud cron.php every 5 minutes
-Documentation={doc}
-
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=5min
-Unit=nextcloud-cron-freedombox.service
-
-[Install]
-WantedBy=timers.target
-'''
-    _cron_service_file.write_text(nextcloud_cron_service_content)
-    _cron_timer_file.write_text(nextcloud_cron_timer_content)
-
-    action_utils.service_daemon_reload()
-
-
 @privileged
 def uninstall():
     """Uninstall Nextcloud"""
     _drop_database()
-    _configure_firewall(action='remove', interface_name=NETWORK_NAME)
     action_utils.podman_uninstall(container_name=CONTAINER_NAME,
-                                  network_name=NETWORK_NAME,
                                   volume_name=VOLUME_NAME,
-                                  image_name=IMAGE_NAME)
-    for path in [_cron_service_file, _cron_timer_file]:
-        path.unlink(missing_ok=True)
+                                  image_name=IMAGE_NAME,
+                                  volume_path=str(_data_path))
 
 
 def _drop_database():
@@ -353,7 +357,7 @@ def restore_database():
     subprocess.run(['redis-cli', '-n',
                     str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
 
-    _set_database_privileges(_get_dbpassword())
+    _set_database_privileges(_get_database_password())
 
     # After updating the configuration, a restart seems to be required for the
     # new DB password be used.
@@ -370,20 +374,21 @@ def restore_database():
     _run_occ('maintenance:data-fingerprint')
 
 
-def _get_dbpassword():
-    """Return the database password from config.php.
+def _get_database_password():
+    """Return the database password from config.php or '' if not set.
 
     OCC cannot run unless Nextcloud can already connect to the database.
     """
-    code = 'include_once("/var/www/html/config/config.php");' \
-        'print($CONFIG["dbpassword"]);'
+    code = 'if (file_exists("/var/www/html/config/config.php")) {' \
+        'include_once("/var/www/html/config/config.php");' \
+        'print($CONFIG["dbpassword"] ?? ""); }'
     return _run_in_container('php', '-r', code,
                              capture_output=True).stdout.decode().strip()
 
 
 def _create_redis_config():
     """Create a php file for Redis configuration."""
-    config_file = _volume_path / '_data/config/freedombox.config.php'
+    config_file = _data_path / 'config/freedombox.config.php'
     file_content = fr'''<?php
 $CONFIG = [
 'memcache.distributed' => '\OC\Memcache\Redis',

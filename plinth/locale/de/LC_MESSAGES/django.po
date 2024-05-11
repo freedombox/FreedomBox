@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 20:02-0400\n"
+"POT-Creation-Date: 2024-05-06 20:18-0400\n"
 "PO-Revision-Date: 2024-04-08 07:01+0000\n"
 "Last-Translator: Johannes Keyser <joke@fsfe.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -30,27 +30,27 @@ msgstr "Statische Konfiguration {etc_path} ist richtig eingerichtet"
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
-#: daemon.py:122
+#: daemon.py:124
 #, python-brace-format
 msgid "Service {service_name} is running"
 msgstr "Der Dienst {service_name} wird ausgeführt"
 
-#: daemon.py:218
+#: daemon.py:222
 #, python-brace-format
 msgid "Listening on {kind} port {listen_address}:{port}"
 msgstr "Gebunden auf {kind} Port {listen_address}:{port}"
 
-#: daemon.py:221
+#: daemon.py:225
 #, python-brace-format
 msgid "Listening on {kind} port {port}"
 msgstr "Gebunden an {kind} Port {port}"
 
-#: daemon.py:291
+#: daemon.py:296
 #, python-brace-format
 msgid "Connect to {host}:{port}"
 msgstr "Verbinden mit {host}:{port}"
 
-#: daemon.py:299
+#: daemon.py:304
 #, python-brace-format
 msgid "Cannot connect to {host}:{port}"
 msgstr "Verbindung mit {host}:{port} fehlgeschlagen"
@@ -144,12 +144,12 @@ msgstr "Webserver"
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Weboberfläche (Plinth)"
 
-#: modules/apache/components.py:159
+#: modules/apache/components.py:162
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Zugangs-URL {url} über TCP{kind}"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Zugangs-URL {url}"
@@ -936,7 +936,7 @@ msgstr "Löschen"
 msgid "Admin"
 msgstr "Admin"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:52
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1621,9 +1621,8 @@ msgstr "App: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
-#: templates/toolbar.html:53
-msgid "Re-run setup"
-msgstr "Einrichtung erneut ausführen"
+msgid "Try to repair"
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1665,9 +1664,14 @@ msgstr "Testen"
 msgid "Result"
 msgstr "Ergebnis"
 
-#: modules/diagnostics/views.py:111
+#: modules/diagnostics/views.py:114
 msgid "Diagnostic Test"
 msgstr "Diagnose"
+
+#: modules/diagnostics/views.py:144
+#, python-brace-format
+msgid "App {app_id} is not installed, cannot repair"
+msgstr ""
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -1861,7 +1865,7 @@ msgstr "Status"
 #: modules/dynamicdns/templates/dynamicdns.html:18
 #: modules/email/templates/email.html:35
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64 modules/nextcloud/forms.py:26
+#: modules/mediawiki/forms.py:64
 msgid "Domain"
 msgstr "Domain"
 
@@ -2264,12 +2268,12 @@ msgstr "Regeln für direktes Durchleiten existieren"
 msgid "Port {name} ({details}) available for internal networks"
 msgstr "Port -Name {name}({details}) für interne Netzwerke verfügbar"
 
-#: modules/firewall/components.py:153
+#: modules/firewall/components.py:154
 #, python-brace-format
 msgid "Port {name} ({details}) available for external networks"
 msgstr "Port -Name {name} ({details}) für externe Netzwerke verfügbar"
 
-#: modules/firewall/components.py:159
+#: modules/firewall/components.py:160
 #, python-brace-format
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port -Name {name} ({details}) für externe Netzwerke nicht verfügbar"
@@ -3370,10 +3374,6 @@ msgstr "Let's Encrypt"
 msgid "Certificates"
 msgstr "Zertifikate"
 
-#: modules/letsencrypt/__init__.py:105
-msgid "Cannot test: No domains are configured."
-msgstr "Kann nicht testen: Es sind keine Domains konfiguriert."
-
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
 msgstr "Zertifikatstatus"
@@ -3908,7 +3908,7 @@ msgstr ""
 msgid "Address"
 msgstr "Adresse"
 
-#: modules/minidlna/__init__.py:22
+#: modules/minidlna/__init__.py:20
 msgid ""
 "MiniDLNA is a simple media server software, with the aim of being fully "
 "compliant with DLNA/UPnP-AV clients. The MiniDLNA daemon serves media files "
@@ -3926,35 +3926,23 @@ msgstr ""
 "Smartphones, Fernseher und Gaming-Systeme (wie PS3 und Xbox 360) oder "
 "Anwendungen wie Totem und Kodi."
 
-#: modules/minidlna/__init__.py:44
-msgid "Media streaming server"
-msgstr "Medien-Streaming-Server"
-
-#: modules/minidlna/__init__.py:47
+#: modules/minidlna/__init__.py:45
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:48
+#: modules/minidlna/__init__.py:46
 msgid "Simple Media Server"
 msgstr "Einfacher Medienserver"
 
-#: modules/minidlna/forms.py:13
+#: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Verzeichnis für Mediendateien"
 
-#: modules/minidlna/forms.py:14
+#: modules/minidlna/forms.py:21
 msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
-"this will be also scanned for media files. If you change the default ensure "
-"that the new directory exists and that is readable from the \"minidlna\" "
-"user. Any user media directories (\"/home/username/\") will usually work."
+"this will be also scanned for media files."
 msgstr ""
-"Verzeichnis, in dem MiniDLNA Server nach Inhalten sucht. Alle "
-"Unterverzeichnisse davon werden ebenfalls nach Mediendateien durchsucht. "
-"Wenn Sie die Standardeinstellung ändern, stellen Sie sicher, dass das neue "
-"Verzeichnis vorhanden und für den Benutzer \"minidlna\" lesbar ist. Alle "
-"Benutzermedienverzeichnisse (\"/ home / username /\") funktionieren "
-"normalerweise."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -3972,11 +3960,7 @@ msgstr "Yaacc"
 msgid "totem"
 msgstr "Totem"
 
-#: modules/minidlna/views.py:35
-msgid "Specified directory does not exist."
-msgstr "Das angegebene Verzeichnis ist nicht vorhanden."
-
-#: modules/minidlna/views.py:38
+#: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr "Aktualisiertes Medienverzeichnis"
 
@@ -5274,7 +5258,7 @@ msgstr "Verbindung {name} gelöscht."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Konnte Verbindung nicht löschen: Verbindung nicht gefunden."
 
-#: modules/nextcloud/__init__.py:20
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5283,33 +5267,33 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:29
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
-"by the Nextcloud project. Security, quality, privacy and legal reviews are "
+"by the Nextcloud community. Security, quality, privacy and legal reviews are "
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:35
+#: modules/nextcloud/__init__.py:40
 #, fuzzy
 #| msgid "Uninstalling an app is an experimental feature."
 msgid "This app is experimental."
 msgstr "Das Deinstallieren einer App ist eine experimentelle Funktion."
 
-#: modules/nextcloud/__init__.py:53 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 #, fuzzy
 #| msgid "Next"
 msgid "Nextcloud"
 msgstr "Weiter"
 
-#: modules/nextcloud/__init__.py:55
+#: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -5319,17 +5303,34 @@ msgstr ""
 msgid "Not set"
 msgstr "Hostname gesetzt"
 
-#: modules/nextcloud/forms.py:27
-msgid "Examples: \"myfreedombox.example.org\" or \"example.onion\"."
-msgstr ""
+#: modules/nextcloud/forms.py:26
+#, fuzzy
+#| msgid "Server domain"
+msgid "Override domain"
+msgstr "Serverdomain"
 
-#: modules/nextcloud/forms.py:30
+#: modules/nextcloud/forms.py:27
+#, fuzzy
+#| msgid ""
+#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
+#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
+#| "\"example.onion\"."
+msgid ""
+"Set to the domain or IP address that Nextcloud should be forced to generate "
+"URLs with. Should not be needed if a valid domain is used to access "
+"Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
+msgstr ""
+"Wird von MediaWiki verwendet, um URLs zu generieren, die auf das Wiki "
+"verweisen, z.B. in der Fußzeile, in Feeds und E-Mails. Beispiele: "
+"\"myfreedombox.example.org\" oder \"example.onion\"."
+
+#: modules/nextcloud/forms.py:33
 #, fuzzy
 #| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "Administrator-Passwort"
 
-#: modules/nextcloud/forms.py:31
+#: modules/nextcloud/forms.py:34
 #, fuzzy
 #| msgid ""
 #| "Set a new password for MediaWiki's administrator account (admin). The "
@@ -5347,13 +5348,13 @@ msgstr ""
 "<strong>10 Zeichen</strong> lang sein. Lassen Sie das Feld leer, bleibt das "
 "derzeitige Passwort bestehen."
 
-#: modules/nextcloud/forms.py:38
+#: modules/nextcloud/forms.py:41
 #, fuzzy
 #| msgid "Default zone is external"
 msgid "Default phone region"
 msgstr "Standard-Zone ist extern"
 
-#: modules/nextcloud/forms.py:39
+#: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
@@ -8717,67 +8718,103 @@ msgstr "Paket {package_expression} ist nicht zur Installation verfügbar"
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Paket {package_name} ist die aktuellste Version ({latest_version})"
 
-#: package.py:419
+#: package.py:420
 msgid "installing"
 msgstr "Installation läuft"
 
-#: package.py:421
+#: package.py:422
 msgid "downloading"
 msgstr "herunterladen"
 
-#: package.py:423
+#: package.py:424
 msgid "media change"
 msgstr "Medienwechsel"
 
-#: package.py:425
+#: package.py:426
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "Konfigurationsdatei: {file}"
 
-#: package.py:453 package.py:478
+#: package.py:454 package.py:479
 msgid "Timeout waiting for package manager"
 msgstr "Zeitüberschreitung beim Warten auf den Paket-Manager"
 
-#: setup.py:39
+#: setup.py:42
 msgid "Installing app"
 msgstr "Installation der App"
 
-#: setup.py:41
+#: setup.py:44
 msgid "Updating app"
 msgstr "Aktualisieren der App"
 
-#: setup.py:75
+#: setup.py:78
 #, python-brace-format
 msgid "Error installing app: {error}"
 msgstr "Fehler bei der Installation der App: {error}"
 
-#: setup.py:78
+#: setup.py:81 setup.py:151
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error repairing app: {error}"
+msgstr "Fehler beim Aktualisieren der App: {error}"
+
+#: setup.py:84
 #, python-brace-format
 msgid "Error updating app: {error}"
 msgstr "Fehler beim Aktualisieren der App: {error}"
 
-#: setup.py:82
+#: setup.py:88
 msgid "App installed."
 msgstr "App installiert."
 
-#: setup.py:84
+#: setup.py:92
 msgid "App updated"
 msgstr "App aktualisiert"
 
-#: setup.py:101
+#: setup.py:110
+#, fuzzy
+#| msgid "Updating app"
+msgid "Repairing app"
+msgstr "Aktualisieren der App"
+
+#: setup.py:130
+#, fuzzy, python-brace-format
+#| msgid "Error uninstalling app: {error}"
+msgid "Error running diagnostics: {error}"
+msgstr "Fehler bei der Deinstallation der App: {error}"
+
+#: setup.py:143
+msgid "Skipping repair, no failed checks"
+msgstr ""
+
+#: setup.py:157
+msgid "Re-running setup to complete repairs"
+msgstr ""
+
+#: setup.py:165
+#, fuzzy
+#| msgid "App updated"
+msgid "App repaired."
+msgstr "App aktualisiert"
+
+#: setup.py:169
+msgid "App repair completed with errors:\n"
+msgstr ""
+
+#: setup.py:189
 msgid "Uninstalling app"
 msgstr "Deinstallation der App"
 
-#: setup.py:117
+#: setup.py:205
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Fehler bei der Deinstallation der App: {error}"
 
-#: setup.py:120
+#: setup.py:208
 msgid "App uninstalled."
 msgstr "App deinstalliert."
 
-#: setup.py:493
+#: setup.py:581
 msgid "Updating app packages"
 msgstr "Aktualisieren von App-Paketen"
 
@@ -9152,6 +9189,10 @@ msgstr "Aktualisieren"
 msgid "Backup"
 msgstr "Sicherungskopie"
 
+#: templates/toolbar.html:53
+msgid "Re-run setup"
+msgstr "Einrichtung erneut ausführen"
+
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
 msgid "Uninstall"
@@ -9182,6 +9223,29 @@ msgstr "vor der Deinstallation von {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Cannot test: No domains are configured."
+#~ msgstr "Kann nicht testen: Es sind keine Domains konfiguriert."
+
+#~ msgid "Media streaming server"
+#~ msgstr "Medien-Streaming-Server"
+
+#~ msgid ""
+#~ "Directory that MiniDLNA Server will read for content. All sub-directories "
+#~ "of this will be also scanned for media files. If you change the default "
+#~ "ensure that the new directory exists and that is readable from the "
+#~ "\"minidlna\" user. Any user media directories (\"/home/username/\") will "
+#~ "usually work."
+#~ msgstr ""
+#~ "Verzeichnis, in dem MiniDLNA Server nach Inhalten sucht. Alle "
+#~ "Unterverzeichnisse davon werden ebenfalls nach Mediendateien durchsucht. "
+#~ "Wenn Sie die Standardeinstellung ändern, stellen Sie sicher, dass das "
+#~ "neue Verzeichnis vorhanden und für den Benutzer \"minidlna\" lesbar ist. "
+#~ "Alle Benutzermedienverzeichnisse (\"/ home / username /\") funktionieren "
+#~ "normalerweise."
+
+#~ msgid "Specified directory does not exist."
+#~ msgstr "Das angegebene Verzeichnis ist nicht vorhanden."
 
 #~ msgid "Storage snapshots configuration updated"
 #~ msgstr "Konfiguration der Speicherauszüge aktualisiert"

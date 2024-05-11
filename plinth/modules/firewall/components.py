@@ -142,7 +142,8 @@ class Firewall(app.FollowerComponent):
                 'details': details
             }
             results.append(
-                DiagnosticCheck(check_id, description, result, parameters))
+                DiagnosticCheck(check_id, description, result, parameters,
+                                self.component_id))
 
             # External zone
             if self.is_external:
@@ -161,7 +162,8 @@ class Firewall(app.FollowerComponent):
 
             parameters = {'name': port, 'details': details}
             results.append(
-                DiagnosticCheck(check_id, description, result, parameters))
+                DiagnosticCheck(check_id, description, result, parameters,
+                                self.component_id))
 
         return results
 

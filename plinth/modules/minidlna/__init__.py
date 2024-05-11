@@ -2,17 +2,15 @@
 """
 FreedomBox app to configure minidlna.
 """
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import frontpage, menu
-from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules import firewall
-from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
-from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages, install
 from plinth.utils import Version
 
@@ -29,19 +27,19 @@ _description = [
       'such as PS3 and Xbox 360) or applications such as totem and Kodi.')
 ]
 
+SYSTEM_USER = 'minidlna'
+
 
 class MiniDLNAApp(app_module.App):
     """Freedombox app managing miniDlna."""
 
     app_id = 'minidlna'
 
-    _version = 5
+    _version = 6
 
     def __init__(self) -> None:
         """Initialize the app components."""
         super().__init__()
-
-        groups = {'minidlna': _('Media streaming server')}
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MiniDLNA'), icon_filename='minidlna',
@@ -61,29 +59,20 @@ class MiniDLNAApp(app_module.App):
         )
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut('shortcut-minidlna', info.name,
-                                      short_description=info.short_description,
-                                      description=info.description,
-                                      icon=info.icon_filename,
-                                      url='/_minidlna/', login_required=True,
-                                      allowed_groups=list(groups))
+        shortcut = frontpage.Shortcut(
+            'shortcut-minidlna', info.name,
+            short_description=info.short_description,
+            description=info.description, icon=info.icon_filename,
+            configure_url=reverse_lazy('minidlna:index'), login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-minidlna', ['minidlna'])
         self.add(packages)
 
-        dropin_configs = DropinConfigs(
-            'dropin-configs-minidlna',
-            ['/etc/apache2/conf-available/minidlna-freedombox.conf'])
-        self.add(dropin_configs)
-
-        firewall = Firewall('firewall-minidlna', info.name, ports=['minidlna'],
-                            is_external=False)
-        self.add(firewall)
-
-        webserver = Webserver('webserver-minidlna', 'minidlna-freedombox',
-                              urls=['https://{host}/_minidlna/'])
-        self.add(webserver)
+        firewall_minidlna = Firewall('firewall-minidlna', info.name,
+                                     ports=['minidlna',
+                                            'ssdp'], is_external=False)
+        self.add(firewall_minidlna)
 
         daemon = Daemon('daemon-minidlna', 'minidlna')
         self.add(daemon)
@@ -91,10 +80,6 @@ class MiniDLNAApp(app_module.App):
         backup_restore = BackupRestore('backup-restore-minidlna',
                                        **manifest.backup)
         self.add(backup_restore)
-
-        users_and_groups = UsersAndGroups('users-and-groups-minidlna',
-                                          groups=groups)
-        self.add(users_and_groups)
 
     def setup(self, old_version):
         """Install and configure the app."""
@@ -107,6 +92,19 @@ class MiniDLNAApp(app_module.App):
                                         '--dport', '8200', '-j', 'REJECT')
             firewall.remove_passthrough('ipv4', '-A', 'INPUT', '-p', 'tcp',
                                         '--dport', '8200', '-j', 'REJECT')
+
+        if old_version and old_version <= 5:
+            # Remove minidlna LDAP group and disable minidlna apache config
+            from plinth.modules.apache import privileged as apache_privileged
+            from plinth.modules.users import privileged as users_privileged
+
+            users_privileged.remove_group('minidlna')
+            apache_privileged.disable('minidlna-freedombox', 'config')
+
+            # Restart app to reload firewall
+            if self.is_enabled():
+                self.disable()
+                self.enable()
 
         if not old_version:
             self.enable()

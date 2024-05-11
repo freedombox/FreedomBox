@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Nextcloud cron.php every 5 minutes
+Documentation=https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/background_jobs_configuration.html#systemd
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Unit=nextcloud-cron-freedombox.service
+
+[Install]
+WantedBy=timers.target
