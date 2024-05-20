@@ -10,3 +10,7 @@ class ConfigureForm(forms.Form):
     daily_run_enabled = forms.BooleanField(
         label=_('Enable daily run'), required=False,
         help_text=_('When enabled, diagnostic checks will run once a day.'))
+
+    automatic_repair = forms.BooleanField(
+        label=_('Enable automatic repair'), required=False,
+        help_text=_('If issues are found, try to repair them automatically.'))

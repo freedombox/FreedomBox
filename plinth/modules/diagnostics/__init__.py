@@ -21,6 +21,7 @@ from plinth.diagnostic_check import (CheckJSONDecoder, CheckJSONEncoder,
                                      DiagnosticCheck, Result)
 from plinth.modules.apache.components import diagnose_url_on_all
 from plinth.modules.backups.components import BackupRestore
+from plinth.setup import run_repair_on_app
 
 from . import manifest
 
@@ -256,7 +257,7 @@ def _daily_diagnostics_run(data: None = None):
         logger.info('Skipping daily diagnostics run (disabled)')
 
 
-def start_diagnostics(data: None = None):
+def start_diagnostics():
     """Start full diagnostics as a background operation."""
     logger.info('Running full diagnostics')
     try:
@@ -275,6 +276,7 @@ def _run_diagnostics():
     from plinth.notification import Notification
 
     _run_on_all_enabled_modules()
+    apps_with_issues = set()
     with results_lock:
         results = current_results['results']
         # Store the most recent results in the database.
@@ -283,13 +285,14 @@ def _run_diagnostics():
 
         issue_count = 0
         severity = 'warning'
-        for _app_id, app_data in results.items():
+        for app_id, app_data in results.items():
             if app_data['exception']:
                 issue_count += 1
                 severity = 'error'
             else:
                 for check in app_data['diagnosis']:
                     if check.result != Result.PASSED:
+                        apps_with_issues.add(app_id)
                         issue_count += 1
                         if check.result != Result.WARNING:
                             severity = 'error'
@@ -322,6 +325,14 @@ def _run_diagnostics():
                                          message=message, actions=actions,
                                          data=data, group='admin')
     note.dismiss(False)
+
+    # If enabled, run automatic repair for apps with failed diagnostics.
+    if is_automatic_repair_enabled():
+        logger.info('Starting automatic repair...')
+        for app_id in apps_with_issues:
+            run_repair_on_app(app_id, False)
+    else:
+        logger.info('Skipping automatic repair, disabled.')
 
 
 def are_results_available():
@@ -374,3 +385,17 @@ def is_daily_run_enabled() -> bool:
 def set_daily_run_enabled(enabled: bool):
     """Enable or disable daily run."""
     kvstore.set('diagnostics_daily_run_enabled', enabled)
+
+
+def is_automatic_repair_enabled() -> bool:
+    """Return whether automatic repair is enabled.
+
+    In case it is not set, assume it is not enabled. This default could be
+    changed later.
+    """
+    return kvstore.get_default('diagnostics_automatic_repair_enabled', False)
+
+
+def set_automatic_repair_enabled(enabled: bool):
+    """Enable or disable automatic repair."""
+    kvstore.set('diagnostics_automatic_repair_enabled', enabled)

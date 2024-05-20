@@ -97,20 +97,36 @@ def _run_setup_on_app(app, current_version, repair: bool = False):
     operation.on_update(message, exception_to_update)
 
 
-def run_repair_on_app(app_id):
-    """Execute the repair process in a thread."""
+def run_repair_on_app(app_id, create_operation=True):
+    """Execute the repair process in a thread.
+
+    In case this is called from within another operation, creating a new
+    operation can be skipped.
+    """
     app = app_module.App.get(app_id)
     current_version = app.get_setup_version()
     if not current_version:
         logger.warning('App %s is not installed, cannot repair', app_id)
         return
 
-    logger.debug('Creating operation to repair app: %s', app_id)
-    return operation_module.manager.new(f'{app_id}-repair', app_id,
-                                        gettext_noop('Repairing app'),
-                                        _run_repair_on_app, [app],
-                                        show_message=True,
-                                        show_notification=True)
+    if create_operation:
+        logger.debug('Creating operation to repair app: %s', app_id)
+        return operation_module.manager.new(f'{app_id}-repair', app_id,
+                                            gettext_noop('Repairing app'),
+                                            _run_repair_on_app, [app],
+                                            show_message=True,
+                                            show_notification=True)
+
+    # Re-use existing operation.
+    try:
+        operation = operation_module.Operation.get_operation()
+    except AttributeError:
+        raise RuntimeError(
+            'run_repair_on_app: Expected an existing operation.')
+
+    # XXX: Ugly hack to re-use operation from another app.
+    operation.app_id = app_id
+    _run_repair_on_app(app)
 
 
 def _run_repair_on_app(app: app_module.App):

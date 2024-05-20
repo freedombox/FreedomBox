@@ -40,7 +40,8 @@ def install(app_id: str, packages: list[str], skip_recommends: bool = False,
     try:
         _assert_managed_packages(app_id, packages)
     except Exception:
-        raise PermissionError(f'Packages are not managed: {packages}')
+        raise PermissionError(
+            f'Packages are not managed by {app_id}: {packages}')
 
     extra_arguments = []
     if skip_recommends:
