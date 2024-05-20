@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-06 20:18-0400\n"
-"PO-Revision-Date: 2024-05-17 13:01+0000\n"
+"PO-Revision-Date: 2024-05-21 00:04+0000\n"
 "Last-Translator: Ray Kuo <ray20140811@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/zh_Hant/>\n"
@@ -1585,6 +1585,9 @@ msgid ""
 "24h), it may be hard for others to find you on the Internet. This will "
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
+"如果您的網路服務供應商定期更改您的 IP 地址（即每 24 "
+"小時一次），其他人可能很難在互聯網上找到您。這將阻止其他人找到由此 {box_name}"
+" 提供的服務。"
 
 #: modules/dynamicdns/__init__.py:32
 msgid ""
@@ -1596,6 +1599,11 @@ msgid ""
 "Internet asks for your DNS name, they will get a response with your current "
 "IP address."
 msgstr ""
+"解決方案是將 DNS 名稱分配給您的 IP 地址，並在您的網路服務供應商更改您的 IP "
+"時更新 DNS 名稱。動態 DNS 允許您將當前的公共 IP 地址推送到一個 <a href=\"http"
+"://gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a> 伺服器。之後，"
+"伺服器將將您的 DNS 名稱分配給新的 IP，如果有人從網路上詢問您的 DNS 名稱，"
+"他們將收到包含您當前 IP 地址的回應。"
 
 #: modules/dynamicdns/__init__.py:40
 msgid ""
@@ -1604,14 +1612,18 @@ msgid ""
 "freedombox.org</a> or you may find free update URL based services at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
+"如果您正在尋找免費的動態 DNS 帳戶，您可以在 <a href=\"https://ddns.freedombox"
+".org\" target=\"_blank\">ddns.freedombox.org</a> 找到免費的 GnuDIP 服務，"
+"或者您也可以在 <a href=\"http://freedns.afraid.org/\" target=\"_blank\""
+">freedns.afraid.org</a> 找到基於更新 URL 的免費服務。"
 
 #: modules/dynamicdns/__init__.py:61
 msgid "Dynamic DNS Client"
-msgstr ""
+msgstr "動態 DNS 客戶端"
 
 #: modules/dynamicdns/__init__.py:75
 msgid "Dynamic Domain Name"
-msgstr ""
+msgstr "動態域名"
 
 #: modules/dynamicdns/forms.py:18
 msgid ""
@@ -1619,34 +1631,39 @@ msgid ""
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
+"URL 中可以使用變數 &lt;User&gt;、&lt;Pass&gt;、&lt;Ip&gt; 和 "
+"&lt;Domain&gt;。有關詳細信息，請參閱示例提供者的更新 URL 模板。"
 
 #: modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
 "you may use the update URL of your provider."
-msgstr ""
+msgstr "請根據您的供應商選擇一個更新協議。如果您的供應商不支持 GnuDIP "
+"協議，或者您的供應商未列出，您可以使用您的供應商的更新 URL。"
 
 #: modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
+"請不要在此處輸入 URL（例如 \"https://example.com/\"），而只需輸入 GnuDIP "
+"伺服器的主機名稱（例如 \"example.com\"）。"
 
 #: modules/dynamicdns/forms.py:31
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
-msgstr ""
+msgstr "使用您想要的公共域名，以便訪問您的 {box_name}。"
 
 #: modules/dynamicdns/forms.py:34
 msgid "Use this option if your provider uses self signed certificates."
-msgstr ""
+msgstr "如果您的供應商使用自簽名證書，請使用此選項。"
 
 #: modules/dynamicdns/forms.py:37
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
-msgstr ""
+msgstr "如果選擇此選項，您的用戶名和密碼將用於 HTTP 基本驗證。"
 
 #: modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
