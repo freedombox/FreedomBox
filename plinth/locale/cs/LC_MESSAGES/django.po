@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-06 20:18-0400\n"
-"PO-Revision-Date: 2024-04-24 07:07+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"PO-Revision-Date: 2024-06-09 16:09+0000\n"
+"Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5.1-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1583,7 +1583,7 @@ msgstr "Aplikace: %(app_name)s"
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
 msgid "Try to repair"
-msgstr ""
+msgstr "Pokuste se opravit"
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1632,7 +1632,7 @@ msgstr "Diagnostické testy"
 #: modules/diagnostics/views.py:144
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
-msgstr ""
+msgstr "Aplikace {app_id} není nainstalována, nelze opravit"
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -3853,6 +3853,8 @@ msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
 "this will be also scanned for media files."
 msgstr ""
+"Adresář, do kterého bude server MiniDLNA načítat obsah. Všechny jeho "
+"podadresáře budou rovněž prohledávány kvůli mediálním souborům."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -5171,12 +5173,7 @@ msgstr ""
 "provést správu "
 
 #: modules/nextcloud/__init__.py:34
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Please note that Nextcloud is installed and run inside a container "
-#| "provided by the Nextcloud project. Security, quality, privacy and legal "
-#| "reviews are done by the upstream project and not by Debian/{box_name}. "
-#| "Updates are performed following an independent cycle."
+#, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
 "by the Nextcloud community. Security, quality, privacy and legal reviews are "
@@ -5184,7 +5181,7 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 "Upozorňujeme, že Nextcloud je nainstalován a spuštěn v kontejneru "
-"poskytnutém projektem Nextcloud. Bezpečnost, kvalitu, ochranu soukromí a "
+"poskytnutém komunitou Nextcloud. Bezpečnost, kvalitu, ochranu soukromí a "
 "právní kontrolu provádí projekt upstream, nikoli Debian/{box_name}. "
 "Aktualizace jsou prováděny podle nezávislého cyklu."
 
@@ -5206,25 +5203,18 @@ msgid "Not set"
 msgstr "Nenastaveno"
 
 #: modules/nextcloud/forms.py:26
-#, fuzzy
-#| msgid "Server domain"
 msgid "Override domain"
-msgstr "Doména serveru"
+msgstr "Přepsat doménu"
 
 #: modules/nextcloud/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
-#| "\"example.onion\"."
 msgid ""
 "Set to the domain or IP address that Nextcloud should be forced to generate "
 "URLs with. Should not be needed if a valid domain is used to access "
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
-"Používá se v MediaWiki k vytváření adres URL, které odkazují na wiki, "
-"například v zápatí, kanálech a e-mailech. Příklad: \"myfreedombox.example."
-"org\" nebo \"example.onion\"."
+"Nastavte na doménu nebo IP adresu, s níž má být Nextcloud nucen generovat "
+"adresy URL. Nemělo by být potřeba, pokud je pro přístup k Nextcloudu použita "
+"platná doména. Příklady: „myfreedombox.example.org“ nebo „example.onion“."
 
 #: modules/nextcloud/forms.py:33
 msgid "Administrator password"
@@ -8557,10 +8547,9 @@ msgid "Error installing app: {error}"
 msgstr "Chyba při instalaci aplikace: {error}"
 
 #: setup.py:81 setup.py:151
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error repairing app: {error}"
-msgstr "Chyba při aktualizaci aplikace: {error}"
+msgstr "Chyba při opravě aplikace: {error}"
 
 #: setup.py:84
 #, python-brace-format
@@ -8576,34 +8565,29 @@ msgid "App updated"
 msgstr "Aplikace aktualizována"
 
 #: setup.py:110
-#, fuzzy
-#| msgid "Updating app"
 msgid "Repairing app"
-msgstr "Aktualizace aplikací"
+msgstr "Oprava aplikace"
 
 #: setup.py:130
-#, fuzzy, python-brace-format
-#| msgid "Error uninstalling app: {error}"
+#, python-brace-format
 msgid "Error running diagnostics: {error}"
-msgstr "Chyba při odinstalaci aplikace: {error}"
+msgstr "Chyba při spuštění diagnostiky: {error}"
 
 #: setup.py:143
 msgid "Skipping repair, no failed checks"
-msgstr ""
+msgstr "Přeskočení opravy, žádné neúspěšné kontroly"
 
 #: setup.py:157
 msgid "Re-running setup to complete repairs"
-msgstr ""
+msgstr "Opětovné spuštění instalace za účelem dokončení oprav"
 
 #: setup.py:165
-#, fuzzy
-#| msgid "App updated"
 msgid "App repaired."
-msgstr "Aplikace aktualizována"
+msgstr "Aplikace opravena."
 
 #: setup.py:169
 msgid "App repair completed with errors:\n"
-msgstr ""
+msgstr "Oprava aplikace byla dokončena s chybami:\n"
 
 #: setup.py:189
 msgid "Uninstalling app"
