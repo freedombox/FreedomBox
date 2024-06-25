@@ -785,6 +785,9 @@ def _create_nspawn_machine(image_file, distribution):
     nspawn_options = f'''[Exec]
 Boot=yes
 PrivateUsers=no
+# Allow all system calls to enable podman containers inside the nspawn
+# container.
+SystemCallFilter=@known
 
 [Files]
 Overlay={_get_project_folder()}:{overlay_folder}:/freedombox
