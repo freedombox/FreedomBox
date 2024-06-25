@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-06 20:18-0400\n"
-"PO-Revision-Date: 2024-03-30 16:18+0000\n"
+"PO-Revision-Date: 2024-06-17 13:09+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-dev\n"
 "X-Language: nl_NL\n"
 "X-Source-Language: C\n"
 
@@ -1605,7 +1605,7 @@ msgstr "Toepassing: %(app_name)s"
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
 msgid "Try to repair"
-msgstr ""
+msgstr "Probeer te herstellen"
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1654,7 +1654,7 @@ msgstr "Diagnostische test"
 #: modules/diagnostics/views.py:144
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
-msgstr ""
+msgstr "Toepassing {app_id} is niet geïnstalleerd, kan niet herstellen"
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -3183,6 +3183,10 @@ msgid ""
 "Wikipedia available without using the internet, but it is potentially "
 "suitable for all HTML content. Kiwix packages are in the ZIM file format."
 msgstr ""
+"Kiwix is een offline lezer voor web inhoud. Het is software bedoeld om "
+"Wikipedia beschikbaar te maken zonder het internet te gebruiken, maar het is "
+"mogelijk geschikt voor alle HTML inhoud. Kiwix pakketten gebruiken het ZIM "
+"formaat."
 
 #: modules/kiwix/__init__.py:25
 msgid ""
@@ -3205,10 +3209,14 @@ msgid ""
 "project or <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">create</a> your own."
 msgstr ""
+"Er kunnen informatie pakketten worden ge<a href=\"https://library.kiwix.org\""
+" target=\"_blank\" rel=\"noopener noreferrer\">download</a> van het Kiwix "
+"project, of <a href=\"https://openzim.org/wiki/Build_your_ZIM_file\" target="
+"\"_blank\" rel=\"noopener noreferrer\">maak</a> eigen infopaketten."
 
 #: modules/kiwix/__init__.py:53
 msgid "Manage Kiwix content server"
-msgstr ""
+msgstr "Beheer de Kiwix inhoudserver"
 
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
@@ -3229,6 +3237,9 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+"Geüploade ZIM-bestanden worden opgeslagen onder {kiwix_home}/content op je "
+"{box_name}. Als Kiwix het dossier niet kan toevoegen, wordt het onmiddellijk "
+"gewist om schijfruimte te besparen."
 
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
@@ -3884,6 +3895,8 @@ msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
 "this will be also scanned for media files."
 msgstr ""
+"Map die MiniDLNA Server zal scannen op inhoud. Alle submappen hiervan worden "
+"ook gescand op mediabestanden."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -5199,6 +5212,8 @@ msgstr ""
 #: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
+"Alle gebruikers van {box_name} kunnen Nextcloud gebruiken. Om "
+"administratieve "
 
 #: modules/nextcloud/__init__.py:34
 #, python-brace-format
@@ -5210,89 +5225,68 @@ msgid ""
 msgstr ""
 
 #: modules/nextcloud/__init__.py:40
-#, fuzzy
-#| msgid "Uninstalling an app is an experimental feature."
 msgid "This app is experimental."
-msgstr "Het verwijderen van een toepassing is een experimentele functie."
+msgstr "Deze toepassing is een experiment."
 
 #: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
-#, fuzzy
-#| msgid "Next"
 msgid "Nextcloud"
-msgstr "Volgende"
+msgstr "Nextcloud"
 
 #: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
-msgstr ""
+msgstr "Bestandsopslag &amp; Samenwerking"
 
 #: modules/nextcloud/forms.py:19
-#, fuzzy
-#| msgid "Hostname set"
 msgid "Not set"
-msgstr "Hostnaam ingesteld"
+msgstr "Niet ingesteld"
 
 #: modules/nextcloud/forms.py:26
-#, fuzzy
-#| msgid "Server domain"
 msgid "Override domain"
-msgstr "Serverdomein"
+msgstr "Domein overschrijven"
 
 #: modules/nextcloud/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
-#| "\"example.onion\"."
 msgid ""
 "Set to the domain or IP address that Nextcloud should be forced to generate "
 "URLs with. Should not be needed if a valid domain is used to access "
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
-"Wordt door MediaWiki gebruikt om URL's te genereren die naar de wiki "
-"verwijzen, zoals in de footer, feeds en e-mails. Voorbeelden: \"myfreedombox."
-"example.org\" of \"example.onion\"."
+"Stel het domein of IP adres in dat door Nextcloud moet worden gebruikt om "
+"URLs te maken. Zou niet nodig moeten zijn als er een valide domein wordt "
+"gebruikt om Nextcloud aan te spreken. Voorbeelden: \"myfreedombox.example."
+"org\" of \"example.onion\"."
 
 #: modules/nextcloud/forms.py:33
-#, fuzzy
-#| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "Beheerderswachtwoord"
 
 #: modules/nextcloud/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). The "
-#| "password cannot be a common one and the minimum required length is "
-#| "<strong>10 characters</strong>. Leave this field blank to keep the "
-#| "current password."
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
 "required length is <strong>10 characters</strong>. Leave this field blank to "
 "keep the current password."
 msgstr ""
-"Stel een nieuw wachtwoord in voor MediaWiki's beheerdersaccount (admin). Dit "
-"wachtwoord moet minimaal <strong>10 tekens</strong> zijn, en niet makkelijk "
-"te raden. Laat dit veld leeg om het huidige wachtwoord te behouden."
+"Optioneel. Stel een nieuw wachtwoord in voor Nextcloud's beheerdersaccount "
+"(nextcloud-admin). Dit wachtwoord moet minimaal <strong>10 tekens</strong> "
+"zijn, en niet makkelijk te raden. Laat dit veld leeg om het huidige "
+"wachtwoord te behouden."
 
 #: modules/nextcloud/forms.py:41
-#, fuzzy
-#| msgid "Default zone is external"
 msgid "Default phone region"
-msgstr "Standaardzone is extern"
+msgstr "Standaard telefoon regio"
 
 #: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
 msgstr ""
+"De eigen telefoon regio is verplicht om telefoonnummers te gebruiken zonder "
+"landcode."
 
 #: modules/nextcloud/views.py:53
-#, fuzzy
-#| msgid "Password update failed. Please choose a stronger password"
 msgid "Password update failed. Please choose a stronger password."
-msgstr "Wachtwoordupdate mislukt. Kies een sterker wachtwoord"
+msgstr "Wachtwoordupdate mislukt. Kies een sterker wachtwoord."
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -7047,6 +7041,9 @@ msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
+"Instellingen kunnen niet worden opgeslagen. Probeer het systeem te "
+"herstarten. Als het probleem na een herstart blijft bestaan, controleer dan "
+"het opslagapparaat op fouten."
 
 #: modules/storage/__init__.py:382
 msgid "Read-only root filesystem"
@@ -7852,6 +7849,8 @@ msgstr "Gebruikersnaam is in gebruik of is gereserveerd."
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
 msgstr ""
+"Optioneel. Vroeger werden e-mails verstuurd om het wachtwoord te resetten en "
+"voor belangrijke berichten."
 
 #: modules/users/forms.py:106
 msgid ""
@@ -8627,10 +8626,9 @@ msgid "Error installing app: {error}"
 msgstr "Fout bij het installeren van de toepassing: {error}"
 
 #: setup.py:81 setup.py:151
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error repairing app: {error}"
-msgstr "Fout bij het bijwerken van de toepassing: {error}"
+msgstr "Fout bij het repareren van de toepassing: {error}"
 
 #: setup.py:84
 #, python-brace-format
@@ -8646,34 +8644,29 @@ msgid "App updated"
 msgstr "Toepassing bijgewerkt"
 
 #: setup.py:110
-#, fuzzy
-#| msgid "Updating app"
 msgid "Repairing app"
-msgstr "Toepassing updaten"
+msgstr "Toepassing repareren"
 
 #: setup.py:130
-#, fuzzy, python-brace-format
-#| msgid "Error uninstalling app: {error}"
+#, python-brace-format
 msgid "Error running diagnostics: {error}"
-msgstr "Fout bij het verwijderen van de toepassing: {error}"
+msgstr "Fout bij het doorlopen van de diagnose: {error}"
 
 #: setup.py:143
 msgid "Skipping repair, no failed checks"
-msgstr ""
+msgstr "Reparatie overslaan, geen mislukte tests"
 
 #: setup.py:157
 msgid "Re-running setup to complete repairs"
-msgstr ""
+msgstr "Opniew setup doorlopen om reparaties te voltooien"
 
 #: setup.py:165
-#, fuzzy
-#| msgid "App updated"
 msgid "App repaired."
-msgstr "Toepassing bijgewerkt"
+msgstr "Toepassing gerepareerd."
 
 #: setup.py:169
 msgid "App repair completed with errors:\n"
-msgstr ""
+msgstr "Toepassingsherstel voltooid met fouten:\n"
 
 #: setup.py:189
 msgid "Uninstalling app"
