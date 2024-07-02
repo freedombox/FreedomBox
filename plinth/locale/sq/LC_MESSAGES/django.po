@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 20:18-0400\n"
+"POT-Creation-Date: 2024-07-01 20:10-0400\n"
 "PO-Revision-Date: 2024-05-22 06:01+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -918,7 +918,7 @@ msgstr "Fshije"
 msgid "Admin"
 msgstr "Përgjegjës"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1490,7 +1490,7 @@ msgstr "Drejtori shkarkimesh"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Klient Bittorrent i shkruar në Python/PyGTK"
 
-#: modules/diagnostics/__init__.py:28
+#: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1499,48 +1499,48 @@ msgstr ""
 "sistemin tuaj, për të verifikuar se aplikacionet dhe shërbimet po punojnë "
 "siç pritet."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "Diagnostikime"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:99
 msgid "passed"
 msgstr "kaloi"
 
-#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
 msgid "failed"
 msgstr "dështoi"
 
-#: modules/diagnostics/__init__.py:100
+#: modules/diagnostics/__init__.py:101
 msgid "error"
 msgstr "gabim"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "warning"
 msgstr "kujdes"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:203
+#: modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:208
+#: modules/diagnostics/__init__.py:209
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:215
+#: modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Duhet të çaktivizoni disa aplikacione, për të zvogëluar përdorim kujtese."
 
-#: modules/diagnostics/__init__.py:220
+#: modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr "S’duhet të instaloni çfarëdo aplikacioni të ri në këtë sistem."
 
-#: modules/diagnostics/__init__.py:232
+#: modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1549,24 +1549,24 @@ msgstr ""
 "Ka pak kujtesë për sistemin: {percent_used}% të përdorur, {memory_available} "
 "{memory_available_unit} të lirë. {advice_message}"
 
-#: modules/diagnostics/__init__.py:234
+#: modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr "Kujtesë e Pakët"
 
-#: modules/diagnostics/__init__.py:265
+#: modules/diagnostics/__init__.py:266
 msgid "Running diagnostics"
 msgstr "Xhirim diagnostikimesh"
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "U gjetën {issue_count} probleme gjatë testimeve rutinë."
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:312
 msgid "Diagnostics results"
 msgstr "Përfundime diagnostikimesh"
 
-#: modules/diagnostics/__init__.py:314
+#: modules/diagnostics/__init__.py:317
 msgid "Go to diagnostics results"
 msgstr "Kaloni te përfundime diagnostikimi"
 
@@ -1577,6 +1577,16 @@ msgstr "Aktivizo xhirim të përditshëm"
 #: modules/diagnostics/forms.py:12
 msgid "When enabled, diagnostic checks will run once a day."
 msgstr "Kur janë aktivizuar, diagnostikimet do të xhirojnë një herë në ditë."
+
+#: modules/diagnostics/forms.py:15
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Enable automatic repair"
+msgstr "Aktivio vetëpërditësim"
+
+#: modules/diagnostics/forms.py:16
+msgid "If issues are found, try to repair them automatically."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1644,11 +1654,11 @@ msgstr "Provë"
 msgid "Result"
 msgstr "Përfundim"
 
-#: modules/diagnostics/views.py:114
+#: modules/diagnostics/views.py:125
 msgid "Diagnostic Test"
 msgstr "Test Diagnostikimesh"
 
-#: modules/diagnostics/views.py:144
+#: modules/diagnostics/views.py:155
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "Aplikacioni {app_id} s’është i instaluar, s’mund të riparohet"
@@ -8659,7 +8669,7 @@ msgstr "Po përditësohet aplikacioni"
 msgid "Error installing app: {error}"
 msgstr "Gabim në instalimin e aplikacionit: {error}"
 
-#: setup.py:81 setup.py:151
+#: setup.py:81 setup.py:167
 #, python-brace-format
 msgid "Error repairing app: {error}"
 msgstr "Gabim në riparimin e aplikacionit: {error}"
@@ -8677,45 +8687,45 @@ msgstr "Aplikacioni u instalua."
 msgid "App updated"
 msgstr "Aplikacioni u përditësua"
 
-#: setup.py:110
+#: setup.py:115
 msgid "Repairing app"
 msgstr "Po riparohet aplikacioni"
 
-#: setup.py:130
+#: setup.py:146
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Gabim në xhirim diagnostikimesh: {error}"
 
-#: setup.py:143
+#: setup.py:159
 msgid "Skipping repair, no failed checks"
 msgstr "Po anashkalohet riparimi, s’ka kontrolle të dështuar"
 
-#: setup.py:157
+#: setup.py:173
 msgid "Re-running setup to complete repairs"
 msgstr "Po rixhirohet ujdisje, për të plotësuar riparimet"
 
-#: setup.py:165
+#: setup.py:181
 msgid "App repaired."
 msgstr "Aplikacioni u riparua."
 
-#: setup.py:169
+#: setup.py:185
 msgid "App repair completed with errors:\n"
 msgstr "Riparimi i aplikacionit u plotësua me gabime:\n"
 
-#: setup.py:189
+#: setup.py:205
 msgid "Uninstalling app"
 msgstr "Po çinstalohet aplikacion"
 
-#: setup.py:205
+#: setup.py:221
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Gabim në çinstalimin e aplikacionit: {error}"
 
-#: setup.py:208
+#: setup.py:224
 msgid "App uninstalled."
 msgstr "Aplikacioni u çinstalua."
 
-#: setup.py:581
+#: setup.py:597
 msgid "Updating app packages"
 msgstr "Po përditësohet paketa aplikacioni"
 

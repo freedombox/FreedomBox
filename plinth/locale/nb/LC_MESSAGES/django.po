@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 20:18-0400\n"
+"POT-Creation-Date: 2024-07-01 20:10-0400\n"
 "PO-Revision-Date: 2024-03-28 01:01+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -937,7 +937,7 @@ msgstr "Slett"
 msgid "Admin"
 msgstr "admin"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1502,7 +1502,7 @@ msgstr "Last ned katalog"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "BitTorrent-klient skrevet i Python/PyGTK"
 
-#: modules/diagnostics/__init__.py:28
+#: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1510,79 +1510,79 @@ msgstr ""
 "Systemets diagnostikktest vil kjøre en rekke kontroller på systemet for å få "
 "bekreftet at programmer og tjenester fungerer som forventet."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "Diagnostikk"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:99
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
 msgid "failed"
 msgstr "feilet"
 
-#: modules/diagnostics/__init__.py:100
+#: modules/diagnostics/__init__.py:101
 msgid "error"
 msgstr "feil"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:203
+#: modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:208
+#: modules/diagnostics/__init__.py:209
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: modules/diagnostics/__init__.py:215
+#: modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør skru av noen programmer for å redusere minnebruken."
 
-#: modules/diagnostics/__init__.py:220
+#: modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere noen nye programmer på dette systemet."
 
-#: modules/diagnostics/__init__.py:232
+#: modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:234
+#: modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr "Lite minne"
 
-#: modules/diagnostics/__init__.py:265
+#: modules/diagnostics/__init__.py:266
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Kjør diagnostikk"
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:312
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Diagnostikkresultater"
 
-#: modules/diagnostics/__init__.py:314
+#: modules/diagnostics/__init__.py:317
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1599,6 +1599,16 @@ msgstr "Tillat underdomener (Subdomains)"
 #| msgid "When enabled, FreedomBox automatically updates once a day."
 msgid "When enabled, diagnostic checks will run once a day."
 msgstr "Når påskrudd, oppdateres FreedomBox automatisk én gang om dagen."
+
+#: modules/diagnostics/forms.py:15
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Enable automatic repair"
+msgstr "Aktiver auto-oppdatering"
+
+#: modules/diagnostics/forms.py:16
+msgid "If issues are found, try to repair them automatically."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics.html:11
 #, fuzzy
@@ -1680,11 +1690,11 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: modules/diagnostics/views.py:114
+#: modules/diagnostics/views.py:125
 msgid "Diagnostic Test"
 msgstr "Diagnostikktest"
 
-#: modules/diagnostics/views.py:144
+#: modules/diagnostics/views.py:155
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr ""
@@ -8714,7 +8724,7 @@ msgstr "Oppdaterer program"
 msgid "Error installing app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:81 setup.py:151
+#: setup.py:81 setup.py:167
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error repairing app: {error}"
@@ -8736,55 +8746,55 @@ msgstr "Program installert."
 msgid "App updated"
 msgstr "Program oppdatert"
 
-#: setup.py:110
+#: setup.py:115
 #, fuzzy
 #| msgid "Updating app"
 msgid "Repairing app"
 msgstr "Oppdaterer program"
 
-#: setup.py:130
+#: setup.py:146
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error running diagnostics: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:143
+#: setup.py:159
 msgid "Skipping repair, no failed checks"
 msgstr ""
 
-#: setup.py:157
+#: setup.py:173
 msgid "Re-running setup to complete repairs"
 msgstr ""
 
-#: setup.py:165
+#: setup.py:181
 #, fuzzy
 #| msgid "App updated"
 msgid "App repaired."
 msgstr "Program oppdatert"
 
-#: setup.py:169
+#: setup.py:185
 msgid "App repair completed with errors:\n"
 msgstr ""
 
-#: setup.py:189
+#: setup.py:205
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Installer App-er"
 
-#: setup.py:205
+#: setup.py:221
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:208
+#: setup.py:224
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Program installert."
 
-#: setup.py:581
+#: setup.py:597
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
