@@ -49,7 +49,8 @@ FIND_ARGS := \
     -not -iname ".*" \
     -not -iname "sessionid*" \
     -not -iname "~*" \
-    -not -iname "django-secret.key"
+    -not -iname "django-secret.key" \
+    -not -iwholename "*/.mypy_cache/*"
 
 
 ROOT_DATA_FILES := $(shell find data -type f $(FIND_ARGS))
