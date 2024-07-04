@@ -1,0 +1,32 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+  {{ block.super }}
+
+  <h3>{% trans "Configuration" %}</h3>
+  <p>
+    {% blocktrans trimmed %}
+      Create an admin user to get started. Other users can be created from
+      within Miniflux.
+    {% endblocktrans %}
+  </p>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'miniflux:create-admin-user' %}" class="btn btn-default"
+       role="button" title="{% trans 'Create admin user' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Create admin user' %}
+    </a>
+    <a href="{% url 'miniflux:reset-user-password' %}" class="btn btn-default"
+       role="button" title="{% trans 'Reset user password' %}">
+      <span class="fa fa-key" aria-hidden="true"></span>
+      {% trans 'Reset user password' %}
+    </a>
+  </div>
+{% endblock %}
