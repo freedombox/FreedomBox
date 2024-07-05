@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 20:18-0400\n"
+"POT-Creation-Date: 2024-07-01 20:10-0400\n"
 "PO-Revision-Date: 2024-05-26 04:09+0000\n"
 "Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -924,7 +924,7 @@ msgstr "Удалить"
 msgid "Admin"
 msgstr "Админ"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1492,7 +1492,7 @@ msgstr "Папка для загрузок"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "BitTorrent клиент, написанный на Python/pygtk"
 
-#: modules/diagnostics/__init__.py:28
+#: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1500,49 +1500,49 @@ msgstr ""
 "Тест диагностики системы выполнит ряд проверок, чтобы убедиться, что "
 "приложения и службы работают так, как ожидается."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "Диагностика"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:99
 msgid "passed"
 msgstr "успешно"
 
-#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
 msgid "failed"
 msgstr "сбой"
 
-#: modules/diagnostics/__init__.py:100
+#: modules/diagnostics/__init__.py:101
 msgid "error"
 msgstr "ошибка"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "warning"
 msgstr "предупреждение"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:203
+#: modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr "МБ"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:208
+#: modules/diagnostics/__init__.py:209
 msgid "GiB"
 msgstr "ГБ"
 
-#: modules/diagnostics/__init__.py:215
+#: modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Вы должны отключить некоторые приложения, чтобы уменьшить использование "
 "памяти."
 
-#: modules/diagnostics/__init__.py:220
+#: modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr "Вы не должны устанавливать никаких новых приложений в этой системе."
 
-#: modules/diagnostics/__init__.py:232
+#: modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1551,24 +1551,24 @@ msgstr ""
 "В системе мало памяти: использовано {percent_used}%, свободно "
 "{memory_available} {memory_available_unit}. {advice_message}"
 
-#: modules/diagnostics/__init__.py:234
+#: modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr "Мало памяти"
 
-#: modules/diagnostics/__init__.py:265
+#: modules/diagnostics/__init__.py:266
 msgid "Running diagnostics"
 msgstr "Выполнение диагностики"
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Найдены {issue_count} проблем во время обычных проверок."
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:312
 msgid "Diagnostics results"
 msgstr "Результаты диагностики"
 
-#: modules/diagnostics/__init__.py:314
+#: modules/diagnostics/__init__.py:317
 msgid "Go to diagnostics results"
 msgstr "Перейдите к результатам диагностики"
 
@@ -1581,6 +1581,16 @@ msgid "When enabled, diagnostic checks will run once a day."
 msgstr ""
 "Если эта функция включена, диагностические проверки будут выполняться раз в "
 "день."
+
+#: modules/diagnostics/forms.py:15
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Enable automatic repair"
+msgstr "Включить автообновление"
+
+#: modules/diagnostics/forms.py:16
+msgid "If issues are found, try to repair them automatically."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1648,11 +1658,11 @@ msgstr "Тест"
 msgid "Result"
 msgstr "Результат"
 
-#: modules/diagnostics/views.py:114
+#: modules/diagnostics/views.py:125
 msgid "Diagnostic Test"
 msgstr "Диагностический тест"
 
-#: modules/diagnostics/views.py:144
+#: modules/diagnostics/views.py:155
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "Приложение {app_id} не установлено, невозможно восстановить"
@@ -1683,8 +1693,8 @@ msgstr ""
 "Динамический DNS позволяет передать ваш текущий публичный IP-адрес на <a "
 "href=\"http://gnudip2.sourceforge.net/\" target=\"_blank\">сервер GnuDIP</"
 "a>. После этого сервер назначит ваше DNS-имя новому IP-адресу, и если кто-то "
-"из Интернета запросит ваше DNS-имя, он получит ответ с вашим текущим "
-"IP-адресом."
+"из Интернета запросит ваше DNS-имя, он получит ответ с вашим текущим IP-"
+"адресом."
 
 #: modules/dynamicdns/__init__.py:40
 msgid ""
@@ -2626,8 +2636,8 @@ msgid ""
 "For more information about the %(box_name)s project, see the <a "
 "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 msgstr ""
-"Дополнительную информацию о проекте %(box_name)s можно найти на <a href="
-"\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+"Дополнительную информацию о проекте %(box_name)s можно найти на <a "
+"href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
 
 #: modules/help/templates/help_about.html:91
 msgid "Learn more"
@@ -2796,10 +2806,10 @@ msgid ""
 "oftc.net/?randomnick=1&channels=freedombox&prompt=1\"> #freedombox</a> "
 "channel using the IRC web interface."
 msgstr ""
-"Многие участники и пользователи %(box_name)s также доступны в IRC-сети "
-"irc.oftc.net.  Присоединяйтесь и запрашивайте помощь на канале <a href="
-"\"https://webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt="
-"1\"> #freedombox</a> с помощью веб-интерфейса IRC."
+"Многие участники и пользователи %(box_name)s также доступны в IRC-сети irc."
+"oftc.net.  Присоединяйтесь и запрашивайте помощь на канале <a href=\"https://"
+"webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> "
+"#freedombox</a> с помощью веб-интерфейса IRC."
 
 #: modules/help/templates/help_manual.html:18
 msgid "Download as PDF"
@@ -5739,9 +5749,9 @@ msgstr ""
 "Вы можете использовать Privoxy, изменив настройки прокси-сервера вашего "
 "браузера на имя хоста {box_name} (или IP-адрес) с портом 8118. Only "
 "connections from local network IP addresses are permitted. While using "
-"Privoxy, you can see its configuration details and documentation at <a href="
-"\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a href="
-"\"http://p.p\">http://p.p</a>."
+"Privoxy, you can see its configuration details and documentation at <a "
+"href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a "
+"href=\"http://p.p\">http://p.p</a>."
 
 #: modules/privoxy/__init__.py:53
 msgid "Privoxy"
@@ -5983,8 +5993,9 @@ msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"Когда эта функция включена, доступ к RSS-мостику может получить <a href=\""
-"{users_url}\">любой пользователь</a>, входящий в группу читателей фидов."
+"Когда эта функция включена, доступ к RSS-мостику может получить <a "
+"href=\"{users_url}\">любой пользователь</a>, входящий в группу читателей "
+"фидов."
 
 #: modules/rssbridge/__init__.py:28
 #, python-brace-format
@@ -7536,8 +7547,8 @@ msgid ""
 "for connecting."
 msgstr ""
 "При использовании мобильного или настольного приложения для Tiny Tiny RSS "
-"используйте для подключения URL <a href=\"/tt-rss/\">/tt-rss</a> или <a href"
-"=\"/tt-rss-app/\">/tt-rss-app</a>."
+"используйте для подключения URL <a href=\"/tt-rss/\">/tt-rss</a> или <a "
+"href=\"/tt-rss-app/\">/tt-rss-app</a>."
 
 #: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
@@ -8060,8 +8071,8 @@ msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
 "change the password."
 msgstr ""
-"Для смены пароля используйте форму <a href=\"%(change_password_url)s\""
-">изменить пароль </a>."
+"Для смены пароля используйте форму <a "
+"href=\"%(change_password_url)s\">изменить пароль </a>."
 
 #: modules/users/templates/users_update.html:31
 #: templates/language-selection.html:17
@@ -8635,7 +8646,7 @@ msgstr "Обновление приложения"
 msgid "Error installing app: {error}"
 msgstr "Ошибка при установке приложения: {error}"
 
-#: setup.py:81 setup.py:151
+#: setup.py:81 setup.py:167
 #, python-brace-format
 msgid "Error repairing app: {error}"
 msgstr "Ошибка при восстановлении приложения: {error}"
@@ -8653,45 +8664,45 @@ msgstr "Установлено приложение."
 msgid "App updated"
 msgstr "Приложение обновлено"
 
-#: setup.py:110
+#: setup.py:115
 msgid "Repairing app"
 msgstr "Приложение для ремонта"
 
-#: setup.py:130
+#: setup.py:146
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Ошибка при выполнении диагностики: {error}"
 
-#: setup.py:143
+#: setup.py:159
 msgid "Skipping repair, no failed checks"
 msgstr "Пропуск ремонта, отсутствие неудачных проверок"
 
-#: setup.py:157
+#: setup.py:173
 msgid "Re-running setup to complete repairs"
 msgstr "Повторное выполнение установки для завершения ремонта"
 
-#: setup.py:165
+#: setup.py:181
 msgid "App repaired."
 msgstr "Приложение отремонтировано."
 
-#: setup.py:169
+#: setup.py:185
 msgid "App repair completed with errors:\n"
 msgstr "Восстановление приложения завершено с ошибками:\n"
 
-#: setup.py:189
+#: setup.py:205
 msgid "Uninstalling app"
 msgstr "Удаление приложения"
 
-#: setup.py:205
+#: setup.py:221
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Ошибка при удалении приложения: {error}"
 
-#: setup.py:208
+#: setup.py:224
 msgid "App uninstalled."
 msgstr "Приложение удалено."
 
-#: setup.py:581
+#: setup.py:597
 msgid "Updating app packages"
 msgstr "Обновление пакетов приложений"
 

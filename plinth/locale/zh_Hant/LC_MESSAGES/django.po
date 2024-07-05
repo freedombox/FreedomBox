@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 20:18-0400\n"
+"POT-Creation-Date: 2024-07-01 20:10-0400\n"
 "PO-Revision-Date: 2024-06-03 11:47+0000\n"
 "Last-Translator: Ray Kuo <ray20140811@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
@@ -884,7 +884,7 @@ msgstr "刪除"
 msgid "Admin"
 msgstr "管理員"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1419,79 +1419,80 @@ msgstr "下載目錄"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "以 Python/PyGTK 寫的 Bittorrent 客戶端"
 
-#: modules/diagnostics/__init__.py:28
+#: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
-msgstr "系統診斷測試將對您的系統進行多項檢查，以確認應用程序和服務是否按預期運行。"
+msgstr ""
+"系統診斷測試將對您的系統進行多項檢查，以確認應用程序和服務是否按預期運行。"
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "診斷"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:99
 msgid "passed"
 msgstr "通過"
 
-#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
 msgid "failed"
 msgstr "失敗"
 
-#: modules/diagnostics/__init__.py:100
+#: modules/diagnostics/__init__.py:101
 msgid "error"
 msgstr "錯誤"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "warning"
 msgstr "警告"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:203
+#: modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:208
+#: modules/diagnostics/__init__.py:209
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:215
+#: modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr "您應該停用一些應用程式以減少記憶體使用量。"
 
-#: modules/diagnostics/__init__.py:220
+#: modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr "您不應該在這個系統上安裝任何新的應用程式。"
 
-#: modules/diagnostics/__init__.py:232
+#: modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
-"系統記憶體不足: 使用了{percent_used}%，剩 "
-"{memory_available}{memory_available_unit} 可用。{advice_message}"
+"系統記憶體不足: 使用了{percent_used}%，剩 {memory_available}"
+"{memory_available_unit} 可用。{advice_message}"
 
-#: modules/diagnostics/__init__.py:234
+#: modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr "記憶體不足"
 
-#: modules/diagnostics/__init__.py:265
+#: modules/diagnostics/__init__.py:266
 msgid "Running diagnostics"
 msgstr "正在進行診斷"
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "在例行測試中發現{issue_count}個問題。"
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:312
 msgid "Diagnostics results"
 msgstr "診斷結果"
 
-#: modules/diagnostics/__init__.py:314
+#: modules/diagnostics/__init__.py:317
 msgid "Go to diagnostics results"
 msgstr "前往診斷結果頁面"
 
@@ -1502,6 +1503,14 @@ msgstr "啟用每日運行"
 #: modules/diagnostics/forms.py:12
 msgid "When enabled, diagnostic checks will run once a day."
 msgstr "啟用後，診斷檢查將每天運行一次。"
+
+#: modules/diagnostics/forms.py:15
+msgid "Enable automatic repair"
+msgstr ""
+
+#: modules/diagnostics/forms.py:16
+msgid "If issues are found, try to repair them automatically."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1569,11 +1578,11 @@ msgstr "測試"
 msgid "Result"
 msgstr "結果"
 
-#: modules/diagnostics/views.py:114
+#: modules/diagnostics/views.py:125
 msgid "Diagnostic Test"
 msgstr "診斷測試"
 
-#: modules/diagnostics/views.py:144
+#: modules/diagnostics/views.py:155
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "應用程式{app_id}未安裝，無法修復"
@@ -1585,9 +1594,8 @@ msgid ""
 "24h), it may be hard for others to find you on the Internet. This will "
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
-"如果您的網路服務供應商定期更改您的 IP 地址（即每 24 "
-"小時一次），其他人可能很難在互聯網上找到您。這將阻止其他人找到由此 {box_name}"
-" 提供的服務。"
+"如果您的網路服務供應商定期更改您的 IP 地址（即每 24 小時一次），其他人可能很"
+"難在互聯網上找到您。這將阻止其他人找到由此 {box_name} 提供的服務。"
 
 #: modules/dynamicdns/__init__.py:32
 msgid ""
@@ -1599,11 +1607,11 @@ msgid ""
 "Internet asks for your DNS name, they will get a response with your current "
 "IP address."
 msgstr ""
-"解決方案是將 DNS 名稱分配給您的 IP 地址，並在您的網路服務供應商更改您的 IP "
-"時更新 DNS 名稱。動態 DNS 允許您將當前的公共 IP 地址推送到一個 <a href=\"http"
-"://gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a> 伺服器。之後，"
-"伺服器將將您的 DNS 名稱分配給新的 IP，如果有人從網路上詢問您的 DNS 名稱，"
-"他們將收到包含您當前 IP 地址的回應。"
+"解決方案是將 DNS 名稱分配給您的 IP 地址，並在您的網路服務供應商更改您的 IP 時"
+"更新 DNS 名稱。動態 DNS 允許您將當前的公共 IP 地址推送到一個 <a "
+"href=\"http://gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a> 伺服"
+"器。之後，伺服器將將您的 DNS 名稱分配給新的 IP，如果有人從網路上詢問您的 DNS "
+"名稱，他們將收到包含您當前 IP 地址的回應。"
 
 #: modules/dynamicdns/__init__.py:40
 msgid ""
@@ -1612,10 +1620,10 @@ msgid ""
 "freedombox.org</a> or you may find free update URL based services at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
-"如果您正在尋找免費的動態 DNS 帳戶，您可以在 <a href=\"https://ddns.freedombox"
-".org\" target=\"_blank\">ddns.freedombox.org</a> 找到免費的 GnuDIP 服務，"
-"或者您也可以在 <a href=\"http://freedns.afraid.org/\" target=\"_blank\""
-">freedns.afraid.org</a> 找到基於更新 URL 的免費服務。"
+"如果您正在尋找免費的動態 DNS 帳戶，您可以在 <a href=\"https://ddns."
+"freedombox.org\" target=\"_blank\">ddns.freedombox.org</a> 找到免費的 GnuDIP "
+"服務，或者您也可以在 <a href=\"http://freedns.afraid.org/\" "
+"target=\"_blank\">freedns.afraid.org</a> 找到基於更新 URL 的免費服務。"
 
 #: modules/dynamicdns/__init__.py:61
 msgid "Dynamic DNS Client"
@@ -1631,24 +1639,25 @@ msgid ""
 "used within the URL. For details see the update URL templates of the example "
 "providers."
 msgstr ""
-"URL 中可以使用變數 &lt;User&gt;、&lt;Pass&gt;、&lt;Ip&gt; 和 "
-"&lt;Domain&gt;。有關詳細信息，請參閱示例提供者的更新 URL 模板。"
+"URL 中可以使用變數 &lt;User&gt;、&lt;Pass&gt;、&lt;Ip&gt; 和 &lt;Domain&gt;。"
+"有關詳細信息，請參閱示例提供者的更新 URL 模板。"
 
 #: modules/dynamicdns/forms.py:22
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
 "you may use the update URL of your provider."
-msgstr "請根據您的供應商選擇一個更新協議。如果您的供應商不支持 GnuDIP "
-"協議，或者您的供應商未列出，您可以使用您的供應商的更新 URL。"
+msgstr ""
+"請根據您的供應商選擇一個更新協議。如果您的供應商不支持 GnuDIP 協議，或者您的"
+"供應商未列出，您可以使用您的供應商的更新 URL。"
 
 #: modules/dynamicdns/forms.py:27
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
-"請不要在此處輸入 URL（例如 \"https://example.com/\"），而只需輸入 GnuDIP "
-"伺服器的主機名稱（例如 \"example.com\"）。"
+"請不要在此處輸入 URL（例如 \"https://example.com/\"），而只需輸入 GnuDIP 伺服"
+"器的主機名稱（例如 \"example.com\"）。"
 
 #: modules/dynamicdns/forms.py:31
 #, python-brace-format
@@ -1804,7 +1813,8 @@ msgstr "已經是最新的"
 msgid ""
 "XMPP is an open and standardized communication protocol. Here you can run "
 "and configure your XMPP server, called ejabberd."
-msgstr "XMPP是一種開放和標準化的通信協定。在這裡，您可以運行和配置名為 ejabberd 的 "
+msgstr ""
+"XMPP是一種開放和標準化的通信協定。在這裡，您可以運行和配置名為 ejabberd 的 "
 "XMPP 伺服器。"
 
 #: modules/ejabberd/__init__.py:32
@@ -1816,9 +1826,9 @@ msgid ""
 "any <a href=\"{users_url}\"> user with a {box_name} login</a>."
 msgstr ""
 "要進行實際通信，您可以使用 <a href=\"{jsxc_url}\"> Web 用戶端</a>或任何其他 "
-"<a href=\"https：//xmpp.org/software/clients\" target=\"_blank\">XMPP "
-"用戶端</a>。啟用後，任何具有 {box_name} 登錄名的 <a href=\"{users_url}\"> "
-"使用者都可以訪問 ejabberd</a>。"
+"<a href=\"https：//xmpp.org/software/clients\" target=\"_blank\">XMPP 用戶端"
+"</a>。啟用後，任何具有 {box_name} 登錄名的 <a href=\"{users_url}\"> 使用者都"
+"可以訪問 ejabberd</a>。"
 
 #: modules/ejabberd/__init__.py:40
 #, python-brace-format
@@ -1826,8 +1836,8 @@ msgid ""
 "ejabberd needs a STUN/TURN server for audio/video calls. Install the <a "
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
-"ejabberd 需要一個用於音訊/視頻通話的 STUN/TURN 伺服器。安裝 <a href=\""
-"{coturn_url}\">Coturn</a> 應用程式或配置外部伺服器。"
+"ejabberd 需要一個用於音訊/視頻通話的 STUN/TURN 伺服器。安裝 <a "
+"href=\"{coturn_url}\">Coturn</a> 應用程式或配置外部伺服器。"
 
 #: modules/ejabberd/__init__.py:61
 msgid "ejabberd"
@@ -1847,7 +1857,8 @@ msgstr "網域名稱"
 msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
-msgstr "ejabberd 要使用的域。請注意，每個域的用戶帳戶都是唯一的，尚未實現將使用者遷移"
+msgstr ""
+"ejabberd 要使用的域。請注意，每個域的用戶帳戶都是唯一的，尚未實現將使用者遷移"
 "到新功能變數名稱。"
 
 #: modules/ejabberd/forms.py:26
@@ -1963,8 +1974,8 @@ msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
-"<a href=\"/plinth/apps/roundcube/\">Roundcube 應用程式</a> "
-"提供使用者存取電子郵件的 Web 介面。"
+"<a href=\"/plinth/apps/roundcube/\">Roundcube 應用程式</a> 提供使用者存取電子"
+"郵件的 Web 介面。"
 
 #: modules/email/__init__.py:44
 msgid ""
@@ -2098,8 +2109,8 @@ msgid ""
 "network traffic on your {box_name}. Keeping a firewall enabled and properly "
 "configured reduces risk of security threat from the Internet."
 msgstr ""
-"防火牆是一個安全系統，用於控制您的 {box_name} 上傳入和傳出的網路流量。"
-"保持防火牆啟用並正確配置可降低來自 Internet 的安全性威脅的風險。"
+"防火牆是一個安全系統，用於控制您的 {box_name} 上傳入和傳出的網路流量。保持防"
+"火牆啟用並正確配置可降低來自 Internet 的安全性威脅的風險。"
 
 #: modules/firewall/__init__.py:61
 msgid "Firewall"
@@ -7627,7 +7638,7 @@ msgstr ""
 msgid "Error installing app: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:81 setup.py:151
+#: setup.py:81 setup.py:167
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error repairing app: {error}"
@@ -7649,51 +7660,51 @@ msgstr "應用已完成安裝。"
 msgid "App updated"
 msgstr ""
 
-#: setup.py:110
+#: setup.py:115
 msgid "Repairing app"
 msgstr ""
 
-#: setup.py:130
+#: setup.py:146
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error running diagnostics: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:143
+#: setup.py:159
 msgid "Skipping repair, no failed checks"
 msgstr ""
 
-#: setup.py:157
+#: setup.py:173
 msgid "Re-running setup to complete repairs"
 msgstr ""
 
-#: setup.py:165
+#: setup.py:181
 msgid "App repaired."
 msgstr ""
 
-#: setup.py:169
+#: setup.py:185
 msgid "App repair completed with errors:\n"
 msgstr ""
 
-#: setup.py:189
+#: setup.py:205
 #, fuzzy
 #| msgid "Error installing application: {error}"
 msgid "Uninstalling app"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:205
+#: setup.py:221
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "安裝應用遇到錯誤：{error}"
 
-#: setup.py:208
+#: setup.py:224
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "應用已完成安裝。"
 
-#: setup.py:581
+#: setup.py:597
 msgid "Updating app packages"
 msgstr ""
 

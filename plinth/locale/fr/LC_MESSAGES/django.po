@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 20:18-0400\n"
-"PO-Revision-Date: 2024-04-02 18:01+0000\n"
+"POT-Creation-Date: 2024-07-01 20:10-0400\n"
+"PO-Revision-Date: 2024-06-20 19:09+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.6-rc\n"
 
 #: config.py:103
 #, python-brace-format
@@ -933,7 +933,7 @@ msgstr "Suppression"
 msgid "Admin"
 msgstr "Admin"
 
-#: modules/bepasty/views.py:88 modules/diagnostics/views.py:55
+#: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
@@ -1519,7 +1519,7 @@ msgstr "Répertoire de téléchargement"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Client BitTorrent écrit en Python/PyGTK"
 
-#: modules/diagnostics/__init__.py:28
+#: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
 "confirm that applications and services are working as expected."
@@ -1528,49 +1528,49 @@ msgstr ""
 "sur votre système pour confirmer que les applications et les services "
 "fonctionnent comme prévu."
 
-#: modules/diagnostics/__init__.py:52 modules/diagnostics/__init__.py:237
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
 msgid "Diagnostics"
 msgstr "Diagnostics"
 
-#: modules/diagnostics/__init__.py:98
+#: modules/diagnostics/__init__.py:99
 msgid "passed"
 msgstr "réussi"
 
-#: modules/diagnostics/__init__.py:99 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
 msgid "failed"
 msgstr "échoué"
 
-#: modules/diagnostics/__init__.py:100
+#: modules/diagnostics/__init__.py:101
 msgid "error"
 msgstr "erreur"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "warning"
 msgstr "avertissement"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:203
+#: modules/diagnostics/__init__.py:204
 msgid "MiB"
 msgstr "Mio"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:208
+#: modules/diagnostics/__init__.py:209
 msgid "GiB"
 msgstr "Gio"
 
-#: modules/diagnostics/__init__.py:215
+#: modules/diagnostics/__init__.py:216
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Vous devriez désactiver certaines application pour libérer de la mémoire."
 
-#: modules/diagnostics/__init__.py:220
+#: modules/diagnostics/__init__.py:221
 msgid "You should not install any new apps on this system."
 msgstr ""
 "Il est déconseillé d’installer de nouvelles applications sur ce système."
 
-#: modules/diagnostics/__init__.py:232
+#: modules/diagnostics/__init__.py:233
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1579,24 +1579,24 @@ msgstr ""
 "Le système est bientôt à court de mémoire : {percent_used}% utilisés, "
 "{memory_available} {memory_available_unit} libres. {advice_message}"
 
-#: modules/diagnostics/__init__.py:234
+#: modules/diagnostics/__init__.py:235
 msgid "Low Memory"
 msgstr "Mémoire disponible faible"
 
-#: modules/diagnostics/__init__.py:265
+#: modules/diagnostics/__init__.py:266
 msgid "Running diagnostics"
 msgstr "Diagnostics en cours"
 
-#: modules/diagnostics/__init__.py:308
+#: modules/diagnostics/__init__.py:311
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "{issue_count} problèmes trouvés lors des tests de routine."
 
-#: modules/diagnostics/__init__.py:309
+#: modules/diagnostics/__init__.py:312
 msgid "Diagnostics results"
 msgstr "Résultats des diagnostics"
 
-#: modules/diagnostics/__init__.py:314
+#: modules/diagnostics/__init__.py:317
 msgid "Go to diagnostics results"
 msgstr "Aller aux résultats des diagnostics"
 
@@ -1608,6 +1608,16 @@ msgstr "Activer l'exécution quotidienne"
 msgid "When enabled, diagnostic checks will run once a day."
 msgstr ""
 "En activant cette option, les diagnostics s'exécuteront une fois par jour."
+
+#: modules/diagnostics/forms.py:15
+#, fuzzy
+#| msgid "Enable auto-update"
+msgid "Enable automatic repair"
+msgstr "Activer les mises à jour automatiques"
+
+#: modules/diagnostics/forms.py:16
+msgid "If issues are found, try to repair them automatically."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1633,7 +1643,7 @@ msgstr "Appli : %(app_name)s"
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
 msgid "Try to repair"
-msgstr ""
+msgstr "Essayer de réparer"
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1675,14 +1685,14 @@ msgstr "Test"
 msgid "Result"
 msgstr "Résultat"
 
-#: modules/diagnostics/views.py:114
+#: modules/diagnostics/views.py:125
 msgid "Diagnostic Test"
 msgstr "Test de diagnostic"
 
-#: modules/diagnostics/views.py:144
+#: modules/diagnostics/views.py:155
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
-msgstr ""
+msgstr "L'application {app_id} n'est pas installée, impossible de réparer"
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -3962,6 +3972,9 @@ msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
 "this will be also scanned for media files."
 msgstr ""
+"Le répertoire que le serveur MiniDLNA lira pour le contenu. Tous les sous-"
+"répertoires de ce répertoire seront aussi analysés à la recherche de "
+"fichiers multimédias."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -5293,10 +5306,17 @@ msgid ""
 "and mobile clients. The Nextcloud server provides a well integrated web "
 "interface."
 msgstr ""
+"Nextcloud est une plate-forme de productivité auto-hébergé qui fournit des "
+"fonctionnalités privées et sûres telles que le partage de fichiers, le "
+"travail collaboratif et davantage. Nextcloud comprend le serveur Nextcloud, "
+"des applications clientes pour les ordinateurs de bureau et des clients "
+"mobiles. Le serveur Nextcloud fournit une interface web bien intégrée."
 
 #: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
+"Tous les utilisateurs de FreedomBox peuvent utiliser Nextcloud. Pour "
+"effectuer des opérations administratives "
 
 #: modules/nextcloud/__init__.py:34
 #, python-brace-format
@@ -5306,95 +5326,76 @@ msgid ""
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
+"Veuillez noter que Nextcloud est installé et fonctionne au sein d'un "
+"conteneur fourni par la communauté Nextcloud. Les vérifications de sécurité, "
+"de qualité, de confidentialité et de légalité sont effectuées par le projet "
+"en amont et pas par Debian/{box_name}. Les mises à jour sont effectuées en "
+"fonction d'un cycle indépendant."
 
 #: modules/nextcloud/__init__.py:40
-#, fuzzy
-#| msgid "Uninstalling an app is an experimental feature."
 msgid "This app is experimental."
-msgstr ""
-"La désinstallation d’applications est une fonctionnalité expérimentale."
+msgstr "Cette application est expérimentale."
 
 #: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
-#, fuzzy
-#| msgid "Next"
 msgid "Nextcloud"
-msgstr "Suivant"
+msgstr "Nextcloud"
 
 #: modules/nextcloud/__init__.py:60
 msgid "File Storage & Collaboration"
-msgstr ""
+msgstr "Stockage de fichiers et collaboration"
 
 #: modules/nextcloud/forms.py:19
-#, fuzzy
-#| msgid "Hostname set"
 msgid "Not set"
-msgstr "Nom de machine configuré"
+msgstr "Non configuré"
 
 #: modules/nextcloud/forms.py:26
-#, fuzzy
-#| msgid "Server domain"
 msgid "Override domain"
-msgstr "Domaine du serveur"
+msgstr "Remplacer le domaine"
 
 #: modules/nextcloud/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
-#| "\"example.onion\"."
 msgid ""
 "Set to the domain or IP address that Nextcloud should be forced to generate "
 "URLs with. Should not be needed if a valid domain is used to access "
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
-"Utilisé par MediaWiki pour engendrer des URL qui pointent vers le wiki comme "
-"dans les pieds de pages, fils et courriels. Exemples : « mafreedombox."
-"exemple.org » ou « exemple.onion »."
+"Configuré sur le domaine ou l'adresse IP avec lequel Nextcloud devrait être "
+"forcé de générer des URL. Exemples : « mafreedombox.exemple.org » ou "
+"« exemple.onion »."
 
 #: modules/nextcloud/forms.py:33
-#, fuzzy
-#| msgid "Administrator Password"
 msgid "Administrator password"
 msgstr "Mot de passe administrateur"
 
 #: modules/nextcloud/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). The "
-#| "password cannot be a common one and the minimum required length is "
-#| "<strong>10 characters</strong>. Leave this field blank to keep the "
-#| "current password."
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
 "required length is <strong>10 characters</strong>. Leave this field blank to "
 "keep the current password."
 msgstr ""
-"Définir un nouveau mot de passe pour le compte d’administration de MediaWiki "
-"(admin). Le mot de passe ne peut pas être courant et la taille minimale "
-"requise est de <strong>10 caractères</strong>. Laissez ce champ vide pour "
-"conserver le mot de passe actuel."
+"Optionnel. Définir u n nouveau mot de passe pour le compte de "
+"l'administrateur Nextcloud (nextcloud-admin). Le mot de passe ne peut pas "
+"être courant et la taille minimale requise est de <strong>10 caractères</"
+"strong>. Laissez ce champ vide pour conserver le mot de passe actuel."
 
 #: modules/nextcloud/forms.py:41
-#, fuzzy
-#| msgid "Default zone is external"
 msgid "Default phone region"
-msgstr "La zone par défaut est externe"
+msgstr "Région téléphonique par défaut"
 
 #: modules/nextcloud/forms.py:42
 msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
 msgstr ""
+"La région téléphonique par défaut est nécessaire pour valider les numéro de "
+"téléphone dans les réglages du profil sans code de pays."
 
 #: modules/nextcloud/views.py:53
-#, fuzzy
-#| msgid "Password update failed. Please choose a stronger password"
 msgid "Password update failed. Please choose a stronger password."
 msgstr ""
 "Échec de la mise à jour du mot passe. Veuillez choisir un mot de passe plus "
-"sûr"
+"sûr."
 
 #: modules/openvpn/__init__.py:20
 #, python-brace-format
@@ -8798,11 +8799,10 @@ msgstr "Mise à jour de l’application"
 msgid "Error installing app: {error}"
 msgstr "Erreur lors de l’installation de l’appli : {error}"
 
-#: setup.py:81 setup.py:151
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#: setup.py:81 setup.py:167
+#, python-brace-format
 msgid "Error repairing app: {error}"
-msgstr "Erreur lors de la mise à jour de l’appli : {error}"
+msgstr "Erreur lors de la réparation de l’application : {error}"
 
 #: setup.py:84
 #, python-brace-format
@@ -8817,50 +8817,45 @@ msgstr "Application installée."
 msgid "App updated"
 msgstr "Application mise à jour"
 
-#: setup.py:110
-#, fuzzy
-#| msgid "Updating app"
+#: setup.py:115
 msgid "Repairing app"
-msgstr "Mise à jour de l’application"
+msgstr "Réparation de l’application"
 
-#: setup.py:130
-#, fuzzy, python-brace-format
-#| msgid "Error uninstalling app: {error}"
+#: setup.py:146
+#, python-brace-format
 msgid "Error running diagnostics: {error}"
-msgstr "Erreur lors de la désinstallation de l’appli : {error}"
+msgstr "Erreur lors de l'exécution des diagnostics : {error}"
 
-#: setup.py:143
+#: setup.py:159
 msgid "Skipping repair, no failed checks"
-msgstr ""
+msgstr "Réparation ignorée, aucune vérification n'a échoué"
 
-#: setup.py:157
+#: setup.py:173
 msgid "Re-running setup to complete repairs"
-msgstr ""
+msgstr "Ré-exécution de la configuration pour terminer les réparations"
 
-#: setup.py:165
-#, fuzzy
-#| msgid "App updated"
+#: setup.py:181
 msgid "App repaired."
-msgstr "Application mise à jour"
+msgstr "Application réparée."
 
-#: setup.py:169
+#: setup.py:185
 msgid "App repair completed with errors:\n"
-msgstr ""
+msgstr "Réparation de l'application terminée avec des erreurs :\n"
 
-#: setup.py:189
+#: setup.py:205
 msgid "Uninstalling app"
 msgstr "Désinstallation de l’application"
 
-#: setup.py:205
+#: setup.py:221
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Erreur lors de la désinstallation de l’appli : {error}"
 
-#: setup.py:208
+#: setup.py:224
 msgid "App uninstalled."
 msgstr "Application désinstallée."
 
-#: setup.py:581
+#: setup.py:597
 msgid "Updating app packages"
 msgstr "Mise à jour des paquets de l’application"
 

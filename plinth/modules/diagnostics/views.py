@@ -44,14 +44,25 @@ class DiagnosticsView(AppView):
         """Return the initial values for the form."""
         status = super().get_initial()
         status['daily_run_enabled'] = diagnostics.is_daily_run_enabled()
+        status['automatic_repair'] = diagnostics.is_automatic_repair_enabled()
         return status
 
     def form_valid(self, form):
         """Apply the form changes."""
         old_status = form.initial
         new_status = form.cleaned_data
+        updated = False
+
         if old_status['daily_run_enabled'] != new_status['daily_run_enabled']:
             diagnostics.set_daily_run_enabled(new_status['daily_run_enabled'])
+            updated = True
+
+        if old_status['automatic_repair'] != new_status['automatic_repair']:
+            diagnostics.set_automatic_repair_enabled(
+                new_status['automatic_repair'])
+            updated = True
+
+        if updated:
             messages.success(self.request, _('Configuration updated.'))
 
         return super().form_valid(form)
