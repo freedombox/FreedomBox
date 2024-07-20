@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-01 20:10-0400\n"
-"PO-Revision-Date: 2024-05-31 23:09+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-07-09 17:09+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1602,11 +1602,12 @@ msgstr "Wenn aktiviert, laufen einmal täglich diagnostische Tests."
 #, fuzzy
 #| msgid "Enable auto-update"
 msgid "Enable automatic repair"
-msgstr "Auto-Aktualisierung aktivieren"
+msgstr "Automatisches Reparieren aktivieren"
 
 #: modules/diagnostics/forms.py:16
+#, fuzzy
 msgid "If issues are found, try to repair them automatically."
-msgstr ""
+msgstr "Wenn Probleme gefunden werden, versuche sie automatisch zu reparieren."
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1631,8 +1632,9 @@ msgstr "App: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:20
 #: modules/diagnostics/templates/diagnostics_full.html:48
+#, fuzzy
 msgid "Try to repair"
-msgstr ""
+msgstr "Versuche, zu reparieren"
 
 #: modules/diagnostics/templates/diagnostics_app.html:32
 msgid "This app does not support diagnostics"
@@ -1679,9 +1681,9 @@ msgid "Diagnostic Test"
 msgstr "Diagnose"
 
 #: modules/diagnostics/views.py:155
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
-msgstr ""
+msgstr "App {app_id} ist nicht installiert, kann nicht reparieren"
 
 #: modules/dynamicdns/__init__.py:28
 #, python-brace-format
@@ -3953,6 +3955,9 @@ msgid ""
 "Directory that MiniDLNA Server will read for content. All sub-directories of "
 "this will be also scanned for media files."
 msgstr ""
+"Verzeichnis, welches von MiniDLNA Server nach Inhalten durchsucht wird. Alle "
+"Unterverzeichnisse dieses Verzeichnisses werden ebenfalls nach Mediendateien "
+"durchsucht."
 
 #: modules/minidlna/manifest.py:10
 msgid "vlc"
@@ -5269,6 +5274,7 @@ msgid "Failed to delete connection: Connection not found."
 msgstr "Konnte Verbindung nicht löschen: Verbindung nicht gefunden."
 
 #: modules/nextcloud/__init__.py:25
+#, fuzzy
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5276,10 +5282,17 @@ msgid ""
 "and mobile clients. The Nextcloud server provides a well integrated web "
 "interface."
 msgstr ""
+"Nextcloud ist eine selbstgehostete Produktivitätsplattform, die private und "
+"sichere Funktionen zum Dateiaustausch, zur Zusammenarbeit und mehr bietet. "
+"Nextcloud umfasst den Nextcloud-Server, Client-Anwendungen für Desktop-"
+"Computer und mobile Clients. Der Nextcloud Server bietet eine gut "
+"integrierte Web-Schnittstelle."
 
 #: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
+"Alle Nutzer von FreedomBox können Nextcloud nutzen. Zur Durchführung von "
+"administrativen "
 
 #: modules/nextcloud/__init__.py:34
 #, python-brace-format
@@ -5289,6 +5302,11 @@ msgid ""
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
+"Bitte beachten Sie, dass Nextcloud in einem von der Nextcloud-Gemeinschaft "
+"bereitgestellten Container installiert und betrieben wird. Sicherheits-, "
+"Qualitäts-, Datenschutz- und rechtliche Überprüfungen werden vom Upstream-"
+"Projekt und nicht von Debian/{box_name} durchgeführt. Aktualisierungen "
+"werden in einem unabhängigen Zyklus durchgeführt."
 
 #: modules/nextcloud/__init__.py:40
 msgid "This app is experimental."
@@ -5312,41 +5330,31 @@ msgid "Override domain"
 msgstr "Domain überschreiben"
 
 #: modules/nextcloud/forms.py:27
-#, fuzzy
-#| msgid ""
-#| "Used by MediaWiki to generate URLs that point to the wiki such as in "
-#| "footer, feeds and emails. Examples: \"myfreedombox.example.org\" or "
-#| "\"example.onion\"."
 msgid ""
 "Set to the domain or IP address that Nextcloud should be forced to generate "
 "URLs with. Should not be needed if a valid domain is used to access "
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
-"Wird von MediaWiki verwendet, um URLs zu generieren, die auf das Wiki "
-"verweisen, z.B. in der Fußzeile, in Feeds und E-Mails. Beispiele: "
-"\"myfreedombox.example.org\" oder \"example.onion\"."
+"Festgelegt auf die Domäne oder IP-Adresse, die Nextcloud zur Generierung von "
+"URLs nutzen soll. Sollte nicht benötigt werden, wenn eine gültige Domain für "
+"den Zugriff auf Nextcloud verwendet wird. Beispiele: \"myfreedombox.example."
+"org\" oder \"example.onion\"."
 
 #: modules/nextcloud/forms.py:33
 msgid "Administrator password"
 msgstr "Administrator-Passwort"
 
 #: modules/nextcloud/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). The "
-#| "password cannot be a common one and the minimum required length is "
-#| "<strong>10 characters</strong>. Leave this field blank to keep the "
-#| "current password."
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
 "required length is <strong>10 characters</strong>. Leave this field blank to "
 "keep the current password."
 msgstr ""
-"Geben Sie ein neues Passwort für den MediaWiki-Administrator ein (admin). "
-"Das Passwort darf nicht allgemein bekannt sein und muss mindestens "
-"<strong>10 Zeichen</strong> lang sein. Lassen Sie das Feld leer, bleibt das "
-"derzeitige Passwort bestehen."
+"Optional. Geben Sie ein neues Passwort für den Nextcloud-Administrator ein "
+"(nextcloud-admin). Das Passwort darf nicht allgemein bekannt sein und muss "
+"mindestens <strong>10 Zeichen</strong> lang sein. Lassen Sie das Feld leer, "
+"bleibt das derzeitige Passwort bestehen."
 
 #: modules/nextcloud/forms.py:41
 msgid "Default phone region"
@@ -5357,6 +5365,8 @@ msgid ""
 "The default phone region is required to validate phone numbers in the "
 "profile settings without a country code."
 msgstr ""
+"Die Standard-Telefonregion ist erforderlich, um Telefonnummern in den "
+"Profileinstellungen ohne Ländervorwahl zu akzeptieren."
 
 #: modules/nextcloud/views.py:53
 msgid "Password update failed. Please choose a stronger password."
@@ -8771,18 +8781,19 @@ msgid "Repairing app"
 msgstr "Reparieren der App"
 
 #: setup.py:146
-#, fuzzy, python-brace-format
-#| msgid "Error uninstalling app: {error}"
+#, python-brace-format
 msgid "Error running diagnostics: {error}"
-msgstr "Fehler bei der Deinstallation der App: {error}"
+msgstr "Fehler bei der Diagnose: {error}"
 
 #: setup.py:159
+#, fuzzy
 msgid "Skipping repair, no failed checks"
-msgstr ""
+msgstr "Überspringe Reparatur, keine fehlgeschlagenen Tests"
 
 #: setup.py:173
+#, fuzzy
 msgid "Re-running setup to complete repairs"
-msgstr ""
+msgstr "Wiederholen der Installation, um Reparatur abzuschließen"
 
 #: setup.py:181
 msgid "App repaired."
@@ -8790,7 +8801,7 @@ msgstr "App repariert."
 
 #: setup.py:185
 msgid "App repair completed with errors:\n"
-msgstr ""
+msgstr "App-Reparatur mit Fehlern abgeschlossen:\n"
 
 #: setup.py:205
 msgid "Uninstalling app"
