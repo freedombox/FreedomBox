@@ -5,7 +5,7 @@ import json
 import os
 import pathlib
 import subprocess
-from typing import Any, Dict, Tuple
+from typing import Tuple
 from urllib.parse import urlparse
 
 import pexpect
@@ -25,12 +25,12 @@ DATABASE_FILE = '/etc/miniflux/database'
 DB_BACKUP_FILE = '/var/lib/plinth/backups-data/miniflux-database.sql'
 
 
-def _dict_to_env_file(dictionary: Dict) -> str:
+def _dict_to_env_file(dictionary: dict[str, str]) -> str:
     """Write a dictionary into a systemd environment file format."""
     return "\n".join((f"{k}={v}" for k, v in dictionary.items()))
 
 
-def _env_file_to_dict(env_vars: str) -> Dict:
+def _env_file_to_dict(env_vars: str) -> dict[str, str]:
     """Return systemd environtment variables as a dictionary."""
     return {
         line.split('=')[0]: line.split('=')[1].strip()
@@ -55,7 +55,7 @@ def pre_setup():
 
 
 def _run_miniflux_interactively(command: str, username: str,
-                                password: str) -> Tuple[Any, Any]:
+                                password: str) -> Tuple[str, dict]:
     """Fill interactive terminal prompt for username and password."""
     args = ['-c', '/etc/miniflux/miniflux.conf', command]
     os.environ['LOG_FORMAT'] = 'json'
@@ -69,10 +69,18 @@ def _run_miniflux_interactively(command: str, username: str,
     child.sendline(password)
 
     child.expect(pexpect.EOF)
-    status = child.before.decode()
+    raw_message = child.before.decode()
+    try:
+        json_message = json.loads(raw_message)
+    except (KeyError, json.JSONDecodeError):
+        json_message = {}
 
     child.close()
-    return (status, child.exitstatus)
+    if child.exitstatus or child.signalstatus:
+        message = json_message.get('msg') if json_message else raw_message
+        raise Exception(message)
+
+    return raw_message, json_message
 
 
 @privileged
@@ -81,16 +89,11 @@ def create_admin_user(username: str, password: str):
 
     Raise exception if a user with the name already exists or otherwise fails.
     """
-    status, _ = _run_miniflux_interactively('--create-admin', username,
-                                            password)
-    try:
-        log = json.loads(status)
-    except (KeyError, json.JSONDecodeError):
-        pass
-
+    _, json_message = _run_miniflux_interactively('--create-admin', username,
+                                                  password)
     # user_id is allocated only when a new user is created successfully.
-    if not log.get('user_id'):
-        raise Exception(log['msg'])
+    if json_message and not json_message.get('user_id'):
+        raise Exception(json_message.get('msg'))
 
 
 @privileged
@@ -99,14 +102,7 @@ def reset_user_password(username: str, password: str):
 
     Raise exception if the user does not exist or otherwise fails.
     """
-    status, exit_code = _run_miniflux_interactively('--reset-password',
-                                                    username, password)
-    if not os.WIFEXITED(exit_code):
-        try:
-            status_message = json.loads(status)['msg']
-            raise Exception(status_message)
-        except (KeyError, json.JSONDecodeError):
-            raise Exception(status)
+    _run_miniflux_interactively('--reset-password', username, password)
 
 
 @privileged
