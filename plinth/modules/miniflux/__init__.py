@@ -60,11 +60,7 @@ class MinifluxApp(app_module.App):
                                       login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-miniflux', [
-            'miniflux',
-            'postgresql',
-            'postgresql-contrib',
-        ])
+        packages = Packages('packages-miniflux', ['miniflux', 'postgresql'])
         self.add(packages)
 
         drop_in_configs = DropinConfigs(
