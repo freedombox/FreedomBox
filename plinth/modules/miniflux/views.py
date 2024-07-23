@@ -76,7 +76,7 @@ class ResetUserPasswordView(SuccessMessageMixin, FormView):
         password = form.cleaned_data['password']
 
         try:
-            privileged.reset_user_password(username, password).strip()
+            privileged.reset_user_password(username, password)
             self.success_message = _('Password reset for user: {username}'
                                      ).format(username=username)
         except Exception as error:
