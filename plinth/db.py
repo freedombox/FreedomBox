@@ -3,6 +3,8 @@
 Common utilities to help with handling a database.
 """
 
+import pathlib
+import subprocess
 import threading
 from typing import ClassVar
 
@@ -83,3 +85,51 @@ class DBLock:
 # most of the significant cases where we have seen database lock issues.
 
 lock = DBLock()
+
+
+#
+# PostgreSQL utilites
+#
+def _run_as_postgres(command, stdin=None, stdout=None):
+    """Run a command as postgres user."""
+    command = ['sudo', '--user', 'postgres'] + command
+    return subprocess.run(command, stdin=stdin, stdout=stdout, check=True)
+
+
+def postgres_dump_database(backup_file: str, database_name: str,
+                           database_user: str):
+    """Dump PostgreSQL database to a file.
+
+    Overwrites file if it exists. Uses pg_dump utility from postgres package
+    (needs to be installed).
+    """
+    backup_path = pathlib.Path(backup_file)
+    backup_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(backup_path, 'w', encoding='utf-8') as file_handle:
+        process = _run_as_postgres(['pg_dumpall', '--roles-only'],
+                                   stdout=subprocess.PIPE)
+        file_handle.write(f'DROP ROLE IF EXISTS {database_user};\n')
+        for line in process.stdout.decode().splitlines():
+            if database_user in line:
+                file_handle.write(line + '\n')
+
+    with open(backup_path, 'a', encoding='utf-8') as file_handle:
+        _run_as_postgres(
+            ['pg_dump', '--create', '--clean', '--if-exists', database_name],
+            stdout=file_handle)
+
+
+def postgres_restore_database(backup_file: str, database_name):
+    """Restore PostgreSQL database from a file.
+
+    Drops database and recreates it. Uses pg_dump utility from postgres package
+    (needs to be installed).
+    """
+    # This is needed for old backups only. New backups include 'DROP DATABASE
+    # IF EXISTS' and 'CREATE DATABASE' statements.
+    _run_as_postgres(['dropdb', database_name])
+    _run_as_postgres(['createdb', database_name])
+
+    with open(backup_file, 'r', encoding='utf-8') as file_handle:
+        _run_as_postgres(['psql', '--dbname', database_name],
+                         stdin=file_handle)

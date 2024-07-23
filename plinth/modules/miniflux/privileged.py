@@ -4,13 +4,12 @@
 import json
 import os
 import pathlib
-import subprocess
 from typing import Tuple
 from urllib.parse import urlparse
 
 import pexpect
 
-from plinth import action_utils
+from plinth import action_utils, db
 from plinth.actions import privileged
 from plinth.utils import is_non_empty_file
 
@@ -124,44 +123,16 @@ def _get_database_config():
     }
 
 
-# The following 3 methods are duplicated in tt-rss/privileged.py
-
-
-def _run_as_postgres(command, stdin=None, stdout=None):
-    """Run a command as postgres user."""
-    command = ['sudo', '--user', 'postgres'] + command
-    return subprocess.run(command, stdin=stdin, stdout=stdout, check=True)
-
-
 @privileged
 def dump_database():
     """Dump database to file."""
     config = _get_database_config()
-    os.makedirs(os.path.dirname(DB_BACKUP_FILE), exist_ok=True)
-    with open(DB_BACKUP_FILE, 'w', encoding='utf-8') as db_backup_file:
-        process = _run_as_postgres(['pg_dumpall', '--roles-only'],
-                                   stdout=subprocess.PIPE)
-        db_backup_file.write(f'DROP ROLE IF EXISTS {config["user"]};\n')
-        for line in process.stdout.decode().splitlines():
-            if config['user'] in line:
-                db_backup_file.write(line + '\n')
-
-    with open(DB_BACKUP_FILE, 'a', encoding='utf-8') as db_backup_file:
-        _run_as_postgres([
-            'pg_dump', '--create', '--clean', '--if-exists', config['database']
-        ], stdout=db_backup_file)
+    db.postgres_dump_database(DB_BACKUP_FILE, config['database'],
+                              config['user'])
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
     config = _get_database_config()
-
-    # This is needed for old backups only. New backups include 'DROP DATABASE
-    # IF EXISTS' and 'CREATE DATABASE' statements.
-    _run_as_postgres(['dropdb', config['database']])
-    _run_as_postgres(['createdb', config['database']])
-
-    with open(DB_BACKUP_FILE, 'r', encoding='utf-8') as db_restore_file:
-        _run_as_postgres(['psql', '--dbname', config['database']],
-                         stdin=db_restore_file)
+    db.postgres_restore_database(DB_BACKUP_FILE, config['database'])
