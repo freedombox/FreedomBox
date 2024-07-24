@@ -74,6 +74,7 @@ def _fill_credentials_form(browser, href):
 def _create_admin_user(browser):
     """Create Miniflux admin user."""
     _fill_credentials_form(browser, 'create-admin-user')
+    _fill_credentials_form(browser, 'reset-user-password')
 
 
 def _open_miniflux_app(browser):
