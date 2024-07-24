@@ -5,7 +5,7 @@ import json
 import os
 import pathlib
 import subprocess
-from typing import Dict
+from typing import Any, Dict, Tuple
 from urllib.parse import urlparse
 
 import pexpect
@@ -54,11 +54,12 @@ def pre_setup():
     vars_file.write_text(_dict_to_env_file(new_settings))
 
 
-def _run_miniflux_intreractively(command: str, username: str,
-                                 password: str) -> str:
+def _run_miniflux_interactively(command: str, username: str,
+                                password: str) -> Tuple[Any, Any]:
     """Fill interactive terminal prompt for username and password."""
     args = ['-c', '/etc/miniflux/miniflux.conf', command]
-    child = pexpect.spawn('miniflux', args, env={'LOG_FORMAT': 'json'})
+    os.environ['LOG_FORMAT'] = 'json'
+    child = pexpect.spawn('miniflux', args, env=os.environ)
 
     # The CLI is in English only.
     child.expect('Enter Username: ')
@@ -71,13 +72,7 @@ def _run_miniflux_intreractively(command: str, username: str,
     status = child.before.decode()
 
     child.close()
-    if not os.WIFEXITED(child.exitstatus):
-        try:
-            status = json.loads(status)['msg']
-        except (KeyError, json.JSONDecodeError):
-            pass
-
-        raise Exception(status)
+    return (status, child.exitstatus)
 
 
 @privileged
@@ -86,7 +81,16 @@ def create_admin_user(username: str, password: str):
 
     Raise exception if a user with the name already exists or otherwise fails.
     """
-    _run_miniflux_intreractively('--create-admin', username, password)
+    status, _ = _run_miniflux_interactively('--create-admin', username,
+                                            password)
+    try:
+        log = json.loads(status)
+    except (KeyError, json.JSONDecodeError):
+        pass
+
+    # user_id is allocated only when a new user is created successfully.
+    if not log.get('user_id'):
+        raise Exception(log['msg'])
 
 
 @privileged
@@ -95,7 +99,15 @@ def reset_user_password(username: str, password: str):
 
     Raise exception if the user does not exist or otherwise fails.
     """
-    _run_miniflux_intreractively('--reset-password', username, password)
+    status, exit_code = _run_miniflux_interactively('--reset-password',
+                                                    username, password)
+    if not os.WIFEXITED(exit_code):
+        try:
+            status_message = json.loads(status)['msg']
+        except (KeyError, json.JSONDecodeError):
+            pass
+
+        raise Exception(status)
 
 
 @privileged

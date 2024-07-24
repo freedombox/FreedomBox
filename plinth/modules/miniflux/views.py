@@ -83,6 +83,6 @@ class ResetUserPasswordView(SuccessMessageMixin, FormView):
             messages.error(
                 self.request,
                 _('An error occurred during password reset: {error}.').format(
-                    error=error))
+                    error=str(error).strip()))
 
         return super().form_valid(form)
