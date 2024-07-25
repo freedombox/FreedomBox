@@ -203,6 +203,17 @@ def download_file_outside_browser(url):
 ###########################
 # Form handling utilities #
 ###########################
+def click(browser, element):
+    """Click an element after scrolling it into view considering header."""
+    try:
+        element.click()
+    except ElementClickInterceptedException:
+        script = 'arguments[0].style.scrollMarginTop = "4.3125rem";' \
+            'arguments[0].scrollIntoView(true);'
+        browser.execute_script(script, element._element)
+        element.click()
+
+
 def submit(browser, element=None, form_class=None, expected_url=None):
     """Submit a specific form in the current page and wait for page change."""
     if not (element or form_class):
@@ -210,7 +221,7 @@ def submit(browser, element=None, form_class=None, expected_url=None):
 
     with wait_for_page_update(browser, expected_url=expected_url):
         if element:
-            element.click()
+            click(browser, element)
         elif form_class:
             browser.find_by_css(
                 '.{} input[type=submit]'.format(form_class)).click()
