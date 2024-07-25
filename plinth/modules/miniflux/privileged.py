@@ -104,10 +104,9 @@ def reset_user_password(username: str, password: str):
     if not os.WIFEXITED(exit_code):
         try:
             status_message = json.loads(status)['msg']
+            raise Exception(status_message)
         except (KeyError, json.JSONDecodeError):
-            pass
-
-        raise Exception(status)
+            raise Exception(status)
 
 
 @privileged
