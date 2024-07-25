@@ -15,7 +15,8 @@ from contextlib import contextmanager
 
 import pytest
 import requests
-from selenium.common.exceptions import (StaleElementReferenceException,
+from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        StaleElementReferenceException,
                                         WebDriverException)
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -131,6 +132,10 @@ def wait_for_page_update(browser, timeout=300, expected_url=None):
     page_body = browser.find_by_tag('body').first
     try:
         yield
+    except ElementClickInterceptedException:
+        # When a element that is not visible is clicked, the click is ignored
+        # and we can't expect a page update.
+        raise
     except WebDriverException:
         # ignore a connection failure which may happen after web server restart
         pass
