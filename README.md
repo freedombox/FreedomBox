@@ -63,3 +63,11 @@ See the [HACKING.md](https://salsa.debian.org/freedombox-team/freedombox/blob/ma
 # Localization
 
 [![Translation status](https://hosted.weblate.org/widgets/freedombox/-/287x66-white.png)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
+
+# License
+
+[![GNU AGPLv3 Image](https://www.gnu.org/graphics/agplv3-155x51.png)](https://www.gnu.org/licenses/agpl-3.0.html)
+
+FreedomBox is distributed under the GNU Affero General Public License, Version 3
+or later. A copy of [AGPLv3](http://www.gnu.org/licenses/agpl.html) is available
+from the Free Software Foundation.
