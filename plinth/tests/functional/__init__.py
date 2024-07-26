@@ -223,10 +223,11 @@ def submit(browser, element=None, form_class=None, expected_url=None):
         if element:
             click(browser, element)
         elif form_class:
-            browser.find_by_css(
-                '.{} input[type=submit]'.format(form_class)).click()
+            browser.find_by_css(f'.{form_class} input[type=submit], '
+                                f'.{form_class} button[type=submit]').click()
         else:
-            browser.find_by_css('input[type=submit]').click()
+            browser.find_by_css(
+                'input[type=submit] button[type=submit]').click()
 
 
 def set_app_form_value(browser, app_id, element_id, value):
