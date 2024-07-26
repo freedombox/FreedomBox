@@ -698,7 +698,7 @@ class BaseAppTests:
         """Install the app and set it up if needed."""
         install(session_browser, self.app_name)
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixture(autouse=True, name='background')
     def fixture_background(self, session_browser):
         """Login, install, and enable the app."""
         login(session_browser)
