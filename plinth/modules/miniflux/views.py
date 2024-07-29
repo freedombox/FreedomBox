@@ -51,7 +51,7 @@ class CreateAdminUserView(SuccessMessageMixin, FormView):
             messages.error(
                 self.request,
                 _('An error occurred while creating the user: {error}.').
-                format(error=error))
+                format(error=str(error).strip()))
 
         return super().form_valid(form)
 
