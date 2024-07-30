@@ -70,6 +70,7 @@ build:
 	$(MAKE) -C doc -j 8
 
 	# Build .whl package
+	rm -f dist/plinth-*.whl
 	$(PYTHON) -m build --no-isolation --skip-dependency-check --wheel
 
 install:
