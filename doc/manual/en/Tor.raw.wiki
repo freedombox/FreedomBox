@@ -17,6 +17,8 @@
 
 Tor is a network of servers operated by volunteers. It allows users of these servers to improve their privacy and security while surfing on the Internet. You and your friends are able to access to your !FreedomBox via Tor network without revealing its IP address. Activating Tor application on your !FreedomBox, you will be able to offer remote services (chat, wiki, file sharing, etc...) without showing your location. This application will give you a better protection than a public web server because you will be less exposed to intrusive people on the web.
 
+To download software packages over Tor, or to run a SOCKS proxy, see the [[FreedomBox/Manual/TorProxy|Tor Proxy app]].
+
 === Using Tor to browse anonymously ===
 Tor Browser is the recommended way to browse the web using Tor. You can download the Tor Browser from https://www.torproject.org/projects/torbrowser.html and follow the instructions on that site to install and run it.
 
@@ -52,41 +54,6 @@ The requirements to run a relay are listed in the [[https://community.torproject
  * recommended that a relay has at least 16 Mbit/s (Mbps) upload and download bandwidth available for Tor. More is better.
  * required that a Tor relay be allowed to use a minimum of 100 GByte of outbound and of incoming traffic per month.
  * recommended that a <40 Mbit/s non-exit relay should have at least 512 MB of RAM available; A relay faster than 40 Mbit/s should have at least 1 GB of RAM. 
-
-=== (Advanced) Usage as a SOCKS proxy ===
-!FreedomBox provides a Tor SOCKS port that other applications can connect to, in
-order to route their traffic over the Tor network. This port is accessible on
-any interfaces configured in the internal firewall zone. To configure the
-application, set SOCKS Host to the internal network connection's IP address, and
-set the SOCKS Port to 9050.
-
-==== Example with Firefox ====
-
-Your web browser can be configured to use the Tor network for all of your
-browsing activity. This allows for censorship circumvention and also hides your
-IP address from websites during regular browsing. For anonymity, using tor
-browser is recommended.
-
-Configure your local !FreedomBox IP address and port 9050 as a SOCKS v5 proxy in
-Firefox. There are extensions to allow for easily turning the proxy on and off.
-
-{{attachment:tor-socks-firefox.png|Configuring Firefox with Tor SOCKS proxy|width=800}}
-
-With the SOCKS proxy configured, you can now access any onion URL directly
-from Firefox. !FreedomBox itself has an onion v3 address that you can connect to
-over the Tor network (bookmark this for use in emergency situations).
-
-=== Circumventing Tor censorship ===
-If your ISP is trying to block Tor traffic, you can use tor bridge relays to connect to the tor network. 
-
-1. Get the bridge configuration from the [[https://bridges.torproject.org/bridges|Tor BridgeDB]]
-
-{{attachment:tor-bridge-db.png|Tor BridgeDB|width=800}}
-
-2. Add the lines to your !FreedomBox Tor configuration as show below.
-
-{{attachment:tor-bridge-configuration.png|Tor Configuration Page|width=800}}
-
 
 === External links ===
 

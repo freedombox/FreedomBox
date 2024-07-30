@@ -1,0 +1,75 @@
+#language es
+
+<<Include(FreedomBox/Manual/TorProxy, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Proxy Tor (Red Anónima) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/TorProxy/TorProxy-icon_en_V01.png|Tor Proxy icon}} ||
+
+'''Disponible desde''': versión  23.14
+
+=== ¿Qué es el Proxy Tor? ===
+
+''Tor'' es una red de servidores operada por voluntarios. Permite a los usuarios de esos servidores mejorar su privacidad y seguridad cuando navegan por Internet.
+
+La aplicación de proxy para Tor proporciona la posibilidad de descargar paquetes de software por Tor, mejorando el anonimato. También proporciona un proxy web en tu !FreedomBox para redes internas, que varias apps pueden usar para acceder a internet via Tor. En caso de censura del proveedor de internet se pueden configurar pasarelas para circundarla.
+
+Para usar el servicio Tor Onion o ejecutar un repetidor Tor ve a [[es/FreedomBox/Manual/Tor|la app Tor]].
+
+=== Navegación anónima con el navegador Tor ===
+
+El navegador Tor es la manera recomendada de navegar la web usando Tor. Puedes descargar el navegador Tor de https://www.torproject.org/projects/torbrowser.html y seguir sus instrucciones para instalarlo y usarlo.
+
+=== Usar el Proxy Tor como un proxy SOCKS (Avanzado) ===
+
+!FreedomBox proporciona un puerto Tor SOCKS al que se pueden conectar otras aplicaciones para enrutar su tráfico a través de la red Tor. Este puerto está accessible en cualquier interfaz configurado en la zona interna del cortafuegos. Para configurar la aplicación, asigna el anfitrión SOCKS a la dirección IP de la conexión de red interna y pon el puerto SOCKS a 9050.
+
+==== Ejemplo con Firefox ====
+
+Tu navegador web se puede configurar para que toda tu actividad de navegación pase por la red Tor.
+Esto permite eludir la censura y también oculta tu dirección IP a los sitios web. Para el anonimato se recomienda el navegador Tor.
+
+Configura la dirección IP local de tu !FreedomBox y el puerto 9050 como proxy SOCKS v5 en Firefox. Hay extensiones que facilitan (des)activar el proxy.
+
+{{attachment:FreedomBox/Manual/TorProxy/tor-socks-firefox.png|Configurar Firefox con Tor como proxy SOCKS|width=800}}
+
+Con el proxy SOCKS configurado, puedes acceder a cualquier URL onion directamente desde Firefox.
+!FreedomBox tiene una dirección onion v3 a la que puedes conectarte a tavés de la red Tor (anótala para emergencias).
+
+=== Eludir la censura de Tor ===
+Si tu proveedor de internet te bloquea el tráfico a la red Tor puedes usar pasarelas para acceder. 
+
+1. Obtén la configuración de la pasarela de la [[https://bridges.torproject.org/bridges|base de datos de pasarelas Tor]]
+
+{{attachment:FreedomBox/Manual/TorProxy/tor-bridge-db.png|Tor BridgeDB|width=800}}
+
+2. Añade las líneas a la configuración de Tor en !FreedomBox Tor como se muestra a continuación.
+
+{{attachment:FreedomBox/Manual/TorProxy/tor-bridge-configuration.png|Página de configuración de Tor|width=800}}
+
+=== Enlaces externos ===
+
+ * Sitio web del proyecto original: https://www.torproject.org
+ * Documentación de uso del proyecto original: https://support.torproject.org
+
+==== Clientes compatibles ====
+
+!FreedomBox recomienda algunas aplicaciones cliente. Selecciona su icono en la página de ''Aplicaciones'' y haz clic en el botón> '''Aplicaciones Cliente'''.
+
+El proxy se puede usar configurando el proxy en tu navegador web. O mejor, usando el Navegador Tor
+
+ * Descargar el navegador Tor: https://www.torproject.org/download/
+
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

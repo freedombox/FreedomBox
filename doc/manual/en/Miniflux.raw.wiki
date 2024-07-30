@@ -1,0 +1,69 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/Miniflux|English]] - [[es/FreedomBox/Manual/Miniflux|Español]] - [[DebianWiki/EditorGuide#translation|(+)]] -~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Miniflux (News Feed Reader) ==
+||<tablestyle="float: right;"> {{attachment:Miniflux-icon_en_v01.png|Miniflux icon}} ||
+
+'''Available since:''' !FreedomBox on Debian 13 (Trixie)
+
+Miniflux is a minimalist and opinionated news feed reader supporting a wide variety of feed formats - RSS, ATOM, RDF and JSON. It is an alternative to [[FreedomBox/Manual/TinyTinyRSS|Tiny Tiny RSS]] on !FreedomBox.
+
+=== Clients ===
+
+The primary web interface is mobile-friendly and optimized for readability. Miniflux is a progressive web application. It can be added to the home screen on mobile and accessed like a native application.
+
+Miniflux server provides an API for clients. It is also compatible with existing applications built for Fever or Google Reader API. There is a listing of [[https://miniflux.app/docs/apps.html|clients]] for various desktop and mobile platforms on the official website.
+
+=== Reader ===
+
+Miniflux's reader supports several content types. In addition to the usual blog posts and comics which most feed readers support, you can also listen to podcasts and play videos from within Miniflux. !YouTube videos are played using youtube-nocookie.com or (optional) a proxy like invidious.io to prevent tracking your preferences across websites. Miniflux also removes tracking pixels and all external !JavaScript.
+
+Miniflux has a content scraper that allows you to fetch and read the full article even if the site only publishes a summary in their feed. Only the relevant content is scraped, providing a reading experience similar to Firefox Reader View. This scraper is also capable of fetching the video duration from !YouTube or Invidious.
+
+=== Other Features ===
+
+Miniflux provides some quality-of-life features like full-text search (powered by PostgreSQL database), [[https://miniflux.app/docs/rules.html|filtering rules]], [[https://miniflux.app/docs/keyboard_shortcuts.html|keyboard shortcuts]] and touch events. There are integrations with several applications like read-it-later solutions, bookmarking tools (Shaarli) and messaging apps (Matrix). If you don't use Shaarli, starring an article within Miniflux is equivalent to bookmarking it.
+
+Miniflux doesn't permit installing additional plugins or themes. You can pick one of the existing light/dark themes or install a browser extension to read in a different theme.
+
+=== Miniflux on FreedomBox ===
+
+==== User Management ====
+
+Miniflux does not integrate with the existing single sign-on mechanisms in !FreedomBox. The !FreedomBox app for Miniflux provides an option to create administrator users. Once an administrator user is created, any further users (administrator or not) can be created and managed from within Miniflux settings.
+
+The !FreedomBox app also provides an option to reset any Miniflux user's password. This is especially convenient in the case where there is only one person using Miniflux. Without this option, in case the only user of Miniflux forgets their password, another administrator user must be created to reset this user's password from Miniflux settings.
+
+Since Miniflux accounts are not tied to !FreedomBox accounts, you can provide Miniflux accounts to your friends who do not have accounts on your !FreedomBox.
+
+==== Migrating from Tiny Tiny RSS ====
+
+TODO
+
+==== Integrations ====
+ 1. Adding a bookmark to Shaarli
+ 2. Posting feeds to a Matrix channel
+ 3. RSS-Bridge
+
+
+=== External links ===
+
+ * Upstream project: https://miniflux.app
+ * Upstream documentation: https://miniflux.app/docs/index.html
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

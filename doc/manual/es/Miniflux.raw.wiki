@@ -1,0 +1,67 @@
+#language es
+
+<<Include(FreedomBox/Manual/Miniflux, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Miniflux (Lector de noticias) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/Miniflux/Miniflux-icon_en_v01.png|Icono de Miniflux}} ||
+
+'''Disponible desde''': !FreedomBox en Debian 13 (Trixie)
+
+Miniflux es un lector de noticias minimalista y con una marcada personalidad que soporta una amplia variedad de formatos - RSS, ATOM, RDF y JSON. En !FreedomBox es una alternativa a [[es/FreedomBox/Manual/TinyTinyRSS|Tiny Tiny RSS]].
+
+=== Clientes ===
+
+La interfaz web primaria es amigable con los dispositivos móviles y maximiza la legibilidad. Miniflux es una aplicación web progresiva. Se puede añadir a la pantalla principal del móvil y acceder como si fuera nativa.
+
+El servidor Miniflux proporciona una API para clientes. También es compatible con aplicaciones existentes creadas para Fever o la API de Google Reader. Hay una lista de [[https://miniflux.app/docs/apps.html|clientes]] para varias plataformas de escritorio y móviles en el sitio web oficial del projecto original.
+
+=== Lector ===
+
+El lector de Miniflux soporta varios tipos de contenido. Además de los blogs y comics habituales que soportan la mayoría de lectores, puedes también escuchar podcasts y reproducir videos desde Miniflux. Los videos de !YouTube se reproducen usando youtube-nocookie.com o (opcionalmente) un proxy como invidious.io para evitar que se rastreen tus preferencias entre sitios webs. Miniflux también elimina los pixeles de rastreo y todo el !JavaScript externo.
+
+Miniflux tiene un extractor de contenido qu te permite obtner y leer el artículo completo incluso si el sitio solo publica un resumen en su feed. Solo se extrae el contenido relevante, proporcionando una experiencia de lectura similar a Firefox Reader View. Este extractor es también capaz de obtener la duración de un video de !YouTube o Invidious.
+
+=== Otras funcionalidades ===
+
+Miniflux proporciona algunas funcionalidades de comodidad como búsqueda de texto completo (basada en una base de datos PostgreSQL), [[https://miniflux.app/docs/rules.html|reglas de filtrado]], [[https://miniflux.app/docs/keyboard_shortcuts.html|atajos de teclado]] y eventos táctiles. Hay integraciones con varias aplicaciones como soluciones de lectura diferida, marcapáginas (Shaarli) y apps de mensajería (Matrix). Si no usas Shaarli, marca un artículo con una estrella en Miniflux.
+
+Miniflux no permite instalar extensiones ni estilos. Puedes elegir uno de los estilos existentes o instalar una extensión de navegador para leer con otro estilo.
+
+=== Miniflux en FreedomBox ===
+
+==== Administración de usuarios ====
+
+Miniflux no se integra con los mecanismos de ingreso único de !FreedomBox. La app de !FreedomBox para Miniflux proporciona una opción para crear usuarios administradores. Una vez creado el usuario administrador se pueden crear y administrar más usuarios (administradores o no) desde los ajustes de Miniflux.
+
+La app de !FreedomBox app también permite restablecer la contraseña de cualquier usuario de Miniflux. Esto es especialmente útil en caso que solo una persona use Miniflux. Sin esta opción, si el único usuario de Miniflux olvida su contraseña habría que crear un administrador para restablecerla desde los ajustes de Miniflux.
+
+Como las cuentas de Miniflux no están conectadas a las de !FreedomBox puedes dar cuentas Miniflux a tus amigos aunque carezcan de cuenta en !FreedomBox.
+
+==== Migrar desde Tiny Tiny RSS ====
+
+Por hacer
+
+==== Integraciones ====
+ 1. Añadir un marcapáginas a Shaarli
+ 2. Publicar feeds en un canal de Matrix
+ 3. Puente RSS
+
+
+=== Enlaces externos ===
+
+ * Proyecto original: https://miniflux.app
+ * Documentación del proyecto original: : https://miniflux.app/docs/index.html
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
