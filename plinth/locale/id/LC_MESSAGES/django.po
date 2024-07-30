@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Indonesian (FreedomBox)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-01 20:10-0400\n"
+"POT-Creation-Date: 2024-07-29 21:32-0400\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/freedombox/"
@@ -871,8 +871,8 @@ msgid "No passwords currently configured."
 msgstr "Tidak ada kata sandi yang saat ini dikonfigurasi."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/networks/forms.py:208 modules/shadowsocks/forms.py:32
-#: modules/shadowsocksserver/forms.py:37
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Kata sandi"
 
@@ -1841,8 +1841,8 @@ msgstr "Terima semua sertifikat SSL"
 msgid "Use HTTP basic authentication"
 msgstr "Gunakan autentikasi dasar HTTP"
 
-#: modules/dynamicdns/forms.py:88 modules/networks/forms.py:207
-#: modules/users/forms.py:129
+#: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
+#: modules/networks/forms.py:207 modules/users/forms.py:129
 msgid "Username"
 msgstr "Nama Pengguna"
 
@@ -3532,6 +3532,7 @@ msgid "FluffyChat"
 msgstr ""
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
 msgid "Configuration"
 msgstr "Konfigurasi"
@@ -3880,6 +3881,148 @@ msgstr "totem"
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr ""
+
+#: modules/miniflux/__init__.py:18
+msgid ""
+"Miniflux is a web-based tool that aggregates news and blog updates from "
+"various websites into one centralized, easy-to-read format. It has a simple "
+"interface and focuses on a distraction-free reading experience. You can can "
+"subscribe to your favorite sites and access full article contents within the "
+"reader itself."
+msgstr ""
+
+#: modules/miniflux/__init__.py:23
+msgid ""
+"Key features include keyboard shortcuts for quick navigation, full-text "
+"search, filtering articles, categories and favorites. Miniflux preserves "
+"user privacy by removing trackers. The primary interface is web-based. There "
+"are several third-party <a href=\"https://miniflux.app/docs/apps."
+"html\">clients</a> as well."
+msgstr ""
+
+#: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
+msgid "Miniflux"
+msgstr ""
+
+#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
+msgid "News Feed Reader"
+msgstr ""
+
+#: modules/miniflux/forms.py:12
+#, fuzzy
+#| msgid "Enter a valid username."
+msgid "Enter a username for the user."
+msgstr "Masukkan sebuah nama pengguna yang valid."
+
+#: modules/miniflux/forms.py:16
+msgid "Enter a strong password with a minimum of 6 characters."
+msgstr ""
+
+#: modules/miniflux/forms.py:18
+#, fuzzy
+#| msgid "An error occurred during configuration."
+msgid "Password confirmation"
+msgstr "Terjadi kesalahan selama konfigurasi."
+
+#: modules/miniflux/forms.py:20
+msgid "Enter the same password for confirmation."
+msgstr ""
+
+#: modules/miniflux/forms.py:31
+#, fuzzy
+#| msgid "Password updated"
+msgid "Passwords do not match."
+msgstr "Kata sandi diperbarui"
+
+#: modules/miniflux/manifest.py:18
+msgid "Fluent Reader Lite"
+msgstr ""
+
+#: modules/miniflux/manifest.py:33
+msgid "Fluent Reader"
+msgstr ""
+
+#: modules/miniflux/manifest.py:46
+msgid "FluxNews"
+msgstr ""
+
+#: modules/miniflux/manifest.py:61
+msgid "MiniFlutt"
+msgstr ""
+
+#: modules/miniflux/manifest.py:71
+msgid "NetNewsWire"
+msgstr ""
+
+#: modules/miniflux/manifest.py:86
+msgid "Newsflash"
+msgstr ""
+
+#: modules/miniflux/manifest.py:96
+#, fuzzy
+#| msgid "Read"
+msgid "Read You"
+msgstr "Baca baca"
+
+#: modules/miniflux/manifest.py:106
+msgid "RSS Guard"
+msgstr ""
+
+#: modules/miniflux/templates/miniflux.html:14
+msgid ""
+"Create an admin user to get started. Other users can be created from within "
+"Miniflux."
+msgstr ""
+
+#: modules/miniflux/templates/miniflux.html:22
+#: modules/miniflux/templates/miniflux.html:24
+#, fuzzy
+#| msgid "Create"
+msgid "Create admin user"
+msgstr "Buat"
+
+#: modules/miniflux/templates/miniflux.html:27
+#: modules/miniflux/templates/miniflux.html:29
+#, fuzzy
+#| msgid "Set SuperUser Password"
+msgid "Reset user password"
+msgstr "Atur Kata sandi PenggunaSuper"
+
+#: modules/miniflux/views.py:38
+#, fuzzy
+#| msgid "Administrator Account"
+msgid "Create Admin User"
+msgstr "Akun Administrator"
+
+#: modules/miniflux/views.py:48
+#, fuzzy, python-brace-format
+#| msgid "Invalid username: {username}"
+msgid "Created admin user: {username}"
+msgstr "Nama pengguna tidak valid: {username}"
+
+#: modules/miniflux/views.py:53
+#, fuzzy, python-brace-format
+#| msgid "An error occurred while creating the repository."
+msgid "An error occurred while creating the user: {error}."
+msgstr "Terjadi kesalahan saat membuat repositori."
+
+#: modules/miniflux/views.py:70
+#, fuzzy
+#| msgid "Set SuperUser Password"
+msgid "Reset User Password"
+msgstr "Atur Kata sandi PenggunaSuper"
+
+#: modules/miniflux/views.py:80
+#, fuzzy, python-brace-format
+#| msgid "Invalid username: {username}"
+msgid "Password reset for user: {username}"
+msgstr "Nama pengguna tidak valid: {username}"
+
+#: modules/miniflux/views.py:85
+#, fuzzy, python-brace-format
+#| msgid "An error occurred during configuration."
+msgid "An error occurred during password reset: {error}."
+msgstr "Terjadi kesalahan selama konfigurasi."
 
 #: modules/mumble/__init__.py:25
 msgid ""
@@ -7071,10 +7214,6 @@ msgstr ""
 msgid "Tiny Tiny RSS"
 msgstr ""
 
-#: modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr ""
-
 #: modules/ttrss/manifest.py:10
 #, fuzzy
 msgid "Tiny Tiny RSS (TTTRSS)"
@@ -9189,16 +9328,6 @@ msgstr "Bahasa Gujarat"
 #~| msgid "Restart Now"
 #~ msgid "Restore apps"
 #~ msgstr "Jalankan ulang Sekarang"
-
-#, fuzzy
-#~| msgid "Create"
-#~ msgid "Create archive"
-#~ msgstr "Buat"
-
-#, fuzzy
-#~| msgid "Administrator Account"
-#~ msgid "Create Archive"
-#~ msgstr "Akun Administrator"
 
 #, fuzzy
 #~| msgid "Device"
