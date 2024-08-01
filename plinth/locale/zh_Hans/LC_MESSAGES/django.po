@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-01 20:10-0400\n"
+"POT-Creation-Date: 2024-07-29 21:32-0400\n"
 "PO-Revision-Date: 2024-07-03 12:34+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
@@ -835,8 +835,8 @@ msgid "No passwords currently configured."
 msgstr "目前没有配置密码。"
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/networks/forms.py:208 modules/shadowsocks/forms.py:32
-#: modules/shadowsocksserver/forms.py:37
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "密码"
 
@@ -1718,8 +1718,8 @@ msgstr "接受所有 SSL 证书"
 msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
-#: modules/dynamicdns/forms.py:88 modules/networks/forms.py:207
-#: modules/users/forms.py:129
+#: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
+#: modules/networks/forms.py:207 modules/users/forms.py:129
 msgid "Username"
 msgstr "用户名"
 
@@ -3245,6 +3245,7 @@ msgid "FluffyChat"
 msgstr ""
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
 msgid "Configuration"
 msgstr "配置"
@@ -3578,6 +3579,150 @@ msgstr ""
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
 msgstr ""
+
+#: modules/miniflux/__init__.py:18
+msgid ""
+"Miniflux is a web-based tool that aggregates news and blog updates from "
+"various websites into one centralized, easy-to-read format. It has a simple "
+"interface and focuses on a distraction-free reading experience. You can can "
+"subscribe to your favorite sites and access full article contents within the "
+"reader itself."
+msgstr ""
+
+#: modules/miniflux/__init__.py:23
+msgid ""
+"Key features include keyboard shortcuts for quick navigation, full-text "
+"search, filtering articles, categories and favorites. Miniflux preserves "
+"user privacy by removing trackers. The primary interface is web-based. There "
+"are several third-party <a href=\"https://miniflux.app/docs/apps."
+"html\">clients</a> as well."
+msgstr ""
+
+#: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
+msgid "Miniflux"
+msgstr ""
+
+#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
+msgid "News Feed Reader"
+msgstr "新闻源阅读器"
+
+#: modules/miniflux/forms.py:12
+#, fuzzy
+#| msgid "Enter a valid username."
+msgid "Enter a username for the user."
+msgstr "输入有效的用户名。"
+
+#: modules/miniflux/forms.py:16
+msgid "Enter a strong password with a minimum of 6 characters."
+msgstr ""
+
+#: modules/miniflux/forms.py:18
+#, fuzzy
+#| msgid "Updating configuration"
+msgid "Password confirmation"
+msgstr "更新配置"
+
+#: modules/miniflux/forms.py:20
+msgid "Enter the same password for confirmation."
+msgstr ""
+
+#: modules/miniflux/forms.py:31
+#, fuzzy
+#| msgid "Password updated"
+msgid "Passwords do not match."
+msgstr "密码已更新"
+
+#: modules/miniflux/manifest.py:18
+msgid "Fluent Reader Lite"
+msgstr ""
+
+#: modules/miniflux/manifest.py:33
+#, fuzzy
+#| msgid "News Feed Reader"
+msgid "Fluent Reader"
+msgstr "新闻源阅读器"
+
+#: modules/miniflux/manifest.py:46
+msgid "FluxNews"
+msgstr ""
+
+#: modules/miniflux/manifest.py:61
+msgid "MiniFlutt"
+msgstr ""
+
+#: modules/miniflux/manifest.py:71
+msgid "NetNewsWire"
+msgstr ""
+
+#: modules/miniflux/manifest.py:86
+msgid "Newsflash"
+msgstr ""
+
+#: modules/miniflux/manifest.py:96
+#, fuzzy
+#| msgid "Read"
+msgid "Read You"
+msgstr "读取"
+
+#: modules/miniflux/manifest.py:106
+msgid "RSS Guard"
+msgstr ""
+
+#: modules/miniflux/templates/miniflux.html:14
+msgid ""
+"Create an admin user to get started. Other users can be created from within "
+"Miniflux."
+msgstr ""
+
+#: modules/miniflux/templates/miniflux.html:22
+#: modules/miniflux/templates/miniflux.html:24
+#, fuzzy
+#| msgid "Create User"
+msgid "Create admin user"
+msgstr "创建用户"
+
+#: modules/miniflux/templates/miniflux.html:27
+#: modules/miniflux/templates/miniflux.html:29
+#, fuzzy
+#| msgid "Set SuperUser Password"
+msgid "Reset user password"
+msgstr "设置超级用户密码"
+
+#: modules/miniflux/views.py:38
+#, fuzzy
+#| msgid "Create User"
+msgid "Create Admin User"
+msgstr "创建用户"
+
+#: modules/miniflux/views.py:48
+#, fuzzy, python-brace-format
+#| msgid "Invalid username: {username}"
+msgid "Created admin user: {username}"
+msgstr "无效用户名：{username}"
+
+#: modules/miniflux/views.py:53
+#, fuzzy, python-brace-format
+#| msgid "An error occurred while creating the repository."
+msgid "An error occurred while creating the user: {error}."
+msgstr "创建存储库时发生错误。"
+
+#: modules/miniflux/views.py:70
+#, fuzzy
+#| msgid "Set SuperUser Password"
+msgid "Reset User Password"
+msgstr "设置超级用户密码"
+
+#: modules/miniflux/views.py:80
+#, fuzzy, python-brace-format
+#| msgid "Invalid username: {username}"
+msgid "Password reset for user: {username}"
+msgstr "无效用户名：{username}"
+
+#: modules/miniflux/views.py:85
+#, fuzzy, python-brace-format
+#| msgid "An error occurred during configuration."
+msgid "An error occurred during password reset: {error}."
+msgstr "在配置过程中出错。"
 
 #: modules/mumble/__init__.py:25
 msgid ""
@@ -6769,10 +6914,6 @@ msgstr ""
 #: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
 msgid "Tiny Tiny RSS"
 msgstr ""
-
-#: modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "新闻源阅读器"
 
 #: modules/ttrss/manifest.py:10
 msgid "Tiny Tiny RSS (TTTRSS)"

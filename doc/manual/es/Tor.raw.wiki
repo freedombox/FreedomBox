@@ -15,6 +15,8 @@
 
 ''Tor'' es una red de servidores operada por voluntarios. Permite a los usuarios de esos servidores mejorar su privacidad y seguridad cuando navegan por Internet. Tu y tus amigos podéis acceder a tu !FreedomBox a través de la red Tor sin revelar su dirección IP. Activando la aplicación Tor en tu !FreedomBox podrás ofrecer servicios remotos (chat, wiki, file sharing, etc...) sin mostrar tu localización. Esta aplicación te dará una protección mejor que un servidor web público porque estarás menos expuesto a gente intrusiva.
 
+Para descargar paquetes de software a través de Tor, o ejecutar un proxy SOCKS que salga a internet por Tor, ve a [[FreedomBox/Manual/TorProxy|Proxy via Tor]].
+
 === Usar Tor para navegación anónima ===
 ''Tor Browser'' es la manera recomendada para navegar la web a través de Tor. Puedes descargar Tor Browser desde https://www.torproject.org/projects/torbrowser.html y seguir sus instrucciones para instalarlo y ejecutarlo.
 
@@ -47,31 +49,6 @@ Los requisitos para ejecutar un puente a la red se listan en la [[https://commun
  * recomienda que un puente tenga disponibles para Tor al menos 16 Mbit/s (Mbps) de ancho de banda para subida y bajada. Mejor más.
  * requiere que a se le permita al puente usar un mínimo de 100 GByte de tráfico mensual de salida y de entrada.
  * recomienda que un nodo sin salida (mero reenrutador) de <40 Mbit/s tenga al menos 512 MB de RAM disponible; Uno más rápido de 40 Mbit/s debería tener al menos 1 GB de RAM. 
-
-=== Usar el puerto Tor SOCKS (avanzado) ===
-!FreedomBox proporciona un puerto Tor SOCKS al que pueden conectar otras aplicaciones para enrutar su tráfico a través de la red Tor. Este puerto es accesible a cualquier interfaz (de red) configurado en la zona interna del cortafuegos. Para configurar la aplicación apunta el ''Host SOCKS'' a la dirección IP interna de la conexión y pon el ''Puerto SOCKS'' a 9050.
-
-==== Exjemplo con Firefox ====
-
-Tu navegador web se puede configurar para emplear la red Tor para toda tu actividad de navegación. Esto permite eludir la censura y oculta tu dirección IP a los sitios web durante la navegación normal. Para anonimato se recomienda usar el Navegador Tor.
-
-Configura tu dirección IP local de !FreedomBox y el puerto 9050 como un proxy SOCKS en Firefox. Hay extensiones para facilitar la activación y desactivación del proxy.
-
-{{attachment:tor-socks-firefox.png|Configuring Firefox with Tor SOCKS proxy|width=800}}
-
-Con en proxy SOCKS configurado puedes acceder cualquier URL de tipo ''onion'' diréctamente desde Firefox. !FreedomBox tiene una dirección onion v3 propia a la que puedes conectarte por la red Tor (guárdala en tus favoritos para usarla en situaciones de emergencia).
-
-
-=== Eludiendo la censura de Tor ===
-Si tu proveedor de Internet (ISP) está tratando de bloquear el tráfico Tor puedes usar puentes (a la red Tor) para conectar (a la red Tor). 
-
-1. Obtén la configuración de los puentes de [[https://bridges.torproject.org/bridges|Tor BridgeDB]]
-
-{{attachment:tor-bridge-db.png|Tor BridgeDB|width=800}}
-
-2. Añade las líneas a la configuración de Tor de tu !FreedomBox como se muestra.
-
-{{attachment:tor-bridge-configuration.png|Tor Configuration Page|width=800}}
 
 
 === Enlaces externos ===
