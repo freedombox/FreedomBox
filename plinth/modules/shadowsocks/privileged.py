@@ -9,7 +9,7 @@ import string
 from shutil import move
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/freedombox.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
@@ -85,8 +85,9 @@ def _merge_config(config):
 
 
 @privileged
-def merge_config(config: dict[str, int | str]):
+def merge_config(config: dict[str, int | str], password: secret_str):
     """Configure Shadowsocks Client."""
+    config['password'] = password
     _merge_config(config)
 
     # Don't try_restart because initial configuration may not be valid so

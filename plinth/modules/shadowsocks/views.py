@@ -45,11 +45,10 @@ class ShadowsocksAppView(views.AppView):
                 'local_port': 1080,
                 'server': new_status['server'],
                 'server_port': new_status['server_port'],
-                'password': new_status['password'],
                 'method': new_status['method'],
             }
 
-            privileged.merge_config(new_config)
+            privileged.merge_config(new_config, new_status['password'])
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
