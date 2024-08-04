@@ -43,12 +43,8 @@ class ShadowsocksServerAppView(views.AppView):
 
         if old_status['password'] != new_status['password'] or \
            old_status['method'] != new_status['method']:
-            new_config = {
-                'password': new_status['password'],
-                'method': new_status['method'],
-            }
-
-            privileged.merge_config(new_config)
+            privileged.merge_config(new_status['password'],
+                                    new_status['method'])
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
