@@ -9,7 +9,7 @@ import subprocess
 import augeas
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 CONFIG_FILE = '/etc/mumble-server.ini'
 DATA_DIR = '/var/lib/mumble-server'
@@ -25,7 +25,7 @@ def setup():
 
 
 @privileged
-def set_super_user_password(password: str):
+def set_super_user_password(password: secret_str):
     """Set the superuser password with murmurd command."""
     subprocess.run(['murmurd', '-readsupw'], input=password.encode(),
                    stdout=subprocess.DEVNULL, check=False)
@@ -50,7 +50,7 @@ def set_domain(domain_name: str | None):
 
 
 @privileged
-def change_join_password(join_password: str):
+def change_join_password(join_password: secret_str):
     """Change to password that is required to join the server"""
     aug = _load_augeas()
     aug.set('.anon/serverpassword', join_password)
