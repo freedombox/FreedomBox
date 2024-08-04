@@ -7,7 +7,7 @@ import re
 import shutil
 import subprocess
 
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 SETUP_WIKI = '/etc/ikiwiki/plinth-wiki.setup'
 SETUP_BLOG = '/etc/ikiwiki/plinth-blog.setup'
@@ -57,7 +57,7 @@ def get_sites() -> list[tuple[str, str]]:
 
 
 @privileged
-def create_wiki(wiki_name: str, admin_name: str, admin_password: str):
+def create_wiki(wiki_name: str, admin_name: str, admin_password: secret_str):
     """Create a wiki."""
     pw_bytes = admin_password.encode()
     input_ = pw_bytes + b'\n' + pw_bytes
@@ -68,7 +68,7 @@ def create_wiki(wiki_name: str, admin_name: str, admin_password: str):
 
 
 @privileged
-def create_blog(blog_name: str, admin_name: str, admin_password: str):
+def create_blog(blog_name: str, admin_name: str, admin_password: secret_str):
     """Create a blog."""
     pw_bytes = admin_password.encode()
     input_ = pw_bytes + b'\n' + pw_bytes
