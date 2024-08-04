@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 import pexpect
 
 from plinth import action_utils, db
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 from plinth.utils import is_non_empty_file
 
 STATIC_SETTINGS = {
@@ -83,7 +83,7 @@ def _run_miniflux_interactively(command: str, username: str,
 
 
 @privileged
-def create_admin_user(username: str, password: str):
+def create_admin_user(username: str, password: secret_str):
     """Create a new admin user for Miniflux CLI.
 
     Raise exception if a user with the name already exists or otherwise fails.
@@ -96,7 +96,7 @@ def create_admin_user(username: str, password: str):
 
 
 @privileged
-def reset_user_password(username: str, password: str):
+def reset_user_password(username: str, password: secret_str):
     """Reset a user password using Miniflux CLI.
 
     Raise exception if the user does not exist or otherwise fails.
