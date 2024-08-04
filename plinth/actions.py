@@ -23,6 +23,13 @@ EXIT_PERM = 20
 logger = logging.getLogger(__name__)
 
 
+# An alias for 'str' to mark some strings as sensitive. Sensitive strings are
+# not logged. Use 'type secret_str = str' when Python 3.11 support is no longer
+# needed.
+class secret_str(str):
+    pass
+
+
 def privileged(func):
     """Mark a method as allowed to be run as privileged method.
 
@@ -402,6 +409,13 @@ def _privileged_assert_valid_type(arg_name, value, annotation):
         if not isinstance(value, annotation):
             raise TypeError(
                 f'Expected type {annotation.__name__} for {arg_name}')
+
+        return
+
+    # secret_str should be a regular string
+    if annotation == secret_str:
+        if not isinstance(value, str):
+            raise TypeError(f'Expected type str for {arg_name}')
 
         return
 

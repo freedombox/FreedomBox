@@ -16,7 +16,7 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from plinth import actions, cfg
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 actions_name = 'actions'
 
@@ -84,14 +84,22 @@ def test_privileged_argument_annotation_check():
     def func2(_a: int, _b):
         return
 
-    def func_valid(_a: int, _b: dict[int, str]):
+    # Parameter with 'password' in the name should be typed 'secret_str'
+    def func3(_password: str):
         return
 
-    for func in (func1, func2):
+    def func1_valid(_a: int, _b: dict[int, str]):
+        return
+
+    def func2_valid(_password: secret_str):
+        return
+
+    for func in (func1, func2, func3):
         with pytest.raises(SyntaxError):
             privileged(func)
 
-    privileged(func_valid)
+    privileged(func1_valid)
+    privileged(func2_valid)
 
 
 @patch('plinth.actions._get_privileged_action_module_name')
@@ -282,7 +290,7 @@ def test_assert_valid_type():
     assert_valid(None, None, typing.Any)
 
     # Invalid values for int, str, float and Optional
-    values = [[1, bool], ['foo', int], [1, str], [1, float],
+    values = [[1, bool], ['foo', int], [1, str], [1, secret_str], [1, float],
               [1, typing.Optional[str]], [1, str | None],
               [1.1, typing.Union[int, str]], [1.1, int | str], [1, list],
               [1, dict], [[1], list[str]], [{
@@ -298,6 +306,7 @@ def test_assert_valid_type():
     assert_valid('arg', True, bool)
     assert_valid('arg', 1, int)
     assert_valid('arg', '1', str)
+    assert_valid('arg', '1', secret_str)
     assert_valid('arg', 1.1, float)
     assert_valid('arg', None, typing.Optional[int])
     assert_valid('arg', 1, typing.Optional[int])
