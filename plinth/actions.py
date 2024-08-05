@@ -272,6 +272,13 @@ def _check_privileged_action_arguments(func):
         if arg not in argspec.annotations:
             raise SyntaxError('All arguments must be annotated')
 
+    for arg_name, arg_value in argspec.annotations.items():
+        for keyword in ('password', 'passphrase', 'secret'):
+            if keyword in arg_name:
+                if arg_value not in [secret_str, secret_str | None]:
+                    raise SyntaxError(
+                        f'Argument {arg_name} should likely be a "secret_str"')
+
 
 def _get_privileged_action_module_name(func):
     """Figure out the module name of a privileged action."""
