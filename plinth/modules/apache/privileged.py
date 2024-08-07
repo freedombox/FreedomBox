@@ -129,6 +129,11 @@ def setup(old_version: int):
         # enable users to share files uploaded to ~/public_html
         webserver.enable('userdir', kind='module')
 
+        # enable WebDAV protocol. Used by feather wiki and potentially by other
+        # apps and file sharing.
+        webserver.enable('dav', kind='module')
+        webserver.enable('dav_fs', kind='module')
+
         # setup freedombox site
         webserver.enable('freedombox', kind='config')
         webserver.enable('freedombox-tls', kind='config')
