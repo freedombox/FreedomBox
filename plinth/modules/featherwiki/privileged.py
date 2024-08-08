@@ -52,9 +52,9 @@ def create_wiki(file_name: str):
 
 
 @privileged
-def add_wiki_file(upload_file_path: str):
+def add_wiki_file(upload_file: str):
     """Add an uploaded wiki file."""
-    upload_file_path = pathlib.Path(upload_file_path)
+    upload_file_path = pathlib.Path(upload_file)
     temp_dir = tempfile.gettempdir()
     if not upload_file_path.is_relative_to(temp_dir):
         raise Exception('Uploaded file is not in expected temp directory.')
