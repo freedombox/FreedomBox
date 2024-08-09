@@ -26,6 +26,8 @@ See: https://docs.djangoproject.com/en/dev/ref/settings/
 
 """
 
+import django
+
 ALLOWED_HOSTS = ['*']
 
 _pwd = 'django.contrib.auth.password_validation'
@@ -200,7 +202,8 @@ TEMPLATES = [
 
 TIME_ZONE = 'UTC'
 
-USE_L10N = True
+if django.VERSION <= (4, 0):
+    USE_L10N = True
 
 USE_TZ = True
 
