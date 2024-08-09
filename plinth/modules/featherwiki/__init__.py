@@ -29,8 +29,10 @@ _description = [
     _('Each wiki is a small file. Create as many wikis as you like, such as '
       'one wiki per topic. Customize each wiki to your liking with extensions '
       'and other customization options.'),
-    _('Feather Wiki is downloaded from upstream website and not from Debian. '
-      'Wikis need to be upgraded to newer version manually.'),
+    format_lazy(
+        _('Feather Wiki is downloaded from {box_name} website and not from '
+          'Debian. Wikis need to be upgraded to newer version manually.'),
+        box_name=_(cfg.box_name)),
     format_lazy(
         _('Wikis are not public by default, but they can be downloaded for '
           'sharing or publishing. They can be edited by <a href="{users_url}">'

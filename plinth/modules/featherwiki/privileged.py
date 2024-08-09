@@ -9,8 +9,7 @@ import urllib.request
 
 from plinth.actions import privileged
 
-# Needs to be changed on a new release
-EMPTY_WIKI_FILE = 'https://feather.wiki/builds/v1.8.x/FeatherWiki_Skylark.html'
+EMPTY_WIKI_FILE = 'https://ftp.freedombox.org/pub/featherwiki/empty.html'
 
 wiki_dir = pathlib.Path('/var/lib/featherwiki')
 
