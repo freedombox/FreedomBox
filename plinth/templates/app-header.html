@@ -36,7 +36,7 @@
         <form class="form form-app-enable-disable" method="post">
           {% csrf_token %}
 
-          {{ app_enable_disable_form }}
+          {{ app_enable_disable_form|bootstrap }}
 
           <button name="app_enable_disable_button" type="submit"
             class="btn toggle-button {{ is_enabled|yesno:'toggle-button--toggled,' }}">
