@@ -3,6 +3,7 @@
 
 import base64
 import logging
+import subprocess
 
 import psutil
 from django.utils.translation import gettext_lazy as _
@@ -10,6 +11,7 @@ from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, glib, menu
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.errors import PlinthError
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
@@ -84,6 +86,15 @@ class StorageApp(app_module.App):
                 privileged.expand_partition(root_device)
             except Exception:
                 pass
+
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        result = _diagnose_grub_configured()
+        if result:
+            results.append(result)
+
+        return results
 
 
 def get_disks():
@@ -397,3 +408,32 @@ def _warn_about_read_only_filesystem(_data):
                                   severity='error', title=title,
                                   message=message, actions=actions, data=data,
                                   group='admin')
+
+
+def _diagnose_grub_configured() -> DiagnosticCheck | None:
+    """Check if grub-pc package configuration failed.
+
+    This detects an error that will occur during upgrades if GRUB
+    install device is not selected.
+    """
+    result = None
+    status = subprocess.check_output([
+        'dpkg-query', '--show', '--showformat=${db:Status-Abbrev}', 'grub-pc'
+    ]).decode().strip()
+    if status[0] != 'i':
+        logger.info('grub-pc is not installed')
+        return None
+
+    # grub-pc should be installed
+    if status[1] == 'i':  # installed
+        logger.info('grub-pc is installed and configured')
+        result = Result.PASSED
+    elif status[1] == 'F':  # failed configuration
+        logger.info('grub-pc is installed but failed configuration')
+        result = Result.FAILED
+    else:  # some other status
+        logger.info('grub-pc is installed with status: %s', status[1])
+        result = Result.WARNING
+
+    return DiagnosticCheck('storage-grub-configured',
+                           gettext_noop('grub package is configured'), result)
