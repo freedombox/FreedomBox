@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 21:32-0400\n"
+"POT-Creation-Date: 2024-08-12 21:33-0400\n"
 "PO-Revision-Date: 2024-02-11 20:14+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -111,7 +111,7 @@ msgstr "ప్రజా దృశ్యమానం"
 msgid "Data"
 msgstr ""
 
-#: menu.py:110 templates/base.html:131
+#: menu.py:110 templates/base.html:129
 msgid "System"
 msgstr "వ్యవస్థ"
 
@@ -199,7 +199,7 @@ msgid "Enable a Backup Schedule"
 msgstr "బ్యాకప్ షెడ్యూల్‌ను ప్రారంభించండి"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "{app_name} కు వెళ్ళండి"
@@ -887,9 +887,11 @@ msgid "List"
 msgstr "జాబితా"
 
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
 #: modules/networks/templates/connection_show.html:56
 #: modules/samba/templates/samba.html:154
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
 #: modules/wireguard/templates/wireguard_delete_server.html:35
 #: modules/wireguard/templates/wireguard_show_client.html:77
@@ -999,8 +1001,8 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:53
-#: modules/shadowsocksserver/views.py:52 modules/ssh/views.py:62
+#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
+#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
 #: modules/transmission/views.py:43 modules/ttrss/views.py:31
 #: modules/wordpress/views.py:31
 msgid "Configuration updated"
@@ -1117,14 +1119,16 @@ msgstr "గ్రంధాలయంను సృష్టించారు."
 msgid "An error occurred while creating the library."
 msgstr "గ్రంధాలయంని సృష్టిస్తున్నప్పుడు లోపం సంభవించింది."
 
-#: modules/calibre/views.py:63 modules/gitweb/views.py:139
-#: modules/kiwix/views.py:100
+#: modules/calibre/views.py:63 modules/featherwiki/views.py:145
+#: modules/gitweb/views.py:139 modules/kiwix/views.py:100
+#: modules/tiddlywiki/views.py:145
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} తొలగించబడింది."
 
-#: modules/calibre/views.py:67 modules/gitweb/views.py:143
-#: modules/kiwix/views.py:104
+#: modules/calibre/views.py:67 modules/featherwiki/views.py:149
+#: modules/gitweb/views.py:143 modules/kiwix/views.py:104
+#: modules/tiddlywiki/views.py:149
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} ను తొలగించలేము: {error}"
@@ -2160,6 +2164,211 @@ msgstr "పోర్టు"
 msgid "Host/Target/Value"
 msgstr "హోస్ట్/టార్గెట్/వేల్యూ"
 
+#: modules/featherwiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"Feather Wiki is a tool to create simple self-contained wikis, each stored in "
+"a single HTML file on your {box_name}. You can use it as a personal wiki, as "
+"a web notebook, or for project documentation."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:29
+msgid ""
+"Each wiki is a small file. Create as many wikis as you like, such as one "
+"wiki per topic. Customize each wiki to your liking with extensions and other "
+"customization options."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:33
+#, python-brace-format
+msgid ""
+"Feather Wiki is downloaded from {box_name} website and not from Debian. "
+"Wikis need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
+#, python-brace-format
+msgid ""
+"Wikis are not public by default, but they can be downloaded for sharing or "
+"publishing. They can be edited by <a href=\"{users_url}\">any user</a> on "
+"{box_name} belonging to the wiki group. Simultaneous editing is not "
+"supported."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/tiddlywiki/__init__.py:61
+msgid "View and edit wiki applications"
+msgstr "వికీ అనువర్తనాలను చూడండి మరియు మార్చండి"
+
+#: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
+#, fuzzy
+#| msgid "Create Wiki/Blog"
+msgid "Feather Wiki"
+msgstr "వికీ/బ్లాగ్ సృష్టించు"
+
+#: modules/featherwiki/__init__.py:61
+msgid "Personal Notebooks"
+msgstr ""
+
+#: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Name of the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+msgid ""
+"Wiki title and description can be set from within the wiki. This file name "
+"is independent of the wiki title."
+msgstr ""
+
+#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+msgid "New name for the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+msgid "Renaming the file has no effect on the title of the wiki."
+msgstr ""
+
+#: modules/featherwiki/forms.py:32
+msgid "A Feather Wiki file with .html file extension"
+msgstr ""
+
+#: modules/featherwiki/forms.py:35
+msgid "Feather Wiki files must be in HTML format"
+msgstr ""
+
+#: modules/featherwiki/forms.py:37
+msgid "Upload an existing Feather Wiki file from this computer."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
+#, fuzzy
+#| msgid "Manage Libraries"
+msgid "Manage Wikis"
+msgstr "గ్రంధాలయంను నిర్వహించండి"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:16
+#: modules/featherwiki/templates/featherwiki_configure.html:18
+#: modules/featherwiki/views.py:48
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
+#: modules/tiddlywiki/views.py:48
+#, fuzzy
+#| msgid "Create Wiki/Blog"
+msgid "Create Wiki"
+msgstr "వికీ/బ్లాగ్ సృష్టించు"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:21
+#: modules/featherwiki/templates/featherwiki_configure.html:23
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki"
+msgstr "ఫైలు ఎగుమతించండి"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:30
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No wikis available."
+msgstr "గ్రంధాలయంలు అందుబాటులో లేవు."
+
+#: modules/featherwiki/templates/featherwiki_configure.html:36
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to wiki %(wiki)s"
+msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:43
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
+#, python-format
+msgid "Rename wiki %(wiki)s"
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:50
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete wiki %(wiki)s"
+msgstr "ప్రదేశం తొలగించు %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete wiki <em>%(name)s</em>"
+msgstr "వికీ లేదా బ్లాగ్ తొలగించు <em>%(name)s</em>"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"Feather Wiki before deleting it."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_delete.html:25
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
+#, fuzzy
+#| msgid "Delete this archive permanently?"
+msgid "Delete this wiki file permanently?</p>"
+msgstr "ఈ ఆర్కైవ్‌ను శాశ్వతంగా తొలగించాలా?"
+
+#: modules/featherwiki/templates/featherwiki_upload_file.html:20
+#: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
+msgid "Upload"
+msgstr "ఎగుమతించండి"
+
+#: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A wiki file with the given name already exists."
+msgstr "ఈ పేరుతో ఒక వాటా ఇప్పటికే ఉంది."
+
+#: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
+#, fuzzy
+#| msgid "Archive created."
+msgid "Wiki created."
+msgstr "భాండాగారాము సృజింపబడింది."
+
+#: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while creating the wiki."
+msgstr "గ్రంధాలయంని సృష్టిస్తున్నప్పుడు లోపం సంభవించింది."
+
+#: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
+#, fuzzy
+#| msgid "MediaWiki"
+msgid "Rename Wiki"
+msgstr "మీడియావికీ"
+
+#: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
+msgid "Wiki renamed."
+msgstr ""
+
+#: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while renaming the wiki."
+msgstr "గ్రంధాలయంని సృష్టిస్తున్నప్పుడు లోపం సంభవించింది."
+
+#: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki File"
+msgstr "ఫైలు ఎగుమతించండి"
+
+#: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
+msgid "Wiki file added."
+msgstr ""
+
+#: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
+#, fuzzy
+#| msgid "Failed to add content package."
+msgid "Failed to add wiki file."
+msgstr "కంటెంట్ ప్యాకేజీని జోడించడంలో విఫలమైంది."
+
 #: modules/firewall/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -2330,7 +2539,7 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Git రిపోజిటరీలకు చదవడానికి-వ్రాయడానికి యాక్సెస్"
 
-#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:11
+#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "గిట్వెబ్"
 
@@ -2392,7 +2601,7 @@ msgstr "డిఫాల్ట్ శాఖ"
 msgid "Gitweb displays this as a default branch."
 msgstr "Gitweb దీన్ని డిఫాల్ట్ బ్రాంచ్‌గా ప్రదర్శిస్తుంది."
 
-#: modules/gitweb/manifest.py:19
+#: modules/gitweb/manifest.py:18
 msgid "Git"
 msgstr "గిట్"
 
@@ -2918,10 +3127,6 @@ msgstr "ఇకివికీ"
 msgid "Wiki and Blog"
 msgstr "వికీ మరియు బ్లాగ్"
 
-#: modules/ikiwiki/__init__.py:80
-msgid "View and edit wiki applications"
-msgstr "వికీ అనువర్తనాలను చూడండి మరియు మార్చండి"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "నిర్వాహకుని ఖాతా పేరు"
@@ -3069,7 +3274,7 @@ msgid "Janus Video Room"
 msgstr "జాన్స్ వీడియొ రూమ్"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:252
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
 msgid "JavaScript license information"
 msgstr "జావాస్క్రిప్ట్ లైసెన్స్ సమాచరం"
 
@@ -4471,7 +4676,7 @@ msgstr "అనుసంధానాన్ని సవరించు"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:159 templates/base.html:160
+#: templates/base.html:157 templates/base.html:158
 msgid "Edit"
 msgstr "సవరించు"
 
@@ -5580,8 +5785,8 @@ msgstr ""
 "ప్రస్తుతం సంస్థాపన లేదా నవీకరణ నడుస్తోంది. మూసివేయడానికి లేదా పునఃప్రారంభించడానికి ముందు ఇది పూర్తి "
 "అయ్యే వరకు వేచి ఉండండి."
 
-#: modules/power/templates/power.html:22 templates/base.html:174
-#: templates/base.html:175
+#: modules/power/templates/power.html:22 templates/base.html:172
+#: templates/base.html:173
 msgid "Restart"
 msgstr "పునఃప్రారంభించండి"
 
@@ -6855,7 +7060,7 @@ msgstr "ప్రవేశించు"
 msgid "Logged out successfully."
 msgstr "విజయవంతంగా లాగ్ అవుట్ చేయబడింది."
 
-#: modules/storage/__init__.py:22
+#: modules/storage/__init__.py:24
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -6866,103 +7071,103 @@ msgstr ""
 "ప్రస్తుతం వాడుకలో ఉన్న స్టోరేజ్ మీడియాను వీక్షించవచ్చు, తొలగించగల మీడియాను మౌంట్ చేయవచ్చు మరియు అన్‌మౌంట్ "
 "చేయవచ్చు, రూట్ విభజనను విస్తరించవచ్చు మొదలైనవి."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
-#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
+#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
+#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
 msgid "Storage"
 msgstr "నిల్వ"
 
-#: modules/storage/__init__.py:216
+#: modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} బైట్లు"
 
-#: modules/storage/__init__.py:220
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} కిలోబైట్లు"
 
-#: modules/storage/__init__.py:224
+#: modules/storage/__init__.py:235
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} మెగాబైట్లు"
 
-#: modules/storage/__init__.py:228
+#: modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} గిగాబైట్లు"
 
-#: modules/storage/__init__.py:231
+#: modules/storage/__init__.py:242
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} టెరాబైట్లు"
 
-#: modules/storage/__init__.py:243
+#: modules/storage/__init__.py:254
 msgid "The operation failed."
 msgstr "ఆపరేషన్ విఫలమైంది."
 
-#: modules/storage/__init__.py:245
+#: modules/storage/__init__.py:256
 msgid "The operation was cancelled."
 msgstr "ఆపరేషన్ రద్దు చేయబడింది."
 
-#: modules/storage/__init__.py:247
+#: modules/storage/__init__.py:258
 msgid "The device is already unmounting."
 msgstr "పరికరం ఇప్పటికే అన్‌మౌంట్ చేయబడుతోంది."
 
-#: modules/storage/__init__.py:249
+#: modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "డ్రైవర్/టూల్ సపోర్ట్ తప్పిపోయినందున ఆపరేషన్‌కు మద్దతు లేదు."
 
-#: modules/storage/__init__.py:252
+#: modules/storage/__init__.py:263
 msgid "The operation timed out."
 msgstr "ఆపరేషన్ టైమవుట్ అయింది."
 
-#: modules/storage/__init__.py:254
+#: modules/storage/__init__.py:265
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "ఈ ఆపరేషన్ గాఢ నిద్రలో ఉన్న ఒక డిస్క్ ను మేల్కొలుపుతుంది."
 
-#: modules/storage/__init__.py:257
+#: modules/storage/__init__.py:268
 msgid "Attempting to unmount a device that is busy."
 msgstr "బిజీగా ఉన్న పరికరాన్ని అన్‌మౌంట్ చేయడానికి ప్రయత్నిస్తోంది."
 
-#: modules/storage/__init__.py:259
+#: modules/storage/__init__.py:270
 msgid "The operation has already been cancelled."
 msgstr "ఆపరేషన్ ఇప్పటికే రద్దు చేయబడింది."
 
-#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
-#: modules/storage/__init__.py:265
+#: modules/storage/__init__.py:272 modules/storage/__init__.py:274
+#: modules/storage/__init__.py:276
 msgid "Not authorized to perform the requested operation."
 msgstr "అభ్యర్థించిన ఆపరేషన్ చేయడానికి అధికారం లేదు."
 
-#: modules/storage/__init__.py:267
+#: modules/storage/__init__.py:278
 msgid "The device is already mounted."
 msgstr "పరికరం ఇప్పటికే మౌంట్ చేయబడింది."
 
-#: modules/storage/__init__.py:269
+#: modules/storage/__init__.py:280
 msgid "The device is not mounted."
 msgstr "పరికరం మౌంట్ చేయబడలేదు."
 
-#: modules/storage/__init__.py:271
+#: modules/storage/__init__.py:282
 msgid "Not permitted to use the requested option."
 msgstr "అభ్యర్థించిన ఎంపికను ఉపయోగించడానికి అనుమతి లేదు."
 
-#: modules/storage/__init__.py:273
+#: modules/storage/__init__.py:284
 msgid "The device is mounted by another user."
 msgstr "పరికరం మరొక వినియోగదారుచే మౌంట్ చేయబడింది."
 
-#: modules/storage/__init__.py:303
+#: modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr "సిస్టమ్ విభజనలో తక్కువ స్థలం: {percent_used}% used, {free_space} ఉచితం."
 
-#: modules/storage/__init__.py:305
+#: modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "తక్కువ ఖని స్థలం"
 
-#: modules/storage/__init__.py:333
+#: modules/storage/__init__.py:344
 msgid "Disk failure imminent"
 msgstr "ఖని వైఫల్యం ఆసన్నమైంది"
 
-#: modules/storage/__init__.py:335
+#: modules/storage/__init__.py:346
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -6971,24 +7176,28 @@ msgstr ""
 "ఖని {id}సమీప భవిష్యత్తులో విఫలమయ్యే అవకాశం ఉందని నివేదిస్తోంది. మీరు చేయగలిగినప్పుడు ఏదైనా సమాచారంకాపీ "
 "చేసి, చోదకం భర్తీ చేయండి."
 
-#: modules/storage/__init__.py:379
+#: modules/storage/__init__.py:390
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
 
-#: modules/storage/__init__.py:382
+#: modules/storage/__init__.py:393
 #, fuzzy
 #| msgid "System"
 msgid "Read-only root filesystem"
 msgstr "వ్యవస్థ"
 
-#: modules/storage/__init__.py:392
+#: modules/storage/__init__.py:403
 #, fuzzy
 #| msgid "Go to Networks"
 msgid "Go to Power"
 msgstr "అల్లిక వైపు వెళ్ళండి"
+
+#: modules/storage/__init__.py:439
+msgid "grub package is configured"
+msgstr ""
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7143,6 +7352,62 @@ msgstr "సింక్ తింగ్"
 #: modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "ఫైళ్ళ సమకాలీకరణ"
+
+#: modules/tiddlywiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"TiddlyWiki is an interactive application that runs entirely in the web "
+"browser. Each wiki is a self-contained HTML file stored on your {box_name}. "
+"Instead of writing long wiki pages, TiddlyWiki encourages you to write "
+"several short notes called Tiddlers and link them together into a dense "
+"graph."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:30
+msgid ""
+"It is a versatile application with a wide variety of use cases - non-linear "
+"notebook, website, personal knowledge base, task and project management "
+"system, personal diary etc. Plugins can extend the functionality of "
+"TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
+"file is possible from within the application."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:37
+#, python-brace-format
+msgid ""
+"TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
+"need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:46
+msgid "Create a new wiki or upload your existing wiki file to get started."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
+msgid "TiddlyWiki"
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:66
+msgid "Non-linear Notebooks"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:32
+msgid "A TiddlyWiki file with .html file extension"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:35
+msgid "TiddlyWiki files must be in HTML format"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:37
+msgid "Upload an existing TiddlyWiki file from this computer."
+msgstr ""
+
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"TiddlyWiki before deleting it."
+msgstr ""
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -8652,43 +8917,43 @@ msgstr ""
 "FreedomBox అనేది గోప్యత మరియు డేటా యాజమాన్యం కోసం రూపొందించబడిన వ్యక్తిగత సర్వర్. ఇది సర్వర్ యాప్‌లను "
 "సులభంగా ఇన్‌స్టాల్ చేయడానికి మరియు నిర్వహించడానికి మిమ్మల్ని అనుమతించే ఉచిత సాఫ్ట్‌వేర్."
 
-#: templates/base.html:110
+#: templates/base.html:108
 msgid " Home"
 msgstr " నివాసం"
 
-#: templates/base.html:113
+#: templates/base.html:111
 msgid "Home"
 msgstr "ముంగిలి"
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Apps"
 msgstr " కార్యక్షేత్రం"
 
-#: templates/base.html:122
+#: templates/base.html:120
 msgid "Apps"
 msgstr "అనువర్తనాలు"
 
-#: templates/base.html:127
+#: templates/base.html:125
 msgid " System"
 msgstr " కార్యవ్యవస్థ"
 
-#: templates/base.html:166 templates/base.html:167
+#: templates/base.html:164 templates/base.html:165
 msgid "Change password"
 msgstr "రహస్యపదాన్ని మార్చు"
 
-#: templates/base.html:180 templates/base.html:181
+#: templates/base.html:178 templates/base.html:179
 msgid "Shut down"
 msgstr "మూసివేయి"
 
-#: templates/base.html:191 templates/base.html:220
+#: templates/base.html:189 templates/base.html:218
 msgid "Log out"
 msgstr "నిష్క్రమించు"
 
-#: templates/base.html:200 templates/base.html:203
+#: templates/base.html:198 templates/base.html:201
 msgid "Select language"
 msgstr "బాషను ఎంచుకోండి"
 
-#: templates/base.html:209 templates/base.html:211
+#: templates/base.html:207 templates/base.html:209
 msgid "Log in"
 msgstr "లోనికి ప్రవేశించండి"
 
@@ -10216,9 +10481,6 @@ msgstr "గుజరాతీ"
 #~ msgid "Pagekite"
 #~ msgstr "పేజ్ కైట్"
 
-#~ msgid "Upload"
-#~ msgstr "ఎగుమతించండి"
-
 #~ msgid "Certificate renewal management enabled for {domain}."
 #~ msgstr "{domain} కొరకు సర్టిఫికేట్ పునరుద్ధరణ నిర్వహణ అమలుపరచబడింది."
 
@@ -10891,9 +11153,6 @@ msgstr "గుజరాతీ"
 
 #~ msgid "show password"
 #~ msgstr "రహస్యపదం చూపించు"
-
-#~ msgid "Create Wiki/Blog"
-#~ msgstr "వికీ/బ్లాగ్ సృష్టించు"
 
 #~ msgid "Physical interface"
 #~ msgstr "శారీరక సంవిధానం"
