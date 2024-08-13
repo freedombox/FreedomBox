@@ -1,0 +1,69 @@
+#language es
+
+<<Include(FreedomBox/Manual/TiddlyWiki, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== TiddlyWiki (Bloc de notas no lineal) ==
+||<tablestyle="float: right;"> {{attachment:FreedomBox/Manual/TiddlyWiki/TiddlyWiki-on-FreedomBox.png|Icono de Tiddly}} ||
+
+'''Disponible desde''': versión 24.17
+
+!TiddlyWiki en un bloc de notas web no lineal interactivo para capturar y organizar información compleja. Puede servir como un sistema unipersonal de gestión de conocimientos.
+Es portable (un único archvo HTML), altamente personalizable y fácil de usar.
+Pese a ser un único archivo HTML !TiddlyWiki puede incrustar multiples tipos de multimedia - imagenes, audio, video y archivos PDF (o apuntar a ellos mediante rutas, aunque esto ya no es tán portable).
+También puede almacenar datos en formato JSON.
+
+=== TiddlyWiki en FreedomBox ===
+
+!FreedomBox incluye una implementación nativa de un nido Feather Wiki (un servidor para guardar tus archivos de wiki). Se usa el mismo para alojar los archivos !TiddlyWiki.
+Esta implementación no es tán eficiente como el servidor oficial !TiddlyWiki, que puede grabar entradas (''Tiddlers'') individualmente, en vez de grabar todo el archivo HTML.
+
+==== Consideraciones respecto al ancho de banda en la configuración de grabación automática ====
+
+Cada archivo !TiddlyWiki vacío es 40 veces mayor (2.4 MB) que uno de Feather Wiki (60 KB). !TiddlyWiki viene con la grabación automática activa por omisión.
+Esto provoca que se transmita al servidor el archivo entero cada vez que se guarda un ''Tiddler''.
+En Feather Wiki el texto es corrido así que quizá escribas páginas largas pero !TiddlyWiki invita a escribir muchos ''Tiddlers'' cortos, lo que deviene en más grabaciones por el mismo texto.
+Los archivos de !TiddlyWiki tienden a crecer a medida que añades contenido multimedia. Hay a quien le crecen sus wikis hasta 100 MB con el transcurso de los años.
+
+Si editas con datos móviles o por conexión telefónica, cientos de grabaciones de 2.4 MB + contenido se notan. En estos casos se recomienda deshabilitar la
+grabación automática en los ajustes y grabar a mano.
+
+{{attachment:FreedomBox/Manual/TiddlyWiki/TiddlyWiki-Autosave.png|Ajuste de grabación automática en TiddlyWiki|width=800}}
+
+=== Casos de uso ===
+
+ * '''Wiki personal''': !TiddlyWiki se puede usar como wiki personal para almacenar todo tipo de información en notas cortas llamadas ''Tiddlers''. Puede alojar una pequeña base de datos de perlas de conocimiento personal enlazadas en estructura de grafo y fáciles de busar y organizar.
+ * '''Notas de investigación''': !TiddlyWiki se puede usar como un tarjetero o un segundo cerebro. Esto puede llevar a revelaciones creativas cruzando conceptos diferentes.
+ * '''Diario cifrado''': !TiddlyWiki soporta [[https://tiddlywiki.com/static/Encryption.html|protección mediante contraseña]] y secuencias de entradas (un ''Tiddler'' con la fecha del día como título). Tu diario personal puede ser un archivo !TiddlyWiki.
+ * !TiddlyWiki se puede emplear para gestión de proyectos, por ejemplo planificar una boda.
+ * Aunque el formato de !TiddlyWiki's es declarativo se puede usar para crear contenido interactivo como tarjetas flash y listas auto-actualizadas. Soporta plantillas y macros en !JavaScript.
+ * '''Blog de enlaces''': Un archivo !TiddlyWiki puede reemplazar a Shaarli si quieres mantener tus marcapáginas privados.
+ * !TiddlyWiki se puede usar como gestor de incidencias para tus proyectos de !GitWeb.
+
+=== Actualizaciones ===
+
+Actualizar !TiddlyWiki es un proceso manual.
+
+ 1. Salva una copia local del fichero desde tu navegador. Haz clic con el botón derecho del ratón -> Guardar como...
+ 2. Usa el [[https://tiddlywiki.com/upgrade.html|Asistente de actualización]] del sitio web oficial.
+ 3. Tras descargar el archivo actualizado, cárgalo al navegador para verificar tu contenido.
+ 4. Reemplaza el archivo antiguo en tu !FreedomBox con el archivo actualizado.
+
+Si alguna vez pierdes un archivo !TiddlyWiki puedes recuperar una copia ligaramente anticuada de la app de Copias de Respaldo. Es mejor conservar tu copia local tras la actualización, si quieres revertir.
+
+=== Enlaces externos ===
+
+ * Proyecto original: https://tiddlywiki.com
+ * Grok !TiddlyWiki (libro electrónico en línea): https://groktiddlywiki.com/read/
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

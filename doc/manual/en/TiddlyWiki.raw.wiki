@@ -1,0 +1,63 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/TiddlyWiki|English]] - [[es/FreedomBox/Manual/TiddlyWiki|Español]] - [[DebianWiki/EditorGuide#translation|(+)]]-~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== TiddlyWiki (Non-linear Notebooks) ==
+||<tablestyle="float: right;"> {{attachment:TiddlyWiki-on-FreedomBox.png|TiddlyWiki icon}} ||
+
+'''Available since''': version 24.17
+
+!TiddlyWiki is an interactive, nonlinear web notebook for capturing and organizing complex information. It can serve as a knowledge management system for one person. It is portable (single HTML file), highly customizable and easy to use. Despite being a single HTML file, !TiddlyWiki can embed multiple types of media - images, audio, video and PDF files (or refer to them by file paths, not as portable). It can also store data in JSON format.
+
+=== TiddlyWiki on FreedomBox ===
+
+!FreedomBox includes a native implementation of a Feather Wiki Nest (a server to save your wiki files). The same is used to host !TiddlyWiki files. This implementation is not as efficient as the official !TiddlyWiki server which can save one Tiddler at a time, instead of saving the entire HTML file.
+
+==== Bandwidth considerations with the Autosave setting ====
+
+Each empty !TiddlyWiki file (2.4 MB) is 40x the size of an empty Feather Wiki file (60 KB). !TiddlyWiki has autosave enabled by default. This causes the entire wiki file to be transmitted to the server, each time an individual Tiddler is saved. You might write long wiki pages in Feather Wiki, but !TiddlyWiki encourages writing lots of short Tiddlers which results in more saves for the same amount of text. !TiddlyWiki files tend to grow large as you add media content, with people growing their wikis to 100 MB in size over the years.
+
+If you are editing while using mobile data or you are connected via a dial-up connection, hundreds of (2.4 MB + content) saves can add up quickly. In such cases, it is recommended to disable autosave from the settings and save manually.
+
+{{attachment:TiddlyWiki-Autosave.png|TiddlyWiki Autosave Settings|width=800}}
+
+=== Use cases ===
+
+ * '''Personal Wiki''': !TiddlyWiki can be used as a personal wiki to store all kinds of information in short notes called Tiddlers. It can hold a small database of your personal knowledge that is linked in a graph and easy to search and organize.
+ * '''Research Notes''': !TiddlyWiki can be used as a zettelkasten or a second brain. This can lead to new creative insights across different concepts.
+ * '''Encrypted Journal/Diary''': !TiddlyWiki supports [[https://tiddlywiki.com/static/Encryption.html|password-protection]] and journal entries (a Tiddler with today's date as the title). Your personal diary/journal can be one !TiddlyWiki file. Engineering Daybooks is a similar use case, but for work.
+ * !TiddlyWiki can be used as a project management tool, e.g. for wedding planning.
+ * !TiddlyWiki's !WikiText though declarative can be used to create interactive content such as flash cards and automatically-updating lists. There is support for templates and !JavaScript macros.
+ * '''Linkblog''': A !TiddlyWiki file can work as a replacement for Shaarli if you want to keep all of your bookmarks private.
+ * !TiddlyWiki can be used as a bug tracker for your projects on !GitWeb.
+
+=== Upgrades ===
+
+Upgrading !TiddlyWiki is a manual process.
+
+ 1. Save a local copy of the file from your browser. Right click -> Save page as...
+ 2. Use the web-based [[https://tiddlywiki.com/upgrade.html|Upgrade Wizard]] from the official website.
+ 3. After downloading the upgraded file, load it into a browser to verify your content.
+ 4. Replace the older file on your !FreedomBox with the upgraded file.
+
+If you ever lose a !TiddlyWiki file, you can always retrieve a slightly outdated copy from the Backups app. It is better to keep your local copy after the upgrade, in case you want to revert.
+
+=== External links ===
+
+ * Website: https://tiddlywiki.com
+ * Grok !TiddlyWiki (online e-book): https://groktiddlywiki.com/read/
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
