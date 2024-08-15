@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 21:32-0400\n"
-"PO-Revision-Date: 2024-07-03 07:09+0000\n"
+"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"PO-Revision-Date: 2024-07-31 05:09+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -109,7 +109,7 @@ msgstr "Dukshmëri"
 msgid "Data"
 msgstr "Të dhëna"
 
-#: menu.py:110 templates/base.html:131
+#: menu.py:110 templates/base.html:129
 msgid "System"
 msgstr "Sistem"
 
@@ -198,7 +198,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Aktivizoni një Plan Kopjeruajtjesh"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Kalo te {app_name}"
@@ -904,9 +904,11 @@ msgid "List"
 msgstr "Listë"
 
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
 #: modules/networks/templates/connection_show.html:56
 #: modules/samba/templates/samba.html:154
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
 #: modules/wireguard/templates/wireguard_delete_server.html:35
 #: modules/wireguard/templates/wireguard_show_client.html:77
@@ -1019,8 +1021,8 @@ msgstr "Rifresko adresë IP dhe përkatësi"
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:53
-#: modules/shadowsocksserver/views.py:52 modules/ssh/views.py:62
+#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
+#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
 #: modules/transmission/views.py:43 modules/ttrss/views.py:31
 #: modules/wordpress/views.py:31
 msgid "Configuration updated"
@@ -1143,14 +1145,16 @@ msgstr "Biblioteka u krijua."
 msgid "An error occurred while creating the library."
 msgstr "Ndodhi një gabim teksa krijohej biblioteka."
 
-#: modules/calibre/views.py:63 modules/gitweb/views.py:139
-#: modules/kiwix/views.py:100
+#: modules/calibre/views.py:63 modules/featherwiki/views.py:145
+#: modules/gitweb/views.py:139 modules/kiwix/views.py:100
+#: modules/tiddlywiki/views.py:145
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} u fshi."
 
-#: modules/calibre/views.py:67 modules/gitweb/views.py:143
-#: modules/kiwix/views.py:104
+#: modules/calibre/views.py:67 modules/featherwiki/views.py:149
+#: modules/gitweb/views.py:143 modules/kiwix/views.py:104
+#: modules/tiddlywiki/views.py:149
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "S’u fshi dot {name}: {error}"
@@ -2223,6 +2227,211 @@ msgstr "Portë"
 msgid "Host/Target/Value"
 msgstr "Strehë/Objektiv/Vlerë"
 
+#: modules/featherwiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"Feather Wiki is a tool to create simple self-contained wikis, each stored in "
+"a single HTML file on your {box_name}. You can use it as a personal wiki, as "
+"a web notebook, or for project documentation."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:29
+msgid ""
+"Each wiki is a small file. Create as many wikis as you like, such as one "
+"wiki per topic. Customize each wiki to your liking with extensions and other "
+"customization options."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:33
+#, python-brace-format
+msgid ""
+"Feather Wiki is downloaded from {box_name} website and not from Debian. "
+"Wikis need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
+#, python-brace-format
+msgid ""
+"Wikis are not public by default, but they can be downloaded for sharing or "
+"publishing. They can be edited by <a href=\"{users_url}\">any user</a> on "
+"{box_name} belonging to the wiki group. Simultaneous editing is not "
+"supported."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/tiddlywiki/__init__.py:61
+msgid "View and edit wiki applications"
+msgstr "Shihni dhe përpunoni aplikacione wiki"
+
+#: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
+msgid "Feather Wiki"
+msgstr ""
+
+#: modules/featherwiki/__init__.py:61
+msgid "Personal Notebooks"
+msgstr ""
+
+#: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Name of the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+msgid ""
+"Wiki title and description can be set from within the wiki. This file name "
+"is independent of the wiki title."
+msgstr ""
+
+#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+msgid "New name for the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+msgid "Renaming the file has no effect on the title of the wiki."
+msgstr ""
+
+#: modules/featherwiki/forms.py:32
+msgid "A Feather Wiki file with .html file extension"
+msgstr ""
+
+#: modules/featherwiki/forms.py:35
+msgid "Feather Wiki files must be in HTML format"
+msgstr ""
+
+#: modules/featherwiki/forms.py:37
+msgid "Upload an existing Feather Wiki file from this computer."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
+#, fuzzy
+#| msgid "Manage Libraries"
+msgid "Manage Wikis"
+msgstr "Administroni Biblioteka"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:16
+#: modules/featherwiki/templates/featherwiki_configure.html:18
+#: modules/featherwiki/views.py:48
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
+#: modules/tiddlywiki/views.py:48
+#, fuzzy
+#| msgid "Create Wiki or Blog"
+msgid "Create Wiki"
+msgstr "Krijoni Wiki ose Blog"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:21
+#: modules/featherwiki/templates/featherwiki_configure.html:23
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki"
+msgstr "Ngarkoni Kartelë"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:30
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No wikis available."
+msgstr "S’ka biblioteka."
+
+#: modules/featherwiki/templates/featherwiki_configure.html:36
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to wiki %(wiki)s"
+msgstr "Kalo te sajti %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:43
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
+#, python-format
+msgid "Rename wiki %(wiki)s"
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:50
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete wiki %(wiki)s"
+msgstr "Fshije sajtin %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete wiki <em>%(name)s</em>"
+msgstr "Fshini Wiki-n ose Blogun <em>%(name)s</em>"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"Feather Wiki before deleting it."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_delete.html:25
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
+#, fuzzy
+#| msgid "Delete this archive permanently?"
+msgid "Delete this wiki file permanently?</p>"
+msgstr "Të fshihet përgjithmonë ky arkiv?"
+
+#: modules/featherwiki/templates/featherwiki_upload_file.html:20
+#: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload"
+msgstr "Ngarkoni Kartelë"
+
+#: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A wiki file with the given name already exists."
+msgstr "Ka tashmë një pjesë me këtë emër."
+
+#: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
+#, fuzzy
+#| msgid "Archive created."
+msgid "Wiki created."
+msgstr "Arkivi u krijua."
+
+#: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while creating the wiki."
+msgstr "Ndodhi një gabim teksa krijohej biblioteka."
+
+#: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
+#, fuzzy
+#| msgid "MediaWiki"
+msgid "Rename Wiki"
+msgstr "MediaWiki"
+
+#: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
+msgid "Wiki renamed."
+msgstr ""
+
+#: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while renaming the wiki."
+msgstr "Ndodhi një gabim teksa krijohej biblioteka."
+
+#: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki File"
+msgstr "Ngarkoni Kartelë"
+
+#: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
+msgid "Wiki file added."
+msgstr ""
+
+#: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
+#, fuzzy
+#| msgid "Failed to add content package."
+msgid "Failed to add wiki file."
+msgstr "S’u arrit të shtohej paketë lënde."
+
 #: modules/firewall/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -2398,7 +2607,7 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Hyrje për shkrim-lexim në depo Git"
 
-#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:11
+#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
 
@@ -2458,7 +2667,7 @@ msgstr "Degë parazgjedhje"
 msgid "Gitweb displays this as a default branch."
 msgstr "Gitweb e shfaq këtë si një degë parazgjedhje."
 
-#: modules/gitweb/manifest.py:19
+#: modules/gitweb/manifest.py:18
 msgid "Git"
 msgstr "Git"
 
@@ -3009,10 +3218,6 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "Wiki dhe Blog"
 
-#: modules/ikiwiki/__init__.py:80
-msgid "View and edit wiki applications"
-msgstr "Shihni dhe përpunoni aplikacione wiki"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Emër Llogarie Përgjegjësi"
@@ -3164,7 +3369,7 @@ msgid "Janus Video Room"
 msgstr "Janus Video Room"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:252
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
 msgid "JavaScript license information"
 msgstr "Hollësi licence JavaScript"
 
@@ -3967,45 +4172,32 @@ msgid "News Feed Reader"
 msgstr "Lexues Prurjesh Lajmesh"
 
 #: modules/miniflux/forms.py:12
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a username for the user."
-msgstr "Jepni një emër përdoruesi të vlefshëm."
+msgstr "Jepni për përdoruesin një emër përdoruesi."
 
 #: modules/miniflux/forms.py:16
 msgid "Enter a strong password with a minimum of 6 characters."
 msgstr ""
 
 #: modules/miniflux/forms.py:18
-#, fuzzy
-#| msgid "Updating configuration"
 msgid "Password confirmation"
-msgstr "Po përditësohet formësimi"
+msgstr "Ripohim fjalëkalimi"
 
 #: modules/miniflux/forms.py:20
-#, fuzzy
-#| msgid ""
-#| "Enter the password for user \"{user}\" to authorize account modifications."
 msgid "Enter the same password for confirmation."
-msgstr ""
-"Jepni fjalëkalimin për përdoruesin “{user}”, që të autorizoni ndryshime "
-"llogarie."
+msgstr "Për ripohim, jepni të njëjtin fjalëkalim."
 
 #: modules/miniflux/forms.py:31
-#, fuzzy
-#| msgid "Password updated"
 msgid "Passwords do not match."
-msgstr "Fjalëkalimi u përditësua"
+msgstr "Fjalëkalimet s’përputhen."
 
 #: modules/miniflux/manifest.py:18
 msgid "Fluent Reader Lite"
 msgstr ""
 
 #: modules/miniflux/manifest.py:33
-#, fuzzy
-#| msgid "News Feed Reader"
 msgid "Fluent Reader"
-msgstr "Lexues Prurjesh Lajmesh"
+msgstr ""
 
 #: modules/miniflux/manifest.py:46
 msgid "FluxNews"
@@ -4024,10 +4216,8 @@ msgid "Newsflash"
 msgstr ""
 
 #: modules/miniflux/manifest.py:96
-#, fuzzy
-#| msgid "Read"
 msgid "Read You"
-msgstr "Lexoni"
+msgstr ""
 
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
@@ -4041,53 +4231,41 @@ msgstr ""
 
 #: modules/miniflux/templates/miniflux.html:22
 #: modules/miniflux/templates/miniflux.html:24
-#, fuzzy
-#| msgid "Create User"
 msgid "Create admin user"
-msgstr "Krijoni Përdorues"
+msgstr "Krijoni përdorues përgjegjës"
 
 #: modules/miniflux/templates/miniflux.html:27
 #: modules/miniflux/templates/miniflux.html:29
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset user password"
-msgstr "Caktoni Fjalëkalim Superpërdoruesi"
+msgstr "Ricaktoni fjalëkalim përdoruesi"
 
 #: modules/miniflux/views.py:38
-#, fuzzy
-#| msgid "Create User"
 msgid "Create Admin User"
-msgstr "Krijoni Përdorues"
+msgstr "Krijoni Përdorues Përgjegjës"
 
 #: modules/miniflux/views.py:48
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Created admin user: {username}"
-msgstr "Emër përdoruesi i pavlefshëm: {username}"
+msgstr "U krijua përdoruesi përgjegjës: {username}"
 
 #: modules/miniflux/views.py:53
-#, fuzzy, python-brace-format
-#| msgid "An error occurred while creating the repository."
+#, python-brace-format
 msgid "An error occurred while creating the user: {error}."
-msgstr "Ndodhi një gabim teksa krijohej depoja."
+msgstr "Ndodhi një gabim teksa krijohej përdoruesi: {error}."
 
 #: modules/miniflux/views.py:70
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset User Password"
-msgstr "Caktoni Fjalëkalim Superpërdoruesi"
+msgstr "Ricaktoni Fjalëkalim Përdoruesi"
 
 #: modules/miniflux/views.py:80
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Password reset for user: {username}"
-msgstr "Emër përdoruesi i pavlefshëm: {username}"
+msgstr "Ricaktim fjalëkalimi për përdoruesin: {username}"
 
 #: modules/miniflux/views.py:85
-#, fuzzy, python-brace-format
-#| msgid "An error occurred during configuration."
+#, python-brace-format
 msgid "An error occurred during password reset: {error}."
-msgstr "Ndodhi një gabim gjatë formësimit."
+msgstr "Ndodhi një gabim gjatë ricaktimit të fjalëkalimit: {error}."
 
 #: modules/mumble/__init__.py:25
 msgid ""
@@ -4657,7 +4835,7 @@ msgstr "Përpunoni lidhjen"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:159 templates/base.html:160
+#: templates/base.html:157 templates/base.html:158
 msgid "Edit"
 msgstr "Përpunoni"
 
@@ -5793,8 +5971,8 @@ msgstr ""
 "Aktualisht po xhiron një instalim ose përmirësim. Shihni mundësinë e "
 "pritjes, deri sa të përfundohet, përpara fikjes apo rinisjes."
 
-#: modules/power/templates/power.html:22 templates/base.html:174
-#: templates/base.html:175
+#: modules/power/templates/power.html:22 templates/base.html:172
+#: templates/base.html:173
 msgid "Restart"
 msgstr "Rinise"
 
@@ -7104,7 +7282,7 @@ msgstr "Hyrje"
 msgid "Logged out successfully."
 msgstr "U dol me sukses."
 
-#: modules/storage/__init__.py:22
+#: modules/storage/__init__.py:24
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -7116,106 +7294,106 @@ msgstr ""
 "përdorim, të montoni dhe çmontoni media të heqshme, të zgjeroni pjesën "
 "rrënjë, etj."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
-#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
+#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
+#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
 msgid "Storage"
 msgstr "Depozitë"
 
-#: modules/storage/__init__.py:216
+#: modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajte"
 
-#: modules/storage/__init__.py:220
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: modules/storage/__init__.py:224
+#: modules/storage/__init__.py:235
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: modules/storage/__init__.py:228
+#: modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: modules/storage/__init__.py:231
+#: modules/storage/__init__.py:242
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: modules/storage/__init__.py:243
+#: modules/storage/__init__.py:254
 msgid "The operation failed."
 msgstr "Veprimi dështoi."
 
-#: modules/storage/__init__.py:245
+#: modules/storage/__init__.py:256
 msgid "The operation was cancelled."
 msgstr "Veprimi u anulua."
 
-#: modules/storage/__init__.py:247
+#: modules/storage/__init__.py:258
 msgid "The device is already unmounting."
 msgstr "Pajisja po çmontohet tashmë."
 
-#: modules/storage/__init__.py:249
+#: modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
 "Veprimi nuk mbulohet, për shkak se mungon mbulimi për përudhësin/mjetin."
 
-#: modules/storage/__init__.py:252
+#: modules/storage/__init__.py:263
 msgid "The operation timed out."
 msgstr "Veprimit i mbaroi koha."
 
-#: modules/storage/__init__.py:254
+#: modules/storage/__init__.py:265
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Veprimi do të zgjonte një disk që është në gjendjen “deep-sleep”."
 
-#: modules/storage/__init__.py:257
+#: modules/storage/__init__.py:268
 msgid "Attempting to unmount a device that is busy."
 msgstr "Po përpiqet të çmontohet një pajisje që është e zënë."
 
-#: modules/storage/__init__.py:259
+#: modules/storage/__init__.py:270
 msgid "The operation has already been cancelled."
 msgstr "Veprimi është anuluar tashmë."
 
-#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
-#: modules/storage/__init__.py:265
+#: modules/storage/__init__.py:272 modules/storage/__init__.py:274
+#: modules/storage/__init__.py:276
 msgid "Not authorized to perform the requested operation."
 msgstr "I paautorizuar për kryerjen e veprimit të kërkuar."
 
-#: modules/storage/__init__.py:267
+#: modules/storage/__init__.py:278
 msgid "The device is already mounted."
 msgstr "Pajisja është e çmontuar tashmë."
 
-#: modules/storage/__init__.py:269
+#: modules/storage/__init__.py:280
 msgid "The device is not mounted."
 msgstr "Pajisja s’është e montuar."
 
-#: modules/storage/__init__.py:271
+#: modules/storage/__init__.py:282
 msgid "Not permitted to use the requested option."
 msgstr "S’i lejohet të përdorë mundësinë e kërkuar."
 
-#: modules/storage/__init__.py:273
+#: modules/storage/__init__.py:284
 msgid "The device is mounted by another user."
 msgstr "Pajisja është montuar nga tjetër përdorues."
 
-#: modules/storage/__init__.py:303
+#: modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Hapësirë e ulët në pjesë sistemi: {percent_used}% të përdorura, {free_space} "
 "të lira."
 
-#: modules/storage/__init__.py:305
+#: modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Hapësirë disku e pamjaftueshme"
 
-#: modules/storage/__init__.py:333
+#: modules/storage/__init__.py:344
 msgid "Disk failure imminent"
 msgstr "Shumë afër dështimi disku"
 
-#: modules/storage/__init__.py:335
+#: modules/storage/__init__.py:346
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7224,7 +7402,7 @@ msgstr ""
 "Disku {id} po raporton se ka gjasa të dështojë tani afër. Kopjoni çfarëdo të "
 "dhënash që mundeni ende dhe zëvendësoni diskun."
 
-#: modules/storage/__init__.py:379
+#: modules/storage/__init__.py:390
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
@@ -7233,12 +7411,16 @@ msgstr ""
 "S’mund të ruani ndryshime formësimi. Provoni të rinisni sistemin. Nëse "
 "problemi vazhdon pas rinisjes, shihni pajisjen e depozitimit për gabimin."
 
-#: modules/storage/__init__.py:382
+#: modules/storage/__init__.py:393
 msgid "Read-only root filesystem"
 msgstr "Sistem kartelash rrënjë vetëm-për-lexim"
 
-#: modules/storage/__init__.py:392
+#: modules/storage/__init__.py:403
 msgid "Go to Power"
+msgstr ""
+
+#: modules/storage/__init__.py:439
+msgid "grub package is configured"
 msgstr ""
 
 #: modules/storage/forms.py:63
@@ -7396,6 +7578,62 @@ msgstr "Syncthing"
 #: modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Njëkohësim Kartelash"
+
+#: modules/tiddlywiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"TiddlyWiki is an interactive application that runs entirely in the web "
+"browser. Each wiki is a self-contained HTML file stored on your {box_name}. "
+"Instead of writing long wiki pages, TiddlyWiki encourages you to write "
+"several short notes called Tiddlers and link them together into a dense "
+"graph."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:30
+msgid ""
+"It is a versatile application with a wide variety of use cases - non-linear "
+"notebook, website, personal knowledge base, task and project management "
+"system, personal diary etc. Plugins can extend the functionality of "
+"TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
+"file is possible from within the application."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:37
+#, python-brace-format
+msgid ""
+"TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
+"need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:46
+msgid "Create a new wiki or upload your existing wiki file to get started."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
+msgid "TiddlyWiki"
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:66
+msgid "Non-linear Notebooks"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:32
+msgid "A TiddlyWiki file with .html file extension"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:35
+msgid "TiddlyWiki files must be in HTML format"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:37
+msgid "Upload an existing TiddlyWiki file from this computer."
+msgstr ""
+
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"TiddlyWiki before deleting it."
+msgstr ""
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -8945,43 +9183,43 @@ msgstr ""
 "pronësi të dhënash. Është software i lirë, që ju lejon të instaloni dhe "
 "administroni kollaj aplikacione shërbyesi."
 
-#: templates/base.html:110
+#: templates/base.html:108
 msgid " Home"
 msgstr " Kreu"
 
-#: templates/base.html:113
+#: templates/base.html:111
 msgid "Home"
 msgstr "Kreu"
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Apps"
 msgstr " Aplikacione"
 
-#: templates/base.html:122
+#: templates/base.html:120
 msgid "Apps"
 msgstr "Aplikacione"
 
-#: templates/base.html:127
+#: templates/base.html:125
 msgid " System"
 msgstr " Sistem"
 
-#: templates/base.html:166 templates/base.html:167
+#: templates/base.html:164 templates/base.html:165
 msgid "Change password"
 msgstr "Ndryshoni fjalëkalimin"
 
-#: templates/base.html:180 templates/base.html:181
+#: templates/base.html:178 templates/base.html:179
 msgid "Shut down"
 msgstr "Fike"
 
-#: templates/base.html:191 templates/base.html:220
+#: templates/base.html:189 templates/base.html:218
 msgid "Log out"
 msgstr "Dil"
 
-#: templates/base.html:200 templates/base.html:203
+#: templates/base.html:198 templates/base.html:201
 msgid "Select language"
 msgstr "Përzgjidhni gjuhën"
 
-#: templates/base.html:209 templates/base.html:211
+#: templates/base.html:207 templates/base.html:209
 msgid "Log in"
 msgstr "Hyni"
 

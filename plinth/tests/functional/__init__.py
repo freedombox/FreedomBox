@@ -223,10 +223,11 @@ def submit(browser, element=None, form_class=None, expected_url=None):
         if element:
             click(browser, element)
         elif form_class:
-            browser.find_by_css(
-                '.{} input[type=submit]'.format(form_class)).click()
+            browser.find_by_css(f'.{form_class} input[type=submit], '
+                                f'.{form_class} button[type=submit]').click()
         else:
-            browser.find_by_css('input[type=submit]').click()
+            browser.find_by_css(
+                'input[type=submit] button[type=submit]').click()
 
 
 def set_app_form_value(browser, app_id, element_id, value):
@@ -697,7 +698,7 @@ class BaseAppTests:
         """Install the app and set it up if needed."""
         install(session_browser, self.app_name)
 
-    @pytest.fixture(autouse=True)
+    @pytest.fixture(autouse=True, name='background')
     def fixture_background(self, session_browser):
         """Login, install, and enable the app."""
         login(session_browser)

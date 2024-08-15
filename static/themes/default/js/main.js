@@ -23,6 +23,17 @@
 */
 
 /*
+ * Remove the 'no-js' class from the <body> element. CSS utilizing this can
+ * create different rules when Javascript is available and when it is not. This
+ * functionality was provided by the Modernizr library earlier.
+ */
+document.addEventListener('DOMContentLoaded', function(event) {
+    const html = document.querySelector('html');
+    html.classList.remove('no-js');
+    html.classList.add('js');
+});
+
+/*
  * Refresh page if marked for refresh.
  */
 document.addEventListener('DOMContentLoaded', function() {

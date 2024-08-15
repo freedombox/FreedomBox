@@ -16,6 +16,17 @@ from . import cfg, log, web_framework
 
 logger = logging.getLogger(__name__)
 
+# When an app installs a python module as a dependency and imports it. CherryPy
+# will start monitoring it for changes. When the app is uninstalled, the module
+# is removed from the system leading to change detected by CherryPy. The entire
+# service is then restarted if it is in development mode. This could cause a
+# temporary failure in requests served leading to failures in functional tests.
+# Workaround this by preventing auto-reloading for some python modules.
+MODULES_EXCLUDED_FROM_AUTORELOAD = [
+    'iso3166',
+    'psycopg2',
+]
+
 
 def _mount_static_directory(static_dir, static_url):
     config = {
@@ -33,6 +44,8 @@ def init():
     """Setup CherryPy server"""
     logger.info('Setting up CherryPy server')
 
+    exclude_modules = '|'.join(MODULES_EXCLUDED_FROM_AUTORELOAD)
+    autoreload_regex = rf'^(?!(?:{exclude_modules})).+'
     # Configure default server
     cherrypy.config.update({
         'server.max_request_body_size': 0,
@@ -41,6 +54,7 @@ def init():
         'server.thread_pool': 10,
         # Avoid stating files once per second in production
         'engine.autoreload.on': cfg.develop,
+        'engine.autoreload.match': autoreload_regex,
     })
 
     application = web_framework.get_wsgi_application()

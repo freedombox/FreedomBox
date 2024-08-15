@@ -2,7 +2,6 @@
 
 from django.utils.translation import gettext_lazy as _
 
-CONFIG_FILE = '/etc/gitweb-freedombox.conf'
 GIT_REPO_PATH = '/var/lib/git'
 REPO_DIR_OWNER = 'www-data'
 
@@ -33,11 +32,4 @@ clients = [
     },
 ]
 
-backup = {
-    'config': {
-        'files': [CONFIG_FILE]
-    },
-    'data': {
-        'directories': [GIT_REPO_PATH]
-    }
-}
+backup = {'data': {'directories': [GIT_REPO_PATH]}}

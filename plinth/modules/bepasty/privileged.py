@@ -15,7 +15,7 @@ import subprocess
 import augeas
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 from plinth.modules import bepasty
 
 DATA_DIR = '/var/lib/bepasty'
@@ -137,7 +137,7 @@ def add_password(permissions: list[str], comment: str | None = None):
 
 
 @privileged
-def remove_password(password: str):
+def remove_password(password: secret_str):
     """Remove a password and its permissions."""
     conf = conf_file_read()
     if password in conf['PERMISSIONS']:

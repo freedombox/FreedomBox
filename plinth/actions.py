@@ -23,6 +23,13 @@ EXIT_PERM = 20
 logger = logging.getLogger(__name__)
 
 
+# An alias for 'str' to mark some strings as sensitive. Sensitive strings are
+# not logged. Use 'type secret_str = str' when Python 3.11 support is no longer
+# needed.
+class secret_str(str):
+    pass
+
+
 def privileged(func):
     """Mark a method as allowed to be run as privileged method.
 
@@ -62,13 +69,14 @@ def privileged(func):
     def wrapper(*args, **kwargs):
         module_name = _get_privileged_action_module_name(func)
         action_name = func.__name__
-        return _run_privileged_method_as_process(module_name, action_name,
-                                                 args, kwargs)
+        return _run_privileged_method_as_process(func, module_name,
+                                                 action_name, args, kwargs)
 
     return wrapper
 
 
-def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
+def _run_privileged_method_as_process(func, module_name, action_name, args,
+                                      kwargs):
     """Execute the privileged method in a sub-process with sudo."""
     run_as_user = kwargs.pop('_run_as_user', None)
     run_in_background = kwargs.pop('_run_in_background', False)
@@ -103,7 +111,8 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
         # In development mode pass on local pythonpath to access Plinth
         proc_kwargs['env'] = {'PYTHONPATH': cfg.file_root}
 
-    _log_action(module_name, action_name, run_as_user, run_in_background)
+    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+                run_in_background)
 
     proc = subprocess.Popen(command, **proc_kwargs)
     os.close(write_fd)
@@ -118,7 +127,7 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
                                    args=(read_fd, buffers))
     read_thread.start()
 
-    wait_args = (module_name, action_name, args, kwargs, log_error, proc,
+    wait_args = (func, module_name, action_name, args, kwargs, log_error, proc,
                  command, read_fd, read_thread, buffers)
     if not run_in_background:
         return _wait_for_return(*wait_args)
@@ -127,8 +136,8 @@ def _run_privileged_method_as_process(module_name, action_name, args, kwargs):
     wait_thread.start()
 
 
-def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
-                     command, read_fd, read_thread, buffers):
+def _wait_for_return(func, module_name, action_name, args, kwargs, log_error,
+                     proc, command, read_fd, read_thread, buffers):
     """Communicate with the subprocess and wait for its return."""
     json_args = json.dumps({'args': args, 'kwargs': kwargs})
 
@@ -159,31 +168,58 @@ def _wait_for_return(module_name, action_name, args, kwargs, log_error, proc,
         """Return an HTML format error that can be shown in messages."""
         from django.utils.html import format_html
 
-        full_args, exception_args, stdout, stderr, traceback = _format_error(
-            args, kwargs, exception, return_value)
+        formatted_args = _format_args(func, args, kwargs)
+        exception_args, stdout, stderr, traceback = _format_error(
+            exception, return_value)
         return format_html('Error running action: {}..{}({}): {}({})\n{}{}{}',
-                           module_name, action_name, full_args,
+                           module_name, action_name, formatted_args,
                            return_value['exception']['name'], exception_args,
                            stdout, stderr, traceback)
 
     exception.get_html_message = _get_html_message
 
     if log_error:
-        full_args, exception_args, stdout, stderr, traceback = _format_error(
-            args, kwargs, exception, return_value)
+        formatted_args = _format_args(func, args, kwargs)
+        exception_args, stdout, stderr, traceback = _format_error(
+            exception, return_value)
         logger.error('Error running action %s..%s(%s): %s(%s)\n'
-                     '%s%s%s', module_name, action_name, full_args,
+                     '%s%s%s', module_name, action_name, formatted_args,
                      return_value['exception']['name'], exception_args, stdout,
                      stderr, traceback)
 
     raise exception
 
 
-def _format_error(args, kwargs, exception, return_value):
+def _format_args(func, args, kwargs):
+    """Return a loggable representation of arguments."""
+    argspec = inspect.getfullargspec(func)
+    if len(args) > len(argspec.args):
+        raise SyntaxError('Too many arguments')
+
+    args_str_list = []
+    for arg_index, arg_value in enumerate(args):
+        arg_name = argspec.args[arg_index]
+        if argspec.annotations[arg_name] in [secret_str, secret_str | None]:
+            value = '****'
+        else:
+            value = json.dumps(arg_value)
+
+        args_str_list.append(value)
+
+    kwargs_str_list = []
+    for arg_name, arg_value in kwargs.items():
+        if argspec.annotations[arg_name] in [secret_str, secret_str | None]:
+            value = "****"
+        else:
+            value = json.dumps(arg_value)
+
+        kwargs_str_list.append(f'{arg_name}=' + value)
+
+    return ', '.join(args_str_list + kwargs_str_list)
+
+
+def _format_error(exception, return_value):
     """Log the exception in a readable manner."""
-    args = [json.dumps(arg) for arg in args]
-    kwargs = [f'{key}=' + json.dumps(value) for key, value in kwargs.items()]
-    full_args = ', '.join(args + kwargs)
     exception_args = ', '.join([json.dumps(arg) for arg in exception.args])
 
     stdout = exception.stdout.decode()
@@ -210,7 +246,7 @@ def _format_error(args, kwargs, exception, return_value):
         traceback = '\n'.join(('╞ ' + line for line in all_lines))
         traceback = 'Action traceback:\n' + traceback + '\n'
 
-    return (full_args, exception_args, stdout, stderr, traceback)
+    return (exception_args, stdout, stderr, traceback)
 
 
 def _thread_reader(read_fd, buffers):
@@ -236,6 +272,13 @@ def _check_privileged_action_arguments(func):
         if arg not in argspec.annotations:
             raise SyntaxError('All arguments must be annotated')
 
+    for arg_name, arg_value in argspec.annotations.items():
+        for keyword in ('password', 'passphrase', 'secret'):
+            if keyword in arg_name:
+                if arg_value not in [secret_str, secret_str | None]:
+                    raise SyntaxError(
+                        f'Argument {arg_name} should likely be a "secret_str"')
+
 
 def _get_privileged_action_module_name(func):
     """Figure out the module name of a privileged action."""
@@ -252,11 +295,14 @@ def _get_privileged_action_module_name(func):
     return module_name.rpartition('.')[2]
 
 
-def _log_action(module_name, action_name, run_as_user, run_in_background):
+def _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+                run_in_background):
     """Log an action in a compact format."""
     prompt = f'({run_as_user})$' if run_as_user else '#'
     suffix = '&' if run_in_background else ''
-    logger.info('%s %s..%s(…) %s', prompt, module_name, action_name, suffix)
+    formatted_args = _format_args(func, args, kwargs)
+    logger.info('%s %s..%s(%s) %s', prompt, module_name, action_name,
+                formatted_args, suffix)
 
 
 def privileged_main():
@@ -402,6 +448,13 @@ def _privileged_assert_valid_type(arg_name, value, annotation):
         if not isinstance(value, annotation):
             raise TypeError(
                 f'Expected type {annotation.__name__} for {arg_name}')
+
+        return
+
+    # secret_str should be a regular string
+    if annotation == secret_str:
+        if not isinstance(value, str):
+            raise TypeError(f'Expected type str for {arg_name}')
 
         return
 

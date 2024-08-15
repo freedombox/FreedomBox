@@ -12,7 +12,7 @@ import subprocess
 import augeas
 
 from plinth import action_utils, utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 config_file = pathlib.Path('/etc/ssh/sshd_config.d/freedombox.conf')
 
@@ -93,7 +93,7 @@ def get_keys(user: str) -> str:
 
 
 @privileged
-def set_keys(user: str, keys: str, auth_user: str, auth_password: str):
+def set_keys(user: str, keys: str, auth_user: str, auth_password: secret_str):
     """Set SSH authorized keys."""
     must_be_admin = user != auth_user
     _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)

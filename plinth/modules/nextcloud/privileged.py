@@ -13,7 +13,7 @@ import time
 import augeas
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'
@@ -146,7 +146,7 @@ def set_trusted_domains(domains: list[str]):
 
 
 @privileged
-def set_admin_password(password: str):
+def set_admin_password(password: secret_str):
     """Set password for owncloud-admin"""
     _run_occ('user:resetpassword', '--password-from-env', GUI_ADMIN,
              env={'OC_PASS': password})

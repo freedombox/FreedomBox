@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 21:32-0400\n"
-"PO-Revision-Date: 2024-06-09 16:09+0000\n"
-"Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
+"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"PO-Revision-Date: 2024-08-11 22:09+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -109,7 +109,7 @@ msgstr "Viditelnost"
 msgid "Data"
 msgstr "Data"
 
-#: menu.py:110 templates/base.html:131
+#: menu.py:110 templates/base.html:129
 msgid "System"
 msgstr "Systém"
 
@@ -195,7 +195,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Povolení plánu zálohování"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:315
+#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Jít na {app_name}"
@@ -895,9 +895,11 @@ msgid "List"
 msgstr "Výpis"
 
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
 #: modules/networks/templates/connection_show.html:56
 #: modules/samba/templates/samba.html:154
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
 #: modules/wireguard/templates/wireguard_delete_server.html:35
 #: modules/wireguard/templates/wireguard_show_client.html:77
@@ -1008,8 +1010,8 @@ msgstr "Obnovení IP adresy a domén"
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
 #: modules/pagekite/forms.py:74 modules/privacy/views.py:36
 #: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:53
-#: modules/shadowsocksserver/views.py:52 modules/ssh/views.py:62
+#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
+#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
 #: modules/transmission/views.py:43 modules/ttrss/views.py:31
 #: modules/wordpress/views.py:31
 msgid "Configuration updated"
@@ -1130,14 +1132,16 @@ msgstr "Knihovna vytvořena."
 msgid "An error occurred while creating the library."
 msgstr "Při vytváření knihovny došlo k chybě."
 
-#: modules/calibre/views.py:63 modules/gitweb/views.py:139
-#: modules/kiwix/views.py:100
+#: modules/calibre/views.py:63 modules/featherwiki/views.py:145
+#: modules/gitweb/views.py:139 modules/kiwix/views.py:100
+#: modules/tiddlywiki/views.py:145
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} smazáno."
 
-#: modules/calibre/views.py:67 modules/gitweb/views.py:143
-#: modules/kiwix/views.py:104
+#: modules/calibre/views.py:67 modules/featherwiki/views.py:149
+#: modules/gitweb/views.py:143 modules/kiwix/views.py:104
+#: modules/tiddlywiki/views.py:149
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "{name} se nepodařilo smazat: {error}"
@@ -1560,14 +1564,12 @@ msgid "When enabled, diagnostic checks will run once a day."
 msgstr "Když je zapnuto, diagnostické kontroly proběhnou jednou denně."
 
 #: modules/diagnostics/forms.py:15
-#, fuzzy
-#| msgid "Enable auto-update"
 msgid "Enable automatic repair"
-msgstr "Zapnout automatické aktualizace"
+msgstr "Povolit automatickou opravu"
 
 #: modules/diagnostics/forms.py:16
 msgid "If issues are found, try to repair them automatically."
-msgstr ""
+msgstr "Pokud jsou nalezeny problémy, zkuste je automaticky opravit."
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -2200,6 +2202,209 @@ msgstr "Port"
 msgid "Host/Target/Value"
 msgstr "Hostitel / cíl / hodnota"
 
+#: modules/featherwiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"Feather Wiki is a tool to create simple self-contained wikis, each stored in "
+"a single HTML file on your {box_name}. You can use it as a personal wiki, as "
+"a web notebook, or for project documentation."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:29
+msgid ""
+"Each wiki is a small file. Create as many wikis as you like, such as one "
+"wiki per topic. Customize each wiki to your liking with extensions and other "
+"customization options."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:33
+#, python-brace-format
+msgid ""
+"Feather Wiki is downloaded from {box_name} website and not from Debian. "
+"Wikis need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
+#, python-brace-format
+msgid ""
+"Wikis are not public by default, but they can be downloaded for sharing or "
+"publishing. They can be edited by <a href=\"{users_url}\">any user</a> on "
+"{box_name} belonging to the wiki group. Simultaneous editing is not "
+"supported."
+msgstr ""
+
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/tiddlywiki/__init__.py:61
+msgid "View and edit wiki applications"
+msgstr "Zobrazit a upravit wiki aplikace"
+
+#: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
+msgid "Feather Wiki"
+msgstr ""
+
+#: modules/featherwiki/__init__.py:61
+msgid "Personal Notebooks"
+msgstr ""
+
+#: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Name of the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+msgid ""
+"Wiki title and description can be set from within the wiki. This file name "
+"is independent of the wiki title."
+msgstr ""
+
+#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+msgid "New name for the wiki file, with file extension \".html\""
+msgstr ""
+
+#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+msgid "Renaming the file has no effect on the title of the wiki."
+msgstr ""
+
+#: modules/featherwiki/forms.py:32
+msgid "A Feather Wiki file with .html file extension"
+msgstr ""
+
+#: modules/featherwiki/forms.py:35
+msgid "Feather Wiki files must be in HTML format"
+msgstr ""
+
+#: modules/featherwiki/forms.py:37
+msgid "Upload an existing Feather Wiki file from this computer."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
+#, fuzzy
+#| msgid "Manage Libraries"
+msgid "Manage Wikis"
+msgstr "Spravovat knihovny"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:16
+#: modules/featherwiki/templates/featherwiki_configure.html:18
+#: modules/featherwiki/views.py:48
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
+#: modules/tiddlywiki/views.py:48
+#, fuzzy
+#| msgid "Create Wiki or Blog"
+msgid "Create Wiki"
+msgstr "Vytvořit wiki nebo blog"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:21
+#: modules/featherwiki/templates/featherwiki_configure.html:23
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki"
+msgstr "Nahrát soubor"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:30
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
+#, fuzzy
+#| msgid "No libraries available."
+msgid "No wikis available."
+msgstr "Nejsou k dispozici žádné knihovny."
+
+#: modules/featherwiki/templates/featherwiki_configure.html:36
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
+#, fuzzy, python-format
+#| msgid "Go to site %(site)s"
+msgid "Go to wiki %(wiki)s"
+msgstr "Přejít na stránku %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_configure.html:43
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
+#, python-format
+msgid "Rename wiki %(wiki)s"
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_configure.html:50
+#: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Delete wiki %(wiki)s"
+msgstr "Smazat stránku %(site)s"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:12
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
+#, fuzzy, python-format
+#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+msgid "Delete wiki <em>%(name)s</em>"
+msgstr "Smazat wiki nebo blog <em>%(name)s</em>"
+
+#: modules/featherwiki/templates/featherwiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"Feather Wiki before deleting it."
+msgstr ""
+
+#: modules/featherwiki/templates/featherwiki_delete.html:25
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
+#, fuzzy
+#| msgid "Delete this archive permanently?"
+msgid "Delete this wiki file permanently?</p>"
+msgstr "Nevratně smazat tento zachycený archiv?"
+
+#: modules/featherwiki/templates/featherwiki_upload_file.html:20
+#: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
+msgid "Upload"
+msgstr "Nahrát"
+
+#: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "A wiki file with the given name already exists."
+msgstr "Sdílení s tímto názvem už existuje."
+
+#: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
+#, fuzzy
+#| msgid "Archive created."
+msgid "Wiki created."
+msgstr "Archiv vytvořen."
+
+#: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while creating the wiki."
+msgstr "Při vytváření knihovny došlo k chybě."
+
+#: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
+#, fuzzy
+#| msgid "MediaWiki"
+msgid "Rename Wiki"
+msgstr "MediaWiki"
+
+#: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
+msgid "Wiki renamed."
+msgstr ""
+
+#: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
+#, fuzzy
+#| msgid "An error occurred while creating the library."
+msgid "An error occurred while renaming the wiki."
+msgstr "Při vytváření knihovny došlo k chybě."
+
+#: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
+#, fuzzy
+#| msgid "Upload File"
+msgid "Upload Wiki File"
+msgstr "Nahrát soubor"
+
+#: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
+msgid "Wiki file added."
+msgstr ""
+
+#: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
+#, fuzzy
+#| msgid "Failed to add content package."
+msgid "Failed to add wiki file."
+msgstr "Přidání balíčku s obsahem se nezdařilo."
+
 #: modules/firewall/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -2374,7 +2579,7 @@ msgstr ""
 msgid "Read-write access to Git repositories"
 msgstr "Přístup do Git repozitářů pro čtení a zápis"
 
-#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:11
+#: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
 
@@ -2434,7 +2639,7 @@ msgstr "Výchozí větev"
 msgid "Gitweb displays this as a default branch."
 msgstr "Gitweb ji zobrazí jako výchozí větev."
 
-#: modules/gitweb/manifest.py:19
+#: modules/gitweb/manifest.py:18
 msgid "Git"
 msgstr "Git"
 
@@ -2975,10 +3180,6 @@ msgstr "ikiwiki"
 msgid "Wiki and Blog"
 msgstr "wiki a blog"
 
-#: modules/ikiwiki/__init__.py:80
-msgid "View and edit wiki applications"
-msgstr "Zobrazit a upravit wiki aplikace"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Název účtu správce"
@@ -3128,7 +3329,7 @@ msgid "Janus Video Room"
 msgstr "Janus Video Room"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:252
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -3895,6 +4096,11 @@ msgid ""
 "subscribe to your favorite sites and access full article contents within the "
 "reader itself."
 msgstr ""
+"Miniflux je webový nástroj, který sdružuje novinky a aktualizace blogů z "
+"různých webových stránek do jednoho centralizovaného a přehledného formátu. "
+"Má jednoduché rozhraní a zaměřuje se na čtení bez rozptylování. Můžete se "
+"přihlásit k odběru svých oblíbených webů a získat přístup k celému obsahu "
+"článků v samotné čtečce."
 
 #: modules/miniflux/__init__.py:23
 msgid ""
@@ -3904,143 +4110,125 @@ msgid ""
 "are several third-party <a href=\"https://miniflux.app/docs/apps."
 "html\">clients</a> as well."
 msgstr ""
+"Mezi klíčové funkce patří klávesové zkratky pro rychlou navigaci, "
+"fulltextové vyhledávání, filtrování článků, kategorií a oblíbených položek. "
+"Miniflux zachovává soukromí uživatelů odstraněním sledovačů. Primární "
+"rozhraní je webové. Existuje také několik <a href=\"https://miniflux.app/"
+"docs/apps.html\">klientů</a> třetích stran."
 
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
-msgstr ""
+msgstr "Miniflux"
 
 #: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "Čtečka novinek"
 
 #: modules/miniflux/forms.py:12
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a username for the user."
-msgstr "Zadejte platné uživatelské jméno."
+msgstr "Zadejte uživatelské jméno uživatele."
 
 #: modules/miniflux/forms.py:16
 msgid "Enter a strong password with a minimum of 6 characters."
-msgstr ""
+msgstr "Zadejte silné heslo s minimálně 6 znaky."
 
 #: modules/miniflux/forms.py:18
-#, fuzzy
-#| msgid "Updating configuration"
 msgid "Password confirmation"
-msgstr "Aktualizace konfigurace"
+msgstr "Potvrzení hesla"
 
 #: modules/miniflux/forms.py:20
-#, fuzzy
-#| msgid ""
-#| "Enter the password for user \"{user}\" to authorize account modifications."
 msgid "Enter the same password for confirmation."
-msgstr "Zadejte heslo uživatele \"{user}\" pro autorizaci změn účtu."
+msgstr "Pro potvrzení zadejte stejné heslo."
 
 #: modules/miniflux/forms.py:31
-#, fuzzy
-#| msgid "Password updated"
 msgid "Passwords do not match."
-msgstr "Heslo aktualizováno"
+msgstr "Hesla se neshodují."
 
 #: modules/miniflux/manifest.py:18
 msgid "Fluent Reader Lite"
-msgstr ""
+msgstr "Čtečka Fluent Reader Lite"
 
 #: modules/miniflux/manifest.py:33
-#, fuzzy
-#| msgid "News Feed Reader"
 msgid "Fluent Reader"
-msgstr "Čtečka novinek"
+msgstr "Fluent Reader"
 
 #: modules/miniflux/manifest.py:46
 msgid "FluxNews"
-msgstr ""
+msgstr "FluxNews"
 
 #: modules/miniflux/manifest.py:61
 msgid "MiniFlutt"
-msgstr ""
+msgstr "MiniFlutt"
 
 #: modules/miniflux/manifest.py:71
 msgid "NetNewsWire"
-msgstr ""
+msgstr "NetNewsWire"
 
 #: modules/miniflux/manifest.py:86
 msgid "Newsflash"
-msgstr ""
+msgstr "Newsflash"
 
 #: modules/miniflux/manifest.py:96
-#, fuzzy
-#| msgid "Read"
 msgid "Read You"
-msgstr "Číst"
+msgstr "Read You"
 
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
-msgstr ""
+msgstr "RSS Guard"
 
 #: modules/miniflux/templates/miniflux.html:14
 msgid ""
 "Create an admin user to get started. Other users can be created from within "
 "Miniflux."
 msgstr ""
+"Vytvořte si uživatele správce a začněte. Ostatní uživatele lze vytvořit v "
+"aplikaci Miniflux."
 
 #: modules/miniflux/templates/miniflux.html:22
 #: modules/miniflux/templates/miniflux.html:24
-#, fuzzy
-#| msgid "Create User"
 msgid "Create admin user"
-msgstr "Vytvořit uživatele"
+msgstr "Vytvořit uživatele správce"
 
 #: modules/miniflux/templates/miniflux.html:27
 #: modules/miniflux/templates/miniflux.html:29
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset user password"
-msgstr "Nastavení hesla superuživatele"
+msgstr "Obnovení uživatelského hesla"
 
 #: modules/miniflux/views.py:38
-#, fuzzy
-#| msgid "Create User"
 msgid "Create Admin User"
-msgstr "Vytvořit uživatele"
+msgstr "Vytvoření uživatele správce"
 
 #: modules/miniflux/views.py:48
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Created admin user: {username}"
-msgstr "Neplatné uživatelské jméno: {username}"
+msgstr "Vytvoření uživatele správce: {username}"
 
 #: modules/miniflux/views.py:53
-#, fuzzy, python-brace-format
-#| msgid "An error occurred while creating the repository."
+#, python-brace-format
 msgid "An error occurred while creating the user: {error}."
-msgstr "Při vytváření úložiště došlo k chybě."
+msgstr "Při vytváření uživatele došlo k chybě: {error}."
 
 #: modules/miniflux/views.py:70
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset User Password"
-msgstr "Nastavení hesla superuživatele"
+msgstr "Obnovení uživatelského hesla"
 
 #: modules/miniflux/views.py:80
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Password reset for user: {username}"
-msgstr "Neplatné uživatelské jméno: {username}"
+msgstr "Obnovení hesla pro uživatele: {username}"
 
 #: modules/miniflux/views.py:85
-#, fuzzy, python-brace-format
-#| msgid "An error occurred during configuration."
+#, python-brace-format
 msgid "An error occurred during password reset: {error}."
-msgstr "Při nastavování se vyskytla chyba."
+msgstr "Při obnovování hesla došlo k chybě: {error}."
 
 #: modules/mumble/__init__.py:25
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr ""
-"Mumble je open source software pro šifrovanou, vysoce kvalitní hlasovou "
-"komunikaci s nízkou prodlevou."
+"Mumble je open source šifrovaný software pro hlasový chat s nízkou latencí a "
+"vysokou kvalitou."
 
 #: modules/mumble/__init__.py:27
 msgid ""
@@ -4596,7 +4784,7 @@ msgstr "Upravit připojení"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:159 templates/base.html:160
+#: templates/base.html:157 templates/base.html:158
 msgid "Edit"
 msgstr "Upravit"
 
@@ -5725,8 +5913,8 @@ msgstr ""
 "Nyní je spuštěná instalace nebo přechod na novější verzi. Počkejte s vypínám "
 "či restartem na dokončení této operace."
 
-#: modules/power/templates/power.html:22 templates/base.html:174
-#: templates/base.html:175
+#: modules/power/templates/power.html:22 templates/base.html:172
+#: templates/base.html:173
 msgid "Restart"
 msgstr "Restartovat"
 
@@ -7020,7 +7208,7 @@ msgstr "Přihlášení"
 msgid "Logged out successfully."
 msgstr "Odhlášení proběhlo úspěšně."
 
-#: modules/storage/__init__.py:22
+#: modules/storage/__init__.py:24
 #, python-brace-format
 msgid ""
 "This module allows you to manage storage media attached to your {box_name}. "
@@ -7031,104 +7219,104 @@ msgstr ""
 "{box_name}. Lze zobrazit úložná zařízení, která jsou využívána, připojovat a "
 "odpojovat ta vyjímatelná."
 
-#: modules/storage/__init__.py:45 modules/storage/__init__.py:308
-#: modules/storage/__init__.py:339 modules/storage/__init__.py:385
+#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
+#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
 msgid "Storage"
 msgstr "Úložiště"
 
-#: modules/storage/__init__.py:216
+#: modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
 msgstr "{disk_size:.1f} bajtů"
 
-#: modules/storage/__init__.py:220
+#: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
 msgstr "{disk_size:.1f} KiB"
 
-#: modules/storage/__init__.py:224
+#: modules/storage/__init__.py:235
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
 msgstr "{disk_size:.1f} MiB"
 
-#: modules/storage/__init__.py:228
+#: modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
 msgstr "{disk_size:.1f} GiB"
 
-#: modules/storage/__init__.py:231
+#: modules/storage/__init__.py:242
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
 msgstr "{disk_size:.1f} TiB"
 
-#: modules/storage/__init__.py:243
+#: modules/storage/__init__.py:254
 msgid "The operation failed."
 msgstr "Operace se nezdařila."
 
-#: modules/storage/__init__.py:245
+#: modules/storage/__init__.py:256
 msgid "The operation was cancelled."
 msgstr "Operace byla zrušena."
 
-#: modules/storage/__init__.py:247
+#: modules/storage/__init__.py:258
 msgid "The device is already unmounting."
 msgstr "Toto zařízení už je odpojováno (umount)."
 
-#: modules/storage/__init__.py:249
+#: modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr "Operace není podporována z důvodu chybějící podpory ovladače/nástroje."
 
-#: modules/storage/__init__.py:252
+#: modules/storage/__init__.py:263
 msgid "The operation timed out."
 msgstr "Časový limit aplikace překročen."
 
-#: modules/storage/__init__.py:254
+#: modules/storage/__init__.py:265
 msgid "The operation would wake up a disk that is in a deep-sleep state."
 msgstr "Operace by probudila disk který je v režimu hlubokého spánku."
 
-#: modules/storage/__init__.py:257
+#: modules/storage/__init__.py:268
 msgid "Attempting to unmount a device that is busy."
 msgstr "Pokus o odpojení zařízení které je zaneprázdněno."
 
-#: modules/storage/__init__.py:259
+#: modules/storage/__init__.py:270
 msgid "The operation has already been cancelled."
 msgstr "Operace už byla zrušena."
 
-#: modules/storage/__init__.py:261 modules/storage/__init__.py:263
-#: modules/storage/__init__.py:265
+#: modules/storage/__init__.py:272 modules/storage/__init__.py:274
+#: modules/storage/__init__.py:276
 msgid "Not authorized to perform the requested operation."
 msgstr "Chybí oprávnění pro provedení požadované operace."
 
-#: modules/storage/__init__.py:267
+#: modules/storage/__init__.py:278
 msgid "The device is already mounted."
 msgstr "Toto zařízení je už připojeno (mount)."
 
-#: modules/storage/__init__.py:269
+#: modules/storage/__init__.py:280
 msgid "The device is not mounted."
 msgstr "Zařízení není připojeno."
 
-#: modules/storage/__init__.py:271
+#: modules/storage/__init__.py:282
 msgid "Not permitted to use the requested option."
 msgstr "Není umožněno použít požadovanou volbu."
 
-#: modules/storage/__init__.py:273
+#: modules/storage/__init__.py:284
 msgid "The device is mounted by another user."
 msgstr "Zařízení je připojeno jiným uživatelem."
 
-#: modules/storage/__init__.py:303
+#: modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
 "Málo místa na systémovém oddílu: {percent_used}% použito, {free_space} volné."
 
-#: modules/storage/__init__.py:305
+#: modules/storage/__init__.py:316
 msgid "Low disk space"
 msgstr "Málo místa na disku"
 
-#: modules/storage/__init__.py:333
+#: modules/storage/__init__.py:344
 msgid "Disk failure imminent"
 msgstr "Hrozí selhání disku"
 
-#: modules/storage/__init__.py:335
+#: modules/storage/__init__.py:346
 #, python-brace-format
 msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
@@ -7137,7 +7325,7 @@ msgstr ""
 "Disk {id} hlásí, že v blízké budoucnosti pravděpodobně selže. Zkopírujte "
 "všechna data, dokud to ještě jde, a disk vyměňte."
 
-#: modules/storage/__init__.py:379
+#: modules/storage/__init__.py:390
 #, no-python-format
 msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
@@ -7146,13 +7334,17 @@ msgstr ""
 "Změny konfigurace nelze uložit. Zkuste restartovat systém. Pokud problém "
 "přetrvává i po restartu, zkontrolujte, zda úložné zařízení neobsahuje chyby."
 
-#: modules/storage/__init__.py:382
+#: modules/storage/__init__.py:393
 msgid "Read-only root filesystem"
 msgstr "Kořenový souborový systém pouze pro čtení"
 
-#: modules/storage/__init__.py:392
+#: modules/storage/__init__.py:403
 msgid "Go to Power"
 msgstr "Přejít na Síť"
+
+#: modules/storage/__init__.py:439
+msgid "grub package is configured"
+msgstr ""
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7308,6 +7500,62 @@ msgstr "Syncthing"
 #: modules/syncthing/__init__.py:60
 msgid "File Synchronization"
 msgstr "Synchronizace souborů"
+
+#: modules/tiddlywiki/__init__.py:25
+#, python-brace-format
+msgid ""
+"TiddlyWiki is an interactive application that runs entirely in the web "
+"browser. Each wiki is a self-contained HTML file stored on your {box_name}. "
+"Instead of writing long wiki pages, TiddlyWiki encourages you to write "
+"several short notes called Tiddlers and link them together into a dense "
+"graph."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:30
+msgid ""
+"It is a versatile application with a wide variety of use cases - non-linear "
+"notebook, website, personal knowledge base, task and project management "
+"system, personal diary etc. Plugins can extend the functionality of "
+"TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
+"file is possible from within the application."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:37
+#, python-brace-format
+msgid ""
+"TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
+"need to be upgraded to newer version manually."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:46
+msgid "Create a new wiki or upload your existing wiki file to get started."
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
+msgid "TiddlyWiki"
+msgstr ""
+
+#: modules/tiddlywiki/__init__.py:66
+msgid "Non-linear Notebooks"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:32
+msgid "A TiddlyWiki file with .html file extension"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:35
+msgid "TiddlyWiki files must be in HTML format"
+msgstr ""
+
+#: modules/tiddlywiki/forms.py:37
+msgid "Upload an existing TiddlyWiki file from this computer."
+msgstr ""
+
+#: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
+msgid ""
+"<strong>Hint</strong>: You can download a copy of this wiki from within "
+"TiddlyWiki before deleting it."
+msgstr ""
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -8828,43 +9076,43 @@ msgstr ""
 "Jedná se o bezplatný software, který umožňuje snadnou instalaci a správu "
 "serverových aplikací."
 
-#: templates/base.html:110
+#: templates/base.html:108
 msgid " Home"
 msgstr " Domů"
 
-#: templates/base.html:113
+#: templates/base.html:111
 msgid "Home"
 msgstr "Domů"
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Apps"
 msgstr " Aplikace"
 
-#: templates/base.html:122
+#: templates/base.html:120
 msgid "Apps"
 msgstr "Aplikace"
 
-#: templates/base.html:127
+#: templates/base.html:125
 msgid " System"
 msgstr " Systém"
 
-#: templates/base.html:166 templates/base.html:167
+#: templates/base.html:164 templates/base.html:165
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: templates/base.html:180 templates/base.html:181
+#: templates/base.html:178 templates/base.html:179
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: templates/base.html:191 templates/base.html:220
+#: templates/base.html:189 templates/base.html:218
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: templates/base.html:200 templates/base.html:203
+#: templates/base.html:198 templates/base.html:201
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: templates/base.html:209 templates/base.html:211
+#: templates/base.html:207 templates/base.html:209
 msgid "Log in"
 msgstr "Přihlásit"
 
@@ -10502,9 +10750,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Pagekite"
 #~ msgstr "Pagekite"
-
-#~ msgid "Upload"
-#~ msgstr "Nahrát"
 
 #~ msgid "Certificate renewal management enabled for {domain}."
 #~ msgstr "Správa obnovování certifikátu pro doménu {domain} zapnuta."

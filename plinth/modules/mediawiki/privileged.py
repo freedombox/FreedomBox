@@ -7,7 +7,7 @@ import shutil
 import subprocess
 import tempfile
 
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 from plinth.utils import generate_password
 
 MAINTENANCE_SCRIPTS_DIR = "/usr/share/mediawiki/maintenance"
@@ -95,7 +95,7 @@ def _include_custom_config():
 
 
 @privileged
-def change_password(username: str, password: str):
+def change_password(username: str, password: secret_str):
     """Change the password for a given user."""
     change_password_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                           'changePassword.php')

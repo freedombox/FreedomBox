@@ -1,0 +1,84 @@
+#language en
+
+##TAG:TRANSLATION-HEADER-START
+~- [[FreedomBox/Manual/FeatherWiki|English]] - [[es/FreedomBox/Manual/FeatherWiki|Español]] - [[DebianWiki/EditorGuide#translation|(+)]]-~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Feather Wiki (Personal Notebooks) ==
+||<tablestyle="float: right;"> {{attachment:Feather-Wiki-on-FreedomBox.png|Feather Wiki icon}} ||
+
+'''Available since''': version 24.17
+
+Feather Wiki is a simple tool to create personal wikis on the web. Each wiki is self-contained within a single HTML file stored on your !FreedomBox. Only !FreedomBox users can read or write to the wiki files. It is also possible to "publish" a Feather Wiki file from within the application.
+
+=== A Nest of Feather Wikis ===
+
+Feather Wiki is a web application that runs entirely in the browser. !FreedomBox implements a Feather Wiki Nest, i.e. an application that can store and manage several Feather Wiki files.
+
+Feather Wiki is a web quine, like its more popular, older and more feature-rich cousin !TiddlyWiki. Every wiki file contains an entire copy of the source code (HTML, CSS and !JavaScript) along with your content, which makes it extremely portable.
+
+The Nest is essentially a !WebDAV server provided by !FreedomBox's Apache web server, so Feather Wiki doesn't require installation of any additional packages. It requires no additional system resources either, since Apache is always running.
+
+=== Setting up wikis ===
+
+Creating and deleting wiki files is handled by the !FreedomBox app itself. Every new wiki file is created from the latest available version of the empty Feather Wiki file downloaded from the official website. Deletion cannot be undone. You have to either restore the deleted file from a backup or import any saved local copy into a new wiki file. Uploading your existing Feather Wiki files is supported if they are at least v1.8.0 (Skylark). For older Feather Wiki files, you can use the import option as described below.
+
+To import an old Feather Wiki file, first create a new wiki on your !FreedomBox.The page called "Wiki Settings" in Feather Wiki provides a button that lets you import the contents of an existing wiki file into a new wiki by uploading the file from your local machine. 
+
+Upgrading Feather Wiki is a manual process that is very similar to importing.
+ 1. Save a local copy of the wiki file.
+ 2. Delete the wiki file from the server.
+ 3. Create a new empty wiki file (this will be of the latest version by default).
+ 4. Open the new wiki.
+ 5. Import the contents of your local copy into the new wiki from the "Wiki Settings" page.
+
+{{attachment:Feather-Wiki-Settings.png|Wiki Settings page|width=800}}
+
+=== Publishing a wiki ===
+
+The Feather Wiki app on !FreedomBox doesn't provide a "public access" option, unlike !MediaWiki. To share your wiki file with someone who doesn't have an account on your !FreedomBox or to publish the file on the Internet, follow these steps:
+
+ 1. Save a local copy of the wiki file.
+ 2. Open the local copy in a web browser.
+ 3. Go to "Wiki Settings" page and enable the "Publish" setting. (This makes the wiki non-editable. Hence the local copy.)
+ 4. Save the local copy.
+
+Now you can share the HTML file or publish it on the web using [[FreedomBox/Manual/Apache_userdir|Apache userdir]] or placing it under the /var/www/html directory on your !FreedomBox.
+
+=== As many wikis as you need ===
+
+The source code of Feather Wiki is tiny - less than 60 kilobytes. You are encouraged to create as many wiki files as you need, since the storage cost of each file is negligible, even on a !FreedomBox running from an SD card. 
+
+The shortcut for Feather Wiki app opens a page with the list of wiki files stored on !FreedomBox. Creating a front page shortcut for each wiki file (like Ikiwiki does) would clutter the front page, considering the number of Feather Wiki files people might create.
+
+=== Use cases ===
+
+ * '''Notebook:''' A student can use Feather Wiki as a web notebook with one wiki file per course. About 40 files for a bachelor's degree!
+ * '''Self-publishing:''' An author can self-publish an online book using Feather Wiki as a !GitBook alternative.
+ * '''Refile:''' One wiki file as a general notes dump that can be refiled later into more organized formats.
+ * One wiki file for each issue of a magazine (indie web zine) maybe with some custom CSS added.
+ * Simple internal websites for organizations to publish information.
+ * One Feather Wiki file for each of your projects. Keep all project-related notes and tasks in one file.
+ * Shipping documentation/user-guide with your product, in a single file.
+
+For more inspiration, see the [[https://feather.wiki/?page=gallery|Gallery]] on the official website.
+
+You might want to configure your wiki with different [[https://feather.wiki/?page=extensions|extensions]] for Feather Wiki depending on the use case.
+
+=== External links ===
+
+ * Website: https://feather.wiki
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

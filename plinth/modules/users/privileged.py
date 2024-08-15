@@ -10,7 +10,7 @@ import subprocess
 import augeas
 
 from plinth import action_utils, utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 INPUT_LINES = None
 ACCESS_CONF = '/etc/security/access.conf'
@@ -219,8 +219,9 @@ def _disconnect_samba_user(username):
 
 
 @privileged
-def create_user(username: str, password: str, auth_user: str | None = None,
-                auth_password: str | None = None):
+def create_user(username: str, password: secret_str,
+                auth_user: str | None = None,
+                auth_password: secret_str | None = None):
     """Create an LDAP user, set password and flush cache."""
     _validate_user(auth_user, auth_password)
 
@@ -231,7 +232,7 @@ def create_user(username: str, password: str, auth_user: str | None = None,
 
 
 @privileged
-def remove_user(username: str, password: str | None = None):
+def remove_user(username: str, password: secret_str | None = None):
     """Remove an LDAP user."""
     groups = _get_user_groups(username)
 
@@ -287,8 +288,8 @@ def _set_samba_user(username, password):
 
 
 @privileged
-def set_user_password(username: str, password: str, auth_user: str,
-                      auth_password: str):
+def set_user_password(username: str, password: secret_str, auth_user: str,
+                      auth_password: secret_str):
     """Set a user's password."""
     must_be_admin = username != auth_user
     _validate_user(auth_user, auth_password, must_be_admin=must_be_admin)
@@ -424,7 +425,7 @@ def _add_user_to_group(username, groupname):
 @privileged
 def add_user_to_group(username: str, groupname: str,
                       auth_user: str | None = None,
-                      auth_password: str | None = None):
+                      auth_password: secret_str | None = None):
     """Add an LDAP user to an LDAP group."""
     if groupname == 'admin':
         _validate_user(auth_user, auth_password)
@@ -440,7 +441,7 @@ def _remove_user_from_group(username, groupname):
 
 @privileged
 def remove_user_from_group(username: str, groupname: str, auth_user: str,
-                           auth_password: str):
+                           auth_password: secret_str):
     """Remove an LDAP user from an LDAP group."""
     if groupname == 'admin':
         _validate_user(auth_user, auth_password)
@@ -459,7 +460,7 @@ def get_group_users(group_name: str) -> list[str]:
 
 @privileged
 def set_user_status(username: str, status: str, auth_user: str,
-                    auth_password: str):
+                    auth_password: secret_str):
     """Set the status of the user."""
     if status not in ('active', 'inactive'):
         raise ValueError('Invalid status')

@@ -8,7 +8,7 @@ import random
 import string
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 
 SHADOWSOCKS_CONFIG_SYMLINK = '/etc/shadowsocks-libev/fbxserver.json'
 SHADOWSOCKS_CONFIG_ACTUAL = \
@@ -68,8 +68,9 @@ def _merge_config(config):
 
 
 @privileged
-def merge_config(config: dict[str, str]):
+def merge_config(password: secret_str, method: str):
     """Configure Shadowsocks Server."""
+    config = {'password': password, 'method': method}
     _merge_config(config)
 
     # Don't try_restart because initial configuration may not be valid so

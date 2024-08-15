@@ -65,6 +65,12 @@ def set_firewall_backend(backend):
         action_utils.service_restart('firewalld')
 
 
+def _run_firewall_cmd(args):
+    """Run firewall-cmd command, discard output and check return value."""
+    subprocess.run(['firewall-cmd'] + args, stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL, check=True)
+
+
 def _setup_local_service_protection():
     """Create the basic set of direct rules for protecting local services.
 
@@ -94,17 +100,13 @@ def _setup_local_service_protection():
     packet is sufficient.
     """
 
-    def _run_firewall_cmd(args):
-        subprocess.run(args, stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True)
-
     def _add_rule(permanent, *rule):
         try:
-            _run_firewall_cmd(['firewall-cmd'] + permanent +
-                              ['--direct', '--query-passthrough'] + list(rule))
+            _run_firewall_cmd(permanent + ['--direct', '--query-passthrough'] +
+                              list(rule))
         except subprocess.CalledProcessError:
-            _run_firewall_cmd(['firewall-cmd'] + permanent +
-                              ['--direct', '--add-passthrough'] + list(rule))
+            _run_firewall_cmd(permanent + ['--direct', '--add-passthrough'] +
+                              list(rule))
 
     for permanent in [[], ['--permanent']]:
         for ip_type in ['ipv4', 'ipv6']:
@@ -122,6 +124,38 @@ def _setup_local_service_protection():
                       '--mark', '0x800000/0x800000', '-j', 'ACCEPT')
 
 
+def _setup_inter_zone_forwarding():
+    """Create a new policy that allows forwarding between zones.
+
+    https://bugzilla.redhat.com/show_bug.cgi?id=2016864#c8
+    """
+
+    def _run(args):
+        """Run a firewall command with --permanent argument."""
+        return _run_firewall_cmd(['--permanent'] + args)
+
+    policy_name = 'fbx_int_to_ext_fwd'
+    try:
+        _run(['--new-policy', policy_name])
+    except subprocess.CalledProcessError as exception:
+        if exception.returncode != 26:  # NAME_CONFLICT
+            raise
+
+    _run(['--policy', policy_name, '--add-ingress-zone', 'internal'])
+    _run(['--policy', policy_name, '--add-egress-zone', 'external'])
+    _run(['--policy', policy_name, '--set-priority', '100'])
+    _run(['--policy', policy_name, '--set-target', 'ACCEPT'])
+
+    # Enable masquerade on external zone
+    _run(['--zone=external', '--add-masquerade'])
+
+    # Enable intra-zone forwarding on internal zone
+    _run(['--zone=internal', '--add-forward'])
+
+    # Restart firewalld
+    action_utils.service_reload('firewalld')
+
+
 @privileged
 def setup():
     """Perform basic firewalld setup."""
@@ -132,6 +166,8 @@ def setup():
     set_firewall_backend('nftables')
 
     _setup_local_service_protection()
+
+    _setup_inter_zone_forwarding()
 
 
 @privileged

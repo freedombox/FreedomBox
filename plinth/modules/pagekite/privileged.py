@@ -6,7 +6,7 @@ import os
 import augeas
 
 from plinth import action_utils
-from plinth.actions import privileged
+from plinth.actions import privileged, secret_str
 from plinth.modules.pagekite import utils
 
 PATHS = {
@@ -85,7 +85,7 @@ def get_config() -> dict[str, object]:
 
 
 @privileged
-def set_config(frontend: str, kite_name: str, kite_secret: str):
+def set_config(frontend: str, kite_name: str, kite_secret: secret_str):
     """Set pagekite kite name, secret and frontend URL."""
     aug = _augeas_load()
     aug.remove(PATHS['abort_not_configured'])
