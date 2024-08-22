@@ -4,6 +4,7 @@ Components
 ----------
 
 .. toctree::
+   :maxdepth: 2
    :caption: Available components:
 
    info

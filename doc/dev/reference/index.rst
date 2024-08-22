@@ -11,6 +11,7 @@ all the FreedomBox apps currently reside in FreedomBox source repository itself
 and are updated when the API is updated.
 
 .. toctree::
+   :maxdepth: 2
 
    app
    components/index
