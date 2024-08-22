@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 
 # pylint: disable=invalid-name
 project = 'FreedomBox'
-copyright = '2021-2023, FreedomBox Authors'
+copyright = '2021-2024, FreedomBox Authors'
 author = 'FreedomBox Authors'
 
 # The short X.Y version
