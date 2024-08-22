@@ -9,11 +9,14 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
 from plinth import cfg, menu
+from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
+from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
-from . import components, manifest
+from . import components, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +35,7 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
-    _version = 1
+    _version = 2
 
     can_be_disabled = False
 
@@ -50,6 +53,13 @@ class NamesApp(app_module.App):
                               parent_url_name='system:visibility', order=10)
         self.add(menu_item)
 
+        packages = Packages('packages-names',
+                            ['systemd-resolved', 'libnss-resolve'])
+        self.add(packages)
+
+        daemon = Daemon('daemon-names', 'systemd-resolved')
+        self.add(daemon)
+
         backup_restore = BackupRestore('backup-restore-names',
                                        **manifest.backup)
         self.add(backup_restore)
@@ -63,6 +73,15 @@ class NamesApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+
+        # Fresh install or upgrading to version 2
+        if old_version < 2:
+            privileged.set_resolved_configuration(dns_fallback=True)
+
+        # Load the configuration files for systemd-resolved provided by
+        # FreedomBox.
+        service_privileged.restart('systemd-resolved')
+
         self.enable()
 
 
