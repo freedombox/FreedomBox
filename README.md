@@ -1,4 +1,4 @@
-[![pipeline status](https://salsa.debian.org/freedombox-team/freedombox/badges/master/pipeline.svg)](https://salsa.debian.org/freedombox-team/freedombox/commits/master)
+[![pipeline status](https://salsa.debian.org/freedombox-team/freedombox/badges/main/pipeline.svg)](https://salsa.debian.org/freedombox-team/freedombox/commits/main)
 [![Translation status](https://hosted.weblate.org/widgets/freedombox/-/svg-badge.svg)](https://hosted.weblate.org/engage/freedombox/?utm_source=widget)
 [![Debian Unstable](https://badges.debian.net/badges/debian/unstable/freedombox/version.svg)](https://packages.debian.org/unstable/freedombox)
 [![Debian Testing](https://badges.debian.net/badges/debian/testing/freedombox/version.svg)](https://packages.debian.org/testing/freedombox)
@@ -58,7 +58,7 @@ HACKING.md.
 
 # Contributing
 
-See the [HACKING.md](https://salsa.debian.org/freedombox-team/freedombox/blob/master/HACKING.md) file for contributing to FreedomBox Service (Plinth).
+See the [HACKING.md](https://salsa.debian.org/freedombox-team/freedombox/blob/main/HACKING.md) file for contributing to FreedomBox Service (Plinth).
 
 # Localization
 
