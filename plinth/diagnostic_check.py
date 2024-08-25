@@ -17,6 +17,7 @@ DiagnosticCheckParameters: TypeAlias = dict[str, str | int | bool | None]
 class Result(StrEnum):
     """The result of a diagnostic check."""
     NOT_DONE = 'not_done'
+    SKIPPED = 'skipped'
     PASSED = 'passed'
     WARNING = 'warning'
     FAILED = 'failed'

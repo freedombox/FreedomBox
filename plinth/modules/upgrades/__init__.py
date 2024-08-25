@@ -11,9 +11,10 @@ from django.utils.translation import gettext_noop
 
 import plinth
 from plinth import app as app_module
-from plinth import cfg, glib, kvstore, menu
+from plinth import action_utils, cfg, glib, kvstore, menu, package
 from plinth.config import DropinConfigs
 from plinth.daemon import RelatedDaemon
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
@@ -159,6 +160,12 @@ class UpgradesApp(app_module.App):
         # install and on version increment.
         setup_repositories(None)
 
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(_diagnose_held_packages())
+        return results
+
 
 def setup_repositories(_):
     """Setup apt repositories for backports."""
@@ -296,3 +303,19 @@ def test_dist_upgrade():
     """Test dist-upgrade from stable to testing."""
     if can_test_dist_upgrade():
         try_start_dist_upgrade(test=True)
+
+
+def _diagnose_held_packages():
+    """Check if any packages have holds."""
+    check = DiagnosticCheck('upgrades-package-holds',
+                            gettext_noop('Check for package holds'),
+                            Result.NOT_DONE)
+    if (package.is_package_manager_busy()
+            or action_utils.service_is_running('freedombox-dist-upgrade')):
+        check.result = Result.SKIPPED
+        return check
+
+    output = subprocess.check_output(['apt-mark', 'showhold']).decode().strip()
+    held_packages = output.split()
+    check.result = Result.FAILED if held_packages else Result.PASSED
+    return check
