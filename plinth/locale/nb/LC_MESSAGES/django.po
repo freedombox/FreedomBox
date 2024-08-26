@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
 "PO-Revision-Date: 2024-08-15 06:09+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -1495,79 +1495,83 @@ msgstr ""
 "Systemets diagnostikktest vil kjøre en rekke kontroller på systemet for å få "
 "bekreftet at programmer og tjenester fungerer som forventet."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnostikk"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "feilet"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "feil"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør skru av noen programmer for å redusere minnebruken."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere noen nye programmer på dette systemet."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Lite minne"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Kjør diagnostikk"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Diagnostikkresultater"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -2399,7 +2403,9 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-msgid "Delete this wiki file permanently?</p>"
+#, fuzzy
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
 msgstr "Slett denne wikifilen for godt?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
@@ -8016,32 +8022,26 @@ msgstr ""
 "Når du bruker et mobilbasert- eller skrivebords-program for Tiny Tiny RSS, "
 "bruk nettadressen <a href=\"/tt-rss-app/\">/tt-rss-app</a>for å koble til."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
 #, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (avgreining)"
-
-#: modules/ttrss/manifest.py:20
-#, fuzzy
 #| msgid "TT-RSS Reader"
 msgid "TTRSS-Reader"
 msgstr "TT-RSS kildeleser"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8049,36 +8049,40 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Programvare-oppdatering"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox oppdatert"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
+msgstr ""
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
 msgstr ""
 
 #: modules/upgrades/forms.py:15
@@ -9584,6 +9588,11 @@ msgstr "før avinstallering av {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Tiny Tiny RSS (Fork)"
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (avgreining)"
 
 #~ msgid "Media streaming server"
 #~ msgstr "Media-strømmetjener"

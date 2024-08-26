@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
 "PO-Revision-Date: 2024-08-15 15:09+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -1485,47 +1485,51 @@ msgstr ""
 "Diagnostický test systému spustí několik kontrol pro potvrzení, že aplikace "
 "a služby fungují tak, jak mají."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "prošlo"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "selhalo"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "chyba"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr "varování"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Měli byste zakázat některé aplikace, abyste snížili využití paměti."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Do tohoto systému byste neměli instalovat žádné nové aplikace."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1534,24 +1538,24 @@ msgstr ""
 "Systém má málo paměti: {percent_used}% využité, {memory_available} "
 "{memory_available_unit} volné. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Málo paměti"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 msgid "Running diagnostics"
 msgstr "Spuštění diagnostiky"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Při rutinních testech bylo nalezeno {issue_count} problémů."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
 msgstr "Výsledky diagnostiky"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 msgid "Go to diagnostics results"
 msgstr "Přejít na výsledky diagnostiky"
 
@@ -2351,7 +2355,9 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-msgid "Delete this wiki file permanently?</p>"
+#, fuzzy
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
 msgstr "Smazat tento soubor wiki natrvalo?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
@@ -7501,9 +7507,10 @@ msgid ""
 "graph."
 msgstr ""
 "TiddlyWiki je interaktivní aplikace, která běží výhradně ve webovém "
-"prohlížeči. Každá wiki je samostatný soubor HTML uložený na vašem {box_name}"
-". Místo psaní dlouhých stránek wiki vás TiddlyWiki vybízí k napsání několika "
-"krátkých poznámek zvaných Tiddlers a jejich propojení do hustého grafu."
+"prohlížeči. Každá wiki je samostatný soubor HTML uložený na vašem "
+"{box_name}. Místo psaní dlouhých stránek wiki vás TiddlyWiki vybízí k "
+"napsání několika krátkých poznámek zvaných Tiddlers a jejich propojení do "
+"hustého grafu."
 
 #: modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -7877,29 +7884,25 @@ msgstr ""
 "adresu URL <a href=\"/tt-rss/\">/tt-rss</a> nebo <a href=\"/tt-rss-app/\"> /"
 "tt-rss-app</a> pro připojení."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (TTTRSS)"
-
-#: modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
 msgstr "TTRSS-Reader"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7912,21 +7915,21 @@ msgstr ""
 "systému považován za nezbytný, provede se automaticky ve 02:00 a způsobí, že "
 "všechny aplikace budou krátce nedostupné."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Aktualizace software"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualizován"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7936,15 +7939,19 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 msgid "Distribution update started"
 msgstr "Zahájena aktualizace distribuce"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
+msgstr ""
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9412,6 +9419,9 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "Nelze testovat: Nejsou nakonfigurovány žádné domény."

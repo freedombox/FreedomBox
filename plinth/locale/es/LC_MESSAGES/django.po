@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
 "PO-Revision-Date: 2024-08-21 16:36+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
@@ -1510,48 +1510,52 @@ msgstr ""
 "El test de diagnóstico del sistema ejecuta una serie de comprobaciones para "
 "confirmar que las aplicaciones y servicios están funcionando como se espera."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnósticos"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "ok."
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "Falló"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "error"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr "aviso"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Habría que deshabilitar algunas apps para reducir el consumo de memoria."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Hay que evitar instalar más apps en este sistema."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1560,25 +1564,25 @@ msgstr ""
 "El sistema va justo de memoria: {percent_used}% usada, {memory_available} "
 "{memory_available_unit} libres. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Poca memoria libre"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 msgid "Running diagnostics"
 msgstr "Ejecutando los diagnósticos"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 "Se han encontrado {issue_count} problemas durante las pruebas rutinarias."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
 msgstr "Resultados de los diagnósticos"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 msgid "Go to diagnostics results"
 msgstr "Ir a los resultados de los diagnósticos"
 
@@ -2267,9 +2271,9 @@ msgid ""
 "supported."
 msgstr ""
 "Los wikis no son públicos de forma predeterminada, pero se pueden descargar "
-"para compartir o publicar. Pueden ser editados por <a href=\"{users_url}\""
-">cualquier usuario</a> en {box_name} que pertenezca al grupo wiki. No se "
-"admite la edición simultánea."
+"para compartir o publicar. Pueden ser editados por <a "
+"href=\"{users_url}\">cualquier usuario</a> en {box_name} que pertenezca al "
+"grupo wiki. No se admite la edición simultánea."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
 #: modules/tiddlywiki/__init__.py:61
@@ -2376,7 +2380,9 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-msgid "Delete this wiki file permanently?</p>"
+#, fuzzy
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
 msgstr "¿Borrar este archivo wiki permanentemente?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
@@ -7935,29 +7941,25 @@ msgstr ""
 "URL <a href=\"/tt-rss/\">/tt-rss</a> o <a href=\"/tt-rss-app/\"> /tt-rss-"
 "app</a> para conectarse."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (TTTRSS)"
-
-#: modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
 msgstr "Lector TTRSS"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Buscar y aplicar las últimas actualizaciones del software y de seguridad."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7971,21 +7973,21 @@ msgstr ""
 "tiempo. Si se decide retrasar el reinicio del sistema, éste se hará de forma "
 "automática a las 02:00 h."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Actualización de software (Update)"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox actualizado"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr "No se pudo iniciar la actualización de la distribución"
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7996,16 +7998,20 @@ msgstr ""
 "libres. Si está habilitada, la actualización de la distribución se "
 "reintentará tras 24h ."
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 msgid "Distribution update started"
 msgstr "Iniciada la actualización de la distribución"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Se inició la actualización a la nueva publicación estable. Podría llevar "
 "mucho tiempo completarla."
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
+msgstr ""
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9483,6 +9489,9 @@ msgstr "antes de desinstalar {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "No puedo probar: No hay dominios configurados."

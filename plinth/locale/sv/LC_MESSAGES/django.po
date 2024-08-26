@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
 "PO-Revision-Date: 2024-07-30 01:31+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -1497,47 +1497,51 @@ msgstr ""
 "Systemets diagnostiktest utför ett antal kontroller av ditt system för att "
 "bekräfta att program och tjänster fungerar som de ska."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnostik"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "passerade"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "misslyckades"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "fel"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr "varning"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bör inaktivera vissa appar för att minska minnesanvändningen."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Du bör inte installera några nya appar på det här systemet."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1546,24 +1550,24 @@ msgstr ""
 "Systemet är ont om minne: {percent_used}% används, {memory_available}"
 "·{memory_available_unit} ledig. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Låg minne"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 msgid "Running diagnostics"
 msgstr "Kör diagnostik"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Hittade {issue_count} problem under rutintester."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
 msgstr "Diagnostikresultat"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 msgid "Go to diagnostics results"
 msgstr "Gå till Diagnostikresultat"
 
@@ -2356,7 +2360,7 @@ msgstr ""
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
 #, fuzzy
 #| msgid "Delete this archive permanently?"
-msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
 msgstr "Vill du ta bort arkivet permanent?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
@@ -7914,29 +7918,25 @@ msgstr ""
 "Använd URL<a href=\"/tt-rss/\">/tt-rss</a> or <a href=\"/tt-rss-app/\">/tt-"
 "rss-app</a> för att ansluta."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (TTTRSS)"
-
-#: modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
 msgstr "TTRSS-Reader"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Sök efter och installera de senaste program-och säkerhetsuppdateringarna."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7949,21 +7949,21 @@ msgstr ""
 "systemet bedöms vara nödvändigt, det sker automatiskt vid 02:00 orsakar alla "
 "apps för att vara tillgängligt en kort stund."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Mjukvaruuppdatering"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox uppdaterad"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr "Det gick inte att starta distributionsuppdatering"
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7974,16 +7974,20 @@ msgstr ""
 "Distributionsuppdateringen kommer att göras ett nytt behov efter 24 timmar, "
 "om det är aktiverat."
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 msgid "Distribution update started"
 msgstr "Distributionsuppdateringen har startats"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Startade uppdateringen till nästa stabila utgåva. Det kan ta lång tid att "
 "slutföra."
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
+msgstr ""
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9462,6 +9466,9 @@ msgstr "innan du avinstallerar {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "Kan inte testa: Inga domäner är konfigurerade."
