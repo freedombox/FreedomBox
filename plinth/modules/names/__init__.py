@@ -8,7 +8,7 @@ import logging
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, menu, network
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
@@ -81,6 +81,15 @@ class NamesApp(app_module.App):
         # Load the configuration files for systemd-resolved provided by
         # FreedomBox.
         service_privileged.restart('systemd-resolved')
+
+        # After systemd-resolved is freshly installed, /etc/resolve.conf
+        # becomes a symlink to configuration pointing to systemd-resovled stub
+        # resolver. However, the old contents are not fed from network-manager
+        # (if it was present earlier and wrote to /etc/resolve.conf). Ask
+        # network-manager to feed the DNS servers from the connections it has
+        # established to systemd-resolved so that using fallback DNS servers is
+        # not necessary.
+        network.refeed_dns()
 
         self.enable()
 

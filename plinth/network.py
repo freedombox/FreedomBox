@@ -622,3 +622,8 @@ def wifi_scan():
             })
 
     return access_points
+
+
+def refeed_dns():
+    """Re-feed DNS servers to systemd-resolved."""
+    get_nm_client().reload(nm.ManagerReloadFlags.DNS_RC)
