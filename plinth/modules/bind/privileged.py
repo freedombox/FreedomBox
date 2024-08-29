@@ -45,14 +45,14 @@ def setup(old_version: int):
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
 
-    action_utils.service_restart('named')
+    action_utils.service_try_restart('named')
 
 
 @privileged
 def configure(forwarders: str):
     """Configure BIND."""
     _set_forwarders(forwarders)
-    action_utils.service_restart('named')
+    action_utils.service_try_restart('named')
 
 
 def get_config():
