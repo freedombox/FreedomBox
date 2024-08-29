@@ -24,7 +24,7 @@ recursion yes;
 allow-query { goodclients; };
 
 forwarders {
-
+127.0.0.53;
 };
 forward first;
 
@@ -32,6 +32,7 @@ auth-nxdomain no;    # conform to RFC1035
 listen-on-v6 { any; };
 };
 '''
+DEFAULT_FORWARDER = '127.0.0.53'  # systemd-resolved
 
 
 @privileged
@@ -40,8 +41,12 @@ def setup(old_version: int):
     if old_version == 0:
         with open(CONFIG_FILE, 'w', encoding='utf-8') as conf_file:
             conf_file.write(DEFAULT_CONFIG)
-    elif old_version < 3:
-        _remove_dnssec()
+    elif old_version < 4:
+        if not get_config()['forwarders']:
+            _set_forwarders(DEFAULT_FORWARDER)
+
+        if old_version < 3:
+            _remove_dnssec()
 
     Path(ZONES_DIR).mkdir(exist_ok=True, parents=True)
 
