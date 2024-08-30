@@ -4,9 +4,9 @@
 import pathlib
 import re
 import shutil
-import tempfile
 import urllib.request
 
+from plinth import action_utils
 from plinth.actions import privileged
 
 EMPTY_WIKI_FILE = 'https://ftp.freedombox.org/pub/tiddlywiki/empty.html'
@@ -51,20 +51,11 @@ def create_wiki(file_name: str):
 
 
 @privileged
-def add_wiki_file(upload_file: str):
+def add_wiki_file(file_name: str, temporary_file_path: str):
     """Add an uploaded wiki file."""
-    upload_file_path = pathlib.Path(upload_file)
-    temp_dir = tempfile.gettempdir()
-    if not upload_file_path.is_relative_to(temp_dir):
-        raise Exception('Uploaded file is not in expected temp directory.')
-
-    file_name = _normalize_wiki_file_name(upload_file_path.name)
-    file_path = wiki_dir / file_name
-    if file_path.exists():
-        raise ValueError('Wiki exists')
-
-    shutil.move(upload_file_path, file_path)
-    _set_ownership(file_path)
+    action_utils.move_uploaded_file(temporary_file_path, wiki_dir, file_name,
+                                    allow_overwrite=False, user='www-data',
+                                    group='www-data', permissions=0o644)
 
 
 @privileged
