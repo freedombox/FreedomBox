@@ -19,6 +19,11 @@ Install the following Debian packages:
 
 * python3-sphinx
 * python3-sphinx-autobuild
+* python3-django
+* python3-django-axes
+* python3-django-captcha
+* python3-django-ipware
+* python3-django-stronghold
 
 If your preferred text editor doesn't have support for the reStructuredText
 format, you can install a simple desktop application called ReText. It has live

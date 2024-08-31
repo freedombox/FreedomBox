@@ -23,6 +23,8 @@
               <span class="badge badge-danger">{% trans result.result %}</span>
             {% elif result.result == 'error' or result.result == 'warning' %}
               <span class="badge badge-warning">{% trans result.result %}</span>
+	    {% elif result.result == 'skipped' %}
+	      <span class="badge badge-secondary">{% trans result.result %}</span>
             {% else %}
               {{ result.result }}
             {% endif %}

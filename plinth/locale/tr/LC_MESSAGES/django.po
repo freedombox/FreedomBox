@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
-"PO-Revision-Date: 2024-07-31 05:09+0000\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"PO-Revision-Date: 2024-08-14 04:09+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -695,7 +695,7 @@ msgstr "Karşıya yüklenen dosyadan geri yükle"
 
 #: modules/backups/views.py:302
 msgid "No additional disks available to add a repository."
-msgstr "Bir depo eklemek için ek diskler yok."
+msgstr "Bir depo eklemek için mevcut ek diskler yok."
 
 #: modules/backups/views.py:310
 msgid "Create backup repository"
@@ -1115,7 +1115,7 @@ msgstr "Kütüphane Oluştur"
 
 #: modules/calibre/templates/calibre.html:24
 msgid "No libraries available."
-msgstr "Kullanılabilir kütüphane yok."
+msgstr "Mevcut kütüphaneler yok."
 
 #: modules/calibre/templates/calibre.html:31
 #, python-format
@@ -1488,48 +1488,52 @@ msgstr ""
 "Sistem tanılama denemesi, uygulamaların ve hizmetlerin beklendiği gibi "
 "çalıştığını doğrulamak için sisteminizde bir dizi denetim gerçekleştirecek."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Tanılama"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "geçti"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "başarısız"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "hata"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr "uyarı"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr ""
 "Bellek kullanımını azaltmak için bazı uygulamaları etkisizleştirmelisiniz."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Bu sisteme herhangi bir yeni uygulama yüklememelisiniz."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1538,24 +1542,24 @@ msgstr ""
 "Sistem belleği düşük: %{percent_used} kullanılıyor, {memory_available}."
 "{memory_available_unit} boş. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Düşük Bellek"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 msgid "Running diagnostics"
 msgstr "Tanılama çalıştırılıyor"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Sıradan denemeler sırasında {issue_count} sorun bulundu."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
 msgstr "Tanı sonuçları"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 msgid "Go to diagnostics results"
 msgstr "Tanı sonuçlarına git"
 
@@ -2216,6 +2220,9 @@ msgid ""
 "a single HTML file on your {box_name}. You can use it as a personal wiki, as "
 "a web notebook, or for project documentation."
 msgstr ""
+"Feather Wiki, her biri {box_name} cihazınızda tek bir HTML dosyasında "
+"saklanan basit bağımsız viki'ler oluşturmak için bir araçtır. Kişisel viki, "
+"web not defteri olarak ya da proje belgeleri için kullanabilirsiniz."
 
 #: modules/featherwiki/__init__.py:29
 msgid ""
@@ -2223,6 +2230,9 @@ msgid ""
 "wiki per topic. Customize each wiki to your liking with extensions and other "
 "customization options."
 msgstr ""
+"Her viki küçük bir dosyadır. Konu başına bir viki gibi istediğiniz kadar "
+"viki oluşturun. Uzantılar ve diğer özelleştirme seçenekleriyle her viki'yi "
+"beğeninize göre özelleştirin."
 
 #: modules/featherwiki/__init__.py:33
 #, python-brace-format
@@ -2230,6 +2240,8 @@ msgid ""
 "Feather Wiki is downloaded from {box_name} website and not from Debian. "
 "Wikis need to be upgraded to newer version manually."
 msgstr ""
+"Feather Wiki, Debian'dan değil, {box_name} web sitesinden indirilir. "
+"Viki'lerin el ile daha yeni sürüme yükseltilmesi gerekir."
 
 #: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
 #, python-brace-format
@@ -2239,6 +2251,10 @@ msgid ""
 "{box_name} belonging to the wiki group. Simultaneous editing is not "
 "supported."
 msgstr ""
+"Viki'ler varsayılan olarak herkese açık değildir, ancak paylaşmak veya "
+"yayınlamak için indirilebilirler. Viki grubuna ait olan {box_name} "
+"üzerindeki <a href=\"{users_url}\">herhangi bir kullanıcı</a> tarafından "
+"düzenlenebilirler. Eşzamanlı düzenleme desteklenmez."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
 #: modules/tiddlywiki/__init__.py:61
@@ -2246,51 +2262,50 @@ msgid "View and edit wiki applications"
 msgstr "Viki uygulamalarını görüntüle ve düzenle"
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
-#, fuzzy
-#| msgid "Create Wiki/Blog"
 msgid "Feather Wiki"
-msgstr "Viki/Blog Oluştur"
+msgstr "Feather Wiki"
 
 #: modules/featherwiki/__init__.py:61
 msgid "Personal Notebooks"
-msgstr ""
+msgstr "Kişisel Defterler"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "\".html\" dosya uzantılı viki dosyasının adı"
 
 #: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
+"Viki başlığı ve açıklaması viki içinden ayarlanabilir. Bu dosya adı viki "
+"başlığından bağımsızdır."
 
 #: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
 msgid "New name for the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Viki dosyası için \".html\" dosya uzantılı yeni ad"
 
 #: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr ""
+"Dosyayı yeniden adlandırmanın viki'nin başlığı üzerinde hiçbir etkisi yoktur."
 
 #: modules/featherwiki/forms.py:32
 msgid "A Feather Wiki file with .html file extension"
-msgstr ""
+msgstr ".html dosya uzantılı bir Feather Wiki dosyası"
 
 #: modules/featherwiki/forms.py:35
 msgid "Feather Wiki files must be in HTML format"
-msgstr ""
+msgstr "Feather Wiki dosyaları HTML biçiminde olmak zorundadır"
 
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
-msgstr ""
+msgstr "Bu bilgisayardan varolan bir Feather Wiki dosyasını yükleyin."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Wikis"
-msgstr "Kütüphaneleri Yönet"
+msgstr "Viki'leri Yönet"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:16
 #: modules/featherwiki/templates/featherwiki_configure.html:18
@@ -2298,67 +2313,59 @@ msgstr "Kütüphaneleri Yönet"
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
 #: modules/tiddlywiki/views.py:48
-#, fuzzy
-#| msgid "Create Wiki/Blog"
 msgid "Create Wiki"
-msgstr "Viki/Blog Oluştur"
+msgstr "Viki Oluştur"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:21
 #: modules/featherwiki/templates/featherwiki_configure.html:23
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki"
-msgstr "Dosya Yükleyin"
+msgstr "Viki Yükle"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:30
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No wikis available."
-msgstr "Kullanılabilir kütüphane yok."
+msgstr "Mevcut viki'ler yok."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:36
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
-#, fuzzy, python-format
-#| msgid "Go to site %(site)s"
+#, python-format
 msgid "Go to wiki %(wiki)s"
-msgstr "%(site)s sitesine git"
+msgstr "%(wiki)s viki'ye git"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:43
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
-#, fuzzy, python-format
-#| msgid "Enable ikiwiki"
+#, python-format
 msgid "Rename wiki %(wiki)s"
-msgstr "ikiwiki'yi Etkinleştir"
+msgstr "%(wiki)s viki'yi yeniden adlandır"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:50
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete wiki %(wiki)s"
-msgstr "%(site)s sitesini sil"
+msgstr "%(wiki)s viki'yi sil"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete wiki <em>%(name)s</em>"
-msgstr "<em>%(name)s</em> Viki veya Blog'unu Sil"
+msgstr "<em>%(name)s</em> viki'yi sil"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "Feather Wiki before deleting it."
 msgstr ""
+"<strong>İpucu</strong>: Bu viki'nin bir kopyasını silmeden önce Feather "
+"Wiki'den indirebilirsiniz."
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
 #, fuzzy
-#| msgid "Delete this archive permanently?"
-msgid "Delete this wiki file permanently?</p>"
-msgstr "Bu arşiv kalıcı olarak silinsin mi?"
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
+msgstr "Bu viki dosyası kalıcı olarak silinsin mi?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -2366,54 +2373,40 @@ msgid "Upload"
 msgstr "Yükle"
 
 #: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A wiki file with the given name already exists."
-msgstr "Bu ada sahip bir paylaşım zaten var."
+msgstr "Belirtilen ada sahip bir viki dosyası zaten var."
 
 #: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
-#, fuzzy
-#| msgid "Archive created."
 msgid "Wiki created."
-msgstr "Arşiv oluşturuldu."
+msgstr "Viki oluşturuldu."
 
 #: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while creating the wiki."
-msgstr "Kütüphane oluşturulurken bir hata meydana geldi."
+msgstr "Viki oluşturulurken bir hata meydana geldi."
 
 #: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
-#, fuzzy
-#| msgid "MediaWiki"
 msgid "Rename Wiki"
-msgstr "MediaWiki"
+msgstr "Viki'yi Yeniden Adlandırın"
 
 #: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
 msgid "Wiki renamed."
-msgstr ""
+msgstr "Viki yeniden adlandırıldı."
 
 #: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while renaming the wiki."
-msgstr "Kütüphane oluşturulurken bir hata meydana geldi."
+msgstr "Viki yeniden adlandırılırken bir hata meydana geldi."
 
 #: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki File"
-msgstr "Dosya Yükleyin"
+msgstr "Viki Dosyasını Yükleyin"
 
 #: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
 msgid "Wiki file added."
-msgstr ""
+msgstr "Viki dosyası eklendi."
 
 #: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
-#, fuzzy
-#| msgid "Failed to add content package."
 msgid "Failed to add wiki file."
-msgstr "İçerik paketi ekleme başarısız oldu."
+msgstr "Viki dosyası ekleme başarısız oldu."
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -2575,9 +2568,9 @@ msgstr ""
 "için dağıtılmış bir sürüm denetim sistemidir. Gitweb, Git depolarına bir web "
 "arayüzü sağlar. Kaynak kodun geçmişine ve içeriğine gözatabilir, ilgili "
 "işlemeleri ve kodu bulmak için aramayı kullanabilirsiniz. Ayrıca bir komut "
-"satırı Git istemcisiyle veya birden fazla mevcut grafik istemcisiyle "
-"depoları çoğaltabilir ve kod değişikliklerini yükleyebilirsiniz. Ve kodunuzu "
-"dünyanın her yerinden insanlarla paylaşabilirsiniz."
+"satırı Git istemcisiyle veya birden çok mevcut grafik istemcisiyle depoları "
+"çoğaltabilir ve kod değişikliklerini yükleyebilirsiniz. Ve kodunuzu dünyanın "
+"her yerinden insanlarla paylaşabilirsiniz."
 
 #: modules/gitweb/__init__.py:29
 msgid ""
@@ -2668,7 +2661,7 @@ msgstr "Depo oluştur"
 
 #: modules/gitweb/templates/gitweb_configure.html:26
 msgid "No repositories available."
-msgstr "Kullanılabilir depolar yok."
+msgstr "Mevcut depolar yok."
 
 #: modules/gitweb/templates/gitweb_configure.html:35
 #, python-format
@@ -3638,10 +3631,10 @@ msgstr ""
 "<a href=\"https://matrix.org/docs/guides/faq.html\">Matrix</a>, açık, "
 "birleşik anlık mesajlaşma ve VoIP için yeni bir ekosistemdir. Synapse, "
 "Matrix protokolünü uygulayan bir sunucudur. Sohbet grupları, sesli/görüntülü "
-"aramalar, uçtan uca şifreleme, çoklu cihaz eşitlemesi sağlar ve çalışmak "
-"için telefon numaralarını gerektirmez. Belirli bir Matrix sunucusundaki "
-"kullanıcılar, federasyon aracılığıyla diğer tüm Matrix sunucularındaki "
-"kullanıcılarla sohbet edebilir."
+"aramalar, uçtan uca şifreleme, birden çok cihaz eşitlemesi sağlar ve "
+"çalışmak için telefon numaralarını gerektirmez. Belirli bir Matrix "
+"sunucusundaki kullanıcılar, federasyon aracılığıyla diğer tüm Matrix "
+"sunucularındaki kullanıcılarla sohbet edebilir."
 
 #: modules/matrixsynapse/__init__.py:34
 #, python-brace-format
@@ -7387,7 +7380,7 @@ msgstr "Güce Git"
 
 #: modules/storage/__init__.py:439
 msgid "grub package is configured"
-msgstr ""
+msgstr "grub paketi yapılandırıldı"
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7554,6 +7547,11 @@ msgid ""
 "several short notes called Tiddlers and link them together into a dense "
 "graph."
 msgstr ""
+"TiddlyWiki tamamen web tarayıcısında çalışan etkileşimli bir uygulamadır. "
+"Her viki, {box_name} cihazınızda saklanan bağımsız bir HTML dosyasıdır. Uzun "
+"wiki sayfaları yazmak yerine, TiddlyWiki sizi Tiddlers adı verilen birkaç "
+"kısa not yazmanızı ve bunları yoğun bir grafik halinde birbirine bağlamanızı "
+"teşvik eder."
 
 #: modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -7563,6 +7561,12 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
+"Doğrusal olmayan not defteri, web sitesi, kişisel bilgi bankası, görev ve "
+"proje yönetim sistemi, kişisel günlük vb. gibi çok çeşitli kullanım "
+"durumlarına sahip çok yönlü bir uygulamadır. Eklentiler TiddlyWiki'nin "
+"işlevselliğini genişletebilir. Uygulamanın içinden bireysel "
+"bilgilendiricileri şifrelemek veya bir viki dosyasını parolayla korumak "
+"mümkündür."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -7570,36 +7574,41 @@ msgid ""
 "TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
 "need to be upgraded to newer version manually."
 msgstr ""
+"TiddlyWiki, Debian'dan değil, {box_name} web sitesinden indirilir. "
+"Viki'lerin el ile daha yeni sürüme yükseltilmesi gerekir."
 
 #: modules/tiddlywiki/__init__.py:46
 msgid "Create a new wiki or upload your existing wiki file to get started."
 msgstr ""
+"Başlamak için yeni bir viki oluşturun veya varolan viki dosyanızı yükleyin."
 
 #: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
 msgid "TiddlyWiki"
-msgstr ""
+msgstr "TiddlyWiki"
 
 #: modules/tiddlywiki/__init__.py:66
 msgid "Non-linear Notebooks"
-msgstr ""
+msgstr "Doğrusal Olmayan Defterler"
 
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
-msgstr ""
+msgstr ".html dosya uzantılı bir TiddlyWiki dosyası"
 
 #: modules/tiddlywiki/forms.py:35
 msgid "TiddlyWiki files must be in HTML format"
-msgstr ""
+msgstr "TiddlyWiki dosyaları HTML biçiminde olmak zorundadır"
 
 #: modules/tiddlywiki/forms.py:37
 msgid "Upload an existing TiddlyWiki file from this computer."
-msgstr ""
+msgstr "Bu bilgisayardan varolan bir TiddlyWiki dosyası yükleyin."
 
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "TiddlyWiki before deleting it."
 msgstr ""
+"<strong>İpucu</strong>: Bu viki'nin bir kopyasını silmeden önce TiddlyWiki "
+"içinden indirebilirsiniz."
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -7648,7 +7657,7 @@ msgstr "Tor Köprüsü Aktarımı"
 
 #: modules/tor/__init__.py:138
 msgid "Tor relay port available"
-msgstr "Tor aktarımı bağlantı noktası kullanılabilir"
+msgstr "Tor aktarma bağlantı noktası kullanılabilir"
 
 #: modules/tor/__init__.py:150
 msgid "Obfs3 transport registered"
@@ -7922,28 +7931,24 @@ msgstr ""
 "için <a href=\"/tt-rss/\">/tt-rss</a> veya <a href=\"/tt-rss-app/\">/tt-rss-"
 "app</a> URL'sini kullanın."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (TTTRSS)"
-
-#: modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
 msgstr "TTRSS Okuyucu"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "En son yazılım ve güvenlik güncellemelerini denetleyin ve uygulayın."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7956,21 +7961,21 @@ msgstr ""
 "Eğer sistemin yeniden başlatılması gerekli görülürse, saat 02:00'da otomatik "
 "olarak yapılır ve tüm uygulamalar kısa bir süre için kullanılamaz hale gelir."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Yazılım Güncellemesi"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox Güncellendi"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr "Dağıtım güncellemesi başlatılamadı"
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7980,16 +7985,20 @@ msgstr ""
 "Lütfen en az 5 GB boş alan olduğundan emin olun. Dağıtım güncellemesi, "
 "etkinleştirildiyse 24 saat sonra yeniden denenecektir."
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 msgid "Distribution update started"
 msgstr "Dağıtım güncellemesi başlatıldı"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Bir sonraki kararlı yayıma güncelleme başlatıldı. Bunun tamamlanması uzun "
 "zaman alabilir."
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
+msgstr ""
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9466,6 +9475,9 @@ msgstr "{app_id} kaldırılmadan önce"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "Denenemiyor: Hiçbir etki alanı yapılandırılmamış."

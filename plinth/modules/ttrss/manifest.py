@@ -7,16 +7,6 @@ from plinth.clients import store_url
 clients = [
     {
         'name':
-            _('Tiny Tiny RSS (TTTRSS)'),
-        'platforms': [{
-            'type': 'store',
-            'os': 'android',
-            'store_name': 'f-droid',
-            'url': store_url('f-droid', 'org.fox.tttrss')
-        }]
-    },
-    {
-        'name':
             _('TTRSS-Reader'),
         'platforms': [{
             'type': 'store',

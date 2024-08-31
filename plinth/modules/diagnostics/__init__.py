@@ -96,6 +96,7 @@ def _run_on_all_enabled_modules():
 
     # Four result strings returned by tests, mark for translation and
     # translate later.
+    gettext_noop('skipped')
     gettext_noop('passed')
     gettext_noop('failed')
     gettext_noop('error')

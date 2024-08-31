@@ -137,7 +137,7 @@ class Operation:
         """
         from django.utils.translation import gettext
         message = gettext(self.message)
-        message = message.format(name=self.name,
+        message = message.format(name=gettext(self.name),
                                  exception_message=str(self.exception))
         if self.app_id:
             message = message.format(

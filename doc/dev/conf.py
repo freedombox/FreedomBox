@@ -16,13 +16,17 @@ list see the documentation: http://www.sphinx-doc.org/en/master/config
 import os
 import sys
 
+import django
+
 sys.path.insert(0, os.path.abspath('../../'))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'plinth.settings'
+django.setup()
 
 # -- Project information -----------------------------------------------------
 
 # pylint: disable=invalid-name
 project = 'FreedomBox'
-copyright = '2021-2023, FreedomBox Authors'
+copyright = '2021-2024, FreedomBox Authors'
 author = 'FreedomBox Authors'
 
 # The short X.Y version
@@ -203,7 +207,6 @@ autodoc_mock_imports = [
     'cherrypy',
     'configobj',
     'dbus',
-    'django',
     'gi',
     'markupsafe',
     'OpenSSL',

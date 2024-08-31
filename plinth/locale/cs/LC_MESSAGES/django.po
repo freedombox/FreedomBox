@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
-"PO-Revision-Date: 2024-08-11 22:09+0000\n"
-"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"PO-Revision-Date: 2024-08-15 15:09+0000\n"
+"Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.7\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1485,47 +1485,51 @@ msgstr ""
 "Diagnostický test systému spustí několik kontrol pro potvrzení, že aplikace "
 "a služby fungují tak, jak mají."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnostika"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "prošlo"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "selhalo"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "chyba"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr "varování"
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 msgid "GiB"
 msgstr "GiB"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Měli byste zakázat některé aplikace, abyste snížili využití paměti."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Do tohoto systému byste neměli instalovat žádné nové aplikace."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
@@ -1534,24 +1538,24 @@ msgstr ""
 "Systém má málo paměti: {percent_used}% využité, {memory_available} "
 "{memory_available_unit} volné. {advice_message}"
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Málo paměti"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 msgid "Running diagnostics"
 msgstr "Spuštění diagnostiky"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr "Při rutinních testech bylo nalezeno {issue_count} problémů."
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
 msgstr "Výsledky diagnostiky"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 msgid "Go to diagnostics results"
 msgstr "Přejít na výsledky diagnostiky"
 
@@ -2209,6 +2213,10 @@ msgid ""
 "a single HTML file on your {box_name}. You can use it as a personal wiki, as "
 "a web notebook, or for project documentation."
 msgstr ""
+"Feather Wiki je nástroj pro vytváření jednoduchých samostatných wiki, z "
+"nichž každá je uložena v jediném souboru HTML na vašem {box_name}. Můžete "
+"jej použít jako osobní wiki, jako webový zápisník nebo pro dokumentaci "
+"projektu."
 
 #: modules/featherwiki/__init__.py:29
 msgid ""
@@ -2216,6 +2224,9 @@ msgid ""
 "wiki per topic. Customize each wiki to your liking with extensions and other "
 "customization options."
 msgstr ""
+"Každá wiki je malý soubor. Vytvořte si libovolný počet wiki, například jednu "
+"wiki pro každé téma. Každou wiki si můžete přizpůsobit podle svých představ "
+"pomocí rozšíření a dalších možností přizpůsobení."
 
 #: modules/featherwiki/__init__.py:33
 #, python-brace-format
@@ -2223,6 +2234,8 @@ msgid ""
 "Feather Wiki is downloaded from {box_name} website and not from Debian. "
 "Wikis need to be upgraded to newer version manually."
 msgstr ""
+"Feather Wiki se stahuje ze stránek {box_name}, nikoli z Debianu. Wiki je "
+"třeba aktualizovat na novější verzi ručně."
 
 #: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
 #, python-brace-format
@@ -2232,6 +2245,10 @@ msgid ""
 "{box_name} belonging to the wiki group. Simultaneous editing is not "
 "supported."
 msgstr ""
+"Wiki ve výchozím nastavení nejsou veřejné, ale lze je stáhnout pro sdílení "
+"nebo publikování. Může je upravovat <a href=\"{users_url}\">jakýkoli "
+"uživatel</a> na {box_name} patřící do skupiny wiki. Simultánní úpravy nejsou "
+"podporovány."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
 #: modules/tiddlywiki/__init__.py:61
@@ -2240,48 +2257,48 @@ msgstr "Zobrazit a upravit wiki aplikace"
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
-msgstr ""
+msgstr "Feather Wiki"
 
 #: modules/featherwiki/__init__.py:61
 msgid "Personal Notebooks"
-msgstr ""
+msgstr "Osobní zápisníky"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Název souboru wiki s příponou \".html\""
 
 #: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
+"Název a popis wiki lze nastavit přímo ve wiki. Tento název souboru je "
+"nezávislý na názvu wiki."
 
 #: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
 msgid "New name for the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Nový název souboru wiki s příponou \".html\""
 
 #: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
 msgid "Renaming the file has no effect on the title of the wiki."
-msgstr ""
+msgstr "Přejmenování souboru nemá žádný vliv na název wiki."
 
 #: modules/featherwiki/forms.py:32
 msgid "A Feather Wiki file with .html file extension"
-msgstr ""
+msgstr "Soubor Feather Wiki s příponou .html"
 
 #: modules/featherwiki/forms.py:35
 msgid "Feather Wiki files must be in HTML format"
-msgstr ""
+msgstr "Soubory Feather Wiki musí být ve formátu HTML"
 
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
-msgstr ""
+msgstr "Nahrajte existující soubor Feather Wiki z tohoto počítače."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Wikis"
-msgstr "Spravovat knihovny"
+msgstr "Spravovat Wiki"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:16
 #: modules/featherwiki/templates/featherwiki_configure.html:18
@@ -2289,66 +2306,59 @@ msgstr "Spravovat knihovny"
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
 #: modules/tiddlywiki/views.py:48
-#, fuzzy
-#| msgid "Create Wiki or Blog"
 msgid "Create Wiki"
-msgstr "Vytvořit wiki nebo blog"
+msgstr "Vytvořit wiki"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:21
 #: modules/featherwiki/templates/featherwiki_configure.html:23
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki"
-msgstr "Nahrát soubor"
+msgstr "Nahrát Wiki"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:30
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No wikis available."
-msgstr "Nejsou k dispozici žádné knihovny."
+msgstr "Nejsou k dispozici žádné wiki."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:36
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
-#, fuzzy, python-format
-#| msgid "Go to site %(site)s"
+#, python-format
 msgid "Go to wiki %(wiki)s"
-msgstr "Přejít na stránku %(site)s"
+msgstr "Přejít na wiki %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:43
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
 #, python-format
 msgid "Rename wiki %(wiki)s"
-msgstr ""
+msgstr "Přejmenovat wiki %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:50
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete wiki %(wiki)s"
-msgstr "Smazat stránku %(site)s"
+msgstr "Smazat wiki %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete wiki <em>%(name)s</em>"
-msgstr "Smazat wiki nebo blog <em>%(name)s</em>"
+msgstr "Smazat wiki <em>%(name)s</em>"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "Feather Wiki before deleting it."
 msgstr ""
+"<strong>Nápověda</strong>: Před smazáním této wiki si můžete stáhnout její "
+"kopii z Feather Wiki."
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
 #, fuzzy
-#| msgid "Delete this archive permanently?"
-msgid "Delete this wiki file permanently?</p>"
-msgstr "Nevratně smazat tento zachycený archiv?"
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
+msgstr "Smazat tento soubor wiki natrvalo?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -2356,54 +2366,40 @@ msgid "Upload"
 msgstr "Nahrát"
 
 #: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A wiki file with the given name already exists."
-msgstr "Sdílení s tímto názvem už existuje."
+msgstr "Soubor wiki s daným názvem již existuje."
 
 #: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
-#, fuzzy
-#| msgid "Archive created."
 msgid "Wiki created."
-msgstr "Archiv vytvořen."
+msgstr "Wiki vytvořena."
 
 #: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while creating the wiki."
-msgstr "Při vytváření knihovny došlo k chybě."
+msgstr "Při vytváření wiki došlo k chybě."
 
 #: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
-#, fuzzy
-#| msgid "MediaWiki"
 msgid "Rename Wiki"
-msgstr "MediaWiki"
+msgstr "Přejmenovat Wiki"
 
 #: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
 msgid "Wiki renamed."
-msgstr ""
+msgstr "Wiki přejmenována."
 
 #: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while renaming the wiki."
-msgstr "Při vytváření knihovny došlo k chybě."
+msgstr "Při přejmenování wiki došlo k chybě."
 
 #: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki File"
-msgstr "Nahrát soubor"
+msgstr "Nahrát soubor Wiki"
 
 #: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
 msgid "Wiki file added."
-msgstr ""
+msgstr "Soubor Wiki přidán."
 
 #: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
-#, fuzzy
-#| msgid "Failed to add content package."
 msgid "Failed to add wiki file."
-msgstr "Přidání balíčku s obsahem se nezdařilo."
+msgstr "Soubor wiki se nepodařilo přidat."
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -7344,7 +7340,7 @@ msgstr "Přejít na Síť"
 
 #: modules/storage/__init__.py:439
 msgid "grub package is configured"
-msgstr ""
+msgstr "balíček grub je nakonfigurován"
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -7510,6 +7506,11 @@ msgid ""
 "several short notes called Tiddlers and link them together into a dense "
 "graph."
 msgstr ""
+"TiddlyWiki je interaktivní aplikace, která běží výhradně ve webovém "
+"prohlížeči. Každá wiki je samostatný soubor HTML uložený na vašem "
+"{box_name}. Místo psaní dlouhých stránek wiki vás TiddlyWiki vybízí k "
+"napsání několika krátkých poznámek zvaných Tiddlers a jejich propojení do "
+"hustého grafu."
 
 #: modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -7519,6 +7520,11 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
+"Jedná se o univerzální aplikaci s širokou škálou možností využití - "
+"nelineární zápisník, webová stránka, osobní znalostní databáze, systém pro "
+"správu úkolů a projektů, osobní diář atd. Funkce TiddlyWiki lze rozšířit "
+"pomocí zásuvných modulů. Šifrování jednotlivých tiddlerů nebo ochrana wiki "
+"souboru heslem je možná přímo z aplikace."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -7526,36 +7532,40 @@ msgid ""
 "TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
 "need to be upgraded to newer version manually."
 msgstr ""
+"TiddlyWiki se stahuje ze stránek {box_name}, nikoliv z Debianu. Wiki je "
+"třeba aktualizovat na novější verzi ručně."
 
 #: modules/tiddlywiki/__init__.py:46
 msgid "Create a new wiki or upload your existing wiki file to get started."
-msgstr ""
+msgstr "Vytvořte novou wiki nebo nahrajte stávající soubor wiki a začněte."
 
 #: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
 msgid "TiddlyWiki"
-msgstr ""
+msgstr "TiddlyWiki"
 
 #: modules/tiddlywiki/__init__.py:66
 msgid "Non-linear Notebooks"
-msgstr ""
+msgstr "Nelineární zápisníky"
 
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
-msgstr ""
+msgstr "Soubor TiddlyWiki s příponou .html"
 
 #: modules/tiddlywiki/forms.py:35
 msgid "TiddlyWiki files must be in HTML format"
-msgstr ""
+msgstr "Soubory TiddlyWiki musí být ve formátu HTML"
 
 #: modules/tiddlywiki/forms.py:37
 msgid "Upload an existing TiddlyWiki file from this computer."
-msgstr ""
+msgstr "Nahrát existující soubor TiddlyWiki z tohoto počítače."
 
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "TiddlyWiki before deleting it."
 msgstr ""
+"<strong>Nápověda</strong>: Před smazáním této wiki si můžete stáhnout její "
+"kopii z TiddlyWiki."
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -7874,29 +7884,25 @@ msgstr ""
 "adresu URL <a href=\"/tt-rss/\">/tt-rss</a> nebo <a href=\"/tt-rss-app/\"> /"
 "tt-rss-app</a> pro připojení."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (TTTRSS)"
-
-#: modules/ttrss/manifest.py:20
 msgid "TTRSS-Reader"
 msgstr "TTRSS-Reader"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7909,21 +7915,21 @@ msgstr ""
 "systému považován za nezbytný, provede se automaticky ve 02:00 a způsobí, že "
 "všechny aplikace budou krátce nedostupné."
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Aktualizace software"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualizován"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7933,15 +7939,19 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 msgid "Distribution update started"
 msgstr "Zahájena aktualizace distribuce"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
+msgstr ""
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9409,6 +9419,9 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "Nelze testovat: Nejsou nakonfigurovány žádné domény."

@@ -34,8 +34,8 @@ Naming conventions:
   tools `yapf` and `isort`. Please check also with `flake8`.
 * Please include one single feature per merge request, to keep the review simple
   and focused on one topic. (This might still mean hundreds of lines of code.)
-  Use a branch other than `master`, so you can create multiple merge requests
-  and still keep merging from `master`. Depending on the complexity of your
+  Use a branch other than `main`, so you can create multiple merge requests
+  and still keep merging from `main`. Depending on the complexity of your
   merge request, it may take a while until it is reviewed and merged.
 * Keep your commits organized logically and as small as possible. If commit B
   fixes a mistake in commit A, both of which are part of the same merge request,

@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-12 21:33-0400\n"
-"PO-Revision-Date: 2024-03-28 01:01+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"PO-Revision-Date: 2024-08-15 06:09+0000\n"
+"Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "freedombox/freedombox/nb_NO/>\n"
 "Language: nb\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -109,14 +109,12 @@ msgid "Use the language preference set in the browser"
 msgstr "Bruk språkforvalg satt i nettleseren"
 
 #: menu.py:106
-#, fuzzy
-#| msgid "Public Visibility"
 msgid "Visibility"
-msgstr "Offentlig synlighet"
+msgstr "Synlighet"
 
 #: menu.py:108
 msgid "Data"
-msgstr ""
+msgstr "Data"
 
 #: menu.py:110 templates/base.html:129
 msgid "System"
@@ -128,14 +126,12 @@ msgid "Security"
 msgstr "Sikkerhet"
 
 #: menu.py:114
-#, fuzzy
-#| msgid "Server Administration"
 msgid "Administration"
-msgstr "Tjeneradministrasjon"
+msgstr "Administrasjon"
 
 #: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
-msgstr ""
+msgstr "Det er mulig systemet har høy belastning. Forsøk igjen senere."
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -507,11 +503,7 @@ msgid "Existing Backups"
 msgstr "Eksisterende sikkerhetskopier"
 
 #: modules/backups/templates/backups_add_remote_repository.html:19
-#, fuzzy, python-format
-#| msgid ""
-#| "The credentials for this repository are stored on your %(box_name)s. <br /"
-#| "> To restore a backup on a new %(box_name)s you need the ssh credentials "
-#| "and, if chosen, the encryption passphrase."
+#, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
 "To restore a backup on a new %(box_name)s you need the SSH credentials and, "
@@ -662,19 +654,14 @@ msgid "How to verify?"
 msgstr "Hvordan bekrefte?"
 
 #: modules/backups/templates/verify_ssh_hostkey.html:45
-#, fuzzy
-#| msgid ""
-#| "Run the following command on the SSH host machine. The output should "
-#| "match one of the provided options. You can also use dsa, ecdsa, ed25519 "
-#| "etc. instead of rsa, by choosing the corresponding file."
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
 "Kjør følgende kommando på SSH-vertsmaskinen. Utdata skal samsvare med én av "
-"de angitte valgene. Du kan også bruke DSA, ECDSA, ED25519, osv. istedenfor "
-"RSA, ved å velge filen som stemmer overens."
+"de angitte valgene. Du kan også bruke DSA, ECDSA, ED25519 og lignende "
+"istedenfor RSA, ved å velge filen som stemmer overens."
 
 #: modules/backups/templates/verify_ssh_hostkey.html:60
 msgid "Verify Host"
@@ -901,10 +888,8 @@ msgid "admin"
 msgstr "admin"
 
 #: modules/bepasty/views.py:20
-#, fuzzy
-#| msgid "Repository"
 msgid "editor"
-msgstr "Kodelager"
+msgstr ""
 
 #: modules/bepasty/views.py:21
 msgid "viewer"
@@ -1156,10 +1141,8 @@ msgid "Library created."
 msgstr "Bibliotek opprettet."
 
 #: modules/calibre/views.py:49
-#, fuzzy
-#| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the library."
-msgstr "En feil oppsto under konfigureringen."
+msgstr "En feil oppsto ved oppretting av bibilioteket."
 
 #: modules/calibre/views.py:63 modules/featherwiki/views.py:145
 #: modules/gitweb/views.py:139 modules/kiwix/views.py:100
@@ -1325,14 +1308,12 @@ msgid "Show apps and features that require more technical knowledge."
 msgstr "Vis programmer og funksjoner som krever dypere teknisk innsikt."
 
 #: modules/config/forms.py:104
-#, fuzzy
-#| msgid "System Configuration"
 msgid "System-wide logging"
-msgstr "Systemoppsett"
+msgstr "Systemomfattende logging"
 
 #: modules/config/forms.py:105
 msgid "Disable logging, for privacy"
-msgstr ""
+msgstr "Koble ut logging for å verne privatsfæren"
 
 #: modules/config/forms.py:107
 msgid "Keep some in memory until a restart, for performance"
@@ -1514,79 +1495,83 @@ msgstr ""
 "Systemets diagnostikktest vil kjøre en rekke kontroller på systemet for å få "
 "bekreftet at programmer og tjenester fungerer som forventet."
 
-#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:238
+#: modules/diagnostics/__init__.py:53 modules/diagnostics/__init__.py:239
 msgid "Diagnostics"
 msgstr "Diagnostikk"
 
 #: modules/diagnostics/__init__.py:99
+msgid "skipped"
+msgstr ""
+
+#: modules/diagnostics/__init__.py:100
 #, fuzzy
 #| msgid "Quassel"
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:100 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
 msgid "failed"
 msgstr "feilet"
 
-#: modules/diagnostics/__init__.py:101
+#: modules/diagnostics/__init__.py:102
 msgid "error"
 msgstr "feil"
 
-#: modules/diagnostics/__init__.py:102
+#: modules/diagnostics/__init__.py:103
 msgid "warning"
 msgstr ""
 
 #. Translators: This is the unit of computer storage Mebibyte similar to
 #. Megabyte.
-#: modules/diagnostics/__init__.py:204
+#: modules/diagnostics/__init__.py:205
 msgid "MiB"
 msgstr "MiB"
 
 #. Translators: This is the unit of computer storage Gibibyte similar to
 #. Gigabyte.
-#: modules/diagnostics/__init__.py:209
+#: modules/diagnostics/__init__.py:210
 #, fuzzy
 #| msgid "Git"
 msgid "GiB"
 msgstr "Git"
 
-#: modules/diagnostics/__init__.py:216
+#: modules/diagnostics/__init__.py:217
 msgid "You should disable some apps to reduce memory usage."
 msgstr "Du bør skru av noen programmer for å redusere minnebruken."
 
-#: modules/diagnostics/__init__.py:221
+#: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
 msgstr "Du bør ikke installere noen nye programmer på dette systemet."
 
-#: modules/diagnostics/__init__.py:233
+#: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
 msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:235
+#: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
 msgstr "Lite minne"
 
-#: modules/diagnostics/__init__.py:266
+#: modules/diagnostics/__init__.py:267
 #, fuzzy
 #| msgid "Run Diagnostics"
 msgid "Running diagnostics"
 msgstr "Kjør diagnostikk"
 
-#: modules/diagnostics/__init__.py:311
+#: modules/diagnostics/__init__.py:312
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
 
-#: modules/diagnostics/__init__.py:312
+#: modules/diagnostics/__init__.py:313
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Diagnostics results"
 msgstr "Diagnostikkresultater"
 
-#: modules/diagnostics/__init__.py:317
+#: modules/diagnostics/__init__.py:318
 #, fuzzy
 #| msgid "Diagnostic Results"
 msgid "Go to diagnostics results"
@@ -1671,19 +1656,15 @@ msgid "Results"
 msgstr "Resultater"
 
 #: modules/diagnostics/templates/diagnostics_full.html:38
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "          App: %(app_name)s\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "            App: %(app_name)s\n"
 "          "
 msgstr ""
 "\n"
-"          Program: %(app_name)s\n"
-"        "
+"            Program: %(app_name)s\n"
+"          "
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -2391,10 +2372,9 @@ msgstr "Intet bibliotek tilgjengelig."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:36
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
-#, fuzzy, python-format
-#| msgid "Go to site %(site)s"
+#, python-format
 msgid "Go to wiki %(wiki)s"
-msgstr "Gå til siden %(site)s"
+msgstr "Gå til wiki %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:43
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
@@ -2404,10 +2384,9 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_configure.html:50
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete wiki %(wiki)s"
-msgstr "Slett nettstedet %(site)s"
+msgstr "Slett wiki %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
@@ -2425,9 +2404,9 @@ msgstr ""
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
 #, fuzzy
-#| msgid "Delete this archive permanently?"
-msgid "Delete this wiki file permanently?</p>"
-msgstr "Slett dette arkivet for godt?"
+#| msgid "Delete this wiki file permanently?</p>"
+msgid "Delete this wiki file permanently?"
+msgstr "Slett denne wikifilen for godt?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -3552,10 +3531,9 @@ msgid "No content packages available."
 msgstr "Intet bibliotek tilgjengelig."
 
 #: modules/kiwix/templates/kiwix.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete package %(title)s"
-msgstr "Slett nettstedet %(site)s"
+msgstr "Slett pakke %(title)s"
 
 #: modules/kiwix/views.py:49
 msgid "Content package added."
@@ -6296,9 +6274,9 @@ msgid ""
 "address>) and your user name. DAVx5 will show all existing calendars and "
 "address books and you can create new."
 msgstr ""
-"Skriv inn nettadressen til Radicale-tjeneren (f.eks. https://<your."
-"freedombox.address>) og ditt brukernavn. DAVx5 vil vise alle eksisterende "
-"kalendere og adressebøker, og du kan opprette nye.</your.freedombox.address>"
+"Skriv inn nettadressen til Radicale-tjeneren (f.eks. https://) og ditt "
+"brukernavn. DAVx5 vil vise alle eksisterende kalendere og adressebøker, og "
+"du kan opprette nye."
 
 #: modules/radicale/manifest.py:28
 msgid "GNOME Calendar"
@@ -8044,32 +8022,26 @@ msgstr ""
 "Når du bruker et mobilbasert- eller skrivebords-program for Tiny Tiny RSS, "
 "bruk nettadressen <a href=\"/tt-rss-app/\">/tt-rss-app</a>for å koble til."
 
-#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:44
+#: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
 msgid "Tiny Tiny RSS"
 msgstr "Tiny Tiny RSS"
 
 #: modules/ttrss/manifest.py:10
 #, fuzzy
-#| msgid "Tiny Tiny RSS (Fork)"
-msgid "Tiny Tiny RSS (TTTRSS)"
-msgstr "Tiny Tiny RSS (avgreining)"
-
-#: modules/ttrss/manifest.py:20
-#, fuzzy
 #| msgid "TT-RSS Reader"
 msgid "TTRSS-Reader"
 msgstr "TT-RSS kildeleser"
 
-#: modules/ttrss/manifest.py:35
+#: modules/ttrss/manifest.py:25
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:36
+#: modules/upgrades/__init__.py:37
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8077,36 +8049,40 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:65 modules/upgrades/__init__.py:126
+#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Programvare-oppdatering"
 
-#: modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:130
 msgid "FreedomBox Updated"
 msgstr "FreedomBox oppdatert"
 
-#: modules/upgrades/__init__.py:197
+#: modules/upgrades/__init__.py:204
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:199
+#: modules/upgrades/__init__.py:206
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:210
+#: modules/upgrades/__init__.py:217
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: modules/upgrades/__init__.py:212
+#: modules/upgrades/__init__.py:219
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
+msgstr ""
+
+#: modules/upgrades/__init__.py:311
+msgid "Check for package holds"
 msgstr ""
 
 #: modules/upgrades/forms.py:15
@@ -9218,10 +9194,9 @@ msgstr ""
 "Du har ikke tilgangen som trengs for å nå %(request_path)s på denne tjeneren."
 
 #: templates/404.html:10
-#, fuzzy, python-format
-#| msgid "Public key for this %(box_name)s:"
+#, python-format
 msgid "Page not found - %(box_name)s"
-msgstr "Offentlig nøkkel for denne %(box_name)s:"
+msgstr "Fant ikke side - %(box_name)s"
 
 #: templates/404.html:18
 msgid "404"
@@ -9585,10 +9560,8 @@ msgstr "Start oppsett"
 
 #: templates/toolbar.html:59 templates/toolbar.html:60
 #: templates/uninstall.html:30
-#, fuzzy
-#| msgid "Install"
 msgid "Uninstall"
-msgstr "Installer"
+msgstr "Avinstaller"
 
 #: templates/uninstall.html:11
 #, python-format
@@ -9615,6 +9588,11 @@ msgstr "før avinstallering av {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "Tiny Tiny RSS (Fork)"
+#~ msgid "Tiny Tiny RSS (TTTRSS)"
+#~ msgstr "Tiny Tiny RSS (avgreining)"
 
 #~ msgid "Media streaming server"
 #~ msgstr "Media-strømmetjener"
