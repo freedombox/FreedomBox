@@ -417,9 +417,17 @@ def _diagnose_grub_configured() -> DiagnosticCheck | None:
     install device is not selected.
     """
     result = None
-    status = subprocess.check_output([
-        'dpkg-query', '--show', '--showformat=${db:Status-Abbrev}', 'grub-pc'
-    ]).decode().strip()
+    try:
+        status = subprocess.check_output([
+            'dpkg-query', '--show', '--showformat=${db:Status-Abbrev}',
+            'grub-pc'
+        ]).decode().strip()
+    except subprocess.CalledProcessError as err:
+        if err.returncode == 1:
+            return None
+
+        raise err
+
     if status[0] != 'i':
         logger.info('grub-pc is not installed')
         return None

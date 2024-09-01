@@ -4,6 +4,7 @@ Test module for storage module operations.
 """
 
 import contextlib
+import dataclasses
 import re
 import subprocess
 import tempfile
@@ -11,7 +12,9 @@ from unittest.mock import patch
 
 import psutil
 import pytest
+from django.utils.translation import gettext_noop
 
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules import storage
 from plinth.modules.storage import privileged
 
@@ -360,3 +363,41 @@ def test_is_partition_read_only(disk_partitions):
     assert not storage.is_partition_read_only('/')
     assert not storage.is_partition_read_only('/foo')
     assert storage.is_partition_read_only('/bar')
+
+
+@patch('subprocess.check_output')
+def test_diagnose_grub_configured(check_output):
+    """Test whether checking grub-pc package configuration failed works."""
+    diagnose = storage._diagnose_grub_configured \
+        # pylint: disable=protected-access
+
+    passed = DiagnosticCheck('storage-grub-configured',
+                             gettext_noop('grub package is configured'),
+                             Result.PASSED)
+    failed = dataclasses.replace(passed, result=Result.FAILED)
+    warning = dataclasses.replace(passed, result=Result.WARNING)
+
+    # installed and configured
+    check_output.return_value = b'ii '
+    assert diagnose() == passed
+
+    # failed configuration
+    check_output.return_value = b'iF '
+    assert diagnose() == failed
+
+    # should be installed, but somehow is not
+    check_output.return_value = b'in '
+    assert diagnose() == warning
+
+    # not installed
+    check_output.return_value = b'un '
+    assert diagnose() is None
+
+    # grub-pc package is not available (e.g. ARM devices)
+    check_output.side_effect = subprocess.CalledProcessError(
+        cmd=[
+            'dpkg-query', '--show', '--showformat=${db:Status-Abbrev}',
+            'grub-pc'
+        ], returncode=1,
+        stderr=b'dpkg-query: no packages found matching grub-pc\n')
+    assert diagnose() is None
