@@ -114,6 +114,16 @@ WIRELESS_MODE_STRINGS = {
     'mesh': gettext_lazy('mesh point'),
 }
 
+# i18n for connection.dns_over_tls
+# https://networkmanager.dev/docs/libnm/latest/NMSettingConnection.html#
+# NMSettingConnectionDnsOverTls
+DNS_OVER_TLS_STRINGS = {
+    'default': gettext_lazy('default'),
+    'no': gettext_lazy('no'),
+    'opportunistic': gettext_lazy('opportunistic'),
+    'yes': gettext_lazy('yes'),
+}
+
 
 class NetworksAppView(AppView):
     """Show networks app main page."""
@@ -149,6 +159,8 @@ def show(request, uuid):
     connection_status = network.get_status_from_connection(connection)
     connection_status['zone_string'] = dict(network.ZONES).get(
         connection_status['zone'], connection_status['zone'])
+    connection_status['dns_over_tls_string'] = DNS_OVER_TLS_STRINGS.get(
+        connection_status['dns_over_tls'], connection_status['dns_over_tls'])
     connection_status['ipv4']['method_string'] = CONNECTION_METHOD_STRINGS.get(
         connection_status['ipv4']['method'],
         connection_status['ipv4']['method'])
@@ -248,6 +260,9 @@ def edit(request, uuid):
             form_data['zone'] = 'external'
 
         if settings_connection.get_connection_type() != 'pppoe':
+            form_data['dns_over_tls'] = \
+                settings_connection.get_dns_over_tls().value_nick
+
             settings_ipv4 = connection.get_setting_ip4_config()
             form_data['ipv4_method'] = settings_ipv4.get_method()
             if settings_ipv4.get_num_addresses():

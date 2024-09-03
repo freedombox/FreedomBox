@@ -37,6 +37,10 @@
     </div>
   </div>
 
+  {% if form.dns_over_tls %}
+    {% include "connections_fields_privacy.html" %}
+  {% endif %}
+
   {% if form.ssid %}
     {% include "connections_fields_wifi.html" %}
   {% endif %}

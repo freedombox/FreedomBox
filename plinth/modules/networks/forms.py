@@ -30,6 +30,37 @@ class ConnectionForm(forms.Form):
         help_text=_('The firewall zone will control which services are '
                     'available over this interfaces. Select Internal only '
                     'for trusted networks.'), choices=network.ZONES)
+    dns_over_tls = forms.ChoiceField(
+        label=_('Use DNS-over-TLS'), widget=forms.RadioSelect, choices=[
+            ('default',
+             format_lazy(
+                 'Default. Unspecified for this connection. <p '
+                 'class="help-block">Use the global preference.</p>',
+                 allow_markup=True)),
+            ('yes',
+             format_lazy(
+                 'Yes. Encrypt connections to the DNS server. <p '
+                 'class="help-block">This improves privacy as domain name '
+                 'queries will not be made as plain text over the network. It '
+                 'also improves security as responses from the server cannot '
+                 'be manipulated. If the configured DNS servers do not '
+                 'support DNS-over-TLS, all name resolutions will fail. If '
+                 'your DNS provider (likely your ISP) does not support '
+                 'DNS-over-TLS or blocks some domains, you can configure a '
+                 'well-known public DNS server below.</p>',
+                 allow_markup=True)),
+            ('opportunistic',
+             format_lazy(
+                 'Opportunistic. <p class="help-block">Encrypt connections to '
+                 'the DNS server if the server supports DNS-over-TLS. '
+                 'Otherwise, use unencrypted connections. There is no '
+                 'protection against response manipulation.</p>',
+                 allow_markup=True)),
+            ('no',
+             format_lazy(
+                 'No. <p class="help-block">Do not encrypt domain name '
+                 'resolutions for this connection.</p>', allow_markup=True)),
+        ], initial='default')
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'), widget=forms.RadioSelect, choices=[
             ('auto',
@@ -127,6 +158,7 @@ class ConnectionForm(forms.Form):
             'name': self.cleaned_data['name'],
             'interface': self.cleaned_data['interface'],
             'zone': self.cleaned_data['zone'],
+            'dns_over_tls': self.cleaned_data['dns_over_tls'],
         }
         settings['ipv4'] = self.get_ipv4_settings()
         settings['ipv6'] = self.get_ipv6_settings()
@@ -191,6 +223,7 @@ class EthernetForm(ConnectionForm):
 
 class PPPoEForm(EthernetForm):
     """Form to create a new PPPoE connection."""
+    dns_over_tls = None
     ipv4_method = None
     ipv4_address = None
     ipv4_netmask = None
