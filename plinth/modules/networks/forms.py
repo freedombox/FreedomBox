@@ -115,7 +115,7 @@ class ConnectionForm(forms.Form):
                'connection from this network')),
             ('ignore', _('Ignore: Ignore this addressing method')),
             ('disabled', _('Disabled: Disable IPv6 for this connection')),
-        ])
+        ], initial='auto')
     ipv6_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv6_address],
         required=False)
