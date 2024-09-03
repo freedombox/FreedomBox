@@ -231,14 +231,6 @@ class PPPoEForm(EthernetForm):
 
 class WifiForm(ConnectionForm):
     """Form to create/edit a Wi-Fi connection."""
-    field_order = [
-        'name', 'interface', 'zone', 'ssid', 'mode', 'band', 'channel',
-        'bssid', 'auth_mode', 'passphrase', 'ipv4_method', 'ipv4_address',
-        'ipv4_netmask', 'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns',
-        'ipv6_method', 'ipv6_address', 'ipv6_prefix', 'ipv6_gateway',
-        'ipv6_dns', 'ipv6_second_dns'
-    ]
-
     ssid = forms.CharField(label=_('SSID'),
                            help_text=_('The visible name of the network.'))
     mode = forms.ChoiceField(
