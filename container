@@ -916,6 +916,14 @@ def _destroy(distribution):
                 _get_compressed_image_path(distribution))
 
 
+def _is_privisioned(distribution):
+    """Return the container has been provisioned fully."""
+    compressed_image = _get_compressed_image_path(distribution)
+    provision_file = compressed_image.with_suffix('.provisioned')
+    if provision_file.exists():
+        return
+
+
 def _provision(image_file, distribution):
     """Run app setup inside the container."""
     provision_file = image_file.with_suffix(image_file.suffix + '.provisioned')
@@ -1038,7 +1046,8 @@ def _is_update_required(distribution):
 def subcommand_up(arguments):
     """Download, setup and bring up the container."""
     machine_name = f'fbx-{arguments.distribution}'
-    if _get_machine_status(machine_name):
+    if _get_machine_status(machine_name) and _is_privisioned(
+            arguments.distribution):
         logger.info('Container is already running')
         _print_banner(arguments.distribution)
         return
