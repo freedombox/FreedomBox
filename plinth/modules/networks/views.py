@@ -30,6 +30,8 @@ CONNECTION_METHOD_STRINGS = {
     'manual': gettext_lazy('manual'),
     'shared': gettext_lazy('shared'),
     'link-local': gettext_lazy('link-local'),
+    'dhcp': gettext_lazy('dhcp'),
+    'ignore': gettext_lazy('ignore'),
 }
 
 # i18n for device.state

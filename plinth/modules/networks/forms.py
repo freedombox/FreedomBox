@@ -107,10 +107,14 @@ class ConnectionForm(forms.Form):
             ('dhcp',
              _('Automatic (DHCP only): Configure automatically, use Internet '
                'connection from this network')),
+            ('link-local',
+             _('Link-local: Configure automatically to use an address that is '
+               'only relevant to this network.')),
             ('manual',
              _('Manual: Use manually specified parameters, use Internet '
                'connection from this network')),
             ('ignore', _('Ignore: Ignore this addressing method')),
+            ('disabled', _('Disabled: Disable IPv6 for this connection')),
         ])
     ipv6_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv6_address],
