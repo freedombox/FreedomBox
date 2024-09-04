@@ -37,3 +37,30 @@ class NamesConfigurationForm(forms.Form):
                  'No. <p class="help-block">Do not encrypt domain name '
                  'resolutions.</p>', allow_markup=True)),
         ], initial='no')
+
+    dnssec = forms.ChoiceField(
+        label=_('Use DNSSEC when resolving domains (global preference)'),
+        widget=forms.RadioSelect, choices=[
+            ('yes',
+             format_lazy(
+                 'Yes. Verify authenticity and integrity of domain '
+                 'resolutions. <p class="help-block">This improves security. '
+                 'If the configured DNS servers do not support DNSSEC, all '
+                 'name resolutions will fail. If your DNS provider (likely '
+                 'your ISP) does not support DNSSEC or is manipulating '
+                 'responses, you can configure well-known public DNS servers '
+                 'in individual network connection settings.</p>',
+                 allow_markup=True)),
+            ('allow-downgrade',
+             format_lazy(
+                 'Allow downgrade. <p class="help-block">Verify name '
+                 'resolutions done by the DNS server if the server supports '
+                 'DNSSEC. Otherwise, allow unverified resolutions. Limited '
+                 'improvement to security. Detecting whether a DNS server '
+                 'supports DNSSEC is not very reliable currently.</p>',
+                 allow_markup=True)),
+            ('no',
+             format_lazy(
+                 'No. <p class="help-block">Do not verify domain name '
+                 'resolutions.</p>', allow_markup=True)),
+        ], initial='no')

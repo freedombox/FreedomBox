@@ -37,9 +37,15 @@ class NamesAppView(AppView):
         old_data = form.initial
         form_data = form.cleaned_data
 
+        changes = {}
         if old_data['dns_over_tls'] != form_data['dns_over_tls']:
-            privileged.set_resolved_configuration(
-                dns_over_tls=form_data['dns_over_tls'])
+            changes['dns_over_tls'] = form_data['dns_over_tls']
+
+        if old_data['dnssec'] != form_data['dnssec']:
+            changes['dnssec'] = form_data['dnssec']
+
+        if changes:
+            privileged.set_resolved_configuration(**changes)
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
