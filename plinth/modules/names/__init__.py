@@ -4,12 +4,16 @@ FreedomBox app to configure name services.
 """
 
 import logging
+import subprocess
 
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg, menu, network
 from plinth.daemon import Daemon
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
@@ -70,6 +74,12 @@ class NamesApp(app_module.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(diagnose_resolution('deb.debian.org'))
+        return results
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -92,6 +102,22 @@ class NamesApp(app_module.App):
         network.refeed_dns()
 
         self.enable()
+
+
+def diagnose_resolution(domain: str) -> DiagnosticCheck:
+    """Perform a diagnostic check for whether a domain can be resolved."""
+    result = Result.NOT_DONE
+    try:
+        subprocess.run(['resolvectl', 'query', '--cache=no', domain],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                       check=True)
+        result = Result.PASSED
+    except subprocess.CalledProcessError:
+        result = Result.FAILED
+
+    description = gettext_noop('Resolve domain name: {domain}')
+    parameters: DiagnosticCheckParameters = {'domain': domain}
+    return DiagnosticCheck('names-resolve', description, result, parameters)
 
 
 def on_domain_added(sender, domain_type, name='', description='',
