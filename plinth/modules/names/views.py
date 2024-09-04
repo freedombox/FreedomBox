@@ -3,9 +3,13 @@
 FreedomBox app for name services.
 """
 
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+
 from plinth.views import AppView
 
-from . import components
+from . import components, privileged
+from .forms import NamesConfigurationForm
 
 
 class NamesAppView(AppView):
@@ -13,12 +17,32 @@ class NamesAppView(AppView):
 
     app_id = 'names'
     template_name = 'names.html'
+    prefix = 'names'
+    form_class = NamesConfigurationForm
+
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial.update(privileged.get_resolved_configuration())
+        return initial
 
     def get_context_data(self, *args, **kwargs):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['status'] = get_status()
         return context
+
+    def form_valid(self, form):
+        """Apply the changes submitted in the form."""
+        old_data = form.initial
+        form_data = form.cleaned_data
+
+        if old_data['dns_over_tls'] != form_data['dns_over_tls']:
+            privileged.set_resolved_configuration(
+                dns_over_tls=form_data['dns_over_tls'])
+            messages.success(self.request, _('Configuration updated'))
+
+        return super().form_valid(form)
 
 
 def get_status():

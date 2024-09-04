@@ -6,7 +6,10 @@
 {% load bootstrap %}
 {% load i18n %}
 
-{% block configuration %}
+{% block status %}
+  {{ block.super }}
+
+  <h3>{% trans "Domains" %}</h3>
 
   <div class="table-responsive">
     <table class="table names-table">
