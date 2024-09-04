@@ -26,7 +26,9 @@ def set_resolved_configuration(dns_fallback: bool | None = None,
     if dns_over_tls is not None:
         _set_resolved_configuration(dns_over_tls)
 
-    action_utils.service_reload('systemd-resolved')
+    # Workaround buggy reload that does not apply DNS-over-TLS changes
+    # properly.
+    action_utils.service_try_restart('systemd-resolved')
 
 
 def get_resolved_configuration() -> dict[str, bool]:
