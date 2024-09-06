@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth.views import AppView
 
-from . import components, privileged
+from . import components, privileged, resolved
 from .forms import NamesConfigurationForm
 
 
@@ -30,6 +30,11 @@ class NamesAppView(AppView):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['status'] = get_status()
+        try:
+            context['resolved_status'] = resolved.get_status()
+        except Exception as exception:
+            context['resolved_status_error'] = exception
+
         return context
 
     def form_valid(self, form):

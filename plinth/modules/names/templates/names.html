@@ -53,4 +53,64 @@
     </table>
   </div>
 
+  <h3>{% trans "Resolver Status" %}</h3>
+
+  {% if resolved_status %}
+    <div class="table-responsive">
+      <table class="table resolved-status-table">
+        <tbody>
+          {% for link in resolved_status %}
+            <tr>
+              <th colspan="2">
+                {% if link.link_index == 0 %}
+                  {% trans "Global" %}
+                {% else %}
+                  {% trans "Link" %} {{ link.link_index }} ({{link.interface_name}})
+                {% endif %}
+              </th>
+            </tr>
+            <tr>
+              <td>{% trans "DNS-over-TLS" %}</td>
+              <td>{{ link.dns_over_tls_string }}</td>
+            </tr>
+            <tr>
+              <td>{% trans "DNSSEC" %}</td>
+              <td>{{ link.dnssec_string }}/{{ link.dnssec_supported_string }}</td>
+            </tr>
+            {% if link.current_dns_server %}
+              <tr>
+                <td>{% trans "Current DNS Server" %}</td>
+                <td>{{ link.current_dns_server }}</td>
+              </tr>
+            {% endif %}
+            {% if link.dns_servers %}
+              <tr>
+                <td>{% trans "DNS Servers" %}</td>
+                <td>
+                  {% for server in link.dns_servers %}
+                    {{ server }}<br />
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endif %}
+            {% if link.fallback_dns_servers %}
+              <tr>
+                <td>{% trans "Fallback DNS Servers" %}</td>
+                <td>
+                  {% for server in link.fallback_dns_servers %}
+                  {{ server }}<br />
+                  {% endfor %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-danger">
+      {% trans "Error retrieving status:" %} {{ resolved_status_error }}
+    </div>
+  {% endif %}
+
 {% endblock %}

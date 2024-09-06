@@ -57,8 +57,9 @@ class NamesApp(app_module.App):
                               parent_url_name='system:visibility', order=10)
         self.add(menu_item)
 
+        # 'ip' utility is needed from 'iproute2' package.
         packages = Packages('packages-names',
-                            ['systemd-resolved', 'libnss-resolve'])
+                            ['systemd-resolved', 'libnss-resolve', 'iproute2'])
         self.add(packages)
 
         daemon = Daemon('daemon-names', 'systemd-resolved')
