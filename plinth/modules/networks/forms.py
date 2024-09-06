@@ -2,12 +2,30 @@
 
 from django import forms
 from django.core import validators
+from django.urls import reverse_lazy
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg, network
 from plinth.utils import format_lazy, import_from_gi
 
 nm = import_from_gi('NM', '1.0')
+
+
+def _get_dns_over_tls():
+    """Return the value of DNS over TLS."""
+    try:
+        from plinth.modules.names import privileged
+        dns_over_tls = privileged.get_resolved_configuration()['dns_over_tls']
+    except Exception:
+        return _('unknown')
+
+    value_map = {
+        'yes': _('yes'),
+        'opportunistic': _('opportunistic'),
+        'no': _('no')
+    }
+    return str(value_map.get(dns_over_tls, dns_over_tls))
 
 
 class ConnectionTypeSelectForm(forms.Form):
@@ -35,8 +53,11 @@ class ConnectionForm(forms.Form):
             ('default',
              format_lazy(
                  'Default. Unspecified for this connection. <p '
-                 'class="help-block">Use the global preference.</p>',
-                 allow_markup=True)),
+                 'class="help-block">Use the <a href="{names_app}">global '
+                 'preference</a>. Current value is "{global_value}".</p>',
+                 names_app=reverse_lazy('names:index'),
+                 global_value=lazy(_get_dns_over_tls,
+                                   str)(), allow_markup=True)),
             ('yes',
              format_lazy(
                  'Yes. Encrypt connections to the DNS server. <p '
