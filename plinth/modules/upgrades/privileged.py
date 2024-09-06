@@ -19,6 +19,8 @@ from plinth.modules.snapshot import is_apt_snapshots_enabled
 from plinth.modules.snapshot import is_supported as snapshot_is_supported
 from plinth.modules.snapshot import load_augeas as snapshot_load_augeas
 
+logger = logging.getLogger(__name__)
+
 SOURCES_LIST = '/etc/apt/sources.list'
 BACKPORTS_SOURCES_LIST = '/etc/apt/sources.list.d/freedombox2.list'
 
@@ -92,6 +94,25 @@ def _release_held_freedombox():
     """
     if apt_hold_flag.exists() and not is_package_manager_busy():
         apt_unhold_freedombox()
+
+
+@privileged
+def release_held_packages():
+    """Release any packages that are being held."""
+    if is_package_manager_busy():
+        logger.warning('Package manager is busy, skipping releasing holds.')
+        return
+
+    if service_is_running('freedombox-dist-upgrade'):
+        logger.warning('Distribution upgrade in progress, skipping releasing '
+                       'holds.')
+        return
+
+    output = subprocess.check_output(['apt-mark', 'showhold']).decode().strip()
+    holds = output.split('\n')
+    logger.info('Releasing package holds: %s', holds)
+    subprocess.run(['apt-mark', 'unhold', *holds], stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL, check=True)
 
 
 @privileged

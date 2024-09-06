@@ -46,6 +46,8 @@ BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'
 
+PKG_HOLD_DIAG_CHECK_ID = 'upgrades-package-holds'
+
 logger = logging.getLogger(__name__)
 
 
@@ -165,6 +167,17 @@ class UpgradesApp(app_module.App):
         results = super().diagnose()
         results.append(_diagnose_held_packages())
         return results
+
+    def repair(self, failed_checks: list) -> bool:
+        """Handle repair for custom diagnostic."""
+        remaining_checks = []
+        for check in failed_checks:
+            if check.check_id == PKG_HOLD_DIAG_CHECK_ID:
+                privileged.release_held_packages()
+            else:
+                remaining_checks.append(check)
+
+        return super().repair(remaining_checks)
 
 
 def setup_repositories(_):
@@ -307,7 +320,7 @@ def test_dist_upgrade():
 
 def _diagnose_held_packages():
     """Check if any packages have holds."""
-    check = DiagnosticCheck('upgrades-package-holds',
+    check = DiagnosticCheck(PKG_HOLD_DIAG_CHECK_ID,
                             gettext_noop('Check for package holds'),
                             Result.NOT_DONE)
     if (package.is_package_manager_busy()
