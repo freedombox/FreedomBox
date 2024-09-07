@@ -104,18 +104,16 @@ class LetsEncryptApp(app_module.App):
         return results
 
     def repair(self, failed_checks: list) -> bool:
-        """Try to repair failed diagnostics.
-
-        Returns whether the app setup should be re-run.
-        """
+        """Handle repair for custom diagnostic."""
         status = get_status()
-
-        # Obtain/re-obtain certificates for failing domains
-        for failed_check in failed_checks:
-            if not failed_check.check_id.startswith('letsencrypt-domain'):
+        remaining_checks = []
+        for check in failed_checks:
+            if not check.check_id.startswith('letsencrypt-domain'):
+                remaining_checks.append(check)
                 continue
 
-            domain = failed_check.parameters['domain']
+            # Obtain/re-obtain certificates for failing domains
+            domain = check.parameters['domain']
             try:
                 domain_status = status['domains'][domain]
                 if domain_status.get('certificate_available', False):
@@ -128,7 +126,7 @@ class LetsEncryptApp(app_module.App):
                 # Add the error message to thread local storage
                 store_error_message(str(error))
 
-        return False
+        return super().repair(remaining_checks)
 
     def setup(self, old_version):
         """Install and configure the app."""
