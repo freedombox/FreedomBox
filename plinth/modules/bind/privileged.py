@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configuration helper for BIND server."""
 
+import pathlib
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -18,6 +19,7 @@ acl goodclients {
     localnets;
 };
 options {
+listen-on { !10.42.0.1; !10.42.1.1; !10.42.2.1; !10.42.3.1; !10.42.4.1; !10.42.5.1; !10.42.6.1; !10.42.7.1; any; };
 directory "/var/cache/bind";
 
 recursion yes;
@@ -31,8 +33,10 @@ forward first;
 auth-nxdomain no;    # conform to RFC1035
 listen-on-v6 { any; };
 };
-'''
+'''  # noqa: E501
 DEFAULT_FORWARDER = '127.0.0.53'  # systemd-resolved
+LISTEN_ON = 'listen-on { !10.42.0.1; !10.42.1.1; !10.42.2.1; !10.42.3.1; '\
+    '!10.42.4.1; !10.42.5.1; !10.42.6.1; !10.42.7.1; any; };'
 
 
 @privileged
@@ -44,6 +48,9 @@ def setup(old_version: int):
     elif old_version < 4:
         if not get_config()['forwarders']:
             _set_forwarders(DEFAULT_FORWARDER)
+
+        if not _has_listen_on():
+            _insert_listen_on()
 
         if old_version < 3:
             _remove_dnssec()
@@ -104,6 +111,26 @@ def _remove_dnssec():
         for line in data:
             if not re.match(r'^\s*dnssec-enable\s+yes;', line):
                 file_handle.write(line + '\n')
+
+
+def _has_listen_on():
+    """Return whether listen-on config option is present."""
+    lines = pathlib.Path(CONFIG_FILE).read_text().splitlines()
+    regex = r'^\s*listen-on\s+{'
+    return any((re.match(regex, line) for line in lines))
+
+
+def _insert_listen_on():
+    """Insert the listen-on option."""
+    config_file = pathlib.Path(CONFIG_FILE)
+    lines = config_file.read_text().splitlines(keepends=True)
+    write_lines = []
+    for line in lines:
+        write_lines += line
+        if re.match(r'^\s*options\s+{', line):
+            write_lines += LISTEN_ON + '\n'
+
+    config_file.write_text(''.join(write_lines))
 
 
 def get_served_domains():
