@@ -19,15 +19,6 @@ JOURNALD_FILE = pathlib.Path('/etc/systemd/journald.conf.d/50-freedombox.conf')
 
 
 @privileged
-def set_hostname(hostname: str):
-    """Set system hostname using hostnamectl."""
-    subprocess.run(
-        ['hostnamectl', 'set-hostname', '--transient', '--static', hostname],
-        check=True)
-    action_utils.service_restart('avahi-daemon')
-
-
-@privileged
 def set_domainname(domainname: str | None = None):
     """Set system domainname in /etc/hosts."""
     hostname = subprocess.check_output(['hostname']).decode().strip()

@@ -4,6 +4,7 @@ FreedomBox app to configure name services.
 """
 
 import logging
+import socket
 import subprocess
 
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +18,8 @@ from plinth.diagnostic_check import (DiagnosticCheck,
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
-from plinth.signals import domain_added, domain_removed
+from plinth.signals import (domain_added, domain_removed, post_hostname_change,
+                            pre_hostname_change)
 from plinth.utils import format_lazy
 
 from . import components, manifest, privileged
@@ -156,6 +158,36 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 ######################################################
 # Domain utilities meant to be used by other modules #
 ######################################################
+
+
+def get_hostname():
+    """Return the hostname."""
+    return socket.gethostname()
+
+
+def set_hostname(hostname):
+    """Set machine hostname and send signals before and after."""
+    from plinth.modules import config
+    from plinth.modules.config import privileged as config_privileged
+
+    old_hostname = get_hostname()
+    domainname = config.get_domainname()
+
+    # Hostname should be ASCII. If it's unicode but passed our
+    # valid_hostname check, convert
+    hostname = str(hostname)
+
+    pre_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
+                                    new_hostname=hostname)
+
+    logger.info('Changing hostname to - %s', hostname)
+    privileged.set_hostname(hostname)
+
+    logger.info('Setting domain name after hostname change - %s', domainname)
+    config_privileged.set_domainname(domainname)
+
+    post_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
+                                     new_hostname=hostname)
 
 
 def get_available_tls_domains():

@@ -15,34 +15,6 @@ from plinth.modules.config import (_home_page_scid2url, change_home_page,
 from plinth.modules.config.forms import ConfigurationForm
 
 
-def test_hostname_field():
-    """Test that hostname field accepts only valid hostnames."""
-    valid_hostnames = [
-        'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname', 'example',
-        '012345678901234567890123456789012345678901234567890123456789012'
-    ]
-    invalid_hostnames = [
-        '', '-', '-a', 'a-', '.a', 'a.', 'a.a', '?', 'a?a',
-        '0123456789012345678901234567890123456789012345678901234567890123'
-    ]
-
-    for hostname in valid_hostnames:
-        form = ConfigurationForm({
-            'hostname': hostname,
-            'domainname': 'example.com',
-            'logging_mode': 'volatile'
-        })
-        assert form.is_valid()
-
-    for hostname in invalid_hostnames:
-        form = ConfigurationForm({
-            'hostname': hostname,
-            'domainname': 'example.com',
-            'logging_mode': 'volatile'
-        })
-        assert not form.is_valid()
-
-
 def test_domainname_field():
     """Test that domainname field accepts only valid domainnames."""
     valid_domainnames = [

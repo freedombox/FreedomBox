@@ -20,7 +20,7 @@ from . import privileged
 
 _description = [
     _('Here you can set some general configuration options '
-      'like hostname, domain name, webserver home page etc.')
+      'like domain name, webserver home page etc.')
 ]
 
 ADVANCED_MODE_KEY = 'advanced_mode'
@@ -99,11 +99,6 @@ def get_domainname():
     """Return the domainname."""
     fqdn = socket.getfqdn()
     return '.'.join(fqdn.split('.')[1:])
-
-
-def get_hostname():
-    """Return the hostname."""
-    return socket.gethostname()
 
 
 def home_page_url2scid(url):

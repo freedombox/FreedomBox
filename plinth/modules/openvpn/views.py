@@ -5,7 +5,7 @@ import logging
 
 from django.http import HttpResponse
 
-from plinth.modules import config
+from plinth.modules import config, names
 from plinth.views import AppView
 
 from . import privileged
@@ -26,7 +26,7 @@ def profile(request):
     domainname = config.get_domainname()
 
     if not config.get_domainname():
-        domainname = config.get_hostname()
+        domainname = names.get_hostname()
 
     profile_string = privileged.get_profile(username, domainname)
     response = HttpResponse(profile_string,

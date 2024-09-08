@@ -19,12 +19,6 @@ def fixture_background(session_browser):
     functional.login(session_browser)
 
 
-def test_change_hostname(session_browser):
-    """Test changing the hostname."""
-    functional.set_hostname(session_browser, 'mybox')
-    assert _get_hostname(session_browser) == 'mybox'
-
-
 def test_change_domain_name(session_browser):
     """Test changing the domain name."""
     functional.set_domain_name(session_browser, 'mydomain.example')
@@ -43,11 +37,6 @@ def test_change_home_page(session_browser):
 
     _set_home_page(session_browser, 'plinth')
     assert _check_home_page_redirect(session_browser, 'plinth')
-
-
-def _get_hostname(browser):
-    functional.nav_to_module(browser, 'config')
-    return browser.find_by_id('id_hostname').value
 
 
 def _get_domain_name(browser):

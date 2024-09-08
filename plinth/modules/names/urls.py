@@ -9,4 +9,6 @@ from . import views
 
 urlpatterns = [
     re_path(r'^sys/names/$', views.NamesAppView.as_view(), name='index'),
+    re_path(r'^sys/names/hostname/$', views.HostnameView.as_view(),
+            name='hostname'),
 ]

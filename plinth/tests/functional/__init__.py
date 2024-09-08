@@ -512,15 +512,18 @@ def running_inside_container():
     return result.stdout.decode('utf-8').strip().lower() != 'none'
 
 
+#############################
+# System -> Names utilities #
+#############################
+def set_hostname(browser, hostname):
+    visit(browser, '/plinth/sys/names/hostname/')
+    browser.find_by_id('id_hostname-hostname').fill(hostname)
+    submit(browser, form_class='form-hostname')
+
+
 ##############################
 # System -> Config utilities #
 ##############################
-def set_hostname(browser, hostname):
-    nav_to_module(browser, 'config')
-    browser.find_by_id('id_hostname').fill(hostname)
-    submit(browser, form_class='form-configuration')
-
-
 def set_advanced_mode(browser, mode):
     nav_to_module(browser, 'config')
     advanced_mode = browser.find_by_id('id_advanced_mode')

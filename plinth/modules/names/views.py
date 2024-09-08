@@ -4,12 +4,15 @@ FreedomBox app for name services.
 """
 
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import FormView
 
+from plinth.modules import names
 from plinth.views import AppView
 
 from . import components, privileged, resolved
-from .forms import NamesConfigurationForm
+from .forms import HostnameForm, NamesConfigurationForm
 
 
 class NamesAppView(AppView):
@@ -52,6 +55,40 @@ class NamesAppView(AppView):
         if changes:
             privileged.set_resolved_configuration(**changes)
             messages.success(self.request, _('Configuration updated'))
+
+        return super().form_valid(form)
+
+
+class HostnameView(FormView):
+    """View to update system's hostname."""
+    template_name = 'form.html'
+    form_class = HostnameForm
+    prefix = 'hostname'
+    success_url = reverse_lazy('names:index')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Set Hostname')
+        return context
+
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial['hostname'] = names.get_hostname()
+        return initial
+
+    def form_valid(self, form):
+        """Apply the form changes."""
+        if form.initial['hostname'] != form.cleaned_data['hostname']:
+            try:
+                names.set_hostname(form.cleaned_data['hostname'])
+                messages.success(self.request, _('Configuration updated'))
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error setting hostname: {exception}').format(
+                        exception=exception))
 
         return super().form_valid(form)
 

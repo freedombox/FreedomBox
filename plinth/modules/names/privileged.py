@@ -2,6 +2,7 @@
 """Configure Names App."""
 
 import pathlib
+import subprocess
 
 import augeas
 
@@ -14,6 +15,15 @@ override_conf = pathlib.Path('/etc/systemd/resolved.conf.d/freedombox.conf')
 source_fallback_conf = pathlib.Path(
     '/usr/share/freedombox'
     '/etc/systemd/resolved.conf.d/freedombox-fallback.conf')
+
+
+@privileged
+def set_hostname(hostname: str):
+    """Set system hostname using hostnamectl."""
+    subprocess.run(
+        ['hostnamectl', 'set-hostname', '--transient', '--static', hostname],
+        check=True)
+    action_utils.service_restart('avahi-daemon')
 
 
 @privileged

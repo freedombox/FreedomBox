@@ -2,9 +2,13 @@
 """Forms for the names app."""
 
 from django import forms
+from django.core import validators
 from django.utils.translation import gettext_lazy as _
 
+from plinth import cfg
 from plinth.utils import format_lazy
+
+HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 
 
 class NamesConfigurationForm(forms.Form):
@@ -64,3 +68,22 @@ class NamesConfigurationForm(forms.Form):
                  'No. <p class="help-block">Do not verify domain name '
                  'resolutions.</p>', allow_markup=True)),
         ], initial='no')
+
+
+class HostnameForm(forms.Form):
+    """Form to update system's hostname."""
+    # See:
+    # https://tools.ietf.org/html/rfc952
+    # https://tools.ietf.org/html/rfc1035#section-2.3.1
+    # https://tools.ietf.org/html/rfc1123#section-2
+    # https://tools.ietf.org/html/rfc2181#section-11
+    hostname = forms.CharField(
+        label=_('Hostname'), help_text=format_lazy(
+            _('Hostname is the local name by which other devices on the local '
+              'network can reach your {box_name}.  It must start and end with '
+              'an alphabet or a digit and have as interior characters only '
+              'alphabets, digits and hyphens.  Total length must be 63 '
+              'characters or less.'), box_name=_(cfg.box_name)), validators=[
+                  validators.RegexValidator(HOSTNAME_REGEX,
+                                            _('Invalid hostname'))
+              ], strip=True)

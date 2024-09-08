@@ -8,8 +8,7 @@ from django.utils.translation import gettext as _
 
 from plinth import views
 from plinth.modules import config
-from plinth.signals import (domain_added, domain_removed, post_hostname_change,
-                            pre_hostname_change)
+from plinth.signals import domain_added, domain_removed
 
 from . import privileged
 from .forms import ConfigurationForm
@@ -26,7 +25,6 @@ class ConfigAppView(views.AppView):
     def get_initial(self):
         """Return the current status."""
         return {
-            'hostname': config.get_hostname(),
             'domainname': config.get_domainname(),
             'homepage': config.get_home_page(),
             'advanced_mode': config.get_advanced_mode(),
@@ -39,17 +37,6 @@ class ConfigAppView(views.AppView):
         new_status = form.cleaned_data
 
         is_changed = False
-
-        if old_status['hostname'] != new_status['hostname']:
-            try:
-                set_hostname(new_status['hostname'])
-            except Exception as exception:
-                messages.error(
-                    self.request,
-                    _('Error setting hostname: {exception}').format(
-                        exception=exception))
-            else:
-                messages.success(self.request, _('Hostname set'))
 
         if old_status['domainname'] != new_status['domainname']:
             try:
@@ -98,29 +85,6 @@ class ConfigAppView(views.AppView):
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
-
-
-def set_hostname(hostname):
-    """Set machine hostname and send signals before and after."""
-    old_hostname = config.get_hostname()
-    domainname = config.get_domainname()
-
-    # Hostname should be ASCII. If it's unicode but passed our
-    # valid_hostname check, convert
-    hostname = str(hostname)
-
-    pre_hostname_change.send_robust(sender='config', old_hostname=old_hostname,
-                                    new_hostname=hostname)
-
-    LOGGER.info('Changing hostname to - %s', hostname)
-    privileged.set_hostname(hostname)
-
-    LOGGER.info('Setting domain name after hostname change - %s', domainname)
-    privileged.set_domainname(domainname)
-
-    post_hostname_change.send_robust(sender='config',
-                                     old_hostname=old_hostname,
-                                     new_hostname=hostname)
 
 
 def set_domainname(domainname, old_domainname):

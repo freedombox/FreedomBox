@@ -46,23 +46,6 @@ def get_homepage_choices():
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
-    # See:
-    # https://tools.ietf.org/html/rfc952
-    # https://tools.ietf.org/html/rfc1035#section-2.3.1
-    # https://tools.ietf.org/html/rfc1123#section-2
-    # https://tools.ietf.org/html/rfc2181#section-11
-    hostname = forms.CharField(
-        label=gettext_lazy('Hostname'), help_text=format_lazy(
-            gettext_lazy(
-                'Hostname is the local name by which other devices on the '
-                'local network can reach your {box_name}.  It must start and '
-                'end with an alphabet or a digit and have as interior '
-                'characters only alphabets, digits and hyphens.  Total '
-                'length must be 63 characters or less.'),
-            box_name=gettext_lazy(cfg.box_name)), validators=[
-                validators.RegexValidator(HOSTNAME_REGEX,
-                                          gettext_lazy('Invalid hostname'))
-            ], strip=True)
 
     domainname = forms.CharField(
         label=gettext_lazy('Domain Name'), help_text=format_lazy(
