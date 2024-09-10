@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"POT-Creation-Date: 2024-09-09 20:39-0400\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/freedombox/"
@@ -114,7 +114,7 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: menu.py:112 modules/networks/templates/connection_show.html:268
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr ""
@@ -200,7 +200,7 @@ msgid "Enable a Backup Schedule"
 msgstr ""
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
+#: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr ""
@@ -359,7 +359,7 @@ msgstr "Ustvari novo skladišče"
 msgid "None"
 msgstr ""
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:270
+#: modules/backups/forms.py:179 modules/networks/forms.py:320
 msgid "Passphrase"
 msgstr "Geslo"
 
@@ -906,7 +906,7 @@ msgid "No passwords currently configured."
 msgstr ""
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr ""
@@ -1026,7 +1026,7 @@ msgid "Serving Domains"
 msgstr ""
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
-#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:15
+#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
 #: modules/networks/templates/connection_show.html:91
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
@@ -1056,12 +1056,12 @@ msgstr ""
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/pagekite/forms.py:74 modules/privacy/views.py:36
-#: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
-#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
-#: modules/transmission/views.py:43 modules/ttrss/views.py:31
-#: modules/wordpress/views.py:31
+#: modules/names/views.py:54 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
+#: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
+#: modules/ssh/views.py:62 modules/transmission/views.py:43
+#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Konfiguracija je posodobljena"
 
@@ -1246,14 +1246,14 @@ msgstr ""
 msgid "General Configuration"
 msgstr ""
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:30
-#: modules/names/templates/names.html:44 modules/snapshot/views.py:32
+#: modules/config/__init__.py:49 modules/names/templates/names.html:33
+#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Nastavitve"
 
 #: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
+#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:19
 msgid "Domain Name"
 msgstr "Ime domene"
 
@@ -1518,7 +1518,7 @@ msgstr ""
 msgid "passed"
 msgstr ""
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
 msgid "failed"
 msgstr ""
 
@@ -1795,11 +1795,11 @@ msgid "Use HTTP basic authentication"
 msgstr ""
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:207 modules/users/forms.py:129
+#: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
 msgstr ""
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:210
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
 msgid "Show password"
 msgstr ""
 
@@ -2375,15 +2375,15 @@ msgstr ""
 msgid "Firewall"
 msgstr ""
 
-#: modules/firewall/__init__.py:273
+#: modules/firewall/__init__.py:262
 msgid "Default zone is external"
 msgstr ""
 
-#: modules/firewall/__init__.py:283
+#: modules/firewall/__init__.py:272
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: modules/firewall/__init__.py:297
+#: modules/firewall/__init__.py:286
 msgid "Direct passthrough rules exist"
 msgstr ""
 
@@ -3786,8 +3786,8 @@ msgstr ""
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:49
-#: modules/networks/forms.py:85
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
+#: modules/networks/forms.py:141
 msgid "Address"
 msgstr ""
 
@@ -4047,7 +4047,7 @@ msgstr ""
 msgid "Root channel name changed."
 msgstr ""
 
-#: modules/names/__init__.py:22
+#: modules/names/__init__.py:29
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4056,8 +4056,13 @@ msgid ""
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
 
-#: modules/names/__init__.py:43
+#: modules/names/__init__.py:50
 msgid "Name Services"
+msgstr ""
+
+#: modules/names/__init__.py:119
+#, python-brace-format
+msgid "Resolve domain name: {domain}"
 msgstr ""
 
 #: modules/names/components.py:14
@@ -4072,251 +4077,360 @@ msgstr ""
 msgid "Secure Shell"
 msgstr ""
 
-#: modules/names/templates/names.html:17
+#: modules/names/forms.py:14
+msgid "Use DNS-over-TLS for resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:42
+msgid "Use DNSSEC when resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/resolved.py:91 modules/names/resolved.py:101
+#: modules/networks/forms.py:24
+#: modules/networks/templates/connection_show.html:66
+#: modules/networks/templates/connection_show.html:208
+#: modules/networks/templates/connection_show.html:249
+#: modules/networks/views.py:126
+msgid "yes"
+msgstr ""
+
+#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/networks/views.py:125
+msgid "opportunistic"
+msgstr ""
+
+#: modules/names/resolved.py:93 modules/names/resolved.py:103
+#: modules/networks/forms.py:26 modules/networks/views.py:124
+#, fuzzy
+#| msgid "Dino"
+msgid "no"
+msgstr "Dino"
+
+#: modules/names/resolved.py:102
+msgid "allow-downgrade"
+msgstr ""
+
+#: modules/names/resolved.py:110
+msgid "supported"
+msgstr ""
+
+#: modules/names/resolved.py:110
+msgid "unsupported"
+msgstr ""
+
+#: modules/names/templates/names.html:12
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Domains"
+msgstr "Ime domene"
+
+#: modules/names/templates/names.html:20
 #, fuzzy
 #| msgid "Service Discovery"
 msgid "Services"
 msgstr "Odkrivanje storitev"
 
-#: modules/networks/__init__.py:36
+#: modules/names/templates/names.html:56
+msgid "Resolver Status"
+msgstr ""
+
+#: modules/names/templates/names.html:66
+msgid "Global"
+msgstr ""
+
+#: modules/names/templates/names.html:68
+msgid "Link"
+msgstr ""
+
+#: modules/names/templates/names.html:73
+#: modules/networks/templates/connection_show.html:263
+msgid "DNS-over-TLS"
+msgstr ""
+
+#: modules/names/templates/names.html:77
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNSSEC"
+msgstr "Omogoči DNSSEC"
+
+#: modules/names/templates/names.html:82
+msgid "Current DNS Server"
+msgstr ""
+
+#: modules/names/templates/names.html:88
+#, fuzzy
+#| msgid "Domain Name Server"
+msgid "DNS Servers"
+msgstr "Strežnik z imenom domene"
+
+#: modules/names/templates/names.html:98
+msgid "Fallback DNS Servers"
+msgstr ""
+
+#: modules/names/templates/names.html:112
+#, fuzzy
+#| msgid "Existing backups"
+msgid "Error retrieving status:"
+msgstr "Obstoječe rezervne kopije"
+
+#: modules/networks/__init__.py:37
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
 msgstr ""
 
-#: modules/networks/__init__.py:38
+#: modules/networks/__init__.py:39
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr ""
 
-#: modules/networks/__init__.py:59
+#: modules/networks/__init__.py:60
 msgid "Networks"
 msgstr ""
 
-#: modules/networks/forms.py:16
+#: modules/networks/forms.py:21 modules/networks/views.py:40
+#: modules/networks/views.py:101 modules/networks/views.py:112
+msgid "unknown"
+msgstr ""
+
+#: modules/networks/forms.py:34
 msgid "Connection Type"
 msgstr ""
 
-#: modules/networks/forms.py:23
+#: modules/networks/forms.py:41
 msgid "Connection Name"
 msgstr ""
 
-#: modules/networks/forms.py:25
+#: modules/networks/forms.py:43
 msgid "Network Interface"
 msgstr ""
 
-#: modules/networks/forms.py:26
+#: modules/networks/forms.py:44
 msgid "The network device that this connection should be bound to."
 msgstr ""
 
-#: modules/networks/forms.py:29
+#: modules/networks/forms.py:47
 msgid "Firewall Zone"
 msgstr ""
 
-#: modules/networks/forms.py:30
+#: modules/networks/forms.py:48
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
 msgstr ""
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:52
+msgid "Use DNS-over-TLS"
+msgstr ""
+
+#: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
 msgstr ""
 
-#: modules/networks/forms.py:36
+#: modules/networks/forms.py:88
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
 
-#: modules/networks/forms.py:39
+#: modules/networks/forms.py:91
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
 
-#: modules/networks/forms.py:42 modules/networks/forms.py:80
+#: modules/networks/forms.py:94 modules/networks/forms.py:135
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
 
-#: modules/networks/forms.py:45
+#: modules/networks/forms.py:97
 msgid "Disabled: Do not configure this addressing method"
 msgstr ""
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:104
 msgid "Netmask"
 msgstr ""
 
-#: modules/networks/forms.py:53
+#: modules/networks/forms.py:105
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr ""
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr ""
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 msgid "Optional value."
 msgstr ""
 
-#: modules/networks/forms.py:60 modules/networks/forms.py:95
+#: modules/networks/forms.py:112 modules/networks/forms.py:151
 msgid "DNS Server"
 msgstr ""
 
-#: modules/networks/forms.py:61
+#: modules/networks/forms.py:113
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: modules/networks/forms.py:66 modules/networks/forms.py:101
+#: modules/networks/forms.py:118 modules/networks/forms.py:157
 msgid "Second DNS Server"
 msgstr ""
 
-#: modules/networks/forms.py:67
+#: modules/networks/forms.py:119
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: modules/networks/forms.py:72
+#: modules/networks/forms.py:124
 msgid "IPv6 Addressing Method"
 msgstr ""
 
-#: modules/networks/forms.py:74
+#: modules/networks/forms.py:126
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
 
-#: modules/networks/forms.py:77
+#: modules/networks/forms.py:129
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
 
-#: modules/networks/forms.py:82
+#: modules/networks/forms.py:132
+msgid ""
+"Link-local: Configure automatically to use an address that is only relevant "
+"to this network."
+msgstr ""
+
+#: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
 msgstr ""
 
-#: modules/networks/forms.py:87
+#: modules/networks/forms.py:138
+msgid "Disabled: Disable IPv6 for this connection"
+msgstr ""
+
+#: modules/networks/forms.py:143
 msgid "Prefix"
 msgstr ""
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:144
 msgid "Value between 1 and 128."
 msgstr ""
 
-#: modules/networks/forms.py:96
+#: modules/networks/forms.py:152
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: modules/networks/forms.py:102
+#: modules/networks/forms.py:158
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
 msgstr ""
 
-#: modules/networks/forms.py:115
+#: modules/networks/forms.py:171
 msgid "-- select --"
 msgstr ""
 
-#: modules/networks/forms.py:242
+#: modules/networks/forms.py:292
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr ""
 
-#: modules/networks/forms.py:243
+#: modules/networks/forms.py:293
 msgid "The visible name of the network."
 msgstr ""
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr ""
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 msgid "Infrastructure"
 msgstr ""
 
-#: modules/networks/forms.py:246
+#: modules/networks/forms.py:296
 msgid "Access Point"
 msgstr ""
 
-#: modules/networks/forms.py:247
+#: modules/networks/forms.py:297
 msgid "Ad-hoc"
 msgstr ""
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Frequency Band"
 msgstr ""
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Automatic"
 msgstr ""
 
-#: modules/networks/forms.py:250
+#: modules/networks/forms.py:300
 msgid "A (5 GHz)"
 msgstr ""
 
-#: modules/networks/forms.py:251
+#: modules/networks/forms.py:301
 msgid "B/G (2.4 GHz)"
 msgstr ""
 
-#: modules/networks/forms.py:253
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr ""
 
-#: modules/networks/forms.py:254
+#: modules/networks/forms.py:304
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr ""
 
-#: modules/networks/forms.py:259
+#: modules/networks/forms.py:309
 msgid "BSSID"
 msgstr ""
 
-#: modules/networks/forms.py:260
+#: modules/networks/forms.py:310
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
 "one provided. Example: 00:11:22:aa:bb:cc."
 msgstr ""
 
-#: modules/networks/forms.py:266
+#: modules/networks/forms.py:316
 msgid "Authentication Mode"
 msgstr ""
 
-#: modules/networks/forms.py:267
+#: modules/networks/forms.py:317
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr ""
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "WPA"
 msgstr ""
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "Open"
 msgstr ""
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:355
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr ""
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:362
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4324,7 +4438,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:369
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4333,7 +4447,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:378
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4341,11 +4455,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:347
+#: modules/networks/forms.py:397
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: modules/networks/forms.py:351
+#: modules/networks/forms.py:401
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4356,7 +4470,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:363
+#: modules/networks/forms.py:413
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4368,7 +4482,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:376
+#: modules/networks/forms.py:426
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4380,17 +4494,17 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:439
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:406
+#: modules/networks/forms.py:456
 msgid "Preferred router configuration"
 msgstr ""
 
-#: modules/networks/forms.py:411
+#: modules/networks/forms.py:461
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4401,7 +4515,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:423
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4413,7 +4527,7 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:487
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4464,12 +4578,6 @@ msgstr ""
 
 #: modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
-msgstr ""
-
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
-msgid "yes"
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:77
@@ -4536,6 +4644,7 @@ msgid "Signal strength"
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:170
+#: modules/networks/templates/connections_fields.html:61
 msgid "IPv4"
 msgstr "IPv4"
 
@@ -4562,6 +4671,7 @@ msgid "Default"
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:213
+#: modules/networks/templates/connections_fields.html:90
 msgid "IPv6"
 msgstr "IPv6"
 
@@ -4569,45 +4679,51 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:264
-#: modules/networks/templates/connection_show.html:284
-#: modules/networks/templates/connection_show.html:303
-msgid "Firewall zone"
+#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+msgid "Privacy"
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:293
+#: modules/networks/templates/connection_show.html:312
+msgid "Firewall zone"
+msgstr ""
+
+#: modules/networks/templates/connection_show.html:282
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:302
+#: modules/networks/templates/connection_show.html:325
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
 "will not be available."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:305
+#: modules/networks/templates/connection_show.html:314
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:321
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
 "automatically assigned to the external zone."
 msgstr ""
 
-#: modules/networks/templates/connections_create.html:19
+#: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
 msgstr ""
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:519
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr ""
 
@@ -4627,13 +4743,14 @@ msgstr ""
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:100 network.py:27
+#: modules/networks/views.py:102 network.py:27
 msgid "Ethernet"
 msgstr ""
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/views.py:101 network.py:28
+#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/views.py:103 network.py:28
 msgid "Wi-Fi"
 msgstr ""
 
@@ -4652,9 +4769,17 @@ msgstr ""
 msgid "Computer"
 msgstr ""
 
-#: modules/networks/templates/connections_edit.html:20
-#: modules/networks/views.py:239 modules/networks/views.py:323
+#: modules/networks/templates/connections_edit.html:19
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
+msgstr ""
+
+#: modules/networks/templates/connections_fields.html:24
+msgid "General"
+msgstr ""
+
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+msgid "PPPoE"
 msgstr ""
 
 #: modules/networks/templates/connections_list.html:8
@@ -4665,13 +4790,13 @@ msgstr "Povezava je zavrnjena"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:372
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr ""
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:396
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr ""
@@ -4882,231 +5007,238 @@ msgstr ""
 msgid "link-local"
 msgstr ""
 
-#: modules/networks/views.py:38 modules/networks/views.py:99
-#: modules/networks/views.py:110
-msgid "unknown"
+#: modules/networks/views.py:33
+msgid "dhcp"
 msgstr ""
 
-#: modules/networks/views.py:39
-msgid "unmanaged"
-msgstr ""
-
-#: modules/networks/views.py:40
-msgid "unavailable"
+#: modules/networks/views.py:34
+msgid "ignore"
 msgstr ""
 
 #: modules/networks/views.py:41
-msgid "disconnected"
+msgid "unmanaged"
 msgstr ""
 
 #: modules/networks/views.py:42
-msgid "preparing"
+msgid "unavailable"
 msgstr ""
 
 #: modules/networks/views.py:43
+msgid "disconnected"
+msgstr ""
+
+#: modules/networks/views.py:44
+msgid "preparing"
+msgstr ""
+
+#: modules/networks/views.py:45
 #, fuzzy
 #| msgid "Connection refused"
 msgid "connecting"
 msgstr "Povezava je zavrnjena"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:46
 msgid "needs authentication"
 msgstr ""
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:47
 msgid "requesting address"
 msgstr ""
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:48
 msgid "checking"
 msgstr ""
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:49
 msgid "waiting for secondary"
 msgstr ""
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:50
 msgid "activated"
 msgstr ""
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:51
 msgid "deactivating"
 msgstr ""
 
-#: modules/networks/views.py:57
+#: modules/networks/views.py:59
 msgid "no reason"
 msgstr ""
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:61
 msgid "unknown error"
 msgstr ""
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:63
 msgid "device is now managed"
 msgstr ""
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:65
 msgid "device is now unmanaged"
 msgstr ""
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:67
 #, fuzzy
 #| msgid "Configuration updated"
 msgid "configuration failed"
 msgstr "Konfiguracija je posodobljena"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:69
 msgid "secrets required"
 msgstr ""
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:71
 msgid "DHCP client failed to start"
 msgstr ""
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:73
 msgid "DHCP client error"
 msgstr ""
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:75
 #, fuzzy
 #| msgid "Archive deleted."
 msgid "DHCP client failed"
 msgstr "Arhiv je izbrisan."
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:77
 msgid "shared connection service failed to start"
 msgstr ""
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:79
 #, fuzzy
 #| msgid "Configuration updated"
 msgid "shared connection service failed"
 msgstr "Konfiguracija je posodobljena"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:81
 msgid "device was removed"
 msgstr ""
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:83
 msgid "device disconnected by user"
 msgstr ""
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:85
 msgid "a dependency of the connection failed"
 msgstr ""
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:87
 #, fuzzy
 #| msgid "Repository not found"
 msgid "Wi-Fi network not found"
 msgstr "Ne najdem skladišča"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:89
 msgid "a secondary connection failed"
 msgstr ""
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:91
 msgid "new connection activation was enqueued"
 msgstr ""
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:93
 msgid "a duplicate IP address was detected"
 msgstr ""
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:95
 msgid "selected IP method is not supported"
 msgstr ""
 
-#: modules/networks/views.py:102
+#: modules/networks/views.py:104
 msgid "generic"
 msgstr ""
 
-#: modules/networks/views.py:103
+#: modules/networks/views.py:105
 msgid "TUN or TAP interface"
 msgstr ""
 
-#: modules/networks/views.py:104 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr ""
 
-#: modules/networks/views.py:111
+#: modules/networks/views.py:113
 msgid "ad-hoc"
 msgstr ""
 
-#: modules/networks/views.py:112
+#: modules/networks/views.py:114
 msgid "infrastructure"
 msgstr ""
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:115
 msgid "access point"
 msgstr ""
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:116
 msgid "mesh point"
 msgstr ""
 
-#: modules/networks/views.py:144
+#: modules/networks/views.py:123
+msgid "default"
+msgstr ""
+
+#: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:197
+#: modules/networks/views.py:211
 msgid "Connection Information"
 msgstr ""
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:217
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr ""
 
-#: modules/networks/views.py:335
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:339
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:345
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 
-#: modules/networks/views.py:358
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:414
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr ""
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr ""
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr ""
 
-#: modules/networks/views.py:485
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr ""
 
-#: modules/networks/views.py:500
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr ""
 
-#: modules/networks/views.py:504 modules/networks/views.py:514
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr ""
 
@@ -5515,15 +5647,11 @@ msgstr ""
 msgid "Manage system-wide privacy settings."
 msgstr ""
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
-msgid "Privacy"
-msgstr ""
-
-#: modules/privacy/__init__.py:68
+#: modules/privacy/__init__.py:70
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 
-#: modules/privacy/__init__.py:73
+#: modules/privacy/__init__.py:75
 msgid "Review privacy setting"
 msgstr ""
 
@@ -5540,6 +5668,18 @@ msgid ""
 "collected are publicly available at <a href=\"https://popcon.debian.org/\" "
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
+msgstr ""
+
+#: modules/privacy/forms.py:27
+msgid "Allow using fallback DNS servers"
+msgstr ""
+
+#: modules/privacy/forms.py:29
+msgid ""
+"Use well-known public DNS servers to resolve domain names in unusual "
+"circumstances where no DNS servers are known but internet connectivity is "
+"available. Can be disabled in most cases if network connectivity is stable "
+"and reliable."
 msgstr ""
 
 #: modules/privoxy/__init__.py:25
@@ -6716,7 +6856,7 @@ msgstr ""
 msgid "Go to Power"
 msgstr ""
 
-#: modules/storage/__init__.py:439
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
 msgid "grub package is configured"
 msgstr ""
 
@@ -7223,7 +7363,7 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
+#: modules/upgrades/__init__.py:68 modules/upgrades/__init__.py:129
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 #, fuzzy
@@ -7231,33 +7371,33 @@ msgstr ""
 msgid "Software Update"
 msgstr "Arhiv je izbrisan."
 
-#: modules/upgrades/__init__.py:130
+#: modules/upgrades/__init__.py:132
 #, fuzzy
 #| msgid "FreedomBox"
 msgid "FreedomBox Updated"
 msgstr "FreedomBox"
 
-#: modules/upgrades/__init__.py:204
+#: modules/upgrades/__init__.py:217
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:206
+#: modules/upgrades/__init__.py:219
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:230
 msgid "Distribution update started"
 msgstr ""
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:232
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 
-#: modules/upgrades/__init__.py:311
+#: modules/upgrades/__init__.py:324
 msgid "Check for package holds"
 msgstr ""
 
@@ -8123,10 +8263,6 @@ msgid ""
 "account for Zoph."
 msgstr ""
 
-#: network.py:29
-msgid "PPPoE"
-msgstr ""
-
 #: network.py:30
 msgid "Generic"
 msgstr ""
@@ -8652,9 +8788,6 @@ msgstr ""
 
 #~ msgid "ChatSecure"
 #~ msgstr "ChatSecure"
-
-#~ msgid "Enable DNSSEC"
-#~ msgstr "Omogoči DNSSEC"
 
 #~ msgid "Enable Domain Name System Security Extensions"
 #~ msgstr "Omogoči varnostne razširitve DNSSEC"
