@@ -48,6 +48,25 @@ Upgrading !TiddlyWiki is a manual process.
 
 If you ever lose a !TiddlyWiki file, you can always retrieve a slightly outdated copy from the Backups app. It is better to keep your local copy after the upgrade, in case you want to revert.
 
+=== Tips ===
+
+==== Setting a favicon ====
+
+Unlike Feather Wiki, !TiddlyWiki does not automatically use your !FreedomBox's favicon. To set it, follow these steps:
+ 1. Create a new tiddler with the title `$:/favicon.ico`. Leave the content section empty
+ 2. In the `Type` dropdown, select `ICO icon (image/x-icon)`
+ 3. In the `Add a new field:` section, set the first field to `_canonical_uri` and the second field to `https://<your-freedombox-url>/favicon.ico`
+ 4. Save the new tiddler and the wiki
+
+'''Reference''': [[https://tiddlywiki.com/static/Setting%2520a%2520favicon.html|Setting a favicon: TiddlyWiki]]
+
+You can also have a custom image as the favicon for each !TiddlyWiki. Using a distinct favicon makes it easier to identify the tab in your browser. Let's say your !TiddlyWiki file is your personal journal and you want to set the favicon to the image "notebook.png" which looks like a diary
+ 1. Open the folder the image is in, using your desktop file explorer
+ 2. Drag and drop the file into your !TiddlyWiki's browser tab
+ 3. A special tiddler called `$:/import` will be opened
+ 4. In the special tiddler, you will have an option to rename the file. Set the file name to `$:/favicon.ico`
+ 5. Click the `Import` button and save the wiki
+
 === External links ===
 
  * Website: https://tiddlywiki.com
