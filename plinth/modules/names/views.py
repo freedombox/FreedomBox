@@ -3,16 +3,21 @@
 FreedomBox app for name services.
 """
 
+import logging
+
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormView
 
 from plinth.modules import names
+from plinth.signals import domain_added, domain_removed
 from plinth.views import AppView
 
 from . import components, privileged, resolved
-from .forms import HostnameForm, NamesConfigurationForm
+from .forms import DomainNameForm, HostnameForm, NamesConfigurationForm
+
+logger = logging.getLogger(__name__)
 
 
 class NamesAppView(AppView):
@@ -93,6 +98,40 @@ class HostnameView(FormView):
         return super().form_valid(form)
 
 
+class DomainNameView(FormView):
+    """View to update system's static domain name."""
+    template_name = 'form.html'
+    form_class = DomainNameForm
+    prefix = 'domain-name'
+    success_url = reverse_lazy('names:index')
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['title'] = _('Set Domain Name')
+        return context
+
+    def get_initial(self):
+        """Return the values to fill in the form."""
+        initial = super().get_initial()
+        initial['domain_name'] = names.get_domain_name()
+        return initial
+
+    def form_valid(self, form):
+        """Apply the form changes."""
+        if form.initial['domain_name'] != form.cleaned_data['domain_name']:
+            try:
+                set_domain_name(form.cleaned_data['domain_name'])
+                messages.success(self.request, _('Configuration updated'))
+            except Exception as exception:
+                messages.error(
+                    self.request,
+                    _('Error setting domain name: {exception}').format(
+                        exception=exception))
+
+        return super().form_valid(form)
+
+
 def get_status():
     """Get configured services per name."""
     domains = components.DomainName.list()
@@ -103,3 +142,26 @@ def get_status():
     ]
 
     return {'domains': domains, 'unused_domain_types': unused_domain_types}
+
+
+def set_domain_name(domain_name):
+    """Set system's static domain name to domain_name."""
+    old_domain_name = names.get_domain_name()
+
+    # Domain name is not case sensitive, but Let's Encrypt certificate
+    # paths use lower-case domain name.
+    domain_name = domain_name.lower()
+
+    logger.info('Changing domain name to - %s', domain_name)
+    privileged.set_domain_name(domain_name)
+
+    # Update domain registered with Name Services module.
+    if old_domain_name:
+        domain_removed.send_robust(sender='names',
+                                   domain_type='domain-type-static',
+                                   name=old_domain_name)
+
+    if domain_name:
+        domain_added.send_robust(sender='names',
+                                 domain_type='domain-type-static',
+                                 name=domain_name, services='__all__')

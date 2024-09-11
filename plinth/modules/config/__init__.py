@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app for basic system configuration."""
 
-import socket
-
 import augeas
 from django.utils.translation import gettext_lazy as _
 
@@ -11,16 +9,14 @@ from plinth import frontpage, menu
 from plinth.daemon import RelatedDaemon
 from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
                                    uws_url_of_user)
-from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
-from plinth.signals import domain_added
 
 from . import privileged
 
 _description = [
     _('Here you can set some general configuration options '
-      'like domain name, webserver home page etc.')
+      'like webserver home page etc.')
 ]
 
 ADVANCED_MODE_KEY = 'advanced_mode'
@@ -60,20 +56,6 @@ class ConfigApp(app_module.App):
         daemon2 = RelatedDaemon('related-daemon-config2', 'rsyslog')
         self.add(daemon2)
 
-        domain_type = DomainType('domain-type-static', _('Domain Name'),
-                                 'config:index', can_have_certificate=True)
-        self.add(domain_type)
-
-    @staticmethod
-    def post_init():
-        """Perform post initialization operations."""
-        # Register domain with Name Services module.
-        domainname = get_domainname()
-        if domainname:
-            domain_added.send_robust(sender='config',
-                                     domain_type='domain-type-static',
-                                     name=domainname, services='__all__')
-
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -93,12 +75,6 @@ class ConfigApp(app_module.App):
         # Ensure that rsyslog is not started by something else as it is
         # installed by default on Debian systems.
         service_privileged.mask('rsyslog')
-
-
-def get_domainname():
-    """Return the domainname."""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
 
 
 def home_page_url2scid(url):

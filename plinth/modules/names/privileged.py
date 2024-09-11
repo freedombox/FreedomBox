@@ -27,6 +27,32 @@ def set_hostname(hostname: str):
 
 
 @privileged
+def set_domain_name(domain_name: str | None = None):
+    """Set system's static domain name in /etc/hosts."""
+    hostname = subprocess.check_output(['hostname']).decode().strip()
+    hosts_path = pathlib.Path('/etc/hosts')
+    if domain_name:
+        insert_line = f'127.0.1.1 {hostname}.{domain_name} {hostname}\n'
+    else:
+        insert_line = f'127.0.1.1 {hostname}\n'
+
+    lines = hosts_path.read_text(encoding='utf-8').splitlines(keepends=True)
+    new_lines = []
+    found = False
+    for line in lines:
+        if '127.0.1.1' in line:
+            new_lines.append(insert_line)
+            found = True
+        else:
+            new_lines.append(line)
+
+    if not found:
+        new_lines.append(insert_line)
+
+    hosts_path.write_text(''.join(new_lines), encoding='utf-8')
+
+
+@privileged
 def set_resolved_configuration(dns_fallback: bool | None = None,
                                dns_over_tls: str | None = None,
                                dnssec: str | None = None):

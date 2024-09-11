@@ -12,7 +12,7 @@ import re
 
 from plinth.actions import privileged
 from plinth.app import App
-from plinth.modules import config
+from plinth.modules import names
 from plinth.modules.email import postfix
 from plinth.modules.names.components import DomainName
 
@@ -34,7 +34,7 @@ def set_all_domains(primary_domain=None):
     if not primary_domain:
         primary_domain = get_domains()['primary_domain']
         if primary_domain not in all_domains:
-            primary_domain = config.get_domainname() or list(all_domains)[0]
+            primary_domain = names.get_domain_name() or list(all_domains)[0]
 
     # Update configuration and don't restart daemons
     set_domains(primary_domain, list(all_domains))

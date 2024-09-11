@@ -16,6 +16,7 @@ from plinth.daemon import Daemon
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
 from plinth.modules.backups.components import BackupRestore
+from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 from plinth.signals import (domain_added, domain_removed, post_hostname_change,
@@ -64,6 +65,10 @@ class NamesApp(app_module.App):
                             ['systemd-resolved', 'libnss-resolve', 'iproute2'])
         self.add(packages)
 
+        domain_type = DomainType('domain-type-static', _('Domain Name'),
+                                 'names:domains', can_have_certificate=True)
+        self.add(domain_type)
+
         daemon = Daemon('daemon-names', 'systemd-resolved')
         self.add(daemon)
 
@@ -76,6 +81,13 @@ class NamesApp(app_module.App):
         """Perform post initialization operations."""
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
+
+        # Register domain with Name Services module.
+        domain_name = get_domain_name()
+        if domain_name:
+            domain_added.send_robust(sender='names',
+                                     domain_type='domain-type-static',
+                                     name=domain_name, services='__all__')
 
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
@@ -160,6 +172,12 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 ######################################################
 
 
+def get_domain_name():
+    """Return the currently set static domain name."""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
+
+
 def get_hostname():
     """Return the hostname."""
     return socket.gethostname()
@@ -167,11 +185,8 @@ def get_hostname():
 
 def set_hostname(hostname):
     """Set machine hostname and send signals before and after."""
-    from plinth.modules import config
-    from plinth.modules.config import privileged as config_privileged
-
     old_hostname = get_hostname()
-    domainname = config.get_domainname()
+    domain_name = get_domain_name()
 
     # Hostname should be ASCII. If it's unicode but passed our
     # valid_hostname check, convert
@@ -183,8 +198,8 @@ def set_hostname(hostname):
     logger.info('Changing hostname to - %s', hostname)
     privileged.set_hostname(hostname)
 
-    logger.info('Setting domain name after hostname change - %s', domainname)
-    config_privileged.set_domainname(domainname)
+    logger.info('Setting domain name after hostname change - %s', domain_name)
+    privileged.set_domain_name(domain_name)
 
     post_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
                                      new_hostname=hostname)

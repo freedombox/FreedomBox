@@ -461,15 +461,6 @@ def app_can_be_disabled(browser, app_name):
     return bool(button)
 
 
-#########################
-# Domain name utilities #
-#########################
-def set_domain_name(browser, domain_name):
-    nav_to_module(browser, 'config')
-    browser.find_by_id('id_domainname').fill(domain_name)
-    submit(browser, form_class='form-configuration')
-
-
 ########################
 # Front page utilities #
 ########################
@@ -519,6 +510,12 @@ def set_hostname(browser, hostname):
     visit(browser, '/plinth/sys/names/hostname/')
     browser.find_by_id('id_hostname-hostname').fill(hostname)
     submit(browser, form_class='form-hostname')
+
+
+def set_domain_name(browser, domain_name):
+    visit(browser, '/plinth/sys/names/domains/')
+    browser.find_by_id('id_domain-name-domain_name').fill(domain_name)
+    submit(browser, form_class='form-domain-name')
 
 
 ##############################

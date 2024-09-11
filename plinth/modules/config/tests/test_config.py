@@ -12,37 +12,6 @@ from plinth import __main__ as plinth_main
 from plinth.modules.apache import uws_directory_of_user, uws_url_of_user
 from plinth.modules.config import (_home_page_scid2url, change_home_page,
                                    get_home_page, home_page_url2scid)
-from plinth.modules.config.forms import ConfigurationForm
-
-
-def test_domainname_field():
-    """Test that domainname field accepts only valid domainnames."""
-    valid_domainnames = [
-        '', 'a', '0a', 'a0', 'AAA', '00', '0-0', 'example-hostname', 'example',
-        'example.org', 'a.b.c.d', 'a-0.b-0.c-0',
-        '012345678901234567890123456789012345678901234567890123456789012',
-        ((('x' * 63) + '.') * 3) + 'x' * 61
-    ]
-    invalid_domainnames = [
-        '-', '-a', 'a-', '.a', 'a.', '?', 'a?a', 'a..a', 'a.-a', '.',
-        ((('x' * 63) + '.') * 3) + 'x' * 62, 'x' * 64
-    ]
-
-    for domainname in valid_domainnames:
-        form = ConfigurationForm({
-            'hostname': 'example',
-            'domainname': domainname,
-            'logging_mode': 'volatile'
-        })
-        assert form.is_valid()
-
-    for domainname in invalid_domainnames:
-        form = ConfigurationForm({
-            'hostname': 'example',
-            'domainname': domainname,
-            'logging_mode': 'volatile'
-        })
-        assert not form.is_valid()
 
 
 def test_homepage_mapping():

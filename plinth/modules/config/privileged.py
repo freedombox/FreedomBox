@@ -3,7 +3,6 @@
 
 import os
 import pathlib
-import subprocess
 
 import augeas
 
@@ -16,32 +15,6 @@ APACHE_HOMEPAGE_CONFIG = os.path.join(APACHE_CONF_ENABLED_DIR,
                                       APACHE_HOMEPAGE_CONF_FILE_NAME)
 
 JOURNALD_FILE = pathlib.Path('/etc/systemd/journald.conf.d/50-freedombox.conf')
-
-
-@privileged
-def set_domainname(domainname: str | None = None):
-    """Set system domainname in /etc/hosts."""
-    hostname = subprocess.check_output(['hostname']).decode().strip()
-    hosts_path = pathlib.Path('/etc/hosts')
-    if domainname:
-        insert_line = f'127.0.1.1 {hostname}.{domainname} {hostname}\n'
-    else:
-        insert_line = f'127.0.1.1 {hostname}\n'
-
-    lines = hosts_path.read_text(encoding='utf-8').splitlines(keepends=True)
-    new_lines = []
-    found = False
-    for line in lines:
-        if '127.0.1.1' in line:
-            new_lines.append(insert_line)
-            found = True
-        else:
-            new_lines.append(line)
-
-    if not found:
-        new_lines.append(insert_line)
-
-    hosts_path.write_text(''.join(new_lines), encoding='utf-8')
 
 
 def load_augeas():

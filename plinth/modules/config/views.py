@@ -1,19 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox views for basic system configuration."""
 
-import logging
-
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
 from plinth import views
 from plinth.modules import config
-from plinth.signals import domain_added, domain_removed
 
 from . import privileged
 from .forms import ConfigurationForm
-
-LOGGER = logging.getLogger(__name__)
 
 
 class ConfigAppView(views.AppView):
@@ -25,7 +20,6 @@ class ConfigAppView(views.AppView):
     def get_initial(self):
         """Return the current status."""
         return {
-            'domainname': config.get_domainname(),
             'homepage': config.get_home_page(),
             'advanced_mode': config.get_advanced_mode(),
             'logging_mode': privileged.get_logging_mode(),
@@ -37,18 +31,6 @@ class ConfigAppView(views.AppView):
         new_status = form.cleaned_data
 
         is_changed = False
-
-        if old_status['domainname'] != new_status['domainname']:
-            try:
-                set_domainname(new_status['domainname'],
-                               old_status['domainname'])
-            except Exception as exception:
-                messages.error(
-                    self.request,
-                    _('Error setting domain name: {exception}').format(
-                        exception=exception))
-            else:
-                messages.success(self.request, _('Domain name set'))
 
         if old_status['homepage'] != new_status['homepage']:
             try:
@@ -85,26 +67,3 @@ class ConfigAppView(views.AppView):
             messages.success(self.request, _('Configuration updated'))
 
         return super().form_valid(form)
-
-
-def set_domainname(domainname, old_domainname):
-    """Set machine domain name to domainname."""
-    old_domainname = config.get_domainname()
-
-    # Domain name is not case sensitive, but Let's Encrypt certificate
-    # paths use lower-case domain name.
-    domainname = domainname.lower()
-
-    LOGGER.info('Changing domain name to - %s', domainname)
-    privileged.set_domainname(domainname)
-
-    # Update domain registered with Name Services module.
-    if old_domainname:
-        domain_removed.send_robust(sender='config',
-                                   domain_type='domain-type-static',
-                                   name=old_domainname)
-
-    if domainname:
-        domain_added.send_robust(sender='config',
-                                 domain_type='domain-type-static',
-                                 name=domainname, services='__all__')
