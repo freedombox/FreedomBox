@@ -16,6 +16,7 @@ from contextlib import contextmanager
 import pytest
 import requests
 from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        NoSuchElementException,
                                         StaleElementReferenceException,
                                         WebDriverException)
 from selenium.webdriver.support.ui import WebDriverWait
@@ -99,19 +100,47 @@ class _PageLoaded():
     def __init__(self, element, expected_url=None):
         self.element = element
         self.expected_url = expected_url
+        self.loaded_new_page = False
 
     def __call__(self, driver):
         is_stale = False
         try:
             self.element.has_class('whatever_class')
+        # XXX: There is still another unhandled case where the webserver
+        # restarts after submission of a form and the browser does not switch
+        # to error page. It continues to wait for a response from the server
+        # indefinitely until timeout.
+        except NoSuchElementException:
+            # This is still the old page, wait for it to change.
+            if not self.loaded_new_page:
+                return False
+
+            # This is the new page and we are not waiting for a specific URL.
+            # Stop waiting.
+            if not self.expected_url:
+                return True
+
+            # This is the new page and expected URL has not reached, wait for
+            # the page to spontaneously change.
+            if not driver.url.endswith(self.expected_url):
+                return False
+
+            # This is the new page and we have reached the expected URL. Stop
+            # waiting.
+            return True
         except (StaleElementReferenceException, TypeError):
             # After a domain name change, Let's Encrypt will restart the web
             # server and could cause a connection failure.
             if driver.find_by_id('netErrorButtonContainer'):
                 try:
                     driver.visit(driver.url)
+                    # After this for some unknown reason,
+                    # StaleElementReferenceException is no longer thrown.
+                    self.loaded_new_page = True
                 except WebDriverException:
+                    # Web server is not yet available.
                     pass
+
                 return False
 
             is_fully_loaded = driver.execute_script(
