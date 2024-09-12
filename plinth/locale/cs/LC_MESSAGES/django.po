@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-09 20:39-0400\n"
-"PO-Revision-Date: 2024-08-15 15:09+0000\n"
-"Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
+"PO-Revision-Date: 2024-09-13 15:09+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1491,7 +1491,7 @@ msgstr "Diagnostika"
 
 #: modules/diagnostics/__init__.py:99
 msgid "skipped"
-msgstr ""
+msgstr "přeskočeno"
 
 #: modules/diagnostics/__init__.py:100
 msgid "passed"
@@ -2355,10 +2355,8 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-#, fuzzy
-#| msgid "Delete this wiki file permanently?</p>"
 msgid "Delete this wiki file permanently?"
-msgstr "Smazat tento soubor wiki natrvalo?"
+msgstr "Trvale smazat tento wiki soubor?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -4320,7 +4318,7 @@ msgstr "Jmenné služby"
 #: modules/names/__init__.py:119
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
-msgstr ""
+msgstr "Vyřešit název domény: {domain}"
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4336,11 +4334,11 @@ msgstr "Zabezpečený shell"
 
 #: modules/names/forms.py:14
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
-msgstr ""
+msgstr "Použít DNS-over-TLS pro překlad domén (globální předvolba)"
 
 #: modules/names/forms.py:42
 msgid "Use DNSSEC when resolving domains (global preference)"
-msgstr ""
+msgstr "Použít DNSSEC při překladu domén (globální předvolba)"
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:24
@@ -4354,28 +4352,24 @@ msgstr "ano"
 #: modules/names/resolved.py:92 modules/networks/forms.py:25
 #: modules/networks/views.py:125
 msgid "opportunistic"
-msgstr ""
+msgstr "oportunistický"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
 #: modules/networks/forms.py:26 modules/networks/views.py:124
-#, fuzzy
-#| msgid "Dino"
 msgid "no"
-msgstr "Dino"
+msgstr "ne"
 
 #: modules/names/resolved.py:102
 msgid "allow-downgrade"
-msgstr ""
+msgstr "povolit downgrade"
 
 #: modules/names/resolved.py:110
-#, fuzzy
-#| msgid "Get Support"
 msgid "supported"
-msgstr "Získejte podporu"
+msgstr "podporováno"
 
 #: modules/names/resolved.py:110
 msgid "unsupported"
-msgstr ""
+msgstr "nepodporováno"
 
 #: modules/names/templates/names.html:12
 msgid "Domains"
@@ -4387,50 +4381,40 @@ msgstr "Služby"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
-msgstr ""
+msgstr "Stav řešitele"
 
 #: modules/names/templates/names.html:66
 msgid "Global"
-msgstr ""
+msgstr "Globální"
 
 #: modules/names/templates/names.html:68
 msgid "Link"
-msgstr ""
+msgstr "Odkaz"
 
 #: modules/names/templates/names.html:73
 #: modules/networks/templates/connection_show.html:263
 msgid "DNS-over-TLS"
-msgstr ""
+msgstr "DNS-over-TLS"
 
 #: modules/names/templates/names.html:77
-#, fuzzy
-#| msgid "Enable DNSSEC"
 msgid "DNSSEC"
-msgstr "Zapnout DNSSEC"
+msgstr "DNSSEC"
 
 #: modules/names/templates/names.html:82
-#, fuzzy
-#| msgid "Second DNS Server"
 msgid "Current DNS Server"
-msgstr "Pomocný DNS server"
+msgstr "Aktuální server DNS"
 
 #: modules/names/templates/names.html:88
-#, fuzzy
-#| msgid "DNS Server"
 msgid "DNS Servers"
-msgstr "DNS server"
+msgstr "DNS servery"
 
 #: modules/names/templates/names.html:98
-#, fuzzy
-#| msgid "DNS Server"
 msgid "Fallback DNS Servers"
-msgstr "DNS server"
+msgstr "Záložní servery DNS"
 
 #: modules/names/templates/names.html:112
-#, fuzzy
-#| msgid "Error during installation"
 msgid "Error retrieving status:"
-msgstr "Chyba při instalaci"
+msgstr "Chyba při instalaci:"
 
 #: modules/networks/__init__.py:37
 msgid ""
@@ -4487,7 +4471,7 @@ msgstr ""
 
 #: modules/networks/forms.py:52
 msgid "Use DNS-over-TLS"
-msgstr ""
+msgstr "Použít DNS-over-TLS"
 
 #: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
@@ -4587,16 +4571,12 @@ msgstr ""
 "připojení z této sítě"
 
 #: modules/networks/forms.py:132
-#, fuzzy
-#| msgid ""
-#| "Automatic: Configure automatically, use Internet connection from this "
-#| "network"
 msgid ""
 "Link-local: Configure automatically to use an address that is only relevant "
 "to this network."
 msgstr ""
-"Automaticky: Konfigurace automatická, použití internetového připojení z této "
-"sítě"
+"Link-local: Automatická konfigurace pro použití adresy, která je relevantní "
+"pouze pro tuto síť."
 
 #: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
@@ -4604,7 +4584,7 @@ msgstr "Ignorovat: Ignorovat tuto metodu adresování"
 
 #: modules/networks/forms.py:138
 msgid "Disabled: Disable IPv6 for this connection"
-msgstr ""
+msgstr "Vypnuto: Zakázat IPv6 pro toto připojení"
 
 #: modules/networks/forms.py:143
 msgid "Prefix"
@@ -5137,8 +5117,6 @@ msgid "Edit Connection"
 msgstr "Upravit připojení"
 
 #: modules/networks/templates/connections_fields.html:24
-#, fuzzy
-#| msgid "Generic"
 msgid "General"
 msgstr "Obecné"
 
@@ -5413,13 +5391,11 @@ msgstr "link-local"
 
 #: modules/networks/views.py:33
 msgid "dhcp"
-msgstr ""
+msgstr "dhcp"
 
 #: modules/networks/views.py:34
-#, fuzzy
-#| msgid "Ignore"
 msgid "ignore"
-msgstr "Ignorovat"
+msgstr "ignorovat"
 
 #: modules/networks/views.py:41
 msgid "unmanaged"
@@ -5571,10 +5547,8 @@ msgid "mesh point"
 msgstr "bod sítě"
 
 #: modules/networks/views.py:123
-#, fuzzy
-#| msgid "Default"
 msgid "default"
-msgstr "Výchozí"
+msgstr "výchozí"
 
 #: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
@@ -6144,7 +6118,7 @@ msgstr ""
 
 #: modules/privacy/forms.py:27
 msgid "Allow using fallback DNS servers"
-msgstr ""
+msgstr "Povolit používání záložních serverů DNS"
 
 #: modules/privacy/forms.py:29
 msgid ""
@@ -6153,6 +6127,10 @@ msgid ""
 "available. Can be disabled in most cases if network connectivity is stable "
 "and reliable."
 msgstr ""
+"V neobvyklých případech, kdy nejsou známy žádné servery DNS, ale je k "
+"dispozici připojení k internetu, použijte k překladu názvů domén známé "
+"veřejné servery DNS. Lze vypnout ve většině případů, pokud je síťové "
+"připojení stabilní a spolehlivé."
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -8107,7 +8085,7 @@ msgstr ""
 
 #: modules/upgrades/__init__.py:324
 msgid "Check for package holds"
-msgstr ""
+msgstr "Kontrola zadržení balíčku"
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
