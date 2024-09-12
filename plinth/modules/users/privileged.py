@@ -70,6 +70,16 @@ def setup():
     _configure_ldap_structure()
 
 
+@privileged
+def setup_and_sync_user_states(inactivated_users: list[str]):
+    """Setup password policy and inactivate users."""
+    _create_organizational_unit('policies')
+    first_ppolicy_setup = _setup_ldap_ppolicy()
+
+    if first_ppolicy_setup and inactivated_users:
+        _upgrade_inactivate_users(inactivated_users)
+
+
 def _configure_ldap_authentication():
     """Configure LDAP authentication."""
     action_utils.dpkg_reconfigure(
@@ -79,6 +89,18 @@ def _configure_ldap_authentication():
             'ldap-auth-type': 'SASL',
             'ldap-sasl-mech': 'EXTERNAL'
         })
+
+    # Set nslcd authorization filter for user locking
+    authorization_filter = ('(&(objectClass=posixAccount)(uid=$username)'
+                            '(!(pwdAccountLockedTime=000001010000Z)))')
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.set('/augeas/load/Nslcd/lens', 'Nslcd.lns')
+    aug.set('/augeas/load/Nslcd/incl[last() + 1]', '/etc/nslcd.conf')
+    aug.load()
+    aug.set('/files/etc/nslcd.conf/pam_authz_search', authorization_filter)
+    aug.save()
+
     action_utils.dpkg_reconfigure('libnss-ldapd',
                                   {'nsswitch': 'group, passwd, shadow'})
 
@@ -107,6 +129,8 @@ def _configure_ldap_structure():
     _setup_admin()
     _create_organizational_unit('users')
     _create_organizational_unit('groups')
+    _create_organizational_unit('policies')
+    _setup_ldap_ppolicy()
 
 
 def _create_organizational_unit(unit):
@@ -162,6 +186,66 @@ olcRootDN: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
 ''')
 
 
+def _setup_ldap_ppolicy() -> bool:
+    """Setup default password policy for user accounts.
+
+    The default password policy makes passwords lockable. Users who have
+    the LDAP operational attribute pwdAccountLockedTime=000001010000Z can't
+    login with password.
+
+    Returns whether it was the first run that enables this policy.
+    """
+    # Load ppolicy module
+    try:
+        subprocess.run(
+            ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+            check=True, stdout=subprocess.DEVNULL, input=b'''
+dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: ppolicy''')
+    except subprocess.CalledProcessError as error:
+        if error.returncode == 20:  # Value already exists
+            pass
+        else:
+            raise
+
+    # Set up default password policy
+    try:
+        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+                       check=True, stdout=subprocess.DEVNULL, input=b'''
+dn: cn=DefaultPPolicy,ou=policies,dc=thisbox
+cn: DefaultPPolicy
+objectClass: pwdPolicy
+objectClass: device
+objectClass: top
+pwdAttribute: userPassword
+pwdLockout: TRUE''')
+    except subprocess.CalledProcessError as error:
+        if error.returncode == 68:  # Value already exists
+            pass
+        else:
+            raise
+
+    # Make DefaultPPolicy as a default ppolicy overlay
+    try:
+        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+                       check=True, stdout=subprocess.DEVNULL, input=b'''
+dn: olcOverlay={0}ppolicy,olcDatabase={1}mdb,cn=config
+objectClass: olcOverlayConfig
+objectClass: olcPPolicyConfig
+olcOverlay: {0}ppolicy
+olcPPolicyDefault: cn=DefaultPPolicy,ou=policies,dc=thisbox
+''')
+    except subprocess.CalledProcessError as error:
+        if error.returncode == 80:  # Value already in list
+            return False
+        else:
+            raise
+
+    return True
+
+
 def _configure_ldapscripts():
     """Set the configuration used by ldapscripts for later user management."""
     # modify a copy of the config file
@@ -183,6 +267,33 @@ def _configure_ldapscripts():
     aug.set('/files' + LDAPSCRIPTS_CONF + '/PASSWORDGEN', '"true"')
     aug.set('/files' + LDAPSCRIPTS_CONF + '/CREATEHOMES', '"yes"')
     aug.save()
+
+
+def _lock_ldap_user(username: str):
+    """Lock user."""
+    if not _get_user_ids(username):
+        # User not found
+        return None
+
+    # Replace command adds the attribute if it doesn't exist.
+    input = '''changetype: modify
+replace: pwdAccountLockedTime
+pwdAccountLockedTime: 000001010000Z
+'''
+    _run(["ldapmodifyuser", username], input=input.encode())
+
+
+def _unlock_ldap_user(username: str):
+    """Unlock user."""
+    if not _get_user_ids(username):
+        # User not found
+        return None
+    # Replace command without providing a value will remove the attribute
+    # and ignores when the attribute doesn't exist.
+    input = '''changetype: modify
+replace: pwdAccountLockedTime
+'''
+    _run(["ldapmodifyuser", username], input=input.encode())
 
 
 @privileged
@@ -333,6 +444,19 @@ def _get_admin_users():
     return admin_users
 
 
+def _get_user_ids(username: str) -> str | None:
+    """Get user information in format like `id` command."""
+    try:
+        process = _run(['ldapid', username], stdout=subprocess.PIPE)
+    except subprocess.CalledProcessError as error:
+        if error.returncode == 1:
+            # User doesn't exist
+            return None
+        raise
+
+    return process.stdout.decode().strip()
+
+
 def _get_group_users(groupname):
     """Return list of members in the group."""
     try:
@@ -353,8 +477,7 @@ def _get_user_groups(username):
 
     Exclude the 'users' primary group from the returned list.
     """
-    process = _run(['ldapid', username], stdout=subprocess.PIPE, check=False)
-    output = process.stdout.decode().strip()
+    output = _get_user_ids(username)
     if output:
         groups_part = output.split(' ')[2]
         try:
@@ -476,14 +599,33 @@ def set_user_status(username: str, status: str, auth_user: str,
     _validate_user(auth_user, auth_password)
 
     if status == 'active':
-        flag = '-e'
+        _unlock_ldap_user(username)
+        smbpasswd_flag = '-e'
     else:
-        flag = '-d'
+        _lock_ldap_user(username)
+        smbpasswd_flag = '-d'
 
+    # Set user status in Samba password database
     if username in _get_samba_users():
-        subprocess.check_call(['smbpasswd', flag, username])
-        if status == 'inactive':
-            _disconnect_samba_user(username)
+        subprocess.check_call(['smbpasswd', smbpasswd_flag, username])
+
+    _flush_cache()
+
+    if status == 'inactive':
+        # Kill all user processes. This includes disconnectiong ssh, samba and
+        # cockpit sessions.
+        subprocess.run(['pkill', "--signal", "KILL", '--uid', username])
+
+
+def _upgrade_inactivate_users(usernames: list[str]):
+    """Inactivate users in LDAP."""
+    for username in usernames:
+        _lock_ldap_user(username)
+
+    _flush_cache()
+
+    for username in usernames:
+        subprocess.run(['pkill', "--signal", "KILL", '--uid', username])
 
 
 def _flush_cache():

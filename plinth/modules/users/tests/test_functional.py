@@ -117,7 +117,6 @@ def test_users_can_connect_passwordless_over_ssh(session_browser,
     """Test that users can connect passwordless over ssh if the keys are
     set."""
     functional.app_enable(session_browser, 'ssh')
-    _generate_ssh_keys(session_browser, tmp_path_factory)
     _configure_ssh_keys(session_browser, tmp_path_factory)
     _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory)
 
@@ -127,7 +126,6 @@ def test_users_cannot_connect_passwordless_over_ssh(session_browser,
     """Test that users cannot connect passwordless over ssh if the keys aren't
     set."""
     functional.app_enable(session_browser, 'ssh')
-    _generate_ssh_keys(session_browser, tmp_path_factory)
     _configure_ssh_keys(session_browser, tmp_path_factory)
     _set_ssh_keys(session_browser, '')
     _should_not_connect_passwordless_over_ssh(session_browser,
@@ -152,11 +150,29 @@ def test_change_language(session_browser, language_code):
     assert _check_language(session_browser, language_code)
 
 
-def test_admin_users_can_set_others_as_inactive(session_browser):
-    """Test that admin users can set other users as inactive."""
-    _non_admin_user_exists(session_browser, 'alice')
-    _set_user_inactive(session_browser, 'alice')
-    _cannot_log_in(session_browser, 'alice')
+def test_user_states(session_browser, tmp_path_factory):
+    """Test that admin users can set other users as inactive/active."""
+    username = 'bob2'
+    _non_admin_user_exists(session_browser, username,
+                           groups=["freedombox-ssh"])
+    _configure_ssh_keys(session_browser, tmp_path_factory, username=username)
+
+    # Test set user inactive
+    _set_user_status(session_browser, username, 'inactive')
+    # Test Django login
+    _cannot_log_in(session_browser, username)
+    # Test PAM/nslcd authorization
+    _should_not_connect_passwordless_over_ssh(session_browser,
+                                              tmp_path_factory,
+                                              username=username)
+
+    # Test set user active
+    functional.login(session_browser)
+    _set_user_status(session_browser, username, 'active')
+    _can_log_in(session_browser, username)
+    _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory,
+                                          username=username)
+
     functional.login(session_browser)
 
 
@@ -201,14 +217,13 @@ def _admin_user_exists(session_browser, name):
     functional.create_user(session_browser, name, groups=['admin'])
 
 
-def _non_admin_user_exists(session_browser, name):
+def _non_admin_user_exists(session_browser, name, groups=[]):
     if functional.user_exists(session_browser, name):
         functional.delete_user(session_browser, name)
-    functional.create_user(session_browser, name)
+    functional.create_user(session_browser, name, groups=groups)
 
 
-def _generate_ssh_keys(session_browser, tmp_path_factory):
-    key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
+def _generate_ssh_keys(session_browser, key_file):
     try:
         key_file.unlink()
     except FileNotFoundError:
@@ -219,10 +234,12 @@ def _generate_ssh_keys(session_browser, tmp_path_factory):
          str(key_file)])
 
 
-def _configure_ssh_keys(session_browser, tmp_path_factory):
-    public_key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key.pub'
+def _configure_ssh_keys(session_browser, tmp_path_factory, username=None):
+    key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
+    _generate_ssh_keys(session_browser, key_file)
+    public_key_file = key_file.with_suffix(key_file.suffix + '.pub')
     public_key = public_key_file.read_text()
-    _set_ssh_keys(session_browser, public_key)
+    _set_ssh_keys(session_browser, public_key, username=username)
 
 
 def _can_log_in(session_browser, username):
@@ -244,16 +261,17 @@ def _cannot_log_in(session_browser, username):
     assert len(session_browser.find_by_id('id_user_menu')) == 0
 
 
-def _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory):
+def _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory,
+                                          username=None):
     key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
-    _try_login_to_ssh(key_file=key_file)
+    _try_login_to_ssh(key_file=key_file, username=username)
 
 
 def _should_not_connect_passwordless_over_ssh(session_browser,
-                                              tmp_path_factory):
+                                              tmp_path_factory, username=None):
     key_file = tmp_path_factory.getbasetemp() / 'users-ssh.key'
     with pytest.raises(subprocess.CalledProcessError):
-        _try_login_to_ssh(key_file=key_file)
+        _try_login_to_ssh(key_file=key_file, username=username)
 
 
 def _rename_user(browser, old_name, new_name):
@@ -323,9 +341,12 @@ def _set_ssh_keys(browser, ssh_keys, username=None):
     functional.submit(browser, form_class='form-update')
 
 
-def _set_user_inactive(browser, username):
+def _set_user_status(browser, username, status):
     functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
-    browser.find_by_id('id_is_active').uncheck()
+    if status == "inactive":
+        browser.find_by_id('id_is_active').uncheck()
+    elif status == "active":
+        browser.find_by_id('id_is_active').check()
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
 
@@ -348,8 +369,8 @@ def _change_password(browser, new_password, current_password=None,
     functional.submit(browser, form_class='form-change-password')
 
 
-def _try_login_to_ssh(key_file=None):
-    user = functional.config['DEFAULT']['username']
+def _try_login_to_ssh(key_file=None, username=None):
+    user = username if username else functional.config['DEFAULT']['username']
     hostname = urllib.parse.urlparse(
         functional.config['DEFAULT']['url']).hostname
     port = functional.config['DEFAULT']['ssh_port']
