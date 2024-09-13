@@ -86,13 +86,13 @@ def service_is_enabled(service_name, strict_check=False):
 
 
 def service_enable(service_name):
-    """Enable and start a service in systemd and sysvinit using update-rc.d."""
+    """Enable and start a service in systemd."""
     subprocess.call(['systemctl', 'enable', service_name])
     service_start(service_name)
 
 
 def service_disable(service_name):
-    """Disable and stop service in systemd and sysvinit using update-rc.d."""
+    """Disable and stop service in systemd."""
     subprocess.call(['systemctl', 'disable', service_name])
     try:
         service_stop(service_name)
@@ -111,27 +111,27 @@ def service_unmask(service_name):
 
 
 def service_start(service_name):
-    """Start a service with systemd or sysvinit."""
+    """Start a service with systemd."""
     service_action(service_name, 'start')
 
 
 def service_stop(service_name):
-    """Stop a service with systemd or sysvinit."""
+    """Stop a service with systemd."""
     service_action(service_name, 'stop')
 
 
 def service_restart(service_name):
-    """Restart a service with systemd or sysvinit."""
+    """Restart a service with systemd."""
     service_action(service_name, 'restart')
 
 
 def service_try_restart(service_name):
-    """Try to restart a service with systemd or sysvinit."""
+    """Try to restart a service with systemd."""
     service_action(service_name, 'try-restart')
 
 
 def service_reload(service_name):
-    """Reload a service with systemd or sysvinit."""
+    """Reload a service with systemd."""
     service_action(service_name, 'reload')
 
 
