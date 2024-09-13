@@ -33,7 +33,7 @@ class MinifluxApp(app_module.App):
 
     app_id = 'miniflux'
 
-    _version = 1
+    _version = 2
 
     def __init__(self):
         """Create components for the app."""
@@ -88,6 +88,7 @@ class MinifluxApp(app_module.App):
         """Install and configure the app."""
         privileged.pre_setup()
         super().setup(old_version)
+        privileged.setup(old_version)
         if not old_version:
             self.enable()
 
