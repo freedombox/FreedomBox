@@ -10,8 +10,9 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 import plinth
+from plinth import action_utils
 from plinth import app as app_module
-from plinth import action_utils, cfg, glib, kvstore, menu, package
+from plinth import cfg, glib, kvstore, menu, package
 from plinth.config import DropinConfigs
 from plinth.daemon import RelatedDaemon
 from plinth.diagnostic_check import DiagnosticCheck, Result
@@ -294,17 +295,18 @@ def is_backports_current():
 
 def can_activate_backports():
     """Return whether backports can be activated."""
-    release, _ = get_current_release()
-    if release == 'unstable' or (release == 'testing' and not cfg.develop):
-        return False
+    if cfg.develop:
+        return True
 
-    return True
+    # Release will be 'n/a' in latest unstable and testing distributions.
+    release, _ = get_current_release()
+    return release not in ['unstable', 'testing', 'n/a']
 
 
 def can_enable_dist_upgrade():
     """Return whether dist upgrade can be enabled."""
     release, _ = get_current_release()
-    return release not in ['unstable', 'testing']
+    return release not in ['unstable', 'testing', 'n/a']
 
 
 def can_test_dist_upgrade():

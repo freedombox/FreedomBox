@@ -257,7 +257,7 @@ def _check_and_backports_sources(develop=False):
         return
 
     release, dist = get_current_release()
-    if release == 'unstable' or (release == 'testing' and not develop):
+    if release in ['unstable', 'testing', 'n/a'] and not develop:
         logging.info(f'System release is {release}. Skip enabling backports.')
         return
 
@@ -326,7 +326,7 @@ def _check_dist_upgrade(test_upgrade=False) -> tuple[bool, str]:
 
     from plinth.modules.upgrades import get_current_release
     release, dist = get_current_release()
-    if release in ['unstable', 'testing']:
+    if release in ['unstable', 'testing', 'n/a']:
         return (False, f'already-{release}')
 
     check_dists = ['stable']
