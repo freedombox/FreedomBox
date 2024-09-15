@@ -9,7 +9,6 @@ import subprocess
 
 from plinth.actions import privileged
 
-SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
 DEFAULT_FILE = '/etc/default/samba'
 
 CONF_PATH = '/etc/samba/smb-freedombox.conf'
@@ -296,25 +295,6 @@ def setup():
 
     if action_utils.service_is_running('smbd'):
         action_utils.service_restart('smbd')
-
-
-@privileged
-def dump_shares():
-    """Dump registy share configuration."""
-    os.makedirs(os.path.dirname(SHARES_CONF_BACKUP_FILE), exist_ok=True)
-    with open(SHARES_CONF_BACKUP_FILE, 'w', encoding='utf-8') as backup_file:
-        command = ['net', 'conf', 'list']
-        subprocess.run(command, stdout=backup_file, check=True)
-
-
-@privileged
-def restore_shares():
-    """Restore registy share configuration."""
-    if not os.path.exists(SHARES_CONF_BACKUP_FILE):
-        raise RuntimeError(
-            'Backup file {0} does not exist.'.format(SHARES_CONF_BACKUP_FILE))
-    _conf_command(['drop'])
-    _conf_command(['import', SHARES_CONF_BACKUP_FILE])
 
 
 @privileged

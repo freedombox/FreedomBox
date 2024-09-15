@@ -86,8 +86,8 @@ class SambaApp(app_module.App):
                                           groups=groups)
         self.add(users_and_groups)
 
-        backup_restore = SambaBackupRestore('backup-restore-samba',
-                                            **manifest.backup)
+        backup_restore = BackupRestore('backup-restore-samba',
+                                       **manifest.backup)
         self.add(backup_restore)
 
     def setup(self, old_version):
@@ -101,21 +101,6 @@ class SambaApp(app_module.App):
         """De-configure and uninstall the app."""
         super().uninstall()
         privileged.uninstall()
-
-
-class SambaBackupRestore(BackupRestore):
-    """Component to backup/restore Samba."""
-
-    def backup_pre(self, packet):
-        """Save registry share configuration."""
-        super().backup_pre(packet)
-        privileged.dump_shares()
-
-    def restore_post(self, packet):
-        """Restore configuration."""
-        super().restore_post(packet)
-        privileged.setup()
-        privileged.restore_shares()
 
 
 def add_share(mount_point, share_type, filesystem):

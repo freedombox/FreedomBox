@@ -26,16 +26,6 @@ class TestSambaApp(functional.BaseAppTests):
         functional.login(session_browser)
         functional.networks_set_firewall_zone(session_browser, 'internal')
 
-    @pytest.mark.backups
-    def test_backup_restore(self, session_browser):
-        """Test backing up and restoring."""
-        _set_share(session_browser, 'home', status='enabled')
-        functional.backup_create(session_browser, 'samba', 'test_samba')
-        _set_share(session_browser, 'home', status='disabled')
-        functional.backup_restore(session_browser, 'samba', 'test_samba')
-        assert functional.service_is_running(session_browser, 'samba')
-        _assert_share_is_writable('home')
-
     @pytest.mark.parametrize('share_type', ['open', 'group', 'home'])
     def test_enable_disable_samba_share(self, session_browser, share_type):
         """Test enabling and disabling Samba share."""

@@ -7,8 +7,6 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth.clients import store_url
 
-SHARES_CONF_BACKUP_FILE = '/var/lib/plinth/backups-data/samba-shares-dump.conf'
-
 clients = [{
     'name':
         _('Android Samba Client'),
@@ -85,4 +83,4 @@ clients = [{
     }]
 }]
 
-backup = {'data': {'files': [SHARES_CONF_BACKUP_FILE]}, 'services': ['smbd']}
+backup: dict = {}
