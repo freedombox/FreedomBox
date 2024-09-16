@@ -55,7 +55,7 @@ class ApacheApp(app_module.App):
         self.add(freedombox_ports)
 
         letsencrypt = LetsEncrypt('letsencrypt-apache', domains='*',
-                                  daemons=['apache2'])
+                                  daemons=['apache2'], reload_daemons=True)
         self.add(letsencrypt)
 
         daemon = Daemon('daemon-apache', 'apache2')
