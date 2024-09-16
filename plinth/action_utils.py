@@ -135,6 +135,14 @@ def service_reload(service_name):
     service_action(service_name, 'reload')
 
 
+def service_try_reload_or_restart(service_name):
+    """Reload a service if it supports reloading, otherwise restart.
+
+    Do nothing if service is not running.
+    """
+    service_action(service_name, 'try-reload-or-restart')
+
+
 def service_action(service_name, action):
     """Perform the given action on the service_name."""
     subprocess.run(['systemctl', action, service_name],
