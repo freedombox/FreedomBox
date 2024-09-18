@@ -119,7 +119,7 @@ def get_override_domain():
 def set_override_domain(domain_name: str):
     """Set the domain name that Nextcloud will use to override all domains."""
     protocol = 'https'
-    if domain_name.endswith('.onion'):
+    if domain_name.endswith('.onion') or not domain_name:
         protocol = 'http'
 
     if domain_name:
@@ -130,7 +130,8 @@ def set_override_domain(domain_name: str):
     else:
         _run_occ('config:system:delete', 'overwritehost')
         _run_occ('config:system:delete', 'overwriteprotocol')
-        _run_occ('config:system:delete', 'overwrite.cli.url')
+        _run_occ('config:system:set', 'overwrite.cli.url', '--value',
+                 f'{protocol}://localhost/nextcloud')
 
     # Restart to apply changes immediately
     action_utils.service_restart('nextcloud-freedombox')
