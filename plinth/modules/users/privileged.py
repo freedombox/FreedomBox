@@ -81,7 +81,15 @@ def _configure_ldap_authentication():
         })
     action_utils.dpkg_reconfigure('libnss-ldapd',
                                   {'nsswitch': 'group, passwd, shadow'})
-    action_utils.service_restart('nscd')
+
+    # NSS caching is not necessary in FreedomBox as lookup are done on a local
+    # LDAP daemon. Caching can lead to unexpected behavior after user account
+    # changes and after queries while nslcd is not running. See:
+    # https://salsa.debian.org/freedombox-team/freedombox/-/merge_requests/2520
+    action_utils.service_mask('nscd')
+    action_utils.service_stop('nscd')
+    action_utils.service_mask('unscd')
+    action_utils.service_stop('unscd')
 
     # XXX: Workaround for login issue
     action_utils.service_enable('slapd')
@@ -479,9 +487,7 @@ def set_user_status(username: str, status: str, auth_user: str,
 
 
 def _flush_cache():
-    """Flush nscd and apache2 cache."""
-    _run(['nscd', '--invalidate=passwd'])
-    _run(['nscd', '--invalidate=group'])
+    """Flush apache2 cache."""
     action_utils.service_reload('apache2')
 
 

@@ -47,7 +47,7 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
-    _version = 5
+    _version = 6
 
     can_be_disabled = False
 
@@ -68,7 +68,7 @@ class UsersApp(app_module.App):
 
         packages = Packages('packages-users', [
             'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd',
-            'nscd', 'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
+            'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
         ])
         self.add(packages)
 
