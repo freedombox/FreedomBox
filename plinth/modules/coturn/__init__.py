@@ -51,7 +51,8 @@ class CoturnApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Coturn'), icon_filename='coturn',
                                short_description=_('VoIP Helper'),
-                               description=_description, manual_page='Coturn')
+                               description=_description, manual_page='Coturn',
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-coturn', info.name, info.short_description,

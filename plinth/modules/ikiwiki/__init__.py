@@ -45,7 +45,7 @@ class IkiwikiApp(app_module.App):
                                name=_('ikiwiki'), icon_filename='ikiwiki',
                                short_description=_('Wiki and Blog'),
                                description=_description, manual_page='Ikiwiki',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://ikiwiki.info/tipjar/')
         self.add(info)
 

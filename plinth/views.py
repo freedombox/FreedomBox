@@ -23,6 +23,7 @@ from django.views.generic.edit import FormView
 from stronghold.decorators import public
 
 from plinth import app as app_module
+from plinth import menu
 from plinth.daemon import app_is_running
 from plinth.modules.config import get_advanced_mode
 from plinth.modules.firewall.components import get_port_forwarding_info
@@ -120,13 +121,61 @@ def index(request):
 
 
 class AppsIndexView(TemplateView):
-    """View for apps index"""
+    """View for apps index.
+
+    This view supports filtering apps by one or more tags. If no tags are
+    provided, it will show all the apps. If one or more tags are provided,
+    it will select apps matching any of the provided tags.
+    """
     template_name = 'apps.html'
+
+    @staticmethod
+    def _pick_menu_items(menu_items, selected_tags):
+        """Return a sorted list of menu items filtered by tags."""
+
+        def _mismatch_map(menu_item) -> list[bool]:
+            """Return a list of mismatches for selected tags.
+
+            A mismatch is when a selected tag is *not* present in the list of
+            tags for menu item.
+            """
+            menu_tags = set(menu_item.app.info.tags)
+            return [tag not in menu_tags for tag in selected_tags]
+
+        def _sort_key(menu_item):
+            """Returns a comparable tuple to sort menu items.
+
+            Sort items by tag match count first, then by the order of matched
+            tags in user specified order, then by the order set by menu item,
+            and then by the name of the menu item in current locale (by
+            configured collation order).
+            """
+            return (_mismatch_map(menu_item).count(True),
+                    _mismatch_map(menu_item), menu_item.order,
+                    menu_item.name.lower())
+
+        # Filter out menu items that don't match any of the selected tags. If
+        # no tags are selected, return all menu items. Otherwise, return all
+        # menu items that have at least one matching tag.
+        filtered_menu_items = [
+            menu_item for menu_item in menu_items
+            if (not selected_tags) or (not all(_mismatch_map(menu_item)))
+        ]
+
+        return sorted(filtered_menu_items, key=_sort_key)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['show_disabled'] = True
         context['advanced_mode'] = get_advanced_mode()
+
+        tags = self.request.GET.getlist('tag', [])
+        menu_items = menu.main_menu.active_item(self.request).items
+
+        context['tags'] = tags
+        context['all_tags'] = app_module.Info.list_tags()
+        context['menu_items'] = self._pick_menu_items(menu_items, tags)
+
         return context
 
 
@@ -364,8 +413,9 @@ class SetupView(TemplateView):
         context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
         context['show_rerun_setup'] = False
-        context['show_uninstall'] = (not app.info.is_essential and setup_state
-                                     != app_module.App.SetupState.NEEDS_SETUP)
+        context['show_uninstall'] = (
+            not app.info.is_essential
+            and setup_state != app_module.App.SetupState.NEEDS_SETUP)
 
         # Perform expensive operation only if needed.
         if not context['operations']:

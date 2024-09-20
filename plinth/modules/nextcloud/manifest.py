@@ -52,3 +52,5 @@ backup = {
         'files': ['/var/lib/plinth/backups-data/nextcloud-database.sql']
     }
 }
+
+tags = [_('Cloud Storage'), _('File Sharing'), _('non-Debian')]

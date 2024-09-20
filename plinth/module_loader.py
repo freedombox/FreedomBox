@@ -3,7 +3,6 @@
 Discover, load and manage FreedomBox applications.
 """
 
-import collections
 import importlib
 import logging
 import pathlib
@@ -16,7 +15,7 @@ from plinth.signals import pre_module_loading
 
 logger = logging.getLogger(__name__)
 
-loaded_modules = collections.OrderedDict()
+loaded_modules = dict()
 _modules_to_load = None
 
 
@@ -36,8 +35,8 @@ def load_modules():
     for module_import_path in get_modules_to_load():
         module_name = module_import_path.split('.')[-1]
         try:
-            loaded_modules[module_name] = importlib.import_module(
-                module_import_path)
+            module = importlib.import_module(module_import_path)
+            loaded_modules[module_name] = module
         except Exception as exception:
             logger.exception('Could not import %s: %s', module_import_path,
                              exception)

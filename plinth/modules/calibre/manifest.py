@@ -16,3 +16,5 @@ backup = {
     },
     'services': ['calibre-server-freedombox']
 }
+
+tags = [_('Ebook'), _('Library'), _('Ebook Reader')]

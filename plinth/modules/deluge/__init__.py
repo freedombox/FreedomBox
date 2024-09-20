@@ -47,7 +47,8 @@ class DelugeApp(app_module.App):
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Deluge',
             clients=manifest.clients,
-            donation_url='https://www.patreon.com/deluge_cas')
+            donation_url='https://www.patreon.com/deluge_cas',
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-deluge', info.name, info.short_description,

@@ -51,7 +51,8 @@ class ShadowsocksApp(app_module.App):
                                icon_filename='shadowsocks',
                                short_description=_('Bypass Censorship'),
                                description=_description,
-                               manual_page='Shadowsocks')
+                               manual_page='Shadowsocks',
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-shadowsocks', info.name,

@@ -50,3 +50,11 @@ backup = {
     },
     'services': ['tor@fbxproxy']
 }
+
+tags = [
+    _('Proxy'),
+    _('SOCKS5'),
+    _('Anonymity Network'),
+    _('Censorship Resistance'),
+    _('Tor')
+]

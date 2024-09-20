@@ -51,7 +51,7 @@ class TTRSSApp(app_module.App):
                                short_description=_('News Feed Reader'),
                                description=_description,
                                manual_page='TinyTinyRSS',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://www.patreon.com/cthulhoo')
         self.add(info)
 

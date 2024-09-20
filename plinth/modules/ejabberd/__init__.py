@@ -56,11 +56,13 @@ class EjabberdApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(
-            app_id=self.app_id, version=self._version, depends=['coturn'],
-            name=_('ejabberd'), icon_filename='ejabberd',
-            short_description=_('Chat Server'), description=_description,
-            manual_page='ejabberd', clients=manifest.clients)
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               depends=['coturn'], name=_('ejabberd'),
+                               icon_filename='ejabberd',
+                               short_description=_('Chat Server'),
+                               description=_description,
+                               manual_page='ejabberd',
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-ejabberd', info.name,

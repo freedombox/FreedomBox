@@ -44,7 +44,7 @@ class MinifluxApp(app_module.App):
                                short_description=_('News Feed Reader'),
                                description=_description,
                                manual_page='miniflux',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://miniflux.app/#donations')
         self.add(info)
 

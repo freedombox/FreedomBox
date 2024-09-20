@@ -48,7 +48,7 @@ class GitwebApp(app_module.App):
                                name=_('Gitweb'), icon_filename='gitweb',
                                short_description=_('Simple Git Hosting'),
                                description=_description, manual_page='GitWeb',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-gitweb', info.name, info.short_description,

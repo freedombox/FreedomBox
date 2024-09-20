@@ -15,10 +15,12 @@
     </div>
   </div>
 
+  {% block tags %}{% endblock %}
+
   <div class="container card-container">
     <div class="row">
       <div class="card-list card-list-primary">
-        {% for item in submenu.sorted_items %}
+        {% for item in menu_items %}
           {% if not show_disabled or item.is_enabled %}
             {% if advanced_mode or not item.advanced %}
               {% include "card.html" %}
@@ -34,7 +36,7 @@
       <div class="card-section-title">{% trans "Disabled" %}</div>
       <div class="row">
         <div class="card-list card-list-disabled">
-          {% for item in submenu.sorted_items %}
+          {% for item in menu_items %}
             {% if not item.is_enabled %}
               {% if advanced_mode or not item.advanced %}
                 {% include "card.html" %}

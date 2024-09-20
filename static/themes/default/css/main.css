@@ -309,7 +309,6 @@ html {
 }
 
 #wrapper {
-    min-height: 100%;
     position: relative;
 }
 
@@ -319,6 +318,59 @@ html {
 
 .content-container {
     margin-bottom: 1.25rem;
+}
+
+/* Tag Input Container */
+.tag-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 3rem;
+}
+
+/* Selected Tags */
+.tag-input #selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: .5rem;
+}
+
+.tag-input .tag {
+    background-color: #e9ecef; /* Light gray background */
+    border-radius: .25rem;
+    padding: .25rem .5rem;
+    margin-right: .25rem;
+    margin-bottom: .25rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Remove tag button */
+.tag-badge .remove-tag {
+  background-color: #f8f9fa; /* Match the tag's background color */
+  border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+/* Adjust input field width */
+.tag-input input[type="search"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: auto;
+    min-width: 3rem;
+}
+
+/* dropdown-menu for tags is a scrollable list */
+.tag-input .dropdown-menu {
+    bottom: calc(-100% - 10px);
+    overflow-y: auto;
 }
 
 @media (min-width: 768px) {

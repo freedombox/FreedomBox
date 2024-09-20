@@ -7,7 +7,7 @@ import collections
 import enum
 import inspect
 import logging
-from typing import ClassVar, TypeAlias
+from typing import ClassVar, Dict, List, TypeAlias
 
 from plinth import cfg
 from plinth.diagnostic_check import DiagnosticCheck
@@ -434,7 +434,7 @@ class Info(FollowerComponent):
     def __init__(self, app_id, version, is_essential=False, depends=None,
                  name=None, icon=None, icon_filename=None,
                  short_description=None, description=None, manual_page=None,
-                 clients=None, donation_url=None):
+                 clients=None, donation_url=None, tags=None):
         """Store the basic properties of an app as a component.
 
         Each app must contain at least one component of this type to provide
@@ -504,6 +504,9 @@ class Info(FollowerComponent):
         'donation_url' is a link to a webpage that describes how to
         donate to the upstream project.
 
+        'tags' is a list of tags that describe the app. Tags help users to find
+        similar apps or alternatives and discover use cases.
+
         """
         self.component_id = app_id + '-info'
         self.app_id = app_id
@@ -518,8 +521,18 @@ class Info(FollowerComponent):
         self.manual_page = manual_page
         self.clients = clients
         self.donation_url = donation_url
+        self.tags = tags or []
         if clients:
             clients_module.validate(clients)
+
+    @classmethod
+    def list_tags(self) -> list:
+        """Return a list of untranslated tags."""
+        tags = set()
+        for app in App.list():
+            tags.update(app.info.tags)
+
+        return list(tags)
 
 
 class EnableState(LeaderComponent):
@@ -626,8 +639,8 @@ def _initialize_module(module_name, module):
         for app_class in app_classes:
             app_class()
     except Exception as exception:
-        logger.exception('Exception while running init for %s: %s', module,
-                         exception)
+        logger.exception('Exception while running init for module %s: %s',
+                         module_name, exception)
         if cfg.develop:
             raise
 

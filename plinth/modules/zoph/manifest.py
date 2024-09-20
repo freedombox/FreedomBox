@@ -22,3 +22,5 @@ backup = {
         ],
     }
 }
+
+tags = [_('Image Viewer'), _('Photo'), _('Library')]

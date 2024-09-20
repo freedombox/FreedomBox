@@ -78,3 +78,5 @@ backup = {
     },
     'services': ['postfix', 'dovecot', 'rspamd']
 }
+
+tags = [_('Email')]

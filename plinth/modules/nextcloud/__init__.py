@@ -59,7 +59,7 @@ class NextcloudApp(app_module.App):
             icon_filename='nextcloud',
             short_description=_('File Storage & Collaboration'),
             description=_description, manual_page='Nextcloud',
-            clients=manifest.clients)
+            clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-nextcloud', info.name,

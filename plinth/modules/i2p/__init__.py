@@ -52,7 +52,7 @@ class I2PApp(app_module.App):
                                name=_('I2P'), icon_filename='i2p',
                                short_description=_('Anonymity Network'),
                                description=_description, manual_page='I2P',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-i2p', info.name, info.short_description,

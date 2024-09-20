@@ -19,3 +19,5 @@ backup = {
     },
     'services': ['uwsgi'],
 }
+
+tags = [_('File Sharing'), _('Pastebin')]

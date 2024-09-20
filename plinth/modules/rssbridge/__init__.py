@@ -50,7 +50,7 @@ class RSSBridgeApp(app_module.App):
                                short_description=_('RSS Feed Generator'),
                                description=_description,
                                manual_page='RSSBridge', donation_url=None,
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-rssbridge', info.name,

@@ -43,7 +43,7 @@ class JanusApp(app_module.App):
                                icon_filename='janus',
                                short_description=_('Video Room'),
                                description=_description, manual_page='Janus',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-janus', info.name, info.short_description,

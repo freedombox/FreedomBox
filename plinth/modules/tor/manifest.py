@@ -52,3 +52,10 @@ backup = {
     },
     'services': ['tor@plinth']
 }
+
+tags = [
+    _('Relay'),
+    _('Anonymity Network'),
+    _('Censorship Resistance'),
+    _('Tor')
+]

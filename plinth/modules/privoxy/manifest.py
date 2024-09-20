@@ -3,4 +3,8 @@
 Application manifest for privoxy.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup: dict = {}
+
+tags = [_('Ad Blocker'), _('Proxy'), _('Local Network')]

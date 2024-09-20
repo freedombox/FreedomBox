@@ -11,8 +11,12 @@ clients = [{
 }]
 
 backup = {
-        'data': {
-            'files': ['/etc/roundcube/freedombox-config.php',
-                      '/var/lib/dbconfig-common/sqlite3/roundcube/roundcube']
-        }
+    'data': {
+        'files': [
+            '/etc/roundcube/freedombox-config.php',
+            '/var/lib/dbconfig-common/sqlite3/roundcube/roundcube'
+        ]
+    }
 }
+
+tags = [_('Email'), _('Contacts'), _('Client')]

@@ -32,7 +32,8 @@ class SharingApp(app_module.App):
         super().__init__()
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Sharing'), icon_filename='sharing',
-                               manual_page='Sharing', description=_description)
+                               manual_page='Sharing', description=_description,
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-sharing', info.name, None,

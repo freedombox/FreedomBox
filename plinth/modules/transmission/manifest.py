@@ -35,3 +35,5 @@ backup = {
     },
     'services': ['transmission-daemon']
 }
+
+tags = [_('File Sharing'), _('BitTorrent'), _('Client'), _('P2P')]

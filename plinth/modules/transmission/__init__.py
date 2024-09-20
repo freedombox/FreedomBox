@@ -76,7 +76,8 @@ class TransmissionApp(app_module.App):
             short_description=_('BitTorrent Web Client'),
             description=_description, manual_page='Transmission',
             clients=manifest.clients,
-            donation_url='https://transmissionbt.com/donate/')
+            donation_url='https://transmissionbt.com/donate/',
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-transmission', info.name,

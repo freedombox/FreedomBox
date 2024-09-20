@@ -87,3 +87,11 @@ backup = {
     },
     'services': ['uwsgi']
 }
+
+tags = [
+    _('Calendar'),
+    _('Contacts'),
+    _('Synchronization'),
+    _('CalDAV'),
+    _('CardDAV')
+]

@@ -18,3 +18,5 @@ backup = {
     },
     'services': ['kiwix-server-freedombox']
 }
+
+tags = [_('Offline Reader'), _('Archival'), _('Censorship Resistance')]

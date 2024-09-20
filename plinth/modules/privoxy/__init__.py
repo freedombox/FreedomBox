@@ -53,7 +53,8 @@ class PrivoxyApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Privoxy'),
             icon_filename='privoxy', short_description=_('Web Proxy'),
             description=_description, manual_page='Privoxy',
-            donation_url='https://www.privoxy.org/faq/general.html#DONATE')
+            donation_url='https://www.privoxy.org/faq/general.html#DONATE',
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-privoxy', info.name,
