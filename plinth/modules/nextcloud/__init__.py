@@ -46,7 +46,7 @@ class NextcloudApp(app_module.App):
 
     app_id = 'nextcloud'
 
-    _version = 1
+    _version = 2
 
     configure_when_disabled = False
 
@@ -128,6 +128,13 @@ class NextcloudApp(app_module.App):
 
     def setup(self, old_version):
         """Install and configure the app."""
+        if old_version == 1:
+            with _ensure_nextcloud_running():
+                # Reset the value so that 'overwrite.cli.url' is set to default
+                # value instead of it being missing.
+                if not privileged.get_override_domain():
+                    privileged.set_override_domain('')
+
         super().setup(old_version)
         # Drop-in configs need to be enabled for setup to succeed
         self.get_component('dropin-configs-nextcloud').enable()
