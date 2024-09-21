@@ -143,6 +143,12 @@ def service_try_reload_or_restart(service_name):
     service_action(service_name, 'try-reload-or-restart')
 
 
+def service_reset_failed(service_name):
+    """Reset the 'failed' state of units."""
+    service_action(service_name, 'reset-failed')
+
+
+
 def service_action(service_name, action):
     """Perform the given action on the service_name."""
     subprocess.run(['systemctl', action, service_name],
