@@ -148,7 +148,6 @@ def service_reset_failed(service_name):
     service_action(service_name, 'reset-failed')
 
 
-
 def service_action(service_name, action):
     """Perform the given action on the service_name."""
     subprocess.run(['systemctl', action, service_name],
