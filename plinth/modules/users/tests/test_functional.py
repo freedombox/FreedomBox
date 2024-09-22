@@ -154,7 +154,7 @@ def test_user_states(session_browser, tmp_path_factory):
     """Test that admin users can set other users as inactive/active."""
     username = 'bob2'
     _non_admin_user_exists(session_browser, username,
-                           groups=["freedombox-ssh"])
+                           groups=['freedombox-ssh'])
     _configure_ssh_keys(session_browser, tmp_path_factory, username=username)
 
     # Test set user inactive
@@ -343,10 +343,11 @@ def _set_ssh_keys(browser, ssh_keys, username=None):
 
 def _set_user_status(browser, username, status):
     functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
-    if status == "inactive":
+    if status == 'inactive':
         browser.find_by_id('id_is_active').uncheck()
-    elif status == "active":
+    elif status == 'active':
         browser.find_by_id('id_is_active').check()
+
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
 

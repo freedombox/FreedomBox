@@ -205,9 +205,17 @@ changetype: modify
 add: olcModuleLoad
 olcModuleLoad: ppolicy''')
     except subprocess.CalledProcessError as error:
-        if error.returncode == 20:  # Value already exists
-            pass
-        else:
+        if error.returncode != 20:  # Value already exists
+            raise
+
+    # Add namedobject schema needed for 'objectClass: namedPolicy'.
+    try:
+        subprocess.run([
+            'ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-f',
+            '/etc/ldap/schema/namedobject.ldif'
+        ], check=True, stdout=subprocess.DEVNULL)
+    except subprocess.CalledProcessError as error:
+        if error.returncode != 80:  # Schema already added
             raise
 
     # Set up default password policy
@@ -217,14 +225,12 @@ olcModuleLoad: ppolicy''')
 dn: cn=DefaultPPolicy,ou=policies,dc=thisbox
 cn: DefaultPPolicy
 objectClass: pwdPolicy
-objectClass: device
+objectClass: namedPolicy
 objectClass: top
 pwdAttribute: userPassword
 pwdLockout: TRUE''')
     except subprocess.CalledProcessError as error:
-        if error.returncode == 68:  # Value already exists
-            pass
-        else:
+        if error.returncode != 68:  # Value already exists
             raise
 
     # Make DefaultPPolicy as a default ppolicy overlay
@@ -288,12 +294,13 @@ def _unlock_ldap_user(username: str):
     if not _get_user_ids(username):
         # User not found
         return None
+
     # Replace command without providing a value will remove the attribute
     # and ignores when the attribute doesn't exist.
     input = '''changetype: modify
 replace: pwdAccountLockedTime
 '''
-    _run(["ldapmodifyuser", username], input=input.encode())
+    _run(['ldapmodifyuser', username], input=input.encode())
 
 
 @privileged
@@ -452,6 +459,7 @@ def _get_user_ids(username: str) -> str | None:
         if error.returncode == 1:
             # User doesn't exist
             return None
+
         raise
 
     return process.stdout.decode().strip()
@@ -614,7 +622,7 @@ def set_user_status(username: str, status: str, auth_user: str,
     if status == 'inactive':
         # Kill all user processes. This includes disconnectiong ssh, samba and
         # cockpit sessions.
-        subprocess.run(['pkill', "--signal", "KILL", '--uid', username])
+        subprocess.run(['pkill', '--signal', 'KILL', '--uid', username])
 
 
 def _upgrade_inactivate_users(usernames: list[str]):
@@ -625,7 +633,7 @@ def _upgrade_inactivate_users(usernames: list[str]):
     _flush_cache()
 
     for username in usernames:
-        subprocess.run(['pkill', "--signal", "KILL", '--uid', username])
+        subprocess.run(['pkill', '--signal', 'KILL', '--uid', username])
 
 
 def _flush_cache():
