@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-23 19:35-0400\n"
-"PO-Revision-Date: 2024-09-11 04:09+0000\n"
+"PO-Revision-Date: 2024-09-25 06:15+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -1148,14 +1148,10 @@ msgid "Server Administration"
 msgstr "服务器管理"
 
 #: modules/config/__init__.py:18
-#, fuzzy
-#| msgid ""
-#| "Here you can set some general configuration options like hostname, domain "
-#| "name, webserver home page etc."
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
-msgstr "在这里你可以设置一些一般的配置选项，如主机名、域名、网络服务器主页等。"
+msgstr "在这里你可以设置一些常规配置选项，如网络服务器主页等。"
 
 #: modules/config/__init__.py:40
 msgid "General Configuration"
@@ -1885,33 +1881,23 @@ msgid "Gajim"
 msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"XMPP 服务器域名可以设置为 <b>%(domainname)s</b>。用户 ID 类似于 "
-"<i>username@%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置"
-"</a>中设置你的域名。"
+"你的 XMPP 服务器名被设为 <b>%(domain_name)s</b>。用户 ID 看上去像 "
+"<i>username@%(domain_name)s</i>。 你可以在系统<a href=\"%(names_url)s\""
+">名称服务器</a> 页面设置你的域名。"
 
 #: modules/ejabberd/templates/ejabberd.html:25
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
 "<a href=\"%(names_url)s\">Name Services</a> page."
-msgstr ""
-"XMPP 服务器域名可以设置为 <b>%(domainname)s</b>。用户 ID 类似于 "
-"<i>username@%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置"
-"</a>中设置你的域名。"
+msgstr "你的 XMPP 服务器域名未设置。你可以在系统 <a href=\"%(names_url)s\">名称服务</"
+"a> 页设置你的域名。"
 
 #: modules/email/__init__.py:26
 msgid ""
@@ -3289,16 +3275,12 @@ msgid "Obtain"
 msgstr "获取"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, fuzzy, python-format
-#| msgid ""
-#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
-#| "domains</a> to be able to obtain certificates for them."
+#, python-format
 msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
-msgstr ""
-"还没有配置域名。<a href=\"%(config_url)s\">配置域名</a>可以为它们获得相应的证"
-"书。"
+msgstr "还没有配置域名。 <a href=\"%(names_url)s\""
+">配置域名</a>可以获得域名相应的证书。"
 
 #: modules/letsencrypt/views.py:40
 #, python-brace-format
@@ -4078,10 +4060,8 @@ msgid "Error retrieving status:"
 msgstr "获取状态出错："
 
 #: modules/names/views.py:77
-#, fuzzy
-#| msgid "Hostname"
 msgid "Set Hostname"
-msgstr "主机名"
+msgstr "设置主机名"
 
 #: modules/names/views.py:95
 #, python-brace-format
@@ -4089,10 +4069,8 @@ msgid "Error setting hostname: {exception}"
 msgstr "设置主机名错误：{exception}"
 
 #: modules/names/views.py:111
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Set Domain Name"
-msgstr "域名"
+msgstr "设置域名"
 
 #: modules/names/views.py:129
 #, python-brace-format
