@@ -9,7 +9,42 @@
 
 == Servicios de Nombre ==
 
-Los Servicios de Nombre proporcionan una vista general a las formas de acceder desde la Internet pública a tu !Freedombox: nombre de dominio, servicio ''Tor Onion'' y cometa (''Pagekite''). Para cada tipo de nombre se indica si los servicios HTTP, HTTPS, y SSH  están habilitados o deshabilitados para conexiones entrantes.
+Los Servicios de Nombre proporcionan una vista general a las formas de acceder desde la Internet pública a tu !Freedombox: nombre de dominio, servicio ''Tor Onion'' y cometa (''Pagekite''). Para cada tipo de nombre se indica si los servicios HTTP, HTTPS, y SSH  están habilitados o deshabilitados para conexiones entrantes.También muestra y permite configurar como !FreedomBox resuelve los nombres de dominio.
+
+=== systemd-resolved ===
+
+Desde la versión 24.19, !FreedomBox emplea `systemd-resolved` como resolutor DNS con memoria y reemplaza a `resolvconf` para administrar la configuración del servidor DNS. Esto mejora la privacidad y la seguridad. Las instalaciones nuevas vendrán con `systemd-resolved` de serie y las anteriores cambiarán automáticamente tras una actualización a esta nueava versión.
+
+`systemd-resolved` obtiene servidores DNS automáticamente de `Network Manager`, la forma recomendada y por omisión de configurar redes en !FreedomBox. No obstante, si administras la configuración de tu red editando a mano `/etc/network/interfaces`, tendrás que asegurar que los servidores DNS le lleguen a `systemd-resolved`. Si no, se usarán los servidores DNS de último recurso. Ver más abajo.
+
+=== Soporte para DNS-sobre-TLS y DNSSEC ===
+
+`systemd-resolved` soporta DNS-sobre-TLS. Este protocolo permite cifrar la comunicación entre !FreedomBox y el servidor de DNS server (habitualmente proporcionado por su proveedor de internet), si este lo soporta.
+Esto mejora la privacidad y la seguridad porque complica a posibles intermediarios ver o maniplar la comunicación.
+Los ajustes para habilitar DNS-sobre-TLS están disponibles a nivel global (para todas las interfaces de red) en la aplicación _Servicios de Nombre_ y a nivel de conexión en los ajusted de conexion de la aplicación _Redes_.
+
+`systemd-resolved` soporta `DNSSEC`. Este estándar permite a los dueños de sitios web firmar sus registros DNS, permitiendo así a los clientes autenticarlos. Esto mejora la seguridad al complicar la manipulación de respuestas DNS.
+Si tu servidor DNS soporta esta funcionalidad se puede habilitar. Hay un nuevo ajuste para activar `DNSSEC` disponible en la aplicación _Servicios de Nombre_.
+
+Puedes detectar si tu DNS actual soporta `DNS-over-TLS` y `DNSSEC` si habilitas ambos de uno en uno y ejecutas los diagnósticos de la aplicación de _Nombres_. Hay un diagnostico que detecta si puedes resolver con éxito el nombre de dominio `deb.debian.org`.
+
+=== Configurar un servidor DNS personalizado ===
+
+Si el proveedor de servidor DNS que te pone actualmente tu proveedor de internet no soporta las funcionalidades `DNS-sobre-TLS` o `DNSSEC`, censura algunos nombres de domino, o no confías en él lo suficiente,
+puedes usar un servidor DNS de los públicamente disponibles. Esto se hace editando las conexiones de red en la aplicación de _Redes_ y añadiendo los servidores DNS a mano.
+Para que los ajustes tengan efecto necesitarás reiniciar tu conexión de red desactivándola y activándola a continuación (o reiniciando !FreedomBox).
+Después de esto la aplicación _Nombres_ te mostrará los servidores DNS configurados.
+
+=== Servidores DNS de último recurso ===
+
+En algunos casos, cuando la conexón a internet está disponoble pero `systemd-resolved` no conoce los servidores DNS, se usan los de último recurso.
+Esto podría pasar, por ejemplo, debido a una configuración errónea o con configuraciones de red administradas manualmente.
+Los servidores DNS de último recurso que configura por omisión el proyecto `systemd` incluyen servidores de Cloudflare y de Google.
+Esto fué una decisión difícil porque conlleva riesgos de privacidad pero pensamos que era importante evitar que !FreedomBox quede inaccesible por un fallo de configuración.
+Una vez que tienes una configuración DNS funcional puedes esactivar los servidores DNS de último recurso usando el nuevo ajusta de la aplicación de _Privacidad_.
+En el interfaz web hay también una nueva notificación que atraerá tu atención a este asunto.
+También puedes editar la lista de servidores DNS de último recurso creando un archivo de configuración para `systemd-resolved`.
+Mira [[https://www.freedesktop.org/software/systemd/man/latest/systemd-resolved.html|la documentación de systemd-resolved]].
 
 ## END_INCLUDE
 
