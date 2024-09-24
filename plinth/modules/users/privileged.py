@@ -60,7 +60,7 @@ def first_setup():
 @privileged
 def setup():
     """Setup LDAP."""
-    # Update pam configs for access and mkhomedir.
+    # Update pam config for mkhomedir.
     subprocess.run(['pam-auth-update', '--package'], check=True)
 
     _configure_ldapscripts()
