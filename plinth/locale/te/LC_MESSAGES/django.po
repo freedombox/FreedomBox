@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 20:39-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2024-09-03 14:09+0000\n"
 "Last-Translator: Hemanth Kumar Veeranki <hems.india1997@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -990,12 +990,13 @@ msgstr "IP చిరునామా"
 msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:54 modules/pagekite/forms.py:74
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:46 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1170,88 +1171,46 @@ msgstr "కాక్పిట్"
 msgid "Server Administration"
 msgstr "సేవిక పరిపాలన"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "ఇక్కడ మీరు ఆతిథ్య నామం అధికారక్షేత్రం మహాతలంసేవిక మొదలైన కొన్ని సాధారణ రూపకరణ ఎంపికలను అమరిక "
 "చేయవచ్చు."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "సాధారణ ఆకృతీకరణ"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:33
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
 #: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:19
-msgid "Domain Name"
-msgstr "డొమైను పేరు"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "డొమైన్ పేరు చెల్లదు"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "{user}'sమహాతలం పుట"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "అప్రమేయం"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "ఫ్రీడమ్ బాక్స్ (ప్లిన్త్ )"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "అతిథ్యనామం"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"అతిథ్యనామం అనేది మీ లోకల్ నెట్‌వర్క్ లో ఉన్న ఇతర పరికరాలు మిమల్ని చేరుకొనుట కొరకు మీ {box_name} కి "
-"ఇవ్వబడే పేరు. ఆది అక్షరంతో మొదలై అక్షారంతో ముగింపబడలి. ఆ మధ్యలో అంకెలు కానీ అక్షరాలు కానీ హైఫెన్(-) "
-"మాత్రమే ఉండాలి. మొత్తం 63 అక్షరాలు లేదా అంత కన్నా తక్కువ ఉండవలెను."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "ఆతిథ్యనామం చెల్లనిది"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"డోమైన్ పేరు అనేది అంతర్జాలంలో ఉన్న మిగత పరికరాలు మీ {box_name} ను చేరుకునేందుకు ఉండే అంతర్జాతీయ "
-"పేరు. అందులో చుక్కలతో వేరుచేయబడిన చీటీలు ఉంటాయి. ప్రతీ చీటీ కూడా ఒక వర్ణమాల అక్షారంతో లేదా అంకె తో "
-"మొదలవాలి అలాగే వర్ణమాల అక్షరాలు, అంకెలు మరియు హైఫెన్(-) మాత్రమే కలిగి ఉండాలి. ప్రతీ చీటీ కేవలం ౬౩ "
-"అక్షరాలు లేదా అంత కన్నా తక్కువే కలిగి ఉండాలి. మొత్తం డోమైన్ పేరు పొడవు ౨౫౩ అక్షరాలు లేదా అంత అత కంటే "
-"తక్కువే ఉండాలి."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "వెబ్‌సర్వర్ హోమ్ పేజీ"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1266,74 +1225,56 @@ msgstr ""
 "(ప్లింత్), చేరుకోవడానికి మీ వినియోగదారులు స్పష్టంగా /ప్లిన్త్ లేదా /ఫ్రీడమ్‌బాక్స్ అని టైప్ చేయాలి {box_name} "
 "సర్వీస్ (ప్లింత్)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలను చూపు"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "మరింత సాంకేతిక పరిజ్ఞానం అవసరమయ్యే అనువర్తనాలు మరియు విశేషాంశాలను చూపించు."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "సిస్టమ్-వైడ్ లాగింగ్"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "గోప్యత కోసం లాగింగ్‌ను నిలిపివేయండి"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "పనితీరు కోసం, పునఃప్రారంభించే వరకు కొన్నింటిని మెమరీలో ఉంచండి"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "డిస్క్‌కి వ్రాయండి, డీబగ్గింగ్‌కు ఉపయోగపడుతుంది"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
 "లాగ్‌లు సిస్టమ్‌ను ఎవరు యాక్సెస్ చేశారనే సమాచారాన్ని మరియు వివిధ సేవల నుండి డీబగ్ సమాచారాన్ని కలిగి ఉంటాయి"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "ఆతిథ్యనామం అమర్చు"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "అధికారక్షేత్రం పేరు అమర్పు"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "వెబ్‌సర్వర్ హోమ్ పేజీని సెట్ చేయడంలో లోపం: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "వెబ్ సర్వర్ హోమ్ పేజీ సెట్ చేయబడింది"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలు చూపబడుతున్నాయి"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలు దాచబడుతున్నాయి"
 
@@ -1773,6 +1714,16 @@ msgstr "అన్ని ఎస్.ఎస్.ఎల్ సర్టిఫిక�
 msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "డొమైను పేరు"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "డొమైన్ పేరు చెల్లదు"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
@@ -1985,17 +1936,35 @@ msgid "Gajim"
 msgstr "గజీం"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "మీ XMPP సర్వర్ డొమైన్ <b>%(domainname)s</b>కు సెట్ చేయబడింది. వినియోగదారు ఐడిలు "
 "<i>username@%(domainname)s</i> లాగా కనిపిస్తాయి. మీరు మీ డొమైన్ను <a "
 "href=\"%(index_url)s\">కాన్ఫిగర్</a> పేజీలో సెటప్ చేయవచ్చు."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"మీ XMPP సర్వర్ డొమైన్ <b>%(domainname)s</b>కు సెట్ చేయబడింది. వినియోగదారు ఐడిలు "
+"<i>username@%(domainname)s</i> లాగా కనిపిస్తాయి. మీరు మీ డొమైన్ను <a "
+"href=\"%(index_url)s\">కాన్ఫిగర్</a> పేజీలో సెటప్ చేయవచ్చు."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2005,7 +1974,7 @@ msgstr ""
 "ఇమెయిల్‌లను పంపుతుంది మరియు అందుకుంటుంది. ఇమాప్ ,మరియు POP3ని ఉపయోగించి మీ మెయిల్‌బాక్స్‌ని యాక్సెస్ "
 "చేయడానికి ఇమెయిల్ క్లయింట్‌లను డావెకట్ ,అనుమతిస్తుంది. రెస్పాన్ , స్పామ్‌తో వ్యవహరిస్తుంది."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2016,7 +1985,7 @@ msgstr ""
 "చాలా ISPలు అవుట్‌గోయింగ్ ఇమెయిల్‌లను కూడా నియంత్రిస్తాయి. కొందరు స్పష్టమైన అభ్యర్థన తర్వాత పరిమితిని "
 "ఎత్తివేస్తారు. మరింత సమాచారం కోసం మాన్యువల్ పేజీని చూడండి."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2030,7 +1999,7 @@ msgstr ""
 "వారు తమ ఇమెయిల్ చిరునామాకు మారుపేర్లను జోడించవచ్చు. మదటి అడ్మిన్ యూజర్ ను సూచిస్తూ \"పోస్ట్ మాస్టర్\" "
 "వంటి అవసరమైన మారుపేర్లు స్వయంచాలకంగా సృష్టించబడతాయి."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2038,25 +2007,25 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube యాప్</a> వినియోగదారులు ఇమెయిల్‌ను యాక్సెస్ "
 "చేయడానికి వెబ్ ఇంటర్‌ఫేస్‌ను అందిస్తుంది."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr "ఇన్‌స్టాలేషన్ సమయంలో, సిస్టమ్‌లోని ఏదైనా ఇతర ఇమెయిల్ సర్వర్లు అన్‌ఇన్‌స్టాల్ చేయబడతాయి."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "పోస్ట్ ఫిక్స్/డోవ్ కాట్"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "ఇమెయిల్ సేవిక"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "మై ఇమెయిల్ అలియాసిస్"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "మేనేజ్ అలియాసిస్ ఫర్ మైలబోస్"
 
@@ -3493,9 +3462,12 @@ msgid "Obtain"
 msgstr "పొందు"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "ఒక్క డొమైన్ కూడా కాన్ఫిగర్ చేయబడలేదు. కాన్ఫిగర్ చేయడానికి <a href=\"%(config_url)s\">కాన్ఫిగర్ "
@@ -4220,7 +4192,7 @@ msgstr "అప్లోడ్ చేయడం కోసమై కేటాయి
 msgid "Root channel name changed."
 msgstr "రూట్ ఛానెల్ పేరు మార్చబడింది."
 
-#: modules/names/__init__.py:29
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4232,11 +4204,11 @@ msgstr ""
 "పేరు, టోర్ ఉల్లిపాయ సేవ మరియు పేజ్‌కైట్. ప్రతి రకమైన పేరు కోసం, ఇచ్చిన పేరు ద్వారా ఇన్‌కమింగ్ కనెక్షన్‌ల కోసం "
 "HTTP, HTTPS మరియు SSH సేవలు ప్రారంభించబడినా లేదా నిలిపివేయబడినా చూపబడుతుంది."
 
-#: modules/names/__init__.py:50
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "పేరు సేవలు"
 
-#: modules/names/__init__.py:119
+#: modules/names/__init__.py:133
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4253,13 +4225,49 @@ msgstr "అన్నీ వెబ్ యాప్‌లు"
 msgid "Secure Shell"
 msgstr "సెక్యూర్ షెల్"
 
-#: modules/names/forms.py:14
+#: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:42
+#: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "అతిథ్యనామం"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"అతిథ్యనామం అనేది మీ లోకల్ నెట్‌వర్క్ లో ఉన్న ఇతర పరికరాలు మిమల్ని చేరుకొనుట కొరకు మీ {box_name} కి "
+"ఇవ్వబడే పేరు. ఆది అక్షరంతో మొదలై అక్షారంతో ముగింపబడలి. ఆ మధ్యలో అంకెలు కానీ అక్షరాలు కానీ హైఫెన్(-) "
+"మాత్రమే ఉండాలి. మొత్తం 63 అక్షరాలు లేదా అంత కన్నా తక్కువ ఉండవలెను."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "ఆతిథ్యనామం చెల్లనిది"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"డోమైన్ పేరు అనేది అంతర్జాలంలో ఉన్న మిగత పరికరాలు మీ {box_name} ను చేరుకునేందుకు ఉండే అంతర్జాతీయ "
+"పేరు. అందులో చుక్కలతో వేరుచేయబడిన చీటీలు ఉంటాయి. ప్రతీ చీటీ కూడా ఒక వర్ణమాల అక్షారంతో లేదా అంకె తో "
+"మొదలవాలి అలాగే వర్ణమాల అక్షరాలు, అంకెలు మరియు హైఫెన్(-) మాత్రమే కలిగి ఉండాలి. ప్రతీ చీటీ కేవలం ౬౩ "
+"అక్షరాలు లేదా అంత కన్నా తక్కువే కలిగి ఉండాలి. మొత్తం డోమైన్ పేరు పొడవు ౨౫౩ అక్షరాలు లేదా అంత అత కంటే "
+"తక్కువే ఉండాలి."
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:24
@@ -4350,6 +4358,28 @@ msgstr "DNS సేవకం"
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
 msgstr "సంస్థాపన ఒక పొరపాటు జరిగింది"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "అతిథ్యనామం"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "డొమైను పేరు"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
 
 #: modules/networks/__init__.py:37
 msgid ""
@@ -7876,12 +7906,12 @@ msgstr "TT-RSS రీడర్"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "తాజా సాఫ్ట్‌వేర్ మరియు భద్రత నవీకరణను కోసం తనిఖీ చేయండి మరియు వర్తించండి."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7893,21 +7923,21 @@ msgstr ""
 "అందుబాటులో ఉండవు. సిస్టమ్ రీబూట్ అవసరమని భావించినట్లయితే, అది స్వయంచాలకంగా 02:00కి చేయబడుతుంది, "
 "దీని వలన అన్ని యాప్‌లు క్లుప్తంగా అందుబాటులో ఉండవు."
 
-#: modules/upgrades/__init__.py:68 modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "సాఫ్ట్‌వేర్ నవీకరణ"
 
-#: modules/upgrades/__init__.py:132
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "స్వతంత్ర సాఫ్ట్వేర్ తాజా పరుచడం"
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "పంపిణీ నవీకరణను ప్రారంభించడం సాధ్యపడలేదు"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7916,16 +7946,16 @@ msgstr ""
 "పంపిణీ నవీకరణను ప్రారంభించడానికి రూట్ విభజనలో తగినంత ఖాళీ స్థలం లేదు. దయచేసి కనీసం 5 GB ఉచితంగా "
 "ఉండేలా చూసుకోండి. ప్రారంభించబడితే, పంపిణీ నవీకరణ 24 గంటల తర్వాత మళ్లీ ప్రయత్నించబడుతుంది."
 
-#: modules/upgrades/__init__.py:230
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "పంపిణీ నవీకరణ ప్రారంభమైంది"
 
-#: modules/upgrades/__init__.py:232
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr "తదుపరి స్థిరమైన విడుదలకు నవీకరణ ప్రారంభించబడింది. ఇది పూర్తి కావడానికి చాలా సమయం పట్టవచ్చు."
 
-#: modules/upgrades/__init__.py:324
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -9397,6 +9427,12 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #, fuzzy
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "Hostname set"
+#~ msgstr "ఆతిథ్యనామం అమర్చు"
+
+#~ msgid "Domain name set"
+#~ msgstr "అధికారక్షేత్రం పేరు అమర్పు"
 
 #, fuzzy
 #~| msgid "Tiny Tiny RSS (Fork)"

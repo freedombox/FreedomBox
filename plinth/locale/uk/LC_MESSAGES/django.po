@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 20:39-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2024-08-31 12:09+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
@@ -1011,12 +1011,13 @@ msgstr "IP-адреси"
 msgid "Refresh IP address and domains"
 msgstr "Оновити IP-адреси і домени"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:54 modules/pagekite/forms.py:74
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:46 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1199,91 +1200,46 @@ msgstr "Cockpit"
 msgid "Server Administration"
 msgstr "Адміністрування сервера"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "Тут Ви можете задати деякі загальні параметри налаштувань, як-от назва "
 "компʼютера, назва домена, домашня сторінка вебсервера тощо."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "Загальні налаштування"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:33
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
 #: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Налаштування"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:19
-msgid "Domain Name"
-msgstr "Доменна назва"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "Неправильна доменна назва"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "Вебсайт {user}"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Типова Apache"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "Сервіс FreedomBox (Plinth)"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "Назва компʼютера"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"Назва компʼютера – це локальна назва, за якою інші пристрої в локальній "
-"мережі можуть звертатися до вашого {box_name}. Вона має починатися і "
-"закінчуватися символами алфавіту або цифрами, і містити всередині лише "
-"символи алфавіту, цифри чи дефіси. Загальна довжина не повинна перевищувати "
-"63 знаки."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "Некоректна назва компʼютера"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"Доменна назва – це глобальна назва, за якою інші пристрої в Інтернеті можуть "
-"звертатися до Вашого {box_name}. Вона має складатися з міток розділених "
-"крапками. Кожна мітка повинна починатися і закінчуватися на літеру алфавіту "
-"або цифру, і між ними містити лише літери алфавіту, цифри чи дефіси. Довжина "
-"кожної мітки не повинна перевищувати 63 знаки. Загальна довжина доменної "
-"назви не повинна перевищувати 253 знаки."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Домашня сторінка вебсервера"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1299,32 +1255,32 @@ msgstr ""
 "{box_name} (Plinth), Ваші користувачі повинні явно вводити /plinth або /"
 "freedombox, щоб отримати доступ до сервісу {box_name} (Plinth)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "Показувати розширені застосунки і можливості"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr ""
 "Показувати застосунки і можливості, що вимагають більш технічних знань."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "Запис в системний журнал"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "Вимкнути запис в журнал, для приватності"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "Зберігати дещо в памʼяті до перезапуску для продуктивності"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "Записати на диск, зручно під час налагодження"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
@@ -1332,43 +1288,25 @@ msgstr ""
 "Журнали містять інформацію про те, хто мав доступ до системи та інформацію "
 "про налагодження від різних служб"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Помилка параметру hostname: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "Назву компʼютера задано"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Помилка встановлення доменної назви: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "Доменну назву задано"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Помилка налаштування домашньої сторінки вебсервера: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "Домашню сторінку вебсервера задано"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Помилка зміни розширеного режиму: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "Відображення розширених застосунків і можливостей"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "Приховування розширених застосунків і можливостей"
 
@@ -1818,6 +1756,16 @@ msgstr "Приймати всі SSL-сертифікати"
 msgid "Use HTTP basic authentication"
 msgstr "Використовувати основну автентифікацію HTTP"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "Доменна назва"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "Неправильна доменна назва"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
@@ -2035,17 +1983,35 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "Домен Вашого сервера XMPP – <b>%(domainname)s</b>. ID користувача "
 "виглядатиме як <i>username@%(domainname)s</i>. Ви можете налаштувати свій "
 "домен на системній сторінці <a href=\"%(index_url)s\">Налаштувати</a>."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"Домен Вашого сервера XMPP – <b>%(domainname)s</b>. ID користувача "
+"виглядатиме як <i>username@%(domainname)s</i>. Ви можете налаштувати свій "
+"домен на системній сторінці <a href=\"%(index_url)s\">Налаштувати</a>."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2056,7 +2022,7 @@ msgstr ""
 "поштовим клієнтам отримувати доступ до вашої поштової скриньки за допомогою "
 "IMAP і POP3. Rspamd блокує спам."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2069,7 +2035,7 @@ msgstr ""
 "обмеження після явного запиту. Дивіться сторінку посібника для отримання "
 "подробиць."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2085,7 +2051,7 @@ msgstr ""
 "\"postmaster\", створюються автоматично, вказуючи на першого користувача-"
 "адміністратора."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2093,26 +2059,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Застосунок Roundcube</a> надає "
 "вебінтерфейс для доступу користувачів до ел. пошти."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "Під час встановлення всі інші сервери ел. пошти в системі буде видалено."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "Сервер електронної пошти"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "Мої псевдоніми ел. пошти"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "Керування псевдонімами для скриньки"
 
@@ -3594,9 +3560,12 @@ msgid "Obtain"
 msgstr "Отримати"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Нема налаштованих доменів. <a href=\"%(config_url)s\">Налаштуйте домени</a>, "
@@ -4356,7 +4325,7 @@ msgstr "Долучення пароля змінено"
 msgid "Root channel name changed."
 msgstr "Змінено назву кореневого каналу."
 
-#: modules/names/__init__.py:29
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4369,11 +4338,11 @@ msgstr ""
 "кожного типу імені показано, чи ввімкнено чи вимкнено служби HTTP, HTTPS і "
 "SSH для вхідних з’єднань через задане ім’я."
 
-#: modules/names/__init__.py:50
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "Назва сервісів"
 
-#: modules/names/__init__.py:119
+#: modules/names/__init__.py:133
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4390,13 +4359,52 @@ msgstr "Усі вебзастосунки"
 msgid "Secure Shell"
 msgstr "Захищена оболонка"
 
-#: modules/names/forms.py:14
+#: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:42
+#: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "Назва компʼютера"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"Назва компʼютера – це локальна назва, за якою інші пристрої в локальній "
+"мережі можуть звертатися до вашого {box_name}. Вона має починатися і "
+"закінчуватися символами алфавіту або цифрами, і містити всередині лише "
+"символи алфавіту, цифри чи дефіси. Загальна довжина не повинна перевищувати "
+"63 знаки."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "Некоректна назва компʼютера"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"Доменна назва – це глобальна назва, за якою інші пристрої в Інтернеті можуть "
+"звертатися до Вашого {box_name}. Вона має складатися з міток розділених "
+"крапками. Кожна мітка повинна починатися і закінчуватися на літеру алфавіту "
+"або цифру, і між ними містити лише літери алфавіту, цифри чи дефіси. Довжина "
+"кожної мітки не повинна перевищувати 63 знаки. Загальна довжина доменної "
+"назви не повинна перевищувати 253 знаки."
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:24
@@ -4487,6 +4495,28 @@ msgstr "Сервер DNS"
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
 msgstr "Помилка під час встановлення"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "Назва компʼютера"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Помилка параметру hostname: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "Доменна назва"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Помилка встановлення доменної назви: {exception}"
 
 #: modules/networks/__init__.py:37
 msgid ""
@@ -8099,12 +8129,12 @@ msgstr "TTRSS-читач"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "Перевірити і застосувати останні оновлення безпеки і ПЗ."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8118,21 +8148,21 @@ msgstr ""
 "автоматично о 02:00, що призводить до короткочасної недоступності всіх "
 "застосунків."
 
-#: modules/upgrades/__init__.py:68 modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Оновлення ПЗ"
 
-#: modules/upgrades/__init__.py:132
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox оновлено"
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "Не можливо запустити оновлення дистрибутиву"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8143,18 +8173,18 @@ msgstr ""
 "місця. Оновлення дистрибутива буде повторено через 24 години, якщо його "
 "увімкнено."
 
-#: modules/upgrades/__init__.py:230
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "Оновлення дистрибутиву розпочато"
 
-#: modules/upgrades/__init__.py:232
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Розпочато оновлення до наступного стабільного випуску. Це може зайняти "
 "багато часу."
 
-#: modules/upgrades/__init__.py:324
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -9623,6 +9653,12 @@ msgstr "перед видаленням {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Hostname set"
+#~ msgstr "Назву компʼютера задано"
+
+#~ msgid "Domain name set"
+#~ msgstr "Доменну назву задано"
 
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (TTTRSS)"

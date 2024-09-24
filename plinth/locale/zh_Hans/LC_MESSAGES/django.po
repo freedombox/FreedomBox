@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 20:39-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2024-09-11 04:09+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
@@ -971,12 +971,13 @@ msgstr "IP 地址"
 msgid "Refresh IP address and domains"
 msgstr "刷新 IP 地址和域"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:54 modules/pagekite/forms.py:74
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:46 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1146,85 +1147,44 @@ msgstr "Cockpit"
 msgid "Server Administration"
 msgstr "服务器管理"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr "在这里你可以设置一些一般的配置选项，如主机名、域名、网络服务器主页等。"
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "常规配置"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:33
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
 #: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "配置"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:19
-msgid "Domain Name"
-msgstr "域名"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "无效的域名"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "{user}的网站"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Apache 默认"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox 服务（Plinth）"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "主机名"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"主机名是本地网络上的其他设备可以到达你 {box_name} 的本地名称。它必须以字母或"
-"数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 63 个字符或更"
-"少。"
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "无效的主机名"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"域名是互联网上的其他设备可以访问您的 {box_name} 的全局名称。它必须由以点分隔"
-"的标签组成。每个标签必须以字母或数字开头和结尾，并且只有字母，数字和连字符作"
-"为内部字符。每个标签的长度必须为 63 个字符或更少。域名总长度不得超过 253 个字"
-"符。"
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Web 服务器首页"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1238,73 +1198,55 @@ msgstr ""
 "{box_name} 服务（Plinth）之外的其它地方，您的用户必须明确输入 /plinth 或 /"
 "freedombox 来访问 {box_name} 服务（Plinth）。"
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "展示先进的应用和特点"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "展示需要更多专业知识的应用和特点。"
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "系统级日志记录"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "由于保护隐私，所以禁用了日志记录"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "为了提高性能，一直保留在内存中，直到重新启动"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "写入磁盘，用于调试"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr "日志记录了访问系统的人员，以及各种服务的调试信息"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "设置主机名错误：{exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "主机名设置"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "设置域名错误：{exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "域名集"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "设置主机名错误：{exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "网页服务器主页已设置"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "更改为高级模式时错误：{exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "展现先进的应用和特征"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "隐藏先进的应用和特征"
 
@@ -1726,6 +1668,16 @@ msgstr "接受所有 SSL 证书"
 msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "域名"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "无效的域名"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
@@ -1933,24 +1885,42 @@ msgid "Gajim"
 msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "XMPP 服务器域名可以设置为 <b>%(domainname)s</b>。用户 ID 类似于 "
 "<i>username@%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置"
 "</a>中设置你的域名。"
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"XMPP 服务器域名可以设置为 <b>%(domainname)s</b>。用户 ID 类似于 "
+"<i>username@%(domainname)s</i>。你可以在系统的<a href=\"%(index_url)s\">配置"
+"</a>中设置你的域名。"
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
 "your mailbox using IMAP and POP3. Rspamd deals with spam."
 msgstr ""
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -1958,7 +1928,7 @@ msgid ""
 "request. See manual page for more information."
 msgstr ""
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -1968,31 +1938,31 @@ msgid ""
 "pointing to the first admin user."
 msgstr ""
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr ""
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "邮件服务器"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "我的邮箱别名"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "管理邮箱别名"
 
@@ -3319,9 +3289,12 @@ msgid "Obtain"
 msgstr "获取"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "还没有配置域名。<a href=\"%(config_url)s\">配置域名</a>可以为它们获得相应的证"
@@ -3955,7 +3928,7 @@ msgstr "加入密码已更改"
 msgid "Root channel name changed."
 msgstr ""
 
-#: modules/names/__init__.py:29
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -3964,11 +3937,11 @@ msgid ""
 "enabled or disabled for incoming connections through the given name."
 msgstr ""
 
-#: modules/names/__init__.py:50
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "名称服务"
 
-#: modules/names/__init__.py:119
+#: modules/names/__init__.py:133
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -3985,13 +3958,48 @@ msgstr ""
 msgid "Secure Shell"
 msgstr "安全 Shell"
 
-#: modules/names/forms.py:14
+#: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:42
+#: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "主机名"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"主机名是本地网络上的其他设备可以到达你 {box_name} 的本地名称。它必须以字母或"
+"数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 63 个字符或更"
+"少。"
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "无效的主机名"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"域名是互联网上的其他设备可以访问您的 {box_name} 的全局名称。它必须由以点分隔"
+"的标签组成。每个标签必须以字母或数字开头和结尾，并且只有字母，数字和连字符作"
+"为内部字符。每个标签的长度必须为 63 个字符或更少。域名总长度不得超过 253 个字"
+"符。"
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:24
@@ -4068,6 +4076,28 @@ msgstr "备选 DNS 服务器"
 #: modules/names/templates/names.html:112
 msgid "Error retrieving status:"
 msgstr "获取状态出错："
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "主机名"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "设置主机名错误：{exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "域名"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "设置域名错误：{exception}"
 
 #: modules/networks/__init__.py:37
 msgid ""
@@ -7271,12 +7301,12 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "检查并应用最新软件和安全更新。"
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7284,37 +7314,37 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:68 modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "软件更新"
 
-#: modules/upgrades/__init__.py:132
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox 已更新"
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:230
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "已启动分发更新"
 
-#: modules/upgrades/__init__.py:232
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 
-#: modules/upgrades/__init__.py:324
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -8654,6 +8684,12 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "Hostname set"
+#~ msgstr "主机名设置"
+
+#~ msgid "Domain name set"
+#~ msgstr "域名集"
 
 #~ msgid "Storage snapshots configuration updated"
 #~ msgstr "存储快照配置已更新"

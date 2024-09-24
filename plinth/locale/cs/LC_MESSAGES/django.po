@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-09 20:39-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2024-09-13 15:09+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -1003,12 +1003,13 @@ msgstr "IP adresy"
 msgid "Refresh IP address and domains"
 msgstr "Obnovení IP adresy a domén"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:54 modules/pagekite/forms.py:74
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:46 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1189,90 +1190,46 @@ msgstr "Cockpit"
 msgid "Server Administration"
 msgstr "Správa serveru"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "Zde můžete nastavit některé obecné konfigurační možnosti, jako je název "
 "hostitele, název domény, domovská stránka webového serveru atd."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "Obecná nastavení"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:33
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
 #: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Nastavit"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:19
-msgid "Domain Name"
-msgstr "Doménový název"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "Neplatný doménový název"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "webové stránky {user}"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Výchozí pro Apache"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "Služba FreedomBox (Plinth)"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "Název stroje"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"Název stroje je místní název pomocí kterého ostatní zařízení na místní síti "
-"mohou komunikovat s vaším {box_name}. Je třeba, aby začínal a končil na "
-"písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
-"Celková délka může být nejvýše 63 znaků."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "Neplatný název stroje"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"Doménový název je celosvětový název pomocí kterého mohou ostatní zařízení na "
-"Internetu komunikovat s vaším {box_name}. Je třeba, aby byl tvořen štítky, "
-"oddělovanými tečkou. Je třeba, aby každý ze štítků začínal a končil písmenem "
-"nebo číslicí a obsahoval pouze písmena, číslice a spojovníky. Délka každého "
-"ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
-"nejvýše 253 znaků."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Domovská stránka domovského serveru"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1288,31 +1245,31 @@ msgstr ""
 "{box_name} (Plinth), uživatelé budou potřebovat výslovně zadávat /plinth "
 "nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "Zobrazit pokročilé aplikace a funkce"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Zobrazit aplikace a funkce, které vyžadují techničtější znalosti."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "Celosystémové protokolování"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "Zakázat protokolování kvůli ochraně soukromí"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "Některé z nich ponechat v paměti až do restartu kvůli výkonu"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "Zápis na disk, užitečné pro ladění"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
@@ -1320,43 +1277,25 @@ msgstr ""
 "Protokoly obsahují informace o tom, kdo přistupoval k systému, a informace o "
 "ladění různých služeb"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Chyba při nastavování názvu stroje: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "Nastavení názvu stroje"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Chyba při nastavování doménového názvu: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "Nastavení doménového názvu"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Chyba při nastavování domovské stránky webového serveru: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "Nastavení domovské stránky webového serveru"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Chyba při změně pokročilého režimu: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "Jsou zobrazovány pokročilé aplikace a funkce"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "Jsou skryté pokročilé aplikace a funkce"
 
@@ -1802,6 +1741,16 @@ msgstr "Přijímat veškeré SSL certifikáty"
 msgid "Use HTTP basic authentication"
 msgstr "Použít základní HTTP ověřování"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "Doménový název"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "Neplatný doménový název"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
@@ -2018,18 +1967,37 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "Doména vašeho XMPP serveru je nastavená na <b>%(domainname)s</b>. "
 "Identifikátory uživatelů budou mít podobu "
 "<i>uzivatelske_jmeno@%(domainname)s</i>. Doménu je možné nastavit na stránce "
 "<a href=\"%(index_url)s\">nastavení</a> systému."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"Doména vašeho XMPP serveru je nastavená na <b>%(domainname)s</b>. "
+"Identifikátory uživatelů budou mít podobu "
+"<i>uzivatelske_jmeno@%(domainname)s</i>. Doménu je možné nastavit na stránce "
+"<a href=\"%(index_url)s\">nastavení</a> systému."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2040,7 +2008,7 @@ msgstr ""
 "klientům přistupovat k poštovní schránce pomocí protokolů IMAP a POP3. "
 "Rspamd se zabývá nevyžádanou poštou."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2052,7 +2020,7 @@ msgstr ""
 "internetových služeb také omezuje odchozí poštu. Někteří po výslovné žádosti "
 "omezení zruší. Další informace naleznete na stránce s manuálem."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2067,7 +2035,7 @@ msgstr ""
 "aliasy. Potřebné aliasy, jako například \"postmaster\", se vytvoří "
 "automaticky a ukazují na prvního uživatele-administrátora."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2075,7 +2043,7 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Aplikace Roundcube</a> poskytuje "
 "uživatelům webové rozhraní pro přístup k e-mailu."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
@@ -2083,19 +2051,19 @@ msgstr ""
 "Během instalace budou odinstalovány všechny ostatní e-mailové servery v "
 "systému."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix / Dovecot"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-mailový Server"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "Moje e-mailové aliasy"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "Správa aliasů pro poštovní schránku"
 
@@ -3558,9 +3526,12 @@ msgid "Obtain"
 msgstr "Získat"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Nejsou nastavené žádné domény. <a href=\"%(config_url)s\">Nastavte je</a>, "
@@ -4298,7 +4269,7 @@ msgstr "Heslo pro připojení změněno"
 msgid "Root channel name changed."
 msgstr "Změna názvu kořenového kanálu."
 
-#: modules/names/__init__.py:29
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4311,11 +4282,11 @@ msgstr ""
 "typu jména je uvedeno, zda jsou služby HTTP, HTTPS a SSH pro příchozí "
 "spojení přes dané jméno povoleny nebo zakázány."
 
-#: modules/names/__init__.py:50
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "Jmenné služby"
 
-#: modules/names/__init__.py:119
+#: modules/names/__init__.py:133
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr "Vyřešit název domény: {domain}"
@@ -4332,13 +4303,51 @@ msgstr "Všechny webové aplikace"
 msgid "Secure Shell"
 msgstr "Zabezpečený shell"
 
-#: modules/names/forms.py:14
+#: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr "Použít DNS-over-TLS pro překlad domén (globální předvolba)"
 
-#: modules/names/forms.py:42
+#: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr "Použít DNSSEC při překladu domén (globální předvolba)"
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "Název stroje"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"Název stroje je místní název pomocí kterého ostatní zařízení na místní síti "
+"mohou komunikovat s vaším {box_name}. Je třeba, aby začínal a končil na "
+"písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
+"Celková délka může být nejvýše 63 znaků."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "Neplatný název stroje"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"Doménový název je celosvětový název pomocí kterého mohou ostatní zařízení na "
+"Internetu komunikovat s vaším {box_name}. Je třeba, aby byl tvořen štítky, "
+"oddělovanými tečkou. Je třeba, aby každý ze štítků začínal a končil písmenem "
+"nebo číslicí a obsahoval pouze písmena, číslice a spojovníky. Délka každého "
+"ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
+"nejvýše 253 znaků."
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:24
@@ -4415,6 +4424,28 @@ msgstr "Záložní servery DNS"
 #: modules/names/templates/names.html:112
 msgid "Error retrieving status:"
 msgstr "Chyba při instalaci:"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "Název stroje"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Chyba při nastavování názvu stroje: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "Doménový název"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Chyba při nastavování doménového názvu: {exception}"
 
 #: modules/networks/__init__.py:37
 msgid ""
@@ -8030,13 +8061,13 @@ msgstr "TTRSS-Reader"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8049,21 +8080,21 @@ msgstr ""
 "systému považován za nezbytný, provede se automaticky ve 02:00 a způsobí, že "
 "všechny aplikace budou krátce nedostupné."
 
-#: modules/upgrades/__init__.py:68 modules/upgrades/__init__.py:129
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Aktualizace software"
 
-#: modules/upgrades/__init__.py:132
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualizován"
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8073,17 +8104,17 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:230
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "Zahájena aktualizace distribuce"
 
-#: modules/upgrades/__init__.py:232
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
 
-#: modules/upgrades/__init__.py:324
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr "Kontrola zadržení balíčku"
 
@@ -9549,6 +9580,12 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Hostname set"
+#~ msgstr "Nastavení názvu stroje"
+
+#~ msgid "Domain name set"
+#~ msgstr "Nastavení doménového názvu"
 
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (TTTRSS)"
