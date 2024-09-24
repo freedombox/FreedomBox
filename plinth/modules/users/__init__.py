@@ -47,7 +47,7 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
-    _version = 6
+    _version = 7
 
     can_be_disabled = False
 
@@ -111,7 +111,7 @@ class UsersApp(app_module.App):
         if not old_version:
             privileged.first_setup()
 
-        if old_version and old_version < 6:
+        if old_version and old_version < 7:
             # Setup password policy and lock LDAP passwords for inactive users.
             inactivated_users = _get_inactivated_users()
             if inactivated_users:
