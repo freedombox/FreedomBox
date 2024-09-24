@@ -291,6 +291,8 @@ def setup():
         action_utils.service_stop('nmbd')
     action_utils.service_disable('nmbd')
     action_utils.service_mask('nmbd')
+    action_utils.service_disable('nmb')
+    action_utils.service_mask('nmb')
 
     if action_utils.service_is_running('smbd'):
         action_utils.service_restart('smbd')
