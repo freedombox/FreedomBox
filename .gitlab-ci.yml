@@ -136,8 +136,9 @@ lintian:
 
 # autopkgtest is flaky due to
 # https://salsa.debian.org/freedombox-team/freedombox/-/issues/2077
-#autopkgtest:
-#    extends: .test-autopkgtest
+autopkgtest:
+    extends: .test-autopkgtest
+    allow_failure: true
 
 blhc:
     extends: .test-blhc
