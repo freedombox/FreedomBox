@@ -6,16 +6,16 @@ Test module for key/value store.
 import json
 import pathlib
 import subprocess
-from unittest.mock import patch
+from unittest.mock import call, patch
 
 import pytest
 
 from plinth.action_utils import (get_addresses, get_hostname,
-                                 is_systemd_running, service_action,
-                                 service_disable, service_enable,
-                                 service_is_enabled, service_is_running,
-                                 service_reload, service_restart,
-                                 service_start, service_stop,
+                                 is_systemd_running, move_uploaded_file,
+                                 service_action, service_disable,
+                                 service_enable, service_is_enabled,
+                                 service_is_running, service_reload,
+                                 service_restart, service_start, service_stop,
                                  service_try_reload_or_restart,
                                  service_try_restart, service_unmask)
 
@@ -140,3 +140,92 @@ def test_get_addresses():
     assert len(ips) > 3  # min: ip, 2x'localhost', hostname
     for address in ips:
         assert address['kind'] in ('4', '6')
+
+
+@pytest.fixture(name='upload_dir')
+def fixture_update_dir(tmp_path):
+    """Patch Django file upload directory."""
+    tmp_path /= 'source'
+    tmp_path.mkdir()
+
+    import plinth.settings
+    old_value = plinth.settings.FILE_UPLOAD_TEMP_DIR
+    plinth.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
+    yield tmp_path
+    plinth.settings.FILE_UPLOAD_TEMP_DIR = old_value
+
+
+def test_move_uploaded_file(tmp_path, upload_dir):
+    """Test moving Django uploaded file to destination directory."""
+    tmp_path /= 'destination'
+    tmp_path.mkdir()
+
+    # Source file does not exist
+    source = tmp_path / 'does-non-exist'
+    destination = tmp_path / 'destination'
+    destination_file_name = 'destination-file-name'
+    with pytest.raises(FileNotFoundError):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Source is not a file
+    source = tmp_path / 'source-dir'
+    source.mkdir()
+    with pytest.raises(ValueError, match='Source is not a file'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Source is not in expected temporary upload directory
+    source = tmp_path / 'source-file'
+    source.touch()
+    with pytest.raises(
+            ValueError,
+            match='Uploaded file is not in expected temp directory'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Destination does not exist
+    source = upload_dir / 'source-file'
+    source.touch()
+    with pytest.raises(ValueError, match='Destination is not a directory'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Destination is not a file
+    destination.touch()
+    with pytest.raises(ValueError, match='Destination is not a directory'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Destination file name is a multi-component path
+    destination.unlink()
+    destination.mkdir()
+    destination_file_name = '../destination-file-name'
+    with pytest.raises(ValueError, match='Invalid destination file name'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    # Destination file exists and override is not allowed
+    destination_file_name = 'destination-file-exists'
+    (destination / destination_file_name).touch()
+    with pytest.raises(FileExistsError, match='Destination already exists'):
+        move_uploaded_file(source, destination, destination_file_name)
+
+    with pytest.raises(FileExistsError, match='Destination already exists'):
+        move_uploaded_file(source, destination, destination_file_name,
+                           allow_overwrite=False)
+
+    # Successful move
+    with patch('shutil.chown') as chown:
+        destination_file = destination / destination_file_name
+        destination_file.unlink()
+        source.write_text('x-contents-1')
+        move_uploaded_file(source, destination, destination_file_name)
+        chown.mock_calls = [call(destination_file, 'root', 'root')]
+        assert destination_file.stat().st_mode & 0o777 == 0o644
+        assert destination_file.read_text() == 'x-contents-1'
+        assert not source.exists()
+
+        chown.reset_mock()
+        source.write_text('x-contents-2')
+        move_uploaded_file(source, destination, destination_file_name,
+                           allow_overwrite=True, user='x-user',
+                           group='x-group', permissions=0o600)
+        chown.mock_calls = [call(destination_file, 'x-user', 'x-group')]
+        assert destination_file.stat().st_mode & 0o777 == 0o600
+        assert destination_file.read_text() == 'x-contents-2'
+        assert not source.exists()
