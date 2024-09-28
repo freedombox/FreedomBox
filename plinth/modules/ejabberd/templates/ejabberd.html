@@ -13,17 +13,19 @@
   <h3>{% trans "Status" %}</h3>
 
   <p>
-    {% url 'config:index' as index_url %}
-    {% if domainname %}
-      {% blocktrans trimmed with domainname=domainname %}
-        Your XMPP server domain is set to <b>{{ domainname }}</b>. User
-        IDs will look like <i>username@{{ domainname }}</i>. You
+    {% url 'names:index' as names_url %}
+    {% if domain_name %}
+      {% blocktrans trimmed with domain_name=domain_name %}
+        Your XMPP server domain is set to <b>{{ domain_name }}</b>. User
+        IDs will look like <i>username@{{ domain_name }}</i>. You
         can setup your domain on the system
-        <a href="{{ index_url }}">Configure</a> page.
+        <a href="{{ names_url }}">Name Services</a> page.
       {% endblocktrans %}
     {% else %}
-      Your XMPP server domain is not set. You can setup your domain on
-      the system <a href="{{ index_url }}">Configure</a> page.
+      {% blocktrans trimmed %}
+        Your XMPP server domain is not set. You can setup your domain on the
+        system <a href="{{ names_url }}">Name Services</a> page.
+      {% endblocktrans %}
     {% endif %}
   </p>
 

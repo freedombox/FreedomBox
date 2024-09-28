@@ -22,3 +22,11 @@ class PrivacyForm(forms.Form):
               'target="_blank">popcon.debian.org</a>. Submission happens over '
               'the Tor network for additional anonymity if Tor app is enabled.'
               ), box_name=_(cfg.box_name)))
+
+    dns_fallback = forms.BooleanField(
+        label=_('Allow using fallback DNS servers'), required=False,
+        help_text=_(
+            'Use well-known public DNS servers to resolve domain names in '
+            'unusual circumstances where no DNS servers are known but '
+            'internet connectivity is available. Can be disabled in most '
+            'cases if network connectivity is stable and reliable.'))

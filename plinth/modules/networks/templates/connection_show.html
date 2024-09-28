@@ -256,6 +256,15 @@
         <p>{% trans "This connection is not active." %}</p>
       {% endif %}
 
+      <h3>{% trans "Privacy" %}</h3>
+
+      <div class="list-group list-group-two-column">
+        <div class="list-group-item">
+          <span class="primary">{% trans "DNS-over-TLS" %}</span>
+          <span class="secondary">{{ connection.dns_over_tls_string }}</span>
+        </div>
+      </div>
+
       <h3>{% trans "Security" %}</h3>
 
       {% if connection.zone == "internal" %}

@@ -40,4 +40,4 @@ def test_on_domain_removed():
     # try to remove things that don't exist
     on_domain_removed('', '')
     with pytest.raises(KeyError):
-        on_domain_removed('', 'domainname', 'iiiii')
+        on_domain_removed('', 'some-domain-type', 'x-unknown-name')

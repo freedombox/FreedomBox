@@ -16,6 +16,7 @@ from plinth.action_utils import (get_addresses, get_hostname,
                                  service_is_enabled, service_is_running,
                                  service_reload, service_restart,
                                  service_start, service_stop,
+                                 service_try_reload_or_restart,
                                  service_try_restart, service_unmask)
 
 UNKNOWN = 'unknowndeamon'
@@ -86,6 +87,8 @@ def test_service_actions(mock):
     mock.assert_called_with(UNKNOWN, 'try-restart')
     service_reload(UNKNOWN)
     mock.assert_called_with(UNKNOWN, 'reload')
+    service_try_reload_or_restart(UNKNOWN)
+    mock.assert_called_with(UNKNOWN, 'try-reload-or-restart')
 
 
 @pytest.mark.usefixtures('needs_root')

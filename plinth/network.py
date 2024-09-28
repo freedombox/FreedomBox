@@ -101,6 +101,8 @@ def get_status_from_connection(connection):
     status['uuid'] = connection.get_uuid()
     status['type'] = connection.get_connection_type()
     status['zone'] = connection.get_setting_connection().get_zone()
+    status['dns_over_tls'] = \
+        connection.get_setting_connection().get_dns_over_tls().value_nick
     status['interface_name'] = connection.get_interface_name()
     status['primary'] = _is_primary(connection)
 
@@ -332,6 +334,16 @@ def _update_common_settings(connection, connection_uuid, common):
 
     if 'zone' in common:
         settings.set_property(nm.SETTING_CONNECTION_ZONE, common['zone'])
+
+    if 'dns_over_tls' in common:
+        values = {
+            'default': nm.SettingConnectionDnsOverTls.DEFAULT,
+            'no': nm.SettingConnectionDnsOverTls.NO,
+            'opportunistic': nm.SettingConnectionDnsOverTls.OPPORTUNISTIC,
+            'yes': nm.SettingConnectionDnsOverTls.YES
+        }
+        settings.set_property(nm.SETTING_CONNECTION_DNS_OVER_TLS,
+                              values[common['dns_over_tls']])
 
     if 'autoconnect' in common:
         settings.set_property(nm.SETTING_CONNECTION_AUTOCONNECT,
@@ -622,3 +634,8 @@ def wifi_scan():
             })
 
     return access_points
+
+
+def refeed_dns():
+    """Re-feed DNS servers to systemd-resolved."""
+    get_nm_client().reload(nm.ManagerReloadFlags.DNS_RC)

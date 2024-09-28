@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2024-08-15 06:09+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -120,7 +120,7 @@ msgstr "Data"
 msgid "System"
 msgstr "System"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: menu.py:112 modules/networks/templates/connection_show.html:268
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Sikkerhet"
@@ -205,7 +205,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Aktiver sikkerhetskopitidsplan"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
+#: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gå til {app_name}"
@@ -363,7 +363,7 @@ msgstr "Nøkkel i kodelager"
 msgid "None"
 msgstr "Ingen"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:270
+#: modules/backups/forms.py:179 modules/networks/forms.py:320
 msgid "Passphrase"
 msgstr "Passfrase"
 
@@ -878,7 +878,7 @@ msgid "No passwords currently configured."
 msgstr "Ingen passord er foreløpig satt opp."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Passord"
@@ -995,7 +995,7 @@ msgid "Serving Domains"
 msgstr "Betjener domener"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
-#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:15
+#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
 #: modules/networks/templates/connection_show.html:91
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
@@ -1018,17 +1018,18 @@ msgstr "IP-adresser"
 msgid "Refresh IP address and domains"
 msgstr "Oppdater IP-adresse og domener"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/pagekite/forms.py:74 modules/privacy/views.py:36
-#: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
-#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
-#: modules/transmission/views.py:43 modules/ttrss/views.py:31
-#: modules/wordpress/views.py:31
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
+#: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
+#: modules/ssh/views.py:62 modules/transmission/views.py:43
+#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Oppsett oppdatert"
 
@@ -1201,89 +1202,46 @@ msgstr "Styrhus"
 msgid "Server Administration"
 msgstr "Tjeneradministrasjon"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "Her kan du sette noen generelle oppsettsvalg som vertsnavn, domenenavn, "
 "vevtjener-hjemmeside, etc."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "Generelt oppsett"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:30
-#: modules/names/templates/names.html:44 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
+#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Oppsett"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
-msgid "Domain Name"
-msgstr "Domenenavn"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "Ugyldig domenenavn"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "{user} sin nettside"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Apache-forvalg"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox-tjeneste (Plinth)"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "Vertsnavn"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"Vertsnavn er det lokale navnet som andre enheter i det lokale nettverket kan "
-"bruke for å nå din {box_name}. Det må starte og avslutte med en bokstav "
-"eller et tall, og inneholde bokstaver tall eller bindrestreker. Lengden må "
-"være 63 tegn eller mindre."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "Ugyldig vertsnavn"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"Domenenavnet er det globale navnet som andre enheter på Internettet kan nå "
-"din {box_name} med. Det må bestå av merkelapper atskilt med punktum. Hver "
-"merkelapp må starte og avslutte med en bokstav eller et tall, og imellom "
-"bare bokstaver, tall og bindestreker. Lengden på hver merkelapp må være 63 "
-"tegn, eller mindre. Lengden på domenenavnet må være 253 tegn, eller mindre."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Web-tjener-forside"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1299,73 +1257,55 @@ msgstr ""
 "skrive /plinth eller /freedombox eksplisitt for å nå {box_name}-tjenesten "
 "(Plinth)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "Vis avanserte programmer og funksjoner"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Vis programmer og funksjoner som krever dypere teknisk innsikt."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "Systemomfattende logging"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "Koble ut logging for å verne privatsfæren"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr ""
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr ""
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Feil ved setting av vertsnavn: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "Vertsnavn satt"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "Domenenavn satt"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Feil ved setting av nettstedets hjemmeside: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "Webtjenerforside satt"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Feil ved bytte til avansert modus: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "Viser avanserte programmer og funksjoner"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "Viser ikke avanserte programmer og funksjoner"
 
@@ -1509,7 +1449,7 @@ msgstr ""
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
 msgid "failed"
 msgstr "feilet"
 
@@ -1848,12 +1788,22 @@ msgstr "Godta alle SSL-sertifikater"
 msgid "Use HTTP basic authentication"
 msgstr "Bruk HTTP-basisgodkjenning"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "Domenenavn"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "Ugyldig domenenavn"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:207 modules/users/forms.py:129
+#: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
 msgstr "Brukernavn"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:210
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
 msgid "Show password"
 msgstr "Vis passord"
 
@@ -2073,17 +2023,35 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "Ditt XMPP-tjenerdomene er satt til <b>%(domainname)s</b>. Bruker-ID-ene vil "
 "se slik ut: <i>username@%(domainname)s</i>. Du kan sette opp ditt domene på "
 "systemsiden <a href=\"%(index_url)s\"> Configure </a>."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"Ditt XMPP-tjenerdomene er satt til <b>%(domainname)s</b>. Bruker-ID-ene vil "
+"se slik ut: <i>username@%(domainname)s</i>. Du kan sette opp ditt domene på "
+"systemsiden <a href=\"%(index_url)s\"> Configure </a>."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2093,7 +2061,7 @@ msgstr ""
 "Rspamd. Postfix sender og mottar e-post. Dovecot gir e-postklienter tilgang "
 "til din postkasse ved hjelp av IMAP og POP3. Rspamd håndterer søppelpost."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2105,7 +2073,7 @@ msgstr ""
 "internettleverandører begrenser også utgående epost. Noen løfter på "
 "blokkeringen etter eksplisitte henvendelser. Se manualsiden for mer info."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2115,33 +2083,33 @@ msgid ""
 "pointing to the first admin user."
 msgstr ""
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
 msgstr ""
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr "Enhver annen e-posttjener vil bli avinstallert under installasjonen."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-posttjener"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 #, fuzzy
 #| msgid "Manage Libraries"
 msgid "My Email Aliases"
 msgstr "Håndter biblioteker"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 #, fuzzy
 #| msgid "Manage Libraries"
 msgid "Manage Aliases for Mailbox"
@@ -2478,17 +2446,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Brannmur"
 
-#: modules/firewall/__init__.py:273
+#: modules/firewall/__init__.py:262
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default zone is external"
 msgstr "Forvalgsprogram satt"
 
-#: modules/firewall/__init__.py:283
+#: modules/firewall/__init__.py:272
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: modules/firewall/__init__.py:297
+#: modules/firewall/__init__.py:286
 msgid "Direct passthrough rules exist"
 msgstr ""
 
@@ -3639,9 +3607,12 @@ msgid "Obtain"
 msgstr "Innhente"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Ingen domener er satt opp. <a href=\"%(config_url)s\">Sett opp domener</a> "
@@ -4113,8 +4084,8 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 "Når den ikke er aktiv, kan ikke spillere dø eller ta skade av noe slag."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:49
-#: modules/networks/forms.py:85
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
+#: modules/networks/forms.py:141
 msgid "Address"
 msgstr "Adresse"
 
@@ -4416,7 +4387,7 @@ msgstr "Oppdaterte opplastingspassord"
 msgid "Root channel name changed."
 msgstr ""
 
-#: modules/names/__init__.py:22
+#: modules/names/__init__.py:32
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4435,9 +4406,14 @@ msgstr ""
 "vises det om HTTP, HTTPS, og SSH-tjenester er på- eller avskrudd for "
 "innkommende tilkoblinger gjennom gitt navn."
 
-#: modules/names/__init__.py:43
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "Navnetjenester"
+
+#: modules/names/__init__.py:133
+#, python-brace-format
+msgid "Resolve domain name: {domain}"
+msgstr ""
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4451,13 +4427,166 @@ msgstr "Alle nettprogrammer"
 msgid "Secure Shell"
 msgstr "Secure Shell (SSH)"
 
-#: modules/names/templates/names.html:17
+#: modules/names/forms.py:21
+msgid "Use DNS-over-TLS for resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:49
+msgid "Use DNSSEC when resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "Vertsnavn"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"Vertsnavn er det lokale navnet som andre enheter i det lokale nettverket kan "
+"bruke for å nå din {box_name}. Det må starte og avslutte med en bokstav "
+"eller et tall, og inneholde bokstaver tall eller bindrestreker. Lengden må "
+"være 63 tegn eller mindre."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "Ugyldig vertsnavn"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"Domenenavnet er det globale navnet som andre enheter på Internettet kan nå "
+"din {box_name} med. Det må bestå av merkelapper atskilt med punktum. Hver "
+"merkelapp må starte og avslutte med en bokstav eller et tall, og imellom "
+"bare bokstaver, tall og bindestreker. Lengden på hver merkelapp må være 63 "
+"tegn, eller mindre. Lengden på domenenavnet må være 253 tegn, eller mindre."
+
+#: modules/names/resolved.py:91 modules/names/resolved.py:101
+#: modules/networks/forms.py:24
+#: modules/networks/templates/connection_show.html:66
+#: modules/networks/templates/connection_show.html:208
+#: modules/networks/templates/connection_show.html:249
+#: modules/networks/views.py:126
+msgid "yes"
+msgstr "Ja"
+
+#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/networks/views.py:125
+msgid "opportunistic"
+msgstr ""
+
+#: modules/names/resolved.py:93 modules/names/resolved.py:103
+#: modules/networks/forms.py:26 modules/networks/views.py:124
+#, fuzzy
+#| msgid "Dino"
+msgid "no"
+msgstr "Dino"
+
+#: modules/names/resolved.py:102
+msgid "allow-downgrade"
+msgstr ""
+
+#: modules/names/resolved.py:110
+#, fuzzy
+#| msgid "Get Support"
+msgid "supported"
+msgstr "Få støtte"
+
+#: modules/names/resolved.py:110
+msgid "unsupported"
+msgstr ""
+
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domener"
+
+#: modules/names/templates/names.html:20
 #, fuzzy
 #| msgid "Service"
 msgid "Services"
 msgstr "Tjeneste"
 
-#: modules/networks/__init__.py:36
+#: modules/names/templates/names.html:56
+msgid "Resolver Status"
+msgstr ""
+
+#: modules/names/templates/names.html:66
+msgid "Global"
+msgstr ""
+
+#: modules/names/templates/names.html:68
+msgid "Link"
+msgstr ""
+
+#: modules/names/templates/names.html:73
+#: modules/networks/templates/connection_show.html:263
+msgid "DNS-over-TLS"
+msgstr ""
+
+#: modules/names/templates/names.html:77
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNSSEC"
+msgstr "Aktiver DNSSEC"
+
+#: modules/names/templates/names.html:82
+#, fuzzy
+#| msgid "Second DNS Server"
+msgid "Current DNS Server"
+msgstr "Andre DNS-tjener"
+
+#: modules/names/templates/names.html:88
+#, fuzzy
+#| msgid "DNS Server"
+msgid "DNS Servers"
+msgstr "DNS-tjener"
+
+#: modules/names/templates/names.html:98
+#, fuzzy
+#| msgid "DNS Server"
+msgid "Fallback DNS Servers"
+msgstr "DNS-tjener"
+
+#: modules/names/templates/names.html:112
+#, fuzzy
+#| msgid "Error during installation"
+msgid "Error retrieving status:"
+msgstr "Feil under installasjon"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "Vertsnavn"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Feil ved setting av vertsnavn: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "Domenenavn"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
+
+#: modules/networks/__init__.py:37
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4465,7 +4594,7 @@ msgstr ""
 "Sett opp nettverksenheter. Sett opp Internett via Ethernet, Wi-Fi eller "
 "PPPoE. Del den tilkoblingen med andre enheter på nettverket."
 
-#: modules/networks/__init__.py:38
+#: modules/networks/__init__.py:39
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4473,31 +4602,36 @@ msgstr ""
 "Enheter administrert gjennom andre metoder kan være utilgjengelige for "
 "oppsett her."
 
-#: modules/networks/__init__.py:59
+#: modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "Nettverk"
 
-#: modules/networks/forms.py:16
+#: modules/networks/forms.py:21 modules/networks/views.py:40
+#: modules/networks/views.py:101 modules/networks/views.py:112
+msgid "unknown"
+msgstr "ukjent"
+
+#: modules/networks/forms.py:34
 msgid "Connection Type"
 msgstr "Oppkoblingstype"
 
-#: modules/networks/forms.py:23
+#: modules/networks/forms.py:41
 msgid "Connection Name"
 msgstr "Oppkoblingsnavn"
 
-#: modules/networks/forms.py:25
+#: modules/networks/forms.py:43
 msgid "Network Interface"
 msgstr "Nettverksgrensesnitt"
 
-#: modules/networks/forms.py:26
+#: modules/networks/forms.py:44
 msgid "The network device that this connection should be bound to."
 msgstr "Nettverksenheten som denne forbindelsen bør være bundet til."
 
-#: modules/networks/forms.py:29
+#: modules/networks/forms.py:47
 msgid "Firewall Zone"
 msgstr "Brannmursone"
 
-#: modules/networks/forms.py:30
+#: modules/networks/forms.py:48
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4505,37 +4639,41 @@ msgstr ""
 "Brannmuren vil kontrollere hvilke tjenester som er tilgjengelig over dette "
 "grensesnitt. Velg Internal (Internt) bare for klarerte nettverk."
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:52
+msgid "Use DNS-over-TLS"
+msgstr ""
+
+#: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 adresseringsmetode"
 
-#: modules/networks/forms.py:36
+#: modules/networks/forms.py:88
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
 
-#: modules/networks/forms.py:39
+#: modules/networks/forms.py:91
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
 
-#: modules/networks/forms.py:42 modules/networks/forms.py:80
+#: modules/networks/forms.py:94 modules/networks/forms.py:135
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
 
-#: modules/networks/forms.py:45
+#: modules/networks/forms.py:97
 msgid "Disabled: Do not configure this addressing method"
 msgstr ""
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:104
 msgid "Netmask"
 msgstr "Nettmaske"
 
-#: modules/networks/forms.py:53
+#: modules/networks/forms.py:105
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -4543,21 +4681,21 @@ msgstr ""
 "Valgfri verdi. Om det står tomt, vil en standard nettmaske, basert på "
 "adressen, bli brukt."
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Inngangsport"
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 msgid "Optional value."
 msgstr "Valgfri verdi."
 
-#: modules/networks/forms.py:60 modules/networks/forms.py:95
+#: modules/networks/forms.py:112 modules/networks/forms.py:151
 msgid "DNS Server"
 msgstr "DNS-tjener"
 
-#: modules/networks/forms.py:61
+#: modules/networks/forms.py:113
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4565,11 +4703,11 @@ msgstr ""
 "Valgfri verdi. Hvis denne verdien er gitt, og IPv4-adresseringsmetoden er "
 "«Automatisk», så vil DNS-tjenerne levert fra en DHCP-tjener bli ignorert."
 
-#: modules/networks/forms.py:66 modules/networks/forms.py:101
+#: modules/networks/forms.py:118 modules/networks/forms.py:157
 msgid "Second DNS Server"
 msgstr "Andre DNS-tjener"
 
-#: modules/networks/forms.py:67
+#: modules/networks/forms.py:119
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4577,34 +4715,44 @@ msgstr ""
 "Valgfri verdi. Hvis denne verdien er gitt, og IPv4-adresseringsmetoden er "
 "«Automatisk», vil DNS-serverne som tilbys fra en DHCP-tjener bli ignorert."
 
-#: modules/networks/forms.py:72
+#: modules/networks/forms.py:124
 msgid "IPv6 Addressing Method"
 msgstr "IPv6-adresseringsmetode"
 
-#: modules/networks/forms.py:74
+#: modules/networks/forms.py:126
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
 
-#: modules/networks/forms.py:77
+#: modules/networks/forms.py:129
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
 
-#: modules/networks/forms.py:82
+#: modules/networks/forms.py:132
+msgid ""
+"Link-local: Configure automatically to use an address that is only relevant "
+"to this network."
+msgstr ""
+
+#: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
 msgstr ""
 
-#: modules/networks/forms.py:87
+#: modules/networks/forms.py:138
+msgid "Disabled: Disable IPv6 for this connection"
+msgstr ""
+
+#: modules/networks/forms.py:143
 msgid "Prefix"
 msgstr "Forstavelse"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:144
 msgid "Value between 1 and 128."
 msgstr "Verdi mellom 1 og 128."
 
-#: modules/networks/forms.py:96
+#: modules/networks/forms.py:152
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4612,7 +4760,7 @@ msgstr ""
 "Valgfri verdi. Hvis denne verdien er gitt, og IPv6-adresseringsmetoden er "
 "«Automatisk», så vil DNS-tjenerne levert fra en DHCP-tjener bli ignorert."
 
-#: modules/networks/forms.py:102
+#: modules/networks/forms.py:158
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4620,58 +4768,58 @@ msgstr ""
 "Valgfri verdi. Hvis denne verdien er gitt, og IPv6-adresseringsmetoden er "
 "«Automatisk», så vil DNS-serverne som tilbys fra en DHCP-tjener bli ignorert."
 
-#: modules/networks/forms.py:115
+#: modules/networks/forms.py:171
 msgid "-- select --"
 msgstr "-- velg --"
 
-#: modules/networks/forms.py:242
+#: modules/networks/forms.py:292
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID (Service Set Identifier)"
 
-#: modules/networks/forms.py:243
+#: modules/networks/forms.py:293
 msgid "The visible name of the network."
 msgstr "Det synlige navnet på nettverket."
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Modus"
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 msgid "Infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/forms.py:246
+#: modules/networks/forms.py:296
 msgid "Access Point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/forms.py:247
+#: modules/networks/forms.py:297
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Frequency Band"
 msgstr "Frekvensbånd"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: modules/networks/forms.py:250
+#: modules/networks/forms.py:300
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:251
+#: modules/networks/forms.py:301
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:253
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Kanal"
 
-#: modules/networks/forms.py:254
+#: modules/networks/forms.py:304
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4679,11 +4827,11 @@ msgstr ""
 "Valgfri verdi. Trådløskanal i det valgte frekvensbåndet som det skal "
 "begrenses til. Blank eller verdi 0 betyr at det skal velges automatisk."
 
-#: modules/networks/forms.py:259
+#: modules/networks/forms.py:309
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:260
+#: modules/networks/forms.py:310
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4693,11 +4841,11 @@ msgstr ""
 "aksesspunkt, koble kun til hvis BSSID-en til aksesspunktet stemmer med det "
 "som er oppgitt. Eksempel: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:266
+#: modules/networks/forms.py:316
 msgid "Authentication Mode"
 msgstr "Autentiseringsmodus"
 
-#: modules/networks/forms.py:267
+#: modules/networks/forms.py:317
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4705,20 +4853,20 @@ msgstr ""
 "Velg WPA (Wi-Fi Protected Access) hvis det trådløse nettverket er sikret og "
 "krever at brukerne har passordet som trengs for å koble seg til."
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "Open"
 msgstr "Åpen"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:355
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Angi hvordan din {box_name} er tilkoblet ditt nettverket"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:362
 #, fuzzy, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4729,7 +4877,7 @@ msgstr ""
 "internett-tilknytning fra en ruter via Wi-Fi eller ethernetkabel. Dette er "
 "et typisk hjemmeoppsett.</p>"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:369
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4742,7 +4890,7 @@ msgstr ""
 "kort. {box_name} er koblet direkte til Internet og alle enhetene dine kan "
 "koble seg til {box_name} med Internett-forbindelsen sin.</p>"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:378
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4753,11 +4901,11 @@ msgstr ""
 "din er koblet direkte til idn {box_name} og det er ingen andre enheter på "
 "nettverket. Dette kan gjelde fellesbokser eller skyoppsett.</p>"
 
-#: modules/networks/forms.py:347
+#: modules/networks/forms.py:397
 msgid "Choose your internet connection type"
 msgstr "Velg din internett-tilkoblingstype"
 
-#: modules/networks/forms.py:351
+#: modules/networks/forms.py:401
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4771,7 +4919,7 @@ msgstr ""
 "internett-tilknytning fra en ruter via Wi-Fi eller Ethernetkabel. Dette er "
 "et typisk hjemmeoppsett.</p>"
 
-#: modules/networks/forms.py:363
+#: modules/networks/forms.py:413
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4783,7 +4931,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:376
+#: modules/networks/forms.py:426
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4795,7 +4943,7 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:439
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4804,13 +4952,13 @@ msgstr ""
 "<p class=\"help-block\">Du vil bli anmodet å fatte de mest konservative "
 "valgene.</p>"
 
-#: modules/networks/forms.py:406
+#: modules/networks/forms.py:456
 #, fuzzy
 #| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
 msgstr "Nåværende nettverksoppsett"
 
-#: modules/networks/forms.py:411
+#: modules/networks/forms.py:461
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4821,7 +4969,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:423
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4833,7 +4981,7 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:487
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4885,12 +5033,6 @@ msgstr "Tilkobling"
 #: modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "Primærtilkobling"
-
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
-msgid "yes"
-msgstr "Ja"
 
 #: modules/networks/templates/connection_show.html:77
 #: modules/storage/templates/storage.html:23
@@ -4956,6 +5098,7 @@ msgid "Signal strength"
 msgstr "Signalstyrke"
 
 #: modules/networks/templates/connection_show.html:170
+#: modules/networks/templates/connections_fields.html:61
 msgid "IPv4"
 msgstr "IPv4"
 
@@ -4982,6 +5125,7 @@ msgid "Default"
 msgstr "Forvalg"
 
 #: modules/networks/templates/connection_show.html:213
+#: modules/networks/templates/connections_fields.html:90
 msgid "IPv6"
 msgstr "IPv6"
 
@@ -4989,13 +5133,21 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Denne forbindelsen er ikke aktiv."
 
-#: modules/networks/templates/connection_show.html:264
-#: modules/networks/templates/connection_show.html:284
-#: modules/networks/templates/connection_show.html:303
+#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#, fuzzy
+#| msgid "Privoxy"
+msgid "Privacy"
+msgstr "Privoxy"
+
+#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:293
+#: modules/networks/templates/connection_show.html:312
 msgid "Firewall zone"
 msgstr "Brannmursone"
 
-#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:282
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5006,8 +5158,8 @@ msgstr ""
 "bare være tilgjengelig internt, bli tilgjengelig eksternt. Dette er en "
 "sikkerhetsrisiko."
 
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:302
+#: modules/networks/templates/connection_show.html:325
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5017,24 +5169,24 @@ msgstr ""
 "til et lokalt nettverk/maskin, vil mange tjenester som er ment å være "
 "tilgjengelig internt ikke være tilgjengelige."
 
-#: modules/networks/templates/connection_show.html:305
+#: modules/networks/templates/connection_show.html:314
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr "Eksternt"
 
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:321
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
 "automatically assigned to the external zone."
 msgstr ""
 
-#: modules/networks/templates/connections_create.html:19
+#: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
 msgstr "Lage forbindelse"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:519
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Slett tilkobling"
 
@@ -5054,13 +5206,14 @@ msgstr "Lage mellomrom"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:100 network.py:27
+#: modules/networks/views.py:102 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/views.py:101 network.py:28
+#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/views.py:103 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5079,10 +5232,20 @@ msgstr "Intern"
 msgid "Computer"
 msgstr "Datamaskin"
 
-#: modules/networks/templates/connections_edit.html:20
-#: modules/networks/views.py:239 modules/networks/views.py:323
+#: modules/networks/templates/connections_edit.html:19
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Endre oppkobling"
+
+#: modules/networks/templates/connections_fields.html:24
+#, fuzzy
+#| msgid "Generic"
+msgid "General"
+msgstr "Generisk"
+
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+msgid "PPPoE"
+msgstr "PPPoE"
 
 #: modules/networks/templates/connections_list.html:8
 #, fuzzy
@@ -5092,13 +5255,13 @@ msgstr "Tilkobling"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:372
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi-nettverk i nærheten"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:396
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Legg til tilkobling"
@@ -5337,257 +5500,268 @@ msgstr "Delt"
 msgid "link-local"
 msgstr ""
 
-#: modules/networks/views.py:38 modules/networks/views.py:99
-#: modules/networks/views.py:110
-msgid "unknown"
-msgstr "ukjent"
+#: modules/networks/views.py:33
+msgid "dhcp"
+msgstr ""
 
-#: modules/networks/views.py:39
+#: modules/networks/views.py:34
+#, fuzzy
+#| msgid "Ignore"
+msgid "ignore"
+msgstr "Overse"
+
+#: modules/networks/views.py:41
 #, fuzzy
 #| msgid "Manage"
 msgid "unmanaged"
 msgstr "Håndtere"
 
-#: modules/networks/views.py:40
+#: modules/networks/views.py:42
 #, fuzzy
 #| msgid "Available Domains"
 msgid "unavailable"
 msgstr "Tilgjengelige domener"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:43
 #, fuzzy
 #| msgid "cable is connected"
 msgid "disconnected"
 msgstr "kabel er tilknyttet"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:44
 #, fuzzy
 #| msgid "Sharing"
 msgid "preparing"
 msgstr "Deling"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:45
 #, fuzzy
 #| msgid "Connection"
 msgid "connecting"
 msgstr "Tilkobling"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:46
 #, fuzzy
 #| msgid "Use HTTP basic authentication"
 msgid "needs authentication"
 msgstr "Bruk HTTP-basisgodkjenning"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:47
 msgid "requesting address"
 msgstr ""
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:48
 msgid "checking"
 msgstr "sjekker"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:49
 msgid "waiting for secondary"
 msgstr ""
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:50
 #, fuzzy
 #| msgid "Deactivate"
 msgid "activated"
 msgstr "Deaktivere"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:51
 #, fuzzy
 #| msgid "Deactivate"
 msgid "deactivating"
 msgstr "Deaktivere"
 
-#: modules/networks/views.py:57
+#: modules/networks/views.py:59
 #, fuzzy
 #| msgid "State reason"
 msgid "no reason"
 msgstr "Grunn til tilstand"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:61
 msgid "unknown error"
 msgstr ""
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:63
 msgid "device is now managed"
 msgstr "Enheten er nå håndtert"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:65
 msgid "device is now unmanaged"
 msgstr "Enheten er nå ikke håndtert"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:67
 #, fuzzy
 #| msgid "configuration file: {file}"
 msgid "configuration failed"
 msgstr "oppsettsfil: {file}"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:69
 msgid "secrets required"
 msgstr ""
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:71
 msgid "DHCP client failed to start"
 msgstr ""
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:73
 msgid "DHCP client error"
 msgstr "DHCP-klientfeil"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:75
 msgid "DHCP client failed"
 msgstr "DHCP-klient feilet"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:77
 msgid "shared connection service failed to start"
 msgstr ""
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:79
 msgid "shared connection service failed"
 msgstr "delt forbindelsestjeneste feilet"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:81
 msgid "device was removed"
 msgstr "enhet ble fjernet"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:83
 msgid "device disconnected by user"
 msgstr "enhet frakoblet av bruker"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:85
 msgid "a dependency of the connection failed"
 msgstr ""
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:87
 #, fuzzy
 #| msgid "Client not found"
 msgid "Wi-Fi network not found"
 msgstr "Finner ikke klient"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:89
 msgid "a secondary connection failed"
 msgstr ""
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:91
 msgid "new connection activation was enqueued"
 msgstr ""
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:93
 msgid "a duplicate IP address was detected"
 msgstr ""
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:95
 msgid "selected IP method is not supported"
 msgstr ""
 
-#: modules/networks/views.py:102
+#: modules/networks/views.py:104
 #, fuzzy
 #| msgid "Generic"
 msgid "generic"
 msgstr "Generisk"
 
-#: modules/networks/views.py:103
+#: modules/networks/views.py:105
 #, fuzzy
 #| msgid "Network Interface"
 msgid "TUN or TAP interface"
 msgstr "Nettverksgrensesnitt"
 
-#: modules/networks/views.py:104 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:111
+#: modules/networks/views.py:113
 #, fuzzy
 #| msgid "Ad-hoc"
 msgid "ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/views.py:112
+#: modules/networks/views.py:114
 #, fuzzy
 #| msgid "Infrastructure"
 msgid "infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:115
 #, fuzzy
 #| msgid "Access Point"
 msgid "access point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:116
 #, fuzzy
 #| msgid "Access Point"
 msgid "mesh point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/views.py:144
+#: modules/networks/views.py:123
+#, fuzzy
+#| msgid "Default"
+msgid "default"
+msgstr "Forvalg"
+
+#: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
 msgstr "Kan ikke vise tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:197
+#: modules/networks/views.py:211
 msgid "Connection Information"
 msgstr "Oppkoblingsinformasjon"
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "Kan ikke redigere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:217
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Denne typen tilkobling er ennå ikke forstått."
 
-#: modules/networks/views.py:335
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Aktiverte tilkobling {name}."
 
-#: modules/networks/views.py:339
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kunne ikke aktivere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:345
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Klarte ikke aktivere tilkoblingen {name}: Ingen passende enhet er "
 "tilgjengelig."
 
-#: modules/networks/views.py:358
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Deaktivert tilkobling {name}."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kunne ikke deaktivere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:414
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Legger til ny generell tilkobling"
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Legge til ny Ethernet-tilkobling"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Legge til ny PPPoE-tilkobling"
 
-#: modules/networks/views.py:485
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Legge til ny Wi-Fi-tilkobling"
 
-#: modules/networks/views.py:500
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Tilkobling {name} slettet."
 
-#: modules/networks/views.py:504 modules/networks/views.py:514
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kunne ikke slette tilkobling: Tilkobling ikke funnet."
 
@@ -6081,17 +6255,11 @@ msgstr "Slå av nå"
 msgid "Manage system-wide privacy settings."
 msgstr ""
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
-#, fuzzy
-#| msgid "Privoxy"
-msgid "Privacy"
-msgstr "Privoxy"
-
-#: modules/privacy/__init__.py:68
+#: modules/privacy/__init__.py:70
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 
-#: modules/privacy/__init__.py:73
+#: modules/privacy/__init__.py:75
 msgid "Review privacy setting"
 msgstr ""
 
@@ -6108,6 +6276,18 @@ msgid ""
 "collected are publicly available at <a href=\"https://popcon.debian.org/\" "
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
+msgstr ""
+
+#: modules/privacy/forms.py:27
+msgid "Allow using fallback DNS servers"
+msgstr ""
+
+#: modules/privacy/forms.py:29
+msgid ""
+"Use well-known public DNS servers to resolve domain names in unusual "
+"circumstances where no DNS servers are known but internet connectivity is "
+"available. Can be disabled in most cases if network connectivity is stable "
+"and reliable."
 msgstr ""
 
 #: modules/privoxy/__init__.py:25
@@ -7487,7 +7667,7 @@ msgstr "Rotfilsystem"
 msgid "Go to Power"
 msgstr "Gå til nettverk"
 
-#: modules/storage/__init__.py:439
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
 msgid "grub package is configured"
 msgstr ""
 
@@ -8036,12 +8216,12 @@ msgstr "TT-RSS kildeleser"
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8049,39 +8229,39 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Programvare-oppdatering"
 
-#: modules/upgrades/__init__.py:130
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox oppdatert"
 
-#: modules/upgrades/__init__.py:204
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:206
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:231
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 
-#: modules/upgrades/__init__.py:311
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -9035,10 +9215,6 @@ msgstr ""
 "Brukerkontoen <strong>%(username)s</strong> vil bli administratorkonto for "
 "Zoph."
 
-#: network.py:29
-msgid "PPPoE"
-msgstr "PPPoE"
-
 #: network.py:30
 msgid "Generic"
 msgstr "Generisk"
@@ -9589,6 +9765,12 @@ msgstr "før avinstallering av {app_id}"
 msgid "Gujarati"
 msgstr "Gujarati"
 
+#~ msgid "Hostname set"
+#~ msgstr "Vertsnavn satt"
+
+#~ msgid "Domain name set"
+#~ msgstr "Domenenavn satt"
+
 #, fuzzy
 #~| msgid "Tiny Tiny RSS (Fork)"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
@@ -9711,9 +9893,6 @@ msgstr "Gujarati"
 #~ msgid "Failed to restrict console access: {error}"
 #~ msgstr "Klarte ikke å begrense konsolltilgang: {error}"
 
-#~ msgid "Enable DNSSEC"
-#~ msgstr "Aktiver DNSSEC"
-
 #~ msgid "Enable Domain Name System Security Extensions"
 #~ msgstr "Aktiver domenenavnsystemets sikkerhetsutvidelser"
 
@@ -9758,9 +9937,6 @@ msgstr "Gujarati"
 
 #~ msgid "Tor configuration is being updated"
 #~ msgstr "Tor-oppsettet oppdateres"
-
-#~ msgid "Error during installation"
-#~ msgstr "Feil under installasjon"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -10094,9 +10270,6 @@ msgstr "Gujarati"
 #~ msgid "Cancel"
 #~ msgstr "Kanseller"
 
-#~ msgid "Domains"
-#~ msgstr "Domener"
-
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "OpenPGP Fingerprint (fingeravtrykk)"
 
@@ -10377,9 +10550,6 @@ msgstr "Gujarati"
 
 #~ msgid "Automatic, DHCP only"
 #~ msgstr "Automatisk, kun DHCP"
-
-#~ msgid "Ignore"
-#~ msgstr "Overse"
 
 #~ msgid "Plumble"
 #~ msgstr "Plumble"

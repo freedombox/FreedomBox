@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 19:15-0400\n"
-"PO-Revision-Date: 2024-08-18 00:09+0000\n"
-"Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
+"PO-Revision-Date: 2024-09-03 14:09+0000\n"
+"Last-Translator: Hemanth Kumar Veeranki <hems.india1997@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/te/>\n"
 "Language: te\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -102,29 +102,26 @@ msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్లో ఉన్న భాషాప్రాధాన్యతనే ఉపయోగించు"
 
 #: menu.py:106
-#, fuzzy
-#| msgid "Public Visibility"
 msgid "Visibility"
-msgstr "ప్రజా దృశ్యమానం"
+msgstr "దృశ్యమానత"
 
 #: menu.py:108
+#, fuzzy
 msgid "Data"
-msgstr ""
+msgstr "డేటా"
 
 #: menu.py:110 templates/base.html:129
 msgid "System"
 msgstr "వ్యవస్థ"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: menu.py:112 modules/networks/templates/connection_show.html:268
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "భద్రత"
 
 #: menu.py:114
-#, fuzzy
-#| msgid "Server Administration"
 msgid "Administration"
-msgstr "సేవిక పరిపాలన"
+msgstr "సర్వర్ నిర్వహణ"
 
 #: middleware.py:131
 msgid "System is possibly under heavy load. Please retry later."
@@ -199,7 +196,7 @@ msgid "Enable a Backup Schedule"
 msgstr "బ్యాకప్ షెడ్యూల్‌ను ప్రారంభించండి"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
+#: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "{app_name} కు వెళ్ళండి"
@@ -358,7 +355,7 @@ msgstr "రిపోజిటరీలో కీ"
 msgid "None"
 msgstr "ఏమీ లేదు"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:270
+#: modules/backups/forms.py:179 modules/networks/forms.py:320
 msgid "Passphrase"
 msgstr "రహస్యపదం"
 
@@ -856,11 +853,10 @@ msgid "No passwords currently configured."
 msgstr "ప్రస్తుతం రహస్యపదాలను ఏవీ కాన్ఫిగర్ చేయబడలేదు."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
-#, fuzzy
 msgid "Password"
-msgstr "పాస్వర్డ"
+msgstr "పాస్వర్డ్"
 
 #: modules/bepasty/views.py:19
 msgid "admin"
@@ -971,7 +967,7 @@ msgid "Serving Domains"
 msgstr "అధికారకక్షేత్రాలను అందిస్తోంది"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
-#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:15
+#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
 #: modules/networks/templates/connection_show.html:91
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
@@ -994,17 +990,18 @@ msgstr "IP చిరునామా"
 msgid "Refresh IP address and domains"
 msgstr "IP చిరునామా మరియు డొమైన్‌లను రిఫ్రెష్ చేయండి"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/pagekite/forms.py:74 modules/privacy/views.py:36
-#: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
-#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
-#: modules/transmission/views.py:43 modules/ttrss/views.py:31
-#: modules/wordpress/views.py:31
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
+#: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
+#: modules/ssh/views.py:62 modules/transmission/views.py:43
+#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
@@ -1174,88 +1171,46 @@ msgstr "కాక్పిట్"
 msgid "Server Administration"
 msgstr "సేవిక పరిపాలన"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "ఇక్కడ మీరు ఆతిథ్య నామం అధికారక్షేత్రం మహాతలంసేవిక మొదలైన కొన్ని సాధారణ రూపకరణ ఎంపికలను అమరిక "
 "చేయవచ్చు."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "సాధారణ ఆకృతీకరణ"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:30
-#: modules/names/templates/names.html:44 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
+#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "ఆకృతీకరణ"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
-msgid "Domain Name"
-msgstr "డొమైను పేరు"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "డొమైన్ పేరు చెల్లదు"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "{user}'sమహాతలం పుట"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "అప్రమేయం"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "ఫ్రీడమ్ బాక్స్ (ప్లిన్త్ )"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "అతిథ్యనామం"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"అతిథ్యనామం అనేది మీ లోకల్ నెట్‌వర్క్ లో ఉన్న ఇతర పరికరాలు మిమల్ని చేరుకొనుట కొరకు మీ {box_name} కి "
-"ఇవ్వబడే పేరు. ఆది అక్షరంతో మొదలై అక్షారంతో ముగింపబడలి. ఆ మధ్యలో అంకెలు కానీ అక్షరాలు కానీ హైఫెన్(-) "
-"మాత్రమే ఉండాలి. మొత్తం 63 అక్షరాలు లేదా అంత కన్నా తక్కువ ఉండవలెను."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "ఆతిథ్యనామం చెల్లనిది"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"డోమైన్ పేరు అనేది అంతర్జాలంలో ఉన్న మిగత పరికరాలు మీ {box_name} ను చేరుకునేందుకు ఉండే అంతర్జాతీయ "
-"పేరు. అందులో చుక్కలతో వేరుచేయబడిన చీటీలు ఉంటాయి. ప్రతీ చీటీ కూడా ఒక వర్ణమాల అక్షారంతో లేదా అంకె తో "
-"మొదలవాలి అలాగే వర్ణమాల అక్షరాలు, అంకెలు మరియు హైఫెన్(-) మాత్రమే కలిగి ఉండాలి. ప్రతీ చీటీ కేవలం ౬౩ "
-"అక్షరాలు లేదా అంత కన్నా తక్కువే కలిగి ఉండాలి. మొత్తం డోమైన్ పేరు పొడవు ౨౫౩ అక్షరాలు లేదా అంత అత కంటే "
-"తక్కువే ఉండాలి."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "వెబ్‌సర్వర్ హోమ్ పేజీ"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1270,74 +1225,56 @@ msgstr ""
 "(ప్లింత్), చేరుకోవడానికి మీ వినియోగదారులు స్పష్టంగా /ప్లిన్త్ లేదా /ఫ్రీడమ్‌బాక్స్ అని టైప్ చేయాలి {box_name} "
 "సర్వీస్ (ప్లింత్)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలను చూపు"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "మరింత సాంకేతిక పరిజ్ఞానం అవసరమయ్యే అనువర్తనాలు మరియు విశేషాంశాలను చూపించు."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "సిస్టమ్-వైడ్ లాగింగ్"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "గోప్యత కోసం లాగింగ్‌ను నిలిపివేయండి"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "పనితీరు కోసం, పునఃప్రారంభించే వరకు కొన్నింటిని మెమరీలో ఉంచండి"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "డిస్క్‌కి వ్రాయండి, డీబగ్గింగ్‌కు ఉపయోగపడుతుంది"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
 msgstr ""
 "లాగ్‌లు సిస్టమ్‌ను ఎవరు యాక్సెస్ చేశారనే సమాచారాన్ని మరియు వివిధ సేవల నుండి డీబగ్ సమాచారాన్ని కలిగి ఉంటాయి"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "ఆతిథ్యనామం అమర్చు"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "అధికారక్షేత్రం పేరు అమర్పు"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "వెబ్‌సర్వర్ హోమ్ పేజీని సెట్ చేయడంలో లోపం: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "వెబ్ సర్వర్ హోమ్ పేజీ సెట్ చేయబడింది"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలు చూపబడుతున్నాయి"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "అధునాతన అనువర్తనాలు మరియు విశేషాంశాలు దాచబడుతున్నాయి"
 
@@ -1469,13 +1406,13 @@ msgstr "లక్షణాలు"
 
 #: modules/diagnostics/__init__.py:99
 msgid "skipped"
-msgstr ""
+msgstr "దాటివేయబడినవి"
 
 #: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "ఉత్తీర్ణులయ్యారు"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
 msgid "failed"
 msgstr "విఫలమయ్యారు"
 
@@ -1777,12 +1714,22 @@ msgstr "అన్ని ఎస్.ఎస్.ఎల్ సర్టిఫిక�
 msgid "Use HTTP basic authentication"
 msgstr "HTTP ప్రాథమిక ప్రమాణీకరణ ఉపయోగించు"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "డొమైను పేరు"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "డొమైన్ పేరు చెల్లదు"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:207 modules/users/forms.py:129
+#: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
 msgstr "వినియోగి పేరు"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:210
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
 msgid "Show password"
 msgstr "రహస్యపదం కనబర్చు"
 
@@ -1989,17 +1936,35 @@ msgid "Gajim"
 msgstr "గజీం"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "మీ XMPP సర్వర్ డొమైన్ <b>%(domainname)s</b>కు సెట్ చేయబడింది. వినియోగదారు ఐడిలు "
 "<i>username@%(domainname)s</i> లాగా కనిపిస్తాయి. మీరు మీ డొమైన్ను <a "
 "href=\"%(index_url)s\">కాన్ఫిగర్</a> పేజీలో సెటప్ చేయవచ్చు."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"మీ XMPP సర్వర్ డొమైన్ <b>%(domainname)s</b>కు సెట్ చేయబడింది. వినియోగదారు ఐడిలు "
+"<i>username@%(domainname)s</i> లాగా కనిపిస్తాయి. మీరు మీ డొమైన్ను <a "
+"href=\"%(index_url)s\">కాన్ఫిగర్</a> పేజీలో సెటప్ చేయవచ్చు."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2009,7 +1974,7 @@ msgstr ""
 "ఇమెయిల్‌లను పంపుతుంది మరియు అందుకుంటుంది. ఇమాప్ ,మరియు POP3ని ఉపయోగించి మీ మెయిల్‌బాక్స్‌ని యాక్సెస్ "
 "చేయడానికి ఇమెయిల్ క్లయింట్‌లను డావెకట్ ,అనుమతిస్తుంది. రెస్పాన్ , స్పామ్‌తో వ్యవహరిస్తుంది."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2020,7 +1985,7 @@ msgstr ""
 "చాలా ISPలు అవుట్‌గోయింగ్ ఇమెయిల్‌లను కూడా నియంత్రిస్తాయి. కొందరు స్పష్టమైన అభ్యర్థన తర్వాత పరిమితిని "
 "ఎత్తివేస్తారు. మరింత సమాచారం కోసం మాన్యువల్ పేజీని చూడండి."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2034,7 +1999,7 @@ msgstr ""
 "వారు తమ ఇమెయిల్ చిరునామాకు మారుపేర్లను జోడించవచ్చు. మదటి అడ్మిన్ యూజర్ ను సూచిస్తూ \"పోస్ట్ మాస్టర్\" "
 "వంటి అవసరమైన మారుపేర్లు స్వయంచాలకంగా సృష్టించబడతాయి."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2042,25 +2007,25 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube యాప్</a> వినియోగదారులు ఇమెయిల్‌ను యాక్సెస్ "
 "చేయడానికి వెబ్ ఇంటర్‌ఫేస్‌ను అందిస్తుంది."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr "ఇన్‌స్టాలేషన్ సమయంలో, సిస్టమ్‌లోని ఏదైనా ఇతర ఇమెయిల్ సర్వర్లు అన్‌ఇన్‌స్టాల్ చేయబడతాయి."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "పోస్ట్ ఫిక్స్/డోవ్ కాట్"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "ఇమెయిల్ సేవిక"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "మై ఇమెయిల్ అలియాసిస్"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "మేనేజ్ అలియాసిస్ ఫర్ మైలబోస్"
 
@@ -2385,15 +2350,15 @@ msgstr ""
 msgid "Firewall"
 msgstr "ఫైర్వాల్"
 
-#: modules/firewall/__init__.py:273
+#: modules/firewall/__init__.py:262
 msgid "Default zone is external"
 msgstr "డిఫాల్ట్ జోన్ ఐస్ ఎక్స్టర్నల్"
 
-#: modules/firewall/__init__.py:283
+#: modules/firewall/__init__.py:272
 msgid "Firewall backend is nftables"
 msgstr "ఫైర్వాల్ బక్కెను ఐస్ నాఫ్తాబ్ల్స్"
 
-#: modules/firewall/__init__.py:297
+#: modules/firewall/__init__.py:286
 msgid "Direct passthrough rules exist"
 msgstr "నిబంధనల ద్వారా డైరెక్ట్ పాస్ లు"
 
@@ -3497,9 +3462,12 @@ msgid "Obtain"
 msgstr "పొందు"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "ఒక్క డొమైన్ కూడా కాన్ఫిగర్ చేయబడలేదు. కాన్ఫిగర్ చేయడానికి <a href=\"%(config_url)s\">కాన్ఫిగర్ "
@@ -3939,8 +3907,8 @@ msgstr "నష్టాన్ని ప్రారంభించండి"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "నిరుపయోగం అయినప్పుడు, ఆటగాళ్ళు చనిపోలేరు లేదా ఎలాంటి నష్టాన్ని పొందలేరు."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:49
-#: modules/networks/forms.py:85
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
+#: modules/networks/forms.py:141
 msgid "Address"
 msgstr "చిరునామా"
 
@@ -4224,7 +4192,7 @@ msgstr "అప్లోడ్ చేయడం కోసమై కేటాయి
 msgid "Root channel name changed."
 msgstr "రూట్ ఛానెల్ పేరు మార్చబడింది."
 
-#: modules/names/__init__.py:22
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4236,9 +4204,14 @@ msgstr ""
 "పేరు, టోర్ ఉల్లిపాయ సేవ మరియు పేజ్‌కైట్. ప్రతి రకమైన పేరు కోసం, ఇచ్చిన పేరు ద్వారా ఇన్‌కమింగ్ కనెక్షన్‌ల కోసం "
 "HTTP, HTTPS మరియు SSH సేవలు ప్రారంభించబడినా లేదా నిలిపివేయబడినా చూపబడుతుంది."
 
-#: modules/names/__init__.py:43
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "పేరు సేవలు"
+
+#: modules/names/__init__.py:133
+#, python-brace-format
+msgid "Resolve domain name: {domain}"
+msgstr ""
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4252,11 +4225,163 @@ msgstr "అన్నీ వెబ్ యాప్‌లు"
 msgid "Secure Shell"
 msgstr "సెక్యూర్ షెల్"
 
-#: modules/names/templates/names.html:17
+#: modules/names/forms.py:21
+msgid "Use DNS-over-TLS for resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:49
+msgid "Use DNSSEC when resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "అతిథ్యనామం"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"అతిథ్యనామం అనేది మీ లోకల్ నెట్‌వర్క్ లో ఉన్న ఇతర పరికరాలు మిమల్ని చేరుకొనుట కొరకు మీ {box_name} కి "
+"ఇవ్వబడే పేరు. ఆది అక్షరంతో మొదలై అక్షారంతో ముగింపబడలి. ఆ మధ్యలో అంకెలు కానీ అక్షరాలు కానీ హైఫెన్(-) "
+"మాత్రమే ఉండాలి. మొత్తం 63 అక్షరాలు లేదా అంత కన్నా తక్కువ ఉండవలెను."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "ఆతిథ్యనామం చెల్లనిది"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"డోమైన్ పేరు అనేది అంతర్జాలంలో ఉన్న మిగత పరికరాలు మీ {box_name} ను చేరుకునేందుకు ఉండే అంతర్జాతీయ "
+"పేరు. అందులో చుక్కలతో వేరుచేయబడిన చీటీలు ఉంటాయి. ప్రతీ చీటీ కూడా ఒక వర్ణమాల అక్షారంతో లేదా అంకె తో "
+"మొదలవాలి అలాగే వర్ణమాల అక్షరాలు, అంకెలు మరియు హైఫెన్(-) మాత్రమే కలిగి ఉండాలి. ప్రతీ చీటీ కేవలం ౬౩ "
+"అక్షరాలు లేదా అంత కన్నా తక్కువే కలిగి ఉండాలి. మొత్తం డోమైన్ పేరు పొడవు ౨౫౩ అక్షరాలు లేదా అంత అత కంటే "
+"తక్కువే ఉండాలి."
+
+#: modules/names/resolved.py:91 modules/names/resolved.py:101
+#: modules/networks/forms.py:24
+#: modules/networks/templates/connection_show.html:66
+#: modules/networks/templates/connection_show.html:208
+#: modules/networks/templates/connection_show.html:249
+#: modules/networks/views.py:126
+msgid "yes"
+msgstr "అవును"
+
+#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/networks/views.py:125
+msgid "opportunistic"
+msgstr ""
+
+#: modules/names/resolved.py:93 modules/names/resolved.py:103
+#: modules/networks/forms.py:26 modules/networks/views.py:124
+#, fuzzy
+#| msgid "Dino"
+msgid "no"
+msgstr "డినో"
+
+#: modules/names/resolved.py:102
+msgid "allow-downgrade"
+msgstr ""
+
+#: modules/names/resolved.py:110
+#, fuzzy
+#| msgid "Get Support"
+msgid "supported"
+msgstr "సహాయం పొందు"
+
+#: modules/names/resolved.py:110
+msgid "unsupported"
+msgstr ""
+
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "డొమైన్లు"
+
+#: modules/names/templates/names.html:20
 msgid "Services"
 msgstr "సేవలు"
 
-#: modules/networks/__init__.py:36
+#: modules/names/templates/names.html:56
+msgid "Resolver Status"
+msgstr ""
+
+#: modules/names/templates/names.html:66
+msgid "Global"
+msgstr ""
+
+#: modules/names/templates/names.html:68
+msgid "Link"
+msgstr ""
+
+#: modules/names/templates/names.html:73
+#: modules/networks/templates/connection_show.html:263
+msgid "DNS-over-TLS"
+msgstr ""
+
+#: modules/names/templates/names.html:77
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNSSEC"
+msgstr "DNSSEC అమలుచెయ్యి"
+
+#: modules/names/templates/names.html:82
+#, fuzzy
+#| msgid "Second DNS Server"
+msgid "Current DNS Server"
+msgstr "ద్వితీయ DNS సేవకం"
+
+#: modules/names/templates/names.html:88
+#, fuzzy
+#| msgid "DNS Server"
+msgid "DNS Servers"
+msgstr "DNS సేవకం"
+
+#: modules/names/templates/names.html:98
+#, fuzzy
+#| msgid "DNS Server"
+msgid "Fallback DNS Servers"
+msgstr "DNS సేవకం"
+
+#: modules/names/templates/names.html:112
+#, fuzzy
+#| msgid "Error during installation"
+msgid "Error retrieving status:"
+msgstr "సంస్థాపన ఒక పొరపాటు జరిగింది"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "అతిథ్యనామం"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "ఆతిథ్యనామం అమర్చుటలో లోపం: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "డొమైను పేరు"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "అధికారక్షేత్రం పేరు అమర్పులోపం: {exception}"
+
+#: modules/networks/__init__.py:37
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4264,37 +4389,42 @@ msgstr ""
 "కాన్ఫిగర్ చేయగల నెట్‌వర్క్ పరికరాలు. ఈథర్నెట్ మరియు Wi-Fi లేదా PPPoE ద్వారా ఇంటర్నెట్‌తో కనెక్ట్ అవ్వండి. "
 "నెట్‌వర్క్‌లోని ఇతర పరికరాలతో ఆ కనెక్షన్‌ని భాగస్వామ్యం చేయండి."
 
-#: modules/networks/__init__.py:38
+#: modules/networks/__init__.py:39
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
 msgstr "ఇతర పద్ధతుల ద్వారా నిర్వహించబడే పరికరాలు ఇక్కడ ఆకృతీకరణకు అందుబాటులో ఉండకపోవచ్చు."
 
-#: modules/networks/__init__.py:59
+#: modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "అల్లికలు"
 
-#: modules/networks/forms.py:16
+#: modules/networks/forms.py:21 modules/networks/views.py:40
+#: modules/networks/views.py:101 modules/networks/views.py:112
+msgid "unknown"
+msgstr "తెలియని"
+
+#: modules/networks/forms.py:34
 msgid "Connection Type"
 msgstr "అనుసంధాన రకం"
 
-#: modules/networks/forms.py:23
+#: modules/networks/forms.py:41
 msgid "Connection Name"
 msgstr "అనుసంధానం పేరు"
 
-#: modules/networks/forms.py:25
+#: modules/networks/forms.py:43
 msgid "Network Interface"
 msgstr "నెట్వర్క్ అంతర్ముఖం"
 
-#: modules/networks/forms.py:26
+#: modules/networks/forms.py:44
 msgid "The network device that this connection should be bound to."
 msgstr "ఈ కనెక్షన్‌కు కట్టుబడి ఉండే నెట్‌వర్క్ పరికరం."
 
-#: modules/networks/forms.py:29
+#: modules/networks/forms.py:47
 msgid "Firewall Zone"
 msgstr "కంచుకోట క్షేత్రాం"
 
-#: modules/networks/forms.py:30
+#: modules/networks/forms.py:48
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4302,60 +4432,64 @@ msgstr ""
 "ఫైర్వాల్ జోన్ ఇది సేవలు ఇంటర్ఫేస్లు అందుబాటులో ఉన్నాయి నియంత్రిస్తాయి. నమ్మదగిన నెట్వర్కులలో మాత్రమే అంతర్గత "
 "ఎంచుకోండి."
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:52
+msgid "Use DNS-over-TLS"
+msgstr ""
+
+#: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 చిరునామా ఇచ్చు పద్ధతి"
 
-#: modules/networks/forms.py:36
+#: modules/networks/forms.py:88
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
 msgstr ""
 "స్వయంచాలక (DHCP ): స్వయంచాలకంగా కాన్ఫిగర్ చేయండి, ఈ నెట్‌వర్క్ నుండి ఇంటర్నెట్ కనెక్షన్‌ని ఉపయోగించండి"
 
-#: modules/networks/forms.py:39
+#: modules/networks/forms.py:91
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
 msgstr ""
 "భాగస్వామ్యం చేయబడింది: రూటర్ వలె పని చేయండి, ఈ నెట్‌వర్క్‌లోని ఇతర పరికరాలకు ఇంటర్నెట్ కనెక్షన్‌ను అందించండి"
 
-#: modules/networks/forms.py:42 modules/networks/forms.py:80
+#: modules/networks/forms.py:94 modules/networks/forms.py:135
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
 msgstr ""
 "నిర్దేశిక : నిర్దేశికంగా పేర్కొన్న పారామితులను ఉపయోగించండి, ఈ నెట్‌వర్క్ నుండి ఇంటర్నెట్ కనెక్షన్‌ని ఉపయోగించండి"
 
-#: modules/networks/forms.py:45
+#: modules/networks/forms.py:97
 msgid "Disabled: Do not configure this addressing method"
 msgstr "నిలిపివేయబడింది: ఈ చిరునామా పద్ధతిని కాన్ఫిగర్ చేయవద్దు"
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:104
 msgid "Netmask"
 msgstr "నెట్ మాస్క్"
 
-#: modules/networks/forms.py:53
+#: modules/networks/forms.py:105
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
 msgstr "ఐచ్ఛిక విలువ. ఖాళీగా ఉంటే, చిరునామాపై ఆధారపడి ఒక డిఫాల్ట్ నెట్మాస్క్ ఉపయోగించబడుతుంది."
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "గేట్వే"
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 msgid "Optional value."
 msgstr "ఐచ్ఛిక విలువ."
 
-#: modules/networks/forms.py:60 modules/networks/forms.py:95
+#: modules/networks/forms.py:112 modules/networks/forms.py:151
 msgid "DNS Server"
 msgstr "DNS సేవకం"
 
-#: modules/networks/forms.py:61
+#: modules/networks/forms.py:113
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4363,11 +4497,11 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv4 ప్రసంగిస్తున్న పద్ధతి \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: modules/networks/forms.py:66 modules/networks/forms.py:101
+#: modules/networks/forms.py:118 modules/networks/forms.py:157
 msgid "Second DNS Server"
 msgstr "ద్వితీయ DNS సేవకం"
 
-#: modules/networks/forms.py:67
+#: modules/networks/forms.py:119
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4375,16 +4509,16 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv4 ప్రసంగిస్తూ విధానం \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: modules/networks/forms.py:72
+#: modules/networks/forms.py:124
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 చిరునామా ఇచ్చు పద్ధతి"
 
-#: modules/networks/forms.py:74
+#: modules/networks/forms.py:126
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr "స్వయంచాలికమైన : స్వయంచాలకంగా కాన్ఫిగర్ చేయండి, ఈ నెట్‌వర్క్ నుండి ఇంటర్నెట్ కనెక్షన్‌ని ఉపయోగించండి"
 
-#: modules/networks/forms.py:77
+#: modules/networks/forms.py:129
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
@@ -4392,19 +4526,33 @@ msgstr ""
 "స్వయంచాలక (DHCP మాత్రమే): స్వయంచాలకంగా కాన్ఫిగర్ చేయండి, ఈ నెట్‌వర్క్ నుండి ఇంటర్నెట్ కనెక్షన్‌ని "
 "ఉపయోగించండి"
 
-#: modules/networks/forms.py:82
+#: modules/networks/forms.py:132
+#, fuzzy
+#| msgid ""
+#| "Automatic: Configure automatically, use Internet connection from this "
+#| "network"
+msgid ""
+"Link-local: Configure automatically to use an address that is only relevant "
+"to this network."
+msgstr "స్వయంచాలికమైన : స్వయంచాలకంగా కాన్ఫిగర్ చేయండి, ఈ నెట్‌వర్క్ నుండి ఇంటర్నెట్ కనెక్షన్‌ని ఉపయోగించండి"
+
+#: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
 msgstr "విస్మరించండి: ఈ చిరునామా పద్ధతిని విస్మరించండి"
 
-#: modules/networks/forms.py:87
+#: modules/networks/forms.py:138
+msgid "Disabled: Disable IPv6 for this connection"
+msgstr ""
+
+#: modules/networks/forms.py:143
 msgid "Prefix"
 msgstr "ఉపసర్గ"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:144
 msgid "Value between 1 and 128."
 msgstr "1 మరియు 128 మధ్యగల విలువ."
 
-#: modules/networks/forms.py:96
+#: modules/networks/forms.py:152
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4412,7 +4560,7 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇవ్వబడుతుంది ఉంటే మరియు IPv6 ప్రసంగిస్తున్న పద్ధతి \"ఆటోమేటిక్\" ఉంది, "
 "DHCP సర్వర్ అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: modules/networks/forms.py:102
+#: modules/networks/forms.py:158
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4420,58 +4568,58 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఈ విలువ ఇచ్చిన మరియు IPv6 ప్రసంగిస్తూ విధానం \"ఆటోమేటిక్\" కాకపోతే, DHCP సర్వర్ "
 "అందించిన DNS సర్వర్లు విస్మరించబడుతుంది."
 
-#: modules/networks/forms.py:115
+#: modules/networks/forms.py:171
 msgid "-- select --"
 msgstr "--ఎంచుకోండి--"
 
-#: modules/networks/forms.py:242
+#: modules/networks/forms.py:292
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:243
+#: modules/networks/forms.py:293
 msgid "The visible name of the network."
 msgstr "నెట్వర్క్ యొక్క కనిపించే పేరు."
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "విధం"
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 msgid "Infrastructure"
 msgstr "ఇన్ఫ్రాస్ట్రక్చర్"
 
-#: modules/networks/forms.py:246
+#: modules/networks/forms.py:296
 msgid "Access Point"
 msgstr "వాడుక సూచి"
 
-#: modules/networks/forms.py:247
+#: modules/networks/forms.py:297
 msgid "Ad-hoc"
 msgstr "తదర్థ"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Frequency Band"
 msgstr "ఫ్రీక్వెన్సీ బ్యాండ్"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Automatic"
 msgstr "స్వయంచాలక"
 
-#: modules/networks/forms.py:250
+#: modules/networks/forms.py:300
 msgid "A (5 GHz)"
 msgstr "ఎ (5 GHz)"
 
-#: modules/networks/forms.py:251
+#: modules/networks/forms.py:301
 msgid "B/G (2.4 GHz)"
 msgstr "బి/జి (2.4 గిగాహెర్ట్జ్)"
 
-#: modules/networks/forms.py:253
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "మార్గం"
 
-#: modules/networks/forms.py:254
+#: modules/networks/forms.py:304
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4479,11 +4627,11 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ఎంపిక ఫ్రీక్వెన్సీ బ్యాండ్ వైర్లెస్ ఇన్ ఛానెల్కు నిరోధించండి. ఖాళీ లేదా 0 విలువ స్వయంచాలక "
 "ఎంపిక అర్థం."
 
-#: modules/networks/forms.py:259
+#: modules/networks/forms.py:309
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:260
+#: modules/networks/forms.py:310
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4492,30 +4640,30 @@ msgstr ""
 "ఐచ్ఛికము విలువ. ప్రవేశ బిందువు కోసం ప్రత్యేక ఐడెంటిఫైయర్. ఒక యాక్సెస్ పాయింట్ కనెక్ట్ చేసినప్పుడు, యాక్సెస్ "
 "పాయింట్ BSSID అందించిన మ్యాచ్లు మాత్రమే ఉంటే కనెక్ట్. ఉదాహరణ: 00: 11: 22: aa: BB: సిసి."
 
-#: modules/networks/forms.py:266
+#: modules/networks/forms.py:316
 msgid "Authentication Mode"
 msgstr "ప్రామాణీకరణ విధం"
 
-#: modules/networks/forms.py:267
+#: modules/networks/forms.py:317
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "వైర్లెస్ నెట్వర్క్ భద్రతతో కనెక్ట్ పాస్వర్డ్ను ఖాతాదారులకు అవసరం ఉంటే WPA ఎంచుకోండి."
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "WPA"
 msgstr "WPA (వైఫై రక్షిత యాక్సెస్)"
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "Open"
 msgstr "తెరచిన"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:355
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "మీ బాక్స్_నామ మీ నెట్‌వర్క్‌కు ఎలా కనెక్ట్ అయిందో ఎంచుకోండి {box_name}"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:362
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4525,7 +4673,7 @@ msgstr ""
 "రూటర్‌కి కనెక్ట్ చేయబడింది <p class=\"help-block\">మీ {box_name} మీ రూటర్ నుండి Wi-Fi లేదా "
 "Ethernet కేబుల్ ద్వారా ఇంటర్నెట్ కనెక్షన్‌ని పొందుతుంది. ఇది సాధారణ ఇంటి సెటప్.</p>"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:369
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4537,7 +4685,7 @@ msgstr ""
 "wi-fi అడాప్టర్ వంటి బహుళ నెట్‌వర్క్ ఇంటర్‌ఫేస్‌లను కలిగి ఉంది. {box_name} నేరుగా ఇంటర్నెట్‌కి కనెక్ట్ "
 "చేయబడింది మరియు మీ అన్ని పరికరాలు వాటి ఇంటర్నెట్ కనెక్టివిటీ కోసం {box_name}కి కనెక్ట్ చేయబడ్డాయి.</p>"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:378
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4548,11 +4696,11 @@ msgstr ""
 "{box_name}కి జోడించబడింది మరియు నెట్‌వర్క్‌లో ఇతర పరికరాలు ఏవీ లేవు. ఇది సంఘం లేదా క్లౌడ్ సెటప్‌లలో "
 "జరగవచ్చు.</p>"
 
-#: modules/networks/forms.py:347
+#: modules/networks/forms.py:397
 msgid "Choose your internet connection type"
 msgstr "మీ ఇంటర్నెట్ కనెక్షన్ రకాన్ని ఎంచుకోండి"
 
-#: modules/networks/forms.py:351
+#: modules/networks/forms.py:401
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4568,7 +4716,7 @@ msgstr ""
 "కొంత ఆఫ్‌లైన్ సమయం తర్వాత. అనేక ISPలు ఈ రకమైన కనెక్టివిటీని అందిస్తాయి. మీరు పబ్లిక్ IP చిరునామాను కలిగి "
 "ఉండి, అది కాలక్రమేణా మారుతుందో లేదో ఖచ్చితంగా తెలియకపోతే, ఈ ఎంపికను ఎంచుకోవడం సురక్షితం.</p>"
 
-#: modules/networks/forms.py:363
+#: modules/networks/forms.py:413
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4586,7 +4734,7 @@ msgstr ""
 "ISPలు దీన్ని అందిస్తున్నారు. మీరు అదనపు చెల్లింపు చేయడం ద్వారా మీ ISP నుండి ఈ సేవను పొందవచ్చు.</"
 "p>"
 
-#: modules/networks/forms.py:376
+#: modules/networks/forms.py:426
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4603,7 +4751,7 @@ msgstr ""
 "అనేక ISPలు ఈ రకమైన కనెక్టివిటీని అందిస్తాయి. ఇంట్లో సేవలను హోస్ట్ చేయడానికి ఇది చాలా సమస్యాత్మకమైన పరిస్థితి. "
 "{box_name} అనేక పరిష్కార పరిష్కారాలను అందిస్తుంది కానీ ప్రతి పరిష్కారానికి కొన్ని పరిమితులు ఉంటాయి.</p>"
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:439
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4611,11 +4759,11 @@ msgstr ""
 "నా ఐ ఎస్ పి అందించే కనెక్షన్ రకం నాకు తెలియదు <p class=\"help-block\">మీరు అత్యంత సాంప్రదాయిక "
 "చర్యలను సూచించబడతారు</p>"
 
-#: modules/networks/forms.py:406
+#: modules/networks/forms.py:456
 msgid "Preferred router configuration"
 msgstr "ప్రస్తుత ఇష్టపడే మార్గం అల్లిక ఆకృతీకరణ"
 
-#: modules/networks/forms.py:411
+#: modules/networks/forms.py:461
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4631,7 +4779,7 @@ msgstr ""
 "అనుమతిస్తుంది. ముందుగా మీ రూటర్ కాన్ఫిగరేషన్‌లో మీ {box_name} కోసం స్టాటిక్ స్థానిక ఐపి చిరునామాను "
 "కాన్ఫిగర్ చేయాలని గుర్తుంచుకోండి.</p>"
 
-#: modules/networks/forms.py:423
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4649,7 +4797,7 @@ msgstr ""
 "443 నుండి ట్రాఫిక్‌ను ఫార్వార్డ్ చేయాలి. ప్రతి ఇతర అప్లికేషన్లు ఆ అప్లికేషన్ పని చేయడానికి ఏ పోర్ట్(లు) "
 "ఫార్వార్డ్ చేయాలో సూచిస్తాయి.</p>"
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:487
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4707,12 +4855,6 @@ msgstr "అనుసంధానం"
 #: modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "ప్రాథమిక అనుసంధానం"
-
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
-msgid "yes"
-msgstr "అవును"
 
 #: modules/networks/templates/connection_show.html:77
 #: modules/storage/templates/storage.html:23
@@ -4778,6 +4920,7 @@ msgid "Signal strength"
 msgstr "సంకేత బలం"
 
 #: modules/networks/templates/connection_show.html:170
+#: modules/networks/templates/connections_fields.html:61
 msgid "IPv4"
 msgstr "IPv4"
 
@@ -4804,6 +4947,7 @@ msgid "Default"
 msgstr "అప్రమేయం"
 
 #: modules/networks/templates/connection_show.html:213
+#: modules/networks/templates/connections_fields.html:90
 msgid "IPv6"
 msgstr "IPv6"
 
@@ -4811,13 +4955,19 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "ఈ అనుసంధానం చురుకుగాలేదు."
 
-#: modules/networks/templates/connection_show.html:264
-#: modules/networks/templates/connection_show.html:284
-#: modules/networks/templates/connection_show.html:303
+#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+msgid "Privacy"
+msgstr "అంతరంగికత"
+
+#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:293
+#: modules/networks/templates/connection_show.html:312
 msgid "Firewall zone"
 msgstr "ఫైర్వాల్ క్షేత్రాం"
 
-#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:282
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -4827,8 +4977,8 @@ msgstr ""
 "సేవలు కేవలం అంతర్గతంగానే బాహ్యంగా అందుబాటులో అవుతుంది అందుబాటులో ఉండాలి అర్థం. ఇది భద్రతాపరమైన "
 "ప్రమాదం."
 
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:302
+#: modules/networks/templates/connection_show.html:325
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -4837,12 +4987,12 @@ msgstr ""
 "ఈ ఇంటర్ఫేస్ మీ ఇంటర్నెట్ కనెక్షన్ అందుకోవాలి. మీరు ఒక స్థానిక నెట్వర్క్ / యంత్రానికి దానిని కనెక్ట్ ఉంటే, "
 "కేవలం అంతర్గతంగానే అందుబాటులో అనేది అనేక సేవలు అందుబాటులో వుండదు."
 
-#: modules/networks/templates/connection_show.html:305
+#: modules/networks/templates/connection_show.html:314
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr "బహిర్గత"
 
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:321
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4851,12 +5001,12 @@ msgstr ""
 "ఈ ఇంటర్‌ఫేస్ %(box_name)s ద్వారా నిర్వహించబడదు. భద్రత కోసం, ఇది స్వయంచాలకంగా బాహ్య జోన్‌కు "
 "కేటాయించబడుతుంది."
 
-#: modules/networks/templates/connections_create.html:19
+#: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
 msgstr "అనుసంధానం సృష్టించు"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:519
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "అనుసంధానం తొలగించు"
 
@@ -4876,13 +5026,14 @@ msgstr "అంతరం"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:100 network.py:27
+#: modules/networks/views.py:102 network.py:27
 msgid "Ethernet"
 msgstr "ఈథర్నెట్"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/views.py:101 network.py:28
+#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/views.py:103 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -4901,10 +5052,20 @@ msgstr "అంతర్గత"
 msgid "Computer"
 msgstr "కంప్యూటర్"
 
-#: modules/networks/templates/connections_edit.html:20
-#: modules/networks/views.py:239 modules/networks/views.py:323
+#: modules/networks/templates/connections_edit.html:19
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "అనుసంధానాన్ని సవరించండి"
+
+#: modules/networks/templates/connections_fields.html:24
+#, fuzzy
+#| msgid "Generic"
+msgid "General"
+msgstr "సాధారణమైన"
+
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+msgid "PPPoE"
+msgstr "పిపిపిఒఇ"
 
 #: modules/networks/templates/connections_list.html:8
 msgid "Connections"
@@ -4912,13 +5073,13 @@ msgstr "అనుసంధానం"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:372
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "సమీప వై-ఫై నెట్వర్కులు"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:396
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "అనుసంధానాన్ని జతచేయండి"
@@ -5158,221 +5319,232 @@ msgstr "పంచుకున్నారు"
 msgid "link-local"
 msgstr "లింక్-స్థానిక"
 
-#: modules/networks/views.py:38 modules/networks/views.py:99
-#: modules/networks/views.py:110
-msgid "unknown"
-msgstr "తెలియని"
+#: modules/networks/views.py:33
+msgid "dhcp"
+msgstr ""
 
-#: modules/networks/views.py:39
+#: modules/networks/views.py:34
+#, fuzzy
+#| msgid "Ignore"
+msgid "ignore"
+msgstr "పట్టించుకోకండి"
+
+#: modules/networks/views.py:41
 msgid "unmanaged"
 msgstr "నిర్వహించబడలేదు"
 
-#: modules/networks/views.py:40
+#: modules/networks/views.py:42
 msgid "unavailable"
 msgstr "అందుబాటులో లేదు"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:43
 msgid "disconnected"
 msgstr "కేబుల్ తొలగించడం"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:44
 msgid "preparing"
 msgstr "సిద్ధమవుతున్నారు"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:45
 msgid "connecting"
 msgstr "అనుసంధానం"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:46
 msgid "needs authentication"
 msgstr "ప్రమాణీకరణ అవసరం"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:47
 msgid "requesting address"
 msgstr "చిరునామాను అభ్యర్థిస్తోంది"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:48
 msgid "checking"
 msgstr "తనిఖీ చేస్తోంది"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:49
 msgid "waiting for secondary"
 msgstr "ద్వితీయ కోసం వేచి ఉంది"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:50
 msgid "activated"
 msgstr "క్రియారహితం చేయి"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:51
 msgid "deactivating"
 msgstr "నిష్క్రియం చేస్తోంది"
 
-#: modules/networks/views.py:57
+#: modules/networks/views.py:59
 msgid "no reason"
 msgstr "కారణం లేదు"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:61
 msgid "unknown error"
 msgstr "అపరిచిత దోషం"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:63
 msgid "device is now managed"
 msgstr "పరికరం ఇప్పుడు నిర్వహించబడుతుంది"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:65
 msgid "device is now unmanaged"
 msgstr "పరికరం ఇప్పుడు నిర్వహించబడలేదు"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:67
 msgid "configuration failed"
 msgstr "కాన్ఫిగరేషన్ విఫలమైంది"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:69
 msgid "secrets required"
 msgstr "రహస్యాలు అవసరం"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:71
 msgid "DHCP client failed to start"
 msgstr "DHCP క్లయింట్ ప్రారంభించడంలో విఫలమైంది"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:73
 msgid "DHCP client error"
 msgstr "DHCP క్లయింట్ లోపం"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:75
 msgid "DHCP client failed"
 msgstr "DHCP క్లయింట్ విఫలమైంది"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:77
 msgid "shared connection service failed to start"
 msgstr "భాగస్వామ్య కనెక్షన్ సేవ ప్రారంభించడంలో విఫలమైంది"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:79
 msgid "shared connection service failed"
 msgstr "భాగస్వామ్య కనెక్షన్ సేవ విఫలమైంది"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:81
 msgid "device was removed"
 msgstr "పరికరం తీసివేయబడింది"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:83
 msgid "device disconnected by user"
 msgstr "వినియోగదారు ద్వారా పరికరం తొలగించవేయబడింది"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:85
 msgid "a dependency of the connection failed"
 msgstr "బంధం యొక్క ఆధారపడటం విఫలమైంది"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:87
 msgid "Wi-Fi network not found"
 msgstr "Wi-Fi నెట్‌వర్క్ కనుగొనబడలేదు"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:89
 msgid "a secondary connection failed"
 msgstr "ద్వితీయ కనెక్షన్ విఫలమైంది"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:91
 msgid "new connection activation was enqueued"
 msgstr "కొత్త కనెక్షన్ యాక్టివేషన్ క్యూలో ఉంది"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:93
 msgid "a duplicate IP address was detected"
 msgstr "నకిలీ IP చిరునామా కనుగొనబడింది"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:95
 msgid "selected IP method is not supported"
 msgstr "ఎంచుకున్న IP పద్ధతికి మద్దతు లేదు"
 
-#: modules/networks/views.py:102
+#: modules/networks/views.py:104
 msgid "generic"
 msgstr "సాధారణమైన"
 
-#: modules/networks/views.py:103
+#: modules/networks/views.py:105
 msgid "TUN or TAP interface"
 msgstr "TUN లేదా TAP సంవిధానం"
 
-#: modules/networks/views.py:104 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "వైర్గార్డ్"
 
-#: modules/networks/views.py:111
+#: modules/networks/views.py:113
 msgid "ad-hoc"
 msgstr "తాత్కాలిక"
 
-#: modules/networks/views.py:112
+#: modules/networks/views.py:114
 msgid "infrastructure"
 msgstr "మౌలిక సదుపాయాలు"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:115
 msgid "access point"
 msgstr "సాంగత్యం సూచి"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:116
 msgid "mesh point"
 msgstr "ప్రాప్తి సూచి"
 
-#: modules/networks/views.py:144
+#: modules/networks/views.py:123
+#, fuzzy
+#| msgid "Default"
+msgid "default"
+msgstr "అప్రమేయం"
+
+#: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
 msgstr "అనుసంధానం చూపించలేము: అనుసంధానం దొరకలేదు."
 
-#: modules/networks/views.py:197
+#: modules/networks/views.py:211
 msgid "Connection Information"
 msgstr "అనుసంధాన సమాచారం"
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "దొరకలేదు అనుసంధానం: అనుసంధానని సవరించడం సాధ్యపడదు."
 
-#: modules/networks/views.py:217
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "ఇటువంటి అనుసంధాన రకం ఇంకా అర్థంకాలేదు."
 
-#: modules/networks/views.py:335
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "{name} అనుసంధానం ఉత్తేజించబడింది."
 
-#: modules/networks/views.py:339
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "అనుసంధానాన్ని ఉత్తేజించుటలో విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: modules/networks/views.py:345
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "{name} అనుసంధానాన్ని ఉత్తేజించుటలో విఫలమైంది: సరైన పరికరం అందుబాటులో లేదు."
 
-#: modules/networks/views.py:358
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "{name} అనుసంధానం క్రియారహితం చేయబడింది."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "అనుసంధానం క్రియారహితం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: modules/networks/views.py:414
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "కొత్త జెనరిక్ కనెక్షన్‌ని జోడిస్తోంది"
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "కొత్త ఈథర్నెట్ అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "కొత్త PPPoE అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:485
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "కొత్త వై-ఫై అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:500
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "{name} అనుసంధానం తొలగించబడింది."
 
-#: modules/networks/views.py:504 modules/networks/views.py:514
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
@@ -5841,15 +6013,11 @@ msgstr "ఇపుడు మూసివేయండి"
 msgid "Manage system-wide privacy settings."
 msgstr "సిస్టమ్-వైడ్ గోప్యతా సెట్టింగ్‌లను నిర్వహించండి."
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
-msgid "Privacy"
-msgstr "అంతరంగికత"
-
-#: modules/privacy/__init__.py:68
+#: modules/privacy/__init__.py:70
 msgid "Please update privacy settings to match your preferences."
 msgstr "మీ అభిరుచులకు అనుగుణంగా అంతరంగిక సెట్టింగులను మార్చుకోండి."
 
-#: modules/privacy/__init__.py:73
+#: modules/privacy/__init__.py:75
 msgid "Review privacy setting"
 msgstr "అంతరంగిక సెట్టింగ్‌ని సమీక్షించండి"
 
@@ -5872,6 +6040,18 @@ msgstr ""
 "సేకరించిన డేటా గణాంకాలు <a href=\"https://popcon.debian.org/\" "
 "target=\"_blank\">popcon.debian.org</a>లో పబ్లిక్‌గా అందుబాటులో ఉన్నాయి. టోర్ యాప్ "
 "ప్రారంభించబడితే అదనపు అజ్ఞాతం కోసం టోర్ నెట్‌వర్క్ ద్వారా సమర్పణ జరుగుతుంది."
+
+#: modules/privacy/forms.py:27
+msgid "Allow using fallback DNS servers"
+msgstr ""
+
+#: modules/privacy/forms.py:29
+msgid ""
+"Use well-known public DNS servers to resolve domain names in unusual "
+"circumstances where no DNS servers are known but internet connectivity is "
+"available. Can be disabled in most cases if network connectivity is stable "
+"and reliable."
+msgstr ""
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -7197,7 +7377,7 @@ msgstr "వ్యవస్థ"
 msgid "Go to Power"
 msgstr "అల్లిక వైపు వెళ్ళండి"
 
-#: modules/storage/__init__.py:439
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
 msgid "grub package is configured"
 msgstr ""
 
@@ -7726,12 +7906,12 @@ msgstr "TT-RSS రీడర్"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr "తాజా సాఫ్ట్‌వేర్ మరియు భద్రత నవీకరణను కోసం తనిఖీ చేయండి మరియు వర్తించండి."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7743,21 +7923,21 @@ msgstr ""
 "అందుబాటులో ఉండవు. సిస్టమ్ రీబూట్ అవసరమని భావించినట్లయితే, అది స్వయంచాలకంగా 02:00కి చేయబడుతుంది, "
 "దీని వలన అన్ని యాప్‌లు క్లుప్తంగా అందుబాటులో ఉండవు."
 
-#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "సాఫ్ట్‌వేర్ నవీకరణ"
 
-#: modules/upgrades/__init__.py:130
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "స్వతంత్ర సాఫ్ట్వేర్ తాజా పరుచడం"
 
-#: modules/upgrades/__init__.py:204
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "పంపిణీ నవీకరణను ప్రారంభించడం సాధ్యపడలేదు"
 
-#: modules/upgrades/__init__.py:206
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7766,16 +7946,16 @@ msgstr ""
 "పంపిణీ నవీకరణను ప్రారంభించడానికి రూట్ విభజనలో తగినంత ఖాళీ స్థలం లేదు. దయచేసి కనీసం 5 GB ఉచితంగా "
 "ఉండేలా చూసుకోండి. ప్రారంభించబడితే, పంపిణీ నవీకరణ 24 గంటల తర్వాత మళ్లీ ప్రయత్నించబడుతుంది."
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "పంపిణీ నవీకరణ ప్రారంభమైంది"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr "తదుపరి స్థిరమైన విడుదలకు నవీకరణ ప్రారంభించబడింది. ఇది పూర్తి కావడానికి చాలా సమయం పట్టవచ్చు."
 
-#: modules/upgrades/__init__.py:311
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -8701,10 +8881,6 @@ msgid ""
 "account for Zoph."
 msgstr "వినియోగదారు ఖాతా <strong>%(username)s</strong> జోఫ్ కోసం నిర్వాహక ఖాతా అవుతుంది."
 
-#: network.py:29
-msgid "PPPoE"
-msgstr "పిపిపిఒఇ"
-
 #: network.py:30
 msgid "Generic"
 msgstr "సాధారణమైన"
@@ -9252,6 +9428,12 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 msgid "Gujarati"
 msgstr "గుజరాతీ"
 
+#~ msgid "Hostname set"
+#~ msgstr "ఆతిథ్యనామం అమర్చు"
+
+#~ msgid "Domain name set"
+#~ msgstr "అధికారక్షేత్రం పేరు అమర్పు"
+
 #, fuzzy
 #~| msgid "Tiny Tiny RSS (Fork)"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
@@ -9378,9 +9560,6 @@ msgstr "గుజరాతీ"
 #~ msgid "Failed to restrict console access: {error}"
 #~ msgstr "కన్సోల్ యాక్సెస్‌ని పరిమితం చేయడంలో విఫలమైంది: {error}"
 
-#~ msgid "Enable DNSSEC"
-#~ msgstr "DNSSEC అమలుచెయ్యి"
-
 #~ msgid "Enable Domain Name System Security Extensions"
 #~ msgstr "డొమైన్ నేమ్ సిస్టం భద్రతా పొడిగింపు ని ప్రారంభించండి"
 
@@ -9454,9 +9633,6 @@ msgstr "గుజరాతీ"
 
 #~ msgid "Tor configuration is being updated"
 #~ msgstr "టోర్ ఆకృతీకరణ నవీకరించబడుతుంది"
-
-#~ msgid "Error during installation"
-#~ msgstr "సంస్థాపన ఒక పొరపాటు జరిగింది"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -9774,9 +9950,6 @@ msgstr "గుజరాతీ"
 #~ msgid "Cancel"
 #~ msgstr "రద్దుచేయి"
 
-#~ msgid "Domains"
-#~ msgstr "డొమైన్లు"
-
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "ఓపెన్‌పిజిపి వేలిముద్ర"
 
@@ -10034,9 +10207,6 @@ msgstr "గుజరాతీ"
 #~| msgid "Automatic (DHCP)"
 #~ msgid "Automatic, DHCP only"
 #~ msgstr "స్వయం చాలకం (DHCP)"
-
-#~ msgid "Ignore"
-#~ msgstr "పట్టించుకోకండి"
 
 #~ msgid "Plumble"
 #~ msgstr "ప్లంబుల్"

@@ -7,8 +7,8 @@ from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.config import get_hostname
 from plinth.modules.firewall.components import Firewall
+from plinth.modules.names import get_hostname
 from plinth.modules.names.components import DomainType
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
@@ -58,7 +58,7 @@ class AvahiApp(app_module.App):
         self.add(packages)
 
         domain_type = DomainType('domain-type-local',
-                                 _('Local Network Domain'), 'config:index',
+                                 _('Local Network Domain'), 'names:hostname',
                                  can_have_certificate=False)
         self.add(domain_type)
 

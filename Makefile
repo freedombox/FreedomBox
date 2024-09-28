@@ -176,6 +176,11 @@ provision-dev:
 	    $$(sudo -u plinth ./run --develop --list-dependencies)
 	apt-mark unhold freedombox
 
+	# DNS resolution may be broken by upgrade to systemd-resolved. See
+	# #1079819 and ##1032937.
+	-systemctl restart systemd-resolved
+	-nmcli general reload dns-rc
+
 	# Install additional packages
 	DEBIAN_FRONTEND=noninteractive apt-get install --yes ncurses-term \
 	    sshpass bash-completion

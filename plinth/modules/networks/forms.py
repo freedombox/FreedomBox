@@ -2,12 +2,30 @@
 
 from django import forms
 from django.core import validators
+from django.urls import reverse_lazy
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg, network
 from plinth.utils import format_lazy, import_from_gi
 
 nm = import_from_gi('NM', '1.0')
+
+
+def _get_dns_over_tls():
+    """Return the value of DNS over TLS."""
+    try:
+        from plinth.modules.names import privileged
+        dns_over_tls = privileged.get_resolved_configuration()['dns_over_tls']
+    except Exception:
+        return _('unknown')
+
+    value_map = {
+        'yes': _('yes'),
+        'opportunistic': _('opportunistic'),
+        'no': _('no')
+    }
+    return str(value_map.get(dns_over_tls, dns_over_tls))
 
 
 class ConnectionTypeSelectForm(forms.Form):
@@ -30,6 +48,40 @@ class ConnectionForm(forms.Form):
         help_text=_('The firewall zone will control which services are '
                     'available over this interfaces. Select Internal only '
                     'for trusted networks.'), choices=network.ZONES)
+    dns_over_tls = forms.ChoiceField(
+        label=_('Use DNS-over-TLS'), widget=forms.RadioSelect, choices=[
+            ('default',
+             format_lazy(
+                 'Default. Unspecified for this connection. <p '
+                 'class="help-block">Use the <a href="{names_app}">global '
+                 'preference</a>. Current value is "{global_value}".</p>',
+                 names_app=reverse_lazy('names:index'),
+                 global_value=lazy(_get_dns_over_tls,
+                                   str)(), allow_markup=True)),
+            ('yes',
+             format_lazy(
+                 'Yes. Encrypt connections to the DNS server. <p '
+                 'class="help-block">This improves privacy as domain name '
+                 'queries will not be made as plain text over the network. It '
+                 'also improves security as responses from the server cannot '
+                 'be manipulated. If the configured DNS servers do not '
+                 'support DNS-over-TLS, all name resolutions will fail. If '
+                 'your DNS provider (likely your ISP) does not support '
+                 'DNS-over-TLS or blocks some domains, you can configure a '
+                 'well-known public DNS server below.</p>',
+                 allow_markup=True)),
+            ('opportunistic',
+             format_lazy(
+                 'Opportunistic. <p class="help-block">Encrypt connections to '
+                 'the DNS server if the server supports DNS-over-TLS. '
+                 'Otherwise, use unencrypted connections. There is no '
+                 'protection against response manipulation.</p>',
+                 allow_markup=True)),
+            ('no',
+             format_lazy(
+                 'No. <p class="help-block">Do not encrypt domain name '
+                 'resolutions for this connection.</p>', allow_markup=True)),
+        ], initial='default')
     ipv4_method = forms.ChoiceField(
         label=_('IPv4 Addressing Method'), widget=forms.RadioSelect, choices=[
             ('auto',
@@ -76,11 +128,15 @@ class ConnectionForm(forms.Form):
             ('dhcp',
              _('Automatic (DHCP only): Configure automatically, use Internet '
                'connection from this network')),
+            ('link-local',
+             _('Link-local: Configure automatically to use an address that is '
+               'only relevant to this network.')),
             ('manual',
              _('Manual: Use manually specified parameters, use Internet '
                'connection from this network')),
             ('ignore', _('Ignore: Ignore this addressing method')),
-        ])
+            ('disabled', _('Disabled: Disable IPv6 for this connection')),
+        ], initial='auto')
     ipv6_address = forms.CharField(
         label=_('Address'), validators=[validators.validate_ipv6_address],
         required=False)
@@ -127,6 +183,7 @@ class ConnectionForm(forms.Form):
             'name': self.cleaned_data['name'],
             'interface': self.cleaned_data['interface'],
             'zone': self.cleaned_data['zone'],
+            'dns_over_tls': self.cleaned_data['dns_over_tls'],
         }
         settings['ipv4'] = self.get_ipv4_settings()
         settings['ipv6'] = self.get_ipv6_settings()
@@ -191,6 +248,7 @@ class EthernetForm(ConnectionForm):
 
 class PPPoEForm(EthernetForm):
     """Form to create a new PPPoE connection."""
+    dns_over_tls = None
     ipv4_method = None
     ipv4_address = None
     ipv4_netmask = None
@@ -231,14 +289,6 @@ class PPPoEForm(EthernetForm):
 
 class WifiForm(ConnectionForm):
     """Form to create/edit a Wi-Fi connection."""
-    field_order = [
-        'name', 'interface', 'zone', 'ssid', 'mode', 'band', 'channel',
-        'bssid', 'auth_mode', 'passphrase', 'ipv4_method', 'ipv4_address',
-        'ipv4_netmask', 'ipv4_gateway', 'ipv4_dns', 'ipv4_second_dns',
-        'ipv6_method', 'ipv6_address', 'ipv6_prefix', 'ipv6_gateway',
-        'ipv6_dns', 'ipv6_second_dns'
-    ]
-
     ssid = forms.CharField(label=_('SSID'),
                            help_text=_('The visible name of the network.'))
     mode = forms.ChoiceField(

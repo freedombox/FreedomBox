@@ -58,6 +58,16 @@ def reload(service: str):
 
 
 @privileged
+def try_reload_or_restart(service: str):
+    """Reload a service if it supports reloading, otherwise restart.
+
+    Do nothing if service is not running.
+    """
+    _assert_service_is_managed_by_plinth(service)
+    action_utils.service_try_reload_or_restart(service)
+
+
+@privileged
 def mask(service: str):
     """Mask a service."""
     _assert_service_is_managed_by_plinth(service)

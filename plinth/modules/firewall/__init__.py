@@ -81,7 +81,7 @@ class FirewallApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        _run_setup()
+        privileged.setup()
 
     def force_upgrade(self, packages):
         """Force upgrade firewalld to resolve conffile prompts."""
@@ -94,7 +94,7 @@ class FirewallApp(app_module.App):
             return False
 
         install(['firewalld'], force_configuration='new')
-        _run_setup()
+        privileged.setup()
         return True
 
     def diagnose(self) -> list[DiagnosticCheck]:
@@ -105,17 +105,6 @@ class FirewallApp(app_module.App):
         results.append(_diagnose_firewall_backend(config))
         results.append(_diagnose_direct_passthroughs(config))
         return results
-
-
-def _run_setup():
-    """Run firewalld setup."""
-    privileged.setup()
-    add_service('http', 'external')
-    add_service('http', 'internal')
-    add_service('https', 'external')
-    add_service('https', 'internal')
-    add_service('dns', 'internal')
-    add_service('dhcp', 'internal')
 
 
 def _get_dbus_proxy(object, interface):

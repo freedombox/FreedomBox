@@ -12,7 +12,6 @@ from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
-from plinth.modules.config import get_domainname
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
 from plinth.modules.letsencrypt.components import LetsEncrypt
@@ -221,12 +220,6 @@ class EmailApp(plinth.app.App):
         # Expose to public internet
         if old_version == 0:
             self.enable()
-
-
-def get_domains():
-    """Return the list of domains configured."""
-    default_domain = get_domainname()
-    return [default_domain] if default_domain else []
 
 
 def _get_first_admin():

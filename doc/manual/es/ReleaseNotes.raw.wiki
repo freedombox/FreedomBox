@@ -8,6 +8,80 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.20.1 (2024-09-25) ==
+
+=== Highlights ===
+
+ * samba: Fix nmb systemd service is in erroneous state
+ * users: Inactivate users in LDAP user database
+
+=== Other Changes ===
+
+ * Revert "debian: tests: Wait for systemd-resolved to be started"
+ * ci: Run autopkgtest but allow failure
+ * d/tests: Add breaks-testbed restriction
+ * locale: Update translations for Bulgarian, Chinese (Simplified Han script), Spanish, Turkish
+ * security: Remove PAM configuration for 'access' module
+ * users: Increment app version for changes w.r.t. inactive users
+ * users: Set proper class on default password policy object
+
+== FreedomBox 24.20 (2024-09-23) ==
+
+=== Highlights ===
+
+ * nextcloud: Fix issue with upgrading to next version
+
+=== Other Changes ===
+
+ * action_utils: Add a method to reset services in 'failed' state
+ * action_utils: Update outdated docstrings
+ * apache: Don't restart daemon when changing certificates
+ * config, names: Move domain name configuration to names app
+ * config, names: Move setting hostname from config to names
+ * debian: tests: Wait for systemd-resolved to be started
+ * letsencrypt: Allow reloading daemons after cert changes
+ * locale: Update translations for Albanian, Bulgarian, Chinese (Simplified Han script), Czech, Dutch, Spanish, Turkish
+ * miniflux: Workaround a packaging bug with DB connection
+ * service: Add privileged utility for 'try-reload-or-restart' action
+ * tests: functional: Don't timeout when web server restarts
+ * upgrades: Treat n/a release as testing
+ * users: Don't cache NSS user identity information
+ * users: Invalidate nscd cache after nslcd service startup
+
+== FreedomBox 24.19 (2024-09-09) ==
+
+=== Highlights ===
+
+ * mediawiki: Increase PHP maximum execution time to 100 seconds
+ * names: Use systemd-resolved for DNS resolution
+
+=== Other Changes ===
+
+ * bind: Don't start a stopped daemon during changes/upgrades
+ * bind: Fix port number clash with 'shared' network connections
+ * bind: Set default forwarder as systemd-resolved
+ * container: Re-run failed provisioning even if container is running
+ * letsencrypt: Handle both standard and custom repairs
+ * locale: Update translations for Albanian, Bulgarian, Chinese (Simplified), Dutch, German, Spanish, Telugu, Turkish, Ukrainian
+ * makefile: Workaround problems with systemd-resolved package
+ * names, network: Re-feed DNS known to network-manager to resolved
+ * names: Add option for setting global DNS-over-TLS preference
+ * names: Add option for setting global DNSSEC preference
+ * names: Implement a diagnostic check for checking name resolution
+ * names: Restart instead of reload for systemd-resolved changes
+ * names: Show systemd-resolved status in the names page
+ * networks: Add more options for IPv6 configuration method
+ * networks: Add support for DNS-over-TLS for individual connections
+ * networks: Declare a need for DHCP/DNS ports to be open in firewall
+ * networks: Fix focusing on network interface field on error
+ * networks: Groups fields in create/edit connection form
+ * networks: Set 'auto' as default IPv6 method in new connection form
+ * networks: Show current global value of DNS-over-TLS and link to it
+ * privacy: Implement a way to disable fallback DNS servers
+ * privacy: Show notification again so that users see the new setting
+ * storage: Handle grub-pc package not available
+ * upgrades: Add repair step for held packages
+
 == FreedomBox 24.18 (2024-08-26) ==
 
  * *.md, pyproject.toml: Update default branch from 'master' to 'main'

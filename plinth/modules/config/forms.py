@@ -3,12 +3,7 @@
 Forms for basic system configuration
 """
 
-import logging
-import re
-
 from django import forms
-from django.core import validators
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
@@ -17,17 +12,6 @@ from plinth.modules.apache import get_users_with_website
 from plinth.utils import format_lazy
 
 from . import home_page_url2scid
-
-logger = logging.getLogger(__name__)
-
-HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
-
-
-def domain_label_validator(domainname):
-    """Validate domain name labels."""
-    for label in domainname.split('.'):
-        if not re.match(HOSTNAME_REGEX, label):
-            raise ValidationError(_('Invalid domain name'))
 
 
 def get_homepage_choices():
@@ -46,40 +30,6 @@ def get_homepage_choices():
 
 class ConfigurationForm(forms.Form):
     """Main system configuration form"""
-    # See:
-    # https://tools.ietf.org/html/rfc952
-    # https://tools.ietf.org/html/rfc1035#section-2.3.1
-    # https://tools.ietf.org/html/rfc1123#section-2
-    # https://tools.ietf.org/html/rfc2181#section-11
-    hostname = forms.CharField(
-        label=gettext_lazy('Hostname'), help_text=format_lazy(
-            gettext_lazy(
-                'Hostname is the local name by which other devices on the '
-                'local network can reach your {box_name}.  It must start and '
-                'end with an alphabet or a digit and have as interior '
-                'characters only alphabets, digits and hyphens.  Total '
-                'length must be 63 characters or less.'),
-            box_name=gettext_lazy(cfg.box_name)), validators=[
-                validators.RegexValidator(HOSTNAME_REGEX,
-                                          gettext_lazy('Invalid hostname'))
-            ], strip=True)
-
-    domainname = forms.CharField(
-        label=gettext_lazy('Domain Name'), help_text=format_lazy(
-            gettext_lazy(
-                'Domain name is the global name by which other devices on the '
-                'Internet can reach your {box_name}.  It must consist of '
-                'labels separated by dots.  Each label must start and end '
-                'with an alphabet or a digit and have as interior characters '
-                'only alphabets, digits and hyphens.  Length of each label '
-                'must be 63 characters or less.  Total length of domain name '
-                'must be 253 characters or less.'),
-            box_name=gettext_lazy(cfg.box_name)), required=False, validators=[
-                validators.RegexValidator(
-                    r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
-                    gettext_lazy('Invalid domain name')),
-                domain_label_validator
-            ], strip=True)
 
     homepage = forms.ChoiceField(
         label=gettext_lazy('Webserver Home Page'), help_text=format_lazy(

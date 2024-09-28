@@ -20,7 +20,7 @@ class PrivacyApp(app_module.App):
 
     app_id = 'privacy'
 
-    _version = 2
+    _version = 3
 
     can_be_disabled = False
 
@@ -58,6 +58,8 @@ class PrivacyApp(app_module.App):
         privileged.setup()
         if old_version == 0:
             privileged.set_configuration(enable_popcon=True)
+
+        if old_version < 3:
             _show_privacy_notification()
 
 
@@ -82,4 +84,4 @@ def _show_privacy_notification():
     Notification.update_or_create(id='privacy-review', app_id='privacy',
                                   severity='info', title=title,
                                   message=message, actions=actions_, data=data,
-                                  group='admin')
+                                  group='admin', dismissed=False)

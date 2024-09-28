@@ -44,7 +44,7 @@ class LetsEncrypt(app.FollowerComponent):
     def __init__(self, component_id, domains=None, daemons=None,
                  should_copy_certificates=False, private_key_path=None,
                  certificate_path=None, user_owner=None, group_owner=None,
-                 managing_app=None):
+                 managing_app=None, reload_daemons=False):
         """Initialize the Let's Encrypt component.
 
         component_id should be a unique ID across all components of an app and
@@ -107,6 +107,8 @@ class LetsEncrypt(app.FollowerComponent):
         objects to which the app is allowed to write certificates and other
         files to.
 
+        reload_daemons is boolean to indicate if the daemons should be reloaded
+        instead of restarted (which is default).
         """
         if should_copy_certificates:
             if (not private_key_path or not certificate_path or not user_owner
@@ -116,6 +118,7 @@ class LetsEncrypt(app.FollowerComponent):
         super().__init__(component_id)
         self._domains = domains
         self.daemons = daemons
+        self.reload_daemons = reload_daemons
         self.should_copy_certificates = should_copy_certificates
         self.private_key_path = private_key_path
         self.certificate_path = certificate_path
@@ -170,7 +173,10 @@ class LetsEncrypt(app.FollowerComponent):
                     self._copy_self_signed_certificates([domain])
 
         for daemon in self.daemons:
-            service_privileged.try_restart(daemon)
+            if self.reload_daemons:
+                service_privileged.try_reload_or_restart(daemon)
+            else:
+                service_privileged.try_restart(daemon)
 
     def get_status(self):
         """Return the status of certificates for all interested domains.
@@ -215,7 +221,10 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_letsencrypt_certificates(interested_domains, lineage)
 
         for daemon in self.daemons:
-            service_privileged.try_restart(daemon)
+            if self.reload_daemons:
+                service_privileged.try_reload_or_restart(daemon)
+            else:
+                service_privileged.try_restart(daemon)
 
     def on_certificate_renewed(self, domains, lineage):
         """Handle event when a certificate is renewed.
@@ -249,7 +258,10 @@ class LetsEncrypt(app.FollowerComponent):
             self._copy_self_signed_certificates(interested_domains)
 
         for daemon in self.daemons:
-            service_privileged.try_restart(daemon)
+            if self.reload_daemons:
+                service_privileged.try_reload_or_restart(daemon)
+            else:
+                service_privileged.try_restart(daemon)
 
     def on_certificate_deleted(self, domains, lineage):
         """Handle event when a certificate is deleted.

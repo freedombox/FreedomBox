@@ -1,0 +1,34 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+<div class="field-group">
+  <div class="card-header" id="header-wifi">
+    <h4>
+      <button class="btn btn-block text-left dropdown-toggle {{ form.errors|yesno:",collapsed" }}"
+              type="button" data-toggle="collapse"
+              data-target="#collapse-wifi"
+              aria-expanded="{{ form.errors|yesno:"true,false" }}"
+              aria-controls="collapse-wifi">
+        {% trans "Wi-Fi" %}
+      </button>
+    </h4>
+  </div>
+
+  <div id="collapse-wifi" class="collapse  {{ form.errors|yesno:"show," }}"
+       aria-labelledby="header-wifi"
+       data-parent="#accordion-connections-fields">
+    <div class="card-body">
+      {{ form.ssid|bootstrap }}
+      {{ form.mode|bootstrap }}
+      {{ form.band|bootstrap }}
+      {{ form.channel|bootstrap }}
+      {{ form.bssid|bootstrap }}
+      {{ form.auth_mode|bootstrap }}
+      {{ form.passphrase|bootstrap }}
+    </div>
+  </div>
+</div>

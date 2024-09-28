@@ -4,6 +4,7 @@
 import json
 import os
 import pathlib
+import shutil
 from typing import Tuple
 from urllib.parse import urlparse
 
@@ -40,7 +41,7 @@ def _env_file_to_dict(env_vars: str) -> dict[str, str]:
 
 @privileged
 def pre_setup():
-    """Perform post-install actions for Miniflux."""
+    """Perform pre-install actions for Miniflux."""
     vars_file = pathlib.Path(ENV_VARS_FILE)
     vars_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -51,6 +52,20 @@ def pre_setup():
 
     new_settings = existing_settings | STATIC_SETTINGS
     vars_file.write_text(_dict_to_env_file(new_settings))
+
+
+@privileged
+def setup(old_version: int):
+    """Perform post-install actions for Miniflux."""
+    # Fix incorrect permissions on database file in version 2.2.0-2. See
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081562 . Can be
+    # removed after the fix for the bug reaches Trixie/testing.
+    shutil.chown(DATABASE_FILE, user='miniflux', group='root')
+    if not old_version or action_utils.service_is_enabled('miniflux'):
+        # If the service was tried too many times already, it won't
+        # successfully restart.
+        action_utils.service_reset_failed('miniflux')
+        action_utils.service_restart('miniflux')
 
 
 def _run_miniflux_interactively(command: str, username: str,

@@ -98,3 +98,21 @@ jQuery(function($) {
     });
 
 });
+
+// When there are validation errors on form elements, expand their parent
+// collapsible so that the form element can be highlighted and an error tooltip
+// can be show by the browser.
+document.addEventListener('DOMContentLoaded', event => {
+    const selector = '.form-connection input, .form-connection select';
+    const input_elements = document.querySelectorAll(selector);
+    input_elements.forEach(input =>
+        input.addEventListener('invalid', on_invalid_event)
+    );
+});
+
+function on_invalid_event(event) {
+    const element = event.target;
+    const parent = element.closest('.collapse');
+    // Don't use .collapse(). Instead, expand all the sections with errors.
+    parent.classList.add('show');
+}

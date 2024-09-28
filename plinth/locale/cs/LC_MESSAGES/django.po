@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 19:15-0400\n"
-"PO-Revision-Date: 2024-08-15 15:09+0000\n"
-"Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
+"PO-Revision-Date: 2024-09-13 15:09+0000\n"
+"Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
 "Language: cs\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -113,7 +113,7 @@ msgstr "Data"
 msgid "System"
 msgstr "Systém"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: menu.py:112 modules/networks/templates/connection_show.html:268
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Zabezpečení"
@@ -195,7 +195,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Povolení plánu zálohování"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
+#: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Jít na {app_name}"
@@ -359,7 +359,7 @@ msgstr "Klíč v úložišti"
 msgid "None"
 msgstr "Žádný"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:270
+#: modules/backups/forms.py:179 modules/networks/forms.py:320
 msgid "Passphrase"
 msgstr "Heslová fráze"
 
@@ -865,7 +865,7 @@ msgid "No passwords currently configured."
 msgstr "V současné době nejsou nakonfigurována žádná hesla."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Heslo"
@@ -980,7 +980,7 @@ msgid "Serving Domains"
 msgstr "Obsluhované domény"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
-#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:15
+#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
 #: modules/networks/templates/connection_show.html:91
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
@@ -1003,17 +1003,18 @@ msgstr "IP adresy"
 msgid "Refresh IP address and domains"
 msgstr "Obnovení IP adresy a domén"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/pagekite/forms.py:74 modules/privacy/views.py:36
-#: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
-#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
-#: modules/transmission/views.py:43 modules/ttrss/views.py:31
-#: modules/wordpress/views.py:31
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
+#: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
+#: modules/ssh/views.py:62 modules/transmission/views.py:43
+#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
@@ -1189,90 +1190,46 @@ msgstr "Cockpit"
 msgid "Server Administration"
 msgstr "Správa serveru"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "Zde můžete nastavit některé obecné konfigurační možnosti, jako je název "
 "hostitele, název domény, domovská stránka webového serveru atd."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "Obecná nastavení"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:30
-#: modules/names/templates/names.html:44 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
+#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Nastavit"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
-msgid "Domain Name"
-msgstr "Doménový název"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "Neplatný doménový název"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "webové stránky {user}"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Výchozí pro Apache"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "Služba FreedomBox (Plinth)"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "Název stroje"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"Název stroje je místní název pomocí kterého ostatní zařízení na místní síti "
-"mohou komunikovat s vaším {box_name}. Je třeba, aby začínal a končil na "
-"písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
-"Celková délka může být nejvýše 63 znaků."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "Neplatný název stroje"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"Doménový název je celosvětový název pomocí kterého mohou ostatní zařízení na "
-"Internetu komunikovat s vaším {box_name}. Je třeba, aby byl tvořen štítky, "
-"oddělovanými tečkou. Je třeba, aby každý ze štítků začínal a končil písmenem "
-"nebo číslicí a obsahoval pouze písmena, číslice a spojovníky. Délka každého "
-"ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
-"nejvýše 253 znaků."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Domovská stránka domovského serveru"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1288,31 +1245,31 @@ msgstr ""
 "{box_name} (Plinth), uživatelé budou potřebovat výslovně zadávat /plinth "
 "nebo /freedombox, aby se dostali na službu {box_name} (Plinth)."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "Zobrazit pokročilé aplikace a funkce"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Zobrazit aplikace a funkce, které vyžadují techničtější znalosti."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "Celosystémové protokolování"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "Zakázat protokolování kvůli ochraně soukromí"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "Některé z nich ponechat v paměti až do restartu kvůli výkonu"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "Zápis na disk, užitečné pro ladění"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
@@ -1320,43 +1277,25 @@ msgstr ""
 "Protokoly obsahují informace o tom, kdo přistupoval k systému, a informace o "
 "ladění různých služeb"
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Chyba při nastavování názvu stroje: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "Nastavení názvu stroje"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Chyba při nastavování doménového názvu: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "Nastavení doménového názvu"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Chyba při nastavování domovské stránky webového serveru: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "Nastavení domovské stránky webového serveru"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Chyba při změně pokročilého režimu: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "Jsou zobrazovány pokročilé aplikace a funkce"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "Jsou skryté pokročilé aplikace a funkce"
 
@@ -1491,13 +1430,13 @@ msgstr "Diagnostika"
 
 #: modules/diagnostics/__init__.py:99
 msgid "skipped"
-msgstr ""
+msgstr "přeskočeno"
 
 #: modules/diagnostics/__init__.py:100
 msgid "passed"
 msgstr "prošlo"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
 msgid "failed"
 msgstr "selhalo"
 
@@ -1802,12 +1741,22 @@ msgstr "Přijímat veškeré SSL certifikáty"
 msgid "Use HTTP basic authentication"
 msgstr "Použít základní HTTP ověřování"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "Doménový název"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "Neplatný doménový název"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:207 modules/users/forms.py:129
+#: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:210
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
 msgid "Show password"
 msgstr "Zobrazit heslo"
 
@@ -2018,18 +1967,37 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "Doména vašeho XMPP serveru je nastavená na <b>%(domainname)s</b>. "
 "Identifikátory uživatelů budou mít podobu "
 "<i>uzivatelske_jmeno@%(domainname)s</i>. Doménu je možné nastavit na stránce "
 "<a href=\"%(index_url)s\">nastavení</a> systému."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"Doména vašeho XMPP serveru je nastavená na <b>%(domainname)s</b>. "
+"Identifikátory uživatelů budou mít podobu "
+"<i>uzivatelske_jmeno@%(domainname)s</i>. Doménu je možné nastavit na stránce "
+"<a href=\"%(index_url)s\">nastavení</a> systému."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2040,7 +2008,7 @@ msgstr ""
 "klientům přistupovat k poštovní schránce pomocí protokolů IMAP a POP3. "
 "Rspamd se zabývá nevyžádanou poštou."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2052,7 +2020,7 @@ msgstr ""
 "internetových služeb také omezuje odchozí poštu. Někteří po výslovné žádosti "
 "omezení zruší. Další informace naleznete na stránce s manuálem."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2067,7 +2035,7 @@ msgstr ""
 "aliasy. Potřebné aliasy, jako například \"postmaster\", se vytvoří "
 "automaticky a ukazují na prvního uživatele-administrátora."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2075,7 +2043,7 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Aplikace Roundcube</a> poskytuje "
 "uživatelům webové rozhraní pro přístup k e-mailu."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
@@ -2083,19 +2051,19 @@ msgstr ""
 "Během instalace budou odinstalovány všechny ostatní e-mailové servery v "
 "systému."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix / Dovecot"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-mailový Server"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "Moje e-mailové aliasy"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "Správa aliasů pro poštovní schránku"
 
@@ -2355,10 +2323,8 @@ msgstr ""
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-#, fuzzy
-#| msgid "Delete this wiki file permanently?</p>"
 msgid "Delete this wiki file permanently?"
-msgstr "Smazat tento soubor wiki natrvalo?"
+msgstr "Trvale smazat tento wiki soubor?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -2416,15 +2382,15 @@ msgstr ""
 msgid "Firewall"
 msgstr "Brána firewall"
 
-#: modules/firewall/__init__.py:273
+#: modules/firewall/__init__.py:262
 msgid "Default zone is external"
 msgstr "Výchozí zóna je externí"
 
-#: modules/firewall/__init__.py:283
+#: modules/firewall/__init__.py:272
 msgid "Firewall backend is nftables"
 msgstr "Firewall backend je nftables"
 
-#: modules/firewall/__init__.py:297
+#: modules/firewall/__init__.py:286
 msgid "Direct passthrough rules exist"
 msgstr "Existují pravidla přímého prostupu"
 
@@ -3560,9 +3526,12 @@ msgid "Obtain"
 msgstr "Získat"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Nejsou nastavené žádné domény. <a href=\"%(config_url)s\">Nastavte je</a>, "
@@ -4021,8 +3990,8 @@ msgstr "Zapnout poškozování"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "Pokud je vypnuto, postavy hráčů nemohou zemřít nebo se zranit."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:49
-#: modules/networks/forms.py:85
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
+#: modules/networks/forms.py:141
 msgid "Address"
 msgstr "Adresa"
 
@@ -4300,7 +4269,7 @@ msgstr "Heslo pro připojení změněno"
 msgid "Root channel name changed."
 msgstr "Změna názvu kořenového kanálu."
 
-#: modules/names/__init__.py:22
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4313,9 +4282,14 @@ msgstr ""
 "typu jména je uvedeno, zda jsou služby HTTP, HTTPS a SSH pro příchozí "
 "spojení přes dané jméno povoleny nebo zakázány."
 
-#: modules/names/__init__.py:43
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "Jmenné služby"
+
+#: modules/names/__init__.py:133
+#, python-brace-format
+msgid "Resolve domain name: {domain}"
+msgstr "Vyřešit název domény: {domain}"
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4329,11 +4303,151 @@ msgstr "Všechny webové aplikace"
 msgid "Secure Shell"
 msgstr "Zabezpečený shell"
 
-#: modules/names/templates/names.html:17
+#: modules/names/forms.py:21
+msgid "Use DNS-over-TLS for resolving domains (global preference)"
+msgstr "Použít DNS-over-TLS pro překlad domén (globální předvolba)"
+
+#: modules/names/forms.py:49
+msgid "Use DNSSEC when resolving domains (global preference)"
+msgstr "Použít DNSSEC při překladu domén (globální předvolba)"
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "Název stroje"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"Název stroje je místní název pomocí kterého ostatní zařízení na místní síti "
+"mohou komunikovat s vaším {box_name}. Je třeba, aby začínal a končil na "
+"písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
+"Celková délka může být nejvýše 63 znaků."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "Neplatný název stroje"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"Doménový název je celosvětový název pomocí kterého mohou ostatní zařízení na "
+"Internetu komunikovat s vaším {box_name}. Je třeba, aby byl tvořen štítky, "
+"oddělovanými tečkou. Je třeba, aby každý ze štítků začínal a končil písmenem "
+"nebo číslicí a obsahoval pouze písmena, číslice a spojovníky. Délka každého "
+"ze štítků může být nejvýše 63 znaků. Celková délka doménového názvu může být "
+"nejvýše 253 znaků."
+
+#: modules/names/resolved.py:91 modules/names/resolved.py:101
+#: modules/networks/forms.py:24
+#: modules/networks/templates/connection_show.html:66
+#: modules/networks/templates/connection_show.html:208
+#: modules/networks/templates/connection_show.html:249
+#: modules/networks/views.py:126
+msgid "yes"
+msgstr "ano"
+
+#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/networks/views.py:125
+msgid "opportunistic"
+msgstr "oportunistický"
+
+#: modules/names/resolved.py:93 modules/names/resolved.py:103
+#: modules/networks/forms.py:26 modules/networks/views.py:124
+msgid "no"
+msgstr "ne"
+
+#: modules/names/resolved.py:102
+msgid "allow-downgrade"
+msgstr "povolit downgrade"
+
+#: modules/names/resolved.py:110
+msgid "supported"
+msgstr "podporováno"
+
+#: modules/names/resolved.py:110
+msgid "unsupported"
+msgstr "nepodporováno"
+
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domény"
+
+#: modules/names/templates/names.html:20
 msgid "Services"
 msgstr "Služby"
 
-#: modules/networks/__init__.py:36
+#: modules/names/templates/names.html:56
+msgid "Resolver Status"
+msgstr "Stav řešitele"
+
+#: modules/names/templates/names.html:66
+msgid "Global"
+msgstr "Globální"
+
+#: modules/names/templates/names.html:68
+msgid "Link"
+msgstr "Odkaz"
+
+#: modules/names/templates/names.html:73
+#: modules/networks/templates/connection_show.html:263
+msgid "DNS-over-TLS"
+msgstr "DNS-over-TLS"
+
+#: modules/names/templates/names.html:77
+msgid "DNSSEC"
+msgstr "DNSSEC"
+
+#: modules/names/templates/names.html:82
+msgid "Current DNS Server"
+msgstr "Aktuální server DNS"
+
+#: modules/names/templates/names.html:88
+msgid "DNS Servers"
+msgstr "DNS servery"
+
+#: modules/names/templates/names.html:98
+msgid "Fallback DNS Servers"
+msgstr "Záložní servery DNS"
+
+#: modules/names/templates/names.html:112
+msgid "Error retrieving status:"
+msgstr "Chyba při instalaci:"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "Název stroje"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Chyba při nastavování názvu stroje: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "Doménový název"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Chyba při nastavování doménového názvu: {exception}"
+
+#: modules/networks/__init__.py:37
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4341,7 +4455,7 @@ msgstr ""
 "Nastavit síťová zařízení. Připojit k Internetu přes ethernet, WiFi nebo "
 "PPPoE. Sdílet toto připojení s ostatními zařízeními na síti."
 
-#: modules/networks/__init__.py:38
+#: modules/networks/__init__.py:39
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4349,31 +4463,36 @@ msgstr ""
 "Zařízení spravovaná jinými metodami zde nemusí být k dispozici pro "
 "konfiguraci."
 
-#: modules/networks/__init__.py:59
+#: modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "Sítě"
 
-#: modules/networks/forms.py:16
+#: modules/networks/forms.py:21 modules/networks/views.py:40
+#: modules/networks/views.py:101 modules/networks/views.py:112
+msgid "unknown"
+msgstr "neznámý"
+
+#: modules/networks/forms.py:34
 msgid "Connection Type"
 msgstr "Typ připojení"
 
-#: modules/networks/forms.py:23
+#: modules/networks/forms.py:41
 msgid "Connection Name"
 msgstr "Název připojení"
 
-#: modules/networks/forms.py:25
+#: modules/networks/forms.py:43
 msgid "Network Interface"
 msgstr "Síťové rozhraní"
 
-#: modules/networks/forms.py:26
+#: modules/networks/forms.py:44
 msgid "The network device that this connection should be bound to."
 msgstr "Síťové zařízení ke kterému má toto spojení být přidruženo."
 
-#: modules/networks/forms.py:29
+#: modules/networks/forms.py:47
 msgid "Firewall Zone"
 msgstr "Zóna firewallu"
 
-#: modules/networks/forms.py:30
+#: modules/networks/forms.py:48
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4381,11 +4500,15 @@ msgstr ""
 "Zóna brány firewall řídí které služby jsou přes tato rozhraní dostupné. Jako "
 "Vnitřní vyberte pouze sítě, kterým důvěřujete."
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:52
+msgid "Use DNS-over-TLS"
+msgstr "Použít DNS-over-TLS"
+
+#: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
 msgstr "Způsob IPv4 adresování"
 
-#: modules/networks/forms.py:36
+#: modules/networks/forms.py:88
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
@@ -4393,7 +4516,7 @@ msgstr ""
 "Automaticky (DHCP): Konfigurace automatická, použití připojení k internetu z "
 "této sítě"
 
-#: modules/networks/forms.py:39
+#: modules/networks/forms.py:91
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
@@ -4401,7 +4524,7 @@ msgstr ""
 "Sdílené: Funguje jako směrovač, poskytuje připojení k internetu ostatním "
 "zařízením v této síti"
 
-#: modules/networks/forms.py:42 modules/networks/forms.py:80
+#: modules/networks/forms.py:94 modules/networks/forms.py:135
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
@@ -4409,15 +4532,15 @@ msgstr ""
 "Příručka: Použijte ručně zadané parametry, použijte připojení k internetu z "
 "této sítě"
 
-#: modules/networks/forms.py:45
+#: modules/networks/forms.py:97
 msgid "Disabled: Do not configure this addressing method"
 msgstr "Vypnuto: Nekonfigurujte tuto metodu adresování"
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:104
 msgid "Netmask"
 msgstr "Síťová maska"
 
-#: modules/networks/forms.py:53
+#: modules/networks/forms.py:105
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -4425,21 +4548,21 @@ msgstr ""
 "Volitelná hodnota. Pokud není vyplněno, bude použita výchozí maska sítě dané "
 "třídy IP adresy."
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Brána"
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 msgid "Optional value."
 msgstr "Volitelná hodnota."
 
-#: modules/networks/forms.py:60 modules/networks/forms.py:95
+#: modules/networks/forms.py:112 modules/networks/forms.py:151
 msgid "DNS Server"
 msgstr "DNS server"
 
-#: modules/networks/forms.py:61
+#: modules/networks/forms.py:113
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4447,11 +4570,11 @@ msgstr ""
 "Nemusí být vyplněné. Pokud ale je a metoda IPv4 adresování je „Automaticky“, "
 "budou ignorovány DNS servery poskytnuté DHCP serverem."
 
-#: modules/networks/forms.py:66 modules/networks/forms.py:101
+#: modules/networks/forms.py:118 modules/networks/forms.py:157
 msgid "Second DNS Server"
 msgstr "Pomocný DNS server"
 
-#: modules/networks/forms.py:67
+#: modules/networks/forms.py:119
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4459,18 +4582,18 @@ msgstr ""
 "Nemusí být vyplněné. Pokud ale je a metoda IPv4 adresování je „Automaticky“, "
 "budou ignorovány DNS servery poskytnuté DHCP serverem."
 
-#: modules/networks/forms.py:72
+#: modules/networks/forms.py:124
 msgid "IPv6 Addressing Method"
 msgstr "Způsob IPv6 adresování"
 
-#: modules/networks/forms.py:74
+#: modules/networks/forms.py:126
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
 "Automaticky: Konfigurace automatická, použití internetového připojení z této "
 "sítě"
 
-#: modules/networks/forms.py:77
+#: modules/networks/forms.py:129
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
@@ -4478,19 +4601,31 @@ msgstr ""
 "Automaticky (pouze DHCP): Konfigurace automatická, použití internetového "
 "připojení z této sítě"
 
-#: modules/networks/forms.py:82
+#: modules/networks/forms.py:132
+msgid ""
+"Link-local: Configure automatically to use an address that is only relevant "
+"to this network."
+msgstr ""
+"Link-local: Automatická konfigurace pro použití adresy, která je relevantní "
+"pouze pro tuto síť."
+
+#: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
 msgstr "Ignorovat: Ignorovat tuto metodu adresování"
 
-#: modules/networks/forms.py:87
+#: modules/networks/forms.py:138
+msgid "Disabled: Disable IPv6 for this connection"
+msgstr "Vypnuto: Zakázat IPv6 pro toto připojení"
+
+#: modules/networks/forms.py:143
 msgid "Prefix"
 msgstr "Předpona"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:144
 msgid "Value between 1 and 128."
 msgstr "Hodnota z rozmezí 1 až 128."
 
-#: modules/networks/forms.py:96
+#: modules/networks/forms.py:152
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4498,7 +4633,7 @@ msgstr ""
 "Nemusí být vyplněné. Pokud ale je a metoda získání IPv6 adresy je "
 "„Automaticky“, budou ignorovány DNS servery poskytnuté DHCP serverem."
 
-#: modules/networks/forms.py:102
+#: modules/networks/forms.py:158
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4506,58 +4641,58 @@ msgstr ""
 "Nemusí být vyplněné. Pokud ale je a metoda získání IPv6 adresy je "
 "„Automaticky“, budou ignorovány DNS servery poskytnuté DHCP serverem."
 
-#: modules/networks/forms.py:115
+#: modules/networks/forms.py:171
 msgid "-- select --"
 msgstr "-- vybrat --"
 
-#: modules/networks/forms.py:242
+#: modules/networks/forms.py:292
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:243
+#: modules/networks/forms.py:293
 msgid "The visible name of the network."
 msgstr "Viditelný název sítě."
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Režim"
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 msgid "Infrastructure"
 msgstr "Infrastrukturní"
 
-#: modules/networks/forms.py:246
+#: modules/networks/forms.py:296
 msgid "Access Point"
 msgstr "Přístupový bod"
 
-#: modules/networks/forms.py:247
+#: modules/networks/forms.py:297
 msgid "Ad-hoc"
 msgstr "Dočasný"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Frequency Band"
 msgstr "Frekvenční pásmo"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Automatic"
 msgstr "Automaticky"
 
-#: modules/networks/forms.py:250
+#: modules/networks/forms.py:300
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:251
+#: modules/networks/forms.py:301
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 GHz)"
 
-#: modules/networks/forms.py:253
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Kanál"
 
-#: modules/networks/forms.py:254
+#: modules/networks/forms.py:304
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4565,11 +4700,11 @@ msgstr ""
 "Nemusí být vyplněné. Bezdrátový kanál ve vybraném frekvenčním pásmu na který "
 "omezit. Nevyplněno nebo 0 (nula) znamená automatický výběr."
 
-#: modules/networks/forms.py:259
+#: modules/networks/forms.py:309
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:260
+#: modules/networks/forms.py:310
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4579,11 +4714,11 @@ msgstr ""
 "připojování k přístupovému bodu, připojit pouze pokud BSSID přístupového "
 "bodu odpovídá tomu zadanému. Příklad: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:266
+#: modules/networks/forms.py:316
 msgid "Authentication Mode"
 msgstr "Režim ověřování"
 
-#: modules/networks/forms.py:267
+#: modules/networks/forms.py:317
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4591,20 +4726,20 @@ msgstr ""
 "Pokud je bezdrátová síť zabezpečená a pro připojení vyžaduje heslo, vyberte "
 "WPA."
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "Open"
 msgstr "Otevřené"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:355
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Zadejte, jak je vaše {box_name} připojeno k síti"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:362
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4615,7 +4750,7 @@ msgstr ""
 "připojení k internetu ze směrovače prostřednictvím Wi-Fi nebo ethernetového "
 "kabelu. Jedná se o typické domácí nastavení.</p>"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:369
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4628,7 +4763,7 @@ msgstr ""
 "Zařízení {box_name} je přímo připojeno k internetu a všechna vaše zařízení "
 "se připojují k zařízení {box_name}, aby se mohli připojit k internetu.</p>"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:378
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4639,11 +4774,11 @@ msgstr ""
 "internetu je přímo připojeno k vašemu {box_name} a v síti nejsou žádná další "
 "zařízení. To se může stát u komunitních nebo cloudových nastavení.</p>"
 
-#: modules/networks/forms.py:347
+#: modules/networks/forms.py:397
 msgid "Choose your internet connection type"
 msgstr "Zvolte typ internetového připojení"
 
-#: modules/networks/forms.py:351
+#: modules/networks/forms.py:401
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4662,7 +4797,7 @@ msgstr ""
 "nejste si jisti, zda se v průběhu času mění nebo ne, je bezpečnější zvolit "
 "tuto možnost.</p>"
 
-#: modules/networks/forms.py:363
+#: modules/networks/forms.py:413
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4681,7 +4816,7 @@ msgstr ""
 "služeb, které však nabízí jen velmi málo poskytovatelů internetových služeb. "
 "Tuto službu můžete od svého poskytovatele internetu získat za příplatek.</p>"
 
-#: modules/networks/forms.py:376
+#: modules/networks/forms.py:426
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4701,7 +4836,7 @@ msgstr ""
 "{box_name} nabízí mnoho řešení, jak tuto situaci obejít, ale každé řešení má "
 "určitá omezení.</b></p>"
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:439
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4709,11 +4844,11 @@ msgstr ""
 "Nevím, jaký typ připojení můj poskytovatel internetu poskytuje <p "
 "class=\"help-block\">Budou vám navrženy nejkonzervativnější kroky.</p>"
 
-#: modules/networks/forms.py:406
+#: modules/networks/forms.py:456
 msgid "Preferred router configuration"
 msgstr "Upřednostňovaná konfigurace směrovače"
 
-#: modules/networks/forms.py:411
+#: modules/networks/forms.py:461
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4730,7 +4865,7 @@ msgstr ""
 "konfiguraci routeru nakonfigurovat statickou místní IP adresu pro váš "
 "{box_name}.</p>"
 
-#: modules/networks/forms.py:423
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4749,7 +4884,7 @@ msgstr ""
 "přesměrování provozu z portů 80 a 443. Každá z ostatních aplikací vám "
 "nabídne, které porty je třeba přesměrovat, aby daná aplikace fungovala.</p>"
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:487
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4809,12 +4944,6 @@ msgstr "Připojení"
 #: modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "Hlavní připojení"
-
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
-msgid "yes"
-msgstr "ano"
 
 #: modules/networks/templates/connection_show.html:77
 #: modules/storage/templates/storage.html:23
@@ -4880,6 +5009,7 @@ msgid "Signal strength"
 msgstr "Síla signálu"
 
 #: modules/networks/templates/connection_show.html:170
+#: modules/networks/templates/connections_fields.html:61
 msgid "IPv4"
 msgstr "IPv4"
 
@@ -4906,6 +5036,7 @@ msgid "Default"
 msgstr "Výchozí"
 
 #: modules/networks/templates/connection_show.html:213
+#: modules/networks/templates/connections_fields.html:90
 msgid "IPv6"
 msgstr "IPv6"
 
@@ -4913,13 +5044,19 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Toto připojení není aktivní."
 
-#: modules/networks/templates/connection_show.html:264
-#: modules/networks/templates/connection_show.html:284
-#: modules/networks/templates/connection_show.html:303
+#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+msgid "Privacy"
+msgstr "Soukromí"
+
+#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:293
+#: modules/networks/templates/connection_show.html:312
 msgid "Firewall zone"
 msgstr "Zóna firewallu"
 
-#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:282
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -4929,8 +5066,8 @@ msgstr ""
 "připojíte do veřejné sítě, služby které jsou zamýšleny být k dispozici pouze "
 "vnitřně se stanou dostupné zvenčí. To je bezpečnostní riziko."
 
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:302
+#: modules/networks/templates/connection_show.html:325
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -4940,12 +5077,12 @@ msgstr ""
 "připojíte do místní sítě/stroji, mnohé služby, které jsou určené být "
 "dostupné pouze vnitřně nebudou dostupné."
 
-#: modules/networks/templates/connection_show.html:305
+#: modules/networks/templates/connection_show.html:314
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr "Vnější"
 
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:321
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4954,12 +5091,12 @@ msgstr ""
 "Toto rozhraní není spravováno %(box_name)s.  Z bezpečnostních důvodů je "
 "automaticky přiřazeno k vnější zóně."
 
-#: modules/networks/templates/connections_create.html:19
+#: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
 msgstr "Vytvořit připojení"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:519
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Smazat připojení"
 
@@ -4979,13 +5116,14 @@ msgstr "Mezery"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:100 network.py:27
+#: modules/networks/views.py:102 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/views.py:101 network.py:28
+#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/views.py:103 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5004,10 +5142,18 @@ msgstr "Vnitřní"
 msgid "Computer"
 msgstr "Počítač"
 
-#: modules/networks/templates/connections_edit.html:20
-#: modules/networks/views.py:239 modules/networks/views.py:323
+#: modules/networks/templates/connections_edit.html:19
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Upravit připojení"
+
+#: modules/networks/templates/connections_fields.html:24
+msgid "General"
+msgstr "Obecné"
+
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+msgid "PPPoE"
+msgstr "PPPoE"
 
 #: modules/networks/templates/connections_list.html:8
 msgid "Connections"
@@ -5015,13 +5161,13 @@ msgstr "Připojení"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:372
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi sítě poblíž"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:396
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Přidat připojení"
@@ -5274,223 +5420,230 @@ msgstr "sdílené"
 msgid "link-local"
 msgstr "link-local"
 
-#: modules/networks/views.py:38 modules/networks/views.py:99
-#: modules/networks/views.py:110
-msgid "unknown"
-msgstr "neznámý"
+#: modules/networks/views.py:33
+msgid "dhcp"
+msgstr "dhcp"
 
-#: modules/networks/views.py:39
+#: modules/networks/views.py:34
+msgid "ignore"
+msgstr "ignorovat"
+
+#: modules/networks/views.py:41
 msgid "unmanaged"
 msgstr "nespravované"
 
-#: modules/networks/views.py:40
+#: modules/networks/views.py:42
 msgid "unavailable"
 msgstr "nedostupné"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:43
 msgid "disconnected"
 msgstr "odpojeno"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:44
 msgid "preparing"
 msgstr "příprava"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:45
 msgid "connecting"
 msgstr "připojení"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:46
 msgid "needs authentication"
 msgstr "potřebuje ověření"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:47
 msgid "requesting address"
 msgstr "vyžadující adresu"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:48
 msgid "checking"
 msgstr "kontrola"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:49
 msgid "waiting for secondary"
 msgstr "čekání na sekundární"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:50
 msgid "activated"
 msgstr "aktivováno"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:51
 msgid "deactivating"
 msgstr "deaktivace"
 
-#: modules/networks/views.py:57
+#: modules/networks/views.py:59
 msgid "no reason"
 msgstr "bez důvodu"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:61
 msgid "unknown error"
 msgstr "neznámá chyba"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:63
 msgid "device is now managed"
 msgstr "zařízení je nyní spravováno"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:65
 msgid "device is now unmanaged"
 msgstr "zařízení je nyní bez správy"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:67
 msgid "configuration failed"
 msgstr "konfigurace selhala"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:69
 msgid "secrets required"
 msgstr "požadovaná tajemství"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:71
 msgid "DHCP client failed to start"
 msgstr "Klienta DHCP se nepodařilo spustit"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:73
 msgid "DHCP client error"
 msgstr "Chyba klienta DHCP"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:75
 msgid "DHCP client failed"
 msgstr "Klient DHCP selhal"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:77
 msgid "shared connection service failed to start"
 msgstr "nepodařilo se spustit službu sdíleného připojení"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:79
 msgid "shared connection service failed"
 msgstr "služba sdíleného připojení selhala"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:81
 msgid "device was removed"
 msgstr "zařízení bylo odstraněno"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:83
 msgid "device disconnected by user"
 msgstr "zařízení odpojené uživatelem"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:85
 msgid "a dependency of the connection failed"
 msgstr "selhala závislost připojení"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:87
 msgid "Wi-Fi network not found"
 msgstr "Síť Wi-Fi nebyla nalezena"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:89
 msgid "a secondary connection failed"
 msgstr "selhalo sekundární připojení"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:91
 msgid "new connection activation was enqueued"
 msgstr "aktivace nového spojení byla zařazena do fronty"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:93
 msgid "a duplicate IP address was detected"
 msgstr "byla zjištěna duplicitní IP adresa"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:95
 msgid "selected IP method is not supported"
 msgstr "vybraná metoda IP není podporována"
 
-#: modules/networks/views.py:102
+#: modules/networks/views.py:104
 msgid "generic"
 msgstr "obecný"
 
-#: modules/networks/views.py:103
+#: modules/networks/views.py:105
 msgid "TUN or TAP interface"
 msgstr "Rozhraní TUN nebo TAP"
 
-#: modules/networks/views.py:104 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:111
+#: modules/networks/views.py:113
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: modules/networks/views.py:112
+#: modules/networks/views.py:114
 msgid "infrastructure"
 msgstr "Infrastruktura"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:115
 msgid "access point"
 msgstr "přístupový bod"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:116
 msgid "mesh point"
 msgstr "bod sítě"
 
-#: modules/networks/views.py:144
+#: modules/networks/views.py:123
+msgid "default"
+msgstr "výchozí"
+
+#: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
 msgstr "Připojení nelze zobrazit: Připojení neexistuje."
 
-#: modules/networks/views.py:197
+#: modules/networks/views.py:211
 msgid "Connection Information"
 msgstr "Informace o spojení"
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "Připojení nelze upravit: Připojení neexistuje."
 
-#: modules/networks/views.py:217
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Tento typ připojení ještě není podporován."
 
-#: modules/networks/views.py:335
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Připojení {name} aktivováno."
 
-#: modules/networks/views.py:339
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Aktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:345
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Nepodařilo se aktivovat připojení {name}: Není k dispozici žádné použitelné "
 "zařízení."
 
-#: modules/networks/views.py:358
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Připojení {name} deaktivováno."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Deaktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:414
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Přidávání nového generického připojení"
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Přidávání nového ethernetového připojení"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Přidávání nového PPPoE připojení"
 
-#: modules/networks/views.py:485
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Přidávání nového Wi-Fi připojení"
 
-#: modules/networks/views.py:500
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Připojení {name} smazáno."
 
-#: modules/networks/views.py:504 modules/networks/views.py:514
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
 
@@ -5963,17 +6116,13 @@ msgstr "Vypnout nyní"
 msgid "Manage system-wide privacy settings."
 msgstr "Správa nastavení ochrany osobních údajů v celém systému."
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
-msgid "Privacy"
-msgstr "Soukromí"
-
-#: modules/privacy/__init__.py:68
+#: modules/privacy/__init__.py:70
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Aktualizujte nastavení ochrany osobních údajů tak, aby odpovídalo vašim "
 "preferencím."
 
-#: modules/privacy/__init__.py:73
+#: modules/privacy/__init__.py:75
 msgid "Review privacy setting"
 msgstr "Zkontrolujte nastavení ochrany osobních údajů"
 
@@ -5997,6 +6146,22 @@ msgstr ""
 "Statistiky shromážděných dat jsou veřejně dostupné na <a href=\"https://"
 "popcon.debian.org/\" target=\"_blank\">popcon.debian.org</a>. Odesílání "
 "probíhá přes síť Tor pro další anonymitu, pokud je povolena aplikace Tor."
+
+#: modules/privacy/forms.py:27
+msgid "Allow using fallback DNS servers"
+msgstr "Povolit používání záložních serverů DNS"
+
+#: modules/privacy/forms.py:29
+msgid ""
+"Use well-known public DNS servers to resolve domain names in unusual "
+"circumstances where no DNS servers are known but internet connectivity is "
+"available. Can be disabled in most cases if network connectivity is stable "
+"and reliable."
+msgstr ""
+"V neobvyklých případech, kdy nejsou známy žádné servery DNS, ale je k "
+"dispozici připojení k internetu, použijte k překladu názvů domén známé "
+"veřejné servery DNS. Lze vypnout ve většině případů, pokud je síťové "
+"připojení stabilní a spolehlivé."
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -7338,7 +7503,7 @@ msgstr "Kořenový souborový systém pouze pro čtení"
 msgid "Go to Power"
 msgstr "Přejít na Síť"
 
-#: modules/storage/__init__.py:439
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
 msgid "grub package is configured"
 msgstr "balíček grub je nakonfigurován"
 
@@ -7896,13 +8061,13 @@ msgstr "TTRSS-Reader"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7915,21 +8080,21 @@ msgstr ""
 "systému považován za nezbytný, provede se automaticky ve 02:00 a způsobí, že "
 "všechny aplikace budou krátce nedostupné."
 
-#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Aktualizace software"
 
-#: modules/upgrades/__init__.py:130
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualizován"
 
-#: modules/upgrades/__init__.py:204
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:206
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -7939,19 +8104,19 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "Zahájena aktualizace distribuce"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
 
-#: modules/upgrades/__init__.py:311
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
-msgstr ""
+msgstr "Kontrola zadržení balíčku"
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -8891,10 +9056,6 @@ msgstr ""
 "Uživatelský účet <strong>%(username)s</strong> se stane administrátorským "
 "účtem pro Zoph."
 
-#: network.py:29
-msgid "PPPoE"
-msgstr "PPPoE"
-
 #: network.py:30
 msgid "Generic"
 msgstr "Obecné"
@@ -9420,6 +9581,12 @@ msgstr "před odinstalací {app_id}"
 msgid "Gujarati"
 msgstr "gudžarátština"
 
+#~ msgid "Hostname set"
+#~ msgstr "Nastavení názvu stroje"
+
+#~ msgid "Domain name set"
+#~ msgstr "Nastavení doménového názvu"
+
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
@@ -9550,9 +9717,6 @@ msgstr "gudžarátština"
 #~ msgid "Failed to restrict console access: {error}"
 #~ msgstr "Nepodařilo se omezit přístup ke konzole: {error}"
 
-#~ msgid "Enable DNSSEC"
-#~ msgstr "Zapnout DNSSEC"
-
 #~ msgid "Enable Domain Name System Security Extensions"
 #~ msgstr "Zapnout zabezpečovací rozšíření systému doménových názvů"
 
@@ -9629,9 +9793,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Tor configuration is being updated"
 #~ msgstr "Nastavení Tor jsou aktualizována"
-
-#~ msgid "Error during installation"
-#~ msgstr "Chyba při instalaci"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -9975,9 +10136,6 @@ msgstr "gudžarátština"
 #~ msgid "Cancel"
 #~ msgstr "Storno"
 
-#~ msgid "Domains"
-#~ msgstr "Domény"
-
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "OpenPGP otisk"
 
@@ -10242,9 +10400,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Automatic, DHCP only"
 #~ msgstr "Automaticky, pouze DHCP"
-
-#~ msgid "Ignore"
-#~ msgstr "Ignorovat"
 
 #~ msgid "Plumble"
 #~ msgstr "Plumble"

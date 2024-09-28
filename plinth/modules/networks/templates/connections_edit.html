@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
-{% load bootstrap %}
 {% load i18n %}
 {% load static %}
 
@@ -11,10 +10,10 @@
 
   <h3>{{ title }}</h3>
 
-  <form class="form form-connection-edit" method="post">
+  <form class="form form-connection form-connection-edit" method="post">
     {% csrf_token %}
 
-    {{ form|bootstrap }}
+    {% include "connections_fields.html" %}
 
     <input type="submit" class="btn btn-primary"
            value="{% trans "Edit Connection" %}"/>

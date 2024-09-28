@@ -1,3 +1,150 @@
+freedombox (24.20.1) unstable; urgency=medium
+
+  [ Veiko Aasa ]
+  * users: Inactivate users in LDAP user database
+  * samba: Fix nmb systemd service is in erroneous state
+
+  [ Sunil Mohan Adapa ]
+  * users: Set proper class on default password policy object
+  * users: Increment app version for changes w.r.t. inactive users
+  * security: Remove PAM configuration for 'access' module
+
+  [ James Valleroy ]
+  * Revert "debian: tests: Wait for systemd-resolved to be started"
+  * ci: Run autopkgtest but allow failure
+  * d/tests: Add breaks-testbed restriction
+  * doc: Fetch latest manual
+
+  [ gallegonovato ]
+  * Translated using Weblate (Spanish)
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ 大王叫我来巡山 ]
+  * Translated using Weblate (Chinese (Simplified Han script))
+
+  [ 109247019824 ]
+  * Translated using Weblate (Bulgarian)
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Wed, 25 Sep 2024 11:57:46 -0400
+
+freedombox (24.20) unstable; urgency=medium
+
+  [ gallegonovato ]
+  * Translated using Weblate (Spanish)
+  * Translated using Weblate (Spanish)
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ 大王叫我来巡山 ]
+  * Translated using Weblate (Chinese (Simplified Han script))
+
+  [ 109247019824 ]
+  * Translated using Weblate (Bulgarian)
+
+  [ Besnik Bleta ]
+  * Translated using Weblate (Albanian)
+  * Translated using Weblate (Albanian)
+
+  [ Jiří Podhorecký ]
+  * Translated using Weblate (Czech)
+
+  [ James Valleroy ]
+  * upgrades: Treat n/a release as testing
+  * debian: tests: Wait for systemd-resolved to be started
+  * action_utils: Remove extra empty line
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+  [ Sunil Mohan Adapa ]
+  * config, names: Move setting hostname from config to names
+  * config, names: Move domain name configuration to names app
+  * tests: functional: Don't timeout when web server restarts
+  * service: Add privileged utility for 'try-reload-or-restart' action
+  * letsencrypt: Allow reloading daemons after cert changes
+  * apache: Don't restart daemon when changing certificates
+  * users: Don't cache NSS user identity information
+  * action_utils: Update outdated docstrings
+  * action_utils: Add a method to reset services in 'failed' state
+  * miniflux: Workaround a packaging bug with DB connection
+
+  [ Veiko Aasa ]
+  * users: Invalidate nscd cache after nslcd service startup
+
+  [ Benedek Nagy ]
+  * nextcloud: Fix issue with upgrading to next version
+
+  [ ikmaak ]
+  * Translated using Weblate (Dutch)
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 23 Sep 2024 20:22:01 -0400
+
+freedombox (24.19) unstable; urgency=medium
+
+  [ ikmaak ]
+  * Translated using Weblate (Dutch)
+
+  [ Burak Yavuz ]
+  * Translated using Weblate (Turkish)
+
+  [ 大王叫我来巡山 ]
+  * Translated using Weblate (Chinese (Simplified))
+
+  [ 109247019824 ]
+  * Translated using Weblate (Bulgarian)
+
+  [ Besnik Bleta ]
+  * Translated using Weblate (Albanian)
+
+  [ gallegonovato ]
+  * Translated using Weblate (Spanish)
+
+  [ Ihor Hordiichuk ]
+  * Translated using Weblate (Ukrainian)
+
+  [ Ettore Atalan ]
+  * Translated using Weblate (German)
+
+  [ Hemanth Kumar Veeranki ]
+  * Translated using Weblate (Telugu)
+
+  [ James Valleroy ]
+  * storage: Handle grub-pc package not available
+  * upgrades: Add repair step for held packages
+  * letsencrypt: Handle both standard and custom repairs
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+  [ Sunil Mohan Adapa ]
+  * names: Use systemd-resolved for DNS resolution
+  * names, network: Re-feed DNS known to network-manager to resolved
+  * privacy: Implement a way to disable fallback DNS servers
+  * privacy: Show notification again so that users see the new setting
+  * makefile: Workaround problems with systemd-resolved package
+  * networks: Declare a need for DHCP/DNS ports to be open in firewall
+  * bind: Don't start a stopped daemon during changes/upgrades
+  * bind: Set default forwarder as systemd-resolved
+  * container: Re-run failed provisioning even if container is running
+  * networks: Groups fields in create/edit connection form
+  * networks: Add support for DNS-over-TLS for individual connections
+  * networks: Add more options for IPv6 configuration method
+  * networks: Set 'auto' as default IPv6 method in new connection form
+  * names: Add option for setting global DNS-over-TLS preference
+  * names: Implement a diagnostic check for checking name resolution
+  * names: Restart instead of reload for systemd-resolved changes
+  * names: Add option for setting global DNSSEC preference
+  * networks: Show current global value of DNS-over-TLS and link to it
+  * names: Show systemd-resolved status in the names page
+  * networks: Fix focusing on network interface field on error
+  * bind: Fix port number clash with 'shared' network connections
+
+  [ Joseph Nuthalapati ]
+  * mediawiki: Increase PHP maximum execution time to 100 seconds
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 09 Sep 2024 21:08:17 -0400
+
 freedombox (24.18~bpo12+1) bookworm-backports; urgency=medium
 
   * Rebuild for bookworm-backports.

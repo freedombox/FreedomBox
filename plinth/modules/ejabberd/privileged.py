@@ -34,18 +34,18 @@ TURN_URI_REGEX = r'(stun|turn):(.*):([0-9]{4})(?:\?transport=(tcp|udp))?'
 
 
 @privileged
-def pre_install(domainname: str):
+def pre_install(domain_name: str):
     """Preseed debconf values before packages are installed."""
-    if not domainname:
-        # If new domainname is blank, use hostname instead.
-        domainname = socket.gethostname()
+    if not domain_name:
+        # If new domain_name is blank, use hostname instead.
+        domain_name = socket.gethostname()
 
     action_utils.debconf_set_selections(
-        ['ejabberd ejabberd/hostname string ' + domainname])
+        ['ejabberd ejabberd/hostname string ' + domain_name])
 
 
 @privileged
-def setup(domainname: str):
+def setup(domain_name: str):
     """Enable LDAP authentication."""
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
@@ -86,7 +86,7 @@ def setup(domainname: str):
     with open(EJABBERD_CONFIG, 'w', encoding='utf-8') as file_handle:
         yaml.dump(conf, file_handle)
 
-    _upgrade_config(domainname)
+    _upgrade_config(domain_name)
 
     try:
         subprocess.check_output(['ejabberdctl', 'restart'])
@@ -195,8 +195,8 @@ def get_domains() -> list[str]:
 
 
 @privileged
-def add_domain(domainname: str):
-    """Update ejabberd with new domainname.
+def add_domain(domain_name: str):
+    """Update ejabberd with new domain name.
 
     Restarting ejabberd is handled by letsencrypt-ejabberd component.
     """
@@ -204,11 +204,11 @@ def add_domain(domainname: str):
         logger.info('ejabberdctl not found')
         return
 
-    # Add updated domainname to ejabberd hosts list.
+    # Add updated domain name to ejabberd hosts list.
     with open(EJABBERD_CONFIG, 'r', encoding='utf-8') as file_handle:
         conf = yaml.load(file_handle)
 
-    conf['hosts'].append(scalarstring.DoubleQuotedScalarString(domainname))
+    conf['hosts'].append(scalarstring.DoubleQuotedScalarString(domain_name))
 
     conf['hosts'] = list(set(conf['hosts']))
 

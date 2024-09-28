@@ -47,7 +47,7 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
-    _version = 5
+    _version = 7
 
     can_be_disabled = False
 
@@ -68,7 +68,7 @@ class UsersApp(app_module.App):
 
         packages = Packages('packages-users', [
             'ldapscripts', 'ldap-utils', 'libnss-ldapd', 'libpam-ldapd',
-            'nscd', 'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
+            'nslcd', 'samba-common-bin', 'slapd', 'tdb-tools'
         ])
         self.add(packages)
 
@@ -92,14 +92,15 @@ class UsersApp(app_module.App):
         results = super().diagnose()
 
         results.append(_diagnose_ldap_entry('dc=thisbox'))
-        results.append(_diagnose_ldap_entry('ou=people'))
+        results.append(_diagnose_ldap_entry('ou=users'))
         results.append(_diagnose_ldap_entry('ou=groups'))
+        results.append(_diagnose_ldap_entry('ou=policies'))
+        results.append(_diagnose_ldap_entry('cn=DefaultPPolicy'))
 
         config = privileged.get_nslcd_config()
         results.append(_diagnose_nslcd_config(config, 'uri', 'ldapi:///'))
         results.append(_diagnose_nslcd_config(config, 'base', 'dc=thisbox'))
         results.append(_diagnose_nslcd_config(config, 'sasl_mech', 'EXTERNAL'))
-
         results.extend(_diagnose_nsswitch_config())
 
         return results
@@ -109,6 +110,12 @@ class UsersApp(app_module.App):
         super().setup(old_version)
         if not old_version:
             privileged.first_setup()
+
+        if old_version and old_version < 7:
+            # Setup password policy and lock LDAP passwords for inactive users.
+            inactivated_users = _get_inactivated_users()
+            if inactivated_users:
+                privileged.setup_and_sync_user_states(inactivated_users)
 
         privileged.setup()
         privileged.create_group('freedombox-share')
@@ -120,9 +127,10 @@ def _diagnose_ldap_entry(search_item: str) -> DiagnosticCheck:
     result = Result.FAILED
 
     try:
-        subprocess.check_output(
-            ['ldapsearch', '-x', '-b', 'dc=thisbox', search_item])
-        result = Result.PASSED
+        output = subprocess.check_output(
+            ['ldapsearch', '-LLL', '-x', '-b', 'dc=thisbox', search_item])
+        if search_item in output.decode():
+            result = Result.PASSED
     except subprocess.CalledProcessError:
         pass
 
@@ -187,6 +195,14 @@ def get_last_admin_user():
         return admin_users[0]
 
     return None
+
+
+def _get_inactivated_users() -> list[str]:
+    """Get list of inactivated usernames"""
+    from django.contrib.auth.models import User
+    users = User.objects.filter(is_active=False)
+
+    return [user.username for user in users]
 
 
 def add_user_to_share_group(username, service=None):

@@ -40,7 +40,7 @@ class MediaWikiApp(app_module.App):
 
     app_id = 'mediawiki'
 
-    _version = 12
+    _version = 13
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -86,7 +86,7 @@ class MediaWikiApp(app_module.App):
         self.add(webserver)
 
         webserver = Webserver('webserver-mediawiki-freedombox',
-                              'mediawiki-freedombox')
+                              'mediawiki-freedombox', last_updated_version=13)
         self.add(webserver)
 
         daemon = Daemon('daemon-mediawiki', 'mediawiki-jobrunner')

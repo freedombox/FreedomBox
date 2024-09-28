@@ -11,7 +11,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
-from plinth.modules import config
+from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
@@ -136,15 +136,15 @@ class EjabberdApp(app_module.App):
 
     def setup(self, old_version):
         """Install and configure the app."""
-        domainname = config.get_domainname()
-        logger.info('ejabberd service domainname - %s', domainname)
+        domain_name = names.get_domain_name()
+        logger.info('ejabberd service domain name - %s', domain_name)
 
-        privileged.pre_install(domainname)
+        privileged.pre_install(domain_name)
         # XXX: Configure all other domain names
         super().setup(old_version)
         self.get_component('letsencrypt-ejabberd').setup_certificates(
-            [domainname])
-        privileged.setup(domainname)
+            [domain_name])
+        privileged.setup(domain_name)
         if not old_version:
             self.enable()
 

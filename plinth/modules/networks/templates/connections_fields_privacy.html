@@ -1,0 +1,28 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+<div class='field-group'>
+  <div class="card-header" id="header-privacy">
+    <h4>
+      <button class="btn btn-block text-left dropdown-toggle {{ form.errors|yesno:",collapsed" }}"
+              type="button" data-toggle="collapse"
+              data-target="#collapse-privacy"
+              aria-expanded="{{ form.errors|yesno:"true,false" }}"
+              aria-controls="collapse-privacy">
+        {% trans "Privacy" %}
+      </button>
+    </h4>
+  </div>
+
+  <div id="collapse-privacy" class="collapse {{ form.errors|yesno:"show," }}"
+       aria-labelledby="header-privacy"
+       data-parent="#accordion-connections-fields">
+    <div class="card-body">
+      {{ form.dns_over_tls|bootstrap }}
+    </div>
+  </div>
+</div>

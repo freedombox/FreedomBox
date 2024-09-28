@@ -4,16 +4,26 @@ FreedomBox app to configure name services.
 """
 
 import logging
+import socket
+import subprocess
 
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, menu
+from plinth import cfg, menu, network
+from plinth.daemon import Daemon
+from plinth.diagnostic_check import (DiagnosticCheck,
+                                     DiagnosticCheckParameters, Result)
 from plinth.modules.backups.components import BackupRestore
-from plinth.signals import domain_added, domain_removed
+from plinth.modules.names.components import DomainType
+from plinth.package import Packages
+from plinth.privileged import service as service_privileged
+from plinth.signals import (domain_added, domain_removed, post_hostname_change,
+                            pre_hostname_change)
 from plinth.utils import format_lazy
 
-from . import components, manifest
+from . import components, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +42,7 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
-    _version = 1
+    _version = 2
 
     can_be_disabled = False
 
@@ -50,6 +60,18 @@ class NamesApp(app_module.App):
                               parent_url_name='system:visibility', order=10)
         self.add(menu_item)
 
+        # 'ip' utility is needed from 'iproute2' package.
+        packages = Packages('packages-names',
+                            ['systemd-resolved', 'libnss-resolve', 'iproute2'])
+        self.add(packages)
+
+        domain_type = DomainType('domain-type-static', _('Domain Name'),
+                                 'names:domains', can_have_certificate=True)
+        self.add(domain_type)
+
+        daemon = Daemon('daemon-names', 'systemd-resolved')
+        self.add(daemon)
+
         backup_restore = BackupRestore('backup-restore-names',
                                        **manifest.backup)
         self.add(backup_restore)
@@ -60,10 +82,57 @@ class NamesApp(app_module.App):
         domain_added.connect(on_domain_added)
         domain_removed.connect(on_domain_removed)
 
+        # Register domain with Name Services module.
+        domain_name = get_domain_name()
+        if domain_name:
+            domain_added.send_robust(sender='names',
+                                     domain_type='domain-type-static',
+                                     name=domain_name, services='__all__')
+
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(diagnose_resolution('deb.debian.org'))
+        return results
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+
+        # Fresh install or upgrading to version 2
+        if old_version < 2:
+            privileged.set_resolved_configuration(dns_fallback=True)
+
+        # Load the configuration files for systemd-resolved provided by
+        # FreedomBox.
+        service_privileged.restart('systemd-resolved')
+
+        # After systemd-resolved is freshly installed, /etc/resolve.conf
+        # becomes a symlink to configuration pointing to systemd-resovled stub
+        # resolver. However, the old contents are not fed from network-manager
+        # (if it was present earlier and wrote to /etc/resolve.conf). Ask
+        # network-manager to feed the DNS servers from the connections it has
+        # established to systemd-resolved so that using fallback DNS servers is
+        # not necessary.
+        network.refeed_dns()
+
         self.enable()
+
+
+def diagnose_resolution(domain: str) -> DiagnosticCheck:
+    """Perform a diagnostic check for whether a domain can be resolved."""
+    result = Result.NOT_DONE
+    try:
+        subprocess.run(['resolvectl', 'query', '--cache=no', domain],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                       check=True)
+        result = Result.PASSED
+    except subprocess.CalledProcessError:
+        result = Result.FAILED
+
+    description = gettext_noop('Resolve domain name: {domain}')
+    parameters: DiagnosticCheckParameters = {'domain': domain}
+    return DiagnosticCheck('names-resolve', description, result, parameters)
 
 
 def on_domain_added(sender, domain_type, name='', description='',
@@ -101,6 +170,39 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 ######################################################
 # Domain utilities meant to be used by other modules #
 ######################################################
+
+
+def get_domain_name():
+    """Return the currently set static domain name."""
+    fqdn = socket.getfqdn()
+    return '.'.join(fqdn.split('.')[1:])
+
+
+def get_hostname():
+    """Return the hostname."""
+    return socket.gethostname()
+
+
+def set_hostname(hostname):
+    """Set machine hostname and send signals before and after."""
+    old_hostname = get_hostname()
+    domain_name = get_domain_name()
+
+    # Hostname should be ASCII. If it's unicode but passed our
+    # valid_hostname check, convert
+    hostname = str(hostname)
+
+    pre_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
+                                    new_hostname=hostname)
+
+    logger.info('Changing hostname to - %s', hostname)
+    privileged.set_hostname(hostname)
+
+    logger.info('Setting domain name after hostname change - %s', domain_name)
+    privileged.set_domain_name(domain_name)
+
+    post_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
+                                     new_hostname=hostname)
 
 
 def get_available_tls_domains():

@@ -16,6 +16,7 @@ from contextlib import contextmanager
 import pytest
 import requests
 from selenium.common.exceptions import (ElementClickInterceptedException,
+                                        NoSuchElementException,
                                         StaleElementReferenceException,
                                         WebDriverException)
 from selenium.webdriver.support.ui import WebDriverWait
@@ -99,19 +100,47 @@ class _PageLoaded():
     def __init__(self, element, expected_url=None):
         self.element = element
         self.expected_url = expected_url
+        self.loaded_new_page = False
 
     def __call__(self, driver):
         is_stale = False
         try:
             self.element.has_class('whatever_class')
+        # XXX: There is still another unhandled case where the webserver
+        # restarts after submission of a form and the browser does not switch
+        # to error page. It continues to wait for a response from the server
+        # indefinitely until timeout.
+        except NoSuchElementException:
+            # This is still the old page, wait for it to change.
+            if not self.loaded_new_page:
+                return False
+
+            # This is the new page and we are not waiting for a specific URL.
+            # Stop waiting.
+            if not self.expected_url:
+                return True
+
+            # This is the new page and expected URL has not reached, wait for
+            # the page to spontaneously change.
+            if not driver.url.endswith(self.expected_url):
+                return False
+
+            # This is the new page and we have reached the expected URL. Stop
+            # waiting.
+            return True
         except (StaleElementReferenceException, TypeError):
             # After a domain name change, Let's Encrypt will restart the web
             # server and could cause a connection failure.
             if driver.find_by_id('netErrorButtonContainer'):
                 try:
                     driver.visit(driver.url)
+                    # After this for some unknown reason,
+                    # StaleElementReferenceException is no longer thrown.
+                    self.loaded_new_page = True
                 except WebDriverException:
+                    # Web server is not yet available.
                     pass
+
                 return False
 
             is_fully_loaded = driver.execute_script(
@@ -461,15 +490,6 @@ def app_can_be_disabled(browser, app_name):
     return bool(button)
 
 
-#########################
-# Domain name utilities #
-#########################
-def set_domain_name(browser, domain_name):
-    nav_to_module(browser, 'config')
-    browser.find_by_id('id_domainname').fill(domain_name)
-    submit(browser, form_class='form-configuration')
-
-
 ########################
 # Front page utilities #
 ########################
@@ -512,15 +532,24 @@ def running_inside_container():
     return result.stdout.decode('utf-8').strip().lower() != 'none'
 
 
+#############################
+# System -> Names utilities #
+#############################
+def set_hostname(browser, hostname):
+    visit(browser, '/plinth/sys/names/hostname/')
+    browser.find_by_id('id_hostname-hostname').fill(hostname)
+    submit(browser, form_class='form-hostname')
+
+
+def set_domain_name(browser, domain_name):
+    visit(browser, '/plinth/sys/names/domains/')
+    browser.find_by_id('id_domain-name-domain_name').fill(domain_name)
+    submit(browser, form_class='form-domain-name')
+
+
 ##############################
 # System -> Config utilities #
 ##############################
-def set_hostname(browser, hostname):
-    nav_to_module(browser, 'config')
-    browser.find_by_id('id_hostname').fill(hostname)
-    submit(browser, form_class='form-configuration')
-
-
 def set_advanced_mode(browser, mode):
     nav_to_module(browser, 'config')
     advanced_mode = browser.find_by_id('id_advanced_mode')

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-26 19:15-0400\n"
+"POT-Creation-Date: 2024-09-23 19:35-0400\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -115,7 +115,7 @@ msgstr ""
 msgid "System"
 msgstr "Rendszer"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:259
+#: menu.py:112 modules/networks/templates/connection_show.html:268
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Biztonság"
@@ -200,7 +200,7 @@ msgid "Enable a Backup Schedule"
 msgstr "Ütemezett biztonsági mentés engedélyezése"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
-#: modules/privacy/__init__.py:77 modules/storage/__init__.py:326
+#: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Ugrás ide: {app_name}"
@@ -365,7 +365,7 @@ msgstr "Kulcs a tárolóban"
 msgid "None"
 msgstr "Nincs"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:270
+#: modules/backups/forms.py:179 modules/networks/forms.py:320
 msgid "Passphrase"
 msgstr "Jelszó"
 
@@ -881,7 +881,7 @@ msgid "No passwords currently configured."
 msgstr "Jelenleg nincs beállítva jelszó."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:208
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Jelszó"
@@ -998,7 +998,7 @@ msgid "Serving Domains"
 msgstr "Kiszolgált tartományok"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
-#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:15
+#: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
 #: modules/networks/templates/connection_show.html:91
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
@@ -1021,17 +1021,18 @@ msgstr "IP-címek"
 msgid "Refresh IP address and domains"
 msgstr "IP-címek és tartományok frissítése"
 
-#: modules/bind/views.py:61 modules/config/views.py:98
+#: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/pagekite/forms.py:74 modules/privacy/views.py:36
-#: modules/quassel/views.py:29 modules/roundcube/views.py:32
-#: modules/rssbridge/views.py:31 modules/shadowsocks/views.py:52
-#: modules/shadowsocksserver/views.py:48 modules/ssh/views.py:62
-#: modules/transmission/views.py:43 modules/ttrss/views.py:31
-#: modules/wordpress/views.py:31
+#: modules/names/views.py:62 modules/names/views.py:91
+#: modules/names/views.py:125 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
+#: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
+#: modules/ssh/views.py:62 modules/transmission/views.py:43
+#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "A beállítások frissültek"
 
@@ -1212,90 +1213,46 @@ msgstr "Cockpit"
 msgid "Server Administration"
 msgstr "Szerver adminisztráció"
 
-#: modules/config/__init__.py:22
+#: modules/config/__init__.py:18
+#, fuzzy
+#| msgid ""
+#| "Here you can set some general configuration options like hostname, domain "
+#| "name, webserver home page etc."
 msgid ""
-"Here you can set some general configuration options like hostname, domain "
-"name, webserver home page etc."
+"Here you can set some general configuration options like webserver home page "
+"etc."
 msgstr ""
 "Itt általános dolgokat állíthatsz be, például gazdagépnév, domainnév, "
 "webszerver kezdőoldala stb."
 
-#: modules/config/__init__.py:44
+#: modules/config/__init__.py:40
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: modules/config/__init__.py:49 modules/names/templates/names.html:30
-#: modules/names/templates/names.html:44 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:33
+#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Beállítások"
 
-#: modules/config/__init__.py:63 modules/config/forms.py:68
-#: modules/dynamicdns/forms.py:82 modules/names/templates/names.html:16
-msgid "Domain Name"
-msgstr "Domainnév"
-
-#: modules/config/forms.py:30 modules/config/forms.py:80
-#: modules/dynamicdns/forms.py:85
-msgid "Invalid domain name"
-msgstr "Érvénytelen domainnév"
-
-#: modules/config/forms.py:40
+#: modules/config/forms.py:24
 #, python-brace-format
 msgid "{user}'s website"
 msgstr "{user} weboldala"
 
-#: modules/config/forms.py:42
+#: modules/config/forms.py:26
 msgid "Apache Default"
 msgstr "Apache alapértelmezett"
 
-#: modules/config/forms.py:43
+#: modules/config/forms.py:27
 msgid "FreedomBox Service (Plinth)"
 msgstr "FreedomBox Szolgáltatás (Plinth)"
 
-#: modules/config/forms.py:55
-msgid "Hostname"
-msgstr "Állomásnév"
-
-#: modules/config/forms.py:57
-#, python-brace-format
-msgid ""
-"Hostname is the local name by which other devices on the local network can "
-"reach your {box_name}.  It must start and end with an alphabet or a digit "
-"and have as interior characters only alphabets, digits and hyphens.  Total "
-"length must be 63 characters or less."
-msgstr ""
-"Az állomásnév az a helyi név, amellyel a helyi hálózaton lévő egyéb eszközök "
-"elérhetik ezt a {box_name} eszközt. Betűvel vagy számmal kell kezdődnie és "
-"végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
-"Teljes hossza nem lehet több 63 karakternél."
-
-#: modules/config/forms.py:64
-msgid "Invalid hostname"
-msgstr "Érvénytelen állomásnév"
-
-#: modules/config/forms.py:70
-#, python-brace-format
-msgid ""
-"Domain name is the global name by which other devices on the Internet can "
-"reach your {box_name}.  It must consist of labels separated by dots.  Each "
-"label must start and end with an alphabet or a digit and have as interior "
-"characters only alphabets, digits and hyphens.  Length of each label must be "
-"63 characters or less.  Total length of domain name must be 253 characters "
-"or less."
-msgstr ""
-"A domainnév az a globális név, amellyel az interneten lévő egyéb eszközök "
-"elérhetik a {box_name} eszközt. Pontokkal elválasztott címkéket kell "
-"tartalmaznia. Minden címkének betűvel vagy számmal kell kezdődnie és "
-"végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. Egy-"
-"egy címke hossza nem lehet több 63 karakternél. A domainnév teljes hossza "
-"pedig nem lehet több 253 karakternél."
-
-#: modules/config/forms.py:85
+#: modules/config/forms.py:35
 msgid "Webserver Home Page"
 msgstr "Webszerver kezdőoldala"
 
-#: modules/config/forms.py:87
+#: modules/config/forms.py:37
 #, python-brace-format
 msgid ""
 "Choose the default page that must be served when someone visits your "
@@ -1312,31 +1269,31 @@ msgstr ""
 "felhasználóknak külön meg kell adniuk a /plinth vagy a /freedombox elérési "
 "utat."
 
-#: modules/config/forms.py:98
+#: modules/config/forms.py:48
 msgid "Show advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók mutatása"
 
-#: modules/config/forms.py:100
+#: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
 msgstr "Több műszaki ismeretet igénylő alkalmazások és funkciók megjelenítése."
 
-#: modules/config/forms.py:104
+#: modules/config/forms.py:54
 msgid "System-wide logging"
 msgstr "Rendszerszintű naplózás"
 
-#: modules/config/forms.py:105
+#: modules/config/forms.py:55
 msgid "Disable logging, for privacy"
 msgstr "Naplózás letiltása"
 
-#: modules/config/forms.py:107
+#: modules/config/forms.py:57
 msgid "Keep some in memory until a restart, for performance"
 msgstr "Naplófájlok megtartása a következő újraindításig (jobb teljesítmény)"
 
-#: modules/config/forms.py:110
+#: modules/config/forms.py:60
 msgid "Write to disk, useful for debugging"
 msgstr "Naplófájlok lemezre írása, hibakeresés esetén hasznos"
 
-#: modules/config/forms.py:112
+#: modules/config/forms.py:62
 msgid ""
 "Logs contain information about who accessed the system and debug information "
 "from various services"
@@ -1344,43 +1301,25 @@ msgstr ""
 "A naplófájlok tárolják, hogy ki kapcsolódott a rendszerhez, illetve "
 "hibakeresési információkkal is szolgálnak számos alkalmazás számára."
 
-#: modules/config/views.py:49
-#, python-brace-format
-msgid "Error setting hostname: {exception}"
-msgstr "Hiba az állomásnév beállítása közben: {exception}"
-
-#: modules/config/views.py:52
-msgid "Hostname set"
-msgstr "Állomásnév beállítva"
-
-#: modules/config/views.py:61
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Hiba a domainnév beállítása közben: {exception}"
-
-#: modules/config/views.py:64
-msgid "Domain name set"
-msgstr "Domainnév beállítva"
-
-#: modules/config/views.py:72
+#: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
 msgstr "Hiba a webszerver kezdőoldalának beállítása közben: {exception}"
 
-#: modules/config/views.py:75
+#: modules/config/views.py:44
 msgid "Webserver home page set"
 msgstr "Webszerver kezdőoldal beállítva"
 
-#: modules/config/views.py:83
+#: modules/config/views.py:52
 #, python-brace-format
 msgid "Error changing advanced mode: {exception}"
 msgstr "Hiba a haladó módba váltás során: {exception}"
 
-#: modules/config/views.py:88
+#: modules/config/views.py:57
 msgid "Showing advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók megjelenítése"
 
-#: modules/config/views.py:91
+#: modules/config/views.py:60
 msgid "Hiding advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók elrejtése"
 
@@ -1523,7 +1462,7 @@ msgstr ""
 msgid "passed"
 msgstr "sikerült"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:50
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
 msgid "failed"
 msgstr "sikertelen"
 
@@ -1855,12 +1794,22 @@ msgstr "Minden SSL-tanúsítvány elfogadása"
 msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
+#: modules/dynamicdns/forms.py:82 modules/names/__init__.py:68
+#: modules/names/forms.py:106 modules/names/templates/names.html:19
+msgid "Domain Name"
+msgstr "Domainnév"
+
+#: modules/dynamicdns/forms.py:85 modules/names/forms.py:99
+#: modules/names/forms.py:117
+msgid "Invalid domain name"
+msgstr "Érvénytelen domainnév"
+
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:207 modules/users/forms.py:129
+#: modules/networks/forms.py:265 modules/users/forms.py:129
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:210
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
 msgid "Show password"
 msgstr "Jelszó mutatása"
 
@@ -2076,17 +2025,35 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
 msgid ""
-"Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will look "
-"like <i>username@%(domainname)s</i>. You can setup your domain on the system "
-"<a href=\"%(index_url)s\">Configure</a> page."
+"Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
+"like <i>username@%(domain_name)s</i>. You can setup your domain on the "
+"system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
 "Az XMPP-szervered domainneve <b>%(domainname)s</b>. A felhasználói ID-k így "
 "fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a rendszered "
 "domainnevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
 
-#: modules/email/__init__.py:27
+#: modules/ejabberd/templates/ejabberd.html:25
+#, fuzzy, python-format
+#| msgid ""
+#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
+#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
+#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+msgid ""
+"Your XMPP server domain is not set. You can setup your domain on the system "
+"<a href=\"%(names_url)s\">Name Services</a> page."
+msgstr ""
+"Az XMPP-szervered domainneve <b>%(domainname)s</b>. A felhasználói ID-k így "
+"fognak kinézni: <i>username@%(domainname)s</i>. Beállíthatod a rendszered "
+"domainnevét a <a href=\"%(index_url)s\">Beállítások</a> lapon."
+
+#: modules/email/__init__.py:26
 msgid ""
 "This is a complete email server solution using Postfix, Dovecot, and Rspamd. "
 "Postfix sends and receives emails. Dovecot allows email clients to access "
@@ -2097,7 +2064,7 @@ msgstr ""
 "lehetővé teszi az e-mail kliensek hozzáférését a leveleidhez az IMAP és POP3 "
 "protokollokat használva, az Rspamd pedig a kéretlen levelek szűrését végzi."
 
-#: modules/email/__init__.py:31
+#: modules/email/__init__.py:30
 msgid ""
 "Email server currently does not work with many free domain services "
 "including those provided by the FreedomBox Foundation. Many ISPs also "
@@ -2110,7 +2077,7 @@ msgstr ""
 "internetszolgáltató kifejezett kérés után feloldja a korlátozást. További "
 "információkért lásd a kézikönyv oldalát."
 
-#: modules/email/__init__.py:36
+#: modules/email/__init__.py:35
 #, python-brace-format
 msgid ""
 "Each user on {box_name} gets an email address like user@mydomain.example. "
@@ -2126,7 +2093,7 @@ msgstr ""
 "álnevek, mint pl. a \"postmaster\" az első admin felhasználóhoz tartozva "
 "automatikusan létrejönnek az alkalmazás telepítése során."
 
-#: modules/email/__init__.py:42
+#: modules/email/__init__.py:41
 msgid ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube app</a> provides web interface "
 "for users to access email."
@@ -2134,26 +2101,26 @@ msgstr ""
 "<a href=\"/plinth/apps/roundcube/\">Roundcube alkalmazás</a> webes felületet "
 "biztosít a felhasználók számára e-mail eléréséhez."
 
-#: modules/email/__init__.py:44
+#: modules/email/__init__.py:43
 msgid ""
 "During installation, any other email servers in the system will be "
 "uninstalled."
 msgstr ""
 "A telepítés során a rendszeren lévő összes egyéb e-mail-szerver törlődni fog."
 
-#: modules/email/__init__.py:63
+#: modules/email/__init__.py:62
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:65
+#: modules/email/__init__.py:64
 msgid "Email Server"
 msgstr "E-mail-szerver"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "My Email Aliases"
 msgstr "E-mail álneveim"
 
-#: modules/email/__init__.py:86
+#: modules/email/__init__.py:85
 msgid "Manage Aliases for Mailbox"
 msgstr "A Mailbox álneveinek kezelése"
 
@@ -2482,17 +2449,17 @@ msgstr ""
 msgid "Firewall"
 msgstr "Tűzfal"
 
-#: modules/firewall/__init__.py:273
+#: modules/firewall/__init__.py:262
 #, fuzzy
 #| msgid "Default app set"
 msgid "Default zone is external"
 msgstr "Alapértelmezett alkalmazás beállítva"
 
-#: modules/firewall/__init__.py:283
+#: modules/firewall/__init__.py:272
 msgid "Firewall backend is nftables"
 msgstr ""
 
-#: modules/firewall/__init__.py:297
+#: modules/firewall/__init__.py:286
 msgid "Direct passthrough rules exist"
 msgstr ""
 
@@ -3638,9 +3605,12 @@ msgid "Obtain"
 msgstr "Beszerzés"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
+#| "domains</a> to be able to obtain certificates for them."
 msgid ""
-"No domains have been configured. <a href=\"%(config_url)s\">Configure "
+"No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Nincsenek domainek beállítva. Előbb <a href=\"%(config_url)s\">állítsd be a "
@@ -4123,8 +4093,8 @@ msgstr "Sérülés engedélyezése"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "Ha le van tiltva, a játékosok nem fognak meghalni, ill. megsérülni."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:49
-#: modules/networks/forms.py:85
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
+#: modules/networks/forms.py:141
 msgid "Address"
 msgstr "Cím"
 
@@ -4415,7 +4385,7 @@ msgstr "A csatlakozáshoz szükséges jelszó megváltoztatva"
 msgid "Root channel name changed."
 msgstr "A szerver fő csatornájának neve megváltoztatva."
 
-#: modules/names/__init__.py:22
+#: modules/names/__init__.py:32
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4429,9 +4399,14 @@ msgstr ""
 "engedélyezettek vagy tiltottak-e az adott néven keresztül bejövő kapcsolatok "
 "számára."
 
-#: modules/names/__init__.py:43
+#: modules/names/__init__.py:53
 msgid "Name Services"
 msgstr "Névszolgáltatások"
+
+#: modules/names/__init__.py:133
+#, python-brace-format
+msgid "Resolve domain name: {domain}"
+msgstr ""
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4445,11 +4420,165 @@ msgstr "Összes webalkalmazás"
 msgid "Secure Shell"
 msgstr "Secure Shell (Biztonságos parancsértelmező)"
 
-#: modules/names/templates/names.html:17
+#: modules/names/forms.py:21
+msgid "Use DNS-over-TLS for resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:49
+msgid "Use DNSSEC when resolving domains (global preference)"
+msgstr ""
+
+#: modules/names/forms.py:84
+msgid "Hostname"
+msgstr "Állomásnév"
+
+#: modules/names/forms.py:85
+#, python-brace-format
+msgid ""
+"Hostname is the local name by which other devices on the local network can "
+"reach your {box_name}.  It must start and end with an alphabet or a digit "
+"and have as interior characters only alphabets, digits and hyphens.  Total "
+"length must be 63 characters or less."
+msgstr ""
+"Az állomásnév az a helyi név, amellyel a helyi hálózaton lévő egyéb eszközök "
+"elérhetik ezt a {box_name} eszközt. Betűvel vagy számmal kell kezdődnie és "
+"végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
+"Teljes hossza nem lehet több 63 karakternél."
+
+#: modules/names/forms.py:91
+msgid "Invalid hostname"
+msgstr "Érvénytelen állomásnév"
+
+#: modules/names/forms.py:107
+#, python-brace-format
+msgid ""
+"Domain name is the global name by which other devices on the Internet can "
+"reach your {box_name}.  It must consist of labels separated by dots.  Each "
+"label must start and end with an alphabet or a digit and have as interior "
+"characters only alphabets, digits and hyphens.  Length of each label must be "
+"63 characters or less.  Total length of domain name must be 253 characters "
+"or less."
+msgstr ""
+"A domainnév az a globális név, amellyel az interneten lévő egyéb eszközök "
+"elérhetik a {box_name} eszközt. Pontokkal elválasztott címkéket kell "
+"tartalmaznia. Minden címkének betűvel vagy számmal kell kezdődnie és "
+"végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. Egy-"
+"egy címke hossza nem lehet több 63 karakternél. A domainnév teljes hossza "
+"pedig nem lehet több 253 karakternél."
+
+#: modules/names/resolved.py:91 modules/names/resolved.py:101
+#: modules/networks/forms.py:24
+#: modules/networks/templates/connection_show.html:66
+#: modules/networks/templates/connection_show.html:208
+#: modules/networks/templates/connection_show.html:249
+#: modules/networks/views.py:126
+msgid "yes"
+msgstr "igen"
+
+#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/networks/views.py:125
+msgid "opportunistic"
+msgstr ""
+
+#: modules/names/resolved.py:93 modules/names/resolved.py:103
+#: modules/networks/forms.py:26 modules/networks/views.py:124
+#, fuzzy
+#| msgid "Dino"
+msgid "no"
+msgstr "Dino"
+
+#: modules/names/resolved.py:102
+msgid "allow-downgrade"
+msgstr ""
+
+#: modules/names/resolved.py:110
+#, fuzzy
+#| msgid "Get Support"
+msgid "supported"
+msgstr "Támogatás kérése"
+
+#: modules/names/resolved.py:110
+msgid "unsupported"
+msgstr ""
+
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domainek"
+
+#: modules/names/templates/names.html:20
 msgid "Services"
 msgstr "Szolgáltatások"
 
-#: modules/networks/__init__.py:36
+#: modules/names/templates/names.html:56
+msgid "Resolver Status"
+msgstr ""
+
+#: modules/names/templates/names.html:66
+msgid "Global"
+msgstr ""
+
+#: modules/names/templates/names.html:68
+msgid "Link"
+msgstr ""
+
+#: modules/names/templates/names.html:73
+#: modules/networks/templates/connection_show.html:263
+msgid "DNS-over-TLS"
+msgstr ""
+
+#: modules/names/templates/names.html:77
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNSSEC"
+msgstr "DNSSEC engedélyezése"
+
+#: modules/names/templates/names.html:82
+#, fuzzy
+#| msgid "Second DNS Server"
+msgid "Current DNS Server"
+msgstr "Másodlagos DNS-szerver"
+
+#: modules/names/templates/names.html:88
+#, fuzzy
+#| msgid "DNS Server"
+msgid "DNS Servers"
+msgstr "DNS-szerver"
+
+#: modules/names/templates/names.html:98
+#, fuzzy
+#| msgid "DNS Server"
+msgid "Fallback DNS Servers"
+msgstr "DNS-szerver"
+
+#: modules/names/templates/names.html:112
+#, fuzzy
+#| msgid "Error during installation"
+msgid "Error retrieving status:"
+msgstr "Hiba lépett fel a telepítés során"
+
+#: modules/names/views.py:77
+#, fuzzy
+#| msgid "Hostname"
+msgid "Set Hostname"
+msgstr "Állomásnév"
+
+#: modules/names/views.py:95
+#, python-brace-format
+msgid "Error setting hostname: {exception}"
+msgstr "Hiba az állomásnév beállítása közben: {exception}"
+
+#: modules/names/views.py:111
+#, fuzzy
+#| msgid "Domain Name"
+msgid "Set Domain Name"
+msgstr "Domainnév"
+
+#: modules/names/views.py:129
+#, python-brace-format
+msgid "Error setting domain name: {exception}"
+msgstr "Hiba a domainnév beállítása közben: {exception}"
+
+#: modules/networks/__init__.py:37
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4458,7 +4587,7 @@ msgstr ""
 "vagy PPPoE segítségével. Oszd meg ezt a kapcsolatot a hálózaton lévő más "
 "eszközökkel."
 
-#: modules/networks/__init__.py:38
+#: modules/networks/__init__.py:39
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4466,31 +4595,36 @@ msgstr ""
 "Előfordulhat, hogy más módszerekkel felügyelt eszközök itt nem lesznek a "
 "konfigurálhatók."
 
-#: modules/networks/__init__.py:59
+#: modules/networks/__init__.py:60
 msgid "Networks"
 msgstr "Hálózatok"
 
-#: modules/networks/forms.py:16
+#: modules/networks/forms.py:21 modules/networks/views.py:40
+#: modules/networks/views.py:101 modules/networks/views.py:112
+msgid "unknown"
+msgstr "ismeretlen"
+
+#: modules/networks/forms.py:34
 msgid "Connection Type"
 msgstr "Kapcsolat típusa"
 
-#: modules/networks/forms.py:23
+#: modules/networks/forms.py:41
 msgid "Connection Name"
 msgstr "Kapcsolat neve"
 
-#: modules/networks/forms.py:25
+#: modules/networks/forms.py:43
 msgid "Network Interface"
 msgstr "Hálózati interfész"
 
-#: modules/networks/forms.py:26
+#: modules/networks/forms.py:44
 msgid "The network device that this connection should be bound to."
 msgstr "A hálózati eszköz, amelyhez a kapcsolatot kötni kell."
 
-#: modules/networks/forms.py:29
+#: modules/networks/forms.py:47
 msgid "Firewall Zone"
 msgstr "Tűzfal zóna"
 
-#: modules/networks/forms.py:30
+#: modules/networks/forms.py:48
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4498,11 +4632,15 @@ msgstr ""
 "A tűzfal zóna szabályozza, hogy mely szolgáltatások lesznek elérhetők ezen "
 "az interfészen. Csak a megbízható hálózatokhoz válaszd a „Belső”-t."
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:52
+msgid "Use DNS-over-TLS"
+msgstr ""
+
+#: modules/networks/forms.py:86
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 címzési módszer"
 
-#: modules/networks/forms.py:36
+#: modules/networks/forms.py:88
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
@@ -4510,7 +4648,7 @@ msgstr ""
 "Automatikus (DHCP): Automatikus konfigurálás, internetkapcsolat használata "
 "erről a hálózatról"
 
-#: modules/networks/forms.py:39
+#: modules/networks/forms.py:91
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
@@ -4518,7 +4656,7 @@ msgstr ""
 "Megosztott: Routerként működik, internetkapcsolatot biztosít a hálózaton "
 "lévő más eszközök számára"
 
-#: modules/networks/forms.py:42 modules/networks/forms.py:80
+#: modules/networks/forms.py:94 modules/networks/forms.py:135
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
@@ -4526,15 +4664,15 @@ msgstr ""
 "Kézikönyv: Kézileg megadott paraméterek használata, internetkapcsolat "
 "használata erről a hálózatról"
 
-#: modules/networks/forms.py:45
+#: modules/networks/forms.py:97
 msgid "Disabled: Do not configure this addressing method"
 msgstr "Letiltva: Ne konfigurálja ezt a címzési módszert"
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:104
 msgid "Netmask"
 msgstr "Hálózati maszk"
 
-#: modules/networks/forms.py:53
+#: modules/networks/forms.py:105
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -4542,21 +4680,21 @@ msgstr ""
 "Opcionális. Ha üresen hagyod, a címen alapuló alapértelmezett hálózati maszk "
 "lesz használva."
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Átjáró"
 
-#: modules/networks/forms.py:57 modules/networks/forms.py:92
+#: modules/networks/forms.py:109 modules/networks/forms.py:148
 msgid "Optional value."
 msgstr "Opcionális érték."
 
-#: modules/networks/forms.py:60 modules/networks/forms.py:95
+#: modules/networks/forms.py:112 modules/networks/forms.py:151
 msgid "DNS Server"
 msgstr "DNS-szerver"
 
-#: modules/networks/forms.py:61
+#: modules/networks/forms.py:113
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4565,11 +4703,11 @@ msgstr ""
 "DHCP-szerver által nyújtott DNS-szerverek címei figyelmen kívül lesznek "
 "hagyva."
 
-#: modules/networks/forms.py:66 modules/networks/forms.py:101
+#: modules/networks/forms.py:118 modules/networks/forms.py:157
 msgid "Second DNS Server"
 msgstr "Másodlagos DNS-szerver"
 
-#: modules/networks/forms.py:67
+#: modules/networks/forms.py:119
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4578,35 +4716,49 @@ msgstr ""
 "DHCP-szerver által nyújtott DNS-szerverek címei figyelmen kívül lesznek "
 "hagyva."
 
-#: modules/networks/forms.py:72
+#: modules/networks/forms.py:124
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 címzési módszer"
 
-#: modules/networks/forms.py:74
+#: modules/networks/forms.py:126
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr "Automatikus: Internetkapcsolat használata erről a hálózatról"
 
-#: modules/networks/forms.py:77
+#: modules/networks/forms.py:129
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
 msgstr ""
 "Automatikus (csak DHCP): Internetkapcsolat használata erről a hálózatról"
 
-#: modules/networks/forms.py:82
+#: modules/networks/forms.py:132
+#, fuzzy
+#| msgid ""
+#| "Automatic: Configure automatically, use Internet connection from this "
+#| "network"
+msgid ""
+"Link-local: Configure automatically to use an address that is only relevant "
+"to this network."
+msgstr "Automatikus: Internetkapcsolat használata erről a hálózatról"
+
+#: modules/networks/forms.py:137
 msgid "Ignore: Ignore this addressing method"
 msgstr "Figyelmen kívül hagyni: Figyelmen kívül hagyja ezt a címzési módszert"
 
-#: modules/networks/forms.py:87
+#: modules/networks/forms.py:138
+msgid "Disabled: Disable IPv6 for this connection"
+msgstr ""
+
+#: modules/networks/forms.py:143
 msgid "Prefix"
 msgstr "Előtag"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:144
 msgid "Value between 1 and 128."
 msgstr "Értéke 1 és 128 között."
 
-#: modules/networks/forms.py:96
+#: modules/networks/forms.py:152
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4615,7 +4767,7 @@ msgstr ""
 "DHCP-szerver által nyújtott DNS-szerverek címei figyelmen kívül lesznek "
 "hagyva."
 
-#: modules/networks/forms.py:102
+#: modules/networks/forms.py:158
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4624,58 +4776,58 @@ msgstr ""
 "DHCP-szerver által nyújtott DNS-szerverek címei figyelmen kívül lesznek "
 "hagyva."
 
-#: modules/networks/forms.py:115
+#: modules/networks/forms.py:171
 msgid "-- select --"
 msgstr "-- válassz --"
 
-#: modules/networks/forms.py:242
+#: modules/networks/forms.py:292
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:243
+#: modules/networks/forms.py:293
 msgid "The visible name of the network."
 msgstr "A név, amellyel a hálózat látható."
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Mód"
 
-#: modules/networks/forms.py:245
+#: modules/networks/forms.py:295
 msgid "Infrastructure"
 msgstr "Infrastruktúra"
 
-#: modules/networks/forms.py:246
+#: modules/networks/forms.py:296
 msgid "Access Point"
 msgstr "Hozzáférési pont"
 
-#: modules/networks/forms.py:247
+#: modules/networks/forms.py:297
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Frequency Band"
 msgstr "Frekvenciasáv"
 
-#: modules/networks/forms.py:249
+#: modules/networks/forms.py:299
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: modules/networks/forms.py:250
+#: modules/networks/forms.py:300
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:251
+#: modules/networks/forms.py:301
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:253
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Csatorna"
 
-#: modules/networks/forms.py:254
+#: modules/networks/forms.py:304
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4684,11 +4836,11 @@ msgstr ""
 "korlátozódik a működés. Az üres vagy \"0\" érték automatikus kiválasztást "
 "jelent."
 
-#: modules/networks/forms.py:259
+#: modules/networks/forms.py:309
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:260
+#: modules/networks/forms.py:310
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4698,11 +4850,11 @@ msgstr ""
 "ponthoz kapcsolódsz, csak akkor kapcsolódj ha a hozzáférési pont BSSID-je "
 "megegyezik az itt megadottal. Például: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:266
+#: modules/networks/forms.py:316
 msgid "Authentication Mode"
 msgstr "Hitelesítési mód"
 
-#: modules/networks/forms.py:267
+#: modules/networks/forms.py:317
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4710,20 +4862,20 @@ msgstr ""
 "Válaszd a WPA-t ha a vezeték nélküli hálózatod biztonságos és az kliensektől "
 "jelszót kér a csatlakozáshoz."
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:269
+#: modules/networks/forms.py:319
 msgid "Open"
 msgstr "Nyílt"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:355
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Add meg, hogyan csatlakozik a hálózathoz a {box_name} eszközöd"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:362
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4734,7 +4886,7 @@ msgstr ""
 "internetkapcsolatát Wi-Fi-n vagy Ethernet vezetéken keresztül kapja a "
 "routertől. Ez egy tipikus otthoni kiépítés.</p>"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:369
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4748,7 +4900,7 @@ msgstr ""
 "minden eszköze a {box_name}hoz csatlakozik az internetkapcsolat érdekében.</"
 "p>"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:378
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4760,11 +4912,11 @@ msgstr ""
 "és nincs más eszköz a hálózaton. Ez közösségi vagy felhőalapú beállítások "
 "esetén fordulhat elő.</p>"
 
-#: modules/networks/forms.py:347
+#: modules/networks/forms.py:397
 msgid "Choose your internet connection type"
 msgstr "Válaszd ki az internetkapcsolat típusát"
 
-#: modules/networks/forms.py:351
+#: modules/networks/forms.py:401
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4783,7 +4935,7 @@ msgstr ""
 "címmel rendelkezel, de nem vagy biztos abban, hogy idővel változik-e vagy "
 "sem, biztonságosabb ezt a lehetőséget választani.</p>"
 
-#: modules/networks/forms.py:363
+#: modules/networks/forms.py:413
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4803,7 +4955,7 @@ msgstr ""
 "ezt a szolgáltatást az internetszolgáltatódtól külön díj fejében igénybe "
 "veheted.</p>"
 
-#: modules/networks/forms.py:376
+#: modules/networks/forms.py:426
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4823,7 +4975,7 @@ msgstr ""
 "szolgáltatásokhoz. A {box_name} számos megkerülő megoldást kínál erre, de "
 "minden megoldásnak vannak korlátai.</p>"
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:439
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4831,11 +4983,11 @@ msgstr ""
 "Nem tudom hogy milyen típusú kapcsolatot biztosít az internetszolgáltatóm<p "
 "class=\"help-block\">A legkonzervatívabb intézkedések lesznek felajánlva.</p>"
 
-#: modules/networks/forms.py:406
+#: modules/networks/forms.py:456
 msgid "Preferred router configuration"
 msgstr "Előnyben részesített router konfiguráció"
 
-#: modules/networks/forms.py:411
+#: modules/networks/forms.py:461
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4852,7 +5004,7 @@ msgstr ""
 "felejts el először beállítani egy statikus helyi IP-címet a {box_name} "
 "eszközödnek a router konfigurációjában.</p>"
 
-#: modules/networks/forms.py:423
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4872,7 +5024,7 @@ msgstr ""
 "továbbítására a működéshez. Minden más alkalmazás javaslatot tesz arra, hogy "
 "melyik port(ok)at kell továbbítani az alkalmazás megfelelő működéséhez. </p>"
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:487
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4931,12 +5083,6 @@ msgstr "Kapcsolat"
 #: modules/networks/templates/connection_show.html:64
 msgid "Primary connection"
 msgstr "Elsődleges kapcsolat"
-
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
-msgid "yes"
-msgstr "igen"
 
 #: modules/networks/templates/connection_show.html:77
 #: modules/storage/templates/storage.html:23
@@ -5002,6 +5148,7 @@ msgid "Signal strength"
 msgstr "Jelerősség"
 
 #: modules/networks/templates/connection_show.html:170
+#: modules/networks/templates/connections_fields.html:61
 msgid "IPv4"
 msgstr "IPv4"
 
@@ -5028,6 +5175,7 @@ msgid "Default"
 msgstr "Alapértelmezett"
 
 #: modules/networks/templates/connection_show.html:213
+#: modules/networks/templates/connections_fields.html:90
 msgid "IPv6"
 msgstr "IPv6"
 
@@ -5035,13 +5183,21 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Ez a kapcsolat nem aktív."
 
-#: modules/networks/templates/connection_show.html:264
-#: modules/networks/templates/connection_show.html:284
-#: modules/networks/templates/connection_show.html:303
+#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#, fuzzy
+#| msgid "Privoxy"
+msgid "Privacy"
+msgstr "Privoxy"
+
+#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:293
+#: modules/networks/templates/connection_show.html:312
 msgid "Firewall zone"
 msgstr "Tűzfal zóna"
 
-#: modules/networks/templates/connection_show.html:273
+#: modules/networks/templates/connection_show.html:282
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5052,8 +5208,8 @@ msgstr ""
 "tervezett szolgáltatások kívülről is elérhetők lesznek. Ez biztonsági "
 "kockázatot jelent."
 
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:302
+#: modules/networks/templates/connection_show.html:325
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5063,12 +5219,12 @@ msgstr ""
 "helyi hálózathoz/géphez csatlakoztatod, sok, csak belsőként elérhetőnek "
 "tervezett szolgáltatás nem lesz elérhető."
 
-#: modules/networks/templates/connection_show.html:305
+#: modules/networks/templates/connection_show.html:314
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr "Külső"
 
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:321
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -5077,12 +5233,12 @@ msgstr ""
 "Ezt az interfészt nem a %(box_name)s eszközödd kezeli. A biztonság kedvéért "
 "automatikusan a külső zónához lesz rendelve."
 
-#: modules/networks/templates/connections_create.html:19
+#: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
 msgstr "Kapcsolat létrehozása"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:519
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Kapcsolat törlése"
 
@@ -5102,13 +5258,14 @@ msgstr "Térköz"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:100 network.py:27
+#: modules/networks/views.py:102 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/views.py:101 network.py:28
+#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/views.py:103 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5127,10 +5284,20 @@ msgstr "Belső"
 msgid "Computer"
 msgstr "Számítógép"
 
-#: modules/networks/templates/connections_edit.html:20
-#: modules/networks/views.py:239 modules/networks/views.py:323
+#: modules/networks/templates/connections_edit.html:19
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Kapcsolat szerkesztése"
+
+#: modules/networks/templates/connections_fields.html:24
+#, fuzzy
+#| msgid "Generic"
+msgid "General"
+msgstr "Általános"
+
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+msgid "PPPoE"
+msgstr "PPPoE"
 
 #: modules/networks/templates/connections_list.html:8
 msgid "Connections"
@@ -5138,13 +5305,13 @@ msgstr "Kapcsolatok"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:372
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi hálózatok a közelben"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:396
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Kapcsolat hozzáadása"
@@ -5397,223 +5564,234 @@ msgstr "megosztott"
 msgid "link-local"
 msgstr "link-local"
 
-#: modules/networks/views.py:38 modules/networks/views.py:99
-#: modules/networks/views.py:110
-msgid "unknown"
-msgstr "ismeretlen"
+#: modules/networks/views.py:33
+msgid "dhcp"
+msgstr ""
 
-#: modules/networks/views.py:39
+#: modules/networks/views.py:34
+#, fuzzy
+#| msgid "Ignore"
+msgid "ignore"
+msgstr "Kihagyás"
+
+#: modules/networks/views.py:41
 msgid "unmanaged"
 msgstr "nem-menedzselt"
 
-#: modules/networks/views.py:40
+#: modules/networks/views.py:42
 msgid "unavailable"
 msgstr "elérhetetlen"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:43
 msgid "disconnected"
 msgstr "szétkapcsolva"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:44
 msgid "preparing"
 msgstr "előkészítés"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:45
 msgid "connecting"
 msgstr "kapcsolódás"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:46
 msgid "needs authentication"
 msgstr "hitelesítést igényel"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:47
 msgid "requesting address"
 msgstr "cím lekérdezése"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:48
 msgid "checking"
 msgstr "ellenőrzése"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:49
 msgid "waiting for secondary"
 msgstr "várakozás a másodlagos"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:50
 msgid "activated"
 msgstr "aktiválva"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:51
 msgid "deactivating"
 msgstr "deaktiválás"
 
-#: modules/networks/views.py:57
+#: modules/networks/views.py:59
 msgid "no reason"
 msgstr "nincs ok"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:61
 msgid "unknown error"
 msgstr "ismeretlen hiba"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:63
 msgid "device is now managed"
 msgstr "az eszköz most már menedzselt"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:65
 msgid "device is now unmanaged"
 msgstr "az eszköz most már nem-menedzselt"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:67
 msgid "configuration failed"
 msgstr "konfiguráció sikertelen"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:69
 msgid "secrets required"
 msgstr "titkosítás szükséges"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:71
 msgid "DHCP client failed to start"
 msgstr "A DHCP-kliens nem indult el"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:73
 msgid "DHCP client error"
 msgstr "DHCP-kliens error"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:75
 msgid "DHCP client failed"
 msgstr "DHCP kliens sikertelen"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:77
 msgid "shared connection service failed to start"
 msgstr "a megosztott kapcsolati szolgáltatás nem indult el"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:79
 msgid "shared connection service failed"
 msgstr "megosztott kapcsolatszolgáltatás sikertelen"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:81
 msgid "device was removed"
 msgstr "eszköz el lett távolítva"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:83
 msgid "device disconnected by user"
 msgstr "eszközt a felhasználó leválasztotta"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:85
 msgid "a dependency of the connection failed"
 msgstr "a kapcsolat egyik függősége meghiúsult"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:87
 msgid "Wi-Fi network not found"
 msgstr "Wi-Fi hálózat nem található"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:89
 msgid "a secondary connection failed"
 msgstr "másodlagos kapcsolat sikertelen"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:91
 msgid "new connection activation was enqueued"
 msgstr "az új kapcsolat aktiválása várólistára került"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:93
 msgid "a duplicate IP address was detected"
 msgstr "kettős IP-cím észlelhető"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:95
 msgid "selected IP method is not supported"
 msgstr "a kiválasztott IP-módszer nem támogatott"
 
-#: modules/networks/views.py:102
+#: modules/networks/views.py:104
 msgid "generic"
 msgstr "általános"
 
-#: modules/networks/views.py:103
+#: modules/networks/views.py:105
 msgid "TUN or TAP interface"
 msgstr "TUN- vagy TAP-interfész"
 
-#: modules/networks/views.py:104 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:111
+#: modules/networks/views.py:113
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: modules/networks/views.py:112
+#: modules/networks/views.py:114
 msgid "infrastructure"
 msgstr "infrastuktúra"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:115
 msgid "access point"
 msgstr "hozzáférési pont"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:116
 msgid "mesh point"
 msgstr "mesh pont"
 
-#: modules/networks/views.py:144
+#: modules/networks/views.py:123
+#, fuzzy
+#| msgid "Default"
+msgid "default"
+msgstr "Alapértelmezett"
+
+#: modules/networks/views.py:156
 msgid "Cannot show connection: Connection not found."
 msgstr "Nem jeleníthető meg a kapcsolat, mivel nem található."
 
-#: modules/networks/views.py:197
+#: modules/networks/views.py:211
 msgid "Connection Information"
 msgstr "Információ a kapcsolatról"
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "A kapcsolat nem szerkeszthető, mivel nem található."
 
-#: modules/networks/views.py:217
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Az ilyen típusú kapcsolat még nem ismert."
 
-#: modules/networks/views.py:335
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "{name} kapcsolat aktiválva."
 
-#: modules/networks/views.py:339
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kapcsolat aktiválása sikertelen: kapcsolat nem található."
 
-#: modules/networks/views.py:345
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "{name} kapcsolat aktiválása sikertelen: nem áll rendelkezésre megfelelő "
 "eszköz."
 
-#: modules/networks/views.py:358
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "{name} kapcsolat deaktiválva."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kapcsolat deaktiválása sikertelen: kapcsolat nem található."
 
-#: modules/networks/views.py:414
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Új általános kapcsolat hozzáadása"
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Új Ethernet kapcsolat hozzáadása"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Új PPPoE kapcsolat hozzáadása"
 
-#: modules/networks/views.py:485
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Új Wi-Fi kapcsolat hozzáadása"
 
-#: modules/networks/views.py:500
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Kapcsolat törölve: {name}."
 
-#: modules/networks/views.py:504 modules/networks/views.py:514
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "A kapcsolat törlése sikertelen, mivel nem található."
 
@@ -6108,19 +6286,13 @@ msgstr "Leállítás most"
 msgid "Manage system-wide privacy settings."
 msgstr "Rendszerszintű adatvédelmi beállítások kezelése."
 
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:70
-#, fuzzy
-#| msgid "Privoxy"
-msgid "Privacy"
-msgstr "Privoxy"
-
-#: modules/privacy/__init__.py:68
+#: modules/privacy/__init__.py:70
 msgid "Please update privacy settings to match your preferences."
 msgstr ""
 "Kérjük, frissítsd az adatvédelmi beállításokat, a preferenciáidnak "
 "megfelelően."
 
-#: modules/privacy/__init__.py:73
+#: modules/privacy/__init__.py:75
 msgid "Review privacy setting"
 msgstr "Adatvédelmi beállítások kezelése"
 
@@ -6137,6 +6309,18 @@ msgid ""
 "collected are publicly available at <a href=\"https://popcon.debian.org/\" "
 "target=\"_blank\">popcon.debian.org</a>. Submission happens over the Tor "
 "network for additional anonymity if Tor app is enabled."
+msgstr ""
+
+#: modules/privacy/forms.py:27
+msgid "Allow using fallback DNS servers"
+msgstr ""
+
+#: modules/privacy/forms.py:29
+msgid ""
+"Use well-known public DNS servers to resolve domain names in unusual "
+"circumstances where no DNS servers are known but internet connectivity is "
+"available. Can be disabled in most cases if network connectivity is stable "
+"and reliable."
 msgstr ""
 
 #: modules/privoxy/__init__.py:25
@@ -7511,7 +7695,7 @@ msgstr "Gyökérfájlrendszer"
 msgid "Go to Power"
 msgstr "Leállítás"
 
-#: modules/storage/__init__.py:439
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
 msgid "grub package is configured"
 msgstr ""
 
@@ -8064,13 +8248,13 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:37
+#: modules/upgrades/__init__.py:38
 #: modules/upgrades/templates/update-firstboot.html:14
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "A legfrissebb szoftver- és biztonsági frissítések ellenőrzése és alkalmazása."
 
-#: modules/upgrades/__init__.py:38
+#: modules/upgrades/__init__.py:39
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8083,21 +8267,21 @@ msgstr ""
 "újraindítása szükségesnek bizonyul, akkor a rendszer automatikusan 02:00-kor "
 "újraindul, ami miatt az összes alkalmazás rövid ideig nem lesz elérhető."
 
-#: modules/upgrades/__init__.py:66 modules/upgrades/__init__.py:127
+#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
 #: modules/upgrades/templates/update-firstboot-progress.html:11
 #: modules/upgrades/templates/update-firstboot.html:11
 msgid "Software Update"
 msgstr "Szoftverfrissítések"
 
-#: modules/upgrades/__init__.py:130
+#: modules/upgrades/__init__.py:133
 msgid "FreedomBox Updated"
 msgstr "FreedomBox frissítve"
 
-#: modules/upgrades/__init__.py:204
+#: modules/upgrades/__init__.py:218
 msgid "Could not start distribution update"
 msgstr "A disztribúció frissítése nem tudott elindulni"
 
-#: modules/upgrades/__init__.py:206
+#: modules/upgrades/__init__.py:220
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8108,18 +8292,18 @@ msgstr ""
 "disztribúció frissítését a rendszer 24 óra múlva újrapróbálja, ha "
 "engedélyezve van."
 
-#: modules/upgrades/__init__.py:217
+#: modules/upgrades/__init__.py:231
 msgid "Distribution update started"
 msgstr "A disztribúció frissítése elindult"
 
-#: modules/upgrades/__init__.py:219
+#: modules/upgrades/__init__.py:233
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Elkezdődött a frissítés a következő stabil kiadásra. Ez hosszú időt vehet "
 "igénybe."
 
-#: modules/upgrades/__init__.py:311
+#: modules/upgrades/__init__.py:326
 msgid "Check for package holds"
 msgstr ""
 
@@ -9085,10 +9269,6 @@ msgstr ""
 "A(z) <strong>%(username)s</strong> felhasználói fiók lesz a Zoph "
 "rendszergazdai fiókja."
 
-#: network.py:29
-msgid "PPPoE"
-msgstr "PPPoE"
-
 #: network.py:30
 msgid "Generic"
 msgstr "Általános"
@@ -9647,6 +9827,12 @@ msgstr ""
 msgid "Gujarati"
 msgstr "Gudzsaráti"
 
+#~ msgid "Hostname set"
+#~ msgstr "Állomásnév beállítva"
+
+#~ msgid "Domain name set"
+#~ msgstr "Domainnév beállítva"
+
 #, fuzzy
 #~| msgid "Tiny Tiny RSS (Fork)"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
@@ -9779,9 +9965,6 @@ msgstr "Gudzsaráti"
 #~ msgid "Failed to restrict console access: {error}"
 #~ msgstr "Nem sikerült a konzolos hozzáférés korlátozása: {error}"
 
-#~ msgid "Enable DNSSEC"
-#~ msgstr "DNSSEC engedélyezése"
-
 #~ msgid "Enable Domain Name System Security Extensions"
 #~ msgstr "Domainnévrendszer biztonsági kiterjesztéseinek engedélyezése"
 
@@ -9858,9 +10041,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Tor configuration is being updated"
 #~ msgstr "A Tor beállításainak frissítése folyamatban"
-
-#~ msgid "Error during installation"
-#~ msgstr "Hiba lépett fel a telepítés során"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -10207,9 +10387,6 @@ msgstr "Gudzsaráti"
 #~ msgid "Cancel"
 #~ msgstr "Mégse"
 
-#~ msgid "Domains"
-#~ msgstr "Domainek"
-
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "OpenPGP ujjlenyomat"
 
@@ -10484,9 +10661,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Automatic, DHCP only"
 #~ msgstr "Automatikus, csak DHCP"
-
-#~ msgid "Ignore"
-#~ msgstr "Kihagyás"
 
 #~ msgid "Plumble"
 #~ msgstr "Plumble"

@@ -17,6 +17,7 @@ ethernet_settings = {
         'name': 'plinth_test_eth',
         'interface': 'eth0',
         'zone': 'internal',
+        'dns_over_tls': 'opportunistic',
     },
     'ipv4': {
         'method': 'auto',
@@ -36,6 +37,7 @@ wifi_settings = {
         'name': 'plinth_test_wifi',
         'interface': 'wlan0',
         'zone': 'external',
+        'dns_over_tls': 'yes',
     },
     'ipv4': {
         'method': 'auto',
@@ -161,6 +163,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     ethernet_settings2['common']['name'] = 'plinth_test_eth_new'
     ethernet_settings2['common']['interface'] = 'eth1'
     ethernet_settings2['common']['zone'] = 'external'
+    ethernet_settings2['common']['dns_over_tls'] = 'no'
     ethernet_settings2['common']['autoconnect'] = False
     ethernet_settings2['ipv4']['method'] = 'auto'
     network.edit_connection(connection, ethernet_settings2)
@@ -171,6 +174,7 @@ def test_edit_ethernet_connection(network, ethernet_uuid):
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'eth1'
     assert settings_connection.get_zone() == 'external'
+    assert settings_connection.get_dns_over_tls().value_nick == 'no'
     assert not settings_connection.get_autoconnect()
 
     settings_ipv4 = connection.get_setting_ip4_config()
@@ -214,6 +218,7 @@ def test_edit_wifi_connection(network, wifi_uuid):
     wifi_settings2['common']['name'] = 'plinth_test_wifi_new'
     wifi_settings2['common']['interface'] = 'wlan1'
     wifi_settings2['common']['zone'] = 'external'
+    wifi_settings2['common']['dns_over_tls'] = 'opportunistic'
     wifi_settings2['common']['autoconnect'] = False
     wifi_settings2['ipv4']['method'] = 'auto'
     wifi_settings2['wireless']['ssid'] = 'plinthtestwifi2'
@@ -229,6 +234,7 @@ def test_edit_wifi_connection(network, wifi_uuid):
     settings_connection = connection.get_setting_connection()
     assert settings_connection.get_interface_name() == 'wlan1'
     assert settings_connection.get_zone() == 'external'
+    assert settings_connection.get_dns_over_tls().value_nick == 'opportunistic'
     assert not settings_connection.get_autoconnect()
 
     settings_wireless = connection.get_setting_wireless()

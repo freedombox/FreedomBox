@@ -10,6 +10,7 @@ from plinth import app as app_module
 from plinth import daemon, kvstore, menu, network
 from plinth.config import DropinConfigs
 from plinth.diagnostic_check import DiagnosticCheck
+from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
 from . import privileged
@@ -68,6 +69,11 @@ class NetworksApp(app_module.App):
 
         packages = Packages('packages-networks', ['network-manager', 'batctl'])
         self.add(packages)
+
+        # For 'shared' network connections
+        firewall = Firewall('firewall-networks', info.name,
+                            ports=['dns', 'dhcp'], is_external=False)
+        self.add(firewall)
 
         dropin_configs = DropinConfigs('dropin-configs-networks', [
             '/etc/NetworkManager/dispatcher.d/10-freedombox-batman',
