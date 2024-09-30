@@ -57,11 +57,11 @@ def _remove_all_torrents(browser):
         torrents.first.click()
         functional.eventually(browser.is_element_not_present_by_css,
                               args=['#toolbar-remove.disabled'])
-        browser.click_link_by_id('toolbar-remove')
+        browser.find_by_id('toolbar-remove').click()
         functional.eventually(
             browser.is_element_not_present_by_css,
             args=['#dialog-container[style="display: none;"]'])
-        browser.click_link_by_id('dialog_confirm_button')
+        browser.find_by_id('dialog_confirm_button').click()
         functional.eventually(browser.is_element_present_by_css,
                               args=['#toolbar-remove.disabled'])
 
@@ -71,11 +71,11 @@ def _upload_sample_torrent(browser):
     functional.visit(browser, '/transmission')
     file_path = os.path.join(os.path.dirname(__file__), 'data',
                              'sample.torrent')
-    browser.click_link_by_id('toolbar-open')
+    browser.find_by_id('toolbar-open').click()
     functional.eventually(browser.is_element_not_present_by_css,
                           args=['#upload-container[style="display: none;"]'])
     browser.attach_file('torrent_files[]', [file_path])
-    browser.click_link_by_id('upload_confirm_button')
+    browser.find_by_id('upload_confirm_button').click()
     functional.eventually(browser.is_element_present_by_css,
                           args=['#torrent_list .torrent'])
 

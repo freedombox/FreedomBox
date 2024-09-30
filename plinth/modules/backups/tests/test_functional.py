@@ -77,7 +77,7 @@ def _backup_download(session_browser, downloaded_file_info, archive_name):
 
 def _backup_restore_from_upload(session_browser, app_name,
                                 downloaded_file_info):
-    path = downloaded_file_info["path"]
+    path = downloaded_file_info['path']
     try:
         _upload_and_restore(session_browser, app_name, path)
     except Exception as err:
@@ -155,11 +155,11 @@ def _backup_schedule_set(browser, enable, daily, weekly, monthly, run_at,
 
 def _download_file_logged_in(browser, url, suffix=''):
     """Download a file from Plinth, pretend being logged in via cookies"""
-    if not url.startswith("http"):
+    if not url.startswith('http'):
         current_url = urllib.parse.urlparse(browser.url)
-        url = "%s://%s%s" % (current_url.scheme, current_url.netloc, url)
+        url = '%s://%s%s' % (current_url.scheme, current_url.netloc, url)
     cookies = browser.driver.get_cookies()
-    cookies = {cookie["name"]: cookie["value"] for cookie in cookies}
+    cookies = {cookie['name']: cookie['value'] for cookie in cookies}
     response = requests.get(url, verify=False, cookies=cookies)
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp_file:
         for chunk in response.iter_content(chunk_size=128):
@@ -183,8 +183,8 @@ def _open_main_page(browser):
 def _upload_and_restore(browser, app_name, downloaded_file_path):
     functional.nav_to_module(browser, 'backups')
     browser.links.find_by_href('/plinth/sys/backups/upload/').first.click()
-    fileinput = browser.driver.find_element_by_id('id_backups-file')
-    fileinput.send_keys(downloaded_file_path)
+    fileinput = browser.find_by_id('id_backups-file')
+    fileinput.fill(downloaded_file_path)
     # submit upload form
     functional.submit(browser, form_class='form-upload')
     # submit restore form
