@@ -62,8 +62,7 @@ class NamesApp(app_module.App):
         self.add(menu_item)
 
         # 'ip' utility is needed from 'iproute2' package.
-        packages = Packages('packages-names',
-                            ['systemd-resolved', 'libnss-resolve', 'iproute2'])
+        packages = Packages('packages-names', ['iproute2'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
