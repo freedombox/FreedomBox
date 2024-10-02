@@ -4,6 +4,7 @@ FreedomBox app to configure name services.
 """
 
 import logging
+import pathlib
 import socket
 import subprocess
 
@@ -209,3 +210,8 @@ def get_available_tls_domains():
     """Return an iterator with all domains able to have a certificate."""
     return (domain.name for domain in components.DomainName.list()
             if domain.domain_type.can_have_certificate)
+
+
+def is_resolved_installed():
+    """Return whether systemd-resolved is installed."""
+    return pathlib.Path('/usr/bin/resolvectl').exists()
