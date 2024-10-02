@@ -8,6 +8,7 @@ import inspect
 import json
 import logging
 import os
+import pathlib
 import subprocess
 import sys
 import threading
@@ -305,6 +306,19 @@ def _log_action(func, module_name, action_name, args, kwargs, run_as_user,
                 formatted_args, suffix)
 
 
+class JSONEncoder(json.JSONEncoder):
+    """Handle to special types that default JSON encoder does not."""
+
+    def default(self, obj):
+        """Handle special object types."""
+        # When subprocess.call() fails and one of the arguments is a Path-like
+        # object, the exception also contains a Path-like object.
+        if isinstance(obj, pathlib.Path):
+            return str(obj)
+
+        return super().default(obj)
+
+
 def privileged_main():
     """Parse arguments for the program spawned as a privileged action."""
     log.action_init()
@@ -330,7 +344,7 @@ def privileged_main():
 
         return_value = _privileged_call(args.module, args.action, arguments)
         with os.fdopen(args.write_fd, 'w') as write_file_handle:
-            write_file_handle.write(json.dumps(return_value))
+            write_file_handle.write(json.dumps(return_value, cls=JSONEncoder))
     except PermissionError as exception:
         logger.error(exception.args[0])
         sys.exit(EXIT_PERM)
