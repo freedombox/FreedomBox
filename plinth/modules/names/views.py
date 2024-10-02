@@ -31,17 +31,21 @@ class NamesAppView(AppView):
     def get_initial(self):
         """Return the values to fill in the form."""
         initial = super().get_initial()
-        initial.update(privileged.get_resolved_configuration())
+        if names.is_resolved_installed():
+            initial.update(privileged.get_resolved_configuration())
+
         return initial
 
     def get_context_data(self, *args, **kwargs):
         """Add additional context data for template."""
         context = super().get_context_data(*args, **kwargs)
         context['status'] = get_status()
-        try:
-            context['resolved_status'] = resolved.get_status()
-        except Exception as exception:
-            context['resolved_status_error'] = exception
+        context['resolved_installed'] = names.is_resolved_installed()
+        if context['resolved_installed']:
+            try:
+                context['resolved_status'] = resolved.get_status()
+            except Exception as exception:
+                context['resolved_status_error'] = exception
 
         return context
 
