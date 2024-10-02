@@ -13,7 +13,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
 from plinth import network
-from plinth.modules import first_boot, networks
+from plinth.modules import first_boot, names, networks
 from plinth.views import AppView
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
@@ -212,7 +212,8 @@ def show(request, uuid):
             'connection': connection_status,
             'active_connection': active_connection_status,
             'device': device_status,
-            'access_point': access_point_status
+            'access_point': access_point_status,
+            'is_resolved_installed': names.is_resolved_installed()
         })
 
 
