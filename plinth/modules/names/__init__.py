@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, menu, network
+from plinth import cfg, glib, menu, network, setup
 from plinth.daemon import Daemon
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
@@ -89,6 +89,11 @@ class NamesApp(app_module.App):
             domain_added.send_robust(sender='names',
                                      domain_type='domain-type-static',
                                      name=domain_name, services='__all__')
+
+        # Schedule installation of systemd-resolved if not already installed.
+        if not is_resolved_installed():
+            # Try to install the package hourly.
+            glib.schedule(3600, install_systemd_resolved)
 
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
@@ -169,6 +174,12 @@ class ResolvedDaemon(Daemon):
             ]
 
         return super().diagnose()
+
+
+def install_systemd_resolved(_data):
+    """Re-run setup on app to install systemd-resolved."""
+    if not is_resolved_installed():
+        setup.run_setup_on_app('names', rerun=True)
 
 
 def diagnose_resolution(domain: str) -> DiagnosticCheck:
