@@ -70,7 +70,7 @@ class NamesApp(app_module.App):
                                  'names:domains', can_have_certificate=True)
         self.add(domain_type)
 
-        daemon = Daemon('daemon-names', 'systemd-resolved')
+        daemon = ResolvedDaemon('daemon-names', 'systemd-resolved')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-names',
@@ -120,6 +120,46 @@ class NamesApp(app_module.App):
         network.refeed_dns()
 
         self.enable()
+
+
+class ResolvedDaemon(Daemon):
+    """Perform work only if systemd-resolved is installed."""
+
+    def is_enabled(self):
+        """Return if the daemon/unit is enabled."""
+        if not is_resolved_installed():
+            return True
+
+        return super().is_enabled()
+
+    def enable(self):
+        """Run operations to enable the daemon/unit."""
+        if is_resolved_installed():
+            super().enable()
+
+    def disable(self):
+        """Run operations to disable the daemon/unit."""
+        if is_resolved_installed():
+            super().disable()
+
+    def is_running(self):
+        """Return whether the daemon/unit is running."""
+        if not is_resolved_installed():
+            return True
+
+        return super().is_running()
+
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Check if the daemon is running and listening on expected ports."""
+        if not is_resolved_installed():
+            return [
+                DiagnosticCheck(
+                    'names-resolved-installed',
+                    gettext_noop('Package systemd-resolved is installed'),
+                    Result.WARNING, {}, self.component_id)
+            ]
+
+        return super().diagnose()
 
 
 def diagnose_resolution(domain: str) -> DiagnosticCheck:
