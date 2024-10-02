@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 import plinth.modules.names.privileged as names_privileged
+from plinth.modules import names
 from plinth.modules.privacy.forms import PrivacyForm
 from plinth.views import AppView
 
@@ -21,7 +22,9 @@ class PrivacyAppView(AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update(privileged.get_configuration())
-        initial.update(names_privileged.get_resolved_configuration())
+        if names.is_resolved_installed():
+            initial.update(names_privileged.get_resolved_configuration())
+
         return initial
 
     def form_valid(self, form):
@@ -34,10 +37,11 @@ class PrivacyAppView(AppView):
         if old_config['enable_popcon'] != new_config['enable_popcon']:
             changes['enable_popcon'] = new_config['enable_popcon']
 
-        if old_config['dns_fallback'] != new_config['dns_fallback']:
-            names_privileged.set_resolved_configuration(
-                dns_fallback=new_config['dns_fallback'])
-            is_changed = True
+        if 'dns_fallback' in old_config:
+            if old_config['dns_fallback'] != new_config['dns_fallback']:
+                names_privileged.set_resolved_configuration(
+                    dns_fallback=new_config['dns_fallback'])
+                is_changed = True
 
         if changes:
             privileged.set_configuration(**changes)
