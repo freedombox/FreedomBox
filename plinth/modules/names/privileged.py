@@ -53,6 +53,20 @@ def set_domain_name(domain_name: str | None = None):
 
 
 @privileged
+def install_resolved():
+    """Install systemd-resolved related packages."""
+    packages = ['systemd-resolved', 'libnss-resolve']
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    with action_utils.apt_hold_freedombox():
+        action_utils.run_apt_command(['--fix-broken', 'install'])
+        returncode = action_utils.run_apt_command(['install'] + packages)
+
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
+
+
+@privileged
 def set_resolved_configuration(dns_fallback: bool | None = None,
                                dns_over_tls: str | None = None,
                                dnssec: str | None = None):

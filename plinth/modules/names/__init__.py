@@ -102,22 +102,31 @@ class NamesApp(app_module.App):
         """Install and configure the app."""
         super().setup(old_version)
 
-        # Fresh install or upgrading to version 2
-        if old_version < 2:
-            privileged.set_resolved_configuration(dns_fallback=True)
+        if not is_resolved_installed():
+            try:
+                # Requires internet connectivity and could fail
+                privileged.install_resolved()
+                privileged.set_resolved_configuration(dns_fallback=True)
+            except Exception:
+                pass
 
-        # Load the configuration files for systemd-resolved provided by
-        # FreedomBox.
-        service_privileged.restart('systemd-resolved')
+        if is_resolved_installed():
+            # Fresh install or upgrading to version 2
+            if old_version < 2:
+                privileged.set_resolved_configuration(dns_fallback=True)
 
-        # After systemd-resolved is freshly installed, /etc/resolve.conf
-        # becomes a symlink to configuration pointing to systemd-resovled stub
-        # resolver. However, the old contents are not fed from network-manager
-        # (if it was present earlier and wrote to /etc/resolve.conf). Ask
-        # network-manager to feed the DNS servers from the connections it has
-        # established to systemd-resolved so that using fallback DNS servers is
-        # not necessary.
-        network.refeed_dns()
+            # Load the configuration files for systemd-resolved provided by
+            # FreedomBox.
+            service_privileged.restart('systemd-resolved')
+
+            # After systemd-resolved is freshly installed, /etc/resolve.conf
+            # becomes a symlink to configuration pointing to systemd-resovled
+            # stub resolver. However, the old contents are not fed from
+            # network-manager (if it was present earlier and wrote to
+            # /etc/resolve.conf). Ask network-manager to feed the DNS servers
+            # from the connections it has established to systemd-resolved so
+            # that using fallback DNS servers is not necessary.
+            network.refeed_dns()
 
         self.enable()
 
