@@ -93,7 +93,9 @@ class NamesApp(app_module.App):
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(diagnose_resolution('deb.debian.org'))
+        if is_resolved_installed():
+            results.append(diagnose_resolution('deb.debian.org'))
+
         return results
 
     def setup(self, old_version):
