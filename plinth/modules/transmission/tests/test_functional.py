@@ -7,6 +7,7 @@ import os
 
 import pytest
 from plinth.tests import functional
+from splinter.exceptions import ElementDoesNotExist
 
 pytestmark = [pytest.mark.apps, pytest.mark.transmission, pytest.mark.sso]
 
@@ -50,7 +51,8 @@ def _remove_all_torrents(browser):
     """Remove all torrents from transmission."""
     functional.visit(browser, '/transmission')
     while True:
-        torrents = browser.find_by_css('#torrent_list .torrent')
+        torrents = browser.find_by_css(
+            '#torrent_list .torrent, #torrent-list .torrent')
         if not torrents:
             break
 
@@ -61,7 +63,11 @@ def _remove_all_torrents(browser):
         functional.eventually(
             browser.is_element_not_present_by_css,
             args=['#dialog-container[style="display: none;"]'])
-        browser.find_by_id('dialog_confirm_button').click()
+        try:
+            browser.find_by_id('dialog_confirm_button').click()
+        except ElementDoesNotExist:
+            browser.find_by_css('.dialog-window button').last.click()
+
         functional.eventually(browser.is_element_present_by_css,
                               args=['#toolbar-remove.disabled'])
 
@@ -72,14 +78,26 @@ def _upload_sample_torrent(browser):
     file_path = os.path.join(os.path.dirname(__file__), 'data',
                              'sample.torrent')
     browser.find_by_id('toolbar-open').click()
-    functional.eventually(browser.is_element_not_present_by_css,
-                          args=['#upload-container[style="display: none;"]'])
-    browser.attach_file('torrent_files[]', [file_path])
-    browser.find_by_id('upload_confirm_button').click()
-    functional.eventually(browser.is_element_present_by_css,
-                          args=['#torrent_list .torrent'])
+    # check if older version of Transmission in Debian Bookworm
+    transmission_old = browser.is_element_present_by_id('transmission_body')
+    if transmission_old:
+        functional.eventually(
+            browser.is_element_not_present_by_css,
+            args=['#upload_container[style="display: none;"]'])
+        browser.attach_file('torrent_files[]', [file_path])
+        browser.find_by_id('upload_confirm_button').click()
+        functional.eventually(browser.is_element_present_by_css,
+                              args=['#torrent_list .torrent'])
+    else:
+        functional.eventually(browser.is_element_present_by_tag,
+                              args=['dialog'])
+        browser.attach_file('torrent-files[]', [file_path])
+        browser.find_by_css('.dialog-window button').last.click()
+        functional.eventually(browser.is_element_present_by_css,
+                              args=['#torrent-list .torrent'])
 
 
 def _get_number_of_torrents(browser):
     """Return the number torrents currently in transmission."""
-    return len(browser.find_by_css('#torrent_list .torrent'))
+    return len(
+        browser.find_by_css('#torrent_list .torrent, #torrent-list .torrent'))
