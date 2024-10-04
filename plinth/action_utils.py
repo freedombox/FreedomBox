@@ -475,6 +475,7 @@ def apt_hold_freedombox():
             yield current_hold
         else:
             # Set the flag.
+            apt_hold_flag.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
             apt_hold_flag.touch(mode=0o660)
             yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
     finally:
