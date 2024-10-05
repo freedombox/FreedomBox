@@ -8,27 +8,79 @@
 
 {% block content %}
 
-  <h2>{% trans "Setup Complete!" %}</h2>
+  <h2>{% trans "Setup Complete! Next Steps:" %}</h2>
 
-  <p>
-    {% blocktrans trimmed %}
-      Without any apps, your {{ box_name }} cannot do very much.
-    {% endblocktrans %}
-  </p>
+  <ol class='next-steps'>
+    <li>
+      <div class="app-icon fa fa-refresh"></div>
+      <div class="step-text">
+        {% url 'upgrades:index' as upgrades_url %}
+        {% blocktrans trimmed %}
+          Automatic <a href="{{ upgrades_url }}" target="_blank">software
+          update</a> runs daily by default. For the first time, manually run
+          it now.
+        {% endblocktrans %}
+        <form class="form" method="post" target="_blank"
+              action="{% url 'upgrades:upgrade' %}">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-default"
+                 value="{% trans "Update now" %}"/>
+        </form>
+      </div>
+    </li>
 
-  <div class="text-center">
-    <a class="btn btn-lg btn-primary" href="{% url 'apps' %}">
-      {% trans "Install Apps" %}</a>
-  </div>
+    <li>
+      <div class="app-icon fa fa-eye-slash"></div>
+      <div class="step-text">
+        {% url 'privacy:index' as privacy_url %}
+        {% blocktrans trimmed %}
+          Review <a href="{{ privacy_url }}" target="_blank">privacy options</a>.
+        {% endblocktrans %}
+      </div>
+    </li>
 
-  <p>
-    <p>
-      {% url 'networks:index' as networks_url %}
-      {% blocktrans trimmed %}
-        You may want to check the <a href="{{ networks_url }}">network
-        setup</a> and modify it if necessary.
-      {% endblocktrans %}
-    </p>
-  </p>
+    <li>
+      <div class="app-icon fa fa-signal"></div>
+      <div class="step-text">
+        {% url 'networks:index' as networks_url %}
+        {% blocktrans trimmed %}
+          Review and setup <a href="{{ networks_url }}" target="_blank">network
+          connections</a>. Change the default Wi-Fi password, if applicable.
+        {% endblocktrans %}
+      </div>
+    </li>
+
+    <li>
+      <div class="app-icon fa fa-tags"></div>
+      <div class="step-text">
+        {% url 'names:index' as names_url %}
+        {% blocktrans trimmed %}
+          Configure a <a href="{{ names_url }}" target="_blank">domain name</a>.
+        {% endblocktrans %}
+      </div>
+    </li>
+
+    <li>
+      <div class="app-icon fa fa-files-o"></div>
+      <div class="step-text">
+        {% url 'backups:index' as backups_url %}
+        {% blocktrans trimmed %}
+          Configure and schedule remote
+          <a href="{{ backups_url }}" target="_blank">backups</a>.
+        {% endblocktrans %}
+      </div>
+    </li>
+
+    <li>
+      <div class="app-icon fa fa-th"></div>
+      <div class="step-text">
+        {% url 'apps' as apps_url %}
+        {% blocktrans trimmed %}
+          Put {{ box_name }} to use by installing
+          <a href="{{ apps_url }}" target="_blank">apps</a>.
+        {% endblocktrans %}
+      </div>
+    </li>
+  </ul>
 
 {% endblock %}
