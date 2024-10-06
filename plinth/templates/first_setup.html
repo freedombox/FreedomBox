@@ -13,6 +13,11 @@ no-brand
 
 {% block content %}
 
+  <div class="logo">
+    <img class="firstboot img-fluid" alt="{{ box_name }}"
+         src="{% static 'theme/img/freedombox-logo-standard.svg' %}"/>
+  </div>
+
   {% if is_first_setup_running %}
     <div class="alert alert-warning" role="alert">
       {% blocktrans trimmed %}
@@ -21,10 +26,5 @@ no-brand
       {% endblocktrans %}
     </div>
   {% endif %}
-
-  <p class="text-center">
-    <img src="{% static 'theme/img/freedombox-logo-standard.svg' %}"
-         alt="{{ box_name }}" width="640"/>
-  </p>
 
 {% endblock %}
