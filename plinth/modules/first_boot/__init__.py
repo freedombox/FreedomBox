@@ -19,12 +19,6 @@ first_boot_steps = [
         'url': 'first_boot:welcome',
         'order': 0
     },
-    {
-        # TODO: Rename this, or merge with 'firstboot_completed'.
-        'id': 'firstboot_complete',
-        'url': 'first_boot:complete',
-        'order': 10
-    }
 ]
 
 _all_first_boot_steps = None
@@ -96,9 +90,9 @@ def _get_steps():
 def next_step():
     """Return the resolved next first boot step URL required to go to.
 
-    If there are no more step remaining, return index page.
+    If there are no more step remaining, return 'complete' page.
     """
-    return next_step_or_none() or 'index'
+    return next_step_or_none() or 'first_boot:complete'
 
 
 def next_step_or_none():
