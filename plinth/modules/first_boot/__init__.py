@@ -8,6 +8,7 @@ import os
 import sys
 
 from django.urls import reverse
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import cfg
@@ -48,7 +49,37 @@ class FirstBootApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+
+        if not old_version:
+            self._show_next_steps_notification()
+
         self.enable()
+
+    def _show_next_steps_notification(self):
+        """After first setup, show notification for next steps."""
+        from plinth.notification import Notification
+        title = gettext_noop('Setup complete! Next steps:')
+        message = gettext_noop(
+            'Initial setup has been completed. Perform the next steps to make '
+            'your {box_name} operational.')
+        data = {
+            'app_name': 'translate:' + gettext_noop('Next steps'),
+            'app_icon': 'fa-arrow-right',
+            'box_name': 'translate:' + cfg.box_name
+        }
+        actions = [{
+            'type': 'link',
+            'class': 'primary',
+            'text': gettext_noop('See next steps'),
+            'url': 'first_boot:complete'
+        }, {
+            'type': 'dismiss'
+        }]
+        Notification.update_or_create(id='first-boot-complete',
+                                      app_id='first_boot', severity='info',
+                                      title=title, message=message,
+                                      actions=actions, data=data,
+                                      group='admin', dismissed=False)
 
 
 def _clear_first_boot_steps(sender, module_name, **kwargs):
