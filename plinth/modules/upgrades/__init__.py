@@ -27,11 +27,6 @@ first_boot_steps = [
         'url': 'upgrades:backports-firstboot',
         'order': 5,
     },
-    {
-        'id': 'initial_update',
-        'url': 'upgrades:update-firstboot',
-        'order': 6,
-    },
 ]
 
 _description = [
