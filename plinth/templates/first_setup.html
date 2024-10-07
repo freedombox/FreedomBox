@@ -19,12 +19,9 @@ no-brand
   </div>
 
   {% if is_first_setup_running %}
-    <div class="alert alert-warning" role="alert">
-      {% blocktrans trimmed %}
-        Please wait for {{ box_name }} to finish installation.
-        You can start using your {{ box_name }} once it is done.
-      {% endblocktrans %}
-    </div>
+    <p class="firstboot-spinner">
+      <span class="fa fa-refresh fa-spin fa-4x fa-pull-left processing"></span>
+    </p>
   {% endif %}
 
 {% endblock %}
