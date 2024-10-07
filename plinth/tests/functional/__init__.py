@@ -345,12 +345,6 @@ def login_with_account(browser, url, username, password=None):
         browser.visit(base_url + '/plinth/firstboot/welcome')
         submit(browser, form_class='form-start')  # "Start Setup" button
         _create_admin_account(browser, username, password)
-        if '/network-topology-first-boot' in browser.url:
-            submit(browser, element=browser.find_by_name('skip')[0])
-
-        if '/internet-connection-type' in browser.url:
-            submit(browser, element=browser.find_by_name('skip')[0])
-
         if '/firstboot/backports' in browser.url:
             submit(browser, element=browser.find_by_name('next')[0])
 
@@ -614,7 +608,7 @@ def networks_set_firewall_zone(browser, zone):
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
     device.click()
-    edit_url = "/plinth/sys/networks/{}/edit/".format(network_id)
+    edit_url = '/plinth/sys/networks/{}/edit/'.format(network_id)
     browser.links.find_by_href(edit_url).first.click()
     browser.select('zone', zone)
     submit(browser, form_class='form-connection-edit')
