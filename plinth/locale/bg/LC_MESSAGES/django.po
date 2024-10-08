@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-23 19:35-0400\n"
+"POT-Creation-Date: 2024-10-07 20:05-0400\n"
 "PO-Revision-Date: 2024-09-25 06:15+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
@@ -114,7 +114,7 @@ msgstr "Данни"
 msgid "System"
 msgstr "Системни"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:268
+#: menu.py:112 modules/networks/templates/connection_show.html:270
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Сигурност"
@@ -363,7 +363,7 @@ msgstr "Ключ в хранилището"
 msgid "None"
 msgstr "Няма"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:320
+#: modules/backups/forms.py:179 modules/networks/forms.py:331
 msgid "Passphrase"
 msgstr "Фраза за достъп"
 
@@ -866,7 +866,7 @@ msgid "No passwords currently configured."
 msgstr ""
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:277
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Парола"
@@ -1003,9 +1003,9 @@ msgstr ""
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:62 modules/names/views.py:91
-#: modules/names/views.py:125 modules/pagekite/forms.py:74
-#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/names/views.py:66 modules/names/views.py:95
+#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:50 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
 #: modules/ssh/views.py:62 modules/transmission/views.py:43
@@ -1115,16 +1115,15 @@ msgstr ""
 msgid "An error occurred while creating the library."
 msgstr ""
 
-#: modules/calibre/views.py:63 modules/featherwiki/views.py:145
-#: modules/gitweb/views.py:139 modules/kiwix/views.py:100
-#: modules/tiddlywiki/views.py:145
+#: modules/calibre/views.py:63 modules/featherwiki/views.py:135
+#: modules/gitweb/views.py:139 modules/kiwix/views.py:97
+#: modules/tiddlywiki/views.py:136
 #, python-brace-format
 msgid "{name} deleted."
 msgstr ""
 
-#: modules/calibre/views.py:67 modules/featherwiki/views.py:149
-#: modules/gitweb/views.py:143 modules/kiwix/views.py:104
-#: modules/tiddlywiki/views.py:149
+#: modules/calibre/views.py:67 modules/gitweb/views.py:143
+#: modules/kiwix/views.py:101
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr ""
@@ -1682,11 +1681,11 @@ msgid "Invalid domain name"
 msgstr "Недопустимо име на домейн"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:265 modules/users/forms.py:129
+#: modules/networks/forms.py:276 modules/users/forms.py:129
 msgid "Username"
 msgstr "Потребителско име"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:279
 msgid "Show password"
 msgstr "Показване на паролата"
 
@@ -2133,10 +2132,10 @@ msgstr "Управление на енциклопедии"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:16
 #: modules/featherwiki/templates/featherwiki_configure.html:18
-#: modules/featherwiki/views.py:48
+#: modules/featherwiki/views.py:47
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
-#: modules/tiddlywiki/views.py:48
+#: modules/tiddlywiki/views.py:47
 msgid "Create Wiki"
 msgstr "Създаване на Wiki"
 
@@ -2192,41 +2191,46 @@ msgstr "Безвъзвратно премахване на енциклопед�
 msgid "Upload"
 msgstr "Качване"
 
-#: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
+#: modules/featherwiki/views.py:20 modules/tiddlywiki/views.py:20
 msgid "A wiki file with the given name already exists."
 msgstr "В енциклопедията съществува файл с такова име."
 
-#: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
+#: modules/featherwiki/views.py:54 modules/tiddlywiki/views.py:54
 msgid "Wiki created."
 msgstr "Енциклопедията е създадена."
 
-#: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
+#: modules/featherwiki/views.py:59 modules/tiddlywiki/views.py:59
 msgid "An error occurred while creating the wiki."
 msgstr "Възникна грешка при създаване на енциклопедия."
 
-#: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
+#: modules/featherwiki/views.py:76 modules/tiddlywiki/views.py:76
 msgid "Rename Wiki"
 msgstr "Преименуване на Wiki"
 
-#: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
+#: modules/featherwiki/views.py:84 modules/tiddlywiki/views.py:84
 msgid "Wiki renamed."
 msgstr ""
 
-#: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
+#: modules/featherwiki/views.py:89 modules/tiddlywiki/views.py:89
 msgid "An error occurred while renaming the wiki."
 msgstr "Възникна грешка при преименуване на енциклопедията."
 
-#: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
+#: modules/featherwiki/views.py:106 modules/tiddlywiki/views.py:106
 msgid "Upload Wiki File"
 msgstr "Качване на файл на Wiki"
 
-#: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
+#: modules/featherwiki/views.py:115 modules/tiddlywiki/views.py:116
 msgid "Wiki file added."
 msgstr "Файлът е добавен към енциклопедията."
 
-#: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
+#: modules/featherwiki/views.py:119 modules/tiddlywiki/views.py:120
 msgid "Failed to add wiki file."
 msgstr "Грешка при добавяне на файла към енциклопедията."
+
+#: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
+#, python-brace-format
+msgid "Could not delete {name}"
+msgstr ""
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -3170,7 +3174,13 @@ msgstr ""
 msgid "Add a new content package"
 msgstr ""
 
-#: modules/kiwix/views.py:83
+#: modules/kiwix/views.py:76
+#, fuzzy
+#| msgid "Remote backup repository already exists."
+msgid "Content package already exists."
+msgstr "Отдалеченото хранилище за резервни копия вече съществува."
+
+#: modules/kiwix/views.py:79
 msgid "Failed to add content package."
 msgstr "Грешка при добавяне на пакет със съдържание."
 
@@ -3645,8 +3655,8 @@ msgstr ""
 "Когато е отметнато, играчите могат да умират и да получават щети от различен "
 "характер."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
-#: modules/networks/forms.py:141
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
+#: modules/networks/forms.py:145
 msgid "Address"
 msgstr "Адрес"
 
@@ -3892,7 +3902,7 @@ msgstr "Паролата за присъединяване е променена
 msgid "Root channel name changed."
 msgstr ""
 
-#: modules/names/__init__.py:32
+#: modules/names/__init__.py:33
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -3905,11 +3915,15 @@ msgstr ""
 "Pagekite. За всеки тип име е показано дали услугите HTTP, HTTPS и SSH са "
 "разрешени или забранени за входящи връзки през даденото име."
 
-#: modules/names/__init__.py:53
+#: modules/names/__init__.py:54
 msgid "Name Services"
 msgstr "Услуги за имена"
 
-#: modules/names/__init__.py:133
+#: modules/names/__init__.py:171
+msgid "Package systemd-resolved is installed"
+msgstr ""
+
+#: modules/names/__init__.py:195
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -3971,7 +3985,7 @@ msgstr ""
 "знака."
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
-#: modules/networks/forms.py:24
+#: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
@@ -3979,13 +3993,13 @@ msgstr ""
 msgid "yes"
 msgstr ""
 
-#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/names/resolved.py:92 modules/networks/forms.py:29
 #: modules/networks/views.py:125
 msgid "opportunistic"
 msgstr ""
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:26 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:124
 msgid "no"
 msgstr "не"
 
@@ -4022,7 +4036,7 @@ msgid "Link"
 msgstr ""
 
 #: modules/names/templates/names.html:73
-#: modules/networks/templates/connection_show.html:263
+#: modules/networks/templates/connection_show.html:264
 msgid "DNS-over-TLS"
 msgstr ""
 
@@ -4043,23 +4057,33 @@ msgid "Fallback DNS Servers"
 msgstr "Резервни сървъри за DNS"
 
 #: modules/names/templates/names.html:112
+msgid ""
+"systemd-resolved package is not installed. Install it for additional "
+"functionality."
+msgstr ""
+
+#: modules/names/templates/names.html:121 templates/setup.html:66
+msgid "Install"
+msgstr "Инсталиране"
+
+#: modules/names/templates/names.html:126
 msgid "Error retrieving status:"
 msgstr "Грешка при получаване на състоянието:"
 
-#: modules/names/views.py:77
+#: modules/names/views.py:81
 msgid "Set Hostname"
 msgstr "Име на хоста"
 
-#: modules/names/views.py:95
+#: modules/names/views.py:99
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Грешка при задаване на името на хоста: {exception}"
 
-#: modules/names/views.py:111
+#: modules/names/views.py:115
 msgid "Set Domain Name"
 msgstr "Име на домейн"
 
-#: modules/names/views.py:129
+#: modules/names/views.py:133
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Грешка при задаване на името на домейна: {exception}"
@@ -4082,32 +4106,33 @@ msgstr ""
 msgid "Networks"
 msgstr "Мрежи"
 
-#: modules/networks/forms.py:21 modules/networks/views.py:40
-#: modules/networks/views.py:101 modules/networks/views.py:112
+#: modules/networks/forms.py:19 modules/networks/forms.py:25
+#: modules/networks/views.py:40 modules/networks/views.py:101
+#: modules/networks/views.py:112
 msgid "unknown"
 msgstr ""
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:38
 msgid "Connection Type"
 msgstr "Вид на връзката"
 
-#: modules/networks/forms.py:41
+#: modules/networks/forms.py:45
 msgid "Connection Name"
 msgstr "Име на връзката"
 
-#: modules/networks/forms.py:43
+#: modules/networks/forms.py:47
 msgid "Network Interface"
 msgstr "Мрежов интерфейс"
 
-#: modules/networks/forms.py:44
+#: modules/networks/forms.py:48
 msgid "The network device that this connection should be bound to."
 msgstr "Мрежовото устройство, което използва тази връзка."
 
-#: modules/networks/forms.py:47
+#: modules/networks/forms.py:51
 msgid "Firewall Zone"
 msgstr "Зона на защитната стена"
 
-#: modules/networks/forms.py:48
+#: modules/networks/forms.py:52
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4115,15 +4140,15 @@ msgstr ""
 "Зоната на защитната стена ще контролира кои услуги са достъпни през този "
 "интерфейс. Изберете „само вътрешни“ единствено за доверени мрежи."
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:56
 msgid "Use DNS-over-TLS"
 msgstr ""
 
-#: modules/networks/forms.py:86
+#: modules/networks/forms.py:90
 msgid "IPv4 Addressing Method"
 msgstr "Метод за адресиране на IPv4"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:92
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
@@ -4131,7 +4156,7 @@ msgstr ""
 "Автоматично (DHCP): Настройва се автоматично, използва се интернет връзка от "
 "тази мрежа"
 
-#: modules/networks/forms.py:91
+#: modules/networks/forms.py:95
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
@@ -4139,7 +4164,7 @@ msgstr ""
 "Споделено: работи като маршрутизатор, осигурява интернет връзка на други "
 "устройства в тази мрежа"
 
-#: modules/networks/forms.py:94 modules/networks/forms.py:135
+#: modules/networks/forms.py:98 modules/networks/forms.py:139
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
@@ -4147,15 +4172,15 @@ msgstr ""
 "Ръчно: Използвайте ръчно зададени параметри, използвайте интернет връзка от "
 "тази мрежа"
 
-#: modules/networks/forms.py:97
+#: modules/networks/forms.py:101
 msgid "Disabled: Do not configure this addressing method"
 msgstr "Изллючено: Без настройка на адресирането"
 
-#: modules/networks/forms.py:104
+#: modules/networks/forms.py:108
 msgid "Netmask"
 msgstr "Мрежова маска"
 
-#: modules/networks/forms.py:105
+#: modules/networks/forms.py:109
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -4163,21 +4188,21 @@ msgstr ""
 "Незадължителна стойност. Ако бъде оставена празна, ще се използва мрежова "
 "маска по подразбиране, базирана на адреса."
 
-#: modules/networks/forms.py:109 modules/networks/forms.py:148
+#: modules/networks/forms.py:113 modules/networks/forms.py:152
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Шлюз"
 
-#: modules/networks/forms.py:109 modules/networks/forms.py:148
+#: modules/networks/forms.py:113 modules/networks/forms.py:152
 msgid "Optional value."
 msgstr "Незадължителна стойност."
 
-#: modules/networks/forms.py:112 modules/networks/forms.py:151
+#: modules/networks/forms.py:116 modules/networks/forms.py:155
 msgid "DNS Server"
 msgstr "Сървър на DNS"
 
-#: modules/networks/forms.py:113
+#: modules/networks/forms.py:117
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4186,11 +4211,11 @@ msgstr ""
 "на IPv4 е „Автоматичен“, сървърите на DNS, предоставени от DHCP, ще бъдат "
 "пренебрегнати."
 
-#: modules/networks/forms.py:118 modules/networks/forms.py:157
+#: modules/networks/forms.py:122 modules/networks/forms.py:161
 msgid "Second DNS Server"
 msgstr "Втори сървър на DNS"
 
-#: modules/networks/forms.py:119
+#: modules/networks/forms.py:123
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4199,18 +4224,18 @@ msgstr ""
 "на IPv4 е „Автоматичен“, сървърите на DNS, предоставени от DHCP, ще бъдат "
 "пренебрегнати."
 
-#: modules/networks/forms.py:124
+#: modules/networks/forms.py:128
 msgid "IPv6 Addressing Method"
 msgstr "Метод за адресиране на IPv6"
 
-#: modules/networks/forms.py:126
+#: modules/networks/forms.py:130
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
 "Автоматично: Настройва се автоматично, използва се интернет връзка от тази "
 "мрежа"
 
-#: modules/networks/forms.py:129
+#: modules/networks/forms.py:133
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
@@ -4218,30 +4243,30 @@ msgstr ""
 "Автоматично (само DHCP): Настройва се автоматично, използва се интернет "
 "връзка от тази мрежа"
 
-#: modules/networks/forms.py:132
+#: modules/networks/forms.py:136
 msgid ""
 "Link-local: Configure automatically to use an address that is only relevant "
 "to this network."
 msgstr ""
 "Местно: автоматично настройва да буде използван адрес от текущата мрежа."
 
-#: modules/networks/forms.py:137
+#: modules/networks/forms.py:141
 msgid "Ignore: Ignore this addressing method"
 msgstr "Пренебрегнато: Методът на адресиране се пренебрегва"
 
-#: modules/networks/forms.py:138
+#: modules/networks/forms.py:142
 msgid "Disabled: Disable IPv6 for this connection"
 msgstr ""
 
-#: modules/networks/forms.py:143
+#: modules/networks/forms.py:147
 msgid "Prefix"
 msgstr "Наставка"
 
-#: modules/networks/forms.py:144
+#: modules/networks/forms.py:148
 msgid "Value between 1 and 128."
 msgstr "Стойността е между 1 и 128."
 
-#: modules/networks/forms.py:152
+#: modules/networks/forms.py:156
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4250,7 +4275,7 @@ msgstr ""
 "на IPv6 е „Автоматичен“, сървърите на DNS, предоставени от DHCP, ще бъдат "
 "пренебрегнати."
 
-#: modules/networks/forms.py:158
+#: modules/networks/forms.py:162
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4259,58 +4284,58 @@ msgstr ""
 "на IPv6 е „Автоматичен“, сървърите на DNS, предоставени от DHCP, ще бъдат "
 "пренебрегнати."
 
-#: modules/networks/forms.py:171
+#: modules/networks/forms.py:182
 msgid "-- select --"
 msgstr "— изберете —"
 
-#: modules/networks/forms.py:292
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:293
+#: modules/networks/forms.py:304
 msgid "The visible name of the network."
 msgstr "Видимото име на мрежата."
 
-#: modules/networks/forms.py:295
+#: modules/networks/forms.py:306
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Режим"
 
-#: modules/networks/forms.py:295
+#: modules/networks/forms.py:306
 msgid "Infrastructure"
 msgstr "Инфраструктура"
 
-#: modules/networks/forms.py:296
+#: modules/networks/forms.py:307
 msgid "Access Point"
 msgstr "Точка за достъп"
 
-#: modules/networks/forms.py:297
+#: modules/networks/forms.py:308
 msgid "Ad-hoc"
 msgstr ""
 
-#: modules/networks/forms.py:299
+#: modules/networks/forms.py:310
 msgid "Frequency Band"
 msgstr "Честотна лента"
 
-#: modules/networks/forms.py:299
+#: modules/networks/forms.py:310
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: modules/networks/forms.py:300
+#: modules/networks/forms.py:311
 msgid "A (5 GHz)"
 msgstr "A (5 ГХц)"
 
-#: modules/networks/forms.py:301
+#: modules/networks/forms.py:312
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 ГХц)"
 
-#: modules/networks/forms.py:303
+#: modules/networks/forms.py:314
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Канал"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:315
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4318,11 +4343,11 @@ msgstr ""
 "Незадължителна стойност. Ограничение на безжичния канал в избраната честотна "
 "лента. Празна стойност или 0 означава автоматичен избор."
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:320
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:321
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4332,11 +4357,11 @@ msgstr ""
 "се свързвате с точка за достъп, се свързвайте само ако BSSID на точката за "
 "достъп съвпада с предоставения. Пример: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:327
 msgid "Authentication Mode"
 msgstr "Режим на удостоверяване"
 
-#: modules/networks/forms.py:317
+#: modules/networks/forms.py:328
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4344,20 +4369,20 @@ msgstr ""
 "Изберете WPA, ако безжичната мрежа е защитена и изисква от клиентите да "
 "разполагат с паролата за свързване."
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:330
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:330
 msgid "Open"
 msgstr "Отворена"
 
-#: modules/networks/forms.py:355
+#: modules/networks/forms.py:366
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Посочете как устройството {box_name} е свързано с мрежата"
 
-#: modules/networks/forms.py:362
+#: modules/networks/forms.py:373
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4368,7 +4393,7 @@ msgstr ""
 "интернет от маршрутизатор безжично или чрез кабел. Това е типичната домашна "
 "постройка.</p>"
 
-#: modules/networks/forms.py:369
+#: modules/networks/forms.py:380
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4381,7 +4406,7 @@ msgstr ""
 "адаптер. {box_name} е устройство, директно свързано с интернет и всички "
 "устройства се свързват с {box_name}, за да получат достъп до интернет.</p>"
 
-#: modules/networks/forms.py:378
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4392,11 +4417,11 @@ msgstr ""
 "е директно свързана към {box_name} и няма други устройства в мрежата. Това "
 "се получава при общностни или облачни настройки.</p>"
 
-#: modules/networks/forms.py:397
+#: modules/networks/forms.py:408
 msgid "Choose your internet connection type"
 msgstr "Изберете вида на връзката с интернет"
 
-#: modules/networks/forms.py:401
+#: modules/networks/forms.py:412
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4415,7 +4440,7 @@ msgstr ""
 "сигурни дали той се променя с течение на времето, по-безопасно е да изберете "
 "тази възможност.</p>"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:424
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4435,7 +4460,7 @@ msgstr ""
 "възможност. Възможно е да можете да получите такава услуга от вашия "
 "доставчик на интернет, срещу заплащане.</p>"
 
-#: modules/networks/forms.py:426
+#: modules/networks/forms.py:437
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4455,7 +4480,7 @@ msgstr ""
 "{box_name} предлага много решения за заобикаляне на ситуацията, но всяко "
 "решение има своите ограничения.</b></p>"
 
-#: modules/networks/forms.py:439
+#: modules/networks/forms.py:450
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4463,11 +4488,11 @@ msgstr ""
 "Не зная каъв вид връзка предоставя доставчикът на интернет<p class=\"help-"
 "block\">Ще бъдат предложени най-консервативните действия.</p>"
 
-#: modules/networks/forms.py:456
+#: modules/networks/forms.py:467
 msgid "Preferred router configuration"
 msgstr "Предпочитана настройка за маршрутизатор"
 
-#: modules/networks/forms.py:461
+#: modules/networks/forms.py:472
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4478,7 +4503,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:484
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4490,7 +4515,7 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:487
+#: modules/networks/forms.py:498
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -4642,39 +4667,39 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
 #: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
 msgid "Privacy"
 msgstr "Поверителност"
 
-#: modules/networks/templates/connection_show.html:273
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:275
+#: modules/networks/templates/connection_show.html:295
+#: modules/networks/templates/connection_show.html:314
 msgid "Firewall zone"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:282
+#: modules/networks/templates/connection_show.html:284
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
 "only internally will become available externally.  This is a security risk."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:302
-#: modules/networks/templates/connection_show.html:325
+#: modules/networks/templates/connection_show.html:304
+#: modules/networks/templates/connection_show.html:327
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
 "will not be available."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:316
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:321
+#: modules/networks/templates/connection_show.html:323
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4686,7 +4711,7 @@ msgid "Create Connection"
 msgstr ""
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:537
 msgid "Delete Connection"
 msgstr ""
 
@@ -4733,7 +4758,7 @@ msgid "Computer"
 msgstr ""
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:254 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Редактиране на връзката"
 
@@ -4751,13 +4776,13 @@ msgstr ""
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:390
 msgid "Nearby Wi-Fi Networks"
 msgstr ""
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:414
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr ""
@@ -5137,59 +5162,59 @@ msgstr ""
 msgid "Connection Information"
 msgstr ""
 
-#: modules/networks/views.py:225
+#: modules/networks/views.py:226
 msgid "Cannot edit connection: Connection not found."
 msgstr "Връзката не може да бъде променена: връзката не е намерена."
 
-#: modules/networks/views.py:231
+#: modules/networks/views.py:232
 msgid "This type of connection is not yet understood."
 msgstr ""
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:432
 msgid "Adding New Generic Connection"
 msgstr ""
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:450
 msgid "Adding New Ethernet Connection"
 msgstr ""
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:468
 msgid "Adding New PPPoE Connection"
 msgstr ""
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:503
 msgid "Adding New Wi-Fi Connection"
 msgstr ""
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:518
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr ""
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:522 modules/networks/views.py:532
 msgid "Failed to delete connection: Connection not found."
 msgstr ""
 
@@ -5615,12 +5640,12 @@ msgstr ""
 msgid "Review privacy setting"
 msgstr "Преглед на настройките за поверителност"
 
-#: modules/privacy/forms.py:15
+#: modules/privacy/forms.py:16
 msgid "Periodically submit a list of apps used (suggested)"
 msgstr ""
 "Периодично изпращане на списък с използваните приложения (препоръчително)"
 
-#: modules/privacy/forms.py:17
+#: modules/privacy/forms.py:18
 #, python-brace-format
 msgid ""
 "Help Debian/{box_name} developers by participating in the Popularity Contest "
@@ -5638,11 +5663,11 @@ msgstr ""
 "target=\"_blank\">popcon.debian.org</a>. За допълнителна анонимност данните "
 "се изпращат през мрежата на Тор, ако приложението Тор е включено."
 
-#: modules/privacy/forms.py:27
+#: modules/privacy/forms.py:28
 msgid "Allow using fallback DNS servers"
 msgstr ""
 
-#: modules/privacy/forms.py:29
+#: modules/privacy/forms.py:30
 msgid ""
 "Use well-known public DNS servers to resolve domain names in unusual "
 "circumstances where no DNS servers are known but internet connectivity is "
@@ -5931,27 +5956,27 @@ msgstr ""
 msgid "Network File Storage"
 msgstr ""
 
-#: modules/samba/manifest.py:14
+#: modules/samba/manifest.py:12
 msgid "Android Samba Client"
 msgstr ""
 
-#: modules/samba/manifest.py:27
+#: modules/samba/manifest.py:25
 msgid "Ghost Commander"
 msgstr "Ghost Commander"
 
-#: modules/samba/manifest.py:36
+#: modules/samba/manifest.py:34
 msgid "Ghost Commander - Samba plugin"
 msgstr ""
 
-#: modules/samba/manifest.py:45
+#: modules/samba/manifest.py:43
 msgid "VLC media player"
 msgstr ""
 
-#: modules/samba/manifest.py:64
+#: modules/samba/manifest.py:62
 msgid "GNOME Files"
 msgstr ""
 
-#: modules/samba/manifest.py:76
+#: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -6842,7 +6867,7 @@ msgstr ""
 msgid "Go to Power"
 msgstr "Към Захранване"
 
-#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:396
 msgid "grub package is configured"
 msgstr ""
 
@@ -7627,17 +7652,17 @@ msgstr "Потребители и групи"
 msgid "Access to all services and system settings"
 msgstr "Достъп до всички услуги и системни настройки"
 
-#: modules/users/__init__.py:129
+#: modules/users/__init__.py:137
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Проверете записа на LDAP „{search_item}“"
 
-#: modules/users/__init__.py:144
+#: modules/users/__init__.py:152
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr ""
 
-#: modules/users/__init__.py:174
+#: modules/users/__init__.py:182
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
@@ -8734,10 +8759,6 @@ msgstr ""
 "<strong>Конфликтни пакети:</strong> Някои пакети, инсталирани в системата, "
 "са в конфликт с инсталирането на това приложение. Ако продължите, следните "
 "пакети ще бъдат премахнати:"
-
-#: templates/setup.html:66
-msgid "Install"
-msgstr "Инсталиране"
 
 #: templates/setup.html:68
 msgid "Update"

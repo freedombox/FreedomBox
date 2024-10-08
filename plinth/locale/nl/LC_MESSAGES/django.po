@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-23 19:35-0400\n"
+"POT-Creation-Date: 2024-10-07 20:05-0400\n"
 "PO-Revision-Date: 2024-09-21 01:05+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -116,7 +116,7 @@ msgstr "Data"
 msgid "System"
 msgstr "Systeem"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:268
+#: menu.py:112 modules/networks/templates/connection_show.html:270
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Security"
@@ -364,7 +364,7 @@ msgstr "Sleutel in archief"
 msgid "None"
 msgstr "Geen"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:320
+#: modules/backups/forms.py:179 modules/networks/forms.py:331
 msgid "Passphrase"
 msgstr "Wachtwoordzin"
 
@@ -880,7 +880,7 @@ msgid "No passwords currently configured."
 msgstr "Er zijn momenteel geen wachwoorden ingesteld."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:266
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:277
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Wachtwoord"
@@ -1024,9 +1024,9 @@ msgstr "IP adressen en domeinen verversen"
 #: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:62 modules/names/views.py:91
-#: modules/names/views.py:125 modules/pagekite/forms.py:74
-#: modules/privacy/views.py:46 modules/quassel/views.py:29
+#: modules/names/views.py:66 modules/names/views.py:95
+#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/privacy/views.py:50 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
 #: modules/ssh/views.py:62 modules/transmission/views.py:43
@@ -1150,16 +1150,15 @@ msgstr "Bibliotheek aangemaakt."
 msgid "An error occurred while creating the library."
 msgstr "Er is een fout opgetreden tijdens het aanmaken van de bibliotheek."
 
-#: modules/calibre/views.py:63 modules/featherwiki/views.py:145
-#: modules/gitweb/views.py:139 modules/kiwix/views.py:100
-#: modules/tiddlywiki/views.py:145
+#: modules/calibre/views.py:63 modules/featherwiki/views.py:135
+#: modules/gitweb/views.py:139 modules/kiwix/views.py:97
+#: modules/tiddlywiki/views.py:136
 #, python-brace-format
 msgid "{name} deleted."
 msgstr "{name} verwijderd."
 
-#: modules/calibre/views.py:67 modules/featherwiki/views.py:149
-#: modules/gitweb/views.py:143 modules/kiwix/views.py:104
-#: modules/tiddlywiki/views.py:149
+#: modules/calibre/views.py:67 modules/gitweb/views.py:143
+#: modules/kiwix/views.py:101
 #, python-brace-format
 msgid "Could not delete {name}: {error}"
 msgstr "Verwijderen van {name} mislukt: {error}"
@@ -1774,11 +1773,11 @@ msgid "Invalid domain name"
 msgstr "Foutieve domeinnaam"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:265 modules/users/forms.py:129
+#: modules/networks/forms.py:276 modules/users/forms.py:129
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:268
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:279
 msgid "Show password"
 msgstr "Toon wachtwoord"
 
@@ -2282,10 +2281,10 @@ msgstr "Wiki's beheren"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:16
 #: modules/featherwiki/templates/featherwiki_configure.html:18
-#: modules/featherwiki/views.py:48
+#: modules/featherwiki/views.py:47
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
-#: modules/tiddlywiki/views.py:48
+#: modules/tiddlywiki/views.py:47
 msgid "Create Wiki"
 msgstr "Nieuwe Wiki"
 
@@ -2341,41 +2340,47 @@ msgstr "Dit wiki bestand permanent verwijderen?"
 msgid "Upload"
 msgstr "Upload"
 
-#: modules/featherwiki/views.py:21 modules/tiddlywiki/views.py:21
+#: modules/featherwiki/views.py:20 modules/tiddlywiki/views.py:20
 msgid "A wiki file with the given name already exists."
 msgstr "Er bestaat al een wiki bestand met deze naam."
 
-#: modules/featherwiki/views.py:55 modules/tiddlywiki/views.py:55
+#: modules/featherwiki/views.py:54 modules/tiddlywiki/views.py:54
 msgid "Wiki created."
 msgstr "Wiki aangemaakt."
 
-#: modules/featherwiki/views.py:61 modules/tiddlywiki/views.py:61
+#: modules/featherwiki/views.py:59 modules/tiddlywiki/views.py:59
 msgid "An error occurred while creating the wiki."
 msgstr "Er is een fout opgetreden tijdens het aanmaken van de wiki."
 
-#: modules/featherwiki/views.py:77 modules/tiddlywiki/views.py:77
+#: modules/featherwiki/views.py:76 modules/tiddlywiki/views.py:76
 msgid "Rename Wiki"
 msgstr "Hernoem Wiki"
 
-#: modules/featherwiki/views.py:85 modules/tiddlywiki/views.py:85
+#: modules/featherwiki/views.py:84 modules/tiddlywiki/views.py:84
 msgid "Wiki renamed."
 msgstr "Wiki hernoemd."
 
-#: modules/featherwiki/views.py:91 modules/tiddlywiki/views.py:91
+#: modules/featherwiki/views.py:89 modules/tiddlywiki/views.py:89
 msgid "An error occurred while renaming the wiki."
 msgstr "Er is een fout opgetreden tijdens het hernoemen van de wiki."
 
-#: modules/featherwiki/views.py:107 modules/tiddlywiki/views.py:107
+#: modules/featherwiki/views.py:106 modules/tiddlywiki/views.py:106
 msgid "Upload Wiki File"
 msgstr "Wiki bestand uploaden"
 
-#: modules/featherwiki/views.py:123 modules/tiddlywiki/views.py:123
+#: modules/featherwiki/views.py:115 modules/tiddlywiki/views.py:116
 msgid "Wiki file added."
 msgstr "Wiki bestand toegevoegd."
 
-#: modules/featherwiki/views.py:128 modules/tiddlywiki/views.py:128
+#: modules/featherwiki/views.py:119 modules/tiddlywiki/views.py:120
 msgid "Failed to add wiki file."
 msgstr "Wiki bestand toevoegen mislukt."
+
+#: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
+#, fuzzy, python-brace-format
+#| msgid "Could not delete {name}: {error}"
+msgid "Could not delete {name}"
+msgstr "Verwijderen van {name} mislukt: {error}"
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -3453,7 +3458,13 @@ msgstr "Informatiepakket toegevoegd."
 msgid "Add a new content package"
 msgstr "Voeg een nieuw informatiepakket toe"
 
-#: modules/kiwix/views.py:83
+#: modules/kiwix/views.py:76
+#, fuzzy
+#| msgid "Content package added."
+msgid "Content package already exists."
+msgstr "Informatiepakket toegevoegd."
+
+#: modules/kiwix/views.py:79
 msgid "Failed to add content package."
 msgstr "Informatiepakket toevoegen mislukt."
 
@@ -4020,8 +4031,8 @@ msgstr "Inschakelen Schade"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "Indien uitgeschakeld, kunnen spelers niet sterven of schade oplopen."
 
-#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:101
-#: modules/networks/forms.py:141
+#: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
+#: modules/networks/forms.py:145
 msgid "Address"
 msgstr "Adres"
 
@@ -4288,7 +4299,7 @@ msgstr "Deelnamewachtwoord gewijzigd"
 msgid "Root channel name changed."
 msgstr "De naam van het hoofdkanaal is gewijzigd."
 
-#: modules/names/__init__.py:32
+#: modules/names/__init__.py:33
 #, python-brace-format
 msgid ""
 "Name Services provides an overview of the ways {box_name} can be reached "
@@ -4302,11 +4313,15 @@ msgstr ""
 "services zijn ingeschakeld of uitgeschakeld voor binnenkomende verbindingen "
 "via de opgegeven naam."
 
-#: modules/names/__init__.py:53
+#: modules/names/__init__.py:54
 msgid "Name Services"
 msgstr "Domeindiensten"
 
-#: modules/names/__init__.py:133
+#: modules/names/__init__.py:171
+msgid "Package systemd-resolved is installed"
+msgstr ""
+
+#: modules/names/__init__.py:195
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4370,7 +4385,7 @@ msgstr ""
 "niet langer zijn dan 253 tekens."
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
-#: modules/networks/forms.py:24
+#: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
@@ -4378,13 +4393,13 @@ msgstr ""
 msgid "yes"
 msgstr "ja"
 
-#: modules/names/resolved.py:92 modules/networks/forms.py:25
+#: modules/names/resolved.py:92 modules/networks/forms.py:29
 #: modules/networks/views.py:125
 msgid "opportunistic"
 msgstr "opportunistisch"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:26 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:124
 msgid "no"
 msgstr "nee"
 
@@ -4421,7 +4436,7 @@ msgid "Link"
 msgstr ""
 
 #: modules/names/templates/names.html:73
-#: modules/networks/templates/connection_show.html:263
+#: modules/networks/templates/connection_show.html:264
 msgid "DNS-over-TLS"
 msgstr ""
 
@@ -4442,29 +4457,39 @@ msgid "Fallback DNS Servers"
 msgstr "Fallback DNS Servers"
 
 #: modules/names/templates/names.html:112
+msgid ""
+"systemd-resolved package is not installed. Install it for additional "
+"functionality."
+msgstr ""
+
+#: modules/names/templates/names.html:121 templates/setup.html:66
+msgid "Install"
+msgstr "Installeer"
+
+#: modules/names/templates/names.html:126
 #, fuzzy
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
 msgstr "Fout tijdens installatie"
 
-#: modules/names/views.py:77
+#: modules/names/views.py:81
 #, fuzzy
 #| msgid "Hostname"
 msgid "Set Hostname"
 msgstr "Hostnaam"
 
-#: modules/names/views.py:95
+#: modules/names/views.py:99
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Hostnaam instellen mislukt: {exception}"
 
-#: modules/names/views.py:111
+#: modules/names/views.py:115
 #, fuzzy
 #| msgid "Domain Name"
 msgid "Set Domain Name"
 msgstr "Domeinnaam"
 
-#: modules/names/views.py:129
+#: modules/names/views.py:133
 #, python-brace-format
 msgid "Error setting domain name: {exception}"
 msgstr "Domeinnaam instellen mislukt: {exception}"
@@ -4489,32 +4514,33 @@ msgstr ""
 msgid "Networks"
 msgstr "Netwerken"
 
-#: modules/networks/forms.py:21 modules/networks/views.py:40
-#: modules/networks/views.py:101 modules/networks/views.py:112
+#: modules/networks/forms.py:19 modules/networks/forms.py:25
+#: modules/networks/views.py:40 modules/networks/views.py:101
+#: modules/networks/views.py:112
 msgid "unknown"
 msgstr "onbekend"
 
-#: modules/networks/forms.py:34
+#: modules/networks/forms.py:38
 msgid "Connection Type"
 msgstr "Verbindingssoort"
 
-#: modules/networks/forms.py:41
+#: modules/networks/forms.py:45
 msgid "Connection Name"
 msgstr "Verbindingsnaam"
 
-#: modules/networks/forms.py:43
+#: modules/networks/forms.py:47
 msgid "Network Interface"
 msgstr "Netwerkinterface"
 
-#: modules/networks/forms.py:44
+#: modules/networks/forms.py:48
 msgid "The network device that this connection should be bound to."
 msgstr "De netwerkapparatuur waar deze verbinding mee moet worden verbonden."
 
-#: modules/networks/forms.py:47
+#: modules/networks/forms.py:51
 msgid "Firewall Zone"
 msgstr "Firewall Zone"
 
-#: modules/networks/forms.py:48
+#: modules/networks/forms.py:52
 msgid ""
 "The firewall zone will control which services are available over this "
 "interfaces. Select Internal only for trusted networks."
@@ -4522,15 +4548,15 @@ msgstr ""
 "De firewall zone controleert welke machines beschikbaar zijn via deze "
 "verbinding. Selecteer \"Allen Intern\" voor vertrouwde netwerken."
 
-#: modules/networks/forms.py:52
+#: modules/networks/forms.py:56
 msgid "Use DNS-over-TLS"
 msgstr "Gebruik DNS-over-TLS"
 
-#: modules/networks/forms.py:86
+#: modules/networks/forms.py:90
 msgid "IPv4 Addressing Method"
 msgstr "IPv4 Adresseringsmethode"
 
-#: modules/networks/forms.py:88
+#: modules/networks/forms.py:92
 msgid ""
 "Automatic (DHCP): Configure automatically, use Internet connection from this "
 "network"
@@ -4538,7 +4564,7 @@ msgstr ""
 "Automatisch (DHCP): Automatisch configureren, internetverbinding van dit "
 "netwerk gebruiken"
 
-#: modules/networks/forms.py:91
+#: modules/networks/forms.py:95
 msgid ""
 "Shared: Act as a router, provide Internet connection to other devices on "
 "this network"
@@ -4546,7 +4572,7 @@ msgstr ""
 "Gedeeld: Fungeert als router, biedt internetverbinding aan andere apparaten "
 "op dit netwerk"
 
-#: modules/networks/forms.py:94 modules/networks/forms.py:135
+#: modules/networks/forms.py:98 modules/networks/forms.py:139
 msgid ""
 "Manual: Use manually specified parameters, use Internet connection from this "
 "network"
@@ -4554,15 +4580,15 @@ msgstr ""
 "Handmatig: Gebruik handmatig opgegeven parameters, gebruik de "
 "internetverbinding van dit netwerk"
 
-#: modules/networks/forms.py:97
+#: modules/networks/forms.py:101
 msgid "Disabled: Do not configure this addressing method"
 msgstr "Uitgeschakeld: deze adresseringsmethode niet configureren"
 
-#: modules/networks/forms.py:104
+#: modules/networks/forms.py:108
 msgid "Netmask"
 msgstr "Netmask"
 
-#: modules/networks/forms.py:105
+#: modules/networks/forms.py:109
 msgid ""
 "Optional value. If left blank, a default netmask based on the address will "
 "be used."
@@ -4570,21 +4596,21 @@ msgstr ""
 "Optionele waarde. Indien leeg, zal een standaard netmask op basis van het "
 "adres worden gebruikt."
 
-#: modules/networks/forms.py:109 modules/networks/forms.py:148
+#: modules/networks/forms.py:113 modules/networks/forms.py:152
 #: modules/networks/templates/connection_show.html:193
 #: modules/networks/templates/connection_show.html:234
 msgid "Gateway"
 msgstr "Gateway"
 
-#: modules/networks/forms.py:109 modules/networks/forms.py:148
+#: modules/networks/forms.py:113 modules/networks/forms.py:152
 msgid "Optional value."
 msgstr "Optionele waarde."
 
-#: modules/networks/forms.py:112 modules/networks/forms.py:151
+#: modules/networks/forms.py:116 modules/networks/forms.py:155
 msgid "DNS Server"
 msgstr "DNS Server"
 
-#: modules/networks/forms.py:113
+#: modules/networks/forms.py:117
 msgid ""
 "Optional value. If this value is given and IPv4 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4593,11 +4619,11 @@ msgstr ""
 "adresseringsmethode is \"Automatisch\", zullen de DNS-Servers van de DHCP-"
 "server worden genegeerd."
 
-#: modules/networks/forms.py:118 modules/networks/forms.py:157
+#: modules/networks/forms.py:122 modules/networks/forms.py:161
 msgid "Second DNS Server"
 msgstr "Tweede DNS Server"
 
-#: modules/networks/forms.py:119
+#: modules/networks/forms.py:123
 msgid ""
 "Optional value. If this value is given and IPv4 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4606,18 +4632,18 @@ msgstr ""
 "methode is \"Automatisch\", zullen de DNS-Servers van de DHCP-server worden "
 "genegeerd."
 
-#: modules/networks/forms.py:124
+#: modules/networks/forms.py:128
 msgid "IPv6 Addressing Method"
 msgstr "IPv6 Adresseringsmethode"
 
-#: modules/networks/forms.py:126
+#: modules/networks/forms.py:130
 msgid ""
 "Automatic: Configure automatically, use Internet connection from this network"
 msgstr ""
 "Automatisch: Automatisch configureren, internetverbinding van dit netwerk "
 "gebruiken"
 
-#: modules/networks/forms.py:129
+#: modules/networks/forms.py:133
 msgid ""
 "Automatic (DHCP only): Configure automatically, use Internet connection from "
 "this network"
@@ -4625,7 +4651,7 @@ msgstr ""
 "Automatisch (alleen DHCP): Automatisch configureren, internetverbinding van "
 "dit netwerk gebruiken"
 
-#: modules/networks/forms.py:132
+#: modules/networks/forms.py:136
 #, fuzzy
 #| msgid ""
 #| "Automatic: Configure automatically, use Internet connection from this "
@@ -4637,23 +4663,23 @@ msgstr ""
 "Automatisch: Automatisch configureren, internetverbinding van dit netwerk "
 "gebruiken"
 
-#: modules/networks/forms.py:137
+#: modules/networks/forms.py:141
 msgid "Ignore: Ignore this addressing method"
 msgstr "Negeren: Deze adresseringsmethode negeren"
 
-#: modules/networks/forms.py:138
+#: modules/networks/forms.py:142
 msgid "Disabled: Disable IPv6 for this connection"
 msgstr ""
 
-#: modules/networks/forms.py:143
+#: modules/networks/forms.py:147
 msgid "Prefix"
 msgstr "Voorvoegsel"
 
-#: modules/networks/forms.py:144
+#: modules/networks/forms.py:148
 msgid "Value between 1 and 128."
 msgstr "Waarde tussen 1 en 128."
 
-#: modules/networks/forms.py:152
+#: modules/networks/forms.py:156
 msgid ""
 "Optional value. If this value is given and IPv6 addressing method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4662,7 +4688,7 @@ msgstr ""
 "adresseringsmethode is \"Automatisch\", zullen de DNS-Servers van de DHCP-"
 "server worden genegeerd."
 
-#: modules/networks/forms.py:158
+#: modules/networks/forms.py:162
 msgid ""
 "Optional value. If this value is given and IPv6 Addressing Method is "
 "\"Automatic\", the DNS Servers provided by a DHCP server will be ignored."
@@ -4671,58 +4697,58 @@ msgstr ""
 "methode is \"Automatisch\", zullen de DNS-Servers van de DHCP-server worden "
 "genegeerd."
 
-#: modules/networks/forms.py:171
+#: modules/networks/forms.py:182
 msgid "-- select --"
 msgstr "-- selecteer --"
 
-#: modules/networks/forms.py:292
+#: modules/networks/forms.py:303
 #: modules/networks/templates/connection_show.html:135
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:293
+#: modules/networks/forms.py:304
 msgid "The visible name of the network."
 msgstr "De zichtbare netwerknaam."
 
-#: modules/networks/forms.py:295
+#: modules/networks/forms.py:306
 #: modules/networks/templates/connection_show.html:148
 msgid "Mode"
 msgstr "Modus"
 
-#: modules/networks/forms.py:295
+#: modules/networks/forms.py:306
 msgid "Infrastructure"
 msgstr "Infrastructuur"
 
-#: modules/networks/forms.py:296
+#: modules/networks/forms.py:307
 msgid "Access Point"
 msgstr "Access Point"
 
-#: modules/networks/forms.py:297
+#: modules/networks/forms.py:308
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:299
+#: modules/networks/forms.py:310
 msgid "Frequency Band"
 msgstr "Frequentieband"
 
-#: modules/networks/forms.py:299
+#: modules/networks/forms.py:310
 msgid "Automatic"
 msgstr "Automatisch"
 
-#: modules/networks/forms.py:300
+#: modules/networks/forms.py:311
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:301
+#: modules/networks/forms.py:312
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:303
+#: modules/networks/forms.py:314
 #: modules/networks/templates/connection_show.html:162
 msgid "Channel"
 msgstr "Kanaal"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:315
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4730,11 +4756,11 @@ msgstr ""
 "Optionele waarde. Beperken van draadloos kanaal tot de geselecteerde "
 "frequentieband. Waarde leeg of 0 betekent automatische selectie."
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:320
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:321
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4745,11 +4771,11 @@ msgstr ""
 "toegangspunt overeenkomt met degene die hier wordt ingevuld. Voorbeeld: "
 "00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:327
 msgid "Authentication Mode"
 msgstr "Authentificatiemodus"
 
-#: modules/networks/forms.py:317
+#: modules/networks/forms.py:328
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4757,20 +4783,20 @@ msgstr ""
 "Selecteer WPA indien het netwerk beveiligd is en gebruikerswachtwoorden "
 "gebruikt om te verbinden."
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:330
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:319
+#: modules/networks/forms.py:330
 msgid "Open"
 msgstr "Open"
 
-#: modules/networks/forms.py:355
+#: modules/networks/forms.py:366
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Geef aan hoe jouw {box_name} verbonden is met jouw netwerk"
 
-#: modules/networks/forms.py:362
+#: modules/networks/forms.py:373
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4781,7 +4807,7 @@ msgstr ""
 "internetverbinding van de router via Wi-Fi of Ethernet-kabel. Dit is een "
 "typische thuisopstelling. </p>"
 
-#: modules/networks/forms.py:369
+#: modules/networks/forms.py:380
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4794,7 +4820,7 @@ msgstr ""
 "{box_name} is rechtstreeks verbonden met het internet en alle apparaten "
 "maken verbinding met {box_name} voor hun internetverbinding. </p>"
 
-#: modules/networks/forms.py:378
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4806,11 +4832,11 @@ msgstr ""
 "andere apparaten op het netwerk. Dit komt voor in community- of "
 "cloudopstellingen. </p>"
 
-#: modules/networks/forms.py:397
+#: modules/networks/forms.py:408
 msgid "Choose your internet connection type"
 msgstr "Het type internetverbinding kiezen"
 
-#: modules/networks/forms.py:401
+#: modules/networks/forms.py:412
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4829,7 +4855,7 @@ msgstr ""
 "maar niet bekend is of dit in de loop van de tijd verandert, is het veiliger "
 "om deze optie te kiezen. </p>"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:424
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4848,7 +4874,7 @@ msgstr ""
 "{box_name} diensten, maar niet veel ISP's bieden dit type verbinding aan. "
 "Het kan zijn dat de ISP deze service als een betaalde dienst aanbiedt.</p>"
 
-#: modules/networks/forms.py:426
+#: modules/networks/forms.py:437
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4867,7 +4893,7 @@ msgstr ""
 "diensten via internet aan te bieden vanuit huis. {box_name} biedt veel "
 "verschillende oplossingen maar ieder daarvan heeft beperkingen.</p>"
 
-#: modules/networks/forms.py:439
+#: modules/networks/forms.py:450
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4875,11 +4901,11 @@ msgstr ""
 "Ik weet niet welk type verbinding mijn ISP biedt <p class=\"help-block\">De "
 "meest conservatieve maatregelen zullen worden voorgesteld.</p>"
 
-#: modules/networks/forms.py:456
+#: modules/networks/forms.py:467
 msgid "Preferred router configuration"
 msgstr "Voorkeurs routerconfiguratie"
 
-#: modules/networks/forms.py:461
+#: modules/networks/forms.py:472
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4896,7 +4922,7 @@ msgstr ""
 "{box_name}. Vergeet niet om eerst een statisch lokaal IP-adres voor de "
 "{box_name} in de router configuratie aan te maken. </p>"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:484
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4916,7 +4942,7 @@ msgstr ""
 "geven aan welke poort(en) moeten worden doorgestuurd voor correcte werking "
 "van die toepassing. </p>"
 
-#: modules/networks/forms.py:487
+#: modules/networks/forms.py:498
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5076,19 +5102,19 @@ msgstr "IPv6"
 msgid "This connection is not active."
 msgstr "Deze verbinding is niet actief."
 
-#: modules/networks/templates/connection_show.html:259
+#: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
 #: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
 msgid "Privacy"
 msgstr "Privacy"
 
-#: modules/networks/templates/connection_show.html:273
-#: modules/networks/templates/connection_show.html:293
-#: modules/networks/templates/connection_show.html:312
+#: modules/networks/templates/connection_show.html:275
+#: modules/networks/templates/connection_show.html:295
+#: modules/networks/templates/connection_show.html:314
 msgid "Firewall zone"
 msgstr "Firewall zone"
 
-#: modules/networks/templates/connection_show.html:282
+#: modules/networks/templates/connection_show.html:284
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5099,8 +5125,8 @@ msgstr ""
 "bedoeld zijn om intern beschikbaar te zijn van buitenaf bereikbaar. Dit is "
 "een veiligheidsrisico."
 
-#: modules/networks/templates/connection_show.html:302
-#: modules/networks/templates/connection_show.html:325
+#: modules/networks/templates/connection_show.html:304
+#: modules/networks/templates/connection_show.html:327
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5110,12 +5136,12 @@ msgstr ""
 "wordt met een lokaal netwerk/machine, zijn veel diensten die alleen lokaal "
 "beschikbaar zijn niet bereikbaar."
 
-#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:316
 #: modules/networks/templates/connections_diagram.html:24 network.py:24
 msgid "External"
 msgstr "Extern"
 
-#: modules/networks/templates/connection_show.html:321
+#: modules/networks/templates/connection_show.html:323
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -5129,7 +5155,7 @@ msgid "Create Connection"
 msgstr "Maak Verbinding"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:537
 msgid "Delete Connection"
 msgstr "Verwijder verbinding"
 
@@ -5176,7 +5202,7 @@ msgid "Computer"
 msgstr "Computer"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:254 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Wijzig verbinding"
 
@@ -5194,13 +5220,13 @@ msgstr "Verbindingen"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:390
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi Netwerken dichtbij"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:414
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Verbinding toevoegen"
@@ -5621,59 +5647,59 @@ msgstr "Kan verbinding niet weergeven: Verbinding niet gevonden."
 msgid "Connection Information"
 msgstr "Verbindingsgegevens"
 
-#: modules/networks/views.py:225
+#: modules/networks/views.py:226
 msgid "Cannot edit connection: Connection not found."
 msgstr "Kan verbinding niet wijzigen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:231
+#: modules/networks/views.py:232
 msgid "This type of connection is not yet understood."
 msgstr "Deze verbindingsmethode is (nog) niet bekend."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Geactiveerde verbinding {name}."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kan verbinding niet inschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Kan verbinding {name} niet inschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Verbinding {name} uitgeschakeld."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kan verbinding niet uitschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:432
 msgid "Adding New Generic Connection"
 msgstr "Toevoegen nieuwe Verbinding"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:450
 msgid "Adding New Ethernet Connection"
 msgstr "Toevoegen nieuwe Ethernetverbinding"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:468
 msgid "Adding New PPPoE Connection"
 msgstr "Toevoegen nieuwe PPPoE verbinding"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:503
 msgid "Adding New Wi-Fi Connection"
 msgstr "Toevoegen nieuwe W-Fi verbinding"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:518
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Verbinding {name} verwijderd."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:522 modules/networks/views.py:532
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kan verbinding niet verwijderen: Verbinding niet gevonden."
 
@@ -6154,11 +6180,11 @@ msgstr ""
 msgid "Review privacy setting"
 msgstr "Privacy-instelling bekijken"
 
-#: modules/privacy/forms.py:15
+#: modules/privacy/forms.py:16
 msgid "Periodically submit a list of apps used (suggested)"
 msgstr "Periodiek een lijst van gebruikte apps laten zien (aanbevolen)"
 
-#: modules/privacy/forms.py:17
+#: modules/privacy/forms.py:18
 #, python-brace-format
 msgid ""
 "Help Debian/{box_name} developers by participating in the Popularity Contest "
@@ -6176,11 +6202,11 @@ msgstr ""
 "De insturen gebeurt via het Tor-netwerk voor extra anonimiteit als de Tor-"
 "app is ingeschakeld."
 
-#: modules/privacy/forms.py:27
+#: modules/privacy/forms.py:28
 msgid "Allow using fallback DNS servers"
 msgstr "Sta fallback DNS servers toe"
 
-#: modules/privacy/forms.py:29
+#: modules/privacy/forms.py:30
 msgid ""
 "Use well-known public DNS servers to resolve domain names in unusual "
 "circumstances where no DNS servers are known but internet connectivity is "
@@ -6545,27 +6571,27 @@ msgstr "Samba"
 msgid "Network File Storage"
 msgstr "Netwerk bestandenopslag"
 
-#: modules/samba/manifest.py:14
+#: modules/samba/manifest.py:12
 msgid "Android Samba Client"
 msgstr "Android Samba Cliënt"
 
-#: modules/samba/manifest.py:27
+#: modules/samba/manifest.py:25
 msgid "Ghost Commander"
 msgstr "Ghost Commander"
 
-#: modules/samba/manifest.py:36
+#: modules/samba/manifest.py:34
 msgid "Ghost Commander - Samba plugin"
 msgstr "Ghost Commander - Samba plugin"
 
-#: modules/samba/manifest.py:45
+#: modules/samba/manifest.py:43
 msgid "VLC media player"
 msgstr "VLC mediaspeler"
 
-#: modules/samba/manifest.py:64
+#: modules/samba/manifest.py:62
 msgid "GNOME Files"
 msgstr "GNOME Bestanden"
 
-#: modules/samba/manifest.py:76
+#: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
 
@@ -7538,7 +7564,7 @@ msgstr "Alleen-lezen bestandssysteem"
 msgid "Go to Power"
 msgstr "Ga naar Power"
 
-#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:375
+#: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:396
 msgid "grub package is configured"
 msgstr "grub pakket is ingesteld"
 
@@ -8370,17 +8396,17 @@ msgstr "Gebruikers en Groepen"
 msgid "Access to all services and system settings"
 msgstr "Toegang tot alle diensten en systeeminstellingen"
 
-#: modules/users/__init__.py:129
+#: modules/users/__init__.py:137
 #, python-brace-format
 msgid "Check LDAP entry \"{search_item}\""
 msgstr "Zoek LDAP item \"{search_item}\""
 
-#: modules/users/__init__.py:144
+#: modules/users/__init__.py:152
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
 msgstr "Controleer nslcd configuratie \"{key} {value}\""
 
-#: modules/users/__init__.py:174
+#: modules/users/__init__.py:182
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
 msgstr "Controleer nsswitch config \"{database}\""
@@ -9580,10 +9606,6 @@ msgstr ""
 "<strong>Conflicterende pakketten:</strong> Sommige pakketten die op het "
 "systeem geïnstalleerd zijn conflicteren met de installatie van deze app. De "
 "volgende pakketten zullen worden verwijderd als deze app wordt geïnstalleerd:"
-
-#: templates/setup.html:66
-msgid "Install"
-msgstr "Installeer"
 
 #: templates/setup.html:68
 msgid "Update"
