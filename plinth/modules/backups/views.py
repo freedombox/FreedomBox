@@ -5,7 +5,6 @@ Views for the backups app.
 
 import logging
 import os
-import tempfile
 from datetime import datetime
 from urllib.parse import unquote
 
@@ -190,11 +189,13 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         return context
 
     def form_valid(self, form):
-        """store uploaded file."""
-        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-            self.request.session[SESSION_PATH_VARIABLE] = tmp_file.name
-            for chunk in self.request.FILES['backups-file'].chunks():
-                tmp_file.write(chunk)
+        """Store uploaded file."""
+        uploaded_file = self.request.FILES['backups-file']
+        # Hold on to Django's uploaded file. It will be used by other views.
+        privileged.add_uploaded_archive(uploaded_file.name,
+                                        uploaded_file.temporary_file_path())
+        self.request.session[SESSION_PATH_VARIABLE] = str(
+            privileged.BACKUPS_UPLOAD_PATH / uploaded_file.name)
         return super().form_valid(form)
 
 
