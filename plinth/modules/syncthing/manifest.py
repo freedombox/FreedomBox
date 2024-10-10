@@ -48,7 +48,9 @@ clients = [{
 
 backup = {
     'secrets': {
-        'directories': ['/var/lib/syncthing/.config']
+        'directories': [
+            '/var/lib/syncthing/.config', '/var/lib/syncthing/.local'
+        ]
     },
     'services': ['syncthing@syncthing']
 }

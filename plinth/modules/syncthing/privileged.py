@@ -14,14 +14,18 @@ from plinth import action_utils
 from plinth.actions import privileged
 
 DATA_DIR = '/var/lib/syncthing'
-CONF_FILE = DATA_DIR + '/.config/syncthing/config.xml'
+# legacy configuration file
+CONF_FILE_LEGACY = DATA_DIR + '/.config/syncthing/config.xml'
+# configuration file since Debian Trixie if '.config/syncthing' directory
+# doesn't exist
+CONF_FILE = DATA_DIR + '/.local/state/syncthing/config.xml'
 
 
-def augeas_load():
+def augeas_load(conf_file):
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.add_transform('Xml.lns', CONF_FILE)
+    aug.add_transform('Xml.lns', conf_file)
     aug.load()
     return aug
 
@@ -54,26 +58,30 @@ def setup():
 def setup_config():
     """Make configuration changes."""
     # wait until the configuration file is created by the syncthing daemon
+    conf_file_in_use = CONF_FILE
     timeout = 300
     while timeout > 0:
-        if os.path.exists(CONF_FILE):
+        if os.path.exists(CONF_FILE_LEGACY):
+            conf_file_in_use = CONF_FILE_LEGACY
+            break
+        elif os.path.exists(CONF_FILE):
             break
         timeout = timeout - 1
         time.sleep(1)
 
-    aug = augeas_load()
+    aug = augeas_load(conf_file_in_use)
 
     # disable authentication missing notification as FreedomBox itself
     # provides authentication
     auth_conf = ('/configuration/options/unackedNotificationID'
                  '[#text="authenticationUserAndPassword"]')
-    conf_changed = bool(aug.remove('/files' + CONF_FILE + auth_conf))
+    conf_changed = bool(aug.remove('/files' + conf_file_in_use + auth_conf))
 
     # disable usage reporting notification by declining reporting
     # if the user has not made a choice yet
     usage_conf = '/configuration/options/urAccepted/#text'
-    if aug.get('/files' + CONF_FILE + usage_conf) == '0':
-        aug.set('/files' + CONF_FILE + usage_conf, '-1')
+    if aug.get('/files' + conf_file_in_use + usage_conf) == '0':
+        aug.set('/files' + conf_file_in_use + usage_conf, '-1')
         conf_changed = True
 
     aug.save()
@@ -84,5 +92,7 @@ def setup_config():
 
 @privileged
 def uninstall():
-    """Remove configuration file when app is uninstalled."""
+    """Remove configuration directory when app is uninstalled."""
+    # legacy location
     shutil.rmtree(DATA_DIR + '/.config', ignore_errors=True)
+    shutil.rmtree(DATA_DIR + '/.local', ignore_errors=True)

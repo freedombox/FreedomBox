@@ -48,6 +48,7 @@ class TestSyncthingApp(functional.BaseAppTests):
                                  'test_syncthing')
 
         _remove_folder(session_browser, 'Test')
+        time.sleep(1)  # Helps with browsing away in next step
         functional.backup_restore(session_browser, self.app_name,
                                   'test_syncthing')
 
