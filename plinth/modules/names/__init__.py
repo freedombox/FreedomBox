@@ -4,6 +4,7 @@ FreedomBox app to configure name services.
 """
 
 import logging
+import pathlib
 import socket
 import subprocess
 
@@ -11,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, menu, network
+from plinth import cfg, glib, menu, network, setup
 from plinth.daemon import Daemon
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
@@ -61,15 +62,14 @@ class NamesApp(app_module.App):
         self.add(menu_item)
 
         # 'ip' utility is needed from 'iproute2' package.
-        packages = Packages('packages-names',
-                            ['systemd-resolved', 'libnss-resolve', 'iproute2'])
+        packages = Packages('packages-names', ['iproute2'])
         self.add(packages)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
                                  'names:domains', can_have_certificate=True)
         self.add(domain_type)
 
-        daemon = Daemon('daemon-names', 'systemd-resolved')
+        daemon = ResolvedDaemon('daemon-names', 'systemd-resolved')
         self.add(daemon)
 
         backup_restore = BackupRestore('backup-restore-names',
@@ -89,34 +89,96 @@ class NamesApp(app_module.App):
                                      domain_type='domain-type-static',
                                      name=domain_name, services='__all__')
 
+        # Schedule installation of systemd-resolved if not already installed.
+        if not is_resolved_installed():
+            # Try to install the package hourly.
+            glib.schedule(3600, install_systemd_resolved)
+
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
         results = super().diagnose()
-        results.append(diagnose_resolution('deb.debian.org'))
+        if is_resolved_installed():
+            results.append(diagnose_resolution('deb.debian.org'))
+
         return results
 
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
 
-        # Fresh install or upgrading to version 2
-        if old_version < 2:
-            privileged.set_resolved_configuration(dns_fallback=True)
+        if not is_resolved_installed():
+            try:
+                # Requires internet connectivity and could fail
+                privileged.install_resolved()
+                privileged.set_resolved_configuration(dns_fallback=True)
+            except Exception:
+                pass
 
-        # Load the configuration files for systemd-resolved provided by
-        # FreedomBox.
-        service_privileged.restart('systemd-resolved')
+        if is_resolved_installed():
+            # Fresh install or upgrading to version 2
+            if old_version < 2:
+                privileged.set_resolved_configuration(dns_fallback=True)
 
-        # After systemd-resolved is freshly installed, /etc/resolve.conf
-        # becomes a symlink to configuration pointing to systemd-resovled stub
-        # resolver. However, the old contents are not fed from network-manager
-        # (if it was present earlier and wrote to /etc/resolve.conf). Ask
-        # network-manager to feed the DNS servers from the connections it has
-        # established to systemd-resolved so that using fallback DNS servers is
-        # not necessary.
-        network.refeed_dns()
+            # Load the configuration files for systemd-resolved provided by
+            # FreedomBox.
+            service_privileged.restart('systemd-resolved')
+
+            # After systemd-resolved is freshly installed, /etc/resolve.conf
+            # becomes a symlink to configuration pointing to systemd-resovled
+            # stub resolver. However, the old contents are not fed from
+            # network-manager (if it was present earlier and wrote to
+            # /etc/resolve.conf). Ask network-manager to feed the DNS servers
+            # from the connections it has established to systemd-resolved so
+            # that using fallback DNS servers is not necessary.
+            network.refeed_dns()
 
         self.enable()
+
+
+class ResolvedDaemon(Daemon):
+    """Perform work only if systemd-resolved is installed."""
+
+    def is_enabled(self):
+        """Return if the daemon/unit is enabled."""
+        if not is_resolved_installed():
+            return True
+
+        return super().is_enabled()
+
+    def enable(self):
+        """Run operations to enable the daemon/unit."""
+        if is_resolved_installed():
+            super().enable()
+
+    def disable(self):
+        """Run operations to disable the daemon/unit."""
+        if is_resolved_installed():
+            super().disable()
+
+    def is_running(self):
+        """Return whether the daemon/unit is running."""
+        if not is_resolved_installed():
+            return True
+
+        return super().is_running()
+
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Check if the daemon is running and listening on expected ports."""
+        if not is_resolved_installed():
+            return [
+                DiagnosticCheck(
+                    'names-resolved-installed',
+                    gettext_noop('Package systemd-resolved is installed'),
+                    Result.WARNING, {}, self.component_id)
+            ]
+
+        return super().diagnose()
+
+
+def install_systemd_resolved(_data):
+    """Re-run setup on app to install systemd-resolved."""
+    if not is_resolved_installed():
+        setup.run_setup_on_app('names', rerun=True)
 
 
 def diagnose_resolution(domain: str) -> DiagnosticCheck:
@@ -209,3 +271,8 @@ def get_available_tls_domains():
     """Return an iterator with all domains able to have a certificate."""
     return (domain.name for domain in components.DomainName.list()
             if domain.domain_type.can_have_certificate)
+
+
+def is_resolved_installed():
+    """Return whether systemd-resolved is installed."""
+    return pathlib.Path('/usr/bin/resolvectl').exists()

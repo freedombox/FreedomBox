@@ -63,6 +63,6 @@ def _profile_download_compare(session_browser, openvpn_profile):
 def _download_profile(browser):
     """Return the content of the current user's OpenVPN profile."""
     browser.visit(base_url)
-    browser.click_link_by_href(shortcut_href)
+    browser.links.find_by_href(shortcut_href).click()
     profile_url = f'{base_url}/plinth/apps/openvpn/profile/'
     return functional.download_file(browser, profile_url)

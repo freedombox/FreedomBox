@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 import pytest
 
+import plinth.settings
 from plinth.modules.kiwix import privileged
 
 pytestmark = pytest.mark.usefixtures('mock_privileged')
@@ -36,23 +37,30 @@ def fixture_kiwix_home(tmp_path):
     shutil.copy(source_file, privileged.LIBRARY_FILE)
 
 
+@pytest.fixture(name='upload_dir')
+def fixture_upload_dir(tmp_path):
+    """Overwrite the Django upload path."""
+    old_value = plinth.settings.FILE_UPLOAD_TEMP_DIR
+    plinth.settings.FILE_UPLOAD_TEMP_DIR = tmp_path
+    yield tmp_path
+    plinth.settings.FILE_UPLOAD_TEMP_DIR = old_value
+
+
 @pytest.fixture(autouse=True)
 def fixture_patch():
     """Patch some underlying methods."""
     with patch('subprocess.check_call'), patch('subprocess.run'), patch(
-            'os.chown'):
+            'shutil.chown'):
         yield
 
 
-def test_add_package(tmp_path):
+def test_add_package(upload_dir):
     """Test adding a content package to Kiwix."""
-    some_dir = tmp_path / 'some' / 'dir'
-    some_dir.mkdir(parents=True, exist_ok=True)
     zim_file_name = 'wikipedia_en_all_maxi_2022-05.zim'
-    orig_file = some_dir / zim_file_name
+    orig_file = upload_dir / zim_file_name
     orig_file.touch()
 
-    privileged.add_package(str(orig_file))
+    privileged.add_package(zim_file_name, str(orig_file))
     assert (privileged.KIWIX_HOME / 'content' / zim_file_name).exists()
     assert not orig_file.exists()
 

@@ -55,7 +55,7 @@
 
   <h3>{% trans "Resolver Status" %}</h3>
 
-  {% if resolved_status %}
+  {% if resolved_installed and resolved_status %}
     <div class="table-responsive">
       <table class="table resolved-status-table">
         <tbody>
@@ -107,10 +107,30 @@
         </tbody>
       </table>
     </div>
+  {% elif not resolved_installed %}
+    <p>
+      {% blocktrans trimmed %}
+        systemd-resolved package is not installed. Install it for additional
+        functionality.
+      {% endblocktrans %}
+      <form class="form form-install-resolved" method="post"
+            action="{% url 'rerun-setup' app_id='names' %}">
+        {% csrf_token %}
+
+        <input type="submit" class="btn btn-primary" name="install_resolved"
+               value="{% trans 'Install' %}"/>
+      </form>
+    </p>
   {% else %}
     <div class="alert alert-danger">
       {% trans "Error retrieving status:" %} {{ resolved_status_error }}
     </div>
   {% endif %}
 
+{% endblock %}
+
+{% block configuration %}
+  {% if resolved_installed %}
+    {{ block.super }}
+  {% endif %}
 {% endblock %}

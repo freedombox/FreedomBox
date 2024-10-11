@@ -18,8 +18,23 @@ from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules import storage
 from plinth.modules.storage import privileged
 
+
+def _is_container():
+    """Return if we are running inside a container."""
+    try:
+        process = subprocess.run(['systemd-detect-virt', '--container'],
+                                 check=False)
+    except FileNotFoundError:
+        # systemd is not installed on the machine. Likely a container.
+        return True  # Skip just in case.
+
+    return process.returncode == 0
+
+
 pytestmark = pytest.mark.usefixtures('mock_privileged')
 privileged_modules_to_mock = ['plinth.modules.storage.privileged']
+skip_if_container = pytest.mark.skipif(_is_container(),
+                                       reason='running inside a container')
 
 
 class Disk():
@@ -163,6 +178,7 @@ def disk_space_available():
 @pytest.mark.usefixtures('needs_root')
 @pytest.mark.skipif(disk_space_available() < 1024,
                     reason='Needs 1024MiB of space')
+@skip_if_container
 def test_simple_case():
     """Test a simple with no complications"""
     disk_info = [
@@ -188,6 +204,7 @@ def test_simple_case():
 @pytest.mark.usefixtures('needs_root')
 @pytest.mark.skipif(disk_space_available() < 512,
                     reason='Needs 512MiB of space')
+@skip_if_container
 def test_extended_partition_free_space():
     """Test that free space does not show up when outside extended."""
     disk_info = [
@@ -202,6 +219,7 @@ def test_extended_partition_free_space():
 @pytest.mark.usefixtures('needs_root')
 @pytest.mark.skipif(disk_space_available() < 512,
                     reason='Needs 512MiB of space')
+@skip_if_container
 def test_gpt_partition_free_space():
     """Test that GPT partitions can be expanded."""
     # Specifically check for partition number > 4
@@ -225,6 +243,7 @@ def test_gpt_partition_free_space():
 @pytest.mark.usefixtures('needs_root')
 @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
 @pytest.mark.skipif(disk_space_available() < 32, reason='Needs 32MiB of space')
+@skip_if_container
 def test_unsupported_file_system(partition_table_type):
     """Test that free space after unknown file system does not count."""
     disk_info = [f'mktable {partition_table_type}', 'mkpart primary 1 8']
@@ -237,6 +256,7 @@ def test_unsupported_file_system(partition_table_type):
 @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
 @pytest.mark.skipif(disk_space_available() < 512,
                     reason='Needs 512MiB of space')
+@skip_if_container
 def test_btrfs_expansion(partition_table_type):
     """Test that btrfs file system can be expanded."""
     disk_info = [
@@ -252,6 +272,7 @@ def test_btrfs_expansion(partition_table_type):
 @pytest.mark.parametrize('partition_table_type', ['gpt', 'msdos'])
 @pytest.mark.skipif(disk_space_available() < 128,
                     reason='Needs 128MiB of space')
+@skip_if_container
 def test_ext4_expansion(partition_table_type):
     """Test that ext4 file system can be expanded."""
     disk_info = [f'mktable {partition_table_type}', 'mkpart primary ext4 1 64']

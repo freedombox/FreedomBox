@@ -96,6 +96,23 @@ DEBUG = False
 # seems to avoid a warning while running 'django-admin makemigrations'.
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
+# /tmp, the default value for this setting, is mounted as tmpfs which is in
+# RAM. It can only handle files of size proportionate to the amount of
+# available RAM. /var/tmp is on a physical disk. Most of the time, /var/tmp
+# will on the same file system as the final destination of the uploaded file,
+# which is the app's storage folder in /var/lib/. This eliminates an extra disk
+# copy operation. Left over files in /var/tmp/ will be cleaned up when service
+# stops due to PrivateTmp=yes in service's systemd unit.
+FILE_UPLOAD_TEMP_DIR = '/var/tmp'
+
+# Disable MemoryFileUploadHandler to handle files of all sizes in the same way.
+# Uploaded files need to be handled by privileged methods (in a separate
+# process) in order to move to the target service's directory and set required
+# ownership and permissions.
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
 # Overridden based on the configuration key server_dir
 FORCE_SCRIPT_NAME = '/plinth'
 

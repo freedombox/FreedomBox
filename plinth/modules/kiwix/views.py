@@ -4,7 +4,6 @@ Views for the Kiwix module.
 """
 
 import logging
-import tempfile
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -20,6 +19,7 @@ from plinth import views
 from plinth.errors import PlinthError
 from plinth.modules import storage
 from plinth.modules.kiwix import privileged
+from plinth.views import messages_error
 
 from . import forms
 
@@ -68,20 +68,17 @@ class AddPackageView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Store the uploaded file."""
-        multipart_file = self.request.FILES['kiwix-file']
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            zim_file_name = temp_dir + '/' + multipart_file.name
-            with open(zim_file_name, 'wb+') as zim_file:
-                for chunk in multipart_file.chunks():
-                    zim_file.write(chunk)
-
-            try:
-                privileged.add_package(zim_file_name)
-            except Exception:
-                messages.error(self.request,
-                               _('Failed to add content package.'))
-                return redirect(reverse_lazy('kiwix:index'))
+        try:
+            uploaded_file = self.request.FILES['kiwix-file']
+            privileged.add_package(uploaded_file.name,
+                                   uploaded_file.temporary_file_path())
+        except FileExistsError:
+            messages.error(self.request, _('Content package already exists.'))
+            return redirect(reverse_lazy('kiwix:index'))
+        except Exception as exception:
+            messages_error(self.request, _('Failed to add content package.'),
+                           exception)
+            return redirect(reverse_lazy('kiwix:index'))
 
         return super().form_valid(form)
 

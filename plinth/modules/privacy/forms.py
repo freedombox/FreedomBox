@@ -5,6 +5,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
+from plinth.modules import names
 from plinth.utils import format_lazy
 
 
@@ -30,3 +31,9 @@ class PrivacyForm(forms.Form):
             'unusual circumstances where no DNS servers are known but '
             'internet connectivity is available. Can be disabled in most '
             'cases if network connectivity is stable and reliable.'))
+
+    def __init__(self, *args, **kwargs):
+        """Disable DNS fallback field if necessary."""
+        super().__init__(*args, **kwargs)
+        self.fields['dns_fallback'].disabled = (
+            not names.is_resolved_installed())

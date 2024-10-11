@@ -7,6 +7,7 @@ from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg, network
+from plinth.modules import names
 from plinth.utils import format_lazy, import_from_gi
 
 nm = import_from_gi('NM', '1.0')
@@ -14,11 +15,14 @@ nm = import_from_gi('NM', '1.0')
 
 def _get_dns_over_tls():
     """Return the value of DNS over TLS."""
+    if not names.is_resolved_installed():
+        return str(_('unknown'))
+
     try:
         from plinth.modules.names import privileged
         dns_over_tls = privileged.get_resolved_configuration()['dns_over_tls']
     except Exception:
-        return _('unknown')
+        return str(_('unknown'))
 
     value_map = {
         'yes': _('yes'),
@@ -159,6 +163,13 @@ class ConnectionForm(forms.Form):
                     'Addressing Method is "Automatic", the DNS Servers '
                     'provided by a DHCP server will be ignored.'),
         validators=[validators.validate_ipv6_address], required=False)
+
+    def __init__(self, *args, **kwargs):
+        """Disable DNS fallback field if necessary."""
+        from plinth.modules import names
+        super().__init__(*args, **kwargs)
+        self.fields['dns_over_tls'].disabled = (
+            not names.is_resolved_installed())
 
     @staticmethod
     def _get_interface_choices(device_type):

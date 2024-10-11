@@ -201,12 +201,33 @@ def _set_database_privileges(db_password: str):
 
 def _nextcloud_wait_until_ready():
     """Wait for Nextcloud container to get ready."""
+
+    def _versions_match():
+        """Return if versions in shipped and runtime directories match.
+
+        Nextcloud container ships with source in /usr/source/nextcloud. This is
+        copied to /var/www/html/ when there is a mismatch between their
+        version.php. The last step in the coping process is the copy of
+        version.php file itself.
+        """
+        try:
+            source_version = '/usr/src/nextcloud/version.php'
+            runtime_version = '/var/www/html/version.php'
+            _run_in_container('diff', source_version, runtime_version)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
     # Nextcloud copies sources from /usr/src/nextcloud to /var/www/html inside
     # the container. Nextcloud is served from the latter location. This happens
-    # on first run of the container and when upgrade happen.
+    # on first run of the container and when upgrade happen. Checking for
+    # existence of version.php is easy and works for first install. For
+    # upgrades, we must wait until source is copied to the runtime directory.
+    # The last file to be copied the version.php. Only after this is checking
+    # for the lock file below meaningful.
     start_time = time.time()
     while time.time() < start_time + 300:
-        if (_data_path / 'version.php').exists():
+        if (_data_path / 'version.php').exists() and _versions_match():
             break
 
         time.sleep(1)

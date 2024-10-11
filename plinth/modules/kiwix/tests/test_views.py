@@ -3,11 +3,11 @@
 Test module for Kiwix views.
 """
 
-import pathlib
-from unittest.mock import call, patch
+from unittest.mock import call, patch, MagicMock
 
 import pytest
 from django import urls
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.http.response import Http404
 
@@ -18,8 +18,6 @@ from plinth.modules.kiwix import views
 pytestmark = pytest.mark.urls('plinth.urls')
 
 ZIM_ID = 'bc4f8cdf-5626-2b13-3860-0033deddfbea'
-
-_data_dir = pathlib.Path(__file__).parent / 'data'
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -43,7 +41,7 @@ def make_request(request, view, **kwargs):
 
 
 @pytest.fixture(autouse=True)
-def fiture_kiwix_patch():
+def fixture_kiwix_patch():
     """Patch kiwix methods."""
     with patch(
             'plinth.modules.kiwix.privileged.list_packages') as list_libraries:
@@ -57,34 +55,46 @@ def fiture_kiwix_patch():
         yield
 
 
-@patch('tempfile.TemporaryDirectory')
+@pytest.fixture()
+def file_path(tmp_path):
+    return str(tmp_path / 'FreedomBox.zim')
+
+
+def uploaded_file():
+    return SimpleUploadedFile('FreedomBox.zim', content=b'FreedomBox rocks!',
+                              content_type='application/octet-stream')
+
+
+@pytest.fixture()
+def add_package_request(rf, file_path):
+    """Patch add_package."""
+    post_data = {'kiwix-file': uploaded_file()}
+    request = rf.post('', data=post_data)
+    request.FILES['kiwix-file'].temporary_file_path = MagicMock(
+        return_value=file_path)
+    return request
+
+
 @patch('plinth.modules.kiwix.privileged.add_package')
-def test_add_package(add_package, temp_dir_class, rf, tmp_path):
+def test_add_package(add_package, file_path, add_package_request):
     """Test that adding content view works."""
-    temp_dir_class.return_value.__enter__.return_value = str(tmp_path)
-    with open(_data_dir / 'FreedomBox.zim', 'rb') as zim_file:
-        post_data = {'kiwix-file': zim_file}
-        request = rf.post('', data=post_data)
-        response, messages = make_request(request,
-                                          views.AddPackageView.as_view())
-        assert response.status_code == 302
-        assert response.url == urls.reverse('kiwix:index')
-        assert list(messages)[0].message == 'Content package added.'
-        add_package.assert_has_calls([call(f'{tmp_path}/FreedomBox.zim')])
+    response, messages = make_request(add_package_request,
+                                      views.AddPackageView.as_view())
+    assert response.status_code == 302
+    assert response.url == urls.reverse('kiwix:index')
+    assert list(messages)[0].message == 'Content package added.'
+    add_package.assert_has_calls([call('FreedomBox.zim', file_path)])
 
 
 @patch('plinth.modules.kiwix.privileged.add_package')
-def test_add_package_failed(add_package, rf):
+def test_add_package_failed(add_package, add_package_request):
     """Test that adding content package fails in case of an error."""
     add_package.side_effect = RuntimeError('TestError')
-    with open(_data_dir / 'FreedomBox.zim', 'rb') as zim_file:
-        post_data = {'kiwix-file': zim_file}
-        request = rf.post('', data=post_data)
-        response, messages = make_request(request,
-                                          views.AddPackageView.as_view())
-        assert response.status_code == 302
-        assert response.url == urls.reverse('kiwix:index')
-        assert list(messages)[0].message == 'Failed to add content package.'
+    response, messages = make_request(add_package_request,
+                                      views.AddPackageView.as_view())
+    assert response.status_code == 302
+    assert response.url == urls.reverse('kiwix:index')
+    assert list(messages)[0].message == 'Failed to add content package.'
 
 
 @patch('plinth.app.App.get')

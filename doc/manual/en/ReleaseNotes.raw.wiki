@@ -8,6 +8,40 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.21 (2024-10-07) ==
+
+=== Highlights ===
+
+ * django: Improve handling of file uploads
+ * nextcloud: Fix existing installs to upgrade properly
+
+=== Other Changes ===
+
+ * action_utils: Fix missing parent folder when creating apt hold flag
+ * action_utils: Introduce utility to move uploaded files
+ * actions: Handle exceptions with Path-like objects
+ * featherwiki: Use new utility for handling uploads
+ * functional tests: Upgrade dependencies selenium and splinter
+ * kiwix: Don't leave invalid .zim in library after a failed attempt
+ * kiwix: Use new utility for handling uploads
+ * locale: Albanian: Fix build issue by correcting typo
+ * locale: Update translations for Albanian, Czech
+ * names: Don't control resolved daemon when package is not installed
+ * names: Don't hard depend on systemd-resolved
+ * names: Don't show resolver status if package is not installed
+ * names: Introduce method to check if resolved is installed
+ * names: Perform resolve diagnostics only if resolved is installed
+ * names: Schedule a task to install systemd-resolved when possible
+ * names: Try to install systemd-resolved during app setup
+ * networks: Disable DNS-over-TLS option if resolved is not installed
+ * networks: Don't show DNS-over-TLS when resolved is not installed
+ * nextcloud: During upgrade wait properly for upgrade to complete
+ * privacy: Disable DNS fallback option if resolved is not installed
+ * samba: Remove option to backup app
+ * storage: Skip tests that involve loopback device in a container
+ * tiddlywiki: Avoid writing duplicate temporary files
+ * transmission: tests: Fix functional test failures in Debian testing
+
 == FreedomBox 24.20.1 (2024-09-25) ==
 
 === Highlights ===

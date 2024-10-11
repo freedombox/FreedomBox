@@ -3,7 +3,6 @@
 Privileged actions for Kiwix content server.
 """
 
-import os
 import pathlib
 import shutil
 import subprocess
@@ -20,7 +19,7 @@ CONTENT_DIR = KIWIX_HOME / 'content'
 
 
 @privileged
-def add_package(file_name: str):
+def add_package(file_name: str, temporary_file_path: str):
     """Adds a content package to Kiwix.
 
     Adding packages is idempotent.
@@ -34,17 +33,23 @@ def add_package(file_name: str):
     aria2c is used for both HTTP and Magnet downloads.
     """
     kiwix.validate_file_name(file_name)
+    # file_name is verified further by move_uploaded_file()
 
     # Moving files to the Kiwix library path ensures that
     # they can't be removed by other apps or users.
-    zim_file_name = pathlib.Path(file_name).name
     CONTENT_DIR.mkdir(exist_ok=True)
-    zim_file_dest = str(CONTENT_DIR / zim_file_name)
-    shutil.chown(file_name, 'root', 'root')
-    os.chmod(file_name, 0o644)
-    shutil.move(file_name, zim_file_dest)
+    action_utils.move_uploaded_file(temporary_file_path, CONTENT_DIR,
+                                    file_name, allow_overwrite=False,
+                                    user='root', group='root',
+                                    permissions=0o644)
 
-    _kiwix_manage_add(zim_file_dest)
+    content_file = CONTENT_DIR / file_name
+    try:
+        _kiwix_manage_add(str(CONTENT_DIR / file_name))
+    except subprocess.CalledProcessError:
+        # Remove the uploaded file if we could not added it to library
+        content_file.unlink()
+        raise
 
 
 def _kiwix_manage_add(zim_file: str):

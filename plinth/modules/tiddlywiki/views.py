@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Django views for TiddlyWiki."""
 
-import tempfile
-
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
@@ -14,6 +12,7 @@ from django.views.generic import FormView
 from plinth import app as app_module
 from plinth import views
 from plinth.modules import tiddlywiki
+from plinth.views import messages_error
 
 from . import privileged
 from .forms import CreateWikiForm, RenameWikiForm, UploadWikiForm
@@ -56,9 +55,9 @@ class CreateWikiView(SuccessMessageMixin, FormView):
         except ValueError:
             messages.error(self.request, DUPLICATE_FILE_ERROR)
         except Exception as error:
-            messages.error(
-                self.request, "{0} {1}".format(
-                    _('An error occurred while creating the wiki.'), error))
+            messages_error(self.request,
+                           _('An error occurred while creating the wiki.'),
+                           error)
 
         return super().form_valid(form)
 
@@ -86,9 +85,9 @@ class RenameWikiView(SuccessMessageMixin, FormView):
         except ValueError:
             messages.error(self.request, DUPLICATE_FILE_ERROR)
         except Exception as error:
-            messages.error(
-                self.request, "{0} {1}".format(
-                    _('An error occurred while renaming the wiki.'), error))
+            messages_error(self.request,
+                           _('An error occurred while renaming the wiki.'),
+                           error)
 
         return super().form_valid(form)
 
@@ -109,24 +108,16 @@ class UploadWikiView(SuccessMessageMixin, FormView):
 
     def form_valid(self, form):
         """Add the wiki file on valid form submission."""
-        multipart_file = self.request.FILES['tiddlywiki-file']
 
         try:
-            with tempfile.TemporaryDirectory() as temp_dir:
-                wiki_file_name = temp_dir + '/' + multipart_file.name
-                with open(wiki_file_name, 'wb+') as wiki_file:
-                    for chunk in multipart_file.chunks():
-                        wiki_file.write(chunk)
-
-                privileged.add_wiki_file(wiki_file_name)
-
+            uploaded_file = self.request.FILES['tiddlywiki-file']
+            privileged.add_wiki_file(uploaded_file.name,
+                                     uploaded_file.temporary_file_path())
             self.success_message = _('Wiki file added.')
-        except ValueError:
+        except FileExistsError:
             messages.error(self.request, DUPLICATE_FILE_ERROR)
         except Exception as error:
-            messages.error(
-                self.request, "{0} {1}".format(_('Failed to add wiki file.'),
-                                               error))
+            messages_error(self.request, _('Failed to add wiki file.'), error)
             return redirect(reverse_lazy('tiddlywiki:index'))
 
         return super().form_valid(form)
@@ -144,10 +135,9 @@ def delete(request, name):
             privileged.delete_wiki(name)
             messages.success(request, _('{name} deleted.').format(name=name))
         except Exception as error:
-            messages.error(
-                request,
-                _('Could not delete {name}: {error}').format(
-                    name=name, error=error))
+            messages_error(request,
+                           _('Could not delete {name}').format(name=name),
+                           error)
 
         return redirect(reverse_lazy('tiddlywiki:index'))
 

@@ -475,6 +475,7 @@ def apt_hold_freedombox():
             yield current_hold
         else:
             # Set the flag.
+            apt_hold_flag.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
             apt_hold_flag.touch(mode=0o660)
             yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
     finally:
@@ -688,3 +689,63 @@ def podman_uninstall(container_name: str, volume_name: str, image_name: str,
     service_file.unlink(missing_ok=True)
     shutil.rmtree(volume_path, ignore_errors=True)
     service_daemon_reload()
+
+
+def move_uploaded_file(source: str | pathlib.Path,
+                       destination_dir: str | pathlib.Path,
+                       destination_file_name: str,
+                       allow_overwrite: bool = False, user: str = 'root',
+                       group: str = 'root', permissions: int = 0o644):
+    """Move an uploaded file from Django upload directory to a destination.
+
+    Sets the expected ownership and permissions on the destination file. If
+    possible, performs a simple rename operation. Otherwise, copies the file to
+    the destination.
+
+    The source must be regular file under the currently configured Django file
+    upload directory. It must be a absolute path that can be verified to be
+    under Django settings FILE_UPLOAD_TEMP_DIR.
+
+    The destination_dir must be a directory. destination_file_name must be a
+    simple file name without any other path components. When concatenated
+    together, they specify the full destination path to move the file to.
+
+    If allow_overwrite is set to False and destination file exists, an
+    exception is raised.
+    """
+    from plinth import settings
+
+    if isinstance(source, str):
+        source = pathlib.Path(source)
+
+    if isinstance(destination_dir, str):
+        destination_dir = pathlib.Path(destination_dir)
+
+    source = source.resolve(strict=True)
+    destination_dir = destination_dir.resolve()
+
+    # Verify source file
+    if not source.is_file():
+        raise ValueError('Source is not a file')
+
+    tmp_dir = pathlib.Path(getattr(settings, 'FILE_UPLOAD_TEMP_DIR', '/tmp'))
+    if not source.is_relative_to(tmp_dir):
+        raise ValueError('Uploaded file is not in expected temp directory')
+
+    # Verify destination directory
+    if not destination_dir.is_dir():
+        raise ValueError('Destination is not a directory')
+
+    # Verify destination file name
+    if len(pathlib.Path(destination_file_name).parts) != 1:
+        raise ValueError('Invalid destination file name')
+
+    destination = destination_dir / destination_file_name
+
+    if destination.exists() and not allow_overwrite:
+        raise FileExistsError('Destination already exists')
+
+    # Move or copy
+    shutil.move(source, destination)
+    shutil.chown(destination, user, group)
+    destination.chmod(permissions)
