@@ -1,0 +1,21 @@
+concurrent = 1
+check_interval = 0
+
+[[runners]]
+  name = "freedombox-functional"
+  url = "https://salsa.debian.org"
+  token = "<insert-server-provided-token-here>"
+  executor = "custom"
+  builds_dir = "/freedombox"
+  cache_dir = "/cache"
+  [runners.custom]
+    prepare_exec = "/var/lib/fbx-functional/bin/prepare.sh"
+    prepare_exec_timeout = 1200
+
+    run_exec = "/var/lib/fbx-functional/bin/run.sh"
+
+    cleanup_exec = "/var/lib/fbx-functional/bin/cleanup.sh"
+    cleanup_exec_timeout = 1200
+
+    graceful_kill_timeout = 200
+    force_kill_timeout = 200
