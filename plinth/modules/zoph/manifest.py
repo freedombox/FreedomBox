@@ -23,4 +23,4 @@ backup = {
     }
 }
 
-tags = [_('Image Viewer'), _('Photo'), _('Library')]
+tags = [_('Photo'), _('Organizer'), _('Web sharing')]

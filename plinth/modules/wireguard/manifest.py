@@ -42,4 +42,4 @@ clients = [{
     }]
 }]
 
-tags = [_('VPN'), _('Anonymity'), _('Remote Access'), _('P2P')]
+tags = [_('VPN client'), _('VPN server'), _('Privacy'), _('Remote access')]

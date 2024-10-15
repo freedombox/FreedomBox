@@ -113,4 +113,4 @@ backup = {
     'services': ['minidlna']
 }
 
-tags = [_('Media Server'), _('Television'), _('UPnP'), _('DLNA')]
+tags = [_('Media server'), _('Television'), _('UPnP'), _('DLNA')]

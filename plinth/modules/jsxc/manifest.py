@@ -13,4 +13,4 @@ clients = [{
 
 backup: dict = {}
 
-tags = [_('XMPP'), _('Client')]
+tags = [_('Web chat'), _('XMPP'), _('Client')]

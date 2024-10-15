@@ -121,10 +121,8 @@ backup = {
 }
 
 tags = [
+    _('Encrypted messaging'),
+    _('Audio chat'),
+    _('Video chat'),
     _('XMPP'),
-    _('VoIP'),
-    _('IM'),
-    _('Encrypted Messaging'),
-    _('Audio Chat'),
-    _('Video Chat')
 ]

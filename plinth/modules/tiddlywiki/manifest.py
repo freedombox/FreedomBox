@@ -17,11 +17,11 @@ backup = {'data': {'directories': [str(wiki_dir)]}}
 
 tags = [
     _('Wiki'),
-    _('Note Taking'),
+    _('Note taking'),
     _('Website'),
     _('Journal'),
-    _('Digital Garden'),
+    _('Digital garden'),
     _('Zettelkasten'),
     _('Quine'),
-    _('non-Debian')
+    _('Non-Debian')
 ]

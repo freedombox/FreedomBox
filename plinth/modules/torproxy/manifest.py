@@ -52,9 +52,8 @@ backup = {
 }
 
 tags = [
-    _('Proxy'),
-    _('SOCKS5'),
-    _('Anonymity Network'),
-    _('Censorship Resistance'),
+    _('Proxy server'),
+    _('Anonymity network'),
+    _('Censorship resistance'),
     _('Tor')
 ]

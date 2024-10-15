@@ -23,4 +23,4 @@ backup = {
     },
 }
 
-tags = [_('Website'), _('Blog')]
+tags = [_('Website'), _('Blog'), _('Content management system')]

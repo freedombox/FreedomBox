@@ -54,8 +54,9 @@ backup = {
 }
 
 tags = [
+    _('Onion services'),
     _('Relay'),
-    _('Anonymity Network'),
-    _('Censorship Resistance'),
-    _('Tor')
+    _('Anonymity network'),
+    _('Censorship resistance'),
+    _('Tor'),
 ]

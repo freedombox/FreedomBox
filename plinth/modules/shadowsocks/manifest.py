@@ -15,9 +15,9 @@ backup = {
 }
 
 tags = [
-    _('Proxy'),
-    _('Client'),
-    _('SOCKS5'),
-    _('Censorship Resistance'),
-    _('Shadowsocks')
+    _('Proxy server'),
+    _('Censorship resistance'),
+    _('Encrypted tunnel'),
+    _('Entry point'),
+    _('Shadowsocks'),
 ]

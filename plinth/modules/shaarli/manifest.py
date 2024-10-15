@@ -31,4 +31,4 @@ clients = [{
 
 backup = {'data': {'directories': ['/var/lib/shaarli/data']}}
 
-tags = [_('Bookmarks'), _('Link Blog'), _('Single User')]
+tags = [_('Bookmarks'), _('Link blog'), _('Single user')]

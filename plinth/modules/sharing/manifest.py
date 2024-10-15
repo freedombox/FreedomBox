@@ -16,4 +16,4 @@ backup = {
     }]
 }
 
-tags = [_('File Sharing')]
+tags = [_('File sharing'), _('Web sharing')]

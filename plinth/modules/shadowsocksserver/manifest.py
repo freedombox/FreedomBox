@@ -14,4 +14,9 @@ backup = {
     'services': ['shadowsocks-libev-server@fbxserver']
 }
 
-tags = [_('Proxy'), _('SOCKS5'), _('Censorship Resistance'), _('Shadowsocks')]
+tags = [
+    _('Censorship resistance'),
+    _('Encrypted tunnel'),
+    _('Exit point'),
+    _('Shadowsocks')
+]

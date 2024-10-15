@@ -4,8 +4,8 @@ Functional, browser based tests for transmission app.
 """
 
 import pytest
-
 from selenium.webdriver.common.keys import Keys
+
 from plinth.tests import functional
 
 pytestmark = [pytest.mark.tags]
@@ -39,11 +39,11 @@ def test_search_for_tag(session_browser):
     search_input = session_browser.driver.find_element_by_id('add-tag-input')
     with functional.wait_for_page_update(
             session_browser, timeout=10,
-            expected_url='/plinth/apps/?tag=BitTorrent&tag=File%20Sharing'):
+            expected_url='/plinth/apps/?tag=BitTorrent&tag=File%20sharing'):
         search_input.click()
         search_input.send_keys('file')
         search_input.send_keys(Keys.ENTER)
-    for app in ['deluge', 'nextcloud', 'sharing', 'syncthing', 'transmission']:
+    for app in ['deluge', 'samba', 'sharing', 'syncthing', 'transmission']:
         _is_app_listed(session_browser, app)
 
 
@@ -52,9 +52,9 @@ def test_click_on_tag(session_browser):
     search_input = session_browser.driver.find_element_by_id('add-tag-input')
     with functional.wait_for_page_update(
             session_browser, timeout=10,
-            expected_url='/plinth/apps/?tag=BitTorrent&tag=Cloud%20Storage'):
+            expected_url='/plinth/apps/?tag=BitTorrent&tag=File%20sync'):
         search_input.click()
         session_browser.find_by_css(
-            ".dropdown-item[data-value='Cloud Storage']").click()
+            ".dropdown-item[data-value='File sync']").click()
     for app in ['deluge', 'nextcloud', 'syncthing', 'transmission']:
         _is_app_listed(session_browser, app)

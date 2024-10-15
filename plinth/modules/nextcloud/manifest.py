@@ -53,4 +53,4 @@ backup = {
     }
 }
 
-tags = [_('Cloud Storage'), _('File Sharing'), _('non-Debian')]
+tags = [_('File sync'), _('Sharing'), _('Groupware'), _('Non-Debian')]

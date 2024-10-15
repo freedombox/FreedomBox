@@ -64,4 +64,4 @@ backup = {
     'services': ['mumble-server']
 }
 
-tags = [_('Audio Chat'), _('VoIP')]
+tags = [_('Audio chat'), _('Group conference'), _('Server')]

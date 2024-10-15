@@ -46,4 +46,4 @@ backup = {
     'services': ['minetest-server']
 }
 
-tags = [_('Game'), _('Block Sandbox')]
+tags = [_('Game server'), _('Block sandbox'), _('Platform')]

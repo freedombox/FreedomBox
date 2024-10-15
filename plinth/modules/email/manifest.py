@@ -79,4 +79,4 @@ backup = {
     'services': ['postfix', 'dovecot', 'rspamd']
 }
 
-tags = [_('Email')]
+tags = [_('Email server'), _('IMAP'), _('Spam control')]

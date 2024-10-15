@@ -34,4 +34,4 @@ clients = [
 
 backup = {'data': {'directories': [GIT_REPO_PATH]}}
 
-tags = [_('Git'), _('Version Control'), _('Dev Tool')]
+tags = [_('Git hosting'), _('Version control'), _('Developer tool')]

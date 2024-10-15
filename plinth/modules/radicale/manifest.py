@@ -88,10 +88,4 @@ backup = {
     'services': ['uwsgi']
 }
 
-tags = [
-    _('Calendar'),
-    _('Contacts'),
-    _('Synchronization'),
-    _('CalDAV'),
-    _('CardDAV')
-]
+tags = [_('Calendar'), _('Contacts'), _('Server'), _('CalDAV'), _('CardDAV')]

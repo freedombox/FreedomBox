@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+"""Application manifest for roundcube."""
 
 from django.utils.translation import gettext_lazy as _
 
@@ -19,4 +20,4 @@ backup = {
     }
 }
 
-tags = [_('Email'), _('Contacts'), _('Client')]
+tags = [_('Email'), _('Contacts'), _('Web client')]

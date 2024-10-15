@@ -55,4 +55,4 @@ backup = {
     'services': ['syncthing@syncthing']
 }
 
-tags = [_('Synchronization'), _('File Sharing'), _('Cloud Storage')]
+tags = [_('File sync'), _('File sharing'), _('P2P')]

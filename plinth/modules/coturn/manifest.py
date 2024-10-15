@@ -4,4 +4,4 @@ from django.utils.translation import gettext_lazy as _
 
 backup = {'secrets': {'directories': ['/etc/coturn']}, 'services': ['coturn']}
 
-tags = [_('VoIP'), _('STUN'), _('TURN')]
+tags = [_('Video conference'), _('STUN'), _('TURN')]

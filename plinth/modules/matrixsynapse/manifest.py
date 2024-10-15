@@ -98,11 +98,9 @@ backup = {
 }
 
 tags = [
-    _('Chat Room'),
-    _('Encrypted Messaging'),
-    _('IM'),
-    _('Audio Chat'),
-    _('Video Chat'),
-    _('Matrix'),
-    _('VoIP')
+    _('Chat room'),
+    _('Encrypted messaging'),
+    _('Audio chat'),
+    _('Video chat'),
+    _('Matrix server'),
 ]

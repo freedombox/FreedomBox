@@ -7,4 +7,4 @@ from django.utils.translation import gettext_lazy as _
 
 backup: dict = {}
 
-tags = [_('Ad Blocker'), _('Proxy'), _('Local Network')]
+tags = [_('Ad blocker'), _('Proxy server'), _('Local network')]
