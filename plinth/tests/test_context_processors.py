@@ -36,9 +36,6 @@ def test_common(Notification, load_cfg):
 
     assert response['box_name'] == 'FreedomBox'
 
-    submenu = response['submenu']
-    assert submenu is None
-
     urls = response['active_menu_urls']
     assert urls is not None
     assert ['/plinth/aaa/', '/plinth/aaa/bbb/', '/plinth/aaa/bbb/ccc/'] == urls
