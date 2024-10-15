@@ -27,7 +27,9 @@ def common(request):
         request, user=request.user)
 
     slash_indices = [match.start() for match in re.finditer('/', request.path)]
-    active_menu_urls = [request.path[:index + 1] for index in slash_indices]
+    active_menu_urls = [
+        request.path[:index + 1] for index in slash_indices[2:]
+    ]  # Ignore the first two slashes '/plinth/apps/'
     return {
         'cfg': cfg,
         'submenu': menu.main_menu.active_item(request),
