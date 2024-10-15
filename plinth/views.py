@@ -181,8 +181,11 @@ class AppsIndexView(TemplateView):
 
 def system_index(request):
     """Serve the system index page."""
-    return TemplateResponse(request, 'system.html',
-                            {'advanced_mode': get_advanced_mode()})
+    menu_items = menu.main_menu.active_item(request).sorted_items()
+    return TemplateResponse(request, 'system.html', {
+        'advanced_mode': get_advanced_mode(),
+        'menu_items': menu_items
+    })
 
 
 class LanguageSelectionView(FormView):
