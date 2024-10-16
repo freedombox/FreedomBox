@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Remove Tag handler.
     document.querySelectorAll('.remove-tag').forEach(button => {
         button.addEventListener('click', () => {
-            let tag = button.dataset.tag;
+            let tag = button.parentElement.dataset.tag;
             let tags = getTags(tag);
             updatePath(tags);
         });
