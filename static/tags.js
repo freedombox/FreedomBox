@@ -24,23 +24,21 @@
  */
 
 /**
- * Update the URL path and history based on the selected tags.
+ * Update the URL path based on the selected tags.
  *
  * If no tags are selected, redirects to the base apps path. Otherwise,
- * constructs a new URL with query parameters for each tag and updates
- * the browser history.
+ * constructs a new URL with query parameters for each tag.
  *
  * @param {string[]} tags - An array of selected tag names.
  */
-function updatePath(tags) {
+function updatePathWithTags(tags) {
     const appsPath = window.location.pathname;
     if (tags.length === 0) {
         this.location.assign(appsPath);
     } else {
-        let queryParams = tags.map(tag => `tag=${tag}`).join('&');
-        let newPath = `${appsPath}?${queryParams}`;
-        this.history.pushState({ tags: tags }, '', newPath);
-        this.location.assign(newPath);
+        const urlParams = new URLSearchParams();
+        tags.forEach(tag => urlParams.append('tag', tag));
+        this.location.search = urlParams;
     }
 }
 
@@ -56,8 +54,8 @@ function updatePath(tags) {
 function getTags(tagToRemove) {
     const tagBadges = document.querySelectorAll('#selected-tags .tag-badge');
     return Array.from(tagBadges)
-        .map(tag => tag.dataset.tag)
-        .filter(tagName => tagName !== tagToRemove);
+        .map(tagBadge => tagBadge.dataset.tag)
+        .filter(tag => tag !== tagToRemove);
 }
 
 /**
@@ -67,9 +65,10 @@ function getTags(tagToRemove) {
  * to match the user's input in the search box. It determines the best
  * matching item and marks it as active.
  *
- * @param {KeyboardEvent} event - The keyboard event that triggered the search.
+ * @param {ElementList} [dropdownItems] - List of items in the tags dropdown.
  */
-function findMatchingTag(addTagInput, dropdownItems) {
+function findMatchingTag(dropdownItems) {
+    const addTagInput = document.getElementById('add-tag-input');
     const searchTerm = addTagInput.value.toLowerCase().trim();
 
     // Remove highlighting from all items
@@ -81,7 +80,8 @@ function findMatchingTag(addTagInput, dropdownItems) {
         if (text.includes(searchTerm)) {
             item.style.display = 'block';
             function matchesEarly () {
-                return text.indexOf(searchTerm) < bestMatch.textContent.toLowerCase().indexOf(searchTerm);
+                let bestMatchText = bestMatch.textContent.toLowerCase();
+                return text.indexOf(searchTerm) < bestMatchText.indexOf(searchTerm);
             };
             if (bestMatch === null || matchesEarly()) {
                 bestMatch = item;
@@ -98,6 +98,70 @@ function findMatchingTag(addTagInput, dropdownItems) {
 }
 
 /**
+ * Handle a key press event on that tag input field.
+ *
+ * As the user types in the input field, the dropdown list is filtered
+ * to show only matching items. The best matching item (first match if
+ * multiple match) is highlighted. Pressing Enter selects the
+ * highlighted item and adds it as a tag.
+ *
+ * @param {KeyboardEvent} [event] - The key press event.
+ */
+function onTagInputKeyUp(event) {
+    const dropdownItems = document.querySelectorAll('.tag-input li.dropdown-item');
+
+    // Select the active tag if the user pressed Enter
+    if (event.key === 'Enter') {
+        dropdownItems.forEach(item => {
+            if (item.classList.contains('active')) {
+                item.click();
+            }
+        });
+    }
+    findMatchingTag(dropdownItems);
+}
+
+/**
+ * When an item in the tags dropdown is clicked, navigate to a new URL with the
+ * added Tag.
+ *
+ * @param {PointerEvent} [event] - The click event.
+ */
+function onTagInputDropdownItemClicked(event) {
+    const item = event.currentTarget;
+    const selectedTag = item.dataset.value;
+
+    // Add the selected tag and update the path.
+    let tags = getTags('');
+    tags.push(selectedTag);
+    updatePathWithTags(tags);
+
+    // Reset the input field
+    const addTagInput = document.getElementById('add-tag-input');
+    addTagInput.value = '';
+
+    // Reset the dropdown
+    const dropdownItems = document.querySelectorAll('.tag-input li.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.style.display = 'none';
+        item.classList.remove('active');
+    });
+}
+
+/**
+ * when an remove button next to a tag is clicked, navigate to a new URL without
+ * that Tag.
+ *
+ * @param {PointerEvent} [event] - The click event.
+ */
+function onRemoveTagClicked(event) {
+    const button = event.currentTarget;
+    const tag = button.parentElement.dataset.tag;
+    const tags = getTags(tag);
+    updatePathWithTags(tags);
+}
+
+/**
  * Manage tag-related UI interactions for filtering and displaying apps.
  *
  * This script manages the user interface for filtering apps based on
@@ -106,65 +170,16 @@ function findMatchingTag(addTagInput, dropdownItems) {
  * available tags in a searchable dropdown.
  */
 document.addEventListener('DOMContentLoaded', function () {
-
-    // Remove Tag handler.
     document.querySelectorAll('.remove-tag').forEach(button => {
-        button.addEventListener('click', () => {
-            let tag = button.parentElement.dataset.tag;
-            let tags = getTags(tag);
-            updatePath(tags);
-        });
+        button.addEventListener('click', onRemoveTagClicked);
     });
 
-    /**
-     * Searchable dropdown for selecting tags.
-     *
-     * As the user types in the input field, the dropdown list is filtered
-     * to show only matching items. The best matching item (first match if
-     * multiple match) is highlighted. Pressing Enter selects the
-     * highlighted item and adds it as a tag.
-     */
     const addTagInput = document.getElementById('add-tag-input');
-    const dropdownItems = document.querySelectorAll('li.dropdown-item');
+    addTagInput.addEventListener('keyup', onTagInputKeyUp);
 
-    var timeoutId;
-    addTagInput.addEventListener('keyup', (event) => {
-        clearTimeout(timeoutId);
-        // Select the active tag if the user pressed Enter
-        if (event.key === 'Enter') {
-            dropdownItems.forEach(item => {
-                if (item.classList.contains('active')) {
-                    item.click();
-                }
-            });
-        }
-        // Debounce the user input for search with 300ms delay.
-        timeoutId = setTimeout(findMatchingTag(addTagInput, dropdownItems), 300);
-    });
-
+    const dropdownItems = document.querySelectorAll('.tag-input li.dropdown-item');
     dropdownItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const selectedTag = item.dataset.value;
-
-            // Add the selected tag and update the path.
-            let tags = getTags('');
-            tags.push(selectedTag);
-            updatePath(tags);
-
-            // Reset the input field and dropdown.
-            addTagInput.value = '';
-            dropdownItems.forEach(item => {
-                item.style.display = '';
-                item.classList.remove('active');
-            });
-        });
-    });
-
-    // Handle browser back/forward navigation.
-    window.addEventListener('popstate', function (event) {
-        if (event.state && event.state.tags) {
-            updatePath(event.state.tags);
-        }
+        item.addEventListener('click', onTagInputDropdownItemClicked);
     });
 });
 
