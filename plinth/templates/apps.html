@@ -31,7 +31,10 @@
             <ul class="dropdown-items list-unstyled">
               {% for tag in all_tags %}
                 {% if tag not in tags %}
-                  <li class="dropdown-item" data-value="{{ tag }}">{% trans tag %}</li>
+                  <li class="dropdown-item" data-tag="{{ tag }}"
+                      data-tag_l10n="{% trans tag %}">
+                    {% trans tag %}
+                  </li>
                 {% endif %}
               {% endfor %}
             </ul>

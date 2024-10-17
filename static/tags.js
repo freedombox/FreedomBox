@@ -76,11 +76,11 @@ function findMatchingTag(dropdownItems) {
 
     let bestMatch = null;
     dropdownItems.forEach(item => {
-        const text = item.textContent.toLowerCase();
+        const text = item.dataset.tag_l10n.toLowerCase();
         if (text.includes(searchTerm)) {
             item.style.display = 'block';
             function matchesEarly () {
-                let bestMatchText = bestMatch.textContent.toLowerCase();
+                let bestMatchText = bestMatch.dataset.tag_l10n.toLowerCase();
                 return text.indexOf(searchTerm) < bestMatchText.indexOf(searchTerm);
             };
             if (bestMatch === null || matchesEarly()) {
@@ -129,7 +129,7 @@ function onTagInputKeyUp(event) {
  */
 function onTagInputDropdownItemClicked(event) {
     const item = event.currentTarget;
-    const selectedTag = item.dataset.value;
+    const selectedTag = item.dataset.tag;
 
     // Add the selected tag and update the path.
     let tags = getTags('');

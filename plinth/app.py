@@ -521,16 +521,29 @@ class Info(FollowerComponent):
         self.manual_page = manual_page
         self.clients = clients
         self.donation_url = donation_url
-        self.tags = tags or []
+        self._tags = tags or []
         if clients:
             clients_module.validate(clients)
 
+    @property
+    def tags(self) -> list[str]:
+        """Return a list of untranslated tags on the app.
+
+        These can only be retrieved after Django has been configured.
+        """
+        # Store untranslated original strings instead of proxy objects
+        from django.utils.translation import override
+        with override(language=None):
+            return [str(tag) for tag in self._tags]
+
     @classmethod
-    def list_tags(self) -> list:
+    def list_tags(self) -> list[str]:
         """Return a list of untranslated tags."""
-        tags = set()
-        for app in App.list():
-            tags.update(app.info.tags)
+        tags: set[str] = set()
+        from django.utils.translation import override
+        with override(language=None):
+            for app in App.list():
+                tags.update((str(tag) for tag in app.info.tags))
 
         return list(tags)
 

@@ -173,7 +173,9 @@ class AppsIndexView(TemplateView):
         menu_items = menu.main_menu.active_item(self.request).items
 
         context['tags'] = tags
-        context['all_tags'] = app_module.Info.list_tags()
+        # Sorted tags by localized string
+        context['all_tags'] = sorted(app_module.Info.list_tags(),
+                                     key=lambda tag: _(tag))
         context['menu_items'] = self._pick_menu_items(menu_items, tags)
 
         return context
