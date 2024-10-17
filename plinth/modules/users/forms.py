@@ -19,6 +19,7 @@ import plinth.forms
 import plinth.modules.ssh.privileged as ssh_privileged
 from plinth.modules import first_boot
 from plinth.utils import is_user_admin
+from plinth.views import messages_error
 
 from . import get_last_admin_user, privileged
 from .components import UsersAndGroups
@@ -247,11 +248,18 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
     language = plinth.forms.LanguageSelectionFormMixin.language
 
+    delete = forms.BooleanField(
+        label=gettext_lazy('Delete user'), required=False,
+        help_text=gettext_lazy(
+            'Deleting the user account will also remove all the files '
+            'related to the user. Deleting files can be avoided by '
+            'setting the user account as inactive.'))
+
     class Meta:
         """Metadata to control automatic form building."""
 
         fields = ('username', 'email', 'groups', 'ssh_keys', 'language',
-                  'is_active', 'confirm_password')
+                  'is_active', 'delete', 'confirm_password')
         model = User
         widgets = {
             'groups': plinth.forms.CheckboxSelectMultipleWithReadOnly(),
@@ -274,6 +282,7 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
 
         if self.is_last_admin_user:
             self.fields['is_active'].disabled = True
+            self.fields['delete'].disabled = True
 
     def save(self, commit=True):
         """Update LDAP user name and groups after saving user model."""
@@ -286,6 +295,19 @@ class UserUpdateForm(ValidNewUsernameCheckMixin, PasswordConfirmForm,
         if commit:
             user.save()
             self.save_m2m()
+
+            if self.cleaned_data.get('delete'):
+                try:
+                    # Remove system user
+                    privileged.remove_user(user.get_username(), auth_username,
+                                           confirm_password)
+                except Exception as error:
+                    messages_error(self.request, _('Failed to delete user.'),
+                                   error)
+                else:
+                    # Remove Django user
+                    user.delete()
+                return user
 
             old_groups = privileged.get_user_groups(self.username)
             old_groups = [group for group in old_groups if group]

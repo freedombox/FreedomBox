@@ -3,6 +3,7 @@
 
 import logging
 import os
+import pathlib
 import re
 import shutil
 import subprocess
@@ -43,6 +44,12 @@ def _validate_password(username, password):
     """Raise an error if the user password is invalid."""
     if not utils.is_authenticated_user(username, password):
         raise PermissionError('Invalid credentials')
+
+
+def _validate_username(username):
+    """Validate username."""
+    if pathlib.Path(username).parts[-1] != username:
+        raise ValueError('Invalid username')
 
 
 @privileged
@@ -277,8 +284,7 @@ def _configure_ldapscripts():
 
 def _lock_ldap_user(username: str):
     """Lock user."""
-    if not _get_user_ids(username):
-        # User not found
+    if not _user_exists(username):
         return None
 
     # Replace command adds the attribute if it doesn't exist.
@@ -286,13 +292,12 @@ def _lock_ldap_user(username: str):
 replace: pwdAccountLockedTime
 pwdAccountLockedTime: 000001010000Z
 '''
-    _run(["ldapmodifyuser", username], input=input.encode())
+    _run(['ldapmodifyuser', username], input=input.encode())
 
 
 def _unlock_ldap_user(username: str):
     """Unlock user."""
-    if not _get_user_ids(username):
-        # User not found
+    if not _user_exists(username):
         return None
 
     # Replace command without providing a value will remove the attribute
@@ -344,41 +349,83 @@ def _disconnect_samba_user(username):
             raise
 
 
+def _get_user_home(username):
+    """Return the user home directory."""
+    output = subprocess.check_output(['getent', 'passwd', username], text=True)
+    return pathlib.Path(output.split(':')[5])
+
+
 @privileged
 def create_user(username: str, password: secret_str,
                 auth_user: str | None = None,
                 auth_password: secret_str | None = None):
     """Create an LDAP user, set password and flush cache."""
+    _validate_username(username)
     _validate_user(auth_user, auth_password)
 
     _run(['ldapadduser', username, 'users'])
+
     _set_user_password(username, password)
     _flush_cache()
     _set_samba_user(username, password)
 
 
 @privileged
-def remove_user(username: str, password: secret_str | None = None):
+def remove_user(username: str, auth_user: str, auth_password: secret_str):
     """Remove an LDAP user."""
+    _validate_username(username)
+    _validate_user(auth_user, auth_password)
     groups = _get_user_groups(username)
-
-    # require authentication if the user is last admin user
-    if _get_group_users('admin') == [username]:
-        _validate_password(username, password)
 
     _delete_samba_user(username)
 
     for group in groups:
         _remove_user_from_group(username, group)
 
-    _run(['ldapdeleteuser', username])
+    if _user_exists(username):
+        # remove the home folder if it's owned by the user
+        home_folder = _get_user_home(username)
+        if home_folder.is_dir():
+            try:
+                owner = home_folder.owner()
+            except KeyError:  # owner not found
+                pass
+            else:
+                if owner == username:
+                    shutil.rmtree(home_folder, ignore_errors=True)
+
+        _run(['ldapdeleteuser', username])
 
     _flush_cache()
+
+
+def _rename_ldap_user(old_username: str, new_username: str,
+                      new_home: pathlib.Path | None):
+    """Rename LDAP user and user parameters."""
+    _run(['ldaprenameuser', old_username, new_username])
+
+    input = f'''changetype: modify
+replace: cn
+cn: {new_username}
+-
+replace: gecos
+gecos: {new_username}
+'''
+
+    if new_home:
+        input += f'''-
+replace: homeDirectory
+homeDirectory: {str(new_home)}
+'''
+
+    _run(['ldapmodifyuser', new_username], input=input.encode())
 
 
 @privileged
 def rename_user(old_username: str, new_username: str):
     """Rename an LDAP user."""
+    _validate_username(old_username)
+    _validate_username(new_username)
     groups = _get_user_groups(old_username)
 
     _delete_samba_user(old_username)
@@ -386,7 +433,16 @@ def rename_user(old_username: str, new_username: str):
     for group in groups:
         _remove_user_from_group(old_username, group)
 
-    _run(['ldaprenameuser', old_username, new_username])
+    old_home = _get_user_home(old_username)
+    new_home = old_home.with_name(new_username)
+
+    if new_home.exists():
+        new_home = None  # Do not rename home
+    else:
+        if old_home.is_dir():
+            old_home.rename(new_home)
+
+    _rename_ldap_user(old_username, new_username, new_home)
 
     for group in groups:
         _add_user_to_group(new_username, group)
@@ -463,6 +519,11 @@ def _get_user_ids(username: str) -> str | None:
         raise
 
     return process.stdout.decode().strip()
+
+
+def _user_exists(username):
+    """Return whether the user exists."""
+    return _get_user_ids(username) is not None
 
 
 def _get_group_users(groupname):

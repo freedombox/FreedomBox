@@ -36,17 +36,17 @@ def _is_ldap_set_up():
 
 pytestmark: list[pytest.MarkDecorator] = [
     pytest.mark.usefixtures('needs_root', 'load_cfg', 'mock_privileged'),
-    pytest.mark.skipif(not _is_ldap_set_up(), reason="LDAP is not configured")
+    pytest.mark.skipif(not _is_ldap_set_up(), reason='LDAP is not configured')
 ]
 privileged_modules_to_mock = [
     'plinth.modules.users.privileged', 'plinth.modules.security.privileged'
 ]
 
 
-def _random_string(length=8):
+def _random_string():
     """Return a random string created from lower case ascii."""
-    return ''.join(
-        [random.choice(string.ascii_lowercase) for _ in range(length)])
+    random_chars = [random.choice(string.ascii_lowercase) for _ in range(8)]
+    return 'test_' + ''.join(random_chars)
 
 
 def _get_password_hash(username):
@@ -135,11 +135,8 @@ def _create_user(username=None, groups=None):
 
 def _delete_user(username):
     """Utility to delete an LDAP and Samba user"""
-    admin_password = None
-    if privileged.get_group_users('admin') == [username]:
-        _, admin_password = _get_admin_user_password()
-
-    privileged.remove_user(username, admin_password)
+    admin_user, admin_password = _get_admin_user_password()
+    privileged.remove_user(username, admin_user, admin_password)
 
 
 def _create_admin_if_does_not_exist():
@@ -192,6 +189,13 @@ def test_create_user():
     assert _try_login_to_ssh(username, password)
     assert username in _get_samba_users()
     with pytest.raises(subprocess.CalledProcessError):
+        _create_user(username)
+
+
+def test_create_invalid_user():
+    """Test invalid username validation."""
+    username = 'invalid/user'
+    with pytest.raises(ValueError):
         _create_user(username)
 
 
@@ -293,6 +297,18 @@ def test_rename_user():
         _rename_user(existing_user, new_username=new_username)
 
 
+def test_rename_invalid_user():
+    """Test rename invalid username"""
+    invalid_username = 'invalid/user'
+    valid_username = _random_string()
+
+    with pytest.raises(ValueError):
+        _rename_user(invalid_username, new_username=valid_username)
+
+    with pytest.raises(ValueError):
+        _rename_user(valid_username, new_username=invalid_username)
+
+
 def test_delete_user():
     """Test to check whether LDAP users can be deleted"""
     _create_admin_if_does_not_exist()
@@ -313,10 +329,17 @@ def test_delete_user():
 
 
 def test_delete_non_existent_user():
-    """Deleting a non-existent user should fail."""
+    """Deleting a non-existent user doesn't fail."""
     non_existent_user = _random_string()
-    with pytest.raises(subprocess.CalledProcessError):
-        privileged.remove_user(non_existent_user)
+    _delete_user(non_existent_user)
+
+
+def test_delete_invalid_user():
+    """Deleting invalid username should fail."""
+    invalid_username = 'invalid/user'
+
+    with pytest.raises(ValueError):
+        _delete_user(invalid_username)
 
 
 def test_groups():

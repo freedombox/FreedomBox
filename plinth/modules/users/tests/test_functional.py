@@ -54,16 +54,21 @@ _config_page_title_language_map = {
 
 @pytest.fixture(scope='module', autouse=True)
 def fixture_background(session_browser):
+    """Unset language."""
+    yield
+    functional.login(session_browser)
+    functional.user_set_language(session_browser, _language_codes['None'])
+
+
+@pytest.fixture(scope='function', autouse=True)
+def fixture_login(session_browser):
     """Login."""
     functional.login(session_browser)
-    yield
-    functional.user_set_language(session_browser, _language_codes['None'])
 
 
 def test_create_user(session_browser):
     """Test creating a user."""
-    if functional.user_exists(session_browser, 'alice'):
-        functional.delete_user(session_browser, 'alice')
+    _delete_user(session_browser, 'alice')
 
     functional.create_user(session_browser, 'alice', email='alice@example.com')
     assert functional.user_exists(session_browser, 'alice')
@@ -73,8 +78,7 @@ def test_create_user(session_browser):
 def test_rename_user(session_browser):
     """Test renaming a user."""
     _non_admin_user_exists(session_browser, 'alice')
-    if functional.user_exists(session_browser, 'bob'):
-        functional.delete_user(session_browser, 'bob')
+    _delete_user(session_browser, 'bob')
 
     _rename_user(session_browser, 'alice', 'bob')
     assert not functional.user_exists(session_browser, 'alice')
@@ -94,7 +98,6 @@ def test_non_admin_users_can_change_own_ssh_keys(session_browser):
                                   'alice')
     _set_ssh_keys(session_browser, 'somekey456')
     assert _get_ssh_keys(session_browser) == 'somekey456'
-    functional.login(session_browser)
 
 
 def test_admin_users_can_change_other_users_ssh_keys(session_browser):
@@ -119,6 +122,26 @@ def test_users_can_connect_passwordless_over_ssh(session_browser,
     functional.app_enable(session_browser, 'ssh')
     _configure_ssh_keys(session_browser, tmp_path_factory)
     _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory)
+
+
+def test_ssh_passwordless_after_user_rename(session_browser, tmp_path_factory):
+    """Test that users can connect passwordless after user is renamed."""
+    username_old = 'bob'
+    username_new = 'bob2'
+    functional.app_enable(session_browser, 'ssh')
+    _non_admin_user_exists(session_browser, username_old,
+                           groups=['freedombox-ssh'])
+    _delete_user(session_browser, username_new)
+    _configure_ssh_keys(session_browser, tmp_path_factory,
+                        username=username_old)
+    _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory,
+                                          username=username_old)
+
+    _rename_user(session_browser, username_old, username_new)
+
+    assert functional.user_exists(session_browser, username_new)
+    _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory,
+                                          username=username_new)
 
 
 def test_users_cannot_connect_passwordless_over_ssh(session_browser,
@@ -173,8 +196,6 @@ def test_user_states(session_browser, tmp_path_factory):
     _should_connect_passwordless_over_ssh(session_browser, tmp_path_factory,
                                           username=username)
 
-    functional.login(session_browser)
-
 
 def test_admin_users_can_change_own_password(session_browser):
     """Test that admin users can change their own password."""
@@ -183,7 +204,6 @@ def test_admin_users_can_change_own_password(session_browser):
                                   'testadmin')
     _change_password(session_browser, 'newpassword456')
     _can_log_in_with_password(session_browser, 'testadmin', 'newpassword456')
-    functional.login(session_browser)
 
 
 def test_admin_users_can_change_others_password(session_browser):
@@ -191,7 +211,6 @@ def test_admin_users_can_change_others_password(session_browser):
     _non_admin_user_exists(session_browser, 'alice')
     _change_password(session_browser, 'secretsecret567', username='alice')
     _can_log_in_with_password(session_browser, 'alice', 'secretsecret567')
-    functional.login(session_browser)
 
 
 def test_non_admin_users_can_change_own_password(session_browser):
@@ -201,7 +220,6 @@ def test_non_admin_users_can_change_own_password(session_browser):
                                   'alice')
     _change_password(session_browser, 'newpassword123')
     _can_log_in_with_password(session_browser, 'alice', 'newpassword123')
-    functional.login(session_browser)
 
 
 def test_delete_user(session_browser):
@@ -211,15 +229,19 @@ def test_delete_user(session_browser):
     assert not functional.user_exists(session_browser, 'alice')
 
 
-def _admin_user_exists(session_browser, name):
+def _delete_user(session_browser, name):
+    """Delete a user."""
     if functional.user_exists(session_browser, name):
         functional.delete_user(session_browser, name)
+
+
+def _admin_user_exists(session_browser, name):
+    _delete_user(session_browser, name)
     functional.create_user(session_browser, name, groups=['admin'])
 
 
 def _non_admin_user_exists(session_browser, name, groups=[]):
-    if functional.user_exists(session_browser, name):
-        functional.delete_user(session_browser, name)
+    _delete_user(session_browser, name)
     functional.create_user(session_browser, name, groups=groups)
 
 

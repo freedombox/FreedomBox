@@ -84,15 +84,14 @@ def make_request(request, view, as_admin=True, **kwargs):
 
 
 def test_users_list_view(rf):
-    """Test that users list view has correct view data."""
+    """Test users list view has correct view data."""
     with (patch('plinth.views.AppView.get_context_data',
                 return_value={'is_enabled': True}),
           patch('plinth.views.AppView.app', return_value=None)):
         view = views.UserList.as_view()
         response, messages = make_request(rf.get('/'), view)
 
-        assert response.context_data['last_admin_user'] == 'admin'
-        assert response.status_code == 200
+    assert response.status_code == 200
 
 
 @pytest.mark.parametrize('username', ['test-new', 'test-neW@2_'])
@@ -268,10 +267,15 @@ def test_update_user_without_permissions_view(rf):
 def test_delete_user_view(rf):
     """Test that user deletion succeeds."""
     user = 'tester'
+    form_data = {
+        'username': user,
+        'delete': True,
+        'confirm_password': 'adminpassword',
+    }
 
-    url = urls.reverse('users:delete', kwargs={'slug': user})
-    request = rf.post(url)
-    view = views.UserDelete.as_view()
+    url = urls.reverse('users:edit', kwargs={'slug': user})
+    request = rf.post(url, data=form_data)
+    view = views.UserUpdate.as_view()
     response, messages = make_request(request, view, as_admin=True, slug=user)
 
     assert list(messages)[0].message == 'User {} deleted.'.format(user)
