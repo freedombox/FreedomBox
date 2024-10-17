@@ -57,7 +57,7 @@ def fixture_background(session_browser):
     """Login."""
     functional.login(session_browser)
     yield
-    _set_language(session_browser, _language_codes['None'])
+    functional.user_set_language(session_browser, _language_codes['None'])
 
 
 def test_create_user(session_browser):
@@ -146,7 +146,7 @@ def test_update_user(session_browser):
 @pytest.mark.parametrize('language_code', _language_codes.values())
 def test_change_language(session_browser, language_code):
     """Test changing the language."""
-    _set_language(session_browser, language_code)
+    functional.user_set_language(session_browser, language_code)
     assert _check_language(session_browser, language_code)
 
 
@@ -296,15 +296,6 @@ def _get_email(browser, username):
     """Return the email field value for a user."""
     functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
     return browser.find_by_id('id_email').value
-
-
-def _set_language(browser, language_code):
-    username = functional.config['DEFAULT']['username']
-    functional.visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
-    browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
-                          language_code + '"]').first.click()
-    browser.find_by_id('id_confirm_password').fill(_admin_password)
-    functional.submit(browser, form_class='form-update')
 
 
 def _check_language(browser, language_code):

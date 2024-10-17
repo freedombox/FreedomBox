@@ -679,6 +679,17 @@ def user_exists(browser, name):
     return len(links) == 1
 
 
+def user_set_language(browser, language_code):
+    """Change user's preferred UI language."""
+    username = config['DEFAULT']['username']
+    admin_password = config['DEFAULT']['password']
+    visit(browser, '/plinth/sys/users/{}/edit/'.format(username))
+    browser.find_by_xpath('//select[@id="id_language"]//option[@value="' +
+                          language_code + '"]').first.click()
+    browser.find_by_id('id_confirm_password').fill(admin_password)
+    submit(browser, form_class='form-update')
+
+
 class BaseAppTests:
     """Base class for common functional tests.
 
