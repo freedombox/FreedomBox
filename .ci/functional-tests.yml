@@ -18,7 +18,7 @@
     - 'echo -e "Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/actions/actions, `pwd`/actions/actions\nDefaults!FREEDOMBOX_ACTION_DEV closefrom_override\nplinth    ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV\n" > /etc/sudoers.d/01-freedombox-development'
     - while ! grep -q "Setup thread finished" plinth.log; do sleep 1; echo -n .; done
   script:
-    - FREDOMBOX_URL=https://localhost FREEDOMBOX_SSH_PORT=22 FREEDOMBOX_SAMBA_PORT=445 pytest -v --durations=10 --include-functional --splinter-headless --template=html1/index.html --report=functional-tests.html
+    - FREDOMBOX_URL=https://localhost FREEDOMBOX_SSH_PORT=22 FREEDOMBOX_SAMBA_PORT=445 pytest -v --durations=10 --include-functional --splinter-headless --instafail --template=html1/index.html --report=functional-tests.html
   artifacts:
     when: always
     paths:
