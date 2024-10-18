@@ -75,7 +75,7 @@ def test_create_user(session_browser):
     assert _get_email(session_browser, 'alice') == 'alice@example.com'
 
 
-def test_rename_user(session_browser):
+def test_rename_user(session_browser, host_sudo):
     """Test renaming a user."""
     _non_admin_user_exists(session_browser, 'alice')
     _delete_user(session_browser, 'bob')
@@ -83,6 +83,10 @@ def test_rename_user(session_browser):
     _rename_user(session_browser, 'alice', 'bob')
     assert not functional.user_exists(session_browser, 'alice')
     assert functional.user_exists(session_browser, 'bob')
+
+    assert 'cn: bob' in host_sudo.check_output('ldapfinger bob')
+    assert host_sudo.user('bob').gecos == 'bob'
+    assert host_sudo.user('bob').home == '/home/bob'
 
 
 def test_admin_users_can_change_own_ssh_keys(session_browser):
