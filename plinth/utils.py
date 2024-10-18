@@ -180,8 +180,15 @@ class SafeFormatter(string.Formatter):
     """A string.format() handler to deal with missing arguments."""
 
     def get_value(self, key, args, kwargs):
-        """Retrieve a given field value."""
+        """Retrieve a given field's value: 0 or foo."""
         try:
             return super().get_value(key, args, kwargs)
         except (IndexError, KeyError):
             return f'?{key}?'
+
+    def get_field(self, field_name, args, kwargs):
+        """Retrieve a given field's value: 0[foo] or foo.bar."""
+        try:
+            return super().get_field(field_name, args, kwargs)
+        except (AttributeError, TypeError):
+            return (f'?{field_name}?', '')
