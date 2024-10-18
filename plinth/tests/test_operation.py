@@ -186,7 +186,7 @@ def test_message(app_get):
     assert operation.translated_message == 'message1'
 
     operation._message = None
-    assert operation.message == 'Error: {name}: {exception_message}'
+    assert operation.message == 'Error: {name}: {exception}'
     assert operation.translated_message == 'Error: op1: error1'
 
     operation.exception = None
