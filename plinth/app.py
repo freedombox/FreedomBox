@@ -7,7 +7,7 @@ import collections
 import enum
 import inspect
 import logging
-from typing import ClassVar, Dict, List, TypeAlias
+from typing import ClassVar, TypeAlias
 
 from plinth import cfg
 from plinth.diagnostic_check import DiagnosticCheck

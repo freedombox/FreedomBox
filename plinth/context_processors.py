@@ -8,7 +8,7 @@ import re
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_noop
 
-from plinth import cfg, menu
+from plinth import cfg
 from plinth.utils import is_user_admin
 
 
