@@ -61,9 +61,6 @@
                   {% else %}
                     <a href="{{ shortcut.url }}" class="nav-link">
                   {% endif %}
-                        <div class="card-title">
-                          {{ shortcut.name }}
-                        </div>
                         <div class="card-icon">
                           {% if "custom" in shortcut.icon %}
                             <img src="{{ shortcut.icon }}"/>
@@ -74,6 +71,9 @@
                               <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
                             {% endif %}
                           {% endif %}
+                        </div>
+                        <div class="card-title">
+                          {{ shortcut.name }}
                         </div>
                         <div class="card-description">
                           {{ shortcut.short_description|default:'' }}
