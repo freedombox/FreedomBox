@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 20:05-0400\n"
+"POT-Creation-Date: 2024-10-21 20:10-0400\n"
 "PO-Revision-Date: 2024-10-14 21:15+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statická konfigurace {etc_path} je nastavena správně"
 
-#: context_processors.py:23 views.py:116
+#: context_processors.py:23 views.py:117
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -109,7 +109,7 @@ msgstr "Viditelnost"
 msgid "Data"
 msgstr "Data"
 
-#: menu.py:110 templates/base.html:129
+#: menu.py:110 templates/base.html:133
 msgid "System"
 msgstr "Systém"
 
@@ -196,6 +196,7 @@ msgstr "Povolení plánu zálohování"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
+#: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Jít na {app_name}"
@@ -460,7 +461,7 @@ msgstr "Existující repozitář není šifrován."
 msgid "{box_name} storage"
 msgstr "Úložiště {box_name}"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:116
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
 msgid "Create a new backup"
 msgstr "Vytvořit novou zálohu"
 
@@ -556,7 +557,7 @@ msgstr "Stáhnout"
 
 #: modules/backups/templates/backups_repository.html:87
 #: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:219 templates/toolbar.html:44
+#: modules/backups/views.py:220 templates/toolbar.html:44
 #: templates/toolbar.html:45
 msgid "Restore"
 msgstr "Obnovit"
@@ -658,99 +659,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Ověřit stroj"
 
-#: modules/backups/views.py:59
+#: modules/backups/views.py:58
 msgid "Backup schedule updated."
 msgstr "Plán zálohování aktualizován."
 
-#: modules/backups/views.py:78
+#: modules/backups/views.py:77
 msgid "Schedule Backups"
 msgstr "Plánování záloh"
 
-#: modules/backups/views.py:111
+#: modules/backups/views.py:110
 msgid "Archive created."
 msgstr "Archiv vytvořen."
 
-#: modules/backups/views.py:147
+#: modules/backups/views.py:146
 msgid "Delete Archive"
 msgstr "Smazat archiv"
 
-#: modules/backups/views.py:159
+#: modules/backups/views.py:158
 msgid "Archive deleted."
 msgstr "Archiv smazán."
 
-#: modules/backups/views.py:172
+#: modules/backups/views.py:171
 msgid "Upload and restore a backup"
 msgstr "Nahrát zálohu a obnovit z ní"
 
-#: modules/backups/views.py:207
+#: modules/backups/views.py:208
 msgid "Restored files from backup."
 msgstr "Soubory obnovené ze zálohy."
 
-#: modules/backups/views.py:235
+#: modules/backups/views.py:236
 msgid "No backup file found."
 msgstr "Nebyl nalezen žádný soubor se zálohou."
 
-#: modules/backups/views.py:243
+#: modules/backups/views.py:244
 msgid "Restore from uploaded file"
 msgstr "Obnovit z nahraného souboru"
 
-#: modules/backups/views.py:302
+#: modules/backups/views.py:303
 msgid "No additional disks available to add a repository."
 msgstr "Nejsou k dispozici žádná další úložiště pro přidání repozitáře."
 
-#: modules/backups/views.py:310
+#: modules/backups/views.py:311
 msgid "Create backup repository"
 msgstr "Vytvořit repozitář pro zálohy"
 
-#: modules/backups/views.py:337
+#: modules/backups/views.py:338
 msgid "Create remote backup repository"
 msgstr "Vytvořit repozitář pro zálohy na protějšku"
 
-#: modules/backups/views.py:357
+#: modules/backups/views.py:358
 msgid "Added new remote SSH repository."
 msgstr "Přidán nový vzdálený SSH repozitář."
 
-#: modules/backups/views.py:379
+#: modules/backups/views.py:380
 msgid "Verify SSH hostkey"
 msgstr "Ověřit SSH klíč stroje"
 
-#: modules/backups/views.py:405
+#: modules/backups/views.py:406
 msgid "SSH host already verified."
 msgstr "SSH stroj už je ověřen."
 
-#: modules/backups/views.py:415
+#: modules/backups/views.py:416
 msgid "SSH host verified."
 msgstr "SSH stroj ověřen."
 
-#: modules/backups/views.py:430
+#: modules/backups/views.py:431
 msgid "SSH host public key could not be verified."
 msgstr "Veřejný klíč SSH stroje se nepodařilo ověřit."
 
-#: modules/backups/views.py:432
+#: modules/backups/views.py:433
 msgid "Authentication to remote server failed."
 msgstr "Ověření vůči vzdálenému serveru se nezdařilo."
 
-#: modules/backups/views.py:434
+#: modules/backups/views.py:435
 msgid "Error establishing connection to server: {}"
 msgstr "Chyba při navazování spojení se serverem: {}"
 
-#: modules/backups/views.py:445
+#: modules/backups/views.py:446
 msgid "Repository removed."
 msgstr "Repozitář odstraněn."
 
-#: modules/backups/views.py:459
+#: modules/backups/views.py:460
 msgid "Remove Repository"
 msgstr "Odebrat repozitář"
 
-#: modules/backups/views.py:468
+#: modules/backups/views.py:469
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repozitář odebrán. Zálohy jako takové smazány nebyly."
 
-#: modules/backups/views.py:478
+#: modules/backups/views.py:479
 msgid "Unmounting failed!"
 msgstr "Odpojení se nezdařilo!"
 
-#: modules/backups/views.py:493 modules/backups/views.py:497
+#: modules/backups/views.py:494 modules/backups/views.py:498
 msgid "Mounting failed"
 msgstr "Připojení (mount) se nezdařilo"
 
@@ -851,6 +852,18 @@ msgstr "Komentář"
 msgid "Any comment to help you remember the purpose of this password."
 msgstr "Jakýkoli komentář, který vám pomůže zapamatovat si účel tohoto hesla."
 
+#: modules/bepasty/manifest.py:23 modules/deluge/manifest.py:21
+#: modules/samba/manifest.py:89 modules/sharing/manifest.py:19
+#: modules/syncthing/manifest.py:58 modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "File & Snippet Sharing"
+msgid "File sharing"
+msgstr "Sdílení souborů a útržků"
+
+#: modules/bepasty/manifest.py:23
+msgid "Pastebin"
+msgstr ""
+
 #: modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
 msgstr "Správa hesel"
@@ -915,7 +928,7 @@ msgstr "správce"
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
 #: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Nastavení aktualizována."
@@ -1079,6 +1092,22 @@ msgstr ""
 #: modules/calibre/forms.py:28
 msgid "A library with this name already exists."
 msgstr "Knihovna s tímto názvem již existuje."
+
+#: modules/calibre/manifest.py:20
+msgid "Ebook"
+msgstr ""
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Library"
+msgstr "Knihovna e-knih"
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Ebook reader"
+msgstr "Knihovna e-knih"
 
 #: modules/calibre/templates/calibre-delete-library.html:11
 #, python-format
@@ -1329,6 +1358,18 @@ msgstr "Pomocník VoIP"
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Neplatný seznam URI serverů STUN/TURN"
 
+#: modules/coturn/manifest.py:7 modules/janus/manifest.py:16
+msgid "Video conference"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "STUN"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "TURN"
+msgstr ""
+
 #: modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr "Pro konfiguraci komunikačního serveru použijte následující adresy URL:"
@@ -1411,6 +1452,24 @@ msgstr "Složka pro stahování"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Bittorent klient napsaný v Python/PyGTK"
 
+#: modules/deluge/manifest.py:21 modules/transmission/manifest.py:39
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
+#: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "Launch web client"
+msgid "Web client"
+msgstr "Spustit webového klienta"
+
+#: modules/deluge/manifest.py:21 modules/syncthing/manifest.py:58
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "I2P"
+msgid "P2P"
+msgstr "I2P"
+
 #: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
@@ -1431,7 +1490,7 @@ msgstr "přeskočeno"
 msgid "passed"
 msgstr "prošlo"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:51
 msgid "failed"
 msgstr "selhalo"
 
@@ -1856,7 +1915,7 @@ msgstr ""
 "aplikaci <a href=\"{coturn_url}\">Coturn</a> nebo nakonfigurujte externí "
 "server."
 
-#: modules/ejabberd/__init__.py:61
+#: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
 
@@ -1960,6 +2019,27 @@ msgstr "Dino"
 #: modules/ejabberd/manifest.py:85
 msgid "Gajim"
 msgstr "Gajim"
+
+#: modules/ejabberd/manifest.py:124 modules/matrixsynapse/manifest.py:102
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted messaging"
+msgstr "Šifrování"
+
+#: modules/ejabberd/manifest.py:125 modules/matrixsynapse/manifest.py:103
+#: modules/mumble/manifest.py:67
+msgid "Audio chat"
+msgstr ""
+
+#: modules/ejabberd/manifest.py:126 modules/matrixsynapse/manifest.py:104
+#, fuzzy
+#| msgid "Video Room"
+msgid "Video chat"
+msgstr "Video Room"
+
+#: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
+msgid "XMPP"
+msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
 #, python-format
@@ -2085,7 +2165,7 @@ msgid "Aliases"
 msgstr "Aliasy"
 
 #: modules/email/manifest.py:12 modules/roundcube/__init__.py:50
-#: modules/roundcube/manifest.py:6
+#: modules/roundcube/manifest.py:7
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -2100,6 +2180,20 @@ msgstr "K-9 Mail"
 #: modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
+
+#: modules/email/manifest.py:82
+#, fuzzy
+#| msgid "Email Server"
+msgid "Email server"
+msgstr "E-mailový Server"
+
+#: modules/email/manifest.py:82
+msgid "IMAP"
+msgstr ""
+
+#: modules/email/manifest.py:82
+msgid "Spam control"
+msgstr ""
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2247,6 +2341,36 @@ msgstr "Soubory Feather Wiki musí být ve formátu HTML"
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Nahrajte existující soubor Feather Wiki z tohoto počítače."
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+msgid "Wiki"
+msgstr "Wiki"
+
+#: modules/featherwiki/manifest.py:18 modules/infinoted/manifest.py:46
+#: modules/tiddlywiki/manifest.py:20
+msgid "Note taking"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:21
+#: modules/wordpress/manifest.py:26
+#, fuzzy
+#| msgid "Website Security"
+msgid "Website"
+msgstr "Zabezpečení webové stránky"
+
+#: modules/featherwiki/manifest.py:18 modules/tiddlywiki/manifest.py:25
+msgid "Quine"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/nextcloud/manifest.py:56
+#: modules/tiddlywiki/manifest.py:26
+#, fuzzy
+#| msgid "Debian:"
+msgid "Non-Debian"
+msgstr "Debian:"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
@@ -2412,7 +2536,7 @@ msgstr "Zapnuto"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:34
+#: templates/cards.html:36
 msgid "Disabled"
 msgstr "Vypnuto"
 
@@ -2456,6 +2580,27 @@ msgstr ""
 "Pokročilé operace brány firewall, jako je otevírání vlastních portů, "
 "zajišťuje aplikace <a href=\"/_cockpit/network/firewall\">Cockpit</a>."
 
+#: modules/first_boot/__init__.py:61
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup complete! Next steps:"
+msgstr "Nastavení dokončeno!"
+
+#: modules/first_boot/__init__.py:63
+#, python-brace-format
+msgid ""
+"Initial setup has been completed. Perform the next steps to make your "
+"{box_name} operational."
+msgstr ""
+
+#: modules/first_boot/__init__.py:66
+msgid "Next steps"
+msgstr ""
+
+#: modules/first_boot/__init__.py:73
+msgid "See next steps"
+msgstr ""
+
 #: modules/first_boot/forms.py:14
 #, python-brace-format
 msgid ""
@@ -2472,32 +2617,61 @@ msgid "Firstboot Wizard Secret"
 msgstr "Tajemství průvodce Firstboot"
 
 #: modules/first_boot/templates/firstboot_complete.html:11
-msgid "Setup Complete!"
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup Complete! Next Steps:"
 msgstr "Nastavení dokončeno!"
 
-#: modules/first_boot/templates/firstboot_complete.html:14
-#, python-format
-msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr "Bez aplikací váš %(box_name)s není moc užitečný."
-
-#: modules/first_boot/templates/firstboot_complete.html:21
-msgid "Install Apps"
-msgstr "Nainstalovat aplikace"
-
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:18
 #, python-format
 msgid ""
-"You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
-"modify it if necessary."
+"Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
+"runs daily by default. For the first time, manually run it now."
 msgstr ""
-"Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení sítě</"
-"a> a případně upravit."
+
+#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/upgrades/templates/upgrades_configure.html:108
+msgid "Update now"
+msgstr "Aktualizovat nyní"
+
+#: modules/first_boot/templates/firstboot_complete.html:36
+#, python-format
+msgid ""
+"Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:46
+#, python-format
+msgid ""
+"Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
+"connections</a>. Change the default Wi-Fi password, if applicable."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:57
+#, python-format
+msgid ""
+"Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:67
+#, python-format
+msgid ""
+"Configure and schedule remote <a href=\"%(backups_url)s\" "
+"target=\"_blank\">backups</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:78
+#, python-format
+msgid ""
+"Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
+"target=\"_blank\">apps</a>."
+msgstr ""
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
 msgstr "Spustit nastavení"
 
-#: modules/first_boot/views.py:50
+#: modules/first_boot/views.py:41
 msgid "Setup Complete"
 msgstr "Nastavení dokončeno"
 
@@ -2595,6 +2769,20 @@ msgstr "Gitweb ji zobrazí jako výchozí větev."
 msgid "Git"
 msgstr "Git"
 
+#: modules/gitweb/manifest.py:37
+#, fuzzy
+#| msgid "Simple Git Hosting"
+msgid "Git hosting"
+msgstr "Jednoduché hostování Git"
+
+#: modules/gitweb/manifest.py:37
+msgid "Version control"
+msgstr ""
+
+#: modules/gitweb/manifest.py:37
+msgid "Developer tool"
+msgstr ""
+
 #: modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
 msgstr "Spravovat repozitáře"
@@ -2658,19 +2846,19 @@ msgid "Manual"
 msgstr "Příručka"
 
 #: modules/help/__init__.py:41 modules/help/templates/help_support.html:9
-#: modules/help/views.py:90 templates/help-menu.html:27
+#: modules/help/views.py:93 templates/help-menu.html:27
 #: templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Získejte podporu"
 
 #: modules/help/__init__.py:45 modules/help/templates/help_feedback.html:9
-#: modules/help/views.py:84 templates/help-menu.html:33
+#: modules/help/views.py:87 templates/help-menu.html:33
 #: templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Odeslat zpětnou vazbu"
 
 #: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:73 templates/help-menu.html:39
+#: modules/help/views.py:76 templates/help-menu.html:39
 #: templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Zapojit se"
@@ -2821,7 +3009,7 @@ msgstr ""
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
-#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:57
+#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:68
 msgid "Learn more..."
 msgstr "Zjistit více…"
 
@@ -3002,16 +3190,16 @@ msgstr ""
 "Před odesláním hlášení chyby odeberte ze záznamů událostí veškerá hesla a "
 "ostatní osobní údaje."
 
-#: modules/help/views.py:28
+#: modules/help/views.py:29
 msgid "Documentation and FAQ"
 msgstr "Dokumentace a často kladené dotazy"
 
-#: modules/help/views.py:96
+#: modules/help/views.py:99
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "O {box_name}"
 
-#: modules/help/views.py:130
+#: modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Příručka k {box_name}"
@@ -3059,6 +3247,19 @@ msgstr "Anonymní síť"
 #: modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "I2P proxy"
+
+#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
+#: modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "Anonymní síť"
+
+#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
+#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
+#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3139,6 +3340,10 @@ msgstr "Název účtu správce"
 #: modules/ikiwiki/forms.py:19
 msgid "Admin Account Password"
 msgstr "Heslo k účtu správce"
+
+#: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
+msgid "Blog"
+msgstr ""
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3237,7 +3442,7 @@ msgstr "infinoted"
 msgid "Gobby Server"
 msgstr "Gobby server"
 
-#: modules/infinoted/manifest.py:10
+#: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
 
@@ -3253,6 +3458,10 @@ msgid ""
 msgstr ""
 "Spusťte Goggy a zvolte „Připojit k serveru“ a zadejte doménový název svého "
 "{box_name}."
+
+#: modules/infinoted/manifest.py:46
+msgid "Collaborative editing"
+msgstr ""
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3280,8 +3489,18 @@ msgstr "Video Room"
 msgid "Janus Video Room"
 msgstr "Janus Video Room"
 
+#: modules/janus/manifest.py:16
+#, fuzzy
+#| msgid "WebRTC server"
+msgid "WebRTC"
+msgstr "WebRTC server"
+
+#: modules/janus/manifest.py:16
+msgid "Web conference"
+msgstr ""
+
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -3300,6 +3519,18 @@ msgstr "JSXC"
 #: modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Chatovací klient"
+
+#: modules/jsxc/manifest.py:16
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web chat"
+msgstr "Vyhledávání na webu"
+
+#: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Client"
+msgstr "IRC klient"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3372,6 +3603,24 @@ msgstr ""
 "Nahrané soubory ZIM budou uloženy pod {kiwix_home}/content na vaší "
 "{box_name}. Pokud se Kiwixu nepodaří soubor přidat, bude okamžitě smazán, "
 "aby se ušetřilo místo na disku."
+
+#: modules/kiwix/manifest.py:23
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Offline reader"
+msgstr "Offline Wikipedia"
+
+#: modules/kiwix/manifest.py:24
+#, fuzzy
+#| msgid "Archive name"
+msgid "Archival"
+msgstr "Název archivu"
+
+#: modules/kiwix/manifest.py:26
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Wikipedia"
+msgstr "Offline Wikipedia"
 
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
@@ -3649,6 +3898,18 @@ msgstr "Prvek"
 msgid "FluffyChat"
 msgstr "FluffyChat"
 
+#: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Chatroom"
+msgid "Chat room"
+msgstr "Chatovací místnost na IRC"
+
+#: modules/matrixsynapse/manifest.py:105
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Matrix server"
+msgstr "Server pro streamování médií"
+
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
@@ -3795,10 +4056,6 @@ msgstr ""
 #: modules/mediawiki/__init__.py:51 modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
-
-#: modules/mediawiki/__init__.py:52 templates/index.html:128
-msgid "Wiki"
-msgstr "Wiki"
 
 #: modules/mediawiki/forms.py:56
 msgid "Administrator Password"
@@ -3982,6 +4239,22 @@ msgstr "Zapnout poškozování"
 msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr "Pokud je vypnuto, postavy hráčů nemohou zemřít nebo se zranit."
 
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Updated server."
+msgid "Game server"
+msgstr "Aktualizovaný server."
+
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Block Sandbox"
+msgid "Block sandbox"
+msgstr "Pískoviště s kostkami"
+
+#: modules/minetest/manifest.py:49
+msgid "Platform"
+msgstr ""
+
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
 msgid "Address"
@@ -4040,6 +4313,26 @@ msgstr "yaacc"
 #: modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "Simple Media Server"
+msgid "Media server"
+msgstr "Simple Media Server"
+
+#: modules/minidlna/manifest.py:116
+msgid "Television"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+msgid "UPnP"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "MiniDLNA"
+msgid "DLNA"
+msgstr "MiniDLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4132,6 +4425,28 @@ msgstr "Read You"
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
 msgstr "RSS Guard"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "News Feed Reader"
+msgid "Feed reader"
+msgstr "Čtečka novinek"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+msgid "News aggregation"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "SSH"
+msgid "RSS"
+msgstr "SSH"
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+msgid "ATOM"
+msgstr ""
 
 #: modules/miniflux/templates/miniflux.html:14
 msgid ""
@@ -4249,6 +4564,15 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
+#: modules/mumble/manifest.py:67
+msgid "Group conference"
+msgstr ""
+
+#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
+#: modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Server"
+
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
 msgstr "Heslo SuperUser bylo úspěšně aktualizováno."
@@ -4350,17 +4674,17 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
-#: modules/networks/views.py:126
+#: modules/networks/views.py:125
 msgid "yes"
 msgstr "ano"
 
 #: modules/names/resolved.py:92 modules/networks/forms.py:29
-#: modules/networks/views.py:125
+#: modules/networks/views.py:124
 msgid "opportunistic"
 msgstr "oportunistický"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:30 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:123
 msgid "no"
 msgstr "ne"
 
@@ -4451,7 +4775,7 @@ msgstr "Nastavte název domény"
 msgid "Error setting domain name: {exception}"
 msgstr "Chyba při nastavování doménového názvu: {exception}"
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:19
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4459,7 +4783,7 @@ msgstr ""
 "Nastavit síťová zařízení. Připojit k Internetu přes ethernet, WiFi nebo "
 "PPPoE. Sdílet toto připojení s ostatními zařízeními na síti."
 
-#: modules/networks/__init__.py:39
+#: modules/networks/__init__.py:21
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4467,13 +4791,13 @@ msgstr ""
 "Zařízení spravovaná jinými metodami zde nemusí být k dispozici pro "
 "konfiguraci."
 
-#: modules/networks/__init__.py:60
+#: modules/networks/__init__.py:42
 msgid "Networks"
 msgstr "Sítě"
 
 #: modules/networks/forms.py:19 modules/networks/forms.py:25
-#: modules/networks/views.py:40 modules/networks/views.py:101
-#: modules/networks/views.py:112
+#: modules/networks/views.py:39 modules/networks/views.py:100
+#: modules/networks/views.py:111
 msgid "unknown"
 msgstr "neznámý"
 
@@ -4920,7 +5244,7 @@ msgstr "Upravit připojení"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:157 templates/base.html:158
+#: templates/base.html:161 templates/base.html:162
 msgid "Edit"
 msgstr "Upravit"
 
@@ -5051,7 +5375,8 @@ msgstr "Toto připojení není aktivní."
 
 #: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
+#: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 msgid "Privacy"
 msgstr "Soukromí"
 
@@ -5101,7 +5426,7 @@ msgid "Create Connection"
 msgstr "Vytvořit připojení"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:537
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Smazat připojení"
 
@@ -5121,14 +5446,14 @@ msgstr "Mezery"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:102 network.py:27
+#: modules/networks/views.py:101 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:103 network.py:28
+#: modules/networks/views.py:102 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5148,7 +5473,7 @@ msgid "Computer"
 msgstr "Počítač"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:254 modules/networks/views.py:341
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Upravit připojení"
 
@@ -5166,13 +5491,13 @@ msgstr "Připojení"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:390
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi sítě poblíž"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:414
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Přidat připojení"
@@ -5205,23 +5530,6 @@ msgid ""
 msgstr ""
 "Vyberte možnost, která nejlépe vystihuje typ připojení k Internetu. Tyto "
 "informace slouží pouze jako vodítko pro další nastavení."
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:19
-#: modules/networks/templates/network_topology_firstboot.html:19
-#: modules/networks/templates/router_configuration_firstboot.html:19
-#: modules/users/templates/users_firstboot.html:63
-msgid "Skip this step"
-msgstr "Tento krok přeskočte"
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:21
-#: modules/networks/templates/network_topology_firstboot.html:21
-#: modules/networks/templates/router_configuration_firstboot.html:21
-#: modules/upgrades/templates/backports-firstboot.html:45
-#: modules/upgrades/templates/update-firstboot-progress.html:35
-#: modules/upgrades/templates/update-firstboot-progress.html:38
-#: modules/upgrades/templates/update-firstboot.html:33
-msgid "Next"
-msgstr "Další"
 
 #: modules/networks/templates/internet_connectivity_main.html:9
 msgid "Your Internet Connection Type"
@@ -5405,250 +5713,250 @@ msgstr ""
 "směrovače a vyhledejte na internetu jeho příručku. Ten vám poskytne úplné "
 "pokyny k provedení tohoto úkolu."
 
-#: modules/networks/views.py:28
+#: modules/networks/views.py:27
 msgid "disabled"
 msgstr "vypnuto"
 
-#: modules/networks/views.py:29
+#: modules/networks/views.py:28
 msgid "automatic"
 msgstr "automaticky"
 
-#: modules/networks/views.py:30
+#: modules/networks/views.py:29
 msgid "manual"
 msgstr "příručka"
 
-#: modules/networks/views.py:31
+#: modules/networks/views.py:30
 msgid "shared"
 msgstr "sdílené"
 
-#: modules/networks/views.py:32
+#: modules/networks/views.py:31
 msgid "link-local"
 msgstr "link-local"
 
-#: modules/networks/views.py:33
+#: modules/networks/views.py:32
 msgid "dhcp"
 msgstr "dhcp"
 
-#: modules/networks/views.py:34
+#: modules/networks/views.py:33
 msgid "ignore"
 msgstr "ignorovat"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:40
 msgid "unmanaged"
 msgstr "nespravované"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:41
 msgid "unavailable"
 msgstr "nedostupné"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:42
 msgid "disconnected"
 msgstr "odpojeno"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:43
 msgid "preparing"
 msgstr "příprava"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:44
 msgid "connecting"
 msgstr "připojení"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:45
 msgid "needs authentication"
 msgstr "potřebuje ověření"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:46
 msgid "requesting address"
 msgstr "vyžadující adresu"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:47
 msgid "checking"
 msgstr "kontrola"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:48
 msgid "waiting for secondary"
 msgstr "čekání na sekundární"
 
-#: modules/networks/views.py:50
+#: modules/networks/views.py:49
 msgid "activated"
 msgstr "aktivováno"
 
-#: modules/networks/views.py:51
+#: modules/networks/views.py:50
 msgid "deactivating"
 msgstr "deaktivace"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:58
 msgid "no reason"
 msgstr "bez důvodu"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:60
 msgid "unknown error"
 msgstr "neznámá chyba"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:62
 msgid "device is now managed"
 msgstr "zařízení je nyní spravováno"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:64
 msgid "device is now unmanaged"
 msgstr "zařízení je nyní bez správy"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:66
 msgid "configuration failed"
 msgstr "konfigurace selhala"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:68
 msgid "secrets required"
 msgstr "požadovaná tajemství"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:70
 msgid "DHCP client failed to start"
 msgstr "Klienta DHCP se nepodařilo spustit"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:72
 msgid "DHCP client error"
 msgstr "Chyba klienta DHCP"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:74
 msgid "DHCP client failed"
 msgstr "Klient DHCP selhal"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:76
 msgid "shared connection service failed to start"
 msgstr "nepodařilo se spustit službu sdíleného připojení"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:78
 msgid "shared connection service failed"
 msgstr "služba sdíleného připojení selhala"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:80
 msgid "device was removed"
 msgstr "zařízení bylo odstraněno"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:82
 msgid "device disconnected by user"
 msgstr "zařízení odpojené uživatelem"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:84
 msgid "a dependency of the connection failed"
 msgstr "selhala závislost připojení"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:86
 msgid "Wi-Fi network not found"
 msgstr "Síť Wi-Fi nebyla nalezena"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:88
 msgid "a secondary connection failed"
 msgstr "selhalo sekundární připojení"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:90
 msgid "new connection activation was enqueued"
 msgstr "aktivace nového spojení byla zařazena do fronty"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:92
 msgid "a duplicate IP address was detected"
 msgstr "byla zjištěna duplicitní IP adresa"
 
-#: modules/networks/views.py:95
+#: modules/networks/views.py:94
 msgid "selected IP method is not supported"
 msgstr "vybraná metoda IP není podporována"
 
-#: modules/networks/views.py:104
+#: modules/networks/views.py:103
 msgid "generic"
 msgstr "obecný"
 
-#: modules/networks/views.py:105
+#: modules/networks/views.py:104
 msgid "TUN or TAP interface"
 msgstr "Rozhraní TUN nebo TAP"
 
-#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:105 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:112
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:113
 msgid "infrastructure"
 msgstr "Infrastruktura"
 
-#: modules/networks/views.py:115
+#: modules/networks/views.py:114
 msgid "access point"
 msgstr "přístupový bod"
 
-#: modules/networks/views.py:116
+#: modules/networks/views.py:115
 msgid "mesh point"
 msgstr "bod sítě"
 
-#: modules/networks/views.py:123
+#: modules/networks/views.py:122
 msgid "default"
 msgstr "výchozí"
 
-#: modules/networks/views.py:156
+#: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
 msgstr "Připojení nelze zobrazit: Připojení neexistuje."
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:210
 msgid "Connection Information"
 msgstr "Informace o spojení"
 
-#: modules/networks/views.py:226
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "Připojení nelze upravit: Připojení neexistuje."
 
-#: modules/networks/views.py:232
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Tento typ připojení ještě není podporován."
 
-#: modules/networks/views.py:353
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Připojení {name} aktivováno."
 
-#: modules/networks/views.py:357
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Aktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:363
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Nepodařilo se aktivovat připojení {name}: Není k dispozici žádné použitelné "
 "zařízení."
 
-#: modules/networks/views.py:376
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Připojení {name} deaktivováno."
 
-#: modules/networks/views.py:380
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Deaktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Přidávání nového generického připojení"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Přidávání nového ethernetového připojení"
 
-#: modules/networks/views.py:468
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Přidávání nového PPPoE připojení"
 
-#: modules/networks/views.py:503
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Přidávání nového Wi-Fi připojení"
 
-#: modules/networks/views.py:518
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Připojení {name} smazáno."
 
-#: modules/networks/views.py:522 modules/networks/views.py:532
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
 
@@ -5743,6 +6051,22 @@ msgstr ""
 "Výchozí telefonní předvolba je vyžadována pro ověření telefonních čísel v "
 "nastavení profilu bez kódu země."
 
+#: modules/nextcloud/manifest.py:56 modules/syncthing/manifest.py:58
+#, fuzzy
+#| msgid "Filesystem"
+msgid "File sync"
+msgstr "Souborový systém"
+
+#: modules/nextcloud/manifest.py:56 modules/sharing/__init__.py:34
+msgid "Sharing"
+msgstr "Sdílení"
+
+#: modules/nextcloud/manifest.py:56
+#, fuzzy
+#| msgid "Group Share"
+msgid "Groupware"
+msgstr "Skupinové sdílení"
+
 #: modules/nextcloud/views.py:53
 msgid "Password update failed. Please choose a stronger password."
 msgstr "Aktualizace hesla se nezdařila. Zvolte prosím silnější heslo."
@@ -5786,6 +6110,18 @@ msgstr ""
 #: modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "DNS server"
+msgid "VPN server"
+msgstr "DNS server"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "Removable Devices"
+msgid "Remote access"
+msgstr "Vyjímatelná zařízení"
 
 #: modules/openvpn/templates/openvpn.html:12
 msgid "Profile"
@@ -6067,8 +6403,8 @@ msgstr ""
 "Nyní je spuštěná instalace nebo přechod na novější verzi. Počkejte s vypínám "
 "či restartem na dokončení této operace."
 
-#: modules/power/templates/power.html:22 templates/base.html:172
-#: templates/base.html:173
+#: modules/power/templates/power.html:22 templates/base.html:176
+#: templates/base.html:177
 msgid "Restart"
 msgstr "Restartovat"
 
@@ -6203,10 +6539,27 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Webová proxy"
 
-#: modules/privoxy/__init__.py:118
+#: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Přistupte {url} s proxy {proxy} na tcp{kind}"
+
+#: modules/privoxy/manifest.py:10
+msgid "Ad blocker"
+msgstr ""
+
+#: modules/privoxy/manifest.py:10 modules/shadowsocks/manifest.py:18
+#: modules/torproxy/manifest.py:55
+#, fuzzy
+#| msgid "Gobby Server"
+msgid "Proxy server"
+msgstr "Gobby server"
+
+#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Doména místní sítě"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6248,6 +6601,10 @@ msgstr "IRC klient"
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
+
+#: modules/quassel/manifest.py:54
+msgid "IRC"
+msgstr ""
 
 #: modules/radicale/__init__.py:25
 #, python-brace-format
@@ -6352,6 +6709,24 @@ msgstr ""
 "své uživatelské jméno. Po kliknutí na tlačítko vyhledávání se zobrazí seznam "
 "existujících kalendářů a adresářů."
 
+#: modules/radicale/manifest.py:91
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "Calendar"
+msgstr "Kalendář GNOME"
+
+#: modules/radicale/manifest.py:91 modules/roundcube/manifest.py:23
+msgid "Contacts"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CalDAV"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CardDAV"
+msgstr ""
+
 #: modules/radicale/views.py:32
 msgid "Access rights configuration updated"
 msgstr "Nastavení přístupových práv aktualizováno"
@@ -6421,6 +6796,12 @@ msgstr ""
 "je zaškrtnutí zrušeno, je na přihlašovací stránku přidáno pole pro zadání "
 "textu, aby uživatel mohl určit, ke kterému účtu se chce připojit."
 
+#: modules/roundcube/manifest.py:23
+#, fuzzy
+#| msgid "FairEmail"
+msgid "Email"
+msgstr "FairEmail"
+
 #: modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
@@ -6453,7 +6834,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:10
+#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
@@ -6469,6 +6850,18 @@ msgstr "Umožnit veřejný přístup"
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
 "Umožnit, aby tato aplikace byla používána kýmkoli, kdo se k ní může dostat."
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "RSS Feed Generator"
+msgid "Feed generator"
+msgstr "Generátor kanálů RSS"
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "FluxNews"
+msgid "News"
+msgstr "FluxNews"
 
 #: modules/samba/__init__.py:23
 msgid ""
@@ -6546,6 +6939,24 @@ msgstr "GNOME soubory"
 #: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
+
+#: modules/samba/manifest.py:91
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network drive"
+msgstr "Síťové rozhraní"
+
+#: modules/samba/manifest.py:92
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Media storage"
+msgstr "Server pro streamování médií"
+
+#: modules/samba/manifest.py:93
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup storage"
+msgstr "Zálohy"
 
 #: modules/samba/templates/samba.html:20
 msgid "Shares"
@@ -6685,6 +7096,16 @@ msgstr "Střední"
 #: modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Přísný"
+
+#: modules/searx/manifest.py:17
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web search"
+msgstr "Vyhledávání na webu"
+
+#: modules/searx/manifest.py:17
+msgid "Metasearch Engine"
+msgstr ""
 
 #: modules/security/forms.py:13
 msgid "Fail2Ban (recommended)"
@@ -6829,13 +7250,25 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37
+#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
 msgid "Bookmarks"
 msgstr "Záložky"
 
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "Link"
+msgid "Link blog"
+msgstr "Odkaz"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "in use"
+msgid "Single user"
+msgstr "v použití"
 
 #: modules/shadowsocks/__init__.py:18 modules/shadowsocksserver/__init__.py:18
 msgid ""
@@ -6886,10 +7319,6 @@ msgstr "Shadowsocks klient"
 msgid "Bypass Censorship"
 msgstr "Obejít cenzuru"
 
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Server"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Název nebo IP adresa serveru"
@@ -6908,6 +7337,24 @@ msgstr ""
 msgid "Encryption method. Must match setting on server."
 msgstr ""
 "Metoda šifrování. Je třeba, aby byla stejná, jaká je nastavená na serveru."
+
+#: modules/shadowsocks/manifest.py:20 modules/shadowsocksserver/manifest.py:19
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted tunnel"
+msgstr "Šifrování"
+
+#: modules/shadowsocks/manifest.py:21
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Entry point"
+msgstr "Koncový bod"
+
+#: modules/shadowsocks/manifest.py:22 modules/shadowsocksserver/manifest.py:21
+#, fuzzy
+#| msgid "Shadowsocks Client"
+msgid "Shadowsocks"
+msgstr "Shadowsocks klient"
 
 #: modules/shadowsocksserver/__init__.py:26
 #, python-brace-format
@@ -6940,6 +7387,12 @@ msgstr "Heslo používané k šifrování dat. Klienti musí používat stejné 
 msgid "Encryption method. Clients must use the same setting."
 msgstr "Metoda šifrování. Klienti musí používat stejné nastavení."
 
+#: modules/shadowsocksserver/manifest.py:20
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Exit point"
+msgstr "Koncový bod"
+
 #: modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
@@ -6948,10 +7401,6 @@ msgid ""
 msgstr ""
 "Sdílení umožňuje sdílet soubory a složky na vašem {box_name} přes web se "
 "zvolenou skupinou uživatelů."
-
-#: modules/sharing/__init__.py:34
-msgid "Sharing"
-msgstr "Sdílení"
 
 #: modules/sharing/forms.py:17
 msgid "Name of the share"
@@ -7003,6 +7452,12 @@ msgstr "Sdílení s tímto názvem už existuje."
 msgid "Shares should be either public or shared with at least one group"
 msgstr ""
 "Sdílení by mělo být buď veřejné, nebo sdílené alespoň s jednou skupinou."
+
+#: modules/sharing/manifest.py:19 modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web sharing"
+msgstr "Sdílení"
 
 #: modules/sharing/templates/sharing.html:18
 #: modules/sharing/templates/sharing.html:21
@@ -7729,6 +8184,18 @@ msgstr "Soubory TiddlyWiki musí být ve formátu HTML"
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "Nahrát existující soubor TiddlyWiki z tohoto počítače."
 
+#: modules/tiddlywiki/manifest.py:22
+msgid "Journal"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:23
+msgid "Digital garden"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:24
+msgid "Zettelkasten"
+msgstr ""
+
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
@@ -7771,7 +8238,8 @@ msgstr ""
 "z internetu, i když používáte poskytovatele internetového připojení, který "
 "omezuje servery doma."
 
-#: modules/tor/__init__.py:62
+#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
 
@@ -7888,6 +8356,16 @@ msgstr "Tor prohlížeč"
 #: modules/tor/manifest.py:31 modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: proxy s Tor"
+
+#: modules/tor/manifest.py:57
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion services"
+msgstr "Onion služba"
+
+#: modules/tor/manifest.py:58
+msgid "Relay"
+msgstr "Předávání"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -8066,13 +8544,12 @@ msgstr "TTRSS-Reader"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:38
-#: modules/upgrades/templates/update-firstboot.html:14
+#: modules/upgrades/__init__.py:33
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Zjistit dostupnost a uplatnit nejnovější aktualizace a opravy zabezpečení."
 
-#: modules/upgrades/__init__.py:39
+#: modules/upgrades/__init__.py:34
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8085,21 +8562,32 @@ msgstr ""
 "systému považován za nezbytný, provede se automaticky ve 02:00 a způsobí, že "
 "všechny aplikace budou krátce nedostupné."
 
-#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
-#: modules/upgrades/templates/update-firstboot-progress.html:11
-#: modules/upgrades/templates/update-firstboot.html:11
+#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:143
 msgid "Software Update"
 msgstr "Aktualizace software"
 
-#: modules/upgrades/__init__.py:133
+#: modules/upgrades/__init__.py:128
 msgid "FreedomBox Updated"
 msgstr "FreedomBox aktualizován"
 
-#: modules/upgrades/__init__.py:218
+#: modules/upgrades/__init__.py:138
+#, fuzzy
+#| msgid "Software Update"
+msgid "Run software update manually"
+msgstr "Aktualizace software"
+
+#: modules/upgrades/__init__.py:140
+msgid ""
+"Automatic software update runs daily by default. For the first time, "
+"manually run it now."
+msgstr ""
+
+#: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:220
+#: modules/upgrades/__init__.py:244
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8109,17 +8597,17 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:231
+#: modules/upgrades/__init__.py:255
 msgid "Distribution update started"
 msgstr "Zahájena aktualizace distribuce"
 
-#: modules/upgrades/__init__.py:233
+#: modules/upgrades/__init__.py:257
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
 
-#: modules/upgrades/__init__.py:326
+#: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
 msgstr "Kontrola zadržení balíčku"
 
@@ -8148,10 +8636,6 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivujte časté aktualizace funkcí (doporučeno)"
 
-#: modules/upgrades/forms.py:40
-msgid "Update now (recommended)"
-msgstr "Aktualizovat nyní (doporučeno)"
-
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -8168,31 +8652,9 @@ msgstr ""
 "<strong>Poznámka:</strong> Jakmile jsou časté aktualizace funkcí aktivovány, "
 "nelze je deaktivovat."
 
-#: modules/upgrades/templates/update-firstboot-progress.html:19
-msgid "Updating, please wait..."
-msgstr "Aktualizace, počkejte prosím..."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:22
-#: modules/upgrades/templates/update-firstboot.html:20
-msgid ""
-"<strong>This may take a long time to complete.</strong> During an update, "
-"this web interface may be temporarily unavailable and show an error. In that "
-"case, refresh the page to continue."
-msgstr ""
-"<strong>Dokončení aktualizace může trvat dlouho.</strong> Během aktualizace "
-"může být toto webové rozhraní dočasně nedostupné a může se zobrazit chyba. V "
-"takovém případě obnovte stránku a pokračujte."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:31
-#, python-format
-msgid ""
-"\n"
-"\t%(box_name)s is up to date. Press Next to continue.\n"
-"      "
-msgstr ""
-"\n"
-"\t%(box_name)s je aktuální. Stiskněte tlačítko Další a pokračujte.\n"
-"      "
+#: modules/upgrades/templates/backports-firstboot.html:45
+msgid "Next"
+msgstr "Další"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -8255,10 +8717,6 @@ msgstr ""
 msgid "Manual Update"
 msgstr "Ruční aktualizace"
 
-#: modules/upgrades/templates/upgrades_configure.html:108
-msgid "Update now"
-msgstr "Aktualizovat nyní"
-
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -8289,23 +8747,23 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Otestujte aktualizaci distribuce"
 
-#: modules/upgrades/views.py:73
+#: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
 msgstr "Chyba při nastavování bezobslužných aktualizací"
 
-#: modules/upgrades/views.py:120
+#: modules/upgrades/views.py:119
 msgid "Upgrade process started."
 msgstr "Proces přechodu na novější verze zahájen."
 
-#: modules/upgrades/views.py:122
+#: modules/upgrades/views.py:121
 msgid "Starting upgrade failed."
 msgstr "Spouštění přechodu na novější verzi se nezdařilo."
 
-#: modules/upgrades/views.py:132
+#: modules/upgrades/views.py:131
 msgid "Frequent feature updates activated."
 msgstr "Aktivovány časté aktualizace funkcí."
 
-#: modules/upgrades/views.py:218
+#: modules/upgrades/views.py:176
 msgid "Starting distribution upgrade test."
 msgstr "Zahájení testu aktualizace distribuce."
 
@@ -8532,6 +8990,10 @@ msgstr ""
 "usr/share/plinth/actions/actions users remove_user\". Pokud je účet již "
 "použitelný s %(box_name)s, tento krok přeskočte."
 
+#: modules/users/templates/users_firstboot.html:63
+msgid "Skip this step"
+msgstr "Tento krok přeskočte"
+
 #: modules/users/templates/users_list.html:11 modules/users/views.py:64
 msgid "Users"
 msgstr "Uživatelé"
@@ -8713,6 +9175,12 @@ msgstr "Toto připojení slouží k odesílání veškerého odchozího provozu"
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Obvykle se kontroluje u služby VPN, přes kterou se odesílá veškerý provoz."
+
+#: modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "IRC Client"
+msgid "VPN client"
+msgstr "IRC klient"
 
 #: modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -8994,6 +9462,10 @@ msgstr ""
 "WordPress pouze správcům. Povolte pouze po provedení počátečního nastavení "
 "WordPressu."
 
+#: modules/wordpress/manifest.py:26
+msgid "Content management system"
+msgstr ""
+
 #: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
@@ -9047,6 +9519,16 @@ msgstr ""
 "Pokud je tato funkce povolena, budou požadavky na servery OpenStreetMap "
 "odesílány z prohlížeče uživatele. To má dopad na soukromí."
 
+#: modules/zoph/manifest.py:26
+msgid "Photo"
+msgstr ""
+
+#: modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Photo Organizer"
+msgid "Organizer"
+msgstr "Organizér fotografií"
+
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
 msgid "Setup"
@@ -9065,17 +9547,18 @@ msgstr ""
 msgid "Generic"
 msgstr "Obecné"
 
-#: operation.py:118
-#, python-brace-format
-msgid "Error: {name}: {exception_message}"
+#: operation.py:120
+#, fuzzy, python-brace-format
+#| msgid "Error: {name}: {exception_message}"
+msgid "Error: {name}: {exception}"
 msgstr "Chyba: {name}: {exception_message}"
 
-#: operation.py:121
+#: operation.py:123
 #, python-brace-format
 msgid "Waiting to start: {name}"
 msgstr "Čeká na spuštění: {name}"
 
-#: operation.py:127
+#: operation.py:129
 #, python-brace-format
 msgid "Finished: {name}"
 msgstr "Dokončeno: {name}"
@@ -9120,67 +9603,75 @@ msgid "Updating app"
 msgstr "Aktualizace aplikací"
 
 #: setup.py:78
-#, python-brace-format
-msgid "Error installing app: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Error installing app: {error}"
+msgid "Error installing app: {exception}"
 msgstr "Chyba při instalaci aplikace: {error}"
 
-#: setup.py:81 setup.py:167
-#, python-brace-format
-msgid "Error repairing app: {error}"
+#: setup.py:80
+#, fuzzy, python-brace-format
+#| msgid "Error repairing app: {error}"
+msgid "Error repairing app: {exception}"
 msgstr "Chyba při opravě aplikace: {error}"
 
-#: setup.py:84
-#, python-brace-format
-msgid "Error updating app: {error}"
+#: setup.py:82
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error updating app: {exception}"
 msgstr "Chyba při aktualizaci aplikace: {error}"
 
-#: setup.py:88
+#: setup.py:85
 msgid "App installed."
 msgstr "Aplikace nainstalována."
 
-#: setup.py:92
+#: setup.py:89
 msgid "App updated"
 msgstr "Aplikace aktualizována"
 
-#: setup.py:115
+#: setup.py:112
 msgid "Repairing app"
 msgstr "Oprava aplikace"
 
-#: setup.py:146
+#: setup.py:143
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Chyba při spuštění diagnostiky: {error}"
 
-#: setup.py:159
+#: setup.py:156
 msgid "Skipping repair, no failed checks"
 msgstr "Přeskočení opravy, žádné neúspěšné kontroly"
 
-#: setup.py:173
+#: setup.py:164
+#, python-brace-format
+msgid "Error repairing app: {error}"
+msgstr "Chyba při opravě aplikace: {error}"
+
+#: setup.py:170
 msgid "Re-running setup to complete repairs"
 msgstr "Opětovné spuštění instalace za účelem dokončení oprav"
 
-#: setup.py:181
+#: setup.py:178
 msgid "App repaired."
 msgstr "Aplikace opravena."
 
-#: setup.py:185
+#: setup.py:182
 msgid "App repair completed with errors:\n"
 msgstr "Oprava aplikace byla dokončena s chybami:\n"
 
-#: setup.py:205
+#: setup.py:202
 msgid "Uninstalling app"
 msgstr "Odinstalování aplikace"
 
-#: setup.py:221
+#: setup.py:218
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Chyba při odinstalaci aplikace: {error}"
 
-#: setup.py:224
+#: setup.py:221
 msgid "App uninstalled."
 msgstr "Aplikace odinstalována."
 
-#: setup.py:597
+#: setup.py:594
 msgid "Updating app packages"
 msgstr "Aktualizace balíčků aplikací"
 
@@ -9243,6 +9734,12 @@ msgstr "Instalace"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Služba <em>%(service_name)s</em> není spuštěná."
 
+#: templates/apps.html:29
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "Hledat na webu"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9252,43 +9749,43 @@ msgstr ""
 "Jedná se o bezplatný software, který umožňuje snadnou instalaci a správu "
 "serverových aplikací."
 
-#: templates/base.html:108
+#: templates/base.html:112
 msgid " Home"
 msgstr " Domů"
 
-#: templates/base.html:111
+#: templates/base.html:115
 msgid "Home"
 msgstr "Domů"
 
-#: templates/base.html:116
+#: templates/base.html:120
 msgid " Apps"
 msgstr " Aplikace"
 
-#: templates/base.html:120
+#: templates/base.html:124
 msgid "Apps"
 msgstr "Aplikace"
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid " System"
 msgstr " Systém"
 
-#: templates/base.html:164 templates/base.html:165
+#: templates/base.html:168 templates/base.html:169
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: templates/base.html:178 templates/base.html:179
+#: templates/base.html:182 templates/base.html:183
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: templates/base.html:189 templates/base.html:218
+#: templates/base.html:193 templates/base.html:222
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: templates/base.html:198 templates/base.html:201
+#: templates/base.html:202 templates/base.html:205
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: templates/base.html:207 templates/base.html:209
+#: templates/base.html:211 templates/base.html:213
 msgid "Log in"
 msgstr "Přihlásit"
 
@@ -9355,15 +9852,6 @@ msgstr "RPM:"
 #: templates/error.html:10
 msgid "Error"
 msgstr "Chyba"
-
-#: templates/first_setup.html:18
-#, python-format
-msgid ""
-"Please wait for %(box_name)s to finish installation. You can start using "
-"your %(box_name)s once it is done."
-msgstr ""
-"Vyčkejte až %(box_name)s dokončí instalaci. Jakmile bude hotová, budete moci "
-"začít svůj %(box_name)s používat."
 
 #: templates/index.html:22
 #, python-format
@@ -9569,11 +10057,11 @@ msgstr ""
 "Všechna data a konfigurace aplikace budou trvale ztraceny. Aplikaci lze "
 "nainstalovat znovu."
 
-#: views.py:268
+#: views.py:322
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
-#: views.py:502
+#: views.py:557
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "před odinstalací {app_id}"
@@ -9581,6 +10069,54 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#, python-format
+#~ msgid "Without any apps, your %(box_name)s cannot do very much."
+#~ msgstr "Bez aplikací váš %(box_name)s není moc užitečný."
+
+#~ msgid "Install Apps"
+#~ msgstr "Nainstalovat aplikace"
+
+#, python-format
+#~ msgid ""
+#~ "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
+#~ "and modify it if necessary."
+#~ msgstr ""
+#~ "Možná bude třeba zkontrolovat <a href=\"%(networks_url)s\">nastavení "
+#~ "sítě</a> a případně upravit."
+
+#~ msgid "Update now (recommended)"
+#~ msgstr "Aktualizovat nyní (doporučeno)"
+
+#~ msgid "Updating, please wait..."
+#~ msgstr "Aktualizace, počkejte prosím..."
+
+#~ msgid ""
+#~ "<strong>This may take a long time to complete.</strong> During an update, "
+#~ "this web interface may be temporarily unavailable and show an error. In "
+#~ "that case, refresh the page to continue."
+#~ msgstr ""
+#~ "<strong>Dokončení aktualizace může trvat dlouho.</strong> Během "
+#~ "aktualizace může být toto webové rozhraní dočasně nedostupné a může se "
+#~ "zobrazit chyba. V takovém případě obnovte stránku a pokračujte."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "\t%(box_name)s is up to date. Press Next to continue.\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "\t%(box_name)s je aktuální. Stiskněte tlačítko Další a pokračujte.\n"
+#~ "      "
+
+#, python-format
+#~ msgid ""
+#~ "Please wait for %(box_name)s to finish installation. You can start using "
+#~ "your %(box_name)s once it is done."
+#~ msgstr ""
+#~ "Vyčkejte až %(box_name)s dokončí instalaci. Jakmile bude hotová, budete "
+#~ "moci začít svůj %(box_name)s používat."
 
 #~ msgid "Hostname set"
 #~ msgstr "Nastavení názvu stroje"
@@ -9593,9 +10129,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "Nelze testovat: Nejsou nakonfigurovány žádné domény."
-
-#~ msgid "Media streaming server"
-#~ msgstr "Server pro streamování médií"
 
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
@@ -9834,17 +10367,11 @@ msgstr "gudžarátština"
 #~ msgstr ""
 #~ "Cockpit bude fungovat pouze při přístupu pomocí následujících adres URL."
 
-#~ msgid "WebRTC server"
-#~ msgstr "WebRTC server"
-
 #~ msgid "Server URL"
 #~ msgstr "Server URL"
 
 #~ msgid "Server URL updated"
 #~ msgstr "Aktualizace URL serveru"
-
-#~ msgid "Relay"
-#~ msgstr "Předávání"
 
 #, python-format
 #~ msgid ""
@@ -10911,9 +11438,6 @@ msgstr "gudžarátština"
 #~ msgid "HTTPS"
 #~ msgstr "HTTPS"
 
-#~ msgid "SSH"
-#~ msgstr "SSH"
-
 #~ msgid "Not Available"
 #~ msgstr "Není k dispozici"
 
@@ -11127,17 +11651,11 @@ msgstr "gudžarátština"
 #~ "Zachycené stavy software starší než tato doba budou smazány. Toto "
 #~ "neomezuje počet vytvořených zachycených stavu software."
 
-#~ msgid "Archive name"
-#~ msgstr "Název archivu"
-
 #~ msgid "Invalid archive name"
 #~ msgstr "Neplatný název archivu"
 
 #~ msgid "Upload backup"
 #~ msgstr "Nahrát zálohu"
-
-#~ msgid "Removable Devices"
-#~ msgstr "Vyjímatelná zařízení"
 
 #~ msgid "There are no additional storage devices attached."
 #~ msgstr "Není připojené žádné další úložiště."
@@ -11262,9 +11780,6 @@ msgstr "gudžarátština"
 #~ msgid "Devices"
 #~ msgstr "Zařízení"
 
-#~ msgid "Filesystem"
-#~ msgstr "Souborový systém"
-
 #~ msgid "Exported filename"
 #~ msgstr "Název exportovaného soubour"
 
@@ -11364,9 +11879,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Enable forwarding to set forwarding DNS servers"
 #~ msgstr "Přeposílat na sadu přeposílajících DNS serverů"
-
-#~ msgid "BitTorrent"
-#~ msgstr "BitTorrent"
 
 #~ msgid "wiki"
 #~ msgstr "wiki"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 20:05-0400\n"
+"POT-Creation-Date: 2024-10-21 20:10-0400\n"
 "PO-Revision-Date: 2024-08-15 06:09+0000\n"
 "Last-Translator: Petter Reinholdtsen <pere-weblate@hungry.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statisk oppsett {etc_path} er korrekt satt opp"
 
-#: context_processors.py:23 views.py:116
+#: context_processors.py:23 views.py:117
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -116,7 +116,7 @@ msgstr "Synlighet"
 msgid "Data"
 msgstr "Data"
 
-#: menu.py:110 templates/base.html:129
+#: menu.py:110 templates/base.html:133
 msgid "System"
 msgstr "System"
 
@@ -206,6 +206,7 @@ msgstr "Aktiver sikkerhetskopitidsplan"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
+#: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gå til {app_name}"
@@ -466,7 +467,7 @@ msgstr "Eksisterende pakkebrønn er ikke kryptert."
 msgid "{box_name} storage"
 msgstr "{box_name} lager"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:116
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
 msgid "Create a new backup"
 msgstr "Lag ny sikkerhetskopi"
 
@@ -563,7 +564,7 @@ msgstr "Last ned"
 
 #: modules/backups/templates/backups_repository.html:87
 #: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:219 templates/toolbar.html:44
+#: modules/backups/views.py:220 templates/toolbar.html:44
 #: templates/toolbar.html:45
 msgid "Restore"
 msgstr "Gjenopprett"
@@ -667,99 +668,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Bekreft vert"
 
-#: modules/backups/views.py:59
+#: modules/backups/views.py:58
 msgid "Backup schedule updated."
 msgstr "Sikkerhetskopieringstidsplan oppdatert."
 
-#: modules/backups/views.py:78
+#: modules/backups/views.py:77
 msgid "Schedule Backups"
 msgstr "Tidsplan for sikkerhetskopiering"
 
-#: modules/backups/views.py:111
+#: modules/backups/views.py:110
 msgid "Archive created."
 msgstr "Arkiv opprettet."
 
-#: modules/backups/views.py:147
+#: modules/backups/views.py:146
 msgid "Delete Archive"
 msgstr "Slett arkiv"
 
-#: modules/backups/views.py:159
+#: modules/backups/views.py:158
 msgid "Archive deleted."
 msgstr "Arkiv slettet."
 
-#: modules/backups/views.py:172
+#: modules/backups/views.py:171
 msgid "Upload and restore a backup"
 msgstr "Last opp og tilbakefør en sikkerhetskopi"
 
-#: modules/backups/views.py:207
+#: modules/backups/views.py:208
 msgid "Restored files from backup."
 msgstr "Gjenopprettede filer fra sikkerhetskopi."
 
-#: modules/backups/views.py:235
+#: modules/backups/views.py:236
 msgid "No backup file found."
 msgstr "Fant ingen sikkerhetskopifiler."
 
-#: modules/backups/views.py:243
+#: modules/backups/views.py:244
 msgid "Restore from uploaded file"
 msgstr "Gjenopprett fra opplastet fil"
 
-#: modules/backups/views.py:302
+#: modules/backups/views.py:303
 msgid "No additional disks available to add a repository."
 msgstr "Ingen ytterligere disker tilgjengelig for opprettelse av kodelager."
 
-#: modules/backups/views.py:310
+#: modules/backups/views.py:311
 msgid "Create backup repository"
 msgstr "Opprett kodelager for sikkerhetskopier"
 
-#: modules/backups/views.py:337
+#: modules/backups/views.py:338
 msgid "Create remote backup repository"
 msgstr "Opprett kodelager annensteds hen for sikkerhetskopi"
 
-#: modules/backups/views.py:357
+#: modules/backups/views.py:358
 msgid "Added new remote SSH repository."
 msgstr "La til nytt SSH-kodelager annensteds fra."
 
-#: modules/backups/views.py:379
+#: modules/backups/views.py:380
 msgid "Verify SSH hostkey"
 msgstr "Bekreft SSH-vertsnøkkel"
 
-#: modules/backups/views.py:405
+#: modules/backups/views.py:406
 msgid "SSH host already verified."
 msgstr "SSH-vert allerede bekreftet."
 
-#: modules/backups/views.py:415
+#: modules/backups/views.py:416
 msgid "SSH host verified."
 msgstr "SSH-vert bekreftet."
 
-#: modules/backups/views.py:430
+#: modules/backups/views.py:431
 msgid "SSH host public key could not be verified."
 msgstr "Offentlig nøkkel tilhørende SSH-vert kunne ikke bekreftes."
 
-#: modules/backups/views.py:432
+#: modules/backups/views.py:433
 msgid "Authentication to remote server failed."
 msgstr "Identitetsbekreftelse til fjerntjener mislyktes."
 
-#: modules/backups/views.py:434
+#: modules/backups/views.py:435
 msgid "Error establishing connection to server: {}"
 msgstr "Klarte ikke å koble til tjener: {}"
 
-#: modules/backups/views.py:445
+#: modules/backups/views.py:446
 msgid "Repository removed."
 msgstr "Kodelager fjernet."
 
-#: modules/backups/views.py:459
+#: modules/backups/views.py:460
 msgid "Remove Repository"
 msgstr "Fjern kodelager"
 
-#: modules/backups/views.py:468
+#: modules/backups/views.py:469
 msgid "Repository removed. Backups were not deleted."
 msgstr "Kodelager fjernet. Sikkerhetskopier ble ikke slettet."
 
-#: modules/backups/views.py:478
+#: modules/backups/views.py:479
 msgid "Unmounting failed!"
 msgstr "Klarte ikke å avmontere!"
 
-#: modules/backups/views.py:493 modules/backups/views.py:497
+#: modules/backups/views.py:494 modules/backups/views.py:498
 msgid "Mounting failed"
 msgstr "Montering feilet"
 
@@ -864,6 +865,18 @@ msgstr ""
 "Vilkårlig kommentar som kan hjelpe deg å huske grunnen til at du har dette "
 "passordet."
 
+#: modules/bepasty/manifest.py:23 modules/deluge/manifest.py:21
+#: modules/samba/manifest.py:89 modules/sharing/manifest.py:19
+#: modules/syncthing/manifest.py:58 modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "File & Snippet Sharing"
+msgid "File sharing"
+msgstr "Deling av filer og snutter"
+
+#: modules/bepasty/manifest.py:23
+msgid "Pastebin"
+msgstr ""
+
 #: modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
 msgstr "Passordhåndtering"
@@ -928,7 +941,7 @@ msgstr "admin"
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
 #: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Konfigurering oppdatert."
@@ -1091,6 +1104,22 @@ msgstr ""
 #: modules/calibre/forms.py:28
 msgid "A library with this name already exists."
 msgstr "Det finnes allerede et bibliotek med dette navnet."
+
+#: modules/calibre/manifest.py:20
+msgid "Ebook"
+msgstr ""
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Library"
+msgstr "E-bok-bibliotek"
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Ebook reader"
+msgstr "E-bok-bibliotek"
 
 #: modules/calibre/templates/calibre-delete-library.html:11
 #, python-format
@@ -1343,6 +1372,18 @@ msgstr "VoIP-hjelper"
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr ""
 
+#: modules/coturn/manifest.py:7 modules/janus/manifest.py:16
+msgid "Video conference"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "STUN"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "TURN"
+msgstr ""
+
 #: modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr "Bruk følgende nettadresser for å sette opp din kommunikasjonstjener:"
@@ -1426,6 +1467,25 @@ msgstr "Last ned katalog"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "BitTorrent-klient skrevet i Python/PyGTK"
 
+#: modules/deluge/manifest.py:21 modules/transmission/manifest.py:39
+#, fuzzy
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
+#: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "Launch web client"
+msgid "Web client"
+msgstr "Sette i gang en web-klient"
+
+#: modules/deluge/manifest.py:21 modules/syncthing/manifest.py:58
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "I2P"
+msgid "P2P"
+msgstr "I2P"
+
 #: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
@@ -1448,7 +1508,7 @@ msgstr ""
 msgid "passed"
 msgstr "Quassel"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:51
 msgid "failed"
 msgstr "feilet"
 
@@ -1918,7 +1978,7 @@ msgid ""
 "href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: modules/ejabberd/__init__.py:61
+#: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
 
@@ -2020,6 +2080,27 @@ msgstr "Dino"
 #: modules/ejabberd/manifest.py:85
 msgid "Gajim"
 msgstr "Gajim"
+
+#: modules/ejabberd/manifest.py:124 modules/matrixsynapse/manifest.py:102
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted messaging"
+msgstr "Kryptering"
+
+#: modules/ejabberd/manifest.py:125 modules/matrixsynapse/manifest.py:103
+#: modules/mumble/manifest.py:67
+msgid "Audio chat"
+msgstr ""
+
+#: modules/ejabberd/manifest.py:126 modules/matrixsynapse/manifest.py:104
+#, fuzzy
+#| msgid "Video Room"
+msgid "Video chat"
+msgstr "Videorom"
+
+#: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
+msgid "XMPP"
+msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
 #, fuzzy, python-format
@@ -2149,7 +2230,7 @@ msgid "Aliases"
 msgstr "Håndter biblioteker"
 
 #: modules/email/manifest.py:12 modules/roundcube/__init__.py:50
-#: modules/roundcube/manifest.py:6
+#: modules/roundcube/manifest.py:7
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -2166,6 +2247,20 @@ msgstr "K-9 Mail"
 #: modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
+
+#: modules/email/manifest.py:82
+#, fuzzy
+#| msgid "Email Server"
+msgid "Email server"
+msgstr "E-posttjener"
+
+#: modules/email/manifest.py:82
+msgid "IMAP"
+msgstr ""
+
+#: modules/email/manifest.py:82
+msgid "Spam control"
+msgstr ""
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2302,6 +2397,36 @@ msgstr ""
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+msgid "Wiki"
+msgstr "Wiki"
+
+#: modules/featherwiki/manifest.py:18 modules/infinoted/manifest.py:46
+#: modules/tiddlywiki/manifest.py:20
+msgid "Note taking"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:21
+#: modules/wordpress/manifest.py:26
+#, fuzzy
+#| msgid "Website Security"
+msgid "Website"
+msgstr "Nettstedssikkerhet"
+
+#: modules/featherwiki/manifest.py:18 modules/tiddlywiki/manifest.py:25
+msgid "Quine"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/nextcloud/manifest.py:56
+#: modules/tiddlywiki/manifest.py:26
+#, fuzzy
+#| msgid "Debian:"
+msgid "Non-Debian"
+msgstr "Debian:"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
@@ -2493,7 +2618,7 @@ msgstr "Aktivert"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:34
+#: templates/cards.html:36
 msgid "Disabled"
 msgstr "Deaktivert"
 
@@ -2537,6 +2662,27 @@ msgstr ""
 "Avanserte brannmursoperasjoner, som åpning av spesifikke porter, tilbys av "
 "<a href=\"/_cockpit/network/firewall\">Cockpit</a>-programmet."
 
+#: modules/first_boot/__init__.py:61
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup complete! Next steps:"
+msgstr "Oppsett er fullført!"
+
+#: modules/first_boot/__init__.py:63
+#, python-brace-format
+msgid ""
+"Initial setup has been completed. Perform the next steps to make your "
+"{box_name} operational."
+msgstr ""
+
+#: modules/first_boot/__init__.py:66
+msgid "Next steps"
+msgstr ""
+
+#: modules/first_boot/__init__.py:73
+msgid "See next steps"
+msgstr ""
+
 #: modules/first_boot/forms.py:14
 #, python-brace-format
 msgid ""
@@ -2553,32 +2699,61 @@ msgid "Firstboot Wizard Secret"
 msgstr "Hemmelighet for oppstartsveiviser"
 
 #: modules/first_boot/templates/firstboot_complete.html:11
-msgid "Setup Complete!"
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup Complete! Next Steps:"
 msgstr "Oppsett er fullført!"
 
-#: modules/first_boot/templates/firstboot_complete.html:14
-#, python-format
-msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr "Uten noen apper, kan ikke din %(box_name)s gjøre veldig mye."
-
-#: modules/first_boot/templates/firstboot_complete.html:21
-msgid "Install Apps"
-msgstr "Installer App-er"
-
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:18
 #, python-format
 msgid ""
-"You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
-"modify it if necessary."
+"Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
+"runs daily by default. For the first time, manually run it now."
 msgstr ""
-"Du vil kanskje kontrollere <a href=\"%(networks_url)s\">network setup</a> "
-"(nettverksoppsettet) og endre det om nødvendig."
+
+#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/upgrades/templates/upgrades_configure.html:108
+msgid "Update now"
+msgstr "Oppdater nå"
+
+#: modules/first_boot/templates/firstboot_complete.html:36
+#, python-format
+msgid ""
+"Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:46
+#, python-format
+msgid ""
+"Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
+"connections</a>. Change the default Wi-Fi password, if applicable."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:57
+#, python-format
+msgid ""
+"Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:67
+#, python-format
+msgid ""
+"Configure and schedule remote <a href=\"%(backups_url)s\" "
+"target=\"_blank\">backups</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:78
+#, python-format
+msgid ""
+"Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
+"target=\"_blank\">apps</a>."
+msgstr ""
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
 msgstr "Gå i gang med oppsett"
 
-#: modules/first_boot/views.py:50
+#: modules/first_boot/views.py:41
 msgid "Setup Complete"
 msgstr "Oppsett ferdig"
 
@@ -2690,6 +2865,20 @@ msgstr "Gitweb biser dette som forvalgt forgrening."
 msgid "Git"
 msgstr "Git"
 
+#: modules/gitweb/manifest.py:37
+#, fuzzy
+#| msgid "Simple Git Hosting"
+msgid "Git hosting"
+msgstr "Enkelt Git-vertsskap"
+
+#: modules/gitweb/manifest.py:37
+msgid "Version control"
+msgstr ""
+
+#: modules/gitweb/manifest.py:37
+msgid "Developer tool"
+msgstr ""
+
 #: modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
 msgstr "Håndter kodelagre"
@@ -2758,19 +2947,19 @@ msgid "Manual"
 msgstr "Manual"
 
 #: modules/help/__init__.py:41 modules/help/templates/help_support.html:9
-#: modules/help/views.py:90 templates/help-menu.html:27
+#: modules/help/views.py:93 templates/help-menu.html:27
 #: templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Få støtte"
 
 #: modules/help/__init__.py:45 modules/help/templates/help_feedback.html:9
-#: modules/help/views.py:84 templates/help-menu.html:33
+#: modules/help/views.py:87 templates/help-menu.html:33
 #: templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Send inn tilbakemeldinger"
 
 #: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:73 templates/help-menu.html:39
+#: modules/help/views.py:76 templates/help-menu.html:39
 #: templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Bidra"
@@ -2916,7 +3105,7 @@ msgstr ""
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
-#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:57
+#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:68
 msgid "Learn more..."
 msgstr "Lær mer…"
 
@@ -3103,16 +3292,16 @@ msgstr ""
 "Alle passord og annen personlig informasjon bør fjernes fra loggen før du "
 "sender inn feilrapporten."
 
-#: modules/help/views.py:28
+#: modules/help/views.py:29
 msgid "Documentation and FAQ"
 msgstr "Dokumentasjon og ofte stilte spørsmål"
 
-#: modules/help/views.py:96
+#: modules/help/views.py:99
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Om {box_name}"
 
-#: modules/help/views.py:130
+#: modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Manual"
@@ -3161,6 +3350,19 @@ msgstr "Anonymitetsnettverk"
 #: modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "I2P-mellomtjener"
+
+#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
+#: modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "Anonymitetsnettverk"
+
+#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
+#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
+#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3243,6 +3445,10 @@ msgstr "Administratorkonto navn"
 #: modules/ikiwiki/forms.py:19
 msgid "Admin Account Password"
 msgstr "Administratorkonto passord"
+
+#: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
+msgid "Blog"
+msgstr ""
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3340,7 +3546,7 @@ msgstr "infinoted"
 msgid "Gobby Server"
 msgstr "Gobby-tjener"
 
-#: modules/infinoted/manifest.py:10
+#: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
 
@@ -3356,6 +3562,10 @@ msgid ""
 msgstr ""
 "Start Gobby og velge «Koble til tjener», og skriver inn domenenavnet til din "
 "{box_name}."
+
+#: modules/infinoted/manifest.py:46
+msgid "Collaborative editing"
+msgstr ""
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3382,8 +3592,18 @@ msgstr "Videorom"
 msgid "Janus Video Room"
 msgstr "Janus videorom"
 
+#: modules/janus/manifest.py:16
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC"
+msgstr "Nett-tjener"
+
+#: modules/janus/manifest.py:16
+msgid "Web conference"
+msgstr ""
+
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
 msgid "JavaScript license information"
 msgstr "JavaScript lisensinformasjon"
 
@@ -3402,6 +3622,18 @@ msgstr "JSXC"
 #: modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Nettpratklient"
+
+#: modules/jsxc/manifest.py:16
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web chat"
+msgstr "Nettsøk"
+
+#: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Client"
+msgstr "IRC-klient"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3457,6 +3689,22 @@ msgid ""
 "{box_name}. If Kiwix fails to add the file, it will be deleted immediately "
 "to save disk space."
 msgstr ""
+
+#: modules/kiwix/manifest.py:23
+msgid "Offline reader"
+msgstr ""
+
+#: modules/kiwix/manifest.py:24
+#, fuzzy
+#| msgid "Archive name"
+msgid "Archival"
+msgstr "Arkivnavn"
+
+#: modules/kiwix/manifest.py:26
+#, fuzzy
+#| msgid "Wiki"
+msgid "Wikipedia"
+msgstr "Wiki"
 
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
@@ -3740,6 +3988,18 @@ msgstr "Element"
 msgid "FluffyChat"
 msgstr "FluffyChat"
 
+#: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Chatroom"
+msgid "Chat room"
+msgstr "IRC-nettpratrom"
+
+#: modules/matrixsynapse/manifest.py:105
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Matrix server"
+msgstr "Media-strømmetjener"
+
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
@@ -3897,10 +4157,6 @@ msgstr ""
 #: modules/mediawiki/__init__.py:51 modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
-
-#: modules/mediawiki/__init__.py:52 templates/index.html:128
-msgid "Wiki"
-msgstr "Wiki"
 
 #: modules/mediawiki/forms.py:56
 msgid "Administrator Password"
@@ -4095,6 +4351,22 @@ msgid "When disabled, players cannot die or receive damage of any kind."
 msgstr ""
 "Når den ikke er aktiv, kan ikke spillere dø eller ta skade av noe slag."
 
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Updated server."
+msgid "Game server"
+msgstr "Tjener oppdatert."
+
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Block Sandbox"
+msgid "Block sandbox"
+msgstr "Block-sandkassen"
+
+#: modules/minetest/manifest.py:49
+msgid "Platform"
+msgstr ""
+
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
 msgid "Address"
@@ -4152,6 +4424,25 @@ msgstr "yaacc"
 #: modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+msgid "Media server"
+msgstr "Enkel mediatjener"
+
+#: modules/minidlna/manifest.py:116
+msgid "Television"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+msgid "UPnP"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "MiniDLNA"
+msgid "DLNA"
+msgstr "MiniDLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4246,6 +4537,28 @@ msgstr "Les"
 
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "News Feed Reader"
+msgid "Feed reader"
+msgstr "Nyhetstrøm-leser"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+msgid "News aggregation"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "SSH"
+msgid "RSS"
+msgstr "SSH"
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+msgid "ATOM"
 msgstr ""
 
 #: modules/miniflux/templates/miniflux.html:14
@@ -4384,6 +4697,15 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
+#: modules/mumble/manifest.py:67
+msgid "Group conference"
+msgstr ""
+
+#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
+#: modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Tjener"
+
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
 msgstr "Vellykket passordbytte for SuperUser."
@@ -4492,17 +4814,17 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
-#: modules/networks/views.py:126
+#: modules/networks/views.py:125
 msgid "yes"
 msgstr "Ja"
 
 #: modules/names/resolved.py:92 modules/networks/forms.py:29
-#: modules/networks/views.py:125
+#: modules/networks/views.py:124
 msgid "opportunistic"
 msgstr ""
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:30 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:123
 #, fuzzy
 #| msgid "Dino"
 msgid "no"
@@ -4611,7 +4933,7 @@ msgstr "Domenenavn"
 msgid "Error setting domain name: {exception}"
 msgstr "Feil ved innstilling/setting av domenenavn: {exception}"
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:19
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4619,7 +4941,7 @@ msgstr ""
 "Sett opp nettverksenheter. Sett opp Internett via Ethernet, Wi-Fi eller "
 "PPPoE. Del den tilkoblingen med andre enheter på nettverket."
 
-#: modules/networks/__init__.py:39
+#: modules/networks/__init__.py:21
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4627,13 +4949,13 @@ msgstr ""
 "Enheter administrert gjennom andre metoder kan være utilgjengelige for "
 "oppsett her."
 
-#: modules/networks/__init__.py:60
+#: modules/networks/__init__.py:42
 msgid "Networks"
 msgstr "Nettverk"
 
 #: modules/networks/forms.py:19 modules/networks/forms.py:25
-#: modules/networks/views.py:40 modules/networks/views.py:101
-#: modules/networks/views.py:112
+#: modules/networks/views.py:39 modules/networks/views.py:100
+#: modules/networks/views.py:111
 msgid "unknown"
 msgstr "ukjent"
 
@@ -5030,7 +5352,7 @@ msgstr "Rediger tilkobling"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:157 templates/base.html:158
+#: templates/base.html:161 templates/base.html:162
 msgid "Edit"
 msgstr "Rediger"
 
@@ -5161,7 +5483,8 @@ msgstr "Denne forbindelsen er ikke aktiv."
 
 #: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
+#: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 #, fuzzy
 #| msgid "Privoxy"
 msgid "Privacy"
@@ -5212,7 +5535,7 @@ msgid "Create Connection"
 msgstr "Lage forbindelse"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:537
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Slett tilkobling"
 
@@ -5232,14 +5555,14 @@ msgstr "Lage mellomrom"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:102 network.py:27
+#: modules/networks/views.py:101 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:103 network.py:28
+#: modules/networks/views.py:102 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5259,7 +5582,7 @@ msgid "Computer"
 msgstr "Datamaskin"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:254 modules/networks/views.py:341
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Endre oppkobling"
 
@@ -5281,13 +5604,13 @@ msgstr "Tilkobling"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:390
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi-nettverk i nærheten"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:414
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Legg til tilkobling"
@@ -5318,23 +5641,6 @@ msgid ""
 "Select an option that best describes the type of Internet connection. This "
 "information is used only to guide you with further setup."
 msgstr ""
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:19
-#: modules/networks/templates/network_topology_firstboot.html:19
-#: modules/networks/templates/router_configuration_firstboot.html:19
-#: modules/users/templates/users_firstboot.html:63
-msgid "Skip this step"
-msgstr "Hopp over dette steget"
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:21
-#: modules/networks/templates/network_topology_firstboot.html:21
-#: modules/networks/templates/router_configuration_firstboot.html:21
-#: modules/upgrades/templates/backports-firstboot.html:45
-#: modules/upgrades/templates/update-firstboot-progress.html:35
-#: modules/upgrades/templates/update-firstboot-progress.html:38
-#: modules/upgrades/templates/update-firstboot.html:33
-msgid "Next"
-msgstr "Neste"
 
 #: modules/networks/templates/internet_connectivity_main.html:9
 msgid "Your Internet Connection Type"
@@ -5498,296 +5804,296 @@ msgid ""
 "full instructions on how to perform this task."
 msgstr ""
 
-#: modules/networks/views.py:28
+#: modules/networks/views.py:27
 #, fuzzy
 #| msgid "Disabled"
 msgid "disabled"
 msgstr "Deaktivert"
 
-#: modules/networks/views.py:29
+#: modules/networks/views.py:28
 #, fuzzy
 #| msgid "Automatic"
 msgid "automatic"
 msgstr "Automatisk"
 
-#: modules/networks/views.py:30
+#: modules/networks/views.py:29
 #, fuzzy
 #| msgid "Manual"
 msgid "manual"
 msgstr "Manual"
 
-#: modules/networks/views.py:31
+#: modules/networks/views.py:30
 #, fuzzy
 #| msgid "Shared"
 msgid "shared"
 msgstr "Delt"
 
-#: modules/networks/views.py:32
+#: modules/networks/views.py:31
 msgid "link-local"
 msgstr ""
 
-#: modules/networks/views.py:33
+#: modules/networks/views.py:32
 msgid "dhcp"
 msgstr ""
 
-#: modules/networks/views.py:34
+#: modules/networks/views.py:33
 #, fuzzy
 #| msgid "Ignore"
 msgid "ignore"
 msgstr "Overse"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:40
 #, fuzzy
 #| msgid "Manage"
 msgid "unmanaged"
 msgstr "Håndtere"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:41
 #, fuzzy
 #| msgid "Available Domains"
 msgid "unavailable"
 msgstr "Tilgjengelige domener"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:42
 #, fuzzy
 #| msgid "cable is connected"
 msgid "disconnected"
 msgstr "kabel er tilknyttet"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:43
 #, fuzzy
 #| msgid "Sharing"
 msgid "preparing"
 msgstr "Deling"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:44
 #, fuzzy
 #| msgid "Connection"
 msgid "connecting"
 msgstr "Tilkobling"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:45
 #, fuzzy
 #| msgid "Use HTTP basic authentication"
 msgid "needs authentication"
 msgstr "Bruk HTTP-basisgodkjenning"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:46
 msgid "requesting address"
 msgstr ""
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:47
 msgid "checking"
 msgstr "sjekker"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:48
 msgid "waiting for secondary"
 msgstr ""
 
-#: modules/networks/views.py:50
+#: modules/networks/views.py:49
 #, fuzzy
 #| msgid "Deactivate"
 msgid "activated"
 msgstr "Deaktivere"
 
-#: modules/networks/views.py:51
+#: modules/networks/views.py:50
 #, fuzzy
 #| msgid "Deactivate"
 msgid "deactivating"
 msgstr "Deaktivere"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:58
 #, fuzzy
 #| msgid "State reason"
 msgid "no reason"
 msgstr "Grunn til tilstand"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:60
 msgid "unknown error"
 msgstr ""
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:62
 msgid "device is now managed"
 msgstr "Enheten er nå håndtert"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:64
 msgid "device is now unmanaged"
 msgstr "Enheten er nå ikke håndtert"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:66
 #, fuzzy
 #| msgid "configuration file: {file}"
 msgid "configuration failed"
 msgstr "oppsettsfil: {file}"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:68
 msgid "secrets required"
 msgstr ""
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:70
 msgid "DHCP client failed to start"
 msgstr ""
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:72
 msgid "DHCP client error"
 msgstr "DHCP-klientfeil"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:74
 msgid "DHCP client failed"
 msgstr "DHCP-klient feilet"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:76
 msgid "shared connection service failed to start"
 msgstr ""
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:78
 msgid "shared connection service failed"
 msgstr "delt forbindelsestjeneste feilet"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:80
 msgid "device was removed"
 msgstr "enhet ble fjernet"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:82
 msgid "device disconnected by user"
 msgstr "enhet frakoblet av bruker"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:84
 msgid "a dependency of the connection failed"
 msgstr ""
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:86
 #, fuzzy
 #| msgid "Client not found"
 msgid "Wi-Fi network not found"
 msgstr "Finner ikke klient"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:88
 msgid "a secondary connection failed"
 msgstr ""
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:90
 msgid "new connection activation was enqueued"
 msgstr ""
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:92
 msgid "a duplicate IP address was detected"
 msgstr ""
 
-#: modules/networks/views.py:95
+#: modules/networks/views.py:94
 msgid "selected IP method is not supported"
 msgstr ""
 
-#: modules/networks/views.py:104
+#: modules/networks/views.py:103
 #, fuzzy
 #| msgid "Generic"
 msgid "generic"
 msgstr "Generisk"
 
-#: modules/networks/views.py:105
+#: modules/networks/views.py:104
 #, fuzzy
 #| msgid "Network Interface"
 msgid "TUN or TAP interface"
 msgstr "Nettverksgrensesnitt"
 
-#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:105 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:112
 #, fuzzy
 #| msgid "Ad-hoc"
 msgid "ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:113
 #, fuzzy
 #| msgid "Infrastructure"
 msgid "infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/views.py:115
+#: modules/networks/views.py:114
 #, fuzzy
 #| msgid "Access Point"
 msgid "access point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/views.py:116
+#: modules/networks/views.py:115
 #, fuzzy
 #| msgid "Access Point"
 msgid "mesh point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/views.py:123
+#: modules/networks/views.py:122
 #, fuzzy
 #| msgid "Default"
 msgid "default"
 msgstr "Forvalg"
 
-#: modules/networks/views.py:156
+#: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
 msgstr "Kan ikke vise tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:210
 msgid "Connection Information"
 msgstr "Oppkoblingsinformasjon"
 
-#: modules/networks/views.py:226
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "Kan ikke redigere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:232
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Denne typen tilkobling er ennå ikke forstått."
 
-#: modules/networks/views.py:353
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Aktiverte tilkobling {name}."
 
-#: modules/networks/views.py:357
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kunne ikke aktivere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:363
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Klarte ikke aktivere tilkoblingen {name}: Ingen passende enhet er "
 "tilgjengelig."
 
-#: modules/networks/views.py:376
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Deaktivert tilkobling {name}."
 
-#: modules/networks/views.py:380
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kunne ikke deaktivere tilkobling: Tilkobling ikke funnet."
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Legger til ny generell tilkobling"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Legge til ny Ethernet-tilkobling"
 
-#: modules/networks/views.py:468
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Legge til ny PPPoE-tilkobling"
 
-#: modules/networks/views.py:503
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Legge til ny Wi-Fi-tilkobling"
 
-#: modules/networks/views.py:518
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Tilkobling {name} slettet."
 
-#: modules/networks/views.py:522 modules/networks/views.py:532
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kunne ikke slette tilkobling: Tilkobling ikke funnet."
 
@@ -5879,6 +6185,22 @@ msgid ""
 "profile settings without a country code."
 msgstr ""
 
+#: modules/nextcloud/manifest.py:56 modules/syncthing/manifest.py:58
+#, fuzzy
+#| msgid "Filesystem"
+msgid "File sync"
+msgstr "Filsystem"
+
+#: modules/nextcloud/manifest.py:56 modules/sharing/__init__.py:34
+msgid "Sharing"
+msgstr "Deling"
+
+#: modules/nextcloud/manifest.py:56
+#, fuzzy
+#| msgid "Add Share"
+msgid "Groupware"
+msgstr "Legg til deling"
+
 #: modules/nextcloud/views.py:53
 #, fuzzy
 #| msgid "Password update failed. Please choose a stronger password"
@@ -5926,6 +6248,18 @@ msgstr ""
 #: modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "DNS server"
+msgid "VPN server"
+msgstr "DNS-tjener"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "Removable Devices"
+msgid "Remote access"
+msgstr "Flyttbare medium"
 
 #: modules/openvpn/templates/openvpn.html:12
 msgid "Profile"
@@ -6224,8 +6558,8 @@ msgstr ""
 "En annen installasjon eller oppgradering kjører allerede. Vent litt før du "
 "prøver igjen."
 
-#: modules/power/templates/power.html:22 templates/base.html:172
-#: templates/base.html:173
+#: modules/power/templates/power.html:22 templates/base.html:176
+#: templates/base.html:177
 msgid "Restart"
 msgstr "Omstart"
 
@@ -6357,10 +6691,27 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Mellomtjener for nettet"
 
-#: modules/privoxy/__init__.py:118
+#: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Tilgang {url} med mellomtjener {proxy} på tcp{kind}"
+
+#: modules/privoxy/manifest.py:10
+msgid "Ad blocker"
+msgstr ""
+
+#: modules/privoxy/manifest.py:10 modules/shadowsocks/manifest.py:18
+#: modules/torproxy/manifest.py:55
+#, fuzzy
+#| msgid "Gobby Server"
+msgid "Proxy server"
+msgstr "Gobby-tjener"
+
+#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Lokalt nettverksdomene"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6402,6 +6753,10 @@ msgstr "IRC-klient"
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
+
+#: modules/quassel/manifest.py:54
+msgid "IRC"
+msgstr ""
 
 #: modules/radicale/__init__.py:25
 #, fuzzy, python-brace-format
@@ -6512,6 +6867,24 @@ msgstr ""
 "freedombox.adresse&gt;) og ditt brukernavn. Å klikke på søkeknappen vil "
 "liste opp eksisterende kalendre og adressebøker."
 
+#: modules/radicale/manifest.py:91
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "Calendar"
+msgstr "GNOME-kalender"
+
+#: modules/radicale/manifest.py:91 modules/roundcube/manifest.py:23
+msgid "Contacts"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CalDAV"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CardDAV"
+msgstr ""
+
 #: modules/radicale/views.py:32
 msgid "Access rights configuration updated"
 msgstr "Tilgangskontrolloppsett oppdatert"
@@ -6574,6 +6947,12 @@ msgid ""
 "login page so the user can specify to which account they wish to connect."
 msgstr ""
 
+#: modules/roundcube/manifest.py:23
+#, fuzzy
+#| msgid "FairEmail"
+msgid "Email"
+msgstr "FairEmail"
+
 #: modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
@@ -6601,7 +6980,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Les og abonner på nyhetsstrømmer"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:10
+#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
 #, fuzzy
 #| msgid "Bridge"
 msgid "RSS-Bridge"
@@ -6618,6 +6997,14 @@ msgstr "Tillat offentlig tilgang"
 #: modules/rssbridge/forms.py:13 modules/searx/forms.py:18
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr "Tillat dette programmet brukt av alle som kan nå det."
+
+#: modules/rssbridge/manifest.py:16
+msgid "Feed generator"
+msgstr ""
+
+#: modules/rssbridge/manifest.py:16
+msgid "News"
+msgstr ""
 
 #: modules/samba/__init__.py:23
 msgid ""
@@ -6691,6 +7078,24 @@ msgstr "GNOME-kalender"
 #: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
+
+#: modules/samba/manifest.py:91
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network drive"
+msgstr "Nettverksgrensesnitt"
+
+#: modules/samba/manifest.py:92
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Media storage"
+msgstr "Media-strømmetjener"
+
+#: modules/samba/manifest.py:93
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup storage"
+msgstr "Sikkerhetskopier"
 
 #: modules/samba/templates/samba.html:20
 #, fuzzy
@@ -6834,6 +7239,16 @@ msgstr "Moderat"
 #: modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Streng"
+
+#: modules/searx/manifest.py:17
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web search"
+msgstr "Nettsøk"
+
+#: modules/searx/manifest.py:17
+msgid "Metasearch Engine"
+msgstr ""
 
 #: modules/security/forms.py:13
 msgid "Fail2Ban (recommended)"
@@ -6983,7 +7398,7 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37
+#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
@@ -6992,6 +7407,16 @@ msgstr "Bokmerker"
 #| msgid "Shaarli"
 msgid "Shaarlier"
 msgstr "Shaarli"
+
+#: modules/shaarli/manifest.py:34
+msgid "Link blog"
+msgstr ""
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "in use"
+msgid "Single user"
+msgstr "i bruk"
 
 #: modules/shadowsocks/__init__.py:18 modules/shadowsocksserver/__init__.py:18
 msgid ""
@@ -7038,10 +7463,6 @@ msgstr "Shadowsocks"
 msgid "Bypass Censorship"
 msgstr ""
 
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Tjener"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Tjernens vertsnavn eller IP-adresse"
@@ -7057,6 +7478,24 @@ msgstr "Passord brukt for å kryptere data. Må samsvare med tjenerpassord."
 #: modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Krypteringsmetode. Må samsvare med den brukt på tjeneren."
+
+#: modules/shadowsocks/manifest.py:20 modules/shadowsocksserver/manifest.py:19
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted tunnel"
+msgstr "Kryptering"
+
+#: modules/shadowsocks/manifest.py:21
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Entry point"
+msgstr "Sluttpunkt"
+
+#: modules/shadowsocks/manifest.py:22 modules/shadowsocksserver/manifest.py:21
+#, fuzzy
+#| msgid "Shadowsocks"
+msgid "Shadowsocks"
+msgstr "Shadowsocks"
 
 #: modules/shadowsocksserver/__init__.py:26
 #, fuzzy, python-brace-format
@@ -7101,6 +7540,12 @@ msgstr "Passord brukt for å kryptere data. Må samsvare med tjenerpassord."
 msgid "Encryption method. Clients must use the same setting."
 msgstr "Krypteringsmetode. Må samsvare med den brukt på tjeneren."
 
+#: modules/shadowsocksserver/manifest.py:20
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Exit point"
+msgstr "Sluttpunkt"
+
 #: modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
@@ -7109,10 +7554,6 @@ msgid ""
 msgstr ""
 "Deling lar deg dele filer og mapper på din {box_name} over nettet, med en "
 "utvalgt gruppe brukere."
-
-#: modules/sharing/__init__.py:34
-msgid "Sharing"
-msgstr "Deling"
 
 #: modules/sharing/forms.py:17
 msgid "Name of the share"
@@ -7161,6 +7602,12 @@ msgstr "En deling ved dette navnet finnes allerede."
 #: modules/sharing/forms.py:62
 msgid "Shares should be either public or shared with at least one group"
 msgstr "Delte områder bør enten være offentlig eller delt med minst en gruppe"
+
+#: modules/sharing/manifest.py:19 modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web sharing"
+msgstr "Deling"
 
 #: modules/sharing/templates/sharing.html:18
 #: modules/sharing/templates/sharing.html:21
@@ -7908,6 +8355,18 @@ msgstr ""
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr ""
 
+#: modules/tiddlywiki/manifest.py:22
+msgid "Journal"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:23
+msgid "Digital garden"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:24
+msgid "Zettelkasten"
+msgstr ""
+
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
@@ -7942,7 +8401,8 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: modules/tor/__init__.py:62
+#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
 
@@ -8068,6 +8528,16 @@ msgstr "Tor-nettleseren"
 #: modules/tor/manifest.py:31 modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Mellomtjener med Tor"
+
+#: modules/tor/manifest.py:57
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion services"
+msgstr "Løktjeneste"
+
+#: modules/tor/manifest.py:58
+msgid "Relay"
+msgstr "Videresending"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -8242,12 +8712,11 @@ msgstr "TT-RSS kildeleser"
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:38
-#: modules/upgrades/templates/update-firstboot.html:14
+#: modules/upgrades/__init__.py:33
 msgid "Check for and apply the latest software and security updates."
 msgstr "Sjekk og legg til siste programvare- og sikkerhetsoppdateringer."
 
-#: modules/upgrades/__init__.py:39
+#: modules/upgrades/__init__.py:34
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8255,39 +8724,50 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
-#: modules/upgrades/templates/update-firstboot-progress.html:11
-#: modules/upgrades/templates/update-firstboot.html:11
+#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:143
 msgid "Software Update"
 msgstr "Programvare-oppdatering"
 
-#: modules/upgrades/__init__.py:133
+#: modules/upgrades/__init__.py:128
 msgid "FreedomBox Updated"
 msgstr "FreedomBox oppdatert"
 
-#: modules/upgrades/__init__.py:218
+#: modules/upgrades/__init__.py:138
+#, fuzzy
+#| msgid "Software Update"
+msgid "Run software update manually"
+msgstr "Programvare-oppdatering"
+
+#: modules/upgrades/__init__.py:140
+msgid ""
+"Automatic software update runs daily by default. For the first time, "
+"manually run it now."
+msgstr ""
+
+#: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
 msgstr ""
 
-#: modules/upgrades/__init__.py:220
+#: modules/upgrades/__init__.py:244
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
 
-#: modules/upgrades/__init__.py:231
+#: modules/upgrades/__init__.py:255
 #, fuzzy
 #| msgid "Automatic upgrades disabled"
 msgid "Distribution update started"
 msgstr "Automatiske oppgraderinger avslått (deaktivert)"
 
-#: modules/upgrades/__init__.py:233
+#: modules/upgrades/__init__.py:257
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 
-#: modules/upgrades/__init__.py:326
+#: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
 msgstr ""
 
@@ -8316,12 +8796,6 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
-#: modules/upgrades/forms.py:40
-#, fuzzy
-#| msgid "Fail2Ban (recommended)"
-msgid "Update now (recommended)"
-msgstr "Fail2Ban (anbefalt)"
-
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -8334,39 +8808,9 @@ msgid ""
 "cannot be deactivated."
 msgstr ""
 
-#: modules/upgrades/templates/update-firstboot-progress.html:19
-#, fuzzy
-#| msgid "Updating..."
-msgid "Updating, please wait..."
-msgstr "Oppdaterer…"
-
-#: modules/upgrades/templates/update-firstboot-progress.html:22
-#: modules/upgrades/templates/update-firstboot.html:20
-#, fuzzy
-#| msgid ""
-#| "<strong>This may take a long time to complete</strong>. During an update, "
-#| "you cannot install apps. Also, this web interface may be temporarily "
-#| "unavailable and show an error. In that case, refresh the page to continue."
-msgid ""
-"<strong>This may take a long time to complete.</strong> During an update, "
-"this web interface may be temporarily unavailable and show an error. In that "
-"case, refresh the page to continue."
-msgstr ""
-"<strong>Det kan ta lang til å fullføre dette.</strong> Mens oppgraderingen "
-"pågår, kan du ikke installere andre pakker. Under oppgraderingen kan dette "
-"nettgrensesnittet være midlertidig utilgjengelig, og vise en feilmelding. "
-"Oppdater siden for å fortsette."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:31
-#, python-format
-msgid ""
-"\n"
-"\t%(box_name)s is up to date. Press Next to continue.\n"
-"      "
-msgstr ""
-"\n"
-"\t%(box_name)s er oppdatert. Trykk «Neste» for å fortsette.\n"
-"      "
+#: modules/upgrades/templates/backports-firstboot.html:45
+msgid "Next"
+msgstr "Neste"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -8426,10 +8870,6 @@ msgstr ""
 msgid "Manual Update"
 msgstr "Manuell oppdatering"
 
-#: modules/upgrades/templates/upgrades_configure.html:108
-msgid "Update now"
-msgstr "Oppdater nå"
-
 #: modules/upgrades/templates/upgrades_configure.html:114
 #, fuzzy
 #| msgid ""
@@ -8470,26 +8910,26 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Automatiske oppgraderinger aktivert"
 
-#: modules/upgrades/views.py:73
+#: modules/upgrades/views.py:72
 #, fuzzy
 #| msgid "Error when configuring unattended-upgrades: {error}"
 msgid "Error when configuring unattended-upgrades"
 msgstr ""
 "Feil ved oppsett av uoppdaterte oppgraderinger (unattended-upgrades): {error}"
 
-#: modules/upgrades/views.py:120
+#: modules/upgrades/views.py:119
 msgid "Upgrade process started."
 msgstr "Oppgraderingsprosessen (upgrade process) har startet."
 
-#: modules/upgrades/views.py:122
+#: modules/upgrades/views.py:121
 msgid "Starting upgrade failed."
 msgstr "Å starte oppgradering (upgrade) mislyktes."
 
-#: modules/upgrades/views.py:132
+#: modules/upgrades/views.py:131
 msgid "Frequent feature updates activated."
 msgstr ""
 
-#: modules/upgrades/views.py:218
+#: modules/upgrades/views.py:176
 msgid "Starting distribution upgrade test."
 msgstr "Starter test av distribusjonsoppgradering."
 
@@ -8710,6 +9150,10 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 
+#: modules/users/templates/users_firstboot.html:63
+msgid "Skip this step"
+msgstr "Hopp over dette steget"
+
 #: modules/users/templates/users_list.html:11 modules/users/views.py:64
 msgid "Users"
 msgstr "Brukere"
@@ -8891,6 +9335,12 @@ msgstr "Bruk denne tilkoblingen for å sende all utgående trafikk"
 #| "Typically checked for a VPN service though which all traffic is sent."
 msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr "Typisk markert for en VPN-tjeneste som all trafikk sendes gjennom."
+
+#: modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "IRC Client"
+msgid "VPN client"
+msgstr "IRC-klient"
 
 #: modules/wireguard/templates/wireguard.html:10
 #, fuzzy
@@ -9186,6 +9636,10 @@ msgstr ""
 "nettstedet eller bloggen. Aktiver kun etter at oppsettet av Wordpress er "
 "gjennomført."
 
+#: modules/wordpress/manifest.py:26
+msgid "Content management system"
+msgstr ""
+
 #: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
@@ -9227,6 +9681,16 @@ msgstr ""
 "Når dette er aktivt gjøres det forespørsler til tjenere hos OpenStreetMap "
 "fra brukerens nettleser. Dette gir inngrep i privatsværen."
 
+#: modules/zoph/manifest.py:26
+msgid "Photo"
+msgstr ""
+
+#: modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Photo Organizer"
+msgid "Organizer"
+msgstr "Organiserer fotografier"
+
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
 msgid "Setup"
@@ -9245,17 +9709,18 @@ msgstr ""
 msgid "Generic"
 msgstr "Generisk"
 
-#: operation.py:118
-#, python-brace-format
-msgid "Error: {name}: {exception_message}"
+#: operation.py:120
+#, fuzzy, python-brace-format
+#| msgid "Error: {name}: {exception_message}"
+msgid "Error: {name}: {exception}"
 msgstr "Feil: {name}: {exception_message}"
 
-#: operation.py:121
+#: operation.py:123
 #, python-brace-format
 msgid "Waiting to start: {name}"
 msgstr ""
 
-#: operation.py:127
+#: operation.py:129
 #, fuzzy, python-brace-format
 #| msgid "Service disabled: {name}"
 msgid "Finished: {name}"
@@ -9306,80 +9771,86 @@ msgstr "Oppdaterer program"
 #: setup.py:78
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
-msgid "Error installing app: {error}"
+msgid "Error installing app: {exception}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:81 setup.py:167
+#: setup.py:80
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
-msgid "Error repairing app: {error}"
+msgid "Error repairing app: {exception}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:84
+#: setup.py:82
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
-msgid "Error updating app: {error}"
+msgid "Error updating app: {exception}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:88
+#: setup.py:85
 #, fuzzy
 #| msgid "Application installed."
 msgid "App installed."
 msgstr "Program installert."
 
-#: setup.py:92
+#: setup.py:89
 msgid "App updated"
 msgstr "Program oppdatert"
 
-#: setup.py:115
+#: setup.py:112
 #, fuzzy
 #| msgid "Updating app"
 msgid "Repairing app"
 msgstr "Oppdaterer program"
 
-#: setup.py:146
+#: setup.py:143
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error running diagnostics: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:159
+#: setup.py:156
 msgid "Skipping repair, no failed checks"
 msgstr ""
 
-#: setup.py:173
+#: setup.py:164
+#, fuzzy, python-brace-format
+#| msgid "Error installing application: {error}"
+msgid "Error repairing app: {error}"
+msgstr "Feil ved programinstallering: {error}"
+
+#: setup.py:170
 msgid "Re-running setup to complete repairs"
 msgstr ""
 
-#: setup.py:181
+#: setup.py:178
 #, fuzzy
 #| msgid "App updated"
 msgid "App repaired."
 msgstr "Program oppdatert"
 
-#: setup.py:185
+#: setup.py:182
 msgid "App repair completed with errors:\n"
 msgstr ""
 
-#: setup.py:205
+#: setup.py:202
 #, fuzzy
 #| msgid "Install Apps"
 msgid "Uninstalling app"
 msgstr "Installer App-er"
 
-#: setup.py:221
+#: setup.py:218
 #, fuzzy, python-brace-format
 #| msgid "Error installing application: {error}"
 msgid "Error uninstalling app: {error}"
 msgstr "Feil ved programinstallering: {error}"
 
-#: setup.py:224
+#: setup.py:221
 #, fuzzy
 #| msgid "Application installed."
 msgid "App uninstalled."
 msgstr "Program installert."
 
-#: setup.py:597
+#: setup.py:594
 #, fuzzy
 #| msgid "Upgrade Packages"
 msgid "Updating app packages"
@@ -9446,49 +9917,55 @@ msgstr "Installasjon"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjenesten <em>%(service_name)s</em> kjører ikke."
 
+#: templates/apps.html:29
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "Søk på nettet"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:108
+#: templates/base.html:112
 msgid " Home"
 msgstr " Hjem"
 
-#: templates/base.html:111
+#: templates/base.html:115
 msgid "Home"
 msgstr "Hjem"
 
-#: templates/base.html:116
+#: templates/base.html:120
 msgid " Apps"
 msgstr " Programmer"
 
-#: templates/base.html:120
+#: templates/base.html:124
 msgid "Apps"
 msgstr "Apps/Programmer"
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid " System"
 msgstr " System"
 
-#: templates/base.html:164 templates/base.html:165
+#: templates/base.html:168 templates/base.html:169
 msgid "Change password"
 msgstr "Endre passord"
 
-#: templates/base.html:178 templates/base.html:179
+#: templates/base.html:182 templates/base.html:183
 msgid "Shut down"
 msgstr "Slå av"
 
-#: templates/base.html:189 templates/base.html:218
+#: templates/base.html:193 templates/base.html:222
 msgid "Log out"
 msgstr "Logg ut"
 
-#: templates/base.html:198 templates/base.html:201
+#: templates/base.html:202 templates/base.html:205
 msgid "Select language"
 msgstr "Velg språk"
 
-#: templates/base.html:207 templates/base.html:209
+#: templates/base.html:211 templates/base.html:213
 msgid "Log in"
 msgstr "Logg inn"
 
@@ -9557,15 +10034,6 @@ msgstr "RPM:"
 #| msgid "error"
 msgid "Error"
 msgstr "feil"
-
-#: templates/first_setup.html:18
-#, python-format
-msgid ""
-"Please wait for %(box_name)s to finish installation. You can start using "
-"your %(box_name)s once it is done."
-msgstr ""
-"Vent på at %(box_name)s fullfører installasjonen. Du kan begynne å bruke "
-"%(box_name)s når det er gjort."
 
 #: templates/index.html:22
 #, python-format
@@ -9774,11 +10242,11 @@ msgstr ""
 "All programdata og oppsett blir permanent borte. Programmet kan installeres "
 "på nytt igjen."
 
-#: views.py:268
+#: views.py:322
 msgid "Setting unchanged"
 msgstr "Oppsett uendret"
 
-#: views.py:502
+#: views.py:557
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "før avinstallering av {app_id}"
@@ -9786,6 +10254,65 @@ msgstr "før avinstallering av {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-format
+#~ msgid "Without any apps, your %(box_name)s cannot do very much."
+#~ msgstr "Uten noen apper, kan ikke din %(box_name)s gjøre veldig mye."
+
+#~ msgid "Install Apps"
+#~ msgstr "Installer App-er"
+
+#, python-format
+#~ msgid ""
+#~ "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
+#~ "and modify it if necessary."
+#~ msgstr ""
+#~ "Du vil kanskje kontrollere <a href=\"%(networks_url)s\">network setup</a> "
+#~ "(nettverksoppsettet) og endre det om nødvendig."
+
+#, fuzzy
+#~| msgid "Fail2Ban (recommended)"
+#~ msgid "Update now (recommended)"
+#~ msgstr "Fail2Ban (anbefalt)"
+
+#, fuzzy
+#~| msgid "Updating..."
+#~ msgid "Updating, please wait..."
+#~ msgstr "Oppdaterer…"
+
+#, fuzzy
+#~| msgid ""
+#~| "<strong>This may take a long time to complete</strong>. During an "
+#~| "update, you cannot install apps. Also, this web interface may be "
+#~| "temporarily unavailable and show an error. In that case, refresh the "
+#~| "page to continue."
+#~ msgid ""
+#~ "<strong>This may take a long time to complete.</strong> During an update, "
+#~ "this web interface may be temporarily unavailable and show an error. In "
+#~ "that case, refresh the page to continue."
+#~ msgstr ""
+#~ "<strong>Det kan ta lang til å fullføre dette.</strong> Mens "
+#~ "oppgraderingen pågår, kan du ikke installere andre pakker. Under "
+#~ "oppgraderingen kan dette nettgrensesnittet være midlertidig "
+#~ "utilgjengelig, og vise en feilmelding. Oppdater siden for å fortsette."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "\t%(box_name)s is up to date. Press Next to continue.\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "\t%(box_name)s er oppdatert. Trykk «Neste» for å fortsette.\n"
+#~ "      "
+
+#, python-format
+#~ msgid ""
+#~ "Please wait for %(box_name)s to finish installation. You can start using "
+#~ "your %(box_name)s once it is done."
+#~ msgstr ""
+#~ "Vent på at %(box_name)s fullfører installasjonen. Du kan begynne å bruke "
+#~ "%(box_name)s når det er gjort."
 
 #~ msgid "Hostname set"
 #~ msgstr "Vertsnavn satt"
@@ -9797,9 +10324,6 @@ msgstr "Gujarati"
 #~| msgid "Tiny Tiny RSS (Fork)"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (avgreining)"
-
-#~ msgid "Media streaming server"
-#~ msgstr "Media-strømmetjener"
 
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
@@ -10001,20 +10525,12 @@ msgstr "Gujarati"
 #~ msgstr "Cockpit fungerer kun når det nås fra følgende nettadresser."
 
 #, fuzzy
-#~| msgid "Web Server"
-#~ msgid "WebRTC server"
-#~ msgstr "Nett-tjener"
-
-#, fuzzy
 #~| msgid "Server"
 #~ msgid "Server URL"
 #~ msgstr "Tjener"
 
 #~ msgid "Server URL updated"
 #~ msgstr "Tjener-URL oppdatert"
-
-#~ msgid "Relay"
-#~ msgstr "Videresending"
 
 #, python-format
 #~ msgid ""
@@ -11074,9 +11590,6 @@ msgstr "Gujarati"
 #~ msgid "HTTPS"
 #~ msgstr "HTTPS"
 
-#~ msgid "SSH"
-#~ msgstr "SSH"
-
 #~ msgid "Not Available"
 #~ msgstr "Ikke tilgjengelig"
 
@@ -11289,17 +11802,11 @@ msgstr "Gujarati"
 #~ "Programvareavbildninger eldre enn dette vil bli slettet. Dette begrenser "
 #~ "ikke antallet."
 
-#~ msgid "Archive name"
-#~ msgstr "Arkivnavn"
-
 #~ msgid "Invalid archive name"
 #~ msgstr "Ugyldig arkivnavn"
 
 #~ msgid "Upload backup"
 #~ msgstr "Last opp sikkerhetskopi"
-
-#~ msgid "Removable Devices"
-#~ msgstr "Flyttbare medium"
 
 #~ msgid "There are no additional storage devices attached."
 #~ msgstr "Ingen ytterligere lagringsenheter er koblet til."
@@ -11424,9 +11931,6 @@ msgstr "Gujarati"
 #~ msgid "Devices"
 #~ msgstr "Enheter"
 
-#~ msgid "Filesystem"
-#~ msgstr "Filsystem"
-
 #~ msgid "Exported filename"
 #~ msgstr "Eksportert filnavn"
 
@@ -11528,10 +12032,6 @@ msgstr "Gujarati"
 
 #~ msgid "Enable forwarding to set forwarding DNS servers"
 #~ msgstr "Aktiver videresending for å sette DNS-tjenere for videresending"
-
-#, fuzzy
-#~ msgid "BitTorrent"
-#~ msgstr "BitTorrent"
 
 #~ msgid "wiki"
 #~ msgstr "wiki"
