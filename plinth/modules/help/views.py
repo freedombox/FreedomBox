@@ -16,7 +16,7 @@ from django.urls import reverse
 from django.utils.translation import get_language_from_request
 from django.utils.translation import gettext as _
 
-from plinth import __version__, cfg
+from plinth import __version__, cfg, menu
 from plinth.modules.upgrades import views as upgrades_views
 
 from . import privileged
@@ -24,8 +24,11 @@ from . import privileged
 
 def index(request):
     """Serve the index page"""
-    return TemplateResponse(request, 'help_index.html',
-                            {'title': _('Documentation and FAQ')})
+    menu_items = menu.main_menu.active_item(request).sorted_items()
+    return TemplateResponse(request, 'help_index.html', {
+        'title': _('Documentation and FAQ'),
+        'menu_items': menu_items
+    })
 
 
 def contribute(request):

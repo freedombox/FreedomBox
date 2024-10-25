@@ -119,3 +119,10 @@ backup = {
     },
     'services': ['ejabberd']
 }
+
+tags = [
+    _('Encrypted messaging'),
+    _('Audio chat'),
+    _('Video chat'),
+    _('XMPP'),
+]

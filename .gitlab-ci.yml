@@ -47,62 +47,8 @@ doc-tests:
   script:
     - make check-doc
 
-.app-server-stable:
-  variables:
-    LAUNCH_TEMPLATE_NAME: functional-tests-stable
-    INSTANCE_NAME: app-server-stable
-    BUILD_JOB_NAME: build-backports
-  extends: .app-server
-
-.run-functional-tests-stable:
-  needs:
-    - job: app-server-stable
-      artifacts: true
+run-functional-tests-stable:
   extends: .run-functional-tests
-
-.terminate-app-server-stable:
-  needs:
-    - job: run-functional-tests-stable
-      artifacts: true
-  extends: .terminate-app-server
-
-.app-server-testing:
-  variables:
-    LAUNCH_TEMPLATE_NAME: functional-tests-testing
-    INSTANCE_NAME: app-server-testing
-    BUILD_JOB_NAME: build
-  extends: .app-server
-
-.run-functional-tests-testing:
-  needs:
-    - job: app-server-testing
-      artifacts: true
-  extends: .run-functional-tests
-
-.terminate-app-server-testing:
-  needs:
-    - job: run-functional-tests-testing
-      artifacts: true
-  extends: .terminate-app-server
-
-.app-server-unstable:
-  variables:
-    LAUNCH_TEMPLATE_NAME: functional-tests-unstable
-    INSTANCE_NAME: app-server-unstable
-    BUILD_JOB_NAME: build
-  extends: .app-server
-
-.run-functional-tests-unstable:
-  needs:
-    - job: app-server-unstable
-      artifacts: true
-  extends: .run-functional-tests
-
-.terminate-app-server-unstable:
-  needs:
-    - job: run-functional-tests-unstable
-      artifacts: true
-  extends: .terminate-app-server
 
 extract-source:
     extends: .provisioning-extract-source

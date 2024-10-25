@@ -45,7 +45,7 @@ class MumbleApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Mumble'),
             icon_filename='mumble', short_description=_('Voice Chat'),
             description=_description, manual_page='Mumble',
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://wiki.mumble.info/wiki/Donate')
         self.add(info)
 

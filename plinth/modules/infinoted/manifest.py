@@ -42,3 +42,5 @@ backup = {
     },
     'services': ['infinoted']
 }
+
+tags = [_('Note taking'), _('Collaborative editing'), _('Gobby')]

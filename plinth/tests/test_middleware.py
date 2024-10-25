@@ -150,8 +150,8 @@ class TestSetupMiddleware:
         """Test that module installation result is collected properly."""
         resolve.return_value.namespaces = ['mockapp']
         operation_manager.collect_results.return_value = [
-            Mock(message='message1', exception=None),
-            Mock(message='message2', exception='x-exception')
+            Mock(translated_message='message1', exception=None),
+            Mock(translated_message='message2', exception='x-exception')
         ]
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 

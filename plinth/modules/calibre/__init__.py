@@ -56,7 +56,7 @@ class CalibreApp(app_module.App):
                                name=_('calibre'), icon_filename='calibre',
                                short_description=_('E-book Library'),
                                description=_description, manual_page='Calibre',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://calibre-ebook.com/donate')
         self.add(info)
 

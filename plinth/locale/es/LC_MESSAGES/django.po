@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 20:05-0400\n"
-"PO-Revision-Date: 2024-09-25 06:15+0000\n"
+"POT-Creation-Date: 2024-10-21 20:10-0400\n"
+"PO-Revision-Date: 2024-10-09 04:16+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/es/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "La configuración fija {etc_path} está configurada correctamente"
 
-#: context_processors.py:23 views.py:116
+#: context_processors.py:23 views.py:117
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -111,7 +111,7 @@ msgstr "Visibilidad"
 msgid "Data"
 msgstr "Datos"
 
-#: menu.py:110 templates/base.html:129
+#: menu.py:110 templates/base.html:133
 msgid "System"
 msgstr "Sistema"
 
@@ -203,6 +203,7 @@ msgstr "Habilitar un respaldo agendado"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
+#: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Ir a {app_name}"
@@ -471,7 +472,7 @@ msgstr "El repositorio existente no está cifrado."
 msgid "{box_name} storage"
 msgstr "Almacenamiento en {box_name}"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:116
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
 msgid "Create a new backup"
 msgstr "Crear una copia de seguridad nueva"
 
@@ -566,7 +567,7 @@ msgstr "Descargar"
 
 #: modules/backups/templates/backups_repository.html:87
 #: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:219 templates/toolbar.html:44
+#: modules/backups/views.py:220 templates/toolbar.html:44
 #: templates/toolbar.html:45
 msgid "Restore"
 msgstr "Restaurar"
@@ -672,99 +673,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Verificar anfitrión"
 
-#: modules/backups/views.py:59
+#: modules/backups/views.py:58
 msgid "Backup schedule updated."
 msgstr "Calendario de respaldos actualizado."
 
-#: modules/backups/views.py:78
+#: modules/backups/views.py:77
 msgid "Schedule Backups"
 msgstr "Agendar respaldos"
 
-#: modules/backups/views.py:111
+#: modules/backups/views.py:110
 msgid "Archive created."
 msgstr "Archivo creado."
 
-#: modules/backups/views.py:147
+#: modules/backups/views.py:146
 msgid "Delete Archive"
 msgstr "Borrar archivo"
 
-#: modules/backups/views.py:159
+#: modules/backups/views.py:158
 msgid "Archive deleted."
 msgstr "Archivo borrado."
 
-#: modules/backups/views.py:172
+#: modules/backups/views.py:171
 msgid "Upload and restore a backup"
 msgstr "Subir y restaurar una copia de seguridad"
 
-#: modules/backups/views.py:207
+#: modules/backups/views.py:208
 msgid "Restored files from backup."
 msgstr "Archivos restaurados desde la copia de seguridad."
 
-#: modules/backups/views.py:235
+#: modules/backups/views.py:236
 msgid "No backup file found."
 msgstr "No se encontraron copias de seguridad."
 
-#: modules/backups/views.py:243
+#: modules/backups/views.py:244
 msgid "Restore from uploaded file"
 msgstr "Restaurar desde la copia de seguridad subida"
 
-#: modules/backups/views.py:302
+#: modules/backups/views.py:303
 msgid "No additional disks available to add a repository."
 msgstr "No hay más discos disponibles para añadir un repositorio."
 
-#: modules/backups/views.py:310
+#: modules/backups/views.py:311
 msgid "Create backup repository"
 msgstr "Crear repositorio de copias de seguridad"
 
-#: modules/backups/views.py:337
+#: modules/backups/views.py:338
 msgid "Create remote backup repository"
 msgstr "Crear repositorio de copias de seguridad remotas"
 
-#: modules/backups/views.py:357
+#: modules/backups/views.py:358
 msgid "Added new remote SSH repository."
 msgstr "Añadido nuevo repositorio SSH remoto."
 
-#: modules/backups/views.py:379
+#: modules/backups/views.py:380
 msgid "Verify SSH hostkey"
 msgstr "Verificar la clave de anfitrión SSH"
 
-#: modules/backups/views.py:405
+#: modules/backups/views.py:406
 msgid "SSH host already verified."
 msgstr "Clave SSH de anfitrión verificada."
 
-#: modules/backups/views.py:415
+#: modules/backups/views.py:416
 msgid "SSH host verified."
 msgstr "Anfitrión SSH verificado."
 
-#: modules/backups/views.py:430
+#: modules/backups/views.py:431
 msgid "SSH host public key could not be verified."
 msgstr "No se pudo verificar la clave pública SSH del anfitrión."
 
-#: modules/backups/views.py:432
+#: modules/backups/views.py:433
 msgid "Authentication to remote server failed."
 msgstr "Ha fallado la autenticación en el servidor remoto."
 
-#: modules/backups/views.py:434
+#: modules/backups/views.py:435
 msgid "Error establishing connection to server: {}"
 msgstr "Error al conectar con el servidor: {}"
 
-#: modules/backups/views.py:445
+#: modules/backups/views.py:446
 msgid "Repository removed."
 msgstr "Repositorio eliminado."
 
-#: modules/backups/views.py:459
+#: modules/backups/views.py:460
 msgid "Remove Repository"
 msgstr "Eliminar repositorio"
 
-#: modules/backups/views.py:468
+#: modules/backups/views.py:469
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repositorio dado de baja. Las copias de seguridad no se han borrado."
 
-#: modules/backups/views.py:478
+#: modules/backups/views.py:479
 msgid "Unmounting failed!"
 msgstr "¡No se pudo desmontar!"
 
-#: modules/backups/views.py:493 modules/backups/views.py:497
+#: modules/backups/views.py:494 modules/backups/views.py:498
 msgid "Mounting failed"
 msgstr "Montaje fallido"
 
@@ -869,6 +870,18 @@ msgid "Any comment to help you remember the purpose of this password."
 msgstr ""
 "Cualquier comentario que te ayude a recordar el propósito de esta contraseña."
 
+#: modules/bepasty/manifest.py:23 modules/deluge/manifest.py:21
+#: modules/samba/manifest.py:89 modules/sharing/manifest.py:19
+#: modules/syncthing/manifest.py:58 modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "File & Snippet Sharing"
+msgid "File sharing"
+msgstr "Compartir archivos y recortes"
+
+#: modules/bepasty/manifest.py:23
+msgid "Pastebin"
+msgstr ""
+
 #: modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
 msgstr "Administrar contraseñas"
@@ -933,7 +946,7 @@ msgstr "Admin"
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
 #: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Configuración actualizada."
@@ -1100,6 +1113,22 @@ msgstr ""
 #: modules/calibre/forms.py:28
 msgid "A library with this name already exists."
 msgstr "Ya existe una biblioteca con este nombre."
+
+#: modules/calibre/manifest.py:20
+msgid "Ebook"
+msgstr ""
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Library"
+msgstr "Biblioteca de libros electrónicos"
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Ebook reader"
+msgstr "Biblioteca de libros electrónicos"
 
 #: modules/calibre/templates/calibre-delete-library.html:11
 #, python-format
@@ -1355,6 +1384,18 @@ msgstr "Asistente VoIP"
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Lista de URIS del servidor Stun/Turn no válida"
 
+#: modules/coturn/manifest.py:7 modules/janus/manifest.py:16
+msgid "Video conference"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "STUN"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "TURN"
+msgstr ""
+
 #: modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr "Use las siguientes URL para configurar su servidor de comunicación:"
@@ -1436,6 +1477,24 @@ msgstr "Directorio de descarga"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Cliente BitTorrent escrito en Python/PyGTK"
 
+#: modules/deluge/manifest.py:21 modules/transmission/manifest.py:39
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
+#: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "Launch web client"
+msgid "Web client"
+msgstr "Lanzar cliente web"
+
+#: modules/deluge/manifest.py:21 modules/syncthing/manifest.py:58
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "I2P"
+msgid "P2P"
+msgstr "I2P"
+
 #: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
@@ -1456,7 +1515,7 @@ msgstr "omitido"
 msgid "passed"
 msgstr "ok."
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:51
 msgid "failed"
 msgstr "Falló"
 
@@ -1881,7 +1940,7 @@ msgstr ""
 "Instalar la app <a href=\"{coturn_url}\">Coturn</a> o configurar un servidor "
 "externo."
 
-#: modules/ejabberd/__init__.py:61
+#: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
 
@@ -1986,6 +2045,27 @@ msgstr "Dino"
 #: modules/ejabberd/manifest.py:85
 msgid "Gajim"
 msgstr "Gajim"
+
+#: modules/ejabberd/manifest.py:124 modules/matrixsynapse/manifest.py:102
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted messaging"
+msgstr "Cifrado"
+
+#: modules/ejabberd/manifest.py:125 modules/matrixsynapse/manifest.py:103
+#: modules/mumble/manifest.py:67
+msgid "Audio chat"
+msgstr ""
+
+#: modules/ejabberd/manifest.py:126 modules/matrixsynapse/manifest.py:104
+#, fuzzy
+#| msgid "Video Room"
+msgid "Video chat"
+msgstr "Sala de vídeo"
+
+#: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
+msgid "XMPP"
+msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
 #, python-format
@@ -2113,7 +2193,7 @@ msgid "Aliases"
 msgstr "Alias"
 
 #: modules/email/manifest.py:12 modules/roundcube/__init__.py:50
-#: modules/roundcube/manifest.py:6
+#: modules/roundcube/manifest.py:7
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -2128,6 +2208,20 @@ msgstr "K-9 Mail"
 #: modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
+
+#: modules/email/manifest.py:82
+#, fuzzy
+#| msgid "Email Server"
+msgid "Email server"
+msgstr "Servidor de correo electrónico"
+
+#: modules/email/manifest.py:82
+msgid "IMAP"
+msgstr ""
+
+#: modules/email/manifest.py:82
+msgid "Spam control"
+msgstr ""
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2275,6 +2369,36 @@ msgstr "Los archivos de Feather Wiki deben estar en formato HTML"
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Cargar un archivo Feather Wiki existente desde este ordenador."
 
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+msgid "Wiki"
+msgstr "Wiki"
+
+#: modules/featherwiki/manifest.py:18 modules/infinoted/manifest.py:46
+#: modules/tiddlywiki/manifest.py:20
+msgid "Note taking"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:21
+#: modules/wordpress/manifest.py:26
+#, fuzzy
+#| msgid "Website Security"
+msgid "Website"
+msgstr "Seguridad del sitio"
+
+#: modules/featherwiki/manifest.py:18 modules/tiddlywiki/manifest.py:25
+msgid "Quine"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/nextcloud/manifest.py:56
+#: modules/tiddlywiki/manifest.py:26
+#, fuzzy
+#| msgid "Debian:"
+msgid "Non-Debian"
+msgstr "Debian:"
+
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
 msgid "Manage Wikis"
@@ -2380,10 +2504,9 @@ msgid "Failed to add wiki file."
 msgstr "Error al añadir el archivo wiki."
 
 #: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {name}"
-msgstr "No se pudo eliminar {name}: {error}"
+msgstr "No se pudo eliminar {name}"
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -2440,7 +2563,7 @@ msgstr "Activado"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:34
+#: templates/cards.html:36
 msgid "Disabled"
 msgstr "Desactivado"
 
@@ -2485,6 +2608,27 @@ msgstr ""
 "provistas por la aplicación <a href=\"/_cockpit/network/firewall\">Cockpit</"
 "a>."
 
+#: modules/first_boot/__init__.py:61
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup complete! Next steps:"
+msgstr "¡Configuración completada!"
+
+#: modules/first_boot/__init__.py:63
+#, python-brace-format
+msgid ""
+"Initial setup has been completed. Perform the next steps to make your "
+"{box_name} operational."
+msgstr ""
+
+#: modules/first_boot/__init__.py:66
+msgid "Next steps"
+msgstr ""
+
+#: modules/first_boot/__init__.py:73
+msgid "See next steps"
+msgstr ""
+
 #: modules/first_boot/forms.py:14
 #, python-brace-format
 msgid ""
@@ -2501,33 +2645,61 @@ msgid "Firstboot Wizard Secret"
 msgstr "Ayudante de clave de primer arranque"
 
 #: modules/first_boot/templates/firstboot_complete.html:11
-msgid "Setup Complete!"
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup Complete! Next Steps:"
 msgstr "¡Configuración completada!"
 
-#: modules/first_boot/templates/firstboot_complete.html:14
-#, python-format
-msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr ""
-"Sin ninguna aplicación instalada, su %(box_name)s no puede hacer mucho."
-
-#: modules/first_boot/templates/firstboot_complete.html:21
-msgid "Install Apps"
-msgstr "Instalar Aplicaciones"
-
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:18
 #, python-format
 msgid ""
-"You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
-"modify it if necessary."
+"Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
+"runs daily by default. For the first time, manually run it now."
 msgstr ""
-"Puede que quiera comprobar la <a href=\"%(networks_url)s\">configuración de "
-"red</a> y modificarla si es necesario."
+
+#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/upgrades/templates/upgrades_configure.html:108
+msgid "Update now"
+msgstr "Actualizar ahora"
+
+#: modules/first_boot/templates/firstboot_complete.html:36
+#, python-format
+msgid ""
+"Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:46
+#, python-format
+msgid ""
+"Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
+"connections</a>. Change the default Wi-Fi password, if applicable."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:57
+#, python-format
+msgid ""
+"Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:67
+#, python-format
+msgid ""
+"Configure and schedule remote <a href=\"%(backups_url)s\" "
+"target=\"_blank\">backups</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:78
+#, python-format
+msgid ""
+"Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
+"target=\"_blank\">apps</a>."
+msgstr ""
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
 msgstr "Iniciar configuración"
 
-#: modules/first_boot/views.py:50
+#: modules/first_boot/views.py:41
 msgid "Setup Complete"
 msgstr "Configuración completada"
 
@@ -2626,6 +2798,20 @@ msgstr "Gitweb muestra esta rama por omisión."
 msgid "Git"
 msgstr "Git"
 
+#: modules/gitweb/manifest.py:37
+#, fuzzy
+#| msgid "Simple Git Hosting"
+msgid "Git hosting"
+msgstr "Alojamiento simple para Git"
+
+#: modules/gitweb/manifest.py:37
+msgid "Version control"
+msgstr ""
+
+#: modules/gitweb/manifest.py:37
+msgid "Developer tool"
+msgstr ""
+
 #: modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
 msgstr "Administrar Repositorios"
@@ -2689,19 +2875,19 @@ msgid "Manual"
 msgstr "Manual"
 
 #: modules/help/__init__.py:41 modules/help/templates/help_support.html:9
-#: modules/help/views.py:90 templates/help-menu.html:27
+#: modules/help/views.py:93 templates/help-menu.html:27
 #: templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Obtener ayuda"
 
 #: modules/help/__init__.py:45 modules/help/templates/help_feedback.html:9
-#: modules/help/views.py:84 templates/help-menu.html:33
+#: modules/help/views.py:87 templates/help-menu.html:33
 #: templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Enviar Comentarios"
 
 #: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:73 templates/help-menu.html:39
+#: modules/help/views.py:76 templates/help-menu.html:39
 #: templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Contribuír"
@@ -2854,7 +3040,7 @@ msgstr ""
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
-#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:57
+#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:68
 msgid "Learn more..."
 msgstr "Aprenda más..."
 
@@ -3036,16 +3222,16 @@ msgstr ""
 "Por favor elimine las contraseñas y cualquier información personal del "
 "registro antes de enviar el informe de fallos."
 
-#: modules/help/views.py:28
+#: modules/help/views.py:29
 msgid "Documentation and FAQ"
 msgstr "Documentación y Preguntas frecuentes"
 
-#: modules/help/views.py:96
+#: modules/help/views.py:99
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Acerca de {box_name}"
 
-#: modules/help/views.py:130
+#: modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Manual de {box_name}"
@@ -3094,6 +3280,19 @@ msgstr "Red anónima"
 #: modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "Proxy I2P"
+
+#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
+#: modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "Red anónima"
+
+#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
+#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
+#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3176,6 +3375,10 @@ msgstr "Nombre de la cuenta de administración"
 #: modules/ikiwiki/forms.py:19
 msgid "Admin Account Password"
 msgstr "Clave de acceso de la cuenta de administración"
+
+#: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
+msgid "Blog"
+msgstr ""
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3274,7 +3477,7 @@ msgstr "infinoted"
 msgid "Gobby Server"
 msgstr "Servidor Gobby"
 
-#: modules/infinoted/manifest.py:10
+#: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
 
@@ -3290,6 +3493,10 @@ msgid ""
 msgstr ""
 "Inicie Gobby, seleccione \"Conectar al servidor\" e introduzca el nombre de "
 "dominio de su {box_name}."
+
+#: modules/infinoted/manifest.py:46
+msgid "Collaborative editing"
+msgstr ""
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3316,8 +3523,18 @@ msgstr "Sala de vídeo"
 msgid "Janus Video Room"
 msgstr "Sala de vídeo Janus"
 
+#: modules/janus/manifest.py:16
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC"
+msgstr "Servidor Web"
+
+#: modules/janus/manifest.py:16
+msgid "Web conference"
+msgstr ""
+
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
 msgid "JavaScript license information"
 msgstr "Información de licencia de JavaScript"
 
@@ -3336,6 +3553,18 @@ msgstr "JSXC"
 #: modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Cliente de Chat"
+
+#: modules/jsxc/manifest.py:16
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web chat"
+msgstr "Buscador web"
+
+#: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Client"
+msgstr "Cliente IRC"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3410,6 +3639,24 @@ msgstr ""
 "{box_name}. Si Kiwix no consigue añadir el archivo, se eliminará "
 "inmediatamente para ahorrar espacio en disco."
 
+#: modules/kiwix/manifest.py:23
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Offline reader"
+msgstr "Wikipedia sin conexión"
+
+#: modules/kiwix/manifest.py:24
+#, fuzzy
+#| msgid "Archive name"
+msgid "Archival"
+msgstr "Nombre de archivo"
+
+#: modules/kiwix/manifest.py:26
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Wikipedia"
+msgstr "Wikipedia sin conexión"
+
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
@@ -3462,10 +3709,8 @@ msgid "Add a new content package"
 msgstr "Añadir un nuevo paquete de contenidos"
 
 #: modules/kiwix/views.py:76
-#, fuzzy
-#| msgid "Content package added."
 msgid "Content package already exists."
-msgstr "Se ha añadido un paquete de contenidos."
+msgstr "El paquete de contenidos ya existe."
 
 #: modules/kiwix/views.py:79
 msgid "Failed to add content package."
@@ -3689,6 +3934,18 @@ msgstr "Element"
 msgid "FluffyChat"
 msgstr "FluffyChat"
 
+#: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Chatroom"
+msgid "Chat room"
+msgstr "Sala de chat IRC"
+
+#: modules/matrixsynapse/manifest.py:105
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Matrix server"
+msgstr "Servidor de emisión multimedia"
+
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
@@ -3837,10 +4094,6 @@ msgstr ""
 #: modules/mediawiki/__init__.py:51 modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
-
-#: modules/mediawiki/__init__.py:52 templates/index.html:128
-msgid "Wiki"
-msgstr "Wiki"
 
 #: modules/mediawiki/forms.py:56
 msgid "Administrator Password"
@@ -4031,6 +4284,22 @@ msgstr ""
 "Cuando se desactiva, los participantes no pueden morir o recibir daño de "
 "ningún tipo."
 
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Updated server."
+msgid "Game server"
+msgstr "Servidor actualizado."
+
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Block Sandbox"
+msgid "Block sandbox"
+msgstr "Sandbox de bloques"
+
+#: modules/minetest/manifest.py:49
+msgid "Platform"
+msgstr ""
+
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
 msgid "Address"
@@ -4088,6 +4357,26 @@ msgstr "yaacc"
 #: modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "Totem"
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "Simple Media Server"
+msgid "Media server"
+msgstr "Servidor multimedia básico"
+
+#: modules/minidlna/manifest.py:116
+msgid "Television"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+msgid "UPnP"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "MiniDLNA"
+msgid "DLNA"
+msgstr "MiniDLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4181,6 +4470,28 @@ msgstr "Read You"
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
 msgstr "RSS Guard"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "News Feed Reader"
+msgid "Feed reader"
+msgstr "Lector de noticias"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+msgid "News aggregation"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "SSH"
+msgid "RSS"
+msgstr "SSH"
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+msgid "ATOM"
+msgstr ""
 
 #: modules/miniflux/templates/miniflux.html:14
 msgid ""
@@ -4298,6 +4609,15 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
+#: modules/mumble/manifest.py:67
+msgid "Group conference"
+msgstr ""
+
+#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
+#: modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Servidor"
+
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
 msgstr "Clave de administración cambiada con éxito."
@@ -4329,7 +4649,7 @@ msgstr "Servicios de nombres"
 
 #: modules/names/__init__.py:171
 msgid "Package systemd-resolved is installed"
-msgstr ""
+msgstr "Paquete systemd-resolved está instalado"
 
 #: modules/names/__init__.py:195
 #, python-brace-format
@@ -4399,17 +4719,17 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
-#: modules/networks/views.py:126
+#: modules/networks/views.py:125
 msgid "yes"
 msgstr "sí"
 
 #: modules/names/resolved.py:92 modules/networks/forms.py:29
-#: modules/networks/views.py:125
+#: modules/networks/views.py:124
 msgid "opportunistic"
 msgstr "oportunista"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:30 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:123
 msgid "no"
 msgstr "no"
 
@@ -4471,6 +4791,8 @@ msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
+"El paquete systemd-resolved no está instalado. Instálelo para obtener "
+"funciones adicionales."
 
 #: modules/names/templates/names.html:121 templates/setup.html:66
 msgid "Install"
@@ -4498,7 +4820,7 @@ msgstr "Establecer el nombre del dominio"
 msgid "Error setting domain name: {exception}"
 msgstr "Error al establecer nombre de dominio: {exception}"
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:19
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4506,7 +4828,7 @@ msgstr ""
 "Configurar dispositivos de red. Conectar con Internet mediante Ethernet, Wi-"
 "Fi o PPPoE. Compartir esa conexión con otros dispositivos de la red."
 
-#: modules/networks/__init__.py:39
+#: modules/networks/__init__.py:21
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4514,13 +4836,13 @@ msgstr ""
 "Los dispositivos administrados mediante otros métodos quizá no estén "
 "disponibles para configurarse aquí."
 
-#: modules/networks/__init__.py:60
+#: modules/networks/__init__.py:42
 msgid "Networks"
 msgstr "Redes"
 
 #: modules/networks/forms.py:19 modules/networks/forms.py:25
-#: modules/networks/views.py:40 modules/networks/views.py:101
-#: modules/networks/views.py:112
+#: modules/networks/views.py:39 modules/networks/views.py:100
+#: modules/networks/views.py:111
 msgid "unknown"
 msgstr "desconocido"
 
@@ -4966,7 +5288,7 @@ msgstr "Editar conexión"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:157 templates/base.html:158
+#: templates/base.html:161 templates/base.html:162
 msgid "Edit"
 msgstr "Editar"
 
@@ -5097,7 +5419,8 @@ msgstr "Esta conexión no está activa."
 
 #: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
+#: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 msgid "Privacy"
 msgstr "Privacidad"
 
@@ -5147,7 +5470,7 @@ msgid "Create Connection"
 msgstr "Crear conexión"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:537
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Eliminar conexión"
 
@@ -5167,14 +5490,14 @@ msgstr "Espaciado"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:102 network.py:27
+#: modules/networks/views.py:101 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:103 network.py:28
+#: modules/networks/views.py:102 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5194,7 +5517,7 @@ msgid "Computer"
 msgstr "Ordenador"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:254 modules/networks/views.py:341
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Editar conexión"
 
@@ -5212,13 +5535,13 @@ msgstr "Conexiones"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:390
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Redes Wi-Fi cercanas"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:414
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Añadir conexión"
@@ -5251,23 +5574,6 @@ msgid ""
 msgstr ""
 "Elija la opción que mejor describa el tipo de conexión a Internet. Esta "
 "información se emplea solo para sugerir otras configuraciones necesarias."
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:19
-#: modules/networks/templates/network_topology_firstboot.html:19
-#: modules/networks/templates/router_configuration_firstboot.html:19
-#: modules/users/templates/users_firstboot.html:63
-msgid "Skip this step"
-msgstr "Saltar este paso"
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:21
-#: modules/networks/templates/network_topology_firstboot.html:21
-#: modules/networks/templates/router_configuration_firstboot.html:21
-#: modules/upgrades/templates/backports-firstboot.html:45
-#: modules/upgrades/templates/update-firstboot-progress.html:35
-#: modules/upgrades/templates/update-firstboot-progress.html:38
-#: modules/upgrades/templates/update-firstboot.html:33
-msgid "Next"
-msgstr "Siguiente"
 
 #: modules/networks/templates/internet_connectivity_main.html:9
 msgid "Your Internet Connection Type"
@@ -5446,250 +5752,250 @@ msgstr ""
 "Internet el manual de su modelo de router, que le proporcionará las "
 "instrucciones necesarias sobre cómo hacerlo."
 
-#: modules/networks/views.py:28
+#: modules/networks/views.py:27
 msgid "disabled"
 msgstr "desactivada"
 
-#: modules/networks/views.py:29
+#: modules/networks/views.py:28
 msgid "automatic"
 msgstr "automática"
 
-#: modules/networks/views.py:30
+#: modules/networks/views.py:29
 msgid "manual"
 msgstr "manual"
 
-#: modules/networks/views.py:31
+#: modules/networks/views.py:30
 msgid "shared"
 msgstr "compartida"
 
-#: modules/networks/views.py:32
+#: modules/networks/views.py:31
 msgid "link-local"
 msgstr "enlace-local"
 
-#: modules/networks/views.py:33
+#: modules/networks/views.py:32
 msgid "dhcp"
 msgstr "dhcp"
 
-#: modules/networks/views.py:34
+#: modules/networks/views.py:33
 msgid "ignore"
 msgstr "ignorar"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:40
 msgid "unmanaged"
 msgstr "no gestionada"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:41
 msgid "unavailable"
 msgstr "indisponible"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:42
 msgid "disconnected"
 msgstr "conectado"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:43
 msgid "preparing"
 msgstr "preparando"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:44
 msgid "connecting"
 msgstr "conectando"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:45
 msgid "needs authentication"
 msgstr "necesita autenticación"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:46
 msgid "requesting address"
 msgstr "solicitando dirección"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:47
 msgid "checking"
 msgstr "comprobando"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:48
 msgid "waiting for secondary"
 msgstr "esperando al secundario"
 
-#: modules/networks/views.py:50
+#: modules/networks/views.py:49
 msgid "activated"
 msgstr "activada"
 
-#: modules/networks/views.py:51
+#: modules/networks/views.py:50
 msgid "deactivating"
 msgstr "desactivando"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:58
 msgid "no reason"
 msgstr "sin motivo"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:60
 msgid "unknown error"
 msgstr "fallo desconocido"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:62
 msgid "device is now managed"
 msgstr "el dispositivo está hora gestionado"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:64
 msgid "device is now unmanaged"
 msgstr "el dispositivo ahora no está gestionado"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:66
 msgid "configuration failed"
 msgstr "falló la configuración"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:68
 msgid "secrets required"
 msgstr "se requieren secretos"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:70
 msgid "DHCP client failed to start"
 msgstr "Fallo iniciando el cliente DHCP"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:72
 msgid "DHCP client error"
 msgstr "Error en cliente DHCP"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:74
 msgid "DHCP client failed"
 msgstr "falló el cliente DHCP"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:76
 msgid "shared connection service failed to start"
 msgstr "fallo al iniciar el servicio de conexión compartida"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:78
 msgid "shared connection service failed"
 msgstr "falló el servicio de conexión compartida"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:80
 msgid "device was removed"
 msgstr "Se eliminó el dispositivo"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:82
 msgid "device disconnected by user"
 msgstr "dispositivo desconectado por el usuario"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:84
 msgid "a dependency of the connection failed"
 msgstr "falló una dependencia de la conexión"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:86
 msgid "Wi-Fi network not found"
 msgstr "Red Wi-Fi no encontrada"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:88
 msgid "a secondary connection failed"
 msgstr "falló una conexión secundaria"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:90
 msgid "new connection activation was enqueued"
 msgstr "encolada la activación de la nueva conexión"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:92
 msgid "a duplicate IP address was detected"
 msgstr "se detectó una dirección IP duplicada"
 
-#: modules/networks/views.py:95
+#: modules/networks/views.py:94
 msgid "selected IP method is not supported"
 msgstr "el método IP seleccionado no está soportado"
 
-#: modules/networks/views.py:104
+#: modules/networks/views.py:103
 msgid "generic"
 msgstr "genérica"
 
-#: modules/networks/views.py:105
+#: modules/networks/views.py:104
 msgid "TUN or TAP interface"
 msgstr "interfaz TUN o TAP"
 
-#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:105 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:112
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:113
 msgid "infrastructure"
 msgstr "infraestructura"
 
-#: modules/networks/views.py:115
+#: modules/networks/views.py:114
 msgid "access point"
 msgstr "punto de acceso"
 
-#: modules/networks/views.py:116
+#: modules/networks/views.py:115
 msgid "mesh point"
 msgstr "punto de acceso a la red mesh"
 
-#: modules/networks/views.py:123
+#: modules/networks/views.py:122
 msgid "default"
 msgstr "por defecto"
 
-#: modules/networks/views.py:156
+#: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
 msgstr "No se puede mostrar la conexión: no se encontró."
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:210
 msgid "Connection Information"
 msgstr "Información de la conexión"
 
-#: modules/networks/views.py:226
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "No se puede editar la conexión: no se encontró."
 
-#: modules/networks/views.py:232
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Este tipo de conexión no está aún soportada."
 
-#: modules/networks/views.py:353
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Activar conexión {name}."
 
-#: modules/networks/views.py:357
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "Ha fallado la activación de la conexión: no se encontró."
 
-#: modules/networks/views.py:363
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Ha fallado la activación de la conexión {name}: no hay ningún dispositivo "
 "disponible."
 
-#: modules/networks/views.py:376
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Conexión {name} desactivada."
 
-#: modules/networks/views.py:380
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Ha fallado la desactivación de la conexión: no se encontró."
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Añadir nueva conexión genérica"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Añadir nueva conexión Ethernet"
 
-#: modules/networks/views.py:468
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Añadir nueva conexión PPPoE"
 
-#: modules/networks/views.py:503
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Añadir nueva conexión Wi-Fi"
 
-#: modules/networks/views.py:518
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Conexión {name} eliminada."
 
-#: modules/networks/views.py:522 modules/networks/views.py:532
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "Ha fallado la eliminación de la conexión: no se encontró."
 
@@ -5787,6 +6093,22 @@ msgstr ""
 "La región telefónica por defecto es necesaria para validar los números de "
 "teléfono en la configuración del perfil sin un código del país."
 
+#: modules/nextcloud/manifest.py:56 modules/syncthing/manifest.py:58
+#, fuzzy
+#| msgid "Filesystem"
+msgid "File sync"
+msgstr "Sistema de archivos"
+
+#: modules/nextcloud/manifest.py:56 modules/sharing/__init__.py:34
+msgid "Sharing"
+msgstr "Compartir"
+
+#: modules/nextcloud/manifest.py:56
+#, fuzzy
+#| msgid "Group Share"
+msgid "Groupware"
+msgstr "Compartir con grupo"
+
 #: modules/nextcloud/views.py:53
 msgid "Password update failed. Please choose a stronger password."
 msgstr "Error al actualizar la contraseña. Elija una contraseña más segura."
@@ -5829,6 +6151,18 @@ msgstr ""
 #: modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "DNS server"
+msgid "VPN server"
+msgstr "Servidor DNS"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "Removable Devices"
+msgid "Remote access"
+msgstr "Dispositivos extraíbles"
 
 #: modules/openvpn/templates/openvpn.html:12
 msgid "Profile"
@@ -6110,8 +6444,8 @@ msgstr ""
 "Otra instalación o actualización está actualmente en ejecución. Por favor "
 "espere unos momentos antes de apagar o reiniciar."
 
-#: modules/power/templates/power.html:22 templates/base.html:172
-#: templates/base.html:173
+#: modules/power/templates/power.html:22 templates/base.html:176
+#: templates/base.html:177
 msgid "Restart"
 msgstr "Reiniciar"
 
@@ -6248,10 +6582,27 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Proxy Web"
 
-#: modules/privoxy/__init__.py:118
+#: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Acceso a {url} con proxy {proxy} en tcp {kind}"
+
+#: modules/privoxy/manifest.py:10
+msgid "Ad blocker"
+msgstr ""
+
+#: modules/privoxy/manifest.py:10 modules/shadowsocks/manifest.py:18
+#: modules/torproxy/manifest.py:55
+#, fuzzy
+#| msgid "Gobby Server"
+msgid "Proxy server"
+msgstr "Servidor Gobby"
+
+#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Dominio de Red Local"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6293,6 +6644,10 @@ msgstr "Cliente IRC"
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
+
+#: modules/quassel/manifest.py:54
+msgid "IRC"
+msgstr ""
 
 #: modules/radicale/__init__.py:25
 #, python-brace-format
@@ -6397,6 +6752,24 @@ msgstr ""
 "freedombox&gt;) y su nombre de usuario. Pulsando en el botón de búsqueda le "
 "mostrará un listado de los calendarios y agendas existentes."
 
+#: modules/radicale/manifest.py:91
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "Calendar"
+msgstr "Calendario GNOME"
+
+#: modules/radicale/manifest.py:91 modules/roundcube/manifest.py:23
+msgid "Contacts"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CalDAV"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CardDAV"
+msgstr ""
+
 #: modules/radicale/views.py:32
 msgid "Access rights configuration updated"
 msgstr "Configuración de derechos de acceso actualizada"
@@ -6465,6 +6838,12 @@ msgstr ""
 "marcada, se agrega un campo de entrada de texto a la página de inicio de "
 "sesión para que el usuario pueda especificar a qué cuenta desea conectarse."
 
+#: modules/roundcube/manifest.py:23
+#, fuzzy
+#| msgid "FairEmail"
+msgid "Email"
+msgstr "FairEmail"
+
 #: modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
@@ -6497,7 +6876,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Leer y suscribirse a nuevos agregadores"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:10
+#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
@@ -6513,6 +6892,18 @@ msgstr "Permitir acceso público"
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr ""
 "Permitir que esta aplicación la use cualquiera que pueda acceder a ella."
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "RSS Feed Generator"
+msgid "Feed generator"
+msgstr "Generador de feeds RSS"
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "FluxNews"
+msgid "News"
+msgstr "FluxNews"
 
 #: modules/samba/__init__.py:23
 msgid ""
@@ -6590,6 +6981,24 @@ msgstr "GNOME Archivos"
 #: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
+
+#: modules/samba/manifest.py:91
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network drive"
+msgstr "Interfaz de red"
+
+#: modules/samba/manifest.py:92
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Media storage"
+msgstr "Servidor de emisión multimedia"
+
+#: modules/samba/manifest.py:93
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup storage"
+msgstr "Copias de seguridad"
 
 #: modules/samba/templates/samba.html:20
 msgid "Shares"
@@ -6731,6 +7140,16 @@ msgstr "Moderado"
 #: modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Estricto"
+
+#: modules/searx/manifest.py:17
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web search"
+msgstr "Buscador web"
+
+#: modules/searx/manifest.py:17
+msgid "Metasearch Engine"
+msgstr ""
 
 #: modules/security/forms.py:13
 msgid "Fail2Ban (recommended)"
@@ -6877,13 +7296,25 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37
+#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
 msgid "Bookmarks"
 msgstr "Marcadores"
 
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "Link"
+msgid "Link blog"
+msgstr "Enlace"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "in use"
+msgid "Single user"
+msgstr "en uso"
 
 #: modules/shadowsocks/__init__.py:18 modules/shadowsocksserver/__init__.py:18
 msgid ""
@@ -6934,10 +7365,6 @@ msgstr "Cliente Shadowsocks"
 msgid "Bypass Censorship"
 msgstr "Evitar la censura"
 
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Servidor"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Nombre del servidor o dirección IP"
@@ -6953,6 +7380,24 @@ msgstr "Clave para cifrar los datos. Debe coincidir con la clave del servidor."
 #: modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Método de cifrado. Debe coincidir con la configuración del servidor."
+
+#: modules/shadowsocks/manifest.py:20 modules/shadowsocksserver/manifest.py:19
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted tunnel"
+msgstr "Cifrado"
+
+#: modules/shadowsocks/manifest.py:21
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Entry point"
+msgstr "Extremo"
+
+#: modules/shadowsocks/manifest.py:22 modules/shadowsocksserver/manifest.py:21
+#, fuzzy
+#| msgid "Shadowsocks Client"
+msgid "Shadowsocks"
+msgstr "Cliente Shadowsocks"
 
 #: modules/shadowsocksserver/__init__.py:26
 #, python-brace-format
@@ -6987,6 +7432,12 @@ msgstr ""
 msgid "Encryption method. Clients must use the same setting."
 msgstr "Método de cifrado. Los clientes deben utilizar la misma configuración."
 
+#: modules/shadowsocksserver/manifest.py:20
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Exit point"
+msgstr "Extremo"
+
 #: modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
@@ -6995,10 +7446,6 @@ msgid ""
 msgstr ""
 "Permite compartir a través de la web archivos y carpetas en su {box_name} "
 "con otras personas."
-
-#: modules/sharing/__init__.py:34
-msgid "Sharing"
-msgstr "Compartir"
 
 #: modules/sharing/forms.py:17
 msgid "Name of the share"
@@ -7051,6 +7498,12 @@ msgid "Shares should be either public or shared with at least one group"
 msgstr ""
 "Las carpetas compartidas deben ser públicas o estar compartidas con al menos "
 "un grupo"
+
+#: modules/sharing/manifest.py:19 modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web sharing"
+msgstr "Compartir"
 
 #: modules/sharing/templates/sharing.html:18
 #: modules/sharing/templates/sharing.html:21
@@ -7784,6 +8237,18 @@ msgstr "Los archivos TiddlyWiki deben estar en formato HTML"
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "Cargar un archivo TiddlyWiki desde este ordenador."
 
+#: modules/tiddlywiki/manifest.py:22
+msgid "Journal"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:23
+msgid "Digital garden"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:24
+msgid "Zettelkasten"
+msgstr ""
+
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
@@ -7826,7 +8291,8 @@ msgstr ""
 "a {box_name} desde internet incluso cuando se usa un ISP que limita los "
 "servidores en casa."
 
-#: modules/tor/__init__.py:62
+#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
 
@@ -7947,6 +8413,16 @@ msgstr "Navegador Tor"
 #: modules/tor/manifest.py:31 modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Proxy con Tor"
+
+#: modules/tor/manifest.py:57
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion services"
+msgstr "Servicio Onion"
+
+#: modules/tor/manifest.py:58
+msgid "Relay"
+msgstr "Retransmisión"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -8125,13 +8601,12 @@ msgstr "Lector TTRSS"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:38
-#: modules/upgrades/templates/update-firstboot.html:14
+#: modules/upgrades/__init__.py:33
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Buscar y aplicar las últimas actualizaciones del software y de seguridad."
 
-#: modules/upgrades/__init__.py:39
+#: modules/upgrades/__init__.py:34
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8145,21 +8620,32 @@ msgstr ""
 "tiempo. Si se decide retrasar el reinicio del sistema, éste se hará de forma "
 "automática a las 02:00 h."
 
-#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
-#: modules/upgrades/templates/update-firstboot-progress.html:11
-#: modules/upgrades/templates/update-firstboot.html:11
+#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:143
 msgid "Software Update"
 msgstr "Actualización de software (Update)"
 
-#: modules/upgrades/__init__.py:133
+#: modules/upgrades/__init__.py:128
 msgid "FreedomBox Updated"
 msgstr "FreedomBox actualizado"
 
-#: modules/upgrades/__init__.py:218
+#: modules/upgrades/__init__.py:138
+#, fuzzy
+#| msgid "Software Update"
+msgid "Run software update manually"
+msgstr "Actualización de software (Update)"
+
+#: modules/upgrades/__init__.py:140
+msgid ""
+"Automatic software update runs daily by default. For the first time, "
+"manually run it now."
+msgstr ""
+
+#: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
 msgstr "No se pudo iniciar la actualización de la distribución"
 
-#: modules/upgrades/__init__.py:220
+#: modules/upgrades/__init__.py:244
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8170,18 +8656,18 @@ msgstr ""
 "libres. Si está habilitada, la actualización de la distribución se "
 "reintentará tras 24h ."
 
-#: modules/upgrades/__init__.py:231
+#: modules/upgrades/__init__.py:255
 msgid "Distribution update started"
 msgstr "Iniciada la actualización de la distribución"
 
-#: modules/upgrades/__init__.py:233
+#: modules/upgrades/__init__.py:257
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Se inició la actualización a la nueva publicación estable. Podría llevar "
 "mucho tiempo completarla."
 
-#: modules/upgrades/__init__.py:326
+#: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
 msgstr "Comprobar si hay paquetes retenidos"
 
@@ -8211,10 +8697,6 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Activar las actualizaciones funcionales frecuentes (recomendado)"
 
-#: modules/upgrades/forms.py:40
-msgid "Update now (recommended)"
-msgstr "Actualizar ahora (recomendado)"
-
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -8231,31 +8713,9 @@ msgstr ""
 "<strong>Nota:</strong> Una vez que se activan las actualizaciones "
 "funcionales frecuentes no se pueden desactivar."
 
-#: modules/upgrades/templates/update-firstboot-progress.html:19
-msgid "Updating, please wait..."
-msgstr "Actualizando, espere por favor..."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:22
-#: modules/upgrades/templates/update-firstboot.html:20
-msgid ""
-"<strong>This may take a long time to complete.</strong> During an update, "
-"this web interface may be temporarily unavailable and show an error. In that "
-"case, refresh the page to continue."
-msgstr ""
-"<strong>Esto puede tardar un buen rato en finalizar</strong>. Durante una "
-"actualización esta interfaz web puede estar temporalmente inaccesible y "
-"mostrar un error. En ese caso, vuelva a cargar la página para continuar."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:31
-#, python-format
-msgid ""
-"\n"
-"\t%(box_name)s is up to date. Press Next to continue.\n"
-"      "
-msgstr ""
-"\n"
-"\t%(box_name)s está actualizado. Pulse Siguente para continuar.\n"
-"      "
+#: modules/upgrades/templates/backports-firstboot.html:45
+msgid "Next"
+msgstr "Siguiente"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -8321,10 +8781,6 @@ msgstr ""
 msgid "Manual Update"
 msgstr "Actualización manual"
 
-#: modules/upgrades/templates/upgrades_configure.html:108
-msgid "Update now"
-msgstr "Actualizar ahora"
-
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -8356,23 +8812,23 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Pruebe la actualización de distribución ahora"
 
-#: modules/upgrades/views.py:73
+#: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
 msgstr "Error al configurar las actualizaciones desatendidas"
 
-#: modules/upgrades/views.py:120
+#: modules/upgrades/views.py:119
 msgid "Upgrade process started."
 msgstr "Proceso de actualización iniciado."
 
-#: modules/upgrades/views.py:122
+#: modules/upgrades/views.py:121
 msgid "Starting upgrade failed."
 msgstr "No se ha podido iniciar la actualización."
 
-#: modules/upgrades/views.py:132
+#: modules/upgrades/views.py:131
 msgid "Frequent feature updates activated."
 msgstr "Las actualizaciones funcionales frecuentes están activadas."
 
-#: modules/upgrades/views.py:218
+#: modules/upgrades/views.py:176
 msgid "Starting distribution upgrade test."
 msgstr "Comenzando la prueba de la actualización de la distribución."
 
@@ -8602,6 +9058,10 @@ msgstr ""
 "users remove_user\" . Si una cuenta ya se puede usar con %(box_name)s, omita "
 "este paso."
 
+#: modules/users/templates/users_firstboot.html:63
+msgid "Skip this step"
+msgstr "Saltar este paso"
+
 #: modules/users/templates/users_list.html:11 modules/users/views.py:64
 msgid "Users"
 msgstr "Usuarias/os"
@@ -8785,6 +9245,12 @@ msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Generalmente activado para el servicio VPN a través del que se envía el "
 "tráfico."
+
+#: modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "IRC Client"
+msgid "VPN client"
+msgstr "Cliente IRC"
 
 #: modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -9067,6 +9533,10 @@ msgstr ""
 "WordPress o blog a los administradores. Habilítalo solo después de ejecutar "
 "la configuración inicial de WordPress."
 
+#: modules/wordpress/manifest.py:26
+msgid "Content management system"
+msgstr ""
+
 #: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
@@ -9120,6 +9590,16 @@ msgstr ""
 "Si se habilita se harán peticiones a los servidores OpenStreetMap desde el "
 "navegador del usuario. Esto impacta en la privacidad."
 
+#: modules/zoph/manifest.py:26
+msgid "Photo"
+msgstr ""
+
+#: modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Photo Organizer"
+msgid "Organizer"
+msgstr "Organizador de fotografías"
+
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
 msgid "Setup"
@@ -9137,17 +9617,18 @@ msgstr ""
 msgid "Generic"
 msgstr "Genérica"
 
-#: operation.py:118
-#, python-brace-format
-msgid "Error: {name}: {exception_message}"
+#: operation.py:120
+#, fuzzy, python-brace-format
+#| msgid "Error: {name}: {exception_message}"
+msgid "Error: {name}: {exception}"
 msgstr "Error: {name}: {exception_message}"
 
-#: operation.py:121
+#: operation.py:123
 #, python-brace-format
 msgid "Waiting to start: {name}"
 msgstr "Esperando a empezar: {name}"
 
-#: operation.py:127
+#: operation.py:129
 #, python-brace-format
 msgid "Finished: {name}"
 msgstr "Terminó: {name}"
@@ -9192,67 +9673,75 @@ msgid "Updating app"
 msgstr "Actualizando app"
 
 #: setup.py:78
-#, python-brace-format
-msgid "Error installing app: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Error installing app: {error}"
+msgid "Error installing app: {exception}"
 msgstr "Error al instalar la app: {error}"
 
-#: setup.py:81 setup.py:167
-#, python-brace-format
-msgid "Error repairing app: {error}"
+#: setup.py:80
+#, fuzzy, python-brace-format
+#| msgid "Error repairing app: {error}"
+msgid "Error repairing app: {exception}"
 msgstr "Error al reparar la aplicación: {error}"
 
-#: setup.py:84
-#, python-brace-format
-msgid "Error updating app: {error}"
+#: setup.py:82
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error updating app: {exception}"
 msgstr "Error al actualizar la app: {error}"
 
-#: setup.py:88
+#: setup.py:85
 msgid "App installed."
 msgstr "App instalada."
 
-#: setup.py:92
+#: setup.py:89
 msgid "App updated"
 msgstr "App actualizada"
 
-#: setup.py:115
+#: setup.py:112
 msgid "Repairing app"
 msgstr "Reparando aplicación"
 
-#: setup.py:146
+#: setup.py:143
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Se produjo un error al instalar la aplicación:{error}"
 
-#: setup.py:159
+#: setup.py:156
 msgid "Skipping repair, no failed checks"
 msgstr "Saltarse la reparación, no hay comprobaciones fallidas"
 
-#: setup.py:173
+#: setup.py:164
+#, python-brace-format
+msgid "Error repairing app: {error}"
+msgstr "Error al reparar la aplicación: {error}"
+
+#: setup.py:170
 msgid "Re-running setup to complete repairs"
 msgstr "Volver a ejecutar la configuración para completar las reparaciones"
 
-#: setup.py:181
+#: setup.py:178
 msgid "App repaired."
 msgstr "Aplicación reparada."
 
-#: setup.py:185
+#: setup.py:182
 msgid "App repair completed with errors:\n"
 msgstr "Reparación de la aplicación completada con errores:\n"
 
-#: setup.py:205
+#: setup.py:202
 msgid "Uninstalling app"
 msgstr "Instalando app"
 
-#: setup.py:221
+#: setup.py:218
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Error desinstalando la aplicación: {error}"
 
-#: setup.py:224
+#: setup.py:221
 msgid "App uninstalled."
 msgstr "Aplicación desinstalada."
 
-#: setup.py:597
+#: setup.py:594
 msgid "Updating app packages"
 msgstr "Actualizando los paquetes de la app"
 
@@ -9317,6 +9806,12 @@ msgstr "Instalación"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "El servidor <em>%(service_name)s</em> no se está ejecutando."
 
+#: templates/apps.html:29
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "Buscar en la web"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9326,43 +9821,43 @@ msgstr ""
 "propiedad de los datos. Es un software gratuito que te permite instalar y "
 "gestionar aplicaciones de un servidor con facilidad."
 
-#: templates/base.html:108
+#: templates/base.html:112
 msgid " Home"
 msgstr " Inicio"
 
-#: templates/base.html:111
+#: templates/base.html:115
 msgid "Home"
 msgstr "Principal"
 
-#: templates/base.html:116
+#: templates/base.html:120
 msgid " Apps"
 msgstr " Aplicaciones"
 
-#: templates/base.html:120
+#: templates/base.html:124
 msgid "Apps"
 msgstr "Aplicaciones"
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid " System"
 msgstr " Sistema"
 
-#: templates/base.html:164 templates/base.html:165
+#: templates/base.html:168 templates/base.html:169
 msgid "Change password"
 msgstr "Cambiar clave de acceso"
 
-#: templates/base.html:178 templates/base.html:179
+#: templates/base.html:182 templates/base.html:183
 msgid "Shut down"
 msgstr "Apagar"
 
-#: templates/base.html:189 templates/base.html:218
+#: templates/base.html:193 templates/base.html:222
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: templates/base.html:198 templates/base.html:201
+#: templates/base.html:202 templates/base.html:205
 msgid "Select language"
 msgstr "Seleccionar idioma"
 
-#: templates/base.html:207 templates/base.html:209
+#: templates/base.html:211 templates/base.html:213
 msgid "Log in"
 msgstr "Iniciar sesión"
 
@@ -9429,15 +9924,6 @@ msgstr "RPM:"
 #: templates/error.html:10
 msgid "Error"
 msgstr "Error"
-
-#: templates/first_setup.html:18
-#, python-format
-msgid ""
-"Please wait for %(box_name)s to finish installation. You can start using "
-"your %(box_name)s once it is done."
-msgstr ""
-"Por favor espere a que %(box_name)s termine la instalación. Podrá empezar a "
-"usar su %(box_name)s una vez finalice."
 
 #: templates/index.html:22
 #, python-format
@@ -9641,11 +10127,11 @@ msgstr ""
 "Todos los datos de la aplicación y la configuración se perderán "
 "permanentemente. La aplicación se puede instalar de nuevo."
 
-#: views.py:268
+#: views.py:322
 msgid "Setting unchanged"
 msgstr "Configuración sin cambio"
 
-#: views.py:502
+#: views.py:557
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "antes de desinstalar {app_id}"
@@ -9653,6 +10139,55 @@ msgstr "antes de desinstalar {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-format
+#~ msgid "Without any apps, your %(box_name)s cannot do very much."
+#~ msgstr ""
+#~ "Sin ninguna aplicación instalada, su %(box_name)s no puede hacer mucho."
+
+#~ msgid "Install Apps"
+#~ msgstr "Instalar Aplicaciones"
+
+#, python-format
+#~ msgid ""
+#~ "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
+#~ "and modify it if necessary."
+#~ msgstr ""
+#~ "Puede que quiera comprobar la <a href=\"%(networks_url)s\">configuración "
+#~ "de red</a> y modificarla si es necesario."
+
+#~ msgid "Update now (recommended)"
+#~ msgstr "Actualizar ahora (recomendado)"
+
+#~ msgid "Updating, please wait..."
+#~ msgstr "Actualizando, espere por favor..."
+
+#~ msgid ""
+#~ "<strong>This may take a long time to complete.</strong> During an update, "
+#~ "this web interface may be temporarily unavailable and show an error. In "
+#~ "that case, refresh the page to continue."
+#~ msgstr ""
+#~ "<strong>Esto puede tardar un buen rato en finalizar</strong>. Durante una "
+#~ "actualización esta interfaz web puede estar temporalmente inaccesible y "
+#~ "mostrar un error. En ese caso, vuelva a cargar la página para continuar."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "\t%(box_name)s is up to date. Press Next to continue.\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "\t%(box_name)s está actualizado. Pulse Siguente para continuar.\n"
+#~ "      "
+
+#, python-format
+#~ msgid ""
+#~ "Please wait for %(box_name)s to finish installation. You can start using "
+#~ "your %(box_name)s once it is done."
+#~ msgstr ""
+#~ "Por favor espere a que %(box_name)s termine la instalación. Podrá empezar "
+#~ "a usar su %(box_name)s una vez finalice."
 
 #~ msgid "Hostname set"
 #~ msgstr "Asignar nombre de anfitrión"
@@ -9665,9 +10200,6 @@ msgstr "Gujarati"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "No puedo probar: No hay dominios configurados."
-
-#~ msgid "Media streaming server"
-#~ msgstr "Servidor de emisión multimedia"
 
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
@@ -9917,19 +10449,11 @@ msgstr "Gujarati"
 #~ msgid "Cockpit will only work when accessed using the following URLs."
 #~ msgstr "Cockpit solo funciona cuando se usan las siguientes URL."
 
-#, fuzzy
-#~| msgid "Web Server"
-#~ msgid "WebRTC server"
-#~ msgstr "Servidor Web"
-
 #~ msgid "Server URL"
 #~ msgstr "URL de Servidor"
 
 #~ msgid "Server URL updated"
 #~ msgstr "URL de servidor actualizada"
-
-#~ msgid "Relay"
-#~ msgstr "Retransmisión"
 
 #, python-format
 #~ msgid ""
@@ -11000,9 +11524,6 @@ msgstr "Gujarati"
 #~ msgid "HTTPS"
 #~ msgstr "HTTPS"
 
-#~ msgid "SSH"
-#~ msgstr "SSH"
-
 #~ msgid "Not Available"
 #~ msgstr "No disponible"
 
@@ -11219,17 +11740,11 @@ msgstr "Gujarati"
 #~ "Las instantáneas más antiguas seleccionadas serán borradas. Esto no "
 #~ "limita el número de instantáneas creadas."
 
-#~ msgid "Archive name"
-#~ msgstr "Nombre de archivo"
-
 #~ msgid "Invalid archive name"
 #~ msgstr "Nombre de archivo no válido"
 
 #~ msgid "Upload backup"
 #~ msgstr "Subir copia de seguridad"
-
-#~ msgid "Removable Devices"
-#~ msgstr "Dispositivos extraíbles"
 
 #~ msgid "There are no additional storage devices attached."
 #~ msgstr "No hay dispositivos de almacenamiento adicionales conectados."
@@ -11351,9 +11866,6 @@ msgstr "Gujarati"
 #~ msgid "Devices"
 #~ msgstr "Dispositivos"
 
-#~ msgid "Filesystem"
-#~ msgstr "Sistema de archivos"
-
 #~ msgid "Exported filename"
 #~ msgstr "Nombre de archivo exportado"
 
@@ -11455,9 +11967,6 @@ msgstr "Gujarati"
 
 #~ msgid "Enable forwarding to set forwarding DNS servers"
 #~ msgstr "Activar reenvío para definir los servidores DNS de reenvío"
-
-#~ msgid "BitTorrent"
-#~ msgstr "BitTorrent"
 
 #~ msgid "wiki"
 #~ msgstr "wiki"

@@ -56,7 +56,7 @@ class MinetestApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Minetest'),
             icon_filename='minetest', short_description=_('Block Sandbox'),
             description=_description, manual_page='Minetest',
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://www.minetest.net/get-involved/#donate')
         self.add(info)
 

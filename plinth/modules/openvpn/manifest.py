@@ -56,3 +56,5 @@ clients = [{
         'url': 'https://tunnelblick.net/downloads.html'
     }]
 }]
+
+tags = [_('VPN server'), _('Privacy'), _('Remote access')]

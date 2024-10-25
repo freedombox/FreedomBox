@@ -3,6 +3,8 @@
 Application manifest for Shadowsocks Client.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup = {
     'secrets': {
         'files': [
@@ -11,3 +13,11 @@ backup = {
     },
     'services': ['shadowsocks-libev-local@freedombox']
 }
+
+tags = [
+    _('Proxy server'),
+    _('Censorship resistance'),
+    _('Encrypted tunnel'),
+    _('Entry point'),
+    _('Shadowsocks'),
+]

@@ -17,3 +17,5 @@ backup = {
     },
     'services': ['deluged', 'deluge-web']
 }
+
+tags = [_('File sharing'), _('BitTorrent'), _('Web client'), _('P2P')]

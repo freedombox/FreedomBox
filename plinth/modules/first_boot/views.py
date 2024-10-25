@@ -31,22 +31,12 @@ class WelcomeView(FormView):
 
 
 class CompleteView(TemplateView):
-    """Show summary after all firstboot setup is done.
-
-    After viewing this page the firstboot module can't be accessed anymore.
-    """
+    """Show next steps after all firstboot wizard steps are done."""
 
     template_name = 'firstboot_complete.html'
-
-    def get(self, request, *args, **kwargs):
-        """Mark as done as soon as page is served."""
-        response = super().get(self, request, *args, **kwargs)
-        first_boot.mark_step_done('firstboot_complete')
-        return response
 
     def get_context_data(self, **kwargs):
         """Add network connections to context list."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Setup Complete')
-        context['firstboot_complete'] = True
         return context

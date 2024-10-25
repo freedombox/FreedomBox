@@ -12,6 +12,15 @@ no-brand
 {% block mainmenu_left_collapse %}
 {% endblock %}
 
+{% block notifications_dropdown %}
+{% endblock %}
+
+{% block mainmenu_toggler %}
+  {% if user.is_authenticated %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
 {% block mainmenu_right %}
   {% if user.is_authenticated %}
     {% include "firstboot_navbar.html" %}

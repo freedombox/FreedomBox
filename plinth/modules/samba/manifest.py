@@ -84,3 +84,11 @@ clients = [{
 }]
 
 backup: dict = {}
+
+tags = [
+    _('File sharing'),
+    _('Local network'),
+    _('Network drive'),
+    _('Media storage'),
+    _('Backup storage')
+]

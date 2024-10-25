@@ -3,6 +3,8 @@
 Application manifest for sharing.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup = {
     'config': {
         'files': ['/etc/apache2/conf-available/sharing-freedombox.conf']
@@ -13,3 +15,5 @@ backup = {
         'name': 'sharing-freedombox'
     }]
 }
+
+tags = [_('File sharing'), _('Web sharing')]

@@ -134,3 +134,5 @@ backup = {
     },
     'services': ['miniflux']
 }
+
+tags = [_('Feed reader'), _('News aggregation'), _('RSS'), _('ATOM')]

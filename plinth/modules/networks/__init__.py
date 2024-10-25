@@ -15,24 +15,6 @@ from plinth.package import Packages
 
 from . import privileged
 
-first_boot_steps = [
-    {
-        'id': 'network_topology_wizard',
-        'url': 'networks:network-topology-first-boot',
-        'order': 2,
-    },
-    {
-        'id': 'router_setup_wizard',
-        'url': 'networks:router-configuration-first-boot',
-        'order': 3,
-    },
-    {
-        'id': 'internet_connectivity_type_wizard',
-        'url': 'networks:internet-connection-type-first-boot',
-        'order': 4,
-    },
-]
-
 _description = [
     _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
       'or PPPoE. Share that connection with other devices on the network.'),

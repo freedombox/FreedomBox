@@ -27,11 +27,6 @@ first_boot_steps = [
         'url': 'upgrades:backports-firstboot',
         'order': 5,
     },
-    {
-        'id': 'initial_update',
-        'url': 'upgrades:update-firstboot',
-        'order': 6,
-    },
 ]
 
 _description = [
@@ -137,6 +132,31 @@ class UpgradesApp(app_module.App):
             group='admin')
         note.dismiss(should_dismiss=dismiss)
 
+    def _show_first_manual_update_notification(self):
+        """After first setup, show notification to manually run updates."""
+        from plinth.notification import Notification
+        title = gettext_noop('Run software update manually')
+        message = gettext_noop(
+            'Automatic software update runs daily by default. For the first '
+            'time, manually run it now.')
+        data = {
+            'app_name': 'translate:' + gettext_noop('Software Update'),
+            'app_icon': 'fa-refresh'
+        }
+        actions = [{
+            'type': 'link',
+            'class': 'primary',
+            'text': gettext_noop('Go to {app_name}'),
+            'url': 'upgrades:index'
+        }, {
+            'type': 'dismiss'
+        }]
+        Notification.update_or_create(id='upgrades-first-manual-update',
+                                      app_id='upgrades', severity='info',
+                                      title=title, message=message,
+                                      actions=actions, data=data,
+                                      group='admin', dismissed=False)
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -144,6 +164,10 @@ class UpgradesApp(app_module.App):
         # Enable automatic upgrades but only on first install
         if not old_version and not cfg.develop:
             privileged.enable_auto()
+
+        # Request user to run manual update as a one time activity
+        if not old_version:
+            self._show_first_manual_update_notification()
 
         # Update apt preferences whenever on first install and on version
         # increment.

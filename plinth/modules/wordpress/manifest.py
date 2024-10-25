@@ -12,11 +12,15 @@ clients = [{
 
 backup = {
     'data': {
-        'files': ['/var/lib/plinth/backups-data/wordpress-database.sql',
-                  '/etc/wordpress/is_public'],
+        'files': [
+            '/var/lib/plinth/backups-data/wordpress-database.sql',
+            '/etc/wordpress/is_public'
+        ],
         'directories': ['/var/lib/wordpress/']
     },
     'secrets': {
         'directories': ['/etc/wordpress/']
     },
 }
+
+tags = [_('Website'), _('Blog'), _('Content management system')]

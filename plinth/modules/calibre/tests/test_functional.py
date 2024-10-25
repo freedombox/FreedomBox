@@ -105,8 +105,17 @@ def _visit_library(browser, name):
 
     functional.eventually(_service_available)
 
-    functional.eventually(browser.find_by_css,
-                          args=[f'.calibre-push-button[data-lid="{name}"]'])
+    def _library_available():
+        """Refresh until the expected library is available."""
+        available = browser.find_by_css(
+            f'.calibre-push-button[data-lid="{name}"]')
+        if not available:
+            time.sleep(0.5)
+            functional.visit(browser, '/calibre')
+
+        return available
+
+    functional.eventually(_library_available)
     link = browser.find_by_css(f'.calibre-push-button[data-lid="{name}"]')
     if not link:
         raise ValueError('Library not found')

@@ -63,7 +63,7 @@ class EmailApp(plinth.app.App):
                                icon_filename='email',
                                short_description=_('Email Server'),
                                description=_description, manual_page='Email',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://rspamd.com/support.html')
         self.add(info)
 

@@ -50,3 +50,5 @@ backup = {
     },
     'services': ['quasselcore'],
 }
+
+tags = [_('Chat room'), _('IRC'), _('Client')]

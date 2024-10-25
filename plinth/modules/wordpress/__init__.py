@@ -53,7 +53,7 @@ class WordPressApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('WordPress'),
             icon_filename='wordpress', short_description=_('Website and Blog'),
             description=_description, manual_page='WordPress',
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://wordpressfoundation.org/donate/')
         self.add(info)
 

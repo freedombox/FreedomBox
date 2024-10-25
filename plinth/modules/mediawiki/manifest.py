@@ -21,3 +21,5 @@ backup = {
     },
     'services': ['mediawiki-jobrunner']
 }
+
+tags = [_('Wiki'), _('Website')]

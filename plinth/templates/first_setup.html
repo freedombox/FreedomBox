@@ -13,18 +13,15 @@ no-brand
 
 {% block content %}
 
-  {% if is_first_setup_running %}
-    <div class="alert alert-warning" role="alert">
-      {% blocktrans trimmed %}
-        Please wait for {{ box_name }} to finish installation.
-        You can start using your {{ box_name }} once it is done.
-      {% endblocktrans %}
-    </div>
-  {% endif %}
+  <div class="logo">
+    <img class="firstboot img-fluid" alt="{{ box_name }}"
+         src="{% static 'theme/img/freedombox-logo-standard.svg' %}"/>
+  </div>
 
-  <p class="text-center">
-    <img src="{% static 'theme/img/freedombox-logo-standard.svg' %}"
-         alt="{{ box_name }}" width="640"/>
-  </p>
+  {% if is_first_setup_running %}
+    <p class="firstboot-spinner">
+      <span class="fa fa-refresh fa-spin fa-4x fa-pull-left processing"></span>
+    </p>
+  {% endif %}
 
 {% endblock %}

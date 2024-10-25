@@ -61,7 +61,8 @@ class SyncthingApp(app_module.App):
                                description=_description,
                                manual_page='Syncthing',
                                clients=manifest.clients,
-                               donation_url='https://syncthing.net/donations/')
+                               donation_url='https://syncthing.net/donations/',
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-syncthing', info.name,

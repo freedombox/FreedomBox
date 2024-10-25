@@ -61,7 +61,7 @@ class FeatherWikiApp(app_module.App):
                                short_description=_('Personal Notebooks'),
                                description=_description,
                                manual_page='FeatherWiki',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-featherwiki', info.name,

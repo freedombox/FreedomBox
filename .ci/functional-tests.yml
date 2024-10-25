@@ -1,66 +1,27 @@
 ---
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-.app-server:
-  stage: functional-tests
-  dependencies: []
-  except:
-    - $GITLAB_USER_LOGIN == "weblate"
-  script:
-    - BUILD_JOB_ID=$(curl -s "https://salsa.debian.org/api/v4/projects/$CI_PROJECT_ID/pipelines/$CI_PIPELINE_ID/jobs?scope[]=success" | jq -r '.[] | select(.name==env.BUILD_JOB_NAME) | .id')
-    - export AWS_DEFAULT_REGION=us-east-1
-    - |
-      aws lambda invoke --function-name launch_app_server --payload '{"launch_template_name": "'"$LAUNCH_TEMPLATE_NAME"'", "instance_name": "'"$INSTANCE_NAME"'", "ci_project_id": "'"$CI_PROJECT_ID"'", "build_job_id": "'"$BUILD_JOB_ID"'"}' response.json
-    - echo "APP_SERVER_IP_1=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
-    - echo "INSTANCE_ID_1=$(jq -r '.instance_id' response.json)" >> app-servers.env
-    - |
-      aws lambda invoke --function-name launch_app_server --payload '{"launch_template_name": "'"$LAUNCH_TEMPLATE_NAME"'", "instance_name": "'"$INSTANCE_NAME"'", "ci_project_id": "'"$CI_PROJECT_ID"'", "build_job_id": "'"$BUILD_JOB_ID"'"}' response.json
-    - echo "APP_SERVER_IP_2=$(jq -r '.app_server_ip' response.json)" >> app-servers.env
-    - echo "INSTANCE_ID_2=$(jq -r '.instance_id' response.json)" >> app-servers.env
-  tags:
-    - functional-tests
-  artifacts:
-    reports:
-      dotenv: app-servers.env
-
 .run-functional-tests:
   stage: functional-tests
-  timeout: 3h
+  needs: []
+  dependencies: []
+  tags:
+    - functional-tests
+  timeout: 10h
   # Need to find another way of running the cleanup step even on failure
   allow_failure: true
-  when: delayed
-  # Wait for the app-server to come up. Saves time for the CI runners.
-  start_in: 3 minutes
+  except:
+    - $GITLAB_USER_LOGIN == "weblate"
   before_script:
     - apt-get update
-    - apt-get install -y sudo curl wget
-    - ./plinth/tests/functional/install.sh
-    - adduser tester --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password && echo "tester:password" | chpasswd
+    - sudo -u plinth ./run --develop > plinth.log 2>&1 &
+    - 'echo -e "Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/actions/actions, `pwd`/actions/actions\nDefaults!FREEDOMBOX_ACTION_DEV closefrom_override\nplinth    ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV\n" > /etc/sudoers.d/01-freedombox-development'
+    - while ! grep -q "Setup thread finished" plinth.log; do sleep 1; echo -n .; done
   script:
-    - cp -r . /home/tester/freedombox && chown -R tester:tester /home/tester/freedombox
-    - |
-      sudo APP_SERVER_URL_1="https://$APP_SERVER_IP_1" APP_SERVER_URL_2="https://$APP_SERVER_IP_2" -u tester bash -c \
-        'cd /home/tester/freedombox && py.test-3 -v --durations=10 --include-functional --splinter-headless -n 2 --dist=loadscope --template=html1/index.html --report=functional-tests.html'
-  after_script:
-    - echo "INSTANCE_ID_1=$INSTANCE_ID_1" >> app-servers.env
-    - echo "INSTANCE_ID_2=$INSTANCE_ID_2" >> app-servers.env
-    - cp /home/tester/freedombox/functional-tests.html .
-    - cp -r /home/tester/freedombox/screenshots/ .
+    - FREDOMBOX_URL=https://localhost FREEDOMBOX_SSH_PORT=22 FREEDOMBOX_SAMBA_PORT=445 pytest -v --durations=10 --include-functional --splinter-headless --instafail --template=html1/index.html --report=functional-tests.html
   artifacts:
     when: always
-    reports:
-      dotenv: app-servers.env
     paths:
       - functional-tests.html
       - screenshots/
-
-# Does not run if the previous job times out or is cancelled
-.terminate-app-server:
-  stage: functional-tests
-  script:
-    - export AWS_DEFAULT_REGION=us-east-1
-    - |
-      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID_1"'"}' response.json
-      aws lambda invoke --function-name terminate_app_server --payload '{"instance_id": "'"$INSTANCE_ID_2"'"}' response.json
-  tags:
-    - functional-tests
+      - plinth.log

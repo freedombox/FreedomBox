@@ -7,3 +7,44 @@
 {% load i18n %}
 
 {% block body_class %}apps-page{% endblock %}
+
+{% block tags %}
+  {% if tags %}
+    <div class="container">
+      <div class="dropdown searchable-dropdown">
+        <div class="tag-input">
+          <div id="selected-tags">
+            {% for tag in tags %}
+              <span class="badge badge-light badge-pill tag-badge"
+                    data-tag="{{ tag }}">
+                {% trans tag %}
+                <button class="btn btn-sm btn-light remove-tag">
+                  <i class="fa fa-times"></i>
+                </button>
+              </span>
+            {% endfor %}
+          </div>
+          <input id="add-tag-input" type="search" class="form-control dropdown-toggle"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 autocomplete="off" placeholder="{% trans "Search with tags" %}">
+          <div class="dropdown-menu" aria-labelledby="add-tag-input">
+            <ul class="dropdown-items list-unstyled">
+              {% for tag in all_tags %}
+                {% if tag not in tags %}
+                  <li class="dropdown-item" data-tag="{{ tag }}"
+                      data-tag_l10n="{% trans tag %}">
+                    {% trans tag %}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'tags.js' %}"></script>
+{% endblock %}

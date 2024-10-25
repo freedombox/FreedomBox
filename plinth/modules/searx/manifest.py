@@ -13,3 +13,5 @@ clients = [{
 PUBLIC_ACCESS_SETTING_FILE = '/etc/searx/allow_public_access'
 
 backup = {'config': {'files': [PUBLIC_ACCESS_SETTING_FILE]}}
+
+tags = [_('Web search'), _('Metasearch Engine')]

@@ -8,11 +8,13 @@ import re
 import subprocess
 import tarfile
 
+from plinth import action_utils
 from plinth.actions import privileged, secret_str
 from plinth.utils import Version
 
 TIMEOUT = 30
 BACKUPS_DATA_PATH = pathlib.Path('/var/lib/plinth/backups-data/')
+BACKUPS_UPLOAD_PATH = pathlib.Path('/var/lib/freedombox/backups-upload/')
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 
 
@@ -141,6 +143,24 @@ def list_repo(path: str,
     process = _run(['borg', 'list', '--json', '--format="{comment}"', path],
                    encryption_passphrase, stdout=subprocess.PIPE)
     return json.loads(process.stdout.decode())
+
+
+@privileged
+def add_uploaded_archive(file_name: str, temporary_file_path: str):
+    """Store an archive uploaded by the user."""
+    BACKUPS_UPLOAD_PATH.mkdir(parents=True, exist_ok=True)
+    action_utils.move_uploaded_file(temporary_file_path, BACKUPS_UPLOAD_PATH,
+                                    file_name, allow_overwrite=True,
+                                    permissions=0o600)
+
+
+@privileged
+def remove_uploaded_archive(file_path: str):
+    """Delete the archive uploaded by the user."""
+    resolved_file_path = pathlib.Path(file_path).resolve()
+    if (resolved_file_path.is_relative_to(BACKUPS_UPLOAD_PATH)
+            and resolved_file_path.is_file()):
+        resolved_file_path.unlink()
 
 
 def _get_borg_version():

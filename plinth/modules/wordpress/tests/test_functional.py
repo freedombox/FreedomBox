@@ -143,7 +143,11 @@ def _write_post(browser, title):
     if browser.find_by_id('post-title-0'):
         browser.find_by_id('post-title-0').fill(title)
     else:
-        browser.find_by_css('.editor-post-title').first.type(title)
+        if browser.find_by_css('.editor-visual-editor.is-iframed'):
+            with browser.get_iframe('editor-canvas') as iframe:
+                iframe.find_by_css('.editor-post-title').first.type(title)
+        else:
+            browser.find_by_css('.editor-post-title').first.type(title)
 
     browser.find_by_css('.editor-post-publish-button__button')[0].click()
     functional.eventually(browser.find_by_css, ['.editor-post-publish-button'])

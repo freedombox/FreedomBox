@@ -12,3 +12,5 @@ clients = [{
 }]
 
 backup: dict = {}
+
+tags = [_('Video conference'), _('WebRTC'), _('Web conference')]

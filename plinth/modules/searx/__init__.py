@@ -41,7 +41,7 @@ class SearxApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Searx'),
             icon_filename='searx', short_description=_('Web Search'),
             description=_description, manual_page='Searx',
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://searx.me/static/donate.html')
         self.add(info)
 

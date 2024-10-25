@@ -7,6 +7,8 @@ import threading
 from collections import OrderedDict
 from typing import Callable
 
+from plinth.utils import SafeFormatter
+
 from . import app as app_module
 
 logger = logging.getLogger(__name__)
@@ -115,7 +117,7 @@ class Operation:
             return self._message
 
         if self.exception:  # Operation resulted in a error.
-            return gettext_noop('Error: {name}: {exception_message}')
+            return gettext_noop('Error: {name}: {exception}')
 
         if self.state == Operation.State.WAITING:
             return gettext_noop('Waiting to start: {name}')
@@ -137,11 +139,15 @@ class Operation:
         """
         from django.utils.translation import gettext
         message = gettext(self.message)
-        message = message.format(name=gettext(self.name),
-                                 exception_message=str(self.exception))
+        data = {'name': gettext(self.name), 'exception': str(self.exception)}
         if self.app_id:
-            message = message.format(
-                app_name=app_module.App.get(self.app_id).info.name)
+            data['app_name'] = app_module.App.get(self.app_id).info.name
+
+        try:
+            message = SafeFormatter().vformat(message, [], data)
+        except (KeyError, AttributeError) as error:
+            logger.warning(
+                'Operation missing required key during translation: %s', error)
 
         return message
 

@@ -20,6 +20,7 @@ SERVICE_NAME = 'nextcloud-freedombox'
 VOLUME_NAME = 'nextcloud-freedombox'
 IMAGE_NAME = 'docker.io/library/nextcloud:stable-fpm'
 
+WWW_DATA_UID = '33'
 DB_HOST = 'localhost'
 DB_NAME = 'nextcloud_fbx'
 DB_USER = 'nextcloud_fbx'
@@ -76,7 +77,7 @@ def _run_in_container(
         env: dict[str, str] | None = None) -> subprocess.CompletedProcess:
     """Run a command inside the container."""
     env_args = [f'--env={key}={value}' for key, value in (env or {}).items()]
-    command = ['podman', 'exec', '--user', 'www-data'
+    command = ['podman', 'exec', '--user', WWW_DATA_UID
                ] + env_args + [CONTAINER_NAME] + list(args)
     return subprocess.run(command, capture_output=capture_output, check=check)
 

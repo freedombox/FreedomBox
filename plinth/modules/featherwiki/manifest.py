@@ -14,3 +14,5 @@ clients = [{
 }]
 
 backup = {'data': {'directories': [str(wiki_dir)]}}
+
+tags = [_('Wiki'), _('Note taking'), _('Website'), _('Quine'), _('Non-Debian')]

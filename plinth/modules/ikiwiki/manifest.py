@@ -11,3 +11,5 @@ clients = [{
 }]
 
 backup = {'data': {'directories': ['/var/lib/ikiwiki/', '/var/www/ikiwiki/']}}
+
+tags = [_('Wiki'), _('Blog'), _('Website')]

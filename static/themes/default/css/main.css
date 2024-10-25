@@ -309,7 +309,6 @@ html {
 }
 
 #wrapper {
-    min-height: 100%;
     position: relative;
 }
 
@@ -319,6 +318,40 @@ html {
 
 .content-container {
     margin-bottom: 1.25rem;
+}
+
+/* Tag Input Container */
+.tag-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: .375rem .75rem;
+    background-color: #fff;
+    margin-bottom: 2rem;
+}
+
+/* Remove tag button */
+.tag-badge .remove-tag {
+    background-color: transparent; /* Match the tag's background color */
+    border: none;
+    cursor: pointer;
+}
+
+/* Adjust input field width */
+.tag-input input[type="search"] {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: auto;
+    min-width: 3rem;
+}
+
+/* dropdown-menu for tags is a scrollable list */
+.tag-input .dropdown-menu {
+    bottom: calc(-100% - 10px);
+    overflow-y: auto;
 }
 
 @media (min-width: 768px) {
@@ -464,6 +497,8 @@ footer {
 
 .main-header .navbar-toggler {
     border: 1px solid #ddd;
+    /* In mobile layout, during first setup, maintain the height of the navbar */
+    margin: 0.6875rem 0;
 }
 
 @media screen and (max-width: 767px) {
@@ -473,11 +508,18 @@ footer {
 
     .main-header .navbar-nav > li > a:focus,
     .main-header .navbar-nav > li > a:hover,
+    .main-header .navbar-nav li > form > input,
+    .main-header .navbar-nav li > form > input:focus,
+    .main-header .navbar-nav li > form > input:hover,
     .main-header .navbar-nav .show a,
     .main-header .navbar-nav .show a:hover,
     .main-header .navbar-nav .show a:focus {
         color: #FFF;
         background: transparent;
+    }
+
+    .main-header .navbar-nav .nav-item:last-of-type .dropdown-menu {
+        margin-bottom: 1.25rem;
     }
 }
 
@@ -634,6 +676,42 @@ a.menu_link_active {
 
 .names-domain-column {
     width: 50%;
+}
+
+
+/*
+ * First setup pages
+ */
+.firstboot-spinner {
+    text-align: center;
+}
+
+.firstboot-spinner span.fa {
+    float: none;
+    margin: auto;
+}
+
+.next-steps {
+    list-style: none;
+    margin-top: 1.5rem;
+    padding: 0;
+}
+
+.next-steps li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+}
+
+.next-steps .app-icon {
+    font-size: 3rem;
+    margin-right: 1rem;
+    width: 3rem;
+    text-align: center;
+}
+
+.next-steps form {
+    display: inline;
 }
 
 /*

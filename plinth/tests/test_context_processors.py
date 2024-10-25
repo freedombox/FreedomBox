@@ -23,7 +23,7 @@ def test_common(Notification, load_cfg):
     """Verify that the common() function returns the correct values."""
 
     request = HttpRequest()
-    request.path = '/aaa/bbb/ccc/'
+    request.path = '/plinth/aaa/bbb/ccc/'
     request.user = Mock()
     request.user.groups.filter().exists = Mock(return_value=True)
     request.session = MagicMock()
@@ -36,12 +36,9 @@ def test_common(Notification, load_cfg):
 
     assert response['box_name'] == 'FreedomBox'
 
-    submenu = response['submenu']
-    assert submenu is None
-
     urls = response['active_menu_urls']
     assert urls is not None
-    assert ['/', '/aaa/', '/aaa/bbb/', '/aaa/bbb/ccc/'] == urls
+    assert ['/plinth/aaa/', '/plinth/aaa/bbb/', '/plinth/aaa/bbb/ccc/'] == urls
 
     assert response['user_is_admin']
 
@@ -57,10 +54,10 @@ def test_common_border_conditions(Notification):
     response = cp.common(request)
     assert response['active_menu_urls'] == []
 
-    request.path = '/'
+    request.path = '/plinth/'
     response = cp.common(request)
-    assert response['active_menu_urls'] == ['/']
+    assert response['active_menu_urls'] == []
 
-    request.path = '/aaa/bbb'
+    request.path = '/plinth/aaa/bbb/ccc'
     response = cp.common(request)
-    assert response['active_menu_urls'] == ['/', '/aaa/']
+    assert response['active_menu_urls'] == ['/plinth/aaa/', '/plinth/aaa/bbb/']

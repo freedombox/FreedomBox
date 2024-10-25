@@ -41,3 +41,5 @@ clients = [{
         'url': 'https://apps.apple.com/us/app/wireguard/id1441195209'
     }]
 }]
+
+tags = [_('VPN client'), _('VPN server'), _('Privacy'), _('Remote access')]

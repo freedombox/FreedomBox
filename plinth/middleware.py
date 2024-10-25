@@ -32,10 +32,10 @@ def _collect_operations_results(request, app):
     operations = operation_module.manager.collect_results(app.app_id)
     for operation in operations:
         if operation.exception:
-            views.messages_error(request, operation.message,
+            views.messages_error(request, operation.translated_message,
                                  operation.exception)
         else:
-            messages.success(request, operation.message)
+            messages.success(request, operation.translated_message)
 
 
 class SetupMiddleware(MiddlewareMixin):

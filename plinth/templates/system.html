@@ -1,4 +1,4 @@
-{% extends 'cards.html' %}
+{% extends 'base.html' %}
 {% comment %}
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
@@ -18,7 +18,7 @@
   </div>
 
   <div class="container card-container">
-    {% for section_item in submenu.sorted_items %}
+    {% for section_item in menu_items %}
       <div class="system-section-title">{{ section_item.name }}</div>
       <div class="row">
         <div class="card-list card-list-primary">

@@ -51,3 +51,5 @@ backup = {
     },
     'services': ['tt-rss']
 }
+
+tags = [_('Feed reader'), _('News aggregation'), _('RSS'), _('ATOM')]

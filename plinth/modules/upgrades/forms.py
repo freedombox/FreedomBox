@@ -33,9 +33,3 @@ class BackportsFirstbootForm(forms.Form):
     backports_enabled = forms.BooleanField(
         label=_('Activate frequent feature updates (recommended)'),
         required=False, initial=True)
-
-
-class UpdateFirstbootForm(forms.Form):
-    """Form to run or skip initial update during first boot wizard."""
-    update_now = forms.BooleanField(label=_('Update now (recommended)'),
-                                    required=False, initial=True)

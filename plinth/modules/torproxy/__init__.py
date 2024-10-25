@@ -57,7 +57,7 @@ class TorProxyApp(app_module.App):
                                short_description=_('Anonymity Network'),
                                description=_description,
                                manual_page='TorProxy',
-                               clients=manifest.clients,
+                               clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://donate.torproject.org/')
         self.add(info)
 

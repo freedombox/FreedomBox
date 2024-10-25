@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Application manifest for bind.
+Application manifest for Shaarli.
 """
 
 from django.utils.translation import gettext_lazy as _
@@ -30,3 +30,5 @@ clients = [{
 }]
 
 backup = {'data': {'directories': ['/var/lib/shaarli/data']}}
+
+tags = [_('Bookmarks'), _('Link blog'), _('Single user')]

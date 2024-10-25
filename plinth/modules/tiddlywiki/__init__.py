@@ -66,7 +66,8 @@ class TiddlyWikiApp(app_module.App):
                                short_description=_('Non-linear Notebooks'),
                                description=_description,
                                manual_page='TiddlyWiki',
-                               clients=manifest.clients)
+                               clients=manifest.clients,
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-tiddlywiki', info.name,

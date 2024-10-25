@@ -54,7 +54,8 @@ class RadicaleApp(app_module.App):
                                short_description=_('Calendar and Addressbook'),
                                description=_description,
                                manual_page='Radicale',
-                               clients=manifest.clients)
+                               clients=manifest.clients,
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-radicale', info.name,

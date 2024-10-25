@@ -149,6 +149,14 @@ class TestYAMLFileUtil:
         'key1': 'value1'
     }), '20 10 value1'),
     (('{2} {1} {key1}', [10, 20], {}), '?2? 20 ?key1?'),
+    (('{a[2]}', [], {
+        'a': [1, 2, 3]
+    }), '3'),
+    (('{a[b]}', [], {
+        'a': []
+    }), '?a[b]?'),
+    (('{a["b"]}', [], {}), '?a["b"]?'),
+    (('{a.b}', [], {}), '?a.b?'),
 ))
 def test_safe_string_formatter(input_, output):
     """Test the safe string formatter."""

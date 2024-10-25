@@ -18,8 +18,12 @@ import pytest
 from django import urls
 from django.conf import settings
 from django.http import Http404
+from django.urls import re_path
 
-from plinth import cfg, module_loader
+from plinth import cfg
+from plinth import menu as menu_module
+from plinth import module_loader
+from plinth.modules import help as help_module
 from plinth.modules.help import views
 
 # For all tests, use plinth.urls instead of urls configured for testing
@@ -35,8 +39,12 @@ def _is_page(response):
 @pytest.fixture(autouse=True, scope='module')
 def fixture_app_urls():
     """Make sure app's URLs are part of plinth.urls."""
+    urls = [
+        re_path(r'^apps/$', views.index, name='apps'),
+        re_path(r'^system/$', views.index, name='system')
+    ]
     with patch('plinth.module_loader._modules_to_load', new=[]) as modules, \
-            patch('plinth.urls.urlpatterns', new=[]):
+            patch('plinth.urls.urlpatterns', new=urls):
         modules.append('plinth.modules.help')
         module_loader.include_urls()
         yield
@@ -46,6 +54,13 @@ def fixture_app_urls():
 def fixture_developer_configuration():
     """Make sure docs are read from current directory instead of /usr."""
     cfg.read_file(cfg.get_develop_config_path())
+
+
+@pytest.fixture(name='menu', autouse=True)
+def fixture_menu():
+    """Initialized menu module."""
+    menu_module.init()
+    help_module.HelpApp()  # Create all menu components
 
 
 @pytest.mark.parametrize("view_name, view", (

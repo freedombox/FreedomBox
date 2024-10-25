@@ -38,7 +38,7 @@ class JSXCApp(app_module.App):
                                name=_('JSXC'), icon_filename='jsxc',
                                short_description=_('Chat Client'),
                                description=_description, manual_page='JSXC',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-jsxc', info.name, info.short_description,

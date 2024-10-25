@@ -46,7 +46,7 @@ class OpenVPNApp(app_module.App):
                                name=_('OpenVPN'), icon_filename='openvpn',
                                short_description=_('Virtual Private Network'),
                                description=_description, manual_page='OpenVPN',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-openvpn', info.name,

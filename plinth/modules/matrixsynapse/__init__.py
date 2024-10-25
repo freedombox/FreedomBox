@@ -54,7 +54,8 @@ class MatrixSynapseApp(app_module.App):
             app_id=self.app_id, version=self._version, depends=['coturn'],
             name=_('Matrix Synapse'), icon_filename='matrixsynapse',
             short_description=_('Chat Server'), description=_description,
-            manual_page='MatrixSynapse', clients=manifest.clients)
+            manual_page='MatrixSynapse', clients=manifest.clients,
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-matrixsynapse', info.name,

@@ -3,7 +3,6 @@
 import logging
 
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse_lazy
@@ -13,7 +12,7 @@ from django.views.decorators.http import require_POST
 from django.views.generic.edit import FormView
 
 from plinth import network
-from plinth.modules import first_boot, names, networks
+from plinth.modules import names, networks
 from plinth.views import AppView
 
 from .forms import (ConnectionTypeSelectForm, EthernetForm, GenericForm,
@@ -561,24 +560,6 @@ class NetworkTopologyView(FormView):
         return super().form_valid(form)
 
 
-class NetworkTopologyFirstBootView(NetworkTopologyView):
-    """View for network topology form during first wizard."""
-    template_name = 'network_topology_firstboot.html'
-
-    def get_success_url(self):
-        """Return next fistboot step."""
-        return reverse_lazy(first_boot.next_step())
-
-    def form_valid(self, form):
-        """Mark the first wizard step as done, save value and redirect."""
-        first_boot.mark_step_done('network_topology_wizard')
-        if 'skip' in form.data:
-            first_boot.mark_step_done('router_setup_wizard')
-            return FormView.form_valid(self, form)
-
-        return super().form_valid(form)
-
-
 class RouterConfigurationView(FormView):
     """View for router configuration form."""
     template_name = 'router_configuration_update.html'
@@ -594,32 +575,6 @@ class RouterConfigurationView(FormView):
         type_ = form.cleaned_data['router_config']
         logger.info('Updating router configuration: %s', type_)
         networks.set_router_configuration_type(type_)
-        return super().form_valid(form)
-
-
-class RouterConfigurationFirstBootView(RouterConfigurationView):
-    """View for router configuration form during first wizard."""
-    template_name = 'router_configuration_firstboot.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        """Don't show wizard step if FreedomBox is not behind a router."""
-        network_topology = networks.get_network_topology_type()
-        if network_topology != 'to_router':
-            first_boot.mark_step_done('router_setup_wizard')
-            return HttpResponseRedirect(reverse_lazy(first_boot.next_step()))
-
-        return super().dispatch(request, *args, *kwargs)
-
-    def get_success_url(self):
-        """Return the next wizard step after this one."""
-        return reverse_lazy(first_boot.next_step())
-
-    def form_valid(self, form):
-        """Mark the first wizard step as done, save value and redirect."""
-        first_boot.mark_step_done('router_setup_wizard')
-        if 'skip' in form.data:
-            return FormView.form_valid(self, form)
-
         return super().form_valid(form)
 
 
@@ -641,21 +596,4 @@ class InternetConnectionTypeView(FormView):
         type_ = form.cleaned_data['internet_connection_type']
         logger.info('Updating internet connectivity type: %s', type_)
         networks.set_internet_connection_type(type_)
-        return super().form_valid(form)
-
-
-class InternetConnectionTypeFirstBootView(InternetConnectionTypeView):
-    """View to show Internet connection type form during first wizard."""
-    template_name = 'internet_connectivity_firstboot.html'
-
-    def get_success_url(self):
-        """Return the next wizard step after this one."""
-        return reverse_lazy(first_boot.next_step())
-
-    def form_valid(self, form):
-        """Mark the first wizard step as done, save value and redirect."""
-        first_boot.mark_step_done('internet_connectivity_type_wizard')
-        if 'skip' in form.data:
-            return FormView.form_valid(self, form)
-
         return super().form_valid(form)

@@ -36,7 +36,7 @@ class ShaarliApp(app_module.App):
                                name=_('Shaarli'), icon_filename='shaarli',
                                short_description=_('Bookmarks'),
                                description=_description, manual_page='Shaarli',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-shaarli', info.name,

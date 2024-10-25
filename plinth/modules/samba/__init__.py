@@ -53,7 +53,7 @@ class SambaApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Samba'),
             icon_filename='samba', short_description=_('Network File Storage'),
             manual_page='Samba', description=_description,
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://www.samba.org/samba/donations.html')
         self.add(info)
 

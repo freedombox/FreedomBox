@@ -51,6 +51,17 @@
       {% endfor %}
     {% endblock %}
 
+    {% if app_info.tags %}
+      <div>
+        {% for tag in app_info.tags %}
+          <a href="{% url 'apps' %}?tag={{ tag|urlencode }}"
+             class="badge badge-pill badge-light">
+            {% trans tag %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% if app_info.manual_page %}
       <p class="manual-page">
         <a href="{% url 'help:manual-page' lang='-' page=app_info.manual_page %}">

@@ -58,7 +58,7 @@ class BepastyApp(app_module.App):
                                icon_filename='bepasty',
                                short_description=_('File & Snippet Sharing'),
                                description=_description, manual_page='bepasty',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-bepasty', info.name,

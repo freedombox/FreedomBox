@@ -75,14 +75,11 @@ def _run_setup_on_app(app, current_version, repair: bool = False):
     except Exception as exception:
         exception_to_update = exception
         if not current_version:
-            message = gettext_noop('Error installing app: {error}').format(
-                error=exception)
+            message = gettext_noop('Error installing app: {exception}')
         elif repair:
-            message = gettext_noop('Error repairing app: {error}').format(
-                error=exception)
+            message = gettext_noop('Error repairing app: {exception}')
         else:
-            message = gettext_noop('Error updating app: {error}').format(
-                error=exception)
+            message = gettext_noop('Error updating app: {exception}')
     else:
         if not current_version:
             message = gettext_noop('App installed.')
@@ -320,8 +317,8 @@ def _get_apps_for_regular_setup():
         1. essential apps that are not up-to-date
         2. non-essential app that are installed and need updates
         """
-        if (app.info.is_essential and app.get_setup_state()
-                != app_module.App.SetupState.UP_TO_DATE):
+        if (app.info.is_essential and
+                app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
             return True
 
         if app.get_setup_state() == app_module.App.SetupState.NEEDS_UPDATE:

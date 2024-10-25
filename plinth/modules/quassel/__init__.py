@@ -51,7 +51,7 @@ class QuasselApp(app_module.App):
                                name=_('Quassel'), icon_filename='quassel',
                                short_description=_('IRC Client'),
                                description=_description, manual_page='Quassel',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-quassel', info.name,

@@ -96,3 +96,11 @@ backup = {
     },
     'services': ['matrix-synapse']
 }
+
+tags = [
+    _('Chat room'),
+    _('Encrypted messaging'),
+    _('Audio chat'),
+    _('Video chat'),
+    _('Matrix server'),
+]

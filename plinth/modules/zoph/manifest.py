@@ -22,3 +22,5 @@ backup = {
         ],
     }
 }
+
+tags = [_('Photo'), _('Organizer'), _('Web sharing')]

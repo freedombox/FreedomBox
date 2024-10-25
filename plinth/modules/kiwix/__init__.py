@@ -56,7 +56,7 @@ class KiwixApp(app_module.App):
             app_id=self.app_id, version=self._version, name=_('Kiwix'),
             icon_filename='kiwix', short_description=_('Offline Wikipedia'),
             description=_description, manual_page='Kiwix',
-            clients=manifest.clients,
+            clients=manifest.clients, tags=manifest.tags,
             donation_url='https://www.kiwix.org/en/support-us/')
         self.add(info)
 

@@ -20,6 +20,7 @@ LOGGER = logging.getLogger(__name__)
 
 class FirstBootMiddleware(MiddlewareMixin):
     """Forward to firstboot page if firstboot isn't finished yet."""
+
     @staticmethod
     def process_request(request):
         """Handle a request as Django middleware request handler."""
@@ -46,11 +47,11 @@ class FirstBootMiddleware(MiddlewareMixin):
 
         # If user requests a step other than the welcome step, verify that they
         # indeed completed the secret verification by looking at the session.
-        if (user_requests_firstboot and
-                not request.path.startswith(reverse('first_boot:welcome')) and
-                first_boot.firstboot_wizard_secret_exists() and
-                not request.session.get('firstboot_secret_provided', False) and
-                not is_user_admin(request)):
+        if (user_requests_firstboot
+                and not request.path.startswith(reverse('first_boot:welcome'))
+                and first_boot.firstboot_wizard_secret_exists()
+                and not request.session.get('firstboot_secret_provided', False)
+                and not is_user_admin(request)):
             return HttpResponseRedirect(reverse('first_boot:welcome'))
 
         # Redirect to first boot if requesting normal page and first
@@ -63,7 +64,7 @@ class FirstBootMiddleware(MiddlewareMixin):
                 # No more steps in first boot
                 first_boot.set_completed()
 
-        # Redirect to index page if request firstboot after it is
+        # Redirect to 'complete' page if user requested firstboot after it is
         # finished.
         if firstboot_completed and user_requests_firstboot:
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('first_boot:complete'))

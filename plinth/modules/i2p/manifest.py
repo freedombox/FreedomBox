@@ -39,3 +39,5 @@ backup = {
     },
     'services': ['i2p']
 }
+
+tags = [_('Anonymity network'), _('Censorship resistance')]

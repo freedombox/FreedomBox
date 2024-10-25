@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 20:05-0400\n"
-"PO-Revision-Date: 2024-10-04 12:15+0000\n"
+"POT-Creation-Date: 2024-10-21 20:10-0400\n"
+"PO-Revision-Date: 2024-10-10 05:16+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Formësimi statik {etc_path} është ujdisur si duhet"
 
-#: context_processors.py:23 views.py:116
+#: context_processors.py:23 views.py:117
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -109,7 +109,7 @@ msgstr "Dukshmëri"
 msgid "Data"
 msgstr "Të dhëna"
 
-#: menu.py:110 templates/base.html:129
+#: menu.py:110 templates/base.html:133
 msgid "System"
 msgstr "Sistem"
 
@@ -199,6 +199,7 @@ msgstr "Aktivizoni një Plan Kopjeruajtjesh"
 
 #: modules/backups/__init__.py:175 modules/backups/__init__.py:222
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
+#: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Kalo te {app_name}"
@@ -465,7 +466,7 @@ msgstr "Depoja ekzistuese s’është e fshehtëzuar."
 msgid "{box_name} storage"
 msgstr "Depozitë {box_name}"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:116
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
 msgid "Create a new backup"
 msgstr "Krijoni një kopjeruajtje të re"
 
@@ -562,7 +563,7 @@ msgstr "Shkarkim"
 
 #: modules/backups/templates/backups_repository.html:87
 #: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:219 templates/toolbar.html:44
+#: modules/backups/views.py:220 templates/toolbar.html:44
 #: templates/toolbar.html:45
 msgid "Restore"
 msgstr "Riktheje"
@@ -665,99 +666,99 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Verifikoni Strehë"
 
-#: modules/backups/views.py:59
+#: modules/backups/views.py:58
 msgid "Backup schedule updated."
 msgstr "Orari i kopjeruajtjeve u përditësua."
 
-#: modules/backups/views.py:78
+#: modules/backups/views.py:77
 msgid "Schedule Backups"
 msgstr "Planifikoni Kopjeruajtje"
 
-#: modules/backups/views.py:111
+#: modules/backups/views.py:110
 msgid "Archive created."
 msgstr "Arkivi u krijua."
 
-#: modules/backups/views.py:147
+#: modules/backups/views.py:146
 msgid "Delete Archive"
 msgstr "Fshini Arkiv"
 
-#: modules/backups/views.py:159
+#: modules/backups/views.py:158
 msgid "Archive deleted."
 msgstr "Arkivi u fshi."
 
-#: modules/backups/views.py:172
+#: modules/backups/views.py:171
 msgid "Upload and restore a backup"
 msgstr "Ngarkoni dhe riktheni një kopjeruajtje"
 
-#: modules/backups/views.py:207
+#: modules/backups/views.py:208
 msgid "Restored files from backup."
 msgstr "U rikthyen kartela prej kopjeruajtjeje."
 
-#: modules/backups/views.py:235
+#: modules/backups/views.py:236
 msgid "No backup file found."
 msgstr "S’u gjet kartelë kopjeruajtje."
 
-#: modules/backups/views.py:243
+#: modules/backups/views.py:244
 msgid "Restore from uploaded file"
 msgstr "Riktheni prej kartele të ngarkuar"
 
-#: modules/backups/views.py:302
+#: modules/backups/views.py:303
 msgid "No additional disks available to add a repository."
 msgstr "S’ka disqe shtesë ku të shtohet një depo."
 
-#: modules/backups/views.py:310
+#: modules/backups/views.py:311
 msgid "Create backup repository"
 msgstr "Krijoni depo kopjeruajtesh"
 
-#: modules/backups/views.py:337
+#: modules/backups/views.py:338
 msgid "Create remote backup repository"
 msgstr "Krijoni depo të largët kopjeruajtjesh"
 
-#: modules/backups/views.py:357
+#: modules/backups/views.py:358
 msgid "Added new remote SSH repository."
 msgstr "Shtoni depo SSH të re të largët."
 
-#: modules/backups/views.py:379
+#: modules/backups/views.py:380
 msgid "Verify SSH hostkey"
 msgstr "Verifikoni kyç strehe SSH"
 
-#: modules/backups/views.py:405
+#: modules/backups/views.py:406
 msgid "SSH host already verified."
 msgstr "Strehë SSH e verifikuar tashmë."
 
-#: modules/backups/views.py:415
+#: modules/backups/views.py:416
 msgid "SSH host verified."
 msgstr "Streha SSH u verifikua."
 
-#: modules/backups/views.py:430
+#: modules/backups/views.py:431
 msgid "SSH host public key could not be verified."
 msgstr "S’u verifikua dot kyç publik strehe SSH."
 
-#: modules/backups/views.py:432
+#: modules/backups/views.py:433
 msgid "Authentication to remote server failed."
 msgstr "Mirëfilltësimi te shërbyesi i largët dështoi."
 
-#: modules/backups/views.py:434
+#: modules/backups/views.py:435
 msgid "Error establishing connection to server: {}"
 msgstr "Gabim gjatë vendosjes së lidhjes me shërbyesin: {}"
 
-#: modules/backups/views.py:445
+#: modules/backups/views.py:446
 msgid "Repository removed."
 msgstr "Depoja u hoq."
 
-#: modules/backups/views.py:459
+#: modules/backups/views.py:460
 msgid "Remove Repository"
 msgstr "Hiqni Depo"
 
-#: modules/backups/views.py:468
+#: modules/backups/views.py:469
 msgid "Repository removed. Backups were not deleted."
 msgstr "Depoja u hoq. Kopjeruajtjet s’u fshinë."
 
-#: modules/backups/views.py:478
+#: modules/backups/views.py:479
 msgid "Unmounting failed!"
 msgstr "Çmontimi dështoi!"
 
-#: modules/backups/views.py:493 modules/backups/views.py:497
+#: modules/backups/views.py:494 modules/backups/views.py:498
 msgid "Mounting failed"
 msgstr "Montimi dështoi"
 
@@ -860,6 +861,18 @@ msgid "Any comment to help you remember the purpose of this password."
 msgstr ""
 "Çfarëdo komenti për t’ju ndihmuar të mbani mend qëllimin e këtij fjalëkalimi."
 
+#: modules/bepasty/manifest.py:23 modules/deluge/manifest.py:21
+#: modules/samba/manifest.py:89 modules/sharing/manifest.py:19
+#: modules/syncthing/manifest.py:58 modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "File & Snippet Sharing"
+msgid "File sharing"
+msgstr "Dhënie Kartelash &amp; Copëzash"
+
+#: modules/bepasty/manifest.py:23
+msgid "Pastebin"
+msgstr ""
+
 #: modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
 msgstr "Administroni Fjalëkalime"
@@ -924,7 +937,7 @@ msgstr "Përgjegjës"
 #: modules/nextcloud/views.py:62 modules/searx/views.py:35
 #: modules/searx/views.py:46 modules/security/views.py:56
 #: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:83
+#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
 #: modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Formësimi u përditësua."
@@ -1092,6 +1105,22 @@ msgstr ""
 #: modules/calibre/forms.py:28
 msgid "A library with this name already exists."
 msgstr "Ka tashmë një bibliotekë me atë emër."
+
+#: modules/calibre/manifest.py:20
+msgid "Ebook"
+msgstr ""
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Library"
+msgstr "Bibliotekë E-librash"
+
+#: modules/calibre/manifest.py:20
+#, fuzzy
+#| msgid "E-book Library"
+msgid "Ebook reader"
+msgstr "Bibliotekë E-librash"
 
 #: modules/calibre/templates/calibre-delete-library.html:11
 #, python-format
@@ -1345,6 +1374,18 @@ msgstr "Ndihmës VoIP"
 msgid "Invalid list of STUN/TURN Server URIs"
 msgstr "Listë e pavlefshme URI-sh Shërbyesi STUN/TURN"
 
+#: modules/coturn/manifest.py:7 modules/janus/manifest.py:16
+msgid "Video conference"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "STUN"
+msgstr ""
+
+#: modules/coturn/manifest.py:7
+msgid "TURN"
+msgstr ""
+
 #: modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
 msgstr ""
@@ -1427,6 +1468,26 @@ msgstr "Drejtori shkarkimesh"
 msgid "Bittorrent client written in Python/PyGTK"
 msgstr "Klient Bittorrent i shkruar në Python/PyGTK"
 
+#: modules/deluge/manifest.py:21 modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "BitTorrent Web Client"
+msgid "BitTorrent"
+msgstr "Klient Web BitTorrent"
+
+#: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "Launch web client"
+msgid "Web client"
+msgstr "Nis klientin web"
+
+#: modules/deluge/manifest.py:21 modules/syncthing/manifest.py:58
+#: modules/transmission/manifest.py:39
+#, fuzzy
+#| msgid "I2P"
+msgid "P2P"
+msgstr "I2P"
+
 #: modules/diagnostics/__init__.py:29
 msgid ""
 "The system diagnostic test will run a number of checks on your system to "
@@ -1448,7 +1509,7 @@ msgstr "anashkaluar"
 msgid "passed"
 msgstr "kaloi"
 
-#: modules/diagnostics/__init__.py:101 modules/networks/views.py:52
+#: modules/diagnostics/__init__.py:101 modules/networks/views.py:51
 msgid "failed"
 msgstr "dështoi"
 
@@ -1876,7 +1937,7 @@ msgstr ""
 "aplikacionin <a href=\"{coturn_url}\">Coturn</a>, ose formësoni një shërbyes "
 "të jashtëm."
 
-#: modules/ejabberd/__init__.py:61
+#: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
 
@@ -1983,6 +2044,27 @@ msgstr "Dino"
 #: modules/ejabberd/manifest.py:85
 msgid "Gajim"
 msgstr "Gajim"
+
+#: modules/ejabberd/manifest.py:124 modules/matrixsynapse/manifest.py:102
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted messaging"
+msgstr "Fshehtëzim"
+
+#: modules/ejabberd/manifest.py:125 modules/matrixsynapse/manifest.py:103
+#: modules/mumble/manifest.py:67
+msgid "Audio chat"
+msgstr ""
+
+#: modules/ejabberd/manifest.py:126 modules/matrixsynapse/manifest.py:104
+#, fuzzy
+#| msgid "Video Room"
+msgid "Video chat"
+msgstr "Dhomë Me Video"
+
+#: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
+msgid "XMPP"
+msgstr ""
 
 #: modules/ejabberd/templates/ejabberd.html:18
 #, python-format
@@ -2109,7 +2191,7 @@ msgid "Aliases"
 msgstr "Aliase"
 
 #: modules/email/manifest.py:12 modules/roundcube/__init__.py:50
-#: modules/roundcube/manifest.py:6
+#: modules/roundcube/manifest.py:7
 msgid "Roundcube"
 msgstr "Roundcube"
 
@@ -2124,6 +2206,20 @@ msgstr "K-9 Mail"
 #: modules/email/manifest.py:52
 msgid "FairEmail"
 msgstr "FairEmail"
+
+#: modules/email/manifest.py:82
+#, fuzzy
+#| msgid "Email Server"
+msgid "Email server"
+msgstr "Shërbyes Email-i"
+
+#: modules/email/manifest.py:82
+msgid "IMAP"
+msgstr ""
+
+#: modules/email/manifest.py:82
+msgid "Spam control"
+msgstr ""
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2273,6 +2369,36 @@ msgstr "Kartelat Feather Wiki duhet të jenë në format HTML"
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Ngarkoni një kartelë ekzistuese Feather Wiki që nga ky kompjuter."
 
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+msgid "Wiki"
+msgstr "Wiki"
+
+#: modules/featherwiki/manifest.py:18 modules/infinoted/manifest.py:46
+#: modules/tiddlywiki/manifest.py:20
+msgid "Note taking"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:21
+#: modules/wordpress/manifest.py:26
+#, fuzzy
+#| msgid "Website Security"
+msgid "Website"
+msgstr "Siguri Sajti"
+
+#: modules/featherwiki/manifest.py:18 modules/tiddlywiki/manifest.py:25
+msgid "Quine"
+msgstr ""
+
+#: modules/featherwiki/manifest.py:18 modules/nextcloud/manifest.py:56
+#: modules/tiddlywiki/manifest.py:26
+#, fuzzy
+#| msgid "Debian:"
+msgid "Non-Debian"
+msgstr "Debian:"
+
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
 msgid "Manage Wikis"
@@ -2378,10 +2504,9 @@ msgid "Failed to add wiki file."
 msgstr "S’u arrit të shtohej kartelë wiki."
 
 #: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {name}"
-msgstr "S’u fshi dot {name}: {error}"
+msgstr "S’u fshi dot {name}"
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -2438,7 +2563,7 @@ msgstr "E aktivizuar"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:34
+#: templates/cards.html:36
 msgid "Disabled"
 msgstr "E çaktivizuar"
 
@@ -2483,6 +2608,27 @@ msgstr ""
 "furnizohen nga aplikacioni <a href=\"/_cockpit/network/firewall\">Cockpit</"
 "a>."
 
+#: modules/first_boot/__init__.py:61
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup complete! Next steps:"
+msgstr "Ujdisje e Plotësuar!"
+
+#: modules/first_boot/__init__.py:63
+#, python-brace-format
+msgid ""
+"Initial setup has been completed. Perform the next steps to make your "
+"{box_name} operational."
+msgstr ""
+
+#: modules/first_boot/__init__.py:66
+msgid "Next steps"
+msgstr ""
+
+#: modules/first_boot/__init__.py:73
+msgid "See next steps"
+msgstr ""
+
 #: modules/first_boot/forms.py:14
 #, python-brace-format
 msgid ""
@@ -2499,32 +2645,61 @@ msgid "Firstboot Wizard Secret"
 msgstr "E fshehtë Për Skenën e Parë të Ndihmësit"
 
 #: modules/first_boot/templates/firstboot_complete.html:11
-msgid "Setup Complete!"
+#, fuzzy
+#| msgid "Setup Complete!"
+msgid "Setup Complete! Next Steps:"
 msgstr "Ujdisje e Plotësuar!"
 
-#: modules/first_boot/templates/firstboot_complete.html:14
-#, python-format
-msgid "Without any apps, your %(box_name)s cannot do very much."
-msgstr "Pa aplikacione, %(box_name)s juaj s’mund të bëjë kushedi çë."
-
-#: modules/first_boot/templates/firstboot_complete.html:21
-msgid "Install Apps"
-msgstr "Instaloni Aplikacione"
-
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:18
 #, python-format
 msgid ""
-"You may want to check the <a href=\"%(networks_url)s\">network setup</a> and "
-"modify it if necessary."
+"Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
+"runs daily by default. For the first time, manually run it now."
 msgstr ""
-"Mund të doni të kontrolloni <a href=\"%(networks_url)s\">ujdisjen e rrjetit</"
-"a> dhe ta ndryshoni, në qoftë e nevojshme."
+
+#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/upgrades/templates/upgrades_configure.html:108
+msgid "Update now"
+msgstr "Përditësoje tani"
+
+#: modules/first_boot/templates/firstboot_complete.html:36
+#, python-format
+msgid ""
+"Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:46
+#, python-format
+msgid ""
+"Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
+"connections</a>. Change the default Wi-Fi password, if applicable."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:57
+#, python-format
+msgid ""
+"Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:67
+#, python-format
+msgid ""
+"Configure and schedule remote <a href=\"%(backups_url)s\" "
+"target=\"_blank\">backups</a>."
+msgstr ""
+
+#: modules/first_boot/templates/firstboot_complete.html:78
+#, python-format
+msgid ""
+"Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
+"target=\"_blank\">apps</a>."
+msgstr ""
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
 msgstr "Nis Ujdisjen"
 
-#: modules/first_boot/views.py:50
+#: modules/first_boot/views.py:41
 msgid "Setup Complete"
 msgstr "Ujdisje e Plotësuar"
 
@@ -2622,6 +2797,20 @@ msgstr "Gitweb e shfaq këtë si një degë parazgjedhje."
 msgid "Git"
 msgstr "Git"
 
+#: modules/gitweb/manifest.py:37
+#, fuzzy
+#| msgid "Simple Git Hosting"
+msgid "Git hosting"
+msgstr "Strehim i Thjeshtë Git"
+
+#: modules/gitweb/manifest.py:37
+msgid "Version control"
+msgstr ""
+
+#: modules/gitweb/manifest.py:37
+msgid "Developer tool"
+msgstr ""
+
 #: modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
 msgstr "Administroni Depo"
@@ -2685,19 +2874,19 @@ msgid "Manual"
 msgstr "Doracak"
 
 #: modules/help/__init__.py:41 modules/help/templates/help_support.html:9
-#: modules/help/views.py:90 templates/help-menu.html:27
+#: modules/help/views.py:93 templates/help-menu.html:27
 #: templates/help-menu.html:28
 msgid "Get Support"
 msgstr "Merrni Asistencë"
 
 #: modules/help/__init__.py:45 modules/help/templates/help_feedback.html:9
-#: modules/help/views.py:84 templates/help-menu.html:33
+#: modules/help/views.py:87 templates/help-menu.html:33
 #: templates/help-menu.html:34
 msgid "Submit Feedback"
 msgstr "Parashtroni Përshtypjet"
 
 #: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:73 templates/help-menu.html:39
+#: modules/help/views.py:76 templates/help-menu.html:39
 #: templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Jepni Ndihmesë"
@@ -2852,7 +3041,7 @@ msgstr ""
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
-#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:57
+#: modules/power/templates/power_shutdown.html:26 templates/app-header.html:68
 msgid "Learn more..."
 msgstr "Mësoni më tepër…"
 
@@ -3037,16 +3226,16 @@ msgstr ""
 "Ju lutemi, hiqni çfarëdo fjalëkalimi apo hollësi të tjera personale prej "
 "regjistrit, përpara se të parashtroni njoftimin për të metën."
 
-#: modules/help/views.py:28
+#: modules/help/views.py:29
 msgid "Documentation and FAQ"
 msgstr "Dokumentim dhe PBR"
 
-#: modules/help/views.py:96
+#: modules/help/views.py:99
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Mbi {box_name}"
 
-#: modules/help/views.py:130
+#: modules/help/views.py:133
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Doracak për {box_name}"
@@ -3094,6 +3283,19 @@ msgstr "Rrjet Anonimiteti"
 #: modules/i2p/__init__.py:83
 msgid "I2P Proxy"
 msgstr "Ndërmjetës I2P"
+
+#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
+#: modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "Rrjet Anonimiteti"
+
+#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
+#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
+#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3176,6 +3378,10 @@ msgstr "Emër Llogarie Përgjegjësi"
 #: modules/ikiwiki/forms.py:19
 msgid "Admin Account Password"
 msgstr "Fjalëkalim Llogarie Përgjegjësi"
+
+#: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
+msgid "Blog"
+msgstr ""
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3275,7 +3481,7 @@ msgstr "infinoted"
 msgid "Gobby Server"
 msgstr "Shërbyes Gobby"
 
-#: modules/infinoted/manifest.py:10
+#: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
 
@@ -3291,6 +3497,10 @@ msgid ""
 msgstr ""
 "Niseni Gobby-n dhe përzgjidhni “Lidhu me Shërbyes” dhe jepni emrin e "
 "përkatësisë tuaj {box_name}."
+
+#: modules/infinoted/manifest.py:46
+msgid "Collaborative editing"
+msgstr ""
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3319,8 +3529,18 @@ msgstr "Dhomë Me Video"
 msgid "Janus Video Room"
 msgstr "Janus Video Room"
 
+#: modules/janus/manifest.py:16
+#, fuzzy
+#| msgid "Web Server"
+msgid "WebRTC"
+msgstr "Shërbyes"
+
+#: modules/janus/manifest.py:16
+msgid "Web conference"
+msgstr ""
+
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:250
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
 msgid "JavaScript license information"
 msgstr "Hollësi licence JavaScript"
 
@@ -3339,6 +3559,18 @@ msgstr "JSXC"
 #: modules/jsxc/__init__.py:39
 msgid "Chat Client"
 msgstr "Klient Fjalosjesh"
+
+#: modules/jsxc/manifest.py:16
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web chat"
+msgstr "Kërkim në Web"
+
+#: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Client"
+msgid "Client"
+msgstr "Klient IRC"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3412,6 +3644,22 @@ msgstr ""
 "{box_name} juaj. Nëse Kiwix s’arrin ta shtojë kartelën, do të fshihet "
 "menjëherë, për të kursyer hapësirë disku."
 
+#: modules/kiwix/manifest.py:23
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Offline reader"
+msgstr "Wikipedia Jo në linjë"
+
+#: modules/kiwix/manifest.py:24
+msgid "Archival"
+msgstr ""
+
+#: modules/kiwix/manifest.py:26
+#, fuzzy
+#| msgid "Offline Wikipedia"
+msgid "Wikipedia"
+msgstr "Wikipedia Jo në linjë"
+
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
@@ -3464,10 +3712,8 @@ msgid "Add a new content package"
 msgstr "Shtoni paketë të re lënde"
 
 #: modules/kiwix/views.py:76
-#, fuzzy
-#| msgid "Content package added."
 msgid "Content package already exists."
-msgstr "U shtua paketë lënde."
+msgstr "Paketa e lëndës ekziston tashmë."
 
 #: modules/kiwix/views.py:79
 msgid "Failed to add content package."
@@ -3691,6 +3937,18 @@ msgstr "Element"
 msgid "FluffyChat"
 msgstr "FluffyChat"
 
+#: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
+#, fuzzy
+#| msgid "IRC Chatroom"
+msgid "Chat room"
+msgstr "Dhomë IRC"
+
+#: modules/matrixsynapse/manifest.py:105
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Matrix server"
+msgstr "Shërbyes transmetimi mediash"
+
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
@@ -3843,10 +4101,6 @@ msgstr ""
 #: modules/mediawiki/__init__.py:51 modules/mediawiki/manifest.py:6
 msgid "MediaWiki"
 msgstr "MediaWiki"
-
-#: modules/mediawiki/__init__.py:52 templates/index.html:128
-msgid "Wiki"
-msgstr "Wiki"
 
 #: modules/mediawiki/forms.py:56
 msgid "Administrator Password"
@@ -4039,6 +4293,22 @@ msgstr ""
 "Kur aktivizohet, lojtarët s’mund të vdesin ose të pësojnë çfarëdo lloj "
 "dëmtimi."
 
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Updated server."
+msgid "Game server"
+msgstr "Shërbyesi u përditësua."
+
+#: modules/minetest/manifest.py:49
+#, fuzzy
+#| msgid "Block Sandbox"
+msgid "Block sandbox"
+msgstr "Bankëprovë Blloqesh"
+
+#: modules/minetest/manifest.py:49
+msgid "Platform"
+msgstr ""
+
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
 msgid "Address"
@@ -4097,6 +4367,26 @@ msgstr "yaacc"
 #: modules/minidlna/manifest.py:91
 msgid "totem"
 msgstr "totem"
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "Simple Media Server"
+msgid "Media server"
+msgstr "Shërbyes i Thjeshtë Mediash"
+
+#: modules/minidlna/manifest.py:116
+msgid "Television"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+msgid "UPnP"
+msgstr ""
+
+#: modules/minidlna/manifest.py:116
+#, fuzzy
+#| msgid "MiniDLNA"
+msgid "DLNA"
+msgstr "MiniDLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4189,6 +4479,26 @@ msgstr "Read You"
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
 msgstr "RSS Guard"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+#, fuzzy
+#| msgid "News Feed Reader"
+msgid "Feed reader"
+msgstr "Lexues Prurjesh Lajmesh"
+
+#: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
+msgid "News aggregation"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+msgid "RSS"
+msgstr ""
+
+#: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
+#: modules/ttrss/manifest.py:55
+msgid "ATOM"
+msgstr ""
 
 #: modules/miniflux/templates/miniflux.html:14
 msgid ""
@@ -4307,6 +4617,15 @@ msgstr "Mumblefly"
 msgid "Mumla"
 msgstr "Mumla"
 
+#: modules/mumble/manifest.py:67
+msgid "Group conference"
+msgstr ""
+
+#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
+#: modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Shërbyes"
+
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
 msgstr "Fjalëkalimi i superpërdoruesit u përditësua me sukses."
@@ -4339,7 +4658,7 @@ msgstr "Shërbime Emrash"
 
 #: modules/names/__init__.py:171
 msgid "Package systemd-resolved is installed"
-msgstr ""
+msgstr "Paketa systemd-resolved është instaluar"
 
 #: modules/names/__init__.py:195
 #, python-brace-format
@@ -4410,17 +4729,17 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:66
 #: modules/networks/templates/connection_show.html:208
 #: modules/networks/templates/connection_show.html:249
-#: modules/networks/views.py:126
+#: modules/networks/views.py:125
 msgid "yes"
 msgstr "po"
 
 #: modules/names/resolved.py:92 modules/networks/forms.py:29
-#: modules/networks/views.py:125
+#: modules/networks/views.py:124
 msgid "opportunistic"
 msgstr "në mënyrë oportuniste"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
-#: modules/networks/forms.py:30 modules/networks/views.py:124
+#: modules/networks/forms.py:30 modules/networks/views.py:123
 msgid "no"
 msgstr "jo"
 
@@ -4482,6 +4801,8 @@ msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
+"Paketa systemd-resolved s’është instaluar. Për më tepër funksione, "
+"instalojeni."
 
 #: modules/names/templates/names.html:121 templates/setup.html:66
 msgid "Install"
@@ -4509,7 +4830,7 @@ msgstr "Caktoni Emër Përkatësie"
 msgid "Error setting domain name: {exception}"
 msgstr "Gabim në caktimin e emrin të përkatësisë: {exception}"
 
-#: modules/networks/__init__.py:37
+#: modules/networks/__init__.py:19
 msgid ""
 "Configure network devices. Connect to the Internet via Ethernet, Wi-Fi or "
 "PPPoE. Share that connection with other devices on the network."
@@ -4517,7 +4838,7 @@ msgstr ""
 "Formësoni pajisje rrjeti. Lidhuni në Internet përmes Ethernet-i, Wi-Fi ose "
 "PPPoE. Ndajeni atë lidhje me pajisje të tjera në rrjet."
 
-#: modules/networks/__init__.py:39
+#: modules/networks/__init__.py:21
 msgid ""
 "Devices administered through other methods may not be available for "
 "configuration here."
@@ -4525,13 +4846,13 @@ msgstr ""
 "Pajisjet e administruara përmes metodash të tjera mund të mos jenë të "
 "pranishme për formësim këtu."
 
-#: modules/networks/__init__.py:60
+#: modules/networks/__init__.py:42
 msgid "Networks"
 msgstr "Rrjete"
 
 #: modules/networks/forms.py:19 modules/networks/forms.py:25
-#: modules/networks/views.py:40 modules/networks/views.py:101
-#: modules/networks/views.py:112
+#: modules/networks/views.py:39 modules/networks/views.py:100
+#: modules/networks/views.py:111
 msgid "unknown"
 msgstr "e panjohur"
 
@@ -4982,7 +5303,7 @@ msgstr "Përpunoni lidhjen"
 #: modules/networks/templates/connection_show.html:36
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:157 templates/base.html:158
+#: templates/base.html:161 templates/base.html:162
 msgid "Edit"
 msgstr "Përpunoni"
 
@@ -5113,7 +5434,8 @@ msgstr "Kjo lidhje s’është aktive."
 
 #: modules/networks/templates/connection_show.html:260
 #: modules/networks/templates/connections_fields_privacy.html:16
-#: modules/privacy/__init__.py:32 modules/privacy/__init__.py:72
+#: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
+#: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 msgid "Privacy"
 msgstr "Privatësi"
 
@@ -5164,7 +5486,7 @@ msgid "Create Connection"
 msgstr "Krijoni Lidhje"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:537
+#: modules/networks/views.py:536
 msgid "Delete Connection"
 msgstr "Fshije Lidhjen"
 
@@ -5184,14 +5506,14 @@ msgstr "Hapësirë"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:102 network.py:27
+#: modules/networks/views.py:101 network.py:27
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:103 network.py:28
+#: modules/networks/views.py:102 network.py:28
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5211,7 +5533,7 @@ msgid "Computer"
 msgstr "Kompjuter"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:254 modules/networks/views.py:341
+#: modules/networks/views.py:253 modules/networks/views.py:340
 msgid "Edit Connection"
 msgstr "Përpunoni Lidhje"
 
@@ -5229,13 +5551,13 @@ msgstr "Lidhje"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:390
+#: modules/networks/views.py:389
 msgid "Nearby Wi-Fi Networks"
 msgstr "Rrjete Wi-Fi Atypari"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:414
+#: modules/networks/views.py:413
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Shtoni Lidhje"
@@ -5268,23 +5590,6 @@ msgid ""
 msgstr ""
 "Përzgjidhni një mundës që përshkruan më mirë llojin e lidhjes Internet. Ky "
 "informacion përdoret vetëm për t’ju treguar rrugën më tej gjatë ujdisjes."
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:19
-#: modules/networks/templates/network_topology_firstboot.html:19
-#: modules/networks/templates/router_configuration_firstboot.html:19
-#: modules/users/templates/users_firstboot.html:63
-msgid "Skip this step"
-msgstr "Anashkalojeni këtë hap"
-
-#: modules/networks/templates/internet_connectivity_firstboot.html:21
-#: modules/networks/templates/network_topology_firstboot.html:21
-#: modules/networks/templates/router_configuration_firstboot.html:21
-#: modules/upgrades/templates/backports-firstboot.html:45
-#: modules/upgrades/templates/update-firstboot-progress.html:35
-#: modules/upgrades/templates/update-firstboot-progress.html:38
-#: modules/upgrades/templates/update-firstboot.html:33
-msgid "Next"
-msgstr "Pasuesi"
 
 #: modules/networks/templates/internet_connectivity_main.html:9
 msgid "Your Internet Connection Type"
@@ -5467,249 +5772,249 @@ msgstr ""
 "numrin e modelit të rrugëzuesit tuaj dhe kërkoni në internet për doracakun e "
 "rrugëzuesit. Kjo do t’ju japë udhëzimet e plota se si të kryhet kjo punë."
 
-#: modules/networks/views.py:28
+#: modules/networks/views.py:27
 msgid "disabled"
 msgstr "i çaktivizuar"
 
-#: modules/networks/views.py:29
+#: modules/networks/views.py:28
 msgid "automatic"
 msgstr "automatik"
 
-#: modules/networks/views.py:30
+#: modules/networks/views.py:29
 msgid "manual"
 msgstr "dorazi"
 
-#: modules/networks/views.py:31
+#: modules/networks/views.py:30
 msgid "shared"
 msgstr "e përbashkët"
 
-#: modules/networks/views.py:32
+#: modules/networks/views.py:31
 msgid "link-local"
 msgstr ""
 
-#: modules/networks/views.py:33
+#: modules/networks/views.py:32
 msgid "dhcp"
 msgstr "dhcp"
 
-#: modules/networks/views.py:34
+#: modules/networks/views.py:33
 msgid "ignore"
 msgstr "shpërfille"
 
-#: modules/networks/views.py:41
+#: modules/networks/views.py:40
 msgid "unmanaged"
 msgstr "e paadministruar"
 
-#: modules/networks/views.py:42
+#: modules/networks/views.py:41
 msgid "unavailable"
 msgstr "jo i passhëm"
 
-#: modules/networks/views.py:43
+#: modules/networks/views.py:42
 msgid "disconnected"
 msgstr "i shkëputur"
 
-#: modules/networks/views.py:44
+#: modules/networks/views.py:43
 msgid "preparing"
 msgstr "po përgatitet"
 
-#: modules/networks/views.py:45
+#: modules/networks/views.py:44
 msgid "connecting"
 msgstr "po lidhet"
 
-#: modules/networks/views.py:46
+#: modules/networks/views.py:45
 msgid "needs authentication"
 msgstr "lyp mirëfilltësim"
 
-#: modules/networks/views.py:47
+#: modules/networks/views.py:46
 msgid "requesting address"
 msgstr "po kërkohet adresë"
 
-#: modules/networks/views.py:48
+#: modules/networks/views.py:47
 msgid "checking"
 msgstr "po kontrollohet"
 
-#: modules/networks/views.py:49
+#: modules/networks/views.py:48
 msgid "waiting for secondary"
 msgstr "po pritet për dytësor"
 
-#: modules/networks/views.py:50
+#: modules/networks/views.py:49
 msgid "activated"
 msgstr "e aktivizuar"
 
-#: modules/networks/views.py:51
+#: modules/networks/views.py:50
 msgid "deactivating"
 msgstr "po çaktivizohet"
 
-#: modules/networks/views.py:59
+#: modules/networks/views.py:58
 msgid "no reason"
 msgstr "pa arsye"
 
-#: modules/networks/views.py:61
+#: modules/networks/views.py:60
 msgid "unknown error"
 msgstr "gabim i panjohur"
 
-#: modules/networks/views.py:63
+#: modules/networks/views.py:62
 msgid "device is now managed"
 msgstr "pajisja tani administrohet"
 
-#: modules/networks/views.py:65
+#: modules/networks/views.py:64
 msgid "device is now unmanaged"
 msgstr "pajisja tani është e paadministruar"
 
-#: modules/networks/views.py:67
+#: modules/networks/views.py:66
 msgid "configuration failed"
 msgstr "formësimi dështoi"
 
-#: modules/networks/views.py:69
+#: modules/networks/views.py:68
 msgid "secrets required"
 msgstr "lyp të fshehta"
 
-#: modules/networks/views.py:71
+#: modules/networks/views.py:70
 msgid "DHCP client failed to start"
 msgstr "Klienti DHCP s’arriti të niset"
 
-#: modules/networks/views.py:73
+#: modules/networks/views.py:72
 msgid "DHCP client error"
 msgstr "Gabim klienti DHCP"
 
-#: modules/networks/views.py:75
+#: modules/networks/views.py:74
 msgid "DHCP client failed"
 msgstr "Klienti DHCP dështoi"
 
-#: modules/networks/views.py:77
+#: modules/networks/views.py:76
 msgid "shared connection service failed to start"
 msgstr "dështoi nisja e shërbimit për lidhje të përbashkët"
 
-#: modules/networks/views.py:79
+#: modules/networks/views.py:78
 msgid "shared connection service failed"
 msgstr "dështoi shërbimi për lidhje të përbashkët"
 
-#: modules/networks/views.py:81
+#: modules/networks/views.py:80
 msgid "device was removed"
 msgstr "pajisja u hoq"
 
-#: modules/networks/views.py:83
+#: modules/networks/views.py:82
 msgid "device disconnected by user"
 msgstr "pajisja u shkëput nga përdoruesi"
 
-#: modules/networks/views.py:85
+#: modules/networks/views.py:84
 msgid "a dependency of the connection failed"
 msgstr "dështoi plotësimi i një varësie të lidhjes"
 
-#: modules/networks/views.py:87
+#: modules/networks/views.py:86
 msgid "Wi-Fi network not found"
 msgstr "S’u gjet rrjet Wi-Fi"
 
-#: modules/networks/views.py:89
+#: modules/networks/views.py:88
 msgid "a secondary connection failed"
 msgstr "dështoi një lidhje dytësore"
 
-#: modules/networks/views.py:91
+#: modules/networks/views.py:90
 msgid "new connection activation was enqueued"
 msgstr "u vu në radhë aktivizim lidhjeje të re"
 
-#: modules/networks/views.py:93
+#: modules/networks/views.py:92
 msgid "a duplicate IP address was detected"
 msgstr "u pikas adresë IP e përsëdytur"
 
-#: modules/networks/views.py:95
+#: modules/networks/views.py:94
 msgid "selected IP method is not supported"
 msgstr "metoda e përzgjedhur për IP nuk mbulohet"
 
-#: modules/networks/views.py:104
+#: modules/networks/views.py:103
 msgid "generic"
 msgstr "elementare"
 
-#: modules/networks/views.py:105
+#: modules/networks/views.py:104
 msgid "TUN or TAP interface"
 msgstr "Ndërfaqe TUN ose TAP"
 
-#: modules/networks/views.py:106 modules/wireguard/__init__.py:47
+#: modules/networks/views.py:105 modules/wireguard/__init__.py:47
 #: modules/wireguard/manifest.py:14
 msgid "WireGuard"
 msgstr "WireGuard"
 
-#: modules/networks/views.py:113
+#: modules/networks/views.py:112
 msgid "ad-hoc"
 msgstr "ad-hoc"
 
-#: modules/networks/views.py:114
+#: modules/networks/views.py:113
 msgid "infrastructure"
 msgstr "infrastrukturë"
 
-#: modules/networks/views.py:115
+#: modules/networks/views.py:114
 msgid "access point"
 msgstr "pikë hyrjeje"
 
-#: modules/networks/views.py:116
+#: modules/networks/views.py:115
 msgid "mesh point"
 msgstr "pikë mesh"
 
-#: modules/networks/views.py:123
+#: modules/networks/views.py:122
 msgid "default"
 msgstr "parazgjedhje"
 
-#: modules/networks/views.py:156
+#: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
 msgstr "S’shfaqet dot lidhje: S’u gjet lidhje."
 
-#: modules/networks/views.py:211
+#: modules/networks/views.py:210
 msgid "Connection Information"
 msgstr "Hollësi Lidhjeje"
 
-#: modules/networks/views.py:226
+#: modules/networks/views.py:225
 msgid "Cannot edit connection: Connection not found."
 msgstr "S’përpunohet dot lidhje: S’u gjet lidhje."
 
-#: modules/networks/views.py:232
+#: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
 msgstr "Ky lloj lidhjesh nuk kuptohet ende."
 
-#: modules/networks/views.py:353
+#: modules/networks/views.py:352
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "U aktivizua lidhja {name}."
 
-#: modules/networks/views.py:357
+#: modules/networks/views.py:356
 msgid "Failed to activate connection: Connection not found."
 msgstr "S’u arrit të aktivizohet lidhje: S’u gjet lidhje."
 
-#: modules/networks/views.py:363
+#: modules/networks/views.py:362
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "S’u arrit të aktivizohet lidhja {name}: S’u gjet pajisje e përshtatshme."
 
-#: modules/networks/views.py:376
+#: modules/networks/views.py:375
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "U çaktivizua lidhja {name}."
 
-#: modules/networks/views.py:380
+#: modules/networks/views.py:379
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Dështoi çaktivizimi i lidhjes: S’u gjet lidhje."
 
-#: modules/networks/views.py:432
+#: modules/networks/views.py:431
 msgid "Adding New Generic Connection"
 msgstr "Po Shtohet Lidhje e Re Elementare"
 
-#: modules/networks/views.py:450
+#: modules/networks/views.py:449
 msgid "Adding New Ethernet Connection"
 msgstr "Po Shtohet Lidhje e Re Ethernet"
 
-#: modules/networks/views.py:468
+#: modules/networks/views.py:467
 msgid "Adding New PPPoE Connection"
 msgstr "Po Shtohet Lidhje e Re PPPoE"
 
-#: modules/networks/views.py:503
+#: modules/networks/views.py:502
 msgid "Adding New Wi-Fi Connection"
 msgstr "Po Shtohet Lidhje e Re Wi-Fi"
 
-#: modules/networks/views.py:518
+#: modules/networks/views.py:517
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Lidhja {name} u fshi."
 
-#: modules/networks/views.py:522 modules/networks/views.py:532
+#: modules/networks/views.py:521 modules/networks/views.py:531
 msgid "Failed to delete connection: Connection not found."
 msgstr "S’u arrit të fshihet lidhje: S’u gjet lidhje."
 
@@ -5806,6 +6111,20 @@ msgstr ""
 "Rajoni telefonik parazgjedhje është i domosdoshëm për të verifikuar numra "
 "telefonash te rregullimet e profilit pa një kod vendi."
 
+#: modules/nextcloud/manifest.py:56 modules/syncthing/manifest.py:58
+msgid "File sync"
+msgstr ""
+
+#: modules/nextcloud/manifest.py:56 modules/sharing/__init__.py:34
+msgid "Sharing"
+msgstr "Dhënie"
+
+#: modules/nextcloud/manifest.py:56
+#, fuzzy
+#| msgid "Group Share"
+msgid "Groupware"
+msgstr "Pjesë Grupi"
+
 #: modules/nextcloud/views.py:53
 msgid "Password update failed. Please choose a stronger password."
 msgstr ""
@@ -5851,6 +6170,16 @@ msgstr ""
 #: modules/openvpn/manifest.py:52
 msgid "Tunnelblick"
 msgstr "Tunnelblick"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "DNS server"
+msgid "VPN server"
+msgstr "Shërbyes DNS"
+
+#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+msgid "Remote access"
+msgstr ""
 
 #: modules/openvpn/templates/openvpn.html:12
 msgid "Profile"
@@ -6136,8 +6465,8 @@ msgstr ""
 "Aktualisht po xhiron një instalim ose përmirësim. Shihni mundësinë e "
 "pritjes, deri sa të përfundohet, përpara fikjes apo rinisjes."
 
-#: modules/power/templates/power.html:22 templates/base.html:172
-#: templates/base.html:173
+#: modules/power/templates/power.html:22 templates/base.html:176
+#: templates/base.html:177
 msgid "Restart"
 msgstr "Rinise"
 
@@ -6277,10 +6606,27 @@ msgstr "Privoxy"
 msgid "Web Proxy"
 msgstr "Ndërmjetës Web"
 
-#: modules/privoxy/__init__.py:118
+#: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
 msgstr "Hapni {url} me ndërmjetësin {proxy} në tcp{kind}"
+
+#: modules/privoxy/manifest.py:10
+msgid "Ad blocker"
+msgstr ""
+
+#: modules/privoxy/manifest.py:10 modules/shadowsocks/manifest.py:18
+#: modules/torproxy/manifest.py:55
+#, fuzzy
+#| msgid "Gobby Server"
+msgid "Proxy server"
+msgstr "Shërbyes Gobby"
+
+#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Përkatësi Rrjeti Vendor"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6322,6 +6668,10 @@ msgstr "Klient IRC"
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
+
+#: modules/quassel/manifest.py:54
+msgid "IRC"
+msgstr ""
 
 #: modules/radicale/__init__.py:25
 #, python-brace-format
@@ -6427,6 +6777,24 @@ msgstr ""
 "e_freedombox-it.tuaj&gt;) dhe emrin tuaj të përdoruesit. Klikimi mbi butonin "
 "e kërkimit do të shfaqë kalendarët dhe librat ekzistues të adresave."
 
+#: modules/radicale/manifest.py:91
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "Calendar"
+msgstr "Kalendar Gnome"
+
+#: modules/radicale/manifest.py:91 modules/roundcube/manifest.py:23
+msgid "Contacts"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CalDAV"
+msgstr ""
+
+#: modules/radicale/manifest.py:91
+msgid "CardDAV"
+msgstr ""
+
 #: modules/radicale/views.py:32
 msgid "Access rights configuration updated"
 msgstr "Formësimi i të drejtave për hyrje u përditësua"
@@ -6498,6 +6866,12 @@ msgstr ""
 "teksti, që përdoruesit të mund të specifikojnë te cila llogari duan të "
 "lidhen."
 
+#: modules/roundcube/manifest.py:23
+#, fuzzy
+#| msgid "FairEmail"
+msgid "Email"
+msgstr "FairEmail"
+
 #: modules/rssbridge/__init__.py:21
 msgid ""
 "RSS-Bridge generates RSS and Atom feeds for websites that do not have one. "
@@ -6531,7 +6905,7 @@ msgstr ""
 msgid "Read and subscribe to news feeds"
 msgstr "Lexoni dhe pajtohuni te prurje lajmesh"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:10
+#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
@@ -6546,6 +6920,18 @@ msgstr "Lejo Hyrje Publike"
 #: modules/rssbridge/forms.py:13 modules/searx/forms.py:18
 msgid "Allow this application to be used by anyone who can reach it."
 msgstr "Të lejohet ky aplikacion të përdoret nga cilido që mund ta kapë."
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "RSS Feed Generator"
+msgid "Feed generator"
+msgstr "Prodhues Prurjesh RSS"
+
+#: modules/rssbridge/manifest.py:16
+#, fuzzy
+#| msgid "FluxNews"
+msgid "News"
+msgstr "FluxNews"
 
 #: modules/samba/__init__.py:23
 msgid ""
@@ -6624,6 +7010,24 @@ msgstr "Kartela GNOME"
 #: modules/samba/manifest.py:74
 msgid "Dolphin"
 msgstr "Dolphin"
+
+#: modules/samba/manifest.py:91
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network drive"
+msgstr "Ndërfaqe Rrjeti"
+
+#: modules/samba/manifest.py:92
+#, fuzzy
+#| msgid "Media streaming server"
+msgid "Media storage"
+msgstr "Shërbyes transmetimi mediash"
+
+#: modules/samba/manifest.py:93
+#, fuzzy
+#| msgid "Backups"
+msgid "Backup storage"
+msgstr "Kopjeruajtje"
 
 #: modules/samba/templates/samba.html:20
 msgid "Shares"
@@ -6764,6 +7168,16 @@ msgstr "I moderuar"
 #: modules/searx/forms.py:14
 msgid "Strict"
 msgstr "Strikt"
+
+#: modules/searx/manifest.py:17
+#, fuzzy
+#| msgid "Web Search"
+msgid "Web search"
+msgstr "Kërkim në Web"
+
+#: modules/searx/manifest.py:17
+msgid "Metasearch Engine"
+msgstr ""
 
 #: modules/security/forms.py:13
 msgid "Fail2Ban (recommended)"
@@ -6911,13 +7325,25 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37
+#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
 msgid "Bookmarks"
 msgstr "Faqerojtës"
 
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "Link"
+msgid "Link blog"
+msgstr "Lidhje"
+
+#: modules/shaarli/manifest.py:34
+#, fuzzy
+#| msgid "in use"
+msgid "Single user"
+msgstr "në përdorim"
 
 #: modules/shadowsocks/__init__.py:18 modules/shadowsocksserver/__init__.py:18
 msgid ""
@@ -6969,10 +7395,6 @@ msgstr "Klient për Shadowsocks"
 msgid "Bypass Censorship"
 msgstr "Anashkaloni Censurën"
 
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Shërbyes"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Strehëemër ose adresë IP shërbyesi"
@@ -6990,6 +7412,24 @@ msgstr ""
 #: modules/shadowsocks/forms.py:37
 msgid "Encryption method. Must match setting on server."
 msgstr "Metodë fshehtëzimi. Duhet të përputhet me atë të caktuar te shërbyesi."
+
+#: modules/shadowsocks/manifest.py:20 modules/shadowsocksserver/manifest.py:19
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted tunnel"
+msgstr "Fshehtëzim"
+
+#: modules/shadowsocks/manifest.py:21
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Entry point"
+msgstr "Pikëmbarim"
+
+#: modules/shadowsocks/manifest.py:22 modules/shadowsocksserver/manifest.py:21
+#, fuzzy
+#| msgid "Shadowsocks Client"
+msgid "Shadowsocks"
+msgstr "Klient për Shadowsocks"
 
 #: modules/shadowsocksserver/__init__.py:26
 #, python-brace-format
@@ -7024,6 +7464,12 @@ msgstr ""
 msgid "Encryption method. Clients must use the same setting."
 msgstr "Metodë fshehtëzimi. Klientët duhet të përdorin të njëjtin rregullim."
 
+#: modules/shadowsocksserver/manifest.py:20
+#, fuzzy
+#| msgid "Endpoint"
+msgid "Exit point"
+msgstr "Pikëmbarim"
+
 #: modules/sharing/__init__.py:17
 #, python-brace-format
 msgid ""
@@ -7032,10 +7478,6 @@ msgid ""
 msgstr ""
 "Dhënia ju lejon të ndani nëpër internet kartela dhe dosje në {box_name}-in "
 "tuaj me grupe dhe përdorues të zgjedhur nga ju."
-
-#: modules/sharing/__init__.py:34
-msgid "Sharing"
-msgstr "Dhënie"
 
 #: modules/sharing/forms.py:17
 msgid "Name of the share"
@@ -7086,6 +7528,12 @@ msgstr "Ka tashmë një pjesë me këtë emër."
 #: modules/sharing/forms.py:62
 msgid "Shares should be either public or shared with at least one group"
 msgstr "Pjesët duhet të jenë ose publike, ose të ndara me të paktën një grup"
+
+#: modules/sharing/manifest.py:19 modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web sharing"
+msgstr "Dhënie"
 
 #: modules/sharing/templates/sharing.html:18
 #: modules/sharing/templates/sharing.html:21
@@ -7819,6 +8267,18 @@ msgstr "Kartelat TiddlyWiki duhet të jenë në format HTML"
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "Ngarkoni nga ky kompjuter një kartelë ekzistuese TiddlyWiki."
 
+#: modules/tiddlywiki/manifest.py:22
+msgid "Journal"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:23
+msgid "Digital garden"
+msgstr ""
+
+#: modules/tiddlywiki/manifest.py:24
+msgid "Zettelkasten"
+msgstr ""
+
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
@@ -7861,7 +8321,8 @@ msgstr ""
 "hyjë te {box_name} që nga interneti, edhe kur përdor një ISP i cili i "
 "kufizon shërbyesit e vet."
 
-#: modules/tor/__init__.py:62
+#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
 
@@ -7983,6 +8444,16 @@ msgstr "Shfletuesi Tor"
 #: modules/tor/manifest.py:31 modules/torproxy/manifest.py:30
 msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Ndërmjetës me Tor"
+
+#: modules/tor/manifest.py:57
+#, fuzzy
+#| msgid "Onion Service"
+msgid "Onion services"
+msgstr "Shërbim Onion"
+
+#: modules/tor/manifest.py:58
+msgid "Relay"
+msgstr "Rele"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -8163,13 +8634,12 @@ msgstr ""
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:38
-#: modules/upgrades/templates/update-firstboot.html:14
+#: modules/upgrades/__init__.py:33
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Kontrolloni dhe aplikoni përditësimet më të reja software-i dhe sigurie."
 
-#: modules/upgrades/__init__.py:39
+#: modules/upgrades/__init__.py:34
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -8182,21 +8652,32 @@ msgstr ""
 "rinisja e sistemit shihet si e domosdoshme, bëhet automatikisht më 02:00, "
 "duke bërë që krejt aplikacionet të jenë jashtë funksionimi për ca çaste."
 
-#: modules/upgrades/__init__.py:69 modules/upgrades/__init__.py:130
-#: modules/upgrades/templates/update-firstboot-progress.html:11
-#: modules/upgrades/templates/update-firstboot.html:11
+#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
+#: modules/upgrades/__init__.py:143
 msgid "Software Update"
 msgstr "Përditësim Software-i"
 
-#: modules/upgrades/__init__.py:133
+#: modules/upgrades/__init__.py:128
 msgid "FreedomBox Updated"
 msgstr "FreedomBox-i u Përditësua"
 
-#: modules/upgrades/__init__.py:218
+#: modules/upgrades/__init__.py:138
+#, fuzzy
+#| msgid "Software Update"
+msgid "Run software update manually"
+msgstr "Përditësim Software-i"
+
+#: modules/upgrades/__init__.py:140
+msgid ""
+"Automatic software update runs daily by default. For the first time, "
+"manually run it now."
+msgstr ""
+
+#: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
 msgstr "S’u fillua dot përditësim shpërndarjeje"
 
-#: modules/upgrades/__init__.py:220
+#: modules/upgrades/__init__.py:244
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8207,18 +8688,18 @@ msgstr ""
 "Përditësimi i shpërndarjes do të riprovohet pas 24 orësh, nëse kjo është "
 "aktivizuar."
 
-#: modules/upgrades/__init__.py:231
+#: modules/upgrades/__init__.py:255
 msgid "Distribution update started"
 msgstr "Përditësimi i shpërndarjes filloi"
 
-#: modules/upgrades/__init__.py:233
+#: modules/upgrades/__init__.py:257
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
 "Filloi përditësimi me hedhjen e re të qëndrueshme në qarkullim. Ky mund të "
 "dojë një kohë të gjatë për t’u plotësuar."
 
-#: modules/upgrades/__init__.py:326
+#: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
 msgstr "Kontrolloni për mbajtje paketash"
 
@@ -8248,10 +8729,6 @@ msgstr ""
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivizoni përditësime të shpeshta veçorish (e rekomanduar)"
 
-#: modules/upgrades/forms.py:40
-msgid "Update now (recommended)"
-msgstr "Përditësoje tani ( e këshilluar)"
-
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
 "It is strongly recommended to activate frequent feature updates. If not "
@@ -8268,31 +8745,9 @@ msgstr ""
 "<strong>Shënim:</strong> Pasi të aktivizohen përditësime të shpeshta "
 "veçorish, s’mund të çaktivizohen më."
 
-#: modules/upgrades/templates/update-firstboot-progress.html:19
-msgid "Updating, please wait..."
-msgstr "Po përditësohet, ju lutemi, pritni…"
-
-#: modules/upgrades/templates/update-firstboot-progress.html:22
-#: modules/upgrades/templates/update-firstboot.html:20
-msgid ""
-"<strong>This may take a long time to complete.</strong> During an update, "
-"this web interface may be temporarily unavailable and show an error. In that "
-"case, refresh the page to continue."
-msgstr ""
-"<strong>Kjo mund të dojë një kohë të gjatë për t’u plotësuar.</strong> Gjatë "
-"një përditësimi, kjo ndërfaqe web mund të jetë përkohësisht e papërdorshme "
-"dhe të shfaqë një gabim. Në rast të tillë, rifreskoni faqen, që të vazhdohet."
-
-#: modules/upgrades/templates/update-firstboot-progress.html:31
-#, python-format
-msgid ""
-"\n"
-"\t%(box_name)s is up to date. Press Next to continue.\n"
-"      "
-msgstr ""
-"\n"
-"\t%(box_name)s është i përditësuar. Që të vazhdohet, klikoni mbi Pasuesi.\n"
-"      "
+#: modules/upgrades/templates/backports-firstboot.html:45
+msgid "Next"
+msgstr "Pasuesi"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -8358,10 +8813,6 @@ msgstr ""
 msgid "Manual Update"
 msgstr "Përditësim Dorazi"
 
-#: modules/upgrades/templates/upgrades_configure.html:108
-msgid "Update now"
-msgstr "Përditësoje tani"
-
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
@@ -8394,23 +8845,23 @@ msgstr ""
 msgid "Test distribution upgrade now"
 msgstr "Testoni përmirësim shpërndarjeje tani"
 
-#: modules/upgrades/views.py:73
+#: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
 msgstr "Gabim teksa formësohej &lt;em&gt;unattended-upgrades&lt;/em&gt;"
 
-#: modules/upgrades/views.py:120
+#: modules/upgrades/views.py:119
 msgid "Upgrade process started."
 msgstr "Procesi i përmirësimit filloi."
 
-#: modules/upgrades/views.py:122
+#: modules/upgrades/views.py:121
 msgid "Starting upgrade failed."
 msgstr "Nisja e përmirësimi dështoi."
 
-#: modules/upgrades/views.py:132
+#: modules/upgrades/views.py:131
 msgid "Frequent feature updates activated."
 msgstr "Përditësime të shpeshta veçorish të aktivizuara."
 
-#: modules/upgrades/views.py:218
+#: modules/upgrades/views.py:176
 msgid "Starting distribution upgrade test."
 msgstr "Po fillohet provë përmirësimi shpërndarjeje."
 
@@ -8644,6 +9095,10 @@ msgstr ""
 "remove_user”. Nëse një llogari është tashmë e përdorshme me %(box_name)s, "
 "anashkaloje këtë hap."
 
+#: modules/users/templates/users_firstboot.html:63
+msgid "Skip this step"
+msgstr "Anashkalojeni këtë hap"
+
 #: modules/users/templates/users_list.html:11 modules/users/views.py:64
 msgid "Users"
 msgstr "Përdorues"
@@ -8829,6 +9284,12 @@ msgid "Typically checked for a VPN service through which all traffic is sent."
 msgstr ""
 "Zakonisht e zgjedhur për një shërbim VPN përmes të cilit dërgohet krejt "
 "trafiku."
+
+#: modules/wireguard/manifest.py:45
+#, fuzzy
+#| msgid "IRC Client"
+msgid "VPN client"
+msgstr "Klient IRC"
 
 #: modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -9111,6 +9572,10 @@ msgstr ""
 "sajtin ose blogun WordPress. Aktivizojeni vetëm pasi të jetë kryer ujdisja "
 "fillestare e WordPress-it."
 
+#: modules/wordpress/manifest.py:26
+msgid "Content management system"
+msgstr ""
+
 #: modules/zoph/__init__.py:24
 #, python-brace-format
 msgid ""
@@ -9164,6 +9629,16 @@ msgstr ""
 "Kur aktivizohet, kërkesat do të bëhen te shërbyesit e OpenStreetMap-it që "
 "nga shfletuesi i përdoruesit. Kjo prek privatësinë."
 
+#: modules/zoph/manifest.py:26
+msgid "Photo"
+msgstr ""
+
+#: modules/zoph/manifest.py:26
+#, fuzzy
+#| msgid "Photo Organizer"
+msgid "Organizer"
+msgstr "Sistemues Fotografish"
+
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
 msgid "Setup"
@@ -9182,17 +9657,18 @@ msgstr ""
 msgid "Generic"
 msgstr "Elementar"
 
-#: operation.py:118
-#, python-brace-format
-msgid "Error: {name}: {exception_message}"
+#: operation.py:120
+#, fuzzy, python-brace-format
+#| msgid "Error: {name}: {exception_message}"
+msgid "Error: {name}: {exception}"
 msgstr "Gabim: {name}: {exception_message}"
 
-#: operation.py:121
+#: operation.py:123
 #, python-brace-format
 msgid "Waiting to start: {name}"
 msgstr "Po pritet të fillohet: {name}"
 
-#: operation.py:127
+#: operation.py:129
 #, python-brace-format
 msgid "Finished: {name}"
 msgstr "Përfundoi: {name}"
@@ -9238,67 +9714,75 @@ msgid "Updating app"
 msgstr "Po përditësohet aplikacioni"
 
 #: setup.py:78
-#, python-brace-format
-msgid "Error installing app: {error}"
+#, fuzzy, python-brace-format
+#| msgid "Error installing app: {error}"
+msgid "Error installing app: {exception}"
 msgstr "Gabim në instalimin e aplikacionit: {error}"
 
-#: setup.py:81 setup.py:167
-#, python-brace-format
-msgid "Error repairing app: {error}"
+#: setup.py:80
+#, fuzzy, python-brace-format
+#| msgid "Error repairing app: {error}"
+msgid "Error repairing app: {exception}"
 msgstr "Gabim në riparimin e aplikacionit: {error}"
 
-#: setup.py:84
-#, python-brace-format
-msgid "Error updating app: {error}"
+#: setup.py:82
+#, fuzzy, python-brace-format
+#| msgid "Error updating app: {error}"
+msgid "Error updating app: {exception}"
 msgstr "Gabim në përditësimin e aplikacionit: {error}"
 
-#: setup.py:88
+#: setup.py:85
 msgid "App installed."
 msgstr "Aplikacioni u instalua."
 
-#: setup.py:92
+#: setup.py:89
 msgid "App updated"
 msgstr "Aplikacioni u përditësua"
 
-#: setup.py:115
+#: setup.py:112
 msgid "Repairing app"
 msgstr "Po riparohet aplikacioni"
 
-#: setup.py:146
+#: setup.py:143
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Gabim në xhirim diagnostikimesh: {error}"
 
-#: setup.py:159
+#: setup.py:156
 msgid "Skipping repair, no failed checks"
 msgstr "Po anashkalohet riparimi, s’ka kontrolle të dështuar"
 
-#: setup.py:173
+#: setup.py:164
+#, python-brace-format
+msgid "Error repairing app: {error}"
+msgstr "Gabim në riparimin e aplikacionit: {error}"
+
+#: setup.py:170
 msgid "Re-running setup to complete repairs"
 msgstr "Po rixhirohet ujdisje, për të plotësuar riparimet"
 
-#: setup.py:181
+#: setup.py:178
 msgid "App repaired."
 msgstr "Aplikacioni u riparua."
 
-#: setup.py:185
+#: setup.py:182
 msgid "App repair completed with errors:\n"
 msgstr "Riparimi i aplikacionit u plotësua me gabime:\n"
 
-#: setup.py:205
+#: setup.py:202
 msgid "Uninstalling app"
 msgstr "Po çinstalohet aplikacion"
 
-#: setup.py:221
+#: setup.py:218
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Gabim në çinstalimin e aplikacionit: {error}"
 
-#: setup.py:224
+#: setup.py:221
 msgid "App uninstalled."
 msgstr "Aplikacioni u çinstalua."
 
-#: setup.py:597
+#: setup.py:594
 msgid "Updating app packages"
 msgstr "Po përditësohet paketa aplikacioni"
 
@@ -9362,6 +9846,12 @@ msgstr "Instalim"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Shërbimi <em>%(service_name)s</em> s’po xhiron."
 
+#: templates/apps.html:29
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "Kërkoni në internet"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9371,43 +9861,43 @@ msgstr ""
 "pronësi të dhënash. Është software i lirë, që ju lejon të instaloni dhe "
 "administroni kollaj aplikacione shërbyesi."
 
-#: templates/base.html:108
+#: templates/base.html:112
 msgid " Home"
 msgstr " Kreu"
 
-#: templates/base.html:111
+#: templates/base.html:115
 msgid "Home"
 msgstr "Kreu"
 
-#: templates/base.html:116
+#: templates/base.html:120
 msgid " Apps"
 msgstr " Aplikacione"
 
-#: templates/base.html:120
+#: templates/base.html:124
 msgid "Apps"
 msgstr "Aplikacione"
 
-#: templates/base.html:125
+#: templates/base.html:129
 msgid " System"
 msgstr " Sistem"
 
-#: templates/base.html:164 templates/base.html:165
+#: templates/base.html:168 templates/base.html:169
 msgid "Change password"
 msgstr "Ndryshoni fjalëkalimin"
 
-#: templates/base.html:178 templates/base.html:179
+#: templates/base.html:182 templates/base.html:183
 msgid "Shut down"
 msgstr "Fike"
 
-#: templates/base.html:189 templates/base.html:218
+#: templates/base.html:193 templates/base.html:222
 msgid "Log out"
 msgstr "Dil"
 
-#: templates/base.html:198 templates/base.html:201
+#: templates/base.html:202 templates/base.html:205
 msgid "Select language"
 msgstr "Përzgjidhni gjuhën"
 
-#: templates/base.html:207 templates/base.html:209
+#: templates/base.html:211 templates/base.html:213
 msgid "Log in"
 msgstr "Hyni"
 
@@ -9474,15 +9964,6 @@ msgstr "RPM:"
 #: templates/error.html:10
 msgid "Error"
 msgstr "Gabim"
-
-#: templates/first_setup.html:18
-#, python-format
-msgid ""
-"Please wait for %(box_name)s to finish installation. You can start using "
-"your %(box_name)s once it is done."
-msgstr ""
-"Ju lutemi, pritni që të përfundojë instalimi për %(box_name)s. Sapo të ketë "
-"mbaruar, mund të filloni përdorimin e %(box_name)s tuaj."
 
 #: templates/index.html:22
 #, python-format
@@ -9687,11 +10168,11 @@ msgstr ""
 "Krejt të dhënat dhe formësimi i aplikacionit do të humbin përgjithnjë. "
 "Aplikacioni mund të instalohet sërish nga e para."
 
-#: views.py:268
+#: views.py:322
 msgid "Setting unchanged"
 msgstr "Rregullim i pandryshuar"
 
-#: views.py:502
+#: views.py:557
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "para çinstalimit të {app_id}"
@@ -9699,6 +10180,56 @@ msgstr "para çinstalimit të {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujaratase"
+
+#, python-format
+#~ msgid "Without any apps, your %(box_name)s cannot do very much."
+#~ msgstr "Pa aplikacione, %(box_name)s juaj s’mund të bëjë kushedi çë."
+
+#~ msgid "Install Apps"
+#~ msgstr "Instaloni Aplikacione"
+
+#, python-format
+#~ msgid ""
+#~ "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
+#~ "and modify it if necessary."
+#~ msgstr ""
+#~ "Mund të doni të kontrolloni <a href=\"%(networks_url)s\">ujdisjen e "
+#~ "rrjetit</a> dhe ta ndryshoni, në qoftë e nevojshme."
+
+#~ msgid "Update now (recommended)"
+#~ msgstr "Përditësoje tani ( e këshilluar)"
+
+#~ msgid "Updating, please wait..."
+#~ msgstr "Po përditësohet, ju lutemi, pritni…"
+
+#~ msgid ""
+#~ "<strong>This may take a long time to complete.</strong> During an update, "
+#~ "this web interface may be temporarily unavailable and show an error. In "
+#~ "that case, refresh the page to continue."
+#~ msgstr ""
+#~ "<strong>Kjo mund të dojë një kohë të gjatë për t’u plotësuar.</strong> "
+#~ "Gjatë një përditësimi, kjo ndërfaqe web mund të jetë përkohësisht e "
+#~ "papërdorshme dhe të shfaqë një gabim. Në rast të tillë, rifreskoni faqen, "
+#~ "që të vazhdohet."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "\t%(box_name)s is up to date. Press Next to continue.\n"
+#~ "      "
+#~ msgstr ""
+#~ "\n"
+#~ "\t%(box_name)s është i përditësuar. Që të vazhdohet, klikoni mbi "
+#~ "Pasuesi.\n"
+#~ "      "
+
+#, python-format
+#~ msgid ""
+#~ "Please wait for %(box_name)s to finish installation. You can start using "
+#~ "your %(box_name)s once it is done."
+#~ msgstr ""
+#~ "Ju lutemi, pritni që të përfundojë instalimi për %(box_name)s. Sapo të "
+#~ "ketë mbaruar, mund të filloni përdorimin e %(box_name)s tuaj."
 
 #~ msgid "Hostname set"
 #~ msgstr "Strehëemri u caktua"
@@ -9711,9 +10242,6 @@ msgstr "Gujaratase"
 
 #~ msgid "Cannot test: No domains are configured."
 #~ msgstr "S’mund të testojë: S’ka përkatësi të formësuara."
-
-#~ msgid "Media streaming server"
-#~ msgstr "Shërbyes transmetimi mediash"
 
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
@@ -9965,19 +10493,11 @@ msgstr "Gujaratase"
 #~ "Cockpit do të funksionojë vetëm kur në të hyhet duke përdorur URL-të "
 #~ "vijuese."
 
-#, fuzzy
-#~| msgid "Web Server"
-#~ msgid "WebRTC server"
-#~ msgstr "Shërbyes"
-
 #~ msgid "Server URL"
 #~ msgstr "URL shërbyesi"
 
 #~ msgid "Server URL updated"
 #~ msgstr "URL-ja e shërbyesit u përditësua"
-
-#~ msgid "Relay"
-#~ msgstr "Rele"
 
 #, python-format
 #~ msgid ""

@@ -83,21 +83,25 @@
 
         {% block mainmenu_left %}
           <a href="{% url 'index' %}"  class="navbar-brand
-                   {% if not submenu.url %} menu_link_active {% else %}
+                   {% if not active_menu_urls %} menu_link_active {% else %}
                    menu_link {% endif %}" title="{{ box_name }}">
             <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
         {% endblock %}
 
-        <ul class="navbar-nav">
-          {% include "notifications-dropdown.html" %}
-        </ul>
+        {% block notifications_dropdown %}
+          <ul class="navbar-nav">
+            {% include "notifications-dropdown.html" %}
+          </ul>
+        {% endblock %}
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbar-collapse" aria-controls="navbar-collapse"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="fa fa-bars"></span>
-        </button>
+        {% block mainmenu_toggler %}
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+                  data-target="#navbar-collapse" aria-controls="navbar-collapse"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="fa fa-bars"></span>
+          </button>
+        {% endblock %}
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="navbar-nav flex-grow-1">
@@ -106,7 +110,7 @@
                 <li class="nav-item">
                   {% url 'index' as index_url %}
                   <a href="{{ index_url }}" title='{% trans " Home" %}'
-                     class="nav-link {% if not submenu.url %}
+                     class="nav-link {% if not active_menu_urls %}
                      menu_link_active {% else %} menu_link {% endif %}">
                     {% trans "Home" %}
                   </a>
@@ -114,7 +118,7 @@
                 <li class="nav-item">
                   {% url 'apps' as apps_url %}
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
-                     class="nav-link {% if apps_url == submenu.url %}
+                     class="nav-link {% if apps_url in active_menu_urls %}
                      menu_link_active {% else %} menu_link {% endif %}">
                     <span class="fa fa-th nav-icon"></span>
                     {% trans "Apps" %}
@@ -123,7 +127,7 @@
                 <li class="nav-item">
                   {% url 'system' as system_url %}
                   <a href="{{ system_url }}" title='{% trans " System" %}'
-                     class="nav-link {% if system_url == submenu.url %}
+                     class="nav-link {% if system_url in active_menu_urls %}
                      menu_link_active {% else %} menu_link {% endif %}">
                     <span class="fa fa-cog nav-icon"></span>
                     {% trans "System" %}

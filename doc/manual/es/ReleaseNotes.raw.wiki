@@ -8,6 +8,58 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 24.22 (2024-10-21) ==
+
+=== Highlights ===
+
+ * Add tags for apps
+
+=== Other Changes ===
+
+ * .gitlab-ci.yml: Update for new infrastructure
+ * Remove unused imports to fix flake8 errors
+ * apache2: Allow popups to have different sandbox policy
+ * backups: Use new utility for handling file uploads
+ * calibre: tests: functional: Fix occasional failure in add book test
+ * ci: Add a custom driver for gitlab runner for podman
+ * ci: Add docker container for functional-tests:stable
+ * ci: Add gitlab runner configuration
+ * ci: Dockerfile: Drop obsolete dependency on pytest-bdd
+ * ci: Enable showing test failures immediately as they fail
+ * ci: Generalize script to update container, switch to podman
+ * ci: Rename Dockerfiles to Containerfiles
+ * ci: Update functional test timeout to 10h
+ * context_processors: Stop adding unused 'submenu' to context
+ * context_processors: Use active menu urls to decide what to highlight
+ * css: Fix height of navbar in mobile layout during first boot
+ * css: Navbar styling fixes in mobile layout
+ * first_boot: Add notification for next steps after first setup
+ * first_boot: Allow the next steps page to be revisited
+ * firstboot: Hide navigation toggler in mobile layouts
+ * firstboot: Improve the setup complete page with more setups
+ * firstboot: Make logo image responsive during first setup
+ * firstboot: Show spinner instead of message during first setup
+ * help, system: Stop using submenu.sorted_items
+ * help: tests: Fix tests failing due to tags related changes
+ * locale: Update translations for Albanian, Bulgarian, Chinese (Simplified Han script), Czech, Spanish, Turkish, Ukrainian
+ * middleware: Show translated error messages when operation completes
+ * networks: Remove first boot steps for connectivity/topology
+ * nextcloud: Fix install failure due to !PrivateTmp=yes
+ * operation: Use safe formatter for translating messages
+ * setup: Translate errors when installing/updating/repairing apps
+ * ssh: Start server after nslcd service
+ * syncthing: Fix app setup in Debian testing
+ * tags: Adjust tags and style
+ * tags: Localization fixes
+ * tags: css: Minor styling cleanups
+ * tags: js: Minor fixes and refactoring
+ * tests: functional: Add package for printing test failures instantly
+ * tests: functional: Create utility to set user preferred locale
+ * upgrades: Remove step upgrade during first setup
+ * upgrades: Show notification to remind user to run updates manually
+ * utils: Improve safe formatter by handling more cases
+ * wordpress: tests: functional: Fix tests on Trixie
+
 == FreedomBox 24.21 (2024-10-07) ==
 
 === Highlights ===

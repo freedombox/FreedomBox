@@ -42,7 +42,7 @@ class InfinotedApp(app_module.App):
                                short_description=_('Gobby Server'),
                                description=_description,
                                manual_page='Infinoted',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-infinoted', info.name,
