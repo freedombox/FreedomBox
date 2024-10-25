@@ -95,12 +95,14 @@ def support(request):
 
 def about(request):
     """Serve the about page"""
-    context = {
-        'title': _('About {box_name}').format(box_name=_(cfg.box_name)),
-        'version': __version__,
-        'new_version': upgrades_views.is_newer_version_available(),
-        'os_release': upgrades_views.get_os_release()
-    }
+    context = {'title': _('About {box_name}').format(box_name=_(cfg.box_name))}
+    if request.user.is_authenticated:
+        context.update({
+            'version': __version__,
+            'new_version': upgrades_views.is_newer_version_available(),
+            'os_release': upgrades_views.get_os_release()
+        })
+
     return TemplateResponse(request, 'help_about.html', context)
 
 

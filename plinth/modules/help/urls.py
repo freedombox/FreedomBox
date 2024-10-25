@@ -4,6 +4,7 @@ URLs for the Help module
 """
 
 from django.urls import re_path
+from stronghold.decorators import public
 
 from plinth.utils import non_admin_view
 
@@ -11,7 +12,7 @@ from . import views
 
 urlpatterns = [
     re_path(r'^help/$', non_admin_view(views.index), name='index'),
-    re_path(r'^help/about/$', non_admin_view(views.about), name='about'),
+    re_path(r'^help/about/$', public(views.about), name='about'),
     re_path(r'^help/feedback/$', non_admin_view(views.feedback),
             name='feedback'),
     re_path(r'^help/support/$', non_admin_view(views.support), name='support'),
