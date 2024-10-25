@@ -29,14 +29,14 @@ def _get_app_choices(components):
     """Return a list of check box multiple choices from list of components."""
     choices = []
     for component in components:
-        name = component.app.info.name
+        name = str(component.app.info.name)
         if not component.has_data:
             name = gettext('{app} (No data to backup)').format(
                 app=component.app.info.name)
 
         choices.append((component.app_id, name))
 
-    return choices
+    return sorted(choices, key=lambda choice: choice[1].lower())
 
 
 def _get_repository_choices():
