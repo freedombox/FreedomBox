@@ -70,8 +70,9 @@ class TestMediawikiApp(functional.BaseAppTests):
 
     def test_upload_images(self, session_browser, login):
         """Test uploading an image."""
-        _upload_image(session_browser, 'admin', 'whatever123', 'noise.png')
-        assert _image_exists(session_browser, 'Noise.png')
+        _upload_image(session_browser, 'admin', 'whatever123',
+                      'freedombox-logo-250px.png')
+        assert _image_exists(session_browser, 'Freedombox-logo-250px.png')
 
     def test_upload_svg_image(self, session_browser, login):
         """Test uploading an SVG image."""
@@ -81,20 +82,22 @@ class TestMediawikiApp(functional.BaseAppTests):
 
     def test_backup_restore(self, session_browser, login):
         """Test backup and restore of pages and images."""
-        if not _image_exists(session_browser, 'Noise.png'):
-            _upload_image(session_browser, 'admin', 'whatever123', 'Noise.png')
+        if not _image_exists(session_browser, 'Freedombox-logo-250px.png'):
+            _upload_image(session_browser, 'admin', 'whatever123',
+                          'freedombox-logo-250px.png')
 
         functional.backup_create(session_browser, 'mediawiki',
                                  'test_mediawiki')
 
         _enable_public_registrations(session_browser)
-        _delete_image(session_browser, 'admin', 'whatever123', 'Noise.png')
+        _delete_image(session_browser, 'admin', 'whatever123',
+                      'Freedombox-logo-250px.png')
         _delete_main_page(session_browser, 'admin', 'whatever123')
         functional.backup_restore(session_browser, 'mediawiki',
                                   'test_mediawiki')
 
         assert _has_main_page(session_browser)
-        assert _image_exists(session_browser, 'Noise.png')
+        assert _image_exists(session_browser, 'Freedombox-logo-250px.png')
         _verify_create_account_link(session_browser)
 
     def test_uninstall(self, session_browser):
