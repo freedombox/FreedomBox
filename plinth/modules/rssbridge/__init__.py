@@ -25,9 +25,11 @@ _description = [
           'any user</a> belonging to the feed-reader group.'),
         users_url=reverse_lazy('users:index')),
     format_lazy(
-        _('You can use RSS-Bridge with <a href="{ttrss_url}">Tiny Tiny '
-          'RSS</a> to follow various websites. When adding a feed, enable '
-          'authentication and use your {box_name} credentials.'),
+        _('You can use RSS-Bridge with <a href="{miniflux_url}">Miniflux</a> '
+          'or <a href="{ttrss_url}">Tiny Tiny RSS</a> to follow various '
+          'websites. When adding a feed, enable authentication and use your '
+          '{box_name} credentials.'),
+        miniflux_url=reverse_lazy('miniflux:index'),
         ttrss_url=reverse_lazy('ttrss:index'), box_name=_(cfg.box_name)),
 ]
 
