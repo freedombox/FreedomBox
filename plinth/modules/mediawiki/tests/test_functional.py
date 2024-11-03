@@ -77,8 +77,8 @@ class TestMediawikiApp(functional.BaseAppTests):
     def test_upload_svg_image(self, session_browser, login):
         """Test uploading an SVG image."""
         _upload_image(session_browser, 'admin', 'whatever123',
-                      'apps-background.svg')
-        assert _image_exists(session_browser, 'Apps-background.svg')
+                      'freedombox-logo-standard.svg')
+        assert _image_exists(session_browser, 'Freedombox-logo-standard.svg')
 
     def test_backup_restore(self, session_browser, login):
         """Test backup and restore of pages and images."""
