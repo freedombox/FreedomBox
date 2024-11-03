@@ -364,7 +364,7 @@ class NetworkTopologyForm(forms.Form):
     network_topology = forms.ChoiceField(
         label=format_lazy(
             _('Specify how your {box_name} is connected to your network'),
-            box_name=cfg.box_name),
+            box_name=_(cfg.box_name)),
         required=True,
         widget=forms.RadioSelect,
         choices=[
@@ -373,8 +373,8 @@ class NetworkTopologyForm(forms.Form):
                  _('Connected to a router '
                    '<p class="help-block">Your {box_name} gets its Internet '
                    'connection from your router via Wi-Fi or Ethernet cable. '
-                   'This is a typical home setup.</p>'), box_name=cfg.box_name,
-                 allow_markup=True)),
+                   'This is a typical home setup.</p>'),
+                 box_name=_(cfg.box_name), allow_markup=True)),
             ('as_router',
              format_lazy(
                  _('{box_name} is your router '
@@ -383,14 +383,14 @@ class NetworkTopologyForm(forms.Form):
                    'a Wi-Fi adapter. {box_name} is directly connected to the '
                    'Internet and all your devices connect to {box_name} '
                    'for their Internet connectivity.</p>'),
-                 box_name=cfg.box_name, allow_markup=True)),
+                 box_name=_(cfg.box_name), allow_markup=True)),
             ('direct',
              format_lazy(
                  _('Directly connected to the Internet '
                    '<p class="help-block">Your Internet connection is '
                    'directly attached to your {box_name} and there are no '
                    'other devices on the network. This can happen on '
-                   'community or cloud setups.</p>'), box_name=cfg.box_name,
+                   'community or cloud setups.</p>'), box_name=_(cfg.box_name),
                  allow_markup=True)),
         ],
     )
@@ -430,8 +430,8 @@ class InternetConnectionTypeForm(forms.Form):
                    'same IP address. This is the most trouble-free setup for '
                    'many {box_name} services but very few ISPs offer this. '
                    'You may be able to get this service from your ISP by '
-                   'making an additional payment.</p>'), box_name=cfg.box_name,
-                 allow_markup=True)),
+                   'making an additional payment.</p>'),
+                 box_name=_(cfg.box_name), allow_markup=True)),
             ('private_ip',
              format_lazy(
                  _('I dont have a public IP address'
@@ -444,7 +444,7 @@ class InternetConnectionTypeForm(forms.Form):
                    'most troublesome situation for hosting services at home. '
                    '{box_name} provides many workaround solutions but each '
                    'solution has some limitations.</p>'),
-                 box_name=cfg.box_name, allow_markup=True)),
+                 box_name=_(cfg.box_name), allow_markup=True)),
             ('unknown',
              format_lazy(
                  _('I do not know the type of connection my ISP provides '
@@ -476,8 +476,8 @@ class RouterConfigurationForm(forms.Form):
                       'Internet to a single IP address such as the '
                       '{box_name}\'s IP address. First remember to configure '
                       'a static local IP address for your {box_name} in your '
-                      'router\'s configuration.</p>'), box_name=cfg.box_name,
-                    allow_markup=True),
+                      'router\'s configuration.</p>'),
+                    box_name=_(cfg.box_name), allow_markup=True),
             ),
             ('port_forwarding',
              format_lazy(
@@ -491,8 +491,8 @@ class RouterConfigurationForm(forms.Form):
                    'web interface need you to forward traffic from ports '
                    '80 and 443 to work. Each of the other applications '
                    'will suggest which port(s) need to be forwarded '
-                   'for that application to work.</p>'), box_name=cfg.box_name,
-                 allow_markup=True)),
+                   'for that application to work.</p>'),
+                 box_name=_(cfg.box_name), allow_markup=True)),
             ('not_configured',
              format_lazy(
                  _('Router is currently unconfigured '

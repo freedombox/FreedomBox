@@ -25,7 +25,7 @@ _description = [
         _('Firewall is a security system that controls the incoming and '
           'outgoing network traffic on your {box_name}. Keeping a '
           'firewall enabled and properly configured reduces risk of '
-          'security threat from the Internet.'), box_name=cfg.box_name)
+          'security threat from the Internet.'), box_name=_(cfg.box_name))
 ]
 
 _port_details: dict[str, list[str]] = {}

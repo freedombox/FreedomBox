@@ -26,7 +26,7 @@ _description = [
           'web browser. Each wiki is a self-contained HTML file stored on your'
           ' {box_name}. Instead of writing long wiki pages, TiddlyWiki '
           'encourages you to write several short notes called Tiddlers and '
-          'link them together into a dense graph.'), box_name=cfg.box_name),
+          'link them together into a dense graph.'), box_name=_(cfg.box_name)),
     _('It is a versatile application with a wide variety of use cases - '
       'non-linear notebook, website, personal knowledge base, task and project'
       ' management system, personal diary etc. Plugins can extend the '
@@ -41,7 +41,7 @@ _description = [
         _('Wikis are not public by default, but they can be downloaded for '
           'sharing or publishing. They can be edited by <a href="{users_url}">'
           'any user</a> on {box_name} belonging to the wiki group. '
-          'Simultaneous editing is not supported.'), box_name=cfg.box_name,
+          'Simultaneous editing is not supported.'), box_name=_(cfg.box_name),
         users_url=reverse_lazy('users:index')),
     _('Create a new wiki or upload your existing wiki file to get started.')
 ]
@@ -66,8 +66,7 @@ class TiddlyWikiApp(app_module.App):
                                short_description=_('Non-linear Notebooks'),
                                description=_description,
                                manual_page='TiddlyWiki',
-                               clients=manifest.clients,
-                               tags=manifest.tags)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-tiddlywiki', info.name,

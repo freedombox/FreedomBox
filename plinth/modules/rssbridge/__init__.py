@@ -28,7 +28,7 @@ _description = [
         _('You can use RSS-Bridge with <a href="{ttrss_url}">Tiny Tiny '
           'RSS</a> to follow various websites. When adding a feed, enable '
           'authentication and use your {box_name} credentials.'),
-        ttrss_url=reverse_lazy('ttrss:index'), box_name=cfg.box_name),
+        ttrss_url=reverse_lazy('ttrss:index'), box_name=_(cfg.box_name)),
 ]
 
 
