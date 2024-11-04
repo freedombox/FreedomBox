@@ -385,11 +385,17 @@ def deactivate(request, uuid):
 
 def scan(request):
     """Show a list of nearby visible Wi-Fi access points."""
-    access_points = network.wifi_scan()
-    return TemplateResponse(request, 'wifi_scan.html', {
-        'title': _('Nearby Wi-Fi Networks'),
-        'access_points': access_points
-    })
+    device_access_points = network.wifi_scan()
+    scanning = any(
+        (device['scan_requested'] for device in device_access_points))
+    # Refresh page in 10s if scanning, 60s otherwise
+    refresh_page_sec = 10 if scanning else 60
+    return TemplateResponse(
+        request, 'wifi_scan.html', {
+            'title': _('Nearby Wi-Fi Networks'),
+            'device_access_points': device_access_points,
+            'refresh_page_sec': refresh_page_sec
+        })
 
 
 def add(request):
