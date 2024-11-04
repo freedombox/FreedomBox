@@ -239,6 +239,8 @@ def test_edit_wifi_connection(network, wifi_uuid):
 
     settings_wireless = connection.get_setting_wireless()
     assert settings_wireless.get_ssid().get_data() == b'plinthtestwifi2'
+    assert settings_wireless.get_ssid().get_data().decode(
+    ) == 'plinthtestwifi2'
     assert settings_wireless.get_mode() == 'infrastructure'
 
     wifi_sec = connection.get_setting_wireless_security()

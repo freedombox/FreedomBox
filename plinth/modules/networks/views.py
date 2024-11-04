@@ -307,7 +307,8 @@ def edit(request, uuid):
             form = GenericForm(form_data)
         elif settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
-            form_data['ssid'] = settings_wireless.get_ssid().get_data()
+            form_data['ssid'] = settings_wireless.get_ssid().get_data().decode(
+            )
             form_data['mode'] = settings_wireless.get_mode()
             form_data['band'] = settings_wireless.get_band() or 'auto'
             form_data['channel'] = settings_wireless.get_channel()
