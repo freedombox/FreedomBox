@@ -626,7 +626,7 @@ def wifi_scan():
             # this is used in the URL it will be escaped properly and
             # unescaped when taken as view function's argument.
             ssid = access_point.get_ssid()
-            ssid_string = ssid.get_data() if ssid else ''
+            ssid_string = ssid.get_data().decode() if ssid else ''
             access_points.append({
                 'interface_name': device.get_iface(),
                 'ssid': ssid_string,
