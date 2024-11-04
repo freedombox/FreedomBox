@@ -18,7 +18,7 @@ from plinth.actions import privileged, secret_str
 CONTAINER_NAME = 'nextcloud-freedombox'
 SERVICE_NAME = 'nextcloud-freedombox'
 VOLUME_NAME = 'nextcloud-freedombox'
-IMAGE_NAME = 'docker.io/library/nextcloud:stable-fpm'
+IMAGE_NAME = 'registry.freedombox.org/library/nextcloud:stable-fpm'
 
 WWW_DATA_UID = '33'
 DB_HOST = 'localhost'
