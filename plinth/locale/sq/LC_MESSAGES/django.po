@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-04 20:11-0500\n"
-"PO-Revision-Date: 2024-10-23 05:15+0000\n"
+"PO-Revision-Date: 2024-11-06 05:06+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: config.py:103
 #, python-brace-format
@@ -325,6 +325,10 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Përzgjidhni kartelën kopjeruajtje për t’u ngarkuar nga kompjuteri vendor. "
+"Kjo duhet të jetë një kartelë e shkarkuar më herët nga përfundimi i një "
+"kojeruajtjeje të suksesshme te një {box_name}. Duhet të ketë zgjatimin .tar."
+"gz."
 
 #: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
@@ -2975,10 +2979,8 @@ msgstr ""
 "<i>emër_pakete</i>” në një terminal (duke përdorur Cockpit, ose SSH)."
 
 #: modules/help/templates/help_about.html:85
-#, fuzzy
-#| msgid "Learn more"
 msgid "Learn"
-msgstr "Mësoni më tepër"
+msgstr "Mësoni"
 
 #: modules/help/templates/help_about.html:88
 msgid "Homepage"
@@ -2990,17 +2992,15 @@ msgstr "Dhuroni"
 
 #: modules/help/templates/help_about.html:107
 msgid "Join project"
-msgstr ""
+msgstr "Merrni pjesë te projekti"
 
 #: modules/help/templates/help_about.html:111
 msgid "Translate"
-msgstr ""
+msgstr "Përktheni"
 
 #: modules/help/templates/help_about.html:117
-#, fuzzy
-#| msgid "Get Support"
 msgid "Support"
-msgstr "Merrni Asistencë"
+msgstr "Asistencë"
 
 #: modules/help/templates/help_about.html:121
 msgid "Forum"
@@ -4612,7 +4612,7 @@ msgstr "Mumla"
 
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
-msgstr ""
+msgstr "Konferencë grupi"
 
 #: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
 #: modules/shadowsocks/forms.py:24
@@ -4758,7 +4758,7 @@ msgstr "Shërbime"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
-msgstr ""
+msgstr "Gjendje Zgjidhësi"
 
 #: modules/names/templates/names.html:66
 msgid "Global"
@@ -8943,22 +8943,21 @@ msgstr ""
 "shpërfillen."
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
-msgstr "Fshi Përdorues"
+msgstr "Fshi përdorues"
 
 #: modules/users/forms.py:254
 msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
 msgstr ""
+"Fshirja e llogarisë do të heqë gjithashtu krejt kartelat e lidhura me "
+"përdoruesin. Fshirja e kartelave mund të shmanget duke e vënë llogarinë e "
+"përdoruesit si joaktive."
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "S’u arrit të shtohej përdorues te grup."
+msgstr "S’u arrit të fshihej përdorues."
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -9086,10 +9085,9 @@ msgid "Save Changes"
 msgstr "Ruaji Ndryshimet"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "Të fshihet përgjithnjë përdoruesi <strong>%(username)s</strong>?"
+msgstr "Të fshihet përdoruesi %(username)s dhe krejt kartelat e përdoruesit?"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -9100,12 +9098,13 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
+"Fshirja e llogarisë do të heqë gjithashtu krejt kartelat drejtorisë shtëpi "
+"të përdoruesit. Nëse dëshironi t’i mbani këto kartela, më mirë çaktivizoni "
+"llogarinë e përdoruesit."
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "Fshini kartela"
+msgstr "Fshini përdorues dhe kartela"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -9126,10 +9125,9 @@ msgid "Edit User"
 msgstr "Përpunoni Përdorues"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "Përdoruesi %(username)s u krijua."
+msgstr "Përdoruesi %(username)s u fshi."
 
 #: modules/users/views.py:130
 msgid "Change Password"
