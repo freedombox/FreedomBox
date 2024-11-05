@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-21 20:10-0400\n"
+"POT-Creation-Date: 2024-11-04 20:11-0500\n"
 "PO-Revision-Date: 2024-05-26 04:09+0000\n"
 "Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -221,16 +221,16 @@ msgstr ""
 msgid "Error During Backup"
 msgstr "Ошибка во время резервного копирования"
 
-#: modules/backups/forms.py:33
+#: modules/backups/forms.py:34
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} (Нет данных для резервного сохранения)"
 
-#: modules/backups/forms.py:53
+#: modules/backups/forms.py:54
 msgid "Enable scheduled backups"
 msgstr "Включить резервное копирование по расписанию"
 
-#: modules/backups/forms.py:54
+#: modules/backups/forms.py:55
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
@@ -238,11 +238,11 @@ msgstr ""
 "Если эта опция включена, резервное копирование выполняется каждый день, "
 "каждую неделю и каждый месяц. Более старые резервные копии удаляются."
 
-#: modules/backups/forms.py:58
+#: modules/backups/forms.py:59
 msgid "Number of daily backups to keep"
 msgstr "Количество ежедневных резервных копий для хранения"
 
-#: modules/backups/forms.py:59
+#: modules/backups/forms.py:60
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
@@ -251,11 +251,11 @@ msgstr ""
 "Значение \"0\" отключает резервное копирование этого типа. Срабатывает в "
 "указанный час каждый день."
 
-#: modules/backups/forms.py:64
+#: modules/backups/forms.py:65
 msgid "Number of weekly backups to keep"
 msgstr "Количество хранимых еженедельных резервных копий"
 
-#: modules/backups/forms.py:66
+#: modules/backups/forms.py:67
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
@@ -264,11 +264,11 @@ msgstr ""
 "Значение \"0\" отключает резервное копирование этого типа. Срабатывает в "
 "указанный час каждое воскресенье."
 
-#: modules/backups/forms.py:71
+#: modules/backups/forms.py:72
 msgid "Number of monthly backups to keep"
 msgstr "Количество ежемесячных резервных копий для хранения"
 
-#: modules/backups/forms.py:73
+#: modules/backups/forms.py:74
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour first day of "
@@ -278,27 +278,27 @@ msgstr ""
 "Значение \"0\" отключает резервное копирование этого типа. Срабатывает в "
 "указанный час первого дня каждого месяца."
 
-#: modules/backups/forms.py:78
+#: modules/backups/forms.py:79
 msgid "Hour of the day to trigger backup operation"
 msgstr "Час дня для запуска операции резервного копирования"
 
-#: modules/backups/forms.py:79
+#: modules/backups/forms.py:80
 msgid "In 24 hour format."
 msgstr "В 24-часовом формате."
 
-#: modules/backups/forms.py:82 modules/backups/forms.py:104
+#: modules/backups/forms.py:83 modules/backups/forms.py:105
 msgid "Included apps"
 msgstr "Включённые приложения"
 
-#: modules/backups/forms.py:82 modules/backups/forms.py:104
+#: modules/backups/forms.py:83 modules/backups/forms.py:105
 msgid "Apps to include in the backup"
 msgstr "Приложения, включённые в резервное сохранение"
 
-#: modules/backups/forms.py:98
+#: modules/backups/forms.py:99
 msgid "Repository"
 msgstr "Репозиторий"
 
-#: modules/backups/forms.py:100
+#: modules/backups/forms.py:101
 #: modules/backups/templates/backups_delete.html:17 modules/ikiwiki/forms.py:15
 #: modules/networks/templates/connection_show.html:71
 #: modules/samba/templates/samba.html:66
@@ -306,50 +306,54 @@ msgstr "Репозиторий"
 msgid "Name"
 msgstr "Имя"
 
-#: modules/backups/forms.py:101
+#: modules/backups/forms.py:102
 msgid "(Optional) Set a name for this backup archive"
 msgstr "(Необязательно) задайте имя для этого резервного архива"
 
-#: modules/backups/forms.py:122
+#: modules/backups/forms.py:123
 msgid "Select the apps you want to restore"
 msgstr "Выберите приложения, которые вы хотите восстановить"
 
-#: modules/backups/forms.py:138 modules/kiwix/forms.py:21
+#: modules/backups/forms.py:139 modules/kiwix/forms.py:21
 msgid "Upload File"
 msgstr "Загрузить файл"
 
-#: modules/backups/forms.py:140
+#: modules/backups/forms.py:141
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Файлы резервного сохранения должны быть в формате .tar.gz"
 
-#: modules/backups/forms.py:141
-msgid "Select the backup file you want to upload"
-msgstr "Выберите файл резервного сохранения для загрузки на локальную машину"
+#: modules/backups/forms.py:143
+#, python-brace-format
+msgid ""
+"Select the backup file to upload from the local computer. This must be a "
+"file previously downloaded from the result of a successful backup on a "
+"{box_name}. It must have a .tar.gz extension."
+msgstr ""
 
-#: modules/backups/forms.py:147
+#: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
 msgstr "Неправильный формат пути репозитория."
 
-#: modules/backups/forms.py:154
+#: modules/backups/forms.py:159
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Неверное имя пользователя: {username}"
 
-#: modules/backups/forms.py:164
+#: modules/backups/forms.py:169
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Неверное имя хоста: {hostname}"
 
-#: modules/backups/forms.py:168
+#: modules/backups/forms.py:173
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Неправильный путь к каталогу: {dir_path}"
 
-#: modules/backups/forms.py:174
+#: modules/backups/forms.py:179
 msgid "Encryption"
 msgstr "Шифрование"
 
-#: modules/backups/forms.py:175
+#: modules/backups/forms.py:180
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -357,53 +361,53 @@ msgstr ""
 "«Ключ в репозитории» подразумевает, что защищённый паролем ключ сохранен "
 "вместе с резервным копированием."
 
-#: modules/backups/forms.py:177
+#: modules/backups/forms.py:182
 msgid "Key in Repository"
 msgstr "Ключ в репозитории"
 
-#: modules/backups/forms.py:177
+#: modules/backups/forms.py:182
 #: modules/matrixsynapse/templates/matrix-synapse.html:62
 #: modules/searx/forms.py:14
 msgid "None"
 msgstr "нет"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:331
+#: modules/backups/forms.py:184 modules/networks/forms.py:331
 msgid "Passphrase"
 msgstr "Парольная фраза"
 
-#: modules/backups/forms.py:180
+#: modules/backups/forms.py:185
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Парольная фраза; нужна только если используется шифрование."
 
-#: modules/backups/forms.py:183
+#: modules/backups/forms.py:188
 msgid "Confirm Passphrase"
 msgstr "Подтвердите парольную фразу"
 
-#: modules/backups/forms.py:183
+#: modules/backups/forms.py:188
 msgid "Repeat the passphrase."
 msgstr "Повторите парольную фразу."
 
-#: modules/backups/forms.py:194
+#: modules/backups/forms.py:199
 msgid "The entered encryption passphrases do not match"
 msgstr "Введённые парольные фразы шифрования неправильные"
 
-#: modules/backups/forms.py:198
+#: modules/backups/forms.py:203
 msgid "Passphrase is needed for encryption."
 msgstr "Парольная фраза необходима для шифрования."
 
-#: modules/backups/forms.py:233
+#: modules/backups/forms.py:238
 msgid "Select Disk or Partition"
 msgstr "Выберите диск или раздел"
 
-#: modules/backups/forms.py:234
+#: modules/backups/forms.py:239
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Резервные копии сохраняются в директорию FreedomBoxBackups"
 
-#: modules/backups/forms.py:243
+#: modules/backups/forms.py:248
 msgid "SSH Repository Path"
 msgstr "Путь к репозиторию SSH"
 
-#: modules/backups/forms.py:244
+#: modules/backups/forms.py:249
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -411,11 +415,11 @@ msgstr ""
 "Путь к новому или существующему репозиторию. Например: <i>user@host:~/path/"
 "to/repo/</i>"
 
-#: modules/backups/forms.py:248
+#: modules/backups/forms.py:253
 msgid "SSH server password"
 msgstr "Пароль SSH-сервера"
 
-#: modules/backups/forms.py:249
+#: modules/backups/forms.py:254
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -423,11 +427,11 @@ msgstr ""
 "Пароль для сервера SSH.<br>Аутентификация на основе SSH-ключа пока не "
 "поддерживается."
 
-#: modules/backups/forms.py:268
+#: modules/backups/forms.py:273
 msgid "Remote backup repository already exists."
 msgstr "Удалённое хранилище резервных копий уже существует."
 
-#: modules/backups/forms.py:274
+#: modules/backups/forms.py:279
 msgid "Select verified SSH public key"
 msgstr "Выберите проверенный открытый ключ SSH"
 
@@ -847,7 +851,7 @@ msgid "Permissions for anonymous users, who have not provided a password."
 msgstr "Разрешения для анонимных пользователей, не предоставивших пароль."
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
-#: modules/users/forms.py:103
+#: modules/users/forms.py:104
 msgid "Permissions"
 msgstr "Разрешения"
 
@@ -1834,7 +1838,7 @@ msgid "Invalid domain name"
 msgstr "Недопустимое имя домена"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:276 modules/users/forms.py:129
+#: modules/networks/forms.py:276 modules/users/forms.py:130
 msgid "Username"
 msgstr "Имя пользователя"
 
@@ -2363,9 +2367,9 @@ msgstr ""
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
-#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+#: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
+#: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2892,8 +2896,8 @@ msgstr "Редактировать репозиторий"
 msgid "Documentation"
 msgstr "Документация"
 
-#: modules/help/__init__.py:37 templates/help-menu.html:20
-#: templates/help-menu.html:21 templates/index.html:124
+#: modules/help/__init__.py:37 modules/help/templates/help_about.html:92
+#: templates/help-menu.html:20 templates/help-menu.html:21
 msgctxt "User guide"
 msgid "Manual"
 msgstr "Руководство"
@@ -2910,37 +2914,38 @@ msgstr "Получить поддержку"
 msgid "Submit Feedback"
 msgstr "Отправить отзыв"
 
-#: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:76 templates/help-menu.html:39
-#: templates/help-menu.html:40
+#: modules/help/__init__.py:49 modules/help/templates/help_about.html:101
+#: modules/help/templates/help_contribute.html:9 modules/help/views.py:76
+#: templates/help-menu.html:39 templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Помощь проекту"
 
-#: modules/help/__init__.py:53 templates/help-menu.html:46
-#: templates/help-menu.html:47
+#: modules/help/__init__.py:53 templates/base.html:211 templates/base.html:214
+#: templates/help-menu.html:46 templates/help-menu.html:47
+#: templates/index.html:96
 msgid "About"
 msgstr "О проекте"
 
-#: modules/help/templates/help_about.html:17
+#: modules/help/templates/help_about.html:18
 #: modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Вы используете %(os_release)s и %(box_name)s версии %(version)s."
 
-#: modules/help/templates/help_about.html:23
+#: modules/help/templates/help_about.html:24
 #, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
 msgstr "<a href=\"%(upgrades_url)s\">Доступна новая версия</a> %(box_name)s."
 
-#: modules/help/templates/help_about.html:28
+#: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s в актуальном состоянии."
 
-#: modules/help/templates/help_about.html:35
+#: modules/help/templates/help_about.html:37
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -2960,7 +2965,7 @@ msgstr ""
 "прокси и сервер Tor, на устройстве, которое может заменить ваш маршрутизатор "
 "Wi-Fi, так что ваши данные остаются с вами."
 
-#: modules/help/templates/help_about.html:48
+#: modules/help/templates/help_about.html:50
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -2976,7 +2981,7 @@ msgstr ""
 "ними. Давая обратно власть пользователям в их сети и машины, мы возвращаемся "
 "к его предполагаемую архитектуру Интернета peer-to-peer."
 
-#: modules/help/templates/help_about.html:61
+#: modules/help/templates/help_about.html:63
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -2986,7 +2991,7 @@ msgstr ""
 "Существует ряд проектов, которые работают в сторону реализации будущего "
 "распределенных служб, %(box_name)s стремится объединить их в удобном пакете."
 
-#: modules/help/templates/help_about.html:69
+#: modules/help/templates/help_about.html:71
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -3003,18 +3008,45 @@ msgstr ""
 "\">Debian Sources</a> site, или путем запуска \"apt source <i>package_name</"
 "i>\" в терминале (с использованием Cockpit или SSH)."
 
-#: modules/help/templates/help_about.html:82
-#, python-format
-msgid ""
-"For more information about the %(box_name)s project, see the <a "
-"href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-msgstr ""
-"Дополнительную информацию о проекте %(box_name)s можно найти на <a "
-"href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-
-#: modules/help/templates/help_about.html:91
-msgid "Learn more"
+#: modules/help/templates/help_about.html:85
+#, fuzzy
+#| msgid "Learn more"
+msgid "Learn"
 msgstr "Подробнее"
+
+#: modules/help/templates/help_about.html:88
+msgid "Homepage"
+msgstr "Домашняя страница"
+
+#: modules/help/templates/help_about.html:104 templates/toolbar.html:19
+msgid "Donate"
+msgstr "Пожертвовать"
+
+#: modules/help/templates/help_about.html:107
+msgid "Join project"
+msgstr ""
+
+#: modules/help/templates/help_about.html:111
+msgid "Translate"
+msgstr ""
+
+#: modules/help/templates/help_about.html:117
+#, fuzzy
+#| msgid "Get Support"
+msgid "Support"
+msgstr "Получить поддержку"
+
+#: modules/help/templates/help_about.html:121
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/help/templates/help_about.html:126
+msgid "IRC Chatroom"
+msgstr "Чат IRC"
+
+#: modules/help/templates/help_about.html:131
+msgid "Mailing list"
+msgstr "Список рассылки"
 
 #: modules/help/templates/help_base.html:21
 #: modules/help/templates/help_index.html:61
@@ -3249,12 +3281,12 @@ msgstr ""
 msgid "Documentation and FAQ"
 msgstr "Документация и FAQ"
 
-#: modules/help/views.py:99
+#: modules/help/views.py:98
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "О {box_name}"
 
-#: modules/help/views.py:133
+#: modules/help/views.py:135
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Руководство {box_name}"
@@ -3554,7 +3586,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
 msgid "JavaScript license information"
 msgstr "Информация о лицензии JavaScript"
 
@@ -8942,18 +8974,18 @@ msgstr "Проверьте конфигурацию nslcd \"{key} {value}\""
 msgid "Check nsswitch config \"{database}\""
 msgstr "Проверьте конфигурацию nsswitch \"{database}\""
 
-#: modules/users/forms.py:35
+#: modules/users/forms.py:36
 msgid "Username is taken or is reserved."
 msgstr "Имя пользователя уже занято."
 
-#: modules/users/forms.py:70
+#: modules/users/forms.py:71
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
 msgstr ""
 "Необязательно. Используется для отправки электронных писем для сброса пароля "
 "и важных уведомлений."
 
-#: modules/users/forms.py:106
+#: modules/users/forms.py:107
 msgid ""
 "Select which services should be available to the new user. The user will be "
 "able to log in to services that support single sign-on through LDAP, if they "
@@ -8967,21 +8999,21 @@ msgstr ""
 "\"admin\" смогут войти во все службы. Они также могут входить в систему "
 "через SSH и иметь привилегии администратора (sudo)."
 
-#: modules/users/forms.py:124
+#: modules/users/forms.py:125
 msgid "Enter a valid username."
 msgstr "Введите действительное имя пользователя."
 
-#: modules/users/forms.py:131
+#: modules/users/forms.py:132
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 "Требуется. 150 символов или меньше. Только английские буквы, цифры и @/./-/_."
 
-#: modules/users/forms.py:140
+#: modules/users/forms.py:141
 msgid "Authorization Password"
 msgstr "Пароль авторизации"
 
-#: modules/users/forms.py:147
+#: modules/users/forms.py:148
 #, python-brace-format
 msgid ""
 "Enter the password for user \"{user}\" to authorize account modifications."
@@ -8989,25 +9021,25 @@ msgstr ""
 "Введите пароль пользователя \"{user}\" для авторизации изменений учетной "
 "записи."
 
-#: modules/users/forms.py:156
+#: modules/users/forms.py:157
 msgid "Invalid password."
 msgstr "Неправильный пароль."
 
-#: modules/users/forms.py:212 modules/users/forms.py:417
+#: modules/users/forms.py:213 modules/users/forms.py:439
 #, python-brace-format
 msgid "Creating LDAP user failed: {error}"
 msgstr "Не удалось создать пользователя LDAP: {error}"
 
-#: modules/users/forms.py:224
+#: modules/users/forms.py:225
 #, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Не удалось добавить нового пользователя в группу {group}: {error}"
 
-#: modules/users/forms.py:240
+#: modules/users/forms.py:241
 msgid "Authorized SSH Keys"
 msgstr "Авторизованные SSH ключи"
 
-#: modules/users/forms.py:242
+#: modules/users/forms.py:243
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -9018,37 +9050,55 @@ msgstr ""
 "на каждой строке. Пустые строки и строки, начинающиеся с # будут "
 "игнорироваться."
 
-#: modules/users/forms.py:298
+#: modules/users/forms.py:252
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete user"
+msgstr "Удаление пользователя"
+
+#: modules/users/forms.py:254
+msgid ""
+"Deleting the user account will also remove all the files related to the "
+"user. Deleting files can be avoided by setting the user account as inactive."
+msgstr ""
+
+#: modules/users/forms.py:305
+#, fuzzy
+#| msgid "Failed to add user to group."
+msgid "Failed to delete user."
+msgstr "Не удалось добавить пользователя в группу."
+
+#: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
 msgstr "Переименование пользователя LDAP не удалось."
 
-#: modules/users/forms.py:309
+#: modules/users/forms.py:331
 msgid "Failed to remove user from group."
 msgstr "Не удалось удалить пользователя из группы."
 
-#: modules/users/forms.py:319
+#: modules/users/forms.py:341
 msgid "Failed to add user to group."
 msgstr "Не удалось добавить пользователя в группу."
 
-#: modules/users/forms.py:326
+#: modules/users/forms.py:348
 msgid "Unable to set SSH keys."
 msgstr "Не удалось задать ключи SSH."
 
-#: modules/users/forms.py:339
+#: modules/users/forms.py:361
 msgid "Failed to change user status."
 msgstr "Не удалось изменить статус пользователя."
 
-#: modules/users/forms.py:380
+#: modules/users/forms.py:402
 msgid "Changing LDAP user password failed."
 msgstr "Изменение LDAP пароля пользователя не удалось."
 
-#: modules/users/forms.py:425
+#: modules/users/forms.py:447
 #, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
 msgstr ""
 "Не удалось добавить нового пользователя в группу администраторов: {error}"
 
-#: modules/users/forms.py:448
+#: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Учетная запись пользователя создана, теперь вы вошли"
 
@@ -9064,23 +9114,9 @@ msgstr "Сохранить пароль"
 #: modules/users/templates/users_create.html:11
 #: modules/users/templates/users_create.html:19
 #: modules/users/templates/users_list.html:15
-#: modules/users/templates/users_list.html:17 modules/users/views.py:46
+#: modules/users/templates/users_list.html:17 modules/users/views.py:43
 msgid "Create User"
 msgstr "Создать пользователя"
-
-#: modules/users/templates/users_delete.html:11 modules/users/views.py:138
-msgid "Delete User"
-msgstr "Удаление пользователя"
-
-#: modules/users/templates/users_delete.html:14
-#, python-format
-msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr "Окончательно удалить пользователя <strong>%(username)s</strong>?"
-
-#: modules/users/templates/users_delete.html:23
-#, python-format
-msgid "Delete %(username)s"
-msgstr "Удаление %(username)s"
 
 #: modules/users/templates/users_firstboot.html:11
 msgid "Administrator Account"
@@ -9128,7 +9164,7 @@ msgstr ""
 msgid "Skip this step"
 msgstr "Пропустить этот шаг"
 
-#: modules/users/templates/users_list.html:11 modules/users/views.py:64
+#: modules/users/templates/users_list.html:11 modules/users/views.py:61
 msgid "Users"
 msgstr "Пользователи"
 
@@ -9137,17 +9173,12 @@ msgstr "Пользователи"
 msgid "Edit user %(username)s"
 msgstr "Редактирование пользователя %(username)s"
 
-#: modules/users/templates/users_list.html:41
-#, python-format
-msgid "Delete user %(username)s"
-msgstr "Удалить пользователя %(username)s"
-
-#: modules/users/templates/users_update.html:11
+#: modules/users/templates/users_update.html:12
 #, python-format
 msgid "Edit User <em>%(username)s</em>"
 msgstr "Редактировать пользователя <em>%(username)s</em>"
 
-#: modules/users/templates/users_update.html:19
+#: modules/users/templates/users_update.html:20
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -9156,39 +9187,62 @@ msgstr ""
 "Для смены пароля используйте форму <a "
 "href=\"%(change_password_url)s\">изменить пароль </a>."
 
-#: modules/users/templates/users_update.html:31
+#: modules/users/templates/users_update.html:32
 #: templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: modules/users/views.py:44
+#: modules/users/templates/users_update.html:41
+#, fuzzy, python-format
+#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+msgid "Delete user <em>%(username)s</em> and all the user's files?"
+msgstr "Окончательно удалить пользователя <strong>%(username)s</strong>?"
+
+#: modules/users/templates/users_update.html:46 templates/messages.html:11
+msgid "Close"
+msgstr "Закрыть"
+
+#: modules/users/templates/users_update.html:51
+msgid ""
+"Deleting a user account also removes all the files user's home directory. If "
+"you wish to keep these files, disable the user account instead."
+msgstr ""
+
+#: modules/users/templates/users_update.html:59
+#, fuzzy
+#| msgid "Delete files"
+msgid "Delete user and files"
+msgstr "Удалить файлы"
+
+#: modules/users/templates/users_update.html:62
+msgid "Cancel"
+msgstr "Отмена"
+
+#: modules/users/views.py:41
 #, python-format
 msgid "User %(username)s created."
 msgstr "Пользователь %(username)s создан."
 
-#: modules/users/views.py:80
+#: modules/users/views.py:72
 #, python-format
 msgid "User %(username)s updated."
 msgstr "Пользователь %(username)s обновлен."
 
-#: modules/users/views.py:81
+#: modules/users/views.py:73
 msgid "Edit User"
 msgstr "Редактирование пользователя"
 
-#: modules/users/views.py:151
-#, python-brace-format
-msgid "User {user} deleted."
-msgstr "Пользователь {user} удален."
+#: modules/users/views.py:111
+#, fuzzy, python-format
+#| msgid "User %(username)s created."
+msgid "User %(username)s deleted."
+msgstr "Пользователь %(username)s создан."
 
-#: modules/users/views.py:157
-msgid "Deleting LDAP user failed."
-msgstr "Сбой при удалении LDAP пользователя."
-
-#: modules/users/views.py:185
+#: modules/users/views.py:130
 msgid "Change Password"
 msgstr "Изменить пароль"
 
-#: modules/users/views.py:186
+#: modules/users/views.py:131
 msgid "Password changed successfully."
 msgstr "Пароль успешно изменён."
 
@@ -9918,7 +9972,7 @@ msgstr "Изменить пароль"
 msgid "Shut down"
 msgstr "Завершить работу"
 
-#: templates/base.html:193 templates/base.html:222
+#: templates/base.html:193 templates/base.html:231
 msgid "Log out"
 msgstr "Выход"
 
@@ -9926,7 +9980,7 @@ msgstr "Выход"
 msgid "Select language"
 msgstr "Выберите язык"
 
-#: templates/base.html:211 templates/base.html:213
+#: templates/base.html:220 templates/base.html:222
 msgid "Log in"
 msgstr "Войти"
 
@@ -10003,57 +10057,6 @@ msgstr ""
 "Включите <a href=\"%(apps_url)s\">приложения</a> чтобы добавить ярлыки на "
 "эту страницу."
 
-#: templates/index.html:104
-#, python-format
-msgid ""
-"%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
-"server to deploy social applications on small machines. It provides online "
-"communication tools respecting your privacy and data ownership."
-msgstr ""
-"%(box_name)s, чистая смесь Debian, это 100%% свободный само-размещенный веб-"
-"сервер, позволяющий выкладывать социальные приложения на небольших машинах. "
-"Он предоставляет онлайн инструменты онлайн-коммуникации, уважающие вашу "
-"приватность и владение данными."
-
-#: templates/index.html:113
-#, python-format
-msgid ""
-"This portal is a part of the %(box_name)s web interface. %(box_name)s is "
-"free software, distributed under the GNU Affero General Public License, "
-"Version 3 or later."
-msgstr ""
-"Этот портал часть веб-интерфейса %(box_name)s. %(box_name)s это свободное "
-"программное обеспечение, выпускаемое под лицензией GNU Affero General Public "
-"License, Версии 3 или старше."
-
-#: templates/index.html:131
-msgid "Source Code"
-msgstr "Исходный код"
-
-#: templates/index.html:136
-msgid "Homepage"
-msgstr "Домашняя страница"
-
-#: templates/index.html:139 templates/toolbar.html:19
-msgid "Donate"
-msgstr "Пожертвовать"
-
-#: templates/index.html:143
-msgid "FreedomBox Foundation"
-msgstr "Фонд FrеedomBox"
-
-#: templates/index.html:150
-msgid "Forum"
-msgstr "Форум"
-
-#: templates/index.html:155
-msgid "IRC Chatroom"
-msgstr "Чат IRC"
-
-#: templates/index.html:160
-msgid "Mailing list"
-msgstr "Список рассылки"
-
 #: templates/internal-zone.html:11
 #, python-format
 msgid ""
@@ -10076,10 +10079,6 @@ msgid ""
 msgstr ""
 "В настоящее время следующие сетевые интерфейсы сконфигурированы как "
 "внутренние: %(interface_list)s"
-
-#: templates/messages.html:11
-msgid "Close"
-msgstr "Закрыть"
 
 #: templates/notifications-dropdown.html:11
 msgid "Notifications"
@@ -10210,6 +10209,60 @@ msgstr "перед удалением {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "Select the backup file you want to upload"
+#~ msgstr ""
+#~ "Выберите файл резервного сохранения для загрузки на локальную машину"
+
+#, python-format
+#~ msgid ""
+#~ "For more information about the %(box_name)s project, see the <a "
+#~ "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+#~ msgstr ""
+#~ "Дополнительную информацию о проекте %(box_name)s можно найти на <a "
+#~ "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+
+#, python-format
+#~ msgid "Delete %(username)s"
+#~ msgstr "Удаление %(username)s"
+
+#, python-format
+#~ msgid "Delete user %(username)s"
+#~ msgstr "Удалить пользователя %(username)s"
+
+#, python-brace-format
+#~ msgid "User {user} deleted."
+#~ msgstr "Пользователь {user} удален."
+
+#~ msgid "Deleting LDAP user failed."
+#~ msgstr "Сбой при удалении LDAP пользователя."
+
+#, python-format
+#~ msgid ""
+#~ "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting "
+#~ "web server to deploy social applications on small machines. It provides "
+#~ "online communication tools respecting your privacy and data ownership."
+#~ msgstr ""
+#~ "%(box_name)s, чистая смесь Debian, это 100%% свободный само-размещенный "
+#~ "веб-сервер, позволяющий выкладывать социальные приложения на небольших "
+#~ "машинах. Он предоставляет онлайн инструменты онлайн-коммуникации, "
+#~ "уважающие вашу приватность и владение данными."
+
+#, python-format
+#~ msgid ""
+#~ "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
+#~ "free software, distributed under the GNU Affero General Public License, "
+#~ "Version 3 or later."
+#~ msgstr ""
+#~ "Этот портал часть веб-интерфейса %(box_name)s. %(box_name)s это свободное "
+#~ "программное обеспечение, выпускаемое под лицензией GNU Affero General "
+#~ "Public License, Версии 3 или старше."
+
+#~ msgid "Source Code"
+#~ msgstr "Исходный код"
+
+#~ msgid "FreedomBox Foundation"
+#~ msgstr "Фонд FrеedomBox"
 
 #, python-format
 #~ msgid "Without any apps, your %(box_name)s cannot do very much."
@@ -10811,9 +10864,6 @@ msgstr "Гуджарати"
 
 #~ msgid "Publishing key to keyserver..."
 #~ msgstr "Публикация ключа на сервер ключей..."
-
-#~ msgid "Cancel"
-#~ msgstr "Отмена"
 
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "OpenPGP отпечаток"
