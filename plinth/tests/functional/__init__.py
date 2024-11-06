@@ -424,7 +424,9 @@ def uninstall(browser, app_name):
     if not uninstall_item:
         pytest.skip('App cannot be uninstalled')
 
+    uninstall_page_url = uninstall_item[0]['href']
     uninstall_item[0].click()
+    wait_for_page_update(browser, expected_url=uninstall_page_url)
     submit(browser, form_class='form-uninstall')
 
     while True:
