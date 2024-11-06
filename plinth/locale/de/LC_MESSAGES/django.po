@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-04 20:11-0500\n"
-"PO-Revision-Date: 2024-10-26 23:15+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2024-11-07 15:00+0000\n"
+"Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
 "Language: de\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: config.py:103
 #, python-brace-format
@@ -330,6 +330,10 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Wählen Sie die Sicherungsdatei aus, die vom lokalen Computer hochgeladen "
+"werden soll. Es muss sich um eine Datei handeln, die zuvor nach einer "
+"erfolgreichen Sicherung einer {box_name} heruntergeladen wurde. Sie muss "
+"eine .tar.gz-Erweiterung haben."
 
 #: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
@@ -1249,16 +1253,12 @@ msgid "Server Administration"
 msgstr "Serververwaltung"
 
 #: modules/config/__init__.py:18
-#, fuzzy
-#| msgid ""
-#| "Here you can set some general configuration options like hostname, domain "
-#| "name, webserver home page etc."
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr ""
-"Hier können Sie einige allgemeine Konfigurationsoptionen wie Hostname, "
-"Domainname, Webserver-Homepage usw. festlegen."
+"Hier können Sie einige allgemeine Konfigurationsoptionen wie die Startseite "
+"des Webservers usw. einstellen."
 
 #: modules/config/__init__.py:40
 msgid "General Configuration"
@@ -2084,35 +2084,24 @@ msgid "XMPP"
 msgstr "XMPP"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"Ihre XMPP-Serverdomain ist auf <b>%(domainname)s</b> eingestellt. Benutzer-"
-"IDs erscheinen als <i>username@%(domainname)s</i>. Sie können Ihre Domain "
-"auf der Seite <a href=\"%(index_url)s\">Systemeinstellungen</a> "
-"konfigurieren."
+"Ihre XMPP-Serverdomain ist auf <b>%(domain_name)s</b> eingestellt. Benutzer-"
+"IDs erscheinen als <i>username@%(domain_name)s</i>. Sie können Ihre Domain "
+"auf der Seite <a href=\"%(names_url)s\">Namen Dienste</a> konfigurieren."
 
 #: modules/ejabberd/templates/ejabberd.html:25
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
 "<a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"Ihre XMPP-Serverdomain ist auf <b>%(domainname)s</b> eingestellt. Benutzer-"
-"IDs erscheinen als <i>username@%(domainname)s</i>. Sie können Ihre Domain "
-"auf der Seite <a href=\"%(index_url)s\">Systemeinstellungen</a> "
-"konfigurieren."
+"Die Domäne Ihres XMPP-Servers ist nicht festgelegt. Sie können Ihre Domäne "
+"auf der Seite <a href=\"%(names_url)s\">Namensdienste</a>  konfigurieren."
 
 #: modules/email/__init__.py:26
 msgid ""
@@ -2244,7 +2233,7 @@ msgstr "IMAP"
 
 #: modules/email/manifest.py:82
 msgid "Spam control"
-msgstr ""
+msgstr "Spam-Kontrolle"
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2311,6 +2300,10 @@ msgid ""
 "a single HTML file on your {box_name}. You can use it as a personal wiki, as "
 "a web notebook, or for project documentation."
 msgstr ""
+"Feather Wiki ist ein Werkzeug zur Erstellung einfacher, in sich "
+"geschlossener Wikis, die jeweils in einer einzigen HTML-Datei auf Ihrer "
+"{box_name} gespeichert sind. Sie können es als persönliches Wiki, als Web-"
+"Notizbuch oder zur Projektdokumentation verwenden."
 
 #: modules/featherwiki/__init__.py:29
 msgid ""
@@ -2318,6 +2311,9 @@ msgid ""
 "wiki per topic. Customize each wiki to your liking with extensions and other "
 "customization options."
 msgstr ""
+"Jedes Wiki ist eine kleine Datei. Sie können so viele Wikis erstellen, wie "
+"Sie möchten, z. B. ein Wiki pro Thema. Passen Sie jedes Wiki nach Ihren "
+"Wünschen mit Erweiterungen und anderen Anpassungsoptionen an."
 
 #: modules/featherwiki/__init__.py:33
 #, python-brace-format
@@ -2325,6 +2321,8 @@ msgid ""
 "Feather Wiki is downloaded from {box_name} website and not from Debian. "
 "Wikis need to be upgraded to newer version manually."
 msgstr ""
+"Feather Wiki wird von der {box_name} Website heruntergeladen und nicht von "
+"Debian. Wikis müssen manuell auf eine neuere Version aktualisiert werden."
 
 #: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
 #, python-brace-format
@@ -2334,6 +2332,10 @@ msgid ""
 "{box_name} belonging to the wiki group. Simultaneous editing is not "
 "supported."
 msgstr ""
+"Wikis sind standardmäßig nicht öffentlich, aber sie können zum Teilen oder "
+"Veröffentlichen heruntergeladen werden. Sie können von <a href=\""
+"„{users_url}“\">jedem Benutzer</a> auf {box_name}, der zur Wiki-Gruppe "
+"gehört, bearbeitet werden. Gleichzeitige Bearbeitung wird nicht unterstützt."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
 #: modules/tiddlywiki/__init__.py:61
@@ -2346,37 +2348,39 @@ msgstr "Feather-Wiki"
 
 #: modules/featherwiki/__init__.py:61
 msgid "Personal Notebooks"
-msgstr ""
+msgstr "Persönliche Notizbücher"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Name der Wiki-Datei, mit Dateierweiterung „.html“"
 
 #: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
+"Wiki-Titel und -Beschreibung können innerhalb des Wikis festgelegt werden. "
+"Dieser Dateiname ist unabhängig vom Titel des Wikis."
 
 #: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
 msgid "New name for the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Neuer Name für die Wiki-Datei, mit Dateierweiterung „.html“"
 
 #: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
 msgid "Renaming the file has no effect on the title of the wiki."
-msgstr ""
+msgstr "Die Umbenennung der Datei hat keine Auswirkung auf den Titel des Wikis."
 
 #: modules/featherwiki/forms.py:32
 msgid "A Feather Wiki file with .html file extension"
-msgstr ""
+msgstr "Eine Feather-Wiki-Datei mit der Dateierweiterung .html"
 
 #: modules/featherwiki/forms.py:35
 msgid "Feather Wiki files must be in HTML format"
-msgstr ""
+msgstr "Feather-Wiki-Dateien müssen im HTML-Format vorliegen"
 
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
-msgstr ""
+msgstr "Laden Sie eine bestehende Feather-Wiki-Datei von diesem Computer hoch."
 
 #: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
 #: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
@@ -2459,6 +2463,8 @@ msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "Feather Wiki before deleting it."
 msgstr ""
+"<strong>Hinweis</strong>: Sie können eine Kopie dieses Wikis aus dem Feather "
+"Wiki herunterladen, bevor Sie es löschen."
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
@@ -2658,6 +2664,9 @@ msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
+"Die automatische <a href=\"„%(upgrades_url)s“\" target=\"„_blank“\""
+">Softwareaktualisierung</a> läuft standardmäßig täglich. Führen Sie es jetzt "
+"zum ersten Mal manuell aus."
 
 #: modules/first_boot/templates/firstboot_complete.html:27
 #: modules/upgrades/templates/upgrades_configure.html:108
@@ -2669,6 +2678,8 @@ msgstr "Jetzt aktualisieren"
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
+"Überprüfen Sie die <a href=\"„%(privacy_url)s“\" target=\"„_blank“\""
+">Datenschutzoptionen</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:46
 #, python-format
@@ -2676,12 +2687,17 @@ msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
+"Überprüfen und richten Sie <a href=\"„%(networks_url)s“\" target=\"„_blank“\""
+">Netzwerkverbindungen</a> ein. Ändern Sie das Standard-Wi-Fi-Passwort, falls "
+"erforderlich."
 
 #: modules/first_boot/templates/firstboot_complete.html:57
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
+"Konfigurieren Sie einen <a href=\"„%(names_url)s“\" target=\"„_blank“\""
+">Domainnamen</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:67
 #, python-format
@@ -2689,6 +2705,8 @@ msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
+"Konfigurieren und planen Sie Remote <a href=\"„%(backups_url)s“\" target=\""
+"„_blank“\">Backups</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:78
 #, python-format
@@ -2696,6 +2714,8 @@ msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
 "target=\"_blank\">apps</a>."
 msgstr ""
+"Verwenden Sie %(box_name)s, indem Sie <a href=\"%(apps_url)s\" target="
+"\"_blank\">apps</a> installieren."
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
@@ -3006,11 +3026,11 @@ msgstr "Spenden"
 
 #: modules/help/templates/help_about.html:107
 msgid "Join project"
-msgstr ""
+msgstr "Dem Projekt beitreten"
 
 #: modules/help/templates/help_about.html:111
 msgid "Translate"
-msgstr ""
+msgstr "Übersetzen"
 
 #: modules/help/templates/help_about.html:117
 #, fuzzy
@@ -3331,7 +3351,7 @@ msgstr "Anonymisierungsnetzwerk"
 #: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
 #: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
 msgid "Censorship resistance"
-msgstr ""
+msgstr "Schutz vor Zensur"
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3417,7 +3437,7 @@ msgstr "Admin-Konto-Passwort"
 
 #: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3534,7 +3554,7 @@ msgstr ""
 
 #: modules/infinoted/manifest.py:46
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Gemeinschaftliche Bearbeitung"
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3564,14 +3584,12 @@ msgid "Janus Video Room"
 msgstr "Janus-Videoraum"
 
 #: modules/janus/manifest.py:16
-#, fuzzy
-#| msgid "WebRTC server"
 msgid "WebRTC"
-msgstr "WebRTC-Server"
+msgstr "WebRTC"
 
 #: modules/janus/manifest.py:16
 msgid "Web conference"
-msgstr ""
+msgstr "Web-Konferenz"
 
 #: modules/janus/templates/janus_video_room.html:205
 #: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
@@ -3595,16 +3613,14 @@ msgid "Chat Client"
 msgstr "Chatclient"
 
 #: modules/jsxc/manifest.py:16
-#, fuzzy
-#| msgid "Web Search"
 msgid "Web chat"
-msgstr "Websuche"
+msgstr "Web-Chat"
 
 #: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
 #, fuzzy
 #| msgid "IRC Client"
 msgid "Client"
-msgstr "IRC-Client"
+msgstr "Client"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3680,22 +3696,18 @@ msgstr ""
 "sofort gelöscht, um Speicherplatz zu sparen."
 
 #: modules/kiwix/manifest.py:23
-#, fuzzy
-#| msgid "Offline Wikipedia"
 msgid "Offline reader"
-msgstr "Wikipedia offline"
+msgstr "Offline-Leser"
 
 #: modules/kiwix/manifest.py:24
 #, fuzzy
 #| msgid "Archive name"
 msgid "Archival"
-msgstr "Archivname"
+msgstr "Archivierung"
 
 #: modules/kiwix/manifest.py:26
-#, fuzzy
-#| msgid "Offline Wikipedia"
 msgid "Wikipedia"
-msgstr "Wikipedia offline"
+msgstr "Wikipedia"
 
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
@@ -3749,10 +3761,8 @@ msgid "Add a new content package"
 msgstr "Ein neues Inhaltspaket hinzufügen"
 
 #: modules/kiwix/views.py:76
-#, fuzzy
-#| msgid "Content package added."
 msgid "Content package already exists."
-msgstr "Inhaltspaket hinzugefügt."
+msgstr "Das Inhaltspaket existiert bereits."
 
 #: modules/kiwix/views.py:79
 msgid "Failed to add content package."
@@ -3849,16 +3859,13 @@ msgid "Obtain"
 msgstr "Beziehen"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, fuzzy, python-format
-#| msgid ""
-#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
-#| "domains</a> to be able to obtain certificates for them."
+#, python-format
 msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
 "Es wurden keine Domains konfiguriert. Um Zertifikate erhalten zu können, "
-"müssen <a href=\"%(config_url)s\">Domains konfiguriert</a> werden."
+"müssen <a href=\"%(names_url)s\">Domains konfiguriert</a> werden."
 
 #: modules/letsencrypt/views.py:40
 #, python-brace-format
@@ -3984,16 +3991,12 @@ msgid "FluffyChat"
 msgstr "FluffyChat"
 
 #: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
-#, fuzzy
-#| msgid "IRC Chatroom"
 msgid "Chat room"
-msgstr "IRC-Chatraum"
+msgstr "Chatraum"
 
 #: modules/matrixsynapse/manifest.py:105
-#, fuzzy
-#| msgid "Media streaming server"
 msgid "Matrix server"
-msgstr "Medien-Streaming-Server"
+msgstr "Matrix Server"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
@@ -4338,10 +4341,8 @@ msgstr ""
 "erleiden."
 
 #: modules/minetest/manifest.py:49
-#, fuzzy
-#| msgid "Updated server."
 msgid "Game server"
-msgstr "Aktualisierter Server."
+msgstr "Spiele Server"
 
 #: modules/minetest/manifest.py:49
 #, fuzzy
@@ -4351,7 +4352,7 @@ msgstr "Block-Sandkasten"
 
 #: modules/minetest/manifest.py:49
 msgid "Platform"
-msgstr ""
+msgstr "Plattform"
 
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
@@ -4414,24 +4415,20 @@ msgid "totem"
 msgstr "Totem"
 
 #: modules/minidlna/manifest.py:116
-#, fuzzy
-#| msgid "Simple Media Server"
 msgid "Media server"
-msgstr "Einfacher Medienserver"
+msgstr "Medienserver"
 
 #: modules/minidlna/manifest.py:116
 msgid "Television"
-msgstr ""
+msgstr "Television"
 
 #: modules/minidlna/manifest.py:116
 msgid "UPnP"
-msgstr ""
+msgstr "UPnP"
 
 #: modules/minidlna/manifest.py:116
-#, fuzzy
-#| msgid "MiniDLNA"
 msgid "DLNA"
-msgstr "MiniDLNA"
+msgstr "DLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4445,6 +4442,12 @@ msgid ""
 "subscribe to your favorite sites and access full article contents within the "
 "reader itself."
 msgstr ""
+"Miniflux ist ein webbasiertes Werkzeug, das Nachrichten und Blog-Updates von "
+"verschiedenen Websites in einem zentralen, leicht zu lesenden Format "
+"zusammenfasst. Es hat eine einfache Schnittstelle und konzentriert sich auf "
+"ein ablenkungsfreies Leseerlebnis. Sie können Ihre Lieblingsseiten "
+"abonnieren und auf den kompletten Inhalt der Artikel direkt im Reader "
+"zugreifen."
 
 #: modules/miniflux/__init__.py:23
 msgid ""
@@ -4454,45 +4457,39 @@ msgid ""
 "are several third-party <a href=\"https://miniflux.app/docs/apps."
 "html\">clients</a> as well."
 msgstr ""
+"Zu den wichtigsten Funktionen gehören Tastaturkürzel für die schnelle "
+"Navigation, Volltextsuche, Filtern von Artikeln, Kategorien und Favoriten. "
+"Miniflux wahrt die Privatsphäre der Nutzer, indem es Tracker entfernt. Die "
+"primäre Schnittstelle ist webbasiert. Es gibt auch mehrere <a href=\""
+"„https://miniflux.app/docs/apps.html“\">Clients</a> von Drittanbietern."
 
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
-msgstr ""
+msgstr "Miniflux"
 
 #: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "Feedreader"
 
 #: modules/miniflux/forms.py:12
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a username for the user."
-msgstr "Einen gültigen Benutzernamen eingeben."
+msgstr "Geben Sie einen Namen für den Benutzer ein."
 
 #: modules/miniflux/forms.py:16
 msgid "Enter a strong password with a minimum of 6 characters."
-msgstr ""
+msgstr "Geben Sie ein sicheres Passwort mit mindestens 6 Zeichen ein."
 
 #: modules/miniflux/forms.py:18
-#, fuzzy
-#| msgid "Updating configuration"
 msgid "Password confirmation"
-msgstr "Aktualisieren der Konfiguration"
+msgstr "Bestätigung des Passworts"
 
 #: modules/miniflux/forms.py:20
-#, fuzzy
-#| msgid ""
-#| "Enter the password for user \"{user}\" to authorize account modifications."
 msgid "Enter the same password for confirmation."
-msgstr ""
-"Geben Sie das Passwort für den Benutzer „{user}“ ein, um Kontoänderungen zu "
-"autorisieren."
+msgstr "Geben Sie zur Bestätigung das gleiche Passwort ein."
 
 #: modules/miniflux/forms.py:31
-#, fuzzy
-#| msgid "Password updated"
 msgid "Passwords do not match."
-msgstr "Passwort geändert"
+msgstr "Passwörter stimmen nicht überein."
 
 #: modules/miniflux/manifest.py:18
 msgid "Fluent Reader Lite"
@@ -4502,7 +4499,7 @@ msgstr ""
 #, fuzzy
 #| msgid "News Feed Reader"
 msgid "Fluent Reader"
-msgstr "Feedreader"
+msgstr "Fluent Reader"
 
 #: modules/miniflux/manifest.py:46
 msgid "FluxNews"
@@ -4524,7 +4521,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Read"
 msgid "Read You"
-msgstr "Lesen"
+msgstr "Read You"
 
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
@@ -4538,14 +4535,14 @@ msgstr "Feedreader"
 
 #: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
 msgid "News aggregation"
-msgstr ""
+msgstr "Aggregation von Nachrichten"
 
 #: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
 #: modules/ttrss/manifest.py:55
 #, fuzzy
 #| msgid "SSH"
 msgid "RSS"
-msgstr "SSH"
+msgstr "RSS"
 
 #: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
 #: modules/ttrss/manifest.py:55
@@ -4557,6 +4554,8 @@ msgid ""
 "Create an admin user to get started. Other users can be created from within "
 "Miniflux."
 msgstr ""
+"Erstellen Sie einen Admin-Benutzer, um zu beginnen. Weitere Benutzer können "
+"von Miniflux aus erstellt werden."
 
 #: modules/miniflux/templates/miniflux.html:22
 #: modules/miniflux/templates/miniflux.html:24
@@ -4729,6 +4728,7 @@ msgstr "Secure Shell"
 #: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
+"DNS-over-TLS für die Auflösung von Domänen verwenden (globale Präferenz)"
 
 #: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
@@ -5040,6 +5040,8 @@ msgid ""
 "Link-local: Configure automatically to use an address that is only relevant "
 "to this network."
 msgstr ""
+"Link-local: Automatisch konfigurieren, um eine Adresse zu verwenden, die nur "
+"für dieses Netzwerk relevant ist."
 
 #: modules/networks/forms.py:141
 msgid "Ignore: Ignore this addressing method"
@@ -5851,8 +5853,9 @@ msgid "link-local"
 msgstr "link-lokal"
 
 #: modules/networks/views.py:32
+#, fuzzy
 msgid "dhcp"
-msgstr ""
+msgstr "dhcp"
 
 #: modules/networks/views.py:33
 msgid "ignore"
@@ -6622,6 +6625,10 @@ msgid ""
 "available. Can be disabled in most cases if network connectivity is stable "
 "and reliable."
 msgstr ""
+"Verwendung bekannter öffentlicher DNS-Server zur Auflösung von Domänennamen "
+"unter ungewöhnlichen Umständen, wenn keine DNS-Server bekannt sind, aber "
+"eine Internetverbindung besteht. Kann in den meisten Fällen deaktiviert "
+"werden, wenn die Netzwerkverbindung stabil und zuverlässig ist."
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -8251,6 +8258,11 @@ msgid ""
 "several short notes called Tiddlers and link them together into a dense "
 "graph."
 msgstr ""
+"TiddlyWiki ist eine interaktive Anwendung, die vollständig im Webbrowser "
+"läuft. Jedes Wiki ist eine in sich geschlossene HTML-Datei, die auf Ihrer "
+"{box_name} gespeichert ist. Anstatt lange Wiki-Seiten zu schreiben, regt "
+"TiddlyWiki dazu an, mehrere kurze Notizen, so genannte Tiddlers, zu "
+"schreiben und sie zu einem kompakten Diagramm zu verknüpfen."
 
 #: modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -8260,6 +8272,12 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
+"Es ist eine vielseitige Anwendung mit einer Vielzahl von "
+"Einsatzmöglichkeiten - nichtlineares Notizbuch, Webseite, persönliche "
+"Wissensdatenbank, Aufgaben- und Projektmanagementsystem, persönliches "
+"Tagebuch usw. Plugins können die Funktionalität von TiddlyWiki erweitern. "
+"Das Verschlüsseln einzelner Tiddler oder das Schützen einer Wiki-Datei mit "
+"einem Passwort ist innerhalb der Anwendung möglich."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -8267,10 +8285,14 @@ msgid ""
 "TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
 "need to be upgraded to newer version manually."
 msgstr ""
+"TiddlyWiki wird von der {box_name} Website heruntergeladen und nicht von "
+"Debian. Wikis müssen manuell auf eine neuere Version aktualisiert werden."
 
 #: modules/tiddlywiki/__init__.py:46
 msgid "Create a new wiki or upload your existing wiki file to get started."
 msgstr ""
+"Erstellen Sie ein neues Wiki oder laden Sie Ihre bestehende Wiki-Datei hoch, "
+"um zu starten."
 
 #: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
 msgid "TiddlyWiki"
@@ -8282,15 +8304,15 @@ msgstr ""
 
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
-msgstr ""
+msgstr "Eine TiddlyWiki-Datei mit der Dateierweiterung .html"
 
 #: modules/tiddlywiki/forms.py:35
 msgid "TiddlyWiki files must be in HTML format"
-msgstr ""
+msgstr "TiddlyWiki-Dateien müssen im HTML-Format vorliegen"
 
 #: modules/tiddlywiki/forms.py:37
 msgid "Upload an existing TiddlyWiki file from this computer."
-msgstr ""
+msgstr "Laden Sie eine bestehende TiddlyWiki-Datei von diesem Computer hoch."
 
 #: modules/tiddlywiki/manifest.py:22
 msgid "Journal"
@@ -8309,6 +8331,8 @@ msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "TiddlyWiki before deleting it."
 msgstr ""
+"<strong>Hinweis</strong>: Sie können eine Kopie dieses Wikis aus TiddlyWiki "
+"herunterladen, bevor Sie es löschen."
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -8691,6 +8715,8 @@ msgid ""
 "Automatic software update runs daily by default. For the first time, "
 "manually run it now."
 msgstr ""
+"Die automatische Software-Aktualisierung wird standardmäßig täglich "
+"ausgeführt. Führen Sie es jetzt zum ersten Mal manuell aus."
 
 #: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
@@ -9009,8 +9035,6 @@ msgstr ""
 "ignoriert."
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
 msgstr "Benutzer löschen"
 
@@ -9019,12 +9043,13 @@ msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
 msgstr ""
+"Beim Löschen des Benutzerkontos werden auch alle mit dem Benutzer "
+"verbundenen Dateien gelöscht. Das Löschen von Dateien kann vermieden werden, "
+"indem das Benutzerkonto als inaktiv eingestuft wird."
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "Hinzufügen eines Benutzers zur Gruppe ist fehlgeschlagen."
+msgstr "Benutzer konnte nicht gelöscht werden."
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -9152,10 +9177,9 @@ msgid "Save Changes"
 msgstr "Änderungen speichern"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "Benutzer <strong>%(username)s</strong> dauerhaft löschen?"
+msgstr "Benutzer <em>%(username)s</em> und alle Dateien des Benutzers löschen?"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -9166,12 +9190,13 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
+"Beim Löschen eines Benutzerkontos werden auch alle Dateien aus dem Home-"
+"Verzeichnis des Benutzers entfernt. Wenn Sie diese Dateien behalten möchten, "
+"deaktivieren Sie stattdessen das Benutzerkonto."
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "Dateien löschen"
+msgstr "Benutzer und Dateien löschen"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -9192,10 +9217,9 @@ msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "Benutzer %(username)s angelegt."
+msgstr "Benutzer %(username)s gelöscht."
 
 #: modules/users/views.py:130
 msgid "Change Password"
