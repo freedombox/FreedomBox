@@ -738,16 +738,21 @@ class BaseAppTests:
         """Install the app and set it up if needed."""
         install(session_browser, self.app_name)
 
+    @pytest.fixture(autouse=True, scope='class', name='disable_after_tests')
+    def fixture_disable_after_tests(self, session_browser):
+        """Disable the app after running tests."""
+        yield
+        if self.disable_after_tests:
+            app_disable(session_browser, self.app_name)
+
     @pytest.fixture(autouse=True, name='background')
-    def fixture_background(self, session_browser):
+    def fixture_background(self, session_browser, disable_after_tests):
         """Login, install, and enable the app."""
         login(session_browser)
         self.install_and_setup(session_browser)
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
-        if self.disable_after_tests:
-            app_disable(session_browser, self.app_name)
 
     def test_enable_disable(self, session_browser):
         """Test enabling and disabling the app."""
