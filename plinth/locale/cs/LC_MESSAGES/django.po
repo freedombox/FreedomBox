@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-04 20:11-0500\n"
-"PO-Revision-Date: 2024-10-24 15:15+0000\n"
+"PO-Revision-Date: 2024-11-07 15:00+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: config.py:103
 #, python-brace-format
@@ -322,6 +322,9 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Vyberte záložní soubor, který chcete nahrát z místního počítače. Musí se "
+"jednat o soubor, který byl dříve stažen jako výsledek úspěšného zálohování "
+"na {box_name}. Musí mít příponu .tar.gz."
 
 #: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
@@ -2946,8 +2949,6 @@ msgstr ""
 "source <i>package_name </i>\" v terminálu (pomocí Cockpit nebo SSH)."
 
 #: modules/help/templates/help_about.html:85
-#, fuzzy
-#| msgid "Learn more"
 msgid "Learn"
 msgstr "Více informací"
 
@@ -2961,17 +2962,15 @@ msgstr "Podpořit vývoj darem"
 
 #: modules/help/templates/help_about.html:107
 msgid "Join project"
-msgstr ""
+msgstr "Připojte se k projektu"
 
 #: modules/help/templates/help_about.html:111
 msgid "Translate"
-msgstr ""
+msgstr "Přeložte"
 
 #: modules/help/templates/help_about.html:117
-#, fuzzy
-#| msgid "Get Support"
 msgid "Support"
-msgstr "Získejte podporu"
+msgstr "Podpora"
 
 #: modules/help/templates/help_about.html:121
 msgid "Forum"
@@ -8834,8 +8833,6 @@ msgstr ""
 "řádek. Prázdné řádky a ty, které začínají na znak # budou ignorovány."
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
 msgstr "Smazat uživatele"
 
@@ -8844,12 +8841,13 @@ msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
 msgstr ""
+"Odstraněním uživatelského účtu se odstraní také všechny soubory související "
+"s uživatelem. Odstranění souborů lze zabránit nastavením uživatelského účtu "
+"jako neaktivního."
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "Přidání uživatele do skupiny se nezdařilo."
+msgstr "Uživatele se nepodařilo odstranit."
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -8974,10 +8972,9 @@ msgid "Save Changes"
 msgstr "Uložit změny"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "Nevratně smazat uživatele <strong>%(username)s</strong>?"
+msgstr "Smazat uživatele <em>%(username)s</em> a všechny jeho soubory?"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -8988,12 +8985,13 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
+"Odstraněním uživatelského účtu se odstraní také všechny soubory domovského "
+"adresáře uživatele. Pokud si přejete tyto soubory zachovat, zakažte raději "
+"uživatelský účet."
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "Smazat soubory"
+msgstr "Odstranit uživatele a soubory"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -9014,10 +9012,9 @@ msgid "Edit User"
 msgstr "Upravit uživatele"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "Uživatel %(username)s vytvořen."
+msgstr "Uživatel %(username)s smazán."
 
 #: modules/users/views.py:130
 msgid "Change Password"
