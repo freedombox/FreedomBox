@@ -491,7 +491,9 @@ def add_wifi(request, ssid=None, interface_name=None):
             'mode': 'infrastructure',
             'band': 'auto',
             'auth_mode': 'wpa',
-            'ipv4_method': 'auto'
+            'ipv4_method': 'auto',
+            'ipv6_method': 'auto',
+            'dns_over_tls': 'default',
         }
 
     if request.method == 'POST':
