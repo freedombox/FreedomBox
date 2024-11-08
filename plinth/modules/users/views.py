@@ -2,17 +2,14 @@
 """Django views for user app."""
 
 import django.views.generic
-from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
-from django.views.generic.edit import (CreateView, DeleteView, FormView,
-                                       UpdateView)
+from django.views.generic.edit import (CreateView, FormView, UpdateView)
 
 import plinth.modules.ssh.privileged as ssh_privileged
 from plinth import translation
@@ -20,7 +17,7 @@ from plinth.modules import first_boot
 from plinth.utils import is_user_admin
 from plinth.views import AppView
 
-from . import get_last_admin_user, privileged
+from . import privileged
 from .forms import (CreateUserForm, FirstBootForm, UserChangePasswordForm,
                     UserUpdateForm)
 
@@ -63,11 +60,6 @@ class UserList(AppView, ContextMixin, django.views.generic.ListView):
     template_name = 'users_list.html'
     title = gettext_lazy('Users')
     app_id = 'users'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['last_admin_user'] = get_last_admin_user()
-        return context
 
 
 class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
@@ -113,7 +105,13 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
 
     def form_valid(self, form):
         """Set the user language if necessary."""
+
+        is_user_deleted = form.cleaned_data.get('delete')
+        if is_user_deleted:
+            self.success_message = gettext_lazy('User %(username)s deleted.')
         response = super().form_valid(form)
+        if is_user_deleted:
+            return HttpResponseRedirect(reverse_lazy('users:index'))
 
         # If user is updating their own profile then set the language for
         # current session too.
@@ -121,59 +119,6 @@ class UserUpdate(ContextMixin, SuccessMessageMixin, UpdateView):
             translation.set_language(self.request, response,
                                      self.request.user.userprofile.language)
 
-        return response
-
-
-class UserDelete(ContextMixin, DeleteView):
-    """Handle deleting users, showing a confirmation dialog first.
-
-    On GET, display a confirmation page.
-    On POST, delete the user.
-    """
-
-    template_name = 'users_delete.html'
-    model = User
-    slug_field = 'username'
-    success_url = reverse_lazy('users:index')
-    title = gettext_lazy('Delete User')
-
-    def __init__(self, *args, **kwargs):
-        """Initialize view, override delete method."""
-        super().__init__(*args, **kwargs)
-
-        # Avoid a warning with Django 4.0 that delete member should not be
-        # overridden. Remove this line and _delete() after Django 4.0 reaches
-        # Debian Stable.
-        self.delete = self._delete
-
-    def _delete_from_ldap(self):
-        """Remove user from LDAP and show a success/error message."""
-        message = _('User {user} deleted.').format(user=self.kwargs['slug'])
-        messages.success(self.request, message)
-
-        try:
-            privileged.remove_user(self.kwargs['slug'])
-        except Exception:
-            messages.error(self.request, _('Deleting LDAP user failed.'))
-
-    def _delete(self, *args, **kwargs):
-        """Set the success message of deleting the user.
-
-        The SuccessMessageMixin doesn't work with the DeleteView on Django1.7,
-        so set the success message manually here.
-        """
-        output = super().delete(*args, **kwargs)
-        self._delete_from_ldap()
-        return output
-
-    def form_valid(self, form):
-        """Perform additional operations after delete.
-
-        Since Django 4.0, DeleteView inherits form_view and a call to delete()
-        is not made.
-        """
-        response = super().form_valid(form)  # NOQA, pylint: disable=no-member
-        self._delete_from_ldap()
         return response
 
 

@@ -261,7 +261,7 @@ def mam(command: str) -> bool | None:
             'mod_mam': {
                 'db_type':
                     'mnesia',  # default is 'mnesia' (w/o set default_db)
-                'default': 'never',  # policy, default 'never'
+                'default': 'always',  # helps various clients to use mam
                 'request_activates_archiving': False,  # default False
                 'assume_mam_usage': False,  # for non-ack'd msgs, default False
                 'cache_size': 1000,  # default is 1000 items

@@ -664,12 +664,20 @@ def create_user(browser, name, password=None, groups=[], email=None):
 def delete_user(browser, name):
     """Delete a user."""
     nav_to_module(browser, 'users')
-    delete_link = browser.links.find_by_href(
-        f'/plinth/sys/users/{name}/delete/')
+    browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/').first.click()
 
-    with wait_for_page_update(browser):
-        delete_link.first.click()
-    submit(browser, form_class='form-delete')
+    browser.find_by_id('id_delete').check()
+    browser.find_by_id('id_confirm_password').fill(
+        config['DEFAULT']['password'])
+
+    browser.find_by_css('.form-update input[type=submit]').first.click()
+
+    confirm_button = browser.find_by_css(
+        '#user-delete-confirm-dialog button.confirm').first
+    eventually(lambda: confirm_button.visible)
+    assert confirm_button.visible
+    with wait_for_page_update(browser, expected_url='/plinth/sys/users/'):
+        confirm_button.click()
 
 
 def user_exists(browser, name):

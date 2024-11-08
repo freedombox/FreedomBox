@@ -19,8 +19,8 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
-      <div class="list-group list-group-two-column">
+    <div class="col-md-4">
+      <div class="list-group">
         {% for user in object_list %}
           <div class="list-group-item">
             <a class='user-edit-label primary'
@@ -34,15 +34,6 @@
                     aria-hidden="true"></span>
             {% endif %}
 
-            {% if user.username != last_admin_user %}
-              <a href="{% url 'users:delete' user.username %}"
-                 class="btn btn-default btn-sm secondary"
-                 role="button"
-                 title="{% blocktrans with username=user.username %}Delete user {{ username }}{% endblocktrans %}">
-                <span class="fa fa-trash-o"
-                      aria-hidden="true"></span>
-              </a>
-            {% endif %}
           </div>
         {% endfor %}
       </div>

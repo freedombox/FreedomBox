@@ -61,9 +61,6 @@
                   {% else %}
                     <a href="{{ shortcut.url }}" class="nav-link">
                   {% endif %}
-                        <div class="card-title">
-                          {{ shortcut.name }}
-                        </div>
                         <div class="card-icon">
                           {% if "custom" in shortcut.icon %}
                             <img src="{{ shortcut.icon }}"/>
@@ -74,6 +71,9 @@
                               <img src="{% static 'theme/icons/' %}{{ shortcut.icon }}.svg"/>
                             {% endif %}
                           {% endif %}
+                        </div>
+                        <div class="card-title">
+                          {{ shortcut.name }}
                         </div>
                         <div class="card-description">
                           {{ shortcut.short_description|default:'' }}
@@ -92,75 +92,10 @@
 
 
 {% block footer_block %}
-
   <p>
-    <a href="{% url 'index' %}" title="{{ box_name }}">
-      <img class="footer-logo" src="{% static 'theme/img/freedombox-logo-standard.svg' %}"
-           alt="{{ box_name }}" />
+    <a href="{% url 'help:about' %}" title="{% trans "About" %}">
+      <img class="footer-logo" alt="{{ box_name }}"
+           src="{% static 'theme/img/freedombox-logo-powered.svg' %}"/>
     </a>
   </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      {{ box_name }}, a Debian pure blend, is a 100% free software
-      self-hosting web server to deploy social applications on small
-      machines. It provides online communication tools respecting your
-      privacy and data ownership.
-    {% endblocktrans %}
-  </p>
-
-  <p>
-    {% blocktrans trimmed %}
-      This portal is a part of the {{ box_name }} web interface. {{ box_name }}
-      is free software, distributed under the GNU Affero General Public License,
-      Version 3 or later.
-    {% endblocktrans %}
-  </p>
-
-  <div class="row">
-    <div class="col-lg-2 offset-lg-3">
-      <p>
-        <a href="https://wiki.debian.org/FreedomBox/Manual">
-          {% trans "Manual" context "User guide"%}
-        </a>
-      </p>
-      <p>
-        <a href="https://wiki.debian.org/FreedomBox">{% trans "Wiki" %}</a>
-      </p>
-      <p>
-        <a href="https://salsa.debian.org/freedombox-team/">{% trans "Source Code" %}</a>
-      </p>
-    </div>
-    <div class="col-lg-2">
-      <p>
-        <a href="https://freedombox.org">{% trans "Homepage" %}</a>
-      </p>
-      <p>
-        <a href="https://freedomboxfoundation.org/donate/">{% trans "Donate" %}</a>
-      </p>
-      <p>
-        <a href="https://freedomboxfoundation.org/">
-          {% trans "FreedomBox Foundation" %}
-        </a>
-      </p>
-    </div>
-    <div class="col-lg-2">
-      <p>
-        <a href="https://discuss.freedombox.org/">
-          {%trans "Forum" %}
-        </a>
-      </p>
-      <p>
-        <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
-          {%trans "IRC Chatroom" %}
-        </a>
-      </p>
-      <p>
-        <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
-          {% trans "Mailing list" %}
-        </a>
-      </p>
-    </div>
-  </div>
-
 {% endblock %}

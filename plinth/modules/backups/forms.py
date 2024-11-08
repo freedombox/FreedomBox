@@ -15,6 +15,7 @@ from django.core.validators import (FileExtensionValidator,
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
+from plinth import cfg
 from plinth.modules.storage import get_mounts
 from plinth.utils import format_lazy
 
@@ -28,14 +29,14 @@ def _get_app_choices(components):
     """Return a list of check box multiple choices from list of components."""
     choices = []
     for component in components:
-        name = component.app.info.name
+        name = str(component.app.info.name)
         if not component.has_data:
             name = gettext('{app} (No data to backup)').format(
                 app=component.app.info.name)
 
         choices.append((component.app_id, name))
 
-    return choices
+    return sorted(choices, key=lambda choice: choice[1].lower())
 
 
 def _get_repository_choices():
@@ -138,7 +139,11 @@ class UploadForm(forms.Form):
         label=_('Upload File'), required=True, validators=[
             FileExtensionValidator(
                 ['gz'], _('Backup files have to be in .tar.gz format'))
-        ], help_text=_('Select the backup file you want to upload'))
+        ], help_text=format_lazy(
+            _('Select the backup file to upload from the local computer. This '
+              'must be a file previously downloaded from the result of a '
+              'successful backup on a {box_name}. It must have a .tar.gz '
+              'extension.'), box_name=_(cfg.box_name)))
 
 
 def repository_validator(path):

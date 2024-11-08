@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-21 20:10-0400\n"
+"POT-Creation-Date: 2024-11-04 20:11-0500\n"
 "PO-Revision-Date: 2022-09-14 17:20+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/freedombox/"
@@ -229,75 +229,75 @@ msgstr ""
 msgid "Error During Backup"
 msgstr "Υπάρχοντα αντίγραφα ασφαλείας"
 
-#: modules/backups/forms.py:33
+#: modules/backups/forms.py:34
 #, python-brace-format
 msgid "{app} (No data to backup)"
 msgstr "{app} (Δεν υπάρχουν δεδομένα για δημιουργία αντιγράφων ασφαλείας)"
 
-#: modules/backups/forms.py:53
+#: modules/backups/forms.py:54
 msgid "Enable scheduled backups"
 msgstr ""
 
-#: modules/backups/forms.py:54
+#: modules/backups/forms.py:55
 msgid ""
 "If enabled, a backup is taken every day, every week and every month. Older "
 "backups are removed."
 msgstr ""
 
-#: modules/backups/forms.py:58
+#: modules/backups/forms.py:59
 msgid "Number of daily backups to keep"
 msgstr ""
 
-#: modules/backups/forms.py:59
+#: modules/backups/forms.py:60
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
 
-#: modules/backups/forms.py:64
+#: modules/backups/forms.py:65
 msgid "Number of weekly backups to keep"
 msgstr ""
 
-#: modules/backups/forms.py:66
+#: modules/backups/forms.py:67
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
 
-#: modules/backups/forms.py:71
+#: modules/backups/forms.py:72
 msgid "Number of monthly backups to keep"
 msgstr ""
 
-#: modules/backups/forms.py:73
+#: modules/backups/forms.py:74
 msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
 
-#: modules/backups/forms.py:78
+#: modules/backups/forms.py:79
 msgid "Hour of the day to trigger backup operation"
 msgstr ""
 
-#: modules/backups/forms.py:79
+#: modules/backups/forms.py:80
 msgid "In 24 hour format."
 msgstr ""
 
-#: modules/backups/forms.py:82 modules/backups/forms.py:104
+#: modules/backups/forms.py:83 modules/backups/forms.py:105
 msgid "Included apps"
 msgstr "Συμπεριλαμβανόμενες εφαρμογές"
 
-#: modules/backups/forms.py:82 modules/backups/forms.py:104
+#: modules/backups/forms.py:83 modules/backups/forms.py:105
 msgid "Apps to include in the backup"
 msgstr "Εφαρμογές που θα συμπεριληφθούν στο αντίγραφο ασφαλείας"
 
-#: modules/backups/forms.py:98
+#: modules/backups/forms.py:99
 #, fuzzy
 #| msgid "Create Repository"
 msgid "Repository"
 msgstr "Δημιουργία Αποθετηρίου"
 
-#: modules/backups/forms.py:100
+#: modules/backups/forms.py:101
 #: modules/backups/templates/backups_delete.html:17 modules/ikiwiki/forms.py:15
 #: modules/networks/templates/connection_show.html:71
 #: modules/samba/templates/samba.html:66
@@ -305,52 +305,56 @@ msgstr "Δημιουργία Αποθετηρίου"
 msgid "Name"
 msgstr "Όνομα"
 
-#: modules/backups/forms.py:101
+#: modules/backups/forms.py:102
 #, fuzzy
 #| msgid "Upload and restore a backup archive"
 msgid "(Optional) Set a name for this backup archive"
 msgstr "Ανεβάστε και επαναφέρετε ένα αντίγραφο ασφαλείας"
 
-#: modules/backups/forms.py:122
+#: modules/backups/forms.py:123
 msgid "Select the apps you want to restore"
 msgstr "Επιλέξτε τις εφαρμογές που θέλετε να επαναφέρετε"
 
-#: modules/backups/forms.py:138 modules/kiwix/forms.py:21
+#: modules/backups/forms.py:139 modules/kiwix/forms.py:21
 msgid "Upload File"
 msgstr "Αποστολή αρχείου"
 
-#: modules/backups/forms.py:140
+#: modules/backups/forms.py:141
 msgid "Backup files have to be in .tar.gz format"
 msgstr "Τα αντίγραφα ασφαλείας πρέπει να είναι σε μορφή. tar. gz"
 
-#: modules/backups/forms.py:141
-msgid "Select the backup file you want to upload"
-msgstr "Επιλέξτε το αντίγραφο ασφαλείας που θέλετε να ανεβάσετε"
+#: modules/backups/forms.py:143
+#, python-brace-format
+msgid ""
+"Select the backup file to upload from the local computer. This must be a "
+"file previously downloaded from the result of a successful backup on a "
+"{box_name}. It must have a .tar.gz extension."
+msgstr ""
 
-#: modules/backups/forms.py:147
+#: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
 msgstr "Εσφαλμένο μονοπατι αποθετηρίου (repository)."
 
-#: modules/backups/forms.py:154
+#: modules/backups/forms.py:159
 #, python-brace-format
 msgid "Invalid username: {username}"
 msgstr "Μη έγκυρο όνομα χρήστη: {username}"
 
-#: modules/backups/forms.py:164
+#: modules/backups/forms.py:169
 #, python-brace-format
 msgid "Invalid hostname: {hostname}"
 msgstr "Μη έγκυρο όνομα υπολογιστή: {hostname}"
 
-#: modules/backups/forms.py:168
+#: modules/backups/forms.py:173
 #, python-brace-format
 msgid "Invalid directory path: {dir_path}"
 msgstr "Εσφαλμένο μονοπάτι φακέλου: {dir_path}"
 
-#: modules/backups/forms.py:174
+#: modules/backups/forms.py:179
 msgid "Encryption"
 msgstr "Κρυπτογράφηση"
 
-#: modules/backups/forms.py:175
+#: modules/backups/forms.py:180
 msgid ""
 "\"Key in Repository\" means that a password-protected key is stored with the "
 "backup."
@@ -358,53 +362,53 @@ msgstr ""
 "\"Κλειδί στο αποθετήριο\" σημαίνει ότι ένα κλειδί που προστατεύεται με "
 "κωδικό πρόσβασης αποθηκεύεται με το αντίγραφο ασφαλείας."
 
-#: modules/backups/forms.py:177
+#: modules/backups/forms.py:182
 msgid "Key in Repository"
 msgstr "Κλειδί στο αποθετήριο"
 
-#: modules/backups/forms.py:177
+#: modules/backups/forms.py:182
 #: modules/matrixsynapse/templates/matrix-synapse.html:62
 #: modules/searx/forms.py:14
 msgid "None"
 msgstr "Κανένα"
 
-#: modules/backups/forms.py:179 modules/networks/forms.py:331
+#: modules/backups/forms.py:184 modules/networks/forms.py:331
 msgid "Passphrase"
 msgstr "Κωδικός"
 
-#: modules/backups/forms.py:180
+#: modules/backups/forms.py:185
 msgid "Passphrase; Only needed when using encryption."
 msgstr "Κωδικός πρόσβασης. Απαιτείται μόνο όταν χρησιμοποιείται κρυπτογράφηση."
 
-#: modules/backups/forms.py:183
+#: modules/backups/forms.py:188
 msgid "Confirm Passphrase"
 msgstr "Επιβεβαίωση κωδικού"
 
-#: modules/backups/forms.py:183
+#: modules/backups/forms.py:188
 msgid "Repeat the passphrase."
 msgstr "Επιβεβαίωση κωδικού."
 
-#: modules/backups/forms.py:194
+#: modules/backups/forms.py:199
 msgid "The entered encryption passphrases do not match"
 msgstr "Οι εισηγμένοι κωδικοί κρυπτογράφησης δεν ταιριάζουν"
 
-#: modules/backups/forms.py:198
+#: modules/backups/forms.py:203
 msgid "Passphrase is needed for encryption."
 msgstr "Απαιτείται κωδικός για την κρυπτογράφηση."
 
-#: modules/backups/forms.py:233
+#: modules/backups/forms.py:238
 msgid "Select Disk or Partition"
 msgstr "Επιλέξτε Δίσκο ή Διαμέρισμα του δίσκου"
 
-#: modules/backups/forms.py:234
+#: modules/backups/forms.py:239
 msgid "Backups will be stored in the directory FreedomBoxBackups"
 msgstr "Τα αντίγραφα ασφαλείας θα αποθηκευτούν στον κατάλογο FreedomBoxBackups"
 
-#: modules/backups/forms.py:243
+#: modules/backups/forms.py:248
 msgid "SSH Repository Path"
 msgstr "Μονοπάτι αποθετηρίου SSH"
 
-#: modules/backups/forms.py:244
+#: modules/backups/forms.py:249
 msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
@@ -412,11 +416,11 @@ msgstr ""
 "Το μονοπάτι από ένα νέο ή ένα υπάρχον αποθετήριο. Παράδειγμα: "
 "<i>χρήστης@υπολογιστής:~/μονοπάτι/για/το/αποθετήριο/</i>"
 
-#: modules/backups/forms.py:248
+#: modules/backups/forms.py:253
 msgid "SSH server password"
 msgstr "Κωδικός πρόσβασης διακομιστή SSH"
 
-#: modules/backups/forms.py:249
+#: modules/backups/forms.py:254
 msgid ""
 "Password of the SSH Server.<br />SSH key-based authentication is not yet "
 "possible."
@@ -424,11 +428,11 @@ msgstr ""
 "Κωδικός πρόσβασης του διακομιστή SSH.<br />Ο έλεγχος ταυτότητας με κλειδί "
 "SSH δεν είναι ακόμα δυνατός."
 
-#: modules/backups/forms.py:268
+#: modules/backups/forms.py:273
 msgid "Remote backup repository already exists."
 msgstr "Το απομακρυσμένο αποθετήριο αντιγράφων ασφαλείας υπάρχει ήδη."
 
-#: modules/backups/forms.py:274
+#: modules/backups/forms.py:279
 msgid "Select verified SSH public key"
 msgstr "Επιλογή εξακριβωμένου δημόσιου κλειδιού SSH"
 
@@ -867,7 +871,7 @@ msgid "Permissions for anonymous users, who have not provided a password."
 msgstr ""
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
-#: modules/users/forms.py:103
+#: modules/users/forms.py:104
 msgid "Permissions"
 msgstr "Δικαιώματα"
 
@@ -1914,7 +1918,7 @@ msgid "Invalid domain name"
 msgstr "Μη έγκυρο όνομα διαδικτύου"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:276 modules/users/forms.py:129
+#: modules/networks/forms.py:276 modules/users/forms.py:130
 msgid "Username"
 msgstr "Όνομα χρήστη"
 
@@ -2451,9 +2455,9 @@ msgstr ""
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
-#: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19 templates/index.html:128
+#: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
+#: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2986,8 +2990,8 @@ msgstr "Τροποποίηση αποθετηρίου"
 msgid "Documentation"
 msgstr "Boηθητικά έγγραφα"
 
-#: modules/help/__init__.py:37 templates/help-menu.html:20
-#: templates/help-menu.html:21 templates/index.html:124
+#: modules/help/__init__.py:37 modules/help/templates/help_about.html:92
+#: templates/help-menu.html:20 templates/help-menu.html:21
 #, fuzzy
 #| msgid "Manual"
 msgctxt "User guide"
@@ -3006,18 +3010,19 @@ msgstr "Λάβετε Υποστήριξη"
 msgid "Submit Feedback"
 msgstr "Υποβάλετε σχόλια"
 
-#: modules/help/__init__.py:49 modules/help/templates/help_contribute.html:9
-#: modules/help/views.py:76 templates/help-menu.html:39
-#: templates/help-menu.html:40
+#: modules/help/__init__.py:49 modules/help/templates/help_about.html:101
+#: modules/help/templates/help_contribute.html:9 modules/help/views.py:76
+#: templates/help-menu.html:39 templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Συνεισφέρετε"
 
-#: modules/help/__init__.py:53 templates/help-menu.html:46
-#: templates/help-menu.html:47
+#: modules/help/__init__.py:53 templates/base.html:211 templates/base.html:214
+#: templates/help-menu.html:46 templates/help-menu.html:47
+#: templates/index.html:96
 msgid "About"
 msgstr "Σχετικά με"
 
-#: modules/help/templates/help_about.html:17
+#: modules/help/templates/help_about.html:18
 #: modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
@@ -3025,7 +3030,7 @@ msgstr ""
 "Τρέχετε λειτουργικό %(os_release)s και έκδοση %(version)s για το "
 "%(box_name)s."
 
-#: modules/help/templates/help_about.html:23
+#: modules/help/templates/help_about.html:24
 #, fuzzy, python-format
 #| msgid "There is a new %(box_name)s version available."
 msgid ""
@@ -3033,13 +3038,13 @@ msgid ""
 "a>."
 msgstr "Υπάρχει μια νέα έκδοση %(box_name)s διαθέσιμη."
 
-#: modules/help/templates/help_about.html:28
+#: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "To %(box_name)s είναι ενημερωμένο."
 
-#: modules/help/templates/help_about.html:35
+#: modules/help/templates/help_about.html:37
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -3059,7 +3064,7 @@ msgstr ""
 "proxy και ένα Tor relay, σε μια συσκευή που μπορεί να αντικαταστήσει το Wi-"
 "Fi router, έτσι ώστε τα δεδομένα σας να μείνουν μαζί σας."
 
-#: modules/help/templates/help_about.html:48
+#: modules/help/templates/help_about.html:50
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -3077,7 +3082,7 @@ msgstr ""
 "πραγματοποιήσουν, επιστρέφουμε το Internet στην αρχιτεκτονική του ομότιμου "
 "σχεδιασμού."
 
-#: modules/help/templates/help_about.html:61
+#: modules/help/templates/help_about.html:63
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -3088,7 +3093,7 @@ msgstr ""
 "κατανεμημένες υπηρεσιες και όχι κεντρικές. Το %(box_name)s έχει ως στόχο να "
 "τα φέρει όλα μαζί σε ένα βολικό πακέτο."
 
-#: modules/help/templates/help_about.html:69
+#: modules/help/templates/help_about.html:71
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -3099,18 +3104,45 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 
-#: modules/help/templates/help_about.html:82
-#, python-format
-msgid ""
-"For more information about the %(box_name)s project, see the <a "
-"href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-msgstr ""
-"Για περισσότερες πληροφορίες σχετικά με το έργο %(box_name)s, ανατρέξτε στο "
-"<a href = \"https://wiki.debian.org/FreedomBox\" >%(box_name)s wiki </a>."
-
-#: modules/help/templates/help_about.html:91
-msgid "Learn more"
+#: modules/help/templates/help_about.html:85
+#, fuzzy
+#| msgid "Learn more"
+msgid "Learn"
 msgstr "Μάθε περισσότερα"
+
+#: modules/help/templates/help_about.html:88
+msgid "Homepage"
+msgstr "Αρχική σελίδα"
+
+#: modules/help/templates/help_about.html:104 templates/toolbar.html:19
+msgid "Donate"
+msgstr "Δωρεά"
+
+#: modules/help/templates/help_about.html:107
+msgid "Join project"
+msgstr ""
+
+#: modules/help/templates/help_about.html:111
+msgid "Translate"
+msgstr ""
+
+#: modules/help/templates/help_about.html:117
+#, fuzzy
+#| msgid "Get Support"
+msgid "Support"
+msgstr "Λάβετε Υποστήριξη"
+
+#: modules/help/templates/help_about.html:121
+msgid "Forum"
+msgstr ""
+
+#: modules/help/templates/help_about.html:126
+msgid "IRC Chatroom"
+msgstr "Αίθουσα συνομιλίας IRC"
+
+#: modules/help/templates/help_about.html:131
+msgid "Mailing list"
+msgstr "Λίστα ηλεκτρονικού ταχυδρομείου"
 
 #: modules/help/templates/help_base.html:21
 #: modules/help/templates/help_index.html:61
@@ -3358,12 +3390,12 @@ msgstr ""
 msgid "Documentation and FAQ"
 msgstr "Βοηθητικά έγγραφα και συχνές ερωτήσεις"
 
-#: modules/help/views.py:99
+#: modules/help/views.py:98
 #, python-brace-format
 msgid "About {box_name}"
 msgstr "Σχετικά με το {box_name}"
 
-#: modules/help/views.py:133
+#: modules/help/views.py:135
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "Εγχειρίδιο για το {box_name}"
@@ -3675,7 +3707,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:254
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
 msgid "JavaScript license information"
 msgstr "Πληροφορίες άδειας χρήσης JavaScript"
 
@@ -9141,16 +9173,16 @@ msgstr ""
 msgid "Check nsswitch config \"{database}\""
 msgstr ""
 
-#: modules/users/forms.py:35
+#: modules/users/forms.py:36
 msgid "Username is taken or is reserved."
 msgstr "Το όνομα χρήστη είναι δεσμευμένο."
 
-#: modules/users/forms.py:70
+#: modules/users/forms.py:71
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
 msgstr ""
 
-#: modules/users/forms.py:106
+#: modules/users/forms.py:107
 #, fuzzy
 #| msgid ""
 #| "Select which services should be available to the new user. The user will "
@@ -9172,52 +9204,52 @@ msgstr ""
 "υπηρεσίες. Μπορούν επίσης να συνδεθούν στο σύστημα μέσω του SSH και να έχουν "
 "δικαιώματα διαχειριστή (sudo)."
 
-#: modules/users/forms.py:124
+#: modules/users/forms.py:125
 #, fuzzy
 #| msgid "Invalid server name"
 msgid "Enter a valid username."
 msgstr "Μη έγκυρο όνομα διακομιστή"
 
-#: modules/users/forms.py:131
+#: modules/users/forms.py:132
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
 
-#: modules/users/forms.py:140
+#: modules/users/forms.py:141
 #, fuzzy
 #| msgid "Administrator Password"
 msgid "Authorization Password"
 msgstr "Κωδικός Πρόσβασης Διαχειριστή"
 
-#: modules/users/forms.py:147
+#: modules/users/forms.py:148
 #, python-brace-format
 msgid ""
 "Enter the password for user \"{user}\" to authorize account modifications."
 msgstr ""
 
-#: modules/users/forms.py:156
+#: modules/users/forms.py:157
 #, fuzzy
 #| msgid "Show password"
 msgid "Invalid password."
 msgstr "Εμφάνιση κωδικού"
 
-#: modules/users/forms.py:212 modules/users/forms.py:417
+#: modules/users/forms.py:213 modules/users/forms.py:439
 #, fuzzy, python-brace-format
 #| msgid "Creating LDAP user failed."
 msgid "Creating LDAP user failed: {error}"
 msgstr "Η δημιουργία χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:224
+#: modules/users/forms.py:225
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to {group} group."
 msgid "Failed to add new user to {group} group: {error}"
 msgstr "Απέτυχε η προσθήκη νέου χρήστη στην ομάδα {group}."
 
-#: modules/users/forms.py:240
+#: modules/users/forms.py:241
 msgid "Authorized SSH Keys"
 msgstr "Εξουσιοδοτημένα κλειδιά SSH"
 
-#: modules/users/forms.py:242
+#: modules/users/forms.py:243
 msgid ""
 "Setting an SSH public key will allow this user to securely log in to the "
 "system without using a password. You may enter multiple keys, one on each "
@@ -9228,37 +9260,55 @@ msgstr ""
 "Μπορείτε να εισαγάγετε πολλαπλά κλειδιά, ένα σε κάθε γραμμή. Οι κενές "
 "γραμμές και οι γραμμές που ξεκινούν με # θα αγνοηθούν."
 
-#: modules/users/forms.py:298
+#: modules/users/forms.py:252
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete user"
+msgstr "Διαγραφή χρήστη"
+
+#: modules/users/forms.py:254
+msgid ""
+"Deleting the user account will also remove all the files related to the "
+"user. Deleting files can be avoided by setting the user account as inactive."
+msgstr ""
+
+#: modules/users/forms.py:305
+#, fuzzy
+#| msgid "Failed to add user to group."
+msgid "Failed to delete user."
+msgstr "Απέτυχε η προσθήκη χρήστη στην ομάδα."
+
+#: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
 msgstr "Η μετονομασία του χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:309
+#: modules/users/forms.py:331
 msgid "Failed to remove user from group."
 msgstr "Απέτυχε η κατάργηση του χρήστη από την ομάδα."
 
-#: modules/users/forms.py:319
+#: modules/users/forms.py:341
 msgid "Failed to add user to group."
 msgstr "Απέτυχε η προσθήκη χρήστη στην ομάδα."
 
-#: modules/users/forms.py:326
+#: modules/users/forms.py:348
 msgid "Unable to set SSH keys."
 msgstr "Δεν ήταν δυνατό να προστεθούν τα κλειδιά SSH."
 
-#: modules/users/forms.py:339
+#: modules/users/forms.py:361
 msgid "Failed to change user status."
 msgstr "Απέτυχε η αλλαγή της κατάστασης χρήστη."
 
-#: modules/users/forms.py:380
+#: modules/users/forms.py:402
 msgid "Changing LDAP user password failed."
 msgstr "Η αλλαγή του κωδικού πρόσβασης χρήστη LDAP απέτυχε."
 
-#: modules/users/forms.py:425
+#: modules/users/forms.py:447
 #, fuzzy, python-brace-format
 #| msgid "Failed to add new user to admin group."
 msgid "Failed to add new user to admin group: {error}"
 msgstr "Αποτυχία προσθήκης νέου χρήστη στην ομάδα διαχειριστών."
 
-#: modules/users/forms.py:448
+#: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Ο λογαριασμός χρήστη δημιουργήθηκε, τώρα είστε συνδεδεμένοι"
 
@@ -9274,23 +9324,9 @@ msgstr "Αποθήκευση κωδικού πρόσβασης"
 #: modules/users/templates/users_create.html:11
 #: modules/users/templates/users_create.html:19
 #: modules/users/templates/users_list.html:15
-#: modules/users/templates/users_list.html:17 modules/users/views.py:46
+#: modules/users/templates/users_list.html:17 modules/users/views.py:43
 msgid "Create User"
 msgstr "Δημιουργία χρήστη"
-
-#: modules/users/templates/users_delete.html:11 modules/users/views.py:138
-msgid "Delete User"
-msgstr "Διαγραφή χρήστη"
-
-#: modules/users/templates/users_delete.html:14
-#, python-format
-msgid "Delete user <strong>%(username)s</strong> permanently?"
-msgstr "Να διαγραφεί οριστικά ο χρήστης <strong>%(username)s </strong>;"
-
-#: modules/users/templates/users_delete.html:23
-#, python-format
-msgid "Delete %(username)s"
-msgstr "Διαγραφή %(username)s"
 
 #: modules/users/templates/users_firstboot.html:11
 msgid "Administrator Account"
@@ -9337,7 +9373,7 @@ msgstr ""
 msgid "Skip this step"
 msgstr ""
 
-#: modules/users/templates/users_list.html:11 modules/users/views.py:64
+#: modules/users/templates/users_list.html:11 modules/users/views.py:61
 msgid "Users"
 msgstr "Χρήστες"
 
@@ -9346,18 +9382,13 @@ msgstr "Χρήστες"
 msgid "Edit user %(username)s"
 msgstr "Επεξεργασία χρήστη %(username)s"
 
-#: modules/users/templates/users_list.html:41
-#, python-format
-msgid "Delete user %(username)s"
-msgstr "Διαγραφή χρήστη %(username)s"
-
-#: modules/users/templates/users_update.html:11
+#: modules/users/templates/users_update.html:12
 #, fuzzy, python-format
 #| msgid "Edit user %(username)s"
 msgid "Edit User <em>%(username)s</em>"
 msgstr "Επεξεργασία χρήστη %(username)s"
 
-#: modules/users/templates/users_update.html:19
+#: modules/users/templates/users_update.html:20
 #, python-format
 msgid ""
 "Use the <a href='%(change_password_url)s'>change password form </a> to "
@@ -9366,39 +9397,62 @@ msgstr ""
 "Χρησιμοποιήστε τη <a href='%(change_password_url)s'> φόρμα αλλαγής κωδικού "
 "πρόσβασης </a> για να αλλάξετε τον κωδικό πρόσβασης."
 
-#: modules/users/templates/users_update.html:31
+#: modules/users/templates/users_update.html:32
 #: templates/language-selection.html:17
 msgid "Save Changes"
 msgstr "Αποθήκευση αλλαγών"
 
-#: modules/users/views.py:44
+#: modules/users/templates/users_update.html:41
+#, fuzzy, python-format
+#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+msgid "Delete user <em>%(username)s</em> and all the user's files?"
+msgstr "Να διαγραφεί οριστικά ο χρήστης <strong>%(username)s </strong>;"
+
+#: modules/users/templates/users_update.html:46 templates/messages.html:11
+msgid "Close"
+msgstr ""
+
+#: modules/users/templates/users_update.html:51
+msgid ""
+"Deleting a user account also removes all the files user's home directory. If "
+"you wish to keep these files, disable the user account instead."
+msgstr ""
+
+#: modules/users/templates/users_update.html:59
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete user and files"
+msgstr "Διαγραφή χρήστη"
+
+#: modules/users/templates/users_update.html:62
+msgid "Cancel"
+msgstr "Άκυρο"
+
+#: modules/users/views.py:41
 #, python-format
 msgid "User %(username)s created."
 msgstr "Ο χρήστης %(username)s δημιουργήθηκε."
 
-#: modules/users/views.py:80
+#: modules/users/views.py:72
 #, python-format
 msgid "User %(username)s updated."
 msgstr "O χρήστης %(username)s ενημερώθηκε."
 
-#: modules/users/views.py:81
+#: modules/users/views.py:73
 msgid "Edit User"
 msgstr "Επεξεργασία χρήστη"
 
-#: modules/users/views.py:151
-#, python-brace-format
-msgid "User {user} deleted."
-msgstr "Ο χρήστης {user} διαγράφηκε."
+#: modules/users/views.py:111
+#, fuzzy, python-format
+#| msgid "User %(username)s created."
+msgid "User %(username)s deleted."
+msgstr "Ο χρήστης %(username)s δημιουργήθηκε."
 
-#: modules/users/views.py:157
-msgid "Deleting LDAP user failed."
-msgstr "Η διαγραφή του χρήστη LDAP απέτυχε."
-
-#: modules/users/views.py:185
+#: modules/users/views.py:130
 msgid "Change Password"
 msgstr "Αλλαγή κωδικού πρόσβασης"
 
-#: modules/users/views.py:186
+#: modules/users/views.py:131
 msgid "Password changed successfully."
 msgstr "Ο κωδικός πρόσβασης άλλαξε με επιτυχία."
 
@@ -10161,7 +10215,7 @@ msgstr "Αλλαγή κωδικού πρόσβασης"
 msgid "Shut down"
 msgstr "ΤΕΡΜΑΤΙΣΜΟΣ ΛΕΙΤΟΥΡΓΙΑΣ"
 
-#: templates/base.html:193 templates/base.html:222
+#: templates/base.html:193 templates/base.html:231
 msgid "Log out"
 msgstr "Αποσύνδεση"
 
@@ -10169,7 +10223,7 @@ msgstr "Αποσύνδεση"
 msgid "Select language"
 msgstr "Επιλογή γλώσσας"
 
-#: templates/base.html:211 templates/base.html:213
+#: templates/base.html:220 templates/base.html:222
 msgid "Log in"
 msgstr "Σύνδεση"
 
@@ -10246,57 +10300,6 @@ msgstr ""
 "Ενεργοποιήστε μερικές <a href=\"%(apps_url)s\"> εφαρμογές </a> για να "
 "προσθέσετε συντομεύσεις σε αυτήν τη σελίδα."
 
-#: templates/index.html:104
-#, python-format
-msgid ""
-"%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting web "
-"server to deploy social applications on small machines. It provides online "
-"communication tools respecting your privacy and data ownership."
-msgstr ""
-"%(box_name)s, ένα καθαρό μίγμα Debian, είναι ένα 100%% ελεύθερο λογισμικό "
-"διακομιστής για να τρέξετε κοινωνικές εφαρμογές σε αδύναμους υπολογιστές. "
-"Παρέχει εργαλεία επικοινωνίας που σέβονται την ιδιωτική σας ζωή και τα "
-"προσωπικά δεδομένα σας."
-
-#: templates/index.html:113
-#, python-format
-msgid ""
-"This portal is a part of the %(box_name)s web interface. %(box_name)s is "
-"free software, distributed under the GNU Affero General Public License, "
-"Version 3 or later."
-msgstr ""
-"Αυτή η πύλη είναι μέρος της σελίδας ιστού του %(box_name)s. το %(box_name)s "
-"είναι ελεύθερο λογισμικό, που διανέμεται με τη γενική άδεια δημόσιας χρήσης "
-"GNU Affero, έκδοση 3 ή νεότερη."
-
-#: templates/index.html:131
-msgid "Source Code"
-msgstr "Πηγαίος Κώδικας"
-
-#: templates/index.html:136
-msgid "Homepage"
-msgstr "Αρχική σελίδα"
-
-#: templates/index.html:139 templates/toolbar.html:19
-msgid "Donate"
-msgstr "Δωρεά"
-
-#: templates/index.html:143
-msgid "FreedomBox Foundation"
-msgstr "Ίδρυμα FreedomBox"
-
-#: templates/index.html:150
-msgid "Forum"
-msgstr ""
-
-#: templates/index.html:155
-msgid "IRC Chatroom"
-msgstr "Αίθουσα συνομιλίας IRC"
-
-#: templates/index.html:160
-msgid "Mailing list"
-msgstr "Λίστα ηλεκτρονικού ταχυδρομείου"
-
 #: templates/internal-zone.html:11
 #, fuzzy, python-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
@@ -10321,10 +10324,6 @@ msgid ""
 msgstr ""
 "Προς το παρόν οι ακόλουθες διασυνδέσεις δικτύου έχουν ρυθμιστεί ως "
 "εσωτερικές: %(interface_list)s"
-
-#: templates/messages.html:11
-msgid "Close"
-msgstr ""
 
 #: templates/notifications-dropdown.html:11
 #, fuzzy
@@ -10468,6 +10467,60 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Select the backup file you want to upload"
+#~ msgstr "Επιλέξτε το αντίγραφο ασφαλείας που θέλετε να ανεβάσετε"
+
+#, python-format
+#~ msgid ""
+#~ "For more information about the %(box_name)s project, see the <a "
+#~ "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+#~ msgstr ""
+#~ "Για περισσότερες πληροφορίες σχετικά με το έργο %(box_name)s, ανατρέξτε "
+#~ "στο <a href = \"https://wiki.debian.org/FreedomBox\" >%(box_name)s wiki </"
+#~ "a>."
+
+#, python-format
+#~ msgid "Delete %(username)s"
+#~ msgstr "Διαγραφή %(username)s"
+
+#, python-format
+#~ msgid "Delete user %(username)s"
+#~ msgstr "Διαγραφή χρήστη %(username)s"
+
+#, python-brace-format
+#~ msgid "User {user} deleted."
+#~ msgstr "Ο χρήστης {user} διαγράφηκε."
+
+#~ msgid "Deleting LDAP user failed."
+#~ msgstr "Η διαγραφή του χρήστη LDAP απέτυχε."
+
+#, python-format
+#~ msgid ""
+#~ "%(box_name)s, a Debian pure blend, is a 100%% free software self-hosting "
+#~ "web server to deploy social applications on small machines. It provides "
+#~ "online communication tools respecting your privacy and data ownership."
+#~ msgstr ""
+#~ "%(box_name)s, ένα καθαρό μίγμα Debian, είναι ένα 100%% ελεύθερο λογισμικό "
+#~ "διακομιστής για να τρέξετε κοινωνικές εφαρμογές σε αδύναμους υπολογιστές. "
+#~ "Παρέχει εργαλεία επικοινωνίας που σέβονται την ιδιωτική σας ζωή και τα "
+#~ "προσωπικά δεδομένα σας."
+
+#, python-format
+#~ msgid ""
+#~ "This portal is a part of the %(box_name)s web interface. %(box_name)s is "
+#~ "free software, distributed under the GNU Affero General Public License, "
+#~ "Version 3 or later."
+#~ msgstr ""
+#~ "Αυτή η πύλη είναι μέρος της σελίδας ιστού του %(box_name)s. το "
+#~ "%(box_name)s είναι ελεύθερο λογισμικό, που διανέμεται με τη γενική άδεια "
+#~ "δημόσιας χρήσης GNU Affero, έκδοση 3 ή νεότερη."
+
+#~ msgid "Source Code"
+#~ msgstr "Πηγαίος Κώδικας"
+
+#~ msgid "FreedomBox Foundation"
+#~ msgstr "Ίδρυμα FreedomBox"
 
 #, python-format
 #~ msgid "Without any apps, your %(box_name)s cannot do very much."
@@ -11035,9 +11088,6 @@ msgstr "Gujarati"
 
 #~ msgid "Publishing key to keyserver..."
 #~ msgstr "Δημοσίευση κλειδιού στο διακομιστή κλειδιών..."
-
-#~ msgid "Cancel"
-#~ msgstr "Άκυρο"
 
 #~ msgid "OpenPGP Fingerprint"
 #~ msgstr "Αποτύπωμα OpenPGP"

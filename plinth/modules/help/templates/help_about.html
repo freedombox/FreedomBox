@@ -13,23 +13,25 @@
          class="main-graphic" />
   </p>
 
-  <div class="alert {% if new_version %}alert-warning{% else %}alert-success{% endif %}">
-    {% blocktrans trimmed %}
-      You are running {{ os_release }} and {{ box_name }} version {{ version }}.
-    {% endblocktrans %}
+  {% if version %}
+    <div class="alert {% if new_version %}alert-warning{% else %}alert-success{% endif %}">
+      {% blocktrans trimmed %}
+        You are running {{ os_release }} and {{ box_name }} version {{ version }}.
+      {% endblocktrans %}
 
-    {% if new_version %}
-      {% url 'upgrades:index' as upgrades_url %}
-      {% blocktrans trimmed %}
-        There is a new {{ box_name }} version
-        <a href="{{ upgrades_url }}">available</a>.
-      {% endblocktrans %}
-    {% else %}
-      {% blocktrans trimmed %}
-        {{ box_name }} is up to date.
-      {% endblocktrans %}
-    {% endif %}
-  </div>
+      {% if new_version %}
+        {% url 'upgrades:index' as upgrades_url %}
+        {% blocktrans trimmed %}
+          There is a new {{ box_name }} version
+          <a href="{{ upgrades_url }}">available</a>.
+        {% endblocktrans %}
+      {% else %}
+        {% blocktrans trimmed %}
+          {{ box_name }} is up to date.
+        {% endblocktrans %}
+      {% endif %}
+    </div>
+  {% endif %}
 
   <p>
     {% blocktrans trimmed %}
@@ -78,16 +80,59 @@
     {% endblocktrans %}
   </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      For more information about the {{ box_name }} project, see the
-      <a href="https://wiki.debian.org/FreedomBox">{{ box_name }}
-      Wiki</a>.
-    {% endblocktrans %}
-  </p>
-
-  <p><a class="btn btn-primary"
-        href="https://wiki.debian.org/FreedomBox"
-        target="_blank">{% trans "Learn more" %}</a></p>
+  <div class="row help-about-links">
+    <section class="col">
+      <h2>{% trans "Learn" %}</h2>
+      <ul>
+        <li>
+          <a href="https://freedombox.org">{% trans "Homepage" %}</a>
+        </li>
+        <li>
+          <a href="https://wiki.debian.org/FreedomBox/Manual">
+            {% trans "Manual" context "User guide"%}
+          </a>
+        </li>
+        <li>
+          <a href="https://wiki.debian.org/FreedomBox">{% trans "Wiki" %}</a>
+        </li>
+      </ul>
+    </section>
+    <section class="col">
+      <h2>{% trans "Contribute" %}</h2>
+      <ul>
+        <li>
+          <a href="https://freedomboxfoundation.org/donate/">{% trans "Donate" %}</a>
+        </li>
+        <li>
+          <a href="https://salsa.debian.org/freedombox-team/">{% trans "Join project" %}</a>
+        </li>
+        <li>
+          <a href="https://hosted.weblate.org/projects/freedombox/">
+            {% trans "Translate" %}
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class="col">
+      <h2>{% trans "Support" %}</h2>
+      <ul>
+        <li>
+          <a href="https://discuss.freedombox.org/">
+            {%trans "Forum" %}
+          </a>
+        </li>
+        <li>
+          <a href="https://webchat.oftc.net/?randomnick=1&channels=freedombox&prompt=1">
+            {%trans "IRC Chatroom" %}
+          </a>
+        </li>
+        <li>
+          <a href="https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss">
+            {% trans "Mailing list" %}
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
 
 {% endblock %}

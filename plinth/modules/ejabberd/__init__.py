@@ -50,7 +50,7 @@ class EjabberdApp(app_module.App):
 
     app_id = 'ejabberd'
 
-    _version = 8
+    _version = 9
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -158,6 +158,10 @@ class EjabberdApp(app_module.App):
             configuration = self.get_component(
                 'turn-ejabberd').get_configuration()
             update_turn_configuration(configuration, force=True)
+
+        if old_version and old_version < 9 and privileged.mam('status'):
+            # Re-enable to change configuration
+            privileged.mam('enable')
 
 
 class EjabberdTurnConsumer(TurnConsumer):

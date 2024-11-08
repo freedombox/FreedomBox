@@ -183,19 +183,6 @@ body {
     padding-top: 6rem;
     position: relative;
     font-family: Lato, sans-serif;
-    background: url('../img/noise.png') var(--background-color);
-}
-
-@media (max-width: 767px) {
-    body {
-        background: none;
-    }
-
-    body.index-page,
-    body.apps-page,
-    body.system-page {
-        background: url('../img/noise.png') var(--background-color);
-    }
 }
 
 .multiple-checkbox li {
@@ -293,12 +280,6 @@ body {
     text-align: center;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-.footer-logo {
-    width: 8.75rem;
-}
-
 html {
     position: relative;
 }
@@ -313,10 +294,12 @@ html {
 }
 
 .container {
-  max-width: 1000px;
+    /* Same width as container-xxl in Bootstrap 5 */
+    max-width: 1320px;
 }
 
 .content-container {
+    max-width: 1000px;
     margin-bottom: 1.25rem;
 }
 
@@ -357,19 +340,12 @@ html {
 @media (min-width: 768px) {
     .content-container {
         padding: 1.5rem 3rem 3rem;
-        background-color: white;
-        border: 1px solid #ddd;
-        border-radius: 0.25rem;
     }
 }
 
 footer {
     text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    height: 9.375rem;
-    padding-top: 9.375rem;
+    padding-top: 20rem;
 }
 
 /*
@@ -558,9 +534,9 @@ a.menu_link_active {
     display: block;
     line-height: 1.42857143;
     text-align: center;
-    box-shadow: 0 0.1875rem 0.3125rem 0 rgba(0,0,0,0.12);
+    box-shadow: 0 0.1875rem 0.3125rem 0 rgba(0,0,0,0.2);
     width: 10rem;
-    padding: 0;
+    padding: 0.5rem 0.25rem;
     margin: 0 0.625rem 1.25rem;
     border: none;
     border-radius: 0.5rem;
@@ -573,22 +549,20 @@ a.menu_link_active {
 
 .card .nav-link {
     display: block;
-    padding: 0.25rem;
-    color: #646464;
+    padding: 0rem;
+    color: #212529;  /* Same as Bootstrap default color */
 }
 
 .card-title {
-    font-weight: 800;
     font-size: 1.25rem;
-    padding: 0.75rem 0;
+    padding: 0.25rem 0;
     margin-bottom: 0;
 }
 
 .card-description {
     font-weight: 400;
-    padding: 0.75rem 0;
     color: #646464;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
 }
 
 .card-icon span,
@@ -596,12 +570,14 @@ a.menu_link_active {
     width: 6.25rem;
     height: 6.25rem;
     font-size: 5rem;
+    margin: 0.5rem 0;
 }
 
 /* System page - special card styling */
 .system-page .card {
     text-align: left;
-    width: 14.375rem;
+    width: 19.375rem;
+    padding: 0;
 }
 
 .system-page .card .nav-link {
@@ -614,7 +590,6 @@ a.menu_link_active {
 .system-page .card-title {
     font-size: 1.125rem;
     font-style: normal;
-    font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -894,13 +869,26 @@ input[type='submit'].running-status-button {
     }
 }
 
-/* Help manual - anchor is below navbar */
+/*
+ * Help
+ */
+/* Manual - anchor is below navbar */
 *[id^='idm']:before {
     display: block;
     content: " ";
     margin-top: -3.75rem;
     height: 3.75rem;
     visibility: hidden;
+}
+
+.help-about-links h2 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.help-about-links ul {
+    list-style: none;
+    padding: 0;
 }
 
 /*

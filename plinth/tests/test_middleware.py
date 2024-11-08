@@ -17,8 +17,6 @@ from plinth import app as app_module
 from plinth.middleware import (AdminRequiredMiddleware, CommonErrorMiddleware,
                                SetupMiddleware)
 
-setup_helper = None
-
 
 @pytest.fixture(name='kwargs')
 def fixture_kwargs():
@@ -76,14 +74,11 @@ class TestSetupMiddleware:
         assert response is None
 
     @staticmethod
-    @patch('plinth.tests.test_middleware.setup_helper')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
-    def test_module_is_up_to_date(_reverse, resolve, setup_helper_, app,
-                                  middleware, kwargs):
+    def test_module_is_up_to_date(_reverse, resolve, app, middleware, kwargs):
         """Test that none is returned when module is up-to-date."""
         resolve.return_value.namespaces = ['mockapp']
-        setup_helper_.is_finished = None
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 
         request = RequestFactory().get('/plinth/mockapp')
@@ -92,20 +87,18 @@ class TestSetupMiddleware:
         assert response is None
 
     @staticmethod
-    @patch('plinth.tests.test_middleware.setup_helper')
     @patch('plinth.views.SetupView')
     @patch('django.urls.resolve')
     @patch('django.urls.reverse', return_value='users:login')
     @pytest.mark.django_db
-    def test_module_view(_reverse, resolve, setup_view, setup_helper, app,
-                         middleware, kwargs):
+    def test_module_view(_reverse, resolve, setup_view, app, middleware,
+                         kwargs):
         """Test that only registered users can access the setup view."""
         resolve.return_value.namespaces = ['mockapp']
         view = Mock()
         setup_view.as_view.return_value = view
         request = RequestFactory().get('/plinth/mockapp')
         request.session = MagicMock()
-        setup_helper.is_finished = None
 
         # Verify that anonymous users cannot access the setup page
         request.user = AnonymousUser()

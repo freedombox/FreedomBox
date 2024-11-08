@@ -12,7 +12,7 @@ Pending: - status log
 import json
 import pathlib
 import subprocess
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import pytest
 from django import urls
@@ -113,10 +113,18 @@ def test_contribute_page(requests_get, decompress, apt_cache, rf):
 def test_about(_get_os_release, _is_newer_version_available, rf):
     """Test some expected items in about view."""
     about_url = urls.reverse('help:about')
-    response = views.about(rf.get(about_url))
+    request = rf.get(about_url)
+    request.user = Mock()
+    request.user.is_authenticated = True
+    response = views.about(request)
     assert _is_page(response)
     for item in ('version', 'new_version', 'os_release'):
         assert item in response.context_data
+
+    request.user.is_authenticated = False
+    response = views.about(request)
+    for item in ('version', 'new_version', 'os_release'):
+        assert item not in response.context_data
 
 
 # ---------------------------------------------------------------------------

@@ -5,7 +5,8 @@ IFS=$'\n\t'
 echo "Installing requirements"
 sudo apt-get install -yq --no-install-recommends \
     python3-pytest python3-pytest-django python3-pytest-instafail \
-    python3-pytest-xdist python3-pip python3-wheel firefox-esr git smbclient
+    python3-pytest-xdist python3-pip python3-wheel firefox-esr git smbclient \
+    python3-testinfra
 
 # Use compatible versions of Splinter and Selenium
 PIP_VERSION=$(dpkg-query -W -f '${Version}' python3-pip)

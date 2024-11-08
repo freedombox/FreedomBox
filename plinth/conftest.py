@@ -223,7 +223,7 @@ def fixture_fix_session_browser_screenshots(request):
             continue
 
         value = fixture_def.cached_result[0]
-        should_take_screenshot = (hasattr(value, "__splinter_browser__")
+        should_take_screenshot = (hasattr(value, '__splinter_browser__')
                                   and splinter_make_screenshot_on_failure
                                   and getattr(request.node, 'splinter_failure',
                                               True))
@@ -250,3 +250,10 @@ def fixture_fix_session_browser_screenshots(request):
             }
 
             plugin._take_screenshot(**kwargs)
+
+
+@pytest.fixture(name='host_sudo')
+def fixture_host_sudo(host):
+    """Pytest fixture to run commands with sudo."""
+    with host.sudo():
+        yield host
