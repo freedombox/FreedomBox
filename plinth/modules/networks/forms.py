@@ -168,8 +168,9 @@ class ConnectionForm(forms.Form):
         """Disable DNS fallback field if necessary."""
         from plinth.modules import names
         super().__init__(*args, **kwargs)
-        self.fields['dns_over_tls'].disabled = (
-            not names.is_resolved_installed())
+        if 'dns_over_tls' in self.fields:
+            self.fields['dns_over_tls'].disabled = (
+                not names.is_resolved_installed())
 
     @staticmethod
     def _get_interface_choices(device_type):
