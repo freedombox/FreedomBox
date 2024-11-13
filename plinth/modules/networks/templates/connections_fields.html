@@ -15,21 +15,19 @@
 {% endif %}
 
 <div class="accordion" id="accordion-connections-fields">
-  <div class='field-group'>
-    <div class="card-header" id="header-general">
-      <h4>
-        <button class="btn btn-block text-left dropdown-toggle" type="button"
-                data-toggle="collapse" data-target="#collapse-general"
-                aria-expanded="true" aria-controls="collapse-general">
-          {% trans "General" %}
-        </button>
-      </h4>
-    </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="header-general">
+      <button class="accordion-button" type="button"
+              data-bs-toggle="collapse" data-bs-target="#collapse-general"
+              aria-expanded="true" aria-controls="collapse-general">
+        {% trans "General" %}
+      </button>
+    </h2>
 
-    <div id="collapse-general" class="collapse show"
+    <div id="collapse-general" class="accordion-collpase collapse show"
          aria-labelledby="header-general"
-         data-parent="#accordion-connections-fields">
-      <div class="card-body">
+         data-bs-parent="#accordion-connections-fields">
+      <div class="accordion-body field-group">
         {{ form.name|bootstrap }}
         {{ form.interface|bootstrap }}
         {{ form.zone|bootstrap }}
@@ -50,23 +48,21 @@
   {% endif %}
 
   {% if form.ipv4_method %}
-    <div class="field-group">
-      <div class="card-header" id="header-ipv4">
-        <h4>
-          <button class="btn btn-block text-left dropdown-toggle {{ form.errors|yesno:",collapsed" }}"
-                  type="button" data-toggle="collapse"
-                  data-target="#collapse-ipv4"
-                  aria-expanded="{{ form.errors|yesno:"true,false" }}"
-                  aria-controls="collapse-ipv4">
-            {% trans "IPv4" %}
-          </button>
-        </h4>
-      </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="header-ipv4">
+        <button class="accordion-button {{ form.errors|yesno:",collapsed" }}"
+                type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse-ipv4"
+                aria-expanded="{{ form.errors|yesno:"true,false" }}"
+                aria-controls="collapse-ipv4">
+          {% trans "IPv4" %}
+        </button>
+      </h2>
 
-      <div id="collapse-ipv4" class="collapse {{ form.errors|yesno:"show," }}"
+      <div id="collapse-ipv4" class="accordion-collpase collapse {{ form.errors|yesno:"show," }}"
            aria-labelledby="header-ipv4"
-           data-parent="#accordion-connections-fields">
-        <div class="card-body">
+           data-bs-parent="#accordion-connections-fields">
+        <div class="accordion-body field-group">
           {{ form.ipv4_method|bootstrap }}
           {{ form.ipv4_address|bootstrap }}
           {{ form.ipv4_netmask|bootstrap }}
@@ -79,23 +75,21 @@
   {% endif %}
 
   {% if form.ipv6_method %}
-    <div class="field-group">
-      <div class="card-header" id="header-ipv6">
-        <h4>
-          <button class="btn btn-block text-left dropdown-toggle {{ form.errors|yesno:",collapsed" }}"
-                  type="button" data-toggle="collapse"
-                  data-target="#collapse-ipv6"
-                  aria-expanded="{{ form.errors|yesno:"true,false" }}"
-                  aria-controls="collapse-ipv6">
-            {% trans "IPv6" %}
-          </button>
-        </h4>
-      </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="header-ipv6">
+        <button class="accordion-button {{ form.errors|yesno:",collapsed" }}"
+                type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse-ipv6"
+                aria-expanded="{{ form.errors|yesno:"true,false" }}"
+                aria-controls="collapse-ipv6">
+          {% trans "IPv6" %}
+        </button>
+      </h2>
 
-      <div id="collapse-ipv6" class="collapse {{ form.errors|yesno:"show," }}"
+      <div id="collapse-ipv6" class="accordion-collpase collapse {{ form.errors|yesno:"show," }}"
            aria-labelledby="header-ipv6"
-           data-parent="#accordion-connections-fields">
-        <div class="card-body">
+           data-bs-parent="#accordion-connections-fields">
+        <div class="accordion-body field-group">
           {{ form.ipv6_method|bootstrap }}
           {{ form.ipv6_address|bootstrap }}
           {{ form.ipv6_prefix|bootstrap }}
