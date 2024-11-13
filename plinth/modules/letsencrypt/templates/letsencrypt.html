@@ -33,13 +33,13 @@
               <td>{{ domain }}</td>
               <td>
                 {% if domain_status.certificate_available and domain_status.validity == "valid" %}
-                  <span class="badge badge-success">
+                  <span class="badge text-bg-success">
                     {% blocktrans trimmed with expiry_date=domain_status.expiry_date %}
                       Valid, expires on {{ expiry_date }}
                     {% endblocktrans %}
                   </span>
                 {% elif domain_status.certificate_available and not domain_status.validity == "valid" %}
-                  <span class="badge badge-warning">
+                  <span class="badge text-bg-warning">
                     {% if "revoked" in domain_status.validity %}
                       {% blocktrans trimmed %}
                         Revoked
@@ -59,16 +59,16 @@
                     {% endif %}
                   </span>
                 {% else %}
-                  <span class="badge badge-warning">
+                  <span class="badge text-bg-warning">
                     {% trans "No certificate" %}
                   </span>
                 {% endif %}
               </td>
               <td>
                 {% if domain_status.web_enabled %}
-                  <span class="badge badge-success">{% trans "Enabled" %}</span>
+                  <span class="badge text-bg-success">{% trans "Enabled" %}</span>
                 {% else %}
-                  <span class="badge badge-warning">{% trans "Disabled" %}</span>
+                  <span class="badge text-bg-warning">{% trans "Disabled" %}</span>
                 {% endif %}
               </td>
               <td class="operations">

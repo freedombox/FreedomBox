@@ -36,10 +36,10 @@
               </td>
               <td class="app-status">
                 {% if component.is_enabled %}
-                  <span class='badge badge-success'>
+                  <span class='badge text-bg-success'>
                     {% trans "Enabled" %}</span>
                 {% else %}
-                  <span class='badge badge-warning'>
+                  <span class='badge text-bg-warning'>
                     {% trans "Disabled" %}</span>
                 {% endif %}
               </td>
@@ -54,16 +54,16 @@
                 </td>
                 <td class="service-status">
                   {% if port.name in internal_enabled_ports and port.name in external_enabled_ports %}
-                    <span class='badge badge-success'>
+                    <span class='badge text-bg-success'>
                       {% trans "Permitted" %}</span>
                   {% elif port.name in internal_enabled_ports %}
-                    <span class='badge badge-warning'>
+                    <span class='badge text-bg-warning'>
                       {% trans "Permitted (internal only)" %}</span>
                   {% elif port.name in external_enabled_ports %}
-                    <span class='badge badge-warning'>
+                    <span class='badge text-bg-warning'>
                       {% trans "Permitted (external only)" %}</span>
                   {% else %}
-                    <span class='badge badge-danger'>
+                    <span class='badge text-bg-danger'>
                       {% trans "Blocked" %}</span>
                   {% endif %}
                 </td>

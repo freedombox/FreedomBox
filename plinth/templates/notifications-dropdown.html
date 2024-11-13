@@ -13,7 +13,14 @@
        role="button" aria-expanded="false" aria-haspopup="true"
        data-target=".notifications">
       <span class="fa fa-bell nav-icon"></span>
-      <span class="badge badge-pill badge-{{ notifications_max_severity }}">
+      <span class="badge rounded-pill
+        {% if notifications_max_severity == 'exception' or notifications_max_severity == 'error' %}
+          text-bg-danger
+        {% elif notifications_max_severity == 'warning' %}
+          text-bg-warning
+        {% else %}
+          text-bg-info
+        {% endif %}">
         {{ notifications|length }}
       </span>
     </a>

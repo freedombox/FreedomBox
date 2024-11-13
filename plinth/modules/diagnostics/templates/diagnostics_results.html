@@ -18,13 +18,13 @@
           <td>{{ result.translated_description }}</td>
           <td class="diagnostics-result">
             {% if result.result == 'passed' %}
-              <span class="badge badge-success">{% trans result.result %}</span>
+              <span class="badge text-bg-success">{% trans result.result %}</span>
             {% elif result.result == 'failed' %}
-              <span class="badge badge-danger">{% trans result.result %}</span>
+              <span class="badge text-bg-danger">{% trans result.result %}</span>
             {% elif result.result == 'error' or result.result == 'warning' %}
-              <span class="badge badge-warning">{% trans result.result %}</span>
+              <span class="badge text-bg-warning">{% trans result.result %}</span>
 	    {% elif result.result == 'skipped' %}
-	      <span class="badge badge-secondary">{% trans result.result %}</span>
+	      <span class="badge text-bg-secondary">{% trans result.result %}</span>
             {% else %}
               {{ result.result }}
             {% endif %}

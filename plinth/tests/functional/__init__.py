@@ -628,7 +628,7 @@ def networks_set_firewall_zone(browser, zone):
     device = browser.find_by_xpath(
         '//span[contains(@class, "connection-type-label") and '
         'contains(., "Ethernet") ]/../..'
-        '//span[contains(@class, "badge-success") '
+        '//span[contains(@class, "text-bg-success") '
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
     device.click()
@@ -794,12 +794,12 @@ class BaseAppTests:
         session_browser.find_by_id('id_extra_actions_button').click()
         submit(session_browser, form_class='form-diagnostics-button')
 
-        warning_results = session_browser.find_by_css('.badge-warning')
+        warning_results = session_browser.find_by_css('.text-bg-warning')
         if warning_results:
             warnings.warn(
                 f'Diagnostics warnings for {self.app_name}: {warning_results}')
 
-        failure_results = session_browser.find_by_css('.badge-danger')
+        failure_results = session_browser.find_by_css('.text-bg-danger')
         assert not failure_results
 
     @pytest.mark.backups
