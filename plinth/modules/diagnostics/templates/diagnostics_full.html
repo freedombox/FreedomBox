@@ -53,8 +53,14 @@
       {% if app_data.diagnosis %}
         {% include "diagnostics_results.html" with results=app_data.diagnosis %}
       {% elif app_data.exception %}
-        <div class="alert alert-danger" role="alert">
-          {{ app_data.exception }}
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <div class="me-2">
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Caution:" %}</span>
+          </div>
+          <div>
+            {{ app_data.exception }}
+          </div>
         </div>
       {% else %}
         <p><span class="fa fa-hourglass-o"></span></p>

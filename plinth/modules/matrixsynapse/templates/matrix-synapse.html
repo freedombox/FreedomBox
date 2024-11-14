@@ -70,14 +70,20 @@
   {% endif %}
 
   {% if certificate_status != "valid" %}
-    <div class="alert alert-warning" role="alert">
-      {% url 'letsencrypt:index' as letsencrypt_url %}
-      {% blocktrans trimmed %}
-        The configured domain name is using a self-signed certificate.
-        Federation with other Matrix Synapse instances requires a valid TLS
-        certificate. Please go to <a href="{{ letsencrypt_url }}">Let's
-        Encrypt</a> to obtain one.
-      {% endblocktrans %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% url 'letsencrypt:index' as letsencrypt_url %}
+        {% blocktrans trimmed %}
+          The configured domain name is using a self-signed certificate.
+          Federation with other Matrix Synapse instances requires a valid TLS
+          certificate. Please go to <a href="{{ letsencrypt_url }}">Let's
+          Encrypt</a> to obtain one.
+        {% endblocktrans %}
+      </div>
     </div>
   {% endif %}
 {% endblock %}

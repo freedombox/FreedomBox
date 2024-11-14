@@ -5,11 +5,30 @@
 {% load i18n %}
 
 {% for message in messages %}
-  <div class='alert alert-{{ message.tags }} alert-dismissible'>
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert"
-            aria-label="{% trans "Close" %}">
-      <span aria-hidden="true">&times;</span>
-    </button>
+  <div class="alert alert-{{ message.tags }} alert-dismissible
+              d-flex align-items-center fade show"
+       role="alert">
+    <div class="me-2">
+      {% if message.tags == 'danger' %}
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Error:" %}</span>
+      {% elif message.tags == 'warning' %}
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      {% elif message.tags == 'info' %}
+        <span class="fa fa-info-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Info:" %}</span>
+      {% elif message.tags == 'success' %}
+        <span class="fa fa-check-circle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Success:" %}</span>
+      {% endif %}
+    </div>
+
+    <div>
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"
+              aria-label="{% trans "Close" %}">
+      </button>
+    </div>
   </div>
 {% endfor %}

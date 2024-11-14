@@ -6,11 +6,20 @@
 {% load i18n %}
 
 {% if form.non_field_errors %}
-  <div class="alert alert-danger">
-    <a class="close" data-dismiss="alert">&times;</a>
+  <div class="alert alert-danger alert-dismissible
+              d-flex align-items-center fade show">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Error:" %}</span>
+    </div>
+    <div>
       {% for non_field_error in form.non_field_errors %}
         {{ non_field_error }}
       {% endfor %}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"
+              aria-label="{% trans "Close" %}">
+      </button>
+    </div>
   </div>
 {% endif %}
 

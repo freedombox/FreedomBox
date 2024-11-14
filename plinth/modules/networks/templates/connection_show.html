@@ -18,15 +18,19 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       {% if connection.primary %}
-        <div class="alert alert-warning" role="alert">
-          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-          <span class="sr-only">{% trans "Caution:" %}</span>
-          {% blocktrans trimmed %}
-            This is the primary connection that {{ box_name }} relies on for
-            Internet connectivity. Altering it may render your {{ box_name }}
-            unreachable. Ensure that you have other means to access
-            {{ box_name }} before altering this connection.
-          {% endblocktrans %}
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+          <div class="me-2">
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Caution:" %}</span>
+          </div>
+          <div>
+            {% blocktrans trimmed %}
+              This is the primary connection that {{ box_name }} relies on for
+              Internet connectivity. Altering it may render your {{ box_name }}
+              unreachable. Ensure that you have other means to access
+              {{ box_name }} before altering this connection.
+            {% endblocktrans %}
+          </div>
         </div>
       {% endif %}
 
@@ -279,15 +283,20 @@
           </div>
         </div>
 
-        <div class="alert alert-info">
-          <span class="fa fa-info-circle" aria-hidden="true"></span>
-          {% blocktrans trimmed %}
-            This interface should be connected to a local
-            network/machine.  If you connect this interface to a
-            public network, services meant to be available only
-            internally will become available externally.  This is a
-            security risk.
-          {% endblocktrans %}
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+          <div class="me-2">
+            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Info:" %}</span>
+          </div>
+          <div>
+            {% blocktrans trimmed %}
+              This interface should be connected to a local
+              network/machine.  If you connect this interface to a
+              public network, services meant to be available only
+              internally will become available externally.  This is a
+              security risk.
+            {% endblocktrans %}
+          </div>
         </div>
       {% elif connection.zone == "external" %}
         <div class="list-group list-group-two-column">
@@ -299,14 +308,19 @@
           </div>
         </div>
 
-        <div class="alert alert-info">
-          <span class="fa fa-info-circle" aria-hidden="true"></span>
-          {% blocktrans trimmed %}
-            This interface should receive your Internet connection.
-            If you connect it to a local network/machine, many
-            services meant to available only internally will not be
-            available.
-          {% endblocktrans %}
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+          <div class="me-2">
+            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Info:" %}</span>
+          </div>
+          <div>
+            {% blocktrans trimmed %}
+              This interface should receive your Internet connection.
+              If you connect it to a local network/machine, many
+              services meant to available only internally will not be
+              available.
+            {% endblocktrans %}
+          </div>
         </div>
       {% else %}
         <div class="list-group list-group-two-column">
@@ -318,18 +332,23 @@
           </div>
         </div>
 
-        <div class="alert alert-info">
-          <span class="fa fa-info-circle" aria-hidden="true"></span>
-          {% blocktrans trimmed %}
-            This interface is not maintained by {{ box_name }}.  For security,
-            it is automatically assigned to the external zone.
-          {% endblocktrans %}
-          {% blocktrans trimmed %}
-            This interface should receive your Internet connection.
-            If you connect it to a local network/machine, many
-            services meant to available only internally will not be
-            available.
-          {% endblocktrans %}
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+          <div class="me-2">
+            <span class="fa fa-info-circle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Info:" %}</span>
+          </div>
+          <div>
+            {% blocktrans trimmed %}
+              This interface is not maintained by {{ box_name }}.  For security,
+              it is automatically assigned to the external zone.
+            {% endblocktrans %}
+            {% blocktrans trimmed %}
+              This interface should receive your Internet connection.
+              If you connect it to a local network/machine, many
+              services meant to available only internally will not be
+              available.
+            {% endblocktrans %}
+          </div>
         </div>
       {% endif %}
     </div>

@@ -15,13 +15,19 @@
 
     {{ form|bootstrap }}
 
-    <div class="alert alert-warning" role="alert">
-      {% blocktrans trimmed %}
-      The credentials for this repository are stored on your {{ box_name }}.
-      <br />
-      To restore a backup on a new {{ box_name }} you need the SSH
-      credentials and, if chosen, the encryption passphrase.
-      {% endblocktrans %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% blocktrans trimmed %}
+          The credentials for this repository are stored on your {{ box_name }}.
+          <br />
+          To restore a backup on a new {{ box_name }} you need the SSH credentials
+          and, if chosen, the encryption passphrase.
+        {% endblocktrans %}
+      </div>
     </div>
 
     <input type="submit" class="btn btn-primary"

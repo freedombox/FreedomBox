@@ -7,26 +7,34 @@
 {% block internal_zone_warning %}
   {% for component in firewall %}
     {% if not component.is_external %}
-      <div class="alert alert-info" role="alert">
-        {% blocktrans trimmed with service_name=component.name %}
-          <em>{{ service_name }}</em> is available only on internal networks or
-          when the client is connected to {{ box_name }} through VPN.
-        {% endblocktrans %}
-        <p>
-          {% with interfaces=component.get_internal_interfaces %}
-            {% if not interfaces %}
-              {% blocktrans trimmed %}
-                Currently there are no network interfaces configured as
-                internal.
-              {% endblocktrans %}
-            {% else %}
-              {% blocktrans trimmed with interface_list=interfaces|join:", " %}
-                Currently the following network interfaces are configured as
-                internal: {{ interface_list }}
-              {% endblocktrans %}
-            {% endif %}
-          {% endwith %}
-        </p>
+      <div class="alert alert-info d-flex align-items-center" role="alert">
+        <div class="me-2">
+          <span class="fa fa-info-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Info:" %}</span>
+        </div>
+        <div>
+          <div>
+            {% blocktrans trimmed with service_name=component.name %}
+              <em>{{ service_name }}</em> is available only on internal networks
+              or when the client is connected to {{ box_name }} through VPN.
+            {% endblocktrans %}
+          </div>
+          <div>
+            {% with interfaces=component.get_internal_interfaces %}
+              {% if not interfaces %}
+                {% blocktrans trimmed %}
+                  Currently there are no network interfaces configured as
+                  internal.
+                {% endblocktrans %}
+              {% else %}
+                {% blocktrans trimmed with interface_list=interfaces|join:", " %}
+                  Currently the following network interfaces are configured as
+                  internal: {{ interface_list }}
+                {% endblocktrans %}
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
       </div>
     {% endif %}
   {% endfor %}

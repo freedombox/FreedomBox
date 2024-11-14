@@ -10,13 +10,18 @@
 {% block content %}
   <h3>{% trans 'Add custom PageKite service' %}</h3>
 
-  <div class="alert alert-warning" role="alert">
-    {% blocktrans trimmed %}
-    <b>Warning:</b><br>Your PageKite frontend server may not support
-    all the protocol/port combinations that you are able to define
-    here. For example, HTTPS on ports other than 443 is known to
-    cause problems.
-    {% endblocktrans %}
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+      {% blocktrans trimmed %}
+        Your PageKite frontend server may not support all the protocol/port
+        combinations that you are able to define here. For example, HTTPS on
+        ports other than 443 is known to cause problems.
+      {% endblocktrans %}
+    </div>
   </div>
 
   <form class="form" method="post">

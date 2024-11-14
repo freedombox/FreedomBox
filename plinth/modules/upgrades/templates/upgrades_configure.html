@@ -72,13 +72,19 @@
     {% endif %}
   </p>
   {% if can_activate_backports and not is_backports_requested %}
-    <div class="alert alert-warning" role="alert">
-      {% url 'snapshot:index' as snapshot_url %}
-      {% blocktrans trimmed %}
-        <strong>Warning!</strong> Once frequent feature updates are activated,
-        they cannot be deactivated. You may wish to take a snapshot using
-        <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
-      {% endblocktrans %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% url 'snapshot:index' as snapshot_url %}
+        {% blocktrans trimmed %}
+          <strong>Warning!</strong> Once frequent feature updates are activated,
+          they cannot be deactivated. You may wish to take a snapshot using
+          <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
+        {% endblocktrans %}
+      </div>
     </div>
     <p>
       <form class="form" method="post"
