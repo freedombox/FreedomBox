@@ -71,7 +71,7 @@ def messages_error(request, message, exception):
         collapse_id = 'error-details-' + str(random.randint(0, 10**9))
         message = format_html(
             '{message} <a href="#" class="dropdown-toggle" '
-            'data-toggle="collapse" data-target="#{collapse_id}" '
+            'data-bs-toggle="collapse" data-bs-target="#{collapse_id}" '
             'aria-expanded="false" aria-controls="{collapse_id}">'
             'Details</a><pre class="collapse" '
             'id="{collapse_id}"><code>{html_message}</code></pre>',
