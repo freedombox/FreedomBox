@@ -35,7 +35,7 @@
     {% for app_id, app_data in results.results.items %}
       <div class="row align-items-center justify-content-between">
         <h4>
-          {% blocktrans with app_name=app_data.name %}
+          {% blocktrans trimmed with app_name=app_data.name %}
             App: {{app_name}}
           {% endblocktrans %}
         </h4>
