@@ -11,6 +11,7 @@
     --progress-color: #3498db; /* Blue */
     --error-color: #d9534f; /* Red */
     --warning-color: #ec971f; /* Orange */
+    --freedombox-form-disabled-bg-color: #e9ecef; /* Grey */
 }
 
 @font-face {
@@ -138,6 +139,12 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0.3125rem;
     margin-bottom: 0.625rem;
     color: #737373;
+}
+
+/* Disabled form elements show as gray, removed in Bootstrap 5 */
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--freedombox-form-disabled-bg-color);
+    opacity: 1;
 }
 
 /* form-horizontal removed in bootstrap, needs updated django-bootstrap-form */
