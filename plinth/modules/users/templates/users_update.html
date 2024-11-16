@@ -42,17 +42,18 @@
               Delete user <em>{{ username }}</em> and all the user's files?
             {% endblocktrans %}
           </h5>
-          <button type="button" class="close" data-bs-dismiss="modal"
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
                   aria-label="{% trans 'Close' %}">
-            <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          {% blocktrans trimmed %}
-            Deleting a user account also removes all the files user's home
-            directory. If you wish to keep these files, disable the user account
-            instead.
-          {% endblocktrans %}
+          <p>
+            {% blocktrans trimmed %}
+              Deleting a user account also removes all the files user's home
+              directory. If you wish to keep these files, disable the user
+              account instead.
+            {% endblocktrans %}
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger confirm">
