@@ -9,33 +9,35 @@
 
   <h2>{% trans "Diagnostic Results" %}</h2>
 
-  <div class="d-flex align-items-center justify-content-between">
-    <h3>{% blocktrans %}App: {{ app_name }}{% endblocktrans %}</h3>
+  <section>
+    <div class="d-flex align-items-center justify-content-between">
+      <h3>{% blocktrans %}App: {{ app_name }}{% endblocktrans %}</h3>
 
-    {% if show_repair %}
-      <form class="form form-diagnostics-repair-button" method="post"
-            action="{% url 'diagnostics:repair' app_id=app_id %}">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-default"
-               name="repair" value="{% trans "Try to repair" %}"/>
-      </form>
-    {% endif %}
-  </div>
-
-  {% if results %}
-    {% include "diagnostics_results.html" with results=results %}
-  {% elif exception %}
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-      <div class="me-2">
-        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-        <span class="visually-hidden">{% trans "Caution:" %}</span>
-      </div>
-      <div>
-        {{ exception }}
-      </div>
+      {% if show_repair %}
+        <form class="form form-diagnostics-repair-button" method="post"
+              action="{% url 'diagnostics:repair' app_id=app_id %}">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-default"
+                 name="repair" value="{% trans "Try to repair" %}"/>
+        </form>
+      {% endif %}
     </div>
-  {% else %}
-    <p>{% trans "This app does not support diagnostics" %}</p>
-  {% endif %}
+
+    {% if results %}
+      {% include "diagnostics_results.html" with results=results %}
+    {% elif exception %}
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <div class="me-2">
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Caution:" %}</span>
+        </div>
+        <div>
+          {{ exception }}
+        </div>
+      </div>
+    {% else %}
+      <p>{% trans "This app does not support diagnostics" %}</p>
+    {% endif %}
+  </section>
 
 {% endblock %}
