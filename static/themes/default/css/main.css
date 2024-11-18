@@ -340,6 +340,17 @@ html {
     margin-bottom: 1.25rem;
 }
 
+/* When an exception's text is shown in message as alert component, don't
+   overflow the alert's width. */
+.alert.d-flex div {
+    max-width: 100%;
+}
+
+/* Tags */
+.tag {
+    --bs-btn-padding-y: 0.25rem; /* Make the badge shorter */
+}
+
 /* Tag Input Container */
 .tag-input {
     display: flex;
@@ -351,17 +362,12 @@ html {
     margin-bottom: 2rem;
 }
 
-/* When an exception's text is shown in message as alert component, don't
-   overflow the alert's width. */
-.alert.d-flex div {
-    max-width: 100%;
-}
-
 /* Remove tag button */
-.tag-badge .remove-tag {
+.tag .remove-tag {
     background-color: transparent; /* Match the tag's background color */
     border: none;
     cursor: pointer;
+    --bs-btn-padding-y: 0; /* To make the entire tag button shorter */
 }
 
 /* Adjust input field width */

@@ -76,7 +76,7 @@ def test_click_on_tag(session_browser, bittorrent_tag):
 def test_tag_localization(session_browser, locale):
     """Test that tags are localized and tests in done localized."""
     functional.visit(session_browser, '/plinth/apps/?tag=Sharing')
-    badge = session_browser.find_by_css('.tag-badge[data-tag="Sharing"]').first
+    badge = session_browser.find_by_css('.tag[data-tag="Sharing"]').first
     assert 'Compartir' in badge.text
 
     search_input = session_browser.find_by_id('add-tag-input').first

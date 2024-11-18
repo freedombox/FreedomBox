@@ -52,9 +52,9 @@ function updatePathWithTags(tags) {
  * @returns {string[]} An array of tag names currently displayed.
  */
 function getTags(tagToRemove) {
-    const tagBadges = document.querySelectorAll('#selected-tags .tag-badge');
-    return Array.from(tagBadges)
-        .map(tagBadge => tagBadge.dataset.tag)
+    const tagElements = document.querySelectorAll('#selected-tags .tag');
+    return Array.from(tagElements)
+        .map(tagElement => tagElement.dataset.tag)
         .filter(tag => tag !== tagToRemove);
 }
 
@@ -156,7 +156,7 @@ function onTagInputDropdownItemClicked(event) {
  */
 function onRemoveTagClicked(event) {
     const button = event.currentTarget;
-    const tag = button.parentElement.dataset.tag;
+    const tag = button.dataset.tag;
     const tags = getTags(tag);
     updatePathWithTags(tags);
 }
@@ -170,7 +170,7 @@ function onRemoveTagClicked(event) {
  * available tags in a searchable dropdown.
  */
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.remove-tag').forEach(button => {
+    document.querySelectorAll('.tag').forEach(button => {
         button.addEventListener('click', onRemoveTagClicked);
     });
 

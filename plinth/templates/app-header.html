@@ -55,7 +55,7 @@
       <div>
         {% for tag in app_info.tags %}
         <a href="{% url 'apps' %}?tag={{ tag|urlencode }}"
-           class="badge rounded-pill text-bg-light">
+           class="btn btn-light rounded-pill tag">
             {% trans tag %}
           </a>
         {% endfor %}
