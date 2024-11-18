@@ -157,6 +157,23 @@ h6:not(:first-child) {
     flex-wrap: wrap;
 }
 
+/* In Bootstrap 5, instead of styling .col-* to 100% width by default, .row > *
+   is styled as .form-group has been removed. Needs updated
+   django-bootstrap-form */
+.form-horizontal > .form-group > * {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .form-horizontal > .form-group > .col-md-4 {
+        width: 33.33333333%;
+    }
+
+    .form-horizontal > .form-group > .col-md-8 {
+        width: 66.66666667%;
+    }
+}
+
 .radio .help-block {
     padding-left: 1.2rem;
 }
