@@ -89,35 +89,35 @@ h6:not(:first-child) {
     box-shadow: none;
 }
 
-/* Primary color changed in bootstrap 4 */
+/* Primary color changed in bootstrap 4, we want colors closer to FreedomBox
+   colors */
 .btn-primary {
-    background-color: #337ab7;
-    border-color: #2e6da4;
-}
-
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:focus,
-.btn-primary:disabled,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-    background-color: #286090;
-    border-color: #204d74;
+    --bs-btn-bg: #337ab7; /* Originally: #0d6efd */
+    --bs-btn-border-color: #2e6da4; /* Originally: #0d6efd */
+    --bs-btn-hover-bg: #286090; /* Originally: #0b5ed7 */
+    --bs-btn-hover-border-color: #204d74; /* Originally: #0a58ca */
+    --bs-btn-active-bg: #286090; /* Originally: #0a58ca */
+    --bs-btn-active-border-color: #204d74; /* Originally: #0a53be */
+    --bs-btn-disabled-bg: #286090; /* Originally: #0d6efd */
+    --bs-btn-disabled-border-color: #204d74; /* Originally: #0d6efd */
 }
 
 /* Default style removed in bootstrap 4 */
 .btn-default {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-}
-
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
+    --bs-btn-color: #333;
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: #ccc;
+    --bs-btn-hover-color: #333;
+    --bs-btn-hover-bg: #e6e6e6;
+    --bs-btn-hover-border-color: #adadad;
+    --bs-btn-focus-shadow-rgb: 192, 192, 192;
+    --bs-btn-active-color: #333;
+    --bs-btn-active-bg: #e6e6e6;
+    --bs-btn-active-border-color: #adadad;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #333;
+    --bs-btn-disabled-bg: #e6e6e6;
+    --bs-btn-disabled-border-color: #adadad;
 }
 
 /* Help block removed from bootstrap 4, needs updated django-bootstrap-from */
