@@ -45,22 +45,22 @@
       {% endif %}
     </section>
 
-    {% block description %}
-      {% for paragraph in app_info.description %}
-        <p>{{ paragraph|safe }}</p>
-      {% endfor %}
-    {% endblock %}
-
     {% if app_info.tags %}
-      <div>
+      <div class="app-tags">
         {% for tag in app_info.tags %}
-        <a href="{% url 'apps' %}?tag={{ tag|urlencode }}"
-           class="btn btn-light rounded-pill tag">
+          <a href="{% url 'apps' %}?tag={{ tag|urlencode }}"
+             class="btn btn-light rounded-pill tag">
             {% trans tag %}
           </a>
         {% endfor %}
       </div>
     {% endif %}
+
+    {% block description %}
+      {% for paragraph in app_info.description %}
+        <p>{{ paragraph|safe }}</p>
+      {% endfor %}
+    {% endblock %}
 
     {% if app_info.manual_page %}
       <p class="manual-page">

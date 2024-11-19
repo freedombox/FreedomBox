@@ -40,10 +40,9 @@ class JanusApp(app_module.App):
         super().__init__()
 
         info = app_module.Info(self.app_id, self._version, name=_('Janus'),
-                               icon_filename='janus',
-                               short_description=_('Video Room'),
-                               description=_description, manual_page='Janus',
-                               clients=manifest.clients, tags=manifest.tags)
+                               icon_filename='janus', description=_description,
+                               manual_page='Janus', clients=manifest.clients,
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-janus', info.name, info.short_description,

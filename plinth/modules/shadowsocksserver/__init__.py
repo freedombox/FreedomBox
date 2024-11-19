@@ -43,12 +43,11 @@ class ShadowsocksServerApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(
-            app_id=self.app_id, version=self._version,
-            name=_('Shadowsocks Server'), icon_filename='shadowsocks',
-            short_description=_('Help Others Bypass Censorship'),
-            description=_description, manual_page='Shadowsocks',
-            tags=manifest.tags)
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               name=_('Shadowsocks Server'),
+                               icon_filename='shadowsocks',
+                               description=_description,
+                               manual_page='Shadowsocks', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-shadowsocks-server', info.name,

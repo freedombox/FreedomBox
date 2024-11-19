@@ -45,10 +45,9 @@ class WireguardApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, name=_('WireGuard'),
-            icon_filename='wireguard',
-            short_description=_('Virtual Private Network'),
-            description=_description, manual_page='WireGuard',
-            clients=manifest.clients, tags=manifest.tags,
+            icon_filename='wireguard', description=_description,
+            manual_page='WireGuard', clients=manifest.clients,
+            tags=manifest.tags,
             donation_url='https://www.wireguard.com/donations/')
         self.add(info)
 

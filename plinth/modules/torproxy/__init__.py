@@ -55,7 +55,6 @@ class TorProxyApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tor Proxy'), icon_filename='torproxy',
-                               short_description=_('Anonymity Network'),
                                description=_description,
                                manual_page='TorProxy',
                                clients=manifest.clients, tags=manifest.tags,

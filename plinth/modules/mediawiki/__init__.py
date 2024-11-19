@@ -49,11 +49,9 @@ class MediaWikiApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MediaWiki'), icon_filename='mediawiki',
-                               short_description=_('Wiki'),
                                description=_description,
                                manual_page='MediaWiki',
-                               clients=manifest.clients,
-                               tags=manifest.tags)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-mediawiki', info.name,

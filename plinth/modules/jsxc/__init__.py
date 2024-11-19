@@ -36,7 +36,6 @@ class JSXCApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('JSXC'), icon_filename='jsxc',
-                               short_description=_('Chat Client'),
                                description=_description, manual_page='JSXC',
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)

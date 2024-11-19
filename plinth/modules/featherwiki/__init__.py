@@ -58,7 +58,6 @@ class FeatherWikiApp(app_module.App):
         info = app_module.Info(self.app_id, self._version,
                                name=_('Feather Wiki'),
                                icon_filename='featherwiki',
-                               short_description=_('Personal Notebooks'),
                                description=_description,
                                manual_page='FeatherWiki',
                                clients=manifest.clients, tags=manifest.tags)

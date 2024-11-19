@@ -61,7 +61,6 @@ class TorApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                depends=['names'
                                         ], name=_('Tor'), icon_filename='tor',
-                               short_description=_('Anonymity Network'),
                                description=_description, manual_page='Tor',
                                clients=manifest.clients, tags=manifest.tags,
                                donation_url='https://donate.torproject.org/')

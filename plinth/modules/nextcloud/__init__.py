@@ -62,12 +62,11 @@ class NextcloudApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(
-            app_id=self.app_id, version=self._version, name=_('Nextcloud'),
-            icon_filename='nextcloud',
-            short_description=_('File Storage & Collaboration'),
-            description=_description, manual_page='Nextcloud',
-            clients=manifest.clients, tags=manifest.tags)
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               name=_('Nextcloud'), icon_filename='nextcloud',
+                               description=_description,
+                               manual_page='Nextcloud',
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-nextcloud', info.name,

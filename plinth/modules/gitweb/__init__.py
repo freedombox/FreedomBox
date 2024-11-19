@@ -46,7 +46,6 @@ class GitwebApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Gitweb'), icon_filename='gitweb',
-                               short_description=_('Simple Git Hosting'),
                                description=_description, manual_page='GitWeb',
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)

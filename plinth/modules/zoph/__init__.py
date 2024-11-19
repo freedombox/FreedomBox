@@ -54,7 +54,6 @@ class ZophApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Zoph'), icon_filename='zoph',
-                               short_description=_('Photo Organizer'),
                                description=_description, manual_page='Zoph',
                                clients=manifest.clients)
         self.add(info)

@@ -63,7 +63,6 @@ class TiddlyWikiApp(app_module.App):
         info = app_module.Info(self.app_id, self._version,
                                name=_('TiddlyWiki'),
                                icon_filename='tiddlywiki',
-                               short_description=_('Non-linear Notebooks'),
                                description=_description,
                                manual_page='TiddlyWiki',
                                clients=manifest.clients, tags=manifest.tags)

@@ -60,10 +60,9 @@ class EmailApp(plinth.app.App):
 
         info = plinth.app.Info(app_id=self.app_id, version=self._version,
                                name=_('Postfix/Dovecot'),
-                               icon_filename='email',
-                               short_description=_('Email Server'),
-                               description=_description, manual_page='Email',
-                               clients=manifest.clients, tags=manifest.tags,
+                               icon_filename='email', description=_description,
+                               manual_page='Email', clients=manifest.clients,
+                               tags=manifest.tags,
                                donation_url='https://rspamd.com/support.html')
         self.add(info)
 
