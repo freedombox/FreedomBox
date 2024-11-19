@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2024-11-06 05:06+0000\n"
 "Last-Translator: 109247019824 <stoyan@gmx.com>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
@@ -5015,7 +5015,7 @@ msgid ""
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr ""
 
@@ -5031,7 +5031,7 @@ msgid "Create Connection"
 msgstr ""
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr ""
 
@@ -5051,14 +5051,14 @@ msgstr ""
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr ""
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr ""
 
@@ -5069,7 +5069,7 @@ msgstr ""
 msgid "Show connection %(name)s"
 msgstr ""
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr ""
 
@@ -5078,7 +5078,7 @@ msgid "Computer"
 msgstr ""
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Редактиране на връзката"
 
@@ -5086,7 +5086,7 @@ msgstr "Редактиране на връзката"
 msgid "General"
 msgstr ""
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5096,13 +5096,13 @@ msgstr ""
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr ""
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr ""
@@ -5274,6 +5274,27 @@ msgid ""
 "router, you may decide to reset it and set it up freshly. Lookup your router "
 "model number and search online for the router's manual. This will provide "
 "full instructions on how to perform this task."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, python-format
+msgid "Device: %(interface_name)s"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:27
+msgid "Last scanned: "
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+msgid "No Wi-Fi networks found."
 msgstr ""
 
 #: modules/networks/views.py:27
@@ -5473,51 +5494,51 @@ msgstr "Връзката не може да бъде променена: връ�
 msgid "This type of connection is not yet understood."
 msgstr ""
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr ""
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr ""
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr ""
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr ""
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr ""
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr ""
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr ""
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr ""
 
@@ -6243,25 +6264,29 @@ msgstr ""
 "потребител</a>, принадлежащ към групата feed-reader."
 
 #: modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+#| "follow various websites. When adding a feed, enable authentication and "
+#| "use your {box_name} credentials."
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "Можете да използвате RSS-Bridge заедно с <a href=\"{ttrss_url}\">Tiny Tiny "
 "RSS</a>, за да следвате различни страници. При добавяне на емисия, включете "
 "удостоверяването и използвайте данните за вход на {box_name}."
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Четене и абонамент за новинарски емисии"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "Създател на емисии на RSS"
 
@@ -8761,7 +8786,7 @@ msgid ""
 "account for Zoph."
 msgstr ""
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr ""
 

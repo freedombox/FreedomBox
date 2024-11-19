@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2024-05-26 04:09+0000\n"
 "Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -5547,7 +5547,7 @@ msgstr ""
 "его к локальной сети/машине, многие внутренние службы будут не доступны."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "Внешний"
 
@@ -5565,7 +5565,7 @@ msgid "Create Connection"
 msgstr "Создание подключения"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "Удаление подключения"
 
@@ -5585,14 +5585,14 @@ msgstr "Интервал"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5603,7 +5603,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "Показать подключение %(name)s"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "Внутренний"
 
@@ -5612,7 +5612,7 @@ msgid "Computer"
 msgstr "Компьютер"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Редактирование подключения"
 
@@ -5622,7 +5622,7 @@ msgstr "Редактирование подключения"
 msgid "General"
 msgstr "Универсальный"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPоE"
 
@@ -5632,13 +5632,13 @@ msgstr "Подключения"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "Соседние сети Wi-Fi"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Добавить подключение"
@@ -5855,6 +5855,32 @@ msgstr ""
 "маршрутизатору. Это предоставит полные инструкции о том, как выполнить эту "
 "задачу."
 
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "Удаление %(username)s"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "Время последнего подключения"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "Сеть Wi-Fi не найдена"
+
 #: modules/networks/views.py:27
 msgid "disabled"
 msgstr "выключено"
@@ -6056,51 +6082,51 @@ msgstr "Нельзя редактировать подключение: подк
 msgid "This type of connection is not yet understood."
 msgstr "Этот тип подключения еще не понятен."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Установленное подключение {name}."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "Невозможно установить подключение: Подключение не найдено."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Не удалось установить подключение {name}: Нет подходящего устройства."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Разорвано подключение {name}."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Не удалось разорвать подключение: соединение не найдено."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "Добавление нового общего подключения"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "Добавление нового подключения Ethernet"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "Добавление нового подключения PPPoE"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "Добавление нового подключения Wi-Fi"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Подключение {name} удалено."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "Не удалось удалить подключение: соединение не найдено."
 
@@ -6981,25 +7007,29 @@ msgstr ""
 "фидов."
 
 #: modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+#| "follow various websites. When adding a feed, enable authentication and "
+#| "use your {box_name} credentials."
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "Вы можете использовать RSS-мостик с <a href=\"{ttrss_url}\">Tiny Tiny RSS</"
 "a>, чтобы следить за различными сайтами. При добавлении ленты включите "
 "аутентификацию и используйте свои учетные данные {box_name}."
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Чтение и подписка на ленты новостей"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-мост"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "Генератор RSS-каналов"
 
@@ -9735,7 +9765,7 @@ msgstr ""
 "Учетная запись пользователя <strong>%(username)s</strong> станет учетной "
 "записью администратора для Zoph."
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "Универсальный"
 
@@ -10221,10 +10251,6 @@ msgstr "Гуджарати"
 #~ msgstr ""
 #~ "Дополнительную информацию о проекте %(box_name)s можно найти на <a "
 #~ "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "Удаление %(username)s"
 
 #, python-format
 #~ msgid "Delete user %(username)s"

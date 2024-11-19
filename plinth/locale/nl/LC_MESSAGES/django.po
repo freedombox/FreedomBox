@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2024-09-21 01:05+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -5496,7 +5496,7 @@ msgstr ""
 "beschikbaar zijn niet bereikbaar."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "Extern"
 
@@ -5514,7 +5514,7 @@ msgid "Create Connection"
 msgstr "Maak Verbinding"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "Verwijder verbinding"
 
@@ -5534,14 +5534,14 @@ msgstr "Verbinding"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5552,7 +5552,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "Tonen verbinding %(name)s"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "Intern"
 
@@ -5561,7 +5561,7 @@ msgid "Computer"
 msgstr "Computer"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Wijzig verbinding"
 
@@ -5569,7 +5569,7 @@ msgstr "Wijzig verbinding"
 msgid "General"
 msgstr "Algemeen"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5579,13 +5579,13 @@ msgstr "Verbindingen"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi Netwerken dichtbij"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Verbinding toevoegen"
@@ -5800,6 +5800,32 @@ msgstr ""
 "handleiding van de router. Daarin wordt de juiste methode van instellen "
 "beschreven."
 
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "Verwijder %(username)s"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "Tijdstip vorige verbinding"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "Wifi netwerk niet gevonden"
+
 #: modules/networks/views.py:27
 msgid "disabled"
 msgstr "uitgeschakeld"
@@ -5997,51 +6023,51 @@ msgstr "Kan verbinding niet wijzigen: Verbinding niet gevonden."
 msgid "This type of connection is not yet understood."
 msgstr "Deze verbindingsmethode is (nog) niet bekend."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Geactiveerde verbinding {name}."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kan verbinding niet inschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "Kan verbinding {name} niet inschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Verbinding {name} uitgeschakeld."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kan verbinding niet uitschakelen: Verbinding niet gevonden."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "Toevoegen nieuwe Verbinding"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "Toevoegen nieuwe Ethernetverbinding"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "Toevoegen nieuwe PPPoE verbinding"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "Toevoegen nieuwe W-Fi verbinding"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Verbinding {name} verwijderd."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kan verbinding niet verwijderen: Verbinding niet gevonden."
 
@@ -6900,25 +6926,29 @@ msgstr ""
 "href=\"{users_url}\">elke gebruiker</a> die tot de feed-reader groep behoort."
 
 #: modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+#| "follow various websites. When adding a feed, enable authentication and "
+#| "use your {box_name} credentials."
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "RSS-Bridge wordt met <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> gebruikt om "
 "verschillende websites te volgen. Schakel bij het toevoegen van een feed "
 "authenticatie in en gebruik de {box_name}-inloggegevens."
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Lezen en abonneren op nieuwsfeeds"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "RSS Feed Generator"
 
@@ -9663,7 +9693,7 @@ msgstr ""
 "Gebruikersaccount <strong>%(username)s</strong> wordt het beheerdersaccount "
 "voor Zoph."
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "Generiek"
 
@@ -10146,10 +10176,6 @@ msgstr "Gujarati"
 #~ msgstr ""
 #~ "Voor meer informatie over het %(box_name)s project, zie de <a "
 #~ "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "Verwijder %(username)s"
 
 #, python-format
 #~ msgid "Delete user %(username)s"

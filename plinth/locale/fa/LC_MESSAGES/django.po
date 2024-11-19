@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/freedombox/"
@@ -5350,7 +5350,7 @@ msgstr ""
 "باشند غیرقابل دسترسی می‌شوند."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr ""
 
@@ -5366,7 +5366,7 @@ msgid "Create Connection"
 msgstr "ساختن اتصال"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "پاک‌کردن اتصال"
 
@@ -5387,14 +5387,14 @@ msgstr "Spacing"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "اترنت"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5405,7 +5405,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "اتصال %(name)s را نشان بده"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr ""
 
@@ -5414,7 +5414,7 @@ msgid "Computer"
 msgstr "کامپیوتر"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "ویرایش اتصال"
 
@@ -5422,7 +5422,7 @@ msgstr "ویرایش اتصال"
 msgid "General"
 msgstr ""
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr ""
 
@@ -5434,13 +5434,13 @@ msgstr "اتصال"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "شبکه‌های بی‌سیم در نزدیکی"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "افزودن اتصال"
@@ -5620,6 +5620,31 @@ msgid ""
 "model number and search online for the router's manual. This will provide "
 "full instructions on how to perform this task."
 msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, python-format
+msgid "Device: %(interface_name)s"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Create Connection"
+msgid "Last scanned: "
+msgstr "ساختن اتصال"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Nearby Wi-Fi Networks"
+msgid "No Wi-Fi networks found."
+msgstr "شبکه‌های بی‌سیم در نزدیکی"
 
 #: modules/networks/views.py:27
 #, fuzzy
@@ -5866,51 +5891,51 @@ msgstr "نمی‌توان اتصال را ویراست: اتصالی پیدا ن
 msgid "This type of connection is not yet understood."
 msgstr "از این نوع اتصال هنوز پشتیبانی نمی‌شود."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "اتصال {name} فعال شد."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "فعال‌سازی اتصال شکست خورد: اتصالی پیدا نشد."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "فعال‌سازی اتصال {name} شکست خورد: دستگاه مناسبی موجود نیست."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "اتصال {name} غیرفعال شد."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "غیرفعال‌سازی اتصال شکست خورد: اتصالی پیدا نشد."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "افزودن یک اتصال عام تازه"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "افزودن اتصال اترنت تازه"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "افزودن اتصال PPPoE تازه"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "افزودن اتصال Wi-Fi تازه"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "اتصال {name} پاک شد."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "پاک‌کردن اتصال شکست خورد: اتصال پیدا نشد."
 
@@ -6640,20 +6665,20 @@ msgstr ""
 #: modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr ""
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr ""
 
@@ -9234,7 +9259,7 @@ msgid ""
 "account for Zoph."
 msgstr ""
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr ""
 
