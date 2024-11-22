@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
-"PO-Revision-Date: 2024-10-23 05:15+0000\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
+"PO-Revision-Date: 2024-11-06 05:06+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: config.py:103
 #, python-brace-format
@@ -2782,10 +2782,8 @@ msgid ""
 msgstr ""
 
 #: modules/help/templates/help_about.html:85
-#, fuzzy
-#| msgid "Learn more"
 msgid "Learn"
-msgstr "了解更多"
+msgstr "了解信息"
 
 #: modules/help/templates/help_about.html:88
 msgid "Homepage"
@@ -2804,10 +2802,8 @@ msgid "Translate"
 msgstr ""
 
 #: modules/help/templates/help_about.html:117
-#, fuzzy
-#| msgid "Get Support"
 msgid "Support"
-msgstr "获取帮助"
+msgstr "支持"
 
 #: modules/help/templates/help_about.html:121
 msgid "Forum"
@@ -4953,7 +4949,7 @@ msgstr ""
 "内网可用的服务将不可用。"
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "外网"
 
@@ -4969,7 +4965,7 @@ msgid "Create Connection"
 msgstr "创建连接"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "删除连接"
 
@@ -4989,14 +4985,14 @@ msgstr "间距"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "以太网"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5007,7 +5003,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "显示连接 %(name)s"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "内网"
 
@@ -5016,7 +5012,7 @@ msgid "Computer"
 msgstr "计算机"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "编辑连接"
 
@@ -5024,7 +5020,7 @@ msgstr "编辑连接"
 msgid "General"
 msgstr "常规"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5034,13 +5030,13 @@ msgstr "连接"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "附近的无线网络"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "添加连接"
@@ -5213,6 +5209,32 @@ msgid ""
 "model number and search online for the router's manual. This will provide "
 "full instructions on how to perform this task."
 msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "删除 %(username)s"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "上次连接时间"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "未找到 Wi-Fi 网络"
 
 #: modules/networks/views.py:27
 msgid "disabled"
@@ -5411,51 +5433,51 @@ msgstr "不能编辑连接: 找不到连接。"
 msgid "This type of connection is not yet understood."
 msgstr "这种类型的连接尚没有引入。"
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "激活的连接 {name}。"
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "未能激活连接: 找不到连接。"
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "未能激活连接 {name}: 没有合适的设备是可用。"
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "停用的连接 {name}。"
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "无法取消激活连接: 找不到连接。"
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "添加新的常规连接"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "添加新的以太网连接"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "添加新的 PPPoE 连接"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "添加新的 Wi-Fi 连接"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "连接 {name} 已删除。"
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
@@ -6207,20 +6229,20 @@ msgstr ""
 #: modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr ""
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr ""
 
@@ -8017,8 +8039,6 @@ msgstr ""
 "一个。将忽略空行和以 # 开头的行。"
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
 msgstr "删除用户"
 
@@ -8029,10 +8049,8 @@ msgid ""
 msgstr ""
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "无法将用户添加到组。"
+msgstr "删除用户失败。"
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -8149,10 +8167,9 @@ msgid "Save Changes"
 msgstr "保存更改"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "永久删除用户 <strong>%(username)s</strong>？"
+msgstr "删除用户 <em>%(username)s</em> 及该用户所有文件？"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -8165,10 +8182,8 @@ msgid ""
 msgstr ""
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "删除文件"
+msgstr "删除用户和文件"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -8189,10 +8204,9 @@ msgid "Edit User"
 msgstr "编辑用户"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "用户 %(username)s 已创建。"
+msgstr "用户 %(username)s 已被删除。"
 
 #: modules/users/views.py:130
 msgid "Change Password"
@@ -8622,7 +8636,7 @@ msgid ""
 "account for Zoph."
 msgstr ""
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "通用"
 
@@ -9077,10 +9091,6 @@ msgstr "古吉拉特语"
 #~ msgstr ""
 #~ "有关 %(box_name)s 项目的详细信息，请参阅 <a href=\"https://wiki.debian."
 #~ "org/FreedomBox\">%(box_name)s Wiki</a>。"
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "删除 %(username)s"
 
 #, python-format
 #~ msgid "Delete user %(username)s"

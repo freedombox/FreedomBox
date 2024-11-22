@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2024-09-03 14:09+0000\n"
 "Last-Translator: Hemanth Kumar Veeranki <hems.india1997@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -5375,7 +5375,7 @@ msgstr ""
 "కేవలం అంతర్గతంగానే అందుబాటులో అనేది అనేక సేవలు అందుబాటులో వుండదు."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "బహిర్గత"
 
@@ -5393,7 +5393,7 @@ msgid "Create Connection"
 msgstr "అనుసంధానం సృష్టించు"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "అనుసంధానం తొలగించు"
 
@@ -5413,14 +5413,14 @@ msgstr "అంతరం"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "ఈథర్నెట్"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5431,7 +5431,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "అనుసంధానం చూపించు %(name)s"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "అంతర్గత"
 
@@ -5440,7 +5440,7 @@ msgid "Computer"
 msgstr "కంప్యూటర్"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "అనుసంధానాన్ని సవరించండి"
 
@@ -5450,7 +5450,7 @@ msgstr "అనుసంధానాన్ని సవరించండి"
 msgid "General"
 msgstr "సాధారణమైన"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "పిపిపిఒఇ"
 
@@ -5460,13 +5460,13 @@ msgstr "అనుసంధానం"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "సమీప వై-ఫై నెట్వర్కులు"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "అనుసంధానాన్ని జతచేయండి"
@@ -5669,6 +5669,32 @@ msgstr ""
 "శోధించండి మరియు రూటర్ మాన్యువల్ కోసం ఆన్‌లైన్‌లో శోధించండి. ఈ పనిని ఎలా నిర్వహించాలో ఇది పూర్తి సూచనలను "
 "అందిస్తుంది."
 
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "%(username)s తొలగించు"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "చివరిగా కనెక్ట్ చేయబడిన సమయం"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "Wi-Fi నెట్‌వర్క్ కనుగొనబడలేదు"
+
 #: modules/networks/views.py:27
 msgid "disabled"
 msgstr "నిలిపివేయబడింది"
@@ -5870,51 +5896,51 @@ msgstr "దొరకలేదు అనుసంధానం: అనుసంధ
 msgid "This type of connection is not yet understood."
 msgstr "ఇటువంటి అనుసంధాన రకం ఇంకా అర్థంకాలేదు."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "{name} అనుసంధానం ఉత్తేజించబడింది."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "అనుసంధానాన్ని ఉత్తేజించుటలో విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr "{name} అనుసంధానాన్ని ఉత్తేజించుటలో విఫలమైంది: సరైన పరికరం అందుబాటులో లేదు."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "{name} అనుసంధానం క్రియారహితం చేయబడింది."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "అనుసంధానం క్రియారహితం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "కొత్త జెనరిక్ కనెక్షన్‌ని జోడిస్తోంది"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "కొత్త ఈథర్నెట్ అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "కొత్త PPPoE అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "కొత్త వై-ఫై అనుసంధానాన్ని కలుపుతోంది"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "{name} అనుసంధానం తొలగించబడింది."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
@@ -6762,25 +6788,29 @@ msgstr ""
 "href=\"{users_url}\">ఏ వినియోగదారు</a> అయినా సాంగత్యం చేయవచ్చు."
 
 #: modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+#| "follow various websites. When adding a feed, enable authentication and "
+#| "use your {box_name} credentials."
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "మీరు వివిధ వెబ్‌సైట్‌లను అనుసరించడానికి ఆర్ఎస్ఎస్- వంతెనను <a href=\"{ttrss_url}\">టైని టైని "
 "ఆర్ఎస్‍ఎస్</a>తొ వాడవచ్చు. ఫీడ్‍ను జోడించేటప్పుడు ప్రామాణీకరణ కోసం {box_name} ఆధారాలను ఇవ్వండి."
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "న్యూస్ ఫీడ్‌లను చదవడం మరియు చందాదారునిగా చేరు"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 #, fuzzy
 msgid "RSS-Bridge"
 msgstr "ఆర్ ఎస్ ఎస్- వంతెన"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "ఆర్ఎస్ఎస్ ఫీడ్ జనరేటర్"
 
@@ -9443,7 +9473,7 @@ msgid ""
 "account for Zoph."
 msgstr "వినియోగదారు ఖాతా <strong>%(username)s</strong> జోఫ్ కోసం నిర్వాహక ఖాతా అవుతుంది."
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "సాధారణమైన"
 
@@ -9946,10 +9976,6 @@ msgstr "గుజరాతీ"
 #~ msgstr ""
 #~ "%(box_name)s ప్రాజెక్ట్ కి సంబందించిన మరింత సమాచారం కోసం <a href=\"https://wiki."
 #~ "debian.org/FreedomBox\"> %(box_name)s వికీ </a> ను దర్శించండి."
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "%(username)s తొలగించు"
 
 #, python-format
 #~ msgid "Delete user %(username)s"

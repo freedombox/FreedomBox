@@ -307,7 +307,8 @@ def edit(request, uuid):
             form = GenericForm(form_data)
         elif settings_connection.get_connection_type() == '802-11-wireless':
             settings_wireless = connection.get_setting_wireless()
-            form_data['ssid'] = settings_wireless.get_ssid().get_data()
+            form_data['ssid'] = settings_wireless.get_ssid().get_data().decode(
+            )
             form_data['mode'] = settings_wireless.get_mode()
             form_data['band'] = settings_wireless.get_band() or 'auto'
             form_data['channel'] = settings_wireless.get_channel()
@@ -384,11 +385,17 @@ def deactivate(request, uuid):
 
 def scan(request):
     """Show a list of nearby visible Wi-Fi access points."""
-    access_points = network.wifi_scan()
-    return TemplateResponse(request, 'wifi_scan.html', {
-        'title': _('Nearby Wi-Fi Networks'),
-        'access_points': access_points
-    })
+    device_access_points = network.wifi_scan()
+    scanning = any(
+        (device['scan_requested'] for device in device_access_points))
+    # Refresh page in 10s if scanning, 60s otherwise
+    refresh_page_sec = 10 if scanning else 60
+    return TemplateResponse(
+        request, 'wifi_scan.html', {
+            'title': _('Nearby Wi-Fi Networks'),
+            'device_access_points': device_access_points,
+            'refresh_page_sec': refresh_page_sec
+        })
 
 
 def add(request):
@@ -484,7 +491,9 @@ def add_wifi(request, ssid=None, interface_name=None):
             'mode': 'infrastructure',
             'band': 'auto',
             'auth_mode': 'wpa',
-            'ipv4_method': 'auto'
+            'ipv4_method': 'auto',
+            'ipv6_method': 'auto',
+            'dns_over_tls': 'default',
         }
 
     if request.method == 'POST':

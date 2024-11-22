@@ -4,6 +4,7 @@ Helper functions for working with network manager.
 """
 
 import collections
+import datetime
 import logging
 import socket
 import struct
@@ -183,7 +184,7 @@ def get_status_from_wifi_access_point(device, ssid):
 
     for access_point in device.get_access_points():
         if access_point and access_point.get_ssid() and \
-           access_point.get_ssid().get_data() == ssid:
+           access_point.get_ssid().get_data().decode() == ssid:
             status['strength'] = access_point.get_strength()
             frequency = access_point.get_frequency()
             status['channel'] = _get_wifi_channel_from_frequency(frequency)
@@ -613,27 +614,79 @@ def delete_connection(connection_uuid):
     return name
 
 
+def _get_access_point_as_dict(access_point, active_ap_path):
+    """Return Wi-Fi access point information as a dictionary."""
+    ssid = access_point.get_ssid()
+    if not ssid:  # Hidden network
+        return None
+
+    try:
+        ssid_string = ssid.get_data().decode(encoding='utf-8')
+    except UnicodeError:
+        # XXX: Can't deal with binary SSIDs. Don't show SSIDs that are
+        # binary only.
+        return None
+
+    is_active = (active_ap_path == access_point.get_path())
+    return {
+        'ssid': ssid,
+        'ssid_string': ssid_string,
+        'strength': access_point.get_strength(),
+        'is_active': is_active
+    }
+
+
 def wifi_scan():
     """Scan for available access points across all Wi-Fi devices."""
-    access_points = []
+    device_access_points = []
     for device in get_nm_client().get_devices():
         if device.get_device_type() != nm.DeviceType.WIFI:
             continue
 
-        for access_point in device.get_access_points():
-            # Retrieve the bytes in SSID.  Don't convert to utf-8 or
-            # escape it in any way as it may contain null bytes.  When
-            # this is used in the URL it will be escaped properly and
-            # unescaped when taken as view function's argument.
-            ssid = access_point.get_ssid()
-            ssid_string = ssid.get_data() if ssid else ''
-            access_points.append({
-                'interface_name': device.get_iface(),
-                'ssid': ssid_string,
-                'strength': access_point.get_strength()
-            })
+        if device.get_client() is None:
+            # The device got deleted (see NM:show-wifi-networks.py)
+            return False
 
-    return access_points
+        # Active access point
+        active_ap_path = device.get_active_access_point()
+
+        # Last scan time
+        last_scan = device.get_last_scan()
+        last_scan_time = None
+        scan_requested = False
+        if last_scan == -1:
+            last_scan = None
+        else:
+            boot_time = time.clock_gettime(time.CLOCK_BOOTTIME)
+            last_scan = boot_time - (last_scan / 1000)
+            last_scan_time = datetime.datetime.now() - datetime.timedelta(
+                seconds=last_scan)
+
+        # Request a scan if the last scan was more than 20 seconds ago
+        if (not last_scan) or last_scan > 20:
+            device.request_scan()
+            scan_requested = True
+
+        # Access points
+        access_points = []
+        for access_point in device.get_access_points():
+            ap_dict = _get_access_point_as_dict(access_point, active_ap_path)
+            if ap_dict:
+                access_points.append(ap_dict)
+
+        access_points = sorted(access_points,
+                               key=lambda point: -point['strength'])
+
+        device_access_points.append({
+            'interface_name': device.get_iface(),
+            'access_points': access_points,
+            'last_scan': last_scan,
+            'last_scan_time': last_scan_time,
+            'scan_requested': scan_requested
+        })
+
+    return sorted(device_access_points,
+                  key=lambda device: device['interface_name'])
 
 
 def refeed_dns():

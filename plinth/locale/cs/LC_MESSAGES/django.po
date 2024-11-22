@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
-"PO-Revision-Date: 2024-10-24 15:15+0000\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
+"PO-Revision-Date: 2024-11-07 15:00+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: config.py:103
 #, python-brace-format
@@ -322,6 +322,9 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Vyberte záložní soubor, který chcete nahrát z místního počítače. Musí se "
+"jednat o soubor, který byl dříve stažen jako výsledek úspěšného zálohování "
+"na {box_name}. Musí mít příponu .tar.gz."
 
 #: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
@@ -2946,8 +2949,6 @@ msgstr ""
 "source <i>package_name </i>\" v terminálu (pomocí Cockpit nebo SSH)."
 
 #: modules/help/templates/help_about.html:85
-#, fuzzy
-#| msgid "Learn more"
 msgid "Learn"
 msgstr "Více informací"
 
@@ -2961,17 +2962,15 @@ msgstr "Podpořit vývoj darem"
 
 #: modules/help/templates/help_about.html:107
 msgid "Join project"
-msgstr ""
+msgstr "Připojte se k projektu"
 
 #: modules/help/templates/help_about.html:111
 msgid "Translate"
-msgstr ""
+msgstr "Přeložte"
 
 #: modules/help/templates/help_about.html:117
-#, fuzzy
-#| msgid "Get Support"
 msgid "Support"
-msgstr "Získejte podporu"
+msgstr "Podpora"
 
 #: modules/help/templates/help_about.html:121
 msgid "Forum"
@@ -5399,7 +5398,7 @@ msgstr ""
 "dostupné pouze vnitřně nebudou dostupné."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "Vnější"
 
@@ -5417,7 +5416,7 @@ msgid "Create Connection"
 msgstr "Vytvořit připojení"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "Smazat připojení"
 
@@ -5437,14 +5436,14 @@ msgstr "Mezery"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5455,7 +5454,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "Zobrazit připojení %(name)s"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "Vnitřní"
 
@@ -5464,7 +5463,7 @@ msgid "Computer"
 msgstr "Počítač"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Upravit připojení"
 
@@ -5472,7 +5471,7 @@ msgstr "Upravit připojení"
 msgid "General"
 msgstr "Obecné"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5482,13 +5481,13 @@ msgstr "Připojení"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi sítě poblíž"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Přidat připojení"
@@ -5704,6 +5703,32 @@ msgstr ""
 "směrovače a vyhledejte na internetu jeho příručku. Ten vám poskytne úplné "
 "pokyny k provedení tohoto úkolu."
 
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "Smazat %(username)s"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "Čas posledního připojení"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "Síť Wi-Fi nebyla nalezena"
+
 #: modules/networks/views.py:27
 msgid "disabled"
 msgstr "vypnuto"
@@ -5901,53 +5926,53 @@ msgstr "Připojení nelze upravit: Připojení neexistuje."
 msgid "This type of connection is not yet understood."
 msgstr "Tento typ připojení ještě není podporován."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "Připojení {name} aktivováno."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "Aktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "Nepodařilo se aktivovat připojení {name}: Není k dispozici žádné použitelné "
 "zařízení."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "Připojení {name} deaktivováno."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Deaktivace připojení se nezdařila: Připojení nenalezeno."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "Přidávání nového generického připojení"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "Přidávání nového ethernetového připojení"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "Přidávání nového PPPoE připojení"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "Přidávání nového Wi-Fi připojení"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Připojení {name} smazáno."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
 
@@ -6795,25 +6820,29 @@ msgstr ""
 "href=\"{users_url}\">každý uživatel </a> patřící do skupiny feed-reader."
 
 #: modules/rssbridge/__init__.py:28
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
+#| "follow various websites. When adding a feed, enable authentication and "
+#| "use your {box_name} credentials."
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 "RSS-Bridge můžete používat s <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> pro "
 "sledování různých webových stránek. Při přidávání kanálu povolte ověřování a "
 "použijte své přihlašovací údaje {box_name}."
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Číst a přihlásit se k odběru novinek"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "Generátor kanálů RSS"
 
@@ -8834,8 +8863,6 @@ msgstr ""
 "řádek. Prázdné řádky a ty, které začínají na znak # budou ignorovány."
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
 msgstr "Smazat uživatele"
 
@@ -8844,12 +8871,13 @@ msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
 msgstr ""
+"Odstraněním uživatelského účtu se odstraní také všechny soubory související "
+"s uživatelem. Odstranění souborů lze zabránit nastavením uživatelského účtu "
+"jako neaktivního."
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "Přidání uživatele do skupiny se nezdařilo."
+msgstr "Uživatele se nepodařilo odstranit."
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -8974,10 +9002,9 @@ msgid "Save Changes"
 msgstr "Uložit změny"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "Nevratně smazat uživatele <strong>%(username)s</strong>?"
+msgstr "Smazat uživatele <em>%(username)s</em> a všechny jeho soubory?"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -8988,12 +9015,13 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
+"Odstraněním uživatelského účtu se odstraní také všechny soubory domovského "
+"adresáře uživatele. Pokud si přejete tyto soubory zachovat, zakažte raději "
+"uživatelský účet."
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "Smazat soubory"
+msgstr "Odstranit uživatele a soubory"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -9014,10 +9042,9 @@ msgid "Edit User"
 msgstr "Upravit uživatele"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "Uživatel %(username)s vytvořen."
+msgstr "Uživatel %(username)s smazán."
 
 #: modules/users/views.py:130
 msgid "Change Password"
@@ -9508,7 +9535,7 @@ msgstr ""
 "Uživatelský účet <strong>%(username)s</strong> se stane administrátorským "
 "účtem pro Zoph."
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "Obecné"
 
@@ -9984,10 +10011,6 @@ msgstr "gudžarátština"
 #~ msgstr ""
 #~ "Více informací o projektu %(box_name)s naleznete na <a href=\"https://"
 #~ "wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "Smazat %(username)s"
 
 #, python-format
 #~ msgid "Delete user %(username)s"

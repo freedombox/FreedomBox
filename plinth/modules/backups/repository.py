@@ -334,7 +334,7 @@ class RootBorgRepository(BaseBorgRepository):
     PATH = '/var/lib/freedombox/borgbackup'
 
     storage_type = 'root'
-    name = format_lazy(_('{box_name} storage'), box_name=cfg.box_name)
+    name = format_lazy(_('{box_name} storage'), box_name=_(cfg.box_name))
     borg_path = PATH
     sort_order = 10
     is_mounted = True

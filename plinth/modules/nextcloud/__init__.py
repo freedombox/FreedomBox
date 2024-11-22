@@ -189,8 +189,6 @@ class NextcloudApp(app_module.App):
                     diagnose_url(url.format(domain=address), kind=kind,
                                  **kwargs))
 
-        results.append(diagnose_url('docker.com'))
-
         return results
 
 

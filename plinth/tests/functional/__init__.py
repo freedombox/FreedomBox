@@ -10,6 +10,7 @@ import pathlib
 import subprocess
 import tempfile
 import time
+import urllib.parse
 import warnings
 from contextlib import contextmanager
 
@@ -67,7 +68,8 @@ _sys_modules = [
 ######################
 def visit(browser, path):
     """Visit a path assuming the base URL as configured."""
-    browser.visit(config['DEFAULT']['url'] + path)
+    with wait_for_page_update(browser):
+        browser.visit(config['DEFAULT']['url'] + path)
 
 
 def eventually(function, args=[], timeout=30):
@@ -88,7 +90,7 @@ def eventually(function, args=[], timeout=30):
     return False
 
 
-class _PageLoaded():
+class _PageLoaded:
     """
     Wait until a page (re)loaded.
 
@@ -103,9 +105,9 @@ class _PageLoaded():
         self.loaded_new_page = False
 
     def __call__(self, driver):
-        is_stale = False
+        """Return if expected page has fully loaded."""
         try:
-            self.element.has_class('whatever_class')
+            self.element.has_class('x-non-existing-class')
         # XXX: There is still another unhandled case where the webserver
         # restarts after submission of a form and the browser does not switch
         # to error page. It continues to wait for a response from the server
@@ -143,17 +145,35 @@ class _PageLoaded():
 
                 return False
 
+            # If page has not loaded fully yet, wait until it does.
             is_fully_loaded = driver.execute_script(
                 'return document.readyState;') == 'complete'
             if not is_fully_loaded:
-                is_stale = False
-            elif self.expected_url is None:
-                is_stale = True
-            else:
-                if driver.url.endswith(self.expected_url):
-                    is_stale = True
+                return False
 
-        return is_stale
+            # If a page has fully loaded check if it is the expected URL.
+            return self.has_expected_url_reached(driver)
+
+        # Should never reach here.
+        return False
+
+    def has_expected_url_reached(self, driver):
+        """Return if the current browser URL is the expected URL."""
+        if not self.expected_url:
+            return True  # We are not expecting a specific URL, always any URL
+
+        browser_url = urllib.parse.urlparse(driver.url)
+        expected_url = urllib.parse.urlparse(self.expected_url)
+
+        if expected_url.scheme and browser_url.scheme != expected_url.scheme:
+            return False
+
+        if expected_url.netloc and browser_url.netloc != expected_url.netloc:
+            return False
+
+        browser_path = browser_url.path.rstrip('/')
+        expected_path = expected_url.path.rstrip('/')
+        return browser_path == expected_path
 
 
 @contextmanager
@@ -424,7 +444,10 @@ def uninstall(browser, app_name):
     if not uninstall_item:
         pytest.skip('App cannot be uninstalled')
 
-    uninstall_item[0].click()
+    uninstall_page_url = uninstall_item[0]['href']
+    with wait_for_page_update(browser, expected_url=uninstall_page_url):
+        uninstall_item[0].click()
+
     submit(browser, form_class='form-uninstall')
 
     while True:
@@ -736,16 +759,21 @@ class BaseAppTests:
         """Install the app and set it up if needed."""
         install(session_browser, self.app_name)
 
+    @pytest.fixture(autouse=True, scope='class', name='disable_after_tests')
+    def fixture_disable_after_tests(self, session_browser):
+        """Disable the app after running tests."""
+        yield
+        if self.disable_after_tests:
+            app_disable(session_browser, self.app_name)
+
     @pytest.fixture(autouse=True, name='background')
-    def fixture_background(self, session_browser):
+    def fixture_background(self, session_browser, disable_after_tests):
         """Login, install, and enable the app."""
         login(session_browser)
         self.install_and_setup(session_browser)
         app_enable(session_browser, self.app_name)
         yield
         login(session_browser)
-        if self.disable_after_tests:
-            app_disable(session_browser, self.app_name)
 
     def test_enable_disable(self, session_browser):
         """Test enabling and disabling the app."""

@@ -121,6 +121,7 @@ import os
 import pathlib
 import platform
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -245,6 +246,8 @@ export FREEDOMBOX_SAMBA_PORT=445
 chmod --recursive --silent a+rw .pytest_cache/
 chmod --recursive --silent a+w htmlcov
 chmod --silent a+w .coverage
+
+exit 0
 '''
 
 logger = logging.getLogger(__name__)
@@ -1079,19 +1082,20 @@ def subcommand_ssh(arguments):
 def subcommand_run_tests(arguments):
     """Run tests in the container."""
     distribution = arguments.distribution
-    pytest_args = ' '.join(arguments.pytest_args or [])
+    pytest_args_list = arguments.pytest_args or []
+    pytest_args = ' '.join((shlex.quote(arg) for arg in pytest_args_list))
+
     ip_address = _wait_for(lambda: _get_ip_address(distribution))
     ssh_command = _get_ssh_command(ip_address, distribution)
 
-    # Disable cache as root has no rights to overwrite files on /freedombox
-    pytest_command = f'py.test-3 {pytest_args}'
+    pytest_command = f'py.test-3 --color=yes {pytest_args}'
     logger.info('Pytest command: %s', pytest_command)
 
     test_script = SETUP_AND_RUN_TESTS_SCRIPT.format(
         pytest_command=pytest_command, distribution=distribution)
-    setup_and_run_command = ['sudo', 'bash', '-c', f"'{test_script}'"]
-    command = ssh_command + setup_and_run_command
-    os.execlp('ssh', *command)
+    command = ssh_command + ['sudo', 'bash']
+    process = subprocess.run(command, input=test_script.encode(), check=False)
+    sys.exit(process.returncode)
 
 
 def subcommand_stop(arguments):
@@ -1108,11 +1112,11 @@ def subcommand_destroy(arguments):
 def subcommand_update(arguments):
     """Update the disk image."""
     if _is_update_required(arguments.distribution):
-        logger.info("Updating...")
+        logger.info('Updating...')
         _download_disk_image(arguments.distribution, arguments.hkp_client,
                              force=True)
     else:
-        logger.info("Already using the latest image")
+        logger.info('Already using the latest image')
 
 
 def set_URLs():

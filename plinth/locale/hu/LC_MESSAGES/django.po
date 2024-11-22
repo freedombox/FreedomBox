@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 20:11-0500\n"
+"POT-Creation-Date: 2024-11-18 20:13-0500\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -5603,7 +5603,7 @@ msgstr ""
 "tervezett szolgáltatás nem lesz elérhető."
 
 #: modules/networks/templates/connection_show.html:316
-#: modules/networks/templates/connections_diagram.html:24 network.py:24
+#: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "Külső"
 
@@ -5621,7 +5621,7 @@ msgid "Create Connection"
 msgstr "Kapcsolat létrehozása"
 
 #: modules/networks/templates/connections_delete.html:11
-#: modules/networks/views.py:536
+#: modules/networks/views.py:545
 msgid "Delete Connection"
 msgstr "Kapcsolat törlése"
 
@@ -5641,14 +5641,14 @@ msgstr "Térköz"
 
 #: modules/networks/templates/connections_diagram.html:29
 #: modules/networks/templates/connections_diagram.html:59
-#: modules/networks/views.py:101 network.py:27
+#: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
 #: modules/networks/templates/connections_fields_wifi.html:16
-#: modules/networks/views.py:102 network.py:28
+#: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
 
@@ -5659,7 +5659,7 @@ msgstr "Wi-Fi"
 msgid "Show connection %(name)s"
 msgstr "%(name)s kapcsolat megjelenítése"
 
-#: modules/networks/templates/connections_diagram.html:53 network.py:24
+#: modules/networks/templates/connections_diagram.html:53 network.py:25
 msgid "Internal"
 msgstr "Belső"
 
@@ -5668,7 +5668,7 @@ msgid "Computer"
 msgstr "Számítógép"
 
 #: modules/networks/templates/connections_edit.html:19
-#: modules/networks/views.py:253 modules/networks/views.py:340
+#: modules/networks/views.py:253 modules/networks/views.py:341
 msgid "Edit Connection"
 msgstr "Kapcsolat szerkesztése"
 
@@ -5678,7 +5678,7 @@ msgstr "Kapcsolat szerkesztése"
 msgid "General"
 msgstr "Általános"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:29
+#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5688,13 +5688,13 @@ msgstr "Kapcsolatok"
 
 #: modules/networks/templates/connections_list.html:12
 #: modules/networks/templates/connections_list.html:14
-#: modules/networks/views.py:389
+#: modules/networks/views.py:395
 msgid "Nearby Wi-Fi Networks"
 msgstr "Wi-Fi hálózatok a közelben"
 
 #: modules/networks/templates/connections_list.html:17
 #: modules/networks/templates/connections_list.html:19
-#: modules/networks/views.py:413
+#: modules/networks/views.py:420
 #: modules/wireguard/templates/wireguard_add_server.html:19
 msgid "Add Connection"
 msgstr "Kapcsolat hozzáadása"
@@ -5910,6 +5910,32 @@ msgstr ""
 "meg az interneten a router kézikönyvét. Ebben teljes körű utasításokat "
 "találsz a feladat elvégzéséhez."
 
+#: modules/networks/templates/wifi_scan.html:14
+msgid "No Wi-Fi device detected."
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:21
+#, fuzzy, python-format
+#| msgid "Delete %(username)s"
+msgid "Device: %(interface_name)s"
+msgstr "%(username)s törlése"
+
+#: modules/networks/templates/wifi_scan.html:27
+#, fuzzy
+#| msgid "Last Connected Time"
+msgid "Last scanned: "
+msgstr "Utolsó csatlakozási idő"
+
+#: modules/networks/templates/wifi_scan.html:31
+msgid "never"
+msgstr ""
+
+#: modules/networks/templates/wifi_scan.html:52
+#, fuzzy
+#| msgid "Wi-Fi network not found"
+msgid "No Wi-Fi networks found."
+msgstr "Wi-Fi hálózat nem található"
+
 #: modules/networks/views.py:27
 msgid "disabled"
 msgstr "letiltva"
@@ -6111,53 +6137,53 @@ msgstr "A kapcsolat nem szerkeszthető, mivel nem található."
 msgid "This type of connection is not yet understood."
 msgstr "Az ilyen típusú kapcsolat még nem ismert."
 
-#: modules/networks/views.py:352
+#: modules/networks/views.py:353
 #, python-brace-format
 msgid "Activated connection {name}."
 msgstr "{name} kapcsolat aktiválva."
 
-#: modules/networks/views.py:356
+#: modules/networks/views.py:357
 msgid "Failed to activate connection: Connection not found."
 msgstr "Kapcsolat aktiválása sikertelen: kapcsolat nem található."
 
-#: modules/networks/views.py:362
+#: modules/networks/views.py:363
 #, python-brace-format
 msgid "Failed to activate connection {name}: No suitable device is available."
 msgstr ""
 "{name} kapcsolat aktiválása sikertelen: nem áll rendelkezésre megfelelő "
 "eszköz."
 
-#: modules/networks/views.py:375
+#: modules/networks/views.py:376
 #, python-brace-format
 msgid "Deactivated connection {name}."
 msgstr "{name} kapcsolat deaktiválva."
 
-#: modules/networks/views.py:379
+#: modules/networks/views.py:380
 msgid "Failed to de-activate connection: Connection not found."
 msgstr "Kapcsolat deaktiválása sikertelen: kapcsolat nem található."
 
-#: modules/networks/views.py:431
+#: modules/networks/views.py:438
 msgid "Adding New Generic Connection"
 msgstr "Új általános kapcsolat hozzáadása"
 
-#: modules/networks/views.py:449
+#: modules/networks/views.py:456
 msgid "Adding New Ethernet Connection"
 msgstr "Új Ethernet kapcsolat hozzáadása"
 
-#: modules/networks/views.py:467
+#: modules/networks/views.py:474
 msgid "Adding New PPPoE Connection"
 msgstr "Új PPPoE kapcsolat hozzáadása"
 
-#: modules/networks/views.py:502
+#: modules/networks/views.py:511
 msgid "Adding New Wi-Fi Connection"
 msgstr "Új Wi-Fi kapcsolat hozzáadása"
 
-#: modules/networks/views.py:517
+#: modules/networks/views.py:526
 #, python-brace-format
 msgid "Connection {name} deleted."
 msgstr "Kapcsolat törölve: {name}."
 
-#: modules/networks/views.py:521 modules/networks/views.py:531
+#: modules/networks/views.py:530 modules/networks/views.py:540
 msgid "Failed to delete connection: Connection not found."
 msgstr "A kapcsolat törlése sikertelen, mivel nem található."
 
@@ -7039,20 +7065,20 @@ msgstr ""
 #: modules/rssbridge/__init__.py:28
 #, python-brace-format
 msgid ""
-"You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-"follow various websites. When adding a feed, enable authentication and use "
-"your {box_name} credentials."
+"You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
+"href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
+"adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
 
-#: modules/rssbridge/__init__.py:46 modules/ttrss/__init__.py:47
+#: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
 msgstr "Hírcsatornák olvasása és feliratkozás"
 
-#: modules/rssbridge/__init__.py:49 modules/rssbridge/manifest.py:7
+#: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:50
+#: modules/rssbridge/__init__.py:52
 msgid "RSS Feed Generator"
 msgstr "RSS-hírfolyam generátor"
 
@@ -9827,7 +9853,7 @@ msgstr ""
 "A(z) <strong>%(username)s</strong> felhasználói fiók lesz a Zoph "
 "rendszergazdai fiókja."
 
-#: network.py:30
+#: network.py:31
 msgid "Generic"
 msgstr "Általános"
 
@@ -10338,10 +10364,6 @@ msgstr "Gudzsaráti"
 #~ msgstr ""
 #~ "A %(box_name)s projektről további információkat a <a href=\"https://wiki."
 #~ "debian.org/FreedomBox\">%(box_name)s Wiki</a> oldalon találsz."
-
-#, python-format
-#~ msgid "Delete %(username)s"
-#~ msgstr "%(username)s törlése"
 
 #, python-format
 #~ msgid "Delete user %(username)s"
