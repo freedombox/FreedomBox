@@ -175,7 +175,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const addTagInput = document.getElementById('add-tag-input');
-    addTagInput.addEventListener('keyup', onTagInputKeyUp);
+    if (addTagInput) {  // When page loads without tag input element
+        addTagInput.addEventListener('keyup', onTagInputKeyUp);
+    }
 
     const dropdownItems = document.querySelectorAll('.tag-input li.dropdown-item');
     dropdownItems.forEach(item => {
