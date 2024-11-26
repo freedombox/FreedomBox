@@ -568,9 +568,8 @@ def notification_dismiss(request, id):
     """Dismiss a notification."""
     from .notification import Notification
     notes = Notification.list(key=id, user=request.user)
-    if not notes:
-        raise Http404
-
-    notes[0].dismiss()
+    if notes:
+        # If a notification is not found, no need to dismiss it.
+        notes[0].dismiss()
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))
