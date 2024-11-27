@@ -8,7 +8,7 @@ import re
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_noop
 
-from plinth import cfg
+from plinth import cfg, web_server
 from plinth.utils import is_user_admin
 
 
@@ -35,6 +35,7 @@ def common(request):
         'active_menu_urls': active_menu_urls,
         'box_name': _(cfg.box_name),
         'user_is_admin': is_user_admin(request, True),
+        'user_css': web_server.get_user_css(),
         'notifications': notifications_context['notifications'],
         'notifications_max_severity': notifications_context['max_severity']
     }
