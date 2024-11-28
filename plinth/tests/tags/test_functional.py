@@ -47,13 +47,13 @@ def test_bittorrent_tag(session_browser, bittorrent_tag):
 
 def test_search_for_tag(session_browser, bittorrent_tag):
     """Test that searching for a tag returns the expected apps."""
-    search_input = session_browser.driver.find_element_by_id('add-tag-input')
+    search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
             session_browser, timeout=10,
             expected_url='/plinth/apps/?tag=BitTorrent&tag=File+sharing'):
         search_input.click()
-        search_input.send_keys('file sharing')
-        search_input.send_keys(Keys.ENTER)
+        search_input.type('file sharing')
+        search_input.type(Keys.ENTER)
 
     for app in ['deluge', 'samba', 'sharing', 'syncthing', 'transmission']:
         _is_app_listed(session_browser, app)
@@ -61,7 +61,7 @@ def test_search_for_tag(session_browser, bittorrent_tag):
 
 def test_click_on_tag(session_browser, bittorrent_tag):
     """Test that clicking on a tag lists the expected apps."""
-    search_input = session_browser.driver.find_element_by_id('add-tag-input')
+    search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
             session_browser, timeout=10,
             expected_url='/plinth/apps/?tag=BitTorrent&tag=File+sync'):
@@ -79,10 +79,10 @@ def test_tag_localization(session_browser, locale):
     badge = session_browser.find_by_css('.tag-badge[data-tag="Sharing"]').first
     assert 'Compartir' in badge.text
 
-    search_input = session_browser.driver.find_element_by_id('add-tag-input')
+    search_input = session_browser.find_by_id('add-tag-input').first
     with functional.wait_for_page_update(
             session_browser, timeout=10,
             expected_url='/plinth/apps/?tag=Sharing&tag=Bookmarks'):
         search_input.click()
-        search_input.send_keys('Marcadores')
-        search_input.send_keys(Keys.ENTER)
+        search_input.type('Marcadores')
+        search_input.type(Keys.ENTER)
