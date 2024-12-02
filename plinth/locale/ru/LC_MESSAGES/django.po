@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-18 20:13-0500\n"
-"PO-Revision-Date: 2024-05-26 04:09+0000\n"
+"PO-Revision-Date: 2024-12-03 05:00+0000\n"
 "Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/ru/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -329,6 +329,9 @@ msgid ""
 "file previously downloaded from the result of a successful backup on a "
 "{box_name}. It must have a .tar.gz extension."
 msgstr ""
+"Выберите файл резервной копии для загрузки с локального компьютера. Это "
+"должен быть файл, ранее загруженный в результате успешного резервного "
+"копирования на {box_name}. Он должен иметь расширение .tar.gz."
 
 #: modules/backups/forms.py:152
 msgid "Repository path format incorrect."
@@ -874,14 +877,13 @@ msgstr ""
 #: modules/bepasty/manifest.py:23 modules/deluge/manifest.py:21
 #: modules/samba/manifest.py:89 modules/sharing/manifest.py:19
 #: modules/syncthing/manifest.py:58 modules/transmission/manifest.py:39
-#, fuzzy
-#| msgid "File & Snippet Sharing"
 msgid "File sharing"
-msgstr "Обмен файлами и фрагментами"
+msgstr "Обмен файлами"
 
 #: modules/bepasty/manifest.py:23
+#, fuzzy
 msgid "Pastebin"
-msgstr ""
+msgstr "Pastebin"
 
 #: modules/bepasty/templates/bepasty.html:12
 msgid "Manage Passwords"
@@ -1116,19 +1118,15 @@ msgstr "Библиотека с таким названием уже сущес�
 
 #: modules/calibre/manifest.py:20
 msgid "Ebook"
-msgstr ""
+msgstr "Электронная книга"
 
 #: modules/calibre/manifest.py:20
-#, fuzzy
-#| msgid "E-book Library"
 msgid "Library"
-msgstr "Электронная библиотека"
+msgstr "Библиотека"
 
 #: modules/calibre/manifest.py:20
-#, fuzzy
-#| msgid "E-book Library"
 msgid "Ebook reader"
-msgstr "Электронная библиотека"
+msgstr "Читалка для электронных книг"
 
 #: modules/calibre/templates/calibre-delete-library.html:11
 #, python-format
@@ -1240,16 +1238,12 @@ msgid "Server Administration"
 msgstr "Администрирование сервера"
 
 #: modules/config/__init__.py:18
-#, fuzzy
-#| msgid ""
-#| "Here you can set some general configuration options like hostname, domain "
-#| "name, webserver home page etc."
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr ""
-"Здесь вы можете установить такие опции конфигурации, как имя хоста, доменное "
-"имя, домашняя страница веб-сервера и тому подобное."
+"Здесь вы можете задать некоторые общие параметры конфигурации, например "
+"домашнюю страницу веб-сервера и т. д."
 
 #: modules/config/__init__.py:40
 msgid "General Configuration"
@@ -1387,15 +1381,17 @@ msgstr "Неверный список URI серверов STUN/TURN"
 
 #: modules/coturn/manifest.py:7 modules/janus/manifest.py:16
 msgid "Video conference"
-msgstr ""
+msgstr "Видеоконференция"
 
 #: modules/coturn/manifest.py:7
+#, fuzzy
 msgid "STUN"
-msgstr ""
+msgstr "STUN"
 
 #: modules/coturn/manifest.py:7
+#, fuzzy
 msgid "TURN"
-msgstr ""
+msgstr "TURN"
 
 #: modules/coturn/templates/coturn.html:15
 msgid "Use the following URLs to configure your communication server:"
@@ -1486,17 +1482,15 @@ msgstr "БитТоррент"
 
 #: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
 #: modules/transmission/manifest.py:39
-#, fuzzy
-#| msgid "Launch web client"
 msgid "Web client"
-msgstr "Запустить веб-клиент"
+msgstr "Веб клиент"
 
 #: modules/deluge/manifest.py:21 modules/syncthing/manifest.py:58
 #: modules/transmission/manifest.py:39
 #, fuzzy
 #| msgid "I2P"
 msgid "P2P"
-msgstr "I2P"
+msgstr "P2P"
 
 #: modules/diagnostics/__init__.py:29
 msgid ""
@@ -1512,7 +1506,7 @@ msgstr "Диагностика"
 
 #: modules/diagnostics/__init__.py:99
 msgid "skipped"
-msgstr ""
+msgstr "пропустить"
 
 #: modules/diagnostics/__init__.py:100
 msgid "passed"
@@ -1593,14 +1587,12 @@ msgstr ""
 "день."
 
 #: modules/diagnostics/forms.py:15
-#, fuzzy
-#| msgid "Enable auto-update"
 msgid "Enable automatic repair"
-msgstr "Включить автообновление"
+msgstr "Включить автоматическое восстановление"
 
 #: modules/diagnostics/forms.py:16
 msgid "If issues are found, try to repair them automatically."
-msgstr ""
+msgstr "Если проблемы обнаружены, попробуйте устранить их автоматически."
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -2052,54 +2044,43 @@ msgid "Gajim"
 msgstr "Gajim"
 
 #: modules/ejabberd/manifest.py:124 modules/matrixsynapse/manifest.py:102
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encrypted messaging"
-msgstr "Шифрование"
+msgstr "Зашифрованные сообщения"
 
 #: modules/ejabberd/manifest.py:125 modules/matrixsynapse/manifest.py:103
 #: modules/mumble/manifest.py:67
 msgid "Audio chat"
-msgstr ""
+msgstr "Аудио чат"
 
 #: modules/ejabberd/manifest.py:126 modules/matrixsynapse/manifest.py:104
-#, fuzzy
-#| msgid "Video Room"
 msgid "Video chat"
-msgstr "Видео комната"
+msgstr "Видео чат"
 
 #: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
+#, fuzzy
 msgid "XMPP"
-msgstr ""
+msgstr "XMPP"
 
 #: modules/ejabberd/templates/ejabberd.html:18
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is set to <b>%(domain_name)s</b>. User IDs will look "
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"Ваш домен сервера XMPP имеет значение <b>%(domainname)s</b> Идентификаторы "
-"пользователей будет выглядеть как <i>username@%(domainname)s</i>. Вы можете "
-"настроить ваш домен на странице <a href=\"%(index_url)s\">Настройка</a>."
+"Домен вашего XMPP-сервера установлен на <b>%(имя_домена)s</b>. "
+"Идентификаторы пользователей будут выглядеть как <i>имя "
+"пользователя@%(имя_домена)s</i>. Вы можете настроить свой домен на странице "
+"системы <a href=\"%(names_url)s\">Name Services</a>."
 
 #: modules/ejabberd/templates/ejabberd.html:25
-#, fuzzy, python-format
-#| msgid ""
-#| "Your XMPP server domain is set to <b>%(domainname)s</b>. User IDs will "
-#| "look like <i>username@%(domainname)s</i>. You can setup your domain on "
-#| "the system <a href=\"%(index_url)s\">Configure</a> page."
+#, python-format
 msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
 "<a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"Ваш домен сервера XMPP имеет значение <b>%(domainname)s</b> Идентификаторы "
-"пользователей будет выглядеть как <i>username@%(domainname)s</i>. Вы можете "
-"настроить ваш домен на странице <a href=\"%(index_url)s\">Настройка</a>."
+"Домен вашего XMPP-сервера не задан. Вы можете настроить свой домен на "
+"странице системы <a href=\"%(names_url)s\">Name Services</a>."
 
 #: modules/email/__init__.py:26
 msgid ""
@@ -2222,18 +2203,17 @@ msgid "FairEmail"
 msgstr "FairEmail"
 
 #: modules/email/manifest.py:82
-#, fuzzy
-#| msgid "Email Server"
 msgid "Email server"
-msgstr "Сервер электронной почты"
+msgstr "Сервер Электронной почты"
 
 #: modules/email/manifest.py:82
+#, fuzzy
 msgid "IMAP"
-msgstr ""
+msgstr "IMAP"
 
 #: modules/email/manifest.py:82
 msgid "Spam control"
-msgstr ""
+msgstr "Контроль спама"
 
 #: modules/email/templates/email-aliases.html:13
 #: modules/email/templates/email.html:15
@@ -2300,6 +2280,10 @@ msgid ""
 "a single HTML file on your {box_name}. You can use it as a personal wiki, as "
 "a web notebook, or for project documentation."
 msgstr ""
+"Feather Wiki - это инструмент для создания простых самодостаточных вики, "
+"каждая из которых хранится в одном HTML-файле на вашем {box_name}. Вы можете "
+"использовать его в качестве персональной вики, веб-блокнота или проектной "
+"документации."
 
 #: modules/featherwiki/__init__.py:29
 msgid ""
@@ -2307,6 +2291,9 @@ msgid ""
 "wiki per topic. Customize each wiki to your liking with extensions and other "
 "customization options."
 msgstr ""
+"Каждая вики - это небольшой файл. Создавайте столько вики, сколько хотите, "
+"например, по одной вики на тему. Настройте каждую вики по своему вкусу с "
+"помощью расширений и других возможностей настройки."
 
 #: modules/featherwiki/__init__.py:33
 #, python-brace-format
@@ -2314,6 +2301,8 @@ msgid ""
 "Feather Wiki is downloaded from {box_name} website and not from Debian. "
 "Wikis need to be upgraded to newer version manually."
 msgstr ""
+"Feather Wiki загружается с сайта {box_name}, а не из Debian. Вики необходимо "
+"обновлять до новой версии вручную."
 
 #: modules/featherwiki/__init__.py:37 modules/tiddlywiki/__init__.py:41
 #, python-brace-format
@@ -2323,6 +2312,10 @@ msgid ""
 "{box_name} belonging to the wiki group. Simultaneous editing is not "
 "supported."
 msgstr ""
+"Вики по умолчанию не являются публичными, но их можно загрузить для "
+"совместного использования или публикации. Их может редактировать <a href=\""
+"{users_url}\">любой пользователь</a> на {box_name}, принадлежащий к вики-"
+"группе. Одновременное редактирование не поддерживается."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
 #: modules/tiddlywiki/__init__.py:61
@@ -2331,41 +2324,43 @@ msgstr "Просмотр и редактирование приложений Wi
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
-msgstr ""
+msgstr "Перо Вики"
 
 #: modules/featherwiki/__init__.py:61
 msgid "Personal Notebooks"
-msgstr ""
+msgstr "Личные блокноты"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Имя вики-файла с расширением \".html\""
 
 #: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
+"Название и описание вики можно задать из самой вики. Имя файла не зависит от "
+"названия вики."
 
 #: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
 msgid "New name for the wiki file, with file extension \".html\""
-msgstr ""
+msgstr "Новое название файла вики с расширением \".html\""
 
 #: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
 msgid "Renaming the file has no effect on the title of the wiki."
-msgstr ""
+msgstr "Переименование файла не влияет на название вики."
 
 #: modules/featherwiki/forms.py:32
 msgid "A Feather Wiki file with .html file extension"
-msgstr ""
+msgstr "Файл Feather Wiki с расширением .html"
 
 #: modules/featherwiki/forms.py:35
 msgid "Feather Wiki files must be in HTML format"
-msgstr ""
+msgstr "Файлы Feather Wiki должны быть в формате HTML"
 
 #: modules/featherwiki/forms.py:37
 msgid "Upload an existing Feather Wiki file from this computer."
-msgstr ""
+msgstr "Загрузите существующий файл Feather Wiki с этого компьютера."
 
 #: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
 #: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
@@ -2376,33 +2371,28 @@ msgstr "Wiki"
 #: modules/featherwiki/manifest.py:18 modules/infinoted/manifest.py:46
 #: modules/tiddlywiki/manifest.py:20
 msgid "Note taking"
-msgstr ""
+msgstr "Взятие на заметку"
 
 #: modules/featherwiki/manifest.py:18 modules/ikiwiki/manifest.py:15
 #: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:21
 #: modules/wordpress/manifest.py:26
-#, fuzzy
-#| msgid "Website Security"
 msgid "Website"
-msgstr "Безопасность Веб-сайта"
+msgstr "Веб-сайт"
 
 #: modules/featherwiki/manifest.py:18 modules/tiddlywiki/manifest.py:25
+#, fuzzy
 msgid "Quine"
-msgstr ""
+msgstr "Quine"
 
 #: modules/featherwiki/manifest.py:18 modules/nextcloud/manifest.py:56
 #: modules/tiddlywiki/manifest.py:26
-#, fuzzy
-#| msgid "Debian:"
 msgid "Non-Debian"
-msgstr "Debian:"
+msgstr "Не-Debian"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:12
-#, fuzzy
-#| msgid "Manage Libraries"
 msgid "Manage Wikis"
-msgstr "Управление библиотеками"
+msgstr "Управление википроектами"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:16
 #: modules/featherwiki/templates/featherwiki_configure.html:18
@@ -2410,67 +2400,57 @@ msgstr "Управление библиотеками"
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:16
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:18
 #: modules/tiddlywiki/views.py:47
-#, fuzzy
-#| msgid "Create Wiki or Blog"
 msgid "Create Wiki"
-msgstr "Создать Блог или Вики"
+msgstr "Создать вики"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:21
 #: modules/featherwiki/templates/featherwiki_configure.html:23
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:21
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:23
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki"
-msgstr "Загрузить файл"
+msgstr "Загрузить Вики"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:30
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:30
-#, fuzzy
-#| msgid "No libraries available."
 msgid "No wikis available."
-msgstr "Нет доступных библиотек."
+msgstr "Вики-сайты отсутствуют."
 
 #: modules/featherwiki/templates/featherwiki_configure.html:36
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:36
-#, fuzzy, python-format
-#| msgid "Go to site %(site)s"
+#, python-format
 msgid "Go to wiki %(wiki)s"
-msgstr "Перейти к %(site)s"
+msgstr "Перейти к вики %(вики)"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:43
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
-#, fuzzy, python-format
-#| msgid "Enable ikiwiki"
+#, python-format
 msgid "Rename wiki %(wiki)s"
-msgstr "Включить ikiwiki"
+msgstr "Переименовать вики %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:50
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:50
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete wiki %(wiki)s"
-msgstr "Удаление узла %(site)s"
+msgstr "Удалить вики %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
-#, fuzzy, python-format
-#| msgid "Delete Wiki or Blog <em>%(name)s</em>"
+#, python-format
 msgid "Delete wiki <em>%(name)s</em>"
-msgstr "Удалить Вики или Блог <em>%(name)s</em>"
+msgstr "Удалить вики <em>%(name)s</em>"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "Feather Wiki before deleting it."
 msgstr ""
+"<strong>Подсказка</strong>: Вы можете загрузить копию этой вики из Feather "
+"Wiki, прежде чем удалять ее."
 
 #: modules/featherwiki/templates/featherwiki_delete.html:25
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:25
-#, fuzzy
-#| msgid "Delete this archive permanently?"
 msgid "Delete this wiki file permanently?"
-msgstr "Окончательно удалить этот архив?"
+msgstr "Удалить этот вики-файл навсегда?"
 
 #: modules/featherwiki/templates/featherwiki_upload_file.html:20
 #: modules/tiddlywiki/templates/tiddlywiki_upload_file.html:20
@@ -2478,60 +2458,45 @@ msgid "Upload"
 msgstr "Скачать"
 
 #: modules/featherwiki/views.py:20 modules/tiddlywiki/views.py:20
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "A wiki file with the given name already exists."
-msgstr "Общий ресурс с таким именем уже существует."
+msgstr "Файл wiki с указанным именем уже существует."
 
 #: modules/featherwiki/views.py:54 modules/tiddlywiki/views.py:54
-#, fuzzy
-#| msgid "Archive created."
 msgid "Wiki created."
-msgstr "Архив создан."
+msgstr "Вики создана."
 
 #: modules/featherwiki/views.py:59 modules/tiddlywiki/views.py:59
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while creating the wiki."
-msgstr "Ошибка при создании библиотеки."
+msgstr "При создании вики произошла ошибка."
 
 #: modules/featherwiki/views.py:76 modules/tiddlywiki/views.py:76
-#, fuzzy
-#| msgid "MediaWiki"
 msgid "Rename Wiki"
-msgstr "MediaWiki"
+msgstr "Переименовать Вики"
 
 #: modules/featherwiki/views.py:84 modules/tiddlywiki/views.py:84
 msgid "Wiki renamed."
-msgstr ""
+msgstr "Вики переименована."
 
 #: modules/featherwiki/views.py:89 modules/tiddlywiki/views.py:89
-#, fuzzy
-#| msgid "An error occurred while creating the library."
 msgid "An error occurred while renaming the wiki."
-msgstr "Ошибка при создании библиотеки."
+msgstr "При переименовании вики произошла ошибка."
 
 #: modules/featherwiki/views.py:106 modules/tiddlywiki/views.py:106
-#, fuzzy
-#| msgid "Upload File"
 msgid "Upload Wiki File"
-msgstr "Загрузить файл"
+msgstr "Загрузить вики-файл"
 
 #: modules/featherwiki/views.py:115 modules/tiddlywiki/views.py:116
 msgid "Wiki file added."
-msgstr ""
+msgstr "Добавлен вики-файл."
 
 #: modules/featherwiki/views.py:119 modules/tiddlywiki/views.py:120
-#, fuzzy
-#| msgid "Failed to add content package."
 msgid "Failed to add wiki file."
-msgstr "Не удалось добавить пакет содержимого."
+msgstr "Не удалось добавить файл wiki."
 
 #: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {name}"
-msgstr "Не удалось удалить {name}: {error}"
+msgstr "Не удалось удалить {name}"
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -2635,10 +2600,8 @@ msgstr ""
 "firewall\">Cockpit</a>."
 
 #: modules/first_boot/__init__.py:61
-#, fuzzy
-#| msgid "Setup Complete!"
 msgid "Setup complete! Next steps:"
-msgstr "Установка Завершена!"
+msgstr "Настройка завершена! Следующие шаги:"
 
 #: modules/first_boot/__init__.py:63
 #, python-brace-format
@@ -2646,14 +2609,16 @@ msgid ""
 "Initial setup has been completed. Perform the next steps to make your "
 "{box_name} operational."
 msgstr ""
+"Первоначальная настройка завершена. Выполните следующие шаги, чтобы ввести "
+"{box_name} в эксплуатацию."
 
 #: modules/first_boot/__init__.py:66
 msgid "Next steps"
-msgstr ""
+msgstr "Следующие шаги"
 
 #: modules/first_boot/__init__.py:73
 msgid "See next steps"
-msgstr ""
+msgstr "Смотрите следующие шаги"
 
 #: modules/first_boot/forms.py:14
 #, python-brace-format
@@ -2671,10 +2636,8 @@ msgid "Firstboot Wizard Secret"
 msgstr "Ассистент при первой загрузке"
 
 #: modules/first_boot/templates/firstboot_complete.html:11
-#, fuzzy
-#| msgid "Setup Complete!"
 msgid "Setup Complete! Next Steps:"
-msgstr "Установка Завершена!"
+msgstr "Настройка завершена! Следующие шаги:"
 
 #: modules/first_boot/templates/firstboot_complete.html:18
 #, python-format
@@ -2682,6 +2645,9 @@ msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
+"Автоматическое <a href=\"%(upgrades_url)s\" target=\"_blank\">обновление "
+"программного обеспечения</a> запускается ежедневно по умолчанию. В первый "
+"раз запустите его вручную сейчас."
 
 #: modules/first_boot/templates/firstboot_complete.html:27
 #: modules/upgrades/templates/upgrades_configure.html:108
@@ -2693,6 +2659,8 @@ msgstr "Обновить сейчас"
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
+"Просмотрите <a href=\"%(privacy_url)s\" target=\"_blank\">опции "
+"конфиденциальности</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:46
 #, python-format
@@ -2700,12 +2668,15 @@ msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
+"Просмотрите и настройте <a href=\"%(networks_url)s\" target=\"_blank\""
+">сетевые подключения</a>. Измените пароль Wi-Fi по умолчанию, если это "
+"необходимо."
 
 #: modules/first_boot/templates/firstboot_complete.html:57
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
-msgstr ""
+msgstr "Настройте <a href=\"%(names_url)s\" target=\"_blank\">имя домена</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:67
 #, python-format
@@ -2713,6 +2684,8 @@ msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
+"Настройка и планирование удаленных <a href=\"%(backups_url)s\" target="
+"\"_blank\">резервных копий</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:78
 #, python-format
@@ -2720,6 +2693,8 @@ msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
 "target=\"_blank\">apps</a>."
 msgstr ""
+"Используйте %(box_name)s для установки <a href=\"%(apps_url)s\" target="
+"\"_blank\">приложений</a>."
 
 #: modules/first_boot/templates/firstboot_welcome.html:29
 msgid "Start Setup"
@@ -2827,18 +2802,16 @@ msgid "Git"
 msgstr "Git"
 
 #: modules/gitweb/manifest.py:37
-#, fuzzy
-#| msgid "Simple Git Hosting"
 msgid "Git hosting"
-msgstr "Простой хостинг Git"
+msgstr "Git-хостинг"
 
 #: modules/gitweb/manifest.py:37
 msgid "Version control"
-msgstr ""
+msgstr "Контроль версий"
 
 #: modules/gitweb/manifest.py:37
 msgid "Developer tool"
-msgstr ""
+msgstr "Инструмент разработчика"
 
 #: modules/gitweb/templates/gitweb_configure.html:13
 msgid "Manage Repositories"
@@ -3009,10 +2982,8 @@ msgstr ""
 "i>\" в терминале (с использованием Cockpit или SSH)."
 
 #: modules/help/templates/help_about.html:85
-#, fuzzy
-#| msgid "Learn more"
 msgid "Learn"
-msgstr "Подробнее"
+msgstr "Узнать"
 
 #: modules/help/templates/help_about.html:88
 msgid "Homepage"
@@ -3024,17 +2995,15 @@ msgstr "Пожертвовать"
 
 #: modules/help/templates/help_about.html:107
 msgid "Join project"
-msgstr ""
+msgstr "Присоединяйтесь к проекту"
 
 #: modules/help/templates/help_about.html:111
 msgid "Translate"
-msgstr ""
+msgstr "Перевести"
 
 #: modules/help/templates/help_about.html:117
-#, fuzzy
-#| msgid "Get Support"
 msgid "Support"
-msgstr "Получить поддержку"
+msgstr "Поддержка"
 
 #: modules/help/templates/help_about.html:121
 msgid "Forum"
@@ -3337,16 +3306,14 @@ msgstr "I2P Прокси"
 
 #: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
 #: modules/torproxy/manifest.py:56
-#, fuzzy
-#| msgid "Anonymity Network"
 msgid "Anonymity network"
-msgstr "Анонимная сеть"
+msgstr "Сеть анонимности"
 
 #: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
 #: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
 #: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
 msgid "Censorship resistance"
-msgstr ""
+msgstr "Противодействие цензуре"
 
 #: modules/i2p/templates/i2p.html:12
 msgid "I2P Proxies and Tunnels"
@@ -3431,7 +3398,7 @@ msgstr "Пароль учетной записи администратора"
 
 #: modules/ikiwiki/manifest.py:15 modules/wordpress/manifest.py:26
 msgid "Blog"
-msgstr ""
+msgstr "Блог"
 
 #: modules/ikiwiki/templates/ikiwiki_configure.html:12
 msgid "Manage Wikis and Blogs"
@@ -3548,7 +3515,7 @@ msgstr ""
 
 #: modules/infinoted/manifest.py:46
 msgid "Collaborative editing"
-msgstr ""
+msgstr "Совместное редактирование"
 
 #: modules/janus/__init__.py:23
 msgid "Janus is a lightweight WebRTC server."
@@ -3579,11 +3546,11 @@ msgstr "Видеокомната Janus"
 #, fuzzy
 #| msgid "WebRTC server"
 msgid "WebRTC"
-msgstr "Сервер WebRTC"
+msgstr "WebRTC"
 
 #: modules/janus/manifest.py:16
 msgid "Web conference"
-msgstr ""
+msgstr "Веб-конференция"
 
 #: modules/janus/templates/janus_video_room.html:205
 #: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
@@ -3607,16 +3574,12 @@ msgid "Chat Client"
 msgstr "Чат-клиент"
 
 #: modules/jsxc/manifest.py:16
-#, fuzzy
-#| msgid "Web Search"
 msgid "Web chat"
-msgstr "Веб-поиск"
+msgstr "Веб чат"
 
 #: modules/jsxc/manifest.py:16 modules/quassel/manifest.py:54
-#, fuzzy
-#| msgid "IRC Client"
 msgid "Client"
-msgstr "IRC-клиент"
+msgstr "Клиент"
 
 #: modules/kiwix/__init__.py:21
 msgid ""
@@ -3692,22 +3655,18 @@ msgstr ""
 "удален для экономии места на диске."
 
 #: modules/kiwix/manifest.py:23
-#, fuzzy
-#| msgid "Offline Wikipedia"
 msgid "Offline reader"
-msgstr "Локальная Википедия"
+msgstr "Автономный читатель"
 
 #: modules/kiwix/manifest.py:24
-#, fuzzy
-#| msgid "Archive name"
 msgid "Archival"
-msgstr "Имя архива"
+msgstr "Архив"
 
 #: modules/kiwix/manifest.py:26
 #, fuzzy
 #| msgid "Offline Wikipedia"
 msgid "Wikipedia"
-msgstr "Локальная Википедия"
+msgstr "Wikipedia"
 
 #: modules/kiwix/templates/kiwix-add-package.html:24
 #, python-format
@@ -3761,10 +3720,8 @@ msgid "Add a new content package"
 msgstr "Добавьте новый пакет контента"
 
 #: modules/kiwix/views.py:76
-#, fuzzy
-#| msgid "Content package added."
 msgid "Content package already exists."
-msgstr "Добавлен пакет контента."
+msgstr "Пакет содержимого уже существует."
 
 #: modules/kiwix/views.py:79
 msgid "Failed to add content package."
@@ -3858,16 +3815,13 @@ msgid "Obtain"
 msgstr "Получить"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, fuzzy, python-format
-#| msgid ""
-#| "No domains have been configured. <a href=\"%(config_url)s\">Configure "
-#| "domains</a> to be able to obtain certificates for them."
+#, python-format
 msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
-"Домены не настроены. <a href=\"%(config_url)s\">Настройте домены</a>, чтобы "
-"иметь возможность получать для них сертификаты."
+"Нет настроенных доменов. <a href=\"%(names_url)s\">Настройте домены</a>, "
+"чтобы иметь возможность получать для них сертификаты."
 
 #: modules/letsencrypt/views.py:40
 #, python-brace-format
@@ -3993,16 +3947,12 @@ msgid "FluffyChat"
 msgstr "FluffyChat"
 
 #: modules/matrixsynapse/manifest.py:101 modules/quassel/manifest.py:54
-#, fuzzy
-#| msgid "IRC Chatroom"
 msgid "Chat room"
-msgstr "Чат IRC"
+msgstr "Чат комната"
 
 #: modules/matrixsynapse/manifest.py:105
-#, fuzzy
-#| msgid "Media streaming server"
 msgid "Matrix server"
-msgstr "Сервер потоковой передачи мультимедиа"
+msgstr "Matrix сервер"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
@@ -4342,20 +4292,16 @@ msgstr ""
 "Когда выключено, игроки не могут умереть или получить урон любого рода."
 
 #: modules/minetest/manifest.py:49
-#, fuzzy
-#| msgid "Updated server."
 msgid "Game server"
-msgstr "Обновленный сервер."
+msgstr "Игровой сервер"
 
 #: modules/minetest/manifest.py:49
-#, fuzzy
-#| msgid "Block Sandbox"
 msgid "Block sandbox"
-msgstr "Песочница"
+msgstr "Блокировать песочницу"
 
 #: modules/minetest/manifest.py:49
 msgid "Platform"
-msgstr ""
+msgstr "Платформа"
 
 #: modules/minetest/templates/minetest.html:17 modules/networks/forms.py:105
 #: modules/networks/forms.py:145
@@ -4417,24 +4363,23 @@ msgid "totem"
 msgstr "totem"
 
 #: modules/minidlna/manifest.py:116
-#, fuzzy
-#| msgid "Simple Media Server"
 msgid "Media server"
-msgstr "Простой медиа-сервер"
+msgstr "Медиа сервер"
 
 #: modules/minidlna/manifest.py:116
 msgid "Television"
-msgstr ""
+msgstr "Телевидение"
 
 #: modules/minidlna/manifest.py:116
+#, fuzzy
 msgid "UPnP"
-msgstr ""
+msgstr "UPnP"
 
 #: modules/minidlna/manifest.py:116
 #, fuzzy
 #| msgid "MiniDLNA"
 msgid "DLNA"
-msgstr "MiniDLNA"
+msgstr "DLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
@@ -4448,6 +4393,11 @@ msgid ""
 "subscribe to your favorite sites and access full article contents within the "
 "reader itself."
 msgstr ""
+"Miniflux - это веб-инструмент, который объединяет новости и обновления "
+"блогов с различных сайтов в один централизованный, удобный для чтения "
+"формат. Он имеет простой интерфейс и ориентирован на чтение без отвлекающих "
+"факторов. Вы можете подписаться на любимые сайты и получить доступ к полному "
+"содержимому статей в самом ридере."
 
 #: modules/miniflux/__init__.py:23
 msgid ""
@@ -4457,159 +4407,143 @@ msgid ""
 "are several third-party <a href=\"https://miniflux.app/docs/apps."
 "html\">clients</a> as well."
 msgstr ""
+"Среди основных функций - сочетания клавиш для быстрой навигации, "
+"полнотекстовый поиск, фильтрация статей, категории и избранное. Благодаря "
+"удалению трекеров Miniflux сохраняет конфиденциальность пользователей. "
+"Основной интерфейс - веб-интерфейс. Существует также несколько сторонних <a "
+"href=\"https://miniflux.app/docs/apps.html\">клиентов</a>."
 
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
+#, fuzzy
 msgid "Miniflux"
-msgstr ""
+msgstr "Miniflux"
 
 #: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
 msgid "News Feed Reader"
 msgstr "Чтение ленты новостей"
 
 #: modules/miniflux/forms.py:12
-#, fuzzy
-#| msgid "Enter a valid username."
 msgid "Enter a username for the user."
-msgstr "Введите действительное имя пользователя."
+msgstr "Введите имя пользователя."
 
 #: modules/miniflux/forms.py:16
 msgid "Enter a strong password with a minimum of 6 characters."
-msgstr ""
+msgstr "Введите надежный пароль, состоящий минимум из 6 символов."
 
 #: modules/miniflux/forms.py:18
-#, fuzzy
-#| msgid "Updating configuration"
 msgid "Password confirmation"
-msgstr "Обновление конфигурации"
+msgstr "Подтверждение пароля"
 
 #: modules/miniflux/forms.py:20
-#, fuzzy
-#| msgid ""
-#| "Enter the password for user \"{user}\" to authorize account modifications."
 msgid "Enter the same password for confirmation."
-msgstr ""
-"Введите пароль пользователя \"{user}\" для авторизации изменений учетной "
-"записи."
+msgstr "Введите тот же пароль для подтверждения."
 
 #: modules/miniflux/forms.py:31
-#, fuzzy
-#| msgid "Password updated"
 msgid "Passwords do not match."
-msgstr "Пароль обновлен"
+msgstr "Пароли не совпадают."
 
 #: modules/miniflux/manifest.py:18
+#, fuzzy
 msgid "Fluent Reader Lite"
-msgstr ""
+msgstr "Fluent Reader Lite"
 
 #: modules/miniflux/manifest.py:33
-#, fuzzy
-#| msgid "News Feed Reader"
 msgid "Fluent Reader"
-msgstr "Чтение ленты новостей"
+msgstr "Беглое чтение"
 
 #: modules/miniflux/manifest.py:46
+#, fuzzy
 msgid "FluxNews"
-msgstr ""
+msgstr "FluxNews"
 
 #: modules/miniflux/manifest.py:61
+#, fuzzy
 msgid "MiniFlutt"
-msgstr ""
+msgstr "MiniFlutt"
 
 #: modules/miniflux/manifest.py:71
+#, fuzzy
 msgid "NetNewsWire"
-msgstr ""
+msgstr "NetNewsWire"
 
 #: modules/miniflux/manifest.py:86
 msgid "Newsflash"
-msgstr ""
+msgstr "Свежие новости"
 
 #: modules/miniflux/manifest.py:96
-#, fuzzy
-#| msgid "Read"
 msgid "Read You"
-msgstr "Читать"
+msgstr "Читать далее"
 
 #: modules/miniflux/manifest.py:106
 msgid "RSS Guard"
-msgstr ""
+msgstr "RSS Охранник"
 
 #: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
-#, fuzzy
-#| msgid "News Feed Reader"
 msgid "Feed reader"
-msgstr "Чтение ленты новостей"
+msgstr "Устройство для чтения фидов"
 
 #: modules/miniflux/manifest.py:138 modules/ttrss/manifest.py:55
 msgid "News aggregation"
-msgstr ""
+msgstr "Агрегация новостей"
 
 #: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
 #: modules/ttrss/manifest.py:55
 #, fuzzy
 #| msgid "SSH"
 msgid "RSS"
-msgstr "SSH"
+msgstr "RSS"
 
 #: modules/miniflux/manifest.py:138 modules/rssbridge/manifest.py:16
 #: modules/ttrss/manifest.py:55
+#, fuzzy
 msgid "ATOM"
-msgstr ""
+msgstr "ATOM"
 
 #: modules/miniflux/templates/miniflux.html:14
 msgid ""
 "Create an admin user to get started. Other users can be created from within "
 "Miniflux."
 msgstr ""
+"Для начала работы создайте пользователя admin. Другие пользователи могут "
+"быть созданы из Miniflux."
 
 #: modules/miniflux/templates/miniflux.html:22
 #: modules/miniflux/templates/miniflux.html:24
-#, fuzzy
-#| msgid "Create User"
 msgid "Create admin user"
-msgstr "Создать пользователя"
+msgstr "Создайте пользователя-администратора"
 
 #: modules/miniflux/templates/miniflux.html:27
 #: modules/miniflux/templates/miniflux.html:29
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset user password"
-msgstr "Установить пароль суперпользователя"
+msgstr "Сброс пароля пользователя"
 
 #: modules/miniflux/views.py:38
-#, fuzzy
-#| msgid "Create User"
 msgid "Create Admin User"
-msgstr "Создать пользователя"
+msgstr "Создать пользователя-администратора"
 
 #: modules/miniflux/views.py:48
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Created admin user: {username}"
-msgstr "Неверное имя пользователя: {username}"
+msgstr "Создан пользователь admin: {username}"
 
 #: modules/miniflux/views.py:53
-#, fuzzy, python-brace-format
-#| msgid "An error occurred while creating the repository."
+#, python-brace-format
 msgid "An error occurred while creating the user: {error}."
-msgstr "Ошибка при создании репозитория."
+msgstr "При создании пользователя произошла ошибка: {error}."
 
 #: modules/miniflux/views.py:70
-#, fuzzy
-#| msgid "Set SuperUser Password"
 msgid "Reset User Password"
-msgstr "Установить пароль суперпользователя"
+msgstr "Сброс пароля пользователя"
 
 #: modules/miniflux/views.py:80
-#, fuzzy, python-brace-format
-#| msgid "Invalid username: {username}"
+#, python-brace-format
 msgid "Password reset for user: {username}"
-msgstr "Неверное имя пользователя: {username}"
+msgstr "Сброс пароля для пользователя: {username}"
 
 #: modules/miniflux/views.py:85
-#, fuzzy, python-brace-format
-#| msgid "An error occurred during configuration."
+#, python-brace-format
 msgid "An error occurred during password reset: {error}."
-msgstr "Произошла ошибка во время настройки."
+msgstr "Во время сброса пароля произошла ошибка: {error}."
 
 #: modules/mumble/__init__.py:25
 msgid ""
@@ -4683,7 +4617,7 @@ msgstr "Mumla"
 
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
-msgstr ""
+msgstr "Групповая конференция"
 
 #: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
 #: modules/shadowsocks/forms.py:24
@@ -4721,12 +4655,12 @@ msgstr "Службы имён"
 
 #: modules/names/__init__.py:171
 msgid "Package systemd-resolved is installed"
-msgstr ""
+msgstr "Пакет systemd-resolved установлен"
 
 #: modules/names/__init__.py:195
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
-msgstr ""
+msgstr "Разрешить доменное имя: {domain}"
 
 #: modules/names/components.py:14
 msgid "All"
@@ -4743,10 +4677,11 @@ msgstr "Sеcure Shell"
 #: modules/names/forms.py:21
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
+"Использовать DNS-over-TLS для разрешения доменов (глобальное предпочтение)"
 
 #: modules/names/forms.py:49
 msgid "Use DNSSEC when resolving domains (global preference)"
-msgstr ""
+msgstr "Использовать DNSSEC при разрешении доменов (глобальное предпочтение)"
 
 #: modules/names/forms.py:84
 msgid "Hostname"
@@ -4797,28 +4732,24 @@ msgstr "Да"
 #: modules/names/resolved.py:92 modules/networks/forms.py:29
 #: modules/networks/views.py:124
 msgid "opportunistic"
-msgstr ""
+msgstr "оппортунистический"
 
 #: modules/names/resolved.py:93 modules/names/resolved.py:103
 #: modules/networks/forms.py:30 modules/networks/views.py:123
-#, fuzzy
-#| msgid "Dino"
 msgid "no"
-msgstr "Dino"
+msgstr "нет"
 
 #: modules/names/resolved.py:102
 msgid "allow-downgrade"
-msgstr ""
+msgstr "разрешить обновление"
 
 #: modules/names/resolved.py:110
-#, fuzzy
-#| msgid "Get Support"
 msgid "supported"
-msgstr "Получить поддержку"
+msgstr "поддерживается"
 
 #: modules/names/resolved.py:110
 msgid "unsupported"
-msgstr ""
+msgstr "не поддерживается"
 
 #: modules/names/templates/names.html:12
 msgid "Domains"
@@ -4830,66 +4761,59 @@ msgstr "Службы"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
-msgstr ""
+msgstr "Состояние резольвера"
 
 #: modules/names/templates/names.html:66
 msgid "Global"
-msgstr ""
+msgstr "Глобальный"
 
 #: modules/names/templates/names.html:68
 msgid "Link"
-msgstr ""
+msgstr "Ссылка"
 
 #: modules/names/templates/names.html:73
 #: modules/networks/templates/connection_show.html:264
+#, fuzzy
 msgid "DNS-over-TLS"
-msgstr ""
+msgstr "DNS-over-TLS"
 
 #: modules/names/templates/names.html:77
 #, fuzzy
 #| msgid "Enable DNSSEC"
 msgid "DNSSEC"
-msgstr "Включить DNSSEC"
+msgstr "DNSSEC"
 
 #: modules/names/templates/names.html:82
-#, fuzzy
-#| msgid "Second DNS Server"
 msgid "Current DNS Server"
-msgstr "Второй DNS-сервер"
+msgstr "Текущий сервер DNS"
 
 #: modules/names/templates/names.html:88
-#, fuzzy
-#| msgid "DNS Server"
 msgid "DNS Servers"
-msgstr "DNS-сервер"
+msgstr "DNS Сервер"
 
 #: modules/names/templates/names.html:98
-#, fuzzy
-#| msgid "DNS Server"
 msgid "Fallback DNS Servers"
-msgstr "DNS-сервер"
+msgstr "Резервные серверы DNS"
 
 #: modules/names/templates/names.html:112
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
+"Пакет systemd-resolved не установлен. Установите его для получения "
+"дополнительной функциональности."
 
 #: modules/names/templates/names.html:121 templates/setup.html:66
 msgid "Install"
 msgstr "Установка"
 
 #: modules/names/templates/names.html:126
-#, fuzzy
-#| msgid "Error during installation"
 msgid "Error retrieving status:"
-msgstr "Ошибка во время установки"
+msgstr "Ошибка при получении статуса:"
 
 #: modules/names/views.py:81
-#, fuzzy
-#| msgid "Hostname"
 msgid "Set Hostname"
-msgstr "Имя хоста"
+msgstr "Установите имя хоста"
 
 #: modules/names/views.py:99
 #, python-brace-format
@@ -4897,10 +4821,8 @@ msgid "Error setting hostname: {exception}"
 msgstr "Ошибка параметра hostname: {exception}"
 
 #: modules/names/views.py:115
-#, fuzzy
-#| msgid "Domain Name"
 msgid "Set Domain Name"
-msgstr "Доменное имя"
+msgstr "Установить доменное имя"
 
 #: modules/names/views.py:133
 #, python-brace-format
@@ -4963,7 +4885,7 @@ msgstr ""
 
 #: modules/networks/forms.py:56
 msgid "Use DNS-over-TLS"
-msgstr ""
+msgstr "Использовать DNS-over-TLS"
 
 #: modules/networks/forms.py:90
 msgid "IPv4 Addressing Method"
@@ -5063,16 +4985,12 @@ msgstr ""
 "подключение к Интернету из этой сети"
 
 #: modules/networks/forms.py:136
-#, fuzzy
-#| msgid ""
-#| "Automatic: Configure automatically, use Internet connection from this "
-#| "network"
 msgid ""
 "Link-local: Configure automatically to use an address that is only relevant "
 "to this network."
 msgstr ""
-"Автоматически: Настроить автоматически, использовать подключение к Интернету "
-"из этой сети"
+"Link-local: Настройте автоматическое использование адреса, относящегося "
+"только к данной сети."
 
 #: modules/networks/forms.py:141
 msgid "Ignore: Ignore this addressing method"
@@ -5080,7 +4998,7 @@ msgstr "Игнорировать: Игнорировать этот метод �
 
 #: modules/networks/forms.py:142
 msgid "Disabled: Disable IPv6 for this connection"
-msgstr ""
+msgstr "Disabled (Отключено): Отключить IPv6 для этого соединения"
 
 #: modules/networks/forms.py:147
 msgid "Prefix"
@@ -5617,10 +5535,8 @@ msgid "Edit Connection"
 msgstr "Редактирование подключения"
 
 #: modules/networks/templates/connections_fields.html:24
-#, fuzzy
-#| msgid "Generic"
 msgid "General"
-msgstr "Универсальный"
+msgstr "Общий"
 
 #: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
 msgid "PPPoE"
@@ -5857,29 +5773,24 @@ msgstr ""
 
 #: modules/networks/templates/wifi_scan.html:14
 msgid "No Wi-Fi device detected."
-msgstr ""
+msgstr "Устройство Wi-Fi не обнаружено."
 
 #: modules/networks/templates/wifi_scan.html:21
-#, fuzzy, python-format
-#| msgid "Delete %(username)s"
+#, python-format
 msgid "Device: %(interface_name)s"
-msgstr "Удаление %(username)s"
+msgstr "Устройство: %(interface_name)s"
 
 #: modules/networks/templates/wifi_scan.html:27
-#, fuzzy
-#| msgid "Last Connected Time"
 msgid "Last scanned: "
-msgstr "Время последнего подключения"
+msgstr "Последнее сканирование: "
 
 #: modules/networks/templates/wifi_scan.html:31
 msgid "never"
-msgstr ""
+msgstr "никогда"
 
 #: modules/networks/templates/wifi_scan.html:52
-#, fuzzy
-#| msgid "Wi-Fi network not found"
 msgid "No Wi-Fi networks found."
-msgstr "Сеть Wi-Fi не найдена"
+msgstr "Не найдено ни одной сети Wi-Fi."
 
 #: modules/networks/views.py:27
 msgid "disabled"
@@ -5902,14 +5813,13 @@ msgid "link-local"
 msgstr "локальная ссылка"
 
 #: modules/networks/views.py:32
+#, fuzzy
 msgid "dhcp"
-msgstr ""
+msgstr "dhcp"
 
 #: modules/networks/views.py:33
-#, fuzzy
-#| msgid "Ignore"
 msgid "ignore"
-msgstr "Игнорировать"
+msgstr "игнорировать"
 
 #: modules/networks/views.py:40
 msgid "unmanaged"
@@ -6061,10 +5971,8 @@ msgid "mesh point"
 msgstr "точка mesh"
 
 #: modules/networks/views.py:122
-#, fuzzy
-#| msgid "Default"
 msgid "default"
-msgstr "По умолчанию"
+msgstr "по умолчанию"
 
 #: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
@@ -6202,22 +6110,16 @@ msgid "Administrator password"
 msgstr "Пароль администратора"
 
 #: modules/nextcloud/forms.py:34
-#, fuzzy
-#| msgid ""
-#| "Set a new password for MediaWiki's administrator account (admin). The "
-#| "password cannot be a common one and the minimum required length is "
-#| "<strong>10 characters</strong>. Leave this field blank to keep the "
-#| "current password."
 msgid ""
 "Optional. Set a new password for Nextcloud's administrator account "
 "(nextcloud-admin). The password cannot be a common one and the minimum "
 "required length is <strong>10 characters</strong>. Leave this field blank to "
 "keep the current password."
 msgstr ""
-"Необязательно. Set a new password for Nextcloud's administrator account "
-"(nextcloud-admin). The password cannot be a common one and the minimum "
-"required length is <strong>10 characters</strong>. Leave this field blank to "
-"keep the current password."
+"Опционально. Установите новый пароль для учетной записи администратора "
+"Nextcloud (nextcloud-admin). Пароль не может быть обычным, а минимальная "
+"требуемая длина составляет <strong>10 символов</strong>. Оставьте это поле "
+"пустым, чтобы сохранить текущий пароль."
 
 #: modules/nextcloud/forms.py:41
 msgid "Default phone region"
@@ -6232,20 +6134,16 @@ msgstr ""
 "настройках профиля без кода страны."
 
 #: modules/nextcloud/manifest.py:56 modules/syncthing/manifest.py:58
-#, fuzzy
-#| msgid "Filesystem"
 msgid "File sync"
-msgstr "Файловая система"
+msgstr "Синхронизация файлов"
 
 #: modules/nextcloud/manifest.py:56 modules/sharing/__init__.py:34
 msgid "Sharing"
 msgstr "Общий доступ"
 
 #: modules/nextcloud/manifest.py:56
-#, fuzzy
-#| msgid "Group Share"
 msgid "Groupware"
-msgstr "Групповой ресурс"
+msgstr "Групповое ПО"
 
 #: modules/nextcloud/views.py:53
 msgid "Password update failed. Please choose a stronger password."
@@ -6294,16 +6192,12 @@ msgid "Tunnelblick"
 msgstr "Tunnelblick"
 
 #: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
-#, fuzzy
-#| msgid "DNS server"
 msgid "VPN server"
-msgstr "DNS-сервер"
+msgstr "VPN сервер"
 
 #: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
-#, fuzzy
-#| msgid "Removable Media"
 msgid "Remote access"
-msgstr "Сменные носители"
+msgstr "Удаленный доступ"
 
 #: modules/openvpn/templates/openvpn.html:12
 msgid "Profile"
@@ -6673,7 +6567,7 @@ msgstr ""
 
 #: modules/privacy/forms.py:28
 msgid "Allow using fallback DNS servers"
-msgstr ""
+msgstr "Разрешите использовать резервные DNS серверы"
 
 #: modules/privacy/forms.py:30
 msgid ""
@@ -6682,6 +6576,10 @@ msgid ""
 "available. Can be disabled in most cases if network connectivity is stable "
 "and reliable."
 msgstr ""
+"Использование известных публичных DNS-серверов для разрешения доменных имен "
+"в необычных ситуациях, когда DNS-серверы неизвестны, но доступно подключение "
+"к Интернету. В большинстве случаев может быть отключено, если подключение к "
+"сети стабильно и надежно."
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -6695,13 +6593,7 @@ msgstr ""
 "интернете. "
 
 #: modules/privoxy/__init__.py:30
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "You can use Privoxy by modifying your browser proxy settings to your "
-#| "{box_name} hostname (or IP address) with port 8118. While using Privoxy, "
-#| "you can see its configuration details and documentation at <a "
-#| "href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a "
-#| "href=\"http://p.p\">http://p.p</a>."
+#, python-brace-format
 msgid ""
 "You can use Privoxy by modifying your browser proxy settings to your "
 "{box_name} hostname (or IP address) with port 8118. Only connections from "
@@ -6711,10 +6603,10 @@ msgid ""
 "p\">http://p.p</a>."
 msgstr ""
 "Вы можете использовать Privoxy, изменив настройки прокси-сервера вашего "
-"браузера на имя хоста {box_name} (или IP-адрес) с портом 8118. Only "
-"connections from local network IP addresses are permitted. While using "
-"Privoxy, you can see its configuration details and documentation at <a "
-"href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> or <a "
+"браузера на имя хоста {box_name} (или IP-адрес) с портом 8118. Разрешены "
+"только соединения с IP-адресов локальной сети. При использовании Privoxy вы "
+"можете ознакомиться с деталями его конфигурации и документацией по адресу <a "
+"href=\"http://config.privoxy.org\">http://config.privoxy.org/</a> или <a "
 "href=\"http://p.p\">http://p.p</a>."
 
 #: modules/privoxy/__init__.py:53
@@ -6732,20 +6624,16 @@ msgstr "Доступ к {url} с прокси {proxy} на tcp{kind}"
 
 #: modules/privoxy/manifest.py:10
 msgid "Ad blocker"
-msgstr ""
+msgstr "Блокировщик рекламы"
 
 #: modules/privoxy/manifest.py:10 modules/shadowsocks/manifest.py:18
 #: modules/torproxy/manifest.py:55
-#, fuzzy
-#| msgid "Gobby Server"
 msgid "Proxy server"
-msgstr "Сервер Gobby"
+msgstr "Прокси сервер"
 
 #: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-#, fuzzy
-#| msgid "Local Network Domain"
 msgid "Local network"
-msgstr "Домен локальной сети"
+msgstr "Локальная сеть"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6789,8 +6677,9 @@ msgid "Quasseldroid"
 msgstr "Quasseldroid"
 
 #: modules/quassel/manifest.py:54
+#, fuzzy
 msgid "IRC"
-msgstr ""
+msgstr "IRC"
 
 #: modules/radicale/__init__.py:25
 #, python-brace-format
@@ -6897,22 +6786,22 @@ msgstr ""
 "address>."
 
 #: modules/radicale/manifest.py:91
-#, fuzzy
-#| msgid "GNOME Calendar"
 msgid "Calendar"
-msgstr "GNOME календарь"
+msgstr "Календарь"
 
 #: modules/radicale/manifest.py:91 modules/roundcube/manifest.py:23
 msgid "Contacts"
-msgstr ""
+msgstr "Контакты"
 
 #: modules/radicale/manifest.py:91
+#, fuzzy
 msgid "CalDAV"
-msgstr ""
+msgstr "CalDAV"
 
 #: modules/radicale/manifest.py:91
+#, fuzzy
 msgid "CardDAV"
-msgstr ""
+msgstr "CardDAV"
 
 #: modules/radicale/views.py:32
 msgid "Access rights configuration updated"
@@ -6986,7 +6875,7 @@ msgstr ""
 #, fuzzy
 #| msgid "FairEmail"
 msgid "Email"
-msgstr "FairEmail"
+msgstr "Email"
 
 #: modules/rssbridge/__init__.py:21
 msgid ""
@@ -7007,19 +6896,16 @@ msgstr ""
 "фидов."
 
 #: modules/rssbridge/__init__.py:28
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "You can use RSS-Bridge with <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> to "
-#| "follow various websites. When adding a feed, enable authentication and "
-#| "use your {box_name} credentials."
+#, python-brace-format
 msgid ""
 "You can use RSS-Bridge with <a href=\"{miniflux_url}\">Miniflux</a> or <a "
 "href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
 "adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
-"Вы можете использовать RSS-мостик с <a href=\"{ttrss_url}\">Tiny Tiny RSS</"
-"a>, чтобы следить за различными сайтами. При добавлении ленты включите "
-"аутентификацию и используйте свои учетные данные {box_name}."
+"Вы можете использовать RSS-Bridge с <a href=\"{miniflux_url}\">Miniflux</a> "
+"или <a href=\"{ttrss_url}\">Tiny Tiny RSS</a>, чтобы следить за различными "
+"сайтами. При добавлении ленты включите аутентификацию и используйте свои "
+"учетные данные {box_name}."
 
 #: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
@@ -7042,14 +6928,12 @@ msgid "Allow this application to be used by anyone who can reach it."
 msgstr "Разрешите использовать это приложение всем, у кого есть доступ к нему."
 
 #: modules/rssbridge/manifest.py:16
-#, fuzzy
-#| msgid "RSS Feed Generator"
 msgid "Feed generator"
-msgstr "Генератор RSS-каналов"
+msgstr "Генератор питания"
 
 #: modules/rssbridge/manifest.py:16
 msgid "News"
-msgstr ""
+msgstr "Новости"
 
 #: modules/samba/__init__.py:23
 msgid ""
@@ -7129,22 +7013,16 @@ msgid "Dolphin"
 msgstr "Dolphin"
 
 #: modules/samba/manifest.py:91
-#, fuzzy
-#| msgid "Network Interface"
 msgid "Network drive"
-msgstr "Сетевой интерфейс"
+msgstr "Сетевой диск"
 
 #: modules/samba/manifest.py:92
-#, fuzzy
-#| msgid "Media streaming server"
 msgid "Media storage"
-msgstr "Сервер потоковой передачи мультимедиа"
+msgstr "Хранение носителей"
 
 #: modules/samba/manifest.py:93
-#, fuzzy
-#| msgid "Backups"
 msgid "Backup storage"
-msgstr "Резервные копии"
+msgstr "Резервное хранение"
 
 #: modules/samba/templates/samba.html:20
 msgid "Shares"
@@ -7288,14 +7166,12 @@ msgid "Strict"
 msgstr "Строгий"
 
 #: modules/searx/manifest.py:17
-#, fuzzy
-#| msgid "Web Search"
 msgid "Web search"
-msgstr "Веб-поиск"
+msgstr "Веб поиск"
 
 #: modules/searx/manifest.py:17
 msgid "Metasearch Engine"
-msgstr ""
+msgstr "Метапоисковая система"
 
 #: modules/security/forms.py:13
 msgid "Fail2Ban (recommended)"
@@ -7452,13 +7328,11 @@ msgstr "Shaarlier"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
-msgstr ""
+msgstr "Блог по ссылке"
 
 #: modules/shaarli/manifest.py:34
-#, fuzzy
-#| msgid "in use"
 msgid "Single user"
-msgstr "в использовании"
+msgstr "Один пользователь"
 
 #: modules/shadowsocks/__init__.py:18 modules/shadowsocksserver/__init__.py:18
 msgid ""
@@ -7529,22 +7403,18 @@ msgid "Encryption method. Must match setting on server."
 msgstr "Метод шифрования. Должен соответствовать параметру на сервере."
 
 #: modules/shadowsocks/manifest.py:20 modules/shadowsocksserver/manifest.py:19
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encrypted tunnel"
-msgstr "Шифрование"
+msgstr "Зашифрованный туннель"
 
 #: modules/shadowsocks/manifest.py:21
-#, fuzzy
-#| msgid "Endpoint"
 msgid "Entry point"
-msgstr "Конечная точка"
+msgstr "Точка входа"
 
 #: modules/shadowsocks/manifest.py:22 modules/shadowsocksserver/manifest.py:21
 #, fuzzy
 #| msgid "Shadowsocks Client"
 msgid "Shadowsocks"
-msgstr "Клиент Shadowsocks"
+msgstr "Shadowsocks"
 
 #: modules/shadowsocksserver/__init__.py:26
 #, python-brace-format
@@ -7580,10 +7450,8 @@ msgid "Encryption method. Clients must use the same setting."
 msgstr "Метод шифрования. Клиенты должны использовать те же настройки."
 
 #: modules/shadowsocksserver/manifest.py:20
-#, fuzzy
-#| msgid "Endpoint"
 msgid "Exit point"
-msgstr "Конечная точка"
+msgstr "Место выхода"
 
 #: modules/sharing/__init__.py:17
 #, python-brace-format
@@ -7643,10 +7511,8 @@ msgstr ""
 "группы"
 
 #: modules/sharing/manifest.py:19 modules/zoph/manifest.py:26
-#, fuzzy
-#| msgid "Sharing"
 msgid "Web sharing"
-msgstr "Общий доступ"
+msgstr "Совместное использование веб-страниц"
 
 #: modules/sharing/templates/sharing.html:18
 #: modules/sharing/templates/sharing.html:21
@@ -8158,7 +8024,7 @@ msgstr "Перейти к питанию"
 
 #: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:396
 msgid "grub package is configured"
-msgstr ""
+msgstr "Пакет grub сконфигурирован"
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
@@ -8327,6 +8193,11 @@ msgid ""
 "several short notes called Tiddlers and link them together into a dense "
 "graph."
 msgstr ""
+"TiddlyWiki - это интерактивное приложение, которое полностью запускается в "
+"веб-браузере. Каждая вики-страница представляет собой автономный HTML-файл, "
+"хранящийся на вашем {box_name}. Вместо того чтобы писать длинные вики-"
+"страницы, TiddlyWiki предлагает вам написать несколько коротких заметок, "
+"называемых Tiddlers, и связать их вместе в плотный граф."
 
 #: modules/tiddlywiki/__init__.py:30
 msgid ""
@@ -8336,6 +8207,11 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
+"Это универсальное приложение с широким спектром возможностей использования - "
+"нелинейный блокнот, веб-сайт, персональная база знаний, система управления "
+"задачами и проектами, личный дневник и т.д. Плагины могут расширять "
+"функциональность TiddlyWiki. Шифрование отдельных тиддлеров или защита "
+"паролем вики-файла возможны прямо из приложения."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -8343,48 +8219,55 @@ msgid ""
 "TiddlyWiki is downloaded from {box_name} website and not from Debian. Wikis "
 "need to be upgraded to newer version manually."
 msgstr ""
+"TiddlyWiki загружается с сайта {box_name}, а не из Debian. Вики необходимо "
+"обновлять до новой версии вручную."
 
 #: modules/tiddlywiki/__init__.py:46
 msgid "Create a new wiki or upload your existing wiki file to get started."
 msgstr ""
+"Создайте новую вики или загрузите существующий файл вики, чтобы начать "
+"работу."
 
 #: modules/tiddlywiki/__init__.py:64 modules/tiddlywiki/manifest.py:9
+#, fuzzy
 msgid "TiddlyWiki"
-msgstr ""
+msgstr "TiddlyWiki"
 
 #: modules/tiddlywiki/__init__.py:66
 msgid "Non-linear Notebooks"
-msgstr ""
+msgstr "Нелинейные блокноты"
 
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
-msgstr ""
+msgstr "Файл TiddlyWiki с расширением .html"
 
 #: modules/tiddlywiki/forms.py:35
 msgid "TiddlyWiki files must be in HTML format"
-msgstr ""
+msgstr "Файлы TiddlyWiki должны быть в формате HTML"
 
 #: modules/tiddlywiki/forms.py:37
 msgid "Upload an existing TiddlyWiki file from this computer."
-msgstr ""
+msgstr "Загрузите существующий файл TiddlyWiki с этого компьютера."
 
 #: modules/tiddlywiki/manifest.py:22
 msgid "Journal"
-msgstr ""
+msgstr "Журнал"
 
 #: modules/tiddlywiki/manifest.py:23
 msgid "Digital garden"
-msgstr ""
+msgstr "Цифровой сад"
 
 #: modules/tiddlywiki/manifest.py:24
 msgid "Zettelkasten"
-msgstr ""
+msgstr "Шкафы для застройки"
 
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:18
 msgid ""
 "<strong>Hint</strong>: You can download a copy of this wiki from within "
 "TiddlyWiki before deleting it."
 msgstr ""
+"<strong>Подсказка</strong>: Вы можете загрузить копию этой вики из "
+"TiddlyWiki, прежде чем удалять ее."
 
 #: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
 msgid ""
@@ -8542,10 +8425,8 @@ msgid "Orbot: Proxy with Tor"
 msgstr "Orbot: Прокси с Tor"
 
 #: modules/tor/manifest.py:57
-#, fuzzy
-#| msgid "Onion Service"
 msgid "Onion services"
-msgstr "Onion сервис"
+msgstr "Луковые сервисы"
 
 #: modules/tor/manifest.py:58
 msgid "Relay"
@@ -8757,16 +8638,16 @@ msgid "FreedomBox Updated"
 msgstr "FreedomBox обновлён"
 
 #: modules/upgrades/__init__.py:138
-#, fuzzy
-#| msgid "Software Update"
 msgid "Run software update manually"
-msgstr "Обновление программного обеспечения"
+msgstr "Запустите обновление программного обеспечения вручную"
 
 #: modules/upgrades/__init__.py:140
 msgid ""
 "Automatic software update runs daily by default. For the first time, "
 "manually run it now."
 msgstr ""
+"По умолчанию автоматическое обновление программного обеспечения выполняется "
+"ежедневно. В первый раз запустите его вручную."
 
 #: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
@@ -8795,7 +8676,7 @@ msgstr ""
 
 #: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
-msgstr ""
+msgstr "Проверьте, не задерживается ли посылка"
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
@@ -9081,22 +8962,21 @@ msgstr ""
 "игнорироваться."
 
 #: modules/users/forms.py:252
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete user"
-msgstr "Удаление пользователя"
+msgstr "Удалить пользователя"
 
 #: modules/users/forms.py:254
 msgid ""
 "Deleting the user account will also remove all the files related to the "
 "user. Deleting files can be avoided by setting the user account as inactive."
 msgstr ""
+"Удаление учетной записи пользователя также приведет к удалению всех файлов, "
+"связанных с ним. Удаления файлов можно избежать, установив учетную запись "
+"пользователя как неактивную."
 
 #: modules/users/forms.py:305
-#, fuzzy
-#| msgid "Failed to add user to group."
 msgid "Failed to delete user."
-msgstr "Не удалось добавить пользователя в группу."
+msgstr "Не удалось удалить пользователя."
 
 #: modules/users/forms.py:320
 msgid "Renaming LDAP user failed."
@@ -9223,10 +9103,9 @@ msgid "Save Changes"
 msgstr "Сохранить изменения"
 
 #: modules/users/templates/users_update.html:41
-#, fuzzy, python-format
-#| msgid "Delete user <strong>%(username)s</strong> permanently?"
+#, python-format
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
-msgstr "Окончательно удалить пользователя <strong>%(username)s</strong>?"
+msgstr "Удалить пользователя <em>%(username)s</em> и все его файлы?"
 
 #: modules/users/templates/users_update.html:46 templates/messages.html:11
 msgid "Close"
@@ -9237,12 +9116,13 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
+"При удалении учетной записи пользователя также удаляются все файлы его "
+"домашнего каталога. Если вы хотите сохранить эти файлы, отключите учетную "
+"запись пользователя."
 
 #: modules/users/templates/users_update.html:59
-#, fuzzy
-#| msgid "Delete files"
 msgid "Delete user and files"
-msgstr "Удалить файлы"
+msgstr "Удаление пользователя и файлов"
 
 #: modules/users/templates/users_update.html:62
 msgid "Cancel"
@@ -9263,10 +9143,9 @@ msgid "Edit User"
 msgstr "Редактирование пользователя"
 
 #: modules/users/views.py:111
-#, fuzzy, python-format
-#| msgid "User %(username)s created."
+#, python-format
 msgid "User %(username)s deleted."
-msgstr "Пользователь %(username)s создан."
+msgstr "Пользователь %(username)s удален."
 
 #: modules/users/views.py:130
 msgid "Change Password"
@@ -9396,10 +9275,8 @@ msgstr ""
 "трафик."
 
 #: modules/wireguard/manifest.py:45
-#, fuzzy
-#| msgid "IRC Client"
 msgid "VPN client"
-msgstr "IRC-клиент"
+msgstr "VPN клиент"
 
 #: modules/wireguard/templates/wireguard.html:10
 msgid "As a Server"
@@ -9685,7 +9562,7 @@ msgstr ""
 
 #: modules/wordpress/manifest.py:26
 msgid "Content management system"
-msgstr ""
+msgstr "Система управления контентом"
 
 #: modules/zoph/__init__.py:24
 #, python-brace-format
@@ -9743,13 +9620,11 @@ msgstr ""
 
 #: modules/zoph/manifest.py:26
 msgid "Photo"
-msgstr ""
+msgstr "Фото"
 
 #: modules/zoph/manifest.py:26
-#, fuzzy
-#| msgid "Photo Organizer"
 msgid "Organizer"
-msgstr "Организатор фотографий"
+msgstr "Органайзер"
 
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
@@ -9770,10 +9645,9 @@ msgid "Generic"
 msgstr "Универсальный"
 
 #: operation.py:120
-#, fuzzy, python-brace-format
-#| msgid "Error: {name}: {exception_message}"
+#, python-brace-format
 msgid "Error: {name}: {exception}"
-msgstr "Ошибка: {name}: {exception_message}"
+msgstr "Ошибка: {name}: {exception}"
 
 #: operation.py:123
 #, python-brace-format
@@ -9825,22 +9699,19 @@ msgid "Updating app"
 msgstr "Обновление приложения"
 
 #: setup.py:78
-#, fuzzy, python-brace-format
-#| msgid "Error installing app: {error}"
+#, python-brace-format
 msgid "Error installing app: {exception}"
-msgstr "Ошибка при установке приложения: {error}"
+msgstr "Ошибка при установке приложения: {exception}"
 
 #: setup.py:80
-#, fuzzy, python-brace-format
-#| msgid "Error repairing app: {error}"
+#, python-brace-format
 msgid "Error repairing app: {exception}"
-msgstr "Ошибка при восстановлении приложения: {error}"
+msgstr "Ошибка при восстановлении приложения: {exception}"
 
 #: setup.py:82
-#, fuzzy, python-brace-format
-#| msgid "Error updating app: {error}"
+#, python-brace-format
 msgid "Error updating app: {exception}"
-msgstr "Ошибка обновления приложения: {error}"
+msgstr "Ошибка обновления приложения: {exception}"
 
 #: setup.py:85
 msgid "App installed."
@@ -9959,10 +9830,8 @@ msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Служба <em>%(service_name)s</em> не запущена."
 
 #: templates/apps.html:29
-#, fuzzy
-#| msgid "Search the web"
 msgid "Search with tags"
-msgstr "Поиск в интернете"
+msgstr "Поиск по тегам"
 
 #: templates/base.html:31
 msgid ""
