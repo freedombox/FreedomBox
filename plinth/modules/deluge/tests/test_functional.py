@@ -35,14 +35,12 @@ class TestDelugeApp(functional.BaseAppTests):
                                       'nogroupuser')
         assert not functional.is_available(session_browser, 'deluge')
 
-        functional.login(session_browser)
-
     def test_upload_torrent(self, session_browser):
         """Test uploading a torrent."""
         functional.app_enable(session_browser, 'deluge')
         _remove_all_torrents(session_browser)
         _upload_sample_torrent(session_browser)
-        assert _get_number_of_torrents(session_browser) == 1
+        assert len(_get_torrents(session_browser)) == 1
 
     @pytest.mark.backups
     def test_backup_restore(self, session_browser):
@@ -55,7 +53,7 @@ class TestDelugeApp(functional.BaseAppTests):
         _remove_all_torrents(session_browser)
         functional.backup_restore(session_browser, 'deluge', 'test_deluge')
         assert functional.service_is_running(session_browser, 'deluge')
-        assert _get_number_of_torrents(session_browser) == 1
+        assert len(_get_torrents(session_browser)) == 1
 
 
 def _get_active_window_title(browser):
@@ -81,49 +79,30 @@ def _ensure_logged_in(browser):
         # After a backup restore, service may not be available immediately
         functional.eventually(service_is_available)
 
-        time.sleep(1)  # Wait for Ext.js application in initialize
+    functional.eventually(browser.is_element_present_by_id, ['add'])
 
-    if _get_active_window_title(browser) != 'Login':
-        return
+    def logged_in():
+        active_window_title = _get_active_window_title(browser)
 
-    browser.find_by_id('_password').first.fill('deluge')
-    _click_active_window_button(browser, 'Login')
+        # Change Default Password window appears once.
+        if active_window_title == 'Change Default Password':
+            _click_active_window_button(browser, 'No')
 
-    assert functional.eventually(
-        lambda: _get_active_window_title(browser) != 'Login')
-    functional.eventually(browser.is_element_not_present_by_css,
-                          args=['#add.x-item-disabled'], timeout=0.3)
+        if active_window_title == 'Login':
+            browser.find_by_id('_password').first.fill('deluge')
+            _click_active_window_button(browser, 'Login')
 
+        return browser.is_element_not_present_by_css('#add .x-item-disabled')
 
-def _open_connection_manager(browser):
-    """Open the connection manager dialog if not already open."""
-    title = 'Connection Manager'
-    if _get_active_window_title(browser) == title:
-        return
-
-    browser.find_by_css('button.x-deluge-connection-manager').first.click()
-    functional.eventually(lambda: _get_active_window_title(browser) == title)
-
-
-def _ensure_connected(browser):
-    """Type the connection password if required and start Deluge daemon."""
-    _ensure_logged_in(browser)
-
-    # Change Default Password window appears once.
-    if _get_active_window_title(browser) == 'Change Default Password':
-        _click_active_window_button(browser, 'No')
-
-    assert functional.eventually(browser.is_element_not_present_by_css,
-                                 args=['#add.x-item-disabled'])
+    functional.eventually(logged_in)
 
 
 def _remove_all_torrents(browser):
     """Remove all torrents from deluge."""
-    _ensure_connected(browser)
+    _ensure_logged_in(browser)
 
-    while browser.find_by_css('#torrentGrid .torrent-name'):
-        browser.find_by_css('#torrentGrid .torrent-name').first.click()
-
+    for torrent in _get_torrents(browser):
+        torrent.click()
         # Click remove toolbar button
         browser.find_by_id('remove').first.click()
 
@@ -155,9 +134,9 @@ def _click_active_window_button(browser, button_text):
 
 def _upload_sample_torrent(browser):
     """Upload a sample torrent into deluge."""
-    _ensure_connected(browser)
+    _ensure_logged_in(browser)
 
-    number_of_torrents = _get_number_of_torrents(browser)
+    number_of_torrents = len(_get_torrents(browser))
 
     # Click add toolbar button
     browser.find_by_id('add').first.click()
@@ -168,35 +147,20 @@ def _upload_sample_torrent(browser):
 
     file_path = os.path.join(os.path.dirname(__file__), 'data',
                              'sample.torrent')
-
-    if browser.find_by_id('fileUploadForm'):  # deluge-web 2.x
-        browser.attach_file('file', file_path)
-    else:  # deluge-web 1.x
-        browser.find_by_css('button.x-deluge-add-file').first.click()
-
-        # Add from file window appears
-        functional.eventually(
-            lambda: _get_active_window_title(browser) == 'Add from File')
-
-        # Attach file
-        browser.attach_file('file', file_path)
-
-        # Click Add
-        _click_active_window_button(browser, 'Add')
-
-        functional.eventually(
-            lambda: _get_active_window_title(browser) == 'Add Torrents')
+    browser.attach_file('file', file_path)
 
     # Click Add
     time.sleep(1)
     _click_active_window_button(browser, 'Add')
 
     functional.eventually(
-        lambda: _get_number_of_torrents(browser) > number_of_torrents)
+        lambda: len(_get_torrents(browser)) > number_of_torrents)
 
 
-def _get_number_of_torrents(browser):
-    """Return the number torrents currently in deluge."""
-    _ensure_connected(browser)
+def _get_torrents(browser):
+    """Return list of torrents currently in deluge."""
+    _ensure_logged_in(browser)
+    # wait until torrent list is loaded
+    functional.eventually(browser.is_element_present_by_css, ['.x-deluge-all'])
 
-    return len(browser.find_by_css('#torrentGrid .torrent-name'))
+    return browser.find_by_css('#torrentGrid .torrent-name')

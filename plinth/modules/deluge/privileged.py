@@ -13,10 +13,10 @@ from plinth.actions import privileged
 from plinth.modules.deluge.utils import Config
 
 DELUGED_DEFAULT_FILE = '/etc/default/deluged'
-DELUGE_CONF_DIR = pathlib.Path('/var/lib/deluged/.config/deluge/')
+DELUGE_CONF_DIR = pathlib.Path('/var/lib/deluged/config/')
 
 DELUGE_WEB_SYSTEMD_SERVICE_PATH = '/etc/systemd/system/deluge-web.service'
-DELUGE_WEB_SYSTEMD_SERVICE = '''
+DELUGE_WEB_SYSTEMD_SERVICE = f'''
 #
 # This file is managed and overwritten by Plinth.  If you wish to edit
 # it, disable Deluge in Plinth, remove this file and manage it manually.
@@ -25,9 +25,10 @@ DELUGE_WEB_SYSTEMD_SERVICE = '''
 Description=Deluge Web Interface
 Documentation=man:deluge-web(1)
 After=network.target
+After=deluged.service
 
 [Service]
-ExecStart=bash -c "/usr/bin/deluge-web --base=deluge $(/usr/bin/deluge-web --version | grep deluge-web | cut -f2 -d' ' | grep -q '^1.' && echo '' || echo '--do-not-daemonize')"
+ExecStart=/usr/bin/deluge-web --config {DELUGE_CONF_DIR} --base=deluge --do-not-daemonize
 Restart=on-failure
 User=debian-deluged
 Group=debian-deluged

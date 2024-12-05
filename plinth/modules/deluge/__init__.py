@@ -11,6 +11,7 @@ from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import (Firewall,
                                                 FirewallLocalProtection)
+from plinth.modules.upgrades import get_current_release
 from plinth.modules.users import add_user_to_share_group
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
@@ -26,12 +27,26 @@ _description = [
 SYSTEM_USER = 'debian-deluged'
 
 
+class DelugePackages(Packages):
+    """Mark deluge app as not available in Debian Bookworm.
+
+    deluge-web is broken in Debian Bookworm. Related bug report:
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1031593
+    """
+
+    def has_unavailable_packages(self) -> bool | None:
+        if get_current_release()[1] == 'bookworm':
+            return True
+
+        return super().has_unavailable_packages()
+
+
 class DelugeApp(app_module.App):
     """FreedomBox app for Deluge."""
 
     app_id = 'deluge'
 
-    _version = 8
+    _version = 9
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -64,7 +79,7 @@ class DelugeApp(app_module.App):
                                       allowed_groups=list(groups))
         self.add(shortcut)
 
-        packages = Packages('packages-deluge', ['deluged', 'deluge-web'])
+        packages = DelugePackages('packages-deluge', ['deluged', 'deluge-web'])
         self.add(packages)
 
         dropin_configs = DropinConfigs(
