@@ -87,8 +87,8 @@
 
         {% block mainmenu_left %}
           <a href="{% url 'index' %}"  class="navbar-brand
-                   {% if not active_menu_urls %} menu_link_active {% else %}
-                   menu_link {% endif %}" title="{{ box_name }}">
+                   {% if not active_menu_urls %}active{% endif %}"
+             title="{{ box_name }}">
             <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
         {% endblock %}
@@ -115,7 +115,7 @@
                   {% url 'index' as index_url %}
                   <a href="{{ index_url }}" title='{% trans " Home" %}'
                      class="nav-link {% if not active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     {% trans "Home" %}
                   </a>
                 </li>
@@ -123,7 +123,7 @@
                   {% url 'apps' as apps_url %}
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
                      class="nav-link {% if apps_url in active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     <span class="fa fa-th nav-icon"></span>
                     {% trans "Apps" %}
                   </a>
@@ -132,7 +132,7 @@
                   {% url 'system' as system_url %}
                   <a href="{{ system_url }}" title='{% trans " System" %}'
                      class="nav-link {% if system_url in active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     <span class="fa fa-cog nav-icon"></span>
                     {% trans "System" %}
                   </a>

@@ -516,47 +516,46 @@ footer {
     padding: 0;
 }
 
-.main-header .navbar-nav > li > a,
-.main-header .navbar-toggler {
-    color: #FFF;
-}
-
 .main-header .nav-item .nav-link {
     padding: 0.9375rem !important;
     height: 3.25rem;
 }
 
-.main-header .nav-link,
-.main-header .nav-link:hover {
-    color: white;
+.main-header .nav-link {
+    --bs-navbar-color: white;
+    --bs-navbar-active-color: white;
+    --bs-navbar-hover-color: white;
+    --bs-nav-link-color: white;
+    --bs-nav-link-active-color: white;
+    --bs-nav-link-hover-color: white;
 }
 
 .main-header .navbar-toggler {
-    border: 1px solid #ddd;
+    --bs-navbar-toggler-border-color: white;
+    --bs-navbar-color: white;
     /* In mobile layout, during first setup, maintain the height of the navbar */
     margin: 0.6875rem 0;
 }
 
 @media screen and (max-width: 767px) {
-    .main-header .navbar-nav .dropdown-menu {
-        background-color: var(--freedombox-blue-color);
-    }
-
-    .main-header .navbar-nav > li > a:focus,
-    .main-header .navbar-nav > li > a:hover,
-    .main-header .navbar-nav li > form > input,
-    .main-header .navbar-nav li > form > input:focus,
-    .main-header .navbar-nav li > form > input:hover,
-    .main-header .navbar-nav .show a,
-    .main-header .navbar-nav .show a:hover,
-    .main-header .navbar-nav .show a:focus {
-        color: #FFF;
-        background: transparent;
+    .main-header .dropdown-menu {
+        --bs-dropdown-link-color: white;
+        --bs-dropdown-link-active-color: white;
+        --bs-dropdown-link-hover-color: white;
+        --bs-dropdown-link-hover-bg: var(--freedombox-blue-color);
+        --bs-dropdown-link-active-bg: var(--freedombox-blue-color);
+        --bs-dropdown-bg: var(--freedombox-blue-color);
+        --bs-dropdown-border-color: white;
     }
 
     .main-header .navbar-nav .nav-item:last-of-type .dropdown-menu {
         margin-bottom: 1.25rem;
     }
+}
+
+.main-header .navbar-brand.active,
+.main-header .nav-link.active {
+    border-bottom: white 3px solid;
 }
 
 /* Cards in Index, Apps, System and Help pages */
@@ -578,18 +577,6 @@ footer {
     font-size: 1.25rem;
     margin: 1.25rem 0;
     border-bottom: var(--neutral-dark-color) solid 2px;
-}
-
-a.menu_link {
-    text-decoration: none;
-}
-
-a.menu_link:hover,a.menu_link:active {
-    text-decoration: none;
-}
-
-a.menu_link_active {
-    border-bottom: white 3px solid;
 }
 
 .card {
