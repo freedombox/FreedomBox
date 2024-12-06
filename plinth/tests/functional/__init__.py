@@ -427,7 +427,8 @@ def install(browser, app_name):
                     f'App {app_name} is not available in distribution')
                 pytest.skip('App not available in distribution')
             else:
-                install_button.click()
+                with wait_for_page_update(browser):
+                    install_button.click()
         else:
             break
 
