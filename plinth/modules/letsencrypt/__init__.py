@@ -70,7 +70,7 @@ class LetsEncryptApp(app_module.App):
                               parent_url_name='system:security', order=20)
         self.add(menu_item)
 
-        packages = Packages('packages-letsencrypt', ['certbot'])
+        packages = Packages('packages-letsencrypt', ['certbot', 'openssl'])
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-letsencrypt', [
