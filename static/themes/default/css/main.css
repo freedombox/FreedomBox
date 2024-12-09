@@ -291,10 +291,6 @@ body {
     animation: spin 1s linear infinite;
 }
 
-.nav-link:hover, .nav-link:visited, .nav-link:link, .nav-link:active {
-    text-decoration: none;
-}
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -594,10 +590,11 @@ footer {
     background: #eee;
 }
 
-.card .nav-link {
+.card > a {
     display: block;
     padding: 0rem;
-    color: #212529;  /* Same as Bootstrap default color */
+    color: var(--bs-body-color);
+    text-decoration: none;
 }
 
 .card-title {
@@ -631,7 +628,7 @@ footer {
     padding: 0;
 }
 
-.system-page .card .nav-link {
+.system-page .card > a {
     display: grid;
     grid-template-columns: 2.1875rem auto;
     grid-column-gap: 0.625rem;
