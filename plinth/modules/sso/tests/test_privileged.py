@@ -4,6 +4,7 @@ Test module for sso module operations.
 """
 
 import os
+import pathlib
 
 import pytest
 
@@ -24,6 +25,10 @@ def fixture_keys_directory(tmpdir):
 def fixture_existing_key_pair():
     """A fixture to create key pair if needed."""
     privileged.create_key_pair()
+    keys_directory = pathlib.Path(privileged.KEYS_DIRECTORY)
+    assert keys_directory.stat().st_mode == 0o40750
+    assert (keys_directory / 'privkey.pem').stat().st_mode == 0o100440
+    assert (keys_directory / 'pubkey.pem').stat().st_mode == 0o100440
 
 
 def test_generate_ticket(existing_key_pair):

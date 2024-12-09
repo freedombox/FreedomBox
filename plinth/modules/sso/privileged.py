@@ -7,8 +7,10 @@ Sign tickets with the FreedomBox server's private key.
 import base64
 import datetime
 import os
+import pathlib
 
-from OpenSSL import crypto
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding, rsa
 
 from plinth.actions import privileged
 
@@ -18,33 +20,42 @@ KEYS_DIRECTORY = '/etc/apache2/auth-pubtkt-keys'
 @privileged
 def create_key_pair():
     """Create public/private key pair for signing the tickets."""
-    private_key_file = os.path.join(KEYS_DIRECTORY, 'privkey.pem')
-    public_key_file = os.path.join(KEYS_DIRECTORY, 'pubkey.pem')
+    keys_directory = pathlib.Path(KEYS_DIRECTORY)
+    private_key_file = keys_directory / 'privkey.pem'
+    public_key_file = keys_directory / 'pubkey.pem'
 
-    os.path.exists(KEYS_DIRECTORY) or os.mkdir(KEYS_DIRECTORY)
+    keys_directory.mkdir(exist_ok=True)
+    # Set explicitly in case permissions are incorrect
+    keys_directory.chmod(0o750)
+    if private_key_file.exists() and public_key_file.exists():
+        # Set explicitly in case permissions are incorrect
+        public_key_file.chmod(0o440)
+        private_key_file.chmod(0o440)
+        return
 
-    if not all([
-            os.path.exists(key_file)
-            for key_file in [public_key_file, private_key_file]
-    ]):
-        pkey = crypto.PKey()
-        pkey.generate_key(crypto.TYPE_RSA, 4096)
+    private_key = rsa.generate_private_key(public_exponent=65537,
+                                           key_size=4096)
 
-        with open(private_key_file, 'w', encoding='utf-8') as priv_key_file:
-            priv_key = crypto.dump_privatekey(crypto.FILETYPE_PEM,
-                                              pkey).decode()
-            priv_key_file.write(priv_key)
+    def opener(path, flags):
+        return os.open(path, flags, mode=0o440)
 
-        with open(public_key_file, 'w', encoding='utf-8') as pub_key_file:
-            pub_key = crypto.dump_publickey(crypto.FILETYPE_PEM, pkey).decode()
-            pub_key_file.write(pub_key)
+    with open(private_key_file, 'wb', opener=opener) as file_handle:
+        pem = private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption())
+        file_handle.write(pem)
 
-        for fil in [public_key_file, private_key_file]:
-            os.chmod(fil, 0o440)
+    with open(public_key_file, 'wb', opener=opener) as file_handle:
+        public_key = private_key.public_key()
+        pem = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo)
+        file_handle.write(pem)
 
 
-def _create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
-                   graceperiod=None, extra_fields=None):
+def _create_ticket(private_key, uid, validuntil, ip=None, tokens=None,
+                   udata=None, graceperiod=None, extra_fields=None):
     """Create and return a signed mod_auth_pubtkt ticket."""
     tokens = ','.join(tokens)
     fields = [
@@ -58,24 +69,27 @@ def _create_ticket(pkey, uid, validuntil, ip=None, tokens=None, udata=None,
         and ';'.join(['{}={}'.format(k, v) for k, v in extra_fields]),
     ]
     data = ';'.join(filter(None, fields))
-    signature = 'sig={}'.format(_sign(pkey, data))
+    signature = 'sig={}'.format(_sign(private_key, data))
     return ';'.join([data, signature])
 
 
-def _sign(pkey, data):
+def _sign(private_key, data):
     """Calculate and return ticket's signature."""
-    sig = crypto.sign(pkey, data.encode(), 'sha512')
-    return base64.b64encode(sig).decode()
+    signature = private_key.sign(data.encode(), padding.PKCS1v15(),
+                                 hashes.SHA512())
+    return base64.b64encode(signature).decode()
 
 
 @privileged
 def generate_ticket(uid: str, private_key_file: str, tokens: list[str]) -> str:
     """Generate a mod_auth_pubtkt ticket using login credentials."""
-    with open(private_key_file, 'r', encoding='utf-8') as fil:
-        pkey = crypto.load_privatekey(crypto.FILETYPE_PEM, fil.read().encode())
+    with open(private_key_file, 'rb') as fil:
+        private_key = serialization.load_pem_private_key(
+            fil.read(), password=None)
+
     valid_until = _minutes_from_now(12 * 60)
     grace_period = _minutes_from_now(11 * 60)
-    return _create_ticket(pkey, uid, valid_until, tokens=tokens,
+    return _create_ticket(private_key, uid, valid_until, tokens=tokens,
                           graceperiod=grace_period)
 
 

@@ -15,7 +15,7 @@ class SSOApp(app_module.App):
 
     app_id = 'sso'
 
-    _version = 2
+    _version = 3
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -27,9 +27,9 @@ class SSOApp(app_module.App):
                                         'apache'], name=_('Single Sign On'))
         self.add(info)
 
-        packages = Packages('packages-sso', [
-            'libapache2-mod-auth-pubtkt', 'openssl', 'python3-openssl', 'flite'
-        ])
+        packages = Packages(
+            'packages-sso',
+            ['libapache2-mod-auth-pubtkt', 'python3-cryptography', 'flite'])
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-sso', [
