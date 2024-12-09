@@ -3,15 +3,11 @@
 */
 
 :root {
-    --background-color: #f1f1f1; /* Light grey */
     --neutral-light-color: #f5f5f5; /* Light grey */
-    --neutral-dark-color: #d4d4d4; /* Grey */
-    --info-color: #5bc0de; /* Pale blue, almost turquoise */
     --freedombox-blue-color: #4989D4; /* Blue */
     --progress-color: #3498db; /* Blue */
-    --error-color: #d9534f; /* Red */
-    --warning-color: #ec971f; /* Orange */
     --freedombox-form-disabled-bg-color: #e9ecef; /* Grey */
+    --freedombox-navbar-color: white;
 }
 
 @font-face {
@@ -125,7 +121,7 @@ h6:not(:first-child) {
     display: block;
     margin-top: 0.3125rem;
     margin-bottom: 0.625rem;
-    color: #737373;
+    color: var(--bs-secondary);
 }
 
 /* .close was renamed to .alert-dismissable.btn-close in Bootstrap 5, needs
@@ -211,12 +207,11 @@ label {
 .has-error.checkbox label,
 .has-error.radio-inline label,
 .has-error.checkbox-inline label {
-    color: #a94442;
+    color: var(--bs-form-invalid-color);
 }
 
 .has-error .form-control {
-    border-color: #a94442;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    border-color: var(--bs-form-invalid-border-color);
 }
 
 /*
@@ -518,30 +513,30 @@ footer {
 }
 
 .main-header .nav-link {
-    --bs-navbar-color: white;
-    --bs-navbar-active-color: white;
-    --bs-navbar-hover-color: white;
-    --bs-nav-link-color: white;
-    --bs-nav-link-active-color: white;
-    --bs-nav-link-hover-color: white;
+    --bs-navbar-color: var(--freedombox-navbar-color);
+    --bs-navbar-active-color: var(--freedombox-navbar-color);
+    --bs-navbar-hover-color: var(--freedombox-navbar-color);
+    --bs-nav-link-color: var(--freedombox-navbar-color);
+    --bs-nav-link-active-color: var(--freedombox-navbar-color);
+    --bs-nav-link-hover-color: var(--freedombox-navbar-color);
 }
 
 .main-header .navbar-toggler {
-    --bs-navbar-toggler-border-color: white;
-    --bs-navbar-color: white;
+    --bs-navbar-toggler-border-color: var(--freedombox-navbar-color);
+    --bs-navbar-color: var(--freedombox-navbar-color);
     /* In mobile layout, during first setup, maintain the height of the navbar */
     margin: 0.6875rem 0;
 }
 
 @media screen and (max-width: 767px) {
     .main-header .dropdown-menu {
-        --bs-dropdown-link-color: white;
-        --bs-dropdown-link-active-color: white;
-        --bs-dropdown-link-hover-color: white;
+        --bs-dropdown-link-color: var(--freedombox-navbar-color);
+        --bs-dropdown-link-active-color: var(--freedombox-navbar-color);
+        --bs-dropdown-link-hover-color: var(--freedombox-navbar-color);
         --bs-dropdown-link-hover-bg: var(--freedombox-blue-color);
         --bs-dropdown-link-active-bg: var(--freedombox-blue-color);
         --bs-dropdown-bg: var(--freedombox-blue-color);
-        --bs-dropdown-border-color: white;
+        --bs-dropdown-border-color: var(--freedombox-navbar-color);
     }
 
     .main-header .navbar-nav .nav-item:last-of-type .dropdown-menu {
@@ -551,7 +546,7 @@ footer {
 
 .main-header .navbar-brand.active,
 .main-header .nav-link.active {
-    border-bottom: white 3px solid;
+    border-bottom: var(--freedombox-navbar-color) 3px solid;
 }
 
 /* Cards in Index, Apps, System and Help pages */
@@ -572,7 +567,7 @@ footer {
     font-weight: 800;
     font-size: 1.25rem;
     margin: 1.25rem 0;
-    border-bottom: var(--neutral-dark-color) solid 2px;
+    border-bottom: var(--bs-secondary-border-subtle) solid 2px;
 }
 
 .card {
@@ -587,7 +582,7 @@ footer {
 }
 
 .card:hover {
-    background: #eee;
+    background: var(--bs-secondary-bg);
 }
 
 .card > a {
@@ -604,7 +599,7 @@ footer {
 
 .card-description {
     font-weight: 400;
-    color: #646464;
+    color: var(--bs-secondary);
     font-size: 0.875rem;
 }
 
@@ -802,7 +797,7 @@ input[type='submit'].running-status-button {
  * Select all checkbox for multiple checkboxes field.
  */
 .select-all-label {
-    border: 1px solid var(--neutral-dark-color);
+    border: 1px solid var(--bs-secondary-border-subtle);
     background-color: var(--neutral-light-color);
     border-radius: 0.25rem;
     padding: 0.5rem 1rem 0.25rem;
@@ -955,7 +950,7 @@ input[type='submit'].running-status-button {
     margin-top: 0;
     background-clip: border-box;
     background-color: var(--bs-body-bg);
-    border: 1px solid rgba(0,0,0,0.15);
+    border: 1px solid var(--bs-border-color-translucent);
     border-radius: 0 0 0.25em 0.25em;
 }
 
@@ -966,7 +961,7 @@ input[type='submit'].running-status-button {
 }
 
 .notification:not(:first-child) {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--bs-border-color-translucent);
 }
 
 .notification-title {
@@ -987,27 +982,15 @@ img.notification-icon {
 }
 
 .notification-exception, .notification-error {
-    border-left-color: var(--error-color);
+    border-left-color: var(--bs-danger);
 }
 
 .notification-warning {
-    border-left-color: var(--warning-color);
+    border-left-color: var(--bs-warning);
 }
 
 .notification-info, .notification-debug {
-    border-left-color: var(--info-color)
-}
-
-.warning {
-    color: var(--warning-color);
-}
-
-.processing {
-    color: var(--progress-color);
-}
-
-.normal {
-    color: var(--neutral-dark-color);
+    border-left-color: var(--bs-info);
 }
 
 /* Two different notifications for each small and one for large screens */
