@@ -122,6 +122,15 @@ def splinter_wait_time():
 
 
 @pytest.fixture(scope='session')
+def splinter_driver_kwargs():
+    """Disable smooth scrolling to fix 'Element x not clickable' errors."""
+    from selenium.webdriver.firefox.options import Options
+    driver_options = Options()
+    driver_options.set_preference('general.smoothScroll', False)
+    return {'options': driver_options}
+
+
+@pytest.fixture(scope='session')
 def splinter_browser_load_condition():
     """When a page it loaded, wait until <body> is available."""
 
