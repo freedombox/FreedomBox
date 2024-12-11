@@ -794,12 +794,14 @@ class BaseAppTests:
         session_browser.find_by_id('id_extra_actions_button').click()
         submit(session_browser, form_class='form-diagnostics-button')
 
-        warning_results = session_browser.find_by_css('.text-bg-warning')
+        warning_results = session_browser.find_by_css(
+            '.diagnostic-result > .text-bg-warning')
         if warning_results:
             warnings.warn(
                 f'Diagnostics warnings for {self.app_name}: {warning_results}')
 
-        failure_results = session_browser.find_by_css('.text-bg-danger')
+        failure_results = session_browser.find_by_css(
+            '.diagnostic-result > .text-bg-danger')
         assert not failure_results
 
     @pytest.mark.backups
