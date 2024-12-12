@@ -64,6 +64,20 @@ def service_ensure_running(service_name):
             service_disable(service_name)
 
 
+@contextmanager
+def service_ensure_stopped(service_name):
+    """Ensure a service is stopped and return to previous state."""
+    starting_state = service_is_running(service_name)
+    if starting_state:
+        service_disable(service_name)
+
+    try:
+        yield starting_state
+    finally:
+        if starting_state:
+            service_enable(service_name)
+
+
 def service_is_enabled(service_name, strict_check=False):
     """Check if service is enabled in systemd.
 
