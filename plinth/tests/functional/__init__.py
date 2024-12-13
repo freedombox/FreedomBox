@@ -72,9 +72,13 @@ def visit(browser, path):
         browser.visit(config['DEFAULT']['url'] + path)
 
 
-def eventually(function, args=[], timeout=30):
-    """Execute a function returning a boolean expression till it returns
-    True or a timeout is reached"""
+def eventually(function, args=[], timeout=30, browser=None):
+    """Execute the function until it returns True or timeout occurs.
+
+    Function is repeatedly executed at a fixed interval until it return True or
+    timeout occurs. If browser is provided, it is ensured that browser page is
+    fully loaded before the function is executed.
+    """
     end_time = time.time() + timeout
     current_time = time.time()
     while current_time < end_time:
@@ -84,10 +88,24 @@ def eventually(function, args=[], timeout=30):
         except Exception:
             pass
 
+        if browser:
+            if not is_page_fully_loaded(browser):
+                pass
+            elif (browser.is_element_present_by_css('.neterror')
+                  or browser.title == '503 Service Unavailable'):
+                # Reload if we are unable to contact web server or if
+                # FreedomBox service is not available yet.
+                browser.visit(browser.url)
+
         time.sleep(0.1)
         current_time = time.time()
 
     return False
+
+
+def is_page_fully_loaded(browser):
+    """Return whether the page is still loading in the browser."""
+    return browser.execute_script('return document.readyState;') == 'complete'
 
 
 class _PageLoaded:
@@ -146,9 +164,7 @@ class _PageLoaded:
                 return False
 
             # If page has not loaded fully yet, wait until it does.
-            is_fully_loaded = driver.execute_script(
-                'return document.readyState;') == 'complete'
-            if not is_fully_loaded:
+            if not is_page_fully_loaded(driver):
                 return False
 
             # If a page has fully loaded check if it is the expected URL.
@@ -338,6 +354,27 @@ def login(browser):
                        config['DEFAULT']['password'])
 
 
+def _run_first_wizard(browser):
+    """Visit and complete first run wizard."""
+    username = config['DEFAULT']['username'],
+    password = config['DEFAULT']['password']
+
+    welcome_url = base_url + '/plinth/firstboot/welcome/'
+    browser.visit(welcome_url)
+    if browser.url != welcome_url:
+        # We got redirected because first wizard is already complete. Don't
+        # unnecessarily wait a long time.
+        return
+
+    # Wait for first setup process to complete
+    eventually(browser.is_element_present_by_css, args=['.form-start'],
+               timeout=1800, browser=browser)
+    submit(browser, form_class='form-start')  # "Start Setup" button
+    _create_admin_account(browser, username, password)
+    if '/firstboot/backports' in browser.url:
+        submit(browser, element=browser.find_by_name('next')[0])
+
+
 def login_with_account(browser, url, username, password=None):
     """Login to the FreedomBox interface with provided account."""
     if password is None:
@@ -362,11 +399,7 @@ def login_with_account(browser, url, username, password=None):
             browser.fill('password', password)
             submit(browser, form_class='form-login')
     else:
-        browser.visit(base_url + '/plinth/firstboot/welcome')
-        submit(browser, form_class='form-start')  # "Start Setup" button
-        _create_admin_account(browser, username, password)
-        if '/firstboot/backports' in browser.url:
-            submit(browser, element=browser.find_by_name('next')[0])
+        _run_first_wizard(browser)
 
 
 def logout(browser):
