@@ -28,13 +28,12 @@ Build-Depends:
  python3-configobj,
  python3-cryptography,
  python3-dbus,
- python3-django (>= 1.11),
- python3-django-axes (>= 5.0.0),
+ python3-django,
+ python3-django-axes,
  python3-django-captcha,
-# Explictly depend on ipware as it is optional dependecy for future versions
-# of django-axes.
- python3-django-ipware (>= 3),
- python3-django-stronghold (>= 0.3.0),
+# Explictly depend on ipware as it is optional dependecy of django-axes
+ python3-django-ipware,
+ python3-django-stronghold,
  python3-gi,
  python3-markupsafe,
  python3-mypy,
@@ -51,8 +50,8 @@ Build-Depends:
  python3-ruamel.yaml,
  python3-setuptools,
  python3-setuptools-git,
-# python3-tomli is not available in Bullseye
- python3-tomli | python3-coverage (<< 6.0),
+# python3-tomli is needed by python3-coverage when pyproject.toml is used
+ python3-tomli,
  python3-typeshed,
  python3-yaml,
  sshpass,
@@ -66,17 +65,11 @@ Rules-Requires-Root: no
 
 Package: freedombox
 Breaks:
- freedombox-setup (<< 0.13~),
- plinth (<< 0.46.0~),
 # Ensure fuse gets replaced by fuse3 on upgrades from buster s.t. sshfs can be installed.
  fuse (<< 3),
 # If ufw is installed, remove it. See issue 2247.
  ufw,
-Replaces:
- freedombox-setup (<< 0.13~),
- plinth (<< 0.46.0~),
 Architecture: all
-Provides: plinth
 Depends:
  ${python3:Depends},
  ${misc:Depends},
@@ -112,12 +105,11 @@ Depends:
  python3-cherrypy3,
  python3-configobj,
  python3-dbus,
- python3-django (>= 1.11),
- python3-django-axes (>= 5.0.0),
+ python3-django,
+ python3-django-axes,
  python3-django-captcha,
-# Explictly depend on ipware as it is optional dependecy for future versions
-# of django-axes.
- python3-django-ipware (>= 3),
+# Explictly depend on ipware as it is optional dependecy of django-axes
+ python3-django-ipware,
  python3-django-stronghold,
  python3-gi,
  python3-markupsafe,
@@ -132,7 +124,7 @@ Depends:
  sudo,
  wget,
 # Ensure fuse gets replaced by fuse3 on upgrades from buster s.t. sshfs can be installed.
- fuse3 (>= 3),
+ fuse3,
 Recommends:
 # Priority: standard
  bzip2,
