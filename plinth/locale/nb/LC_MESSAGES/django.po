@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-18 20:13-0500\n"
+"POT-Creation-Date: 2024-12-16 21:12-0500\n"
 "PO-Revision-Date: 2024-10-27 23:30+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -116,11 +116,11 @@ msgstr "Synlighet"
 msgid "Data"
 msgstr "Data"
 
-#: menu.py:110 templates/base.html:133
+#: menu.py:110 templates/base.html:139
 msgid "System"
 msgstr "System"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:270
+#: menu.py:112 modules/networks/templates/connection_show.html:274
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "Sikkerhet"
@@ -297,7 +297,7 @@ msgstr "Kodelager"
 
 #: modules/backups/forms.py:101
 #: modules/backups/templates/backups_delete.html:17 modules/ikiwiki/forms.py:15
-#: modules/networks/templates/connection_show.html:71
+#: modules/networks/templates/connection_show.html:75
 #: modules/samba/templates/samba.html:66
 #: modules/sharing/templates/sharing.html:32
 msgid "Name"
@@ -368,7 +368,7 @@ msgstr "Nøkkel i kodelager"
 msgid "None"
 msgstr "Ingen"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:331
+#: modules/backups/forms.py:184 modules/networks/forms.py:332
 msgid "Passphrase"
 msgstr "Passfrase"
 
@@ -507,7 +507,30 @@ msgstr "Legg til kodelager annensteds fra for sikkerhetskopi"
 msgid "Existing Backups"
 msgstr "Eksisterende sikkerhetskopier"
 
-#: modules/backups/templates/backups_add_remote_repository.html:19
+#: modules/backups/templates/backups_add_remote_repository.html:21
+#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:27
+#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/help/templates/help_about.html:22
+#: modules/help/templates/statuslog.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
+#: modules/matrixsynapse/templates/matrix-synapse.html:76
+#: modules/names/templates/names.html:128
+#: modules/networks/templates/connection_show.html:24
+#: modules/nextcloud/__init__.py:48
+#: modules/pagekite/templates/pagekite_custom_services.html:16
+#: modules/power/templates/power_busy_warning.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:13
+#: modules/upgrades/templates/backports-firstboot.html:35
+#: modules/upgrades/templates/upgrades_configure.html:79
+#: modules/users/templates/users_firstboot.html:34 templates/app.html:31
+#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+msgid "Caution:"
+msgstr "Vær forsiktig:"
+
+#: modules/backups/templates/backups_add_remote_repository.html:24
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
@@ -518,7 +541,7 @@ msgstr ""
 "For å tilbakeføre en sikkerhetskopi på en ny %(box_name)s så trenger du SSH-"
 "innloggingsinformasjon samt, hvis satt, krypteringspassfrasen."
 
-#: modules/backups/templates/backups_add_remote_repository.html:28
+#: modules/backups/templates/backups_add_remote_repository.html:34
 msgid "Create Location"
 msgstr "Opprett plassering"
 
@@ -617,13 +640,7 @@ msgstr ""
 "      sikkerhetskopifil.\n"
 "    "
 
-#: modules/backups/templates/backups_upload.html:27
-#: modules/help/templates/statuslog.html:23
-#: modules/networks/templates/connection_show.html:23
-msgid "Caution:"
-msgstr "Vær forsiktig:"
-
-#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/backups_upload.html:31
 #, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
@@ -632,7 +649,7 @@ msgstr ""
 "Du har %(max_filesize)s tilgjengelig for gjenoppretting av sikkerhetskopi. Å "
 "overskride denne grensen kan levne din %(box_name)s ubrukelig."
 
-#: modules/backups/templates/backups_upload.html:41
+#: modules/backups/templates/backups_upload.html:45
 msgid "Upload file"
 msgstr "Last opp fil"
 
@@ -645,7 +662,7 @@ msgstr ""
 "Kunne ikke nå SSH-verten %(hostname)s. Bekreft at verten er oppe og at den "
 "godtar tilkoblinger."
 
-#: modules/backups/templates/verify_ssh_hostkey.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:34
 #, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
@@ -654,11 +671,11 @@ msgstr ""
 "Kunne ikke identitetsbekrefte %(hostname)s. Verten annonserer følgende "
 "offentlige SSH-nøkler. Bekreft en vilkårlig nøkkel av dem."
 
-#: modules/backups/templates/verify_ssh_hostkey.html:40
+#: modules/backups/templates/verify_ssh_hostkey.html:46
 msgid "How to verify?"
 msgstr "Hvordan bekrefte?"
 
-#: modules/backups/templates/verify_ssh_hostkey.html:45
+#: modules/backups/templates/verify_ssh_hostkey.html:51
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
@@ -668,7 +685,7 @@ msgstr ""
 "de angitte valgene. Du kan også bruke DSA, ECDSA, ED25519 og lignende "
 "istedenfor RSA, ved å velge filen som stemmer overens."
 
-#: modules/backups/templates/verify_ssh_hostkey.html:60
+#: modules/backups/templates/verify_ssh_hostkey.html:66
 msgid "Verify Host"
 msgstr "Bekreft vert"
 
@@ -895,7 +912,7 @@ msgid "No passwords currently configured."
 msgstr "Ingen passord er foreløpig satt opp."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:277
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Passord"
@@ -927,7 +944,7 @@ msgstr "List opp"
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
@@ -1013,7 +1030,7 @@ msgstr "Betjener domener"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
 #: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
-#: modules/networks/templates/connection_show.html:91
+#: modules/networks/templates/connection_show.html:95
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
 msgid "Type"
@@ -1439,11 +1456,11 @@ msgstr "Feil ved setting av tidssone: {exception}"
 msgid "Time zone set"
 msgstr "Tidssone satt"
 
-#: modules/deluge/__init__.py:21
+#: modules/deluge/__init__.py:22
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge er en BitTorrent-klient som har et Web-grensesnitt."
 
-#: modules/deluge/__init__.py:22
+#: modules/deluge/__init__.py:23
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
@@ -1451,15 +1468,15 @@ msgstr ""
 "Standardpassordet er «deluge», men du bør logge inn og endre det umiddelbart "
 "etter at denne tjenesten er aktivert."
 
-#: modules/deluge/__init__.py:41 modules/transmission/__init__.py:70
+#: modules/deluge/__init__.py:56 modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "Last ned filer ved bruk av BitTorrent-programmer"
 
-#: modules/deluge/__init__.py:45 modules/deluge/manifest.py:6
+#: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
 
-#: modules/deluge/__init__.py:47 modules/transmission/__init__.py:76
+#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent nett-klient"
 
@@ -1624,17 +1641,18 @@ msgstr "Resultater"
 msgid "Diagnostic Results"
 msgstr "Diagnostikkresultater"
 
-#: modules/diagnostics/templates/diagnostics_app.html:13
+#: modules/diagnostics/templates/diagnostics_app.html:14
+#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Program: %(app_name)s"
 
-#: modules/diagnostics/templates/diagnostics_app.html:20
-#: modules/diagnostics/templates/diagnostics_full.html:48
+#: modules/diagnostics/templates/diagnostics_app.html:21
+#: modules/diagnostics/templates/diagnostics_full.html:49
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_app.html:39
 #, fuzzy
 #| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
@@ -1657,17 +1675,6 @@ msgstr "Diagnostikktest kjører nå"
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "Resultater"
-
-#: modules/diagnostics/templates/diagnostics_full.html:38
-#, python-format
-msgid ""
-"\n"
-"            App: %(app_name)s\n"
-"          "
-msgstr ""
-"\n"
-"            Program: %(app_name)s\n"
-"          "
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1862,11 +1869,11 @@ msgid "Invalid domain name"
 msgstr "Ugyldig domenenavn"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:276 modules/users/forms.py:130
+#: modules/networks/forms.py:277 modules/users/forms.py:130
 msgid "Username"
 msgstr "Brukernavn"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:279
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
 msgid "Show password"
 msgstr "Vis passord"
 
@@ -1888,7 +1895,7 @@ msgstr ""
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
 #: modules/matrixsynapse/templates/matrix-synapse.html:12
-#: modules/networks/templates/connection_show.html:254
+#: modules/networks/templates/connection_show.html:258
 #: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:19
 #: modules/upgrades/templates/upgrades_configure.html:14
 #: modules/wireguard/templates/wireguard_show_client.html:48
@@ -2402,9 +2409,10 @@ msgstr ""
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
-#: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
-#: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
-#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
+#: modules/featherwiki/manifest.py:18
+#: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2716,7 +2724,7 @@ msgid ""
 msgstr ""
 
 #: modules/first_boot/templates/firstboot_complete.html:27
-#: modules/upgrades/templates/upgrades_configure.html:108
+#: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Oppdater nå"
 
@@ -2942,7 +2950,7 @@ msgstr "Rediger kodelager"
 msgid "Documentation"
 msgstr "Dokumentasjon"
 
-#: modules/help/__init__.py:37 modules/help/templates/help_about.html:92
+#: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
 #, fuzzy
 #| msgid "Manual"
@@ -2962,25 +2970,31 @@ msgstr "Få støtte"
 msgid "Submit Feedback"
 msgstr "Send inn tilbakemeldinger"
 
-#: modules/help/__init__.py:49 modules/help/templates/help_about.html:101
+#: modules/help/__init__.py:49 modules/help/templates/help_about.html:113
 #: modules/help/templates/help_contribute.html:9 modules/help/views.py:76
 #: templates/help-menu.html:39 templates/help-menu.html:40
 msgid "Contribute"
 msgstr "Bidra"
 
-#: modules/help/__init__.py:53 templates/base.html:211 templates/base.html:214
+#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
 msgstr "Om"
 
-#: modules/help/templates/help_about.html:18
+#: modules/help/templates/help_about.html:25 templates/messages.html:23
+#, fuzzy
+#| msgid "Access Point"
+msgid "Success:"
+msgstr "Aksesspunkt"
+
+#: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "Du benytter %(os_release)s og %(box_name)s versjon %(version)s."
 
-#: modules/help/templates/help_about.html:24
+#: modules/help/templates/help_about.html:35
 #, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
@@ -2988,13 +3002,13 @@ msgid ""
 msgstr ""
 "En ny %(box_name)s-versjon er <a href=\"%(upgrades_url)s\">tilgjengelig</a>."
 
-#: modules/help/templates/help_about.html:29
+#: modules/help/templates/help_about.html:40
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s er oppdatert."
 
-#: modules/help/templates/help_about.html:37
+#: modules/help/templates/help_about.html:49
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -3014,7 +3028,7 @@ msgstr ""
 "samlet på en enhet som kan erstatte din Wi-Fi-ruter, slik at dataene dine "
 "blir hos deg."
 
-#: modules/help/templates/help_about.html:50
+#: modules/help/templates/help_about.html:62
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -3031,7 +3045,7 @@ msgstr ""
 "maskiner, er vi tilbake til Internettet sin tiltenkte like-til-like "
 "arkitektur."
 
-#: modules/help/templates/help_about.html:63
+#: modules/help/templates/help_about.html:75
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -3042,7 +3056,7 @@ msgstr ""
 "distribuerte tjenester; %(box_name)s mål er å bringe dem sammen i en "
 "praktisk pakke."
 
-#: modules/help/templates/help_about.html:71
+#: modules/help/templates/help_about.html:83
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -3053,48 +3067,48 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 
-#: modules/help/templates/help_about.html:85
+#: modules/help/templates/help_about.html:97
 #, fuzzy
 #| msgid "Learn more"
 msgid "Learn"
 msgstr "Lær mer"
 
-#: modules/help/templates/help_about.html:88
+#: modules/help/templates/help_about.html:100
 msgid "Homepage"
 msgstr "Hjemmeside"
 
-#: modules/help/templates/help_about.html:104 templates/toolbar.html:19
+#: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
 msgstr "Doner"
 
-#: modules/help/templates/help_about.html:107
+#: modules/help/templates/help_about.html:119
 msgid "Join project"
 msgstr ""
 
-#: modules/help/templates/help_about.html:111
+#: modules/help/templates/help_about.html:123
 msgid "Translate"
 msgstr ""
 
-#: modules/help/templates/help_about.html:117
+#: modules/help/templates/help_about.html:129
 #, fuzzy
 #| msgid "Get Support"
 msgid "Support"
 msgstr "Få støtte"
 
-#: modules/help/templates/help_about.html:121
+#: modules/help/templates/help_about.html:133
 msgid "Forum"
 msgstr "Forum"
 
-#: modules/help/templates/help_about.html:126
+#: modules/help/templates/help_about.html:138
 msgid "IRC Chatroom"
 msgstr "IRC-nettpratrom"
 
-#: modules/help/templates/help_about.html:131
+#: modules/help/templates/help_about.html:143
 msgid "Mailing list"
 msgstr "Adresseliste"
 
 #: modules/help/templates/help_base.html:21
-#: modules/help/templates/help_index.html:61
+#: modules/help/templates/help_index.html:63
 #, python-format
 msgid "%(box_name)s Setup"
 msgstr "Oppsett av %(box_name)s"
@@ -3208,12 +3222,12 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Takk."
 
-#: modules/help/templates/help_index.html:12 templates/help-menu.html:8
+#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
 #: templates/help-menu.html:14
 msgid "Help"
 msgstr "Hjelp"
 
-#: modules/help/templates/help_index.html:16
+#: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
@@ -3222,7 +3236,7 @@ msgstr ""
 "Det beste stedet å starte for å få informasjon om %(box_name)s er <a "
 "href=\"%(manual_url)s\">%(box_name)s Manual</a>."
 
-#: modules/help/templates/help_index.html:23
+#: modules/help/templates/help_index.html:25
 #, python-format
 msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
@@ -3231,7 +3245,7 @@ msgstr ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s prosjekt wiki </a> har mer informasjon."
 
-#: modules/help/templates/help_index.html:30
+#: modules/help/templates/help_index.html:32
 #, python-format
 msgid ""
 "To seek help from %(box_name)s community, queries may be posted on the <a "
@@ -3244,7 +3258,7 @@ msgstr ""
 "freedombox-discuss\"> mailing list</a>.  Listen inneholder også informasjon "
 "om problemer andre brukere har møtt, og mulige løsninger."
 
-#: modules/help/templates/help_index.html:40
+#: modules/help/templates/help_index.html:42
 #, python-format
 msgid ""
 "Many %(box_name)s contributors and users are also available on the irc.oftc."
@@ -3316,10 +3330,14 @@ msgstr ""
 "issues\">feilrapporteringssystemet</a> og legger denne statusloggen ved "
 "feilrapporten."
 
-#: modules/help/templates/statuslog.html:24
+#: modules/help/templates/statuslog.html:27
+#, fuzzy
+#| msgid ""
+#| "Please remove any passwords or other personal information from the log "
+#| "before submitting the bug report."
 msgid ""
-"Please remove any passwords or other personal information from the log "
-"before submitting the bug report."
+"Please remove any personal information from the log before submitting the "
+"bug report."
 msgstr ""
 "Alle passord og annen personlig informasjon bør fjernes fra loggen før du "
 "sender inn feilrapporten."
@@ -3337,106 +3355,6 @@ msgstr "Om {box_name}"
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} Manual"
-
-#: modules/i2p/__init__.py:21
-msgid ""
-"The Invisible Internet Project is an anonymous network layer intended to "
-"protect communication from censorship and surveillance. I2P provides "
-"anonymity by sending encrypted traffic through a volunteer-run network "
-"distributed around the world."
-msgstr ""
-"Det usynlige inernettprosjektet er et anonymt nettverkslag tiltenkt "
-"beskyttelse av kommunikasjon fra sensur og overvåkning. I2P tilbyr "
-"anonymitet ved å sende kryptert trafikk gjennom et frivilligdrevet nettverk "
-"distribuert verden om."
-
-#: modules/i2p/__init__.py:25
-msgid ""
-"Find more information about I2P on their project <a href=\"https://geti2p."
-"net\" target=\"_blank\">homepage</a>."
-msgstr ""
-"For mer informasjon om I2P, sjekk deres <a href=\"https://geti2p.net\" "
-"target=\"_blank\">nettside</a>."
-
-#: modules/i2p/__init__.py:27
-msgid ""
-"The first visit to the provided web interface will initiate the "
-"configuration process."
-msgstr ""
-"Den første til å besøke det oppsatte nettgrensesnittet vil igangsette "
-"oppsettsprosessen."
-
-#: modules/i2p/__init__.py:49
-msgid "Manage I2P application"
-msgstr "Håndter I2P-program"
-
-#: modules/i2p/__init__.py:52 modules/i2p/manifest.py:13
-msgid "I2P"
-msgstr "I2P"
-
-#: modules/i2p/__init__.py:53 modules/tor/__init__.py:63
-#: modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Anonymitetsnettverk"
-
-#: modules/i2p/__init__.py:83
-msgid "I2P Proxy"
-msgstr "I2P-mellomtjener"
-
-#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
-#: modules/torproxy/manifest.py:56
-#, fuzzy
-#| msgid "Anonymity Network"
-msgid "Anonymity network"
-msgstr "Anonymitetsnettverk"
-
-#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
-#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
-#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
-msgid "Censorship resistance"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:12
-msgid "I2P Proxies and Tunnels"
-msgstr "I2P-mellomtjenere og tunneler"
-
-#: modules/i2p/templates/i2p.html:21 modules/i2p/templates/i2p.html:34
-#: templates/clients.html:28
-msgid "Launch"
-msgstr "Start"
-
-#: modules/i2p/templates/i2p.html:25
-msgid "Anonymous Torrents"
-msgstr "Anonyme torrenter"
-
-#: modules/i2p/views.py:16
-msgid ""
-"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably the Tor Browser, needs to be configured "
-"with a proxy."
-msgstr ""
-"I2P lar deg utforske Internett og skjulte tjenester (eepsider) anonymt. For "
-"å gjøre dette må din nettleser, helst Tor-nettleseren, settes opp med en "
-"mellomtjener."
-
-#: modules/i2p/views.py:19
-msgid ""
-"By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
-"tunnels may be configured using the tunnel configuration interface."
-msgstr ""
-"Som forvalg er HTTP, HTTPS, og IRC -mellomtjenere tilgjengelige. Ytterligere "
-"mellomtjenere og tunneler må settes opp ved bruk av "
-"tunneloppsettsgrensesnittet."
-
-#: modules/i2p/views.py:24
-msgid ""
-"I2P provides an application to download files anonymously in a peer-to-peer "
-"network. Download files by adding torrents or create a new torrent to share "
-"a file."
-msgstr ""
-"I2P tilbyr et program for nedlasting av filer anonymt i et "
-"likemannsnettverk. Last ned filer ved å legge til torrenter, eller opprett "
-"en ny torrent for å dele ei fil."
 
 #: modules/ikiwiki/__init__.py:20
 msgid ""
@@ -3507,8 +3425,8 @@ msgid "Delete site %(site)s"
 msgstr "Slett nettstedet %(site)s"
 
 #: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:54
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
 msgid "Update setup"
 msgstr "Oppdater oppsett"
 
@@ -3635,7 +3553,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
 msgid "JavaScript license information"
 msgstr "JavaScript lisensinformasjon"
 
@@ -3732,18 +3650,24 @@ msgstr ""
 msgid "Archival"
 msgstr "Arkivnavn"
 
+#: modules/kiwix/manifest.py:25 modules/shadowsocks/manifest.py:19
+#: modules/shadowsocksserver/manifest.py:18 modules/tor/manifest.py:60
+#: modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
+
 #: modules/kiwix/manifest.py:26
 #, fuzzy
 #| msgid "Wiki"
 msgid "Wikipedia"
 msgstr "Wiki"
 
-#: modules/kiwix/templates/kiwix-add-package.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:29
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
 msgstr ""
 
-#: modules/kiwix/templates/kiwix-add-package.html:36
+#: modules/kiwix/templates/kiwix-add-package.html:42
 #, fuzzy
 #| msgid "Upload file"
 msgid "Upload ZIM file"
@@ -4034,7 +3958,7 @@ msgstr "Media-strømmetjener"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
 msgid "Configuration"
 msgstr "Oppsett"
 
@@ -4048,7 +3972,7 @@ msgstr ""
 "tjenere vil kunne nå brukere på denne tjeneren ved å bruke dette "
 "domenenavnet. Matrix bruker-ID-er som ligner <em>@username:domainname</em>."
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -4057,12 +3981,8 @@ msgstr ""
 #| "      setup is currently not supported.\n"
 #| "    "
 msgid ""
-"\n"
-"      <strong>Warning!</strong> Changing the domain name after this step "
-"will\n"
-"      require uninstalling and reinstalling the app which will wipe app's "
-"data.\n"
-"    "
+"<strong>Warning!</strong> Changing the domain name after this step will "
+"require uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 "\n"
 "      <strong>Warning!</strong> Å endre navnet på domenet etter den "
@@ -4070,7 +3990,7 @@ msgstr ""
 "       installasjonen støttes for øyeblikket ikke.\n"
 "    "
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 #, python-format
 msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
@@ -4136,7 +4056,7 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
-#: modules/matrixsynapse/templates/matrix-synapse.html:75
+#: modules/matrixsynapse/templates/matrix-synapse.html:80
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4843,9 +4763,9 @@ msgstr ""
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
+#: modules/networks/templates/connection_show.html:70
+#: modules/networks/templates/connection_show.html:212
+#: modules/networks/templates/connection_show.html:253
 #: modules/networks/views.py:125
 msgid "yes"
 msgstr "Ja"
@@ -4899,7 +4819,7 @@ msgid "Link"
 msgstr ""
 
 #: modules/names/templates/names.html:73
-#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
@@ -4933,11 +4853,11 @@ msgid ""
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:66
+#: modules/names/templates/names.html:121 templates/setup.html:78
 msgid "Install"
 msgstr "Installer"
 
-#: modules/names/templates/names.html:126
+#: modules/names/templates/names.html:131
 #, fuzzy
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
@@ -5062,8 +4982,8 @@ msgstr ""
 "adressen, bli brukt."
 
 #: modules/networks/forms.py:113 modules/networks/forms.py:152
-#: modules/networks/templates/connection_show.html:193
-#: modules/networks/templates/connection_show.html:234
+#: modules/networks/templates/connection_show.html:197
+#: modules/networks/templates/connection_show.html:238
 msgid "Gateway"
 msgstr "Inngangsport"
 
@@ -5148,58 +5068,58 @@ msgstr ""
 "Valgfri verdi. Hvis denne verdien er gitt, og IPv6-adresseringsmetoden er "
 "«Automatisk», så vil DNS-serverne som tilbys fra en DHCP-tjener bli ignorert."
 
-#: modules/networks/forms.py:182
+#: modules/networks/forms.py:183
 msgid "-- select --"
 msgstr "-- velg --"
 
-#: modules/networks/forms.py:303
-#: modules/networks/templates/connection_show.html:135
+#: modules/networks/forms.py:304
+#: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID (Service Set Identifier)"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:305
 msgid "The visible name of the network."
 msgstr "Det synlige navnet på nettverket."
 
-#: modules/networks/forms.py:306
-#: modules/networks/templates/connection_show.html:148
+#: modules/networks/forms.py:307
+#: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Modus"
 
-#: modules/networks/forms.py:306
+#: modules/networks/forms.py:307
 msgid "Infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:308
 msgid "Access Point"
 msgstr "Aksesspunkt"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:309
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Frequency Band"
 msgstr "Frekvensbånd"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:312
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:313
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:314
-#: modules/networks/templates/connection_show.html:162
+#: modules/networks/forms.py:315
+#: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Kanal"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:316
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5207,11 +5127,11 @@ msgstr ""
 "Valgfri verdi. Trådløskanal i det valgte frekvensbåndet som det skal "
 "begrenses til. Blank eller verdi 0 betyr at det skal velges automatisk."
 
-#: modules/networks/forms.py:320
+#: modules/networks/forms.py:321
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:322
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5221,11 +5141,11 @@ msgstr ""
 "aksesspunkt, koble kun til hvis BSSID-en til aksesspunktet stemmer med det "
 "som er oppgitt. Eksempel: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:327
+#: modules/networks/forms.py:328
 msgid "Authentication Mode"
 msgstr "Autentiseringsmodus"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:329
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -5233,20 +5153,20 @@ msgstr ""
 "Velg WPA (Wi-Fi Protected Access) hvis det trådløse nettverket er sikret og "
 "krever at brukerne har passordet som trengs for å koble seg til."
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "Open"
 msgstr "Åpen"
 
-#: modules/networks/forms.py:366
+#: modules/networks/forms.py:367
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Angi hvordan din {box_name} er tilkoblet ditt nettverket"
 
-#: modules/networks/forms.py:373
+#: modules/networks/forms.py:374
 #, fuzzy, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5257,7 +5177,7 @@ msgstr ""
 "internett-tilknytning fra en ruter via Wi-Fi eller ethernetkabel. Dette er "
 "et typisk hjemmeoppsett.</p>"
 
-#: modules/networks/forms.py:380
+#: modules/networks/forms.py:381
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5270,7 +5190,7 @@ msgstr ""
 "kort. {box_name} er koblet direkte til Internet og alle enhetene dine kan "
 "koble seg til {box_name} med Internett-forbindelsen sin.</p>"
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:390
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5281,11 +5201,11 @@ msgstr ""
 "din er koblet direkte til idn {box_name} og det er ingen andre enheter på "
 "nettverket. Dette kan gjelde fellesbokser eller skyoppsett.</p>"
 
-#: modules/networks/forms.py:408
+#: modules/networks/forms.py:409
 msgid "Choose your internet connection type"
 msgstr "Velg din internett-tilkoblingstype"
 
-#: modules/networks/forms.py:412
+#: modules/networks/forms.py:413
 #, fuzzy
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
@@ -5300,7 +5220,7 @@ msgstr ""
 "internett-tilknytning fra en ruter via Wi-Fi eller Ethernetkabel. Dette er "
 "et typisk hjemmeoppsett.</p>"
 
-#: modules/networks/forms.py:424
+#: modules/networks/forms.py:425
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5312,7 +5232,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:438
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5324,7 +5244,7 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:450
+#: modules/networks/forms.py:451
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5333,13 +5253,13 @@ msgstr ""
 "<p class=\"help-block\">Du vil bli anmodet å fatte de mest konservative "
 "valgene.</p>"
 
-#: modules/networks/forms.py:467
+#: modules/networks/forms.py:468
 #, fuzzy
 #| msgid "Current Network Configuration"
 msgid "Preferred router configuration"
 msgstr "Nåværende nettverksoppsett"
 
-#: modules/networks/forms.py:472
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5350,7 +5270,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:484
+#: modules/networks/forms.py:485
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5362,14 +5282,14 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:498
+#: modules/networks/forms.py:499
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:24
+#: modules/networks/templates/connection_show.html:27
 #, python-format
 msgid ""
 "This is the primary connection that %(box_name)s relies on for Internet "
@@ -5378,32 +5298,32 @@ msgid ""
 "connection."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "Rediger tilkobling"
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:161 templates/base.html:162
+#: templates/base.html:167 templates/base.html:168
 msgid "Edit"
 msgstr "Rediger"
 
-#: modules/networks/templates/connection_show.html:43
+#: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
 msgstr "Deaktivere"
 
-#: modules/networks/templates/connection_show.html:50
+#: modules/networks/templates/connection_show.html:54
 #: modules/networks/templates/connections_list.html:69
 msgid "Activate"
 msgstr "Aktiver"
 
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 msgid "Delete connection"
 msgstr "Slett tilkobling"
 
-#: modules/networks/templates/connection_show.html:59
+#: modules/networks/templates/connection_show.html:63
 #: modules/networks/templates/connections_diagram.html:19
 #: modules/networks/templates/connections_diagram.html:22
 #: modules/networks/templates/connections_diagram.html:51
@@ -5411,111 +5331,111 @@ msgstr "Slett tilkobling"
 msgid "Connection"
 msgstr "Tilkobling"
 
-#: modules/networks/templates/connection_show.html:64
+#: modules/networks/templates/connection_show.html:68
 msgid "Primary connection"
 msgstr "Primærtilkobling"
 
-#: modules/networks/templates/connection_show.html:77
+#: modules/networks/templates/connection_show.html:81
 #: modules/storage/templates/storage.html:23
 msgid "Device"
 msgstr "Enhet"
 
-#: modules/networks/templates/connection_show.html:81
+#: modules/networks/templates/connection_show.html:85
 msgid "State"
 msgstr "Tilstand"
 
-#: modules/networks/templates/connection_show.html:86
+#: modules/networks/templates/connection_show.html:90
 msgid "State reason"
 msgstr "Grunn til tilstand"
 
-#: modules/networks/templates/connection_show.html:95
+#: modules/networks/templates/connection_show.html:99
 msgid "MAC address"
 msgstr "MAC-adresse"
 
-#: modules/networks/templates/connection_show.html:99
+#: modules/networks/templates/connection_show.html:103
 msgid "Interface"
 msgstr "Grensesnitt"
 
-#: modules/networks/templates/connection_show.html:103
+#: modules/networks/templates/connection_show.html:107
 #: modules/snapshot/templates/snapshot_delete_selected.html:19
 #: modules/snapshot/templates/snapshot_manage.html:29
 #: modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: modules/networks/templates/connection_show.html:109
+#: modules/networks/templates/connection_show.html:113
 msgid "Physical Link"
 msgstr "Fysisk link"
 
-#: modules/networks/templates/connection_show.html:114
+#: modules/networks/templates/connection_show.html:118
 msgid "Link state"
 msgstr "Linkens tilstand"
 
-#: modules/networks/templates/connection_show.html:117
+#: modules/networks/templates/connection_show.html:121
 msgid "cable is connected"
 msgstr "kabel er tilknyttet"
 
-#: modules/networks/templates/connection_show.html:120
+#: modules/networks/templates/connection_show.html:124
 msgid "please check cable"
 msgstr "vennligst sjekk kabelen"
 
-#: modules/networks/templates/connection_show.html:124
-#: modules/networks/templates/connection_show.html:140
+#: modules/networks/templates/connection_show.html:128
+#: modules/networks/templates/connection_show.html:144
 msgid "Speed"
 msgstr "Hastighet"
 
-#: modules/networks/templates/connection_show.html:126
+#: modules/networks/templates/connection_show.html:130
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s Mbit/s"
 
-#: modules/networks/templates/connection_show.html:142
+#: modules/networks/templates/connection_show.html:146
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s Mbit/s"
 
-#: modules/networks/templates/connection_show.html:154
+#: modules/networks/templates/connection_show.html:158
 msgid "Signal strength"
 msgstr "Signalstyrke"
 
-#: modules/networks/templates/connection_show.html:170
-#: modules/networks/templates/connections_fields.html:61
+#: modules/networks/templates/connection_show.html:174
+#: modules/networks/templates/connections_fields.html:67
 msgid "IPv4"
 msgstr "IPv4"
 
-#: modules/networks/templates/connection_show.html:175
-#: modules/networks/templates/connection_show.html:218
+#: modules/networks/templates/connection_show.html:179
+#: modules/networks/templates/connection_show.html:222
 #: modules/shadowsocks/forms.py:36 modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "Metode"
 
-#: modules/networks/templates/connection_show.html:184
-#: modules/networks/templates/connection_show.html:225
+#: modules/networks/templates/connection_show.html:188
+#: modules/networks/templates/connection_show.html:229
 msgid "IP address"
 msgstr "IP-adresse"
 
-#: modules/networks/templates/connection_show.html:200
-#: modules/networks/templates/connection_show.html:241
+#: modules/networks/templates/connection_show.html:204
+#: modules/networks/templates/connection_show.html:245
 msgid "DNS server"
 msgstr "DNS-tjener"
 
-#: modules/networks/templates/connection_show.html:207
-#: modules/networks/templates/connection_show.html:248
+#: modules/networks/templates/connection_show.html:211
+#: modules/networks/templates/connection_show.html:252
 #: modules/storage/forms.py:132
 msgid "Default"
 msgstr "Forvalg"
 
-#: modules/networks/templates/connection_show.html:213
-#: modules/networks/templates/connections_fields.html:90
+#: modules/networks/templates/connection_show.html:217
+#: modules/networks/templates/connections_fields.html:94
 msgid "IPv6"
 msgstr "IPv6"
 
-#: modules/networks/templates/connection_show.html:256
+#: modules/networks/templates/connection_show.html:260
 msgid "This connection is not active."
 msgstr "Denne forbindelsen er ikke aktiv."
 
-#: modules/networks/templates/connection_show.html:260
-#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connections_fields_privacy.html:15
 #: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
 #: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 #, fuzzy
@@ -5523,13 +5443,20 @@ msgstr "Denne forbindelsen er ikke aktiv."
 msgid "Privacy"
 msgstr "Privoxy"
 
-#: modules/networks/templates/connection_show.html:275
-#: modules/networks/templates/connection_show.html:295
-#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:279
+#: modules/networks/templates/connection_show.html:304
+#: modules/networks/templates/connection_show.html:328
 msgid "Firewall zone"
 msgstr "Brannmursone"
 
-#: modules/networks/templates/connection_show.html:284
+#: modules/networks/templates/connection_show.html:289
+#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:338
+#: templates/internal-zone.html:13 templates/messages.html:20
+msgid "Info:"
+msgstr ""
+
+#: modules/networks/templates/connection_show.html:292
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5540,8 +5467,8 @@ msgstr ""
 "bare være tilgjengelig internt, bli tilgjengelig eksternt. Dette er en "
 "sikkerhetsrisiko."
 
-#: modules/networks/templates/connection_show.html:304
-#: modules/networks/templates/connection_show.html:327
+#: modules/networks/templates/connection_show.html:317
+#: modules/networks/templates/connection_show.html:345
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5551,12 +5478,12 @@ msgstr ""
 "til et lokalt nettverk/maskin, vil mange tjenester som er ment å være "
 "tilgjengelig internt ikke være tilgjengelige."
 
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:330
 #: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "Eksternt"
 
-#: modules/networks/templates/connection_show.html:323
+#: modules/networks/templates/connection_show.html:341
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -5594,7 +5521,7 @@ msgstr "Ethernet"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/templates/connections_fields_wifi.html:15
 #: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
@@ -5619,13 +5546,25 @@ msgstr "Datamaskin"
 msgid "Edit Connection"
 msgstr "Endre oppkobling"
 
-#: modules/networks/templates/connections_fields.html:24
+#: modules/networks/templates/connections_fields.html:13
+#: templates/messages.html:14
+#, fuzzy
+#| msgid "error"
+msgid "Error:"
+msgstr "feil"
+
+#: modules/networks/templates/connections_fields.html:20
+#: modules/users/templates/users_update.html:46 templates/messages.html:30
+msgid "Close"
+msgstr "Lukk"
+
+#: modules/networks/templates/connections_fields.html:32
 #, fuzzy
 #| msgid "Generic"
 msgid "General"
 msgstr "Generisk"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
+#: modules/networks/templates/connections_fields_pppoe.html:15 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5717,7 +5656,7 @@ msgstr "Oppdater..."
 #: modules/networks/templates/internet_connectivity_type.html:18
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
-#: modules/pagekite/templates/pagekite_custom_services.html:28
+#: modules/pagekite/templates/pagekite_custom_services.html:33
 #: modules/sharing/templates/sharing_add_edit.html:20 templates/form.html:19
 msgid "Submit"
 msgstr "Send inn"
@@ -6156,7 +6095,7 @@ msgstr "Tilkobling {name} slettet."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Kunne ikke slette tilkobling: Tilkobling ikke funnet."
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:34
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6165,11 +6104,11 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:30
+#: modules/nextcloud/__init__.py:39
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:43
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6178,18 +6117,18 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:40
+#: modules/nextcloud/__init__.py:48
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:66 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 #, fuzzy
 #| msgid "Next"
 msgid "Nextcloud"
 msgstr "Neste"
 
-#: modules/nextcloud/__init__.py:60
+#: modules/nextcloud/__init__.py:68
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -6538,11 +6477,16 @@ msgstr "Slett denne tjenesten"
 msgid "Add custom PageKite service"
 msgstr "Lagt til selvvalgt tjeneste"
 
-#: modules/pagekite/templates/pagekite_custom_services.html:14
+#: modules/pagekite/templates/pagekite_custom_services.html:19
+#, fuzzy
+#| msgid ""
+#| "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
+#| "protocol/port combinations that you are able to define here. For example, "
+#| "HTTPS on ports other than 443 is known to cause problems."
 msgid ""
-"<b>Warning:</b><br>Your PageKite frontend server may not support all the "
-"protocol/port combinations that you are able to define here. For example, "
-"HTTPS on ports other than 443 is known to cause problems."
+"Your PageKite frontend server may not support all the protocol/port "
+"combinations that you are able to define here. For example, HTTPS on ports "
+"other than 443 is known to cause problems."
 msgstr ""
 "<b>Warning:</b><br>Your PageKite frontend-tjener kan muligens ikke støtte "
 "alle protokoll-/portkombinasjoner som du kan definere her. For eksempel, "
@@ -6609,24 +6553,24 @@ msgstr "Start om igjen, eller slå av systemet."
 msgid "Power"
 msgstr "Strøm"
 
-#: modules/power/templates/power.html:13
+#: modules/power/templates/power.html:15 templates/base.html:182
+#: templates/base.html:183
+msgid "Restart"
+msgstr "Omstart"
+
+#: modules/power/templates/power.html:18
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shut Down"
+msgstr "Slå av"
+
+#: modules/power/templates/power_busy_warning.html:14
 msgid ""
 "Currently an installation or upgrade is running. Consider waiting until it's "
 "finished before shutting down or restarting."
 msgstr ""
 "En annen installasjon eller oppgradering kjører allerede. Vent litt før du "
 "prøver igjen."
-
-#: modules/power/templates/power.html:22 templates/base.html:176
-#: templates/base.html:177
-msgid "Restart"
-msgstr "Omstart"
-
-#: modules/power/templates/power.html:25
-#, fuzzy
-#| msgid "Shut down"
-msgid "Shut Down"
-msgstr "Slå av"
 
 #: modules/power/templates/power_restart.html:17
 msgid ""
@@ -6636,16 +6580,8 @@ msgstr ""
 "Er du sikker på at du ønsker en omstart? Du vil ikke få kontakt med dette "
 "vevgrensesnittet i noen få minutter inntil systemet er startet opp igjen."
 
-#: modules/power/templates/power_restart.html:34
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before restarting."
-msgstr ""
-"En annen installasjon eller oppgradering pågår. Vurder å vente litt før du "
-"prøver igjen."
-
-#: modules/power/templates/power_restart.html:48
-#: modules/power/templates/power_restart.html:51
+#: modules/power/templates/power_restart.html:41
+#: modules/power/templates/power_restart.html:44
 msgid "Restart Now"
 msgstr "Omstart nå"
 
@@ -6657,16 +6593,8 @@ msgstr ""
 "Er du sikker på at du ønsker å slå av?  Du vil ikke få kontakt med dette "
 "webgrensesnittet etter at systemet er slått av."
 
-#: modules/power/templates/power_shutdown.html:33
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before shutting down."
-msgstr ""
-"En annen installasjon eller oppgradering pågår. Vurder å vente til den er "
-"ferdig før du tar ned systemet."
-
-#: modules/power/templates/power_shutdown.html:47
-#: modules/power/templates/power_shutdown.html:50
+#: modules/power/templates/power_shutdown.html:40
+#: modules/power/templates/power_shutdown.html:43
 msgid "Shut Down Now"
 msgstr "Slå av nå"
 
@@ -6827,9 +6755,8 @@ msgstr ""
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
-"radicale.org/master.html#documentation/supported-clients\">supported client "
-"application</a> is needed. Radicale can be accessed by any user with a "
-"{box_name} login."
+"radicale.org/master.html#supported-clients\">supported client application</"
+"a> is needed. Radicale can be accessed by any user with a {box_name} login."
 msgstr ""
 "Radicale er en CalDAV- og CardDAV-tjener. Den tillater synkronisering og "
 "deling av kontakt- og planleggingsdata. For å bruke Radicale trengs et <a "
@@ -7878,7 +7805,7 @@ msgstr "i bruk"
 msgid "Rollback to snapshot #%(number)s"
 msgstr "Rull tilbake til øyeblikksbilde #%(number)s"
 
-#: modules/snapshot/templates/snapshot_not_supported.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:16
 #, fuzzy, python-format
 #| msgid ""
 #| "Your have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots "
@@ -8465,6 +8392,10 @@ msgstr ""
 msgid "Tor"
 msgstr "Tor"
 
+#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
+msgid "Anonymity Network"
+msgstr "Anonymitetsnettverk"
+
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
 msgstr "Tor-løktjeneste"
@@ -8597,6 +8528,12 @@ msgstr "Løktjeneste"
 #: modules/tor/manifest.py:58
 msgid "Relay"
 msgstr "Videresending"
+
+#: modules/tor/manifest.py:59 modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "Anonymitetsnettverk"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -8851,7 +8788,7 @@ msgid ""
 msgstr ""
 
 #: modules/upgrades/forms.py:34
-#: modules/upgrades/templates/upgrades_configure.html:89
+#: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -8861,13 +8798,13 @@ msgid ""
 "activated now, they can be activated later."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:33
+#: modules/upgrades/templates/backports-firstboot.html:38
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:45
+#: modules/upgrades/templates/backports-firstboot.html:51
 msgid "Next"
 msgstr "Neste"
 
@@ -8891,7 +8828,7 @@ msgid "Dismiss"
 msgstr "Forkast"
 
 #: modules/upgrades/templates/upgrades_configure.html:30
-#: modules/upgrades/templates/upgrades_configure.html:100
+#: modules/upgrades/templates/upgrades_configure.html:106
 msgid "Updating..."
 msgstr "Oppdaterer…"
 
@@ -8915,7 +8852,7 @@ msgid ""
 "your distribution."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:78
+#: modules/upgrades/templates/upgrades_configure.html:83
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -8923,13 +8860,13 @@ msgid ""
 "href=\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:94
+#: modules/upgrades/templates/upgrades_configure.html:100
 #, fuzzy
 #| msgid "Manual update"
 msgid "Manual Update"
 msgstr "Manuell oppdatering"
 
-#: modules/upgrades/templates/upgrades_configure.html:114
+#: modules/upgrades/templates/upgrades_configure.html:120
 #, fuzzy
 #| msgid ""
 #| "<strong>This may take a long time to complete</strong>. During an update, "
@@ -8945,25 +8882,25 @@ msgstr ""
 "nettgrensesnittet være midlertidig utilgjengelig, og vise en feilmelding. "
 "Oppdater siden for å fortsette."
 
-#: modules/upgrades/templates/upgrades_configure.html:128
+#: modules/upgrades/templates/upgrades_configure.html:134
 #, fuzzy
 #| msgid "Toggle recent update logs"
 msgid "Show recent update logs"
 msgstr "Veksle nylige oppdateringslogger"
 
-#: modules/upgrades/templates/upgrades_configure.html:138
+#: modules/upgrades/templates/upgrades_configure.html:144
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Test Distribution Upgrade"
 msgstr "Automatiske oppgraderinger aktivert"
 
-#: modules/upgrades/templates/upgrades_configure.html:140
+#: modules/upgrades/templates/upgrades_configure.html:146
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:150
+#: modules/upgrades/templates/upgrades_configure.html:156
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Test distribution upgrade now"
@@ -9195,15 +9132,15 @@ msgstr ""
 msgid "Create Account"
 msgstr "Opprett konto"
 
-#: modules/users/templates/users_firstboot.html:32
+#: modules/users/templates/users_firstboot.html:37
 msgid "An administrator account already exists."
 msgstr "Det eksisterer allerede en administratorkonto."
 
-#: modules/users/templates/users_firstboot.html:38
+#: modules/users/templates/users_firstboot.html:44
 msgid "The following administrator accounts exist in the system."
 msgstr "Følgende administratorkontoer finnes i systemet."
 
-#: modules/users/templates/users_firstboot.html:50
+#: modules/users/templates/users_firstboot.html:56
 #, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
@@ -9213,7 +9150,7 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 
-#: modules/users/templates/users_firstboot.html:63
+#: modules/users/templates/users_firstboot.html:69
 msgid "Skip this step"
 msgstr "Hopp over dette steget"
 
@@ -9251,23 +9188,19 @@ msgstr "Lagre endringer"
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr "Slett bruker <strong>%(username)s</strong> for godt?"
 
-#: modules/users/templates/users_update.html:46 templates/messages.html:11
-msgid "Close"
-msgstr "Lukk"
-
 #: modules/users/templates/users_update.html:51
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
 
-#: modules/users/templates/users_update.html:59
+#: modules/users/templates/users_update.html:60
 #, fuzzy
 #| msgid "Delete files"
 msgid "Delete user and files"
 msgstr "Slett filer"
 
-#: modules/users/templates/users_update.html:62
+#: modules/users/templates/users_update.html:63
 msgid "Cancel"
 msgstr "Kanseller"
 
@@ -9993,7 +9926,7 @@ msgstr ""
 msgid "Installation"
 msgstr "Installasjon"
 
-#: templates/app.html:29
+#: templates/app.html:34
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjenesten <em>%(service_name)s</em> kjører ikke."
@@ -10010,43 +9943,43 @@ msgid ""
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:112
+#: templates/base.html:118
 msgid " Home"
 msgstr " Hjem"
 
-#: templates/base.html:115
+#: templates/base.html:121
 msgid "Home"
 msgstr "Hjem"
 
-#: templates/base.html:120
+#: templates/base.html:126
 msgid " Apps"
 msgstr " Programmer"
 
-#: templates/base.html:124
+#: templates/base.html:130
 msgid "Apps"
 msgstr "Apps/Programmer"
 
-#: templates/base.html:129
+#: templates/base.html:135
 msgid " System"
 msgstr " System"
 
-#: templates/base.html:168 templates/base.html:169
+#: templates/base.html:174 templates/base.html:175
 msgid "Change password"
 msgstr "Endre passord"
 
-#: templates/base.html:182 templates/base.html:183
+#: templates/base.html:188 templates/base.html:189
 msgid "Shut down"
 msgstr "Slå av"
 
-#: templates/base.html:193 templates/base.html:231
+#: templates/base.html:199 templates/base.html:237
 msgid "Log out"
 msgstr "Logg ut"
 
-#: templates/base.html:202 templates/base.html:205
+#: templates/base.html:208 templates/base.html:211
 msgid "Select language"
 msgstr "Velg språk"
 
-#: templates/base.html:220 templates/base.html:222
+#: templates/base.html:226 templates/base.html:228
 msgid "Log in"
 msgstr "Logg inn"
 
@@ -10061,6 +9994,10 @@ msgstr "Klientprogrammer"
 #: templates/clients.html:17
 msgid "Web"
 msgstr "Web"
+
+#: templates/clients.html:28
+msgid "Launch"
+msgstr "Start"
 
 #: templates/clients.html:42
 msgid "Desktop"
@@ -10125,7 +10062,7 @@ msgstr ""
 "Aktiver noen <a href=\"%(apps_url)s\">programmer</a> for å legge til "
 "snarveier på denne siden."
 
-#: templates/internal-zone.html:11
+#: templates/internal-zone.html:17
 #, python-format
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
@@ -10134,11 +10071,11 @@ msgstr ""
 "Tjenesten <em>%(service_name)s</em> er kun tilgjengelig på interne nettverk "
 "eller når klienten er koblet til %(box_name)s via VPN."
 
-#: templates/internal-zone.html:17
+#: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
 msgstr "Ingen nettverksgrensesnitt er satt opp som interne."
 
-#: templates/internal-zone.html:19
+#: templates/internal-zone.html:30
 #, python-format
 msgid ""
 "Currently the following network interfaces are configured as internal: "
@@ -10163,7 +10100,7 @@ msgstr ""
 "Din FreedomBox er <a href=\"%(networks_url)s\">ikke bak en router</a>. "
 "Trenger ikke gjøre noe."
 
-#: templates/port-forwarding-info.html:19
+#: templates/port-forwarding-info.html:21
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
@@ -10174,7 +10111,7 @@ msgstr ""
 "funksjonen for demilitarisert sone for å videresende alle porter. Videre "
 "oppsett av ruter er ikke nødvendig."
 
-#: templates/port-forwarding-info.html:26
+#: templates/port-forwarding-info.html:30
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
@@ -10185,21 +10122,21 @@ msgstr ""
 "sette opp portvideresending på ruteren din. Du må sette opp videresending "
 "for følgende porter for %(service_name)s:"
 
-#: templates/port-forwarding-info.html:37
+#: templates/port-forwarding-info.html:42
 #, fuzzy
 #| msgid "Service Type"
 msgid "Service Name"
 msgstr "Type tjeneste"
 
-#: templates/port-forwarding-info.html:38
+#: templates/port-forwarding-info.html:43
 msgid "Protocol"
 msgstr "protokoll"
 
-#: templates/port-forwarding-info.html:39
+#: templates/port-forwarding-info.html:44
 msgid "From Router/WAN Ports"
 msgstr "Fra ruter/WAN-porter"
 
-#: templates/port-forwarding-info.html:40
+#: templates/port-forwarding-info.html:45
 #, python-format
 msgid "To %(box_name)s Ports"
 msgstr "Til portene for %(box_name)s"
@@ -10216,15 +10153,15 @@ msgstr "Installere dette programmet?"
 msgid "This application needs an update. Update now?"
 msgstr "Dette programmet trenger en oppdatering. Oppdatere nå?"
 
-#: templates/setup.html:41
+#: templates/setup.html:46
 msgid "This application is currently not available in your distribution."
 msgstr "Dette programmet er for tiden ikke tilgjengelig for din distribusjon."
 
-#: templates/setup.html:45
+#: templates/setup.html:50
 msgid "Check again"
 msgstr "Sjekk på nytt"
 
-#: templates/setup.html:50
+#: templates/setup.html:61
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10234,7 +10171,7 @@ msgstr ""
 "systemet er i konflikt med installasjon av dette programmet. Følgende pakker "
 "vil bli fjernet om du fortsetter:"
 
-#: templates/setup.html:68
+#: templates/setup.html:80
 msgid "Update"
 msgstr "Oppdater"
 
@@ -10280,6 +10217,96 @@ msgstr "før avinstallering av {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "            App: %(app_name)s\n"
+#~ "          "
+#~ msgstr ""
+#~ "\n"
+#~ "            Program: %(app_name)s\n"
+#~ "          "
+
+#~ msgid ""
+#~ "The Invisible Internet Project is an anonymous network layer intended to "
+#~ "protect communication from censorship and surveillance. I2P provides "
+#~ "anonymity by sending encrypted traffic through a volunteer-run network "
+#~ "distributed around the world."
+#~ msgstr ""
+#~ "Det usynlige inernettprosjektet er et anonymt nettverkslag tiltenkt "
+#~ "beskyttelse av kommunikasjon fra sensur og overvåkning. I2P tilbyr "
+#~ "anonymitet ved å sende kryptert trafikk gjennom et frivilligdrevet "
+#~ "nettverk distribuert verden om."
+
+#~ msgid ""
+#~ "Find more information about I2P on their project <a href=\"https://geti2p."
+#~ "net\" target=\"_blank\">homepage</a>."
+#~ msgstr ""
+#~ "For mer informasjon om I2P, sjekk deres <a href=\"https://geti2p.net\" "
+#~ "target=\"_blank\">nettside</a>."
+
+#~ msgid ""
+#~ "The first visit to the provided web interface will initiate the "
+#~ "configuration process."
+#~ msgstr ""
+#~ "Den første til å besøke det oppsatte nettgrensesnittet vil igangsette "
+#~ "oppsettsprosessen."
+
+#~ msgid "Manage I2P application"
+#~ msgstr "Håndter I2P-program"
+
+#~ msgid "I2P"
+#~ msgstr "I2P"
+
+#~ msgid "I2P Proxy"
+#~ msgstr "I2P-mellomtjener"
+
+#~ msgid "I2P Proxies and Tunnels"
+#~ msgstr "I2P-mellomtjenere og tunneler"
+
+#~ msgid "Anonymous Torrents"
+#~ msgstr "Anonyme torrenter"
+
+#~ msgid ""
+#~ "I2P lets you browse the Internet and hidden services (eepsites) "
+#~ "anonymously. For this, your browser, preferably the Tor Browser, needs to "
+#~ "be configured with a proxy."
+#~ msgstr ""
+#~ "I2P lar deg utforske Internett og skjulte tjenester (eepsider) anonymt. "
+#~ "For å gjøre dette må din nettleser, helst Tor-nettleseren, settes opp med "
+#~ "en mellomtjener."
+
+#~ msgid ""
+#~ "By default HTTP, HTTPS and IRC proxies are available. Additional proxies "
+#~ "and tunnels may be configured using the tunnel configuration interface."
+#~ msgstr ""
+#~ "Som forvalg er HTTP, HTTPS, og IRC -mellomtjenere tilgjengelige. "
+#~ "Ytterligere mellomtjenere og tunneler må settes opp ved bruk av "
+#~ "tunneloppsettsgrensesnittet."
+
+#~ msgid ""
+#~ "I2P provides an application to download files anonymously in a peer-to-"
+#~ "peer network. Download files by adding torrents or create a new torrent "
+#~ "to share a file."
+#~ msgstr ""
+#~ "I2P tilbyr et program for nedlasting av filer anonymt i et "
+#~ "likemannsnettverk. Last ned filer ved å legge til torrenter, eller "
+#~ "opprett en ny torrent for å dele ei fil."
+
+#~ msgid ""
+#~ "Currently an installation or upgrade is running. Consider waiting until "
+#~ "it's finished before restarting."
+#~ msgstr ""
+#~ "En annen installasjon eller oppgradering pågår. Vurder å vente litt før "
+#~ "du prøver igjen."
+
+#~ msgid ""
+#~ "Currently an installation or upgrade is running. Consider waiting until "
+#~ "it's finished before shutting down."
+#~ msgstr ""
+#~ "En annen installasjon eller oppgradering pågår. Vurder å vente til den er "
+#~ "ferdig før du tar ned systemet."
 
 #~ msgid "Select the backup file you want to upload"
 #~ msgstr "Velg sikkerhetskopiarkivet du ønsker å laste opp"

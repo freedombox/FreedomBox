@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-18 20:13-0500\n"
+"POT-Creation-Date: 2024-12-16 21:12-0500\n"
 "PO-Revision-Date: 2023-10-19 06:30+0000\n"
 "Last-Translator: Shaik <arifashaik807@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -113,11 +113,11 @@ msgstr "सार्वजनिक विसिबिलिटी"
 msgid "Data"
 msgstr ""
 
-#: menu.py:110 templates/base.html:133
+#: menu.py:110 templates/base.html:139
 msgid "System"
 msgstr "सिस्टम"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:270
+#: menu.py:112 modules/networks/templates/connection_show.html:274
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "सुरक्षा"
@@ -291,7 +291,7 @@ msgstr "यूसर बनाये"
 
 #: modules/backups/forms.py:101
 #: modules/backups/templates/backups_delete.html:17 modules/ikiwiki/forms.py:15
-#: modules/networks/templates/connection_show.html:71
+#: modules/networks/templates/connection_show.html:75
 #: modules/samba/templates/samba.html:66
 #: modules/sharing/templates/sharing.html:32
 msgid "Name"
@@ -370,7 +370,7 @@ msgstr "यूसर बनाये"
 msgid "None"
 msgstr "कोई नहीं"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:331
+#: modules/backups/forms.py:184 modules/networks/forms.py:332
 msgid "Passphrase"
 msgstr "पासफ्रेज़"
 
@@ -526,7 +526,30 @@ msgstr "मौजूदा कस्टम सर्विसस"
 msgid "Existing Backups"
 msgstr "मौजूदा कस्टम सर्विसस"
 
-#: modules/backups/templates/backups_add_remote_repository.html:19
+#: modules/backups/templates/backups_add_remote_repository.html:21
+#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:27
+#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/help/templates/help_about.html:22
+#: modules/help/templates/statuslog.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
+#: modules/matrixsynapse/templates/matrix-synapse.html:76
+#: modules/names/templates/names.html:128
+#: modules/networks/templates/connection_show.html:24
+#: modules/nextcloud/__init__.py:48
+#: modules/pagekite/templates/pagekite_custom_services.html:16
+#: modules/power/templates/power_busy_warning.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:13
+#: modules/upgrades/templates/backports-firstboot.html:35
+#: modules/upgrades/templates/upgrades_configure.html:79
+#: modules/users/templates/users_firstboot.html:34 templates/app.html:31
+#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+msgid "Caution:"
+msgstr "सावधान:"
+
+#: modules/backups/templates/backups_add_remote_repository.html:24
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
@@ -534,7 +557,7 @@ msgid ""
 "if chosen, the encryption passphrase."
 msgstr ""
 
-#: modules/backups/templates/backups_add_remote_repository.html:28
+#: modules/backups/templates/backups_add_remote_repository.html:34
 #, fuzzy
 #| msgid "Create Connection"
 msgid "Create Location"
@@ -637,20 +660,14 @@ msgid ""
 "    "
 msgstr ""
 
-#: modules/backups/templates/backups_upload.html:27
-#: modules/help/templates/statuslog.html:23
-#: modules/networks/templates/connection_show.html:23
-msgid "Caution:"
-msgstr "सावधान:"
-
-#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/backups_upload.html:31
 #, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
 "limit can leave your %(box_name)s unusable."
 msgstr ""
 
-#: modules/backups/templates/backups_upload.html:41
+#: modules/backups/templates/backups_upload.html:45
 #, fuzzy
 #| msgid "Download my profile"
 msgid "Upload file"
@@ -663,25 +680,25 @@ msgid ""
 "accepting connections."
 msgstr ""
 
-#: modules/backups/templates/verify_ssh_hostkey.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:34
 #, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
 
-#: modules/backups/templates/verify_ssh_hostkey.html:40
+#: modules/backups/templates/verify_ssh_hostkey.html:46
 msgid "How to verify?"
 msgstr ""
 
-#: modules/backups/templates/verify_ssh_hostkey.html:45
+#: modules/backups/templates/verify_ssh_hostkey.html:51
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
 "instead of RSA, by choosing the corresponding file."
 msgstr ""
 
-#: modules/backups/templates/verify_ssh_hostkey.html:60
+#: modules/backups/templates/verify_ssh_hostkey.html:66
 msgid "Verify Host"
 msgstr ""
 
@@ -919,7 +936,7 @@ msgid "No passwords currently configured."
 msgstr "वर्तमान में कोई शेयर कॉन्फ़िगर नहीं किया गया है."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:277
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "पासवर्ड"
@@ -953,7 +970,7 @@ msgstr ""
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
@@ -1044,7 +1061,7 @@ msgstr "सर्वर डोमेन"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
 #: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
-#: modules/networks/templates/connection_show.html:91
+#: modules/networks/templates/connection_show.html:95
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
 msgid "Type"
@@ -1477,11 +1494,11 @@ msgstr "समय क्षेत्र सेट करने में एर�
 msgid "Time zone set"
 msgstr "समय क्षेत्र सेट"
 
-#: modules/deluge/__init__.py:21
+#: modules/deluge/__init__.py:22
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "डेलूज एक बिटटोरेंट ग्राहक है जिसमे वेब युआई है."
 
-#: modules/deluge/__init__.py:22
+#: modules/deluge/__init__.py:23
 #, fuzzy
 #| msgid ""
 #| "When enabled, the Deluge web client will be available from <a href=\"/"
@@ -1496,15 +1513,15 @@ msgstr ""
 "डिफ़ॉल्ट पासवर्ड 'डेलूज' है लेकिन आप डेलूज से सक्षम करके आपको लॉग ऑन करना चाहिये आैर इसको "
 "बदलना चाहिये."
 
-#: modules/deluge/__init__.py:41 modules/transmission/__init__.py:70
+#: modules/deluge/__init__.py:56 modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "बिटटोरेंट एप्लिकेशन उपयोग कर फ़ाइल डाउनलोड करें"
 
-#: modules/deluge/__init__.py:45 modules/deluge/manifest.py:6
+#: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "डेलूज"
 
-#: modules/deluge/__init__.py:47 modules/transmission/__init__.py:76
+#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "बिटटोरेंट वेब ग्राहक"
 
@@ -1666,17 +1683,18 @@ msgstr "परिणाम"
 msgid "Diagnostic Results"
 msgstr "निदानिकी का परिणाम"
 
-#: modules/diagnostics/templates/diagnostics_app.html:13
+#: modules/diagnostics/templates/diagnostics_app.html:14
+#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:20
-#: modules/diagnostics/templates/diagnostics_full.html:48
+#: modules/diagnostics/templates/diagnostics_app.html:21
+#: modules/diagnostics/templates/diagnostics_full.html:49
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_app.html:39
 #, fuzzy
 #| msgid "This module does not support diagnostics"
 msgid "This app does not support diagnostics"
@@ -1699,14 +1717,6 @@ msgstr "निदानिकी परिक्षा अभी चल रह�
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "परिणाम"
-
-#: modules/diagnostics/templates/diagnostics_full.html:38
-#, python-format
-msgid ""
-"\n"
-"            App: %(app_name)s\n"
-"          "
-msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1898,11 +1908,11 @@ msgid "Invalid domain name"
 msgstr "अमान्य डोमेन नाम"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:276 modules/users/forms.py:130
+#: modules/networks/forms.py:277 modules/users/forms.py:130
 msgid "Username"
 msgstr "युसरनाम"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:279
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
 msgid "Show password"
 msgstr "शो पासवर्ड"
 
@@ -1924,7 +1934,7 @@ msgstr ""
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
 #: modules/matrixsynapse/templates/matrix-synapse.html:12
-#: modules/networks/templates/connection_show.html:254
+#: modules/networks/templates/connection_show.html:258
 #: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:19
 #: modules/upgrades/templates/upgrades_configure.html:14
 #: modules/wireguard/templates/wireguard_show_client.html:48
@@ -2434,9 +2444,10 @@ msgstr ""
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
-#: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
-#: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
-#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
+#: modules/featherwiki/manifest.py:18
+#: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "विकी"
 
@@ -2753,7 +2764,7 @@ msgid ""
 msgstr ""
 
 #: modules/first_boot/templates/firstboot_complete.html:27
-#: modules/upgrades/templates/upgrades_configure.html:108
+#: modules/upgrades/templates/upgrades_configure.html:114
 #, fuzzy
 #| msgid "Update"
 msgid "Update now"
@@ -2986,7 +2997,7 @@ msgstr "यूसर बनाये"
 msgid "Documentation"
 msgstr "प्रलेखन"
 
-#: modules/help/__init__.py:37 modules/help/templates/help_about.html:92
+#: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
 #, fuzzy
 #| msgid "Manual"
@@ -3006,26 +3017,32 @@ msgstr ""
 msgid "Submit Feedback"
 msgstr ""
 
-#: modules/help/__init__.py:49 modules/help/templates/help_about.html:101
+#: modules/help/__init__.py:49 modules/help/templates/help_about.html:113
 #: modules/help/templates/help_contribute.html:9 modules/help/views.py:76
 #: templates/help-menu.html:39 templates/help-menu.html:40
 msgid "Contribute"
 msgstr ""
 
-#: modules/help/__init__.py:53 templates/base.html:211 templates/base.html:214
+#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 #, fuzzy
 msgid "About"
 msgstr "के बारे में"
 
-#: modules/help/templates/help_about.html:18
+#: modules/help/templates/help_about.html:25 templates/messages.html:23
+#, fuzzy
+#| msgid "Access Point"
+msgid "Success:"
+msgstr "अभिगम केंद्र"
+
+#: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "आप %(os_release)s चल रहे है और %(box_name)s संस्करण %(version)s."
 
-#: modules/help/templates/help_about.html:24
+#: modules/help/templates/help_about.html:35
 #, fuzzy, python-format
 #| msgid "There is a new %(box_name)s version available."
 msgid ""
@@ -3033,13 +3050,13 @@ msgid ""
 "a>."
 msgstr "एक नया %(box_name)s संस्करण उपलब्ध है."
 
-#: modules/help/templates/help_about.html:29
+#: modules/help/templates/help_about.html:40
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s उद्दिनांकित है."
 
-#: modules/help/templates/help_about.html:37
+#: modules/help/templates/help_about.html:49
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -3056,7 +3073,7 @@ msgstr ""
 "वेबसाइट, सामाजिक नेटवर्क, ईमेल, वेब प्रॉक्सी और एक टोर रिले के जैसे एप्लिकेशन होस्ट कर सकते "
 "है, एक वाई - फाई रूटर के जैसे डिवाइस पर ताकि आपना डेटा आपना साख रखेगें."
 
-#: modules/help/templates/help_about.html:50
+#: modules/help/templates/help_about.html:62
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -3071,7 +3088,7 @@ msgstr ""
 "उपयोगी कानूनी सुरक्षा प्राप्त करते हैं. अपने नेटवर्क और मशीनों पर उपयोगकर्ताओं को वापस "
 "शक्ति देकर, हम इंटरनेट उसके इरादे-वाले पीयर टू पीयर वास्तुकला  पर लौट रहे हैं."
 
-#: modules/help/templates/help_about.html:63
+#: modules/help/templates/help_about.html:75
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -3081,7 +3098,7 @@ msgstr ""
 "बहुत सारे प्रोजैक्ट चल रहे है, एक वितरित सेवाओं का भविष्य एहसास करने के लिए. "
 "%(box_name)s यह सब साथ लाने के लिए कोशिस करती है."
 
-#: modules/help/templates/help_about.html:71
+#: modules/help/templates/help_about.html:83
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -3092,48 +3109,48 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 
-#: modules/help/templates/help_about.html:85
+#: modules/help/templates/help_about.html:97
 #, fuzzy
 #| msgid "Learn more"
 msgid "Learn"
 msgstr "और सीखिये"
 
-#: modules/help/templates/help_about.html:88
+#: modules/help/templates/help_about.html:100
 msgid "Homepage"
 msgstr "होमपेज"
 
-#: modules/help/templates/help_about.html:104 templates/toolbar.html:19
+#: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
 msgstr "दान करें"
 
-#: modules/help/templates/help_about.html:107
+#: modules/help/templates/help_about.html:119
 msgid "Join project"
 msgstr ""
 
-#: modules/help/templates/help_about.html:111
+#: modules/help/templates/help_about.html:123
 msgid "Translate"
 msgstr ""
 
-#: modules/help/templates/help_about.html:117
+#: modules/help/templates/help_about.html:129
 #, fuzzy
 #| msgid "Export"
 msgid "Support"
 msgstr "निर्यात"
 
-#: modules/help/templates/help_about.html:121
+#: modules/help/templates/help_about.html:133
 msgid "Forum"
 msgstr ""
 
-#: modules/help/templates/help_about.html:126
+#: modules/help/templates/help_about.html:138
 msgid "IRC Chatroom"
 msgstr "आईआरसी चैटरूम"
 
-#: modules/help/templates/help_about.html:131
+#: modules/help/templates/help_about.html:143
 msgid "Mailing list"
 msgstr "मेलिंग सूची"
 
 #: modules/help/templates/help_base.html:21
-#: modules/help/templates/help_index.html:61
+#: modules/help/templates/help_index.html:63
 #, python-format
 msgid "%(box_name)s Setup"
 msgstr "%(box_name)s सेटअप"
@@ -3228,12 +3245,12 @@ msgstr ""
 msgid "Thank you!"
 msgstr ""
 
-#: modules/help/templates/help_index.html:12 templates/help-menu.html:8
+#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
 #: templates/help-menu.html:14
 msgid "Help"
 msgstr "मदद"
 
-#: modules/help/templates/help_index.html:16
+#: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
@@ -3242,7 +3259,7 @@ msgstr ""
 "वह <a href=\"%(manual_url)s\">%(box_name)s मैन्युअल</a> %(box_name)s के बारे में "
 "जानकारी के लिये सबसे अच्छे जगह है."
 
-#: modules/help/templates/help_index.html:23
+#: modules/help/templates/help_index.html:25
 #, python-format
 msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
@@ -3251,7 +3268,7 @@ msgstr ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\">%(box_name)s "
 "प्रोजेक्ट विकि </a> में और जानकारी है."
 
-#: modules/help/templates/help_index.html:30
+#: modules/help/templates/help_index.html:32
 #, python-format
 msgid ""
 "To seek help from %(box_name)s community, queries may be posted on the <a "
@@ -3264,7 +3281,7 @@ msgstr ""
 "सकते है. लिस्ट अभिलेखागार में द्वारा यूजर की समस्याओं के बारे में जानकारी और संभावित समाधान "
 "भी हे सकता है."
 
-#: modules/help/templates/help_index.html:40
+#: modules/help/templates/help_index.html:42
 #, python-format
 msgid ""
 "Many %(box_name)s contributors and users are also available on the irc.oftc."
@@ -3326,10 +3343,14 @@ msgstr ""
 "यह <a href=\"https://salsa.debian.org/freedombox-team/plinth/issues\">  बग "
 "ट्रैकर </a> उपयोग किजिये और इस स्थिति लॉग को बग रिपोर्ट में जोड़ें."
 
-#: modules/help/templates/statuslog.html:24
+#: modules/help/templates/statuslog.html:27
+#, fuzzy
+#| msgid ""
+#| "Please remove any passwords or other personal information from the log "
+#| "before submitting the bug report."
 msgid ""
-"Please remove any passwords or other personal information from the log "
-"before submitting the bug report."
+"Please remove any personal information from the log before submitting the "
+"bug report."
 msgstr "बग रिपोर्ट सबमिट करने से पहले कोई पासवर्ड या दूसरे व्यक्तिगत जानकारी निकालें."
 
 #: modules/help/views.py:29
@@ -3345,99 +3366,6 @@ msgstr "{box_name} के बारे में"
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} मैनुअल"
-
-#: modules/i2p/__init__.py:21
-msgid ""
-"The Invisible Internet Project is an anonymous network layer intended to "
-"protect communication from censorship and surveillance. I2P provides "
-"anonymity by sending encrypted traffic through a volunteer-run network "
-"distributed around the world."
-msgstr ""
-
-#: modules/i2p/__init__.py:25
-#, fuzzy
-#| msgid ""
-#| "For more information about the %(box_name)s project, see the <a "
-#| "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
-msgid ""
-"Find more information about I2P on their project <a href=\"https://geti2p."
-"net\" target=\"_blank\">homepage</a>."
-msgstr ""
-"%(box_name)s के बारे में और सिखने के लिये यह देखिये <a href=\"https://wiki.debian.org/"
-"FreedomBox\">%(box_name)s Wiki</a>."
-
-#: modules/i2p/__init__.py:27
-msgid ""
-"The first visit to the provided web interface will initiate the "
-"configuration process."
-msgstr ""
-
-#: modules/i2p/__init__.py:49
-#, fuzzy
-#| msgid "Enable application"
-msgid "Manage I2P application"
-msgstr "एप्लिकेशन सक्षम करें"
-
-#: modules/i2p/__init__.py:52 modules/i2p/manifest.py:13
-msgid "I2P"
-msgstr ""
-
-#: modules/i2p/__init__.py:53 modules/tor/__init__.py:63
-#: modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "गुमनामी नेटवर्क"
-
-#: modules/i2p/__init__.py:83
-#, fuzzy
-#| msgid "Web Proxy"
-msgid "I2P Proxy"
-msgstr "वेब प्रॉक्सी"
-
-#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
-#: modules/torproxy/manifest.py:56
-#, fuzzy
-#| msgid "Anonymity Network"
-msgid "Anonymity network"
-msgstr "गुमनामी नेटवर्क"
-
-#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
-#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
-#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
-msgid "Censorship resistance"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:12
-msgid "I2P Proxies and Tunnels"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:21 modules/i2p/templates/i2p.html:34
-#: templates/clients.html:28
-msgid "Launch"
-msgstr "लॉन्च"
-
-#: modules/i2p/templates/i2p.html:25
-msgid "Anonymous Torrents"
-msgstr ""
-
-#: modules/i2p/views.py:16
-msgid ""
-"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably the Tor Browser, needs to be configured "
-"with a proxy."
-msgstr ""
-
-#: modules/i2p/views.py:19
-msgid ""
-"By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
-"tunnels may be configured using the tunnel configuration interface."
-msgstr ""
-
-#: modules/i2p/views.py:24
-msgid ""
-"I2P provides an application to download files anonymously in a peer-to-peer "
-"network. Download files by adding torrents or create a new torrent to share "
-"a file."
-msgstr ""
 
 #: modules/ikiwiki/__init__.py:20
 #, fuzzy
@@ -3515,8 +3443,8 @@ msgid "Delete site %(site)s"
 msgstr "साइट हटाएं %(site)s"
 
 #: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:54
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
 msgid "Update setup"
 msgstr "सेटअप अपडेट"
 
@@ -3643,7 +3571,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
 msgid "JavaScript license information"
 msgstr "जावास्क्रिप्ट लाइसेंस जानकारी"
 
@@ -3738,18 +3666,24 @@ msgstr ""
 msgid "Archival"
 msgstr "पुरालेख नाम"
 
+#: modules/kiwix/manifest.py:25 modules/shadowsocks/manifest.py:19
+#: modules/shadowsocksserver/manifest.py:18 modules/tor/manifest.py:60
+#: modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
+
 #: modules/kiwix/manifest.py:26
 #, fuzzy
 #| msgid "Wiki"
 msgid "Wikipedia"
 msgstr "विकी"
 
-#: modules/kiwix/templates/kiwix-add-package.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:29
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
 msgstr ""
 
-#: modules/kiwix/templates/kiwix-add-package.html:36
+#: modules/kiwix/templates/kiwix-add-package.html:42
 #, fuzzy
 #| msgid "Download my profile"
 msgid "Upload ZIM file"
@@ -4039,7 +3973,7 @@ msgstr "मैट्रिक्स सिनापसॅ"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
 msgid "Configuration"
 msgstr "कॉन्फ़िगरेशन"
 
@@ -4053,7 +3987,7 @@ msgstr ""
 "इस डोमेन नाम का उपयोग कर इस सर्वर पर यूसरसॅ को मिल सकते है.  मैट्रिक्स यूसर IDs <em> "
 "@username:d omainname </em> की तरह दिखेगा."
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -4062,19 +3996,15 @@ msgstr ""
 #| "      setup is currently not supported.\n"
 #| "    "
 msgid ""
-"\n"
-"      <strong>Warning!</strong> Changing the domain name after this step "
-"will\n"
-"      require uninstalling and reinstalling the app which will wipe app's "
-"data.\n"
-"    "
+"<strong>Warning!</strong> Changing the domain name after this step will "
+"require uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 "\n"
 "      <strong> वारनंग!</strong> प्रारंभिक सेटअप के बाद डोमेन नाम बदलना करना वर्तमान "
 "समर्थित नहीं है.\n"
 "    "
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 #, python-format
 msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
@@ -4136,7 +4066,7 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
-#: modules/matrixsynapse/templates/matrix-synapse.html:75
+#: modules/matrixsynapse/templates/matrix-synapse.html:80
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4807,9 +4737,9 @@ msgstr ""
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
+#: modules/networks/templates/connection_show.html:70
+#: modules/networks/templates/connection_show.html:212
+#: modules/networks/templates/connection_show.html:253
 #: modules/networks/views.py:125
 msgid "yes"
 msgstr "हाँ"
@@ -4861,7 +4791,7 @@ msgid "Link"
 msgstr ""
 
 #: modules/names/templates/names.html:73
-#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
@@ -4895,11 +4825,11 @@ msgid ""
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:66
+#: modules/names/templates/names.html:121 templates/setup.html:78
 msgid "Install"
 msgstr "इंस्टॉल करें"
 
-#: modules/names/templates/names.html:126
+#: modules/names/templates/names.html:131
 #, fuzzy
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
@@ -5022,8 +4952,8 @@ msgstr ""
 "जाएगा."
 
 #: modules/networks/forms.py:113 modules/networks/forms.py:152
-#: modules/networks/templates/connection_show.html:193
-#: modules/networks/templates/connection_show.html:234
+#: modules/networks/templates/connection_show.html:197
+#: modules/networks/templates/connection_show.html:238
 msgid "Gateway"
 msgstr "गेटवे"
 
@@ -5108,58 +5038,58 @@ msgstr ""
 "वैकल्पिक मूल्य. अगर यह मूल्य दिया जाता है और आइपीवी6 एड्रेसिंग मेथड \"ऑटोमैटिक\" है, तो "
 "DHCP सर्वर द्वारा प्रदान किए गए DNS सर्वरों नज़रअंदाज़ किया जाएगा."
 
-#: modules/networks/forms.py:182
+#: modules/networks/forms.py:183
 msgid "-- select --"
 msgstr "-- चुनिये --"
 
-#: modules/networks/forms.py:303
-#: modules/networks/templates/connection_show.html:135
+#: modules/networks/forms.py:304
+#: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "एसएसआईडी"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:305
 msgid "The visible name of the network."
 msgstr "यह नेटवर्क का दृश्य नाम."
 
-#: modules/networks/forms.py:306
-#: modules/networks/templates/connection_show.html:148
+#: modules/networks/forms.py:307
+#: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "मोड"
 
-#: modules/networks/forms.py:306
+#: modules/networks/forms.py:307
 msgid "Infrastructure"
 msgstr "इंफ्रास्ट्रक्चर"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:308
 msgid "Access Point"
 msgstr "अभिगम केंद्र"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:309
 msgid "Ad-hoc"
 msgstr "एड-हॉक"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Frequency Band"
 msgstr "फ्रीक्वेंसी बैंड"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Automatic"
 msgstr "ऑटोमैटिक"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:312
 msgid "A (5 GHz)"
 msgstr "ए ( 5 जीएचज़ि)"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:313
 msgid "B/G (2.4 GHz)"
 msgstr "बी/जी (२.४ जीएचज़ि)"
 
-#: modules/networks/forms.py:314
-#: modules/networks/templates/connection_show.html:162
+#: modules/networks/forms.py:315
+#: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "चैनल"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:316
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5167,11 +5097,11 @@ msgstr ""
 "वैकल्पिक मूल्य. चुने हूआ फ्रीक्वेंसी बैंड में वायरलेस चैनल, प्रतिबंधित करने के लिये. रिक्त या 0 मूल्य "
 "का मतलब है ऑटोमैटिक चुनाव."
 
-#: modules/networks/forms.py:320
+#: modules/networks/forms.py:321
 msgid "BSSID"
 msgstr "बिएसएसआई़़डी"
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:322
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5181,32 +5111,32 @@ msgstr ""
 "एक्सेस पॉइंट का BSSID प्रदान की गई से मैच करते है तो कनेक्ट करें. उदाहरण: 00:11:22:aa:bb:"
 "cc."
 
-#: modules/networks/forms.py:327
+#: modules/networks/forms.py:328
 msgid "Authentication Mode"
 msgstr "प्रमाणीकरण मोड"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:329
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr ""
 "अगर वायरलेस नेटवर्क सुरक्षित है और क्लाइंट को कनेक्ट करने के लिए पासवर्ड ज़रुरत है WPA चुनिये."
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "Open"
 msgstr "खुला"
 
-#: modules/networks/forms.py:366
+#: modules/networks/forms.py:367
 #, fuzzy, python-brace-format
 #| msgid "Use upstream bridges to connect to Tor network"
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "अपस्ट्रीम ब्रिजस उपयोग करके टो नेटवर्क से कनेक्ट करें"
 
-#: modules/networks/forms.py:373
+#: modules/networks/forms.py:374
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5214,7 +5144,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:380
+#: modules/networks/forms.py:381
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5223,7 +5153,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:390
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5231,11 +5161,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:408
+#: modules/networks/forms.py:409
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: modules/networks/forms.py:412
+#: modules/networks/forms.py:413
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5246,7 +5176,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:424
+#: modules/networks/forms.py:425
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5258,7 +5188,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:438
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5270,19 +5200,19 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:450
+#: modules/networks/forms.py:451
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:467
+#: modules/networks/forms.py:468
 #, fuzzy
 #| msgid "An error occurred during configuration."
 msgid "Preferred router configuration"
 msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
 
-#: modules/networks/forms.py:472
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5293,7 +5223,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:484
+#: modules/networks/forms.py:485
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5305,14 +5235,14 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:498
+#: modules/networks/forms.py:499
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:24
+#: modules/networks/templates/connection_show.html:27
 #, python-format
 msgid ""
 "This is the primary connection that %(box_name)s relies on for Internet "
@@ -5321,32 +5251,32 @@ msgid ""
 "connection."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "कनेक्शन संपादित करें"
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:161 templates/base.html:162
+#: templates/base.html:167 templates/base.html:168
 msgid "Edit"
 msgstr "संपादन"
 
-#: modules/networks/templates/connection_show.html:43
+#: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
 msgstr "निष्क्रिय"
 
-#: modules/networks/templates/connection_show.html:50
+#: modules/networks/templates/connection_show.html:54
 #: modules/networks/templates/connections_list.html:69
 msgid "Activate"
 msgstr "सक्रिय"
 
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 msgid "Delete connection"
 msgstr "कनेक्शन हटाएँ"
 
-#: modules/networks/templates/connection_show.html:59
+#: modules/networks/templates/connection_show.html:63
 #: modules/networks/templates/connections_diagram.html:19
 #: modules/networks/templates/connections_diagram.html:22
 #: modules/networks/templates/connections_diagram.html:51
@@ -5354,111 +5284,111 @@ msgstr "कनेक्शन हटाएँ"
 msgid "Connection"
 msgstr "कनेक्शन"
 
-#: modules/networks/templates/connection_show.html:64
+#: modules/networks/templates/connection_show.html:68
 msgid "Primary connection"
 msgstr "मुख्य कनेक्शन"
 
-#: modules/networks/templates/connection_show.html:77
+#: modules/networks/templates/connection_show.html:81
 #: modules/storage/templates/storage.html:23
 msgid "Device"
 msgstr "यंत्र"
 
-#: modules/networks/templates/connection_show.html:81
+#: modules/networks/templates/connection_show.html:85
 msgid "State"
 msgstr "स्थिति"
 
-#: modules/networks/templates/connection_show.html:86
+#: modules/networks/templates/connection_show.html:90
 msgid "State reason"
 msgstr "कारण कहो"
 
-#: modules/networks/templates/connection_show.html:95
+#: modules/networks/templates/connection_show.html:99
 msgid "MAC address"
 msgstr "एमएेसी एड्रेस"
 
-#: modules/networks/templates/connection_show.html:99
+#: modules/networks/templates/connection_show.html:103
 msgid "Interface"
 msgstr "इंटरफ़ेस"
 
-#: modules/networks/templates/connection_show.html:103
+#: modules/networks/templates/connection_show.html:107
 #: modules/snapshot/templates/snapshot_delete_selected.html:19
 #: modules/snapshot/templates/snapshot_manage.html:29
 #: modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "विवरण"
 
-#: modules/networks/templates/connection_show.html:109
+#: modules/networks/templates/connection_show.html:113
 msgid "Physical Link"
 msgstr "फिजिकल लिंक"
 
-#: modules/networks/templates/connection_show.html:114
+#: modules/networks/templates/connection_show.html:118
 msgid "Link state"
 msgstr "लिंक स्ट्टेट"
 
-#: modules/networks/templates/connection_show.html:117
+#: modules/networks/templates/connection_show.html:121
 msgid "cable is connected"
 msgstr "केबल कनेक्ट हो गया"
 
-#: modules/networks/templates/connection_show.html:120
+#: modules/networks/templates/connection_show.html:124
 msgid "please check cable"
 msgstr "केबल चेक करें"
 
-#: modules/networks/templates/connection_show.html:124
-#: modules/networks/templates/connection_show.html:140
+#: modules/networks/templates/connection_show.html:128
+#: modules/networks/templates/connection_show.html:144
 msgid "Speed"
 msgstr "स्पीड"
 
-#: modules/networks/templates/connection_show.html:126
+#: modules/networks/templates/connection_show.html:130
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s एमबीट/एस"
 
-#: modules/networks/templates/connection_show.html:142
+#: modules/networks/templates/connection_show.html:146
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s एमबीट/एस"
 
-#: modules/networks/templates/connection_show.html:154
+#: modules/networks/templates/connection_show.html:158
 msgid "Signal strength"
 msgstr "सिग्नल क्षमती"
 
-#: modules/networks/templates/connection_show.html:170
-#: modules/networks/templates/connections_fields.html:61
+#: modules/networks/templates/connection_show.html:174
+#: modules/networks/templates/connections_fields.html:67
 msgid "IPv4"
 msgstr "आईपीवी4"
 
-#: modules/networks/templates/connection_show.html:175
-#: modules/networks/templates/connection_show.html:218
+#: modules/networks/templates/connection_show.html:179
+#: modules/networks/templates/connection_show.html:222
 #: modules/shadowsocks/forms.py:36 modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "तरीका"
 
-#: modules/networks/templates/connection_show.html:184
-#: modules/networks/templates/connection_show.html:225
+#: modules/networks/templates/connection_show.html:188
+#: modules/networks/templates/connection_show.html:229
 msgid "IP address"
 msgstr "आइपी एेड्रैस"
 
-#: modules/networks/templates/connection_show.html:200
-#: modules/networks/templates/connection_show.html:241
+#: modules/networks/templates/connection_show.html:204
+#: modules/networks/templates/connection_show.html:245
 msgid "DNS server"
 msgstr "डीएनएस सर्वर"
 
-#: modules/networks/templates/connection_show.html:207
-#: modules/networks/templates/connection_show.html:248
+#: modules/networks/templates/connection_show.html:211
+#: modules/networks/templates/connection_show.html:252
 #: modules/storage/forms.py:132
 msgid "Default"
 msgstr "डिफ़ॉल्ट"
 
-#: modules/networks/templates/connection_show.html:213
-#: modules/networks/templates/connections_fields.html:90
+#: modules/networks/templates/connection_show.html:217
+#: modules/networks/templates/connections_fields.html:94
 msgid "IPv6"
 msgstr "आईपीवी6"
 
-#: modules/networks/templates/connection_show.html:256
+#: modules/networks/templates/connection_show.html:260
 msgid "This connection is not active."
 msgstr "यह कनेक्शन सक्रिय नहीं है."
 
-#: modules/networks/templates/connection_show.html:260
-#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connections_fields_privacy.html:15
 #: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
 #: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 #, fuzzy
@@ -5466,13 +5396,20 @@ msgstr "यह कनेक्शन सक्रिय नहीं है."
 msgid "Privacy"
 msgstr "प्रिवोक्सी"
 
-#: modules/networks/templates/connection_show.html:275
-#: modules/networks/templates/connection_show.html:295
-#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:279
+#: modules/networks/templates/connection_show.html:304
+#: modules/networks/templates/connection_show.html:328
 msgid "Firewall zone"
 msgstr "फ़ायरवॉल ज़ोन"
 
-#: modules/networks/templates/connection_show.html:284
+#: modules/networks/templates/connection_show.html:289
+#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:338
+#: templates/internal-zone.html:13 templates/messages.html:20
+msgid "Info:"
+msgstr ""
+
+#: modules/networks/templates/connection_show.html:292
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -5482,8 +5419,8 @@ msgstr ""
 "नेटवर्क से कनेक्ट करते हैं, सिर्फ आंतरिक रूप से उपलब्ध होने सर्विसे बाहर से भी उपलब्ध हो "
 "जाएगा. यह एक सुरक्षा जोखिम है."
 
-#: modules/networks/templates/connection_show.html:304
-#: modules/networks/templates/connection_show.html:327
+#: modules/networks/templates/connection_show.html:317
+#: modules/networks/templates/connection_show.html:345
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -5493,12 +5430,12 @@ msgstr ""
 "मशीन से कनेक्ट करते हैं, तो सिर्फ आंतरिक रूप से उपलब्ध होने वाली कई सर्विसस उपलब्ध नहीं "
 "होंगी."
 
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:330
 #: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "बाहरी"
 
-#: modules/networks/templates/connection_show.html:323
+#: modules/networks/templates/connection_show.html:341
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -5536,7 +5473,7 @@ msgstr "इथरनेट"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/templates/connections_fields_wifi.html:15
 #: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "वाई-फ़ाई"
@@ -5561,13 +5498,23 @@ msgstr "कंप्यूटर"
 msgid "Edit Connection"
 msgstr "कनेक्शन संपादित करें"
 
-#: modules/networks/templates/connections_fields.html:24
+#: modules/networks/templates/connections_fields.html:13
+#: templates/messages.html:14
+msgid "Error:"
+msgstr ""
+
+#: modules/networks/templates/connections_fields.html:20
+#: modules/users/templates/users_update.html:46 templates/messages.html:30
+msgid "Close"
+msgstr ""
+
+#: modules/networks/templates/connections_fields.html:32
 #, fuzzy
 #| msgid "Generic"
 msgid "General"
 msgstr "जेनेरिक"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
+#: modules/networks/templates/connections_fields_pppoe.html:15 network.py:30
 msgid "PPPoE"
 msgstr "पीपीपीअोइ"
 
@@ -5656,7 +5603,7 @@ msgstr "अपडेट"
 #: modules/networks/templates/internet_connectivity_type.html:18
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
-#: modules/pagekite/templates/pagekite_custom_services.html:28
+#: modules/pagekite/templates/pagekite_custom_services.html:33
 #: modules/sharing/templates/sharing_add_edit.html:20 templates/form.html:19
 msgid "Submit"
 msgstr "जमा करें"
@@ -6094,7 +6041,7 @@ msgstr "कनेक्शन {name} हटाया गया."
 msgid "Failed to delete connection: Connection not found."
 msgstr "कनेक्शन हटाने में विफल: कनेक्शन नहीं मिला."
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:34
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6103,11 +6050,11 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:30
+#: modules/nextcloud/__init__.py:39
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:43
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6116,16 +6063,16 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:40
+#: modules/nextcloud/__init__.py:48
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:66 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:60
+#: modules/nextcloud/__init__.py:68
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -6475,11 +6422,16 @@ msgstr "यह सर्विस हटाएं"
 msgid "Add custom PageKite service"
 msgstr "जोड़ा गया कस्टम सर्विस"
 
-#: modules/pagekite/templates/pagekite_custom_services.html:14
+#: modules/pagekite/templates/pagekite_custom_services.html:19
+#, fuzzy
+#| msgid ""
+#| "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
+#| "protocol/port combinations that you are able to define here. For example, "
+#| "HTTPS on ports other than 443 is known to cause problems."
 msgid ""
-"<b>Warning:</b><br>Your PageKite frontend server may not support all the "
-"protocol/port combinations that you are able to define here. For example, "
-"HTTPS on ports other than 443 is known to cause problems."
+"Your PageKite frontend server may not support all the protocol/port "
+"combinations that you are able to define here. For example, HTTPS on ports "
+"other than 443 is known to cause problems."
 msgstr ""
 "<b>वार्निंग:</b><br> अपने पेजकइट फ्रंटेंड सर्वर कि आप यहां परिभाषित करते सब प्रोटोकॉल/"
 "पोर्ट संयोजन का समर्थन नहीं कर सकते है. उदाहरण के लिए, ४४३ के अलावा पोर्ट पर HTTPS "
@@ -6544,24 +6496,24 @@ msgstr "सिस्टम को रीस्टार्ट करें य�
 msgid "Power"
 msgstr "पावर"
 
-#: modules/power/templates/power.html:13
+#: modules/power/templates/power.html:15 templates/base.html:182
+#: templates/base.html:183
+msgid "Restart"
+msgstr "रीस्टार्ट"
+
+#: modules/power/templates/power.html:18
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shut Down"
+msgstr "शट डाउन"
+
+#: modules/power/templates/power_busy_warning.html:14
 msgid ""
 "Currently an installation or upgrade is running. Consider waiting until it's "
 "finished before shutting down or restarting."
 msgstr ""
 "अभी एक स्थापना या अपग्रेड चल रहा है. इसे शट डाउन या रीस्टार्ट करने से पहले इसे समाप्त "
 "होने तक प्रतीक्षा करें."
-
-#: modules/power/templates/power.html:22 templates/base.html:176
-#: templates/base.html:177
-msgid "Restart"
-msgstr "रीस्टार्ट"
-
-#: modules/power/templates/power.html:25
-#, fuzzy
-#| msgid "Shut down"
-msgid "Shut Down"
-msgstr "शट डाउन"
 
 #: modules/power/templates/power_restart.html:17
 msgid ""
@@ -6571,16 +6523,8 @@ msgstr ""
 "क्या आप रीस्टार्ट करना चाहिये? आप सिर्फ सिस्टम रीस्टार्ट होने के कुछ मिनट के बाद वेब "
 "इंटरफ़ेस उपयोग कर सकते हैं."
 
-#: modules/power/templates/power_restart.html:34
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before restarting."
-msgstr ""
-"अभी एक स्थापना या अपग्रेड चल रहा है. इसे शट डाउन या रीस्टार्ट करने से पहले इसे समाप्त "
-"होने तक प्रतीक्षा करें."
-
-#: modules/power/templates/power_restart.html:48
-#: modules/power/templates/power_restart.html:51
+#: modules/power/templates/power_restart.html:41
+#: modules/power/templates/power_restart.html:44
 msgid "Restart Now"
 msgstr "अभी रीस्टार्ट करें"
 
@@ -6591,16 +6535,8 @@ msgid ""
 msgstr ""
 "क्या आप शट डाउन करना चाहते हैं? आप शट डाउन के बाद इस वेब इंटरफ़ेस नहीं सक्षम करना होंगा."
 
-#: modules/power/templates/power_shutdown.html:33
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before shutting down."
-msgstr ""
-"अभी एक स्थापना या अपग्रेड चल रहा है. इसे शट डाउन या रीस्टार्ट करने से पहले इसे समाप्त "
-"होने तक प्रतीक्षा करें."
-
-#: modules/power/templates/power_shutdown.html:47
-#: modules/power/templates/power_shutdown.html:50
+#: modules/power/templates/power_shutdown.html:40
+#: modules/power/templates/power_shutdown.html:43
 msgid "Shut Down Now"
 msgstr "अब शट डाउन करें"
 
@@ -6759,9 +6695,8 @@ msgstr ""
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
-"radicale.org/master.html#documentation/supported-clients\">supported client "
-"application</a> is needed. Radicale can be accessed by any user with a "
-"{box_name} login."
+"radicale.org/master.html#supported-clients\">supported client application</"
+"a> is needed. Radicale can be accessed by any user with a {box_name} login."
 msgstr ""
 "राडिकैल एक CalDAV और CardDAV सर्वर है. यह तुल्यकालन और शेड्यूलिंग और संपर्क डेटा साझा "
 "करना की अनुमति देता है. राडिकैल उपयोग करने के लिये, एक <a href=\"http://radicale."
@@ -7821,7 +7756,7 @@ msgstr ""
 msgid "Rollback to snapshot #%(number)s"
 msgstr "स्नैपशॉट से रोलबैक करें #%(number)s"
 
-#: modules/snapshot/templates/snapshot_not_supported.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:16
 #, python-format
 msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
@@ -8402,6 +8337,10 @@ msgstr ""
 msgid "Tor"
 msgstr "टोर"
 
+#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
+msgid "Anonymity Network"
+msgstr "गुमनामी नेटवर्क"
+
 #: modules/tor/__init__.py:78
 #, fuzzy
 #| msgid "Tor Hidden Service"
@@ -8534,6 +8473,12 @@ msgstr "हिडन सर्विस"
 #: modules/tor/manifest.py:58
 msgid "Relay"
 msgstr "रीले"
+
+#: modules/tor/manifest.py:59 modules/torproxy/manifest.py:56
+#, fuzzy
+#| msgid "Anonymity Network"
+msgid "Anonymity network"
+msgstr "गुमनामी नेटवर्क"
 
 #: modules/tor/templates/tor.html:18
 #, fuzzy
@@ -8810,7 +8755,7 @@ msgid ""
 msgstr ""
 
 #: modules/upgrades/forms.py:34
-#: modules/upgrades/templates/upgrades_configure.html:89
+#: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -8820,13 +8765,13 @@ msgid ""
 "activated now, they can be activated later."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:33
+#: modules/upgrades/templates/backports-firstboot.html:38
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:45
+#: modules/upgrades/templates/backports-firstboot.html:51
 msgid "Next"
 msgstr ""
 
@@ -8849,7 +8794,7 @@ msgid "Dismiss"
 msgstr ""
 
 #: modules/upgrades/templates/upgrades_configure.html:30
-#: modules/upgrades/templates/upgrades_configure.html:100
+#: modules/upgrades/templates/upgrades_configure.html:106
 msgid "Updating..."
 msgstr ""
 
@@ -8875,7 +8820,7 @@ msgid ""
 "your distribution."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:78
+#: modules/upgrades/templates/upgrades_configure.html:83
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -8883,13 +8828,13 @@ msgid ""
 "href=\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:94
+#: modules/upgrades/templates/upgrades_configure.html:100
 #, fuzzy
 #| msgid "Last update"
 msgid "Manual Update"
 msgstr "अंतिम अपडेट"
 
-#: modules/upgrades/templates/upgrades_configure.html:114
+#: modules/upgrades/templates/upgrades_configure.html:120
 #, fuzzy
 #| msgid ""
 #| "Depending on the number of packages to install, this may take a long time "
@@ -8905,23 +8850,23 @@ msgstr ""
 "जब अपग्रेडस प्रगति पर हैं, दुसरे पैकेजस इंस्टॉल नहीं कर सकेगा. अपग्रेड करते समय, यह वेब इंटरफ़ेस "
 "शयद अस्थायी रूप से अनुपलब्ध है और एक त्रुटि दिखाएे. जारी रखने के लिए पेज रिफ्रेश करें."
 
-#: modules/upgrades/templates/upgrades_configure.html:128
+#: modules/upgrades/templates/upgrades_configure.html:134
 msgid "Show recent update logs"
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:138
+#: modules/upgrades/templates/upgrades_configure.html:144
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Test Distribution Upgrade"
 msgstr "ऑटोमेटिक अपग्रेडस सक्षम किया गया"
 
-#: modules/upgrades/templates/upgrades_configure.html:140
+#: modules/upgrades/templates/upgrades_configure.html:146
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:150
+#: modules/upgrades/templates/upgrades_configure.html:156
 #, fuzzy
 #| msgid "Automatic upgrades enabled"
 msgid "Test distribution upgrade now"
@@ -9161,19 +9106,19 @@ msgstr ""
 msgid "Create Account"
 msgstr "अकाउंट बनाएँ"
 
-#: modules/users/templates/users_firstboot.html:32
+#: modules/users/templates/users_firstboot.html:37
 #, fuzzy
 #| msgid "Administrator Account"
 msgid "An administrator account already exists."
 msgstr "व्यवस्थापक अकाउंट"
 
-#: modules/users/templates/users_firstboot.html:38
+#: modules/users/templates/users_firstboot.html:44
 #, fuzzy
 #| msgid "Cannot delete the only administrator in the system."
 msgid "The following administrator accounts exist in the system."
 msgstr "सिस्टम में केवल व्यवस्थापक को नहीं हटा सकता."
 
-#: modules/users/templates/users_firstboot.html:50
+#: modules/users/templates/users_firstboot.html:56
 #, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
@@ -9183,7 +9128,7 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 
-#: modules/users/templates/users_firstboot.html:63
+#: modules/users/templates/users_firstboot.html:69
 msgid "Skip this step"
 msgstr ""
 
@@ -9222,23 +9167,19 @@ msgstr "बदलाव संचयित कीजिये"
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr "यूसर <strong>%(username)s</strong> स्थाई रूप से हटाइये?"
 
-#: modules/users/templates/users_update.html:46 templates/messages.html:11
-msgid "Close"
-msgstr ""
-
 #: modules/users/templates/users_update.html:51
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
 
-#: modules/users/templates/users_update.html:59
+#: modules/users/templates/users_update.html:60
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete user and files"
 msgstr "यूसर हटाइये"
 
-#: modules/users/templates/users_update.html:62
+#: modules/users/templates/users_update.html:63
 msgid "Cancel"
 msgstr "कैंसिल"
 
@@ -9977,7 +9918,7 @@ msgstr ""
 msgid "Installation"
 msgstr "इंस्टालेशन"
 
-#: templates/app.html:29
+#: templates/app.html:34
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "सर्विस <em>%(service_name)s</em> नहीं चल रहा है."
@@ -9994,43 +9935,43 @@ msgid ""
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:112
+#: templates/base.html:118
 msgid " Home"
 msgstr " होम"
 
-#: templates/base.html:115
+#: templates/base.html:121
 msgid "Home"
 msgstr "होम"
 
-#: templates/base.html:120
+#: templates/base.html:126
 msgid " Apps"
 msgstr " ऐप्स"
 
-#: templates/base.html:124
+#: templates/base.html:130
 msgid "Apps"
 msgstr "ऐप्स"
 
-#: templates/base.html:129
+#: templates/base.html:135
 msgid " System"
 msgstr " सिस्टम"
 
-#: templates/base.html:168 templates/base.html:169
+#: templates/base.html:174 templates/base.html:175
 msgid "Change password"
 msgstr "पासवर्ड बदलें"
 
-#: templates/base.html:182 templates/base.html:183
+#: templates/base.html:188 templates/base.html:189
 msgid "Shut down"
 msgstr "शट डाउन"
 
-#: templates/base.html:193 templates/base.html:231
+#: templates/base.html:199 templates/base.html:237
 msgid "Log out"
 msgstr "लॉग आउट"
 
-#: templates/base.html:202 templates/base.html:205
+#: templates/base.html:208 templates/base.html:211
 msgid "Select language"
 msgstr "भाषा चुनें"
 
-#: templates/base.html:220 templates/base.html:222
+#: templates/base.html:226 templates/base.html:228
 msgid "Log in"
 msgstr "लॉग इन"
 
@@ -10045,6 +9986,10 @@ msgstr "क्लाइंट ऐप्स"
 #: templates/clients.html:17
 msgid "Web"
 msgstr "वेब"
+
+#: templates/clients.html:28
+msgid "Launch"
+msgstr "लॉन्च"
 
 #: templates/clients.html:42
 msgid "Desktop"
@@ -10106,7 +10051,7 @@ msgid ""
 msgstr ""
 "कुछ<a href=\"%(apps_url)s\">एप्लिकेशनस</a> सक्षम करें, इस पेज पर शॉर्टकटस जोड़ने के लिए."
 
-#: templates/internal-zone.html:11
+#: templates/internal-zone.html:17
 #, fuzzy, python-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid ""
@@ -10114,11 +10059,11 @@ msgid ""
 "client is connected to %(box_name)s through VPN."
 msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
 
-#: templates/internal-zone.html:17
+#: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
 msgstr "अभी कोई नेटवर्क इंटरफ़ेस आंतरिक के रूप में कॉंफ़िगर किया गया है."
 
-#: templates/internal-zone.html:19
+#: templates/internal-zone.html:30
 #, python-format
 msgid ""
 "Currently the following network interfaces are configured as internal: "
@@ -10147,7 +10092,7 @@ msgstr ""
 "आप <a href=\"%(networks_url)s\"> नेटवर्क सेटअप </a> जांचना चाह सकते है और अगर जरुरत "
 "हू, इससे बदलें."
 
-#: templates/port-forwarding-info.html:19
+#: templates/port-forwarding-info.html:21
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
@@ -10155,7 +10100,7 @@ msgid ""
 "configuration is necessary."
 msgstr ""
 
-#: templates/port-forwarding-info.html:26
+#: templates/port-forwarding-info.html:30
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
@@ -10163,23 +10108,23 @@ msgid ""
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
 
-#: templates/port-forwarding-info.html:37
+#: templates/port-forwarding-info.html:42
 #, fuzzy
 #| msgid "Service Type"
 msgid "Service Name"
 msgstr "सेवा टाइप"
 
-#: templates/port-forwarding-info.html:38
+#: templates/port-forwarding-info.html:43
 #, fuzzy
 #| msgid "protocol"
 msgid "Protocol"
 msgstr "प्रोटोकॉल"
 
-#: templates/port-forwarding-info.html:39
+#: templates/port-forwarding-info.html:44
 msgid "From Router/WAN Ports"
 msgstr ""
 
-#: templates/port-forwarding-info.html:40
+#: templates/port-forwarding-info.html:45
 #, fuzzy, python-format
 #| msgid "%(box_name)s Setup"
 msgid "To %(box_name)s Ports"
@@ -10197,22 +10142,22 @@ msgstr "यह एप्लिकेशन इंस्टॉल करें?"
 msgid "This application needs an update. Update now?"
 msgstr "इस ऐप्लिकेशन को अप्डेट चाहिये. अभी अप्डेट करें?"
 
-#: templates/setup.html:41
+#: templates/setup.html:46
 msgid "This application is currently not available in your distribution."
 msgstr "यह एप्लिकेशन अभी अापका वितरण में उपलब्ध नहीं है."
 
-#: templates/setup.html:45
+#: templates/setup.html:50
 msgid "Check again"
 msgstr ""
 
-#: templates/setup.html:50
+#: templates/setup.html:61
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
 
-#: templates/setup.html:68
+#: templates/setup.html:80
 msgid "Update"
 msgstr "अपडेट"
 
@@ -10259,6 +10204,41 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr ""
+
+#, fuzzy
+#~| msgid ""
+#~| "For more information about the %(box_name)s project, see the <a "
+#~| "href=\"https://wiki.debian.org/FreedomBox\">%(box_name)s Wiki</a>."
+#~ msgid ""
+#~ "Find more information about I2P on their project <a href=\"https://geti2p."
+#~ "net\" target=\"_blank\">homepage</a>."
+#~ msgstr ""
+#~ "%(box_name)s के बारे में और सिखने के लिये यह देखिये <a href=\"https://wiki.debian."
+#~ "org/FreedomBox\">%(box_name)s Wiki</a>."
+
+#, fuzzy
+#~| msgid "Enable application"
+#~ msgid "Manage I2P application"
+#~ msgstr "एप्लिकेशन सक्षम करें"
+
+#, fuzzy
+#~| msgid "Web Proxy"
+#~ msgid "I2P Proxy"
+#~ msgstr "वेब प्रॉक्सी"
+
+#~ msgid ""
+#~ "Currently an installation or upgrade is running. Consider waiting until "
+#~ "it's finished before restarting."
+#~ msgstr ""
+#~ "अभी एक स्थापना या अपग्रेड चल रहा है. इसे शट डाउन या रीस्टार्ट करने से पहले इसे समाप्त "
+#~ "होने तक प्रतीक्षा करें."
+
+#~ msgid ""
+#~ "Currently an installation or upgrade is running. Consider waiting until "
+#~ "it's finished before shutting down."
+#~ msgstr ""
+#~ "अभी एक स्थापना या अपग्रेड चल रहा है. इसे शट डाउन या रीस्टार्ट करने से पहले इसे समाप्त "
+#~ "होने तक प्रतीक्षा करें."
 
 #, python-format
 #~ msgid ""
