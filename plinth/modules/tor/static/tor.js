@@ -22,26 +22,38 @@
  * in this page.
  */
 
-(function($) {
-    $('#id_tor-relay_enabled').change(function() {
-        var bridge = $('#id_tor-bridge_relay_enabled');
-        var disable = !$('#id_tor-relay_enabled').prop('checked');
-        bridge.prop('disabled', disable);
-        if (disable) {
-            $('#id_tor-bridge_relay_enabled').prop('checked', false);
-        }
-    }).change();
+document.addEventListener('DOMContentLoaded', () => {
+    const relayEnabled = document.getElementById('id_tor-relay_enabled');
+    const bridgeRelay = document.getElementById('id_tor-bridge_relay_enabled');
+    const useUpstreamBridges = document.getElementById('id_tor-use_upstream_bridges');
+    const upstreamBridgesField = document.getElementById('id_tor-upstream_bridges')
+          .closest('.form-group');
 
-    $('#id_tor-use_upstream_bridges').change(function() {
-        if ($('#id_tor-use_upstream_bridges').prop('checked')) {
-            $('#id_tor-upstream_bridges').parent().parent().show('slow');
-            $('#id_tor-relay_enabled').prop('checked', false)
-                .prop('disabled', true);
-            $('#id_tor-bridge_relay_enabled').prop('checked', false)
-                .prop('disabled', true);
-        } else {
-            $('#id_tor-upstream_bridges').parent().parent().hide('slow');
-            $('#id_tor-relay_enabled').prop('disabled', false);
+    function handleRelayChange() {
+        const disable = !relayEnabled.checked;
+        bridgeRelay.disabled = disable;
+        if (disable) {
+            bridgeRelay.checked = false;
         }
-    }).change();
-})(jQuery);
+    }
+
+    function handleUseUpstreamBridgesChange() {
+        if (useUpstreamBridges.checked) {
+            upstreamBridgesField.style.display = '';
+            relayEnabled.checked = false;
+            relayEnabled.disabled = true;
+            bridgeRelay.checked = false;
+            bridgeRelay.disabled = true;
+        } else {
+            upstreamBridgesField.style.display = 'none';
+            relayEnabled.disabled = false;
+        }
+    }
+
+    relayEnabled.addEventListener('change', handleRelayChange);
+    useUpstreamBridges.addEventListener('change', handleUseUpstreamBridgesChange);
+
+    // Initial state
+    handleRelayChange();
+    handleUseUpstreamBridgesChange();
+});
