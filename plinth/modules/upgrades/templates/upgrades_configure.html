@@ -14,11 +14,11 @@
   <div class="upgrades-status-frame clearfix">
     <div class="upgrade-status-icon pull-left">
       {% if is_busy %}
-        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left processing"></span>
+        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left text-info"></span>
       {% elif new_version %}
-        <span class="fa fa-frown-o fa-3x fa-pull-left warning"></span>
+        <span class="fa fa-frown-o fa-3x fa-pull-left text-warning"></span>
       {% else %}
-        <span class="fa fa-smile-o fa-3x fa-pull-left normal"></span>
+        <span class="fa fa-smile-o fa-3x fa-pull-left text-body-tertiary"></span>
       {% endif %}
     </div>
     <p>
@@ -72,13 +72,19 @@
     {% endif %}
   </p>
   {% if can_activate_backports and not is_backports_requested %}
-    <div class="alert alert-warning" role="alert">
-      {% url 'snapshot:index' as snapshot_url %}
-      {% blocktrans trimmed %}
-        <strong>Warning!</strong> Once frequent feature updates are activated,
-        they cannot be deactivated. You may wish to take a snapshot using
-        <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
-      {% endblocktrans %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% url 'snapshot:index' as snapshot_url %}
+        {% blocktrans trimmed %}
+          <strong>Warning!</strong> Once frequent feature updates are activated,
+          they cannot be deactivated. You may wish to take a snapshot using
+          <a href="{{ snapshot_url }}">Storage Snapshots</a> before continuing.
+        {% endblocktrans %}
+      </div>
     </div>
     <p>
       <form class="form" method="post"
@@ -121,7 +127,7 @@
   {% if log %}
     <p>
       <a class="btn btn-default collapsed collapsible-button" role="button"
-         data-toggle="collapse" href="#collapse-log" aria-expanded="false"
+         data-bs-toggle="collapse" href="#collapse-log" aria-expanded="false"
          aria-controls="collapse-log">
         <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
         {% trans "Show recent update logs" %}

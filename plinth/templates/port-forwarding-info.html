@@ -7,52 +7,56 @@
 {% if port_forwarding_info.ports %}
   <h3>{% trans "Port Forwarding" %}</h3>
 
-  <p>
-    {% url 'networks:index' as networks_url %}
-    {% if port_forwarding_info.network_topology_type != "to_router" %}
+  {% url 'networks:index' as networks_url %}
+  {% if port_forwarding_info.network_topology_type != "to_router" %}
+    <p>
       {% blocktrans trimmed %}
         Your FreedomBox is <a href="{{ networks_url }}">not behind a router</a>.
         No action is necessary.
       {% endblocktrans %}
       <span class="fa fa-check" aria-hidden="true"></span>
-    {% elif port_forwarding_info.router_configuration_type == 'dmz' %}
+    </p>
+  {% elif port_forwarding_info.router_configuration_type == 'dmz' %}
+    <p>
       {% blocktrans trimmed %}
         Your FreedomBox is <a href="{{ networks_url }}"> behind a router</a> and
         you are using the DMZ feature to forward all ports. No further router
         configuration is necessary.
       {% endblocktrans %}
       <span class="fa fa-check" aria-hidden="true"></span>
-    {% else %}
+    </p>
+  {% else %}
+    <p>
       {% blocktrans trimmed %}
         Your FreedomBox is <a href="{{ networks_url }}">behind a router</a> and
         you are not using the DMZ feature. You will need to set up port
         forwarding on your router. You should forward the following ports for
         {{ service_name }}:
       {% endblocktrans %}
+    </p>
 
-      <div class="table-responsive table-port-forwarding-info">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>{% trans "Service Name" %}</th>
-              <th>{% trans "Protocol" %}</th>
-              <th>{% trans "From Router/WAN Ports" %}</th>
-              <th>{% blocktrans %}To {{box_name}} Ports{% endblocktrans %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for port in port_forwarding_info.ports %}
-            <tr>
-              <td>{{ port.name }}</td>
-              <td>{{ port.protocol }}</td>
-              <td>{{ port.ports }}</td>
-              <td>{{ port.ports }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% endif %}
-  </p>
+    <div class="table-responsive table-port-forwarding-info">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Service Name" %}</th>
+            <th>{% trans "Protocol" %}</th>
+            <th>{% trans "From Router/WAN Ports" %}</th>
+            <th>{% blocktrans %}To {{box_name}} Ports{% endblocktrans %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for port in port_forwarding_info.ports %}
+          <tr>
+            <td>{{ port.name }}</td>
+            <td>{{ port.protocol }}</td>
+            <td>{{ port.ports }}</td>
+            <td>{{ port.ports }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
 
 {% endif %}

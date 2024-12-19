@@ -71,7 +71,7 @@ def messages_error(request, message, exception):
         collapse_id = 'error-details-' + str(random.randint(0, 10**9))
         message = format_html(
             '{message} <a href="#" class="dropdown-toggle" '
-            'data-toggle="collapse" data-target="#{collapse_id}" '
+            'data-bs-toggle="collapse" data-bs-target="#{collapse_id}" '
             'aria-expanded="false" aria-controls="{collapse_id}">'
             'Details</a><pre class="collapse" '
             'id="{collapse_id}"><code>{html_message}</code></pre>',
@@ -568,9 +568,8 @@ def notification_dismiss(request, id):
     """Dismiss a notification."""
     from .notification import Notification
     notes = Notification.list(key=id, user=request.user)
-    if not notes:
-        raise Http404
-
-    notes[0].dismiss()
+    if notes:
+        # If a notification is not found, no need to dismiss it.
+        notes[0].dismiss()
 
     return HttpResponseRedirect(_get_redirect_url_from_param(request))

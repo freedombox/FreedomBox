@@ -50,15 +50,21 @@
   <link rel="apple-touch-icon" sizes="72x72" href="{% static 'theme/img/apple-touch-icon-72px-precomposed.png' %}"/>
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'theme/img/apple-touch-icon-114px-precomposed.png' %}"/>
 
-  <!-- Bootstrap base CSS -->
-  <link rel="stylesheet" href="{% static '/javascript/bootstrap4/css/bootstrap.min.css' %}"/>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{% static '/javascript/bootstrap5/css/bootstrap.min.css' %}"/>
   <link rel="stylesheet" href="{% static '/javascript/fork-awesome/css/fork-awesome.css' %}"/>
   <link rel="stylesheet" href="{% static 'theme/css/main.css' %}"/>
+  {% if user_css %}
+    <link rel="stylesheet" href="{% static user_css %}"/>
+  {% endif %}
+
   <!-- Local link to system jQuery -->
   <!-- TODO Deferring jQuery is causing scripts to be loaded before jQuery is available -->
   <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
-  <script type="text/javascript" src="{% static '/javascript/bootstrap4/js/bootstrap.bundle.min.js' %}" defer></script>
+  <script type="text/javascript" src="{% static '/javascript/popper.js/umd/popper.js' %}" defer></script>
+  <script type="text/javascript" src="{% static 'theme/js/fix.js' %}" defer></script>
+  <script type="text/javascript" src="{% static '/javascript/bootstrap5/js/bootstrap.bundle.min.js' %}" defer></script>
 
   <script type="text/javascript" src="{% static 'theme/js/main.js' %}" defer></script>
 
@@ -83,8 +89,8 @@
 
         {% block mainmenu_left %}
           <a href="{% url 'index' %}"  class="navbar-brand
-                   {% if not active_menu_urls %} menu_link_active {% else %}
-                   menu_link {% endif %}" title="{{ box_name }}">
+                   {% if not active_menu_urls %}active{% endif %}"
+             title="{{ box_name }}">
             <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
         {% endblock %}
@@ -96,8 +102,8 @@
         {% endblock %}
 
         {% block mainmenu_toggler %}
-          <button class="navbar-toggler" type="button" data-toggle="collapse"
-                  data-target="#navbar-collapse" aria-controls="navbar-collapse"
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbar-collapse" aria-controls="navbar-collapse"
                   aria-expanded="false" aria-label="Toggle navigation">
             <span class="fa fa-bars"></span>
           </button>
@@ -111,7 +117,7 @@
                   {% url 'index' as index_url %}
                   <a href="{{ index_url }}" title='{% trans " Home" %}'
                      class="nav-link {% if not active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     {% trans "Home" %}
                   </a>
                 </li>
@@ -119,7 +125,7 @@
                   {% url 'apps' as apps_url %}
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
                      class="nav-link {% if apps_url in active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     <span class="fa fa-th nav-icon"></span>
                     {% trans "Apps" %}
                   </a>
@@ -128,7 +134,7 @@
                   {% url 'system' as system_url %}
                   <a href="{{ system_url }}" title='{% trans " System" %}'
                      class="nav-link {% if system_url in active_menu_urls %}
-                     menu_link_active {% else %} menu_link {% endif %}">
+                     active{% endif %}">
                     <span class="fa fa-cog nav-icon"></span>
                     {% trans "System" %}
                   </a>
@@ -147,7 +153,7 @@
 
                 <li id="id_user_menu" class="nav-item dropdown">
                   <a href="{% url 'users:edit' request.user.username %}"
-                     class="nav-link dropdown-toggle" data-toggle="dropdown"
+                     class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                      role="button" aria-expanded="false" aria-haspopup="true"
                      id="id_user_menu_link">
                     <i class="fa fa-user nav-icon"></i>
@@ -189,7 +195,7 @@
                       <form class="form form-logout" method="post"
                             action="{% url 'users:logout' %}">
                         {% csrf_token %}
-                        <input type="submit" class="dropdown-item no-running-status" 
+                        <input type="submit" class="dropdown-item no-running-status"
                                value="{% trans "Log out" %}"/>
                       </form>
                     </li>
@@ -224,7 +230,7 @@
               {% endif %}
 
               {% if user.is_authenticated %}
-                <form id="logout-nojs" class="form form-inline form-logout"
+                <form id="logout-nojs" class="form form-inline form-logout nav-item"
                       method="post" action="{% url 'users:logout' %}">
                   {% csrf_token %}
                   <input type="submit" class="nav-link no-running-status btn btn-link"

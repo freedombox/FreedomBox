@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-18 20:13-0500\n"
-"PO-Revision-Date: 2024-11-06 05:06+0000\n"
+"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"PO-Revision-Date: 2024-11-20 22:29+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8.2\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -106,11 +106,11 @@ msgstr "可见性"
 msgid "Data"
 msgstr ""
 
-#: menu.py:110 templates/base.html:133
+#: menu.py:110 templates/base.html:139
 msgid "System"
 msgstr "系统"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:270
+#: menu.py:112 modules/networks/templates/connection_show.html:274
 #: modules/security/__init__.py:35
 msgid "Security"
 msgstr "安全"
@@ -281,7 +281,7 @@ msgstr "存储库"
 
 #: modules/backups/forms.py:101
 #: modules/backups/templates/backups_delete.html:17 modules/ikiwiki/forms.py:15
-#: modules/networks/templates/connection_show.html:71
+#: modules/networks/templates/connection_show.html:75
 #: modules/samba/templates/samba.html:66
 #: modules/sharing/templates/sharing.html:32
 msgid "Name"
@@ -350,7 +350,7 @@ msgstr "存储库中的密钥"
 msgid "None"
 msgstr "空"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:331
+#: modules/backups/forms.py:184 modules/networks/forms.py:332
 msgid "Passphrase"
 msgstr "密码"
 
@@ -481,7 +481,30 @@ msgstr "添加远程备份位置"
 msgid "Existing Backups"
 msgstr "现有的备份"
 
-#: modules/backups/templates/backups_add_remote_repository.html:19
+#: modules/backups/templates/backups_add_remote_repository.html:21
+#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:27
+#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/help/templates/help_about.html:22
+#: modules/help/templates/statuslog.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
+#: modules/matrixsynapse/templates/matrix-synapse.html:76
+#: modules/names/templates/names.html:128
+#: modules/networks/templates/connection_show.html:24
+#: modules/nextcloud/__init__.py:48
+#: modules/pagekite/templates/pagekite_custom_services.html:16
+#: modules/power/templates/power_busy_warning.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:13
+#: modules/upgrades/templates/backports-firstboot.html:35
+#: modules/upgrades/templates/upgrades_configure.html:79
+#: modules/users/templates/users_firstboot.html:34 templates/app.html:31
+#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+msgid "Caution:"
+msgstr "注意："
+
+#: modules/backups/templates/backups_add_remote_repository.html:24
 #, python-format
 msgid ""
 "The credentials for this repository are stored on your %(box_name)s. <br /> "
@@ -491,7 +514,7 @@ msgstr ""
 "这个存储库的凭证存储在您的 %(box_name)s。<br>要在新的 %(box_name)s 上恢复备"
 "份，你需要这个 SSH 凭证，如果当时选择了加密，则也需要加密口令。"
 
-#: modules/backups/templates/backups_add_remote_repository.html:28
+#: modules/backups/templates/backups_add_remote_repository.html:34
 msgid "Create Location"
 msgstr "创建存储位置"
 
@@ -585,13 +608,7 @@ msgstr ""
 "      应用。\n"
 "    "
 
-#: modules/backups/templates/backups_upload.html:27
-#: modules/help/templates/statuslog.html:23
-#: modules/networks/templates/connection_show.html:23
-msgid "Caution:"
-msgstr "注意："
-
-#: modules/backups/templates/backups_upload.html:28
+#: modules/backups/templates/backups_upload.html:31
 #, python-format
 msgid ""
 "You have %(max_filesize)s available to restore a backup. Exceeding this "
@@ -600,7 +617,7 @@ msgstr ""
 "您有 %(max_filesize)s 的可用空间来恢复备份。超出此大小将会使您的 "
 "%(box_name)s 不可用。"
 
-#: modules/backups/templates/backups_upload.html:41
+#: modules/backups/templates/backups_upload.html:45
 msgid "Upload file"
 msgstr "上传文件"
 
@@ -611,7 +628,7 @@ msgid ""
 "accepting connections."
 msgstr "无法访问SSH主机%(hostname)s。 请确认主机已启动并接受连接。"
 
-#: modules/backups/templates/verify_ssh_hostkey.html:28
+#: modules/backups/templates/verify_ssh_hostkey.html:34
 #, python-format
 msgid ""
 "The authenticity of SSH host %(hostname)s could not be established. The host "
@@ -620,11 +637,11 @@ msgstr ""
 "无法建立SSH主机%(hostname)s的真实性。 该主机发布以下SSH公钥。 请验证其中任何"
 "一个。"
 
-#: modules/backups/templates/verify_ssh_hostkey.html:40
+#: modules/backups/templates/verify_ssh_hostkey.html:46
 msgid "How to verify?"
 msgstr "如何核实？"
 
-#: modules/backups/templates/verify_ssh_hostkey.html:45
+#: modules/backups/templates/verify_ssh_hostkey.html:51
 msgid ""
 "Run the following command on the SSH host machine. The output should match "
 "one of the provided options. You can also use DSA, ECDSA, Ed25519 etc. "
@@ -633,7 +650,7 @@ msgstr ""
 "请在 SSH 主机上运行下面的命令。输出应该和提供的选项之一相符。您也可以选择相对"
 "应的文件来使用 DSA、ECDSA、Ed25519 等而非 RSA。"
 
-#: modules/backups/templates/verify_ssh_hostkey.html:60
+#: modules/backups/templates/verify_ssh_hostkey.html:66
 msgid "Verify Host"
 msgstr "核实本地计算机"
 
@@ -850,7 +867,7 @@ msgid "No passwords currently configured."
 msgstr "目前没有配置密码。"
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:277
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "密码"
@@ -882,7 +899,7 @@ msgstr "列表"
 #: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
 #: modules/wireguard/templates/wireguard_delete_client.html:24
@@ -964,7 +981,7 @@ msgstr "服务域"
 
 #: modules/bind/templates/bind.html:17 modules/email/templates/email.html:38
 #: modules/ikiwiki/forms.py:12 modules/names/templates/names.html:18
-#: modules/networks/templates/connection_show.html:91
+#: modules/networks/templates/connection_show.html:95
 #: modules/samba/templates/samba.html:65
 #: modules/storage/templates/storage.html:26
 msgid "Type"
@@ -1361,25 +1378,25 @@ msgstr "设置时区错误：{exception}"
 msgid "Time zone set"
 msgstr "时区设置"
 
-#: modules/deluge/__init__.py:21
+#: modules/deluge/__init__.py:22
 msgid "Deluge is a BitTorrent client that features a Web UI."
 msgstr "Deluge 是一个有网页界面的 BitTorrent 客户端。"
 
-#: modules/deluge/__init__.py:22
+#: modules/deluge/__init__.py:23
 msgid ""
 "The default password is 'deluge', but you should log in and change it "
 "immediately after enabling this service."
 msgstr "默认密码是“deluge”，但是你需要在启用此服务以后立刻登录并修改它。"
 
-#: modules/deluge/__init__.py:41 modules/transmission/__init__.py:70
+#: modules/deluge/__init__.py:56 modules/transmission/__init__.py:70
 msgid "Download files using BitTorrent applications"
 msgstr "使用BitTorrent应用程序下载文件"
 
-#: modules/deluge/__init__.py:45 modules/deluge/manifest.py:6
+#: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "启用 Deluge"
 
-#: modules/deluge/__init__.py:47 modules/transmission/__init__.py:76
+#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
 msgid "BitTorrent Web Client"
 msgstr "BitTorrent 网页客户端"
 
@@ -1518,17 +1535,18 @@ msgstr "查看结果"
 msgid "Diagnostic Results"
 msgstr "诊断结果"
 
-#: modules/diagnostics/templates/diagnostics_app.html:13
+#: modules/diagnostics/templates/diagnostics_app.html:14
+#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "应用程序。%(app_name)s"
 
-#: modules/diagnostics/templates/diagnostics_app.html:20
-#: modules/diagnostics/templates/diagnostics_full.html:48
+#: modules/diagnostics/templates/diagnostics_app.html:21
+#: modules/diagnostics/templates/diagnostics_full.html:49
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:32
+#: modules/diagnostics/templates/diagnostics_app.html:39
 msgid "This app does not support diagnostics"
 msgstr "此应用程序不支持诊断"
 
@@ -1547,17 +1565,6 @@ msgstr "当前正在运行诊断测试"
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "结果"
-
-#: modules/diagnostics/templates/diagnostics_full.html:38
-#, python-format
-msgid ""
-"\n"
-"            App: %(app_name)s\n"
-"          "
-msgstr ""
-"\n"
-"            应用程序: %(app_name)s\n"
-"          "
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1727,11 +1734,11 @@ msgid "Invalid domain name"
 msgstr "无效的域名"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:276 modules/users/forms.py:130
+#: modules/networks/forms.py:277 modules/users/forms.py:130
 msgid "Username"
 msgstr "用户名"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:279
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
 msgid "Show password"
 msgstr "显示密码"
 
@@ -1753,7 +1760,7 @@ msgstr ""
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
 #: modules/matrixsynapse/templates/matrix-synapse.html:12
-#: modules/networks/templates/connection_show.html:254
+#: modules/networks/templates/connection_show.html:258
 #: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:19
 #: modules/upgrades/templates/upgrades_configure.html:14
 #: modules/wireguard/templates/wireguard_show_client.html:48
@@ -2211,9 +2218,10 @@ msgstr ""
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
-#: modules/featherwiki/manifest.py:18 modules/help/templates/help_about.html:96
-#: modules/ikiwiki/manifest.py:15 modules/mediawiki/__init__.py:52
-#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
+#: modules/featherwiki/manifest.py:18
+#: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
+#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
+#: modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "共笔文档"
 
@@ -2482,7 +2490,7 @@ msgid ""
 msgstr ""
 
 #: modules/first_boot/templates/firstboot_complete.html:27
-#: modules/upgrades/templates/upgrades_configure.html:108
+#: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "立即更新"
 
@@ -2680,7 +2688,7 @@ msgstr "编辑存储库"
 msgid "Documentation"
 msgstr "文档"
 
-#: modules/help/__init__.py:37 modules/help/templates/help_about.html:92
+#: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
 msgctxt "User guide"
 msgid "Manual"
@@ -2698,38 +2706,44 @@ msgstr "获取帮助"
 msgid "Submit Feedback"
 msgstr ""
 
-#: modules/help/__init__.py:49 modules/help/templates/help_about.html:101
+#: modules/help/__init__.py:49 modules/help/templates/help_about.html:113
 #: modules/help/templates/help_contribute.html:9 modules/help/views.py:76
 #: templates/help-menu.html:39 templates/help-menu.html:40
 msgid "Contribute"
 msgstr "贡献"
 
-#: modules/help/__init__.py:53 templates/base.html:211 templates/base.html:214
+#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
 msgstr "关于"
 
-#: modules/help/templates/help_about.html:18
+#: modules/help/templates/help_about.html:25 templates/messages.html:23
+#, fuzzy
+#| msgid "Success"
+msgid "Success:"
+msgstr "成功"
+
+#: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:26
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "您正在运行 %(os_release)s 和 %(version)s 版的 %(box_name)s。"
 
-#: modules/help/templates/help_about.html:24
+#: modules/help/templates/help_about.html:35
 #, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
 msgstr "有新的 %(box_name)s 版本 <a href=\"%(upgrades_url)s\">可用</a>。"
 
-#: modules/help/templates/help_about.html:29
+#: modules/help/templates/help_about.html:40
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s 已是最新。"
 
-#: modules/help/templates/help_about.html:37
+#: modules/help/templates/help_about.html:49
 #, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
@@ -2746,7 +2760,7 @@ msgstr ""
 "wiki、网站、社交网络、电子邮件、Web 代理和 Tor 中继，以便让您的数据与您在一"
 "起。"
 
-#: modules/help/templates/help_about.html:50
+#: modules/help/templates/help_about.html:62
 msgid ""
 "We live in a world where our use of the network is mediated by those who "
 "often do not have our best interests at heart.  By building software that "
@@ -2760,7 +2774,7 @@ msgstr ""
 "据保存在家中，我们可以获得有用的法律保护。通过在用户的网络和机器重获权力，我"
 "们将互联网返回到应有的对等架构。"
 
-#: modules/help/templates/help_about.html:63
+#: modules/help/templates/help_about.html:75
 #, python-format
 msgid ""
 "There are a number of projects working to realize a future of distributed "
@@ -2770,7 +2784,7 @@ msgstr ""
 "有一些项目致力于实现未来的分布式服务；%(box_name)s 旨在将它们集中在一个方便的"
 "软件包中。"
 
-#: modules/help/templates/help_about.html:71
+#: modules/help/templates/help_about.html:83
 #, python-format
 msgid ""
 "%(box_name)s is free software, licensed under the GNU Affero General Public "
@@ -2781,44 +2795,44 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 
-#: modules/help/templates/help_about.html:85
+#: modules/help/templates/help_about.html:97
 msgid "Learn"
 msgstr "了解信息"
 
-#: modules/help/templates/help_about.html:88
+#: modules/help/templates/help_about.html:100
 msgid "Homepage"
 msgstr "主页"
 
-#: modules/help/templates/help_about.html:104 templates/toolbar.html:19
+#: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
 msgstr "捐赠"
 
-#: modules/help/templates/help_about.html:107
+#: modules/help/templates/help_about.html:119
 msgid "Join project"
 msgstr ""
 
-#: modules/help/templates/help_about.html:111
+#: modules/help/templates/help_about.html:123
 msgid "Translate"
 msgstr ""
 
-#: modules/help/templates/help_about.html:117
+#: modules/help/templates/help_about.html:129
 msgid "Support"
 msgstr "支持"
 
-#: modules/help/templates/help_about.html:121
+#: modules/help/templates/help_about.html:133
 msgid "Forum"
 msgstr ""
 
-#: modules/help/templates/help_about.html:126
+#: modules/help/templates/help_about.html:138
 msgid "IRC Chatroom"
 msgstr ""
 
-#: modules/help/templates/help_about.html:131
+#: modules/help/templates/help_about.html:143
 msgid "Mailing list"
 msgstr "邮件列表"
 
 #: modules/help/templates/help_base.html:21
-#: modules/help/templates/help_index.html:61
+#: modules/help/templates/help_index.html:63
 #, python-format
 msgid "%(box_name)s Setup"
 msgstr "%(box_name)s 安装程序"
@@ -2913,12 +2927,12 @@ msgstr ""
 msgid "Thank you!"
 msgstr ""
 
-#: modules/help/templates/help_index.html:12 templates/help-menu.html:8
+#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
 #: templates/help-menu.html:14
 msgid "Help"
 msgstr "帮助"
 
-#: modules/help/templates/help_index.html:16
+#: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
 "The <a href=\"%(manual_url)s\">%(box_name)s Manual</a> is the best place to "
@@ -2927,7 +2941,7 @@ msgstr ""
 "<a href=\"%(manual_url)s\"> %(box_name)s 手册</a> 是开始了解 %(box_name)s 有"
 "关信息最好的地方。"
 
-#: modules/help/templates/help_index.html:23
+#: modules/help/templates/help_index.html:25
 #, python-format
 msgid ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
@@ -2936,7 +2950,7 @@ msgstr ""
 "<a href=\"http://wiki.debian.org/FreedomBox\" target=\"_blank\"> "
 "%(box_name)s 项目 wiki</a> 包含更多信息。"
 
-#: modules/help/templates/help_index.html:30
+#: modules/help/templates/help_index.html:32
 #, python-format
 msgid ""
 "To seek help from %(box_name)s community, queries may be posted on the <a "
@@ -2948,7 +2962,7 @@ msgstr ""
 "debian.org/mailman/listinfo/freedombox-discuss\"> 邮件列表 </a>上发布问题。邮"
 "件列表存档还包含其他用户面临的问题和可能的解决方案的信息。"
 
-#: modules/help/templates/help_index.html:40
+#: modules/help/templates/help_index.html:42
 #, python-format
 msgid ""
 "Many %(box_name)s contributors and users are also available on the irc.oftc."
@@ -3002,10 +3016,14 @@ msgstr ""
 "href=\"salsa.debian.org/freedombox-team/freedombox/issues\"> bug 追踪器</a> "
 "并附上此状态日志。"
 
-#: modules/help/templates/statuslog.html:24
+#: modules/help/templates/statuslog.html:27
+#, fuzzy
+#| msgid ""
+#| "Please remove any passwords or other personal information from the log "
+#| "before submitting the bug report."
 msgid ""
-"Please remove any passwords or other personal information from the log "
-"before submitting the bug report."
+"Please remove any personal information from the log before submitting the "
+"bug report."
 msgstr "提交日志报告前，请从日志中删除任何密码和其他个人信息。"
 
 #: modules/help/views.py:29
@@ -3021,89 +3039,6 @@ msgstr "关于 {box_name}"
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} 手册"
-
-#: modules/i2p/__init__.py:21
-msgid ""
-"The Invisible Internet Project is an anonymous network layer intended to "
-"protect communication from censorship and surveillance. I2P provides "
-"anonymity by sending encrypted traffic through a volunteer-run network "
-"distributed around the world."
-msgstr ""
-
-#: modules/i2p/__init__.py:25
-msgid ""
-"Find more information about I2P on their project <a href=\"https://geti2p."
-"net\" target=\"_blank\">homepage</a>."
-msgstr ""
-"I2P 项目的更多信息，请参阅 <a href=\"https://geti2p.net\" target=\"_blank\">"
-"主页</a>。"
-
-#: modules/i2p/__init__.py:27
-msgid ""
-"The first visit to the provided web interface will initiate the "
-"configuration process."
-msgstr ""
-
-#: modules/i2p/__init__.py:49
-msgid "Manage I2P application"
-msgstr "管理 I2P 应用程序"
-
-#: modules/i2p/__init__.py:52 modules/i2p/manifest.py:13
-msgid "I2P"
-msgstr ""
-
-#: modules/i2p/__init__.py:53 modules/tor/__init__.py:63
-#: modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "匿名网络"
-
-#: modules/i2p/__init__.py:83
-msgid "I2P Proxy"
-msgstr "I2P 代理"
-
-#: modules/i2p/manifest.py:43 modules/tor/manifest.py:59
-#: modules/torproxy/manifest.py:56
-msgid "Anonymity network"
-msgstr "匿名网络"
-
-#: modules/i2p/manifest.py:43 modules/kiwix/manifest.py:25
-#: modules/shadowsocks/manifest.py:19 modules/shadowsocksserver/manifest.py:18
-#: modules/tor/manifest.py:60 modules/torproxy/manifest.py:57
-msgid "Censorship resistance"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:12
-msgid "I2P Proxies and Tunnels"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:21 modules/i2p/templates/i2p.html:34
-#: templates/clients.html:28
-msgid "Launch"
-msgstr ""
-
-#: modules/i2p/templates/i2p.html:25
-msgid "Anonymous Torrents"
-msgstr ""
-
-#: modules/i2p/views.py:16
-msgid ""
-"I2P lets you browse the Internet and hidden services (eepsites) anonymously. "
-"For this, your browser, preferably the Tor Browser, needs to be configured "
-"with a proxy."
-msgstr ""
-
-#: modules/i2p/views.py:19
-msgid ""
-"By default HTTP, HTTPS and IRC proxies are available. Additional proxies and "
-"tunnels may be configured using the tunnel configuration interface."
-msgstr ""
-
-#: modules/i2p/views.py:24
-msgid ""
-"I2P provides an application to download files anonymously in a peer-to-peer "
-"network. Download files by adding torrents or create a new torrent to share "
-"a file."
-msgstr ""
 
 #: modules/ikiwiki/__init__.py:20
 msgid ""
@@ -3168,8 +3103,8 @@ msgid "Delete site %(site)s"
 msgstr "删除站点 %(site)s"
 
 #: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:47
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:54
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
 msgid "Update setup"
 msgstr "更新安装程序"
 
@@ -3290,7 +3225,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:263
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
 msgid "JavaScript license information"
 msgstr ""
 
@@ -3377,16 +3312,22 @@ msgstr ""
 msgid "Archival"
 msgstr "Archival"
 
+#: modules/kiwix/manifest.py:25 modules/shadowsocks/manifest.py:19
+#: modules/shadowsocksserver/manifest.py:18 modules/tor/manifest.py:60
+#: modules/torproxy/manifest.py:57
+msgid "Censorship resistance"
+msgstr ""
+
 #: modules/kiwix/manifest.py:26
 msgid "Wikipedia"
 msgstr "维基百科"
 
-#: modules/kiwix/templates/kiwix-add-package.html:24
+#: modules/kiwix/templates/kiwix-add-package.html:29
 #, python-format
 msgid "You have %(max_filesize)s of free disk space available."
 msgstr ""
 
-#: modules/kiwix/templates/kiwix-add-package.html:36
+#: modules/kiwix/templates/kiwix-add-package.html:42
 msgid "Upload ZIM file"
 msgstr "上传 ZIM 文件"
 
@@ -3638,7 +3579,7 @@ msgstr "Matrix 服务器"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:46
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
 msgid "Configuration"
 msgstr "配置"
 
@@ -3649,17 +3590,13 @@ msgid ""
 "Matrix user IDs will look like <em>@username:domainname</em>."
 msgstr ""
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:26
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:31
 msgid ""
-"\n"
-"      <strong>Warning!</strong> Changing the domain name after this step "
-"will\n"
-"      require uninstalling and reinstalling the app which will wipe app's "
-"data.\n"
-"    "
+"<strong>Warning!</strong> Changing the domain name after this step will "
+"require uninstalling and reinstalling the app which will wipe app's data."
 msgstr ""
 
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:35
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:42
 #, python-format
 msgid ""
 "No domain(s) are available. <a href=\"%(config_url)s\">Configure</a> at "
@@ -3712,7 +3649,7 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
-#: modules/matrixsynapse/templates/matrix-synapse.html:75
+#: modules/matrixsynapse/templates/matrix-synapse.html:80
 #, python-format
 msgid ""
 "The configured domain name is using a self-signed certificate. Federation "
@@ -4297,9 +4234,9 @@ msgstr ""
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
-#: modules/networks/templates/connection_show.html:66
-#: modules/networks/templates/connection_show.html:208
-#: modules/networks/templates/connection_show.html:249
+#: modules/networks/templates/connection_show.html:70
+#: modules/networks/templates/connection_show.html:212
+#: modules/networks/templates/connection_show.html:253
 #: modules/networks/views.py:125
 msgid "yes"
 msgstr "是的"
@@ -4347,7 +4284,7 @@ msgid "Link"
 msgstr ""
 
 #: modules/names/templates/names.html:73
-#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
@@ -4373,11 +4310,11 @@ msgid ""
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:66
+#: modules/names/templates/names.html:121 templates/setup.html:78
 msgid "Install"
 msgstr "安装"
 
-#: modules/names/templates/names.html:126
+#: modules/names/templates/names.html:131
 msgid "Error retrieving status:"
 msgstr "获取状态出错："
 
@@ -4488,8 +4425,8 @@ msgid ""
 msgstr "可选的值。如果为空，则将使用基于地址的默认子网掩码。"
 
 #: modules/networks/forms.py:113 modules/networks/forms.py:152
-#: modules/networks/templates/connection_show.html:193
-#: modules/networks/templates/connection_show.html:234
+#: modules/networks/templates/connection_show.html:197
+#: modules/networks/templates/connection_show.html:238
 msgid "Gateway"
 msgstr "网关"
 
@@ -4574,68 +4511,68 @@ msgstr ""
 "可选的值。如果给出了此值和 IPv6 寻址方式是\"自动\"，将忽略由 DHCP 服务器提供"
 "的 DNS 服务器。"
 
-#: modules/networks/forms.py:182
+#: modules/networks/forms.py:183
 msgid "-- select --"
 msgstr "-- 选择 --"
 
-#: modules/networks/forms.py:303
-#: modules/networks/templates/connection_show.html:135
+#: modules/networks/forms.py:304
+#: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:305
 msgid "The visible name of the network."
 msgstr "可见网络的名称。"
 
-#: modules/networks/forms.py:306
-#: modules/networks/templates/connection_show.html:148
+#: modules/networks/forms.py:307
+#: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "模式"
 
-#: modules/networks/forms.py:306
+#: modules/networks/forms.py:307
 msgid "Infrastructure"
 msgstr "基础架构"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:308
 msgid "Access Point"
 msgstr "访问点"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:309
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Frequency Band"
 msgstr "频带"
 
-#: modules/networks/forms.py:310
+#: modules/networks/forms.py:311
 msgid "Automatic"
 msgstr "自动"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:312
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:313
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:314
-#: modules/networks/templates/connection_show.html:162
+#: modules/networks/forms.py:315
+#: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "信道"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:316
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr "可选值。可通过指定频宽限制无线信道。为空或者填 0 表示自动选择。"
 
-#: modules/networks/forms.py:320
+#: modules/networks/forms.py:321
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:322
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4644,30 +4581,30 @@ msgstr ""
 "可选的值。指定接入点的标识。当要连接到一个接入点时，只会连接到符合给出值的提"
 "供者。例如：00:11:22:aa:bb:cc。"
 
-#: modules/networks/forms.py:327
+#: modules/networks/forms.py:328
 msgid "Authentication Mode"
 msgstr "身份验证模式"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:329
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "如果无线网络安全的和要求客户端具有密码才能连接，请选择 WPA。"
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:330
+#: modules/networks/forms.py:331
 msgid "Open"
 msgstr "打开"
 
-#: modules/networks/forms.py:366
+#: modules/networks/forms.py:367
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "指定 {box_name} 连接到网络的方式"
 
-#: modules/networks/forms.py:373
+#: modules/networks/forms.py:374
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4675,7 +4612,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:380
+#: modules/networks/forms.py:381
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4684,7 +4621,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:389
+#: modules/networks/forms.py:390
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4692,11 +4629,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:408
+#: modules/networks/forms.py:409
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: modules/networks/forms.py:412
+#: modules/networks/forms.py:413
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4707,7 +4644,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:424
+#: modules/networks/forms.py:425
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4719,7 +4656,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:437
+#: modules/networks/forms.py:438
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4731,17 +4668,17 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:450
+#: modules/networks/forms.py:451
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:467
+#: modules/networks/forms.py:468
 msgid "Preferred router configuration"
 msgstr "首选路由器配置"
 
-#: modules/networks/forms.py:472
+#: modules/networks/forms.py:473
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4752,7 +4689,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:484
+#: modules/networks/forms.py:485
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4764,14 +4701,14 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:498
+#: modules/networks/forms.py:499
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:24
+#: modules/networks/templates/connection_show.html:27
 #, python-format
 msgid ""
 "This is the primary connection that %(box_name)s relies on for Internet "
@@ -4780,32 +4717,32 @@ msgid ""
 "connection."
 msgstr ""
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "编辑连接"
 
-#: modules/networks/templates/connection_show.html:36
+#: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:161 templates/base.html:162
+#: templates/base.html:167 templates/base.html:168
 msgid "Edit"
 msgstr "編輯"
 
-#: modules/networks/templates/connection_show.html:43
+#: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
 msgid "Deactivate"
 msgstr "停用"
 
-#: modules/networks/templates/connection_show.html:50
+#: modules/networks/templates/connection_show.html:54
 #: modules/networks/templates/connections_list.html:69
 msgid "Activate"
 msgstr "激活"
 
-#: modules/networks/templates/connection_show.html:56
+#: modules/networks/templates/connection_show.html:60
 msgid "Delete connection"
 msgstr "删除连接"
 
-#: modules/networks/templates/connection_show.html:59
+#: modules/networks/templates/connection_show.html:63
 #: modules/networks/templates/connections_diagram.html:19
 #: modules/networks/templates/connections_diagram.html:22
 #: modules/networks/templates/connections_diagram.html:51
@@ -4813,123 +4750,130 @@ msgstr "删除连接"
 msgid "Connection"
 msgstr "连接"
 
-#: modules/networks/templates/connection_show.html:64
+#: modules/networks/templates/connection_show.html:68
 msgid "Primary connection"
 msgstr "主连接"
 
-#: modules/networks/templates/connection_show.html:77
+#: modules/networks/templates/connection_show.html:81
 #: modules/storage/templates/storage.html:23
 msgid "Device"
 msgstr "设备"
 
-#: modules/networks/templates/connection_show.html:81
+#: modules/networks/templates/connection_show.html:85
 msgid "State"
 msgstr "状态"
 
-#: modules/networks/templates/connection_show.html:86
+#: modules/networks/templates/connection_show.html:90
 msgid "State reason"
 msgstr "状态原因"
 
-#: modules/networks/templates/connection_show.html:95
+#: modules/networks/templates/connection_show.html:99
 msgid "MAC address"
 msgstr "MAC 地址"
 
-#: modules/networks/templates/connection_show.html:99
+#: modules/networks/templates/connection_show.html:103
 msgid "Interface"
 msgstr "接口"
 
-#: modules/networks/templates/connection_show.html:103
+#: modules/networks/templates/connection_show.html:107
 #: modules/snapshot/templates/snapshot_delete_selected.html:19
 #: modules/snapshot/templates/snapshot_manage.html:29
 #: modules/snapshot/templates/snapshot_rollback.html:27
 msgid "Description"
 msgstr "描述"
 
-#: modules/networks/templates/connection_show.html:109
+#: modules/networks/templates/connection_show.html:113
 msgid "Physical Link"
 msgstr "物理链路"
 
-#: modules/networks/templates/connection_show.html:114
+#: modules/networks/templates/connection_show.html:118
 msgid "Link state"
 msgstr "链路状态"
 
-#: modules/networks/templates/connection_show.html:117
+#: modules/networks/templates/connection_show.html:121
 msgid "cable is connected"
 msgstr "线缆已连接"
 
-#: modules/networks/templates/connection_show.html:120
+#: modules/networks/templates/connection_show.html:124
 msgid "please check cable"
 msgstr "请检查线缆"
 
-#: modules/networks/templates/connection_show.html:124
-#: modules/networks/templates/connection_show.html:140
+#: modules/networks/templates/connection_show.html:128
+#: modules/networks/templates/connection_show.html:144
 msgid "Speed"
 msgstr "速度"
 
-#: modules/networks/templates/connection_show.html:126
+#: modules/networks/templates/connection_show.html:130
 #, python-format
 msgid "%(ethernet_speed)s Mbit/s"
 msgstr "%(ethernet_speed)s Mbit/s"
 
-#: modules/networks/templates/connection_show.html:142
+#: modules/networks/templates/connection_show.html:146
 #, python-format
 msgid "%(wireless_bitrate)s Mbit/s"
 msgstr "%(wireless_bitrate)s Mbit/s"
 
-#: modules/networks/templates/connection_show.html:154
+#: modules/networks/templates/connection_show.html:158
 msgid "Signal strength"
 msgstr "信号强度"
 
-#: modules/networks/templates/connection_show.html:170
-#: modules/networks/templates/connections_fields.html:61
+#: modules/networks/templates/connection_show.html:174
+#: modules/networks/templates/connections_fields.html:67
 msgid "IPv4"
 msgstr "IPv4"
 
-#: modules/networks/templates/connection_show.html:175
-#: modules/networks/templates/connection_show.html:218
+#: modules/networks/templates/connection_show.html:179
+#: modules/networks/templates/connection_show.html:222
 #: modules/shadowsocks/forms.py:36 modules/shadowsocksserver/forms.py:42
 msgid "Method"
 msgstr "方法"
 
-#: modules/networks/templates/connection_show.html:184
-#: modules/networks/templates/connection_show.html:225
+#: modules/networks/templates/connection_show.html:188
+#: modules/networks/templates/connection_show.html:229
 msgid "IP address"
 msgstr "IP 地址"
 
-#: modules/networks/templates/connection_show.html:200
-#: modules/networks/templates/connection_show.html:241
+#: modules/networks/templates/connection_show.html:204
+#: modules/networks/templates/connection_show.html:245
 msgid "DNS server"
 msgstr "DNS 服务器"
 
-#: modules/networks/templates/connection_show.html:207
-#: modules/networks/templates/connection_show.html:248
+#: modules/networks/templates/connection_show.html:211
+#: modules/networks/templates/connection_show.html:252
 #: modules/storage/forms.py:132
 msgid "Default"
 msgstr "默认"
 
-#: modules/networks/templates/connection_show.html:213
-#: modules/networks/templates/connections_fields.html:90
+#: modules/networks/templates/connection_show.html:217
+#: modules/networks/templates/connections_fields.html:94
 msgid "IPv6"
 msgstr "IPv6"
 
-#: modules/networks/templates/connection_show.html:256
+#: modules/networks/templates/connection_show.html:260
 msgid "This connection is not active."
 msgstr "此连接未处于激活状态。"
 
-#: modules/networks/templates/connection_show.html:260
-#: modules/networks/templates/connections_fields_privacy.html:16
+#: modules/networks/templates/connection_show.html:264
+#: modules/networks/templates/connections_fields_privacy.html:15
 #: modules/openvpn/manifest.py:60 modules/privacy/__init__.py:32
 #: modules/privacy/__init__.py:72 modules/wireguard/manifest.py:45
 msgid "Privacy"
 msgstr "隐私"
 
-#: modules/networks/templates/connection_show.html:275
-#: modules/networks/templates/connection_show.html:295
-#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:279
+#: modules/networks/templates/connection_show.html:304
+#: modules/networks/templates/connection_show.html:328
 msgid "Firewall zone"
 msgstr "防火墙区域"
 
-#: modules/networks/templates/connection_show.html:284
+#: modules/networks/templates/connection_show.html:289
+#: modules/networks/templates/connection_show.html:314
+#: modules/networks/templates/connection_show.html:338
+#: templates/internal-zone.html:13 templates/messages.html:20
+msgid "Info:"
+msgstr ""
+
+#: modules/networks/templates/connection_show.html:292
 msgid ""
 "This interface should be connected to a local network/machine.  If you "
 "connect this interface to a public network, services meant to be available "
@@ -4938,8 +4882,8 @@ msgstr ""
 "此接口应该连接到本地网络。 如果您将此接口连接到公用网络，意味着只为内网提供的"
 "服务将成开放给外网。这会产生安全风险。"
 
-#: modules/networks/templates/connection_show.html:304
-#: modules/networks/templates/connection_show.html:327
+#: modules/networks/templates/connection_show.html:317
+#: modules/networks/templates/connection_show.html:345
 msgid ""
 "This interface should receive your Internet connection. If you connect it to "
 "a local network/machine, many services meant to available only internally "
@@ -4948,12 +4892,12 @@ msgstr ""
 "此接口应该接收您的 Internet 连接。如果你将其连接到本地网络，这意味着很多仅在"
 "内网可用的服务将不可用。"
 
-#: modules/networks/templates/connection_show.html:316
+#: modules/networks/templates/connection_show.html:330
 #: modules/networks/templates/connections_diagram.html:24 network.py:25
 msgid "External"
 msgstr "外网"
 
-#: modules/networks/templates/connection_show.html:323
+#: modules/networks/templates/connection_show.html:341
 #, python-format
 msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
@@ -4991,7 +4935,7 @@ msgstr "以太网"
 
 #: modules/networks/templates/connections_diagram.html:32
 #: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:16
+#: modules/networks/templates/connections_fields_wifi.html:15
 #: modules/networks/views.py:102 network.py:29
 msgid "Wi-Fi"
 msgstr "Wi-Fi"
@@ -5016,11 +4960,23 @@ msgstr "计算机"
 msgid "Edit Connection"
 msgstr "编辑连接"
 
-#: modules/networks/templates/connections_fields.html:24
+#: modules/networks/templates/connections_fields.html:13
+#: templates/messages.html:14
+#, fuzzy
+#| msgid "Error"
+msgid "Error:"
+msgstr "错误"
+
+#: modules/networks/templates/connections_fields.html:20
+#: modules/users/templates/users_update.html:46 templates/messages.html:30
+msgid "Close"
+msgstr ""
+
+#: modules/networks/templates/connections_fields.html:32
 msgid "General"
 msgstr "常规"
 
-#: modules/networks/templates/connections_fields_pppoe.html:16 network.py:30
+#: modules/networks/templates/connections_fields_pppoe.html:15 network.py:30
 msgid "PPPoE"
 msgstr "PPPoE"
 
@@ -5103,7 +5059,7 @@ msgstr "更新…"
 #: modules/networks/templates/internet_connectivity_type.html:18
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
-#: modules/pagekite/templates/pagekite_custom_services.html:28
+#: modules/pagekite/templates/pagekite_custom_services.html:33
 #: modules/sharing/templates/sharing_add_edit.html:20 templates/form.html:19
 msgid "Submit"
 msgstr "提交"
@@ -5215,26 +5171,21 @@ msgid "No Wi-Fi device detected."
 msgstr ""
 
 #: modules/networks/templates/wifi_scan.html:21
-#, fuzzy, python-format
-#| msgid "Delete %(username)s"
+#, python-format
 msgid "Device: %(interface_name)s"
-msgstr "删除 %(username)s"
+msgstr "设备：%(interface_name)s"
 
 #: modules/networks/templates/wifi_scan.html:27
-#, fuzzy
-#| msgid "Last Connected Time"
 msgid "Last scanned: "
-msgstr "上次连接时间"
+msgstr "上次扫描： "
 
 #: modules/networks/templates/wifi_scan.html:31
 msgid "never"
 msgstr ""
 
 #: modules/networks/templates/wifi_scan.html:52
-#, fuzzy
-#| msgid "Wi-Fi network not found"
 msgid "No Wi-Fi networks found."
-msgstr "未找到 Wi-Fi 网络"
+msgstr "未找到 Wi-Fi 网络。"
 
 #: modules/networks/views.py:27
 msgid "disabled"
@@ -5481,7 +5432,7 @@ msgstr "连接 {name} 已删除。"
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
-#: modules/nextcloud/__init__.py:25
+#: modules/nextcloud/__init__.py:34
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5490,11 +5441,11 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:30
+#: modules/nextcloud/__init__.py:39
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:43
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -5503,16 +5454,16 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:40
+#: modules/nextcloud/__init__.py:48
 msgid "This app is experimental."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:58 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:66 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:60
+#: modules/nextcloud/__init__.py:68
 msgid "File Storage & Collaboration"
 msgstr ""
 
@@ -5798,11 +5749,16 @@ msgstr "删除此服务"
 msgid "Add custom PageKite service"
 msgstr "添加自定义 PageKite 服务"
 
-#: modules/pagekite/templates/pagekite_custom_services.html:14
+#: modules/pagekite/templates/pagekite_custom_services.html:19
+#, fuzzy
+#| msgid ""
+#| "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
+#| "protocol/port combinations that you are able to define here. For example, "
+#| "HTTPS on ports other than 443 is known to cause problems."
 msgid ""
-"<b>Warning:</b><br>Your PageKite frontend server may not support all the "
-"protocol/port combinations that you are able to define here. For example, "
-"HTTPS on ports other than 443 is known to cause problems."
+"Your PageKite frontend server may not support all the protocol/port "
+"combinations that you are able to define here. For example, HTTPS on ports "
+"other than 443 is known to cause problems."
 msgstr ""
 "<b>警告：</b><br>您的 PageKite 前端服务器可能不支持您在此处定义的所有协议/端"
 "口组合。例如，已知443以外的端口上的HTTPS会导致问题。"
@@ -5866,20 +5822,20 @@ msgstr "重新启动或关闭系统。"
 msgid "Power"
 msgstr "电源"
 
-#: modules/power/templates/power.html:13
+#: modules/power/templates/power.html:15 templates/base.html:182
+#: templates/base.html:183
+msgid "Restart"
+msgstr "重新启动"
+
+#: modules/power/templates/power.html:18
+msgid "Shut Down"
+msgstr "关闭"
+
+#: modules/power/templates/power_busy_warning.html:14
 msgid ""
 "Currently an installation or upgrade is running. Consider waiting until it's "
 "finished before shutting down or restarting."
 msgstr ""
-
-#: modules/power/templates/power.html:22 templates/base.html:176
-#: templates/base.html:177
-msgid "Restart"
-msgstr "重新启动"
-
-#: modules/power/templates/power.html:25
-msgid "Shut Down"
-msgstr "关闭"
 
 #: modules/power/templates/power_restart.html:17
 msgid ""
@@ -5888,14 +5844,8 @@ msgid ""
 msgstr ""
 "你确定要重新启动？你将在几分钟内不能访问此 web 界面，直到重新启动系统。"
 
-#: modules/power/templates/power_restart.html:34
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before restarting."
-msgstr ""
-
-#: modules/power/templates/power_restart.html:48
-#: modules/power/templates/power_restart.html:51
+#: modules/power/templates/power_restart.html:41
+#: modules/power/templates/power_restart.html:44
 msgid "Restart Now"
 msgstr "现在重新启动"
 
@@ -5905,14 +5855,8 @@ msgid ""
 "interface after shut down."
 msgstr "你确定要关闭? 关闭以后将不能访问此 web 界面。"
 
-#: modules/power/templates/power_shutdown.html:33
-msgid ""
-"Currently an installation or upgrade is running. Consider waiting until it's "
-"finished before shutting down."
-msgstr ""
-
-#: modules/power/templates/power_shutdown.html:47
-#: modules/power/templates/power_shutdown.html:50
+#: modules/power/templates/power_shutdown.html:40
+#: modules/power/templates/power_shutdown.html:43
 msgid "Shut Down Now"
 msgstr "现在关闭"
 
@@ -6048,13 +5992,18 @@ msgid "IRC"
 msgstr ""
 
 #: modules/radicale/__init__.py:25
-#, python-brace-format
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
+#| "sharing of scheduling and contact data. To use Radicale, a <a "
+#| "href=\"https://radicale.org/master.html#documentation/supported-"
+#| "clients\">supported client application</a> is needed. Radicale can be "
+#| "accessed by any user with a {box_name} login."
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
-"radicale.org/master.html#documentation/supported-clients\">supported client "
-"application</a> is needed. Radicale can be accessed by any user with a "
-"{box_name} login."
+"radicale.org/master.html#supported-clients\">supported client application</"
+"a> is needed. Radicale can be accessed by any user with a {box_name} login."
 msgstr ""
 "Radicale 是一个 CalDAV 和 CardDAV 服务器。它允许同步和日程安排和联系人数据的"
 "共享。要使用 Radicale，需要安装<a href=\"https://radicale.org/user_master."
@@ -6950,7 +6899,7 @@ msgstr ""
 msgid "Rollback to snapshot #%(number)s"
 msgstr "回滚到快照 #%(number)s"
 
-#: modules/snapshot/templates/snapshot_not_supported.html:11
+#: modules/snapshot/templates/snapshot_not_supported.html:16
 #, python-format
 msgid ""
 "You have a filesystem of type <strong>%(fs_type)s</strong>. Snapshots are "
@@ -7471,6 +7420,10 @@ msgstr ""
 msgid "Tor"
 msgstr ""
 
+#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
+msgid "Anonymity Network"
+msgstr "匿名网络"
+
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
 msgstr "Tor 洋葱服务"
@@ -7582,6 +7535,10 @@ msgstr "洋葱服务"
 #: modules/tor/manifest.py:58
 msgid "Relay"
 msgstr "网桥"
+
+#: modules/tor/manifest.py:59 modules/torproxy/manifest.py:56
+msgid "Anonymity network"
+msgstr "匿名网络"
 
 #: modules/tor/templates/tor.html:18
 msgid "Onion Service"
@@ -7812,7 +7769,7 @@ msgid ""
 msgstr ""
 
 #: modules/upgrades/forms.py:34
-#: modules/upgrades/templates/upgrades_configure.html:89
+#: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -7822,13 +7779,13 @@ msgid ""
 "activated now, they can be activated later."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:33
+#: modules/upgrades/templates/backports-firstboot.html:38
 msgid ""
 "<strong>Note:</strong> Once frequent feature updates are activated, they "
 "cannot be deactivated."
 msgstr ""
 
-#: modules/upgrades/templates/backports-firstboot.html:45
+#: modules/upgrades/templates/backports-firstboot.html:51
 msgid "Next"
 msgstr ""
 
@@ -7850,7 +7807,7 @@ msgid "Dismiss"
 msgstr ""
 
 #: modules/upgrades/templates/upgrades_configure.html:30
-#: modules/upgrades/templates/upgrades_configure.html:100
+#: modules/upgrades/templates/upgrades_configure.html:106
 msgid "Updating..."
 msgstr ""
 
@@ -7874,7 +7831,7 @@ msgid ""
 "your distribution."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:78
+#: modules/upgrades/templates/upgrades_configure.html:83
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -7882,11 +7839,11 @@ msgid ""
 "href=\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:94
+#: modules/upgrades/templates/upgrades_configure.html:100
 msgid "Manual Update"
 msgstr "手动更新"
 
-#: modules/upgrades/templates/upgrades_configure.html:114
+#: modules/upgrades/templates/upgrades_configure.html:120
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -7895,21 +7852,21 @@ msgstr ""
 "<strong>这可能需要很长时间才能完成。</strong>在更新期间，您无法安装应用。 此"
 "外，此 Web 界面可能暂时不可用并显示错误。 在这种情况下，刷新页面以继续。"
 
-#: modules/upgrades/templates/upgrades_configure.html:128
+#: modules/upgrades/templates/upgrades_configure.html:134
 msgid "Show recent update logs"
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:138
+#: modules/upgrades/templates/upgrades_configure.html:144
 msgid "Test Distribution Upgrade"
 msgstr "测试分发升级"
 
-#: modules/upgrades/templates/upgrades_configure.html:140
+#: modules/upgrades/templates/upgrades_configure.html:146
 msgid ""
 "This will attempt to upgrade the system from stable to testing. <strong>It "
 "is meant only for development use.</strong>"
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:150
+#: modules/upgrades/templates/upgrades_configure.html:156
 msgid "Test distribution upgrade now"
 msgstr "立即测试分发升级"
 
@@ -8118,15 +8075,15 @@ msgstr ""
 msgid "Create Account"
 msgstr "创建帐户"
 
-#: modules/users/templates/users_firstboot.html:32
+#: modules/users/templates/users_firstboot.html:37
 msgid "An administrator account already exists."
 msgstr "已存在一个管理员账户。"
 
-#: modules/users/templates/users_firstboot.html:38
+#: modules/users/templates/users_firstboot.html:44
 msgid "The following administrator accounts exist in the system."
 msgstr ""
 
-#: modules/users/templates/users_firstboot.html:50
+#: modules/users/templates/users_firstboot.html:56
 #, python-format
 msgid ""
 "Delete these accounts from command line and refresh the page to create an "
@@ -8136,7 +8093,7 @@ msgid ""
 "already usable with %(box_name)s, skip this step."
 msgstr ""
 
-#: modules/users/templates/users_firstboot.html:63
+#: modules/users/templates/users_firstboot.html:69
 msgid "Skip this step"
 msgstr ""
 
@@ -8171,21 +8128,17 @@ msgstr "保存更改"
 msgid "Delete user <em>%(username)s</em> and all the user's files?"
 msgstr "删除用户 <em>%(username)s</em> 及该用户所有文件？"
 
-#: modules/users/templates/users_update.html:46 templates/messages.html:11
-msgid "Close"
-msgstr ""
-
 #: modules/users/templates/users_update.html:51
 msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
 
-#: modules/users/templates/users_update.html:59
+#: modules/users/templates/users_update.html:60
 msgid "Delete user and files"
 msgstr "删除用户和文件"
 
-#: modules/users/templates/users_update.html:62
+#: modules/users/templates/users_update.html:63
 msgid "Cancel"
 msgstr "取消"
 
@@ -8818,7 +8771,7 @@ msgstr ""
 msgid "Installation"
 msgstr "安装"
 
-#: templates/app.html:29
+#: templates/app.html:34
 #, python-format
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "服务 <em>%(service_name)s</em> 未在运行。"
@@ -8833,43 +8786,43 @@ msgid ""
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:112
+#: templates/base.html:118
 msgid " Home"
 msgstr " 主页"
 
-#: templates/base.html:115
+#: templates/base.html:121
 msgid "Home"
 msgstr "主页"
 
-#: templates/base.html:120
+#: templates/base.html:126
 msgid " Apps"
 msgstr " 应用程序"
 
-#: templates/base.html:124
+#: templates/base.html:130
 msgid "Apps"
 msgstr "应用程序"
 
-#: templates/base.html:129
+#: templates/base.html:135
 msgid " System"
 msgstr " 系统"
 
-#: templates/base.html:168 templates/base.html:169
+#: templates/base.html:174 templates/base.html:175
 msgid "Change password"
 msgstr "更改密码"
 
-#: templates/base.html:182 templates/base.html:183
+#: templates/base.html:188 templates/base.html:189
 msgid "Shut down"
 msgstr "关闭"
 
-#: templates/base.html:193 templates/base.html:231
+#: templates/base.html:199 templates/base.html:237
 msgid "Log out"
 msgstr "登出"
 
-#: templates/base.html:202 templates/base.html:205
+#: templates/base.html:208 templates/base.html:211
 msgid "Select language"
 msgstr "选择语言"
 
-#: templates/base.html:220 templates/base.html:222
+#: templates/base.html:226 templates/base.html:228
 msgid "Log in"
 msgstr "登录"
 
@@ -8883,6 +8836,10 @@ msgstr "客户端应用程序"
 
 #: templates/clients.html:17
 msgid "Web"
+msgstr ""
+
+#: templates/clients.html:28
+msgid "Launch"
 msgstr ""
 
 #: templates/clients.html:42
@@ -8945,7 +8902,7 @@ msgid ""
 msgstr ""
 "启用一些<a href=\"%(apps_url)s\">应用程序</a>来将其快捷方式放到此页面。"
 
-#: templates/internal-zone.html:11
+#: templates/internal-zone.html:17
 #, python-format
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
@@ -8954,11 +8911,11 @@ msgstr ""
 "<em>%(service_name)s</em>仅在内网可用或仅当客户端通过 VPN 连接到 "
 "%(box_name)s 时可用。"
 
-#: templates/internal-zone.html:17
+#: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
 msgstr ""
 
-#: templates/internal-zone.html:19
+#: templates/internal-zone.html:30
 #, python-format
 msgid ""
 "Currently the following network interfaces are configured as internal: "
@@ -8980,7 +8937,7 @@ msgid ""
 "action is necessary."
 msgstr ""
 
-#: templates/port-forwarding-info.html:19
+#: templates/port-forwarding-info.html:21
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\"> behind a router</a> and you "
@@ -8988,7 +8945,7 @@ msgid ""
 "configuration is necessary."
 msgstr ""
 
-#: templates/port-forwarding-info.html:26
+#: templates/port-forwarding-info.html:30
 #, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">behind a router</a> and you "
@@ -8996,19 +8953,19 @@ msgid ""
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
 
-#: templates/port-forwarding-info.html:37
+#: templates/port-forwarding-info.html:42
 msgid "Service Name"
 msgstr "服务名"
 
-#: templates/port-forwarding-info.html:38
+#: templates/port-forwarding-info.html:43
 msgid "Protocol"
 msgstr "协议"
 
-#: templates/port-forwarding-info.html:39
+#: templates/port-forwarding-info.html:44
 msgid "From Router/WAN Ports"
 msgstr ""
 
-#: templates/port-forwarding-info.html:40
+#: templates/port-forwarding-info.html:45
 #, python-format
 msgid "To %(box_name)s Ports"
 msgstr "到 %(box_name)s 端口"
@@ -9025,22 +8982,22 @@ msgstr "安装此应用程序？"
 msgid "This application needs an update. Update now?"
 msgstr "此应用程序需要一次更新。立即更新？"
 
-#: templates/setup.html:41
+#: templates/setup.html:46
 msgid "This application is currently not available in your distribution."
 msgstr "此应用程序目前在您的发行版中不可用。"
 
-#: templates/setup.html:45
+#: templates/setup.html:50
 msgid "Check again"
 msgstr ""
 
-#: templates/setup.html:50
+#: templates/setup.html:61
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
 
-#: templates/setup.html:68
+#: templates/setup.html:80
 msgid "Update"
 msgstr "更新"
 
@@ -9080,6 +9037,29 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "            App: %(app_name)s\n"
+#~ "          "
+#~ msgstr ""
+#~ "\n"
+#~ "            应用程序: %(app_name)s\n"
+#~ "          "
+
+#~ msgid ""
+#~ "Find more information about I2P on their project <a href=\"https://geti2p."
+#~ "net\" target=\"_blank\">homepage</a>."
+#~ msgstr ""
+#~ "I2P 项目的更多信息，请参阅 <a href=\"https://geti2p.net\" "
+#~ "target=\"_blank\">主页</a>。"
+
+#~ msgid "Manage I2P application"
+#~ msgstr "管理 I2P 应用程序"
+
+#~ msgid "I2P Proxy"
+#~ msgstr "I2P 代理"
 
 #~ msgid "Select the backup file you want to upload"
 #~ msgstr "选择您想上传的备份文件"

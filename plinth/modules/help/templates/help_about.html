@@ -14,22 +14,34 @@
   </p>
 
   {% if version %}
-    <div class="alert {% if new_version %}alert-warning{% else %}alert-success{% endif %}">
-      {% blocktrans trimmed %}
-        You are running {{ os_release }} and {{ box_name }} version {{ version }}.
-      {% endblocktrans %}
+    <div class="alert {% if new_version %}alert-warning{% else %}alert-success{% endif %}
+                d-flex align-items-center">
+      <div class="me-2">
+        {% if new_version %}
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Caution:" %}</span>
+        {% else %}
+          <span class="fa fa-check-circle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Success:" %}</span>
+        {% endif %}
+      </div>
+      <div>
+        {% blocktrans trimmed %}
+          You are running {{ os_release }} and {{ box_name }} version {{ version }}.
+        {% endblocktrans %}
 
-      {% if new_version %}
-        {% url 'upgrades:index' as upgrades_url %}
-        {% blocktrans trimmed %}
-          There is a new {{ box_name }} version
-          <a href="{{ upgrades_url }}">available</a>.
-        {% endblocktrans %}
-      {% else %}
-        {% blocktrans trimmed %}
-          {{ box_name }} is up to date.
-        {% endblocktrans %}
-      {% endif %}
+        {% if new_version %}
+          {% url 'upgrades:index' as upgrades_url %}
+          {% blocktrans trimmed %}
+            There is a new {{ box_name }} version
+            <a href="{{ upgrades_url }}">available</a>.
+          {% endblocktrans %}
+        {% else %}
+          {% blocktrans trimmed %}
+            {{ box_name }} is up to date.
+          {% endblocktrans %}
+        {% endif %}
+      </div>
     </div>
   {% endif %}
 

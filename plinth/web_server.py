@@ -5,6 +5,7 @@ Setup CherryPy web server.
 
 import logging
 import os
+import pathlib
 import sys
 import warnings
 from typing import ClassVar
@@ -26,6 +27,24 @@ MODULES_EXCLUDED_FROM_AUTORELOAD = [
     'iso3166',
     'psycopg2',
 ]
+
+_CUSTOM_STATIC_URL = '/custom/static'
+
+_USER_CSS_PATH = 'css/user.css'
+
+
+def get_custom_static_url():
+    """Return the URL path fragment for custom static URL."""
+    return f'{cfg.server_dir}{_CUSTOM_STATIC_URL}'
+
+
+def get_user_css():
+    """Return the URL path fragement for user CSS if it exists else None."""
+    user_css_path = pathlib.Path(cfg.custom_static_dir) / _USER_CSS_PATH
+    if not user_css_path.exists():
+        return None
+
+    return get_custom_static_url() + '/' + _USER_CSS_PATH
 
 
 def _mount_static_directory(static_dir, static_url):
@@ -64,7 +83,7 @@ def init():
     _mount_static_directory(static_dir, web_framework.get_static_url())
 
     custom_static_dir = cfg.custom_static_dir
-    custom_static_url = '/plinth/custom/static'
+    custom_static_url = get_custom_static_url()
     if os.path.exists(custom_static_dir):
         _mount_static_directory(custom_static_dir, custom_static_url)
     else:

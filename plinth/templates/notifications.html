@@ -8,8 +8,8 @@
 {% load static %}
 
 {% if notifications %}
-  <div class="notifications dropdown">
-    <ul class="dropdown-menu" role="menu">
+  <div class="notifications collapse no-no-js">
+    <ul>
       {% for note in notifications %}
         <li class="notification notification-{{ note.severity }}">
           {% if note.data.app_name %}

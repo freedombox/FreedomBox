@@ -8,14 +8,7 @@
 
 {% block configuration %}
 
-  {% if pkg_manager_is_busy %}
-    <div class="alert alert-danger">
-    {% blocktrans trimmed %}
-      Currently an installation or upgrade is running.
-      Consider waiting until it's finished before shutting down or restarting.
-    {% endblocktrans %}
-    </div>
-  {% endif %}
+  {% include "power_busy_warning.html" %}
 
   <div class="btn-toolbar">
     <a class="btn btn-default btn-md" href="{% url 'power:restart' %}">

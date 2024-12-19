@@ -67,7 +67,8 @@ class OpenVPNApp(app_module.App):
             allowed_groups=['vpn'])
         self.add(shortcut)
 
-        packages = Packages('packages-openvpn', ['openvpn', 'easy-rsa'])
+        packages = Packages('packages-openvpn',
+                            ['openvpn', 'easy-rsa', 'openssl'])
         self.add(packages)
 
         firewall = Firewall('firewall-openvpn', info.name, ports=['openvpn'],

@@ -7,11 +7,17 @@
 {% load i18n %}
 
 {% block configuration %}
-  <div id="snapshot-not-supported" class="alert alert-danger">
-    {% blocktrans trimmed with fs_types_supported|join:', ' as types_supported %}
-      You have a filesystem of type <strong>{{ fs_type }}</strong>. Snapshots
-      are currently only available on <strong>{{ types_supported }}</strong>
-      filesystems.
-    {% endblocktrans %}
+  <div id="snapshot-not-supported" class="alert alert-danger d-flex align-items-center">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+      {% blocktrans trimmed with fs_types_supported|join:', ' as types_supported %}
+        You have a filesystem of type <strong>{{ fs_type }}</strong>. Snapshots
+        are currently only available on <strong>{{ types_supported }}</strong>
+        filesystems.
+      {% endblocktrans %}
+    </div>
   </div>
 {% endblock %}

@@ -18,14 +18,18 @@
     {% endblocktrans %}
   </p>
 
-  <p class="alert alert-warning">
-    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-    <span class="sr-only">{% trans "Caution:" %}</span>
-    {% blocktrans trimmed %}
-      Please remove any passwords or other personal information from
-      the log before submitting the bug report.
-    {% endblocktrans %}
-  </p>
+  <div class="alert alert-warning d-flex align-items-center">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+      {% blocktrans trimmed %}
+        Please remove any personal information from the log before submitting
+        the bug report.
+      {% endblocktrans %}
+    </div>
+  </div>
 
   <p>
     <pre class="status-log">{{ data }}</pre>

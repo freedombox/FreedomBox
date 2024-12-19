@@ -28,14 +28,7 @@
     </p>
   {% endif %}
 
-  {% if pkg_manager_is_busy %}
-    <div class="alert alert-danger">
-    {% blocktrans trimmed %}
-      Currently an installation or upgrade is running.
-      Consider waiting until it's finished before shutting down.
-    {% endblocktrans %}
-    </div>
-  {% endif %}
+  {% include "power_busy_warning.html" %}
 
   <form class="form" method="post">
     {% csrf_token %}

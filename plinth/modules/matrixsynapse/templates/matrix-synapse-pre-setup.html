@@ -22,11 +22,18 @@
     {% endblocktrans %}
   </p>
 
-  <div class="alert alert-warning" role="alert">
-    {% blocktrans %}
-      <strong>Warning!</strong> Changing the domain name after this step will
-      require uninstalling and reinstalling the app which will wipe app's data.
-    {% endblocktrans %}
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+      {% blocktrans trimmed %}
+        <strong>Warning!</strong> Changing the domain name after this step will
+        require uninstalling and reinstalling the app which will wipe app's
+        data.
+      {% endblocktrans %}
+    </div>
   </div>
 
   {% if not domain_names %}

@@ -29,11 +29,17 @@
     {% endblocktrans %}
   </p>
 
-  <div class="alert alert-warning" role="alert">
-    {% blocktrans trimmed %}
-      <strong>Note:</strong> Once frequent feature updates are activated,
-      they cannot be deactivated.
-    {% endblocktrans %}
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <div class="me-2">
+      <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+      <span class="visually-hidden">{% trans "Caution:" %}</span>
+    </div>
+    <div>
+     {% blocktrans trimmed %}
+       <strong>Note:</strong> Once frequent feature updates are activated, they
+       cannot be deactivated.
+     {% endblocktrans %}
+    </div>
   </div>
 
   <form class="form" method="post">

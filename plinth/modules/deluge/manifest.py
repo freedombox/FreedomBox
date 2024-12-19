@@ -13,7 +13,7 @@ clients = [{
 
 backup = {
     'config': {
-        'directories': ['/var/lib/deluged/.config']
+        'directories': ['/var/lib/deluged/config']
     },
     'services': ['deluged', 'deluge-web']
 }

@@ -20,10 +20,16 @@
   </p>
 
   {% if max_filesize %}
-    <div class="alert alert-warning" role="alert">
-      {% blocktrans trimmed %}
-        You have {{ max_filesize }} of free disk space available.
-      {% endblocktrans %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% blocktrans trimmed %}
+          You have {{ max_filesize }} of free disk space available.
+        {% endblocktrans %}
+      </div>
     </div>
   {% endif %}
 

@@ -21,7 +21,13 @@
         {% endblocktrans %}
       </p>
       {% if form.keyscan_error %}
-        <pre class="alert alert-danger">{{ form.keyscan_error }}</pre>
+        <div class="alert alert-danger d-flex align-items-center">
+          <div class="me-2">
+            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+            <span class="visually-hidden">{% trans "Caution:" %}</span>
+          </div>
+          <pre class="mb-0">{{ form.keyscan_error }}</pre>
+        </div>
       {% endif %}
     {% else %}
       <p>
@@ -35,12 +41,12 @@
       <section>
         <p>
           <a class="btn btn-default collapsed collapsible-button"
-             data-toggle="collapse" href="#help" aria-expanded="false">
+             data-bs-toggle="collapse" href="#help" aria-expanded="false">
             <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
             {% trans "How to verify?" %}
           </a>
         </p>
-        <div class="collapse card-body" id="help">
+        <div class="collapse" id="help">
           <p>
             {% blocktrans trimmed %}
               Run the following command on the SSH host machine. The output

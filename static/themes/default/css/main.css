@@ -3,14 +3,11 @@
 */
 
 :root {
-    --background-color: #f1f1f1; /* Light grey */
     --neutral-light-color: #f5f5f5; /* Light grey */
-    --neutral-dark-color: #d4d4d4; /* Grey */
-    --info-color: #5bc0de; /* Pale blue, almost turquoise */
     --freedombox-blue-color: #4989D4; /* Blue */
     --progress-color: #3498db; /* Blue */
-    --error-color: #d9534f; /* Red */
-    --warning-color: #ec971f; /* Orange */
+    --freedombox-form-disabled-bg-color: #e9ecef; /* Grey */
+    --freedombox-navbar-color: white;
 }
 
 @font-face {
@@ -72,28 +69,14 @@
 /*
  * Bootstrap override
  */
-/* Heading margins from bootstrap 3 */
-h1, h2, h3, h4, h5, h6 {
-    margin-top: 1.25rem;
-    margin-bottom: 0.625rem;
-}
-
-/* Warning colors from bootstrap 3 */
-.badge-warning,
-.bg-warning,
-.btn-warning {
-    background-color: #f0ad4e !important;
-    color: #fff !important;
-}
-
-.btn-warning:hover,
-.btn-warning:active,
-.btn-warning:focus,
-.btn-warning:disabled,
-.btn-warning.disabled,
-.btn-warning[disabled] {
-    background-color: var(--warning-color) !important;
-    color: #fff !important;
+section:not(:first-child),
+h1:not(:first-child),
+h2:not(:first-child),
+h3:not(:first-child),
+h4:not(:first-child),
+h5:not(:first-child),
+h6:not(:first-child) {
+    margin-top: 2rem;
 }
 
 .btn[disabled] {
@@ -102,35 +85,35 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: none;
 }
 
-/* Primary color changed in bootstrap 4 */
+/* Primary color changed in bootstrap 4, we want colors closer to FreedomBox
+   colors */
 .btn-primary {
-    background-color: #337ab7;
-    border-color: #2e6da4;
-}
-
-.btn-primary:hover,
-.btn-primary:active,
-.btn-primary:focus,
-.btn-primary:disabled,
-.btn-primary.disabled,
-.btn-primary[disabled] {
-    background-color: #286090;
-    border-color: #204d74;
+    --bs-btn-bg: #337ab7; /* Originally: #0d6efd */
+    --bs-btn-border-color: #2e6da4; /* Originally: #0d6efd */
+    --bs-btn-hover-bg: #286090; /* Originally: #0b5ed7 */
+    --bs-btn-hover-border-color: #204d74; /* Originally: #0a58ca */
+    --bs-btn-active-bg: #286090; /* Originally: #0a58ca */
+    --bs-btn-active-border-color: #204d74; /* Originally: #0a53be */
+    --bs-btn-disabled-bg: #286090; /* Originally: #0d6efd */
+    --bs-btn-disabled-border-color: #204d74; /* Originally: #0d6efd */
 }
 
 /* Default style removed in bootstrap 4 */
 .btn-default {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
-}
-
-.btn-default:hover,
-.btn-default:focus,
-.btn-default:active {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
+    --bs-btn-color: #333;
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: #ccc;
+    --bs-btn-hover-color: #333;
+    --bs-btn-hover-bg: #e6e6e6;
+    --bs-btn-hover-border-color: #adadad;
+    --bs-btn-focus-shadow-rgb: 192, 192, 192;
+    --bs-btn-active-color: #333;
+    --bs-btn-active-bg: #e6e6e6;
+    --bs-btn-active-border-color: #adadad;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #333;
+    --bs-btn-disabled-bg: #e6e6e6;
+    --bs-btn-disabled-border-color: #adadad;
 }
 
 /* Help block removed from bootstrap 4, needs updated django-bootstrap-from */
@@ -138,15 +121,59 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     margin-top: 0.3125rem;
     margin-bottom: 0.625rem;
-    color: #737373;
+    color: var(--bs-secondary);
+}
+
+/* .close was renamed to .alert-dismissable.btn-close in Bootstrap 5, needs
+   updated django-bootstrap-from */
+form .alert {
+    padding-right: 3rem;
+}
+
+form .alert .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 1.25rem 1rem;
+    cursor: pointer;
+    color: transparent;
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 0;
+    border-radius: 0.375rem;
+    opacity: 0.5;
+}
+
+/* Disabled form elements show as gray, removed in Bootstrap 5 */
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--freedombox-form-disabled-bg-color);
+    opacity: 1;
 }
 
 /* form-horizontal removed in bootstrap, needs updated django-bootstrap-form */
 .form-horizontal > .form-group {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -0.9375rem;
-    margin-left: -0.9375rem;
+}
+
+/* In Bootstrap 5, instead of styling .col-* to 100% width by default, .row > *
+   is styled as .form-group has been removed. Needs updated
+   django-bootstrap-form */
+.form-horizontal > .form-group > * {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .form-horizontal > .form-group > .col-md-4 {
+        width: 33.33333333%;
+    }
+
+    .form-horizontal > .form-group > .col-md-8 {
+        width: 66.66666667%;
+    }
 }
 
 .radio .help-block {
@@ -155,6 +182,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .checkbox .help-block {
     padding-left: 1.4rem;
+}
+
+/* label styling moved to .form-label in Bootstrap 5, needs updated
+   django-bootstrap-form */
+label {
+    margin-bottom: 0.5rem;
+}
+
+/* Form group has been removed in Bootstrap 5, need updated
+   django-bootstrap-form */
+.form-group {
+    margin-bottom: 1rem;
 }
 
 /* Form error display was changed in bootstrap 4, provide compatibility */
@@ -168,12 +207,11 @@ h1, h2, h3, h4, h5, h6 {
 .has-error.checkbox label,
 .has-error.radio-inline label,
 .has-error.checkbox-inline label {
-    color: #a94442;
+    color: var(--bs-form-invalid-color);
 }
 
 .has-error .form-control {
-    border-color: #a94442;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    border-color: var(--bs-form-invalid-border-color);
 }
 
 /*
@@ -248,10 +286,6 @@ body {
     animation: spin 1s linear infinite;
 }
 
-.nav-link:hover, .nav-link:visited, .nav-link:link, .nav-link:active {
-    text-decoration: none;
-}
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -303,6 +337,17 @@ html {
     margin-bottom: 1.25rem;
 }
 
+/* When an exception's text is shown in message as alert component, don't
+   overflow the alert's width. */
+.alert.d-flex div {
+    max-width: 100%;
+}
+
+/* Tags */
+.tag {
+    --bs-btn-padding-y: 0.25rem; /* Make the badge shorter */
+}
+
 /* Tag Input Container */
 .tag-input {
     display: flex;
@@ -315,10 +360,11 @@ html {
 }
 
 /* Remove tag button */
-.tag-badge .remove-tag {
+.tag .remove-tag {
     background-color: transparent; /* Match the tag's background color */
     border: none;
     cursor: pointer;
+    --bs-btn-padding-y: 0; /* To make the entire tag button shorter */
 }
 
 /* Adjust input field width */
@@ -333,8 +379,13 @@ html {
 
 /* dropdown-menu for tags is a scrollable list */
 .tag-input .dropdown-menu {
-    bottom: calc(-100% - 10px);
     overflow-y: auto;
+    max-height: 15rem;
+}
+
+.tag-input .dropdown-menu > ul {
+    list-style: none;
+    margin-bottom: 0;
 }
 
 @media (min-width: 768px) {
@@ -440,7 +491,7 @@ footer {
 }
 
 /* No-JS fallbacks for collapsible content */
-.no-js .collapse {
+.no-js .collapse:not(.no-no-js) {
     display: block;
 }
 
@@ -461,42 +512,36 @@ footer {
     padding: 0;
 }
 
-.main-header .navbar-nav > li > a,
-.main-header .navbar-toggler {
-    color: #FFF;
-}
-
 .main-header .nav-item .nav-link {
     padding: 0.9375rem !important;
     height: 3.25rem;
 }
 
-.main-header .nav-link,
-.main-header .nav-link:hover {
-    color: white;
+.main-header .nav-link {
+    --bs-navbar-color: var(--freedombox-navbar-color);
+    --bs-navbar-active-color: var(--freedombox-navbar-color);
+    --bs-navbar-hover-color: var(--freedombox-navbar-color);
+    --bs-nav-link-color: var(--freedombox-navbar-color);
+    --bs-nav-link-active-color: var(--freedombox-navbar-color);
+    --bs-nav-link-hover-color: var(--freedombox-navbar-color);
 }
 
 .main-header .navbar-toggler {
-    border: 1px solid #ddd;
+    --bs-navbar-toggler-border-color: var(--freedombox-navbar-color);
+    --bs-navbar-color: var(--freedombox-navbar-color);
     /* In mobile layout, during first setup, maintain the height of the navbar */
     margin: 0.6875rem 0;
 }
 
 @media screen and (max-width: 767px) {
-    .main-header .navbar-nav .dropdown-menu {
-        background-color: var(--freedombox-blue-color);
-    }
-
-    .main-header .navbar-nav > li > a:focus,
-    .main-header .navbar-nav > li > a:hover,
-    .main-header .navbar-nav li > form > input,
-    .main-header .navbar-nav li > form > input:focus,
-    .main-header .navbar-nav li > form > input:hover,
-    .main-header .navbar-nav .show a,
-    .main-header .navbar-nav .show a:hover,
-    .main-header .navbar-nav .show a:focus {
-        color: #FFF;
-        background: transparent;
+    .main-header .dropdown-menu {
+        --bs-dropdown-link-color: var(--freedombox-navbar-color);
+        --bs-dropdown-link-active-color: var(--freedombox-navbar-color);
+        --bs-dropdown-link-hover-color: var(--freedombox-navbar-color);
+        --bs-dropdown-link-hover-bg: var(--freedombox-blue-color);
+        --bs-dropdown-link-active-bg: var(--freedombox-blue-color);
+        --bs-dropdown-bg: var(--freedombox-blue-color);
+        --bs-dropdown-border-color: var(--freedombox-navbar-color);
     }
 
     .main-header .navbar-nav .nav-item:last-of-type .dropdown-menu {
@@ -504,11 +549,22 @@ footer {
     }
 }
 
-/* Cards in Apps, System and Help pages */
+.main-header .navbar-brand.active,
+.main-header .nav-link.active {
+    border-bottom: var(--freedombox-navbar-color) 3px solid;
+}
+
+/* Cards in Index, Apps, System and Help pages */
 .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.row > .card-list {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .card-section-title, .system-section-title {
@@ -516,19 +572,7 @@ footer {
     font-weight: 800;
     font-size: 1.25rem;
     margin: 1.25rem 0;
-    border-bottom: var(--neutral-dark-color) solid 2px;
-}
-
-a.menu_link {
-    text-decoration: none;
-}
-
-a.menu_link:hover,a.menu_link:active {
-    text-decoration: none;
-}
-
-a.menu_link_active {
-    border-bottom: white 3px solid;
+    border-bottom: var(--bs-secondary-border-subtle) solid 2px;
 }
 
 .card {
@@ -543,13 +587,14 @@ a.menu_link_active {
 }
 
 .card:hover {
-    background: #eee;
+    background: var(--bs-secondary-bg);
 }
 
-.card .nav-link {
+.card > a {
     display: block;
     padding: 0rem;
-    color: #212529;  /* Same as Bootstrap default color */
+    color: var(--bs-body-color);
+    text-decoration: none;
 }
 
 .card-title {
@@ -559,7 +604,7 @@ a.menu_link_active {
 
 .card-description {
     font-weight: 400;
-    color: #646464;
+    color: var(--bs-secondary);
     font-size: 0.875rem;
 }
 
@@ -572,13 +617,18 @@ a.menu_link_active {
 }
 
 /* System page - special card styling */
+.system-page .card-list {
+    justify-content: left;
+    margin: 0;
+}
+
 .system-page .card {
     text-align: left;
     width: 20.625rem;
     padding: 0;
 }
 
-.system-page .card .nav-link {
+.system-page .card > a {
     display: grid;
     grid-template-columns: 2.1875rem auto;
     grid-column-gap: 0.625rem;
@@ -683,6 +733,9 @@ a.menu_link_active {
     width: 3.125rem;
     height: 1.625rem;
     background: #ccc;
+    --bs-btn-hover-bg: #ccc;
+    --bs-btn-disabled-bg: #ccc;
+    --bs-btn-disabled-border-color: transparent;
     position: relative;
 }
 
@@ -701,6 +754,8 @@ a.menu_link_active {
 
 .toggle-button--toggled {
     background: var(--freedombox-blue-color);
+    --bs-btn-hover-bg: var(--freedombox-blue-color);
+    --bs-btn-disabled-bg: var(--freedombox-blue-color);
 }
 
 .toggle-button--toggled::before {
@@ -747,7 +802,7 @@ input[type='submit'].running-status-button {
  * Select all checkbox for multiple checkboxes field.
  */
 .select-all-label {
-    border: 1px solid var(--neutral-dark-color);
+    border: 1px solid var(--bs-secondary-border-subtle);
     background-color: var(--neutral-light-color);
     border-radius: 0.25rem;
     padding: 0.5rem 1rem 0.25rem;
@@ -790,7 +845,7 @@ input[type='submit'].running-status-button {
 }
 
 .app-header > img {
-    margin: 1.5625rem auto 0;
+    margin: 0 auto;
     width: 100%;
 }
 
@@ -867,6 +922,10 @@ input[type='submit'].running-status-button {
     visibility: hidden;
 }
 
+.help-about-links > section {
+    margin-top: 2rem;
+}
+
 .help-about-links h2 {
     font-size: 1rem;
     font-weight: bold;
@@ -883,16 +942,25 @@ input[type='submit'].running-status-button {
 .notifications {
     margin-left: -0.9375rem;
     margin-right: -0.9375rem;
+    position: relative;
+    transition: none;  /* Remove Bootstrap's default animation */
 }
 
-.notifications .dropdown-menu {
+.notifications.collapsing {
+    display: none;  /* Don't show up with blue background momentarily */
+}
+
+.notifications > ul {
+    position: absolute; /* Don't increase parent's height */
+    list-style: none;
     width: 100%;
     padding: 0;
     float: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     margin-top: 0;
     background-clip: border-box;
+    background-color: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color-translucent);
+    border-radius: 0 0 0.25em 0.25em;
 }
 
 /* Style for individual notification */
@@ -902,7 +970,7 @@ input[type='submit'].running-status-button {
 }
 
 .notification:not(:first-child) {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--bs-border-color-translucent);
 }
 
 .notification-title {
@@ -920,44 +988,18 @@ img.notification-icon {
 .notifications-dropdown .badge {
     padding: 0.125rem 0.3125rem;
     margin-left: -0.75rem;
-    color: #fff;
-}
-
-/* TODO: match with or use bootstrap 4 colors */
-.badge-exception, .badge-error {
-    background-color: var(--error-color);
-}
-
-.badge-warning {
-    background-color: var(--warning-color);
-}
-
-.badge-info, .badge-debug {
-    background-color: var(--info-color);
 }
 
 .notification-exception, .notification-error {
-    border-left-color: var(--error-color);
+    border-left-color: var(--bs-danger);
 }
 
 .notification-warning {
-    border-left-color: var(--warning-color);
+    border-left-color: var(--bs-warning);
 }
 
 .notification-info, .notification-debug {
-    border-left-color: var(--info-color)
-}
-
-.warning {
-    color: var(--warning-color);
-}
-
-.processing {
-    color: var(--progress-color);
-}
-
-.normal {
-    color: var(--neutral-dark-color);
+    border-left-color: var(--bs-info);
 }
 
 /* Two different notifications for each small and one for large screens */
@@ -974,6 +1016,7 @@ img.notification-icon {
         display: block;
     }
 
+    .collapsing .notifications-dropdown,
     .collapse .notifications-dropdown {
         display: none;
     }
@@ -984,6 +1027,6 @@ img.notification-icon {
     margin-bottom: 1.25rem;
 }
 
-.accordion .card-header h4 {
+.accordion-header {
     margin: 0;
 }

@@ -122,8 +122,14 @@
       </form>
     </p>
   {% else %}
-    <div class="alert alert-danger">
-      {% trans "Error retrieving status:" %} {{ resolved_status_error }}
+    <div class="alert alert-danger d-flex align-items-center">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+      <div>
+        {% trans "Error retrieving status:" %} {{ resolved_status_error }}
+      </div>
     </div>
   {% endif %}
 

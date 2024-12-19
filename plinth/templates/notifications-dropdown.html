@@ -7,13 +7,20 @@
 {% load i18n %}
 
 {% if notifications %}
-  <li class="nav-item dropdown notifications-dropdown">
+  <li class="nav-item notifications-dropdown">
     <a href="#" title="{% trans "Notifications" %}"
-       class="nav-link dropdown-toggle" data-toggle="dropdown"
+       class="nav-link dropdown-toggle" data-bs-toggle="collapse"
        role="button" aria-expanded="false" aria-haspopup="true"
-       data-target=".notifications">
+       data-bs-target=".notifications">
       <span class="fa fa-bell nav-icon"></span>
-      <span class="badge badge-pill badge-{{ notifications_max_severity }}">
+      <span class="badge rounded-pill
+        {% if notifications_max_severity == 'exception' or notifications_max_severity == 'error' %}
+          text-bg-danger
+        {% elif notifications_max_severity == 'warning' %}
+          text-bg-warning
+        {% else %}
+          text-bg-info
+        {% endif %}">
         {{ notifications|length }}
       </span>
     </a>

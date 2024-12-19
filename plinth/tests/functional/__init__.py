@@ -427,7 +427,8 @@ def install(browser, app_name):
                     f'App {app_name} is not available in distribution')
                 pytest.skip('App not available in distribution')
             else:
-                install_button.click()
+                with wait_for_page_update(browser):
+                    install_button.click()
         else:
             break
 
@@ -627,7 +628,7 @@ def networks_set_firewall_zone(browser, zone):
     device = browser.find_by_xpath(
         '//span[contains(@class, "connection-type-label") and '
         'contains(., "Ethernet") ]/../..'
-        '//span[contains(@class, "badge-success") '
+        '//span[contains(@class, "text-bg-success") '
         'and contains(@class, "connection-status-label")]/following::a').first
     network_id = device['href'].split('/')[-3]
     device.click()
@@ -763,7 +764,8 @@ class BaseAppTests:
     def fixture_disable_after_tests(self, session_browser):
         """Disable the app after running tests."""
         yield
-        if self.disable_after_tests:
+        if self.disable_after_tests and is_installed(session_browser,
+                                                     self.app_name):
             app_disable(session_browser, self.app_name)
 
     @pytest.fixture(autouse=True, name='background')
@@ -792,12 +794,14 @@ class BaseAppTests:
         session_browser.find_by_id('id_extra_actions_button').click()
         submit(session_browser, form_class='form-diagnostics-button')
 
-        warning_results = session_browser.find_by_css('.badge-warning')
+        warning_results = session_browser.find_by_css(
+            '.diagnostic-result > .text-bg-warning')
         if warning_results:
             warnings.warn(
                 f'Diagnostics warnings for {self.app_name}: {warning_results}')
 
-        failure_results = session_browser.find_by_css('.badge-danger')
+        failure_results = session_browser.find_by_css(
+            '.diagnostic-result > .text-bg-danger')
         assert not failure_results
 
     @pytest.mark.backups
