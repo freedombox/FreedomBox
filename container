@@ -507,6 +507,12 @@ def _get_compressed_image_path(distribution: str) -> pathlib.Path:
     return _get_work_directory() / pathlib.Path(result.path).name
 
 
+def _get_image_file(distribution: str) -> pathlib.Path:
+    """Return the path of the image file."""
+    compressed_image = _get_compressed_image_path(distribution)
+    return compressed_image.with_suffix('')
+
+
 def _get_project_folder() -> pathlib.Path:
     """Return the read-only folder that should be exposed into container."""
     return _get_work_directory().parent.resolve()
@@ -748,8 +754,7 @@ def _setup_image(image_file: pathlib.Path):
 
 def _destroy_image(distribution: str):
     """Remove all traces of the machine and its image."""
-    compressed_image = _get_compressed_image_path(distribution)
-    image_file = compressed_image.with_suffix('')
+    image_file = _get_image_file(distribution)
     logger.info('Removing image file %s', image_file)
     try:
         image_file.with_suffix(image_file.suffix + '.provisioned').unlink()
@@ -772,8 +777,7 @@ def _destroy_image(distribution: str):
 
 def _is_provisioned(distribution: str) -> bool:
     """Return the container has been provisioned fully."""
-    compressed_image = _get_compressed_image_path(distribution)
-    image_file = compressed_image.with_suffix('')
+    image_file = _get_image_file(distribution)
     provision_file = image_file.with_suffix(image_file.suffix + '.provisioned')
     return provision_file.exists()
 
@@ -1045,9 +1049,7 @@ class Container(Machine):
 
     def _create_nspawn_machine(self) -> None:
         """Create systemd-nspawn options/image used by machinectl."""
-        compressed_image = _get_compressed_image_path(self.distribution)
-        image_file = compressed_image.with_suffix('')
-
+        image_file = _get_image_file(self.distribution)
         overlay_folder = _get_overlay_folder(self.distribution)
         logger.info('Creating overlay folder %s', overlay_folder)
         overlay_folder.mkdir(parents=True, exist_ok=True)
