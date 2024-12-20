@@ -186,17 +186,17 @@ BACKPORTS_SOURCES_LIST=/etc/apt/sources.list.d/freedombox2.list
 LDAPSCRIPTS_CONF=/etc/ldapscripts/freedombox-ldapscripts.conf
 
 # Remount /freedoombox to be up to date
-echo "> In container: Remounting /freedombox"
+echo "> In machine: Remounting /freedombox"
 mount -o remount /freedombox
 
 # Activate backports if Debian stable
 if [[ "{distribution}" == "stable"  && ! -e $BACKPORTS_SOURCES_LIST ]]
 then
-    echo "> In container: Enable backports"
+    echo "> In machine: Enable backports"
     /freedombox/actions/actions upgrades activate_backports --no-args
 fi
 
-echo "> In container: Upgrade packages"
+echo "> In machine: Upgrade packages"
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -yq --with-new-pkgs upgrade
 
@@ -217,9 +217,9 @@ then
 
     if [[ $is_plinth_running -eq 1 ]]
     then
-        echo "> In container: Plinth is already running"
+        echo "> In machine: Plinth is already running"
     else
-        echo -n "> In container: Starting plinth ... "
+        echo -n "> In machine: Starting plinth ... "
         sudo -u plinth /freedombox/run --develop > plinth.log 2>&1 &
         while ! grep -q "Setup thread finished" plinth.log
         do
@@ -669,7 +669,7 @@ def _setup_users(image_file: pathlib.Path):
 
     uid = 10000
     gid = 10000
-    logger.info('In container: Setting UID/GID of "fbx" to %s/%s', uid, gid)
+    logger.info('In image: Setting UID/GID of "fbx" to %s/%s', uid, gid)
     _runc(image_file, ['groupmod', '--gid', str(gid), 'fbx'])
     _runc(image_file, ['usermod', '--uid',
                        str(uid), '--gid',
@@ -678,15 +678,15 @@ def _setup_users(image_file: pathlib.Path):
     uid = folder.stat().st_uid
     gid = folder.stat().st_gid
     logger.info(
-        'In container: Setting UID/GID of "plinth" to %s/%s to match %s/%s',
-        uid, gid, folder.owner(), folder.group())
+        'In image: Setting UID/GID of "plinth" to %s/%s to match %s/%s', uid,
+        gid, folder.owner(), folder.group())
     _runc(image_file, ['groupmod', '--gid', str(gid), 'plinth'])
     _runc(image_file,
           ['usermod', '--uid',
            str(uid), '--gid',
            str(gid), 'plinth'], stdout=subprocess.DEVNULL)
 
-    logger.info('In container: Setting up sudo for users "fbx" and "plinth"')
+    logger.info('In image: Setting up sudo for users "fbx" and "plinth"')
     sudo_config = 'Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/' \
         'actions/actions, /freedombox/actions/actions\n' \
         'Defaults!FREEDOMBOX_ACTION_DEV closefrom_override\n' \
@@ -698,7 +698,7 @@ def _setup_users(image_file: pathlib.Path):
 
 def _setup_ssh(image_file: pathlib.Path):
     """Setup SSH server and client keys."""
-    logger.info('In container: Generating SSH server keys')
+    logger.info('In image: Generating SSH server keys')
     _runc(image_file, ['dpkg-reconfigure', 'openssh-server'],
           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -734,13 +734,13 @@ def _setup_image(image_file: pathlib.Path):
     if setup_file.exists():
         return
 
-    logger.info('In container: Disabling automatic updates temporarily')
+    logger.info('In image: Disabling automatic updates temporarily')
     contents = 'APT::Periodic::Update-Package-Lists "0";\n' \
         'APT::Periodic::Unattended-Upgrade "0";\n'
     _runc(image_file, ['tee', '/etc/apt/apt.conf.d/20auto-upgrades'],
           input=contents.encode())
 
-    logger.info('In container: Disabling FreedomBox service')
+    logger.info('In image: Disabling FreedomBox service')
     _runc(image_file, ['systemctl', 'disable', 'plinth'],
           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -840,7 +840,7 @@ def _wait_for(method: Callable[[], None | object]):
         if return_value:
             return return_value
 
-        logger.info('Waiting for container')
+        logger.info('Waiting for machine')
         time.sleep(3)
 
     logger.error('Failed')
