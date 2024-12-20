@@ -32,6 +32,11 @@ logger = logging.getLogger(__name__)
 @privileged
 def setup(old_version: int):
     """Setup Tor configuration after installing it."""
+    # Disable default Tor service. We will use tor@plinth instance instead.
+    action_utils.service_disable('tor@default')
+    # Mask the service to prevent re-enabling it by the Tor master service.
+    action_utils.service_mask('tor@default')
+
     if old_version:
         if old_version <= 4:
             _upgrade_orport_value()
@@ -48,9 +53,6 @@ def setup(old_version: int):
 def _first_time_setup():
     """Setup Tor configuration for the first time setting defaults."""
     logger.info('Performing first time setup for Tor')
-    # Disable default tor service. We will use tor@plinth instance
-    # instead.
-    action_utils.service_disable('tor@default')
 
     subprocess.run(['tor-instance-create', INSTANCE_NAME], check=True)
 
@@ -311,17 +313,6 @@ def _get_hidden_service(aug=None) -> dict[str, Any]:
     }
 
 
-def _enable():
-    """Enable and start the service."""
-    action_utils.service_enable(SERVICE_NAME)
-    _update_ports()
-
-
-def _disable():
-    """Disable and stop the service."""
-    action_utils.service_disable(SERVICE_NAME)
-
-
 def _use_upstream_bridges(use_upstream_bridges: bool | None = None, aug=None):
     """Enable use of upstream bridges."""
     if use_upstream_bridges is None:
@@ -505,3 +496,4 @@ def uninstall():
         shutil.rmtree(directory, ignore_errors=True)
 
     os.unlink(f'/var/run/tor-instances/{INSTANCE_NAME}.defaults')
+    action_utils.service_unmask(SERVICE_NAME)

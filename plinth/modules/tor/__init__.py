@@ -22,6 +22,7 @@ from plinth.modules.names.components import DomainType
 from plinth.modules.torproxy.utils import is_apt_transport_tor_enabled
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
 
@@ -51,7 +52,7 @@ class TorApp(app_module.App):
 
     app_id = 'tor'
 
-    _version = 7
+    _version = 8
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -114,6 +115,7 @@ class TorApp(app_module.App):
 
     def enable(self):
         """Enable the app and update firewall ports."""
+        service_privileged.unmask('tor@plinth')
         super().enable()
         privileged.update_ports()
         update_hidden_service_domain()
@@ -121,6 +123,7 @@ class TorApp(app_module.App):
     def disable(self):
         """Disable the app and remove HS domain."""
         super().disable()
+        service_privileged.mask('tor@plinth')
         update_hidden_service_domain()
 
     def diagnose(self) -> list[DiagnosticCheck]:
@@ -210,6 +213,12 @@ class TorApp(app_module.App):
             # This creates the operation, which will run after the current
             # operation (Tor setup) is completed.
             setup_module_.run_setup_on_app('torproxy')
+
+        # Version 8 masks the tor@plinth service when disabling the app to
+        # prevent the service starting by the Tor master service after system
+        # reboot.
+        if old_version and old_version < 8 and not self.is_enabled():
+            self.disable()
 
         if not old_version:
             logger.info('Enabling Tor app')

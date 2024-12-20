@@ -24,18 +24,16 @@ TORPROXY_CONFIG_AUG = f'/files/{TORPROXY_CONFIG}'
 
 
 @privileged
-def setup(old_version: int):
-    """Setup Tor configuration after installing it."""
-    _first_time_setup()
-
-
-def _first_time_setup():
-    """Setup Tor configuration for the first time setting defaults."""
-    logger.info('Performing first time setup for Tor Proxy')
+def setup():
+    """Setup Tor configuration."""
     # Disable default tor service. We will use tor@fbxproxy instance
     # instead.
     _disable_apt_transport_tor()
+
+    # Disable default Tor service.
     action_utils.service_disable('tor@default')
+    # Mask the service to prevent re-enabling it by the Tor master service.
+    action_utils.service_mask('tor@default')
 
     subprocess.run(['tor-instance-create', INSTANCE_NAME], check=True)
 
@@ -61,8 +59,8 @@ def _first_time_setup():
 
     aug.save()
 
-    action_utils.service_enable(SERVICE_NAME)
-    action_utils.service_restart(SERVICE_NAME)
+    if action_utils.service_is_running(SERVICE_NAME):
+        action_utils.service_restart(SERVICE_NAME)
 
 
 @privileged
@@ -112,17 +110,6 @@ def _get_upstream_bridges(aug) -> str:
     matches = aug.match(TORPROXY_CONFIG_AUG + '/Bridge')
     bridges = [aug.get(match) for match in matches]
     return '\n'.join(bridges)
-
-
-def _enable():
-    """Enable and start the service."""
-    action_utils.service_enable(SERVICE_NAME)
-
-
-def _disable():
-    """Disable and stop the service."""
-    _disable_apt_transport_tor()
-    action_utils.service_disable(SERVICE_NAME)
 
 
 def _use_upstream_bridges(use_upstream_bridges: bool | None = None, aug=None):
@@ -214,3 +201,4 @@ def uninstall():
         shutil.rmtree(directory, ignore_errors=True)
 
     os.unlink(f'/var/run/tor-instances/{INSTANCE_NAME}.defaults')
+    action_utils.service_unmask(SERVICE_NAME)
