@@ -1,26 +1,33 @@
 #!/usr/bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""Script to manage systemd-nspawn container for FreedomBox development.
+"""Script to manage a container or a VM for FreedomBox development.
 
-This script creates a simple container using systemd-nspawn for developing
-FreedomBox. It has many advantages over running a VM using Vagrant. RAM is
-allocated to processes in the container as needed without any fixed limit. Also
-RAM does not have to be statically allocated so it is typically much lighter
-than running an VM. There is no hardware emulation when running a container
-with same architecture, so processes run as fast as they would on the host
-machine.
+This script creates either a simple container using systemd-nspawn or a virtual
+machine using libvirt for developing FreedomBox. Containers have many
+advantages over running a VM. RAM is allocated to processes in the container as
+needed without any fixed limit. Also RAM does not have to be statically
+allocated so it is typically much lighter than running an VM. There is no
+hardware emulation when running a container with same architecture, so
+processes run as fast as they would on the host machine. On the other hand, VMs
+have the advantage of full machine emulation. They allow full permissions as
+required for mounting filesystems, USB passthrough of Wi-Fi devices, emulation
+of multiple disks, etc. as required for testing some of the features of
+FreedomBox.
 
-Environment: The script will run only run on hosts having systemd-nspawn and
-network-manager installed, typical GNU/Linux distributions. It has been
-primarily developed and tested on Debian Buster but should work on most modern
-GNU/Linux distributions.
+Environment: The script will run only run on hosts having systemd-nspawn,
+virsh, and network-manager installed, typical GNU/Linux distributions. It has
+been primarily developed and tested on Debian Buster but should work on most
+modern GNU/Linux distributions.
 
-Disk image: systemd-nspawn accepts not only a directory for starting a
-container but also a disk image. This disk image is loop-back mounted and
-container is started from that mounted directory. The partition to use is
-determined by looking at the boot flag in the partition table. This happens to
-work well with all existing FreedomBox images. In future, we may be able to run
-different architectures in this manner.
+Disk image: For a container, systemd-nspawn accepts not only a directory for
+starting a container but also a disk image. This disk image is loop-back
+mounted and container is started from that mounted directory. The partition to
+use is determined by looking at the boot flag in the partition table. This
+happens to work well with all existing FreedomBox images. In future, we may be
+able to run different architectures in this manner.
+
+For a VM, a disk drive is created that is backed by the image file. The image
+is a bootable image using GRUB as built by freedom-maker.
 
 After downloading, the disk image is expanded along with the partition and file
 system inside so that development can be done without running into disk space
@@ -35,32 +42,43 @@ script. Downloaded images are kept even after destroying the extracted raw
 image along with container. This allows for quickly resetting the container
 without downloading again.
 
-Booting: systemd-nspawn is run in 'boot' mode. This means that init process
-(happens to be systemd) is started inside the container. It then spawns all the
-other necessary daemons including openssh-server, firewalld and
+Booting: For a container, systemd-nspawn is run in 'boot' mode. This means that
+init process (happens to be systemd) is started inside the container. It then
+spawns all the other necessary daemons including openssh-server, firewalld and
 network-manager. A login terminal can be opened using 'machinectl login'
 because container is running systemd. SSH into the container is possible
 because network is up, configured by network-manager, and openssh server is
 running.
 
-Shared folder: Using systemd-nspawn, the project directory is mounted as
-/freedombox inside the container. The project directory is determined as
-directory in which this script resides. The project folder from the container
-point of view will be read-only. Container should be able to write various
-files such as build files into the /freedombox folder. To enable writing, an
-additional read-write folder is overlayed onto /freedombox folder in the
-container. This directory can't be created under the project folder and is
-created instead in $XDG_DATA_HOME/freedombox-container/overlay/$DISTRIBUTION.
-If XDG_DATA_HOME is not set, it is assumed to be $HOME/.local/shared/. Whenever
-data is written into /freedombox directory inside the container, this directory
-on the host receives the changes. See documentation for Overlay filesystem for
-further details. When container is destroyed, this overlay folder is destroyed
-to ensure clean state after bringing up the container again.
+For a VM, when the virtual machine is started, the firmware of the machine
+boots the machine from the attached disk. The boot process is similar to a
+physical machine.
 
-Users: PrivateUsers configuration flag for systemd-nspawn is currently off.
-This means that each user's UID on the host is also the same UID in the
-container as along as there is an entry in the container's password database.
-In future, we may explore using private users inside the container.
+Shared folder: For a container, using systemd-nspawn, the project directory is
+mounted as /freedombox inside the container. The project directory is
+determined as directory in which this script resides. The project folder from
+the container point of view will be read-only. Container should be able to
+write various files such as build files into the /freedombox folder. To enable
+writing, an additional read-write folder is overlayed onto /freedombox folder
+in the container. This directory can't be created under the project folder and
+is created instead in
+$XDG_DATA_HOME/freedombox-container/overlay/$DISTRIBUTION. If XDG_DATA_HOME is
+not set, it is assumed to be $HOME/.local/shared/. Whenever data is written
+into /freedombox directory inside the container, this directory on the host
+receives the changes. See documentation for Overlay filesystem for further
+details. When container is destroyed, this overlay folder is destroyed to
+ensure clean state after bringing up the container again.
+
+For a VM, the project directory is exposed into the virtual machine with the
+mount token 'freedombox' using virtiofs. This is done as part of virtual
+machine configuration. Inside the virtual machine, a systemd .mount unit will
+mount the virtiofs filesystem using the 'freedombox' token onto the folder
+/freedombox. The folder is read-write.
+
+Users: In container, PrivateUsers configuration flag for systemd-nspawn is
+currently off. This means that each user's UID on the host is also the same UID
+in the container as along as there is an entry in the container's password
+database. In future, we may explore using private users inside the container.
 
 'fbx' is the development user and its UID is changed during setup phase to
 10000 hoping it would not match anything on the host system. 'fbx' user has
@@ -74,16 +92,17 @@ whichever user owns the project directory. This allows the files to written by
 'plinth' container user in the project directory because UID of the owner of
 the directory is same as the 'plinth' user's UID in container.
 
-Network: A private network is created inside the container using systemd-nspawn
-feature. Network interfaces from the host are not available inside the
-container. A new network interface called 'host0' is configured inside the
-container which is automatically configured by network-manager. On the host a
-new network interface is created. This script creates configuration for a
-'shared' network using network-manager. When bringing up the container, this
-network connection is also brought up. A DHCP server and a DNS server are
-started network-manager on the host side so that DHCP and DNS client functions
-work inside the container. Traffic from the container is also masqueraded so
-that Internet connectivity inside the container works if the host has one.
+Network: For a container, a private network is created inside the container
+using systemd-nspawn feature. Network interfaces from the host are not
+available inside the container. A new network interface called 'host0' is
+configured inside the container which is automatically configured by
+network-manager. On the host a new network interface is created. This script
+creates configuration for a 'shared' network using network-manager. When
+bringing up the container, this network connection is also brought up. A DHCP
+server and a DNS server are started network-manager on the host side so that
+DHCP and DNS client functions work inside the container. Traffic from the
+container is also masqueraded so that Internet connectivity inside the
+container works if the host has one.
 
 If necessary, the network interface on host side can be differently configured.
 For example, it can be bridged with another interface to expose the container
@@ -95,6 +114,14 @@ messages. All ports in the container can be reached from the host using this IP
 address as long as the firewall inside the container allows it. There is no
 need to perform port forwarding or mapping.
 
+For a VM, the network device is fully emulated. On the host it is exposed as
+network interface that is bridged with the default libvirt bridge. The bridge
+interface is configured by libvirt and it listens for DHCP requests from the
+guests and also has a DNS server running. All traffic from the guest is NATed
+and, as a result, the guest has full network access. The guest is accessible
+from the host using the guest IP address which can be retrieved by asking
+libvirt.
+
 SSH: It is assumed that openssh-server is installed inside the container. SSH
 server keys in the container are created if missing. Client side keys are
 created in .container/ssh directory and the public key is installed in the
@@ -102,12 +129,13 @@ authorized keys file of the 'fbx' user. The 'ssh' sub-command to this script is
 simply a convenience mechanism for quick launch of ssh with the right IP
 address, user name and identity file.
 
-Role of machinectl: Most of the work is done by systemd-nspawn. machinectl is
-useful for running systemd-nspawn in the background and querying its current
-state. It also helps with providing the IP address of the container. machinectl
-is made to recognize the container by creating a link in /var/lib/machines/ to
-the image file. systemd-nspawn options are added by creating a temporary file
-in /run/systemd/nspawn. All machinectl commands should work.
+Role of machinectl: For a container, most of the work is done by
+systemd-nspawn. machinectl is useful for running systemd-nspawn in the
+background and querying its current state. It also helps with providing the IP
+address of the container. machinectl is made to recognize the container by
+creating a link in /var/lib/machines/ to the image file. systemd-nspawn options
+are added by creating a temporary file in /run/systemd/nspawn. All machinectl
+commands should work.
 
 """
 
@@ -251,6 +279,191 @@ chmod --silent a+w .coverage
 exit 0
 '''
 
+LIBVIRT_DOMAIN_XML_TEMPLATE = '''<domain type="kvm">
+  <name>{domain_name}</name>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://debian.org/debian/testing"/>
+    </libosinfo:libosinfo>
+  </metadata>
+  <memory unit="MiB">{memory_mib}</memory>
+  <currentMemory unit="MiB">{memory_mib}</currentMemory>
+  <memoryBacking>
+    <source type="memfd"/>
+    <access mode="shared"/>
+  </memoryBacking>
+  <vcpu placement="static">{cpus}</vcpu>
+  <os>
+    <type arch="x86_64" machine="pc-q35-7.2">hvm</type>
+    <boot dev="hd"/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <vmport state="off"/>
+  </features>
+  <cpu mode="host-passthrough" check="none" migratable="on"/>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no"/>
+    <suspend-to-disk enabled="no"/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="raw"/>
+      <source file="{image_file}"/>
+      <target dev="vda" bus="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
+    </disk>
+    <controller type="usb" index="0" model="qemu-xhci" ports="15">
+      <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
+    </controller>
+    <controller type="pci" index="0" model="pcie-root"/>
+    <controller type="pci" index="1" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="1" port="0x10"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="2" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="2" port="0x11"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x1"/>
+    </controller>
+    <controller type="pci" index="3" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="3" port="0x12"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x2"/>
+    </controller>
+    <controller type="pci" index="4" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="4" port="0x13"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x3"/>
+    </controller>
+    <controller type="pci" index="5" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="5" port="0x14"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x4"/>
+    </controller>
+    <controller type="pci" index="6" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="6" port="0x15"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x5"/>
+    </controller>
+    <controller type="pci" index="7" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="7" port="0x16"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x6"/>
+    </controller>
+    <controller type="pci" index="8" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="8" port="0x17"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x7"/>
+    </controller>
+    <controller type="pci" index="9" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="9" port="0x18"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="10" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="10" port="0x19"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x1"/>
+    </controller>
+    <controller type="pci" index="11" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="11" port="0x1a"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x2"/>
+    </controller>
+    <controller type="pci" index="12" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="12" port="0x1b"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x3"/>
+    </controller>
+    <controller type="pci" index="13" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="13" port="0x1c"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x4"/>
+    </controller>
+    <controller type="pci" index="14" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="14" port="0x1d"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x03" function="0x5"/>
+    </controller>
+    <controller type="sata" index="0">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x1f" function="0x2"/>
+    </controller>
+    <controller type="virtio-serial" index="0">
+      <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
+    </controller>
+    <filesystem type="mount" accessmode="passthrough">
+      <driver type="virtiofs"/>
+      <source dir="{source_dir}"/>
+      <target dir="freedombox"/>
+      <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
+    </filesystem>
+    <interface type="network">
+      <source network="default"/>
+      <model type="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
+    </interface>
+    <serial type="pty">
+      <target type="isa-serial" port="0">
+        <model name="isa-serial"/>
+      </target>
+    </serial>
+    <console type="pty">
+      <target type="serial" port="0"/>
+    </console>
+    <channel type="unix">
+      <target type="virtio" name="org.qemu.guest_agent.0"/>
+      <address type="virtio-serial" controller="0" bus="0" port="1"/>
+    </channel>
+    <channel type="spicevmc">
+      <target type="virtio" name="com.redhat.spice.0"/>
+      <address type="virtio-serial" controller="0" bus="0" port="2"/>
+    </channel>
+    <input type="tablet" bus="usb">
+      <address type="usb" bus="0" port="1"/>
+    </input>
+    <input type="mouse" bus="ps2"/>
+    <input type="keyboard" bus="ps2"/>
+    <graphics type="spice" autoport="yes">
+      <listen type="address"/>
+      <image compression="off"/>
+    </graphics>
+    <sound model="ich9">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x1b" function="0x0"/>
+    </sound>
+    <audio id="1" type="spice"/>
+    <video>
+      <model type="virtio" heads="1" primary="yes"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0"/>
+    </video>
+    <redirdev bus="usb" type="spicevmc">
+      <address type="usb" bus="0" port="2"/>
+    </redirdev>
+    <redirdev bus="usb" type="spicevmc">
+      <address type="usb" bus="0" port="3"/>
+    </redirdev>
+    <memballoon model="virtio">
+      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+    </memballoon>
+    <rng model="virtio">
+      <backend model="random">/dev/urandom</backend>
+      <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
+    </rng>
+  </devices>
+</domain>
+'''    # noqa: E501
+
 logger = logging.getLogger(__name__)
 
 
@@ -273,8 +486,10 @@ def parse_arguments() -> argparse.Namespace:
         subparser.add_argument('--distribution', choices=distributions,
                                default=default_distribution,
                                help='Distribution to work with')
-        subparser.add_argument('--machine-type', choices=('container', ),
-                               default='container')
+        subparser.add_argument(
+            '--machine-type', choices=('container', 'vm'), default='container',
+            help='Type of the machine, container to virtual machine, to run '
+            'operation on')
 
     # Up
     subparser = subparsers.add_parser('up', help='Bring up the container',
@@ -375,6 +590,7 @@ def _verify_dependencies() -> None:
         'dnsmasq': 'dnsmasq',
         'ssh': 'openssh-client',
         'ssh-keygen': 'openssh-client',
+        'virsh': 'libvirt-clients',
     }
     missing_commands = []
     missing_packages = []
@@ -744,6 +960,24 @@ def _setup_image(image_file: pathlib.Path):
     _runc(image_file, ['systemctl', 'disable', 'plinth'],
           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+    logger.info('In image: Creating virtiofs mount at /freedombox')
+    mount = '''[Unit]
+Description=FreedomBox development directory on host
+ConditionVirtualization=kvm
+
+[Mount]
+What=freedombox
+Where=/freedombox
+Type=virtiofs
+
+[Install]
+WantedBy=multi-user.target
+'''
+    _runc(image_file, ['tee', '/usr/lib/systemd/system/freedombox.mount'],
+          input=mount.encode(), stdout=subprocess.DEVNULL)
+    _runc(image_file, ['systemctl', 'enable', 'freedombox.mount'],
+          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
     _setup_ssh(image_file)
 
     _setup_users(image_file)
@@ -883,6 +1117,9 @@ class Machine:
         """Return instance of a concrete machine class based on type."""
         if machine_type == 'container':
             return Container(distribution)
+
+        if machine_type == 'vm':
+            return VM(distribution)
 
         raise ValueError('Unknown machine type')
 
@@ -1098,6 +1335,96 @@ VirtualEthernet=yes
             str(image_file.resolve()),
             str(image_link)
         ], check=False)
+
+
+class VM(Machine):
+    """Handle VM specific operations."""
+
+    def get_status(self) -> bool:
+        """Return whether the VM is currently running."""
+        process = self._virsh(['domstate', self.machine_name], check=False,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL)
+        return process.stdout.decode().splitlines()[0] not in ('shut off', '')
+
+    def setup(self) -> None:
+        """Setup the infrastructure needed for the VM."""
+        try:
+            self._virsh(['dominfo', self.machine_name],
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            return  # Already exists
+        except subprocess.CalledProcessError:
+            pass
+
+        image_file = _get_image_file(self.distribution)
+        domain_xml = LIBVIRT_DOMAIN_XML_TEMPLATE.format(
+            domain_name=self.machine_name, memory_mib='2048', cpus='4',
+            image_file=image_file, source_dir=_get_project_folder())
+
+        with tempfile.NamedTemporaryFile() as file_handle:
+            file_handle.write(domain_xml.encode())
+            logger.info('Running `virsh define %s`', file_handle.name)
+            self._virsh(['define', file_handle.name],
+                        stdout=subprocess.DEVNULL)
+
+    def launch(self) -> None:
+        """Start the VM."""
+        if self.get_status():
+            return
+
+        logger.info('Running `virsh start %s`', self.machine_name)
+        self._virsh(['start', self.machine_name], stdout=subprocess.DEVNULL)
+
+    def stop(self) -> None:
+        """Stop the VM."""
+        if not self.get_status():  # Already shut off
+            return
+
+        logger.info('Running `virsh shutdown %s`', self.machine_name)
+        self._virsh(['shutdown', self.machine_name], stdout=subprocess.DEVNULL)
+
+    def terminate(self) -> None:
+        """Terminate, i.e., force stop the VM."""
+        if not self.get_status():  # Already shut off
+            return
+
+        logger.info('Running `virsh destroy %s`', self.machine_name)
+        self._virsh(['destroy', self.machine_name], stdout=subprocess.DEVNULL)
+
+    def destory(self) -> None:
+        """Remove all traces of the VM from the host."""
+        logger.info('Running `virsh undefine %s`', self.machine_name)
+        self._virsh(['undefine', self.machine_name], stdout=subprocess.DEVNULL)
+
+    def get_ip_address(self) -> str | None:
+        """Return the IP address assigned to the VM."""
+        try:
+            process = self._virsh(['domifaddr', self.machine_name],
+                                  stdout=subprocess.PIPE)
+        except subprocess.CalledProcessError:
+            return None
+
+        lines = process.stdout.decode().splitlines()
+        if len(lines) < 3:  # First two lines are header
+            return None
+
+        # Example: 'vnet12 52:54:00:55:8c:68 ipv4  192.168.122.203/24'
+        return lines[2].rpartition(' ')[2].partition('/')[0]
+
+    def get_ssh_command(self) -> list[str]:
+        """Return the SSH command to execute for the VM."""
+        ip_address = _wait_for(lambda: self.get_ip_address())
+        public_key = _get_work_directory() / 'ssh' / 'id_ed25519'
+        return [
+            'ssh', '-Y', '-C', '-t', '-i',
+            str(public_key), '-o', 'LogLevel=error', '-o',
+            'StrictHostKeyChecking=no', '-o', 'UserKnownHostsFile=/dev/null',
+            '-o', 'IdentitiesOnly=yes', f'fbx@{ip_address}'
+        ]
+
+    def _virsh(self, args: list[str], check=True, **kwargs):
+        """Run virsh to control the virtual machine."""
+        return subprocess.run(['sudo', 'virsh'] + args, check=check, **kwargs)
 
 
 def subcommand_up(arguments: argparse.Namespace):
