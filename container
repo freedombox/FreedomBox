@@ -591,7 +591,9 @@ def _resize_disk_image(image_file: pathlib.Path, new_size: str):
         check=True)
     last_line = process.stdout.decode().splitlines()[-1]
     partition = '/dev/mapper/' + last_line.split()[2]
+    old_fsid = _get_fsid(partition)
     subprocess.run(['sudo', 'btrfstune', '-uf', partition], check=True)
+    new_fsid = _get_fsid(partition)
 
     with tempfile.TemporaryDirectory(
             dir=_get_work_directory().resolve()) as mount_point:
@@ -599,11 +601,52 @@ def _resize_disk_image(image_file: pathlib.Path, new_size: str):
         subprocess.run(
             ['sudo', 'btrfs', 'filesystem', 'resize', 'max', mount_point],
             check=True, stdout=subprocess.DEVNULL)
+        _update_fsid(mount_point, partition, old_fsid, new_fsid)
         subprocess.run(['sudo', 'umount', mount_point], check=True)
 
     subprocess.run(
         ['sudo', 'kpartx', '-ds', str(image_file)], check=True,
         stderr=subprocess.DEVNULL)
+
+
+def _get_fsid(partition: str) -> str:
+    """Return the btrfs filesystem ID for a device."""
+    # Find the new FSID
+    process = subprocess.run(
+        ['sudo', 'btrfs', 'filesystem', 'show', partition], check=True,
+        stdout=subprocess.PIPE)
+    return process.stdout.decode().splitlines()[0].rpartition(' ')[2]
+
+
+def _update_fsid(mount_point: str, partition: str, old_fsid: str,
+                 new_fsid: str):
+    """After changing btrfs fsid, run grub-install to keep image bootable."""
+    # Guess the loopback device for the filesystem
+    matches = re.match(r'^/dev/mapper/loop(\d+)p\d+$', partition)
+    assert matches
+    loop_device = f'/dev/loop{matches[1]}'
+
+    # Mount /dev, /proc and run grub commands in chroot
+    grub_args = []
+    if platform.machine() in ('aarch64', 'arm64'):
+        grub_args += ['--no-nvram']
+
+    subprocess.run(
+        ['sudo', 'mount', '-o', 'bind', '/dev/', f'{mount_point}/dev'],
+        check=True)
+    subprocess.run(
+        ['sudo', 'mount', '-o', 'bind', '/proc/', f'{mount_point}/proc'],
+        check=True)
+    subprocess.run(['sudo', 'chroot', mount_point, 'update-grub'], check=True)
+    subprocess.run(
+        ['sudo', 'chroot', mount_point, 'grub-install', loop_device] +
+        grub_args, check=True)
+    subprocess.run([
+        'sudo', 'chroot', mount_point, 'sed', '-ie',
+        f's|UUID={old_fsid}|UUID={new_fsid}|', '/etc/fstab'
+    ], check=True)
+    subprocess.run(['sudo', 'umount', f'{mount_point}/proc'], check=True)
+    subprocess.run(['sudo', 'umount', f'{mount_point}/dev'], check=True)
 
 
 def _runc(image_file: pathlib.Path, command: list[str], **kwargs):
