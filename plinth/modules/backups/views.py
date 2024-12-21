@@ -5,10 +5,10 @@ Views for the backups app.
 
 import logging
 import os
+import subprocess
 from datetime import datetime
 from urllib.parse import unquote
 
-import paramiko
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404, StreamingHttpResponse
@@ -427,13 +427,14 @@ def _save_repository(request, repository):
         repository.verified = True
         repository.save()
         return True
-    except paramiko.BadHostKeyException:
-        message = _('SSH host public key could not be verified.')
-    except paramiko.AuthenticationException:
-        message = _('Authentication to remote server failed.')
-    except paramiko.SSHException as exception:
-        message = _('Error establishing connection to server: {}').format(
-            str(exception))
+    except subprocess.CalledProcessError as exception:
+        if exception.returncode in (6, 7):
+            message = _('SSH host public key could not be verified.')
+        elif exception.returncode == 5:
+            message = _('Authentication to remote server failed.')
+        else:
+            message = _('Error establishing connection to server: {}').format(
+                str(exception))
     except Exception as exception:
         message = str(exception)
         logger.exception('Error adding repository: %s', exception)

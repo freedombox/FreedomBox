@@ -7,9 +7,9 @@ import io
 import logging
 import os
 import re
+import subprocess
 from uuid import uuid1
 
-import paramiko
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
@@ -493,28 +493,13 @@ class SshBorgRepository(BaseBorgRepository):
         password = self.credentials['ssh_password']
 
         # Ensure remote directory exists, check contents
-        # TODO Test with IPv6 connection
-        with _ssh_connection(hostname, username, password) as ssh_client:
-            with ssh_client.open_sftp() as sftp_client:
-                try:
-                    sftp_client.listdir(dir_path)
-                except FileNotFoundError:
-                    logger.info('Directory %s does not exist, creating.',
-                                dir_path)
-                    sftp_client.mkdir(dir_path)
-
-
-@contextlib.contextmanager
-def _ssh_connection(hostname, username, password):
-    """Context manager to create and close an SSH connection."""
-    ssh_client = paramiko.SSHClient()
-    ssh_client.load_host_keys(str(get_known_hosts_path()))
-
-    try:
-        ssh_client.connect(hostname, username=username, password=password)
-        yield ssh_client
-    finally:
-        ssh_client.close()
+        env = {'SSHPASS': password}
+        known_hosts_path = str(get_known_hosts_path())
+        subprocess.run([
+            'sshpass', '-e', 'ssh', '-o',
+            f'UserKnownHostsFile={known_hosts_path}', f'{username}@{hostname}',
+            'mkdir', '-p', dir_path
+        ], check=True, env=env)
 
 
 def get_repositories():

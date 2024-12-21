@@ -211,7 +211,6 @@ autodoc_mock_imports = [
     'gi',
     'markupsafe',
     'pam',
-    'paramiko',
     'psutil',
     'pytest',
     'requests',
