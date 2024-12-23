@@ -11,7 +11,8 @@ import urllib.parse
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.forms import Form
-from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import (Http404, HttpRequest, HttpResponseBadRequest,
+                         HttpResponseRedirect)
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -60,6 +61,53 @@ def is_safe_url(url):
         return False
 
     return True
+
+
+def get_breadcrumbs(request: HttpRequest) -> dict[str, dict[str, str | bool]]:
+    """Return all the URL ancestors that can be show as breadcrumbs."""
+    breadcrumbs = {}
+
+    def _add(url: str, name: str, url_name: str | None = None):
+        """Add item into the breadcrumb dictionary."""
+        breadcrumbs[url] = {
+            'name': name,
+            'is_active': request.path == url,
+            'url_name': url_name
+        }
+
+    url_name = request.resolver_match.url_name
+    full_url_name = ':'.join(request.resolver_match.app_names + [url_name])
+    try:
+        menu_item = menu.Menu.get_with_url_name(full_url_name)
+    except LookupError:
+        # There is no menu entry for this page, find it's app.
+        _add(request.path, _('Here'), full_url_name)
+        app_url_name = ':'.join(request.resolver_match.app_names + ['index'])
+        try:
+            menu_item = menu.Menu.get_with_url_name(app_url_name)
+        except LookupError:
+            # Don't know which app this page belongs to, assume parent is Home.
+            menu_item = menu.Menu.get_with_url_name('index')
+
+    for _number in range(10):
+        _add(menu_item.url, menu_item.name, menu_item.url_name)
+        if not menu_item.parent_url_name:
+            # We have reached the top
+            break
+
+        menu_item = menu.Menu.get_with_url_name(menu_item.parent_url_name)
+    else:
+        # Too much hierarchy, we must be in a recursive loop.
+        breadcrumbs = {}
+        menu_item = menu.Menu.get_with_url_name('index')
+        _add(menu_item.url, menu_item.name, menu_item.url_name)
+
+    # Find the active section: 'index', 'apps', 'system' or 'help'.
+    active_section_index = -2 if len(breadcrumbs) >= 2 else -1
+    active_section_key = list(breadcrumbs.keys())[active_section_index]
+    breadcrumbs[active_section_key]['is_active_section'] = True
+
+    return breadcrumbs
 
 
 def messages_error(request, message, exception):
