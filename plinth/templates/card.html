@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 {% endcomment %}
 
+{% load i18n %}
 {% load static %}
 
 <div class="card">
@@ -18,6 +19,8 @@
       {% endif %}
     </div>
     <div class="card-title">{{ item.name }}</div>
-    <div class="card-description">{{ item.short_description|default:'' }}</div>
+    <div class="card-tags">
+      {% for tag in item.app.info.tags|slice:":3" %}{% trans tag %}{% if not forloop.last %}・{% endif %}{% endfor %}
+    </div>
   </a>
 </div>

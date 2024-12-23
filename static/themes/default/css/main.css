@@ -596,8 +596,8 @@ footer {
     display: block;
     line-height: 1.42857143;
     text-align: center;
-    width: 10rem;
-    padding: 1rem;
+    width: 11.5rem;
+    padding: 1rem 0.5rem;
     border: none;
     border-radius: 0.5rem;
     transition: border .2s ease-in-out;
@@ -619,10 +619,17 @@ footer {
     margin-bottom: 0;
 }
 
-.card-description {
+.card-tags {
     font-weight: 400;
     color: var(--bs-secondary);
     font-size: 0.875rem;
+
+    /* Show ellipsis after 3 lines. */
+    /* Standardized in CSS Overflow Module Level 4 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
 }
 
 .card-icon span,
