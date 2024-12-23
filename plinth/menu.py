@@ -109,10 +109,10 @@ main_menu = None
 def init():
     """Create main menu and other essential menus."""
     global main_menu
-    main_menu = Menu('menu-index', url_name='index')
-    Menu('menu-apps', icon='fa-download', url_name='apps',
+    main_menu = Menu('menu-index', name=_('Home'), url_name='index')
+    Menu('menu-apps', name=_('Apps'), icon='fa-download', url_name='apps',
          parent_url_name='index')
-    Menu('menu-system', icon='fa-cog', url_name='system',
+    Menu('menu-system', name=_('System'), icon='fa-cog', url_name='system',
          parent_url_name='index')
 
     Menu('menu-system-visibility', name=_('Visibility'), icon='fa-cog',
