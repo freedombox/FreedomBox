@@ -38,7 +38,6 @@ class PerformanceApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Performance'), icon='fa-bar-chart',
-                               short_description=_('System Monitoring'),
                                description=_description,
                                manual_page='Performance',
                                clients=manifest.clients, tags=manifest.tags)

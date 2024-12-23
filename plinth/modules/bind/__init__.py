@@ -38,7 +38,6 @@ class BindApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('BIND'), icon='fa-globe-w',
-                               short_description=_('Domain Name Server'),
                                description=_description, manual_page='Bind',
                                tags=manifest.tags)
         self.add(info)

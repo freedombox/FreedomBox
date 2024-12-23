@@ -52,7 +52,6 @@ class CockpitApp(app_module.App):
                                depends=['apache'], is_essential=True,
                                name=_('Cockpit'), icon='fa-wrench',
                                icon_filename='cockpit',
-                               short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
