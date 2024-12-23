@@ -90,6 +90,18 @@ class Menu(app.FollowerComponent):
 
         return None
 
+    @staticmethod
+    def get_with_url_name(url_name: str) -> 'Menu':
+        """Return a menu item with given URL name.
+
+        Raise LookupError of the request item is not found.
+        """
+        for item in Menu._all_menus:
+            if item.url_name == url_name:
+                return item
+
+        raise LookupError
+
 
 main_menu = None
 
