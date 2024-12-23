@@ -41,7 +41,7 @@ class PerformanceApp(app_module.App):
                                short_description=_('System Monitoring'),
                                description=_description,
                                manual_page='Performance',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-performance', info.name,

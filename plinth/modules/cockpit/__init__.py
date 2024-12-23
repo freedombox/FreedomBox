@@ -54,7 +54,7 @@ class CockpitApp(app_module.App):
                                icon_filename='cockpit',
                                short_description=_('Server Administration'),
                                description=_description, manual_page='Cockpit',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-cockpit', info.name,

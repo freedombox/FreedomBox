@@ -14,3 +14,5 @@ clients = [{
 }]
 
 backup: dict = {}
+
+tags = [_('Monitoring'), _('Resource utilization')]
