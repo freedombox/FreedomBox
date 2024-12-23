@@ -55,7 +55,7 @@ class ZophApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Zoph'), icon_filename='zoph',
                                description=_description, manual_page='Zoph',
-                               clients=manifest.clients)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-zoph', info.name, info.short_description,
