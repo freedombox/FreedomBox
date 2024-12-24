@@ -17,6 +17,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import FormView, TemplateView, View
 
 from plinth.errors import PlinthError
@@ -472,6 +473,7 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
         return redirect('backups:index')
 
 
+@require_POST
 def umount_repository(request, uuid):
     """View to unmount a remote SSH repository."""
     repository = SshBorgRepository.load(uuid)
@@ -482,6 +484,7 @@ def umount_repository(request, uuid):
     return redirect('backups:index')
 
 
+@require_POST
 def mount_repository(request, uuid):
     """View to mount a remote SSH repository."""
     # Do not mount unverified ssh repositories. Prompt for verification.
