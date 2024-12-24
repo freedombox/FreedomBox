@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure backups (with borg) and sshfs."""
 
+import functools
 import json
 import os
 import pathlib
@@ -8,20 +9,100 @@ import re
 import subprocess
 import tarfile
 
+from django.utils.translation import gettext_lazy as _
+
 from plinth import action_utils
 from plinth.actions import privileged, secret_str
 from plinth.utils import Version
+
+from . import errors
 
 TIMEOUT = 30
 BACKUPS_DATA_PATH = pathlib.Path('/var/lib/plinth/backups-data/')
 BACKUPS_UPLOAD_PATH = pathlib.Path('/var/lib/freedombox/backups-upload/')
 MANIFESTS_FOLDER = '/var/lib/plinth/backups-manifests/'
 
+# known errors that come up when remotely accessing a borg repository
+# 'errors' are error strings to look for in the stacktrace.
+KNOWN_ERRORS = [
+    {
+        'errors': ['subprocess.TimeoutExpired'],
+        'message':
+            _('Connection refused - make sure you provided correct '
+              'credentials and the server is running.'),
+        'raise_as':
+            errors.BorgError,
+    },
+    {
+        'errors': ['Connection refused'],
+        'message': _('Connection refused'),
+        'raise_as': errors.BorgError,
+    },
+    {
+        'errors': [
+            'not a valid repository', 'does not exist', 'FileNotFoundError'
+        ],
+        'message': _('Repository not found'),
+        'raise_as': errors.BorgRepositoryDoesNotExistError,
+    },
+    {
+        'errors': ['passphrase supplied in .* is incorrect'],
+        'message': _('Incorrect encryption passphrase'),
+        'raise_as': errors.BorgError,
+    },
+    {
+        'errors': ['Connection reset by peer'],
+        'message': _('SSH access denied'),
+        'raise_as': errors.SshfsError,
+    },
+    {
+        'errors': ['There is already something at'],
+        'message':
+            _('Repository path is neither empty nor '
+              'is an existing backups repository.'),
+        'raise_as':
+            errors.BorgError,
+    },
+    {
+        'errors': ['A repository already exists at'],
+        'message': None,
+        'raise_as': errors.BorgRepositoryExists,
+    },
+]
+
 
 class AlreadyMountedError(Exception):
     """Exception raised when mount point is already mounted."""
 
 
+def reraise_known_errors(privileged_func):
+    """Decorator to convert borg raised exceptions to specialized ones."""
+
+    @functools.wraps(privileged_func)
+    def wrapper(*args, **kwargs):
+        """Run privileged method, catch exceptions and throw new ones."""
+        try:
+            return privileged_func(*args, **kwargs)
+        except Exception as exception:
+            _reraise_known_errors(exception)
+
+    return wrapper
+
+
+def _reraise_known_errors(err):
+    """Look whether the caught error is known and reraise it accordingly"""
+    stdout = getattr(err, 'stdout', b'').decode()
+    stderr = getattr(err, 'stderr', b'').decode()
+    caught_error = str((err, err.args, stdout, stderr))
+    for known_error in KNOWN_ERRORS:
+        for error in known_error['errors']:
+            if re.search(error, caught_error):
+                raise known_error['raise_as'](known_error['message'])
+
+    raise err
+
+
+@reraise_known_errors
 @privileged
 def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
           password: secret_str | None = None,
@@ -61,6 +142,7 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
     subprocess.run(cmd, check=True, timeout=TIMEOUT, input=input_)
 
 
+@reraise_known_errors
 @privileged
 def umount(mountpoint: str):
     """Unmount a mountpoint."""
@@ -91,12 +173,14 @@ def _is_mounted(mountpoint):
         return False
 
 
+@reraise_known_errors
 @privileged
 def is_mounted(mount_point: str) -> bool:
     """Return whether a path is already mounted."""
     return _is_mounted(mount_point)
 
 
+@reraise_known_errors
 @privileged
 def setup(path: str):
     """Create repository if it does not already exist."""
@@ -121,6 +205,7 @@ def _init_repository(path: str, encryption: str,
     _run(cmd, encryption_passphrase)
 
 
+@reraise_known_errors
 @privileged
 def init(path: str, encryption: str,
          encryption_passphrase: secret_str | None = None):
@@ -128,6 +213,7 @@ def init(path: str, encryption: str,
     _init_repository(path, encryption, encryption_passphrase)
 
 
+@reraise_known_errors
 @privileged
 def info(path: str, encryption_passphrase: secret_str | None = None) -> dict:
     """Show repository information."""
@@ -136,6 +222,7 @@ def info(path: str, encryption_passphrase: secret_str | None = None) -> dict:
     return json.loads(process.stdout.decode())
 
 
+@reraise_known_errors
 @privileged
 def list_repo(path: str,
               encryption_passphrase: secret_str | None = None) -> dict:
@@ -145,6 +232,7 @@ def list_repo(path: str,
     return json.loads(process.stdout.decode())
 
 
+@reraise_known_errors
 @privileged
 def add_uploaded_archive(file_name: str, temporary_file_path: str):
     """Store an archive uploaded by the user."""
@@ -154,6 +242,7 @@ def add_uploaded_archive(file_name: str, temporary_file_path: str):
                                     permissions=0o600)
 
 
+@reraise_known_errors
 @privileged
 def remove_uploaded_archive(file_path: str):
     """Delete the archive uploaded by the user."""
@@ -169,6 +258,7 @@ def _get_borg_version():
     return process.stdout.decode().split()[1]  # Example: "borg 1.1.9"
 
 
+@reraise_known_errors
 @privileged
 def create_archive(path: str, paths: list[str], comment: str | None = None,
                    encryption_passphrase: secret_str | None = None):
@@ -188,6 +278,7 @@ def create_archive(path: str, paths: list[str], comment: str | None = None,
     _run(command, encryption_passphrase)
 
 
+@reraise_known_errors
 @privileged
 def delete_archive(path: str, encryption_passphrase: secret_str | None = None):
     """Delete archive."""
@@ -218,6 +309,7 @@ def _extract(archive_path, destination, encryption_passphrase, locations=None):
         os.chdir(prev_dir)
 
 
+@reraise_known_errors
 @privileged
 def export_tar(path: str, encryption_passphrase: secret_str | None = None):
     """Export archive contents as tar stream on stdout."""
@@ -232,6 +324,7 @@ def _read_archive_file(archive, filepath, encryption_passphrase):
                 stdout=subprocess.PIPE).stdout.decode()
 
 
+@reraise_known_errors
 @privileged
 def get_archive_apps(
         path: str,
@@ -278,6 +371,7 @@ def _get_apps_of_manifest(manifest):
     return apps
 
 
+@reraise_known_errors
 @privileged
 def get_exported_archive_apps(path: str) -> list[str]:
     """Get list of apps included in an exported archive file."""
@@ -304,6 +398,7 @@ def get_exported_archive_apps(path: str) -> list[str]:
     return app_names
 
 
+@reraise_known_errors
 @privileged
 def restore_archive(archive_path: str, destination: str,
                     directories: list[str], files: list[str],
@@ -317,6 +412,7 @@ def restore_archive(archive_path: str, destination: str,
              locations=locations_all)
 
 
+@reraise_known_errors
 @privileged
 def restore_exported_archive(path: str, directories: list[str],
                              files: list[str]):
@@ -339,6 +435,7 @@ def _assert_app_id(app_id):
         raise Exception('Invalid App ID')
 
 
+@reraise_known_errors
 @privileged
 def dump_settings(app_id: str, settings: dict[str, int | float | bool | str]):
     """Dump an app's settings to a JSON file."""
@@ -348,6 +445,7 @@ def dump_settings(app_id: str, settings: dict[str, int | float | bool | str]):
     settings_path.write_text(json.dumps(settings))
 
 
+@reraise_known_errors
 @privileged
 def load_settings(app_id: str) -> dict[str, int | float | bool | str]:
     """Load an app's settings from a JSON file."""
