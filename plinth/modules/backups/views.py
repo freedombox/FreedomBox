@@ -3,6 +3,7 @@
 Views for the backups app.
 """
 
+import contextlib
 import logging
 import os
 import subprocess
@@ -11,7 +12,7 @@ from urllib.parse import unquote
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404, StreamingHttpResponse
+from django.http import Http404, HttpRequest, StreamingHttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -24,13 +25,22 @@ from plinth.errors import PlinthError
 from plinth.modules import backups, storage
 from plinth.views import AppView
 
-from . import (SESSION_PATH_VARIABLE, api, forms, get_known_hosts_path,
+from . import (SESSION_PATH_VARIABLE, api, errors, forms, get_known_hosts_path,
                is_ssh_hostkey_verified, privileged)
 from .decorators import delete_tmp_backup_file
 from .repository import (BorgRepository, SshBorgRepository, get_instance,
                          get_repositories)
 
 logger = logging.getLogger(__name__)
+
+
+@contextlib.contextmanager
+def handle_common_errors(request: HttpRequest):
+    """If any known Borg exceptions occur, show proper error messages."""
+    try:
+        yield
+    except errors.BorgError as exception:
+        messages.error(request, exception.args[0])
 
 
 @method_decorator(delete_tmp_backup_file, name='dispatch')
@@ -101,14 +111,13 @@ class ScheduleView(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
-class CreateArchiveView(SuccessMessageMixin, FormView):
+class CreateArchiveView(FormView):
     """View to create a new archive."""
 
     form_class = forms.CreateArchiveForm
     prefix = 'backups'
     template_name = 'form.html'
     success_url = reverse_lazy('backups:index')
-    success_message = gettext_lazy('Archive created.')
 
     def get_context_data(self, **kwargs):
         """Return additional context for rendering the template."""
@@ -136,11 +145,14 @@ class CreateArchiveView(SuccessMessageMixin, FormView):
                 microsecond=0).isoformat()
 
         selected_apps = form.cleaned_data['selected_apps']
-        repository.create_archive(name, selected_apps)
+        with handle_common_errors(self.request):
+            repository.create_archive(name, selected_apps)
+            messages.success(self.request, _('Archive created.'))
+
         return super().form_valid(form)
 
 
-class DeleteArchiveView(SuccessMessageMixin, TemplateView):
+class DeleteArchiveView(TemplateView):
     """View to delete an archive."""
     template_name = 'backups_delete.html'
 
@@ -158,12 +170,14 @@ class DeleteArchiveView(SuccessMessageMixin, TemplateView):
     def post(self, request, uuid, name):
         """Delete the archive."""
         repository = get_instance(uuid)
-        repository.delete_archive(name)
-        messages.success(request, _('Archive deleted.'))
+        with handle_common_errors(self.request):
+            repository.delete_archive(name)
+            messages.success(request, _('Archive deleted.'))
+
         return redirect('backups:index')
 
 
-class UploadArchiveView(SuccessMessageMixin, FormView):
+class UploadArchiveView(FormView):
     form_class = forms.UploadForm
     prefix = 'backups'
     template_name = 'backups_upload.html'
@@ -196,20 +210,22 @@ class UploadArchiveView(SuccessMessageMixin, FormView):
         """Store uploaded file."""
         uploaded_file = self.request.FILES['backups-file']
         # Hold on to Django's uploaded file. It will be used by other views.
-        privileged.add_uploaded_archive(uploaded_file.name,
-                                        uploaded_file.temporary_file_path())
-        self.request.session[SESSION_PATH_VARIABLE] = str(
-            privileged.BACKUPS_UPLOAD_PATH / uploaded_file.name)
+        with handle_common_errors(self.request):
+            privileged.add_uploaded_archive(
+                uploaded_file.name, uploaded_file.temporary_file_path())
+            self.request.session[SESSION_PATH_VARIABLE] = str(
+                privileged.BACKUPS_UPLOAD_PATH / uploaded_file.name)
+            messages.success(self.request, _('Upload successful.'))
+
         return super().form_valid(form)
 
 
-class BaseRestoreView(SuccessMessageMixin, FormView):
+class BaseRestoreView(FormView):
     """View to restore files from an archive."""
     form_class = forms.RestoreForm
     prefix = 'backups'
     template_name = 'backups_restore.html'
     success_url = reverse_lazy('backups:index')
-    success_message = gettext_lazy('Restored files from backup.')
 
     def get_form_kwargs(self):
         """Pass additional keyword args for instantiating the form."""
@@ -257,7 +273,10 @@ class RestoreFromUploadView(BaseRestoreView):
         """Restore files from the archive on valid form submission."""
         path = self.request.session.get(SESSION_PATH_VARIABLE)
         selected_apps = form.cleaned_data['selected_apps']
-        backups.restore_from_upload(path, selected_apps)
+        with handle_common_errors(self.request):
+            backups.restore_from_upload(path, selected_apps)
+            messages.success(self.request, _('Restored files from backup.'))
+
         return super().form_valid(form)
 
 
@@ -275,7 +294,10 @@ class RestoreArchiveView(BaseRestoreView):
         """Restore files from the archive on valid form submission."""
         repository = get_instance(self.kwargs['uuid'])
         selected_apps = form.cleaned_data['selected_apps']
-        repository.restore_archive(self.kwargs['name'], selected_apps)
+        with handle_common_errors(self.request):
+            repository.restore_archive(self.kwargs['name'], selected_apps)
+            messages.success(self.request, _('Restored files from backup.'))
+
         return super().form_valid(form)
 
 
@@ -293,7 +315,7 @@ class DownloadArchiveView(View):
         return response
 
 
-class AddRepositoryView(SuccessMessageMixin, FormView):
+class AddRepositoryView(FormView):
     """View to create a new backup repository."""
     form_class = forms.AddRepositoryForm
     template_name = 'backups_add_repository.html'
@@ -324,14 +346,16 @@ class AddRepositoryView(SuccessMessageMixin, FormView):
             encryption_passphrase = None
 
         credentials = {'encryption_passphrase': encryption_passphrase}
-        repository = BorgRepository(path, credentials)
-        if _save_repository(self.request, repository):
-            return super().form_valid(form)
+        with handle_common_errors(self.request):
+            repository = BorgRepository(path, credentials)
+            if _save_repository(self.request, repository):
+                messages.success(self.request, _('Added new repository.'))
+                return super().form_valid(form)
 
         return redirect(reverse_lazy('backups:add-repository'))
 
 
-class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
+class AddRemoteRepositoryView(FormView):
     """View to create a new remote backup repository."""
     form_class = forms.AddRemoteRepositoryForm
     template_name = 'backups_add_remote_repository.html'
@@ -356,16 +380,18 @@ class AddRemoteRepositoryView(SuccessMessageMixin, FormView):
             'ssh_password': form.cleaned_data.get('ssh_password'),
             'encryption_passphrase': encryption_passphrase
         }
-        repository = SshBorgRepository(path, credentials)
-        repository.verfied = False
-        repository.save()
-        messages.success(self.request, _('Added new remote SSH repository.'))
+        with handle_common_errors(self.request):
+            repository = SshBorgRepository(path, credentials)
+            repository.verfied = False
+            repository.save()
+            messages.success(self.request,
+                             _('Added new remote SSH repository.'))
 
         url = reverse('backups:verify-ssh-hostkey', args=[repository.uuid])
         return redirect(url)
 
 
-class VerifySshHostkeyView(SuccessMessageMixin, FormView):
+class VerifySshHostkeyView(FormView):
     """View to verify SSH Hostkey of the remote repository."""
     form_class = forms.VerifySshHostkeyForm
     template_name = 'verify_ssh_hostkey.html'
@@ -416,10 +442,11 @@ class VerifySshHostkeyView(SuccessMessageMixin, FormView):
     def form_valid(self, form):
         """Create and store the repository."""
         ssh_public_key = form.cleaned_data['ssh_public_key']
-        self._add_ssh_hostkey(ssh_public_key)
-        messages.success(self.request, _('SSH host verified.'))
-        if _save_repository(self.request, self._get_repository()):
-            return redirect(reverse_lazy('backups:index'))
+        with handle_common_errors(self.request):
+            self._add_ssh_hostkey(ssh_public_key)
+            messages.success(self.request, _('SSH host verified.'))
+            if _save_repository(self.request, self._get_repository()):
+                return redirect(reverse_lazy('backups:index'))
 
         return redirect(reverse_lazy('backups:add-remote-repository'))
 
@@ -455,7 +482,7 @@ def _save_repository(request, repository):
     return False
 
 
-class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
+class RemoveRepositoryView(TemplateView):
     """View to delete a repository."""
     template_name = 'backups_repository_remove.html'
 
@@ -468,10 +495,11 @@ class RemoveRepositoryView(SuccessMessageMixin, TemplateView):
 
     def post(self, request, uuid):
         """Delete the repository on confirmation."""
-        repository = get_instance(uuid)
-        repository.remove()
-        messages.success(request,
-                         _('Repository removed. Backups were not deleted.'))
+        with handle_common_errors(self.request):
+            repository = get_instance(uuid)
+            repository.remove()
+            messages.success(
+                request, _('Repository removed. Backups were not deleted.'))
 
         return redirect('backups:index')
 

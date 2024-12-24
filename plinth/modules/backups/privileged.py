@@ -68,6 +68,25 @@ KNOWN_ERRORS = [
         'message': None,
         'raise_as': errors.BorgRepositoryExists,
     },
+    {
+        'errors': ['Archive .* already exists'],
+        'message':
+            _('An archive with given name already exists in the repository.'),
+        'raise_as':
+            errors.BorgArchiveExists,
+    },
+    {
+        'errors': ['Archive .* not found'],
+        'message':
+            _('Archive with given name was not found in the repository.'),
+        'raise_as':
+            errors.BorgArchiveDoesNotExist,
+    },
+    {
+        'errors': ['Failed to create/acquire the lock'],
+        'message': _('Backup system is busy with another operation.'),
+        'raise_as': errors.BorgBusy,
+    },
 ]
 
 
