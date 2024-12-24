@@ -6,6 +6,7 @@ Main FreedomBox views.
 import datetime
 import random
 import time
+import traceback
 import urllib.parse
 
 from django.contrib import messages
@@ -116,17 +117,20 @@ def messages_error(request, message, exception):
     If an exception can show HTML message, handle is separately.
     """
     if hasattr(exception, 'get_html_message'):
-        collapse_id = 'error-details-' + str(random.randint(0, 10**9))
-        message = format_html(
-            '{message} <a href="#" class="dropdown-toggle" '
-            'data-bs-toggle="collapse" data-bs-target="#{collapse_id}" '
-            'aria-expanded="false" aria-controls="{collapse_id}">'
-            'Details</a><pre class="collapse" '
-            'id="{collapse_id}"><code>{html_message}</code></pre>',
-            message=message, html_message=exception.get_html_message(),
-            collapse_id=collapse_id)
+        html_message = exception.get_html_message()
+    else:
+        exception_lines = traceback.format_exception(exception)
+        html_message = ''.join(exception_lines)
 
-    messages.error(request, message)
+    collapse_id = 'error-details-' + str(random.randint(0, 10**9))
+    formatted_message = format_html(
+        '{message} <a href="#" class="dropdown-toggle" '
+        'data-bs-toggle="collapse" data-bs-target="#{collapse_id}" '
+        'aria-expanded="false" aria-controls="{collapse_id}">'
+        'Details</a><pre class="collapse" '
+        'id="{collapse_id}"><code>{html_message}</code></pre>',
+        message=message, html_message=html_message, collapse_id=collapse_id)
+    messages.error(request, formatted_message)
 
 
 def _get_redirect_url_from_param(request):
