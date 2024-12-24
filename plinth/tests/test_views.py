@@ -6,23 +6,10 @@ Tests for common FreedomBox views.
 import pytest
 from django.urls import resolve
 
-from plinth import menu as menu_module
 from plinth.views import get_breadcrumbs, is_safe_url
 
 
-@pytest.fixture(name='menu')
-def fixture_menu():
-    """Initialized menu module."""
-    menu_module.Menu._all_menus = set()
-    menu_module.init()
-    menu_module.Menu('home-id', name='Home', url_name='index')
-    menu_module.Menu('apps-id', name='Apps', url_name='apps',
-                     parent_url_name='index')
-    menu_module.Menu('testapp-id', name='Test App', url_name='testapp:index',
-                     parent_url_name='apps')
-
-
-def test_get_breadcrumbs(rf, menu):
+def test_get_breadcrumbs(rf, test_menu):
     """Test that computing breadcrumbs works."""
 
     def _crumb(name: str, is_active: bool = False, url_name: str | None = None,

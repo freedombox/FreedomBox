@@ -9,8 +9,9 @@ import pytest
 from django.contrib.auth.models import AnonymousUser, Group, User
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.test.client import RequestFactory
+from django.urls import resolve
 from stronghold.decorators import public
 
 from plinth import app as app_module
@@ -144,12 +145,14 @@ class TestSetupMiddleware:
         resolve.return_value.namespaces = ['mockapp']
         operation_manager.collect_results.return_value = [
             Mock(translated_message='message1', exception=None),
-            Mock(translated_message='message2', exception='x-exception')
+            Mock(translated_message='message2',
+                 exception=RuntimeError('x-exception'))
         ]
         app.get_setup_state = lambda: app_module.App.SetupState.UP_TO_DATE
 
         # Admin user can collect result
         request = RequestFactory().get('/plinth/mockapp')
+        request.resolver_match = Mock()
         user = User(username='adminuser')
         user.save()
         group = Group(name='admin')
@@ -162,7 +165,9 @@ class TestSetupMiddleware:
 
         assert response is None
         messages_success.assert_has_calls([call(request, 'message1')])
-        messages_error.assert_has_calls([call(request, 'message2')])
+        messages_error.assert_called_once()
+        assert messages_error.call_args.args[0] == request
+        assert messages_error.call_args.args[1].startswith('message2')
         operation_manager.collect_results.assert_has_calls([call('mockapp')])
 
         # Non-admin user can't collect result
@@ -265,7 +270,8 @@ class TestCommonErrorMiddleware:
     @pytest.fixture(name='web_request')
     def fixture_web_request():
         """Fixture for returning web request."""
-        web_request = RequestFactory().get('/plinth/mockapp')
+        web_request = RequestFactory().get('/apps/testapp/')
+        web_request.resolver_match = resolve('/apps/testapp/')
         web_request.user = Mock()
         return web_request
 
@@ -288,6 +294,36 @@ class TestCommonErrorMiddleware:
         assert 'message' in response.context_data
 
     @staticmethod
-    def test_other_error(middleware, web_request, other_error):
+    @patch('django.contrib.messages.error')
+    def test_other_error_get(messages_error, middleware, web_request,
+                             other_error, test_menu):
         response = middleware.process_exception(web_request, other_error)
-        assert response is None
+        assert isinstance(response, HttpResponseRedirect)
+        assert response.url == '/apps/'
+        messages_error.assert_called_once()
+        assert messages_error.call_args.args[0] == web_request
+        assert messages_error.call_args.args[1].startswith(
+            'Error loading page.')
+
+    @staticmethod
+    @patch('django.contrib.messages.error')
+    def test_other_error_post(messages_error, middleware, web_request,
+                              other_error, test_menu):
+        web_request.method = 'POST'
+        response = middleware.process_exception(web_request, other_error)
+        assert isinstance(response, HttpResponseRedirect)
+        assert response.url == '/apps/testapp/'
+        messages_error.assert_called_once()
+        assert messages_error.call_args.args[0] == web_request
+        assert messages_error.call_args.args[1].startswith(
+            'Error running operation.')
+
+    @staticmethod
+    @patch('django.contrib.messages.error')
+    def test_other_error_index(messages_error, middleware, web_request,
+                               other_error, test_menu):
+        web_request.path = '/'
+        web_request.resolver_match = resolve('/')
+        response = middleware.process_exception(web_request, other_error)
+        assert not response
+        messages_error.assert_not_called()

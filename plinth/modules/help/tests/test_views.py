@@ -20,9 +20,7 @@ from django.conf import settings
 from django.http import Http404
 from django.urls import re_path
 
-from plinth import cfg
-from plinth import menu as menu_module
-from plinth import module_loader
+from plinth import cfg, module_loader
 from plinth.modules import help as help_module
 from plinth.modules.help import views
 
@@ -57,9 +55,8 @@ def fixture_developer_configuration():
 
 
 @pytest.fixture(name='menu', autouse=True)
-def fixture_menu():
+def fixture_menu(test_menu):
     """Initialized menu module."""
-    menu_module.init()
     help_module.HelpApp()  # Create all menu components
 
 
