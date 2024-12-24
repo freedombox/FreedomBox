@@ -242,14 +242,11 @@ class Schedule:
 
             archive['comment'] = comment
 
-            start_time = datetime.strptime(archive['start'],
-                                           '%Y-%m-%dT%H:%M:%S.%f')
-            if start_time > now:
+            if archive['start'] > now:
                 # This backup was taken when clock was set in future. Ignore it
                 # to ensure backups continue to be taken.
                 continue
 
-            archive['start'] = start_time
             scheduled_archives.append(archive)
 
         return scheduled_archives

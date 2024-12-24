@@ -3,6 +3,7 @@
 
 import abc
 import contextlib
+import datetime
 import io
 import logging
 import os
@@ -121,6 +122,12 @@ class BaseBorgRepository(abc.ABC):
         """Return list of archives in this repository."""
         archives = privileged.list_repo(
             self.borg_path, self._get_encryption_passpharse())['archives']
+        for archive in archives:
+            archive['time'] = datetime.datetime.strptime(
+                archive['time'], '%Y-%m-%dT%H:%M:%S.%f')
+            archive['start'] = datetime.datetime.strptime(
+                archive['start'], '%Y-%m-%dT%H:%M:%S.%f')
+
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
