@@ -34,9 +34,7 @@ class TestMinifluxApp(functional.BaseAppTests):
         """Test creating an admin user."""
         _miniflux_login(session_browser)
         # Verify that this user can see admin settings
-        with functional.wait_for_page_update(session_browser):
-            session_browser.links.find_by_href(
-                '/miniflux/settings').first.click()
+        functional.click_link_by_href(session_browser, '/miniflux/settings')
 
         assert not session_browser.links.find_by_href(
             '/miniflux/users').is_empty()
@@ -61,9 +59,7 @@ class TestMinifluxApp(functional.BaseAppTests):
 def _fill_credentials_form(browser, href):
     """Fill the user credentials form in Miniflux app."""
     functional.nav_to_module(browser, 'miniflux')
-    with functional.wait_for_page_update(browser):
-        browser.links.find_by_href(
-            f'/plinth/apps/miniflux/{href}/').first.click()
+    functional.click_link_by_href(browser, f'/plinth/apps/miniflux/{href}/')
 
     browser.fill('miniflux-username', CREDENTIALS['username'])
     browser.fill('miniflux-password', CREDENTIALS['password'])
@@ -89,8 +85,7 @@ def _miniflux_logout(browser):
     _open_miniflux_app(browser)
     maybe_logout_button = browser.links.find_by_href('/miniflux/logout')
     if not maybe_logout_button.is_empty():
-        with functional.wait_for_page_update(browser):
-            maybe_logout_button.first.click()
+        functional.click_and_wait(browser, maybe_logout_button)
 
 
 def _miniflux_submit(browser):
@@ -117,19 +112,15 @@ def _subscribe(browser, feed_url):
     """Subscribe to a feed in Miniflux."""
     _open_miniflux_app(browser)
     _miniflux_login(browser)
-    with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/miniflux/subscribe').first.click()
-
-    with functional.wait_for_page_update(browser):
-        browser.find_by_id('form-url').fill(feed_url)
-        _miniflux_submit(browser)
+    functional.click_link_by_href(browser, '/miniflux/subscribe')
+    browser.find_by_id('form-url').fill(feed_url)
+    _miniflux_submit(browser)
 
 
 def _is_subscribed(browser, feed_name):
     """Check if the user is subscribed to a feed."""
     _open_miniflux_app(browser)
     _miniflux_login(browser)
-    with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/miniflux/feeds').first.click()
+    functional.click_link_by_href(browser, '/miniflux/feeds')
 
     return browser.is_text_present(feed_name)
