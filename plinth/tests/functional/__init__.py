@@ -279,20 +279,32 @@ def click(browser, element):
         element.click()
 
 
+def click_and_wait(browser, element, timeout=300, expected_url=None):
+    """Click an element.
+
+    Scroll it into view considering header if needed and wait for a page
+    update.
+    """
+    with wait_for_page_update(browser, timeout, expected_url=expected_url):
+        click(browser, element)
+
+
+def click_link_by_href(browser, href):
+    """Click a link and wait for a page update."""
+    click_and_wait(browser, browser.links.find_by_href(href).first)
+
+
 def submit(browser, element=None, form_class=None, expected_url=None):
     """Submit a specific form in the current page and wait for page change."""
     if not (element or form_class):
         raise AssertionError('Either element or form_class must be sent')
 
-    with wait_for_page_update(browser, expected_url=expected_url):
-        if element:
-            click(browser, element)
-        elif form_class:
-            browser.find_by_css(f'.{form_class} input[type=submit], '
-                                f'.{form_class} button[type=submit]').click()
-        else:
-            browser.find_by_css(
-                'input[type=submit] button[type=submit]').click()
+    if not element:
+        element = browser.find_by_css(
+            f'.{form_class} input[type=submit], '
+            f'.{form_class} button[type=submit]').first
+
+    click_and_wait(browser, element, expected_url=expected_url)
 
 
 def set_app_form_value(browser, app_id, element_id, value):
@@ -393,11 +405,10 @@ def login_with_account(browser, url, username, password=None):
 
     login_button = browser.links.find_by_href('/plinth/accounts/login/')
     if login_button:
-        login_button.first.click()
-        if login_button:
-            browser.fill('username', username)
-            browser.fill('password', password)
-            submit(browser, form_class='form-login')
+        click_and_wait(browser, login_button.first)
+        browser.fill('username', username)
+        browser.fill('password', password)
+        submit(browser, form_class='form-login')
     else:
         _run_first_wizard(browser)
 
@@ -460,8 +471,7 @@ def install(browser, app_name):
                     f'App {app_name} is not available in distribution')
                 pytest.skip('App not available in distribution')
             else:
-                with wait_for_page_update(browser):
-                    install_button.click()
+                click_and_wait(browser, install_button)
         else:
             break
 
@@ -479,8 +489,7 @@ def uninstall(browser, app_name):
         pytest.skip('App cannot be uninstalled')
 
     uninstall_page_url = uninstall_item[0]['href']
-    with wait_for_page_update(browser, expected_url=uninstall_page_url):
-        uninstall_item[0].click()
+    click_and_wait(browser, uninstall_item[0], expected_url=uninstall_page_url)
 
     submit(browser, form_class='form-uninstall')
 
@@ -666,7 +675,7 @@ def networks_set_firewall_zone(browser, zone):
     network_id = device['href'].split('/')[-3]
     device.click()
     edit_url = '/plinth/sys/networks/{}/edit/'.format(network_id)
-    browser.links.find_by_href(edit_url).first.click()
+    click_link_by_href(browser, edit_url)
     browser.select('zone', zone)
     submit(browser, form_class='form-connection-edit')
 
@@ -699,8 +708,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
     if password is None:
         password = get_password(name)
 
-    with wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/sys/users/create/').first.click()
+    click_link_by_href(browser, '/plinth/sys/users/create/')
 
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
@@ -721,7 +729,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
 def delete_user(browser, name):
     """Delete a user."""
     nav_to_module(browser, 'users')
-    browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/').first.click()
+    click_link_by_href(browser, f'/plinth/sys/users/{name}/edit/')
 
     browser.find_by_id('id_delete').check()
     browser.find_by_id('id_confirm_password').fill(
@@ -733,8 +741,7 @@ def delete_user(browser, name):
         '#user-delete-confirm-dialog button.confirm').first
     eventually(lambda: confirm_button.visible)
     assert confirm_button.visible
-    with wait_for_page_update(browser, expected_url='/plinth/sys/users/'):
-        confirm_button.click()
+    click_and_wait(browser, confirm_button, expected_url='/plinth/sys/users/')
 
 
 def user_exists(browser, name):
