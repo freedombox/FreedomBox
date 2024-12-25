@@ -179,8 +179,8 @@ def _login(browser, username, password):
     functional.visit(browser, '/mediawiki/index.php?title=Special:Login')
     browser.find_by_id('wpName1').fill(username)
     browser.find_by_id('wpPassword1').fill(password)
-    with functional.wait_for_page_update(browser):
-        browser.find_by_id('wpLoginAttempt').click()
+    functional.click_and_wait(browser,
+                              browser.find_by_id('wpLoginAttempt').first)
 
 
 def _login_with_credentials(browser, username, password):
@@ -249,8 +249,7 @@ def _delete_main_page(browser, username, password):
     _login(browser, username, password)
     functional.visit(browser,
                      '/mediawiki/index.php?title=Main_Page&action=delete')
-    with functional.wait_for_page_update(browser):
-        browser.find_by_id('wpConfirmB').first.click()
+    functional.click_and_wait(browser, browser.find_by_id('wpConfirmB').first)
 
 
 def _has_main_page(browser):
