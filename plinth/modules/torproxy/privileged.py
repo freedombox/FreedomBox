@@ -26,10 +26,6 @@ TORPROXY_CONFIG_AUG = f'/files/{TORPROXY_CONFIG}'
 @privileged
 def setup():
     """Setup Tor configuration."""
-    # Disable default tor service. We will use tor@fbxproxy instance
-    # instead.
-    _disable_apt_transport_tor()
-
     # Disable default Tor service.
     action_utils.service_disable('tor@default')
     # Mask the service to prevent re-enabling it by the Tor master service.
