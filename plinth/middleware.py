@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
-from django.http import HttpResponseNotAllowed
+from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.template.response import SimpleTemplateResponse
 from django.utils.deprecation import MiddlewareMixin
@@ -143,12 +143,19 @@ class CommonErrorMiddleware(MiddlewareMixin):
                 # to infinite redirects.
                 return None
 
-            if request.method == 'POST':
+            if isinstance(exception, Http404):
+                message = _('Page not found: {url}').format(url=request.path)
+                exception = None  # Don't show exception details
+            elif request.method == 'POST':
                 message = _('Error running operation.')
             else:
                 message = _('Error loading page.')
 
-            views.messages_error(request, message, exception)
+            if exception:
+                views.messages_error(request, message, exception)
+            else:
+                messages.error(request, message)
+
             redirect_url = CommonErrorMiddleware._get_redirect_url_on_error(
                 request)
             return redirect(redirect_url)

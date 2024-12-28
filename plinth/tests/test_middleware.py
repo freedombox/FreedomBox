@@ -9,7 +9,7 @@ import pytest
 from django.contrib.auth.models import AnonymousUser, Group, User
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
-from django.http import (HttpResponse, HttpResponseNotAllowed,
+from django.http import (Http404, HttpResponse, HttpResponseNotAllowed,
                          HttpResponseRedirect)
 from django.test.client import RequestFactory
 from django.urls import resolve
@@ -293,6 +293,18 @@ class TestCommonErrorMiddleware:
         response = middleware.process_exception(web_request, operational_error)
         assert response.template_name == 'error.html'
         assert 'message' in response.context_data
+
+    @staticmethod
+    @patch('django.contrib.messages.error')
+    def test_404_error_get(messages_error, middleware, web_request, test_menu):
+        """Test that 404 page not found errors are handled."""
+        response = middleware.process_exception(web_request, Http404())
+        assert isinstance(response, HttpResponseRedirect)
+        assert response.url == '/apps/'
+        messages_error.assert_called_once()
+        assert messages_error.call_args.args[0] == web_request
+        assert messages_error.call_args.args[1].startswith(
+            'Page not found: /apps/testapp/')
 
     @staticmethod
     @patch('django.contrib.messages.error')
