@@ -47,7 +47,7 @@ class UsersApp(app_module.App):
 
     app_id = 'users'
 
-    _version = 7
+    _version = 8
 
     can_be_disabled = False
 

@@ -124,7 +124,8 @@ def _configure_ldap_authentication():
     action_utils.service_enable('slapd')
     action_utils.service_start('slapd')
     action_utils.service_enable('nslcd')
-    action_utils.service_start('nslcd')
+    # For changes in /etc/nslcd.conf to take effect, restart the service
+    action_utils.service_restart('nslcd')
 
 
 def _configure_ldap_structure():
