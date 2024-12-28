@@ -9,7 +9,8 @@ import pytest
 from django.contrib.auth.models import AnonymousUser, Group, User
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import (HttpResponse, HttpResponseNotAllowed,
+                         HttpResponseRedirect)
 from django.test.client import RequestFactory
 from django.urls import resolve
 from stronghold.decorators import public
@@ -326,4 +327,14 @@ class TestCommonErrorMiddleware:
         web_request.resolver_match = resolve('/')
         response = middleware.process_exception(web_request, other_error)
         assert not response
+        messages_error.assert_not_called()
+
+    @staticmethod
+    @patch('django.contrib.messages.error')
+    def test_405_error(messages_error, middleware, web_request, test_menu):
+        """Test that method not allowed errors are handled."""
+        response = middleware.process_response(
+            web_request, HttpResponseNotAllowed(['POST']))
+        assert isinstance(response, HttpResponseRedirect)
+        assert response.url == '/apps/'
         messages_error.assert_not_called()

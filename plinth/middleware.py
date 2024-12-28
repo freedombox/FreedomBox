@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect, render
 from django.template.response import SimpleTemplateResponse
 from django.utils.deprecation import MiddlewareMixin
@@ -153,6 +154,20 @@ class CommonErrorMiddleware(MiddlewareMixin):
             return redirect(redirect_url)
 
         return None
+
+    @staticmethod
+    def process_response(request, response):
+        """Handle 405 method not allowed errors.
+
+        These errors may happen when we redirect to a page that does not allow
+        GET.
+        """
+        if isinstance(response, HttpResponseNotAllowed):
+            redirect_url = CommonErrorMiddleware._get_redirect_url_on_error(
+                request)
+            return redirect(redirect_url)
+
+        return response
 
     @staticmethod
     def _get_redirect_url_on_error(request):
