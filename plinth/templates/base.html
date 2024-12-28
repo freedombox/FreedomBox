@@ -252,7 +252,9 @@
         {% block content_row %}
             {% include 'messages.html' %}
 
-            {% include 'breadcrumbs.html' %}
+            {% block breadcrumbs %}
+              {% include 'breadcrumbs.html' %}
+            {% endblock %}
 
             {% block content %}
               {# main content goes here #}
