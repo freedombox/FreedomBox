@@ -39,9 +39,9 @@ class SSHApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True,
-                               name=_('Secure Shell (SSH) Server'),
+                               name=_('Secure Shell Server'),
                                icon='fa-terminal', description=_description,
-                               manual_page='SecureShell')
+                               manual_page='SecureShell', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-ssh', info.name, None, info.icon,

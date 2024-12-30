@@ -16,7 +16,7 @@ from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.package import Packages
 
-from . import api, privileged
+from . import api, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,8 @@ class BackupsApp(app_module.App):
             app_id=self.app_id, version=self._version, is_essential=True,
             depends=['storage'], name=_('Backups'), icon='fa-files-o',
             description=_description, manual_page='Backups',
-            donation_url='https://www.borgbackup.org/support/fund.html')
+            donation_url='https://www.borgbackup.org/support/fund.html',
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,

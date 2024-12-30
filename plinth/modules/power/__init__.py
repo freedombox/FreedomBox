@@ -30,7 +30,7 @@ class PowerApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Power'),
                                icon='fa-power-off', description=_description,
-                               manual_page='Power')
+                               manual_page='Power', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-power', info.name, None, info.icon,

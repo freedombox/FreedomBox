@@ -20,8 +20,11 @@ clients = [{
 backup: dict = {}
 
 tags = [
-    _('Server manager'),
-    _('Terminal'),
-    _('Disks'),
-    _('RAID'),
+    _('Advanced administration'),
+    _('Web terminal'),
+    _('Storage'),
+    _('Networking'),
+    _('Services'),
+    _('Logs'),
+    _('Performance'),
 ]

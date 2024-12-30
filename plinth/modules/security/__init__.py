@@ -33,7 +33,8 @@ class SecurityApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Security'),
-                               icon='fa-lock', manual_page='Security')
+                               icon='fa-lock', manual_page='Security',
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-security', info.name, None, info.icon,

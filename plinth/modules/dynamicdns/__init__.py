@@ -60,7 +60,7 @@ class DynamicDNSApp(app_module.App):
                                is_essential=True, depends=['names'],
                                name=_('Dynamic DNS Client'), icon='fa-refresh',
                                description=_description,
-                               manual_page='DynamicDNS')
+                               manual_page='DynamicDNS', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,

@@ -12,4 +12,8 @@ backup = {
     'services': ['pagekite']
 }
 
-tags = [_('Tunneling'), _('NAT traversal'), _('Remote access')]
+tags = [
+    _('Reachability'),
+    _('Remote access'),
+    _('Tunneling'),
+]

@@ -49,7 +49,7 @@ class SnapshotApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Storage Snapshots'),
                                icon='fa-film', description=_description,
-                               manual_page='Snapshots')
+                               manual_page='Snapshots', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-snapshot', info.name, None, info.icon,

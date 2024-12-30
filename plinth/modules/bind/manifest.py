@@ -13,6 +13,7 @@ backup = {
 }
 
 tags = [
-    _('Name server'),
-    _('DNS resolver'),
+    _('DNS'),
+    _('Server'),
+    _('Resolver'),
 ]

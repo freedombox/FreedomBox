@@ -46,7 +46,8 @@ class AvahiApp(app_module.App):
                                is_essential=True, depends=['names'],
                                name=_('Service Discovery'), icon='fa-compass',
                                description=_description,
-                               manual_page='ServiceDiscovery')
+                               manual_page='ServiceDiscovery',
+                               tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-avahi', info.name, None, info.icon,

@@ -60,7 +60,7 @@ class FirewallApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Firewall'),
                                icon='fa-shield', description=_description,
-                               manual_page='Firewall')
+                               manual_page='Firewall', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,

@@ -12,7 +12,7 @@ from plinth.modules.apache import (get_users_with_website, user_of_uws_url,
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 
-from . import privileged
+from . import manifest, privileged
 
 _description = [
     _('Here you can set some general configuration options '
@@ -39,7 +39,7 @@ class ConfigApp(app_module.App):
                                depends=['apache', 'firewall', 'names'
                                         ], name=_('General Configuration'),
                                icon='fa-cog', description=_description,
-                               manual_page='Configure')
+                               manual_page='Configure', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-config', _('Configure'), None, info.icon,

@@ -53,7 +53,7 @@ class NamesApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Name Services'),
                                icon='fa-tags', description=_description,
-                               manual_page='NameServices')
+                               manual_page='NameServices', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-names', info.name, None, info.icon,

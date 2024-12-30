@@ -18,7 +18,7 @@ from plinth.diagnostic_check import (DiagnosticCheck,
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 
-from . import privileged
+from . import manifest, privileged
 from .components import UsersAndGroups
 
 first_boot_steps = [
@@ -58,7 +58,7 @@ class UsersApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Users and Groups'),
                                icon='fa-users', description=_description,
-                               manual_page='Users')
+                               manual_page='Users', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-users', info.name, None, info.icon,
