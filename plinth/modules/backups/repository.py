@@ -2,7 +2,6 @@
 """Remote and local Borg backup repositories."""
 
 import abc
-import contextlib
 import datetime
 import io
 import logging
