@@ -26,6 +26,15 @@ def setup():
 
 
 @privileged
+def check_setup() -> bool:
+    """Check that setup configuration is retained."""
+    aug = _load_augeas()
+    ssl_cert_matches = aug.get('.anon/sslCert') == DATA_DIR + '/fullchain.pem'
+    ssl_key_matches = aug.get('.anon/sslKey') == DATA_DIR + '/privkey.pem'
+    return ssl_cert_matches and ssl_key_matches
+
+
+@privileged
 def set_super_user_password(password: secret_str):
     """Set the superuser password with murmurd command."""
     subprocess.run(['murmurd', '-readsupw'], input=password.encode(),
