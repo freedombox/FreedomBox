@@ -532,9 +532,19 @@ class Info(FollowerComponent):
         These can only be retrieved after Django has been configured.
         """
         # Store untranslated original strings instead of proxy objects
+        from django.core.exceptions import ImproperlyConfigured
+        from django.utils.functional import Promise
         from django.utils.translation import override
-        with override(language=None):
-            return [str(tag) for tag in self._tags]
+        try:
+            with override(language=None):
+                return [str(tag) for tag in self._tags]
+        except ImproperlyConfigured:
+            # Hack to allow apps to be instantiated without Django
+            # initialization as required by privileged process.
+            return [
+                tag._proxy____args[0] if isinstance(tag, Promise) else tag
+                for tag in self._tags
+            ]
 
     @classmethod
     def list_tags(self) -> list[str]:
