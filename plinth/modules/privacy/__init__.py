@@ -34,8 +34,7 @@ class PrivacyApp(app_module.App):
                                manual_page=None, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-privacy', info.name,
-                              info.short_description, info.icon,
+        menu_item = menu.Menu('menu-privacy', info.name, info.icon, info.tags,
                               'privacy:index', parent_url_name='system:data',
                               order=10)
         self.add(menu_item)

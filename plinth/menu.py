@@ -13,14 +13,15 @@ class Menu(app.FollowerComponent):
 
     _all_menus: ClassVar[set['Menu']] = set()
 
-    def __init__(self, component_id, name=None, short_description=None,
-                 icon=None, url_name=None, url_args=None, url_kwargs=None,
-                 parent_url_name=None, order=50, advanced=False):
+    def __init__(self, component_id: str, name: str | None = None,
+                 icon: str | None = None, tags: list[str] | None = None,
+                 url_name: str | None = None, url_args: list | None = None,
+                 url_kwargs: dict | None = None,
+                 parent_url_name: str | None = None, order: int = 50,
+                 advanced: bool = False):
         """Initialize a new menu item with basic properties.
 
         name is the label of the menu item.
-
-        short_description is an optional description shown on the menu item.
 
         icon is the icon to be displayed for the menu item. Icon can be the
         name of a glyphicon from the Fork Awesome font's icon set:
@@ -32,6 +33,9 @@ class Menu(app.FollowerComponent):
         value of icon is 'myicon' and app_id in App class is 'myapp', then two
         icons files plinth/modules/myapp/static/icons/myicon.svg and
         plinth/modules/myapp/static/icons/myicon.png are used in the interface.
+
+        tags is a list of tags that describe the app. Tags help users to find
+        similar apps or alternatives and discover use cases.
 
         url_name is the name of url location that will be activated when the
         menu item is selected. This is not optional. url_args and url_kwargs
@@ -56,8 +60,8 @@ class Menu(app.FollowerComponent):
         url = reverse_lazy(url_name, args=url_args, kwargs=url_kwargs)
 
         self.name = name
-        self.short_description = short_description
         self.icon = icon
+        self.tags = tags
         self.url = url
         self.order = order
         self.advanced = advanced

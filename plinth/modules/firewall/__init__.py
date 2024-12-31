@@ -63,7 +63,7 @@ class FirewallApp(app_module.App):
                                manual_page='Firewall', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-firewall', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-firewall', info.name, info.icon, info.tags,
                               'firewall:index',
                               parent_url_name='system:security', order=30)
         self.add(menu_item)

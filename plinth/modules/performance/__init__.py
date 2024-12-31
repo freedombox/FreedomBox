@@ -43,9 +43,8 @@ class PerformanceApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-performance', info.name,
-                              info.short_description, info.icon,
-                              'performance:index',
+        menu_item = menu.Menu('menu-performance', info.name, info.icon,
+                              info.tags, 'performance:index',
                               parent_url_name='system:administration',
                               order=40)
         self.add(menu_item)

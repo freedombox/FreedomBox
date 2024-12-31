@@ -50,7 +50,7 @@ class AvahiApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-avahi', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-avahi', info.name, info.icon, info.tags,
                               'avahi:index',
                               parent_url_name='system:visibility', order=50)
         self.add(menu_item)

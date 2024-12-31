@@ -45,16 +45,14 @@ class JanusApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-janus', info.name, info.short_description,
-                              info.icon_filename, 'janus:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-janus', info.name, info.icon_filename,
+                              info.tags, 'janus:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-janus', info.name,
-                                      info.short_description,
                                       info.icon_filename,
                                       reverse_lazy('janus:room'),
-                                      clients=manifest.clients)
+                                      clients=manifest.clients, tags=info.tags)
         self.add(shortcut)
 
         packages = Packages('packages-janus', [

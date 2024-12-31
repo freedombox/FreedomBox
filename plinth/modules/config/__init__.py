@@ -42,9 +42,9 @@ class ConfigApp(app_module.App):
                                manual_page='Configure', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-config', _('Configure'), None, info.icon,
-                              'config:index', parent_url_name='system:system',
-                              order=30)
+        menu_item = menu.Menu('menu-config', _('Configure'), info.icon,
+                              info.tags, 'config:index',
+                              parent_url_name='system:system', order=30)
         self.add(menu_item)
 
         packages = Packages('packages-config', ['zram-tools'])

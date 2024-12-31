@@ -44,15 +44,13 @@ class SearxApp(app_module.App):
             donation_url='https://searx.me/static/donate.html')
         self.add(info)
 
-        menu_item = menu.Menu('menu-searx', info.name, info.short_description,
-                              info.icon_filename, 'searx:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-searx', info.name, info.icon_filename,
+                              info.tags, 'searx:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-searx', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
-            url='/searx/', clients=info.clients,
+            'shortcut-searx', info.name, icon=info.icon_filename,
+            url='/searx/', clients=info.clients, tags=info.tags,
             login_required=(not is_public_access_enabled()),
             allowed_groups=list(groups))
         self.add(shortcut)

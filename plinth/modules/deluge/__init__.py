@@ -64,15 +64,14 @@ class DelugeApp(app_module.App):
             tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-deluge', info.name, info.short_description,
-                              info.icon_filename, 'deluge:index',
+        menu_item = menu.Menu('menu-deluge', info.name, info.icon_filename,
+                              info.tags, 'deluge:index',
                               parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-deluge', info.name,
-                                      short_description=info.short_description,
                                       url='/deluge', icon=info.icon_filename,
-                                      clients=info.clients,
+                                      clients=info.clients, tags=info.tags,
                                       login_required=True,
                                       allowed_groups=list(groups))
         self.add(shortcut)

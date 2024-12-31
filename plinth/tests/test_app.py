@@ -438,10 +438,10 @@ def test_info_initialization_without_args():
     assert info.name is None
     assert info.icon is None
     assert info.icon_filename is None
-    assert info.short_description is None
     assert info.description is None
     assert info.manual_page is None
     assert info.clients is None
+    assert info.tags == []
 
 
 def test_info_initialization_with_args():
@@ -455,17 +455,17 @@ def test_info_initialization_with_args():
     }]
     info = Info('test-app', 3, is_essential=True, depends=['test-app-2'],
                 name='Test App', icon='fa-test', icon_filename='test-icon',
-                short_description='For Test', description='Test description',
-                manual_page='Test', clients=clients)
+                description='Test description', manual_page='Test',
+                clients=clients, tags=['tag1', 'tag2'])
     assert info.is_essential
     assert info.depends == ['test-app-2']
     assert info.name == 'Test App'
     assert info.icon == 'fa-test'
     assert info.icon_filename == 'test-icon'
-    assert info.short_description == 'For Test'
     assert info.description == 'Test description'
     assert info.manual_page == 'Test'
     assert info.clients == clients
+    assert info.tags == ['tag1', 'tag2']
 
 
 def test_info_clients_validation():

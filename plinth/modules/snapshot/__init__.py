@@ -52,7 +52,7 @@ class SnapshotApp(app_module.App):
                                manual_page='Snapshots', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-snapshot', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-snapshot', info.name, info.icon, info.tags,
                               'snapshot:index', parent_url_name='system:data',
                               order=40)
         self.add(menu_item)

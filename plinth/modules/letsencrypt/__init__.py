@@ -63,9 +63,8 @@ class LetsEncryptApp(app_module.App):
                                donation_url='https://letsencrypt.org/donate/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-letsencrypt', info.name,
-                              info.short_description, info.icon,
-                              'letsencrypt:index',
+        menu_item = menu.Menu('menu-letsencrypt', info.name, info.icon,
+                              info.tags, 'letsencrypt:index',
                               parent_url_name='system:security', order=20)
         self.add(menu_item)
 

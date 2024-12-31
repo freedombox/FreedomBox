@@ -57,15 +57,15 @@ class WordPressApp(app_module.App):
             donation_url='https://wordpressfoundation.org/donate/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-wordpress', info.name,
-                              info.short_description, info.icon_filename,
-                              'wordpress:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-wordpress', info.name, info.icon_filename,
+                              info.tags, 'wordpress:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-wordpress', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
-                                      url='/wordpress/', clients=info.clients)
+                                      url='/wordpress/', clients=info.clients,
+                                      tags=info.tags)
         self.add(shortcut)
 
         # Add php to avoid wordpress package bringing in lib-apache2-mod-php.

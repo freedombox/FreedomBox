@@ -26,13 +26,13 @@ def test_shortcut_init_with_arguments():
     shortcut = Shortcut('test-component', 'test-name')
     assert shortcut.component_id == 'test-component'
     assert shortcut.name == 'test-name'
-    assert shortcut.short_description is None
     assert shortcut.url == '?selected=test-component'
     assert shortcut.icon is None
     assert shortcut.description is None
     assert shortcut.manual_page is None
     assert shortcut.configure_url is None
     assert shortcut.clients is None
+    assert shortcut.tags is None
     assert not shortcut.login_required
     assert shortcut.allowed_groups is None
     assert Shortcut._all_shortcuts['test-component'] == shortcut
@@ -42,19 +42,19 @@ def test_shortcut_init():
     """Test initializing shortcut component."""
     clients = ['client1', 'client2']
     allowed_groups = ['group1', 'group2']
-    shortcut = Shortcut('test-component', name='test-name',
-                        short_description='test-short-description',
-                        url='test-url', icon='test-icon',
-                        description='test-description', manual_page='TestPage',
+    shortcut = Shortcut('test-component', name='test-name', url='test-url',
+                        icon='test-icon', description='test-description',
+                        manual_page='TestPage',
                         configure_url='test-configure-url', clients=clients,
-                        login_required=True, allowed_groups=allowed_groups)
-    assert shortcut.short_description == 'test-short-description'
+                        tags=['tag1', 'tag2'], login_required=True,
+                        allowed_groups=allowed_groups)
     assert shortcut.url == 'test-url'
     assert shortcut.icon == 'test-icon'
     assert shortcut.description == 'test-description'
     assert shortcut.manual_page == 'TestPage'
     assert shortcut.configure_url == 'test-configure-url'
     assert shortcut.clients == clients
+    assert shortcut.tags == ['tag1', 'tag2']
     assert shortcut.login_required
     assert shortcut.allowed_groups == set(allowed_groups)
 
@@ -90,9 +90,6 @@ def test_shortcut_list_sorting(common_shortcuts):
 
     return_list = Shortcut.list(sort_by='name')
     assert return_list == [cuts[0], cuts[1], cuts[2], cuts[3]]
-
-    return_list = Shortcut.list(sort_by='short_description')
-    assert return_list == [cuts[3], cuts[2], cuts[1], cuts[0]]
 
 
 def test_shortcut_list_web_apps_only(common_shortcuts):

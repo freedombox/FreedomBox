@@ -37,7 +37,7 @@ class SecurityApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-security', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-security', info.name, info.icon, info.tags,
                               'security:index',
                               parent_url_name='system:security', order=10)
         self.add(menu_item)

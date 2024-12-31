@@ -63,8 +63,8 @@ class DynamicDNSApp(app_module.App):
                                manual_page='DynamicDNS', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-dynamicdns', info.name, None, info.icon,
-                              'dynamicdns:index',
+        menu_item = menu.Menu('menu-dynamicdns', info.name, info.icon,
+                              info.tags, 'dynamicdns:index',
                               parent_url_name='system:visibility', order=20)
         self.add(menu_item)
 

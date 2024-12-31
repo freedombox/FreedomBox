@@ -59,16 +59,15 @@ class MatrixSynapseApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-matrixsynapse', info.name,
-                              info.short_description, 'matrixsynapse',
+                              info.icon_filename, info.tags,
                               'matrixsynapse:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-matrixsynapse', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-matrixsynapse', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('matrixsynapse:index'),
-            clients=info.clients, login_required=True)
+            clients=info.clients, tags=info.tags, login_required=True)
         self.add(shortcut)
 
         # Include python3-psycopg2 to prevent accidental uninstall

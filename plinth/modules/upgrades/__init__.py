@@ -66,7 +66,7 @@ class UpgradesApp(app_module.App):
                                manual_page='Upgrades', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-upgrades', info.name, info.icon, info.tags,
                               'upgrades:index',
                               parent_url_name='system:system', order=50)
         self.add(menu_item)

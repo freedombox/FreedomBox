@@ -44,17 +44,16 @@ class InfinotedApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-infinoted', info.name,
-                              info.short_description, info.icon_filename,
-                              'infinoted:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-infinoted', info.name, info.icon_filename,
+                              info.tags, 'infinoted:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-infinoted', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-infinoted', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('infinoted:index'),
-            clients=info.clients, login_required=False)
+            clients=info.clients, tags=info.tags, login_required=False)
         self.add(shortcut)
 
         packages = Packages('packages-infinoted', ['infinoted'])

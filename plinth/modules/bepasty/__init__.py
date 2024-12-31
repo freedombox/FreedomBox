@@ -60,15 +60,14 @@ class BepastyApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-bepasty', info.name,
-                              info.short_description, info.icon_filename,
-                              'bepasty:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-bepasty', info.name, info.icon_filename,
+                              info.tags, 'bepasty:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-bepasty', info.name,
-                                      info.short_description,
                                       info.icon_filename, '/bepasty',
-                                      clients=manifest.clients)
+                                      clients=manifest.clients, tags=info.tags)
         self.add(shortcut)
 
         packages = Packages('packages-bepasty', ['bepasty'])

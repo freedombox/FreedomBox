@@ -68,7 +68,7 @@ def get_breadcrumbs(request: HttpRequest) -> dict[str, dict[str, str | bool]]:
     """Return all the URL ancestors that can be show as breadcrumbs."""
     breadcrumbs = {}
 
-    def _add(url: str, name: str, url_name: str | None = None):
+    def _add(url: str, name: str | None, url_name: str | None = None):
         """Add item into the breadcrumb dictionary."""
         breadcrumbs[url] = {
             'name': name,

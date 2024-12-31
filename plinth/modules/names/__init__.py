@@ -56,7 +56,7 @@ class NamesApp(app_module.App):
                                manual_page='NameServices', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-names', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-names', info.name, info.icon, info.tags,
                               'names:index',
                               parent_url_name='system:visibility', order=10)
         self.add(menu_item)

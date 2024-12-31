@@ -56,16 +56,15 @@ class RadicaleApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-radicale', info.name,
-                              info.short_description, info.icon_filename,
-                              'radicale:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-radicale', info.name, info.icon_filename,
+                              info.tags, 'radicale:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-radicale', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url='/radicale/', clients=info.clients,
-                                      login_required=True)
+                                      tags=info.tags, login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-radicale', ['radicale'])

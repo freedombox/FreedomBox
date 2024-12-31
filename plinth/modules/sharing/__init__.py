@@ -36,8 +36,8 @@ class SharingApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-sharing', info.name, None,
-                              info.icon_filename, 'sharing:index',
+        menu_item = menu.Menu('menu-sharing', info.name, info.icon_filename,
+                              info.tags, 'sharing:index',
                               parent_url_name='apps')
         self.add(menu_item)
 

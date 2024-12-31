@@ -64,7 +64,7 @@ class FeatherWikiApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-featherwiki', info.name,
-                              info.short_description, info.icon_filename,
+                              info.icon_filename, info.tags,
                               'featherwiki:index', parent_url_name='apps')
         self.add(menu_item)
 
@@ -72,11 +72,10 @@ class FeatherWikiApp(app_module.App):
         # Expecting a large number of wiki files, so creating a shortcut for
         # each file (like in ikiwiki's case) will crowd the front page.
         shortcut = frontpage.Shortcut(
-            'shortcut-featherwiki', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-featherwiki', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            url='/featherwiki/', clients=info.clients, login_required=True,
-            allowed_groups=list(groups))
+            url='/featherwiki/', clients=info.clients, tags=info.tags,
+            login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
 
         dropin_configs = DropinConfigs('dropin-configs-featherwiki', [

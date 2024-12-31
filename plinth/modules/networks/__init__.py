@@ -44,7 +44,7 @@ class NetworksApp(app_module.App):
                                manual_page='Networks', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-networks', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-networks', info.name, info.icon, info.tags,
                               'networks:index',
                               parent_url_name='system:system', order=20)
         self.add(menu_item)

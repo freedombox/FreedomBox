@@ -47,7 +47,7 @@ class BackupsApp(app_module.App):
             tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-backups', info.name, info.icon, info.tags,
                               'backups:index', parent_url_name='system:data',
                               order=20)
         self.add(menu_item)

@@ -64,17 +64,16 @@ class EjabberdApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-ejabberd', info.name,
-                              info.short_description, info.icon_filename,
-                              'ejabberd:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-ejabberd', info.name, info.icon_filename,
+                              info.tags, 'ejabberd:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-ejabberd', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-ejabberd', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('ejabberd:index'), clients=info.clients,
-            login_required=True)
+            tags=info.tags, login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-ejabberd', ['ejabberd'])

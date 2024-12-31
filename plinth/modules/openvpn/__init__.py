@@ -48,9 +48,9 @@ class OpenVPNApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-openvpn', info.name,
-                              info.short_description, info.icon_filename,
-                              'openvpn:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-openvpn', info.name, info.icon_filename,
+                              info.tags, 'openvpn:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         download_profile = \
@@ -58,12 +58,11 @@ class OpenVPNApp(app_module.App):
                           'Download Profile</a>'),
                         link=reverse_lazy('openvpn:profile'))
         shortcut = frontpage.Shortcut(
-            'shortcut-openvpn', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
-            description=info.description + [download_profile],
+            'shortcut-openvpn', info.name, icon=info.icon_filename,
+            description=(info.description or []) + [download_profile],
             manual_page=info.manual_page,
-            configure_url=reverse_lazy('openvpn:index'), login_required=True,
-            allowed_groups=['vpn'])
+            configure_url=reverse_lazy('openvpn:index'), tags=info.tags,
+            login_required=True, allowed_groups=['vpn'])
         self.add(shortcut)
 
         packages = Packages('packages-openvpn',

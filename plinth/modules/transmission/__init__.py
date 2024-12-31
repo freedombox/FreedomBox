@@ -79,15 +79,16 @@ class TransmissionApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-transmission', info.name,
-                              info.short_description, info.icon_filename,
+                              info.icon_filename, info.tags,
                               'transmission:index', parent_url_name='apps')
         self.add(menu_item)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-transmission', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
-            url='/transmission', clients=info.clients, login_required=True,
-            allowed_groups=list(groups))
+        shortcut = frontpage.Shortcut('shortcut-transmission', info.name,
+                                      icon=info.icon_filename,
+                                      url='/transmission',
+                                      clients=info.clients, tags=info.tags,
+                                      login_required=True,
+                                      allowed_groups=list(groups))
         self.add(shortcut)
 
         packages = Packages('packages-transmission', ['transmission-daemon'])

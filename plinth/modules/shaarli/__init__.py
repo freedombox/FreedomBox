@@ -38,15 +38,14 @@ class ShaarliApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-shaarli', info.name,
-                              info.short_description, info.icon_filename,
-                              'shaarli:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-shaarli', info.name, info.icon_filename,
+                              info.tags, 'shaarli:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-shaarli', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename, url='/shaarli',
-                                      clients=info.clients,
+                                      clients=info.clients, tags=info.tags,
                                       login_required=True)
         self.add(shortcut)
 

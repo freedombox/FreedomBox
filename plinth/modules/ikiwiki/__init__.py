@@ -48,9 +48,9 @@ class IkiwikiApp(app_module.App):
                                donation_url='https://ikiwiki.info/tipjar/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-ikiwiki', info.name,
-                              info.short_description, info.icon_filename,
-                              'ikiwiki:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-ikiwiki', info.name, info.icon_filename,
+                              info.tags, 'ikiwiki:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         packages = Packages('packages-ikiwiki', [

@@ -61,7 +61,7 @@ class UsersApp(app_module.App):
                                manual_page='Users', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-users', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-users', info.name, info.icon, info.tags,
                               'users:index', parent_url_name='system:system',
                               order=10)
         self.add(menu_item)

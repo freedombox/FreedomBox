@@ -61,16 +61,16 @@ class TorProxyApp(app_module.App):
                                donation_url='https://donate.torproject.org/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-torproxy', info.name,
-                              info.short_description, info.icon_filename,
-                              'torproxy:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-torproxy', info.name, info.icon_filename,
+                              info.tags, 'torproxy:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-torproxy', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-torproxy', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            configure_url=reverse_lazy('torproxy:index'), login_required=True)
+            configure_url=reverse_lazy('torproxy:index'), tags=info.tags,
+            login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-torproxy', [

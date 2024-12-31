@@ -66,9 +66,8 @@ class TorApp(app_module.App):
                                donation_url='https://donate.torproject.org/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-tor', info.name, info.short_description,
-                              info.icon_filename, 'tor:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-tor', info.name, info.icon_filename,
+                              info.tags, 'tor:index', parent_url_name='apps')
         self.add(menu_item)
 
         packages = Packages('packages-tor',

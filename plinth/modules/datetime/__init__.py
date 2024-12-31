@@ -70,7 +70,7 @@ class DateTimeApp(app_module.App):
                                manual_page='DateTime', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-datetime', info.name, info.icon, info.tags,
                               'datetime:index',
                               parent_url_name='system:system', order=40)
         self.add(menu_item)
