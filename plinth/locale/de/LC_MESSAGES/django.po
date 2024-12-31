@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
 "PO-Revision-Date: 2024-12-19 04:00+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statische Konfiguration {etc_path} ist richtig eingerichtet"
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -104,32 +104,58 @@ msgstr "Sprache für die Darstellung dieser Weboberfläche"
 msgid "Use the language preference set in the browser"
 msgstr "Die im Browser festgelegte Sprache verwenden"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "Sichtbarkeit"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Startseite"
 
-#: menu.py:108
-msgid "Data"
-msgstr "Daten"
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Apps"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "System"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "Sichtbarkeit"
+
+#: menu.py:120
+msgid "Data"
+msgstr "Daten"
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Sicherheit"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "Verwaltung"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
 "Das System ist möglicherweise stark belastet. Bitte versuchen Sie es später "
 "erneut."
+
+#: middleware.py:147
+#, fuzzy, python-brace-format
+#| msgid "Page not found - %(box_name)s"
+msgid "Page not found: {url}"
+msgstr "Seite nicht gefunden - %(box_name)s"
+
+#: middleware.py:150
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error running operation."
+msgstr "Fehler beim Ausführen von apt-get"
+
+#: middleware.py:152
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error loading page."
+msgstr "Fehler beim Ausführen von apt-get"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -175,20 +201,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Dienste-Erkennung"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Lokale Netzwerkdomäne"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Erstellen und Verwalten von Sicherungs-Archiven."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Sicherungen"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -197,18 +235,18 @@ msgstr ""
 "Bevorzugen Sie einen verschlüsselten Remote-Backup-Speicherort oder einen "
 "zusätzlich angeschlossenen Datenträger."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Aktivieren eines Sicherungszeitplans"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gehe zu {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -218,7 +256,7 @@ msgstr ""
 "Versuche zur Sicherung waren nicht erfolgreich. Der letzte Fehler ist: "
 "{error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Fehler beim Sichern"
 
@@ -354,7 +392,7 @@ msgstr "Ungültiger Hostname: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "Ungültiger Ordnerpfad: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Verschlüsselung"
 
@@ -376,7 +414,7 @@ msgstr "Schlüssel im Repository"
 msgid "None"
 msgstr "Keiner"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Passwort"
 
@@ -440,7 +478,50 @@ msgstr "Remote-Sicherungs-Archiv existiert bereits."
 msgid "Select verified SSH public key"
 msgstr "Wähle verifizierten öffentlichen SSH-Schlüssel"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Wiederherstellen"
+
+#: modules/backups/manifest.py:15
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted"
+msgstr "Verschlüsselung"
+
+#: modules/backups/manifest.py:16
+#, fuzzy
+#| msgid "Schedule"
+msgid "Schedules"
+msgstr "Zeitplan"
+
+#: modules/backups/manifest.py:18
+#, fuzzy
+#| msgid "Remove"
+msgid "Remote"
+msgstr "Entfernen"
+
+#: modules/backups/manifest.py:19
+#, fuzzy
+#| msgid "App updated"
+msgid "App data"
+msgstr "App aktualisiert"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -448,38 +529,52 @@ msgstr ""
 "Verbindung verweigert - vergewissern Sie sich, dass die Anmeldeinformationen "
 "korrekt sind und dass der Hostrechner läuft."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Verbindung verweigert"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Archiv nicht gefunden"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Falsche Verschlüsselungs-Passphrase"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH-Zugriff verweigert"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
 "Der Repository-Pfad ist weder leer noch ein vorhandenes Sicherungs-"
 "Repository."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "An archive with given name already exists in the repository."
+msgstr "Eine Freigabe mit diesem Namen existiert bereits."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "Vorhandenes Repository ist nicht verschlüsselt."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name}-Speichermedien"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Neue Sicherung erstellen"
 
@@ -518,7 +613,6 @@ msgstr "Vorhandene Sicherungen"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -572,40 +666,33 @@ msgstr "Zeit"
 msgid "Delete Archive %(name)s"
 msgstr "Archiv %(name)s löschen"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Dieses Repository ist verschlüsselt"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "Zeitplan"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Standort aushängen"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Standort einhängen"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Sicherungsspeicherort entfernen. Dadurch wird die Remote-Sicherung nicht "
 "gelöscht."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "Herunterladen"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Wiederherstellen"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "Derzeit existieren keine Archive."
 
@@ -700,102 +787,114 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Host verifizieren"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "Sicherungsplan aktualisiert."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Zeitplan für Sicherungen"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Archiv angelegt."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Archiv löschen"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Archiv gelöscht."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Hochladen und Wiederherstellen einer Sicherung"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Dateien aus Sicherung wiederhergestellt."
+#: modules/backups/views.py:218
+#, fuzzy
+#| msgid "Logged out successfully."
+msgid "Upload successful."
+msgstr "Erfolgreich abgemeldet."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Keine Sicherungsdatei gefunden."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Wiederherstellen aus hochgeladener Datei"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Dateien aus Sicherung wiederhergestellt."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr ""
 "Es sind keine zusätzlichen Festplatten verfügbar, um ein Repository "
 "hinzuzufügen."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Sicherungs-Repository erstellen"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+#, fuzzy
+#| msgid "Added new remote SSH repository."
+msgid "Added new repository."
+msgstr "Neue Remote-SSH-Archiv hinzugefügt."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Remote-Sicherungs-Archiv anlegen"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Neue Remote-SSH-Archiv hinzugefügt."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "Verifiziere SSH-Schlüssel des Hosts"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH-Host bereits verifiziert."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH-Host verifiziert."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr ""
 "Der öffentliche SSH-Schlüssel des Hosts konnte nicht verifiziert werden."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "Authentifizierung am Server fehlgeschlagen."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Fehler beim Verbinden mit Server: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Archiv gelöscht."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Archiv entfernen"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repository entfernt. Sicherungen wurden nicht gelöscht."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Aushängen fehlgeschlagen!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Einhängen fehlgeschlagen"
 
@@ -869,10 +968,6 @@ msgstr "Alle Dateien auflisten und lesen"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "Datei- und Snippet-Freigabe"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "Öffentlicher Zugang (Standardberechtigungen)"
@@ -928,7 +1023,7 @@ msgid "No passwords currently configured."
 msgstr "Derzeit sind keine Passwörter konfiguriert."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Passwort"
@@ -1025,10 +1120,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "DNS-Server"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "Weiterleiter"
@@ -1039,6 +1130,23 @@ msgid ""
 msgstr ""
 "Eine Liste von DNS-Servern, getrennt durch Leerzeichen, an welche die "
 "Anfragen weitergeleitet werden"
+
+#: modules/bind/manifest.py:16
+#, fuzzy
+#| msgid "DNSSEC"
+msgid "DNS"
+msgstr "DNSSEC"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Server"
+
+#: modules/bind/manifest.py:18
+#, fuzzy
+#| msgid "Resolver Status"
+msgid "Resolver"
+msgstr "Status des Resolvers"
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1125,10 +1233,6 @@ msgstr "Verwenden von Calibre-E-Book-Bibliotheken"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "E-Book-Bibliothek"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1265,9 +1369,40 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr "Serververwaltung"
+#: modules/cockpit/manifest.py:23
+#, fuzzy
+#| msgid "Administration"
+msgid "Advanced administration"
+msgstr "Verwaltung"
+
+#: modules/cockpit/manifest.py:24
+msgid "Web terminal"
+msgstr ""
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Speicher"
+
+#: modules/cockpit/manifest.py:26
+#, fuzzy
+#| msgid "Networks"
+msgid "Networking"
+msgstr "Netzwerke"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Dienste"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Leistung"
 
 #: modules/config/__init__.py:18
 msgid ""
@@ -1355,6 +1490,20 @@ msgstr ""
 "Die Protokolle enthalten Informationen darüber, wer auf das System "
 "zugegriffen hat, sowie Debug-Informationen von verschiedenen Diensten"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Homepage"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+#, fuzzy
+#| msgid "Advanced"
+msgid "Advanced apps"
+msgstr "Fortgeschritten"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1405,10 +1554,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "VoIP-Helfer"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1468,6 +1613,18 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- keine Zeitzone gesetzt --"
 
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Network drive"
+msgid "Network time"
+msgstr "Netzlaufwerk"
+
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timezone"
+msgstr "Zeitzone"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1496,10 +1653,6 @@ msgstr "Dateien mit BitTorrent herunterladen"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "BitTorrent-Webclient"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1624,6 +1777,18 @@ msgstr "Automatisches Reparieren aktivieren"
 msgid "If issues are found, try to repair them automatically."
 msgstr "Wenn Probleme gefunden werden, versuche sie automatisch zu reparieren."
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Reparieren"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
 msgstr "Diagnose-Lauf"
@@ -1652,7 +1817,7 @@ msgstr "App: %(app_name)s"
 msgid "Try to repair"
 msgstr "Versuche, zu reparieren"
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Diese App unterstützt keine Diagnose"
 
@@ -1681,11 +1846,11 @@ msgstr "Testen"
 msgid "Result"
 msgstr "Ergebnis"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Diagnose"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "App {app_id} ist nicht installiert, kann nicht reparieren"
@@ -1855,11 +2020,11 @@ msgid "Invalid domain name"
 msgstr "Ungültiger Domain-Name"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Benutzername"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Passwort anzeigen"
 
@@ -1875,8 +2040,26 @@ msgstr "Verwenden Sie IPv6 statt IPv4"
 msgid "This field is required."
 msgstr "Dieses Feld ist erforderlich."
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Domain"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+#, fuzzy
+#| msgid "Server public key:"
+msgid "Needs public IP"
+msgstr "Öffentlicher Schlüssel des Servers:"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1888,13 +2071,6 @@ msgstr "Dieses Feld ist erforderlich."
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Status"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Domain"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1967,10 +2143,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "Chatserver"
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2169,15 +2341,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "E-Mail Server"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "Meine E-Mail-Aliase"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "Aliase des Postfachs verwalten"
 
@@ -2345,7 +2513,7 @@ msgstr ""
 "Gruppe gehört, bearbeitet werden. Gleichzeitige Bearbeitung wird nicht "
 "unterstützt."
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "Wiki-Anwendungen ansehen und bearbeiten"
@@ -2353,10 +2521,6 @@ msgstr "Wiki-Anwendungen ansehen und bearbeiten"
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
 msgstr "Feather-Wiki"
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
-msgstr "Persönliche Notizbücher"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
@@ -2393,8 +2557,7 @@ msgstr "Laden Sie eine bestehende Feather-Wiki-Datei von diesem Computer hoch."
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2569,6 +2732,21 @@ msgstr "Port -Name {name} ({details}) für externe Netzwerke verfügbar"
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port -Name {name} ({details}) für externe Netzwerke nicht verfügbar"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Ports"
+
+#: modules/firewall/manifest.py:10
+#, fuzzy
+#| msgid "Blocked"
+msgid "Blocking"
+msgstr "Geblockt"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Automatisch"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Dienst/Port"
@@ -2664,11 +2842,11 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Assistent beim ersten Start"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 msgid "Setup Complete! Next Steps:"
 msgstr "Einrichtung abgeschlossen! Nächste Schritte:"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
@@ -2678,12 +2856,12 @@ msgstr ""
 "target=\"„_blank“\">Softwareaktualisierung</a> läuft standardmäßig täglich. "
 "Führen Sie es jetzt zum ersten Mal manuell aus."
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Jetzt aktualisieren"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
@@ -2691,7 +2869,7 @@ msgstr ""
 "Überprüfen Sie die <a href=\"„%(privacy_url)s“\" "
 "target=\"„_blank“\">Datenschutzoptionen</a>."
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
@@ -2701,7 +2879,7 @@ msgstr ""
 "target=\"„_blank“\">Netzwerkverbindungen</a> ein. Ändern Sie das Standard-Wi-"
 "Fi-Passwort, falls erforderlich."
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
@@ -2709,7 +2887,7 @@ msgstr ""
 "Konfigurieren Sie einen <a href=\"„%(names_url)s“\" "
 "target=\"„_blank“\">Domainnamen</a>."
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
@@ -2718,7 +2896,7 @@ msgstr ""
 "Konfigurieren und planen Sie Remote <a href=\"„%(backups_url)s“\" "
 "target=\"„_blank“\">Backups</a>."
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2769,10 +2947,6 @@ msgstr "Lese- und Schreibberechtigung auf Git respositories"
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Einfaches Git Hosting"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2898,9 +3072,10 @@ msgstr "Archiv bearbeitet."
 msgid "Edit repository"
 msgstr "Archiv bearbeiten"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Dokumentation"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Hilfe"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2926,9 +3101,9 @@ msgstr "Feedback geben"
 msgid "Contribute"
 msgstr "Mitwirken"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "Info"
 
@@ -3027,10 +3202,6 @@ msgstr ""
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
 msgstr "Kennenlernen"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Homepage"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -3181,11 +3352,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Danke!"
 
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Hilfe"
-
 #: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
@@ -3335,10 +3501,6 @@ msgstr ""
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Wiki und Blog"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Admin-Konto-Name"
@@ -3443,10 +3605,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby-Server"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3487,10 +3645,6 @@ msgstr ""
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr "Videoraum"
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr "Janus-Videoraum"
@@ -3504,7 +3658,7 @@ msgid "Web conference"
 msgstr "Web-Konferenz"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr "JavaScript-Lizenzinformation"
 
@@ -3519,10 +3673,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "Chatclient"
 
 #: modules/jsxc/manifest.py:16
 msgid "Web chat"
@@ -3585,10 +3735,6 @@ msgstr "Kiwix-Inhaltsserver verwalten"
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
 msgstr "Kiwix"
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
-msgstr "Wikipedia offline"
 
 #: modules/kiwix/forms.py:23
 msgid "Content packages have to be in .zim format"
@@ -3716,9 +3862,19 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Zertifikate"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+#, fuzzy
+#| msgid "Website Security"
+msgid "Web security"
+msgstr "Webseiten-Sicherheit"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3843,7 +3999,7 @@ msgstr ""
 "Installiere die <a href=\"{coturn_url}\">Coturn</a>-App oder konfiguriere "
 "einen externen Server."
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3911,12 +4067,6 @@ msgstr "Chatraum"
 #: modules/matrixsynapse/manifest.py:105
 msgid "Matrix server"
 msgstr "Matrix Server"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Konfiguration"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -4210,10 +4360,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Block-Sandkasten"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "Maximale Spielerzahl"
@@ -4297,10 +4443,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "Einfacher Medienserver"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Verzeichnis für Mediendateien"
@@ -4383,10 +4525,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr "Miniflux"
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "Feedreader"
 
 #: modules/miniflux/forms.py:12
 msgid "Enter a username for the user."
@@ -4532,10 +4670,6 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "Sprachkonferenz"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "SuperUser-Kennwort festlegen"
@@ -4584,11 +4718,6 @@ msgstr "Mumla"
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr "Gruppenkonferenz"
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Server"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4649,7 +4778,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr "DNSSEC bei der Auflösung von Domains verwenden (globale Einstellung)"
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Hostname"
 
@@ -4686,6 +4815,16 @@ msgstr ""
 "alphanumerischen Zeichen und Bindestrichen bestehen. Jede Kennung darf "
 "maximal 63 Zeichen lang sein, die Gesamtlänge des Domainnamens 253 Zeichen."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domains"
+
+#: modules/names/manifest.py:13
+#, fuzzy
+#| msgid "Evolution"
+msgid "DNS Resolution"
+msgstr "Evolution"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4716,14 +4855,6 @@ msgstr "unterstützt"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr "nicht unterstützt"
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domains"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Dienste"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -4996,54 +5127,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- auswählen --"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "Der sichtbare Name des Netzwerks."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Modus"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Zugangspunkt"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Frequenzband"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Automatisch"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Kanal"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5051,11 +5178,11 @@ msgstr ""
 "Optionaler Wert. Beschränkung auf den WLAN-Kanal in dem ausgewählten "
 "Frequenzband. Leer oder 0 bedeutet automatische Auswahl."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5065,11 +5192,11 @@ msgstr ""
 "einem Zugangspunkt ist nur zugelassen, wenn die BSSID des Zugangspunkts mit "
 "diesem Wert übereinstimmt. Beispiel: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Authentifizierungsmodus"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -5077,20 +5204,20 @@ msgstr ""
 "Wählen Sie WPA, wenn das WLAN-Netzwerk gesichert ist und ein Passwort für "
 "die Benutzung erfordert."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Offen"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Geben Sie an, wie Ihre {box_name} mit Ihrem Netzwerk verbunden ist"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5101,7 +5228,7 @@ msgstr ""
 "die Internetverbindung von Ihrem Router über Wi-Fi oder Ethernet-Kabel. Dies "
 "ist eine typische Einrichtung für zu Hause.</p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5115,7 +5242,7 @@ msgstr ""
 "Ihre Geräte stellen eine Verbindung mit der Internetverbindung von "
 "{box_name} her. </p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5127,11 +5254,11 @@ msgstr ""
 "keine anderen Geräte im Netzwerk. Dies kann bei Community- oder Cloud-Setups "
 "passieren.</p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "Wählen Sie die Art Ihrer Internetverbindung"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5151,7 +5278,7 @@ msgstr ""
 "sicher sind, ob sie sich im Laufe der Zeit ändert, ist es sicherer, diese "
 "Option zu wählen.</p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5170,7 +5297,7 @@ msgstr ""
 "Möglicherweise können Sie diesen Service von Ihrem ISP erhalten, indem Sie "
 "eine zusätzliche Zahlung leisten.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5190,7 +5317,7 @@ msgstr ""
 "Dienste zu Hause. {box_name} bietet viele Umgehungslösungen, aber jede "
 "Lösung hat einige Einschränkungen.</p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5198,11 +5325,11 @@ msgstr ""
 "Ich weiss nicht, welche Art von Verbindung mein ISP anbietet <p class=\"help-"
 "block\">Es werden Ihnen die konservativsten Massnahmen vorgeschlagen.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Bevorzugte Routerkonfiguration"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5220,7 +5347,7 @@ msgstr ""
 "daran, eine statische lokale IP-Adresse für Ihre {box_name} in der "
 "Konfiguration Ihres Routers zu konfigurieren.</p>"
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5241,7 +5368,7 @@ msgstr ""
 "Anwendungen schlägt vor, welche(r) Port(s) weitergeleitet werden müssen, "
 "damit diese Anwendung funktioniert.</p>"
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5252,6 +5379,28 @@ msgstr ""
 "Lage sind, den Router derzeit zu konfigurieren, und Sie später daran "
 "erinnert werden möchten. Einige der anderen Konfigurationsschritte können "
 "fehlschlagen.</p>"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "Internet"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "WLAN"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+msgid "Local network"
+msgstr "Lokales Netzwerk"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5273,7 +5422,7 @@ msgstr "Verbindung bearbeiten"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -5472,10 +5621,6 @@ msgstr "Verbindung löschen"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "Verbindung <strong>%(name)s</strong> dauerhaft löschen?"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "Internet"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -5486,13 +5631,6 @@ msgstr "Abstand"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "WLAN"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -6078,10 +6216,6 @@ msgstr "Diese App ist experimentell."
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr "Dateispeicherung &amp; Zusammenarbeit"
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "Nicht festgelegt"
@@ -6172,11 +6306,7 @@ msgstr "Mit VPN-Diensten verbinden"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "Virtuelles Privates Netzwerk"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -6191,7 +6321,8 @@ msgstr "Tunnelblick"
 msgid "VPN server"
 msgstr "VPN-Server"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 msgid "Remote access"
 msgstr "Fernzugriff"
 
@@ -6287,11 +6418,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "Öffentliche Sichtbarkeit"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite Domäne"
 
@@ -6371,6 +6498,16 @@ msgstr "Spezieller Dienst hinzugefügt"
 msgid "This service already exists"
 msgstr "Dieser Dienst existiert bereits"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+#, fuzzy
+#| msgid "Tunnelblick"
+msgid "Tunneling"
+msgstr "Tunnelblick"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "Spezielle Dienste"
@@ -6442,10 +6579,6 @@ msgstr ""
 "Siehe SSH-Client <a href=\"https://pagekite.net/wiki/Howto/SshOverPageKite/"
 "\">Konfigurationsanweisungen</a>"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr "Leistung"
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -6465,9 +6598,15 @@ msgstr ""
 "Leistungskennzahlen werden von Performance Co-Pilot erfasst und können in "
 "der Cockpit-App angezeigt werden."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
+#: modules/performance/manifest.py:18
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "Monitoring"
 msgstr "Systemüberwachung"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6477,8 +6616,18 @@ msgstr "Neu starten oder das System herunterfahren."
 msgid "Power"
 msgstr "Power"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Neu starten"
 
@@ -6573,6 +6722,16 @@ msgstr ""
 "eine Internetverbindung besteht. Kann in den meisten Fällen deaktiviert "
 "werden, wenn die Netzwerkverbindung stabil und zuverlässig ist."
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+#, fuzzy
+#| msgid "Fallback DNS Servers"
+msgid "Fallback DNS"
+msgstr "Ausweich-DNS-Server"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -6605,10 +6764,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Web Proxy"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -6622,10 +6777,6 @@ msgstr "Werbeblocker"
 #: modules/torproxy/manifest.py:55
 msgid "Proxy server"
 msgstr "Proxy-Server"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-msgid "Local network"
-msgstr "Lokales Netzwerk"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6660,10 +6811,6 @@ msgstr ""
 #: modules/quassel/__init__.py:51 modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
-
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC-Client"
 
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
@@ -6707,10 +6854,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Kalender und Adressbuch"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6846,10 +6989,6 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "E-Mail-Client"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr "Nur den lokalen Mailserver verwenden"
@@ -6908,10 +7047,6 @@ msgstr "Lesen und Abonnieren von Neuigkeiten-Feeds"
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "RSS Feed Generator"
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -6980,10 +7115,6 @@ msgstr "Zugriff auf die privaten Freigaben"
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr "Samba"
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "Netzwerkdateispeicherung"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -7139,10 +7270,6 @@ msgstr "Suche im Web"
 msgid "Searx"
 msgstr "Searx"
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Websuche"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "Sichere Suche"
@@ -7181,6 +7308,18 @@ msgid ""
 msgstr ""
 "Falls aktiviert, begrenzt Fail2Ban automatisierte Einbruchversuche in den "
 "SSH-Server und andere aktivierte, passwortgeschützte Anwendungen."
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Automatic"
+msgid "Automatic bans"
+msgstr "Automatisch"
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Ports"
+msgid "Reports"
+msgstr "Ports"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7313,13 +7452,13 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "Lesezeichen"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "Lesezeichen"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -7375,10 +7514,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks-Client"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr "Zensur umgehen"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Servername oder IP-Adresse"
@@ -7422,13 +7557,9 @@ msgstr ""
 "Clients ermöglicht, sich mit ihm zu verbinden. Die Daten der Clients werden "
 "verschlüsselt und durch diesen Server geleitet."
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks-Server"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr "Anderen helfen, die Zensur zu umgehen"
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -7679,6 +7810,18 @@ msgstr ""
 "Behalten Sie ein Maximum dieser vielen jährlichen Momentaufnahmen. Der "
 "Standardwert ist 0 (keinen Jahres-Snapshot behalten)."
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "Folgenden Speicherauszug dauerhaft löschen?"
@@ -7816,7 +7959,9 @@ msgstr ""
 "kopieren oder andere Anwendungen starten."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
+#, fuzzy
+#| msgid "Secure Shell (SSH) Server"
+msgid "Secure Shell Server"
 msgstr "Secure Shell (SSH) Server"
 
 #: modules/ssh/__init__.py:75
@@ -7850,6 +7995,24 @@ msgstr ""
 "Erlaubt allen Benutzern, die ein gültiges Konto haben, sich per SSH "
 "anzumelden. Falls deaktiviert, können sich nur Benutzer der Gruppen root, "
 "admin und freedombox-ssh über SSH anmelden."
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "RSS"
+msgid "SSH"
+msgstr "RSS"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Remote terminal"
+msgstr "Standort entfernen"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Fingerprint"
+msgid "Fingerprints"
+msgstr "Fingerabdruck"
 
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
@@ -7885,7 +8048,7 @@ msgstr ""
 msgid "Proceed to Login"
 msgstr "Weiter zum Login"
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Anmelden"
 
@@ -7904,11 +8067,6 @@ msgstr ""
 "{box_name} angeschlossen sind. Sie können die derzeitig genutzten "
 "Speichermedien einsehen, Wechselmedien einbinden und aushängen, die Root-"
 "Partition erweitern usw."
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "Speicher"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -8074,6 +8232,28 @@ msgstr "Freigeben"
 msgid "Other directory (specify below)"
 msgstr "Anderes Verzeichnis (unten angeben)"
 
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Disk"
+msgid "Disks"
+msgstr "Speichermedium"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Automatic"
+msgid "Auto-mount"
+msgstr "Automatisch"
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Expand Root Partition"
+msgid "Expand partition"
+msgstr "Erweitern der Root-Partition"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "Die folgenden Speichermedien werden verwendet:"
@@ -8193,10 +8373,6 @@ msgstr "Syncthing-Anwendung einstellen"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Dateisynchronisation"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -8246,10 +8422,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "TiddlyWiki"
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr "Nicht-lineare Notizbücher"
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr "Eine TiddlyWiki-Datei mit der Dateierweiterung .html"
@@ -8282,7 +8454,7 @@ msgstr ""
 "<strong>Hinweis</strong>: Sie können eine Kopie dieses Wikis aus TiddlyWiki "
 "herunterladen, bevor Sie es löschen."
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -8296,7 +8468,7 @@ msgstr ""
 "Sie den <a href=\"https://www.torproject.org/download/download-easy.html."
 "en\">Tor Browser</a> verwenden."
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
@@ -8304,7 +8476,7 @@ msgstr ""
 "Diese App bietet Relay-Dienste, um zum Tor-Netzwerk beizutragen und anderen "
 "zu helfen, die Zensur zu überwinden."
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -8316,14 +8488,10 @@ msgstr ""
 "auf {box_name} zugreifen, auch wenn man einen ISP benutzt, der die Server zu "
 "Hause begrenzt."
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Anonymisierungsnetzwerk"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -8333,19 +8501,19 @@ msgstr "Tor-Onion-Dienste"
 msgid "Tor Bridge Relay"
 msgstr "Tor-Bridge-Relay"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor-Relay-Port ist verfügbar"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3-Transport registriert"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4-Transport registriert"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion-Dienst ist Version 3"
 
@@ -8461,10 +8629,6 @@ msgstr "Anonymisierungsnetzwerk"
 msgid "Onion Service"
 msgstr "Onion-Dienste"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Ports"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Aktualisieren der Konfiguration"
@@ -8474,7 +8638,7 @@ msgstr "Aktualisieren der Konfiguration"
 msgid "Error configuring app: {error}"
 msgstr "Fehler beim Konfigurieren der App: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -8488,7 +8652,7 @@ msgstr ""
 "Internet zuzugreifen. Die ISP-Zensur kann mit Upstream-Brücken umgangen "
 "werden."
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Tor-Proxy"
 
@@ -8496,12 +8660,12 @@ msgstr "Tor-Proxy"
 msgid "Tor Socks Proxy"
 msgstr "Tor-Socks-Proxy"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Zugangs-URL {url} auf TCP{kind} über Tor"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tor-Nutzung auf {url} über TCP{kind} bestätigen"
@@ -8729,6 +8893,16 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivieren häufigen feature-updates (empfohlen)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+#, fuzzy
+#| msgid "New value"
+msgid "New features"
+msgstr "Neuer Wert"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9040,6 +9214,18 @@ msgstr ""
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Benutzerkonto wurde erstellt, Sie sind jetzt angemeldet"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Manage Snapshots"
+msgid "Manage accounts"
+msgstr "Schnappschüsse verwalten"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "App permissions"
+msgstr "Berechtigungen"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9579,10 +9765,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "Internetseite und Blog"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "Öffentlicher Zugang"
@@ -9639,10 +9821,6 @@ msgstr ""
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Foto-Manager"
 
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -9874,6 +10052,12 @@ msgstr "Dienst <em>%(service_name)s</em> läuft nicht."
 msgid "Search with tags"
 msgstr "Suche mit Schlagwörtern"
 
+#: templates/apps.html:42
+#, fuzzy
+#| msgid "Search with tags"
+msgid "Clear all tags"
+msgstr "Suche mit Schlagwörtern"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9883,43 +10067,35 @@ msgstr ""
 "und Datenschutz entwickelt wurde. Es ist freie Software, mit der Sie Server-"
 "Apps einfach installieren und verwalten können."
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Startseite"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Startseite"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Apps"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Apps"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " System"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Herunterfahren"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Abmelden"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Sprache wählen"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -10139,11 +10315,15 @@ msgstr ""
 "Alle App-Daten und -Konfigurationen gehen dauerhaft verloren. App kann "
 "wieder frisch installiert werden."
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "Einstellung unverändert"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "vor der Deinstallation von {app_id}"
@@ -10151,6 +10331,117 @@ msgstr "vor der Deinstallation von {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "Datei- und Snippet-Freigabe"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "DNS-Server"
+
+#~ msgid "E-book Library"
+#~ msgstr "E-Book-Bibliothek"
+
+#~ msgid "Server Administration"
+#~ msgstr "Serververwaltung"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "VoIP-Helfer"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "BitTorrent-Webclient"
+
+#~ msgid "Chat Server"
+#~ msgstr "Chatserver"
+
+#~ msgid "Email Server"
+#~ msgstr "E-Mail Server"
+
+#~ msgid "Personal Notebooks"
+#~ msgstr "Persönliche Notizbücher"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Einfaches Git Hosting"
+
+#~ msgid "Documentation"
+#~ msgstr "Dokumentation"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Wiki und Blog"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby-Server"
+
+#~ msgid "Video Room"
+#~ msgstr "Videoraum"
+
+#~ msgid "Chat Client"
+#~ msgstr "Chatclient"
+
+#~ msgid "Offline Wikipedia"
+#~ msgstr "Wikipedia offline"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Block-Sandkasten"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "Einfacher Medienserver"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "Feedreader"
+
+#~ msgid "Voice Chat"
+#~ msgstr "Sprachkonferenz"
+
+#~ msgid "File Storage & Collaboration"
+#~ msgstr "Dateispeicherung &amp; Zusammenarbeit"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "Virtuelles Privates Netzwerk"
+
+#~ msgid "Public Visibility"
+#~ msgstr "Öffentliche Sichtbarkeit"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Web Proxy"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC-Client"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Kalender und Adressbuch"
+
+#~ msgid "Email Client"
+#~ msgstr "E-Mail-Client"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "RSS Feed Generator"
+
+#~ msgid "Network File Storage"
+#~ msgstr "Netzwerkdateispeicherung"
+
+#~ msgid "Web Search"
+#~ msgstr "Websuche"
+
+#~ msgid "Bypass Censorship"
+#~ msgstr "Zensur umgehen"
+
+#~ msgid "Help Others Bypass Censorship"
+#~ msgstr "Anderen helfen, die Zensur zu umgehen"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Dateisynchronisation"
+
+#~ msgid "Non-linear Notebooks"
+#~ msgstr "Nicht-lineare Notizbücher"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "Anonymisierungsnetzwerk"
+
+#~ msgid "Website and Blog"
+#~ msgstr "Internetseite und Blog"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Foto-Manager"
 
 #, python-format
 #~ msgid ""
@@ -10539,9 +10830,6 @@ msgstr "Gujarati"
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "SSH-Authentifizierung mit Passwort aktiviert."
 
-#~ msgid "Error running apt-get"
-#~ msgstr "Fehler beim Ausführen von apt-get"
-
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
 #~ msgstr "Kernfunktionalität und Weboberfläche für %(box_name)s"
@@ -10731,9 +11019,6 @@ msgstr "Gujarati"
 
 #~ msgid "Service Alert"
 #~ msgstr "Service-Warnung"
-
-#~ msgid "Repair"
-#~ msgstr "Reparieren"
 
 #, python-brace-format
 #~ msgid "Internal error in {0}"
@@ -11022,9 +11307,6 @@ msgstr "Gujarati"
 #~ msgid "Connected introducers"
 #~ msgstr "Verbundene Vermittler"
 
-#~ msgid "Remove"
-#~ msgstr "Entfernen"
-
 #~ msgid "Postfix domain name config"
 #~ msgstr "Postfix-Domänenname konfigurieren"
 
@@ -11048,9 +11330,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete selected"
 #~ msgstr "Ausgewählte löschen"
-
-#~ msgid "New value"
-#~ msgstr "Neuer Wert"
 
 #~ msgid "There was a problem with your request. Please try again."
 #~ msgstr ""
@@ -11677,9 +11956,6 @@ msgstr "Gujarati"
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
 
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
-
 #~ msgid "Not Available"
 #~ msgstr "Nicht verfügbar"
 
@@ -11926,9 +12202,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete Snapshot"
 #~ msgstr "Lösche Speicherauszug"
-
-#~ msgid "Disk"
-#~ msgstr "Speichermedium"
 
 #~ msgid "Disk or removable storage where the backup archive will be saved."
 #~ msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
 "PO-Revision-Date: 2024-12-18 02:16+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Sabit yapılandırma {etc_path} düzgün bir şekilde ayarlanmış"
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -101,30 +101,56 @@ msgstr "Bu web arayüzünü sunmak için kullanılacak dil"
 msgid "Use the language preference set in the browser"
 msgstr "Tarayıcıda ayarlanan dil tercihini kullan"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "Görünürlük"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Giriş"
 
-#: menu.py:108
-msgid "Data"
-msgstr "Veri"
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Uygulamalar"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "Sistem"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "Görünürlük"
+
+#: menu.py:120
+msgid "Data"
+msgstr "Veri"
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Güvenlik"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "Yönetim"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "Sistem muhtemelen ağır yük altında. Lütfen daha sonra yeniden deneyin."
+
+#: middleware.py:147
+#, fuzzy, python-brace-format
+#| msgid "Page not found - %(box_name)s"
+msgid "Page not found: {url}"
+msgstr "Sayfa bulunamadı - %(box_name)s"
+
+#: middleware.py:150
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error running operation."
+msgstr "apt-get çalıştırılırken hata oldu"
+
+#: middleware.py:152
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error loading page."
+msgstr "apt-get çalıştırılırken hata oldu"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -170,20 +196,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Hizmet Keşfi"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Yerel Ağ Etki Alanı"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Yedeklemeler, yedekleme arşivleri oluşturmayı ve yönetmeyi sağlar."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Yedeklemeler"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -191,18 +229,18 @@ msgstr ""
 "Veri güvenliği için otomatik bir yedekleme planı etkinleştirin. Şifrelenmiş "
 "bir uzak yedekleme konumu veya fazladan eklenmiş bir disk tercih edin."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Bir Yedekleme Planı etkinleştirin"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "{app_name} için git"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -211,7 +249,7 @@ msgstr ""
 "Planlanmış bir yedekleme başarısız oldu. Geçen {error_count} yedekleme "
 "denemesi başarılı olmadı. En son hata: {error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Yedekleme Sırasında Hata"
 
@@ -344,7 +382,7 @@ msgstr "Geçersiz anamakine adı: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "Geçersiz dizin yolu: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Şifreleme"
 
@@ -366,7 +404,7 @@ msgstr "Anahtar Depoda"
 msgid "None"
 msgstr "Yok"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Parola"
 
@@ -429,7 +467,50 @@ msgstr "Uzak yedekleme deposu zaten var."
 msgid "Select verified SSH public key"
 msgstr "Doğrulanmış SSH ortak anahtarını seçin"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Geri Yükle"
+
+#: modules/backups/manifest.py:15
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted"
+msgstr "Şifreleme"
+
+#: modules/backups/manifest.py:16
+#, fuzzy
+#| msgid "Schedule"
+msgid "Schedules"
+msgstr "Zamanla"
+
+#: modules/backups/manifest.py:18
+#, fuzzy
+#| msgid "Remove"
+msgid "Remote"
+msgstr "Kaldır"
+
+#: modules/backups/manifest.py:19
+#, fuzzy
+#| msgid "App updated"
+msgid "App data"
+msgstr "Uygulama güncellendi"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -437,36 +518,50 @@ msgstr ""
 "Bağlantı reddedildi - doğru kimlik bilgilerini girdiğinizden ve sunucunun "
 "çalıştığından emin olun."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Bağlantı reddedildi"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Depo bulunamadı"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Yanlış şifreleme parolası"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH erişimi reddedildi"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "Depo yolu ne boş ne de varolan bir yedeklemeler deposu."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "An archive with given name already exists in the repository."
+msgstr "Bu ada sahip bir paylaşım zaten var."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "Varolan depo şifrelenmemiş."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} depolaması"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Yeni bir yedek oluşturun"
 
@@ -505,7 +600,6 @@ msgstr "Varolan Yedekler"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -558,38 +652,31 @@ msgstr "Zaman"
 msgid "Delete Archive %(name)s"
 msgstr "%(name)s Arşivini Sil"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Bu depo şifreli"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "Zamanla"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Konumun Bağlantısını Kaldır"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Konumu Bağla"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr "Yedekleme Konumunu Kaldır. Bu, uzak yedeği silmeyecek."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "İndir"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Geri Yükle"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "Şu anda mevcut arşivler yok."
 
@@ -682,99 +769,111 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Anamakineyi Doğrula"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "Yedekleme planı güncellendi."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Yedeklemeleri Zamanla"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Arşiv oluşturuldu."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Arşivi Sil"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Arşiv silindi."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Yedeklemeyi karşıya yükleyin ve geri yükleyin"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Dosyalar yedekten geri yüklendi."
+#: modules/backups/views.py:218
+#, fuzzy
+#| msgid "Logged out successfully."
+msgid "Upload successful."
+msgstr "Başarılı olarak oturumu kapatıldı."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Yedekleme dosyası bulunamadı."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Karşıya yüklenen dosyadan geri yükle"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Dosyalar yedekten geri yüklendi."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr "Bir depo eklemek için mevcut ek diskler yok."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Yedekleme deposu oluşturun"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+#, fuzzy
+#| msgid "Added new remote SSH repository."
+msgid "Added new repository."
+msgstr "Yeni uzak SSH deposu eklendi."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Uzak yedekleme deposu oluşturun"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Yeni uzak SSH deposu eklendi."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "SSH anamakine anahtarını doğrula"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH anamakinesi zaten doğrulandı."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH anamakinesi doğrulandı."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "SSH anamakinesi ortak anahtarı doğrulanamadı."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "Uzak sunucuya kimlik doğrulama başarısız oldu."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Sunucuyla bağlantı kurulurken hata oldu: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Depo kaldırıldı."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Depoyu Kaldır"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Depo kaldırıldı. Yedekler silinmedi."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Bağlantıyı kaldırma başarısız oldu!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Bağlama başarısız oldu"
 
@@ -846,10 +945,6 @@ msgstr "Tüm dosyaları listele ve oku"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "Dosya ve Kod Parçacığı Paylaşımı"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "Herkese Açık Erişim (varsayılan izinler)"
@@ -901,7 +996,7 @@ msgid "No passwords currently configured."
 msgstr "Şu anda yapılandırılmış parolalar yok."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Parola"
@@ -997,10 +1092,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "Etki Alanı Adı Sunucusu"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "Yönlendiriciler"
@@ -1011,6 +1102,23 @@ msgid ""
 msgstr ""
 "Hangi isteklerin yönlendirileceği, boşluklar ile ayrılmış DNS sunucuları "
 "listesi"
+
+#: modules/bind/manifest.py:16
+#, fuzzy
+#| msgid "DNSSEC"
+msgid "DNS"
+msgstr "DNSSEC"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Sunucu"
+
+#: modules/bind/manifest.py:18
+#, fuzzy
+#| msgid "Resolver Status"
+msgid "Resolver"
+msgstr "Çözümleyici Durumu"
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1097,10 +1205,6 @@ msgstr "calibre e-kitap kütüphanesini kullan"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "E-kitap Kütüphanesi"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1235,9 +1339,42 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr "Sunucu Yönetimi"
+#: modules/cockpit/manifest.py:23
+#, fuzzy
+#| msgid "Administration"
+msgid "Advanced administration"
+msgstr "Yönetim"
+
+#: modules/cockpit/manifest.py:24
+#, fuzzy
+#| msgid "Web sharing"
+msgid "Web terminal"
+msgstr "Web paylaşımı"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Depolama"
+
+#: modules/cockpit/manifest.py:26
+#, fuzzy
+#| msgid "Networks"
+msgid "Networking"
+msgstr "Ağlar"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Hizmetler"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Performans"
 
 #: modules/config/__init__.py:18
 msgid ""
@@ -1323,6 +1460,20 @@ msgstr ""
 "Günlükler, sisteme kimin eriştiği ve çeşitli hizmetlerden gelen hata "
 "ayıklama bilgileri hakkında bilgiler içerir"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Ana Sayfa"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+#, fuzzy
+#| msgid "Advanced"
+msgid "Advanced apps"
+msgstr "Gelişmiş"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1371,10 +1522,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "VoIP Yardımcısı"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1432,6 +1579,18 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- ayarlı saat dilimi yok --"
 
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Network drive"
+msgid "Network time"
+msgstr "Ağ sürücüsü"
+
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timezone"
+msgstr "Saat Dilimi"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1460,10 +1619,6 @@ msgstr "BitTorrent uygulamalarını kullanarak dosyaları indir"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "BitTorrent Web İstemcisi"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1587,6 +1742,18 @@ msgstr "Otomatik onarmayı etkinleştir"
 msgid "If issues are found, try to repair them automatically."
 msgstr "Eğer sorunlar bulunursa, bunları otomatik olarak onarmayı dener."
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Onar"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
 msgstr "Tanılama Çalıştırması"
@@ -1614,7 +1781,7 @@ msgstr "Uygulama: %(app_name)s"
 msgid "Try to repair"
 msgstr "Onarmayı dene"
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Bu uygulama tanılamayı desteklemiyor"
 
@@ -1643,11 +1810,11 @@ msgstr "Deneme"
 msgid "Result"
 msgstr "Sonuç"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Tanı Denemesi"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "{app_id} uygulaması yüklü değil, onarılamıyor"
@@ -1814,11 +1981,11 @@ msgid "Invalid domain name"
 msgstr "Geçersiz etki alanı adı"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Kullanıcı adı"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Parolayı göster"
 
@@ -1834,8 +2001,26 @@ msgstr "IPv4 yerine IPv6 kullan"
 msgid "This field is required."
 msgstr "Bu alan gereklidir."
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Etki Alanı"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+#, fuzzy
+#| msgid "Server public key:"
+msgid "Needs public IP"
+msgstr "Sunucu ortak anahtarı:"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1847,13 +2032,6 @@ msgstr "Bu alan gereklidir."
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Durum"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Etki Alanı"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1926,10 +2104,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "Sohbet Sunucusu"
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2127,15 +2301,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "E-posta Sunucusu"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "E-posta Kod Adlarım"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "Posta Kutusu için Kod Adlarını Yönet"
 
@@ -2301,7 +2471,7 @@ msgstr ""
 "üzerindeki <a href=\"{users_url}\">herhangi bir kullanıcı</a> tarafından "
 "düzenlenebilirler. Eşzamanlı düzenleme desteklenmez."
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "Viki uygulamalarını görüntüle ve düzenle"
@@ -2309,10 +2479,6 @@ msgstr "Viki uygulamalarını görüntüle ve düzenle"
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
 msgstr "Feather Wiki"
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
-msgstr "Kişisel Defterler"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
@@ -2349,8 +2515,7 @@ msgstr "Bu bilgisayardan varolan bir Feather Wiki dosyasını yükleyin."
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Viki"
 
@@ -2526,6 +2691,21 @@ msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılabil
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Harici ağlar için {name} ({details}) bağlantı noktası kullanılamaz"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Bağlantı Noktaları"
+
+#: modules/firewall/manifest.py:10
+#, fuzzy
+#| msgid "Blocked"
+msgid "Blocking"
+msgstr "Engellendi"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Otomatik"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Hizmet/Bağlantı Noktası"
@@ -2620,11 +2800,11 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Firstboot Sihirbazı Gizli Anahtarı"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 msgid "Setup Complete! Next Steps:"
 msgstr "Kurulum Tamamlandı! Sonraki Adımlar:"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
@@ -2634,12 +2814,12 @@ msgstr ""
 "güncellemesi</a> varsayılan olarak günlük çalışır. Şimdi ilk kez el ile "
 "çalıştırın."
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Şimdi güncelle"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
@@ -2647,7 +2827,7 @@ msgstr ""
 "<a href=\"%(privacy_url)s\" target=\"_blank\">Gizlilik seçeneklerini</a> "
 "inceleyin."
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
@@ -2657,7 +2837,7 @@ msgstr ""
 "inceleyin ve ayarlayın. Varsa, varsayılan kablosuz (Wi-Fi) şifresini "
 "değiştirin."
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
@@ -2665,7 +2845,7 @@ msgstr ""
 "Bir <a href=\"%(names_url)s\" target=\"_blank\">etki alanı adı</a> "
 "yapılandırın."
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
@@ -2674,7 +2854,7 @@ msgstr ""
 "Uzak <a href=\"%(backups_url)s\" target=\"_blank\">yedeklemeleri</a> "
 "yapılandırın ve zamanlayın."
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2725,10 +2905,6 @@ msgstr "Git depolarına okuma-yazma erişimi"
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Basit Git Barındırma"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2851,9 +3027,10 @@ msgstr "Depo düzenlendi."
 msgid "Edit repository"
 msgstr "Depoyu düzenle"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Belgeler"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Yardım"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2879,9 +3056,9 @@ msgstr "Geri Bildirim Gönder"
 msgid "Contribute"
 msgstr "Katkıda Bulun"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "Hakkında"
 
@@ -2976,10 +3153,6 @@ msgstr ""
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
 msgstr "Bilgi edinin"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Ana Sayfa"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -3127,11 +3300,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Teşekkür ederiz!"
 
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Yardım"
-
 #: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
@@ -3278,10 +3446,6 @@ msgstr ""
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Viki ve Blog"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Yönetici Hesap Adı"
@@ -3388,10 +3552,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby Sunucusu"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3430,10 +3590,6 @@ msgstr "Janus'u kullanmak için <a href=\"{coturn_url}\">Coturn</a> gereklidir."
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr "Video Odası"
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr "Janus Video Odası"
@@ -3447,7 +3603,7 @@ msgid "Web conference"
 msgstr "Web görüşme"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr "JavaScript lisans bilgileri"
 
@@ -3462,10 +3618,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "Sohbet İstemcisi"
 
 #: modules/jsxc/manifest.py:16
 msgid "Web chat"
@@ -3528,10 +3680,6 @@ msgstr "Kiwix içerik sunucusunu yönetin"
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
 msgstr "Kiwix"
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
-msgstr "Çevrimdışı Vikipedi"
 
 #: modules/kiwix/forms.py:23
 msgid "Content packages have to be in .zim format"
@@ -3657,9 +3805,19 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Sertifikalar"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+#, fuzzy
+#| msgid "Website Security"
+msgid "Web security"
+msgstr "Web Sitesi Güvenliği"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3783,7 +3941,7 @@ msgstr ""
 "ihtiyaç duyar. <a href={coturn_url}>Coturn</a> uygulamasını yükleyin veya "
 "harici bir sunucu yapılandırın."
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3850,12 +4008,6 @@ msgstr "Sohbet odası"
 #: modules/matrixsynapse/manifest.py:105
 msgid "Matrix server"
 msgstr "Matrix sunucusu"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Yapılandırma"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -4134,10 +4286,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Blok Kum Havuzu"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "En fazla oyuncu sayısı"
@@ -4220,10 +4368,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "Basit Ortam Sunucusu"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Ortam Dosyaları Dizini"
@@ -4303,10 +4447,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr "Miniflux"
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "Haber Bildirim Okuyucusu"
 
 #: modules/miniflux/forms.py:12
 msgid "Enter a username for the user."
@@ -4446,10 +4586,6 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "Sesli Sohbet"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "Süper Kullanıcı Parolası Ayarlayın"
@@ -4497,11 +4633,6 @@ msgstr "Mumla"
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr "Grup görüşme"
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Sunucu"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4563,7 +4694,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr "Etki alanlarını çözümlerken DNSSEC'yi kullan (genel tercih)"
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Anamakine Adı"
 
@@ -4601,6 +4732,16 @@ msgstr ""
 "etiketin uzunluğu 63 karakter veya daha az olmak zorundadır. Etki alanı "
 "adının toplam uzunluğu 253 karakter veya daha az olmak zorundadır."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Etki Alanları"
+
+#: modules/names/manifest.py:13
+#, fuzzy
+#| msgid "Evolution"
+msgid "DNS Resolution"
+msgstr "Evolution"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4631,14 +4772,6 @@ msgstr "desteklenen"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr "desteklenmeyen"
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Etki Alanları"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Hizmetler"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -4908,54 +5041,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- seç --"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "Ağın görünür adı."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Kip"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Altyapı"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Erişim Noktası"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Geçici"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Frekans Bandı"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Otomatik"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Kanal"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4963,11 +5092,11 @@ msgstr ""
 "İsteğe bağlı değer. Seçilen frekans bandında kısıtlanacak kablosuz kanal. "
 "Boş veya 0 değeri otomatik seçim anlamına gelir."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4977,11 +5106,11 @@ msgstr ""
 "noktasına bağlanırken, sadece erişim noktasının BSSID'si sağlanan ile "
 "eşleşiyorsa bağlanır. Örnek: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Kimlik Doğrulama Kipi"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4989,20 +5118,20 @@ msgstr ""
 "Kablosuz ağ güvenliyse ve istemcilerin bağlanmak için parolaya sahip "
 "olmasını gerektiriyorsa WPA'yı seçin."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Açık"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "{box_name} cihazınızın ağınıza nasıl bağlı olduğunu belirtin"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5013,7 +5142,7 @@ msgstr ""
 "İnternet bağlantısını yönlendiricinizden Kablosuz (Wi-Fi) veya Ethernet "
 "kablosu aracılığıyla alır. Bu tipik bir ev ayarlamasıdır.</p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5027,7 +5156,7 @@ msgstr ""
 "İnternet'e bağlı ve tüm cihazlarınız kendi İnternet bağlanabilirlikleri için "
 "{box_name} cihazına bağlanır.</p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5038,11 +5167,11 @@ msgstr ""
 "doğrudan {box_name} cihazınıza bağlıdır ve ağda başka cihaz yoktur. Bu, "
 "topluluk veya bulut ayarlamalarında olabilir.</p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "İnternet bağlantı türünüzü seçin"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5060,7 +5189,7 @@ msgstr ""
 "dış IP adresiniz varsa ancak zamanla değişip değişmeyeceğinden emin "
 "değilseniz, bu seçeneği seçmeniz daha güvenlidir.</p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5078,7 +5207,7 @@ msgstr ""
 "birçok {box_name} hizmeti için en sorunsuz ayarlamadır, ancak çok az İSS "
 "bunu sunmaktadır. Ek ödeme yaparak bu hizmeti İSS'nizden alabilirsiniz.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5097,7 +5226,7 @@ msgstr ""
 "hizmetleri için en sıkıntılı durum budur. {box_name} birçok geçici çözüm "
 "sağlar ancak her çözümün bazı sınırlamaları vardır.</p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5105,11 +5234,11 @@ msgstr ""
 "ISS'min sağladığı bağlantı türünü bilmiyorum<p class=\"help-block\">Size en "
 "ölçülü eylemler önerilecektir.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Tercih edilen yönlendirici yapılandırması"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5126,7 +5255,7 @@ msgstr ""
 "Öncelikle yönlendiricinizin yapılandırmasında {box_name} cihazınız için "
 "sabit bir yerel IP adresi yapılandırmayı unutmayın.</p>"
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5146,7 +5275,7 @@ msgstr ""
 "uygulamaların her biri, o uygulamanın çalışması için hangi bağlantı "
 "nokta(larının)sının yönlendirilmesi gerektiğini önerecektir.</p>"
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5156,6 +5285,28 @@ msgstr ""
 "block\">Yönlendiriciyi şu anda yapılandırmadıysanız veya "
 "yapılandıramıyorsanız ve daha sonra hatırlatılmasını istiyorsanız bunu "
 "seçin. Diğer yapılandırma adımlarından bazıları başarısız olabilir. </p>"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "İnternet"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Kablosuz (Wi-Fi)"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+msgid "Local network"
+msgstr "Yerel ağ"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5177,7 +5328,7 @@ msgstr "Bağlantıyı düzenle"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -5375,10 +5526,6 @@ msgstr "Bağlantıyı Sil"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "<strong>%(name)s</strong> bağlantısı kalıcı olarak silinsin mi?"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "İnternet"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -5389,13 +5536,6 @@ msgstr "Aralık"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Kablosuz (Wi-Fi)"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -5969,10 +6109,6 @@ msgstr "Bu uygulama deneyseldir."
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr "Dosya Depolama ve İşbirliği"
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "Ayarlı değil"
@@ -6061,11 +6197,7 @@ msgstr "VPN hizmetlerine bağlan"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "Sanal Özel Ağ"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -6079,7 +6211,8 @@ msgstr "Tunnelblick"
 msgid "VPN server"
 msgstr "VPN sunucusu"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 msgid "Remote access"
 msgstr "Uzaktan erişim"
 
@@ -6171,11 +6304,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "Herkese Açık Görünürlük"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite Etki Alanı"
 
@@ -6255,6 +6384,16 @@ msgstr "Özel hizmet eklendi"
 msgid "This service already exists"
 msgstr "Bu hizmet zaten var"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+#, fuzzy
+#| msgid "Tunnelblick"
+msgid "Tunneling"
+msgstr "Tunnelblick"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "Özel Hizmetler"
@@ -6321,10 +6460,6 @@ msgstr ""
 "SSH istemci ayarlaması <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">talimatlarına</a> bakın"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr "Performans"
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -6344,9 +6479,15 @@ msgstr ""
 "Performans ölçümleri, Performance Co-Pilot tarafından toplanır ve Cockpit "
 "uygulaması kullanılarak görüntülenebilir."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
+#: modules/performance/manifest.py:18
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "Monitoring"
 msgstr "Sistem İzleme"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6356,8 +6497,18 @@ msgstr "Sistemi yeniden başlatın veya kapatın."
 msgid "Power"
 msgstr "Güç"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shutdown"
+msgstr "Kapat"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Yeniden başlat"
 
@@ -6450,6 +6601,16 @@ msgstr ""
 "halka açık DNS sunucularını kullanın. Ağ bağlantısı sağlam ve güvenilirse "
 "çoğu durumda etkisizleştirilebilir."
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+#, fuzzy
+#| msgid "Fallback DNS Servers"
+msgid "Fallback DNS"
+msgstr "Yedek DNS Sunucuları"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -6482,10 +6643,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Web Vekil Sunucusu"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -6499,10 +6656,6 @@ msgstr "Reklam engelleyici"
 #: modules/torproxy/manifest.py:55
 msgid "Proxy server"
 msgstr "Vekil sunucusu"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-msgid "Local network"
-msgstr "Yerel ağ"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6537,10 +6690,6 @@ msgstr ""
 msgid "Quassel"
 msgstr "Quassel"
 
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC İstemcisi"
-
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr "Quasseldroid"
@@ -6558,8 +6707,8 @@ msgid ""
 "a> is needed. Radicale can be accessed by any user with a {box_name} login."
 msgstr ""
 "Radicale bir CalDAV ve CardDAV sunucusudur. Planlama ve kişi verilerinin "
-"eşitlenmesini ve paylaşımını sağlar. Radicale'yi kullanmak için <a href="
-"\"https://radicale.org/master.html#supported-clients\">desteklenen bir "
+"eşitlenmesini ve paylaşımını sağlar. Radicale'yi kullanmak için <a "
+"href=\"https://radicale.org/master.html#supported-clients\">desteklenen bir "
 "istemci uygulaması</a> gereklidir. Radicale'ye {box_name} oturum açma adı "
 "ile herhangi bir kullanıcı tarafından erişilebilir."
 
@@ -6576,10 +6725,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Takvim ve Adres Defteri"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6713,10 +6858,6 @@ msgstr ""
 "gerekeceğini unutmayın (<a href=\"https://myaccount.google.com/"
 "lesssecureapps\">https://myaccount.google.com/lesssecureapps</a>)."
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "E-posta İstemcisi"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr "Sadece yerel posta sunucusunu kullan"
@@ -6777,10 +6918,6 @@ msgstr "Haber bildirimlerini oku ve abone ol"
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "RSS Bildirim Oluşturucu"
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -6848,10 +6985,6 @@ msgstr "Özel paylaşımlara erişim"
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr "Samba"
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "Ağ Dosya Depolama"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -7006,10 +7139,6 @@ msgstr "Web'de ara"
 msgid "Searx"
 msgstr "Searx"
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Web Arama"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "Güvenli Arama"
@@ -7047,6 +7176,18 @@ msgstr ""
 "Bu seçenek etkinleştirildiğinde, Fail2Ban, SSH sunucusuna ve diğer "
 "etkinleştirilmiş parola korumalı İnternet hizmetlerine yönelik deneme "
 "yanılmayla zorlama girişimlerini sınırlayacaktır."
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Automatic"
+msgid "Automatic bans"
+msgstr "Otomatik"
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Ports"
+msgid "Reports"
+msgstr "Bağlantı Noktaları"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7180,13 +7321,13 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "Yer İşaretleri"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "Yer İşaretleri"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -7242,10 +7383,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks İstemcisi"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr "Sansürü Atlat"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Sunucu anamakine adı veya IP adresi"
@@ -7287,13 +7424,9 @@ msgstr ""
 "veren bir Shadowsocks sunucusu çalıştırabilir. İstemcilerin verileri "
 "şifrelenecek ve bu sunucu vekil olarak kullanılacaktır."
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks Sunucusu"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr "Başkalarının Sansürü Aşmasına Yardım Edin"
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -7538,6 +7671,18 @@ msgstr ""
 "En fazla bu kadar tutulacak yıllık anlık görüntü. Varsayılan değer 0'dır "
 "(yıllık anlık görüntü tutma)."
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "Aşağıdaki anlık görüntüler kalıcı olarak silinsin mi?"
@@ -7673,7 +7818,9 @@ msgstr ""
 "kopyalayabilir veya diğer hizmetleri çalıştırabilir."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
+#, fuzzy
+#| msgid "Secure Shell (SSH) Server"
+msgid "Secure Shell Server"
 msgstr "Güvenli Kabuk (SSH) Sunucusu"
 
 #: modules/ssh/__init__.py:75
@@ -7708,6 +7855,24 @@ msgstr ""
 "açmasını sağlar. Etkisizleştirildiğinde, sadece root, admin ve freedombox-"
 "ssh gruplarının kullanıcıları SSH aracılığıyla oturum açabilir."
 
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "RSS"
+msgid "SSH"
+msgstr "RSS"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Remote terminal"
+msgstr "Konumu Kaldır"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Fingerprint"
+msgid "Fingerprints"
+msgstr "Parmak İzi"
+
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
 msgstr "Sunucu Parmak İzleri"
@@ -7740,7 +7905,7 @@ msgstr "Oturum açma sayfasına ilerlemek için resimdeki harfleri girin"
 msgid "Proceed to Login"
 msgstr "Oturum açmak için ilerle"
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Oturum aç"
 
@@ -7759,11 +7924,6 @@ msgstr ""
 "Şu anda kullanımda olan depolama ortamını görüntüleyebilir, çıkarılabilir "
 "ortamı bağlayabilir ve bağlantısını kaldırabilir, kök bölümünü vb. "
 "genişletebilirsiniz."
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "Depolama"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -7924,6 +8084,28 @@ msgstr "Paylaş"
 msgid "Other directory (specify below)"
 msgstr "Diğer dizin (aşağıda belirtin)"
 
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Disks"
+msgid "Disks"
+msgstr "Diskler"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Automatic"
+msgid "Auto-mount"
+msgstr "Otomatik"
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Expand Root Partition"
+msgid "Expand partition"
+msgstr "Kök Bölümünü Genişlet"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "Aşağıdaki depolama aygıtları kullanımda:"
@@ -8040,10 +8222,6 @@ msgstr "Syncthing uygulamasını yönet"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Dosya Eşitleme"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -8092,10 +8270,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "TiddlyWiki"
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr "Doğrusal Olmayan Defterler"
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ".html dosya uzantılı bir TiddlyWiki dosyası"
@@ -8128,7 +8302,7 @@ msgstr ""
 "<strong>İpucu</strong>: Bu viki'nin bir kopyasını silmeden önce TiddlyWiki "
 "içinden indirebilirsiniz."
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -8141,7 +8315,7 @@ msgstr ""
 "gezinirken en iyi koruma için Tor Projesi, <a href=\"https://www.torproject."
 "org/download/download-easy.html.en\">Tor Tarayıcı</a> kullanmanızı önerir."
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
@@ -8149,7 +8323,7 @@ msgstr ""
 "Bu uygulama, Tor ağına katkıda bulunmak ve başkalarının sansürü atlatmasına "
 "yardımcı olmak için aktarma hizmetleri sağlar."
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -8161,14 +8335,10 @@ msgstr ""
 "sunucuları sınırlayan bir İSS kullanılırken bile internetten {box_name} "
 "cihazına erişilebilir."
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "İsim Gizliliği Ağı"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -8178,19 +8348,19 @@ msgstr "Tor Onion Hizmeti"
 msgid "Tor Bridge Relay"
 msgstr "Tor Köprüsü Aktarımı"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor aktarma bağlantı noktası kullanılabilir"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 taşıma kayıtlı"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 taşıma kayıtlı"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion hizmeti sürüm 3'tür"
 
@@ -8303,10 +8473,6 @@ msgstr "İsim gizliliği ağı"
 msgid "Onion Service"
 msgstr "Onion Hizmeti"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Bağlantı Noktaları"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Yapılandırma güncelleniyor"
@@ -8316,7 +8482,7 @@ msgstr "Yapılandırma güncelleniyor"
 msgid "Error configuring app: {error}"
 msgstr "Uygulama yapılandırılırken hata oldu: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -8329,7 +8495,7 @@ msgstr ""
 "ağı aracılığıyla internete erişmek için çeşitli uygulamalar tarafından "
 "kullanılabilir. İSS sansürü yukarı akış köprüleri kullanılarak atlatılabilir."
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Tor Vekil Sunucusu"
 
@@ -8337,12 +8503,12 @@ msgstr "Tor Vekil Sunucusu"
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks Vekil Sunucusu"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tor aracılığıyla tcp{kind} üzerinde erişim URL'si {url}"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Tcp{kind} üzerinde {url} adresinde Tor kullanımını onaylama"
@@ -8570,6 +8736,16 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Sık yapılan özellik güncellemelerini etkinleştir (önerilir)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+#, fuzzy
+#| msgid "New value"
+msgid "New features"
+msgstr "Yeni değer"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -8878,6 +9054,18 @@ msgstr "Admin grubuna yeni kullanıcı ekleme başarısız oldu: {error}"
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Kullanıcı hesabı oluşturuldu, şu an oturum açtınız"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Manage Snapshots"
+msgid "Manage accounts"
+msgstr "Anlık Görüntüleri Yönet"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "App permissions"
+msgstr "İzinler"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9403,10 +9591,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "Web Sitesi ve Blog"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "Herkese açık erişim"
@@ -9460,10 +9644,6 @@ msgstr ""
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Fotoğraf Düzenleyici"
 
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -9692,6 +9872,12 @@ msgstr "<em>%(service_name)s</em> hizmeti çalışmıyor."
 msgid "Search with tags"
 msgstr "Etiketler ile ara"
 
+#: templates/apps.html:42
+#, fuzzy
+#| msgid "Search with tags"
+msgid "Clear all tags"
+msgstr "Etiketler ile ara"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9701,43 +9887,35 @@ msgstr ""
 "sunucudur. Sunucu uygulamalarını kolaylıkla yüklemenizi ve yönetmenizi "
 "sağlayan özgür bir yazılımdır."
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Giriş"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Giriş"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Uygulamalar"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Uygulamalar"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " Sistem"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "Parolayı değiştir"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Kapat"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Oturumu kapat"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Dil seçin"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Oturum aç"
 
@@ -9956,11 +10134,15 @@ msgstr ""
 "Tüm uygulama verileri ve yapılandırması kalıcı olarak kaybolacaktır. "
 "Uygulama tekrar yeni olarak yüklenebilir."
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "Ayar değişmedi"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} kaldırılmadan önce"
@@ -9968,6 +10150,117 @@ msgstr "{app_id} kaldırılmadan önce"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "Dosya ve Kod Parçacığı Paylaşımı"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "Etki Alanı Adı Sunucusu"
+
+#~ msgid "E-book Library"
+#~ msgstr "E-kitap Kütüphanesi"
+
+#~ msgid "Server Administration"
+#~ msgstr "Sunucu Yönetimi"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "VoIP Yardımcısı"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "BitTorrent Web İstemcisi"
+
+#~ msgid "Chat Server"
+#~ msgstr "Sohbet Sunucusu"
+
+#~ msgid "Email Server"
+#~ msgstr "E-posta Sunucusu"
+
+#~ msgid "Personal Notebooks"
+#~ msgstr "Kişisel Defterler"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Basit Git Barındırma"
+
+#~ msgid "Documentation"
+#~ msgstr "Belgeler"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Viki ve Blog"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby Sunucusu"
+
+#~ msgid "Video Room"
+#~ msgstr "Video Odası"
+
+#~ msgid "Chat Client"
+#~ msgstr "Sohbet İstemcisi"
+
+#~ msgid "Offline Wikipedia"
+#~ msgstr "Çevrimdışı Vikipedi"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Blok Kum Havuzu"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "Basit Ortam Sunucusu"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "Haber Bildirim Okuyucusu"
+
+#~ msgid "Voice Chat"
+#~ msgstr "Sesli Sohbet"
+
+#~ msgid "File Storage & Collaboration"
+#~ msgstr "Dosya Depolama ve İşbirliği"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "Sanal Özel Ağ"
+
+#~ msgid "Public Visibility"
+#~ msgstr "Herkese Açık Görünürlük"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Web Vekil Sunucusu"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC İstemcisi"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Takvim ve Adres Defteri"
+
+#~ msgid "Email Client"
+#~ msgstr "E-posta İstemcisi"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "RSS Bildirim Oluşturucu"
+
+#~ msgid "Network File Storage"
+#~ msgstr "Ağ Dosya Depolama"
+
+#~ msgid "Web Search"
+#~ msgstr "Web Arama"
+
+#~ msgid "Bypass Censorship"
+#~ msgstr "Sansürü Atlat"
+
+#~ msgid "Help Others Bypass Censorship"
+#~ msgstr "Başkalarının Sansürü Aşmasına Yardım Edin"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Dosya Eşitleme"
+
+#~ msgid "Non-linear Notebooks"
+#~ msgstr "Doğrusal Olmayan Defterler"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "İsim Gizliliği Ağı"
+
+#~ msgid "Website and Blog"
+#~ msgstr "Web Sitesi ve Blog"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Fotoğraf Düzenleyici"
 
 #, python-format
 #~ msgid ""
@@ -10361,9 +10654,6 @@ msgstr "Gujarati"
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "Parola ile SSH kimlik doğrulaması etkinleştirildi."
 
-#~ msgid "Error running apt-get"
-#~ msgstr "apt-get çalıştırılırken hata oldu"
-
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
 #~ msgstr "%(box_name)s için temel işlevsellik ve web arayüzü"
@@ -10552,9 +10842,6 @@ msgstr "Gujarati"
 
 #~ msgid "Service Alert"
 #~ msgstr "Hizmet Uyarısı"
-
-#~ msgid "Repair"
-#~ msgstr "Onar"
 
 #, python-brace-format
 #~ msgid "Internal error in {0}"
@@ -10840,9 +11127,6 @@ msgstr "Gujarati"
 #~ msgid "Connected introducers"
 #~ msgstr "Bağlı tanıtıcılar"
 
-#~ msgid "Remove"
-#~ msgstr "Kaldır"
-
 #~ msgid "Postfix domain name config"
 #~ msgstr "Postfix etki alanı adı yapılandırması"
 
@@ -10866,9 +11150,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete selected"
 #~ msgstr "Seçileni sil"
-
-#~ msgid "New value"
-#~ msgstr "Yeni değer"
 
 #~ msgid "There was a problem with your request. Please try again."
 #~ msgstr "İsteğiniz ile ilgili bir sorun oldu. Lütfen tekrar deneyin."
@@ -11446,9 +11727,6 @@ msgstr "Gujarati"
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
 
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
-
 #~ msgid "Not Available"
 #~ msgstr "Mevcut değil"
 
@@ -11753,11 +12031,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete Snapshot"
 #~ msgstr "Anlığı sil"
-
-#, fuzzy
-#~| msgid "Disks"
-#~ msgid "Disk"
-#~ msgstr "Diskler"
 
 #, fuzzy
 #~| msgid "reStore"
