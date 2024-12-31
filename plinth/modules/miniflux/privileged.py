@@ -83,7 +83,7 @@ def _run_miniflux_interactively(command: str, username: str,
     child.sendline(password)
 
     child.expect(pexpect.EOF)
-    raw_message = child.before.decode()
+    raw_message = child.before.decode()  # type: ignore
     try:
         json_message = json.loads(raw_message)
     except (KeyError, json.JSONDecodeError):
