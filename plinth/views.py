@@ -191,7 +191,7 @@ class AppsIndexView(TemplateView):
             A mismatch is when a selected tag is *not* present in the list of
             tags for menu item.
             """
-            menu_tags = set(menu_item.app.info.tags)
+            menu_tags = set(menu_item.tags)
             return [tag not in menu_tags for tag in selected_tags]
 
         def _sort_key(menu_item):
