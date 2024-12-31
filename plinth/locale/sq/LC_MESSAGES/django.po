@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 20:05-0500\n"
-"PO-Revision-Date: 2024-12-18 02:16+0000\n"
+"PO-Revision-Date: 2025-01-01 08:00+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -136,22 +136,17 @@ msgstr ""
 "Sistemi ka gjasa të jetë nën ngarkesë të madhe. Ju lutemi, riprovoni më vonë."
 
 #: middleware.py:147
-#, fuzzy, python-brace-format
-#| msgid "Page not found - %(box_name)s"
+#, python-brace-format
 msgid "Page not found: {url}"
-msgstr "Faqe që s’gjendet - %(box_name)s"
+msgstr "S’u gjet faqe: {url}"
 
 #: middleware.py:150
-#, fuzzy
-#| msgid "Error running apt-get"
 msgid "Error running operation."
-msgstr "Gabim në xhirimin e urdhrit apt-get"
+msgstr "Gabim në ekzekutimin e veprimit."
 
 #: middleware.py:152
-#, fuzzy
-#| msgid "Error running apt-get"
 msgid "Error loading page."
-msgstr "Gabim në xhirimin e urdhrit apt-get"
+msgstr "Gabim në ngarkimin e faqes."
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -174,7 +169,7 @@ msgstr "URL hyrjeje {url} në tcp{kind}"
 #: modules/apache/components.py:165
 #, python-brace-format
 msgid "Access URL {url}"
-msgstr "URL Hyrjeje {url}"
+msgstr "URL hyrjeje {url}"
 
 #: modules/avahi/__init__.py:24
 #, python-brace-format
@@ -203,15 +198,15 @@ msgstr "Përkatësi Rrjeti Vendor"
 
 #: modules/avahi/manifest.py:14
 msgid "Auto-discovery"
-msgstr ""
+msgstr "Vetëpikase"
 
 #: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
 msgid "Local"
-msgstr ""
+msgstr "Lokale"
 
 #: modules/avahi/manifest.py:14
 msgid "mDNS"
-msgstr ""
+msgstr "mDNS"
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
@@ -249,7 +244,7 @@ msgid ""
 "succeed. The latest error is: {error_message}"
 msgstr ""
 "Dështoi një kopjeruajtje e planifikuar. {error_count} përpjekjet e mëparshme "
-"nuk patën sukses. Gabimi i fundit qe: {error_message}"
+"s’patën sukses. Gabimi i fundit qe: {error_message}"
 
 #: modules/backups/__init__.py:224
 msgid "Error During Backup"
@@ -482,28 +477,20 @@ msgid "Restore"
 msgstr "Riktheje"
 
 #: modules/backups/manifest.py:15
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encrypted"
-msgstr "Fshehtëzim"
+msgstr "E fshehtëzuar"
 
 #: modules/backups/manifest.py:16
-#, fuzzy
-#| msgid "Schedule"
 msgid "Schedules"
-msgstr "Vëreni në plan"
+msgstr "Planifikime"
 
 #: modules/backups/manifest.py:18
-#, fuzzy
-#| msgid "Remove"
 msgid "Remote"
-msgstr "Hiqe"
+msgstr "E largët"
 
 #: modules/backups/manifest.py:19
-#, fuzzy
-#| msgid "App updated"
 msgid "App data"
-msgstr "Aplikacioni u përditësua"
+msgstr "Të dhëna aplikacioni"
 
 #: modules/backups/manifest.py:20
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -514,7 +501,7 @@ msgstr "Formësim"
 
 #: modules/backups/manifest.py:21
 msgid "Borg"
-msgstr ""
+msgstr "Borg"
 
 #: modules/backups/privileged.py:31
 msgid ""
@@ -547,18 +534,16 @@ msgstr ""
 "kopjeruajtjesh."
 
 #: modules/backups/privileged.py:74
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "An archive with given name already exists in the repository."
-msgstr "Ka tashmë një pjesë me këtë emër."
+msgstr "Te depoja ka tashmë një arkiv me emrin e dhënë."
 
 #: modules/backups/privileged.py:81
 msgid "Archive with given name was not found in the repository."
-msgstr ""
+msgstr "Te depoja s’u gjet arkiv me emrin e dhënë."
 
 #: modules/backups/privileged.py:87
 msgid "Backup system is busy with another operation."
-msgstr ""
+msgstr "Sistemi i kojeruajtjeve është i zënë me një tjetër veprim."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -758,7 +743,7 @@ msgid ""
 "advertises the following SSH public keys. Please verify any one of them."
 msgstr ""
 "S’u përcaktua dot mirëfilltësia e shtresë SSH %(hostname)s. Streha pretendon "
-"për kyçat vijues publikë SSH. Ju lutemi, verifikoni cilindo prej tyre."
+"për kyçet vijues publikë SSH. Ju lutemi, verifikoni cilindo prej tyre."
 
 #: modules/backups/templates/verify_ssh_hostkey.html:46
 msgid "How to verify?"
@@ -803,10 +788,8 @@ msgid "Upload and restore a backup"
 msgstr "Ngarkoni dhe riktheni një kopjeruajtje"
 
 #: modules/backups/views.py:218
-#, fuzzy
-#| msgid "Logged out successfully."
 msgid "Upload successful."
-msgstr "U dol me sukses."
+msgstr "Ngarkim i suksesshëm."
 
 #: modules/backups/views.py:256
 msgid "No backup file found."
@@ -829,10 +812,8 @@ msgid "Create backup repository"
 msgstr "Krijoni depo kopjeruajtesh"
 
 #: modules/backups/views.py:352
-#, fuzzy
-#| msgid "Added new remote SSH repository."
 msgid "Added new repository."
-msgstr "Shtoni depo SSH të re të largët."
+msgstr "U shtua depo e re."
 
 #: modules/backups/views.py:366
 msgid "Create remote backup repository"
@@ -1114,10 +1095,8 @@ msgstr ""
 "përcillen kërkesat"
 
 #: modules/bind/manifest.py:16
-#, fuzzy
-#| msgid "DNSSEC"
 msgid "DNS"
-msgstr "DNSSEC"
+msgstr "DNS"
 
 #: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
 #: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
@@ -1125,10 +1104,8 @@ msgid "Server"
 msgstr "Shërbyes"
 
 #: modules/bind/manifest.py:18
-#, fuzzy
-#| msgid "Resolver Status"
 msgid "Resolver"
-msgstr "Gjendje Zgjidhësi"
+msgstr "Zgjidhës"
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1197,8 +1174,8 @@ msgstr ""
 "eksportojë, ose shndërrojë një gamë të gjera formatesh, për t’i bërë e-"
 "librat gati për lexim në çfarëdo pajisje. Furnizon gjithashtu edhe një "
 "lexues web &lt;em&gt;online&lt;/em&gt;. Mban mend vendndodhjen tuaj të "
-"fundit të leximit, faqerojtës, dhe tekst të theksuar. Aktualisht nuk "
-"mbulohet shpërndarje lënde duke përdorur OPDS."
+"fundit të leximit, faqerojtës, dhe tekst të theksuar. Aktualisht s’mbulohet "
+"shpërndarje lënde duke përdorur OPDS."
 
 #: modules/calibre/__init__.py:33
 msgid ""
@@ -1336,7 +1313,7 @@ msgstr ""
 "fjala ndarje disqesh në pjesë dhe administrim RAID. Mund të përdoret edhe "
 "për të hapur porta vetjake firewall-i dhe veprime të thelluara në rrjet, bie "
 "fjala &lt;em&gt;bonding&lt;/em&gt;, &lt;em&gt;bridging&lt;/em&gt; dhe "
-"administrmi VLAN-i."
+"administrim VLAN-i."
 
 #: modules/cockpit/__init__.py:34
 #, python-brace-format
@@ -1353,16 +1330,12 @@ msgid "Cockpit"
 msgstr "Cockpit"
 
 #: modules/cockpit/manifest.py:23
-#, fuzzy
-#| msgid "Administration"
 msgid "Advanced administration"
-msgstr "Administrim"
+msgstr "Administrim i thelluar"
 
 #: modules/cockpit/manifest.py:24
-#, fuzzy
-#| msgid "Web sharing"
 msgid "Web terminal"
-msgstr "Dhënie në Web"
+msgstr "Terminal Web"
 
 #: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
 #: modules/storage/__init__.py:319 modules/storage/__init__.py:350
@@ -1371,10 +1344,8 @@ msgid "Storage"
 msgstr "Depozitë"
 
 #: modules/cockpit/manifest.py:26
-#, fuzzy
-#| msgid "Networks"
 msgid "Networking"
-msgstr "Rrjete"
+msgstr "Punim në rrjet"
 
 #: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
 msgid "Services"
@@ -1382,7 +1353,7 @@ msgstr "Shërbime"
 
 #: modules/cockpit/manifest.py:28
 msgid "Logs"
-msgstr ""
+msgstr "Regjistra"
 
 #: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
 #: modules/performance/__init__.py:40
@@ -1478,13 +1449,11 @@ msgstr "Faqe hyrëse"
 
 #: modules/config/manifest.py:8
 msgid "Logging"
-msgstr ""
+msgstr "Regjistrim"
 
 #: modules/config/manifest.py:8
-#, fuzzy
-#| msgid "Advanced"
 msgid "Advanced apps"
-msgstr "Të thelluara"
+msgstr "Aplikacione të thelluara"
 
 #: modules/config/views.py:41
 #, python-brace-format
@@ -1594,16 +1563,12 @@ msgid "-- no time zone set --"
 msgstr "-- pa zonë kohore të ujdisur --"
 
 #: modules/datetime/manifest.py:15
-#, fuzzy
-#| msgid "Network drive"
 msgid "Network time"
-msgstr "Disk rrjeti"
+msgstr "Kohë rrjeti"
 
 #: modules/datetime/manifest.py:15
-#, fuzzy
-#| msgid "Time Zone"
 msgid "Timezone"
-msgstr "Zonë Kohe"
+msgstr "Zonë kohore"
 
 #: modules/datetime/views.py:53
 #, python-brace-format
@@ -1758,17 +1723,15 @@ msgstr "Nëse gjenden probleme, provoni t’i riparoni në mënyrë të automati
 
 #: modules/diagnostics/manifest.py:10
 msgid "Detect problems"
-msgstr ""
+msgstr "Pikas probleme"
 
 #: modules/diagnostics/manifest.py:10
-#, fuzzy
-#| msgid "Repairing app"
 msgid "Repair"
-msgstr "Po riparohet aplikacioni"
+msgstr "Riparoje"
 
 #: modules/diagnostics/manifest.py:10
 msgid "Daily"
-msgstr ""
+msgstr "Përditë"
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1799,7 +1762,7 @@ msgstr "Provo ta ndreqësh"
 
 #: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
-msgstr "Ky aplikacion nuk mbulon diagnostikime"
+msgstr "Ky aplikacion s’mbulon diagnostikime"
 
 #: modules/diagnostics/templates/diagnostics_button.html:11
 msgid "Run Diagnostics"
@@ -1843,9 +1806,9 @@ msgid ""
 "prevent others from finding services which are provided by this {box_name}."
 msgstr ""
 "Nëse furnizuesi juaj i shërbimeve Internet e ndryshon periodikisht adresën "
-"tuaj IP (pra, çdo 24h), mund të jetë e vështirë për të tjerët t’ju gjejnë në "
-"Internet. Kjo do t’u pengojë të tjerëve të gjejnë shërbime të cilat ofrohen "
-"nga ky {box_name}."
+"tuaj IP (pra, çdo 24 orë), mund të jetë e vështirë për të tjerët t’ju gjejnë "
+"në Internet. Kjo do t’u pengojë të tjerëve të gjejnë shërbime të cilat "
+"ofrohen nga ky {box_name}."
 
 #: modules/dynamicdns/__init__.py:32
 msgid ""
@@ -1873,10 +1836,10 @@ msgid ""
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Nëse po kërkoni për një llogari falas DNS-je dinamike, mund të gjeni një "
-"shërbim GnuDIP të lirë, te <a href=\"https://ddns.freedombox.org\" "
-"target=\"_blank\">ddns.freedombox.org</a> ose mund të gjeni shërbime të lira "
-"me bazë përditësim URL-je, te <a href=\"http://freedns.afraid.org/\" "
-"target=\"_blank\">freedns.afraid.org</a>."
+"shërbim GnuDIP të lirë, te <a href=\"https://ddns.freedombox.org\" target="
+"\"_blank\">ddns.freedombox.org</a>, ose mund të gjeni shërbime të lira me "
+"bazë përditësim URL-je, te <a href=\"http://freedns.afraid.org/\" target="
+"\"_blank\">freedns.afraid.org</a>."
 
 #: modules/dynamicdns/__init__.py:61
 msgid "Dynamic DNS Client"
@@ -1903,9 +1866,9 @@ msgid ""
 "you may use the update URL of your provider."
 msgstr ""
 "Ju lutemi, zgjidhni një protokoll përditësimi në përputhje me furnizuesin "
-"tuaj të shërbimeve. Nëse furnizuesi juaj nuk mbulon protokollin GnuDIP, ose "
-"nëse furnizuesi juaj nuk duket te lista, mund të përdorni URL-n e "
-"përditësimit të furnizuesit tuaj."
+"tuaj të shërbimeve. Nëse furnizuesi juaj s’mbulon protokollin GnuDIP, ose "
+"nëse furnizuesi juaj s’duket te lista, mund të përdorni URL-n e përditësimit "
+"të furnizuesit tuaj."
 
 #: modules/dynamicdns/forms.py:27
 msgid ""
@@ -1933,7 +1896,7 @@ msgid ""
 "basic authentication."
 msgstr ""
 "Nëse kjo mundësi është përzgjedhur, emri i përdoruesit dhe fjalëkalimi për "
-"ju do të përdoren për mirëfilltësim elementa HTTP."
+"ju do të përdoren për mirëfilltësim elementar HTTP."
 
 #: modules/dynamicdns/forms.py:40
 msgid "Leave this field empty if you want to keep your current password."
@@ -2033,10 +1996,8 @@ msgid "Free"
 msgstr ""
 
 #: modules/dynamicdns/manifest.py:17
-#, fuzzy
-#| msgid "Server public key:"
 msgid "Needs public IP"
-msgstr "Kyç publik shërbyesi:"
+msgstr "Lyp IP publike"
 
 #: modules/dynamicdns/templates/dynamicdns.html:11
 #: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
@@ -2280,9 +2241,9 @@ msgid ""
 "restrict outgoing email. Some lift the restriction after an explicit "
 "request. See manual page for more information."
 msgstr ""
-"Shërbyesi email aktualisht nuk funksionon me mjaft shërbime të lira "
+"Shërbyesi email aktualisht s’funksionon me mjaft shërbime të lira "
 "përkatësish, përfshi ato të FreedomBox Foundation. Gjithashtu mjaft ISP "
-"kufizojnë email-t e dërguar. Disa prej tyre e heqin kufizimin pas një "
+"kufizojnë email-et e dërguar. Disa prej tyre e heqin kufizimin pas një "
 "kërkese shprehimisht për këtë. Për më tepër hollësi, shihni faqen e "
 "doracakut."
 
@@ -2295,12 +2256,11 @@ msgid ""
 "address. Necessary aliases such as \"postmaster\" are automatically created "
 "pointing to the first admin user."
 msgstr ""
-"Çdo përdorues në {box_name} merr një adresë email të ngjashme me "
-"përdorues@përkatësiaime.shembull. Do të marrë gjithashtu email nga krejt "
-"adresat që duken si përdorues+foo@përkatësiaime.shembull. Më tej, mund të "
-"shtojë aliase te adresa e tij email. Aliase të nevojshëm, të tillë si "
-"“postmaster” krijohen automatikisht dhe shpien te i pari përdorues "
-"përgjegjës."
+"Çdo përdorues në {box_name} merr një adresë email të ngjashme me përdorues@"
+"përkatësiaime.shembull. Do të marrë gjithashtu email nga krejt adresat që "
+"duken si përdorues+foo@përkatësiaime.shembull. Më tej, mund të shtojë aliase "
+"te adresa e tij email. Aliase të nevojshëm, të tillë si “postmaster”, "
+"krijohen automatikisht dhe shpien te i pari përdorues përgjegjës."
 
 #: modules/email/__init__.py:41
 msgid ""
@@ -2397,7 +2357,7 @@ msgstr "Administroni Aliase"
 
 #: modules/email/templates/email-aliases.html:16
 msgid "You have no email aliases."
-msgstr "S’keni aliase emil-i."
+msgstr "S’keni aliase email-i."
 
 #: modules/email/templates/email-aliases.html:28
 msgid "Create a new email alias"
@@ -2488,10 +2448,9 @@ msgid ""
 "supported."
 msgstr ""
 "Wiki-t, si parazgjedhje, s’janë publike, por mund të shkarkohen, për t’i "
-"ndarë me të tjerët apo për botim. Mund të përpunohen nga <a "
-"href=\"{users_url}\">cilido përdorues</a> në {box_name} që është pjesë e "
-"grupit wiki. Nuk mbulohet përpunim në të njëjtën kohë nga më tepër se një "
-"përdorues."
+"ndarë me të tjerët apo për botim. Mund të përpunohen nga <a href="
+"\"{users_url}\">cilido përdorues</a> në {box_name} që është pjesë e grupit "
+"wiki. S’mbulohet përpunim në të njëjtën kohë nga më tepër se një përdorues."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
@@ -2520,7 +2479,7 @@ msgstr "Emër i ri për kartelën wiki, me zgjatim kartele “.html”"
 
 #: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
 msgid "Renaming the file has no effect on the title of the wiki."
-msgstr "Riemërtimi i kartelës nuk prek titullin e wiki-t."
+msgstr "Riemërtimi i kartelës s’prek titullin e wiki-t."
 
 #: modules/featherwiki/forms.py:32
 msgid "A Feather Wiki file with .html file extension"
@@ -2716,10 +2675,8 @@ msgid "Ports"
 msgstr "Porta"
 
 #: modules/firewall/manifest.py:10
-#, fuzzy
-#| msgid "Blocked"
 msgid "Blocking"
-msgstr "E bllokuar"
+msgstr ""
 
 #: modules/firewall/manifest.py:10 modules/networks/forms.py:319
 #: modules/upgrades/manifest.py:10
@@ -3134,7 +3091,7 @@ msgid ""
 "returning the Internet to its intended peer-to-peer architecture."
 msgstr ""
 "Rrojmë në një botë ku përdorimi që i bëjmë rrjetit ndërmjetësohet nga ata që "
-"shpesh s’kanë në mendje të mirën tonë.  Duke krijuar software që nuk bazohet "
+"shpesh s’kanë në mendje të mirën tonë.  Duke krijuar software që s’bazohet "
 "në një shërbim qendror, mund të rifitojmë kontrollin dhe privatësinë.  Duke "
 "i mbajtur të dhënat tona në shtëpitë tona, përfitojmë mbrojtje ligjore të "
 "dobishme mbi to.  Duke u kthyer përdoruesve pushtetin mbi rrjetet dhe "
@@ -3163,11 +3120,12 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 "%(box_name)s është software, i licencuar sipas GNU Affero General Public "
-"License. Kodim burim gjendet në internet në <a href=\"https://salsa.debian."
-"org/freedombox-team/freedombox\">depon  %(box_name)s</a>.  Veç kësaj, kodi "
-"burim i cilësdo paketë Debian mund të merret nga sajti i <a href=\"https://"
-"sources.debian.org/\">Burimeve Debian</a>, ose duke xhiruar “apt source "
-"<i>emër_pakete</i>” në një terminal (duke përdorur Cockpit, ose SSH)."
+"License. Kodi burim gjendet në internet në <a href="
+"\"https://salsa.debian.org/freedombox-team/freedombox\">depon %(box_name)s</"
+"a>.  Veç kësaj, kodi burim i cilësdo paketë Debian mund të merret nga sajti "
+"i <a href=\"https://sources.debian.org/\">Burimeve Debian</a>, ose duke "
+"xhiruar “apt source <i>emër_pakete</i>” në një terminal (duke përdorur "
+"Cockpit, ose SSH)."
 
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
@@ -3678,7 +3636,7 @@ msgstr ""
 "Kiwix-i mund të strehojë lloje të ndryshme lënde:\n"
 "    <ul>\n"
 "      <li>Versione offline sajtesh: projekte Wikimedia, Stack Exchange</li>\n"
-"      <li>Lëndën video: Khan Academy, TED Talks, Crash Course</li>\n"
+"      <li>Lëndë video: Khan Academy, TED Talks, Crash Course</li>\n"
 "      <li>Materiale edukative: PHET, TED Ed, Vikidia</li>\n"
 "      <li>eLibra: Project Gutenberg</li>\n"
 "      <li>Revista: Low-tech Magazine</li>\n"
@@ -3823,7 +3781,7 @@ msgstr ""
 "hapura, që xhirohet për të mirën e publikut nga Internet Security Research "
 "Group (ISRG).  Ju lutemi, përpara se të përdorni këtë shërbim, lexoni dhe "
 "pajtohuni me <a href=\"https://letsencrypt.org/repository/\">Marrëveshje "
-"Pajtimtari Let’s Encrypt</a> before using this service."
+"Pajtimtari Let’s Encrypt</a>."
 
 #: modules/letsencrypt/__init__.py:60
 msgid "Let's Encrypt"
@@ -3835,13 +3793,11 @@ msgstr "Dëshmi"
 
 #: modules/letsencrypt/manifest.py:11
 msgid "HTTPS"
-msgstr ""
+msgstr "HTTPS"
 
 #: modules/letsencrypt/manifest.py:11
-#, fuzzy
-#| msgid "Website Security"
 msgid "Web security"
-msgstr "Siguri Sajti"
+msgstr "Siguri Web"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3951,7 +3907,7 @@ msgstr ""
 "ekosistem i ri për shkëmbim të hapët, të federuar, mesazhesh të "
 "atypëratyshëm dhe VoIP. Synapse është një shërbyes që sendërton protokollin "
 "Matrix. Furnizon grupe fjalosjesh, thirrje audio/video, fshehtëzim skaj-më-"
-"skaj, njëkohësim pajisjesh të shumta dhe nuk lyp numra telefonash që të "
+"skaj, njëkohësim pajisjesh të shumta dhe s’lyp numra telefonash që të "
 "funksionojë. Përmes federimi, përdoruesit në një shërbyes të dhënë Matrix "
 "mund të bisedojnë me përdorues në krejt shërbyesit e tjerë Matrix."
 
@@ -4060,7 +4016,7 @@ msgid ""
 "least one domain to be able to use Matrix Synapse."
 msgstr ""
 "S’ka përkatësi. <a href=\"%(config_url)s\">Formësoni</a> të paktën një "
-"përkatësi, që të jeni në gjendje të përdorniatrix Synapse."
+"përkatësi, që të jeni në gjendje të përdorni Matrix Synapse."
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:15
 #, python-format
@@ -4072,7 +4028,7 @@ msgstr ""
 "Si përkatësi shërbyesi Matrix është caktuar <em>%(domain_name)s</em>. ID-të "
 "e përdoruesve do të jenë të trajtës <em>@emërpërdoruesi:%(domain_name)s</"
 "em>. Ndryshimi i emrit të përkatësisë, pas ujdisjes fillestare, aktualisht "
-"nuk mbulohet."
+"s’mbulohet."
 
 #: modules/matrixsynapse/templates/matrix-synapse.html:22
 msgid ""
@@ -4252,7 +4208,7 @@ msgid ""
 "Choose a default language for your MediaWiki installation. Users have the "
 "option to select their preferred language."
 msgstr ""
-"Zgjidhni për instalimin tuaj MediaWiki një gjuhë prazgjedhje. Përdoruesit "
+"Zgjidhni për instalimin tuaj MediaWiki një gjuhë parazgjedhje. Përdoruesit "
 "kanë mundësi të përzgjedhin gjuhën e tyre të parapëlqyer."
 
 #: modules/mediawiki/views.py:43
@@ -4306,10 +4262,10 @@ msgid ""
 "downloads/\">Minetest client</a> is needed."
 msgstr ""
 "Minetest është një bankëprovë blloqesh lojërash “botë e pafundme” me shumë "
-"lojëtarë. Ky modul i bën të mundur shërbyesit Minetest të xhirojë mbi këtë "
+"lojtarë. Ky modul i bën të mundur shërbyesit Minetest të xhirojë mbi këtë "
 "{box_name}, në portën parazgjedhje (30000). Që të lidheni me shërbyesin, "
-"lypset një <a href=\"http://www.minetest.net/downloads/\">klient Minetest</"
-"a>."
+"lypset një <a href=\"http://www.minetest.net/downloads/\">klient "
+"Minetest</a>."
 
 #: modules/minetest/__init__.py:56 modules/minetest/manifest.py:9
 msgid "Minetest"
@@ -4768,10 +4724,8 @@ msgid "Domains"
 msgstr "Përkatësi"
 
 #: modules/names/manifest.py:13
-#, fuzzy
-#| msgid "Evolution"
 msgid "DNS Resolution"
-msgstr "Evolution"
+msgstr "Ftillim DNS-je"
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
@@ -4802,7 +4756,7 @@ msgstr "të mbuluar"
 
 #: modules/names/resolved.py:110
 msgid "unsupported"
-msgstr "e pambuluar"
+msgstr "të pambuluar"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -5196,7 +5150,7 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 "I lidhur drejtpërdrejt në Internet <p class=\"help-block\">Lidhja juaj "
-"Internet i është bashkëngjitur drejpërsëdrejti {box_name} tuaj dhe s’ka "
+"Internet i është bashkëngjitur drejtpërsëdrejti {box_name} tuaj dhe s’ka "
 "pajisje të tjera në rrjet. Kjo ndodh në ujdisje për bashkësi ose re.</p>"
 
 #: modules/networks/forms.py:417
@@ -5252,20 +5206,19 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 "S’kam adresë IP publike<p class=\"help-block\">Kjo do të thotë se pajisjet "
-"në Internet <b>nuk munden</b> të lidhen me ju, kur jeni i lidhur në "
-"Internet. Sa herë që lidheni në Internet përmes Furnizuesit tuaj të "
-"Shërbimeve Internet (ISP), ju jepet një adresë IP që ka vlerë vetëm për "
-"rrjete vendore. Mjaft ISP e ofrojnë këtë lloj lidhjeje. Ky është rasti më "
-"problematik për strehim shërbimesh në shtëpi. {box_name} ofron mjaft "
-"zgjidhje për anashkalim të këtyre problemeve, por çdo zgjidhje ka ca "
-"kufizime.</p>"
+"në Internet <b>s’munden</b> të lidhen me ju, kur jeni i lidhur në Internet. "
+"Sa herë që lidheni në Internet përmes Furnizuesit tuaj të Shërbimeve "
+"Internet (ISP), ju jepet një adresë IP që ka vlerë vetëm për rrjete vendore. "
+"Mjaft ISP e ofrojnë këtë lloj lidhjeje. Ky është rasti më problematik për "
+"strehim shërbimesh në shtëpi. {box_name} ofron mjaft zgjidhje për anashkalim "
+"të këtyre problemeve, por çdo zgjidhje ka ca kufizime.</p>"
 
 #: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
 msgstr ""
-"Nuk e di llojin e lidhjes që jep ISP-ja ime <p class=\"help-block\">Do t’ju "
+"S’e di llojin e lidhjes që jep ISP-ja ime <p class=\"help-block\">Do t’ju "
 "sugjerohen veprimet më konservative.</p>"
 
 #: modules/networks/forms.py:476
@@ -5300,12 +5253,12 @@ msgid ""
 "ports 80 and 443 to work. Each of the other applications will suggest which "
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
-"Përcill trafik specifik, sipas nevojave të secilit aplikacion <p "
-"class=\"help-block\">Mundet edhe të zgjidhni të përcillni te {box_name}-i "
-"juaj vetëm trafik specifik. Kjo është ideale, nëse në rrjetin tuaj keni "
-"shërbyes të tjerë si {box_name}-i, ose nëse rrugëzuesi juaj nuk e mbulon "
-"veçorinë DMZ. Krejt aplikacionet që furnizojnë një ndërfaqe web duan prej "
-"jush të përcillni trafik prej portash 80 dhe 443, që të punojnë. Secili prej "
+"Përcill trafik specifik, sipas nevojave të secilit aplikacion <p class"
+"=\"help-block\">Mundet edhe të zgjidhni të përcillni te {box_name}-i juaj "
+"vetëm trafik specifik. Kjo është ideale, nëse në rrjetin tuaj keni shërbyes "
+"të tjerë si {box_name}-i, ose nëse rrugëzuesi juaj s’e mbulon veçorinë DMZ. "
+"Krejt aplikacionet që furnizojnë një ndërfaqe web duan prej jush të "
+"përcillni trafik prej portash 80 dhe 443, që të punojnë. Secili prej "
 "aplikacioneve të tjera do të sugjerojnë te cila portë(a) duhet bërë "
 "përcjellja që ai aplikacion të funksionojë.</p>"
 
@@ -5340,7 +5293,7 @@ msgstr "Rrjet vendor"
 
 #: modules/networks/manifest.py:8
 msgid "Topology"
-msgstr ""
+msgstr "Toplogji"
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5544,8 +5497,8 @@ msgid ""
 "This interface is not maintained by %(box_name)s.  For security, it is "
 "automatically assigned to the external zone."
 msgstr ""
-"Kjo ndërfaqe nuk mirëmbahet nga %(box_name)s.  Për hir të sigurisë, i "
-"caktohet automatikisht zonës së jashtme."
+"Kjo ndërfaqe s’mirëmbahet nga %(box_name)s.  Për hir të sigurisë, i caktohet "
+"automatikisht zonës së jashtme."
 
 #: modules/networks/templates/connections_create.html:18
 msgid "Create Connection"
@@ -5633,7 +5586,7 @@ msgstr "Aktive"
 
 #: modules/networks/templates/connections_list.html:35
 msgid "Inactive"
-msgstr "Jo aktivr"
+msgstr "Jo aktive"
 
 #: modules/networks/templates/connections_list.html:77
 #, python-format
@@ -5687,7 +5640,7 @@ msgstr "ISP-ja im s’furnizon një adresë IP publike."
 
 #: modules/networks/templates/internet_connectivity_main.html:35
 msgid "I do not know the type of connection my ISP provides."
-msgstr "Nuk e di llojin e lidhjes që jep ISP-ja ime."
+msgstr "S’e di llojin e lidhjes që jep ISP-ja ime."
 
 #: modules/networks/templates/internet_connectivity_main.html:41
 #: modules/networks/templates/network_topology_main.html:41
@@ -5876,7 +5829,7 @@ msgstr "e përbashkët"
 
 #: modules/networks/views.py:31
 msgid "link-local"
-msgstr ""
+msgstr "link-local"
 
 #: modules/networks/views.py:32
 msgid "dhcp"
@@ -6004,7 +5957,7 @@ msgstr "u pikas adresë IP e përsëdytur"
 
 #: modules/networks/views.py:94
 msgid "selected IP method is not supported"
-msgstr "metoda e përzgjedhur për IP nuk mbulohet"
+msgstr "metoda e përzgjedhur për IP s’mbulohet"
 
 #: modules/networks/views.py:103
 msgid "generic"
@@ -6053,7 +6006,7 @@ msgstr "S’përpunohet dot lidhje: S’u gjet lidhje."
 
 #: modules/networks/views.py:231
 msgid "This type of connection is not yet understood."
-msgstr "Ky lloj lidhjesh nuk kuptohet ende."
+msgstr "Ky lloj lidhjesh s’kuptohet ende."
 
 #: modules/networks/views.py:353
 #, python-brace-format
@@ -6305,7 +6258,7 @@ msgstr "{box_name} gjendet pas një firewall-i të kufizuar."
 #, python-brace-format
 msgid "{box_name} is connected to a (wireless) router which you don't control."
 msgstr ""
-"{box_name} është i lidhur te një rrugëzues (pa fill), të cilin nuk e "
+"{box_name} është i lidhur te një rrugëzues (pa fill), të cilin s’e "
 "kontrolloni ju."
 
 #: modules/pagekite/__init__.py:29
@@ -6434,10 +6387,8 @@ msgid "Reachability"
 msgstr ""
 
 #: modules/pagekite/manifest.py:18
-#, fuzzy
-#| msgid "Tunnelblick"
 msgid "Tunneling"
-msgstr "Tunnelblick"
+msgstr ""
 
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
@@ -6522,14 +6473,12 @@ msgstr ""
 "shihen duke përdorur aplikacionin Cockpit."
 
 #: modules/performance/manifest.py:18
-#, fuzzy
-#| msgid "System Monitoring"
 msgid "Monitoring"
-msgstr "Mbikëqyrje Sistemi"
+msgstr ""
 
 #: modules/performance/manifest.py:18
 msgid "Resource utilization"
-msgstr ""
+msgstr "Përdorim burimesh"
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6541,11 +6490,9 @@ msgstr "Energji"
 
 #: modules/power/manifest.py:10
 msgid "Reboot"
-msgstr ""
+msgstr "Rinisu"
 
 #: modules/power/manifest.py:10
-#, fuzzy
-#| msgid "Shut down"
 msgid "Shutdown"
 msgstr "Fike"
 
@@ -6623,12 +6570,12 @@ msgid ""
 "network for additional anonymity if Tor app is enabled."
 msgstr ""
 "Ndihmoni zhvilluesit e Debian/{box_name} duke marrë pjesë te anketimi "
-"Konkurs Popullariteti progamesh. Kur aktivizohet, te Debian do të "
+"Konkurs Popullariteti programesh. Kur aktivizohet, te Debian do të "
 "parashtrohet në mënyrë anonime çdo javë një listë e aplikacioneve të "
 "përdorura në këtë sistem. Statistikat për të dhënat e grumbulluara janë "
-"publike, te <a href=\"https://popcon.debian.org/\" target=\"_blank\">popcon."
-"debian.org</a>. Parashtrimi bëhet përmes rrjetit Tor, për anonimitet shtesë, "
-"nëse është i aktivizuar aplikacioni Tor."
+"publike, te <a href=\"https://popcon.debian.org/\" target=\"_blank\""
+">popcon.debian.org</a>. Parashtrimi bëhet përmes rrjetit Tor, për anonimitet "
+"shtesë, nëse është i aktivizuar aplikacioni Tor."
 
 #: modules/privacy/forms.py:28
 msgid "Allow using fallback DNS servers"
@@ -6643,18 +6590,16 @@ msgid ""
 msgstr ""
 "Përdor shërbyes publik të mirënjohur DNS për të ftilluar emra përkatësish në "
 "rrethana jo të zakonshme, kur s’dihen shërbyes DNS, por ka internet. Mund të "
-"çaktivizohet në shumicën e rasteve, nëse lidhja në rrjet është stabël dhe e "
-"qëndrueshme."
+"çaktivizohet në shumicën e rasteve, nëse lidhja në rrjet është qëndrueshme "
+"dhe e besueshme."
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
-msgstr ""
+msgstr "Raportim përdorimi"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Fallback DNS Servers"
 msgid "Fallback DNS"
-msgstr "Shërbyes DNS rrugëdalje"
+msgstr "DNS rrugëdalje"
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -6764,8 +6709,8 @@ msgid ""
 "which must be done using a separate client."
 msgstr ""
 "Radicale jep një ndërfaqe web elementare, që mbulon vetëm krijim kalendarësh "
-"të ri dhe librash adresash. Nuk mbulon shtim veprimtarish ose kontaktesh, "
-"çka duhen bërë duke përdorur një tjetër klient."
+"të ri dhe librash adresash. S’mbulon shtim veprimtarish ose kontaktesh, çka "
+"duhen bërë duke përdorur një tjetër klient."
 
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
@@ -6956,7 +6901,7 @@ msgstr ""
 "RSS-Bridge-in mund ta përdorni me <a href=\"{miniflux_url}\">Miniflux</a>, "
 "ose <a href=\"{ttrss_url}\">Tiny Tiny RSS</a> për të ndjekur sajte të "
 "ndryshëm. Kur shtohet një prurje, aktivizoni mirëfilltësimin dhe përdorni "
-"kredencialet tuaj për {box_name} credentials."
+"kredencialet tuaj për {box_name}."
 
 #: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
@@ -7082,7 +7027,7 @@ msgstr ""
 
 #: modules/samba/templates/samba.html:84
 msgid "VFAT partitions are not supported"
-msgstr "Nuk mbulohen pjesët VFAT"
+msgstr "S’mbulohen pjesë VFAT"
 
 #: modules/samba/templates/samba.html:112
 #, python-format
@@ -7176,7 +7121,7 @@ msgid ""
 "stores no cookies by default."
 msgstr ""
 "Searx mund të përdoret për të shmangur gjurmim dhe profilizim nga motorë "
-"kërkimesh. Si parazgjedhje, nuk depoziton cookies."
+"kërkimesh. Si parazgjedhje, s’depoziton cookies."
 
 #: modules/searx/__init__.py:38
 msgid "Search the web"
@@ -7227,16 +7172,12 @@ msgstr ""
 "me fjalëkalim."
 
 #: modules/security/manifest.py:10
-#, fuzzy
-#| msgid "Automatic"
 msgid "Automatic bans"
-msgstr "Automatike"
+msgstr "Dëbime të automatizuara"
 
 #: modules/security/manifest.py:10
-#, fuzzy
-#| msgid "Ports"
 msgid "Reports"
-msgstr "Porta"
+msgstr "Raporte"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7268,10 +7209,10 @@ msgid ""
 "community."
 msgstr ""
 "Përditësimet e shpeshta të veçorive lejojnë Shërbimin %(box_name)s Service, "
-"plus një grup shumë të kufizuar software-i, të marrin përditësime më shpesh "
-"(që nga depoja &lt;em&gt;backports&lt;/em&gt;). Kjo sjell marrjen e disa "
+"plus një grup shumë të kufizuar software-i, të marrin përditësime më shpesh ("
+"që nga depoja &lt;em&gt;backports&lt;/em&gt;). Kjo sjell marrjen e disa "
 "veçorive të reja brenda javësh, në vend se çdo 2 vjet pak a shumë. Kini "
-"parasysh se software-i me përditësime të shpeshta veçorish nuk ka asistencë "
+"parasysh se software-i me përditësime të shpeshta veçorish s’ka asistencë "
 "nga Ekipi i Sigurisë së Debian-it. Në vend të kësaj, ato mirëmbahen nga "
 "kontribues te Debian dhe bashkësia %(box_name)s."
 
@@ -7319,7 +7260,7 @@ msgid ""
 "from the rest of the system. It is only displayed while the service is "
 "running."
 msgstr ""
-"“Mbulim Bankëprove” është një matje se sa me efikasitet izolohet një shërbim "
+"“Mbulim Bankëprove” është një matje se me sa efikasitet izolohet një shërbim "
 "nga pjesa tjetër e sistemit. Shfaqet vetëm kur shërbimi është në funksionim."
 
 #: modules/security/templates/security_report.html:45
@@ -7631,9 +7572,9 @@ msgid ""
 "backups\">backups</a> since they can only be stored on the same partition. "
 msgstr ""
 "Fotografimet aktualisht funksionojnë vetëm në sisteme btrfs kartelash dhe "
-"vetëm në pjesë rrënjë. Fotografimet nuk janë zëvendësim për <a href=\"/"
-"plinth/sys/backups\">kopjeruajtjet</a>, ngaqë mund të rikthehen vetëm në të "
-"njëjtën pjesë. "
+"vetëm në pjesë rrënjë. Fotografimet s’janë zëvendësim për <a href="
+"\"/plinth/sys/backups\">kopjeruajtjet</a>, ngaqë mund të rikthehen vetëm në "
+"të njëjtën pjesë. "
 
 #: modules/snapshot/__init__.py:50
 msgid "Storage Snapshots"
@@ -7722,15 +7663,15 @@ msgstr ""
 
 #: modules/snapshot/manifest.py:14
 msgid "Periodic"
-msgstr ""
+msgstr "Periodike"
 
 #: modules/snapshot/manifest.py:14
 msgid "Known good state"
-msgstr ""
+msgstr "Gjendje e mirë e njohur"
 
 #: modules/snapshot/manifest.py:14
 msgid "Btrfs"
-msgstr ""
+msgstr "Btrfs"
 
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
@@ -7867,8 +7808,6 @@ msgstr ""
 "kopjojë kartela ose të xhirojë shërbime të tjera."
 
 #: modules/ssh/__init__.py:42
-#, fuzzy
-#| msgid "Secure Shell (SSH) Server"
 msgid "Secure Shell Server"
 msgstr "Shërbyes Shelli të Sigurt (SSH)"
 
@@ -7905,20 +7844,14 @@ msgstr ""
 "vetëm përdorues të grupit rrënjë, përgjegjës dhe freedombox-ssh."
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "RSS"
 msgid "SSH"
-msgstr "RSS"
+msgstr "SSH"
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Remote terminal"
-msgstr "Hiqe Vendndodhjen"
+msgstr "Terminal i largët"
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "Fingerprint"
 msgid "Fingerprints"
 msgstr "Shenja gishtash"
 
@@ -8013,8 +7946,7 @@ msgstr "Pajisja po çmontohet tashmë."
 
 #: modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
-msgstr ""
-"Veprimi nuk mbulohet, për shkak se mungon mbulimi për përudhësin/mjetin."
+msgstr "Veprimi s’mbulohet, për shkak se mungon mbulimi për përudhësin/mjetin."
 
 #: modules/storage/__init__.py:263
 msgid "The operation timed out."
@@ -8136,23 +8068,19 @@ msgstr "Drejtori tjetër (jepeni më poshtë)"
 
 #: modules/storage/manifest.py:9
 msgid "Disks"
-msgstr ""
+msgstr "Disqe"
 
 #: modules/storage/manifest.py:9
 msgid "Usage"
-msgstr ""
+msgstr "Përdorim"
 
 #: modules/storage/manifest.py:9
-#, fuzzy
-#| msgid "Automatic"
 msgid "Auto-mount"
-msgstr "Automatike"
+msgstr "Vetëmontoje"
 
 #: modules/storage/manifest.py:9
-#, fuzzy
-#| msgid "Expand Root Partition"
 msgid "Expand partition"
-msgstr "Zgjero Pjesën Rrënjë"
+msgstr "Zgjero pjesën"
 
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
@@ -8181,9 +8109,9 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
-"Kas të lirë %(expandable_root_size)s hapësirë të padhënë, pas pjesës tuaj "
-"rrënjë.  Për të përdorur këtë hapësirë, mund të zgjerohet pjesa rrënjë.  Kjo "
-"do t’ju japë hapësirë të lirë shtesë për të depozituar kartelat tuaja."
+"Pas pjesës tuaj rrënjë ka të lirë %(expandable_root_size)s hapësirë të "
+"padhënë.  Për të përdorur këtë hapësirë, mund të zgjerohet pjesa rrënjë.  "
+"Kjo do t’ju japë hapësirë të lirë shtesë për të depozituar kartelat tuaja."
 
 #: modules/storage/templates/storage.html:89
 #: modules/storage/templates/storage_expand.html:24 modules/storage/views.py:55
@@ -8293,10 +8221,10 @@ msgid ""
 "file is possible from within the application."
 msgstr ""
 "Është një aplikacion i zhdërvjellët, me një larmi përdorimesh - blloqe "
-"shënimesh jo-linearë, sajt, bazë personale dijesh, sistem administrimi "
-"punësh dhe projektesh, ditar personal, etj. Shtojcat mund të zgjerojnë "
-"funksionet e TiddlyWiki-t. Fshehtëzimi i shënimeve individuale, ose mbrojtja "
-"me fjalëkalim e një kartele wiki është e mundur që nga brenda aplikacionit."
+"shënimesh jolineare, sajt, bazë personale dijesh, sistem administrimi punësh "
+"dhe projektesh, ditar personal, etj. Shtojcat mund të zgjerojnë funksionet e "
+"TiddlyWiki-t. Fshehtëzimi i shënimeve individuale, ose mbrojtja me "
+"fjalëkalim e një kartele wiki është e mundur që nga brenda aplikacionit."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -8476,7 +8404,7 @@ msgid ""
 msgstr ""
 "Kur aktivizohet, hollësitë e relesë do të publikohen te baza e të dhënave të "
 "urave Tor, në vend se baza e të dhënave të releve publike Tor, duke e bërë "
-"më të vështirë censurimin e kësaj nyjeje. Kjo i ndihmon të tjerët të "
+"më të vështirë censurimin e kësaj nyje. Kjo i ndihmon të tjerët të "
 "anashkalojnë censurimin."
 
 #: modules/tor/forms.py:108
@@ -8679,7 +8607,7 @@ msgid ""
 "for connecting."
 msgstr ""
 "Kur për Tiny Tiny RSS-në përdoret një aplikacion për celular, ose për "
-"dekstop, përdorni URL-në <a href=\"/tt-rss/\">/tt-rss</a> ose <a href=\"/tt-"
+"desktop, përdorni URL-në <a href=\"/tt-rss/\">/tt-rss</a> ose <a href=\"/tt-"
 "rss-app/\">/tt-rss-app</a> për t’u lidhur."
 
 #: modules/ttrss/__init__.py:50 modules/ttrss/manifest.py:34
@@ -8765,7 +8693,7 @@ msgstr "Kontrolloni për mbajtje paketash"
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
-msgstr "Aktivio vetëpërditësim"
+msgstr "Aktivizo vetëpërditësim"
 
 #: modules/upgrades/forms.py:16
 msgid "When enabled, FreedomBox automatically updates once a day."
@@ -8791,11 +8719,11 @@ msgstr "Aktivizoni përditësime të shpeshta veçorish (e rekomanduar)"
 
 #: modules/upgrades/manifest.py:10
 msgid "Reboots"
-msgstr ""
+msgstr "Rinisje"
 
 #: modules/upgrades/manifest.py:10
 msgid "New features"
-msgstr ""
+msgstr "Veçori të reja"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9108,16 +9036,12 @@ msgid "User account created, you are now logged in"
 msgstr "Llogaria e përdoruesit u krijua, tani jeni i futur në llogari"
 
 #: modules/users/manifest.py:8
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage accounts"
-msgstr "Administroni Fotografime"
+msgstr "Administroni llogari"
 
 #: modules/users/manifest.py:8
-#, fuzzy
-#| msgid "Permissions"
 msgid "App permissions"
-msgstr "Leje"
+msgstr "Leje aplikacioni"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9355,7 +9279,7 @@ msgstr ""
 "Opsionale. Në u lëntë i zbrazët, prodhohen kyça të rinj publikë/privatë. "
 "Mandej kyçi publik mund t’i jepet shërbyesit. Kjo është rruga e rekomanduar. "
 "Megjithatë, disa operatorë shërbyesish këmbëngulin në dhënien e tij. "
-"ShembullConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
+"Shembull: MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 
 #: modules/wireguard/forms.py:98
 msgid "Pre-shared key"
@@ -9931,10 +9855,8 @@ msgid "Search with tags"
 msgstr "Kërkoni me etiketa"
 
 #: templates/apps.html:42
-#, fuzzy
-#| msgid "Search with tags"
 msgid "Clear all tags"
-msgstr "Kërkoni me etiketa"
+msgstr "Spastroji krejt etiketat"
 
 #: templates/base.html:31
 msgid ""
@@ -10065,7 +9987,7 @@ msgstr ""
 
 #: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
-msgstr "Aktualisht nuk ka ndërfaqe rrjeti të formësuara për të brendshëm."
+msgstr "Aktualisht s’ka ndërfaqe rrjeti të formësuara për të brendshëm."
 
 #: templates/internal-zone.html:30
 #, python-format
@@ -10090,8 +10012,8 @@ msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
-"FreedomBox -i juaj s’gjendet <a href=\"%(networks_url)s\">pas një "
-"rrugëzuesi</a>. S’ka nevojë për veprim."
+"FreedomBox-i juaj s’gjendet <a href=\"%(networks_url)s\">pas një rrugëzuesi</"
+"a>. S’ka nevojë për veprim."
 
 #: templates/port-forwarding-info.html:21
 #, python-format
@@ -10112,7 +10034,7 @@ msgid ""
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
 "FreedomBox-i juaj gjendet <a href=\"%(networks_url)s\">pas një rrugëzuesi</"
-"a> dhe nuk po përdorni veçorinë DMZ. Do t’ju duhet të ujdisni te rrugëzuesi "
+"a> dhe s’po përdorni veçorinë DMZ. Do t’ju duhet të ujdisni te rrugëzuesi "
 "juaj përcjellje te porta. Duhet të lejoni përcjellje te portat vijuese për "
 "%(service_name)s:"
 
@@ -10195,7 +10117,7 @@ msgstr ""
 
 #: views.py:85
 msgid "Here"
-msgstr ""
+msgstr "Këtu"
 
 #: views.py:374
 msgid "Setting unchanged"
