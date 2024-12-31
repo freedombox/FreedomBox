@@ -226,8 +226,11 @@ class AppsIndexView(TemplateView):
 
         context['tags'] = tags
         # Sorted tags by localized string
-        context['all_tags'] = sorted(app_module.Info.list_tags(),
-                                     key=lambda tag: _(tag))
+        all_tags = set()
+        for menu_item in menu_items:
+            all_tags.update(menu_item.tags or [])
+
+        context['all_tags'] = sorted(all_tags, key=lambda tag: _(tag))
         context['menu_items'] = self._pick_menu_items(menu_items, tags)
 
         return context

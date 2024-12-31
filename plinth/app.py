@@ -543,17 +543,6 @@ class Info(FollowerComponent):
                 for tag in self._tags
             ]
 
-    @classmethod
-    def list_tags(self) -> list[str]:
-        """Return a list of untranslated tags."""
-        tags: set[str] = set()
-        from django.utils.translation import override
-        with override(language=None):
-            for app in App.list():
-                tags.update((str(tag) for tag in app.info.tags))
-
-        return list(tags)
-
 
 class EnableState(LeaderComponent):
     """A component to hold the enable state of an app using a simple flag.
