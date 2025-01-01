@@ -10,8 +10,11 @@ import shutil
 import subprocess
 
 from plinth.actions import privileged
+from plinth.privileged import service as service_privileged
 
 _keys_dir = pathlib.Path('/var/lib/rspamd/dkim/')
+
+rspamd_user = '_rspamd'
 
 DOMAIN_PART_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 
@@ -40,7 +43,7 @@ def setup_dkim(domain: str):
 
     _keys_dir.mkdir(exist_ok=True)
     _keys_dir.chmod(0o500)
-    shutil.chown(_keys_dir, '_rspamd', '_rspamd')
+    shutil.chown(_keys_dir, rspamd_user, rspamd_user)
 
     # Default path is /var/lib/dkim/$domain.$selector.key. Default selector is
     # "dkim". Use these to simplify key management until we have a need to
@@ -55,4 +58,13 @@ def setup_dkim(domain: str):
         'rspamadm', 'dkim_keygen', '-t', 'rsa', '-b', '2048', '-s', 'dkim',
         '-d', domain, '-k', (str(key_file))
     ], check=True)
+    shutil.chown(key_file, rspamd_user, rspamd_user)
     key_file.chmod(0o400)
+    service_privileged.try_restart('rspamd')
+
+
+@privileged
+def fix_incorrect_key_ownership():
+    """Set the ownership on DKIM private keys."""
+    for key in _keys_dir.glob('*.dkim.key'):
+        shutil.chown(key, rspamd_user, rspamd_user)

@@ -52,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 4
+    _version = 5
 
     def __init__(self) -> None:
         """Initialize the email app."""
@@ -116,6 +116,7 @@ class EmailApp(plinth.app.App):
             '/etc/rspamd/local.d/freedombox-logging.inc',
             '/etc/rspamd/local.d/freedombox-milter-headers.conf',
             '/etc/rspamd/local.d/freedombox-redis.conf',
+            '/etc/rspamd/local.d/freedombox-dkim-signing.conf'
         ])
         self.add(dropin_configs)
         dropin_configs_sieve = DropinConfigs(
@@ -219,6 +220,9 @@ class EmailApp(plinth.app.App):
         # Expose to public internet
         if old_version == 0:
             self.enable()
+        elif old_version < 5:
+            privileged.fix_incorrect_key_ownership()
+            service_privileged.try_restart('rspamd')
 
 
 def _get_first_admin():

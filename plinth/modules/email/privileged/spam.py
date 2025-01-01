@@ -4,6 +4,8 @@ Configures rspamd to handle incoming and outgoing spam.
 
 See: http://www.postfix.org/MILTER_README.html
 See: https://rspamd.com/doc/configuration/ucl.html
+
+For testing DKIM signatures: https://www.mail-tester.com/
 """
 
 import pathlib
@@ -37,7 +39,8 @@ def _setup_rspamd():
     """Adjust configuration to include FreedomBox configuration files."""
     configs = [('milter_headers.conf', 'freedombox-milter-headers.conf'),
                ('redis.conf', 'freedombox-redis.conf'),
-               ('logging.inc', 'freedombox-logging.inc')]
+               ('logging.inc', 'freedombox-logging.inc'),
+               ('dkim_signing.conf', 'freedombox-dkim-signing.conf')]
     base_path = pathlib.Path('/etc/rspamd/local.d')
     for orig_path, include_path in configs:
         _setup_local_include(base_path / orig_path, base_path / include_path)
