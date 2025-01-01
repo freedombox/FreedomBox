@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-30 20:05-0500\n"
-"PO-Revision-Date: 2024-12-26 01:00+0000\n"
+"PO-Revision-Date: 2025-01-02 09:00+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -135,22 +135,17 @@ msgid "System is possibly under heavy load. Please retry later."
 msgstr "Systém je pravděpodobně velmi zatížený. Zkuste to prosím později."
 
 #: middleware.py:147
-#, fuzzy, python-brace-format
-#| msgid "Page not found - %(box_name)s"
+#, python-brace-format
 msgid "Page not found: {url}"
-msgstr "Strana nenalezena - %(box_name)s"
+msgstr "Strana nenalezena: {url}"
 
 #: middleware.py:150
-#, fuzzy
-#| msgid "Error running apt-get"
 msgid "Error running operation."
-msgstr "Chyba při spuštění apt-get"
+msgstr "Chyba při provádění operace."
 
 #: middleware.py:152
-#, fuzzy
-#| msgid "Error running apt-get"
 msgid "Error loading page."
-msgstr "Chyba při spuštění apt-get"
+msgstr "Chyba při načítání stránky."
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -201,15 +196,15 @@ msgstr "Doména místní sítě"
 
 #: modules/avahi/manifest.py:14
 msgid "Auto-discovery"
-msgstr ""
+msgstr "Automatické zjišťování"
 
 #: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
 msgid "Local"
-msgstr ""
+msgstr "Lokální"
 
 #: modules/avahi/manifest.py:14
 msgid "mDNS"
-msgstr ""
+msgstr "mDNS"
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
@@ -476,28 +471,20 @@ msgid "Restore"
 msgstr "Obnovit"
 
 #: modules/backups/manifest.py:15
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encrypted"
-msgstr "Šifrování"
+msgstr "Šifrováno"
 
 #: modules/backups/manifest.py:16
-#, fuzzy
-#| msgid "Schedule"
 msgid "Schedules"
-msgstr "Plán"
+msgstr "Rozvrhy"
 
 #: modules/backups/manifest.py:18
-#, fuzzy
-#| msgid "Remove"
 msgid "Remote"
-msgstr "Odebrat"
+msgstr "Vzdálený"
 
 #: modules/backups/manifest.py:19
-#, fuzzy
-#| msgid "App updated"
 msgid "App data"
-msgstr "Aplikace aktualizována"
+msgstr "Data aplikace"
 
 #: modules/backups/manifest.py:20
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
@@ -508,7 +495,7 @@ msgstr "Nastavení"
 
 #: modules/backups/manifest.py:21
 msgid "Borg"
-msgstr ""
+msgstr "Borg"
 
 #: modules/backups/privileged.py:31
 msgid ""
@@ -541,18 +528,16 @@ msgstr ""
 "repozitář záloh."
 
 #: modules/backups/privileged.py:74
-#, fuzzy
-#| msgid "A share with this name already exists."
 msgid "An archive with given name already exists in the repository."
-msgstr "Sdílení s tímto názvem už existuje."
+msgstr "Archiv s daným názvem již v úložišti existuje."
 
 #: modules/backups/privileged.py:81
 msgid "Archive with given name was not found in the repository."
-msgstr ""
+msgstr "Archiv s daným názvem nebyl v úložišti nalezen."
 
 #: modules/backups/privileged.py:87
 msgid "Backup system is busy with another operation."
-msgstr ""
+msgstr "Zálohovací systém je zaneprázdněn jinou operací."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -795,10 +780,8 @@ msgid "Upload and restore a backup"
 msgstr "Nahrát zálohu a obnovit z ní"
 
 #: modules/backups/views.py:218
-#, fuzzy
-#| msgid "Logged out successfully."
 msgid "Upload successful."
-msgstr "Odhlášení proběhlo úspěšně."
+msgstr "Nahrání bylo úspěšné."
 
 #: modules/backups/views.py:256
 msgid "No backup file found."
@@ -821,10 +804,8 @@ msgid "Create backup repository"
 msgstr "Vytvořit repozitář pro zálohy"
 
 #: modules/backups/views.py:352
-#, fuzzy
-#| msgid "Added new remote SSH repository."
 msgid "Added new repository."
-msgstr "Přidán nový vzdálený SSH repozitář."
+msgstr "Přidáno nové úložiště."
 
 #: modules/backups/views.py:366
 msgid "Create remote backup repository"
@@ -1102,10 +1083,8 @@ msgstr ""
 "Seznam DNS serverů (oddělovaných mezerou) na které přeposílat požadavky"
 
 #: modules/bind/manifest.py:16
-#, fuzzy
-#| msgid "DNSSEC"
 msgid "DNS"
-msgstr "DNSSEC"
+msgstr "DNS"
 
 #: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
 #: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
@@ -1113,10 +1092,8 @@ msgid "Server"
 msgstr "Server"
 
 #: modules/bind/manifest.py:18
-#, fuzzy
-#| msgid "Resolver Status"
 msgid "Resolver"
-msgstr "Stav řešitele"
+msgstr "Řešitel"
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1337,16 +1314,12 @@ msgid "Cockpit"
 msgstr "Cockpit"
 
 #: modules/cockpit/manifest.py:23
-#, fuzzy
-#| msgid "Administration"
 msgid "Advanced administration"
-msgstr "Správa"
+msgstr "Pokročilá správa"
 
 #: modules/cockpit/manifest.py:24
-#, fuzzy
-#| msgid "Web sharing"
 msgid "Web terminal"
-msgstr "Webové sdílení"
+msgstr "Webový terminál"
 
 #: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
 #: modules/storage/__init__.py:319 modules/storage/__init__.py:350
@@ -1355,10 +1328,8 @@ msgid "Storage"
 msgstr "Úložiště"
 
 #: modules/cockpit/manifest.py:26
-#, fuzzy
-#| msgid "Networks"
 msgid "Networking"
-msgstr "Sítě"
+msgstr "Vytváření sítí"
 
 #: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
 msgid "Services"
@@ -1366,7 +1337,7 @@ msgstr "Služby"
 
 #: modules/cockpit/manifest.py:28
 msgid "Logs"
-msgstr ""
+msgstr "Protokoly"
 
 #: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
 #: modules/performance/__init__.py:40
@@ -1462,13 +1433,11 @@ msgstr "Domovská stránka"
 
 #: modules/config/manifest.py:8
 msgid "Logging"
-msgstr ""
+msgstr "Protokolování"
 
 #: modules/config/manifest.py:8
-#, fuzzy
-#| msgid "Advanced"
 msgid "Advanced apps"
-msgstr "Pokročilé"
+msgstr "Pokročilé aplikace"
 
 #: modules/config/views.py:41
 #, python-brace-format
@@ -1576,14 +1545,10 @@ msgid "-- no time zone set --"
 msgstr "-- není nastavena časová zóna --"
 
 #: modules/datetime/manifest.py:15
-#, fuzzy
-#| msgid "Network drive"
 msgid "Network time"
-msgstr "Síťový disk"
+msgstr "Síťový čas"
 
 #: modules/datetime/manifest.py:15
-#, fuzzy
-#| msgid "Time Zone"
 msgid "Timezone"
 msgstr "Časová zóna"
 
@@ -1739,7 +1704,7 @@ msgstr "Pokud jsou nalezeny problémy, zkuste je automaticky opravit."
 
 #: modules/diagnostics/manifest.py:10
 msgid "Detect problems"
-msgstr ""
+msgstr "Zjištění problémů"
 
 #: modules/diagnostics/manifest.py:10
 msgid "Repair"
@@ -1747,7 +1712,7 @@ msgstr "Oprava"
 
 #: modules/diagnostics/manifest.py:10
 msgid "Daily"
-msgstr ""
+msgstr "Denně"
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -2007,13 +1972,11 @@ msgstr "Doména"
 
 #: modules/dynamicdns/manifest.py:17
 msgid "Free"
-msgstr ""
+msgstr "Zdarma"
 
 #: modules/dynamicdns/manifest.py:17
-#, fuzzy
-#| msgid "Server public key:"
 msgid "Needs public IP"
-msgstr "Veřejný klíč serveru:"
+msgstr "Potřebuje veřejnou IP"
 
 #: modules/dynamicdns/templates/dynamicdns.html:11
 #: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
@@ -2688,10 +2651,8 @@ msgid "Ports"
 msgstr "Porty"
 
 #: modules/firewall/manifest.py:10
-#, fuzzy
-#| msgid "Blocked"
 msgid "Blocking"
-msgstr "Blokováno"
+msgstr "Blokování"
 
 #: modules/firewall/manifest.py:10 modules/networks/forms.py:319
 #: modules/upgrades/manifest.py:10
@@ -3797,10 +3758,8 @@ msgid "HTTPS"
 msgstr "HTTPS"
 
 #: modules/letsencrypt/manifest.py:11
-#, fuzzy
-#| msgid "Website Security"
 msgid "Web security"
-msgstr "Zabezpečení webové stránky"
+msgstr "Zabezpečení webu"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -4711,10 +4670,8 @@ msgid "Domains"
 msgstr "Domény"
 
 #: modules/names/manifest.py:13
-#, fuzzy
-#| msgid "Evolution"
 msgid "DNS Resolution"
-msgstr "Evolution"
+msgstr "Rozlišení DNS"
 
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
@@ -5279,7 +5236,7 @@ msgstr "Místní síť"
 
 #: modules/networks/manifest.py:8
 msgid "Topology"
-msgstr ""
+msgstr "Topologie"
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -6365,13 +6322,11 @@ msgstr "Tato služba už existuje"
 
 #: modules/pagekite/manifest.py:16
 msgid "Reachability"
-msgstr ""
+msgstr "Dosažitelnost"
 
 #: modules/pagekite/manifest.py:18
-#, fuzzy
-#| msgid "Tunnelblick"
 msgid "Tunneling"
-msgstr "Tunnelblick"
+msgstr "Tunelování"
 
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
@@ -6455,14 +6410,12 @@ msgstr ""
 "zobrazit pomocí aplikace Cockpit."
 
 #: modules/performance/manifest.py:18
-#, fuzzy
-#| msgid "System Monitoring"
 msgid "Monitoring"
-msgstr "Monitoring systému"
+msgstr "Monitorování"
 
 #: modules/performance/manifest.py:18
 msgid "Resource utilization"
-msgstr ""
+msgstr "Využití prostředků"
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6474,11 +6427,9 @@ msgstr "Napájení"
 
 #: modules/power/manifest.py:10
 msgid "Reboot"
-msgstr ""
+msgstr "Restart"
 
 #: modules/power/manifest.py:10
-#, fuzzy
-#| msgid "Shut down"
 msgid "Shutdown"
 msgstr "Vypnout"
 
@@ -6577,13 +6528,11 @@ msgstr ""
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
-msgstr ""
+msgstr "Hlášení o použití"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Fallback DNS Servers"
 msgid "Fallback DNS"
-msgstr "Záložní servery DNS"
+msgstr "Záložní systém DNS"
 
 #: modules/privoxy/__init__.py:25
 msgid ""
@@ -7151,16 +7100,12 @@ msgstr ""
 "ověření heslem."
 
 #: modules/security/manifest.py:10
-#, fuzzy
-#| msgid "Automatic"
 msgid "Automatic bans"
-msgstr "Automaticky"
+msgstr "Automatické zákazy"
 
 #: modules/security/manifest.py:10
-#, fuzzy
-#| msgid "Ports"
 msgid "Reports"
-msgstr "Porty"
+msgstr "Hlášení"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7642,15 +7587,15 @@ msgstr ""
 
 #: modules/snapshot/manifest.py:14
 msgid "Periodic"
-msgstr ""
+msgstr "Pravidelné"
 
 #: modules/snapshot/manifest.py:14
 msgid "Known good state"
-msgstr ""
+msgstr "Dobře známý stav"
 
 #: modules/snapshot/manifest.py:14
 msgid "Btrfs"
-msgstr ""
+msgstr "Btrfs"
 
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
@@ -7785,10 +7730,8 @@ msgstr ""
 "služby."
 
 #: modules/ssh/__init__.py:42
-#, fuzzy
-#| msgid "Secure Shell (SSH) Server"
 msgid "Secure Shell Server"
-msgstr "Server zabezpečeného shellu (SSH)"
+msgstr "Zabezpečený server Shell"
 
 #: modules/ssh/__init__.py:75
 msgid "Remotely login using Secure Shell (SSH)"
@@ -7823,22 +7766,16 @@ msgstr ""
 "root, admin a freedombox-ssh."
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "RSS"
 msgid "SSH"
-msgstr "RSS"
+msgstr "SSH"
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "Remove Location"
 msgid "Remote terminal"
-msgstr "Odebrat umístění"
+msgstr "Vzdálený terminál"
 
 #: modules/ssh/manifest.py:22
-#, fuzzy
-#| msgid "Fingerprint"
 msgid "Fingerprints"
-msgstr "Otisk (fingerprint)"
+msgstr "Otisky (fingerprints)"
 
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
@@ -8050,26 +7987,20 @@ msgid "Other directory (specify below)"
 msgstr "Jiný adresář (uveďte níže)"
 
 #: modules/storage/manifest.py:9
-#, fuzzy
-#| msgid "Disk"
 msgid "Disks"
-msgstr "Disk"
+msgstr "Disky"
 
 #: modules/storage/manifest.py:9
 msgid "Usage"
-msgstr ""
+msgstr "Užití"
 
 #: modules/storage/manifest.py:9
-#, fuzzy
-#| msgid "Automatic"
 msgid "Auto-mount"
-msgstr "Automaticky"
+msgstr "Automatické připojení"
 
 #: modules/storage/manifest.py:9
-#, fuzzy
-#| msgid "Expand Root Partition"
 msgid "Expand partition"
-msgstr "Zvětšit kořenový oddíl"
+msgstr "Rozšířit oddíl"
 
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
@@ -8696,13 +8627,11 @@ msgstr "Aktivujte časté aktualizace funkcí (doporučeno)"
 
 #: modules/upgrades/manifest.py:10
 msgid "Reboots"
-msgstr ""
+msgstr "Restarty"
 
 #: modules/upgrades/manifest.py:10
-#, fuzzy
-#| msgid "New Backup"
 msgid "New features"
-msgstr "Nová záloha"
+msgstr "Nové vlastnosti"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9005,16 +8934,12 @@ msgid "User account created, you are now logged in"
 msgstr "Uživatelský účet vytvořen, není jste jím přihlášeni"
 
 #: modules/users/manifest.py:8
-#, fuzzy
-#| msgid "Manage Snapshots"
 msgid "Manage accounts"
-msgstr "Spravovat zachycené stavy"
+msgstr "Spravovat účty"
 
 #: modules/users/manifest.py:8
-#, fuzzy
-#| msgid "Permissions"
 msgid "App permissions"
-msgstr "Oprávnění"
+msgstr "Oprávnění aplikace"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9819,10 +9744,8 @@ msgid "Search with tags"
 msgstr "Hledání pomocí štítků"
 
 #: templates/apps.html:42
-#, fuzzy
-#| msgid "Search with tags"
 msgid "Clear all tags"
-msgstr "Hledání pomocí štítků"
+msgstr "Vymazat všechny štítky"
 
 #: templates/base.html:31
 msgid ""
@@ -10084,7 +10007,7 @@ msgstr ""
 
 #: views.py:85
 msgid "Here"
-msgstr ""
+msgstr "Zde"
 
 #: views.py:374
 msgid "Setting unchanged"
