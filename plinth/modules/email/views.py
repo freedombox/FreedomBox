@@ -26,6 +26,7 @@ class EmailAppView(AppView):
         """Add additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['dns_entries'] = dns.get_entries()
+        context['reverse_dns_entries'] = dns.get_reverse_entries()
         return context
 
     def get_initial(self):

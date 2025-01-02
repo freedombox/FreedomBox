@@ -58,4 +58,41 @@
       </tbody>
     </table>
   </div>
+
+  <h4>{% trans "Reverse DNS" %}</h4>
+
+  <p>
+    {% blocktrans trimmed %}
+      If your {{ box_name }} runs on a cloud service infrastructure, you
+      should configure <a href="https://en.wikipedia.org/wiki/Reverse_DNS_lookup">
+      Reverse DNS lookup</a>. This isn't mandatory, however, it greatly improves
+      email deliverability. Reverse DNS isn't configured where your regular DNS
+      is. You should look for it in the settings of your VPS. Some providers
+      preconfigure the IP address part for you and you only have to set the domain part.
+    {% endblocktrans %}
+  </p>
+
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>{% trans "Host" %}</th>
+          <th>{% trans "TTL" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Host/Target/Value" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dns_entry in reverse_dns_entries %}
+          <tr>
+            <td>{{ dns_entry.domain|default_if_none:"" }}</td>
+            <td>{{ dns_entry.ttl }}</td>
+            <td>{{ dns_entry.type_ }}</td>
+            <td class="text-break">{{ dns_entry.get_split_value }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
 {% endblock %}
