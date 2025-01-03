@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import menu
+from plinth import kvstore, menu
 from plinth.config import DropinConfigs
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
@@ -94,7 +94,13 @@ def _show_privacy_notification():
 
 def get_ip_lookup_url():
     """Return the URL to use to lookup external IP address."""
-    return 'https://ddns.freedombox.org/ip/'
+    return kvstore.get_default('ip_lookup_url',
+                               'https://ddns.freedombox.org/ip/')
+
+
+def set_ip_lookup_url(ip_lookup_url: str):
+    """Set the URL to use to lookup external IP address."""
+    kvstore.set('ip_lookup_url', ip_lookup_url)
 
 
 def lookup_public_address(ip_type: Literal['ipv4', 'ipv6']) -> str:

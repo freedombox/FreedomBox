@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 import plinth.modules.names.privileged as names_privileged
-from plinth.modules import names
+from plinth.modules import names, privacy
 from plinth.modules.privacy.forms import PrivacyForm
 from plinth.views import AppView
 
@@ -22,6 +22,7 @@ class PrivacyAppView(AppView):
         """Return the values to fill in the form."""
         initial = super().get_initial()
         initial.update(privileged.get_configuration())
+        initial['ip_lookup_url'] = privacy.get_ip_lookup_url()
         if names.is_resolved_installed():
             initial.update(names_privileged.get_resolved_configuration())
 
@@ -42,6 +43,10 @@ class PrivacyAppView(AppView):
                 names_privileged.set_resolved_configuration(
                     dns_fallback=new_config['dns_fallback'])
                 is_changed = True
+
+        if old_config['ip_lookup_url'] != new_config['ip_lookup_url']:
+            privacy.set_ip_lookup_url(new_config['ip_lookup_url'])
+            is_changed = True
 
         if changes:
             privileged.set_configuration(**changes)
