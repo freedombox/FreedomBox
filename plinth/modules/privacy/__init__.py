@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to the Privacy app."""
 
+import logging
+import subprocess
+from typing import Literal
+
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
@@ -11,6 +15,8 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
 from . import manifest, privileged
+
+logger = logging.getLogger(__name__)
 
 _description = [_('Manage system-wide privacy settings.')]
 
@@ -84,3 +90,33 @@ def _show_privacy_notification():
                                   severity='info', title=title,
                                   message=message, actions=actions_, data=data,
                                   group='admin', dismissed=False)
+
+
+def get_ip_lookup_url():
+    """Return the URL to use to lookup external IP address."""
+    return 'https://ddns.freedombox.org/ip/'
+
+
+def lookup_public_address(ip_type: Literal['ipv4', 'ipv6']) -> str:
+    """Return the IP of this server/network by querying an external server."""
+    lookup_url = get_ip_lookup_url()
+    if not lookup_url:
+        raise RuntimeError('Lookup URL not configured')
+
+    ip_option = '-6' if ip_type == 'ipv6' else '-4'
+    try:
+        ip_address = subprocess.check_output([
+            'wget', ip_option, '-o', '/dev/null', '-t', '3', '-T', '3', '-O',
+            '-', lookup_url
+        ])
+        return ip_address.decode().strip().lower()
+    except subprocess.CalledProcessError as exception:
+        logger.warning('Unable to lookup external IP with URL %s: %s',
+                       lookup_url, exception)
+        message_map = {
+            4: 'Network failure',
+            5: 'SSL error',
+            8: 'Server reponded with error'
+        }
+        raise RuntimeError(
+            message_map.get(exception.returncode, 'Unknown error'))
