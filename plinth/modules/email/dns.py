@@ -46,9 +46,8 @@ class Entry:  # pylint: disable=too-many-instance-attributes
         return ' '.join(pieces)
 
 
-def get_entries():
-    """Return the list of DNS entries to make."""
-    domain = privileged.domain.get_domains()['primary_domain']
+def get_entries(domain: str) -> list[Entry]:
+    """Return the list of DNS entries to be set in DNS server for domain."""
     mx_spam_entries = [
         Entry(type_='MX', value=f'{domain}.'),
         Entry(type_='TXT', value='v=spf1 mx a ~all'),
@@ -77,10 +76,9 @@ def get_entries():
     return mx_spam_entries + dkim_entries + autoconfig_entries
 
 
-def get_reverse_entries() -> list[Entry]:
+def get_reverse_entries(domain: str) -> list[Entry]:
     """Return the list of reverse DNS entries to make."""
     entries = []
-    domain = privileged.domain.get_domains()['primary_domain']
     for ip_type in typing.get_args(typing.Literal['ipv4', 'ipv6']):
         try:
             ip_address = lookup_public_address(ip_type)

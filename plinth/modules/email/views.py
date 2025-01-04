@@ -25,8 +25,7 @@ class EmailAppView(AppView):
     def get_context_data(self, **kwargs):
         """Add additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
-        context['dns_entries'] = dns.get_entries()
-        context['reverse_dns_entries'] = dns.get_reverse_entries()
+        context.update(privileged.domain.get_domains())
         return context
 
     def get_initial(self):
@@ -49,6 +48,21 @@ class EmailAppView(AppView):
                                _('An error occurred during configuration.'))
 
         return super().form_valid(form)
+
+
+class DnsView(TemplateView):
+    """Show the DNS records to configure on a given domain."""
+    template_name = 'email-dns.html'
+
+    def get_context_data(self, **kwargs):
+        """Add additional context data for rendering the template."""
+        domain = self.kwargs['domain']
+        context = super().get_context_data(**kwargs)
+        primary_domain = privileged.domain.get_domains()['primary_domain']
+        context['primary_domain'] = primary_domain
+        context['dns_entries'] = dns.get_entries(domain)
+        context['reverse_dns_entries'] = dns.get_reverse_entries(domain)
+        return context
 
 
 class AliasView(FormView):
