@@ -22,8 +22,6 @@
  * in this page.
  */
 
-var deleteConfirmed = false;
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const form = document.querySelector('form.form-update');
     form.addEventListener('submit', onUserUpdateSubmit);
@@ -33,28 +31,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
     confirmDeleteButton.addEventListener('click', () => {
         onUserDeleteConfirmed(form);
     });
+
+    var deleteConfirmed = false;
+    const modal = new bootstrap.Modal('#user-delete-confirm-dialog');
+
+    // Show the confirmation dialog if the delete checkbox is selected
+    function onUserUpdateSubmit(event) {
+        const deleteUserCheckbox = document.getElementById('id_delete');
+        if (!deleteUserCheckbox.checked) {
+            return;
+        }
+
+        if (deleteConfirmed) { // Deletion is already confirmed
+           deleteConfirmed = false;
+           return;
+        }
+
+        event.preventDefault();
+        modal.show();
+    };
+
+    // Submit the user edit form
+    function onUserDeleteConfirmed(form) {
+        deleteConfirmed = true;
+        modal.hide();
+        // Click instead of submit to disable the submission button
+        form.querySelector('input[type=submit]').click();
+    };
 });
-
-// Show the confirmation dialog if the delete checkbox is selected
-function onUserUpdateSubmit(event) {
-    const deleteUserCheckbox = document.getElementById('id_delete');
-    if (!deleteUserCheckbox.checked) {
-        return;
-    }
-
-    if (deleteConfirmed) { // Deletion is already confirmed
-       deleteConfirmed = false;
-       return;
-    }
-
-    event.preventDefault();
-    $("#user-delete-confirm-dialog").modal('show');
-};
-
-// Submit the user edit form
-function onUserDeleteConfirmed(form) {
-    deleteConfirmed = true;
-    $('#user-delete-confirm-dialog').modal('hide');
-    // Click instead of submit to disable the submission button
-    form.querySelector('input[type=submit]').click();
-};
