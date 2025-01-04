@@ -26,7 +26,7 @@ class PrivacyApp(app_module.App):
 
     app_id = 'privacy'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 
@@ -64,7 +64,7 @@ class PrivacyApp(app_module.App):
         if old_version == 0:
             privileged.set_configuration(enable_popcon=True)
 
-        if old_version < 3:
+        if old_version < 4:
             _show_privacy_notification()
 
 
