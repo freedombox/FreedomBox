@@ -15,6 +15,7 @@ from plinth import app as app_module
 from plinth import cfg, glib, kvstore, menu
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.names.components import DomainType
+from plinth.modules.privacy import lookup_public_address
 from plinth.modules.users.components import UsersAndGroups
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy
@@ -42,6 +43,8 @@ _description = [
       'target=\'_blank\'>ddns.freedombox.org</a> or you may find free update '
       'URL based services at <a href=\'http://freedns.afraid.org/\' '
       'target=\'_blank\'>freedns.afraid.org</a>.'),
+    _('This service uses an external service to lookup public IP address. '
+      'This can be configured in the privacy app.'),
 ]
 
 
@@ -112,21 +115,12 @@ class DynamicDNSApp(app_module.App):
             privileged.clean()
 
 
-def _query_external_address(domain):
+def _lookup_public_address(domain):
     """Return the IP address by querying an external server."""
-    if not domain['ip_lookup_url']:
-        return None
-
-    ip_option = '-6' if domain['use_ipv6'] else '-4'
     try:
-        ip_address = subprocess.check_output([
-            'wget', ip_option, '-o', '/dev/null', '-t', '3', '-T', '3', '-O',
-            '-', domain['ip_lookup_url']
-        ])
-        return ip_address.decode().strip().lower()
-    except subprocess.CalledProcessError as exception:
-        logger.warning('Unable to lookup external IP with URL %s: %s',
-                       domain['ip_lookup_url'], exception)
+        ip_type = 'ipv6' if domain['use_ipv6'] else 'ipv4'
+        return lookup_public_address(ip_type)
+    except Exception:
         return None
 
 
@@ -186,7 +180,7 @@ def _update_dns_for_domain(domain):
 
     try:
         dns_address = _query_dns_address(domain)
-        external_address = _query_external_address(domain)
+        external_address = _lookup_public_address(domain)
         if dns_address == external_address and dns_address is not None:
             logger.info('Dynamic domain %s is up-to-date: %s',
                         domain['domain'], dns_address)

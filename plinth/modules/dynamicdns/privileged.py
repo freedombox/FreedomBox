@@ -53,7 +53,6 @@ def export_config() -> dict[str, bool | dict[str, dict[str, str | None]]]:
         'server': input_config.get('server'),
         'username': input_config.get('user', '').split(':')[0] or None,
         'password': input_config.get('user', '').split(':')[-1] or None,
-        'ip_lookup_url': helper.get('IPURL'),
         'update_url': _clean(helper.get('POSTURL')) or None,
         'use_http_basic_auth': _clean(helper.get('POSTAUTH')),
         'disable_ssl_cert_check': _clean(helper.get('POSTSSLIGNORE')),

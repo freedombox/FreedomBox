@@ -39,14 +39,6 @@ class ConfigureForm(forms.Form):
     help_password = \
         gettext_lazy('Leave this field empty if you want to keep your '
                      'current password.')
-    help_ip_lookup_url = format_lazy(
-        gettext_lazy('Optional Value. If your {box_name} is not connected '
-                     'directly to the Internet (i.e. connected to a NAT '
-                     'router) this URL is used to determine the real '
-                     'IP address. The URL should simply return the IP where '
-                     'the client comes from (example: '
-                     'https://ddns.freedombox.org/ip/).'),
-        box_name=gettext_lazy(cfg.box_name))
     help_username = \
         gettext_lazy('The username that was used when the account was '
                      'created.')
@@ -95,11 +87,6 @@ class ConfigureForm(forms.Form):
     show_password = forms.BooleanField(label=gettext_lazy('Show password'),
                                        required=False)
 
-    ip_lookup_url = forms.CharField(
-        label=gettext_lazy('URL to look up public IP'), required=False,
-        help_text=help_ip_lookup_url,
-        validators=[validators.URLValidator(schemes=['http', 'https'])])
-
     use_ipv6 = forms.BooleanField(
         label=gettext_lazy('Use IPv6 instead of IPv4'), required=False)
 
@@ -129,8 +116,7 @@ class ConfigureForm(forms.Form):
             if not update_url:
                 self.add_error('update_url', message)
 
-            param_map = (('username', '<User>'), ('password', '<Pass>'),
-                         ('ip_lookup_url', '<Ip>'))
+            param_map = (('username', '<User>'), ('password', '<Pass>'))
             for field_name, param in param_map:
                 if (update_url and param in update_url
                         and not cleaned_data.get(field_name)):
