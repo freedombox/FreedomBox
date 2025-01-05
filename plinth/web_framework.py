@@ -45,6 +45,14 @@ def init():
     settings.STATIC_URL = '/'.join([cfg.server_dir,
                                     'static/']).replace('//', '/')
     settings.USE_X_FORWARDED_HOST = cfg.use_x_forwarded_host
+    if cfg.develop:
+        # Disable template caching in development so that page updates don't
+        # require service restart.
+        del settings.TEMPLATES[0]['APP_DIRS']
+        settings.TEMPLATES[0]['OPTIONS']['loaders'] = [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ]
 
     kwargs = {}
     for setting in dir(settings):
