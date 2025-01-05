@@ -7,6 +7,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'sharing/sharing_add_edit.js' %}"
+          defer></script>
+{% endblock %}
+
 {% block content %}
 
   <h3>{{ title }}</h3>
@@ -20,8 +25,4 @@
            value="{% trans "Submit" %}"/>
   </form>
 
-{% endblock %}
-
-{% block page_js %}
-  <script type="text/javascript" src="{% static 'sharing/sharing_add_edit.js' %}"></script>
 {% endblock %}

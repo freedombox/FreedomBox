@@ -6,6 +6,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'networks/networks.js' %}"
+          defer></script>
+{% endblock %}
+
 {% block content %}
 
   <h3>{{ title }}</h3>
@@ -18,11 +23,5 @@
     <input type="submit" class="btn btn-primary"
            value="{% trans "Edit Connection" %}"/>
   </form>
-
-{% endblock %}
-
-{% block page_js %}
-
-  <script type="text/javascript" src="{% static 'networks/networks.js' %}"></script>
 
 {% endblock %}
