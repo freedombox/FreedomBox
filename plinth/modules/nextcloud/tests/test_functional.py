@@ -112,7 +112,8 @@ def _class(klass):
 def _create_folder(browser, folder_name):
     """Create a folder in the Nextcloud files app."""
     # Click on the '+ New' button in the header
-    xpath = f'//div[{_class("action-item")} and @menu-title="New"]//button'
+    xpath = f'//div[{_class("action-item")}]' \
+        '//button[.//*[contains(text(),"New")]]'
     browser.find_by_xpath(xpath).first.click()
 
     # Click on the 'New folder' pop down menu item
