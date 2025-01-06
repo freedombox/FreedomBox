@@ -242,7 +242,9 @@ def get_domain_name():
 
 def get_hostname():
     """Return the hostname."""
-    return socket.gethostname()
+    process = subprocess.run(['hostnamectl', 'hostname', '--static'],
+                             stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode().strip()
 
 
 def set_hostname(hostname):
