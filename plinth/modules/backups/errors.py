@@ -33,3 +33,7 @@ class BorgArchiveDoesNotExist(BorgError):
 
 class BorgBusy(BorgError):
     """Borg could not acquire lock being busy with another operation."""
+
+
+class BorgNoSpace(BorgError):
+    """There is not enough space left on the device to perform operation."""
