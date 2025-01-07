@@ -9,7 +9,7 @@ from unittest.mock import MagicMock, call, patch
 
 import pytest
 
-import plinth.modules.backups.repository  # noqa, pylint: disable=unused-import
+import plinth.modules.backups.repository as repository_module
 from plinth.app import App
 
 from ..components import BackupRestore
@@ -431,15 +431,19 @@ def test_run_schedule(get_instance, get_setup_state, schedule_params,
     repository.list_archives.side_effect = \
         lambda: _get_archives_from_test_data(archives_data)
     get_instance.return_value = repository
+    repository.generate_archive_name = lambda: \
+        repository_module.BaseBorgRepository.generate_archive_name(None)
 
     with patch('plinth.modules.backups.schedule.datetime') as mock_datetime, \
-            patch('plinth.app.App.list') as app_list:
+         patch('plinth.modules.backups.repository.datetime') \
+         as repo_datetime, patch('plinth.app.App.list') as app_list:
         app_list.return_value = [
             _get_test_app('test-app1'),
             _get_test_app('test-app2'),
             _get_test_app('test-app3')
         ]
 
+        repo_datetime.datetime.now.return_value = test_now
         mock_datetime.now.return_value = test_now
         mock_datetime.strptime = datetime.strptime
         mock_datetime.min = datetime.min
@@ -458,7 +462,8 @@ def test_run_schedule(get_instance, get_setup_state, schedule_params,
             run_periods.sort()
             name = 'scheduled: {periods}: {datetime}'.format(
                 periods=', '.join(run_periods),
-                datetime=mock_datetime.now().strftime('%Y-%m-%d:%H:%M'))
+                datetime=repo_datetime.datetime.now().astimezone().replace(
+                    microsecond=0).isoformat())
             app_ids = ['test-app1', 'test-app3']
             archive_comment = json.dumps({
                 'type': 'scheduled',

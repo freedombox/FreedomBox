@@ -3,7 +3,6 @@
 Main FreedomBox views.
 """
 
-import datetime
 import random
 import time
 import traceback
@@ -607,10 +606,9 @@ class UninstallView(FormView):
             if repository.flags.get('mountable'):
                 repository.mount()
 
-            name = datetime.datetime.now().strftime(
-                '%Y-%m-%d:%H:%M:%S') + ' ' + str(
-                    _('before uninstall of {app_id}')).format(
-                        app_id=self.app.app_id)
+            name = repository.generate_archive_name() + ' ' + str(
+                _('before uninstall of {app_id}')).format(
+                    app_id=self.app.app_id)
             repository.create_archive(name, [self.app.app_id])
 
         # Uninstall

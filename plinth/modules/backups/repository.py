@@ -241,6 +241,11 @@ class BaseBorgRepository(abc.ABC):
 
         return None
 
+    def generate_archive_name(self):
+        """Return a name to create a backup archive with using time."""
+        return datetime.datetime.now().astimezone().replace(
+            microsecond=0).isoformat()
+
     def get_archive_apps(self, archive_name):
         """Get list of apps included in an archive."""
         archive_path = self._get_archive_path(archive_name)
