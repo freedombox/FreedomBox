@@ -77,6 +77,12 @@ def setup():
 
     aug.save()
 
+    config = _get_database_config()
+    # dbconfig may not always setup the database and user account correctly.
+    # Following, operation to create database/user is an idempotent operation.
+    postgres.create_database(config['database'], config['user'],
+                             config['password'])
+
     if action_utils.service_is_enabled('tt-rss'):
         action_utils.service_restart('tt-rss')
 
