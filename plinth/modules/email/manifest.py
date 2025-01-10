@@ -34,17 +34,17 @@ clients = [
     },
     {
         'name':
-            _('K-9 Mail'),
+            _('Thunderbird Mobile'),
         'platforms': [{
             'type': 'store',
             'os': 'android',
             'store_name': 'f-droid',
-            'url': store_url('f-droid', 'com.fsck.k9')
+            'url': store_url('f-droid', 'net.thunderbird.android')
         }, {
             'type': 'store',
             'os': 'android',
             'store_name': 'google-play',
-            'url': store_url('google-play', 'com.fsck.k9')
+            'url': store_url('google-play', 'net.thunderbird.android')
         }]
     },
     {
