@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, SharedDaemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -73,6 +73,10 @@ class MinifluxApp(app_module.App):
         webserver = Webserver('webserver-miniflux', 'miniflux-freedombox',
                               urls=['https://{host}/miniflux/'])
         self.add(webserver)
+
+        daemon = SharedDaemon('shared-daemon-miniflus-postgresql',
+                              'postgresql')
+        self.add(daemon)
 
         daemon = Daemon('daemon-miniflux', 'miniflux',
                         listen_ports=[(8788, 'tcp4'), (8788, 'tcp6')])
