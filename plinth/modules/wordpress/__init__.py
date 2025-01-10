@@ -103,11 +103,11 @@ class WordPressApp(app_module.App):
                               urls=['https://{host}/wordpress/'])
         self.add(webserver)
 
-        daemon = Daemon('daemon-wordpress', 'wordpress-freedombox.timer')
-        self.add(daemon)
+        daemon1 = SharedDaemon('shared-daemon-wordpress-mysql', 'mysql')
+        self.add(daemon1)
 
-        daemon = SharedDaemon('shared-daemon-wordpress-mysql', 'mysql')
-        self.add(daemon)
+        daemon2 = Daemon('daemon-wordpress', 'wordpress-freedombox.timer')
+        self.add(daemon2)
 
         backup_restore = WordPressBackupRestore('backup-restore-wordpress',
                                                 **manifest.backup)
