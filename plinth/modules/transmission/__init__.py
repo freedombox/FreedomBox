@@ -72,10 +72,8 @@ class TransmissionApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, name=_('Transmission'),
-            icon_filename='transmission',
-            short_description=_('BitTorrent Web Client'),
-            description=_description, manual_page='Transmission',
-            clients=manifest.clients,
+            icon_filename='transmission', description=_description,
+            manual_page='Transmission', clients=manifest.clients,
             donation_url='https://transmissionbt.com/donate/',
             tags=manifest.tags)
         self.add(info)

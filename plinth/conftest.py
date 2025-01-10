@@ -266,3 +266,17 @@ def fixture_host_sudo(host):
     """Pytest fixture to run commands with sudo."""
     with host.sudo():
         yield host
+
+
+@pytest.fixture(name='test_menu')
+def fixture_test_menu():
+    """Initialized menu module."""
+    from plinth import menu as menu_module
+
+    menu_module.Menu._all_menus = set()
+    menu_module.init()
+    menu_module.Menu('home-id', name='Home', url_name='index')
+    menu_module.Menu('apps-id', name='Apps', url_name='apps',
+                     parent_url_name='index')
+    menu_module.Menu('testapp-id', name='Test App', url_name='testapp:index',
+                     parent_url_name='apps')

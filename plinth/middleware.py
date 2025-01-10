@@ -11,7 +11,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.utils import OperationalError
-from django.shortcuts import render
+from django.http import Http404, HttpResponseNotAllowed
+from django.shortcuts import redirect, render
 from django.template.response import SimpleTemplateResponse
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.translation import gettext as _
@@ -126,6 +127,8 @@ class CommonErrorMiddleware(MiddlewareMixin):
     @staticmethod
     def process_exception(request, exception):
         """Show a custom error page when OperationalError is raised."""
+        logger.exception('Error processing page. %s %s, exception: %s',
+                         request.method, request.path, exception)
         if isinstance(exception, OperationalError):
             message = _(
                 'System is possibly under heavy load. Please retry later.')
@@ -133,4 +136,55 @@ class CommonErrorMiddleware(MiddlewareMixin):
                                           context={'message': message},
                                           status=503)
 
+        if isinstance(exception, Exception):
+            match = request.resolver_match
+            if not match.app_name and match.url_name == 'index':
+                # Don't try to handle errors on the home page as it will lead
+                # to infinite redirects.
+                return None
+
+            if isinstance(exception, Http404):
+                message = _('Page not found: {url}').format(url=request.path)
+                exception = None  # Don't show exception details
+            elif request.method == 'POST':
+                message = _('Error running operation.')
+            else:
+                message = _('Error loading page.')
+
+            if exception:
+                views.messages_error(request, message, exception)
+            else:
+                messages.error(request, message)
+
+            redirect_url = CommonErrorMiddleware._get_redirect_url_on_error(
+                request)
+            return redirect(redirect_url)
+
         return None
+
+    @staticmethod
+    def process_response(request, response):
+        """Handle 405 method not allowed errors.
+
+        These errors may happen when we redirect to a page that does not allow
+        GET.
+        """
+        if isinstance(response, HttpResponseNotAllowed):
+            redirect_url = CommonErrorMiddleware._get_redirect_url_on_error(
+                request)
+            return redirect(redirect_url)
+
+        return response
+
+    @staticmethod
+    def _get_redirect_url_on_error(request):
+        """Return the URL to redirect to after an error."""
+        if request.method != 'GET':
+            return request.path
+
+        # If the original request was a GET, trying to redirect to same URL
+        # with same request method might result in an recursive loop. Instead
+        # redirect to a parent URL.
+        breadcrumbs = views.get_breadcrumbs(request)
+        parent_index = 1 if len(breadcrumbs) > 1 else 0
+        return list(breadcrumbs.keys())[parent_index]

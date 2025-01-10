@@ -1,0 +1,25 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    {% for url, breadcrumb in breadcrumbs.items reversed %}
+      {% if breadcrumb.is_active %}
+        <li class="breadcrumb-item active" aria-current="page">
+          {{ breadcrumb.name }}
+        </li>
+      {% else %}
+        <li class="breadcrumb-item">
+          <a href="{{ url }}">
+            {% if breadcrumb.url_name == 'index' %}
+              <span class="fa fa-home"></span>
+            {% else %}
+              {{ breadcrumb.name }}
+            {% endif %}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+</nav>

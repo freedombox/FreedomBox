@@ -91,8 +91,7 @@ def _add_share(browser, name, path, group):
 def _edit_share(browser, old_name, new_name, path, group):
     """Edit a share in sharing app."""
     row = _get_share(browser, old_name)
-    with functional.wait_for_page_update(browser):
-        row.find_by_css('.share-edit')[0].click()
+    functional.click_and_wait(browser, row.find_by_css('.share-edit').first)
     browser.fill('sharing-name', new_name)
     browser.fill('sharing-path', path)
     browser.find_by_css('#id_sharing-groups input').uncheck()
@@ -130,8 +129,7 @@ def _access_share(browser, name):
 def _make_share_public(browser, name):
     """Make share publicly accessible."""
     row = _get_share(browser, name)
-    with functional.wait_for_page_update(browser):
-        row.find_by_css('.share-edit')[0].click()
+    functional.click_and_wait(browser, row.find_by_css('.share-edit').first)
     browser.find_by_id('id_sharing-is_public').check()
     functional.submit(browser, form_class='form-add-edit')
 

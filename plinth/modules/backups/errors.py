@@ -21,3 +21,15 @@ class BorgRepositoryExists(BorgError):
 
 class BorgUnencryptedRepository(BorgError):
     """Attempt to provide password on an unencrypted repository."""
+
+
+class BorgArchiveExists(BorgError):
+    """A archive with the given name already exists in the repository."""
+
+
+class BorgArchiveDoesNotExist(BorgError):
+    """Specified archive does not exist in the repository."""
+
+
+class BorgBusy(BorgError):
+    """Borg could not acquire lock being busy with another operation."""

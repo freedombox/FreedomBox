@@ -3,4 +3,8 @@
 Application manifest for power.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup: dict = {}
+
+tags = [_('Reboot'), _('Shutdown')]

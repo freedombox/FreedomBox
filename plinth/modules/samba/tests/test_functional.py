@@ -51,9 +51,9 @@ def _set_share(browser, share_type, status='enabled'):
     share_btn = share.find_by_css('.share-status').find_by_tag('button').first
 
     if status == 'enabled' and share_btn['value'] == 'enable':
-        share_btn.click()
+        functional.click_and_wait(browser, share_btn)
     elif status == 'disabled' and share_btn['value'] == 'disable':
-        share_btn.click()
+        functional.click_and_wait(browser, share_btn)
 
 
 def _write_to_share(share_type, as_guest=False):

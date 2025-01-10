@@ -22,18 +22,19 @@
  * in this page.
  */
 
-(function($) {
-    $('#id_enable_public_registrations').click(function() {
-        var checkedState = $(this).prop("checked");
-        if (checkedState) {
-            $('#id_enable_private_mode').prop('checked', false);
+document.addEventListener('DOMContentLoaded', () => {
+    const enablePublicRegistrations = document.getElementById('id_enable_public_registrations');
+    const enablePrivateMode = document.getElementById('id_enable_private_mode');
+
+    enablePublicRegistrations.addEventListener('click', () => {
+        if (enablePublicRegistrations.checked) {
+            enablePrivateMode.checked = false;
         }
     });
 
-    $('#id_enable_private_mode').click(function() {
-        var checkedState = $(this).prop("checked");
-        if (checkedState) {
-            $('#id_enable_public_registrations').prop('checked', false);
+    enablePrivateMode.addEventListener('click', () => {
+        if (enablePrivateMode.checked) {
+            enablePublicRegistrations.checked = false;
         }
     });
-})(jQuery);
+});

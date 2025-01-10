@@ -58,9 +58,6 @@
     <link rel="stylesheet" href="{% static user_css %}"/>
   {% endif %}
 
-  <!-- Local link to system jQuery -->
-  <!-- TODO Deferring jQuery is causing scripts to be loaded before jQuery is available -->
-  <script type="text/javascript" src="{% static '/javascript/jquery/jquery.min.js' %}"></script>
   <!-- Local link to system Bootstrap JS -->
   <script type="text/javascript" src="{% static '/javascript/popper.js/umd/popper.js' %}" defer></script>
   <script type="text/javascript" src="{% static 'theme/js/fix.js' %}" defer></script>
@@ -88,8 +85,9 @@
       <nav class="navbar navbar-expand-md">
 
         {% block mainmenu_left %}
-          <a href="{% url 'index' %}"  class="navbar-brand
-                   {% if not active_menu_urls %}active{% endif %}"
+          {% url 'index' as index_url %}
+          <a href="{{ index_url }}"  class="navbar-brand
+                   {% if index_url == active_section_url %}active{% endif %}"
              title="{{ box_name }}">
             <i class="fa fa-freedombox fa-2x fa-inverse" aria-hidden="true"></i>
           </a>
@@ -116,7 +114,7 @@
                 <li class="nav-item">
                   {% url 'index' as index_url %}
                   <a href="{{ index_url }}" title='{% trans " Home" %}'
-                     class="nav-link {% if not active_menu_urls %}
+                     class="nav-link {% if index_url == active_section_url %}
                      active{% endif %}">
                     {% trans "Home" %}
                   </a>
@@ -124,7 +122,7 @@
                 <li class="nav-item">
                   {% url 'apps' as apps_url %}
                   <a href="{{ apps_url }}" title='{% trans " Apps" %}'
-                     class="nav-link {% if apps_url in active_menu_urls %}
+                     class="nav-link {% if apps_url == active_section_url %}
                      active{% endif %}">
                     <span class="fa fa-th nav-icon"></span>
                     {% trans "Apps" %}
@@ -133,7 +131,7 @@
                 <li class="nav-item">
                   {% url 'system' as system_url %}
                   <a href="{{ system_url }}" title='{% trans " System" %}'
-                     class="nav-link {% if system_url in active_menu_urls %}
+                     class="nav-link {% if system_url == active_section_url %}
                      active{% endif %}">
                     <span class="fa fa-cog nav-icon"></span>
                     {% trans "System" %}
@@ -250,6 +248,10 @@
     <div class="container content-container">
         {% block content_row %}
             {% include 'messages.html' %}
+
+            {% block breadcrumbs %}
+              {% include 'breadcrumbs.html' %}
+            {% endblock %}
 
             {% block content %}
               {# main content goes here #}

@@ -7,9 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
-"PO-Revision-Date: 2024-11-20 22:29+0000\n"
-"Last-Translator: 109247019824 <stoyan@gmx.com>\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
+"PO-Revision-Date: 2025-01-03 22:02+0000\n"
+"Last-Translator: 109247019824 <109247019824@users.noreply.hosted.weblate.org>"
+"\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
 "Language: bg\n"
@@ -17,14 +18,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Статичните настройки {etc_path} са правилно настроени"
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -102,30 +103,51 @@ msgstr "Език на интерфейса"
 msgid "Use the language preference set in the browser"
 msgstr "Използване на предпочитания от четеца език"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "Видимост"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Начало"
 
-#: menu.py:108
-msgid "Data"
-msgstr "Данни"
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Приложения"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "Системни"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "Видимост"
+
+#: menu.py:120
+msgid "Data"
+msgstr "Данни"
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Сигурност"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "Администриране"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "Възможно е системата да е натоварена. Опитайте по-късно."
+
+#: middleware.py:147
+#, python-brace-format
+msgid "Page not found: {url}"
+msgstr "Страницата не е намерена – {url}"
+
+#: middleware.py:150
+msgid "Error running operation."
+msgstr "Грешка при извършване на действието."
+
+#: middleware.py:152
+msgid "Error loading page."
+msgstr "Грешка при зареждане на страница."
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -171,20 +193,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Откриване на услуги"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Домейн в местната мрежа"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Създаване и управление на архиви с резервни копия."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Резервни копия"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -193,18 +227,18 @@ msgstr ""
 "Предпочетете шифровано местоположение за отдалечено архивиране или "
 "допълнително свързан диск."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Включване на резервни копия по график"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Към {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -214,7 +248,7 @@ msgstr ""
 "опита за създаване на резервно копие са безуспешни. Последната грешка е: "
 "{error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Грешка при създаване на резервно копие"
 
@@ -349,7 +383,7 @@ msgstr "Недействително име на хост: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "Недействителен път до папка: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Шифроване"
 
@@ -371,7 +405,7 @@ msgstr "Ключ в хранилището"
 msgid "None"
 msgstr "Няма"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Фраза за достъп"
 
@@ -435,7 +469,42 @@ msgstr "Отдалеченото хранилище за резервни коп
 msgid "Select verified SSH public key"
 msgstr "Изберете проверен публичен ключ за SSH"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Възстановяване"
+
+#: modules/backups/manifest.py:15
+msgid "Encrypted"
+msgstr "Шифровано"
+
+#: modules/backups/manifest.py:16
+msgid "Schedules"
+msgstr "Графици"
+
+#: modules/backups/manifest.py:18
+msgid "Remote"
+msgstr "Отдалечено"
+
+#: modules/backups/manifest.py:19
+msgid "App data"
+msgstr "Информация на приложение"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Настройки"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr "Borg"
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -443,38 +512,50 @@ msgstr ""
 "Връзката е отказана - уверете се, че сте предоставили правилните данни за "
 "вход и сървърът работи."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Връзката е отказана"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Хранилището не е намерено"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Грешна фраза за шифроване"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "Достъпът през SSH е отказан"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
 "Папката на хранилището не е празна, но не е и съществуващо хранилище за "
 "резервни копия."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+msgid "An archive with given name already exists in the repository."
+msgstr "Разервно копие с това име вече съществува в хранилището."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr "Разервно копие с това име не съществува в хранилището."
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr "Системата за резервни копия е заета с друго действие."
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "Съществуващото хранилище не е шифровано."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "Хранилище на {box_name}"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Създаване на резервно копие"
 
@@ -513,7 +594,6 @@ msgstr "Съществуващи архивни копия"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -566,40 +646,33 @@ msgstr "Време"
 msgid "Delete Archive %(name)s"
 msgstr "Премахване на архива %(name)s"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Хранилището е шифровано"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "График"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Изключване на хранилище"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Включване на хранилище"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Премахване на хранилище за резервни копия. Данните в хранилището няма да "
 "бъдат премахнати."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "Изтегляне"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Възстановяване"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "В момента липсват архиви."
 
@@ -691,99 +764,107 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Проверяване на хоста"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "Графикът за резервни копия е променен."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Резервни копия по график"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Архивът е създаден."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Премахване на архив"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Архивът е премахнат."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Качване и възстановяване от резервно копие"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Файловете от резервното копие са възстановени."
+#: modules/backups/views.py:218
+msgid "Upload successful."
+msgstr "Файлът е изпратен."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Не е намерено резервно копие."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Възстановяване от качен файл"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Файловете от резервното копие са възстановени."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr "Няма допълнителни дискове, на които да бъде създадено хранилище."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Създаване на хранилище за резервни копия"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+msgid "Added new repository."
+msgstr "Добавено е хранилище."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Създаване на отдалечено хранилище за резервни копия"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Създадено е отдалечено хранилище с достъп през SSH."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "Проверяване на ключ за SSH на хост"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH на хоста вече е проверен."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH на хоста е проверен."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "Публичният ключ за SSH на хоста не може да бъде проверен."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "Удостоверяването на отдалечения сървър е неуспешно."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Грешка при свързване със сървъра: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Хранилището е премахнато."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Премахване на хранилище"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Хранилището е премахнато. Резервните копия не са премахнати."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Грешка при размонтиране!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Грешка при монтиране"
 
@@ -847,10 +928,6 @@ msgstr ""
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr ""
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr ""
@@ -901,7 +978,7 @@ msgid "No passwords currently configured."
 msgstr ""
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Парола"
@@ -992,10 +1069,6 @@ msgstr ""
 msgid "BIND"
 msgstr ""
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr ""
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr ""
@@ -1004,6 +1077,19 @@ msgstr ""
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr ""
+
+#: modules/bind/manifest.py:16
+msgid "DNS"
+msgstr "DNS"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Сървър"
+
+#: modules/bind/manifest.py:18
+msgid "Resolver"
+msgstr "Разпознаване"
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1078,10 +1164,6 @@ msgstr ""
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr ""
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1206,9 +1288,36 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr ""
+#: modules/cockpit/manifest.py:23
+msgid "Advanced administration"
+msgstr "Разширено управление"
+
+#: modules/cockpit/manifest.py:24
+msgid "Web terminal"
+msgstr "Терминал за уеб"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Хранилище"
+
+#: modules/cockpit/manifest.py:26
+msgid "Networking"
+msgstr "Мрежи"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Услуги"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr "Дневник"
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Производителност"
 
 #: modules/config/__init__.py:18
 msgid ""
@@ -1295,6 +1404,18 @@ msgstr ""
 "Дневникът съдържа информация, за това кой е достъпвал системата, както и "
 "информация от различни услуги за отстраняване на дефекти"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Страница"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr "Дневник"
+
+#: modules/config/manifest.py:8
+msgid "Advanced apps"
+msgstr "Разширени приложения"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1336,10 +1457,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "Помощник за VoIP"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1397,6 +1514,14 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "— не е избран часови пояс —"
 
+#: modules/datetime/manifest.py:15
+msgid "Network time"
+msgstr "Време от мрежата"
+
+#: modules/datetime/manifest.py:15
+msgid "Timezone"
+msgstr "Часови пояс"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1424,10 +1549,6 @@ msgstr ""
 msgid "Deluge"
 msgstr "Deluge"
 
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr ""
-
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
 msgstr ""
@@ -1438,7 +1559,7 @@ msgstr ""
 
 #: modules/deluge/manifest.py:21 modules/transmission/manifest.py:39
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: modules/deluge/manifest.py:21 modules/roundcube/manifest.py:23
 #: modules/transmission/manifest.py:39
@@ -1464,7 +1585,7 @@ msgstr "Диагностика"
 
 #: modules/diagnostics/__init__.py:99
 msgid "skipped"
-msgstr ""
+msgstr "пропусната"
 
 #: modules/diagnostics/__init__.py:100
 msgid "passed"
@@ -1524,6 +1645,7 @@ msgstr "Диагностициране"
 #, no-python-format, python-brace-format
 msgid "Found {issue_count} issues during routine tests."
 msgstr ""
+"По време на обичайната проверка са намерени {issue_count} неизправности."
 
 #: modules/diagnostics/__init__.py:313
 msgid "Diagnostics results"
@@ -1548,6 +1670,18 @@ msgstr "Включване на автоматична поправка"
 #: modules/diagnostics/forms.py:16
 msgid "If issues are found, try to repair them automatically."
 msgstr "Ако бъдат открити проблеми бъде правен опит за отстраняване."
+
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr "Търсене на неизправности"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Поправяне"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr "Всеки ден"
 
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
@@ -1576,7 +1710,7 @@ msgstr "Приложение: %(app_name)s"
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Приложението не поддържа дисгностика"
 
@@ -1605,11 +1739,11 @@ msgstr "Проверка"
 msgid "Result"
 msgstr "Резултат"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Диагностична проверка"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr ""
@@ -1744,11 +1878,11 @@ msgid "Invalid domain name"
 msgstr "Недопустимо име на домейн"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Потребителско име"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Показване на паролата"
 
@@ -1764,8 +1898,24 @@ msgstr ""
 msgid "This field is required."
 msgstr ""
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Домейн"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Needs public IP"
+msgstr "Необходим е публичен адрес по IP"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1777,13 +1927,6 @@ msgstr ""
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Състояние"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Домейн"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1851,10 +1994,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr ""
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2014,15 +2153,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "Пощенски сървър"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr ""
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr ""
 
@@ -2174,17 +2309,13 @@ msgid ""
 "supported."
 msgstr ""
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr ""
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
-msgstr ""
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
 msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
@@ -2219,8 +2350,7 @@ msgstr ""
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2393,6 +2523,19 @@ msgstr "Порт {name} ({details}) достъпен за външните мр�
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Порт {name} ({details}) недостъпен за външните мрежи"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Портове"
+
+#: modules/firewall/manifest.py:10
+msgid "Blocking"
+msgstr "Блокиране"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Автоматично"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Услуга/порт"
@@ -2485,49 +2628,49 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Помощник за тайния ключ при първо зареждане"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 msgid "Setup Complete! Next Steps:"
 msgstr "Настройката е завършена! Следващи стъпки:"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Обновяване"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2566,10 +2709,6 @@ msgstr ""
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Обикновен хостинг на Git"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2691,9 +2830,10 @@ msgstr "Хранилището е променено."
 msgid "Edit repository"
 msgstr "Промяна на хранилище"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Документация"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Помощ"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2719,9 +2859,9 @@ msgstr "Обратна връзка"
 msgid "Contribute"
 msgstr "Допринасяне"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "За проекта"
 
@@ -2747,7 +2887,7 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "%(box_name)s is up to date."
-msgstr "%(box_name)s е обновено."
+msgstr "Устройството %(box_name)s е обновено."
 
 #: modules/help/templates/help_about.html:49
 #, python-format
@@ -2793,10 +2933,6 @@ msgstr ""
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
 msgstr "Научете"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Страница"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -2927,11 +3063,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Благодарим!"
 
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Помощ"
-
 #: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
@@ -3004,16 +3135,12 @@ msgid ""
 msgstr ""
 
 #: modules/help/templates/statuslog.html:27
-#, fuzzy
-#| msgid ""
-#| "Please remove any passwords or other personal information from the log "
-#| "before submitting the bug report."
 msgid ""
 "Please remove any personal information from the log before submitting the "
 "bug report."
 msgstr ""
-"Премахнете всички пароли или друга лична информация от дневника, преди да "
-"изпратите доклад за грешка."
+"Премахнете личната информация от дневника, преди да изпратите доклад за "
+"грешка."
 
 #: modules/help/views.py:29
 msgid "Documentation and FAQ"
@@ -3048,10 +3175,6 @@ msgstr ""
 #: modules/ikiwiki/__init__.py:45 modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
-
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr ""
 
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
@@ -3152,10 +3275,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr ""
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3192,10 +3311,6 @@ msgstr ""
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr ""
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr ""
@@ -3209,7 +3324,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr ""
 
@@ -3222,10 +3337,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr ""
 
 #: modules/jsxc/manifest.py:16
 msgid "Web chat"
@@ -3288,10 +3399,6 @@ msgstr "Управление на сървъра за съдържание на 
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
 msgstr "Kiwix"
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
-msgstr "Уикипедия извън мрежата"
 
 #: modules/kiwix/forms.py:23
 msgid "Content packages have to be in .zim format"
@@ -3394,6 +3501,11 @@ msgid ""
 "domain.  It does so by proving itself to be the owner of a domain to Let's "
 "Encrypt, a certificate authority (CA)."
 msgstr ""
+"Цифровият сертификат дава възможност на потребителите на дадена услуга да "
+"проверяват самоличността ѝ и да осъществяват обмен на инфирмация безопасно с "
+"нея. {box_name} може автоматично да получава и настройва цифрови сертификати "
+"за всеки наличен домейн. Това става след доказване на собствеността на "
+"домейна пред Let's Encrypt, орган за издаване на сертификати (CA)."
 
 #: modules/letsencrypt/__init__.py:33
 msgid ""
@@ -3402,66 +3514,79 @@ msgid ""
 "read and agree with the <a href=\"https://letsencrypt.org/repository/"
 "\">Let's Encrypt Subscriber Agreement</a> before using this service."
 msgstr ""
+"Let's Encrypt е безплатен, автоматизиран и отворен орган за издаване на "
+"сертификати, управляван в полза на обществеността от Internet Security "
+"Research Group (ISRG). Преди да използвате услугата, прочетете и се "
+"съгласете със <a href=\"https://letsencrypt.org/repository/\">Споразумението "
+"за абонамент на Let's Encrypt</a>."
 
 #: modules/letsencrypt/__init__.py:60
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Сертификати"
 
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "Web security"
+msgstr "Сигурност на връзката"
+
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
-msgstr ""
+msgstr "Състояние на сертификата"
 
 #: modules/letsencrypt/templates/letsencrypt.html:26
 msgid "Website Security"
-msgstr ""
+msgstr "Сигурност на страницата"
 
 #: modules/letsencrypt/templates/letsencrypt.html:27
 #: modules/storage/templates/storage.html:28
 msgid "Actions"
-msgstr ""
+msgstr "Действия"
 
 #: modules/letsencrypt/templates/letsencrypt.html:37
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
-msgstr ""
+msgstr "Валиден, изтича на %(expiry_date)s"
 
 #: modules/letsencrypt/templates/letsencrypt.html:44
 msgid "Revoked"
-msgstr ""
+msgstr "Отменен"
 
 #: modules/letsencrypt/templates/letsencrypt.html:48
 #, python-format
 msgid "Expired on %(expiry_date)s"
-msgstr ""
+msgstr "Изтекъл на %(expiry_date)s"
 
 #: modules/letsencrypt/templates/letsencrypt.html:52
 msgid "Invalid test certificate"
-msgstr ""
+msgstr "Неприемлив тестов сертификат"
 
 #: modules/letsencrypt/templates/letsencrypt.html:56
 #, python-format
 msgid "Invalid (%(reason)s)"
-msgstr ""
+msgstr "Неприемлив (%(reason)s)"
 
 #: modules/letsencrypt/templates/letsencrypt.html:63
 msgid "No certificate"
-msgstr ""
+msgstr "Липсва сертификат"
 
 #: modules/letsencrypt/templates/letsencrypt.html:80
 msgid "Re-obtain"
-msgstr ""
+msgstr "Повторно получаване"
 
 #: modules/letsencrypt/templates/letsencrypt.html:93
 msgid "Revoke"
-msgstr ""
+msgstr "Отменяне"
 
 #: modules/letsencrypt/templates/letsencrypt.html:101
 msgid "Obtain"
-msgstr ""
+msgstr "Получаване"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
 #, python-format
@@ -3469,6 +3594,8 @@ msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
+"Не са настроени домейни. За да получите сертификат трябва да <a href="
+"\"%(names_url)s\">настройте домейн</a>."
 
 #: modules/letsencrypt/views.py:40
 #, python-brace-format
@@ -3476,31 +3603,33 @@ msgid ""
 "Certificate successfully revoked for domain {domain}.This may take a few "
 "moments to take effect."
 msgstr ""
+"Сертификатът за домейна {domain} е отменен. За да влезе в сила може да "
+"отнеме няколко минути."
 
 #: modules/letsencrypt/views.py:46
 #, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}"
-msgstr ""
+msgstr "Грешка при отменяне на сертификата за домейна {domain}"
 
 #: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
 msgid "Certificate successfully obtained for domain {domain}"
-msgstr ""
+msgstr "Сертификатът за домейна {domain} е получен"
 
 #: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
 #, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}"
-msgstr ""
+msgstr "Грешка при получаване на сертификат за домейна {domain}"
 
 #: modules/letsencrypt/views.py:95
 #, python-brace-format
 msgid "Certificate successfully deleted for domain {domain}"
-msgstr ""
+msgstr "Сертификатът за домейна {domain} е премахнат"
 
 #: modules/letsencrypt/views.py:100
 #, python-brace-format
 msgid "Failed to delete certificate for domain {domain}"
-msgstr ""
+msgstr "Грешка при премахване на сертификат за домейна {domain}"
 
 #: modules/matrixsynapse/__init__.py:26
 msgid ""
@@ -3519,7 +3648,7 @@ msgid ""
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3574,12 +3703,6 @@ msgstr "Стая за разговори"
 #: modules/matrixsynapse/manifest.py:105
 msgid "Matrix server"
 msgstr "Сървър на Matrix"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Настройки"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -3811,10 +3934,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Пясъчник с блокове"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "Максимален брой играчи"
@@ -3888,10 +4007,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr ""
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr ""
@@ -3959,10 +4074,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr ""
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "Четец на абонаменти за новини"
 
 #: modules/miniflux/forms.py:12
 msgid "Enter a username for the user."
@@ -4095,10 +4206,6 @@ msgstr ""
 msgid "Mumble"
 msgstr ""
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr ""
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr ""
@@ -4139,11 +4246,6 @@ msgstr ""
 
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
-msgstr ""
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
 msgstr ""
 
 #: modules/mumble/views.py:43
@@ -4204,7 +4306,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Име на хоста"
 
@@ -4240,6 +4342,14 @@ msgstr ""
 "трябва да надхвърля 63 знака. Максималната дължина на името на домейна е 253 "
 "знака."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Домейни"
+
+#: modules/names/manifest.py:13
+msgid "DNS Resolution"
+msgstr "Разпознаване на DNS"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4271,17 +4381,9 @@ msgstr "поддържано"
 msgid "unsupported"
 msgstr "неподдържано"
 
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Домейни"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Услуги"
-
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
-msgstr ""
+msgstr "Състояние на разпознаване"
 
 #: modules/names/templates/names.html:66
 msgid "Global"
@@ -4544,54 +4646,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "— изберете —"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "Видимото име на мрежата."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Режим"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Инфраструктура"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Точка за достъп"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr ""
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Честотна лента"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Автоматично"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 ГХц)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 ГХц)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Канал"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -4599,11 +4697,11 @@ msgstr ""
 "Незадължителна стойност. Ограничение на безжичния канал в избраната честотна "
 "лента. Празна стойност или 0 означава автоматичен избор."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4613,11 +4711,11 @@ msgstr ""
 "се свързвате с точка за достъп, се свързвайте само ако BSSID на точката за "
 "достъп съвпада с предоставения. Пример: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Режим на удостоверяване"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -4625,20 +4723,20 @@ msgstr ""
 "Изберете WPA, ако безжичната мрежа е защитена и изисква от клиентите да "
 "разполагат с паролата за свързване."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Отворена"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Посочете как устройството {box_name} е свързано с мрежата"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4649,7 +4747,7 @@ msgstr ""
 "интернет от маршрутизатор безжично или чрез кабел. Това е типичната домашна "
 "постройка.</p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4662,7 +4760,7 @@ msgstr ""
 "адаптер. {box_name} е устройство, директно свързано с интернет и всички "
 "устройства се свързват с {box_name}, за да получат достъп до интернет.</p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4673,11 +4771,11 @@ msgstr ""
 "е директно свързана към {box_name} и няма други устройства в мрежата. Това "
 "се получава при общностни или облачни настройки.</p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "Изберете вида на връзката с интернет"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4696,7 +4794,7 @@ msgstr ""
 "сигурни дали той се променя с течение на времето, по-безопасно е да изберете "
 "тази възможност.</p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4716,7 +4814,7 @@ msgstr ""
 "възможност. Възможно е да можете да получите такава услуга от вашия "
 "доставчик на интернет, срещу заплащане.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4736,7 +4834,7 @@ msgstr ""
 "{box_name} предлага много решения за заобикаляне на ситуацията, но всяко "
 "решение има своите ограничения.</b></p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -4744,11 +4842,11 @@ msgstr ""
 "Не зная каъв вид връзка предоставя доставчикът на интернет<p class=\"help-"
 "block\">Ще бъдат предложени най-консервативните действия.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Предпочитана настройка за маршрутизатор"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4759,7 +4857,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4771,12 +4869,34 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
 msgstr ""
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr ""
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr ""
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+msgid "Local network"
+msgstr "Местна мрежа"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr "Топология"
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -4794,7 +4914,7 @@ msgstr "Редактиране на връзката"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Редактиране"
 
@@ -4827,7 +4947,7 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:81
 #: modules/storage/templates/storage.html:23
 msgid "Device"
-msgstr ""
+msgstr "Устройство"
 
 #: modules/networks/templates/connection_show.html:85
 msgid "State"
@@ -4912,7 +5032,7 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:252
 #: modules/storage/forms.py:132
 msgid "Default"
-msgstr ""
+msgstr "Подразбирано"
 
 #: modules/networks/templates/connection_show.html:217
 #: modules/networks/templates/connections_fields.html:94
@@ -4984,10 +5104,6 @@ msgstr ""
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr ""
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr ""
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -4997,13 +5113,6 @@ msgstr ""
 #: modules/networks/templates/connections_diagram.html:59
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
-msgstr ""
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
 msgstr ""
 
 #: modules/networks/templates/connections_diagram.html:35
@@ -5028,10 +5137,8 @@ msgstr "Редактиране на връзката"
 
 #: modules/networks/templates/connections_fields.html:13
 #: templates/messages.html:14
-#, fuzzy
-#| msgid "Error"
 msgid "Error:"
-msgstr "Грешка"
+msgstr "Грешка:"
 
 #: modules/networks/templates/connections_fields.html:20
 #: modules/users/templates/users_update.html:46 templates/messages.html:30
@@ -5432,7 +5539,7 @@ msgstr ""
 
 #: modules/networks/views.py:122
 msgid "default"
-msgstr ""
+msgstr "подразбирано"
 
 #: modules/networks/views.py:155
 msgid "Cannot show connection: Connection not found."
@@ -5529,10 +5636,6 @@ msgstr "Приложението е експериментално."
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr ""
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "Не е зададено"
@@ -5608,11 +5711,7 @@ msgstr ""
 msgid "OpenVPN"
 msgstr ""
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr ""
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5626,7 +5725,8 @@ msgstr ""
 msgid "VPN server"
 msgstr "Сървър за ВЧМ"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 msgid "Remote access"
 msgstr "Отдалечен достъп"
 
@@ -5700,11 +5800,7 @@ msgstr ""
 msgid "PageKite"
 msgstr ""
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr ""
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr ""
 
@@ -5780,6 +5876,14 @@ msgstr ""
 msgid "This service already exists"
 msgstr ""
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+msgid "Tunneling"
+msgstr "Тунели"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr ""
@@ -5838,26 +5942,32 @@ msgid ""
 "SshOverPageKite/\">instructions</a>"
 msgstr ""
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr ""
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
 "utilization of the hardware. This can give you basic insights into usage "
 "patterns and whether the hardware is overloaded by users and services."
 msgstr ""
+"Приложението „Производителност“ дава възможност да събирате, съхранявате и "
+"преглеждате информация за използването на хардуера. Това може да ви даде "
+"бегла представа за моделите на използване и дали хардуерът е претоварен от "
+"потребители и услуги."
 
 #: modules/performance/__init__.py:23
 msgid ""
 "Performance metrics are collected by Performance Co-Pilot and can be viewed "
 "using the Cockpit app."
 msgstr ""
+"Показателите за производителност се събират от Performance Co-Pilot и могат "
+"да бъдат прегледани с помощта на приложението Cockpit."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
-msgstr "Наблюдение на системата"
+#: modules/performance/manifest.py:18
+msgid "Monitoring"
+msgstr "Наблюдение"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr "Използване на ресурсите"
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -5867,8 +5977,16 @@ msgstr "Рестартирайте или изключете системата.
 msgid "Power"
 msgstr "Захранване"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr "Рестартиране"
+
+#: modules/power/manifest.py:10
+msgid "Shutdown"
+msgstr "Изключване"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Рестартиране"
 
@@ -5959,6 +6077,14 @@ msgid ""
 "and reliable."
 msgstr ""
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr "Отчет за използването"
+
+#: modules/privacy/manifest.py:10
+msgid "Fallback DNS"
+msgstr "Резервни DNS"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -5981,10 +6107,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr ""
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr ""
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -5998,10 +6120,6 @@ msgstr ""
 #: modules/torproxy/manifest.py:55
 msgid "Proxy server"
 msgstr ""
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-msgid "Local network"
-msgstr "Местна мрежа"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6025,10 +6143,6 @@ msgstr ""
 #: modules/quassel/__init__.py:51 modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
-
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr ""
 
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
@@ -6057,10 +6171,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Календар и адресна книга"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6164,10 +6274,6 @@ msgid ""
 "a>)."
 msgstr ""
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr ""
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr ""
@@ -6222,10 +6328,6 @@ msgstr "Четене и абонамент за новинарски емиси�
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
 
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "Създател на емисии на RSS"
-
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
 msgstr ""
@@ -6279,10 +6381,6 @@ msgstr ""
 
 #: modules/samba/__init__.py:53
 msgid "Samba"
-msgstr ""
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
 msgstr ""
 
 #: modules/samba/manifest.py:12
@@ -6377,11 +6475,11 @@ msgstr "Диск с OS на FreedomBox"
 
 #: modules/samba/views.py:60 modules/storage/forms.py:140
 msgid "Open Share"
-msgstr ""
+msgstr "Отворен ресурс"
 
 #: modules/samba/views.py:64 modules/storage/forms.py:138
 msgid "Group Share"
-msgstr ""
+msgstr "Групов ресурс"
 
 #: modules/samba/views.py:68
 msgid "Home Share"
@@ -6425,10 +6523,6 @@ msgstr ""
 msgid "Searx"
 msgstr ""
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr ""
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr ""
@@ -6465,6 +6559,14 @@ msgid ""
 msgstr ""
 "Когато е отметнато, Fail2Ban ще ограничава опитите за проникване с груба "
 "сила в сървъра на SSH и други разрешени мрежови услуги, защитени с парола."
+
+#: modules/security/manifest.py:10
+msgid "Automatic bans"
+msgstr "Автоматична забрана"
+
+#: modules/security/manifest.py:10
+msgid "Reports"
+msgstr "Доклади"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -6596,12 +6698,12 @@ msgstr ""
 msgid "Shaarli"
 msgstr ""
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr ""
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
+msgstr ""
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
 msgstr ""
 
 #: modules/shaarli/manifest.py:34
@@ -6645,10 +6747,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr ""
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr ""
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr ""
@@ -6685,12 +6783,8 @@ msgid ""
 "through this server."
 msgstr ""
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
-msgstr ""
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
 msgstr ""
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
@@ -6907,6 +7001,18 @@ msgid ""
 "no yearly snapshot)."
 msgstr ""
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr "Периодично"
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr "Известно добро състояние"
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr "Btrfs"
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr ""
@@ -7029,14 +7135,14 @@ msgid ""
 "administration tasks, copy files or run other services using such "
 "connections."
 msgstr ""
-"Сървърът Secure Shell използва протокола Secure Shell, за да приема "
-"свързване от отдалечени компютри. Удостоверен отдалечен компютър може да "
-"изпълнява задачи за администриране, да копира файлове или да изпълнява други "
-"услуги, използвайки такива връзки."
+"Сървърът Secure Shell използва протокола Secure Shell, за да приема връзки "
+"от отдалечени компютри. Удостоверен отдалечен компютър може да изпълнява "
+"задачи за администриране, да копира файлове или да изпълнява други услуги, "
+"използвайки такива връзки."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
-msgstr "Сървър за Secure Shell (SSH)"
+msgid "Secure Shell Server"
+msgstr "Сървър за Secure Shell"
 
 #: modules/ssh/__init__.py:75
 msgid "Remotely login using Secure Shell (SSH)"
@@ -7052,9 +7158,9 @@ msgid ""
 "setup SSH keys in your administrator user account before enabling this "
 "option."
 msgstr ""
-"Подобрява сигурността, като предотвратява отгатването на паролата. Уверете "
-"се, че сте настроили ключове за SSH в администраторския профил, преди да "
-"сложите отметка."
+"Подобрява сигурността, като предотвратява отгатването на паролата. Преди да "
+"сложите отметка се уверете, че сте настроили ключове за SSH в "
+"администраторския профил."
 
 #: modules/ssh/forms.py:21
 msgid "Allow all users to login remotely"
@@ -7069,6 +7175,18 @@ msgstr ""
 "Дава разрешение на всички потребители, които имат валиден профил, да влизат "
 "отдалечено през SSH. Когато не е отметнато, само потребителите от групите "
 "root, admin и freedombox-ssh могат да влизат през SSH."
+
+#: modules/ssh/manifest.py:22
+msgid "SSH"
+msgstr "SSH"
+
+#: modules/ssh/manifest.py:22
+msgid "Remote terminal"
+msgstr "Отдалечен терминал"
+
+#: modules/ssh/manifest.py:22
+msgid "Fingerprints"
+msgstr "Отпечатъци"
 
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
@@ -7102,7 +7220,7 @@ msgstr ""
 msgid "Proceed to Login"
 msgstr ""
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Вход"
 
@@ -7117,102 +7235,104 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr ""
+"Този модул ви дава възможност да управлявате носителите, свързани към "
+"{box_name}. Можете да преглеждате използваните в момента носители, да "
+"монтирате и демонтирате сменяеми носители, да разширявате основния дял и т.н."
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
 msgid "{disk_size:.1f} bytes"
-msgstr ""
+msgstr "{disk_size:.1f} байта"
 
 #: modules/storage/__init__.py:231
 #, python-brace-format
 msgid "{disk_size:.1f} KiB"
-msgstr ""
+msgstr "{disk_size:.1f} КиБ"
 
 #: modules/storage/__init__.py:235
 #, python-brace-format
 msgid "{disk_size:.1f} MiB"
-msgstr ""
+msgstr "{disk_size:.1f} МиБ"
 
 #: modules/storage/__init__.py:239
 #, python-brace-format
 msgid "{disk_size:.1f} GiB"
-msgstr ""
+msgstr "{disk_size:.1f} ГиБ"
 
 #: modules/storage/__init__.py:242
 #, python-brace-format
 msgid "{disk_size:.1f} TiB"
-msgstr ""
+msgstr "{disk_size:.1f} ТиБ"
 
 #: modules/storage/__init__.py:254
 msgid "The operation failed."
-msgstr ""
+msgstr "Грешка при извършване на действието."
 
 #: modules/storage/__init__.py:256
 msgid "The operation was cancelled."
-msgstr ""
+msgstr "Действието е отказано."
 
 #: modules/storage/__init__.py:258
 msgid "The device is already unmounting."
-msgstr ""
+msgstr "Устройството се демонтира."
 
 #: modules/storage/__init__.py:260
 msgid "The operation is not supported due to missing driver/tool support."
 msgstr ""
+"Действието не се поддържа, поради липсващ управляващ софтуер или поддръжка "
+"на инструменти."
 
 #: modules/storage/__init__.py:263
 msgid "The operation timed out."
-msgstr ""
+msgstr "Времето за изчакване на действието е изтекло."
 
 #: modules/storage/__init__.py:265
 msgid "The operation would wake up a disk that is in a deep-sleep state."
-msgstr ""
+msgstr "Действието ще събуди носител, намиращ се в състояние на дълбок сън."
 
 #: modules/storage/__init__.py:268
 msgid "Attempting to unmount a device that is busy."
-msgstr ""
+msgstr "Опит за демонтиране на насител, който в момента се използва."
 
 #: modules/storage/__init__.py:270
 msgid "The operation has already been cancelled."
-msgstr ""
+msgstr "Действието вече е отказано."
 
 #: modules/storage/__init__.py:272 modules/storage/__init__.py:274
 #: modules/storage/__init__.py:276
 msgid "Not authorized to perform the requested operation."
-msgstr ""
+msgstr "Липсват права за изпълняване на заявеното действие."
 
 #: modules/storage/__init__.py:278
 msgid "The device is already mounted."
-msgstr ""
+msgstr "Носителят вече е монтиран."
 
 #: modules/storage/__init__.py:280
 msgid "The device is not mounted."
-msgstr ""
+msgstr "Носителят не е монтиран."
 
 #: modules/storage/__init__.py:282
 msgid "Not permitted to use the requested option."
-msgstr ""
+msgstr "Използването на заявената настройка не е разрешено."
 
 #: modules/storage/__init__.py:284
 msgid "The device is mounted by another user."
-msgstr ""
+msgstr "Носителят е монтиран от друг потребител."
 
 #: modules/storage/__init__.py:314
 #, no-python-format, python-brace-format
 msgid "Low space on system partition: {percent_used}% used, {free_space} free."
 msgstr ""
+"Мястото на системния дял е малко: използвано {percent_used} %, свободно "
+"{free_space}."
 
 #: modules/storage/__init__.py:316
 msgid "Low disk space"
-msgstr ""
+msgstr "Недостатъчно място на носителя"
 
 #: modules/storage/__init__.py:344
 msgid "Disk failure imminent"
-msgstr ""
+msgstr "Неизбежна повреда на носителя"
 
 #: modules/storage/__init__.py:346
 #, python-brace-format
@@ -7220,6 +7340,8 @@ msgid ""
 "Disk {id} is reporting that it is likely to fail in the near future. Copy "
 "any data while you still can and replace the drive."
 msgstr ""
+"Дискът {id} съобщава, че в близко бъдеще може да претърпи повреда. Направете "
+"копие на данните докато все още можете и сменете носителя."
 
 #: modules/storage/__init__.py:390
 #, no-python-format
@@ -7227,10 +7349,13 @@ msgid ""
 "You cannot save configuration changes. Try rebooting the system. If the "
 "problem persists after a reboot, check the storage device for errors."
 msgstr ""
+"Промените на настройките не могат да бъдат запазени. Опитайте отново след "
+"рестартират на системата. Ако проблемът продължава след него, проверете "
+"носителя за грешки."
 
 #: modules/storage/__init__.py:393
 msgid "Read-only root filesystem"
-msgstr ""
+msgstr "Кореновата файлова система е достъпна само за четене"
 
 #: modules/storage/__init__.py:403
 msgid "Go to Power"
@@ -7238,63 +7363,79 @@ msgstr "Към Захранване"
 
 #: modules/storage/__init__.py:447 modules/storage/tests/test_storage.py:396
 msgid "grub package is configured"
-msgstr ""
+msgstr "Пакетът grub е настроен"
 
 #: modules/storage/forms.py:63
 msgid "Invalid directory name."
-msgstr ""
+msgstr "Неприемливо име на папка."
 
 #: modules/storage/forms.py:73
 msgid "Directory does not exist."
-msgstr ""
+msgstr "Папката не съществува."
 
 #: modules/storage/forms.py:75
 msgid "Path is not a directory."
-msgstr ""
+msgstr "Пътят не е папка."
 
 #: modules/storage/forms.py:79
 msgid "Directory is not readable by the user."
-msgstr ""
+msgstr "Потребителят няма права за четене на папката."
 
 #: modules/storage/forms.py:82
 msgid "Directory is not writable by the user."
-msgstr ""
+msgstr "Потребителят няма права за писане на папката."
 
 #: modules/storage/forms.py:87
 msgid "Directory"
-msgstr ""
+msgstr "Папка"
 
 #: modules/storage/forms.py:89
 msgid "Subdirectory (optional)"
-msgstr ""
+msgstr "Вложена папка (по желание)"
 
 #: modules/storage/forms.py:136
 msgid "Share"
-msgstr ""
+msgstr "Споделяне"
 
 #: modules/storage/forms.py:144
 msgid "Other directory (specify below)"
-msgstr ""
+msgstr "Дъуга папка (укажете долу)"
+
+#: modules/storage/manifest.py:9
+msgid "Disks"
+msgstr "Носители"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr "Използвано"
+
+#: modules/storage/manifest.py:9
+msgid "Auto-mount"
+msgstr "Автоматично монтиране"
+
+#: modules/storage/manifest.py:9
+msgid "Expand partition"
+msgstr "Уголемяване на дяла"
 
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
-msgstr ""
+msgstr "Следните носители се използват:"
 
 #: modules/storage/templates/storage.html:24
 msgid "Label"
-msgstr ""
+msgstr "Етикет"
 
 #: modules/storage/templates/storage.html:25
 msgid "Mount Point"
-msgstr ""
+msgstr "Точка на монтиране"
 
 #: modules/storage/templates/storage.html:27
 msgid "Used"
-msgstr ""
+msgstr "Използвано"
 
 #: modules/storage/templates/storage.html:77
 msgid "Partition Expansion"
-msgstr ""
+msgstr "Уголемяване на дяла"
 
 #: modules/storage/templates/storage.html:79
 #, python-format
@@ -7303,17 +7444,24 @@ msgid ""
 "root partition.  Root partition can be expanded to use this space.  This "
 "will provide you additional free space to store your files."
 msgstr ""
+"След кореновия дял има %(expandable_root_size)s неразпределено пространство. "
+"Кореновият дял може да бъде разширен, за да бъде използвано това "
+"пространство. То ще ви осигури допълнително свободно място за съхраняване на "
+"файлове."
 
 #: modules/storage/templates/storage.html:89
 #: modules/storage/templates/storage_expand.html:24 modules/storage/views.py:55
 msgid "Expand Root Partition"
-msgstr ""
+msgstr "Уголемяване на кореновия дял"
 
 #: modules/storage/templates/storage.html:95
 msgid ""
 "Advanced storage operations such as disk partitioning and RAID management "
 "are provided by the <a href=\"/_cockpit/storage\">Cockpit</a> app."
 msgstr ""
+"Разширените операции с носителите, като разделяне на дялове и управление на "
+"RAID, се осигуряват от приложението <a href=\"/_cockpit/storage\""
+">Cockpit</a>."
 
 #: modules/storage/templates/storage_expand.html:14
 #, python-format
@@ -7322,28 +7470,31 @@ msgid ""
 "%(expandable_root_size)s of additional free space will be available in your "
 "root partition."
 msgstr ""
+"Преди да продължите направете резервно копие на данните. След това действие "
+"в кореновия дял ще бъде налично %(expandable_root_size)s допълнително "
+"свободно пространство."
 
 #: modules/storage/views.py:67
 #, python-brace-format
 msgid "Error expanding partition: {exception}"
-msgstr ""
+msgstr "Грешка при уголемяване на дяла: {exception}"
 
 #: modules/storage/views.py:70
 msgid "Partition expanded successfully."
-msgstr ""
+msgstr "Дялът е уголемен."
 
 #: modules/storage/views.py:87
 #, python-brace-format
 msgid "{drive_vendor} {drive_model} can be safely unplugged."
-msgstr ""
+msgstr "{drive_vendor} {drive_model} може безопасно да бъде изваден."
 
 #: modules/storage/views.py:91
 msgid "Device can be safely unplugged."
-msgstr ""
+msgstr "Устройството може безопасно да бъде извадено."
 
 #: modules/storage/views.py:93
 msgid "Error ejecting device."
-msgstr ""
+msgstr "Грешка при изваждане на устройството."
 
 #: modules/syncthing/__init__.py:23
 msgid ""
@@ -7385,10 +7536,6 @@ msgstr "Управление на приложението Syncthing"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Синхронизиране на файлове"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -7423,10 +7570,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr ""
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr ""
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
@@ -7457,7 +7600,7 @@ msgid ""
 "TiddlyWiki before deleting it."
 msgstr ""
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7466,13 +7609,13 @@ msgid ""
 "en\">Tor Browser</a>."
 msgstr ""
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -7480,14 +7623,10 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Тор"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Анонимна мрежа"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -7497,19 +7636,19 @@ msgstr "Услуга на Тор Onion"
 msgid "Tor Bridge Relay"
 msgstr ""
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr ""
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Транспортът Obfs3 е регистриран"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Транспортът Obfs4 е регистриран"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Услугата на Onion е версия 3"
 
@@ -7623,10 +7762,6 @@ msgstr "Анонимна мрежа"
 msgid "Onion Service"
 msgstr "Услуга на Onion"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Портове"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Запазване на настройки"
@@ -7636,7 +7771,7 @@ msgstr "Запазване на настройки"
 msgid "Error configuring app: {error}"
 msgstr "Грешка при настройка на приложението: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -7645,7 +7780,7 @@ msgid ""
 "using upstream bridges."
 msgstr ""
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Прокси сървър на Тор"
 
@@ -7653,12 +7788,12 @@ msgstr "Прокси сървър на Тор"
 msgid "Tor Socks Proxy"
 msgstr "Прокси сървър на Тор за SOCKS"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Достъп до {url} по tcp{kind} чрез Тор"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr ""
@@ -7793,6 +7928,11 @@ msgid ""
 "to be unavailable briefly. If system reboot is deemed necessary, it is done "
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
+"Обновяванията се извършват в 06:00 ч. всеки ден според часовия пояс. Задайте "
+"часовия пояс в приложението Дата и час. Приложенията се рестартират след "
+"обновяване, което ще доведе до кратко прекъсване на достъпа до тях. Ако е "
+"необходимо рестартиране на системата, то ще бъде извършено в 02:00 ч., което "
+"ще доведе до кратко прекъсване на достъпа до всички приложения."
 
 #: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
 #: modules/upgrades/__init__.py:143
@@ -7812,8 +7952,8 @@ msgid ""
 "Automatic software update runs daily by default. For the first time, "
 "manually run it now."
 msgstr ""
-"Автоматичното обновяване по подразбиране се извършва всеки ден. Извършете го "
-"за първи път ръчно сега."
+"Автоматичното обновяване, по подразбиране, се извършва всеки ден. Извършете "
+"го за първи път ръчно сега."
 
 #: modules/upgrades/__init__.py:242
 msgid "Could not start distribution update"
@@ -7825,23 +7965,29 @@ msgid ""
 "distribution update. Please ensure at least 5 GB is free. Distribution "
 "update will be retried after 24 hours, if enabled."
 msgstr ""
+"В кореновия дял няма достатъчно свободно място за започване на обновяване на "
+"дистрибуцията. Уверете се, че има поне 5 ГБ свободно пространство. Ако е "
+"включено нов опит за обновяване на дистрибуцията ще бъде направен отново "
+"след 24 часа."
 
 #: modules/upgrades/__init__.py:255
 msgid "Distribution update started"
-msgstr ""
+msgstr "Започнато е обновяване на дистрибуцията"
 
 #: modules/upgrades/__init__.py:257
 msgid ""
 "Started update to next stable release. This may take a long time to complete."
 msgstr ""
+"Започнато е обновяване до следващото стабилно издание. То може да отнеме "
+"дълго време."
 
 #: modules/upgrades/__init__.py:350
 msgid "Check for package holds"
-msgstr ""
+msgstr "Проверка за задържани от обновяване пакети"
 
 #: modules/upgrades/forms.py:15
 msgid "Enable auto-update"
-msgstr ""
+msgstr "Включване на автоматично обновяване"
 
 #: modules/upgrades/forms.py:16
 msgid "When enabled, FreedomBox automatically updates once a day."
@@ -7850,7 +7996,7 @@ msgstr ""
 
 #: modules/upgrades/forms.py:19
 msgid "Enable auto-update to next stable release"
-msgstr ""
+msgstr "Включване на автоматично обновяване до следващо стабилно издание"
 
 #: modules/upgrades/forms.py:20
 msgid ""
@@ -7864,6 +8010,14 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Включване на често обновяване на възможностите (препоръчително)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr "Рестарти"
+
+#: modules/upgrades/manifest.py:10
+msgid "New features"
+msgstr "Нови възможности"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -7956,7 +8110,7 @@ msgid ""
 msgstr ""
 "<strong>За да завърши може да отнеме много време</strong>. Докато тече "
 "обновяването не може да инсталирате приложения. Също така този интерфейс "
-"може временно да е недостъпен и да показва грешка. В този случаи, за да "
+"може временно да е недостъпен и да показва грешка. В такъв случаи, за да "
 "продължите презаредете страницата."
 
 #: modules/upgrades/templates/upgrades_configure.html:134
@@ -7981,15 +8135,15 @@ msgstr "Надграждане на дистрибуцията до тестов
 
 #: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
-msgstr ""
+msgstr "Грешка при настройка на unattended-upgrades"
 
 #: modules/upgrades/views.py:119
 msgid "Upgrade process started."
-msgstr ""
+msgstr "Процесът на обновяване започна."
 
 #: modules/upgrades/views.py:121
 msgid "Starting upgrade failed."
-msgstr ""
+msgstr "Грешка при започване на обновяване."
 
 #: modules/upgrades/views.py:131
 msgid "Frequent feature updates activated."
@@ -8038,12 +8192,12 @@ msgstr "Проверете записа на LDAP „{search_item}“"
 #: modules/users/__init__.py:152
 #, python-brace-format
 msgid "Check nslcd config \"{key} {value}\""
-msgstr ""
+msgstr "Проверете настройката на nslcd „{key} {value}“"
 
 #: modules/users/__init__.py:182
 #, python-brace-format
 msgid "Check nsswitch config \"{database}\""
-msgstr ""
+msgstr "Проверете настройката на nsswitch „{database}“"
 
 #: modules/users/forms.py:36
 msgid "Username is taken or is reserved."
@@ -8052,7 +8206,7 @@ msgstr "Потребителското име е заето."
 #: modules/users/forms.py:71
 msgid ""
 "Optional. Used to send emails to reset password and important notifications."
-msgstr ""
+msgstr "По желание. Използва се за нулиране на паролата и важни известия."
 
 #: modules/users/forms.py:107
 msgid ""
@@ -8062,16 +8216,22 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
+"Изберете кои услуги да бъдат достъпни за новия потребител. Той ще може да "
+"влиза в услуги, които поддържат вход чрез LDAP, ако е в съответната "
+"група.<br><br>Потребителите в групата admin ще могат да влизат във всички "
+"услуги. Те могат също така да влизат в системата чрез SSH и да имат "
+"администраторски права (sudo)."
 
 #: modules/users/forms.py:125
 msgid "Enter a valid username."
-msgstr "Въведете валидно потребителско име."
+msgstr "Въведете съществуващо потребителско име."
 
 #: modules/users/forms.py:132
 msgid ""
 "Required. 150 characters or fewer. English letters, digits and @/./-/_ only."
 msgstr ""
-"Задължително. 150 знака или по-малко. Само латински букви, цифри и @/./-/_."
+"Задължително. 150 знака или по-малко. Само латински букви, цифри и знаците @/"
+"./-/_."
 
 #: modules/users/forms.py:141
 msgid "Authorization Password"
@@ -8163,6 +8323,14 @@ msgstr "Новият потребител не е добавен към адми
 msgid "User account created, you are now logged in"
 msgstr "Профилът е създаден и вече сте влезли"
 
+#: modules/users/manifest.py:8
+msgid "Manage accounts"
+msgstr "Управление на профили"
+
+#: modules/users/manifest.py:8
+msgid "App permissions"
+msgstr "Права на приложението"
+
 #: modules/users/templates/users_change_password.html:11
 #, python-format
 msgid "Change Password for <em>%(username)s</em>"
@@ -8214,12 +8382,12 @@ msgid ""
 "sudo /usr/share/plinth/actions/actions users remove_user\". If an account is "
 "already usable with %(box_name)s, skip this step."
 msgstr ""
-"За да създадете профил, който може да се използва с %(box_name)s, премахнете "
-"тези профили от командния ред и презаредете страницата. Чрез командния ред "
-"изпълнете командата \"echo '{\"args\": [\"USERNAME\", \"PASSWORD\"], "
-"\"kwargs\": {}}' | sudo /usr/share/plinth/actions/actions users "
-"remove_user\". Ако профилът вече може да се използва с %(box_name)s, "
-"прескочете тази стъпка."
+"За да създадете профил, който може да бъде използван с %(box_name)s, "
+"премахнете тези профили от командния ред и презаредете страницата. От "
+"команднен ред изпълнете командата „echo '{\"args\": "
+"[\"USERNAME\", \"PASSWORD\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
+"actions/actions users remove_user“. Ако профилът вече може да се използва с "
+"%(box_name)s, прескочете тази стъпка."
 
 #: modules/users/templates/users_firstboot.html:69
 msgid "Skip this step"
@@ -8265,9 +8433,9 @@ msgid ""
 "Deleting a user account also removes all the files user's home directory. If "
 "you wish to keep these files, disable the user account instead."
 msgstr ""
-"При премахване на профил на потребител се премахват и всички файлове от "
+"При премахване на потребителски профил се премахват и всички файлове от "
 "домашната му папка. Ако желаете тези файлове да бъдат запазени, вместо да "
-"премахвате профила го изключете.."
+"премахвате профила го изключете."
 
 #: modules/users/templates/users_update.html:60
 msgid "Delete user and files"
@@ -8647,10 +8815,6 @@ msgstr ""
 msgid "WordPress"
 msgstr ""
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr ""
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr ""
@@ -8690,10 +8854,6 @@ msgstr ""
 msgid "Zoph"
 msgstr "Zoph"
 
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Организатор на фотографии"
-
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
 msgstr ""
@@ -8717,7 +8877,7 @@ msgstr ""
 #: modules/zoph/templates/zoph-pre-setup.html:15
 #: modules/zoph/templates/zoph-pre-setup.html:28
 msgid "Setup"
-msgstr ""
+msgstr "Настройка"
 
 #: modules/zoph/templates/zoph-pre-setup.html:18
 #, python-format
@@ -8910,6 +9070,10 @@ msgstr "Услугата <em>%(service_name)s</em> не работи."
 msgid "Search with tags"
 msgstr "Търсене по етикети"
 
+#: templates/apps.html:42
+msgid "Clear all tags"
+msgstr "Изчистване на всички етикети"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -8919,43 +9083,35 @@ msgstr ""
 "данни. Това е безплатен софтуер, който ви позволява да инсталирате и "
 "управлявате сървърни приложения с лекота."
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Начало"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Начало"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Приложения"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Приложения"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " Системни"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
-msgstr "Смяна на парола"
+msgstr "Промяна на парола"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Изключване"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Изход"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Избор на език"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Вход"
 
@@ -9160,11 +9316,15 @@ msgstr ""
 "Всички данни и настройки на приложението ще бъдат загубени. Приложението "
 "може да бъде инсталирано отново."
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr "Тук"
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "Настройките не са променени"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "преди премахване на {app_id}"
@@ -9172,6 +9332,42 @@ msgstr "преди премахване на {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "Помощник за VoIP"
+
+#~ msgid "Email Server"
+#~ msgstr "Пощенски сървър"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Обикновен хостинг на Git"
+
+#~ msgid "Documentation"
+#~ msgstr "Документация"
+
+#~ msgid "Offline Wikipedia"
+#~ msgstr "Уикипедия извън мрежата"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Пясъчник с блокове"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "Четец на абонаменти за новини"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Календар и адресна книга"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "Създател на емисии на RSS"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Синхронизиране на файлове"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "Анонимна мрежа"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Организатор на фотографии"
 
 #, python-format
 #~ msgid ""
@@ -9369,9 +9565,6 @@ msgstr "Гуджарати"
 #~ "Дебиан, каквато е %(box_name)s, можете да я стартирате с командата "
 #~ "„service firewalld start“, а при устройства със systemd командата е "
 #~ "„systemctl start firewalld“."
-
-#~ msgid "Error running apt-get"
-#~ msgstr "Грешка при изпълняване на apt-get"
 
 #~ msgid "Tor configuration is being updated"
 #~ msgstr "В момента настройките на Тор се обновяват"

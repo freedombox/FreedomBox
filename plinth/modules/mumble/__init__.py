@@ -7,10 +7,12 @@ import pathlib
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
 from plinth import frontpage, menu
 from plinth.daemon import Daemon
+from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules import names
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -43,9 +45,8 @@ class MumbleApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, name=_('Mumble'),
-            icon_filename='mumble', short_description=_('Voice Chat'),
-            description=_description, manual_page='Mumble',
-            clients=manifest.clients, tags=manifest.tags,
+            icon_filename='mumble', description=_description,
+            manual_page='Mumble', clients=manifest.clients, tags=manifest.tags,
             donation_url='https://wiki.mumble.info/wiki/Donate')
         self.add(info)
 
@@ -114,6 +115,12 @@ class MumbleApp(app_module.App):
         privileged.setup()
         return True
 
+    def diagnose(self) -> list[DiagnosticCheck]:
+        """Run diagnostics and return the results."""
+        results = super().diagnose()
+        results.append(_diagnose_config())
+        return results
+
 
 def get_available_domains():
     """Return an iterator with all domains able to have a certificate."""
@@ -141,3 +148,10 @@ def get_domains():
         return [domain]
 
     return []
+
+
+def _diagnose_config() -> DiagnosticCheck:
+    """Check that configuration changes made during setup are in place."""
+    result = Result.PASSED if privileged.check_setup() else Result.FAILED
+    return DiagnosticCheck('mumble-config',
+                           gettext_noop('Mumble server is configured'), result)

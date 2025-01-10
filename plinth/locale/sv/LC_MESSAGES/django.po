@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
 "PO-Revision-Date: 2024-07-30 01:31+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statisk konfiguration {etc_path} är inställd korrekt"
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -101,30 +101,56 @@ msgstr "Språk att använda för att presentera detta webbgränssnitt"
 msgid "Use the language preference set in the browser"
 msgstr "Använd språkinställningen i webbläsaren"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "Synlighet"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Hem"
 
-#: menu.py:108
-msgid "Data"
-msgstr "Data"
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Appar"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "System"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "Synlighet"
+
+#: menu.py:120
+msgid "Data"
+msgstr "Data"
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Säkerhet"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "Administrering"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "Systemet är möjligen under tung belastning. Försök igen senare."
+
+#: middleware.py:147
+#, fuzzy, python-brace-format
+#| msgid "Page not found - %(box_name)s"
+msgid "Page not found: {url}"
+msgstr "Sidan hittades inte - %(box_name)s"
+
+#: middleware.py:150
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error running operation."
+msgstr "Fel vid körning av apt-get"
+
+#: middleware.py:152
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error loading page."
+msgstr "Fel vid körning av apt-get"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -170,20 +196,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Identifiera tjänster"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Lokalt nätverksdomän"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Säkerhetskopior gör det möjligt att skapa och hantera säkerhetsarkiv."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Säkerhetskopiering"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -191,18 +229,18 @@ msgstr ""
 "Aktivera ett automatiskt reservschema för datasäkerhet. Föredra en krypterad "
 "plats för fjärrbackup eller en extra ansluten disk."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Aktivera ett schema för säkerhetskopiering"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Gå till {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -211,7 +249,7 @@ msgstr ""
 "En schemalagd säkerhetskopiering misslyckades. Tidigare {error_count} försök "
 "för säkerhetskopiering lyckades inte. Det senaste felet är: {error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Fel under säkerhetskopiering"
 
@@ -343,7 +381,7 @@ msgstr "Ogiltigt hostname: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "Ogiltig katalogsökväg: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Kryptering"
 
@@ -365,7 +403,7 @@ msgstr "Key i databasen"
 msgid "None"
 msgstr "Ingen"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Lösenfras"
 
@@ -429,7 +467,50 @@ msgstr "Fjärrbackup respository finns redan."
 msgid "Select verified SSH public key"
 msgstr "Välj verifierad Offentlig SSH-nyckel"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Återställa"
+
+#: modules/backups/manifest.py:15
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted"
+msgstr "Kryptering"
+
+#: modules/backups/manifest.py:16
+#, fuzzy
+#| msgid "Schedule"
+msgid "Schedules"
+msgstr "Schema"
+
+#: modules/backups/manifest.py:18
+#, fuzzy
+#| msgid "Remove"
+msgid "Remote"
+msgstr "Ta bort"
+
+#: modules/backups/manifest.py:19
+#, fuzzy
+#| msgid "App updated"
+msgid "App data"
+msgstr "App uppdaterad"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -437,36 +518,50 @@ msgstr ""
 "Anslutningen nekad-Kontrollera att du har angett rätt "
 "autentiseringsuppgifter och servern körs."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Anslutningen nekades"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Databasen hittades inte"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Felaktig krypteringslösenfras"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH-åtkomst nekad"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "Respositorysökvägen är varken tom eller en befintlig säkerhetskopia."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "An archive with given name already exists in the repository."
+msgstr "Det finns redan en share med det här namnet."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "Befintlig respository är inte krypterad."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} lagring"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Skapa en ny säkerhetskopia"
 
@@ -505,7 +600,6 @@ msgstr "Befintliga säkerhetskopior"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -559,39 +653,32 @@ msgstr "Tid"
 msgid "Delete Archive %(name)s"
 msgstr "Ta bort arkiv %(name)s"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Den här databasen är krypterad"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "Schema"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Avmontera plats"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Montera plats"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Ta bort säkerhetskopieringsplatsen. Fjärrsäkerhetskopieringen tas inte bort."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "Hämta"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Återställa"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "Det finns för närvarande inga arkiv."
 
@@ -683,101 +770,113 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Verifiera Host"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "Backup schema uppdaterat."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Schemalägg säkerhetskopior"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Arkiv skapat."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Ta bort Archiv"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Archiv borttagen."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Ladda upp och återställ en säkerhetskopia"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Återställda filer från säkerhetskopian."
+#: modules/backups/views.py:218
+#, fuzzy
+#| msgid "Logged out successfully."
+msgid "Upload successful."
+msgstr "Du har loggat ut framgångsrikt."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Ingen backup-fil hittades."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Återställ från uppladdad fil"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Återställda filer från säkerhetskopian."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr ""
 "Det finns inga ytterligare diskar tillgängliga för att lägga till ett "
 "repository."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Skapa backup repository"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+#, fuzzy
+#| msgid "Added new remote SSH repository."
+msgid "Added new repository."
+msgstr "Lade till ett nytt remote SSH-repository."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Skapa remote backup repository"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Lade till ett nytt remote SSH-repository."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "Verifiera SSH hostkey"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH host redan verifierat."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH host verifierade."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "SSH hosts offentliga nyckel kunde inte verifieras."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "Autentisering till remote servern misslyckades."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Fel vid upprättande av anslutning till servern: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Repository raderad."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Radera Repository"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repository tas bort.Säkerhetskopior raderades inte."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Avmontering misslyckas!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Avmontering misslyckades"
 
@@ -849,10 +948,6 @@ msgstr "Lista och läsa alla filer"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "Fil &amp; Snippet Sharing"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "Offentlig tillgång (standardbehörigheter)"
@@ -910,7 +1005,7 @@ msgid "No passwords currently configured."
 msgstr "Inga lösenord har för närvarande konfigurerats."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Lösenord"
@@ -1006,10 +1101,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "Domän Namn Server"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "Vidarebefordrare"
@@ -1020,6 +1111,21 @@ msgid ""
 msgstr ""
 "En lista med DNS-servrar, separerade med mellanslag, till vilka "
 "förfrågningar kommer att vidarebefordras"
+
+#: modules/bind/manifest.py:16
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNS"
+msgstr "Aktivera DNSSEC"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Server"
+
+#: modules/bind/manifest.py:18
+msgid "Resolver"
+msgstr ""
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1104,10 +1210,6 @@ msgstr "Använd calibre e-bokbibliotek"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "E-bok Bibliotek"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1246,9 +1348,42 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr "Server administrering"
+#: modules/cockpit/manifest.py:23
+#, fuzzy
+#| msgid "Administration"
+msgid "Advanced administration"
+msgstr "Administrering"
+
+#: modules/cockpit/manifest.py:24
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web terminal"
+msgstr "Sharing"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Lagring"
+
+#: modules/cockpit/manifest.py:26
+#, fuzzy
+#| msgid "Networks"
+msgid "Networking"
+msgstr "Nätverk"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Tjänster"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Prestanda"
 
 #: modules/config/__init__.py:18
 #, fuzzy
@@ -1337,6 +1472,20 @@ msgstr ""
 "Loggar innehåller information om vem som har åtkomst till systemet och "
 "felsökningsinformation från olika tjänster"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Hemsida"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+#, fuzzy
+#| msgid "Advanced"
+msgid "Advanced apps"
+msgstr "Avancerat"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1385,10 +1534,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "VoIP-hjälpare"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1447,6 +1592,18 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- ingen tidszon inställd --"
 
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network time"
+msgstr "Nätverksgränssnitt"
+
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timezone"
+msgstr "Tidszon"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1477,10 +1634,6 @@ msgstr "Ladda ner filer med BitTorrent-applikationer"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "BitTorrent Webbklient"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1608,6 +1761,18 @@ msgstr "Aktivera automatisk reparation"
 msgid "If issues are found, try to repair them automatically."
 msgstr "Om problem upptäcks, försök att reparera dem automatiskt."
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Reparera"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
 msgstr "Diagnostik körning"
@@ -1635,7 +1800,7 @@ msgstr "App:%(app_name)s"
 msgid "Try to repair"
 msgstr "Försök att reparera"
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Den här appen stöder inte diagnostik"
 
@@ -1664,11 +1829,11 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultat"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Diagnostiktest"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "App {app_id} är inte installerad, kan inte repareras"
@@ -1832,11 +1997,11 @@ msgid "Invalid domain name"
 msgstr "Ogiltigt domännamn"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Användarnamn"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Visa lösenord"
 
@@ -1852,8 +2017,26 @@ msgstr "Använda IPv6 i stället för IPv4"
 msgid "This field is required."
 msgstr "Detta fält krävs."
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Domän"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+#, fuzzy
+#| msgid "Server public key:"
+msgid "Needs public IP"
+msgstr "Serverns offentliga nyckel:"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1865,13 +2048,6 @@ msgstr "Detta fält krävs."
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Status"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Domän"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1943,10 +2119,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabbert"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "Chat-Server"
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2154,15 +2326,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "E-postserver"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "Mina E-postalias"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "Hantera alias för Brevlåda"
 
@@ -2318,7 +2486,7 @@ msgid ""
 "supported."
 msgstr ""
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "Visa och redigera wiki-applikationer"
@@ -2328,10 +2496,6 @@ msgstr "Visa och redigera wiki-applikationer"
 #| msgid "Create Wiki/Blog"
 msgid "Feather Wiki"
 msgstr "Skapa wiki eller blogg"
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
-msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
@@ -2365,8 +2529,7 @@ msgstr ""
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2573,6 +2736,21 @@ msgstr "Port {name} ({details}) tillgängligt för externa nätverk"
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Port {name} ({details}) är inte tillgängligt för externa nätverk"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Portar"
+
+#: modules/firewall/manifest.py:10
+#, fuzzy
+#| msgid "Blocked"
+msgid "Blocking"
+msgstr "Blockerade"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Automatisk"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Service/Port"
@@ -2666,51 +2844,51 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Firstboot Wizard hemlighet"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 #, fuzzy
 #| msgid "Setup Complete!"
 msgid "Setup Complete! Next Steps:"
 msgstr "Installation klar!"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Uppdatera nu"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2758,10 +2936,6 @@ msgstr "Läs-skrivåtkomst till Git-respositories"
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Enkelt Git hosting"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2886,9 +3060,10 @@ msgstr "Respository redigerad."
 msgid "Edit repository"
 msgstr "Redigera respository"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Dokumentation"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Hjälp"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2914,9 +3089,9 @@ msgstr "Skicka feedback"
 msgid "Contribute"
 msgstr "Bidrar"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "Om"
 
@@ -3016,10 +3191,6 @@ msgstr ""
 #| msgid "Learn more"
 msgid "Learn"
 msgstr "Läs mer"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Hemsida"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -3168,11 +3339,6 @@ msgstr ""
 #: modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
 msgstr "Tack så mycket!"
-
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Hjälp"
 
 #: modules/help/templates/help_index.html:18
 #, python-format
@@ -3325,10 +3491,6 @@ msgstr ""
 msgid "ikiwiki"
 msgstr "Ikiwiki"
 
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Wiki och Blogg"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Namn på administratörskontot"
@@ -3433,10 +3595,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "Infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby-Server"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3475,10 +3633,6 @@ msgstr "<a href=\"{coturn_url}\">Coturn</a> krävs för att använda Janus."
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr "Videorum"
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr "Janus videorum"
@@ -3494,7 +3648,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr "JavaScript-licensinformation"
 
@@ -3509,10 +3663,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "Chat klient"
 
 #: modules/jsxc/manifest.py:16
 #, fuzzy
@@ -3578,10 +3728,6 @@ msgstr "Hantera Kiwix innehållsserver"
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
 msgstr "Kiwix"
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
-msgstr "Offline Wikipedia"
 
 #: modules/kiwix/forms.py:23
 msgid "Content packages have to be in .zim format"
@@ -3712,9 +3858,19 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Låt oss kryptera"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Certifikaterna"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+#, fuzzy
+#| msgid "Website Security"
+msgid "Web security"
+msgstr "Säkerhet för webbsida"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3840,7 +3996,7 @@ msgstr ""
 "Matrix Synapse behöver en STUN/TURN-server för ljud-/videosamtal. Installera "
 "<a href=\"{coturn_url}\">Coturn</a>-appen eller konfigurera en extern server."
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3911,12 +4067,6 @@ msgstr "IRC chatrum"
 #| msgid "Media streaming server"
 msgid "Matrix server"
 msgstr "Media Streaming Server"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Konfiguration"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -4203,10 +4353,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Block sandbox"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "Maximalt antal spelare"
@@ -4290,10 +4436,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "Enkel mediaserver"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Media-filer katalog"
@@ -4367,10 +4509,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr ""
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "Läsare för nyhetsflödet"
 
 #: modules/miniflux/forms.py:12
 #, fuzzy
@@ -4539,10 +4677,6 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "Röstchatt"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "Ange SuperUser lösenord"
@@ -4591,11 +4725,6 @@ msgstr "Mumla"
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr ""
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Server"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4655,7 +4784,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Värdnamn"
 
@@ -4692,6 +4821,16 @@ msgstr ""
 "sluta med bindestreck. Varje ord får vara max 63 tecken. Total längd på "
 "domännamnet får max vara 253 tecken."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domäner"
+
+#: modules/names/manifest.py:13
+#, fuzzy
+#| msgid "Evolution"
+msgid "DNS Resolution"
+msgstr "Evolution"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4726,14 +4865,6 @@ msgstr "Få support"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr ""
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domäner"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Tjänster"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -5019,54 +5150,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "--Välj--"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "Synligt namn för nätverket."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Läge"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Infrastruktur"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Kopplingspunkt"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Ad-hoc-"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Frekvensbandet"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Automatisk"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2,4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Kanal"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5074,11 +5201,11 @@ msgstr ""
 "Valfritt värde. Trådlösa kanalen i det valda frekvensbandet för att begränsa "
 "till. Tomt eller 0 värde betyder automatiskt val."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5088,11 +5215,11 @@ msgstr ""
 "en åtkomstpunkt ska du endast ansluta om åtkomstpunktens BSSID matchar det "
 "som angetts. Exempel: 00:11:22: aa: bb: cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Autentiseringsläge"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -5100,20 +5227,20 @@ msgstr ""
 "Välj WPA om det trådlösa nätverket är säkert och kräver att användare har "
 "lösenord för att ansluta."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Öppet"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Ange hur ditt {box_name} är anslutet till ditt nätverk"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5124,7 +5251,7 @@ msgstr ""
 "Internetanslutning från routern via Wi-Fi- eller Ethernet-kabel. Detta är en "
 "typisk hem setup.</p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5137,7 +5264,7 @@ msgstr ""
 "{box_name} är direkt ansluten till Internet och alla dina enheter ansluter "
 "till {box_name} för sin Internetanslutning.</p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5148,11 +5275,11 @@ msgstr ""
 "är direkt ansluten till {box_name} och det finns inga andra enheter i "
 "nätverket. Detta kan inträffa på community- eller molninställningar.</p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "Välj din internetanslutningstyp"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5170,7 +5297,7 @@ msgstr ""
 "en offentlig IP-adress men är osäker på om den ändras med tiden eller inte, "
 "är det säkrare att välja det här alternativet.</p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5189,7 +5316,7 @@ msgstr ""
 "Internetleverantörer erbjuder detta. Du kan få denna service från din ISP "
 "genom att göra en extra betalning.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5208,7 +5335,7 @@ msgstr ""
 "besvärliga situationen för hosting tjänster hemma. {box_name} innehåller "
 "många lösningar men varje lösning har vissa begränsningar.</p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5217,11 +5344,11 @@ msgstr ""
 "<p class=\"help-block\">Du kommer att föreslås de mest konservativa "
 "åtgärderna.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Önskad routerkonfiguration"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5238,7 +5365,7 @@ msgstr ""
 "{box_name}-adressen. Kom först ihåg att konfigurera en statisk lokal IP-"
 "adress för din {box_name} i routerns konfiguration.</p>"
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5258,7 +5385,7 @@ msgstr ""
 "ansökningarna kommer att föreslå vilken eller vilka portar som behöver "
 "vidarebefordras för att ansökan ska fungera.</p>"
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5268,6 +5395,30 @@ msgstr ""
 "alternativet om du inte har konfigurerat eller inte kan konfigurera routern "
 "för tillfället och vill bli påmind senare. Vissa andra konfigurationssteg "
 "kan misslyckas.</p>"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "Internet"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Lokalt nätverksdomän"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5289,7 +5440,7 @@ msgstr "Redigera anslutning"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Redigera"
 
@@ -5488,10 +5639,6 @@ msgstr "Ta Bort Anslutning"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "Ta bort anslutning <strong> %(name)s </strong> permanent?"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "Internet"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -5502,13 +5649,6 @@ msgstr "Avstånd"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -6096,10 +6236,6 @@ msgstr "Denna app är experimentell."
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr "Fillagring &amp; samarbete"
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "Inte inställt"
@@ -6189,11 +6325,7 @@ msgstr "Ansluta till VPN-tjänster"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "Virtuellt privat nätverk"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -6210,7 +6342,8 @@ msgstr "Tunnelblick"
 msgid "VPN server"
 msgstr "DNS-Server"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 #, fuzzy
 #| msgid "Name Services"
 msgid "Remote access"
@@ -6306,11 +6439,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "Offentlig Synlighet"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite domän"
 
@@ -6390,6 +6519,16 @@ msgstr "Lade till anpassad service"
 msgid "This service already exists"
 msgstr "Den här tjänsten finns redan"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+#, fuzzy
+#| msgid "Tunnelblick"
+msgid "Tunneling"
+msgstr "Tunnelblick"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "Anpassade tjänster"
@@ -6462,10 +6601,6 @@ msgstr ""
 "Se SSH-klientinstallation <a href =\"https://pagekite.net/wiki/Howto/"
 "SshoverPageKite/\">instruktioner</a>"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr "Prestanda"
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -6485,9 +6620,15 @@ msgstr ""
 "Prestandamätvärden samlas in av Performance Co-Pilot och kan visas med "
 "Cockpit-appen."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
+#: modules/performance/manifest.py:18
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "Monitoring"
 msgstr "Systemövervakning"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6497,8 +6638,18 @@ msgstr "Starta om eller stänga av systemet."
 msgid "Power"
 msgstr "Ström"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shutdown"
+msgstr "Stänga ner"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Starta om"
 
@@ -6588,6 +6739,16 @@ msgid ""
 "and reliable."
 msgstr ""
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+#, fuzzy
+#| msgid "DNS Server"
+msgid "Fallback DNS"
+msgstr "DNS-Server"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -6618,10 +6779,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Webbproxy"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -6637,12 +6794,6 @@ msgstr ""
 #| msgid "Gobby Server"
 msgid "Proxy server"
 msgstr "Gobby-Server"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-#, fuzzy
-#| msgid "Local Network Domain"
-msgid "Local network"
-msgstr "Lokalt nätverksdomän"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6676,10 +6827,6 @@ msgstr ""
 #: modules/quassel/__init__.py:51 modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
-
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC-klient"
 
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
@@ -6722,10 +6869,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Kalender och adressbok"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6860,10 +7003,6 @@ msgstr ""
 "security/lesssecureapps\" >https://www.Google.com/settings/Security/"
 "lesssecureapps</a>)."
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "E-postklient"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr "Använd endast den lokala e-postservern"
@@ -6927,10 +7066,6 @@ msgstr "Läsa och prenumerera på nyhetsflöden"
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "RSS Feed Generator"
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -6998,10 +7133,6 @@ msgstr "Tillgång till privata delningar"
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr "Samba"
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "Nätverk För Fillagring"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -7161,10 +7292,6 @@ msgstr "Sök på webben"
 msgid "Searx"
 msgstr "Searx"
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Webbsökning"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "Säker sökning"
@@ -7204,6 +7331,18 @@ msgstr ""
 "När detta alternativ är aktiverat, Fail2Ban kommer att begränsa Brute Force "
 "inbrott försök till SSH-servern och andra aktiverade lösenordsskyddade "
 "Internet-tjänster."
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Automatic"
+msgid "Automatic bans"
+msgstr "Automatisk"
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Ports"
+msgid "Reports"
+msgstr "Portar"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7336,13 +7475,13 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "Bokmärken"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarli"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "Bokmärken"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -7399,10 +7538,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks klient"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr "Förbigå censur"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Serverns värdnamn eller IP-adress"
@@ -7449,13 +7584,9 @@ msgstr ""
 "klienter att ansluta till den. Klienters data kommer att krypteras och "
 "skickas via proxy via denna server."
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks Server"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr "Hjälp andra att kringgå censur"
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -7702,6 +7833,18 @@ msgstr ""
 "Behåll maximalt så här många årsögonblicksbilder. Standardvärdet är 0 "
 "(behåll ingen årsögonblicksbild)."
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "Vill du ta bort följande ögonblicksbilder permanent?"
@@ -7836,7 +7979,9 @@ msgstr ""
 "anslutningar."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
+#, fuzzy
+#| msgid "Secure Shell (SSH) Server"
+msgid "Secure Shell Server"
 msgstr "Secure Shell-Server (SSH)"
 
 #: modules/ssh/__init__.py:75
@@ -7871,6 +8016,24 @@ msgstr ""
 "SSH. När det är inaktiverat kan endast användare i grupperna root, admin och "
 "freedombox-ssh logga in via SSH."
 
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "SSH"
+msgid "SSH"
+msgstr "SSH"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Remote terminal"
+msgstr "Ta bort plats"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Fingerprint"
+msgid "Fingerprints"
+msgstr "Fingeravtryck"
+
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
 msgstr "Server fingeravtryck"
@@ -7903,7 +8066,7 @@ msgstr "Skriv in bokstäverna i bilden för att gå vidare till inloggningssidan
 msgid "Proceed to Login"
 msgstr "Fortsätt till inloggning"
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Logga in"
 
@@ -7921,11 +8084,6 @@ msgstr ""
 "Med den här modulen kan du hantera lagringsmedier som är anslutna till "
 "{box_name}. Du kan visa lagringsmedia som för närvarande används, montera "
 "och demontera flyttbara media, expandera rotpartitionen etc."
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "Lagring"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -8086,6 +8244,26 @@ msgstr "Share"
 msgid "Other directory (specify below)"
 msgstr "Annan katalog (specificera nedan)"
 
+#: modules/storage/manifest.py:9
+msgid "Disks"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Automatic"
+msgid "Auto-mount"
+msgstr "Automatisk"
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Expand Root Partition"
+msgid "Expand partition"
+msgstr "Utöka root-partitionen"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "Följande lagringsenheter används:"
@@ -8202,10 +8380,6 @@ msgstr "Administrera Syncthing-program"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Filsynkronisering"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -8240,10 +8414,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr ""
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr ""
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
@@ -8274,7 +8444,7 @@ msgid ""
 "TiddlyWiki before deleting it."
 msgstr ""
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -8288,7 +8458,7 @@ msgstr ""
 "använder <a href=\"https://www.torproject.org/download/download-easy.html."
 "en\">TOR Browser</a>."
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
@@ -8296,7 +8466,7 @@ msgstr ""
 "Denna app tillhandahåller relätjänster för att bidra till Tor-nätverket och "
 "hjälpa andra att övervinna censur."
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -8308,14 +8478,10 @@ msgstr ""
 "internet även när man använder en internetleverantör som begränsar servrar "
 "hemma."
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Anonymitetsnätverk"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -8325,19 +8491,19 @@ msgstr "Tor Onion service"
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor relä port tillgänglig"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport registrerad"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registrerad"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion tjänst är version 3"
 
@@ -8454,10 +8620,6 @@ msgstr "Anonymitetsnätverk"
 msgid "Onion Service"
 msgstr "Onion tjänst"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Portar"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Uppdatera konfigurationen"
@@ -8467,7 +8629,7 @@ msgstr "Uppdatera konfigurationen"
 msgid "Error configuring app: {error}"
 msgstr "Fel vid konfigurering av appen: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -8480,7 +8642,7 @@ msgstr ""
 "appar för att komma åt internet via Tor-nätverket. ISP-censur kan kringgås "
 "med hjälp av uppströms broar."
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Tor Proxy"
 
@@ -8488,12 +8650,12 @@ msgstr "Tor Proxy"
 msgid "Tor Socks Proxy"
 msgstr "Tor SOCKS-proxy"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Tillgång URL {url} på TCP {kind} via Tor"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bekräfta Tor-användning vid {url} på TCP {kind}"
@@ -8721,6 +8883,16 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Aktivera frekventa uppdateringar (rekommenderas)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+#, fuzzy
+#| msgid "New value"
+msgid "New features"
+msgstr "Nytt värde"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9028,6 +9200,18 @@ msgstr ""
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Användarkonto skapat, du är nu inloggad"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Manage Snapshots"
+msgid "Manage accounts"
+msgstr "Hantera ögonblicksbilder"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "App permissions"
+msgstr "Behörigheter"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9559,10 +9743,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "Webbplats och blogg"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "Publik tillgång"
@@ -9615,10 +9795,6 @@ msgstr ""
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Foto Organizer"
 
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -9854,6 +10030,12 @@ msgstr "Tjänsten <em> %(service_name)s </em> körs inte."
 msgid "Search with tags"
 msgstr "Sök på webben"
 
+#: templates/apps.html:42
+#, fuzzy
+#| msgid "Search the web"
+msgid "Clear all tags"
+msgstr "Sök på webben"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9863,43 +10045,35 @@ msgstr ""
 "Det är gratis programvara som låter dig enkelt installera och hantera "
 "serverappar."
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Hem"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Hem"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Appar"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Appar"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " System"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "Ändra lösenord"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Stänga ner"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Logga ut"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Välj språk"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Logga in"
 
@@ -10121,11 +10295,15 @@ msgstr ""
 "All appdata och konfiguration kommer att gå förlorad permanent. Appen kan "
 "installeras på nytt igen."
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "innan du avinstallerar {app_id}"
@@ -10133,6 +10311,111 @@ msgstr "innan du avinstallerar {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "Fil &amp; Snippet Sharing"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "Domän Namn Server"
+
+#~ msgid "E-book Library"
+#~ msgstr "E-bok Bibliotek"
+
+#~ msgid "Server Administration"
+#~ msgstr "Server administrering"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "VoIP-hjälpare"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "BitTorrent Webbklient"
+
+#~ msgid "Chat Server"
+#~ msgstr "Chat-Server"
+
+#~ msgid "Email Server"
+#~ msgstr "E-postserver"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Enkelt Git hosting"
+
+#~ msgid "Documentation"
+#~ msgstr "Dokumentation"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Wiki och Blogg"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby-Server"
+
+#~ msgid "Video Room"
+#~ msgstr "Videorum"
+
+#~ msgid "Chat Client"
+#~ msgstr "Chat klient"
+
+#~ msgid "Offline Wikipedia"
+#~ msgstr "Offline Wikipedia"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Block sandbox"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "Enkel mediaserver"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "Läsare för nyhetsflödet"
+
+#~ msgid "Voice Chat"
+#~ msgstr "Röstchatt"
+
+#~ msgid "File Storage & Collaboration"
+#~ msgstr "Fillagring &amp; samarbete"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "Virtuellt privat nätverk"
+
+#~ msgid "Public Visibility"
+#~ msgstr "Offentlig Synlighet"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Webbproxy"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC-klient"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Kalender och adressbok"
+
+#~ msgid "Email Client"
+#~ msgstr "E-postklient"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "RSS Feed Generator"
+
+#~ msgid "Network File Storage"
+#~ msgstr "Nätverk För Fillagring"
+
+#~ msgid "Web Search"
+#~ msgstr "Webbsökning"
+
+#~ msgid "Bypass Censorship"
+#~ msgstr "Förbigå censur"
+
+#~ msgid "Help Others Bypass Censorship"
+#~ msgstr "Hjälp andra att kringgå censur"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Filsynkronisering"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "Anonymitetsnätverk"
+
+#~ msgid "Website and Blog"
+#~ msgstr "Webbplats och blogg"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Foto Organizer"
 
 #, python-format
 #~ msgid ""
@@ -10509,9 +10792,6 @@ msgstr "Gujarati"
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "SSH-autentisering med lösenord aktiverat."
 
-#~ msgid "Error running apt-get"
-#~ msgstr "Fel vid körning av apt-get"
-
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
 #~ msgstr "Kärnfunktioner och webbgränssnitt för %(box_name)s"
@@ -10696,9 +10976,6 @@ msgstr "Gujarati"
 
 #~ msgid "Service Alert"
 #~ msgstr "Servicevarning"
-
-#~ msgid "Repair"
-#~ msgstr "Reparera"
 
 #, python-brace-format
 #~ msgid "Internal error in {0}"
@@ -10980,9 +11257,6 @@ msgstr "Gujarati"
 #~ msgid "Connected introducers"
 #~ msgstr "Anslutna introducerare"
 
-#~ msgid "Remove"
-#~ msgstr "Ta bort"
-
 #~ msgid "Postfix domain name config"
 #~ msgstr "Konfiguration av Postfix domännamn"
 
@@ -11006,9 +11280,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete selected"
 #~ msgstr "Tabort valda"
-
-#~ msgid "New value"
-#~ msgstr "Nytt värde"
 
 #~ msgid "There was a problem with your request. Please try again."
 #~ msgstr "Ett problem uppstod med din begäran. Var god försök igen."
@@ -11588,9 +11859,6 @@ msgstr "Gujarati"
 
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
-
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
 
 #~ msgid "Not Available"
 #~ msgstr "Inte tillgänglig"

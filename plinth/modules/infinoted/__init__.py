@@ -39,7 +39,6 @@ class InfinotedApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('infinoted'), icon_filename='infinoted',
-                               short_description=_('Gobby Server'),
                                description=_description,
                                manual_page='Infinoted',
                                clients=manifest.clients, tags=manifest.tags)

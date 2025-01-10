@@ -22,14 +22,21 @@
  * in this page.
  */
 
-jQuery(function($) {
-    $('#id_enable_managed_turn').change(function() {
-        if($(this).prop('checked')) {
-            $('#id_turn_uris').closest('.form-group').hide();
-            $('#id_shared_secret').closest('.form-group').hide();
+document.addEventListener('DOMContentLoaded', () => {
+    const enableManagedTurn = document.getElementById('id_enable_managed_turn');
+    const turnUrisGroup = document.getElementById('id_turn_uris').closest('.form-group');
+    const sharedSecretGroup = document.getElementById('id_shared_secret').closest('.form-group');
+
+    function toggleVisibility() {
+        if (enableManagedTurn.checked) {
+            turnUrisGroup.style.display = 'none';
+            sharedSecretGroup.style.display = 'none';
         } else {
-            $('#id_turn_uris').closest('.form-group').show();
-            $('#id_shared_secret').closest('.form-group').show();
+            turnUrisGroup.style.display = '';
+            sharedSecretGroup.style.display = '';
         }
-    }).change();
+    }
+
+    enableManagedTurn.addEventListener('change', toggleVisibility);
+    toggleVisibility();
 });

@@ -13,7 +13,7 @@ from plinth.diagnostic_check import DiagnosticCheck
 from plinth.modules.firewall.components import Firewall
 from plinth.package import Packages
 
-from . import privileged
+from . import manifest, privileged
 
 _description = [
     _('Configure network devices. Connect to the Internet via Ethernet, Wi-Fi '
@@ -41,7 +41,7 @@ class NetworksApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Networks'),
                                icon='fa-signal', description=_description,
-                               manual_page='Networks')
+                               manual_page='Networks', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-networks', info.name, None, info.icon,

@@ -6,8 +6,8 @@ import logging
 import os
 import pathlib
 import re
+import subprocess
 
-import paramiko
 from django.utils.text import get_valid_filename
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
@@ -16,7 +16,7 @@ from plinth import app as app_module
 from plinth import cfg, glib, menu
 from plinth.package import Packages
 
-from . import api, privileged
+from . import api, manifest, privileged
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,8 @@ class BackupsApp(app_module.App):
             app_id=self.app_id, version=self._version, is_essential=True,
             depends=['storage'], name=_('Backups'), icon='fa-files-o',
             description=_description, manual_page='Backups',
-            donation_url='https://www.borgbackup.org/support/fund.html')
+            donation_url='https://www.borgbackup.org/support/fund.html',
+            tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-backups', info.name, None, info.icon,
@@ -51,7 +52,8 @@ class BackupsApp(app_module.App):
                               order=20)
         self.add(menu_item)
 
-        packages = Packages('packages-backups', ['borgbackup', 'sshfs'])
+        packages = Packages('packages-backups',
+                            ['borgbackup', 'sshfs', 'sshpass'])
         self.add(packages)
 
     @staticmethod
@@ -143,9 +145,13 @@ def is_ssh_hostkey_verified(hostname):
     if not known_hosts_path.exists():
         return False
 
-    known_hosts = paramiko.hostkeys.HostKeys(str(known_hosts_path))
-    host_keys = known_hosts.lookup(hostname)
-    return host_keys is not None
+    try:
+        subprocess.run(
+            ['ssh-keygen', '-F', hostname, '-f',
+             str(known_hosts_path)], check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
 
 
 def split_path(path):

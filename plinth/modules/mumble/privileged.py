@@ -11,7 +11,8 @@ import augeas
 from plinth import action_utils
 from plinth.actions import privileged, secret_str
 
-CONFIG_FILE = '/etc/mumble-server.ini'
+CONFIG_FILE = '/etc/mumble/mumble-server.ini'
+OLD_CONFIG_FILE = '/etc/mumble-server.ini'
 DATA_DIR = '/var/lib/mumble-server'
 
 
@@ -22,6 +23,15 @@ def setup():
     aug.set('.anon/sslCert', DATA_DIR + '/fullchain.pem')
     aug.set('.anon/sslKey', DATA_DIR + '/privkey.pem')
     aug.save()
+
+
+@privileged
+def check_setup() -> bool:
+    """Check that setup configuration is retained."""
+    aug = _load_augeas()
+    ssl_cert_matches = aug.get('.anon/sslCert') == DATA_DIR + '/fullchain.pem'
+    ssl_key_matches = aug.get('.anon/sslKey') == DATA_DIR + '/privkey.pem'
+    return ssl_cert_matches and ssl_key_matches
 
 
 @privileged
@@ -79,8 +89,10 @@ def _load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.transform('Php', CONFIG_FILE)
-    aug.set('/augeas/context', '/files' + CONFIG_FILE)
+    config_file = CONFIG_FILE if pathlib.Path(CONFIG_FILE).exists() \
+        else OLD_CONFIG_FILE
+    aug.transform('Php', config_file)
+    aug.set('/augeas/context', '/files' + config_file)
     aug.load()
 
     return aug

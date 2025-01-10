@@ -45,7 +45,6 @@ _description = [
           'and legal reviews are done by the upstream project and not by '
           'Debian/{box_name}. Updates are performed following an independent '
           'cycle.'), box_name=_(cfg.box_name)),
-    format_lazy(_alert, _('Caution:'), _('This app is experimental.')),
 ]
 
 
@@ -62,12 +61,11 @@ class NextcloudApp(app_module.App):
         """Create components for the app."""
         super().__init__()
 
-        info = app_module.Info(
-            app_id=self.app_id, version=self._version, name=_('Nextcloud'),
-            icon_filename='nextcloud',
-            short_description=_('File Storage & Collaboration'),
-            description=_description, manual_page='Nextcloud',
-            clients=manifest.clients, tags=manifest.tags)
+        info = app_module.Info(app_id=self.app_id, version=self._version,
+                               name=_('Nextcloud'), icon_filename='nextcloud',
+                               description=_description,
+                               manual_page='Nextcloud',
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-nextcloud', info.name,

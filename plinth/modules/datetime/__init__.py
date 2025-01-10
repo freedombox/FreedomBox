@@ -67,7 +67,7 @@ class DateTimeApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Date & Time'),
                                icon='fa-clock-o', description=_description,
-                               manual_page='DateTime')
+                               manual_page='DateTime', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-datetime', info.name, None, info.icon,

@@ -195,11 +195,15 @@ class ConnectionForm(forms.Form):
             'name': self.cleaned_data['name'],
             'interface': self.cleaned_data['interface'],
             'zone': self.cleaned_data['zone'],
-            'dns_over_tls': self.cleaned_data['dns_over_tls'],
         }
+        settings['common'] |= self.get_privacy_settings()
         settings['ipv4'] = self.get_ipv4_settings()
         settings['ipv6'] = self.get_ipv6_settings()
         return settings
+
+    def get_privacy_settings(self) -> dict[str, object]:
+        """Return privacy dict from cleaned data."""
+        return {'dns_over_tls': self.cleaned_data['dns_over_tls']}
 
     def get_ipv4_settings(self):
         """Return IPv4 dict from cleaned data."""
@@ -289,6 +293,10 @@ class PPPoEForm(EthernetForm):
             'password': self.cleaned_data['password'],
         }
         return settings
+
+    def get_privacy_settings(self) -> dict[str, object]:
+        """Return privacy dict from cleaned data."""
+        return {}
 
     def get_ipv4_settings(self):
         """Return IPv4 settings from cleaned data."""

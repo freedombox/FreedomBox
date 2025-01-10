@@ -17,6 +17,7 @@ from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
+from plinth.privileged import service as service_privileged
 from plinth.utils import format_lazy
 
 from . import manifest, privileged
@@ -46,7 +47,7 @@ class TorProxyApp(app_module.App):
 
     app_id = 'torproxy'
 
-    _version = 1
+    _version = 2
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -54,7 +55,6 @@ class TorProxyApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tor Proxy'), icon_filename='torproxy',
-                               short_description=_('Anonymity Network'),
                                description=_description,
                                manual_page='TorProxy',
                                clients=manifest.clients, tags=manifest.tags,
@@ -96,10 +96,16 @@ class TorProxyApp(app_module.App):
                                        **manifest.backup)
         self.add(backup_restore)
 
+    def enable(self):
+        """Enable app."""
+        service_privileged.unmask('tor@fbxproxy')
+        super().enable()
+
     def disable(self):
         """Disable APT use of Tor before disabling."""
         privileged.configure(apt_transport_tor=False)
         super().disable()
+        service_privileged.mask('tor@fbxproxy')
 
     def diagnose(self) -> list[DiagnosticCheck]:
         """Run diagnostics and return the results."""
@@ -113,7 +119,7 @@ class TorProxyApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
-        privileged.setup(old_version)
+        privileged.setup()
         if not old_version:
             logger.info('Enabling apt-transport-tor')
             config = kvstore.get_default(PREINSTALL_CONFIG_KEY, '{}')
@@ -127,6 +133,12 @@ class TorProxyApp(app_module.App):
             logger.info('Enabling Tor Proxy app')
             self.enable()
             kvstore.delete(PREINSTALL_CONFIG_KEY, ignore_missing=True)
+
+        # Version 2 masks the tor@fbproxy service when disabling the app to
+        # prevent the service starting by the Tor master service after system
+        # reboot.
+        if old_version and old_version < 2 and not self.is_enabled():
+            self.disable()
 
     def uninstall(self):
         """De-configure and uninstall the app."""

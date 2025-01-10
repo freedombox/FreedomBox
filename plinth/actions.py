@@ -383,7 +383,14 @@ def _privileged_call(module_name, action_name, arguments):
     if not getattr(action, '_privileged', None):
         raise SyntaxError('Specified action is not privileged action')
 
-    func = getattr(action, '__wrapped__')
+    # Get the original function that may have been wrapped/decorated multiple
+    # times
+    func = action
+    while True:
+        try:
+            func = getattr(func, '__wrapped__')
+        except AttributeError:
+            break
 
     _privileged_assert_valid_arguments(func, arguments)
 

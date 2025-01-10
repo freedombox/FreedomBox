@@ -58,10 +58,8 @@ class DelugeApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, name=_('Deluge'),
-            icon_filename='deluge',
-            short_description=_('BitTorrent Web Client'),
-            description=_description, manual_page='Deluge',
-            clients=manifest.clients,
+            icon_filename='deluge', description=_description,
+            manual_page='Deluge', clients=manifest.clients,
             donation_url='https://www.patreon.com/deluge_cas',
             tags=manifest.tags)
         self.add(info)

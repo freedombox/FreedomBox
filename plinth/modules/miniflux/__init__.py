@@ -41,7 +41,6 @@ class MinifluxApp(app_module.App):
 
         info = app_module.Info(self.app_id, self._version, name=_('Miniflux'),
                                icon_filename='miniflux',
-                               short_description=_('News Feed Reader'),
                                description=_description,
                                manual_page='miniflux',
                                clients=manifest.clients, tags=manifest.tags,

@@ -3,12 +3,12 @@
 Test module for Kiwix views.
 """
 
-from unittest.mock import call, patch, MagicMock
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 from django import urls
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http.response import Http404
 
 from plinth import module_loader
@@ -94,7 +94,8 @@ def test_add_package_failed(add_package, add_package_request):
                                       views.AddPackageView.as_view())
     assert response.status_code == 302
     assert response.url == urls.reverse('kiwix:index')
-    assert list(messages)[0].message == 'Failed to add content package.'
+    assert list(messages)[0].message.startswith(
+        'Failed to add content package.')
 
 
 @patch('plinth.app.App.get')

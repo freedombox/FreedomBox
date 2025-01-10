@@ -44,7 +44,6 @@ class OpenVPNApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('OpenVPN'), icon_filename='openvpn',
-                               short_description=_('Virtual Private Network'),
                                description=_description, manual_page='OpenVPN',
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)

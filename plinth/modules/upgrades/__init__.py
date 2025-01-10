@@ -63,7 +63,7 @@ class UpgradesApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Software Update'),
                                icon='fa-refresh', description=_description,
-                               manual_page='Upgrades')
+                               manual_page='Upgrades', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-upgrades', info.name, None, info.icon,

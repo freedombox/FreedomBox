@@ -57,7 +57,6 @@ class SyncthingApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Syncthing'), icon_filename='syncthing',
-                               short_description=_('File Synchronization'),
                                description=_description,
                                manual_page='Syncthing',
                                clients=manifest.clients,

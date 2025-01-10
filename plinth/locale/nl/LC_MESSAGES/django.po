@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
 "PO-Revision-Date: 2024-09-21 01:05+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/freedombox/"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "Statische configuratie {etc_path} is correct ingesteld"
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -104,30 +104,56 @@ msgstr "Te gebruiken taal voor de weergave van deze webinterface"
 msgid "Use the language preference set in the browser"
 msgstr "Gebruik de taalvoorkeuren die zijn ingesteld in de browser"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "Zichtbaarheid"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Startpagina"
 
-#: menu.py:108
-msgid "Data"
-msgstr "Data"
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Toepassingen"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "Systeem"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "Zichtbaarheid"
+
+#: menu.py:120
+msgid "Data"
+msgstr "Data"
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Security"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "Beheer"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr "Systeem is mogelijk zwaar belast. Probeer het later nog eens."
+
+#: middleware.py:147
+#, fuzzy, python-brace-format
+#| msgid "Page not found - %(box_name)s"
+msgid "Page not found: {url}"
+msgstr "Pagina niet gevonden - %(box_name)s"
+
+#: middleware.py:150
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error running operation."
+msgstr "Fout bij het uitvoeren van apt-get"
+
+#: middleware.py:152
+#, fuzzy
+#| msgid "Error running apt-get"
+msgid "Error loading page."
+msgstr "Fout bij het uitvoeren van apt-get"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -173,20 +199,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Service Discovery"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Lokaal netwerkdomein"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Met back-ups kun je back-uparchieven maken en beheren."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Back-ups"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -195,18 +233,18 @@ msgstr ""
 "verhogen. Gebruik bij voorkeur een versleutelde externe back-uplocatie of "
 "een extra aangesloten schijf."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Een back-upschema inschakelen"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Ga naar {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -215,7 +253,7 @@ msgstr ""
 "Een geplande back-up is mislukt. De vorige {error_count} back-up pogingen "
 "zijn ook niet gelukt. De laatste fout was: {error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Fout tijdens back-up"
 
@@ -347,7 +385,7 @@ msgstr "Ongeldige hostnaam: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "Ongeldig pad: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Encryptie"
 
@@ -369,7 +407,7 @@ msgstr "Sleutel in archief"
 msgid "None"
 msgstr "Geen"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Wachtwoordzin"
 
@@ -433,7 +471,50 @@ msgstr "Externe backup repository bestaat al."
 msgid "Select verified SSH public key"
 msgstr "Selecteer geverifieerde SSH openbare sleutel"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Herstellen"
+
+#: modules/backups/manifest.py:15
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted"
+msgstr "Encryptie"
+
+#: modules/backups/manifest.py:16
+#, fuzzy
+#| msgid "Schedule"
+msgid "Schedules"
+msgstr "Schema"
+
+#: modules/backups/manifest.py:18
+#, fuzzy
+#| msgid "Remove"
+msgid "Remote"
+msgstr "Verwijderen"
+
+#: modules/backups/manifest.py:19
+#, fuzzy
+#| msgid "App updated"
+msgid "App data"
+msgstr "Toepassing bijgewerkt"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Configuratie"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -441,36 +522,50 @@ msgstr ""
 "Verbinding geweigerd - zorg ervoor dat de juiste inloggegevens zijn "
 "opgegeven en dat de server actief is."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Verbinding geweigerd"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Repository niet gevonden"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Onjuiste wachtwoordzin voor versleuteling"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH toegang geweigerd"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "Het opslag pad is niet leeg, en ook geen lege bestaande backup opslag."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "An archive with given name already exists in the repository."
+msgstr "Er bestaat al een gedeelde map met deze naam."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "Bestaande repository is niet versleuteld."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} opslag"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Maak een nieuwe back-up"
 
@@ -509,7 +604,6 @@ msgstr "Bestaande back-ups"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -562,40 +656,33 @@ msgstr "Tijd"
 msgid "Delete Archive %(name)s"
 msgstr "Archief %(name)s verwijderen"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Deze repository is versleuteld"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "Schema"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Locatie loskoppelen"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Locatie koppelen"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Verwijder de back-uplocatie. Hierdoor wordt de externe back-up niet "
 "verwijderd."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "Downloaden"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Herstellen"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "Er bestaan momenteel geen archiefbestanden."
 
@@ -689,100 +776,112 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Host verifiëren"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "Back-upschema bijgewerkt."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Back-ups plannen"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Archief aangemaakt."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Archief verwijderen"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Archief verwijderd."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Een back-up uploaden en herstellen"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Herstelde bestanden van de back-up."
+#: modules/backups/views.py:218
+#, fuzzy
+#| msgid "Logged out successfully."
+msgid "Upload successful."
+msgstr "Succesvol uitgelogd."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Er is geen back-upbestand gevonden."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Herstellen vanuit geüpload bestand"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Herstelde bestanden van de back-up."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr ""
 "Er zijn geen extra schijven beschikbaar om een opslagplaats toe te voegen."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Maak een back-up repository"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+#, fuzzy
+#| msgid "Added new remote SSH repository."
+msgid "Added new repository."
+msgstr "Nieuwe externe SSH-repository toegevoegd."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Maak een back-up repository"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Nieuwe externe SSH-repository toegevoegd."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "SSH-hostkey verifiëren"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH-host is al geverifieerd."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH-host geverifieerd."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "De openbare sleutel van de SSH-host kan niet worden geverifieerd."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "Authenticatie naar externe server is mislukt."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Fout bij het tot stand brengen van een verbinding met de server: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Repository verwijderd."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Verwijder Repository"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Repository verwijderd. Back-ups zijn niet verwijderd."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Ontkoppelen is mislukt!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Aankoppelen is mislukt"
 
@@ -855,10 +954,6 @@ msgstr "Alle bestanden aanbieden om te lezen"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "Delen van bestanden en fragmenten"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "Openbare toegang (standaardmachtigingen)"
@@ -914,7 +1009,7 @@ msgid "No passwords currently configured."
 msgstr "Er zijn momenteel geen wachwoorden ingesteld."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Wachtwoord"
@@ -1010,10 +1105,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "Domeinnaam Server"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "Forwarders"
@@ -1024,6 +1115,21 @@ msgid ""
 msgstr ""
 "Een lijst met DNS-servers, gescheiden door een spatie, waarnaar verzoeken "
 "worden doorgestuurd"
+
+#: modules/bind/manifest.py:16
+#, fuzzy
+#| msgid "DNSSEC"
+msgid "DNS"
+msgstr "DNSSEC"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Server"
+
+#: modules/bind/manifest.py:18
+msgid "Resolver"
+msgstr ""
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1110,10 +1216,6 @@ msgstr "Gebruik calibre e-book bibliotheken"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "E-boek bibliotheek"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1252,9 +1354,42 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr "Serverbeheer"
+#: modules/cockpit/manifest.py:23
+#, fuzzy
+#| msgid "Administration"
+msgid "Advanced administration"
+msgstr "Beheer"
+
+#: modules/cockpit/manifest.py:24
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web terminal"
+msgstr "Delen"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Storage"
+
+#: modules/cockpit/manifest.py:26
+#, fuzzy
+#| msgid "Networks"
+msgid "Networking"
+msgstr "Netwerken"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Diensten"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Prestaties"
 
 #: modules/config/__init__.py:18
 #, fuzzy
@@ -1344,6 +1479,20 @@ msgstr ""
 "Logboeken bevatten informatie over wie toegang heeft gehad tot het systeem "
 "en foutopsporingsinformatie van verschillende services"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Startpagina"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+#, fuzzy
+#| msgid "Advanced"
+msgid "Advanced apps"
+msgstr "Gevorderd"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1394,10 +1543,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "VoIP helper"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1455,6 +1600,18 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- geen tijdzone ingesteld --"
 
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network time"
+msgstr "Netwerkinterface"
+
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timezone"
+msgstr "Tijdzone"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1483,10 +1640,6 @@ msgstr "Download bestanden met BitTorrent toepassingen"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "BitTorrent-webclient"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1617,6 +1770,18 @@ msgstr "Automatisch repareren inschakelen"
 msgid "If issues are found, try to repair them automatically."
 msgstr "Als er problemen zijn, probeer ze dan automatisch te repareren."
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Herstellen"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
 msgstr "Diagnose uitvoeren"
@@ -1644,7 +1809,7 @@ msgstr "Toepassing: %(app_name)s"
 msgid "Try to repair"
 msgstr "Probeer te herstellen"
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Deze toepassing heeft geen diagnosetests"
 
@@ -1673,11 +1838,11 @@ msgstr "Test"
 msgid "Result"
 msgstr "Resultaat"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Diagnostische test"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr "Toepassing {app_id} is niet geïnstalleerd, kan niet herstellen"
@@ -1845,11 +2010,11 @@ msgid "Invalid domain name"
 msgstr "Foutieve domeinnaam"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Toon wachtwoord"
 
@@ -1865,8 +2030,26 @@ msgstr "Gebruik IPv6 in plaats van IPv4"
 msgid "This field is required."
 msgstr "Dit veld is vereist."
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Domein"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+#, fuzzy
+#| msgid "Server public key:"
+msgid "Needs public IP"
+msgstr "Openbare sleutel van de server:"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1878,13 +2061,6 @@ msgstr "Dit veld is vereist."
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Status"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Domein"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1957,10 +2133,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "Chatserver"
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2168,15 +2340,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "E-mailserver"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "Mijn e-mail aliassen"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "Aliassen voor postvak beheren"
 
@@ -2338,7 +2506,7 @@ msgid ""
 "supported."
 msgstr ""
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "Bekijken en bewerken van wiki toepassingen"
@@ -2346,10 +2514,6 @@ msgstr "Bekijken en bewerken van wiki toepassingen"
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
 msgstr "Feather Wiki"
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
-msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
 msgid "Name of the wiki file, with file extension \".html\""
@@ -2383,8 +2547,7 @@ msgstr ""
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2562,6 +2725,21 @@ msgstr "Poort {name} ({details})is beschikbaar voor externe netwerken"
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "Poort {name} ({details}) is niet beschikbaar voor externe netwerken"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Poorten"
+
+#: modules/firewall/manifest.py:10
+#, fuzzy
+#| msgid "Blocked"
+msgid "Blocking"
+msgstr "Geblokkeerd"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Automatisch"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Dienst/Poort"
@@ -2655,51 +2833,51 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "geheime code van Firstboot Wizard"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 #, fuzzy
 #| msgid "Setup Complete!"
 msgid "Setup Complete! Next Steps:"
 msgstr "Instelling voltooid!"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Nu bijwerken"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2748,10 +2926,6 @@ msgstr "Lees- en schrijftoegang tot Git-repositories"
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Eenvoudige Git Hosting"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2879,9 +3053,10 @@ msgstr "Repository gewijzigd."
 msgid "Edit repository"
 msgstr "Wijzig repository"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Documentatie"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Hulp"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2907,9 +3082,9 @@ msgstr "Feedback indienen"
 msgid "Contribute"
 msgstr "Bijdragen"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "Over ons"
 
@@ -3012,10 +3187,6 @@ msgstr ""
 #| msgid "Learn more"
 msgid "Learn"
 msgstr "Meer informatie"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Startpagina"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -3166,11 +3337,6 @@ msgstr ""
 #: modules/help/templates/help_feedback.html:36
 msgid "Thank you!"
 msgstr "Bedankt!"
-
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Hulp"
 
 #: modules/help/templates/help_index.html:18
 #, python-format
@@ -3323,10 +3489,6 @@ msgstr ""
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Wiki en Blog"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Beheerdersaccount naam"
@@ -3433,10 +3595,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby Server"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3475,10 +3633,6 @@ msgstr "Om Janus te gebruiken is <a href=\"{coturn_url}\">Coturn</a> nodig."
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr "Video Ruimte"
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr "Janus Video Ruimte"
@@ -3494,7 +3648,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr "JavaScript licentie-informatie"
 
@@ -3509,10 +3663,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "Chat Cliënt"
 
 #: modules/jsxc/manifest.py:16
 #, fuzzy
@@ -3570,10 +3720,6 @@ msgstr "Beheer de Kiwix inhoudserver"
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
 msgstr "Kiwix"
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
-msgstr "Offline Wikipedia"
 
 #: modules/kiwix/forms.py:23
 msgid "Content packages have to be in .zim format"
@@ -3708,9 +3854,19 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Certificaten"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+#, fuzzy
+#| msgid "Website Security"
+msgid "Web security"
+msgstr "Websitebeveiliging"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3837,7 +3993,7 @@ msgstr ""
 "videogesprekken. Installeer de <a href=\"{coturn_url}\">Coturn</a> "
 "toepassing of configureer een externe server."
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3908,12 +4064,6 @@ msgstr "IRC Chatroom"
 #| msgid "Media streaming server"
 msgid "Matrix server"
 msgstr "Mediastreaming server"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Configuratie"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -4203,10 +4353,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Block Sandbox"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "Maximum aantal spelers"
@@ -4293,10 +4439,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "Simple Media Server"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Map met mediabestanden"
@@ -4370,10 +4512,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr "Miniflux"
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "News Feed Reader"
 
 #: modules/miniflux/forms.py:12
 msgid "Enter a username for the user."
@@ -4516,10 +4654,6 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "Voice Chat"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "Wachtwoord van de Supergebruiker vastleggen"
@@ -4567,11 +4701,6 @@ msgstr "Mumla"
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr ""
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Server"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4632,7 +4761,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Hostnaam"
 
@@ -4670,6 +4799,16 @@ msgstr ""
 "per naam mag niet langer zijn dan 63 tekens. De totale domeinnaamlengte mag "
 "niet langer zijn dan 253 tekens."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domeinen"
+
+#: modules/names/manifest.py:13
+#, fuzzy
+#| msgid "Evolution"
+msgid "DNS Resolution"
+msgstr "Evolution"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4700,14 +4839,6 @@ msgstr "ondersteund"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr "niet ondersteund"
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domeinen"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Diensten"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -4987,54 +5118,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- selecteer --"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "De zichtbare netwerknaam."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Modus"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Infrastructuur"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Access Point"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Frequentieband"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Automatisch"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Kanaal"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5042,11 +5169,11 @@ msgstr ""
 "Optionele waarde. Beperken van draadloos kanaal tot de geselecteerde "
 "frequentieband. Waarde leeg of 0 betekent automatische selectie."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5057,11 +5184,11 @@ msgstr ""
 "toegangspunt overeenkomt met degene die hier wordt ingevuld. Voorbeeld: "
 "00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Authentificatiemodus"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -5069,20 +5196,20 @@ msgstr ""
 "Selecteer WPA indien het netwerk beveiligd is en gebruikerswachtwoorden "
 "gebruikt om te verbinden."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Open"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Geef aan hoe jouw {box_name} verbonden is met jouw netwerk"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5093,7 +5220,7 @@ msgstr ""
 "internetverbinding van de router via Wi-Fi of Ethernet-kabel. Dit is een "
 "typische thuisopstelling. </p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5106,7 +5233,7 @@ msgstr ""
 "{box_name} is rechtstreeks verbonden met het internet en alle apparaten "
 "maken verbinding met {box_name} voor hun internetverbinding. </p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5118,11 +5245,11 @@ msgstr ""
 "andere apparaten op het netwerk. Dit komt voor in community- of "
 "cloudopstellingen. </p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "Het type internetverbinding kiezen"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5141,7 +5268,7 @@ msgstr ""
 "maar niet bekend is of dit in de loop van de tijd verandert, is het veiliger "
 "om deze optie te kiezen. </p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5160,7 +5287,7 @@ msgstr ""
 "{box_name} diensten, maar niet veel ISP's bieden dit type verbinding aan. "
 "Het kan zijn dat de ISP deze service als een betaalde dienst aanbiedt.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5179,7 +5306,7 @@ msgstr ""
 "diensten via internet aan te bieden vanuit huis. {box_name} biedt veel "
 "verschillende oplossingen maar ieder daarvan heeft beperkingen.</p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5187,11 +5314,11 @@ msgstr ""
 "Ik weet niet welk type verbinding mijn ISP biedt <p class=\"help-block\">De "
 "meest conservatieve maatregelen zullen worden voorgesteld.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Voorkeurs routerconfiguratie"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5208,7 +5335,7 @@ msgstr ""
 "{box_name}. Vergeet niet om eerst een statisch lokaal IP-adres voor de "
 "{box_name} in de router configuratie aan te maken. </p>"
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5228,7 +5355,7 @@ msgstr ""
 "geven aan welke poort(en) moeten worden doorgestuurd voor correcte werking "
 "van die toepassing. </p>"
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5238,6 +5365,30 @@ msgstr ""
 "optie als de router momenteel niet is of kan worden geconfigureerd en later "
 "eraan herinnerd wilt worden. Sommige van de andere configuratiestappen "
 "kunnen mislukken. </p>"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "Internet"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Lokaal netwerkdomein"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5259,7 +5410,7 @@ msgstr "Wijzig verbinding"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Wijzig"
 
@@ -5458,10 +5609,6 @@ msgstr "Verwijder verbinding"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "Verbinding <strong>%(name)s</strong> permanent verwijderen?"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "Internet"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -5472,13 +5619,6 @@ msgstr "Verbinding"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -6051,10 +6191,6 @@ msgstr "Deze toepassing is een experiment."
 msgid "Nextcloud"
 msgstr "Nextcloud"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr "Bestandsopslag &amp; Samenwerking"
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "Niet ingesteld"
@@ -6148,11 +6284,7 @@ msgstr "Verbinding maken met VPN-dienst"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "Virtual Private Network"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -6169,7 +6301,8 @@ msgstr "Tunnelblick"
 msgid "VPN server"
 msgstr "DNS server"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 #, fuzzy
 #| msgid "Removable Media"
 msgid "Remote access"
@@ -6266,11 +6399,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "Openbare zichtbaarheid"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite domein"
 
@@ -6350,6 +6479,16 @@ msgstr "Aangepaste dienst toegevoegd"
 msgid "This service already exists"
 msgstr "Deze dienst bestaat al"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+#, fuzzy
+#| msgid "Tunnelblick"
+msgid "Tunneling"
+msgstr "Tunnelblick"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "Aangepaste Diensten"
@@ -6421,10 +6560,6 @@ msgstr ""
 "Zie de SSH cliënt setup <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\">instructies (Engelstalig)</a>"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr "Prestaties"
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -6444,9 +6579,15 @@ msgstr ""
 "Prestatiestatistieken worden verzameld door Performance Co-Pilot en kunnen "
 "worden bekeken via de Cockpit-app."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
+#: modules/performance/manifest.py:18
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "Monitoring"
 msgstr "Systeembewaking"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6456,8 +6597,18 @@ msgstr "Herstarten of uitschakelen van het systeem."
 msgid "Power"
 msgstr "Power"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shutdown"
+msgstr "Uitschakelen"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Herstarten"
 
@@ -6546,6 +6697,16 @@ msgid ""
 "and reliable."
 msgstr ""
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+#, fuzzy
+#| msgid "Fallback DNS Servers"
+msgid "Fallback DNS"
+msgstr "Fallback DNS Servers"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -6577,10 +6738,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Web Proxy"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -6596,12 +6753,6 @@ msgstr ""
 #| msgid "Gobby Server"
 msgid "Proxy server"
 msgstr "Gobby Server"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-#, fuzzy
-#| msgid "Local Network Domain"
-msgid "Local network"
-msgstr "Lokaal netwerkdomein"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6636,10 +6787,6 @@ msgstr ""
 #: modules/quassel/__init__.py:51 modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
-
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC Cliënt"
 
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
@@ -6683,10 +6830,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Agenda en Adresboek"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6821,10 +6964,6 @@ msgstr ""
 "(<a href=\"https://www.google.com/settings/security/lesssecureapps\">https://"
 "www.google.com/settings/security/lesssecureapps</a>)."
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "Email Cliënt"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr "Gebruik alleen de lokale mailserver"
@@ -6888,10 +7027,6 @@ msgstr "Lezen en abonneren op nieuwsfeeds"
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "RSS Feed Generator"
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -6964,10 +7099,6 @@ msgstr "Toegang tot de privéshares"
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr "Samba"
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "Netwerk bestandenopslag"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -7130,10 +7261,6 @@ msgstr "Zoeken op internet"
 msgid "Searx"
 msgstr "Searx"
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Zoeken op het Internet"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "Veilig Zoeken"
@@ -7172,6 +7299,18 @@ msgid ""
 msgstr ""
 "Als dit actief is, zal Fail2Ban brute-kracht inbraakpogingen beperken op de "
 "SSH server en andere diensten die door wachtwoorden worden afgeschermd."
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Automatic"
+msgid "Automatic bans"
+msgstr "Automatisch"
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Ports"
+msgid "Reports"
+msgstr "Poorten"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7304,13 +7443,13 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "Bladwijzers"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "Bladwijzers"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -7368,10 +7507,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks Client"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr "Omzeil censuur"
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "Server hostnaam of IP adres"
@@ -7419,13 +7554,9 @@ msgstr ""
 "clients verbinding kunnen maken. De gegevens van klanten worden versleuteld "
 "en via deze server verstuurd."
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks Server"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr "Help anderen censuur te omzeilen"
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -7672,6 +7803,18 @@ msgstr ""
 "Bewaar maximaal dit aantal jaarlijkse snapshots. De standaardwaarde is 0 "
 "(geen jaarlijks snapshot bewaren)."
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "De volgende snapshots permanent verwijderen?"
@@ -7807,7 +7950,9 @@ msgstr ""
 "bestanden kopiëren en andere taken verrichten door zulk een verbinding."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
+#, fuzzy
+#| msgid "Secure Shell (SSH) Server"
+msgid "Secure Shell Server"
 msgstr "Secure Shell (SSH) Server"
 
 #: modules/ssh/__init__.py:75
@@ -7842,6 +7987,24 @@ msgstr ""
 "via SSH. Als dit is uitgeschakeld, kunnen alleen gebruikers van de groepen "
 "root, admin en freedombox-ssh inloggen via SSH."
 
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "SSH"
+msgid "SSH"
+msgstr "SSH"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Remote terminal"
+msgstr "Locatie verwijderen"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Fingerprint"
+msgid "Fingerprints"
+msgstr "Vingerafdruk"
+
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
 msgstr "Server Vingerafdrukken"
@@ -7874,7 +8037,7 @@ msgstr "Vul de letters in het plaatje in, om naar de login pagina te gaan"
 msgid "Proceed to Login"
 msgstr "Ga naar Login"
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Aanmelding"
 
@@ -7893,11 +8056,6 @@ msgstr ""
 "zijn aangesloten. Je kunt de opslagmedia die momenteel in gebruik zijn "
 "bekijken, verwijderbare media koppelen en ontkoppelen, de rootpartitie "
 "uitbreiden enz."
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "Storage"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -8062,6 +8220,28 @@ msgstr "Delen"
 msgid "Other directory (specify below)"
 msgstr "Andere map (hieronder aangeven)"
 
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Disks"
+msgid "Disks"
+msgstr "Schijven"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Automatic"
+msgid "Auto-mount"
+msgstr "Automatisch"
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Expand Root Partition"
+msgid "Expand partition"
+msgstr "Root-partitie uitbreiden"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "De volgende opslagapparaten zijn in gebruik:"
@@ -8178,10 +8358,6 @@ msgstr "Beheer Syncthing toepassing"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Bestandssynchronisatie"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -8217,10 +8393,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "TiddlyWiki"
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr "Niet lineaire Notebooks"
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr "Een TiddlyWiki bestand met .html bestands extensie"
@@ -8253,7 +8425,7 @@ msgstr ""
 "<strong>Tip</strong>: Je kunt voor het verwijderen een kopie van deze wiki "
 "downloaden vanuit TiddlyWiki."
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -8267,7 +8439,7 @@ msgstr ""
 "de <a href=\"https://www.torproject.org/download/download-easy.html.en\">Tor "
 "Browser</a> aan."
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
@@ -8275,7 +8447,7 @@ msgstr ""
 "Deze applicatie biedt relay-diensten om bij te dragen aan het Tor-netwerk en "
 "anderen te helpen censuur te overwinnen."
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -8287,14 +8459,10 @@ msgstr ""
 "toegang tot {box_name} via internet, zelfs als een ISP die servers vanuit "
 "thuis beperkt."
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Anonimiteitsnetwerk"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -8304,19 +8472,19 @@ msgstr "Tor-Onion Dienst"
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor relay poort beschikbaar"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport geregistreerd"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport geregistreerd"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion service is versie 3"
 
@@ -8436,10 +8604,6 @@ msgstr "Anonimiteitsnetwerk"
 msgid "Onion Service"
 msgstr "Onion Service"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Poorten"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Configuratie bijwerken"
@@ -8449,7 +8613,7 @@ msgstr "Configuratie bijwerken"
 msgid "Error configuring app: {error}"
 msgstr "Fout bij het configureren van de toepassing: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -8463,7 +8627,7 @@ msgstr ""
 "krijgen tot internet. ISP-censuur kan worden omzeild door upstream bridges "
 "te gebruiken."
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Tor Proxy"
 
@@ -8471,12 +8635,12 @@ msgstr "Tor Proxy"
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks Proxy"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Gebruik URL {url} op tcp{kind} via Tor"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Bevestig Tor gebruik met {url} via tcp{kind}"
@@ -8700,6 +8864,16 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Activeer Tussentijdse Software Updates (aanbevolen)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+#, fuzzy
+#| msgid "New value"
+msgid "New features"
+msgstr "Nieuwe waarde"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9007,6 +9181,18 @@ msgstr "Toevoegen van gebruiker aan admin groep mislukt: {error}"
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Gebruikersaccount aangemaakt, je bent nu ingelogd"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Manage Snapshots"
+msgid "Manage accounts"
+msgstr "Beheren van Snapshots"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "App permissions"
+msgstr "Toegangsrechten"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9541,10 +9727,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "Website en Blog"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "Openbare toegang"
@@ -9598,10 +9780,6 @@ msgstr ""
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Foto Organisator"
 
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -9839,6 +10017,12 @@ msgstr "Service <em>%(service_name)s</em> is niet actief."
 msgid "Search with tags"
 msgstr "Zoeken op internet"
 
+#: templates/apps.html:42
+#, fuzzy
+#| msgid "Search the web"
+msgid "Clear all tags"
+msgstr "Zoeken op internet"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9848,43 +10032,35 @@ msgstr ""
 "gegevenseigendom. Het is gratis software waarmee u eenvoudig server-apps "
 "kunt installeren en beheren."
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Startpagina"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Startpagina"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Toepassingen"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Toepassingen"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " Systeem"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "Wijzig wachtwoord"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Uitschakelen"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Afmelden"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Selecteer taal"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Aanmelden"
 
@@ -10104,11 +10280,15 @@ msgstr ""
 "Alle toepassings-gegevens en configuratie gaan permanent verloren. de "
 "toepassing kan opnieuw vers worden geïnstalleerd."
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "Instelling onveranderd"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "voor het verwijderen van {app_id}"
@@ -10116,6 +10296,114 @@ msgstr "voor het verwijderen van {app_id}"
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "Delen van bestanden en fragmenten"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "Domeinnaam Server"
+
+#~ msgid "E-book Library"
+#~ msgstr "E-boek bibliotheek"
+
+#~ msgid "Server Administration"
+#~ msgstr "Serverbeheer"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "VoIP helper"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "BitTorrent-webclient"
+
+#~ msgid "Chat Server"
+#~ msgstr "Chatserver"
+
+#~ msgid "Email Server"
+#~ msgstr "E-mailserver"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Eenvoudige Git Hosting"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentatie"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Wiki en Blog"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby Server"
+
+#~ msgid "Video Room"
+#~ msgstr "Video Ruimte"
+
+#~ msgid "Chat Client"
+#~ msgstr "Chat Cliënt"
+
+#~ msgid "Offline Wikipedia"
+#~ msgstr "Offline Wikipedia"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Block Sandbox"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "Simple Media Server"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "News Feed Reader"
+
+#~ msgid "Voice Chat"
+#~ msgstr "Voice Chat"
+
+#~ msgid "File Storage & Collaboration"
+#~ msgstr "Bestandsopslag &amp; Samenwerking"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "Virtual Private Network"
+
+#~ msgid "Public Visibility"
+#~ msgstr "Openbare zichtbaarheid"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Web Proxy"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC Cliënt"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Agenda en Adresboek"
+
+#~ msgid "Email Client"
+#~ msgstr "Email Cliënt"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "RSS Feed Generator"
+
+#~ msgid "Network File Storage"
+#~ msgstr "Netwerk bestandenopslag"
+
+#~ msgid "Web Search"
+#~ msgstr "Zoeken op het Internet"
+
+#~ msgid "Bypass Censorship"
+#~ msgstr "Omzeil censuur"
+
+#~ msgid "Help Others Bypass Censorship"
+#~ msgstr "Help anderen censuur te omzeilen"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Bestandssynchronisatie"
+
+#~ msgid "Non-linear Notebooks"
+#~ msgstr "Niet lineaire Notebooks"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "Anonimiteitsnetwerk"
+
+#~ msgid "Website and Blog"
+#~ msgstr "Website en Blog"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Foto Organisator"
 
 #, python-format
 #~ msgid ""
@@ -10493,9 +10781,6 @@ msgstr "Gujarati"
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "SSH-authenticatie met wachtwoord ingeschakeld."
 
-#~ msgid "Error running apt-get"
-#~ msgstr "Fout bij het uitvoeren van apt-get"
-
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
 #~ msgstr "Basisfunctionaliteit en webinterface voor %(box_name)s"
@@ -10684,9 +10969,6 @@ msgstr "Gujarati"
 
 #~ msgid "Service Alert"
 #~ msgstr "Servicewaarschuwing"
-
-#~ msgid "Repair"
-#~ msgstr "Herstellen"
 
 #, python-brace-format
 #~ msgid "Internal error in {0}"
@@ -10975,9 +11257,6 @@ msgstr "Gujarati"
 #~ msgid "Connected introducers"
 #~ msgstr "Verbonden introduceerders"
 
-#~ msgid "Remove"
-#~ msgstr "Verwijderen"
-
 #, fuzzy
 #~| msgid "Error setting domain name: {exception}"
 #~ msgid "Postfix domain name config"
@@ -11003,9 +11282,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete selected"
 #~ msgstr "Verwijder selectie"
-
-#~ msgid "New value"
-#~ msgstr "Nieuwe waarde"
 
 #~ msgid "There was a problem with your request. Please try again."
 #~ msgstr "Er was een probleem met dit verzoek. Probeer het opnieuw."
@@ -11596,9 +11872,6 @@ msgstr "Gujarati"
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
 
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
-
 #~ msgid "Not Available"
 #~ msgstr "Niet Beschikbaar"
 
@@ -11904,11 +12177,6 @@ msgstr "Gujarati"
 
 #~ msgid "Delete Snapshot"
 #~ msgstr "Snapshot verwijderen"
-
-#, fuzzy
-#~| msgid "Disks"
-#~ msgid "Disk"
-#~ msgstr "Schijven"
 
 #, fuzzy
 #~| msgid ""

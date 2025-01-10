@@ -72,9 +72,13 @@ def visit(browser, path):
         browser.visit(config['DEFAULT']['url'] + path)
 
 
-def eventually(function, args=[], timeout=30):
-    """Execute a function returning a boolean expression till it returns
-    True or a timeout is reached"""
+def eventually(function, args=[], timeout=30, browser=None):
+    """Execute the function until it returns True or timeout occurs.
+
+    Function is repeatedly executed at a fixed interval until it return True or
+    timeout occurs. If browser is provided, it is ensured that browser page is
+    fully loaded before the function is executed.
+    """
     end_time = time.time() + timeout
     current_time = time.time()
     while current_time < end_time:
@@ -84,10 +88,24 @@ def eventually(function, args=[], timeout=30):
         except Exception:
             pass
 
+        if browser:
+            if not is_page_fully_loaded(browser):
+                pass
+            elif (browser.is_element_present_by_css('.neterror')
+                  or browser.title == '503 Service Unavailable'):
+                # Reload if we are unable to contact web server or if
+                # FreedomBox service is not available yet.
+                browser.visit(browser.url)
+
         time.sleep(0.1)
         current_time = time.time()
 
     return False
+
+
+def is_page_fully_loaded(browser):
+    """Return whether the page is still loading in the browser."""
+    return browser.execute_script('return document.readyState;') == 'complete'
 
 
 class _PageLoaded:
@@ -146,9 +164,7 @@ class _PageLoaded:
                 return False
 
             # If page has not loaded fully yet, wait until it does.
-            is_fully_loaded = driver.execute_script(
-                'return document.readyState;') == 'complete'
-            if not is_fully_loaded:
+            if not is_page_fully_loaded(driver):
                 return False
 
             # If a page has fully loaded check if it is the expected URL.
@@ -263,20 +279,32 @@ def click(browser, element):
         element.click()
 
 
+def click_and_wait(browser, element, timeout=300, expected_url=None):
+    """Click an element.
+
+    Scroll it into view considering header if needed and wait for a page
+    update.
+    """
+    with wait_for_page_update(browser, timeout, expected_url=expected_url):
+        click(browser, element)
+
+
+def click_link_by_href(browser, href):
+    """Click a link and wait for a page update."""
+    click_and_wait(browser, browser.links.find_by_href(href).first)
+
+
 def submit(browser, element=None, form_class=None, expected_url=None):
     """Submit a specific form in the current page and wait for page change."""
     if not (element or form_class):
         raise AssertionError('Either element or form_class must be sent')
 
-    with wait_for_page_update(browser, expected_url=expected_url):
-        if element:
-            click(browser, element)
-        elif form_class:
-            browser.find_by_css(f'.{form_class} input[type=submit], '
-                                f'.{form_class} button[type=submit]').click()
-        else:
-            browser.find_by_css(
-                'input[type=submit] button[type=submit]').click()
+    if not element:
+        element = browser.find_by_css(
+            f'.{form_class} input[type=submit], '
+            f'.{form_class} button[type=submit]').first
+
+    click_and_wait(browser, element, expected_url=expected_url)
 
 
 def set_app_form_value(browser, app_id, element_id, value):
@@ -338,6 +366,27 @@ def login(browser):
                        config['DEFAULT']['password'])
 
 
+def _run_first_wizard(browser):
+    """Visit and complete first run wizard."""
+    username = config['DEFAULT']['username'],
+    password = config['DEFAULT']['password']
+
+    welcome_url = base_url + '/plinth/firstboot/welcome/'
+    browser.visit(welcome_url)
+    if browser.url != welcome_url:
+        # We got redirected because first wizard is already complete. Don't
+        # unnecessarily wait a long time.
+        return
+
+    # Wait for first setup process to complete
+    eventually(browser.is_element_present_by_css, args=['.form-start'],
+               timeout=1800, browser=browser)
+    submit(browser, form_class='form-start')  # "Start Setup" button
+    _create_admin_account(browser, username, password)
+    if '/firstboot/backports' in browser.url:
+        submit(browser, element=browser.find_by_name('next')[0])
+
+
 def login_with_account(browser, url, username, password=None):
     """Login to the FreedomBox interface with provided account."""
     if password is None:
@@ -356,17 +405,12 @@ def login_with_account(browser, url, username, password=None):
 
     login_button = browser.links.find_by_href('/plinth/accounts/login/')
     if login_button:
-        login_button.first.click()
-        if login_button:
-            browser.fill('username', username)
-            browser.fill('password', password)
-            submit(browser, form_class='form-login')
+        click_and_wait(browser, login_button.first)
+        browser.fill('username', username)
+        browser.fill('password', password)
+        submit(browser, form_class='form-login')
     else:
-        browser.visit(base_url + '/plinth/firstboot/welcome')
-        submit(browser, form_class='form-start')  # "Start Setup" button
-        _create_admin_account(browser, username, password)
-        if '/firstboot/backports' in browser.url:
-            submit(browser, element=browser.find_by_name('next')[0])
+        _run_first_wizard(browser)
 
 
 def logout(browser):
@@ -427,8 +471,7 @@ def install(browser, app_name):
                     f'App {app_name} is not available in distribution')
                 pytest.skip('App not available in distribution')
             else:
-                with wait_for_page_update(browser):
-                    install_button.click()
+                click_and_wait(browser, install_button)
         else:
             break
 
@@ -446,8 +489,7 @@ def uninstall(browser, app_name):
         pytest.skip('App cannot be uninstalled')
 
     uninstall_page_url = uninstall_item[0]['href']
-    with wait_for_page_update(browser, expected_url=uninstall_page_url):
-        uninstall_item[0].click()
+    click_and_wait(browser, uninstall_item[0], expected_url=uninstall_page_url)
 
     submit(browser, form_class='form-uninstall')
 
@@ -633,7 +675,7 @@ def networks_set_firewall_zone(browser, zone):
     network_id = device['href'].split('/')[-3]
     device.click()
     edit_url = '/plinth/sys/networks/{}/edit/'.format(network_id)
-    browser.links.find_by_href(edit_url).first.click()
+    click_link_by_href(browser, edit_url)
     browser.select('zone', zone)
     submit(browser, form_class='form-connection-edit')
 
@@ -666,8 +708,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
     if password is None:
         password = get_password(name)
 
-    with wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/sys/users/create/').first.click()
+    click_link_by_href(browser, '/plinth/sys/users/create/')
 
     browser.find_by_id('id_username').fill(name)
     browser.find_by_id('id_password1').fill(password)
@@ -688,7 +729,7 @@ def create_user(browser, name, password=None, groups=[], email=None):
 def delete_user(browser, name):
     """Delete a user."""
     nav_to_module(browser, 'users')
-    browser.links.find_by_href(f'/plinth/sys/users/{name}/edit/').first.click()
+    click_link_by_href(browser, f'/plinth/sys/users/{name}/edit/')
 
     browser.find_by_id('id_delete').check()
     browser.find_by_id('id_confirm_password').fill(
@@ -700,8 +741,7 @@ def delete_user(browser, name):
         '#user-delete-confirm-dialog button.confirm').first
     eventually(lambda: confirm_button.visible)
     assert confirm_button.visible
-    with wait_for_page_update(browser, expected_url='/plinth/sys/users/'):
-        confirm_button.click()
+    click_and_wait(browser, confirm_button, expected_url='/plinth/sys/users/')
 
 
 def user_exists(browser, name):
@@ -795,13 +835,13 @@ class BaseAppTests:
         submit(session_browser, form_class='form-diagnostics-button')
 
         warning_results = session_browser.find_by_css(
-            '.diagnostic-result > .text-bg-warning')
+            '.diagnostics-result > .text-bg-warning')
         if warning_results:
             warnings.warn(
                 f'Diagnostics warnings for {self.app_name}: {warning_results}')
 
         failure_results = session_browser.find_by_css(
-            '.diagnostic-result > .text-bg-danger')
+            '.diagnostics-result > .text-bg-danger')
         assert not failure_results
 
     @pytest.mark.backups

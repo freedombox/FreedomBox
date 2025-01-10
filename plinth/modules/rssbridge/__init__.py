@@ -49,7 +49,6 @@ class RSSBridgeApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('RSS-Bridge'), icon_filename='rssbridge',
-                               short_description=_('RSS Feed Generator'),
                                description=_description,
                                manual_page='RSSBridge', donation_url=None,
                                clients=manifest.clients, tags=manifest.tags)

@@ -3,6 +3,8 @@
 Application manifest for ssh.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup = {
     'config': {
         'files': ['/etc/ssh/sshd_config.d/freedombox.conf']
@@ -16,3 +18,5 @@ backup = {
         ]
     }
 }
+
+tags = [_('SSH'), _('Remote terminal'), _('Fingerprints')]

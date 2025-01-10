@@ -103,17 +103,9 @@ def diagnose_app(request, app_id):
         app = App.get(app_id)
     except KeyError:
         raise Http404('App does not exist')
+
     app_name = app.info.name or app_id
-
-    diagnosis = None
-    diagnosis_exception = None
-    try:
-        diagnosis = app.diagnose()
-    except Exception as exception:
-        logger.exception('Error running %s diagnostics - %s', app_id,
-                         exception)
-        diagnosis_exception = str(exception)
-
+    diagnosis = app.diagnose()
     show_repair = False
     for check in diagnosis:
         if check.result in [Result.FAILED, Result.WARNING]:
@@ -126,7 +118,6 @@ def diagnose_app(request, app_id):
             'app_id': app_id,
             'app_name': app_name,
             'results': diagnosis,
-            'exception': diagnosis_exception,
             'show_repair': show_repair,
         })
 

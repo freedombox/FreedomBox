@@ -43,11 +43,9 @@ class MiniDLNAApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('MiniDLNA'), icon_filename='minidlna',
-                               short_description=_('Simple Media Server'),
                                description=_description,
                                manual_page='MiniDLNA',
-                               clients=manifest.clients,
-                               tags=manifest.tags)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu(

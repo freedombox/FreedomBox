@@ -31,7 +31,7 @@ class PrivacyApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Privacy'),
                                icon='fa-eye-slash', description=_description,
-                               manual_page=None)
+                               manual_page=None, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-privacy', info.name,

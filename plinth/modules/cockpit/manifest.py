@@ -18,3 +18,13 @@ clients = [{
 # will set the value of allowed domains correctly. This is the only key the is
 # customized in cockpit.conf.
 backup: dict = {}
+
+tags = [
+    _('Advanced administration'),
+    _('Web terminal'),
+    _('Storage'),
+    _('Networking'),
+    _('Services'),
+    _('Logs'),
+    _('Performance'),
+]

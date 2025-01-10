@@ -56,9 +56,8 @@ class PagekiteApp(app_module.App):
 
         info = app_module.Info(
             app_id=self.app_id, version=self._version, depends=['names'],
-            name=_('PageKite'), icon='fa-flag',
-            short_description=_('Public Visibility'), description=_description,
-            manual_page='PageKite',
+            name=_('PageKite'), icon='fa-flag', description=_description,
+            manual_page='PageKite', tags=manifest.tags,
             donation_url='https://pagekite.net/support/faq/#donate')
         self.add(info)
 

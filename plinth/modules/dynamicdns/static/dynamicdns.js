@@ -22,58 +22,60 @@
  * in this page.
  */
 
-(function($) {
-    var NOIP = 'https://<User>:<Pass>@dynupdate.no-ip.com/nic/update?' +
+document.addEventListener('DOMContentLoaded', () => {
+    const NOIP = 'https://<User>:<Pass>@dynupdate.no-ip.com/nic/update?' +
         'hostname=<Domain>';
-    var FREEDNS = 'https://freedns.afraid.org/dynamic/update.php?' +
+    const FREEDNS = 'https://freedns.afraid.org/dynamic/update.php?' +
         '_YOURAPIKEYHERE_';
 
-    $('#id_service_type').change(function() {
-        set_mode();
+    document.getElementById('id_service_type').addEventListener('change', () => {
+        setMode();
 
-        var service_type = $("#id_service_type").val();
-        if (service_type == "noip.com") {
-            $('#id_update_url').val(NOIP);
-        } else if (service_type == "freedns.afraid.org") {
-            $('#id_update_url').val(FREEDNS);
+        const service_type = document.getElementById('id_service_type').value;
+        if (service_type === "noip.com") {
+            document.getElementById('id_update_url').value = NOIP;
+        } else if (service_type === "freedns.afraid.org") {
+            document.getElementById('id_update_url').value = FREEDNS;
         } else {  // GnuDIP and other
-            $('#id_update_url').val('');
+            document.getElementById('id_update_url').value = '';
         }
     });
 
-    $('#id_show_password').change(function() {
-        if ($('#id_show_password').prop('checked')) {
-            $('#id_password').prop('type', 'text');
+    document.getElementById('id_show_password').addEventListener('change', () => {
+        if (document.getElementById('id_show_password').checked) {
+            document.getElementById('id_password').type = 'text';
         } else {
-            $('#id_password').prop('type', 'password');
+            document.getElementById('id_password').type = 'password';
         }
     });
 
-    function set_mode() {
-        var service_type = $("#id_service_type").val();
-        if (service_type == "gnudip") {
-            set_gnudip_mode();
+    function setMode() {
+        const service_type = document.getElementById('id_service_type').value;
+        if (service_type === "gnudip") {
+            setGnudipMode();
         } else {
-            set_update_url_mode();
+            setUpdateUrlMode();
         }
     }
 
-    function set_gnudip_mode() {
-        $('.form-group').show();
-        $('#id_update_url').closest('.form-group').hide();
-        $('#id_disable_ssl_cert_check').closest('.form-group').hide();
-        $('#id_use_http_basic_auth').closest('.form-group').hide();
-        $('#id_use_ipv6').closest('.form-group').hide();
-        $('#id_server').closest('.form-group').show();
+    function setGnudipMode() {
+        document.querySelectorAll('.form-group').forEach((element) => {
+            element.style.display = 'block';
+        });
+        document.getElementById('id_update_url').closest('.form-group').style.display = 'none';
+        document.getElementById('id_disable_ssl_cert_check').closest('.form-group').style.display = 'none';
+        document.getElementById('id_use_http_basic_auth').closest('.form-group').style.display = 'none';
+        document.getElementById('id_use_ipv6').closest('.form-group').style.display = 'none';
+        document.getElementById('id_server').closest('.form-group').style.display = 'block';
     }
 
-    function set_update_url_mode() {
-        $('#id_update_url').closest('.form-group').show();
-        $('#id_disable_ssl_cert_check').closest('.form-group').show();
-        $('#id_use_http_basic_auth').closest('.form-group').show();
-        $('#id_use_ipv6').closest('.form-group').show();
-        $('#id_server').closest('.form-group').hide();
+    function setUpdateUrlMode() {
+        document.getElementById('id_update_url').closest('.form-group').style.display = 'block';
+        document.getElementById('id_disable_ssl_cert_check').closest('.form-group').style.display = 'block';
+        document.getElementById('id_use_http_basic_auth').closest('.form-group').style.display = 'block';
+        document.getElementById('id_use_ipv6').closest('.form-group').style.display = 'block';
+        document.getElementById('id_server').closest('.form-group').style.display = 'none';
     }
 
-    set_mode();
-})(jQuery);
+    setMode();
+});

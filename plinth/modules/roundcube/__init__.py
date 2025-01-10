@@ -48,11 +48,9 @@ class RoundcubeApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Roundcube'), icon_filename='roundcube',
-                               short_description=_('Email Client'),
                                description=_description,
                                manual_page='Roundcube',
-                               clients=manifest.clients,
-                               tags=manifest.tags)
+                               clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-roundcube', info.name,

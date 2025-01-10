@@ -3,9 +3,17 @@
 Application manifest for bind.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup = {
     'config': {
         'files': ['/etc/bind/named.conf.options']
     },
     'services': ['named']
 }
+
+tags = [
+    _('DNS'),
+    _('Server'),
+    _('Resolver'),
+]

@@ -84,16 +84,12 @@ def _get_archives_from_test_data(data):
         if isinstance(archive_time, str):
             archive_time = datetime.strptime(archive_time,
                                              '%Y-%m-%d %H:%M:%S+0000')
+
+        comment = json.dumps({'type': 'scheduled', 'periods': item['periods']})
         archive = {
-            'comment':
-                json.dumps({
-                    'type': 'scheduled',
-                    'periods': item['periods']
-                }),
-            'start':
-                archive_time.strftime('%Y-%m-%dT%H:%M:%S.%f'),
-            'name':
-                f'archive-{index}'
+            'comment': comment,
+            'start': archive_time,
+            'name': f'archive-{index}'
         }
         archives.append(archive)
 

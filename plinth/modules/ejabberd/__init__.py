@@ -59,7 +59,6 @@ class EjabberdApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                depends=['coturn'], name=_('ejabberd'),
                                icon_filename='ejabberd',
-                               short_description=_('Chat Server'),
                                description=_description,
                                manual_page='ejabberd',
                                clients=manifest.clients, tags=manifest.tags)

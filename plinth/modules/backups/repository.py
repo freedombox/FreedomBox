@@ -2,14 +2,13 @@
 """Remote and local Borg backup repositories."""
 
 import abc
-import contextlib
+import datetime
 import io
 import logging
 import os
-import re
+import subprocess
 from uuid import uuid1
 
-import paramiko
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
@@ -20,54 +19,6 @@ from . import (_backup_handler, api, errors, get_known_hosts_path, privileged,
 from .schedule import Schedule
 
 logger = logging.getLogger(__name__)
-
-# known errors that come up when remotely accessing a borg repository
-# 'errors' are error strings to look for in the stacktrace.
-KNOWN_ERRORS = [
-    {
-        'errors': ['subprocess.TimeoutExpired'],
-        'message':
-            _('Connection refused - make sure you provided correct '
-              'credentials and the server is running.'),
-        'raise_as':
-            errors.BorgError,
-    },
-    {
-        'errors': ['Connection refused'],
-        'message': _('Connection refused'),
-        'raise_as': errors.BorgError,
-    },
-    {
-        'errors': [
-            'not a valid repository', 'does not exist', 'FileNotFoundError'
-        ],
-        'message': _('Repository not found'),
-        'raise_as': errors.BorgRepositoryDoesNotExistError,
-    },
-    {
-        'errors': ['passphrase supplied in .* is incorrect'],
-        'message': _('Incorrect encryption passphrase'),
-        'raise_as': errors.BorgError,
-    },
-    {
-        'errors': ['Connection reset by peer'],
-        'message': _('SSH access denied'),
-        'raise_as': errors.SshfsError,
-    },
-    {
-        'errors': ['There is already something at'],
-        'message':
-            _('Repository path is neither empty nor '
-              'is an existing backups repository.'),
-        'raise_as':
-            errors.BorgError,
-    },
-    {
-        'errors': ['A repository already exists at'],
-        'message': None,
-        'raise_as': errors.BorgRepositoryExists,
-    },
-]
 
 
 class BaseBorgRepository(abc.ABC):
@@ -135,10 +86,8 @@ class BaseBorgRepository(abc.ABC):
 
     def get_info(self):
         """Return Borg information about a repository."""
-        with self._handle_errors():
-            output = privileged.info(self.borg_path,
-                                     self._get_encryption_passpharse())
-
+        output = privileged.info(self.borg_path,
+                                 self._get_encryption_passpharse())
         if output['encryption']['mode'] == 'none' and \
            self._get_encryption_data():
             raise errors.BorgUnencryptedRepository(
@@ -170,9 +119,14 @@ class BaseBorgRepository(abc.ABC):
 
     def list_archives(self):
         """Return list of archives in this repository."""
-        with self._handle_errors():
-            archives = privileged.list_repo(
-                self.borg_path, self._get_encryption_passpharse())['archives']
+        archives = privileged.list_repo(
+            self.borg_path, self._get_encryption_passpharse())['archives']
+        for archive in archives:
+            archive['time'] = datetime.datetime.strptime(
+                archive['time'], '%Y-%m-%dT%H:%M:%S.%f')
+            archive['start'] = datetime.datetime.strptime(
+                archive['start'], '%Y-%m-%dT%H:%M:%S.%f')
+
         return sorted(archives, key=lambda archive: archive['start'],
                       reverse=True)
 
@@ -187,9 +141,8 @@ class BaseBorgRepository(abc.ABC):
     def delete_archive(self, archive_name):
         """Delete an archive with given name from this repository."""
         archive_path = self._get_archive_path(archive_name)
-        with self._handle_errors():
-            privileged.delete_archive(archive_path,
-                                      self._get_encryption_passpharse())
+        privileged.delete_archive(archive_path,
+                                  self._get_encryption_passpharse())
 
     def initialize(self):
         """Initialize / create a borg repository."""
@@ -199,9 +152,8 @@ class BaseBorgRepository(abc.ABC):
             encryption = 'repokey'
 
         try:
-            with self._handle_errors():
-                privileged.init(self.borg_path, encryption,
-                                self._get_encryption_passpharse())
+            privileged.init(self.borg_path, encryption,
+                            self._get_encryption_passpharse())
         except errors.BorgRepositoryExists:
             pass
 
@@ -214,14 +166,6 @@ class BaseBorgRepository(abc.ABC):
             return {'encryption_passphrase': passphrase}
 
         return {}
-
-    @contextlib.contextmanager
-    def _handle_errors(self):
-        """Parse exceptions into more specific ones."""
-        try:
-            yield
-        except Exception as exception:
-            self.reraise_known_error(exception)
 
     def _get_encryption_passpharse(self):
         """Return encryption passphrase or raise an exception."""
@@ -256,10 +200,9 @@ class BaseBorgRepository(abc.ABC):
 
                 return chunk
 
-        with self._handle_errors():
-            proc, read_fd, input_ = privileged.export_tar(
-                self._get_archive_path(archive_name),
-                self._get_encryption_passpharse(), _raw_output=True)
+        proc, read_fd, input_ = privileged.export_tar(
+            self._get_archive_path(archive_name),
+            self._get_encryption_passpharse(), _raw_output=True)
 
         os.close(read_fd)  # Don't use the pipe for communication, just stdout
         proc.stdin.write(input_)
@@ -272,19 +215,6 @@ class BaseBorgRepository(abc.ABC):
         """Return full borg path for an archive."""
         return '::'.join([self.borg_path, archive_name])
 
-    @staticmethod
-    def reraise_known_error(err):
-        """Look whether the caught error is known and reraise it accordingly"""
-        stdout = getattr(err, 'stdout', b'').decode()
-        stderr = getattr(err, 'stderr', b'').decode()
-        caught_error = str((err, err.args, stdout, stderr))
-        for known_error in KNOWN_ERRORS:
-            for error in known_error['errors']:
-                if re.search(error, caught_error):
-                    raise known_error['raise_as'](known_error['message'])
-
-        raise err
-
     def get_archive(self, name):
         """Return a specific archive from this repository with given name."""
         for archive in self.list_archives():
@@ -296,9 +226,8 @@ class BaseBorgRepository(abc.ABC):
     def get_archive_apps(self, archive_name):
         """Get list of apps included in an archive."""
         archive_path = self._get_archive_path(archive_name)
-        with self._handle_errors():
-            return privileged.get_archive_apps(
-                archive_path, self._get_encryption_passpharse())
+        return privileged.get_archive_apps(archive_path,
+                                           self._get_encryption_passpharse())
 
     def restore_archive(self, archive_name, app_ids=None):
         """Restore an archive from this repository to the system."""
@@ -424,8 +353,7 @@ class SshBorgRepository(BaseBorgRepository):
     @property
     def is_mounted(self):
         """Return whether remote path is mounted locally."""
-        with self._handle_errors():
-            return privileged.is_mounted(self._mountpoint)
+        return privileged.is_mounted(self._mountpoint)
 
     def initialize(self):
         """Initialize the repository after mounting the target directory."""
@@ -448,16 +376,14 @@ class SshBorgRepository(BaseBorgRepository):
                 'ssh_keyfile']:
             kwargs['ssh_keyfile'] = self.credentials['ssh_keyfile']
 
-        with self._handle_errors():
-            privileged.mount(self._mountpoint, self._path, **kwargs)
+        privileged.mount(self._mountpoint, self._path, **kwargs)
 
     def umount(self):
         """Unmount the remote path that was mounted locally using sshfs."""
         if not self.is_mounted:
             return
 
-        with self._handle_errors():
-            privileged.umount(self._mountpoint)
+        privileged.umount(self._mountpoint)
 
     def _umount_ignore_errors(self):
         """Run unmount operation and ignore any exceptions thrown."""
@@ -493,28 +419,13 @@ class SshBorgRepository(BaseBorgRepository):
         password = self.credentials['ssh_password']
 
         # Ensure remote directory exists, check contents
-        # TODO Test with IPv6 connection
-        with _ssh_connection(hostname, username, password) as ssh_client:
-            with ssh_client.open_sftp() as sftp_client:
-                try:
-                    sftp_client.listdir(dir_path)
-                except FileNotFoundError:
-                    logger.info('Directory %s does not exist, creating.',
-                                dir_path)
-                    sftp_client.mkdir(dir_path)
-
-
-@contextlib.contextmanager
-def _ssh_connection(hostname, username, password):
-    """Context manager to create and close an SSH connection."""
-    ssh_client = paramiko.SSHClient()
-    ssh_client.load_host_keys(str(get_known_hosts_path()))
-
-    try:
-        ssh_client.connect(hostname, username=username, password=password)
-        yield ssh_client
-    finally:
-        ssh_client.close()
+        env = {'SSHPASS': password}
+        known_hosts_path = str(get_known_hosts_path())
+        subprocess.run([
+            'sshpass', '-e', 'ssh', '-o',
+            f'UserKnownHostsFile={known_hosts_path}', f'{username}@{hostname}',
+            'mkdir', '-p', dir_path
+        ], check=True, env=env)
 
 
 def get_repositories():

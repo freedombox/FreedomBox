@@ -34,7 +34,6 @@ class ShaarliApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Shaarli'), icon_filename='shaarli',
-                               short_description=_('Bookmarks'),
                                description=_description, manual_page='Shaarli',
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)

@@ -302,9 +302,8 @@ def _should_not_connect_passwordless_over_ssh(session_browser,
 
 def _rename_user(browser, old_name, new_name):
     functional.nav_to_module(browser, 'users')
-    with functional.wait_for_page_update(browser):
-        browser.links.find_by_href('/plinth/sys/users/' + old_name +
-                                   '/edit/').first.click()
+    functional.click_link_by_href(browser,
+                                  f'/plinth/sys/users/{old_name}/edit/')
     browser.find_by_id('id_username').fill(new_name)
     browser.find_by_id('id_confirm_password').fill(_admin_password)
     functional.submit(browser, form_class='form-update')
@@ -334,20 +333,20 @@ def _get_ssh_keys(browser, username=None):
     functional.visit(browser, '/plinth/')
     if username is None:
         browser.find_by_id('id_user_menu').click()
-        browser.find_by_id('id_user_edit_menu').click()
+        functional.click_and_wait(browser,
+                                  browser.find_by_id('id_user_edit_menu'))
     else:
-        functional.visit(browser,
-                         '/plinth/sys/users/{}/edit/'.format(username))
+        functional.visit(browser, f'/plinth/sys/users/{username}/edit/')
     return browser.find_by_id('id_ssh_keys').text
 
 
 def _set_ssh_keys(browser, ssh_keys, username=None):
     if username is None:
         browser.find_by_id('id_user_menu').click()
-        browser.find_by_id('id_user_edit_menu').click()
+        functional.click_and_wait(browser,
+                                  browser.find_by_id('id_user_edit_menu'))
     else:
-        functional.visit(browser,
-                         '/plinth/sys/users/{}/edit/'.format(username))
+        functional.visit(browser, f'/plinth/sys/users/{username}/edit/')
 
     current_user = browser.find_by_id('id_user_menu_link').text
     auth_password = functional.get_password(current_user)
@@ -373,7 +372,8 @@ def _change_password(browser, new_password, current_password=None,
                      username=None):
     if username is None:
         browser.find_by_id('id_user_menu').click()
-        browser.find_by_id('id_change_password_menu').click()
+        functional.click_and_wait(
+            browser, browser.find_by_id('id_change_password_menu'))
     else:
         functional.visit(
             browser, '/plinth/sys/users/{}/change_password/'.format(username))

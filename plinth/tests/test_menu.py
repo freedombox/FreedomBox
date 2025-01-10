@@ -12,7 +12,7 @@ from django.urls import reverse
 from plinth import menu as menu_module
 from plinth.menu import Menu
 
-URL_TEMPLATE = '/test/{}/{}/{}/'
+URL_TEMPLATE = '/test{}/{}/{}/{}/'
 
 # Test helper methods
 
@@ -25,11 +25,11 @@ def build_menu(size=5):
 
     for index in range(1, size + 1):
         kwargs = {
-            'component_id': 'menu-test-' + str(index),
-            'name': 'Name' + str(index),
-            'short_description': 'ShortDescription' + str(index),
-            'icon': 'Icon' + str(index),
-            'url_name': 'test',
+            'component_id': f'menu-test-{index}',
+            'name': f'Name{index}',
+            'short_description': f'ShortDescription{index}',
+            'icon': f'Icon{index}',
+            'url_name': f'test{index}',
             'url_kwargs': {
                 'a': index,
                 'b': index,
@@ -134,7 +134,7 @@ def test_active_item():
 
     for index in range(1, 8):
         request = HttpRequest()
-        request.path = URL_TEMPLATE.format(index, index, index)
+        request.path = URL_TEMPLATE.format(index, index, index, index)
         item = menu.active_item(request)
         if index <= 5:
             assert request.path == item.url
@@ -145,8 +145,18 @@ def test_active_item():
 def test_active_item_when_inside_subpath():
     """Verify that the current URL could be a sub-path of a menu item."""
     menu = build_menu()
-    expected_url = URL_TEMPLATE.format(1, 1, 1)
+    expected_url = URL_TEMPLATE.format(1, 1, 1, 1)
     request = HttpRequest()
     request.path = expected_url + 'd/e/f/'
     item = menu.active_item(request)
     assert expected_url == item.url
+
+
+def test_get_with_url_name():
+    """Verify that menu item can be retrieved from all items."""
+    build_menu()
+
+    menu = Menu.get_with_url_name('test5')
+    assert menu.name == 'Name5'
+    with pytest.raises(LookupError):
+        Menu.get_with_url_name('x-non-existent')

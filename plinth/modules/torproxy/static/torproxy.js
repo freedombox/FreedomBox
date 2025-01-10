@@ -22,12 +22,20 @@
  * in this page.
  */
 
-(function($) {
-    $('#id_torproxy-use_upstream_bridges').change(function() {
-        if ($('#id_torproxy-use_upstream_bridges').prop('checked')) {
-            $('#id_torproxy-upstream_bridges').parent().parent().show('slow');
+document.addEventListener('DOMContentLoaded', () => {
+    const useUpstreamBridges = document.getElementById('id_torproxy-use_upstream_bridges');
+    const upstreamBridges = document.getElementById('id_torproxy-upstream_bridges');
+
+    function handleUseUpstreamBridgesChange() {
+        if (useUpstreamBridges.checked) {
+            upstreamBridges.closest('.form-group').style.display = '';
         } else {
-            $('#id_torproxy-upstream_bridges').parent().parent().hide('slow');
+            upstreamBridges.closest('.form-group').style.display = 'none';
         }
-    }).change();
-})(jQuery);
+    }
+
+    useUpstreamBridges.addEventListener('change', handleUseUpstreamBridgesChange);
+
+    // Initial state
+    handleUseUpstreamBridgesChange();
+});

@@ -52,7 +52,7 @@ class DiagnosticsApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, name=_('Diagnostics'),
                                icon='fa-heartbeat', description=_description,
-                               manual_page='Diagnostics')
+                               manual_page='Diagnostics', tags=manifest.tags)
         self.add(info)
 
         menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,

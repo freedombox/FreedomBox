@@ -292,7 +292,8 @@ class VerifySshHostkeyForm(forms.Form):
         keyscan = subprocess.run(['ssh-keyscan', hostname],
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE, check=False)
-        keys = keyscan.stdout.decode().splitlines()
+        key_lines = keyscan.stdout.decode().splitlines()
+        keys = [line for line in key_lines if not line.startswith('#')]
         error_message = keyscan.stderr.decode() if keyscan.returncode else None
         # Generate user-friendly fingerprints of public keys
         keygen = subprocess.run(['ssh-keygen', '-l', '-f', '-'],

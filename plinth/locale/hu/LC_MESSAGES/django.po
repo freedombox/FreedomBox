@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -101,34 +101,60 @@ msgstr "A webes felület megjelenítéséhez használt nyelv"
 msgid "Use the language preference set in the browser"
 msgstr "A böngésző nyelvének használata"
 
-#: menu.py:106
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "Kezdőlap"
+
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "Alkalmazások"
+
+#: menu.py:115 menu.py:122 templates/base.html:137
+msgid "System"
+msgstr "Rendszer"
+
+#: menu.py:118
 #, fuzzy
 #| msgid "Public Visibility"
 msgid "Visibility"
 msgstr "Nyilvános láthatóság"
 
-#: menu.py:108
+#: menu.py:120
 msgid "Data"
 msgstr ""
 
-#: menu.py:110 templates/base.html:139
-msgid "System"
-msgstr "Rendszer"
-
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "Biztonság"
 
-#: menu.py:114
+#: menu.py:126
 #, fuzzy
 #| msgid "Server Administration"
 msgid "Administration"
 msgstr "Szerver adminisztráció"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
+
+#: middleware.py:147
+#, fuzzy, python-brace-format
+#| msgid "Public key for this %(box_name)s:"
+msgid "Page not found: {url}"
+msgstr "A %(box_name)s nyilvános kulcsa:"
+
+#: middleware.py:150
+#, fuzzy
+#| msgid "Error During Backup"
+msgid "Error running operation."
+msgstr "Hiba történt a biztonsági mentés közben"
+
+#: middleware.py:152
+#, fuzzy
+#| msgid "Error During Backup"
+msgid "Error loading page."
+msgstr "Hiba történt a biztonsági mentés közben"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -174,20 +200,32 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "Szolgáltatásfelderítés"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "Helyi hálózati domain"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "Lehetővé teszi a biztonsági mentés létrehozását és kezelését."
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "Biztonsági mentések"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
@@ -195,18 +233,18 @@ msgstr ""
 "Automatikus biztonsági mentések ütemezésének engedélyezése. Ha lehet, "
 "használj egy titkosított távoli helyet, vagy egy extra külső lemezt."
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "Ütemezett biztonsági mentés engedélyezése"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Ugrás ide: {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -216,7 +254,7 @@ msgstr ""
 "mentésre tett próbálkozás nem sikerült. A legutóbbi hibaüzenet: "
 "{error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "Hiba történt a biztonsági mentés közben"
 
@@ -348,7 +386,7 @@ msgstr "Érvénytelen állomásnév: {hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "A könyvtár elérési útja érvénytelen: {dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "Titkosítás"
 
@@ -370,7 +408,7 @@ msgstr "Kulcs a tárolóban"
 msgid "None"
 msgstr "Nincs"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "Jelszó"
 
@@ -433,7 +471,50 @@ msgstr "A távoli biztonsági mentési tároló már létezik."
 msgid "Select verified SSH public key"
 msgstr "Válaszd ki az ellenőrzött SSH nyilvános kulcsot"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "Visszaállítás"
+
+#: modules/backups/manifest.py:15
+#, fuzzy
+#| msgid "Encryption"
+msgid "Encrypted"
+msgstr "Titkosítás"
+
+#: modules/backups/manifest.py:16
+#, fuzzy
+#| msgid "Schedule"
+msgid "Schedules"
+msgstr "Ütemezés"
+
+#: modules/backups/manifest.py:18
+#, fuzzy
+#| msgid "Remove"
+msgid "Remote"
+msgstr "Eltávolít"
+
+#: modules/backups/manifest.py:19
+#, fuzzy
+#| msgid "Last update"
+msgid "App data"
+msgstr "Legutolsó frissítés"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "Beállítások"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -441,38 +522,52 @@ msgstr ""
 "Kapcsolat elutasítva – győződj meg róla hogy a megfelelő hitelesítő adatokat "
 "adtad meg és hogy a szerver is üzemel."
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "Kapcsolat elutasítva"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "Tároló nem található"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "Helytelen titkosítási jelszó"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH-hozzáférés megtagadva"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
 "A tároló elérési útja nem üres, és nem is létező biztonsági mentések "
 "tárolója."
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+#, fuzzy
+#| msgid "A share with this name already exists."
+msgid "An archive with given name already exists in the repository."
+msgstr "Egy megosztás ezzel a névvel már létezik."
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "A meglévő tároló nem titkosított."
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} Tárhely"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "Új biztonsági mentés létrehozása"
 
@@ -511,7 +606,6 @@ msgstr "Meglévő biztonsági mentések"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -565,40 +659,33 @@ msgstr "Idő"
 msgid "Delete Archive %(name)s"
 msgstr "%(name)s archívum törlése"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "Ez a tároló titkosított"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "Ütemezés"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "Hely lecsatolása"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "Hely felcsatolása"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr ""
 "Biztonsági mentés helyének eltávolítása. Ez nem fogja kitörölni a távoli "
 "biztonsági mentést."
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "Letöltés"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "Visszaállítás"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "Jelenleg nincsenek archívumok."
 
@@ -691,99 +778,111 @@ msgstr ""
 msgid "Verify Host"
 msgstr "Állomás ellenőrzése"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "A biztonsági mentések készítésének ütemezése frissítve."
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "Biztonsági mentések ütemezése"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "Archívum létrehozva."
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "Archívum törlése"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "Archívum törölve."
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "Biztonsági mentések feltöltése és visszaállítása"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "Visszaállított fájlok a biztonsági mentésből."
+#: modules/backups/views.py:218
+#, fuzzy
+#| msgid "Logged out successfully."
+msgid "Upload successful."
+msgstr "Sikeres kijelentkezés."
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "Nem található biztonsági mentési fájl."
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "Visszaállítás a feltöltött fájlból"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "Visszaállított fájlok a biztonsági mentésből."
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr "Nincs további lemez amit a tárolóhoz lehetne adni."
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "Biztonsági mentési tároló létrehozása"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+#, fuzzy
+#| msgid "Added new remote SSH repository."
+msgid "Added new repository."
+msgstr "Új távoli SSH tároló hozzáadva."
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "Távoli biztonsági mentési tároló létrehozása"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "Új távoli SSH tároló hozzáadva."
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "SSH-állomáskulcs ellenőrzése"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "Az SSH-állomás már ellenőrzött."
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH-állomás leellenőrizve."
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "SSH-állomás nyilvános kulcsa nem ellenőrizhető le."
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "A távoli szerverrel végzett hitelesítés sikertelen."
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "Hiba lépett fel a szerverhez kapcsolódás során: {}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "Tároló eltávolítva."
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "Tároló eltávolítása"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "Tároló eltávolítva. A biztonsági mentések nem lettek törölve."
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "Lecsatolás sikertelen!"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "Felcsatolás sikertelen"
 
@@ -856,10 +955,6 @@ msgstr "Az összes fájl listázása és olvasása"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "Fájl és kódrészlet megosztása"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "Nyilvános hozzáférés (alapértelmezett jogosultságok)"
@@ -915,7 +1010,7 @@ msgid "No passwords currently configured."
 msgstr "Jelenleg nincs beállítva jelszó."
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "Jelszó"
@@ -1012,10 +1107,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "Domainnévszerver (DNS)"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "Továbbítók"
@@ -1026,6 +1117,21 @@ msgid ""
 msgstr ""
 "DNS-szerverek listája, szóközökkel elválasztva, amelyekhez a kérések "
 "továbbítva lesznek"
+
+#: modules/bind/manifest.py:16
+#, fuzzy
+#| msgid "Enable DNSSEC"
+msgid "DNS"
+msgstr "DNSSEC engedélyezése"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "Szerver"
+
+#: modules/bind/manifest.py:18
+msgid "Resolver"
+msgstr ""
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1112,10 +1218,6 @@ msgstr "Calibre e-könyvtárak használata"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "E-könyvtár"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1258,9 +1360,42 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
+#: modules/cockpit/manifest.py:23
+#, fuzzy
+#| msgid "Server Administration"
+msgid "Advanced administration"
 msgstr "Szerver adminisztráció"
+
+#: modules/cockpit/manifest.py:24
+#, fuzzy
+#| msgid "Sharing"
+msgid "Web terminal"
+msgstr "Megosztás"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "Tárhely"
+
+#: modules/cockpit/manifest.py:26
+#, fuzzy
+#| msgid "Networks"
+msgid "Networking"
+msgstr "Hálózatok"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "Szolgáltatások"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr "Teljesítmény"
 
 #: modules/config/__init__.py:18
 #, fuzzy
@@ -1350,6 +1485,20 @@ msgstr ""
 "A naplófájlok tárolják, hogy ki kapcsolódott a rendszerhez, illetve "
 "hibakeresési információkkal is szolgálnak számos alkalmazás számára."
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "Honlap"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+#, fuzzy
+#| msgid "Advanced"
+msgid "Advanced apps"
+msgstr "Haladó"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1399,10 +1548,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "VoIP-segéd"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1461,6 +1606,18 @@ msgstr ""
 msgid "-- no time zone set --"
 msgstr "-- nincs időzóna beállítva --"
 
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Network Interface"
+msgid "Network time"
+msgstr "Hálózati interfész"
+
+#: modules/datetime/manifest.py:15
+#, fuzzy
+#| msgid "Time Zone"
+msgid "Timezone"
+msgstr "Időzóna"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1489,10 +1646,6 @@ msgstr "Fájlok letöltése BitTorrent-alkalmazások használatával"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "Webes BitTorrent-kliens"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1634,6 +1787,18 @@ msgstr "Automatikus frissítések engedélyezése"
 msgid "If issues are found, try to repair them automatically."
 msgstr ""
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "Javítás"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 #, fuzzy
 #| msgid "Diagnostics"
@@ -1667,7 +1832,7 @@ msgstr "Alkalmazás: %(app_name)s"
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "Ez az alkalmazás nem támogatja a hibaellenőrzést"
 
@@ -1698,11 +1863,11 @@ msgstr "Teszt"
 msgid "Result"
 msgstr "Eredmény"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "Ellenőrző teszt"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr ""
@@ -1872,11 +2037,11 @@ msgid "Invalid domain name"
 msgstr "Érvénytelen domainnév"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Jelszó mutatása"
 
@@ -1892,8 +2057,26 @@ msgstr "IPv6 használata IPv4 helyett"
 msgid "This field is required."
 msgstr "Ezt a mezőt ki kell tölteni."
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "Domain"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+#, fuzzy
+#| msgid "Server public key:"
+msgid "Needs public IP"
+msgstr "Szerver nyilvános kulcsa:"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1905,13 +2088,6 @@ msgstr "Ezt a mezőt ki kell tölteni."
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "Állapot"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "Domain"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1984,10 +2160,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "Chat szerver"
 
 #: modules/ejabberd/forms.py:19
 #, fuzzy
@@ -2200,15 +2372,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr "Postfix/Dovecot"
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "E-mail-szerver"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "E-mail álneveim"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "A Mailbox álneveinek kezelése"
 
@@ -2364,17 +2532,13 @@ msgid ""
 "supported."
 msgstr ""
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "Wiki alkalmazások megtekintése és szerkesztése"
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
-msgstr ""
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
 msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
@@ -2409,8 +2573,7 @@ msgstr ""
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "Wiki"
 
@@ -2617,6 +2780,21 @@ msgstr "{name} port ({details}) elérhető a külső hálózaton"
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr "{name} port ({details}) nem érhető el külső hálózaton"
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "Portok"
+
+#: modules/firewall/manifest.py:10
+#, fuzzy
+#| msgid "Blocked"
+msgid "Blocking"
+msgstr "Blokkolva"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "Automatikus"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "Szolgáltatás/port"
@@ -2710,51 +2888,51 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr "Telepítő varázsló titkos kulcsa"
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 #, fuzzy
 #| msgid "Setup Complete!"
 msgid "Setup Complete! Next Steps:"
 msgstr "A beállítás elkészült!"
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "Frissítés most"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2804,10 +2982,6 @@ msgstr "Olvasási-írási hozzáférés a Git-tárolókhoz"
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
 msgstr "Gitweb"
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
-msgstr "Egyszerű Git-hoszting"
 
 #: modules/gitweb/forms.py:59
 msgid "Invalid repository URL."
@@ -2934,9 +3108,10 @@ msgstr "Tároló szerkesztve."
 msgid "Edit repository"
 msgstr "Tároló szerkesztése"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "Dokumentáció"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "Súgó"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2962,9 +3137,9 @@ msgstr "Visszajelzés küldése"
 msgid "Contribute"
 msgstr "Hozzájárulás"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "Névjegy"
 
@@ -3059,10 +3234,6 @@ msgstr ""
 #| msgid "Learn more"
 msgid "Learn"
 msgstr "Bővebben"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "Honlap"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -3216,11 +3387,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr "Köszönjük!"
 
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "Súgó"
-
 #: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
@@ -3373,10 +3539,6 @@ msgstr ""
 msgid "ikiwiki"
 msgstr "ikiwiki"
 
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Wiki és blog"
-
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
 msgstr "Adminisztrátori fiók neve"
@@ -3483,10 +3645,6 @@ msgstr ""
 msgid "infinoted"
 msgstr "infinoted"
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby-szerver"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr "Gobby"
@@ -3527,10 +3685,6 @@ msgstr ""
 msgid "Janus"
 msgstr "Janus"
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr "Videószoba"
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr "Janus videószoba"
@@ -3546,7 +3700,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr "JavaScript licencinformáció"
 
@@ -3561,10 +3715,6 @@ msgstr ""
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr "JSXC"
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "Chat kliens"
 
 #: modules/jsxc/manifest.py:16
 #, fuzzy
@@ -3613,10 +3763,6 @@ msgstr ""
 
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
 msgstr ""
 
 #: modules/kiwix/forms.py:23
@@ -3761,9 +3907,19 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "Tanúsítványok"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+#, fuzzy
+#| msgid "Website Security"
+msgid "Web security"
+msgstr "Webhelybiztonság"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3893,7 +4049,7 @@ msgstr ""
 "videóhívásokhoz. Telepítsd a <a href=\"{coturn_url}\">Coturn</a> "
 "alkalmazást, vagy konfigurálj egy külső szervert."
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3958,12 +4114,6 @@ msgstr "IRC-csevegőszoba"
 #| msgid "Media streaming server"
 msgid "Matrix server"
 msgstr "Média streaming szerver"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "Beállítások"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -4266,10 +4416,6 @@ msgstr ""
 msgid "Minetest"
 msgstr "Minetest"
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "Blokk sandbox"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "Játékosok maximális száma"
@@ -4353,10 +4499,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr "MiniDLNA"
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "Egyszerű médiaszerver"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr "Médiafájlok könyvtára"
@@ -4428,10 +4570,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr ""
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "Hírcsatorna-olvasó"
 
 #: modules/miniflux/forms.py:12
 #, fuzzy
@@ -4599,10 +4737,6 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "Audiókonferencia"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "SuperUser jelszavának beállítása"
@@ -4651,11 +4785,6 @@ msgstr "Mumla"
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr ""
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "Szerver"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4716,7 +4845,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Állomásnév"
 
@@ -4754,6 +4883,16 @@ msgstr ""
 "egy címke hossza nem lehet több 63 karakternél. A domainnév teljes hossza "
 "pedig nem lehet több 253 karakternél."
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domainek"
+
+#: modules/names/manifest.py:13
+#, fuzzy
+#| msgid "Evolution"
+msgid "DNS Resolution"
+msgstr "Evolution"
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4788,14 +4927,6 @@ msgstr "Támogatás kérése"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr ""
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domainek"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "Szolgáltatások"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -5079,54 +5210,50 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- válassz --"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "A név, amellyel a hálózat látható."
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "Mód"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "Infrastruktúra"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "Hozzáférési pont"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "Frekvenciasáv"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "Automatikus"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "Csatorna"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
@@ -5135,11 +5262,11 @@ msgstr ""
 "korlátozódik a működés. Az üres vagy \"0\" érték automatikus kiválasztást "
 "jelent."
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -5149,11 +5276,11 @@ msgstr ""
 "ponthoz kapcsolódsz, csak akkor kapcsolódj ha a hozzáférési pont BSSID-je "
 "megegyezik az itt megadottal. Például: 00:11:22:aa:bb:cc."
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "Hitelesítési mód"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
@@ -5161,20 +5288,20 @@ msgstr ""
 "Válaszd a WPA-t ha a vezeték nélküli hálózatod biztonságos és az kliensektől "
 "jelszót kér a csatlakozáshoz."
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "Nyílt"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "Add meg, hogyan csatlakozik a hálózathoz a {box_name} eszközöd"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -5185,7 +5312,7 @@ msgstr ""
 "internetkapcsolatát Wi-Fi-n vagy Ethernet vezetéken keresztül kapja a "
 "routertől. Ez egy tipikus otthoni kiépítés.</p>"
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -5199,7 +5326,7 @@ msgstr ""
 "minden eszköze a {box_name}hoz csatlakozik az internetkapcsolat érdekében.</"
 "p>"
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -5211,11 +5338,11 @@ msgstr ""
 "és nincs más eszköz a hálózaton. Ez közösségi vagy felhőalapú beállítások "
 "esetén fordulhat elő.</p>"
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr "Válaszd ki az internetkapcsolat típusát"
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -5234,7 +5361,7 @@ msgstr ""
 "címmel rendelkezel, de nem vagy biztos abban, hogy idővel változik-e vagy "
 "sem, biztonságosabb ezt a lehetőséget választani.</p>"
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -5254,7 +5381,7 @@ msgstr ""
 "ezt a szolgáltatást az internetszolgáltatódtól külön díj fejében igénybe "
 "veheted.</p>"
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -5274,7 +5401,7 @@ msgstr ""
 "szolgáltatásokhoz. A {box_name} számos megkerülő megoldást kínál erre, de "
 "minden megoldásnak vannak korlátai.</p>"
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
@@ -5282,11 +5409,11 @@ msgstr ""
 "Nem tudom hogy milyen típusú kapcsolatot biztosít az internetszolgáltatóm<p "
 "class=\"help-block\">A legkonzervatívabb intézkedések lesznek felajánlva.</p>"
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "Előnyben részesített router konfiguráció"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -5303,7 +5430,7 @@ msgstr ""
 "felejts el először beállítani egy statikus helyi IP-címet a {box_name} "
 "eszközödnek a router konfigurációjában.</p>"
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -5323,7 +5450,7 @@ msgstr ""
 "továbbítására a működéshez. Minden más alkalmazás javaslatot tesz arra, hogy "
 "melyik port(ok)at kell továbbítani az alkalmazás megfelelő működéséhez. </p>"
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
@@ -5332,6 +5459,30 @@ msgstr ""
 "A router jelenleg nincs konfigurálva <p class=\"help-block\">Válaszd ezt a "
 "lehetőséget, ha még nem konfiguráltad vagy jelenleg nem tudod konfigurálni a "
 "routert, és később szeretnéd, hogy a rendszer emlékeztessen.</p>"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "internet"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+#, fuzzy
+#| msgid "Local Network Domain"
+msgid "Local network"
+msgstr "Helyi hálózati domain"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
+msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
 #, python-format
@@ -5353,7 +5504,7 @@ msgstr "Kapcsolat szerkesztése"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "Szerkesztés"
 
@@ -5554,10 +5705,6 @@ msgstr "Kapcsolat törlése"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "<strong>%(name)s</strong> kapcsolatot véglegesen törlöd?"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "internet"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -5568,13 +5715,6 @@ msgstr "Térköz"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "Ethernet"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -6156,10 +6296,6 @@ msgstr ""
 msgid "Nextcloud"
 msgstr "Következő"
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr ""
-
 #: modules/nextcloud/forms.py:19
 #, fuzzy
 #| msgid "Hostname set"
@@ -6271,11 +6407,7 @@ msgstr "Csatlakozás a VPN-szolgáltatásokhoz"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "Virtuális magánhálózat"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -6292,7 +6424,8 @@ msgstr "Tunnelblick"
 msgid "VPN server"
 msgstr "DNS-szerver"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 #, fuzzy
 #| msgid "Removable Devices"
 msgid "Remote access"
@@ -6396,11 +6529,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "Nyilvános láthatóság"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite domain"
 
@@ -6480,6 +6609,16 @@ msgstr "Egyedi szolgáltatás hozzáadva"
 msgid "This service already exists"
 msgstr "Ez a szolgáltatás már létezik"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+#, fuzzy
+#| msgid "Tunnelblick"
+msgid "Tunneling"
+msgstr "Tunnelblick"
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "Egyedi szolgáltatások"
@@ -6549,10 +6688,6 @@ msgstr ""
 "Tekintsd meg az SSH-kliens beállítási <a href=\"https://pagekite.net/wiki/"
 "Howto/SshOverPageKite/\">instrukciókat</a>"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr "Teljesítmény"
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -6572,9 +6707,15 @@ msgstr ""
 "A teljesítménymutatókat a Teljesítmény segédprogram gyűjti össze, amelyek a "
 "Cockpit alkalmazással tekinthetők meg."
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
+#: modules/performance/manifest.py:18
+#, fuzzy
+#| msgid "System Monitoring"
+msgid "Monitoring"
 msgstr "Rendszerfigyelés"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -6584,8 +6725,18 @@ msgstr "Újraindítás vagy leállítás."
 msgid "Power"
 msgstr "Leállítás"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+#, fuzzy
+#| msgid "Shut down"
+msgid "Shutdown"
+msgstr "Leállítás"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "Újraindítás"
 
@@ -6668,6 +6819,16 @@ msgid ""
 "and reliable."
 msgstr ""
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+#, fuzzy
+#| msgid "DNS Server"
+msgid "Fallback DNS"
+msgstr "DNS-szerver"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -6705,10 +6866,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Web proxy"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -6725,12 +6882,6 @@ msgstr ""
 #| msgid "Gobby Server"
 msgid "Proxy server"
 msgstr "Gobby-szerver"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-#, fuzzy
-#| msgid "Local Network Domain"
-msgid "Local network"
-msgstr "Helyi hálózati domain"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -6764,10 +6915,6 @@ msgstr ""
 #: modules/quassel/__init__.py:51 modules/quassel/manifest.py:9
 msgid "Quassel"
 msgstr "Quassel"
-
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC-kliens"
 
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
@@ -6811,10 +6958,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr "Radicale"
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "Naptár és címjegyzék"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6950,10 +7093,6 @@ msgstr ""
 "lesssecureapps\">https://www.google.com/settings/security/lesssecureapps</"
 "a>)."
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "E-mail kliens"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr "Kizárólag a helyi levelezőszerver használata"
@@ -7007,10 +7146,6 @@ msgstr "Hírcsatornák olvasása és feliratkozás"
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr "RSS-hírfolyam generátor"
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -7079,10 +7214,6 @@ msgstr "Hozzáférés a privát megosztásokhoz"
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr "Samba"
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "Hálózati tárhely"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -7245,10 +7376,6 @@ msgstr "Keresés a weben"
 msgid "Searx"
 msgstr "Searx"
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Webes keresés"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "Biztonságos keresés"
@@ -7290,6 +7417,18 @@ msgstr ""
 "Ha engedélyezett, akkor a Fail2Ban korlátozni fogja a nyers erőből történő "
 "behatolási kísérleteket az SSH-szerver és egyéb engedélyezett, jelszóval "
 "védett internetes szolgáltatásokra."
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Automatic"
+msgid "Automatic bans"
+msgstr "Automatikus"
+
+#: modules/security/manifest.py:10
+#, fuzzy
+#| msgid "Ports"
+msgid "Reports"
+msgstr "Portok"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -7425,13 +7564,13 @@ msgstr ""
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "Könyvjelzők"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "Könyvjelzők"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -7485,10 +7624,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr ""
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr "A szerver állomásneve vagy IP-címe"
@@ -7541,15 +7676,11 @@ msgstr ""
 "Helyi eszközeiddel csatlakozhatsz erre a proxy-ra, és az adataik titkosítva "
 "és proxizva lesznek a Shadowsocks-szerveren keresztül."
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 #, fuzzy
 #| msgid "Shadowsocks"
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr ""
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -7806,6 +7937,18 @@ msgstr ""
 "Legfeljebb ennyi évenkénti pillanatkép legyen megtartva. Az alapértelmezett "
 "érték 0 (nem tart meg éves pillanatképeket)."
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "Véglegesen törlöd az alábbi pillanatképeket?"
@@ -7946,7 +8089,9 @@ msgstr ""
 "egyéb szolgáltatásokat futtathat ilyen kapcsolat használatával."
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
+#, fuzzy
+#| msgid "Secure Shell (SSH) Server"
+msgid "Secure Shell Server"
 msgstr "SSH-szerver"
 
 #: modules/ssh/__init__.py:75
@@ -7980,6 +8125,24 @@ msgid ""
 "SSH."
 msgstr ""
 
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "SSH"
+msgid "SSH"
+msgstr "SSH"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Remove Location"
+msgid "Remote terminal"
+msgstr "Hely eltávolítása"
+
+#: modules/ssh/manifest.py:22
+#, fuzzy
+#| msgid "Fingerprint"
+msgid "Fingerprints"
+msgstr "Ujjlenyomat"
+
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
 msgstr "Szerver ujjlenyomatok"
@@ -8012,7 +8175,7 @@ msgstr ""
 msgid "Proceed to Login"
 msgstr ""
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "Bejelentkezés"
 
@@ -8031,11 +8194,6 @@ msgstr ""
 "adathordozókat kezeld. Megtekintheted a jelenleg is használt adattárolókat, "
 "fel- és lecsatolhatsz cserélhető adathordozókat, kibővítheted a root "
 "partíciót, stb."
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "Tárhely"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -8200,6 +8358,28 @@ msgstr "Megosztás"
 msgid "Other directory (specify below)"
 msgstr "Egyéb könyvtár (add meg alább)"
 
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Disk"
+msgid "Disks"
+msgstr "Lemez"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Automatic"
+msgid "Auto-mount"
+msgstr "Automatikus"
+
+#: modules/storage/manifest.py:9
+#, fuzzy
+#| msgid "Expand Root Partition"
+msgid "Expand partition"
+msgstr "Root partíció kibővítése"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "A következő tárhelyek vannak használatban:"
@@ -8319,10 +8499,6 @@ msgstr "A Syncthing alkalmazás beállítása"
 msgid "Syncthing"
 msgstr "Syncthing"
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr "Fájlszinkronizáció"
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -8357,10 +8533,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr ""
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr ""
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
@@ -8391,7 +8563,7 @@ msgid ""
 "TiddlyWiki before deleting it."
 msgstr ""
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -8405,13 +8577,13 @@ msgstr ""
 "torproject.org/download/download-easy.html.en\">Tor böngésző</a> használatát "
 "javasolja."
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -8419,14 +8591,10 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr "Tor"
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "Anonim hálózat"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -8436,19 +8604,19 @@ msgstr "Tor Onion szolgáltatás"
 msgid "Tor Bridge Relay"
 msgstr "Tor híd relay"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor relay port elérhető"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 átvitel regisztrálva"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 átvitel regisztrálva"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 #, fuzzy
 #| msgid "Onion Service"
 msgid "Onion service is version 3"
@@ -8574,10 +8742,6 @@ msgstr "Anonim hálózat"
 msgid "Onion Service"
 msgstr "Onion-szolgáltatás"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "Portok"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "Beállítások frissítése"
@@ -8587,7 +8751,7 @@ msgstr "Beállítások frissítése"
 msgid "Error configuring app: {error}"
 msgstr "Hiba lépett fel az alkalmazás konfigurációja során: {error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -8596,7 +8760,7 @@ msgid ""
 "using upstream bridges."
 msgstr ""
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 #, fuzzy
 #| msgid "Tor Socks Proxy"
 msgid "Tor Proxy"
@@ -8606,12 +8770,12 @@ msgstr "Tor Socks proxy"
 msgid "Tor Socks Proxy"
 msgstr "Tor Socks proxy"
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "Hozzáférés a {url} URL-hez tcp{kind}-on Tor használatával"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "Hagyd jóvá a Tor használatát {url} célcímhez tcp{kind} protokollon"
@@ -8840,6 +9004,16 @@ msgstr ""
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Gyakori funkciófrissítéseket aktiválása (ajánlott)"
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+#, fuzzy
+#| msgid "New Backup"
+msgid "New features"
+msgstr "Új biztonsági másolat"
 
 #: modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9153,6 +9327,18 @@ msgstr ""
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "Felhasználói fiók létrehozva, bejelentkezés sikeres"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Manage Snapshots"
+msgid "Manage accounts"
+msgstr "Pillanatképek kezelése"
+
+#: modules/users/manifest.py:8
+#, fuzzy
+#| msgid "Permissions"
+msgid "App permissions"
+msgstr "Engedélyek"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -9690,10 +9876,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "Weboldal és blog"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "Nyilvános hozzáférés"
@@ -9748,10 +9930,6 @@ msgstr ""
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
 msgstr "Zoph"
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
-msgstr "Fotó szervező"
 
 #: modules/zoph/forms.py:14
 msgid "Enable OpenStreetMap for maps"
@@ -10010,49 +10188,47 @@ msgstr "A szolgáltatás nem fut (<em>%(service_name)s</em>)."
 msgid "Search with tags"
 msgstr "Keresés a weben"
 
+#: templates/apps.html:42
+#, fuzzy
+#| msgid "Search the web"
+msgid "Clear all tags"
+msgstr "Keresés a weben"
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " Kezdőlap"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "Kezdőlap"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " Alkalmazások"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "Alkalmazások"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " Rendszer"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "Jelszómódosítás"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "Leállítás"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "Kijelentkezés"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "Válassz nyelvet"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "Bejelentkezés"
 
@@ -10281,11 +10457,15 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "A beállítás változatlan"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -10293,6 +10473,99 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "Gudzsaráti"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "Fájl és kódrészlet megosztása"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "Domainnévszerver (DNS)"
+
+#~ msgid "E-book Library"
+#~ msgstr "E-könyvtár"
+
+#~ msgid "Server Administration"
+#~ msgstr "Szerver adminisztráció"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "VoIP-segéd"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "Webes BitTorrent-kliens"
+
+#~ msgid "Chat Server"
+#~ msgstr "Chat szerver"
+
+#~ msgid "Email Server"
+#~ msgstr "E-mail-szerver"
+
+#~ msgid "Simple Git Hosting"
+#~ msgstr "Egyszerű Git-hoszting"
+
+#~ msgid "Documentation"
+#~ msgstr "Dokumentáció"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Wiki és blog"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby-szerver"
+
+#~ msgid "Video Room"
+#~ msgstr "Videószoba"
+
+#~ msgid "Chat Client"
+#~ msgstr "Chat kliens"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "Blokk sandbox"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "Egyszerű médiaszerver"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "Hírcsatorna-olvasó"
+
+#~ msgid "Voice Chat"
+#~ msgstr "Audiókonferencia"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "Virtuális magánhálózat"
+
+#~ msgid "Public Visibility"
+#~ msgstr "Nyilvános láthatóság"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Web proxy"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC-kliens"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "Naptár és címjegyzék"
+
+#~ msgid "Email Client"
+#~ msgstr "E-mail kliens"
+
+#~ msgid "RSS Feed Generator"
+#~ msgstr "RSS-hírfolyam generátor"
+
+#~ msgid "Network File Storage"
+#~ msgstr "Hálózati tárhely"
+
+#~ msgid "Web Search"
+#~ msgstr "Webes keresés"
+
+#~ msgid "File Synchronization"
+#~ msgstr "Fájlszinkronizáció"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "Anonim hálózat"
+
+#~ msgid "Website and Blog"
+#~ msgstr "Weboldal és blog"
+
+#~ msgid "Photo Organizer"
+#~ msgstr "Fotó szervező"
 
 #, fuzzy, python-format
 #~| msgid ""
@@ -10681,11 +10954,6 @@ msgstr "Gudzsaráti"
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "Jelszavas SSH-hitelesítés engedélyezve."
 
-#, fuzzy
-#~| msgid "Error During Backup"
-#~ msgid "Error running apt-get"
-#~ msgstr "Hiba történt a biztonsági mentés közben"
-
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
 #~ msgstr "Alapvető funkcionalitás és webes felület a %(box_name)s számára"
@@ -10874,9 +11142,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Service Alert"
 #~ msgstr "Szolgáltatási riasztás"
-
-#~ msgid "Repair"
-#~ msgstr "Javítás"
 
 #, python-brace-format
 #~ msgid "Internal error in {0}"
@@ -11161,9 +11426,6 @@ msgstr "Gudzsaráti"
 #~ msgid "Connected introducers"
 #~ msgstr "Csatlakozott bevezetők"
 
-#~ msgid "Remove"
-#~ msgstr "Eltávolít"
-
 #, fuzzy
 #~| msgid "Error setting domain name: {exception}"
 #~ msgid "Postfix domain name config"
@@ -11188,11 +11450,6 @@ msgstr "Gudzsaráti"
 #~| msgid "Deleted selected snapshots"
 #~ msgid "Delete selected"
 #~ msgstr "Kiválasztott pillanatképek törölve"
-
-#, fuzzy
-#~| msgid "New Backup"
-#~ msgid "New value"
-#~ msgstr "Új biztonsági másolat"
 
 #, fuzzy
 #~| msgid "Path is not a directory."
@@ -11816,9 +12073,6 @@ msgstr "Gudzsaráti"
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
 
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
-
 #~ msgid "Not Available"
 #~ msgstr "Nem hozzáférhető"
 
@@ -12032,9 +12286,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "SSH Keys"
 #~ msgstr "SSH kulcsok"
-
-#~ msgid "Disk"
-#~ msgstr "Lemez"
 
 #~ msgid "Disk or removable storage where the backup archive will be saved."
 #~ msgstr ""

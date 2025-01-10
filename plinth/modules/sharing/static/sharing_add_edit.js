@@ -22,16 +22,19 @@
  * in this page.
  */
 
-var sharing_groups = $('#id_sharing-groups').parent().parent();
+document.addEventListener('DOMContentLoaded', () => {
+    const sharingGroups = document.getElementById('id_sharing-groups').closest('.form-group');
+    const isPublic = document.getElementById('id_sharing-is_public');
 
-if ($("#id_sharing-is_public").prop('checked')) {
-    sharing_groups.hide();
-}
-
-$("#id_sharing-is_public").change(function() {
-    if (this.checked) {
-        sharing_groups.hide();
-    } else {
-        sharing_groups.show();
+    if (isPublic.checked) {
+        sharingGroups.style.display = 'none';
     }
+
+    isPublic.addEventListener('change', (event) => {
+        if (event.currentTarget.checked) {
+            sharingGroups.style.display = 'none';
+        } else {
+            sharingGroups.style.display = '';
+        }
+    });
 });

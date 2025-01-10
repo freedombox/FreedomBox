@@ -6,67 +6,72 @@
 
 <div class="table-responsive">
   <table class="table" id="archives-list">
-    <thead class="collapsible-button" data-bs-toggle="collapse" data-bs-target="#{{ uuid }}">
+    <thead>
       <tr>
         <th colspan="2">
-          <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
-          {% if repository.error %}
-            <span class="fa fa-exclamation-triangle mount-error"
-                  aria-hidden="true" title="{{ repository.error }}">
-            </span>
-          {% elif repository.is_encrypted %}
-            <span class="fa fa-lock encrypted"
-                  aria-hidden="true" title="{% trans "This repository is encrypted" %}">
-            </span>
-          {% endif %}
+          <div  class="d-sm-flex flex-sm-row">
+            <div class="flex-sm-grow-1 lh-lg collapsible-button"
+                 data-bs-toggle="collapse" data-bs-target="#{{ uuid }}">
+              <span class="fa fa-chevron-right fa-fw" aria-hidden="true"></span>
+              {% if repository.error %}
+                <span class="fa fa-exclamation-triangle mount-error"
+                      aria-hidden="true" title="{{ repository.error }}">
+                </span>
+              {% elif repository.is_encrypted %}
+                <span class="fa fa-lock encrypted"
+                      aria-hidden="true" title="{% trans "This repository is encrypted" %}">
+                </span>
+              {% endif %}
 
-          {{ repository.name }}
+              {{ repository.name }}
+            </div>
 
-          <span class="pull-right">
-            <a class="repository-schedule btn btn-sm btn-primary"
-               href="{% url 'backups:schedule' uuid %}">
-              <span class="fa fa-clock-o" aria-hidden="true"></span>
-              {% trans "Schedule" %}
-            </a>
+            <div class="text-end">
+              <a class="repository-schedule btn btn-sm btn-primary"
+                 href="{% url 'backups:schedule' uuid %}">
+                <span class="fa fa-clock-o" aria-hidden="true"></span>
+                {% trans "Schedule" %}
+              </a>
 
-            {% if repository.flags.mountable %}
+              {% if repository.flags.mountable %}
 
-              {% if repository.mounted %}
+                {% if repository.mounted %}
 
-                <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
-                      class="inline-block" >
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-default"
-                         title="{% trans 'Unmount Location' %}">
-                    <span class="fa fa-eject" aria-hidden="true"></span>
-                  </button>
-                </form>
+                  <form action="{% url 'backups:repository-umount' uuid %}" method="POST"
+                        class="inline-block" >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-default"
+                           title="{% trans 'Unmount Location' %}">
+                      <span class="fa fa-eject" aria-hidden="true"></span>
+                    </button>
+                  </form>
 
-              {% else %}
+                {% else %}
 
-                <form action="{% url 'backups:repository-mount' uuid %}" method="POST"
-                      class="inline-block" >
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-default"
-                          title="{% trans 'Mount Location' %}">
-                    <span class="fa fa-eye" aria-hidden="true"></span>
-                  </button>
-                </form>
+                  <form action="{% url 'backups:repository-mount' uuid %}" method="POST"
+                        class="inline-block" >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-default"
+                            title="{% trans 'Mount Location' %}">
+                      <span class="fa fa-eye" aria-hidden="true"></span>
+                    </button>
+                  </form>
+
+                {% endif %}
 
               {% endif %}
 
-            {% endif %}
+              {% if repository.flags.removable %}
 
-            {% if repository.flags.removable %}
+                <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
+                   role="button" class="repository-remove btn btn-sm btn-default"
+                   href="{% url 'backups:repository-remove' uuid %}">
+                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                </a>
 
-              <a title="{% trans 'Remove Backup Location. This will not delete the remote backup.' %}"
-                 role="button" class="repository-remove btn btn-sm btn-default"
-                 href="{% url 'backups:repository-remove' uuid %}">
-                <span class="fa fa-trash-o" aria-hidden="true"></span>
-              </a>
-
-            {% endif %}
-          </span>
+              {% endif %}
+            </div>
+          </div>
         </th>
       </tr>
     </thead>

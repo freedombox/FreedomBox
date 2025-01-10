@@ -3,9 +3,17 @@
 Application manifest for pagekite.
 """
 
+from django.utils.translation import gettext_lazy as _
+
 backup = {
     'config': {
         'directories': ['/etc/pagekite.d/']
     },
     'services': ['pagekite']
 }
+
+tags = [
+    _('Reachability'),
+    _('Remote access'),
+    _('Tunneling'),
+]

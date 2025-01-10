@@ -9,12 +9,11 @@ from stronghold.decorators import public
 from . import views
 
 system_urlpatterns = [
-    re_path(r'^sys/#visibility$', views.system_index, name='visibility'),
-    re_path(r'^sys/#data$', views.system_index, name='data'),
-    re_path(r'^sys/#system$', views.system_index, name='system'),
-    re_path(r'^sys/#security$', views.system_index, name='security'),
-    re_path(r'^sys/#administration$', views.system_index,
-            name='administration'),
+    re_path(r'^sys/$', views.system_index, name='visibility'),
+    re_path(r'^sys/$', views.system_index, name='data'),
+    re_path(r'^sys/$', views.system_index, name='system'),
+    re_path(r'^sys/$', views.system_index, name='security'),
+    re_path(r'^sys/$', views.system_index, name='administration'),
 ]
 
 urlpatterns = [

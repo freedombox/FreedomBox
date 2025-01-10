@@ -48,7 +48,6 @@ class TTRSSApp(app_module.App):
 
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                name=_('Tiny Tiny RSS'), icon_filename='ttrss',
-                               short_description=_('News Feed Reader'),
                                description=_description,
                                manual_page='TinyTinyRSS',
                                clients=manifest.clients, tags=manifest.tags,

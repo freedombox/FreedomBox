@@ -22,12 +22,15 @@
  * in this page.
  */
 
-(function($) {
-    $("#select-all").click(function() {
-        var checkedState = this.checked;
-        checkboxes = document.getElementsByName('snapshot_list');
-        jQuery.each(checkboxes, function(i, checkbox) {
-            checkbox.checked = checkedState;
+document.addEventListener('DOMContentLoaded', () => {
+    const selectAllCheckbox = document.getElementById('select-all');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('click', (event) => {
+            const checkedState = event.currentTarget.checked;
+            const checkboxes = document.getElementsByName('snapshot_list');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checkedState;
+            });
         });
-    });
-})(jQuery);
+    }
+});

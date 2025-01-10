@@ -30,7 +30,7 @@ class HelpApp(app_module.App):
                                is_essential=True)
         self.add(info)
 
-        menu_item = menu.Menu('menu-help', _('Documentation'), None, 'fa-book',
+        menu_item = menu.Menu('menu-help', _('Help'), None, 'fa-book',
                               'help:index', parent_url_name='index')
         self.add(menu_item)
         menu_item = menu.Menu('menu-help-manual',

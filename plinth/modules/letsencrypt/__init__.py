@@ -58,9 +58,8 @@ class LetsEncryptApp(app_module.App):
         info = app_module.Info(app_id=self.app_id, version=self._version,
                                is_essential=True, depends=['names'],
                                name=_('Let\'s Encrypt'), icon='fa-lock',
-                               short_description=_('Certificates'),
                                description=_description,
-                               manual_page='LetsEncrypt',
+                               manual_page='LetsEncrypt', tags=manifest.tags,
                                donation_url='https://letsencrypt.org/donate/')
         self.add(info)
 

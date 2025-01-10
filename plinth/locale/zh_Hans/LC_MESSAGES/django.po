@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 21:12-0500\n"
-"PO-Revision-Date: 2024-11-20 22:29+0000\n"
-"Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
-"org>\n"
+"POT-Creation-Date: 2024-12-30 20:05-0500\n"
+"PO-Revision-Date: 2025-01-01 08:00+0000\n"
+"Last-Translator: 大王叫我来巡山 "
+"<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/freedombox/freedombox/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -18,14 +18,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: config.py:103
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr ""
 
-#: context_processors.py:23 views.py:117
+#: context_processors.py:21 views.py:169
 msgid "FreedomBox"
 msgstr "FreedomBox"
 
@@ -98,30 +98,51 @@ msgstr "此 web 管理界面的语言"
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
 
-#: menu.py:106
-msgid "Visibility"
-msgstr "可见性"
+#: menu.py:112 templates/base.html:119
+msgid "Home"
+msgstr "主页"
 
-#: menu.py:108
-msgid "Data"
-msgstr ""
+#: menu.py:113 templates/base.html:128
+msgid "Apps"
+msgstr "应用程序"
 
-#: menu.py:110 templates/base.html:139
+#: menu.py:115 menu.py:122 templates/base.html:137
 msgid "System"
 msgstr "系统"
 
-#: menu.py:112 modules/networks/templates/connection_show.html:274
-#: modules/security/__init__.py:35
+#: menu.py:118
+msgid "Visibility"
+msgstr "可见性"
+
+#: menu.py:120
+msgid "Data"
+msgstr ""
+
+#: menu.py:124 modules/networks/templates/connection_show.html:274
+#: modules/security/__init__.py:35 modules/upgrades/manifest.py:10
 msgid "Security"
 msgstr "安全"
 
-#: menu.py:114
+#: menu.py:126
 msgid "Administration"
 msgstr "管理"
 
-#: middleware.py:131
+#: middleware.py:134
 msgid "System is possibly under heavy load. Please retry later."
 msgstr ""
+
+#: middleware.py:147
+#, python-brace-format
+msgid "Page not found: {url}"
+msgstr ""
+
+#: middleware.py:150
+msgid "Error running operation."
+msgstr "运行操作出错。"
+
+#: middleware.py:152
+msgid "Error loading page."
+msgstr "加载页面出错。"
 
 #: modules/apache/__init__.py:32
 msgid "Apache HTTP Server"
@@ -165,37 +186,49 @@ msgstr ""
 msgid "Service Discovery"
 msgstr "服务发现"
 
-#: modules/avahi/__init__.py:61
+#: modules/avahi/__init__.py:62
 msgid "Local Network Domain"
 msgstr "本地网络领域"
+
+#: modules/avahi/manifest.py:14
+msgid "Auto-discovery"
+msgstr ""
+
+#: modules/avahi/manifest.py:14 modules/backups/manifest.py:17
+msgid "Local"
+msgstr ""
+
+#: modules/avahi/manifest.py:14
+msgid "mDNS"
+msgstr ""
 
 #: modules/backups/__init__.py:24
 msgid "Backups allows creating and managing backup archives."
 msgstr "备份允许创建和管理备份存档。"
 
-#: modules/backups/__init__.py:44 modules/backups/__init__.py:168
-#: modules/backups/__init__.py:213
+#: modules/backups/__init__.py:44 modules/backups/__init__.py:174
+#: modules/backups/__init__.py:219
 msgid "Backups"
 msgstr "备份"
 
-#: modules/backups/__init__.py:165
+#: modules/backups/__init__.py:171
 msgid ""
 "Enable an automatic backup schedule for data safety. Prefer an encrypted "
 "remote backup location or an extra attached disk."
 msgstr "为数据安全启用自动备份计划，最好使用加密的远程备份位置或附加的磁盘。"
 
-#: modules/backups/__init__.py:171
+#: modules/backups/__init__.py:177
 msgid "Enable a Backup Schedule"
 msgstr "启用备份计划"
 
-#: modules/backups/__init__.py:175 modules/backups/__init__.py:222
+#: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:79 modules/storage/__init__.py:326
 #: modules/upgrades/__init__.py:149
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "转到 {app_name}"
 
-#: modules/backups/__init__.py:210
+#: modules/backups/__init__.py:216
 #, python-brace-format
 msgid ""
 "A scheduled backup failed. Past {error_count} attempts for backup did not "
@@ -203,7 +236,7 @@ msgid ""
 msgstr ""
 "定时备份失败，尝试{error_count}次备份未成功。最后的错误是：{error_message}"
 
-#: modules/backups/__init__.py:218
+#: modules/backups/__init__.py:224
 msgid "Error During Backup"
 msgstr "备份时出错"
 
@@ -330,7 +363,7 @@ msgstr "无效的主机名：{hostname}"
 msgid "Invalid directory path: {dir_path}"
 msgstr "无效的目录路径：{dir_path}"
 
-#: modules/backups/forms.py:179
+#: modules/backups/forms.py:179 modules/letsencrypt/manifest.py:11
 msgid "Encryption"
 msgstr "加密"
 
@@ -350,7 +383,7 @@ msgstr "存储库中的密钥"
 msgid "None"
 msgstr "空"
 
-#: modules/backups/forms.py:184 modules/networks/forms.py:332
+#: modules/backups/forms.py:184 modules/networks/forms.py:340
 msgid "Passphrase"
 msgstr "密码"
 
@@ -410,42 +443,89 @@ msgstr "远程备份存储库已存在。"
 msgid "Select verified SSH public key"
 msgstr "选择经过验证的 SSH 公钥"
 
-#: modules/backups/repository.py:30
+#: modules/backups/manifest.py:14
+#: modules/backups/templates/backups_repository.html:92
+#: modules/backups/templates/backups_restore.html:27
+#: modules/backups/views.py:240 modules/snapshot/manifest.py:14
+#: templates/toolbar.html:44 templates/toolbar.html:45
+msgid "Restore"
+msgstr "恢复"
+
+#: modules/backups/manifest.py:15
+msgid "Encrypted"
+msgstr "已加密"
+
+#: modules/backups/manifest.py:16
+msgid "Schedules"
+msgstr "计划"
+
+#: modules/backups/manifest.py:18
+msgid "Remote"
+msgstr "远程"
+
+#: modules/backups/manifest.py:19
+msgid "App data"
+msgstr "应用数据"
+
+#: modules/backups/manifest.py:20
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
+#: modules/miniflux/templates/miniflux.html:12
+#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
+msgid "Configuration"
+msgstr "配置"
+
+#: modules/backups/manifest.py:21
+msgid "Borg"
+msgstr ""
+
+#: modules/backups/privileged.py:31
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr "连接被拒绝——请确认您提供了正确的凭证并且服务器在运行。"
 
-#: modules/backups/repository.py:37
+#: modules/backups/privileged.py:38
 msgid "Connection refused"
 msgstr "连接被拒绝"
 
-#: modules/backups/repository.py:44
+#: modules/backups/privileged.py:45
 msgid "Repository not found"
 msgstr "找不到存储库"
 
-#: modules/backups/repository.py:49
+#: modules/backups/privileged.py:50
 msgid "Incorrect encryption passphrase"
 msgstr "加密密码不正确"
 
-#: modules/backups/repository.py:54
+#: modules/backups/privileged.py:55
 msgid "SSH access denied"
 msgstr "SSH 访问被拒绝"
 
-#: modules/backups/repository.py:60
+#: modules/backups/privileged.py:61
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "存储库的路径为空或已有备份。"
 
-#: modules/backups/repository.py:145
+#: modules/backups/privileged.py:74
+msgid "An archive with given name already exists in the repository."
+msgstr "存储库中已存在同名存档。"
+
+#: modules/backups/privileged.py:81
+msgid "Archive with given name was not found in the repository."
+msgstr ""
+
+#: modules/backups/privileged.py:87
+msgid "Backup system is busy with another operation."
+msgstr ""
+
+#: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
 msgstr "现有存储库未加密。"
 
-#: modules/backups/repository.py:337
+#: modules/backups/repository.py:266
 #, python-brace-format
 msgid "{box_name} storage"
 msgstr "{box_name} 存储"
 
-#: modules/backups/templates/backups.html:17 modules/backups/views.py:115
+#: modules/backups/templates/backups.html:17 modules/backups/views.py:125
 msgid "Create a new backup"
 msgstr "创建新备份"
 
@@ -484,7 +564,6 @@ msgstr "现有的备份"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_app.html:32
 #: modules/diagnostics/templates/diagnostics_full.html:60
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
@@ -536,38 +615,31 @@ msgstr "时间"
 msgid "Delete Archive %(name)s"
 msgstr "删除名为 %(name)s 的存档"
 
-#: modules/backups/templates/backups_repository.html:19
+#: modules/backups/templates/backups_repository.html:22
 msgid "This repository is encrypted"
 msgstr "此存储库已加密"
 
-#: modules/backups/templates/backups_repository.html:29
+#: modules/backups/templates/backups_repository.html:33
 msgid "Schedule"
 msgstr "计划"
 
-#: modules/backups/templates/backups_repository.html:40
+#: modules/backups/templates/backups_repository.html:44
 msgid "Unmount Location"
 msgstr "卸载存储位置"
 
-#: modules/backups/templates/backups_repository.html:51
+#: modules/backups/templates/backups_repository.html:55
 msgid "Mount Location"
 msgstr "挂载位置"
 
-#: modules/backups/templates/backups_repository.html:62
+#: modules/backups/templates/backups_repository.html:66
 msgid "Remove Backup Location. This will not delete the remote backup."
 msgstr "移除备份位置，这不会删除远程备份。"
 
-#: modules/backups/templates/backups_repository.html:83
+#: modules/backups/templates/backups_repository.html:88
 msgid "Download"
 msgstr "下载"
 
-#: modules/backups/templates/backups_repository.html:87
-#: modules/backups/templates/backups_restore.html:27
-#: modules/backups/views.py:220 templates/toolbar.html:44
-#: templates/toolbar.html:45
-msgid "Restore"
-msgstr "恢复"
-
-#: modules/backups/templates/backups_repository.html:109
+#: modules/backups/templates/backups_repository.html:114
 msgid "No archives currently exist."
 msgstr "目前没有备份档。"
 
@@ -654,99 +726,107 @@ msgstr ""
 msgid "Verify Host"
 msgstr "核实本地计算机"
 
-#: modules/backups/views.py:58
+#: modules/backups/views.py:69
 msgid "Backup schedule updated."
 msgstr "备份计划已更新。"
 
-#: modules/backups/views.py:77
+#: modules/backups/views.py:88
 msgid "Schedule Backups"
 msgstr "计划备份"
 
-#: modules/backups/views.py:110
+#: modules/backups/views.py:150
 msgid "Archive created."
 msgstr "文档已创建。"
 
-#: modules/backups/views.py:146
+#: modules/backups/views.py:162
 msgid "Delete Archive"
 msgstr "删除文档"
 
-#: modules/backups/views.py:158
+#: modules/backups/views.py:175
 msgid "Archive deleted."
 msgstr "归档已删除。"
 
-#: modules/backups/views.py:171
+#: modules/backups/views.py:189
 msgid "Upload and restore a backup"
 msgstr "上传并且储存一个备份"
 
-#: modules/backups/views.py:208
-msgid "Restored files from backup."
-msgstr "从备份中恢复了文件。"
+#: modules/backups/views.py:218
+msgid "Upload successful."
+msgstr "上传成功。"
 
-#: modules/backups/views.py:236
+#: modules/backups/views.py:256
 msgid "No backup file found."
 msgstr "没有找到备份文件。"
 
-#: modules/backups/views.py:244
+#: modules/backups/views.py:264
 msgid "Restore from uploaded file"
 msgstr "从已上传的文件中恢复"
 
-#: modules/backups/views.py:303
+#: modules/backups/views.py:278 modules/backups/views.py:299
+msgid "Restored files from backup."
+msgstr "从备份中恢复了文件。"
+
+#: modules/backups/views.py:329
 msgid "No additional disks available to add a repository."
 msgstr "没有可增加到信息库的额外可用磁盘。"
 
-#: modules/backups/views.py:311
+#: modules/backups/views.py:337
 msgid "Create backup repository"
 msgstr "创建备份存储库"
 
-#: modules/backups/views.py:338
+#: modules/backups/views.py:352
+msgid "Added new repository."
+msgstr "添加新存储库。"
+
+#: modules/backups/views.py:366
 msgid "Create remote backup repository"
 msgstr "创建远程备份存储库"
 
-#: modules/backups/views.py:358
+#: modules/backups/views.py:388
 msgid "Added new remote SSH repository."
 msgstr "已添加新的远程 SSH 存储库。"
 
-#: modules/backups/views.py:380
+#: modules/backups/views.py:410
 msgid "Verify SSH hostkey"
 msgstr "验证 SSH hostkey"
 
-#: modules/backups/views.py:406
+#: modules/backups/views.py:436
 msgid "SSH host already verified."
 msgstr "SSH 主机已经验证过了。"
 
-#: modules/backups/views.py:416
+#: modules/backups/views.py:447
 msgid "SSH host verified."
 msgstr "SSH 主机已验证。"
 
-#: modules/backups/views.py:431
+#: modules/backups/views.py:463
 msgid "SSH host public key could not be verified."
 msgstr "SSH 主机的公钥无法被验证。"
 
-#: modules/backups/views.py:433
+#: modules/backups/views.py:465
 msgid "Authentication to remote server failed."
 msgstr "远程服务器认证失败。"
 
-#: modules/backups/views.py:435
+#: modules/backups/views.py:467
 msgid "Error establishing connection to server: {}"
 msgstr "启用到服务器的连接时错误：{}"
 
-#: modules/backups/views.py:446
+#: modules/backups/views.py:478
 msgid "Repository removed."
 msgstr "储存库被移除。"
 
-#: modules/backups/views.py:460
+#: modules/backups/views.py:492
 msgid "Remove Repository"
 msgstr "移除存储"
 
-#: modules/backups/views.py:469
+#: modules/backups/views.py:502
 msgid "Repository removed. Backups were not deleted."
 msgstr "存储库被删除，备份并没有被删除。"
 
-#: modules/backups/views.py:479
+#: modules/backups/views.py:513
 msgid "Unmounting failed!"
 msgstr "卸载失败！"
 
-#: modules/backups/views.py:494 modules/backups/views.py:498
+#: modules/backups/views.py:529 modules/backups/views.py:533
 msgid "Mounting failed"
 msgstr "安装失败"
 
@@ -813,10 +893,6 @@ msgstr "列出并阅读所有文件"
 msgid "bepasty"
 msgstr "bepasty"
 
-#: modules/bepasty/__init__.py:59
-msgid "File & Snippet Sharing"
-msgstr "文件和片段共享"
-
 #: modules/bepasty/forms.py:17
 msgid "Public Access (default permissions)"
 msgstr "公共访问（默认权限）"
@@ -867,7 +943,7 @@ msgid "No passwords currently configured."
 msgstr "目前没有配置密码。"
 
 #: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:91
-#: modules/miniflux/forms.py:14 modules/networks/forms.py:278
+#: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
 msgstr "密码"
@@ -962,10 +1038,6 @@ msgstr ""
 msgid "BIND"
 msgstr "BIND"
 
-#: modules/bind/__init__.py:41
-msgid "Domain Name Server"
-msgstr "域名服务器"
-
 #: modules/bind/forms.py:19
 msgid "Forwarders"
 msgstr "转发器"
@@ -974,6 +1046,19 @@ msgstr "转发器"
 msgid ""
 "A list DNS servers, separated by space, to which requests will be forwarded"
 msgstr "DNS 服务器列表，请求将会被转发到这里，使用空格分割"
+
+#: modules/bind/manifest.py:16
+msgid "DNS"
+msgstr "DNS"
+
+#: modules/bind/manifest.py:17 modules/mumble/manifest.py:67
+#: modules/radicale/manifest.py:91 modules/shadowsocks/forms.py:24
+msgid "Server"
+msgstr "服务器"
+
+#: modules/bind/manifest.py:18
+msgid "Resolver"
+msgstr ""
 
 #: modules/bind/templates/bind.html:11
 msgid "Serving Domains"
@@ -1056,10 +1141,6 @@ msgstr "使用 calibre 电子书库"
 #: modules/calibre/__init__.py:56 modules/calibre/manifest.py:6
 msgid "calibre"
 msgstr "calibre"
-
-#: modules/calibre/__init__.py:57
-msgid "E-book Library"
-msgstr "电子书库"
 
 #: modules/calibre/forms.py:16
 msgid "Name of the new library"
@@ -1186,9 +1267,36 @@ msgstr ""
 msgid "Cockpit"
 msgstr "Cockpit"
 
-#: modules/cockpit/__init__.py:55
-msgid "Server Administration"
-msgstr "服务器管理"
+#: modules/cockpit/manifest.py:23
+msgid "Advanced administration"
+msgstr "高级管理"
+
+#: modules/cockpit/manifest.py:24
+msgid "Web terminal"
+msgstr "Web 终端"
+
+#: modules/cockpit/manifest.py:25 modules/storage/__init__.py:47
+#: modules/storage/__init__.py:319 modules/storage/__init__.py:350
+#: modules/storage/__init__.py:396
+msgid "Storage"
+msgstr "存储"
+
+#: modules/cockpit/manifest.py:26
+msgid "Networking"
+msgstr "网络"
+
+#: modules/cockpit/manifest.py:27 modules/names/templates/names.html:20
+msgid "Services"
+msgstr "服务"
+
+#: modules/cockpit/manifest.py:28
+msgid "Logs"
+msgstr ""
+
+#: modules/cockpit/manifest.py:29 modules/performance/__init__.py:16
+#: modules/performance/__init__.py:40
+msgid "Performance"
+msgstr ""
 
 #: modules/config/__init__.py:18
 msgid ""
@@ -1267,6 +1375,18 @@ msgid ""
 "from various services"
 msgstr "日志记录了访问系统的人员，以及各种服务的调试信息"
 
+#: modules/config/manifest.py:8 modules/help/templates/help_about.html:100
+msgid "Homepage"
+msgstr "主页"
+
+#: modules/config/manifest.py:8
+msgid "Logging"
+msgstr ""
+
+#: modules/config/manifest.py:8
+msgid "Advanced apps"
+msgstr "高级应用"
+
 #: modules/config/views.py:41
 #, python-brace-format
 msgid "Error setting webserver home page: {exception}"
@@ -1312,10 +1432,6 @@ msgstr ""
 #: modules/coturn/__init__.py:52
 msgid "Coturn"
 msgstr "Coturn"
-
-#: modules/coturn/__init__.py:53
-msgid "VoIP Helper"
-msgstr "网络电话助手"
 
 #: modules/coturn/forms.py:23
 msgid "Invalid list of STUN/TURN Server URIs"
@@ -1369,6 +1485,14 @@ msgstr "设置您的时区来得到准确的时间戳。这将影响全系统时
 msgid "-- no time zone set --"
 msgstr "-- 时区未设置 --"
 
+#: modules/datetime/manifest.py:15
+msgid "Network time"
+msgstr "网络时间"
+
+#: modules/datetime/manifest.py:15
+msgid "Timezone"
+msgstr "时区"
+
 #: modules/datetime/views.py:53
 #, python-brace-format
 msgid "Error setting time zone: {exception}"
@@ -1395,10 +1519,6 @@ msgstr "使用BitTorrent应用程序下载文件"
 #: modules/deluge/__init__.py:60 modules/deluge/manifest.py:6
 msgid "Deluge"
 msgstr "启用 Deluge"
-
-#: modules/deluge/__init__.py:62 modules/transmission/__init__.py:76
-msgid "BitTorrent Web Client"
-msgstr "BitTorrent 网页客户端"
 
 #: modules/deluge/forms.py:20 modules/transmission/forms.py:20
 msgid "Download directory"
@@ -1519,6 +1639,18 @@ msgstr "启用自动修复"
 msgid "If issues are found, try to repair them automatically."
 msgstr ""
 
+#: modules/diagnostics/manifest.py:10
+msgid "Detect problems"
+msgstr ""
+
+#: modules/diagnostics/manifest.py:10
+msgid "Repair"
+msgstr "修复"
+
+#: modules/diagnostics/manifest.py:10
+msgid "Daily"
+msgstr ""
+
 #: modules/diagnostics/templates/diagnostics.html:11
 msgid "Diagnostics Run"
 msgstr "运行诊断"
@@ -1546,7 +1678,7 @@ msgstr "应用程序。%(app_name)s"
 msgid "Try to repair"
 msgstr ""
 
-#: modules/diagnostics/templates/diagnostics_app.html:39
+#: modules/diagnostics/templates/diagnostics_app.html:29
 msgid "This app does not support diagnostics"
 msgstr "此应用程序不支持诊断"
 
@@ -1575,11 +1707,11 @@ msgstr "测试"
 msgid "Result"
 msgstr "结果"
 
-#: modules/diagnostics/views.py:125
+#: modules/diagnostics/views.py:117
 msgid "Diagnostic Test"
 msgstr "诊断测试"
 
-#: modules/diagnostics/views.py:155
+#: modules/diagnostics/views.py:146
 #, python-brace-format
 msgid "App {app_id} is not installed, cannot repair"
 msgstr ""
@@ -1734,11 +1866,11 @@ msgid "Invalid domain name"
 msgstr "无效的域名"
 
 #: modules/dynamicdns/forms.py:88 modules/miniflux/forms.py:11
-#: modules/networks/forms.py:277 modules/users/forms.py:130
+#: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "用户名"
 
-#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:280
+#: modules/dynamicdns/forms.py:95 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "显示密码"
 
@@ -1754,8 +1886,24 @@ msgstr "使用IPv6而不是IPv4"
 msgid "This field is required."
 msgstr ""
 
+#: modules/dynamicdns/manifest.py:17
+#: modules/dynamicdns/templates/dynamicdns.html:18
+#: modules/email/templates/email.html:35
+#: modules/letsencrypt/templates/letsencrypt.html:24
+#: modules/mediawiki/forms.py:64
+msgid "Domain"
+msgstr "域名"
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Free"
+msgstr ""
+
+#: modules/dynamicdns/manifest.py:17
+msgid "Needs public IP"
+msgstr "需要公共 IP"
+
 #: modules/dynamicdns/templates/dynamicdns.html:11
-#: modules/ejabberd/templates/ejabberd.html:13
+#: modules/ejabberd/templates/ejabberd.html:13 modules/firewall/manifest.py:10
 #: modules/firewall/templates/firewall.html:16
 #: modules/firewall/templates/firewall.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:17
@@ -1767,13 +1915,6 @@ msgstr ""
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
 msgstr "状态"
-
-#: modules/dynamicdns/templates/dynamicdns.html:18
-#: modules/email/templates/email.html:35
-#: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
-msgid "Domain"
-msgstr "域名"
 
 #: modules/dynamicdns/templates/dynamicdns.html:19
 msgid "Last update"
@@ -1844,10 +1985,6 @@ msgstr ""
 #: modules/ejabberd/__init__.py:60
 msgid "ejabberd"
 msgstr "ejabberd"
-
-#: modules/ejabberd/__init__.py:62 modules/matrixsynapse/__init__.py:56
-msgid "Chat Server"
-msgstr "聊天服务器"
 
 #: modules/ejabberd/forms.py:19
 msgid "Domain names"
@@ -2017,15 +2154,11 @@ msgstr ""
 msgid "Postfix/Dovecot"
 msgstr ""
 
-#: modules/email/__init__.py:64
-msgid "Email Server"
-msgstr "邮件服务器"
-
-#: modules/email/__init__.py:84
+#: modules/email/__init__.py:83
 msgid "My Email Aliases"
 msgstr "我的邮箱别名"
 
-#: modules/email/__init__.py:85
+#: modules/email/__init__.py:84
 msgid "Manage Aliases for Mailbox"
 msgstr "管理邮箱别名"
 
@@ -2175,17 +2308,13 @@ msgid ""
 "supported."
 msgstr ""
 
-#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:80
+#: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
 msgid "View and edit wiki applications"
 msgstr "查看和编辑 wiki 应用程序"
 
 #: modules/featherwiki/__init__.py:59 modules/featherwiki/manifest.py:9
 msgid "Feather Wiki"
-msgstr ""
-
-#: modules/featherwiki/__init__.py:61
-msgid "Personal Notebooks"
 msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
@@ -2220,8 +2349,7 @@ msgstr ""
 
 #: modules/featherwiki/manifest.py:18
 #: modules/help/templates/help_about.html:108 modules/ikiwiki/manifest.py:15
-#: modules/mediawiki/__init__.py:52 modules/mediawiki/manifest.py:25
-#: modules/tiddlywiki/manifest.py:19
+#: modules/mediawiki/manifest.py:25 modules/tiddlywiki/manifest.py:19
 msgid "Wiki"
 msgstr "共笔文档"
 
@@ -2393,6 +2521,19 @@ msgstr "外网端口 {name}（{details}）可用"
 msgid "Port {name} ({details}) unavailable for external networks"
 msgstr ""
 
+#: modules/firewall/manifest.py:10 modules/tor/templates/tor.html:20
+msgid "Ports"
+msgstr "端口"
+
+#: modules/firewall/manifest.py:10
+msgid "Blocking"
+msgstr "拦截"
+
+#: modules/firewall/manifest.py:10 modules/networks/forms.py:319
+#: modules/upgrades/manifest.py:10
+msgid "Automatic"
+msgstr "自动"
+
 #: modules/firewall/templates/firewall.html:21
 msgid "Service/Port"
 msgstr "服务/端口"
@@ -2478,49 +2619,49 @@ msgstr ""
 msgid "Firstboot Wizard Secret"
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:11
+#: modules/first_boot/templates/firstboot_complete.html:14
 msgid "Setup Complete! Next Steps:"
 msgstr "安装已完成！后续步骤："
 
-#: modules/first_boot/templates/firstboot_complete.html:18
+#: modules/first_boot/templates/firstboot_complete.html:21
 #, python-format
 msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:27
+#: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:114
 msgid "Update now"
 msgstr "立即更新"
 
-#: modules/first_boot/templates/firstboot_complete.html:36
+#: modules/first_boot/templates/firstboot_complete.html:39
 #, python-format
 msgid ""
 "Review <a href=\"%(privacy_url)s\" target=\"_blank\">privacy options</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:46
+#: modules/first_boot/templates/firstboot_complete.html:49
 #, python-format
 msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:57
+#: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
 msgid ""
 "Configure a <a href=\"%(names_url)s\" target=\"_blank\">domain name</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:67
+#: modules/first_boot/templates/firstboot_complete.html:70
 #, python-format
 msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
 
-#: modules/first_boot/templates/firstboot_complete.html:78
+#: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
 msgid ""
 "Put %(box_name)s to use by installing <a href=\"%(apps_url)s\" "
@@ -2558,10 +2699,6 @@ msgstr ""
 
 #: modules/gitweb/__init__.py:48 modules/gitweb/manifest.py:10
 msgid "Gitweb"
-msgstr ""
-
-#: modules/gitweb/__init__.py:49
-msgid "Simple Git Hosting"
 msgstr ""
 
 #: modules/gitweb/forms.py:59
@@ -2684,9 +2821,10 @@ msgstr "已编辑储存库。"
 msgid "Edit repository"
 msgstr "编辑存储库"
 
-#: modules/help/__init__.py:33
-msgid "Documentation"
-msgstr "文档"
+#: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
+#: templates/help-menu.html:8 templates/help-menu.html:14
+msgid "Help"
+msgstr "帮助"
 
 #: modules/help/__init__.py:37 modules/help/templates/help_about.html:104
 #: templates/help-menu.html:20 templates/help-menu.html:21
@@ -2712,17 +2850,15 @@ msgstr ""
 msgid "Contribute"
 msgstr "贡献"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:215 templates/base.html:218
 #: templates/help-menu.html:46 templates/help-menu.html:47
-#: templates/index.html:96
+#: templates/index.html:98
 msgid "About"
 msgstr "关于"
 
 #: modules/help/templates/help_about.html:25 templates/messages.html:23
-#, fuzzy
-#| msgid "Success"
 msgid "Success:"
-msgstr "成功"
+msgstr "成功："
 
 #: modules/help/templates/help_about.html:29
 #: modules/upgrades/templates/upgrades_configure.html:26
@@ -2798,10 +2934,6 @@ msgstr ""
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
 msgstr "了解信息"
-
-#: modules/help/templates/help_about.html:100
-msgid "Homepage"
-msgstr "主页"
 
 #: modules/help/templates/help_about.html:116 templates/toolbar.html:19
 msgid "Donate"
@@ -2927,11 +3059,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr ""
 
-#: modules/help/templates/help_index.html:14 templates/help-menu.html:8
-#: templates/help-menu.html:14
-msgid "Help"
-msgstr "帮助"
-
 #: modules/help/templates/help_index.html:18
 #, python-format
 msgid ""
@@ -3017,14 +3144,10 @@ msgstr ""
 "并附上此状态日志。"
 
 #: modules/help/templates/statuslog.html:27
-#, fuzzy
-#| msgid ""
-#| "Please remove any passwords or other personal information from the log "
-#| "before submitting the bug report."
 msgid ""
 "Please remove any personal information from the log before submitting the "
 "bug report."
-msgstr "提交日志报告前，请从日志中删除任何密码和其他个人信息。"
+msgstr "提交日志报告前，请从日志中删除任何个人信息。"
 
 #: modules/help/views.py:29
 msgid "Documentation and FAQ"
@@ -3061,10 +3184,6 @@ msgstr ""
 #: modules/ikiwiki/__init__.py:45 modules/ikiwiki/manifest.py:6
 msgid "ikiwiki"
 msgstr "ikiwiki"
-
-#: modules/ikiwiki/__init__.py:46
-msgid "Wiki and Blog"
-msgstr "Wiki 和博客"
 
 #: modules/ikiwiki/forms.py:17
 msgid "Admin Account Name"
@@ -3168,10 +3287,6 @@ msgstr ""
 msgid "infinoted"
 msgstr ""
 
-#: modules/infinoted/__init__.py:42
-msgid "Gobby Server"
-msgstr "Gobby 服务器"
-
 #: modules/infinoted/manifest.py:10 modules/infinoted/manifest.py:46
 msgid "Gobby"
 msgstr ""
@@ -3208,10 +3323,6 @@ msgstr ""
 msgid "Janus"
 msgstr ""
 
-#: modules/janus/__init__.py:44
-msgid "Video Room"
-msgstr ""
-
 #: modules/janus/manifest.py:7
 msgid "Janus Video Room"
 msgstr ""
@@ -3225,7 +3336,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:269
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:271
 msgid "JavaScript license information"
 msgstr ""
 
@@ -3238,10 +3349,6 @@ msgstr "JSXC 是一个 XMPP 网页客户端，主要用于连接本地 XMPP 服�
 #: modules/jsxc/__init__.py:38 modules/jsxc/manifest.py:7
 msgid "JSXC"
 msgstr ""
-
-#: modules/jsxc/__init__.py:39
-msgid "Chat Client"
-msgstr "聊天客户端"
 
 #: modules/jsxc/manifest.py:16
 msgid "Web chat"
@@ -3286,10 +3393,6 @@ msgstr ""
 
 #: modules/kiwix/__init__.py:56 modules/kiwix/manifest.py:8
 msgid "Kiwix"
-msgstr ""
-
-#: modules/kiwix/__init__.py:57
-msgid "Offline Wikipedia"
 msgstr ""
 
 #: modules/kiwix/forms.py:23
@@ -3407,9 +3510,17 @@ msgstr ""
 msgid "Let's Encrypt"
 msgstr "Let's Encrypt"
 
-#: modules/letsencrypt/__init__.py:61
+#: modules/letsencrypt/manifest.py:11
 msgid "Certificates"
 msgstr "证书"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "HTTPS"
+msgstr "HTTPS"
+
+#: modules/letsencrypt/manifest.py:11
+msgid "Web security"
+msgstr "Web 安全"
 
 #: modules/letsencrypt/templates/letsencrypt.html:25
 msgid "Certificate Status"
@@ -3521,7 +3632,7 @@ msgid ""
 "<a href={coturn_url}>Coturn</a> app or configure an external server."
 msgstr ""
 
-#: modules/matrixsynapse/__init__.py:55
+#: modules/matrixsynapse/__init__.py:54
 msgid "Matrix Synapse"
 msgstr "Matrix Synapse"
 
@@ -3576,12 +3687,6 @@ msgstr "聊天室"
 #: modules/matrixsynapse/manifest.py:105
 msgid "Matrix server"
 msgstr "Matrix 服务器"
-
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
-#: modules/miniflux/templates/miniflux.html:12
-#: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
-msgid "Configuration"
-msgstr "配置"
 
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:18
 msgid ""
@@ -3811,10 +3916,6 @@ msgstr ""
 msgid "Minetest"
 msgstr ""
 
-#: modules/minetest/__init__.py:57
-msgid "Block Sandbox"
-msgstr "方块沙盒"
-
 #: modules/minetest/forms.py:13
 msgid "Maximum number of players"
 msgstr "最大玩家数量"
@@ -3883,10 +3984,6 @@ msgstr ""
 msgid "MiniDLNA"
 msgstr ""
 
-#: modules/minidlna/__init__.py:46
-msgid "Simple Media Server"
-msgstr "简单媒体服务器"
-
 #: modules/minidlna/forms.py:20
 msgid "Media Files Directory"
 msgstr ""
@@ -3954,10 +4051,6 @@ msgstr ""
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
 msgstr ""
-
-#: modules/miniflux/__init__.py:44 modules/ttrss/__init__.py:51
-msgid "News Feed Reader"
-msgstr "新闻源阅读器"
 
 #: modules/miniflux/forms.py:12
 msgid "Enter a username for the user."
@@ -4092,10 +4185,6 @@ msgstr ""
 msgid "Mumble"
 msgstr ""
 
-#: modules/mumble/__init__.py:46
-msgid "Voice Chat"
-msgstr "语音聊天"
-
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
 msgstr "设置超级用户密码"
@@ -4137,11 +4226,6 @@ msgstr ""
 #: modules/mumble/manifest.py:67
 msgid "Group conference"
 msgstr ""
-
-#: modules/mumble/manifest.py:67 modules/radicale/manifest.py:91
-#: modules/shadowsocks/forms.py:24
-msgid "Server"
-msgstr "服务器"
 
 #: modules/mumble/views.py:43
 msgid "SuperUser password successfully updated."
@@ -4197,7 +4281,7 @@ msgstr ""
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84
+#: modules/names/forms.py:84 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "主机名"
 
@@ -4232,6 +4316,14 @@ msgstr ""
 "为内部字符。每个标签的长度必须为 63 个字符或更少。域名总长度不得超过 253 个字"
 "符。"
 
+#: modules/names/manifest.py:11 modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "域名"
+
+#: modules/names/manifest.py:13
+msgid "DNS Resolution"
+msgstr ""
+
 #: modules/names/resolved.py:91 modules/names/resolved.py:101
 #: modules/networks/forms.py:28
 #: modules/networks/templates/connection_show.html:70
@@ -4262,14 +4354,6 @@ msgstr "受支持"
 #: modules/names/resolved.py:110
 msgid "unsupported"
 msgstr ""
-
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "域名"
-
-#: modules/names/templates/names.html:20
-msgid "Services"
-msgstr "服务"
 
 #: modules/names/templates/names.html:56
 msgid "Resolver Status"
@@ -4515,64 +4599,60 @@ msgstr ""
 msgid "-- select --"
 msgstr "-- 选择 --"
 
-#: modules/networks/forms.py:304
+#: modules/networks/forms.py:312
 #: modules/networks/templates/connection_show.html:139
 msgid "SSID"
 msgstr "SSID"
 
-#: modules/networks/forms.py:305
+#: modules/networks/forms.py:313
 msgid "The visible name of the network."
 msgstr "可见网络的名称。"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 #: modules/networks/templates/connection_show.html:152
 msgid "Mode"
 msgstr "模式"
 
-#: modules/networks/forms.py:307
+#: modules/networks/forms.py:315
 msgid "Infrastructure"
 msgstr "基础架构"
 
-#: modules/networks/forms.py:308
+#: modules/networks/forms.py:316
 msgid "Access Point"
 msgstr "访问点"
 
-#: modules/networks/forms.py:309
+#: modules/networks/forms.py:317
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: modules/networks/forms.py:311
+#: modules/networks/forms.py:319
 msgid "Frequency Band"
 msgstr "频带"
 
-#: modules/networks/forms.py:311
-msgid "Automatic"
-msgstr "自动"
-
-#: modules/networks/forms.py:312
+#: modules/networks/forms.py:320
 msgid "A (5 GHz)"
 msgstr "A (5 GHz)"
 
-#: modules/networks/forms.py:313
+#: modules/networks/forms.py:321
 msgid "B/G (2.4 GHz)"
 msgstr "B/G (2.4 GHz)"
 
-#: modules/networks/forms.py:315
+#: modules/networks/forms.py:323
 #: modules/networks/templates/connection_show.html:166
 msgid "Channel"
 msgstr "信道"
 
-#: modules/networks/forms.py:316
+#: modules/networks/forms.py:324
 msgid ""
 "Optional value. Wireless channel in the selected frequency band to restrict "
 "to. Blank or 0 value means automatic selection."
 msgstr "可选值。可通过指定频宽限制无线信道。为空或者填 0 表示自动选择。"
 
-#: modules/networks/forms.py:321
+#: modules/networks/forms.py:329
 msgid "BSSID"
 msgstr "BSSID"
 
-#: modules/networks/forms.py:322
+#: modules/networks/forms.py:330
 msgid ""
 "Optional value. Unique identifier for the access point. When connecting to "
 "an access point, connect only if the BSSID of the access point matches the "
@@ -4581,30 +4661,30 @@ msgstr ""
 "可选的值。指定接入点的标识。当要连接到一个接入点时，只会连接到符合给出值的提"
 "供者。例如：00:11:22:aa:bb:cc。"
 
-#: modules/networks/forms.py:328
+#: modules/networks/forms.py:336
 msgid "Authentication Mode"
 msgstr "身份验证模式"
 
-#: modules/networks/forms.py:329
+#: modules/networks/forms.py:337
 msgid ""
 "Select WPA if the wireless network is secured and requires clients to have "
 "the password to connect."
 msgstr "如果无线网络安全的和要求客户端具有密码才能连接，请选择 WPA。"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "WPA"
 msgstr "WPA"
 
-#: modules/networks/forms.py:331
+#: modules/networks/forms.py:339
 msgid "Open"
 msgstr "打开"
 
-#: modules/networks/forms.py:367
+#: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
 msgstr "指定 {box_name} 连接到网络的方式"
 
-#: modules/networks/forms.py:374
+#: modules/networks/forms.py:382
 #, python-brace-format
 msgid ""
 "Connected to a router <p class=\"help-block\">Your {box_name} gets its "
@@ -4612,7 +4692,7 @@ msgid ""
 "typical home setup.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:381
+#: modules/networks/forms.py:389
 #, python-brace-format
 msgid ""
 "{box_name} is your router <p class=\"help-block\">Your {box_name} has "
@@ -4621,7 +4701,7 @@ msgid ""
 "devices connect to {box_name} for their Internet connectivity.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:390
+#: modules/networks/forms.py:398
 #, python-brace-format
 msgid ""
 "Directly connected to the Internet <p class=\"help-block\">Your Internet "
@@ -4629,11 +4709,11 @@ msgid ""
 "devices on the network. This can happen on community or cloud setups.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:409
+#: modules/networks/forms.py:417
 msgid "Choose your internet connection type"
 msgstr ""
 
-#: modules/networks/forms.py:413
+#: modules/networks/forms.py:421
 msgid ""
 "I have a public IP address that may change over time<p class=\"help-"
 "block\">This means that devices on the Internet can reach you when you are "
@@ -4644,7 +4724,7 @@ msgid ""
 "over time or not, it is safer to choose this option.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:425
+#: modules/networks/forms.py:433
 #, python-brace-format
 msgid ""
 "I have a public IP address that does not change over time (recommended)<p "
@@ -4656,7 +4736,7 @@ msgid ""
 "ISP by making an additional payment.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:438
+#: modules/networks/forms.py:446
 #, python-brace-format
 msgid ""
 "I dont have a public IP address<p class=\"help-block\">This means that "
@@ -4668,17 +4748,17 @@ msgid ""
 "workaround solutions but each solution has some limitations.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:451
+#: modules/networks/forms.py:459
 msgid ""
 "I do not know the type of connection my ISP provides <p class=\"help-"
 "block\">You will be suggested the most conservative actions.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:468
+#: modules/networks/forms.py:476
 msgid "Preferred router configuration"
 msgstr "首选路由器配置"
 
-#: modules/networks/forms.py:473
+#: modules/networks/forms.py:481
 #, python-brace-format
 msgid ""
 "Use DMZ feature to forward all traffic (recommended) <p class=\"help-"
@@ -4689,7 +4769,7 @@ msgid ""
 "configuration.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:485
+#: modules/networks/forms.py:493
 #, python-brace-format
 msgid ""
 "Forward specific traffic as needed by each application <p class=\"help-"
@@ -4701,11 +4781,33 @@ msgid ""
 "port(s) need to be forwarded for that application to work.</p>"
 msgstr ""
 
-#: modules/networks/forms.py:499
+#: modules/networks/forms.py:507
 msgid ""
 "Router is currently unconfigured <p class=\"help-block\">Choose this if you "
 "have not configured or are unable to configure the router currently and wish "
 "to be reminded later. Some of the other configuration steps may fail.</p>"
+msgstr ""
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:11
+msgid "Internet"
+msgstr "互联网"
+
+#: modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
+#: modules/samba/manifest.py:90
+msgid "Local network"
+msgstr "本地网络"
+
+#: modules/networks/manifest.py:8
+msgid "Topology"
 msgstr ""
 
 #: modules/networks/templates/connection_show.html:27
@@ -4724,7 +4826,7 @@ msgstr "编辑连接"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:165 templates/base.html:166
 msgid "Edit"
 msgstr "編輯"
 
@@ -4918,10 +5020,6 @@ msgstr "删除连接"
 msgid "Delete connection <strong>%(name)s</strong> permanently?"
 msgstr "永久删除连接 <strong>%(name)s</strong>？"
 
-#: modules/networks/templates/connections_diagram.html:11
-msgid "Internet"
-msgstr "互联网"
-
 #: modules/networks/templates/connections_diagram.html:16
 #: modules/networks/templates/connections_diagram.html:48
 msgid "Spacing"
@@ -4932,13 +5030,6 @@ msgstr "间距"
 #: modules/networks/views.py:101 network.py:28
 msgid "Ethernet"
 msgstr "以太网"
-
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
 
 #: modules/networks/templates/connections_diagram.html:35
 #: modules/networks/templates/connections_diagram.html:65
@@ -4962,10 +5053,8 @@ msgstr "编辑连接"
 
 #: modules/networks/templates/connections_fields.html:13
 #: templates/messages.html:14
-#, fuzzy
-#| msgid "Error"
 msgid "Error:"
-msgstr "错误"
+msgstr "错误："
 
 #: modules/networks/templates/connections_fields.html:20
 #: modules/users/templates/users_update.html:46 templates/messages.html:30
@@ -5463,10 +5552,6 @@ msgstr ""
 msgid "Nextcloud"
 msgstr ""
 
-#: modules/nextcloud/__init__.py:68
-msgid "File Storage & Collaboration"
-msgstr ""
-
 #: modules/nextcloud/forms.py:19
 msgid "Not set"
 msgstr "未设置"
@@ -5543,11 +5628,7 @@ msgstr "连接到 VPN 服务"
 msgid "OpenVPN"
 msgstr "OpenVPN"
 
-#: modules/openvpn/__init__.py:47 modules/wireguard/__init__.py:49
-msgid "Virtual Private Network"
-msgstr "虚拟专用网络"
-
-#: modules/openvpn/__init__.py:58
+#: modules/openvpn/__init__.py:57
 #, python-brace-format
 msgid ""
 "<a class=\"btn btn-primary btn-sm\" href=\"{link}\">Download Profile</a>"
@@ -5561,7 +5642,8 @@ msgstr ""
 msgid "VPN server"
 msgstr "VPN 服务器"
 
-#: modules/openvpn/manifest.py:60 modules/wireguard/manifest.py:45
+#: modules/openvpn/manifest.py:60 modules/pagekite/manifest.py:17
+#: modules/wireguard/manifest.py:45
 msgid "Remote access"
 msgstr "远程访问"
 
@@ -5644,11 +5726,7 @@ msgstr ""
 msgid "PageKite"
 msgstr "PageKite"
 
-#: modules/pagekite/__init__.py:60
-msgid "Public Visibility"
-msgstr "公开可见性"
-
-#: modules/pagekite/__init__.py:74
+#: modules/pagekite/__init__.py:73
 msgid "PageKite Domain"
 msgstr "PageKite 域名"
 
@@ -5726,6 +5804,14 @@ msgstr "已添加的自定义服务"
 msgid "This service already exists"
 msgstr "此服务已存在"
 
+#: modules/pagekite/manifest.py:16
+msgid "Reachability"
+msgstr ""
+
+#: modules/pagekite/manifest.py:18
+msgid "Tunneling"
+msgstr ""
+
 #: modules/pagekite/templates/pagekite_configure.html:13
 msgid "Custom Services"
 msgstr "定制服务"
@@ -5750,18 +5836,13 @@ msgid "Add custom PageKite service"
 msgstr "添加自定义 PageKite 服务"
 
 #: modules/pagekite/templates/pagekite_custom_services.html:19
-#, fuzzy
-#| msgid ""
-#| "<b>Warning:</b><br>Your PageKite frontend server may not support all the "
-#| "protocol/port combinations that you are able to define here. For example, "
-#| "HTTPS on ports other than 443 is known to cause problems."
 msgid ""
 "Your PageKite frontend server may not support all the protocol/port "
 "combinations that you are able to define here. For example, HTTPS on ports "
 "other than 443 is known to cause problems."
 msgstr ""
-"<b>警告：</b><br>您的 PageKite 前端服务器可能不支持您在此处定义的所有协议/端"
-"口组合。例如，已知443以外的端口上的HTTPS会导致问题。"
+"您的 PageKite 前端服务器可能不支持您在此处定义的所有协议/端口组合。例如，已知"
+"443以外的端口上的HTTPS会导致问题。"
 
 #: modules/pagekite/utils.py:45
 msgid "Web Server (HTTP)"
@@ -5793,10 +5874,6 @@ msgstr ""
 "请参见 SSH 客户端安装 <a href=\"https://pagekite.net/wiki/Howto/"
 "SshOverPageKite/\"> 说明</a>"
 
-#: modules/performance/__init__.py:16 modules/performance/__init__.py:40
-msgid "Performance"
-msgstr ""
-
 #: modules/performance/__init__.py:19
 msgid ""
 "Performance app allows you to collect, store and view information about "
@@ -5810,9 +5887,13 @@ msgid ""
 "using the Cockpit app."
 msgstr ""
 
-#: modules/performance/__init__.py:41
-msgid "System Monitoring"
-msgstr "系统监控"
+#: modules/performance/manifest.py:18
+msgid "Monitoring"
+msgstr "监控"
+
+#: modules/performance/manifest.py:18
+msgid "Resource utilization"
+msgstr ""
 
 #: modules/power/__init__.py:14
 msgid "Restart or shut down the system."
@@ -5822,8 +5903,16 @@ msgstr "重新启动或关闭系统。"
 msgid "Power"
 msgstr "电源"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/manifest.py:10
+msgid "Reboot"
+msgstr ""
+
+#: modules/power/manifest.py:10
+msgid "Shutdown"
+msgstr "关闭"
+
+#: modules/power/templates/power.html:15 templates/base.html:180
+#: templates/base.html:181
 msgid "Restart"
 msgstr "重新启动"
 
@@ -5899,6 +5988,14 @@ msgid ""
 "and reliable."
 msgstr ""
 
+#: modules/privacy/manifest.py:10
+msgid "Usage reporting"
+msgstr ""
+
+#: modules/privacy/manifest.py:10
+msgid "Fallback DNS"
+msgstr "备选 DNS"
+
 #: modules/privoxy/__init__.py:25
 msgid ""
 "Privoxy is a non-caching web proxy with advanced filtering capabilities for "
@@ -5927,10 +6024,6 @@ msgstr ""
 msgid "Privoxy"
 msgstr "Privoxy"
 
-#: modules/privoxy/__init__.py:54
-msgid "Web Proxy"
-msgstr "Web 代理"
-
 #: modules/privoxy/__init__.py:119
 #, python-brace-format
 msgid "Access {url} with proxy {proxy} on tcp{kind}"
@@ -5944,10 +6037,6 @@ msgstr ""
 #: modules/torproxy/manifest.py:55
 msgid "Proxy server"
 msgstr "代理服务器"
-
-#: modules/privoxy/manifest.py:10 modules/samba/manifest.py:90
-msgid "Local network"
-msgstr "本地网络"
 
 #: modules/quassel/__init__.py:24
 #, python-brace-format
@@ -5979,10 +6068,6 @@ msgstr ""
 msgid "Quassel"
 msgstr ""
 
-#: modules/quassel/__init__.py:52
-msgid "IRC Client"
-msgstr "IRC 客户端"
-
 #: modules/quassel/manifest.py:33
 msgid "Quasseldroid"
 msgstr ""
@@ -5992,13 +6077,7 @@ msgid "IRC"
 msgstr ""
 
 #: modules/radicale/__init__.py:25
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
-#| "sharing of scheduling and contact data. To use Radicale, a <a "
-#| "href=\"https://radicale.org/master.html#documentation/supported-"
-#| "clients\">supported client application</a> is needed. Radicale can be "
-#| "accessed by any user with a {box_name} login."
+#, python-brace-format
 msgid ""
 "Radicale is a CalDAV and CardDAV server. It allows synchronization and "
 "sharing of scheduling and contact data. To use Radicale, a <a href=\"https://"
@@ -6006,9 +6085,9 @@ msgid ""
 "a> is needed. Radicale can be accessed by any user with a {box_name} login."
 msgstr ""
 "Radicale 是一个 CalDAV 和 CardDAV 服务器。它允许同步和日程安排和联系人数据的"
-"共享。要使用 Radicale，需要安装<a href=\"https://radicale.org/user_master."
-"html#documentation/#idcaldav-and-carddavsupported-clients\">支持的客户端应用"
-"程序</a>。任何拥有 {box_name} 登录名的用户都可以访问 Radicale。"
+"共享。要使用 Radicale，需要安装<a href=\"https://radicale.org/master."
+"html#supported-clients\">支持的客户端应用程序</a>。任何拥有 {box_name} 登录名"
+"的用户都可以访问 Radicale。"
 
 #: modules/radicale/__init__.py:31
 msgid ""
@@ -6020,10 +6099,6 @@ msgstr ""
 #: modules/radicale/__init__.py:53 modules/radicale/manifest.py:74
 msgid "Radicale"
 msgstr ""
-
-#: modules/radicale/__init__.py:54
-msgid "Calendar and Addressbook"
-msgstr "日历和通讯录"
 
 #: modules/radicale/forms.py:14
 msgid "Only the owner of a calendar/addressbook can view or make changes."
@@ -6139,10 +6214,6 @@ msgstr ""
 "href=\"https://www.google.com/settings/security/lesssecureapps\">https://www."
 "google.com/settings/security/lesssecureapps</a>)中启用“安全性较低的应用”。"
 
-#: modules/roundcube/__init__.py:51
-msgid "Email Client"
-msgstr "邮件客户端"
-
 #: modules/roundcube/forms.py:16
 msgid "Use only the local mail server"
 msgstr ""
@@ -6190,10 +6261,6 @@ msgstr ""
 #: modules/rssbridge/__init__.py:51 modules/rssbridge/manifest.py:7
 msgid "RSS-Bridge"
 msgstr "RSS-Bridge"
-
-#: modules/rssbridge/__init__.py:52
-msgid "RSS Feed Generator"
-msgstr ""
 
 #: modules/rssbridge/forms.py:12 modules/searx/forms.py:17
 msgid "Allow Public Access"
@@ -6249,10 +6316,6 @@ msgstr ""
 #: modules/samba/__init__.py:53
 msgid "Samba"
 msgstr ""
-
-#: modules/samba/__init__.py:54
-msgid "Network File Storage"
-msgstr "网络文件存储"
 
 #: modules/samba/manifest.py:12
 msgid "Android Samba Client"
@@ -6394,10 +6457,6 @@ msgstr ""
 msgid "Searx"
 msgstr ""
 
-#: modules/searx/__init__.py:42
-msgid "Web Search"
-msgstr "Web 搜索"
-
 #: modules/searx/forms.py:12
 msgid "Safe Search"
 msgstr "安全搜索"
@@ -6432,6 +6491,14 @@ msgid ""
 "attempts to the SSH server and other enabled password protected internet-"
 "services."
 msgstr ""
+
+#: modules/security/manifest.py:10
+msgid "Automatic bans"
+msgstr "自动封禁"
+
+#: modules/security/manifest.py:10
+msgid "Reports"
+msgstr "报告"
 
 #: modules/security/templates/security.html:12
 #: modules/security/templates/security.html:14
@@ -6543,13 +6610,13 @@ msgstr "注意，Shaarli 只支持单用户帐户，您需要在初次访问时�
 msgid "Shaarli"
 msgstr "Shaarli"
 
-#: modules/shaarli/__init__.py:37 modules/shaarli/manifest.py:34
-msgid "Bookmarks"
-msgstr "书签"
-
 #: modules/shaarli/manifest.py:12
 msgid "Shaarlier"
 msgstr "Shaarlier"
+
+#: modules/shaarli/manifest.py:34
+msgid "Bookmarks"
+msgstr "书签"
 
 #: modules/shaarli/manifest.py:34
 msgid "Link blog"
@@ -6592,10 +6659,6 @@ msgstr ""
 msgid "Shadowsocks Client"
 msgstr "Shadowsocks 客户端"
 
-#: modules/shadowsocks/__init__.py:52
-msgid "Bypass Censorship"
-msgstr ""
-
 #: modules/shadowsocks/forms.py:25
 msgid "Server hostname or IP address"
 msgstr ""
@@ -6632,13 +6695,9 @@ msgid ""
 "through this server."
 msgstr ""
 
-#: modules/shadowsocksserver/__init__.py:48
+#: modules/shadowsocksserver/__init__.py:47
 msgid "Shadowsocks Server"
 msgstr "Shadowsocks 服务器"
-
-#: modules/shadowsocksserver/__init__.py:49
-msgid "Help Others Bypass Censorship"
-msgstr ""
 
 #: modules/shadowsocksserver/forms.py:10 modules/shadowsocksserver/forms.py:11
 msgid "Recommended"
@@ -6856,6 +6915,18 @@ msgid ""
 "no yearly snapshot)."
 msgstr ""
 
+#: modules/snapshot/manifest.py:14
+msgid "Periodic"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Known good state"
+msgstr ""
+
+#: modules/snapshot/manifest.py:14
+msgid "Btrfs"
+msgstr ""
+
 #: modules/snapshot/templates/snapshot_delete_selected.html:12
 msgid "Delete the following snapshots permanently?"
 msgstr "永久删除以下快照？"
@@ -6982,8 +7053,8 @@ msgid ""
 msgstr ""
 
 #: modules/ssh/__init__.py:42
-msgid "Secure Shell (SSH) Server"
-msgstr "安全 Shell（SSH）服务器"
+msgid "Secure Shell Server"
+msgstr "SSH 服务器"
 
 #: modules/ssh/__init__.py:75
 msgid "Remotely login using Secure Shell (SSH)"
@@ -7010,6 +7081,18 @@ msgid ""
 "disabled, only users of groups root, admin and freedombox-ssh can login via "
 "SSH."
 msgstr ""
+
+#: modules/ssh/manifest.py:22
+msgid "SSH"
+msgstr "SSH"
+
+#: modules/ssh/manifest.py:22
+msgid "Remote terminal"
+msgstr "远程终端"
+
+#: modules/ssh/manifest.py:22
+msgid "Fingerprints"
+msgstr "指纹"
 
 #: modules/ssh/templates/ssh.html:11
 msgid "Server Fingerprints"
@@ -7041,7 +7124,7 @@ msgstr ""
 msgid "Proceed to Login"
 msgstr ""
 
-#: modules/sso/templates/login.html:20
+#: modules/sso/templates/login.html:23
 msgid "Login"
 msgstr "登录"
 
@@ -7056,11 +7139,6 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
-
-#: modules/storage/__init__.py:47 modules/storage/__init__.py:319
-#: modules/storage/__init__.py:350 modules/storage/__init__.py:396
-msgid "Storage"
-msgstr "存储"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -7215,6 +7293,22 @@ msgstr "共享"
 msgid "Other directory (specify below)"
 msgstr ""
 
+#: modules/storage/manifest.py:9
+msgid "Disks"
+msgstr "磁盘"
+
+#: modules/storage/manifest.py:9
+msgid "Usage"
+msgstr ""
+
+#: modules/storage/manifest.py:9
+msgid "Auto-mount"
+msgstr "自动挂载"
+
+#: modules/storage/manifest.py:9
+msgid "Expand partition"
+msgstr "扩展分区"
+
 #: modules/storage/templates/storage.html:17
 msgid "The following storage devices are in use:"
 msgstr "正在使用以下存储设备："
@@ -7316,10 +7410,6 @@ msgstr "管理 Syncthing 程序"
 msgid "Syncthing"
 msgstr ""
 
-#: modules/syncthing/__init__.py:60
-msgid "File Synchronization"
-msgstr ""
-
 #: modules/tiddlywiki/__init__.py:25
 #, python-brace-format
 msgid ""
@@ -7354,10 +7444,6 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr ""
 
-#: modules/tiddlywiki/__init__.py:66
-msgid "Non-linear Notebooks"
-msgstr ""
-
 #: modules/tiddlywiki/forms.py:32
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
@@ -7388,7 +7474,7 @@ msgid ""
 "TiddlyWiki before deleting it."
 msgstr ""
 
-#: modules/tor/__init__.py:33 modules/torproxy/__init__.py:29
+#: modules/tor/__init__.py:34 modules/torproxy/__init__.py:30
 msgid ""
 "Tor is an anonymous communication system. You can learn more about it from "
 "the <a href=\"https://www.torproject.org/\">Tor Project</a> website. For "
@@ -7401,13 +7487,13 @@ msgstr ""
 "href=\"https://www.torproject.org/download/download-easy.html.en\">Tor浏览器"
 "</a>。"
 
-#: modules/tor/__init__.py:39
+#: modules/tor/__init__.py:40
 msgid ""
 "This app provides relay services to contribute to Tor network and help "
 "others overcome censorship."
 msgstr ""
 
-#: modules/tor/__init__.py:42
+#: modules/tor/__init__.py:43
 #, python-brace-format
 msgid ""
 "This app provides an onion domain to expose {box_name} services via the Tor "
@@ -7415,14 +7501,10 @@ msgid ""
 "when using an ISP that limits servers at home."
 msgstr ""
 
-#: modules/tor/__init__.py:62 modules/tor/manifest.py:61
+#: modules/tor/__init__.py:63 modules/tor/manifest.py:61
 #: modules/torproxy/manifest.py:58
 msgid "Tor"
 msgstr ""
-
-#: modules/tor/__init__.py:63 modules/torproxy/__init__.py:57
-msgid "Anonymity Network"
-msgstr "匿名网络"
 
 #: modules/tor/__init__.py:78
 msgid "Tor Onion Service"
@@ -7432,19 +7514,19 @@ msgstr "Tor 洋葱服务"
 msgid "Tor Bridge Relay"
 msgstr "Tor 网桥中继"
 
-#: modules/tor/__init__.py:138
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor 中继端口可用"
 
-#: modules/tor/__init__.py:150
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "已注册 Obfs3 传输"
 
-#: modules/tor/__init__.py:161
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "已注册 Obfs4 传输"
 
-#: modules/tor/__init__.py:174
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion 服务版本为 3"
 
@@ -7544,10 +7626,6 @@ msgstr "匿名网络"
 msgid "Onion Service"
 msgstr "洋葱服务"
 
-#: modules/tor/templates/tor.html:20
-msgid "Ports"
-msgstr "端口"
-
 #: modules/tor/views.py:53 modules/torproxy/views.py:51
 msgid "Updating configuration"
 msgstr "更新配置"
@@ -7557,7 +7635,7 @@ msgstr "更新配置"
 msgid "Error configuring app: {error}"
 msgstr "配置应用出错：{error}"
 
-#: modules/torproxy/__init__.py:36
+#: modules/torproxy/__init__.py:37
 #, python-brace-format
 msgid ""
 "This app provides a web proxy on your {box_name} for internal networks on "
@@ -7566,7 +7644,7 @@ msgid ""
 "using upstream bridges."
 msgstr ""
 
-#: modules/torproxy/__init__.py:56
+#: modules/torproxy/__init__.py:57
 msgid "Tor Proxy"
 msgstr "Tor 代理"
 
@@ -7574,12 +7652,12 @@ msgstr "Tor 代理"
 msgid "Tor Socks Proxy"
 msgstr ""
 
-#: modules/torproxy/__init__.py:142
+#: modules/torproxy/__init__.py:154
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind} via Tor"
 msgstr "在 tcp{kind} 上通过 Tor 访问 {url}"
 
-#: modules/torproxy/__init__.py:154
+#: modules/torproxy/__init__.py:166
 #, python-brace-format
 msgid "Confirm Tor usage at {url} on tcp{kind}"
 msgstr "确认使用 Tor 通过 tcp{kind} 访问 {url}"
@@ -7771,6 +7849,14 @@ msgstr ""
 #: modules/upgrades/forms.py:34
 #: modules/upgrades/templates/upgrades_configure.html:95
 msgid "Activate frequent feature updates (recommended)"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+msgid "Reboots"
+msgstr ""
+
+#: modules/upgrades/manifest.py:10
+msgid "New features"
 msgstr ""
 
 #: modules/upgrades/templates/backports-firstboot.html:26
@@ -8041,6 +8127,14 @@ msgstr "未能将新用户添加到管理员组：{error}"
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
 msgstr "用户帐户已创建，您现在可以登录"
+
+#: modules/users/manifest.py:8
+msgid "Manage accounts"
+msgstr "管理账户"
+
+#: modules/users/manifest.py:8
+msgid "App permissions"
+msgstr "应用权限"
 
 #: modules/users/templates/users_change_password.html:11
 #, python-format
@@ -8512,10 +8606,6 @@ msgstr ""
 msgid "WordPress"
 msgstr "WordPress"
 
-#: modules/wordpress/__init__.py:54
-msgid "Website and Blog"
-msgstr "网站和博客"
-
 #: modules/wordpress/forms.py:14
 msgid "Public access"
 msgstr "公开访问"
@@ -8553,10 +8643,6 @@ msgstr ""
 
 #: modules/zoph/__init__.py:56 modules/zoph/manifest.py:6
 msgid "Zoph"
-msgstr ""
-
-#: modules/zoph/__init__.py:57
-msgid "Photo Organizer"
 msgstr ""
 
 #: modules/zoph/forms.py:14
@@ -8780,49 +8866,45 @@ msgstr "服务 <em>%(service_name)s</em> 未在运行。"
 msgid "Search with tags"
 msgstr ""
 
+#: templates/apps.html:42
+msgid "Clear all tags"
+msgstr ""
+
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:116
 msgid " Home"
 msgstr " 主页"
 
-#: templates/base.html:121
-msgid "Home"
-msgstr "主页"
-
-#: templates/base.html:126
+#: templates/base.html:124
 msgid " Apps"
 msgstr " 应用程序"
 
-#: templates/base.html:130
-msgid "Apps"
-msgstr "应用程序"
-
-#: templates/base.html:135
+#: templates/base.html:133
 msgid " System"
 msgstr " 系统"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:172 templates/base.html:173
 msgid "Change password"
 msgstr "更改密码"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:186 templates/base.html:187
 msgid "Shut down"
 msgstr "关闭"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:197 templates/base.html:235
 msgid "Log out"
 msgstr "登出"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:206 templates/base.html:209
 msgid "Select language"
 msgstr "选择语言"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:224 templates/base.html:226
 msgid "Log in"
 msgstr "登录"
 
@@ -9025,11 +9107,15 @@ msgid ""
 "installed freshly again."
 msgstr ""
 
-#: views.py:322
+#: views.py:85
+msgid "Here"
+msgstr ""
+
+#: views.py:374
 msgid "Setting unchanged"
 msgstr "设置未改变"
 
-#: views.py:557
+#: views.py:609
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9037,6 +9123,84 @@ msgstr ""
 #: web_framework.py:114
 msgid "Gujarati"
 msgstr "古吉拉特语"
+
+#~ msgid "File & Snippet Sharing"
+#~ msgstr "文件和片段共享"
+
+#~ msgid "Domain Name Server"
+#~ msgstr "域名服务器"
+
+#~ msgid "E-book Library"
+#~ msgstr "电子书库"
+
+#~ msgid "Server Administration"
+#~ msgstr "服务器管理"
+
+#~ msgid "VoIP Helper"
+#~ msgstr "网络电话助手"
+
+#~ msgid "BitTorrent Web Client"
+#~ msgstr "BitTorrent 网页客户端"
+
+#~ msgid "Chat Server"
+#~ msgstr "聊天服务器"
+
+#~ msgid "Email Server"
+#~ msgstr "邮件服务器"
+
+#~ msgid "Documentation"
+#~ msgstr "文档"
+
+#~ msgid "Wiki and Blog"
+#~ msgstr "Wiki 和博客"
+
+#~ msgid "Gobby Server"
+#~ msgstr "Gobby 服务器"
+
+#~ msgid "Chat Client"
+#~ msgstr "聊天客户端"
+
+#~ msgid "Block Sandbox"
+#~ msgstr "方块沙盒"
+
+#~ msgid "Simple Media Server"
+#~ msgstr "简单媒体服务器"
+
+#~ msgid "News Feed Reader"
+#~ msgstr "新闻源阅读器"
+
+#~ msgid "Voice Chat"
+#~ msgstr "语音聊天"
+
+#~ msgid "Virtual Private Network"
+#~ msgstr "虚拟专用网络"
+
+#~ msgid "Public Visibility"
+#~ msgstr "公开可见性"
+
+#~ msgid "Web Proxy"
+#~ msgstr "Web 代理"
+
+#~ msgid "IRC Client"
+#~ msgstr "IRC 客户端"
+
+#~ msgid "Calendar and Addressbook"
+#~ msgstr "日历和通讯录"
+
+#~ msgid "Email Client"
+#~ msgstr "邮件客户端"
+
+#~ msgid "Network File Storage"
+#~ msgstr "网络文件存储"
+
+#~ msgid "Web Search"
+#~ msgstr "Web 搜索"
+
+#~ msgid "Anonymity Network"
+#~ msgstr "匿名网络"
+
+#~ msgid "Website and Blog"
+#~ msgstr "网站和博客"
 
 #, python-format
 #~ msgid ""
@@ -9220,9 +9384,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "SSH authentication with password enabled."
 #~ msgstr "启用密码的 SSH 身份验证。"
-
-#~ msgid "Error running apt-get"
-#~ msgstr "运行 apt-get 出错"
 
 #, python-format
 #~ msgid "Core functionality and web interface for %(box_name)s"
@@ -10059,9 +10220,6 @@ msgstr "古吉拉特语"
 #~ msgid "HTTP"
 #~ msgstr "HTTP"
 
-#~ msgid "HTTPS"
-#~ msgstr "HTTPS"
-
 #~ msgid "Not Available"
 #~ msgstr "不可用"
 
@@ -10191,11 +10349,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "Delete Snapshot"
 #~ msgstr "删除快照"
-
-#, fuzzy
-#~| msgid "Disks"
-#~ msgid "Disk"
-#~ msgstr "磁盘"
 
 #, fuzzy
 #~| msgid "reStore"
