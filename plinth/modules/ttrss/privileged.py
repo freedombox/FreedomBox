@@ -3,8 +3,9 @@
 
 import augeas
 
-from plinth import action_utils, db
+from plinth import action_utils
 from plinth.actions import privileged
+from plinth.db import postgres
 
 CONFIG_FILE = '/etc/tt-rss/config.php'
 DEFAULT_FILE = '/etc/default/tt-rss'
@@ -121,15 +122,15 @@ def enable_api_access():
 def dump_database():
     """Dump database to file."""
     config = _get_database_config()
-    db.postgres_dump_database(DB_BACKUP_FILE, config['database'],
-                              config['user'])
+    postgres.dump_database(DB_BACKUP_FILE, config['database'])
 
 
 @privileged
 def restore_database():
     """Restore database from file."""
     config = _get_database_config()
-    db.postgres_restore_database(DB_BACKUP_FILE, config['database'])
+    postgres.restore_database(DB_BACKUP_FILE, config['database'],
+                              config['user'], config['password'])
 
 
 def load_augeas():
