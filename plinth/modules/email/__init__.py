@@ -5,7 +5,6 @@ import logging
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext_noop
 
 import plinth.app
 from plinth import cfg, frontpage, menu
@@ -19,7 +18,7 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, gettext_noop
 
 from . import aliases, manifest, privileged
 

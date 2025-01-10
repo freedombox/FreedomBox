@@ -192,3 +192,8 @@ class SafeFormatter(string.Formatter):
             return super().get_field(field_name, args, kwargs)
         except (AttributeError, TypeError):
             return (f'?{field_name}?', '')
+
+
+def gettext_noop(message: str) -> str:
+    """Do nothing. Using this method marks the string for translation."""
+    return message
