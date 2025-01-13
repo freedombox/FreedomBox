@@ -29,6 +29,24 @@ def is_systemd_running():
     return os.path.exists('/run/systemd')
 
 
+def systemd_get_default() -> str:
+    """Return the default target that systemd will boot into."""
+    process = subprocess.run(['systemctl', 'get-default'],
+                             stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode().strip()
+
+
+def systemd_set_default(target: str, isolate: bool = True):
+    """Set the default target that systemd will boot into.
+
+    If 'isolate' is True, then immediate switch the current system target to
+    newly set target resulting in starting/stopping of services.
+    """
+    subprocess.run(['systemctl', 'set-default', target], check=True)
+    if isolate:
+        subprocess.run(['systemctl', 'isolate', target], check=True)
+
+
 def service_daemon_reload():
     """Reload systemd to ensure that newer unit files are read."""
     subprocess.run(['systemctl', 'daemon-reload'], check=True,
