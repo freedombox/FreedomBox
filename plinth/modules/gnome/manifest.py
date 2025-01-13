@@ -3,7 +3,7 @@
 
 from django.utils.translation import gettext_lazy as _
 
-backup = {}
+backup: dict = {}
 
 tags = [
     _('Desktop'),

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure GNOME desktop."""
 
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils
@@ -23,8 +24,12 @@ _description = [
           'You may install further graphical applications using the software '
           'center provided within.'), box_name=_(cfg.box_name)),
     _('This app is not suitable for low-end hardware. It requires at least '
-      '4GiB for RAM, 4GiB or disk space and a GPU capable of basic 3D '
+      '4GiB of RAM, 4GiB of disk space and a GPU capable of basic 3D '
       'acceleration.'),
+    format_lazy(
+        _('After installing, enabling, disabling, or uninstalling the app, '
+          'you will need to <a href="{power_url}">restart</a> the machine for '
+          'changes to take effect.'), power_url=reverse_lazy('power:restart')),
 ]
 
 

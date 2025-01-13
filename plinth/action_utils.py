@@ -36,15 +36,9 @@ def systemd_get_default() -> str:
     return process.stdout.decode().strip()
 
 
-def systemd_set_default(target: str, isolate: bool = True):
-    """Set the default target that systemd will boot into.
-
-    If 'isolate' is True, then immediate switch the current system target to
-    newly set target resulting in starting/stopping of services.
-    """
+def systemd_set_default(target: str):
+    """Set the default target that systemd will boot into."""
     subprocess.run(['systemctl', 'set-default', target], check=True)
-    if isolate:
-        subprocess.run(['systemctl', 'isolate', target], check=True)
 
 
 def service_daemon_reload():
