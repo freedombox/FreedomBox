@@ -111,7 +111,7 @@ def _setup_local_service_protection():
     for permanent in [[], ['--permanent']]:
         for ip_type in ['ipv4', 'ipv6']:
             for owner_type in ['--uid-owner', '--gid-owner']:
-                for user_group in ['root', 'www-data']:
+                for user_group in ['root', 'www-data', 'mail']:
                     _add_rule(permanent, ip_type, '-A', 'OUTPUT', '-m',
                               'owner', owner_type, user_group, '-j', 'MARK',
                               '--or-mark', '0x800000')
