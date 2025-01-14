@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-01 08:00+0000\n"
+"PO-Revision-Date: 2025-01-15 04:00+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -312,6 +312,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"24 saat biçiminde. Günün bu saatinde yedekleme işlemi çalıştırılırken "
+"hizmetler geçici olarak kullanılamayabilir."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -541,7 +543,7 @@ msgstr "Yedekleme sistemi başka bir işlemle meşgul."
 
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
-msgstr ""
+msgstr "Diskte veya uzak konumda yeterli alan kalmadı."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1838,6 +1840,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Bu hizmet, dış IP adresini aramak için harici bir hizmet kullanır. Bu, "
+"gizlilik uygulamasında yapılandırılabilir."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -2262,11 +2266,11 @@ msgstr "Postfix/Dovecot"
 
 #: modules/email/__init__.py:80
 msgid "More emails"
-msgstr ""
+msgstr "Daha fazla e-posta"
 
 #: modules/email/__init__.py:80
 msgid "Same mailbox"
-msgstr ""
+msgstr "Aynı posta kutusu"
 
 #: modules/email/__init__.py:82
 msgid "My Email Aliases"
@@ -2351,22 +2355,16 @@ msgid "Add"
 msgstr "Ekle"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "DNS Kayıtları"
+msgstr "Etki alanı için DNS Kayıtları:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Posta sunucusunun düzgün çalışması için aşağıdaki DNS kayıtları birincil "
-"etki alanınıza el ile eklenmek zorundadır."
+"Bu etki alanı için posta sunucusunun düzgün çalışması amacıyla aşağıdaki DNS "
+"kayıtları bu etki alanına el ile eklenmek zorundadır."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2396,10 +2394,8 @@ msgid "Host/Target/Value"
 msgstr "Anamakine/Hedef/Değer"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Sunucu anamakine adı veya IP adresi"
+msgstr "IP Adresleri için Ters DNS Kayıtları"
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2413,18 +2409,27 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Eğer %(box_name)s cihazınız bir bulut hizmeti altyapısında çalışıyorsa, <a "
+"href=\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\">Ters DNS "
+"aramasını</a> yapılandırmanız gerekir. Bu zorunlu değildir, ancak e-posta "
+"teslim edilebilirliğini büyük ölçüde artırır. Ters DNS, normal DNS'nizin "
+"olduğu yerde yapılandırılmamıştır. Bunu VPS/ISP'nizin ayarlarında "
+"aramalısınız. Bazı sağlayıcılar IP adresi bölümünü sizin için önceden "
+"yapılandırır ve sadece etki alanı bölümünü ayarlamak zorundasınız. Birden "
+"çok dış IP adresiniz olmadığı sürece, etki alanlarınızdan sadece birinde "
+"Ters DNS araması yapılandırılmış olabilir."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"Aşağıdaki bölümde gösterilecek ortak IP adresini aramak için harici bir "
+"hizmet kullanılır. Bu, gizlilik uygulamasında yapılandırılabilir."
 
 #: modules/email/templates/email-dns.html:76
-#, fuzzy
-#| msgid "Hostname"
 msgid "Host"
-msgstr "Anamakine Adı"
+msgstr "Anamakine"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2440,12 +2445,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Aşağıdaki etki alanları yapılandırıldı. Etki alanı için yapılacak DNS "
+"girişlerinin listesini görmek için ayrıntıları görüntüleyin."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Etki alanı adını çözümle: {domain}"
+msgstr "Etki alanını görüntüle: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -4602,10 +4608,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "Mumble server is running"
 msgid "Mumble server is configured"
-msgstr "Mumble sunucusu çalışmaktadır"
+msgstr "Mumble sunucusu yapılandırıldı"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -6576,6 +6580,12 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"İsteğe Bağlı Değer. Bu URL, {box_name}'ınızın herkese açık olarak "
+"görülebilen IP adresini belirlemek için kullanılır. URL, istemci isteğinin "
+"geldiği IPv4 veya IPv6 adresini döndürmelidir. Varsayılanı, FreedomBox Vakfı "
+"tarafından https://ddns.freedombox.org/ip/ adresinde sağlanan hizmetin "
+"kullanılmasıdır. Eğer boşsa, aramalar etkisizleştirilir ve bazı işlevler "
+"başarısız olacaktır."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6617,20 +6627,16 @@ msgstr ""
 "çoğu durumda etkisizleştirilebilir."
 
 #: modules/privacy/forms.py:45
-#, fuzzy
-#| msgid "URL to look up public IP"
 msgid "URL to look up public IP address"
-msgstr "Dış IP'yi aramak için URL"
+msgstr "Dış IP adresi aramak için URL"
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
 msgstr "Kullanım raporlama"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Enable repro service"
 msgid "External services"
-msgstr "repro servisini etkinleştir"
+msgstr "Harici hizmetler"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
