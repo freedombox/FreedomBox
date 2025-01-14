@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-02 09:00+0000\n"
+"PO-Revision-Date: 2025-01-15 04:00+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -313,6 +313,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"Ve 24-hodinovém formátu. Při zálohování v tuto denní dobu mohou být služby "
+"dočasně nedostupné."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -543,7 +545,7 @@ msgstr "Zálohovací systém je zaneprázdněn jinou operací."
 
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
-msgstr ""
+msgstr "Na disku nebo ve vzdáleném umístění nezbývá dostatek místa."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1832,6 +1834,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Tato služba používá externí službu k vyhledávání veřejné IP adresy. To lze "
+"nakonfigurovat v aplikaci pro ochranu soukromí."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -2255,11 +2259,11 @@ msgstr "Postfix / Dovecot"
 
 #: modules/email/__init__.py:80
 msgid "More emails"
-msgstr ""
+msgstr "Další e-maily"
 
 #: modules/email/__init__.py:80
 msgid "Same mailbox"
-msgstr ""
+msgstr "Stejná poštovní schránka"
 
 #: modules/email/__init__.py:82
 msgid "My Email Aliases"
@@ -2344,22 +2348,16 @@ msgid "Add"
 msgstr "Přidat"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "Záznamy DNS"
+msgstr "Záznamy DNS pro doménu:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Pro správnou funkci poštovního serveru je třeba na primární doméně ručně "
-"přidat následující záznamy DNS."
+"Pro správnou funkci poštovního serveru na této doméně je třeba ručně přidat "
+"následující záznamy DNS."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2389,10 +2387,8 @@ msgid "Host/Target/Value"
 msgstr "Hostitel / cíl / hodnota"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Název nebo IP adresa serveru"
+msgstr "Reverzní záznamy DNS pro IP adresy"
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2406,18 +2402,27 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Pokud vaše %(box_name)s běží na infrastruktuře cloudové služby, měli byste "
+"nakonfigurovat <a href=\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\""
+">Reverzní vyhledávání DNS</a>. Není to povinné, nicméně to výrazně zlepšuje "
+"doručitelnost e-mailů. Reverzní DNS se nekonfiguruje tam, kde je váš běžný "
+"DNS. Měli byste jej hledat v nastavení svého VPS/ISP. Někteří poskytovatelé "
+"za vás předkonfigurují část s IP adresou a vy musíte nastavit pouze část s "
+"doménou. Reverzní vyhledávání DNS může být nakonfigurováno pouze u jedné z "
+"vašich domén, pokud nemáte více veřejných IP adres."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"K vyhledání veřejné IP adresy, která se zobrazí v následující části, se "
+"používá externí služba. To lze nakonfigurovat v aplikaci pro ochranu "
+"soukromí."
 
 #: modules/email/templates/email-dns.html:76
-#, fuzzy
-#| msgid "Hostname"
 msgid "Host"
-msgstr "Název stroje"
+msgstr "Hostitel"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2433,12 +2438,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Jsou nakonfigurovány následující domény. Zobrazením podrobností zobrazíte "
+"seznam záznamů DNS, které mají být pro danou doménu vytvořeny."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Vyřešit název domény: {domain}"
+msgstr "Zobrazit doménu: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -4578,10 +4584,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "grub package is configured"
 msgid "Mumble server is configured"
-msgstr "balíček grub je nakonfigurován"
+msgstr "Server Mumble je nakonfigurován"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -6552,6 +6556,11 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"Volitelná hodnota. Tato adresa URL slouží k určení veřejně viditelné IP "
+"adresy vašeho {box_name}. Adresa URL by měla jednoduše vrátit adresu IPv4 "
+"nebo IPv6, odkud přichází požadavek klienta. Výchozí nastavení je použití "
+"služby poskytované nadací FreedomBox na adrese https://ddns.freedombox.org/"
+"ip/. Pokud je prázdná, vyhledávání je zakázáno a některé funkce selžou."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6591,20 +6600,16 @@ msgstr ""
 "připojení stabilní a spolehlivé."
 
 #: modules/privacy/forms.py:45
-#, fuzzy
-#| msgid "URL to look up public IP"
 msgid "URL to look up public IP address"
-msgstr "URL adresa na které hledat veřejnou IP adresu"
+msgstr "URL pro vyhledání veřejné IP adresy"
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
 msgstr "Hlášení o použití"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Standard Services"
 msgid "External services"
-msgstr "Standardní služby"
+msgstr "Externí služby"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
