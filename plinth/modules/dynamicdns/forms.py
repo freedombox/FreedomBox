@@ -12,8 +12,8 @@ from plinth import cfg
 from plinth.utils import format_lazy
 
 
-class ConfigureForm(forms.Form):
-    """Form to configure the Dynamic DNS client."""
+class DomainForm(forms.Form):
+    """Form to add/edit a domain in the Dynamic DNS client."""
     help_update_url = \
         gettext_lazy('The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, '
                      '&lt;Domain&gt; may be used within the URL. For details '

@@ -5,18 +5,20 @@
 
 {% load bootstrap %}
 {% load i18n %}
-{% load static %}
-
-{% block page_js %}
-  <script type="text/javascript" src="{% static 'dynamicdns/dynamicdns.js' %}"
-          defer></script>
-{% endblock %}
 
 {% block extra_content %}
-  <h3>{% trans "Status" %}</h3>
+  <h3>{% trans "Domains" %}</h3>
+
+  <div class="btn-toolbar">
+    <a href="{% url 'dynamicdns:domain-add' %}" class="btn btn-primary"
+       role="button" title="{% trans 'Add Domain' %}">
+      <span class="fa fa-plus" aria-hidden="true"></span>
+      {% trans 'Add Domain' %}
+    </a>
+  </div>
 
   {% if domains_status %}
-    <div class="table-responsive">
+    <div class="table-responsive domains-status">
       <table class="table">
         <thead>
           <tr>
@@ -24,12 +26,20 @@
             <th>{% trans "Last update" %}</th>
             <th>{% trans "Result" %}</th>
             <th>{% trans "IP Address" %}</th>
+            <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
         <tbody>
           {% for domain in domains_status.values %}
             <tr>
-              <td>{{ domain.domain }}</td>
+              <td class="domain-name">
+                <a href="{% url 'dynamicdns:domain-edit' domain.domain %}"
+                   title="{% blocktrans trimmed with domain=domain.domain %}
+                            Edit domain {{ domain }}
+                          {% endblocktrans %}">
+                  {{ domain.domain }}
+                </a>
+              </td>
               <td>{{ domain.timestamp|timesince }}</td>
               <td>
                 {% if domain.result %}
@@ -48,12 +58,28 @@
                 {% endif %}
               </td>
               <td>{{ domain.ip_address|default_if_none:'-' }}</td>
+              <td>
+                <a href="{% url 'dynamicdns:domain-edit' domain.domain %}"
+                   class="btn btn-default btn-sm domain-edit" role="button"
+                   title="{% blocktrans trimmed with domain=domain.domain %}
+                            Edit domain {{ domain }}
+                         {% endblocktrans %}">
+                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                </a>
+                <a href="{% url 'dynamicdns:domain-delete' domain.domain %}"
+                   class="btn btn-default btn-sm domain-delete" role="button"
+                   title="{% blocktrans trimmed with domain=domain.main %}
+                          Delete domain {{ domain }}
+                          {% endblocktrans %}">
+                  <span class="fa fa-trash" aria-hidden="true"></span>
+                </a>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
   {% else %}
-    {% trans "No status available." %}
+    <p>{% trans "No domains configured." %}</p>
   {% endif %}
 {% endblock %}

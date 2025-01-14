@@ -28,29 +28,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const FREEDNS = 'https://freedns.afraid.org/dynamic/update.php?' +
         '_YOURAPIKEYHERE_';
 
-    document.getElementById('id_service_type').addEventListener('change', () => {
+    document.getElementById('id_domain-service_type').addEventListener('change', () => {
         setMode();
 
-        const service_type = document.getElementById('id_service_type').value;
+        const service_type = document.getElementById('id_domain-service_type').value;
         if (service_type === "noip.com") {
-            document.getElementById('id_update_url').value = NOIP;
+            document.getElementById('id_domain-update_url').value = NOIP;
         } else if (service_type === "freedns.afraid.org") {
-            document.getElementById('id_update_url').value = FREEDNS;
+            document.getElementById('id_domain-update_url').value = FREEDNS;
         } else {  // GnuDIP and other
-            document.getElementById('id_update_url').value = '';
+            document.getElementById('id_domain-update_url').value = '';
         }
     });
 
-    document.getElementById('id_show_password').addEventListener('change', () => {
-        if (document.getElementById('id_show_password').checked) {
-            document.getElementById('id_password').type = 'text';
+    document.getElementById('id_domain-show_password').addEventListener('change', () => {
+        if (document.getElementById('id_domain-show_password').checked) {
+            document.getElementById('id_domain-password').type = 'text';
         } else {
-            document.getElementById('id_password').type = 'password';
+            document.getElementById('id_domain-password').type = 'password';
         }
     });
 
     function setMode() {
-        const service_type = document.getElementById('id_service_type').value;
+        const service_type = document.getElementById('id_domain-service_type').value;
         if (service_type === "gnudip") {
             setGnudipMode();
         } else {
@@ -62,19 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.form-group').forEach((element) => {
             element.style.display = 'block';
         });
-        document.getElementById('id_update_url').closest('.form-group').style.display = 'none';
-        document.getElementById('id_disable_ssl_cert_check').closest('.form-group').style.display = 'none';
-        document.getElementById('id_use_http_basic_auth').closest('.form-group').style.display = 'none';
-        document.getElementById('id_use_ipv6').closest('.form-group').style.display = 'none';
-        document.getElementById('id_server').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-update_url').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-disable_ssl_cert_check').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-use_http_basic_auth').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-use_ipv6').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-server').closest('.form-group').style.display = 'block';
     }
 
     function setUpdateUrlMode() {
-        document.getElementById('id_update_url').closest('.form-group').style.display = 'block';
-        document.getElementById('id_disable_ssl_cert_check').closest('.form-group').style.display = 'block';
-        document.getElementById('id_use_http_basic_auth').closest('.form-group').style.display = 'block';
-        document.getElementById('id_use_ipv6').closest('.form-group').style.display = 'block';
-        document.getElementById('id_server').closest('.form-group').style.display = 'none';
+        document.getElementById('id_domain-update_url').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-disable_ssl_cert_check').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-use_http_basic_auth').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-use_ipv6').closest('.form-group').style.display = 'block';
+        document.getElementById('id_domain-server').closest('.form-group').style.display = 'none';
     }
 
     setMode();
