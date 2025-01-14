@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-01 08:00+0000\n"
+"PO-Revision-Date: 2025-01-15 04:00+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/sq/>\n"
@@ -316,6 +316,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"Në format 24-orësh. Shërbimet mund të jenë përkohësisht të pakapshme, teksa "
+"kryhet veprimi i kopjeruajtjes në këtë kohë të ditës."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -550,6 +552,7 @@ msgstr "Sistemi i kojeruajtjeve është i zënë me një tjetër veprim."
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
 msgstr ""
+"S’ka mbetur hapësirë e mjaftueshme te disku apo te vendndodhja e largët."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1853,6 +1856,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Ky shërbim përdor një shërbim të jashtëm për të kërkuar adresa IP publike. "
+"Kjo mund të formësohet te aplikacioni për privatësinë."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -2280,11 +2285,11 @@ msgstr "Postfix/Dovecot"
 
 #: modules/email/__init__.py:80
 msgid "More emails"
-msgstr ""
+msgstr "Më tepër email-e"
 
 #: modules/email/__init__.py:80
 msgid "Same mailbox"
-msgstr ""
+msgstr "E njëjta kuti postare"
 
 #: modules/email/__init__.py:82
 msgid "My Email Aliases"
@@ -2369,22 +2374,16 @@ msgid "Add"
 msgstr "Shtoje"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "Zëra DNS"
+msgstr "Zëra DNS për përkatësinë:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Që shërbyesi i postës të funksionojë si duhet, zërat DNS vijues duhen shtuar "
-"dorazi te përkatësia juaj parësore."
+"Që shërbyesi i postës të funksionojë si duhet për këtë përkatësi, zërat DNS "
+"vijues duhen shtuar dorazi te kjo përkatësi."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2414,10 +2413,8 @@ msgid "Host/Target/Value"
 msgstr "Strehë/Objektiv/Vlerë"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Strehëemër ose adresë IP shërbyesi"
+msgstr "Zëra Reverse DNS për Adresa IP"
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2431,18 +2428,27 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Nëse %(box_name)s juaj funksionon në një infrastrukturë shërbimesh në re, "
+"duhet të formësoni <a href="
+"\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\"> kërkim Reverse DNS</"
+"a>. Kjo s’është e detyrueshme, por, përmirëson fort shkallën e dërgimit të "
+"email-eve. Reverse DNS s’është formësuar atje ku është formësuar DNS-ja juaj "
+"e rregull. Duhet të kërkoni për të te rregullimet e VPS/ISP-së tuaj. Disa "
+"furnizues e paraformësojnë pjesën e adresës IP për ju dhe ju duhet vetëm të "
+"ujdisni pjesën e përkatësisë. Kërkim Revese DNS mund të ketë të formësuar "
+"vetëm një nga përkatësitë tuaja, veç në paçi adresa të shumta publike IP."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"Për të kërkuar adresë publike IP, që të shfaqet te ndarja pasues, përdoret "
+"një shërbim i jashtëm. Kjo mund të formësohet te aplikacioni për privatësinë."
 
 #: modules/email/templates/email-dns.html:76
-#, fuzzy
-#| msgid "Hostname"
 msgid "Host"
-msgstr "Strehëemër"
+msgstr "Strehë"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2458,12 +2464,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Janë të formësuar përkatësinë vijuese. Shihni hollësitë, për të parë listën "
+"e zërave DNS që duhen ujdisur për përkatësinë."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Ftillo emër përkatësie: {domain}"
+msgstr "Shihni përkatësi: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -2734,7 +2741,7 @@ msgstr "Porta"
 
 #: modules/firewall/manifest.py:10
 msgid "Blocking"
-msgstr ""
+msgstr "Bllokim"
 
 #: modules/firewall/manifest.py:10 modules/networks/forms.py:319
 #: modules/upgrades/manifest.py:10
@@ -4630,10 +4637,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "grub package is configured"
 msgid "Mumble server is configured"
-msgstr "paketa grub është e formësuar"
+msgstr "Shërbyesi Mumble është formësuar"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -6617,6 +6622,12 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"Vlerë Opsionale. Kjo URL përdoret për të përcaktuar adresën IP të dukshme "
+"publikisht të {box_name} tuaj. URL-ja duhet të japë thjesht adresën IPv4 ose "
+"IPv6 prej nga vjen kërkesa e klientit. Parazgjedhja është të përdoret "
+"shërbimi i ofruar nga FreedomBox Foundation te https://ddns.freedombox.org/"
+"ip/. Në u lëntë e zbrazët, kërkimet çaktivizohen dhe disa funksione s’do të "
+"kryhen dot."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6659,20 +6670,16 @@ msgstr ""
 "dhe e besueshme."
 
 #: modules/privacy/forms.py:45
-#, fuzzy
-#| msgid "URL to look up public IP"
 msgid "URL to look up public IP address"
-msgstr "URL ku të kërkohet IP publike"
+msgstr "URL ku të kërkohet adresë IP publike"
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
 msgstr "Raportim përdorimi"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Onion services"
 msgid "External services"
-msgstr "Shërbime Onion"
+msgstr "Shërbime të jashtme"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
