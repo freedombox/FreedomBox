@@ -77,7 +77,9 @@ class ScheduleForm(forms.Form):
 
     run_at_hour = forms.IntegerField(
         label=_('Hour of the day to trigger backup operation'), required=True,
-        min_value=0, max_value=23, help_text=_('In 24 hour format.'))
+        min_value=0, max_value=23, help_text=_(
+            'In 24 hour format. Services may become temporarily unavailable '
+            'while running backup operation at this time of the day.'))
 
     selected_apps = forms.MultipleChoiceField(
         label=_('Included apps'), help_text=_('Apps to include in the backup'),

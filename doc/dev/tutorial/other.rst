@@ -89,22 +89,23 @@ the Django's localization methods to make that happen.
 
         info = app_module.Info(...
                                name=_('Transmission'),
+                               description=[_('Transmission is a...'),
+                                            _('BitTorrent is a peer-to-peer...')],
                                ...
-                               short_description=_('BitTorrent Web Client'),
+                               tags=[_('File sharing'), _('BitTorrent'), ...])
                                ...)
 
-Notice that the app's name, description, etc. are wrapped in the ``_()`` method
-call. This needs to be done for the rest of our app. We use the
+Notice that the app's name, description, tags, etc. are wrapped in the ``_()``
+method calls. This needs to be done for the rest of our app. We use the
 :obj:`~django.utils.translation.gettext_lazy` in some cases and we use the
-regular :obj:`~django.utils.translation.gettext` in other cases. This is
-because in the second case the :obj:`~django.utils.translation.gettext` lookup
-is made once and reused for every user looking at the interface. These users may
-each have a different language set for their interface. Lookup made for one
-language for a user should not be used for other users. The ``_lazy`` methods
-provided by Django makes sure that the return value is an object that will
-actually be converted to string at the final moment when the string is being
-displayed. In the first case, the lookup is made and string is returned
-immediately.
+regular :obj:`~django.utils.translation.gettext` in other cases. This is because
+in the second case the :obj:`~django.utils.translation.gettext` lookup is made
+once and reused for every user looking at the interface. These users may each
+have a different language set for their interface. Lookup made for one language
+for a user should not be used for other users. The ``_lazy`` methods provided by
+Django makes sure that the return value is an object that will actually be
+converted to string at the final moment when the string is being displayed. In
+the first case, the lookup is made and string is returned immediately.
 
 All of this is the usual way internationalization is done in Django. See
 :doc:`Internationalization and localization <django:topics/i18n/index>`

@@ -68,20 +68,19 @@ class TiddlyWikiApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-tiddlywiki', info.name,
-                              info.short_description, info.icon_filename,
-                              'tiddlywiki:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-tiddlywiki', info.name, info.icon_filename,
+                              info.tags, 'tiddlywiki:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         # The shortcut is a simple directory listing provided by Apache server.
         # Expecting a large number of wiki files, so creating a shortcut for
         # each file (like in ikiwiki's case) will crowd the front page.
         shortcut = frontpage.Shortcut(
-            'shortcut-tiddlywiki', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-tiddlywiki', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            url='/tiddlywiki/', clients=info.clients, login_required=True,
-            allowed_groups=list(groups))
+            url='/tiddlywiki/', clients=info.clients, tags=info.tags,
+            login_required=True, allowed_groups=list(groups))
         self.add(shortcut)
 
         dropin_configs = DropinConfigs('dropin-configs-tiddlywiki', [

@@ -33,7 +33,7 @@ class PowerApp(app_module.App):
                                manual_page='Power', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-power', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-power', info.name, info.icon, info.tags,
                               'power:index',
                               parent_url_name='system:administration',
                               order=50)

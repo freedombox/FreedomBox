@@ -17,45 +17,28 @@
 {% endblock %}
 
 {% block extra_content %}
-  {{ block.super }}
-
-  <h3>{% trans "DNS Records" %}</h3>
+  <h3>{% trans "Domains" %}</h3>
 
   <p>
     {% blocktrans trimmed %}
-      The following DNS records must be added manually on your primary domain
-      for the mail server to work properly.
+      The following domains are configured. View details to see the list of DNS
+      entries to be made for the domain.
     {% endblocktrans %}
   </p>
 
-  <div class="table-responsive">
-    <table class="table table-sm">
-      <thead>
-        <tr>
-          <th>{% trans "Domain" %}</th>
-          <th>{% trans "TTL" %}</th>
-          <th>{% trans "Class" %}</th>
-          <th>{% trans "Type" %}</th>
-          <th>{% trans "Priority" %}</th>
-          <th>{% trans "Weight" %}</th>
-          <th>{% trans "Port" %}</th>
-          <th>{% trans "Host/Target/Value" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for dns_entry in dns_entries %}
-          <tr>
-            <td>{{ dns_entry.domain|default_if_none:"" }}</td>
-            <td>{{ dns_entry.ttl }}</td>
-            <td>{{ dns_entry.class_ }}</td>
-            <td>{{ dns_entry.type_ }}</td>
-            <td>{{ dns_entry.priority }}</td>
-            <td>{{ dns_entry.weight|default_if_none:"" }}</td>
-            <td>{{ dns_entry.port|default_if_none:"" }}</td>
-            <td class="text-break">{{ dns_entry.get_split_value }}</td>
-          </tr>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="list-group">
+        {% for domain in all_domains %}
+          <div class="list-group-item">
+            <a href="{% url 'email:dns' domain %}"
+               title="{% blocktrans %}View domain: {{ domain }}{% endblocktrans %}">
+              {{ domain }}</a>
+            {% if domain == primary_domain %}<div class="app-icon fa fa-tag"></div>{% endif %}
+          </div>
         {% endfor %}
-      </tbody>
-    </table>
+      </div>
+    </div>
   </div>
+
 {% endblock %}

@@ -7,6 +7,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'ejabberd/ejabberd.js' %}"
+          defer></script>
+{% endblock %}
+
 {% block status %}
   {{ block.super }}
 
@@ -29,9 +34,4 @@
     {% endif %}
   </p>
 
-{% endblock %}
-
-{% block page_js %}
-  <script type="text/javascript"
-          src="{% static 'ejabberd/ejabberd.js' %}"></script>
 {% endblock %}

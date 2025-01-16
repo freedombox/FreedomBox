@@ -64,16 +64,15 @@ class SyncthingApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-syncthing', info.name,
-                              info.short_description, info.icon_filename,
-                              'syncthing:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-syncthing', info.name, info.icon_filename,
+                              info.tags, 'syncthing:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-syncthing', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url='/syncthing/', clients=info.clients,
-                                      login_required=True,
+                                      tags=info.tags, login_required=True,
                                       allowed_groups=list(self.groups))
         self.add(shortcut)
 

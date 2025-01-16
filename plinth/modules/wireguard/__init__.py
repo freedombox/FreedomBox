@@ -51,15 +51,15 @@ class WireguardApp(app_module.App):
             donation_url='https://www.wireguard.com/donations/')
         self.add(info)
 
-        menu_item = menu.Menu('menu-wireguard', info.name,
-                              info.short_description, info.icon_filename,
-                              'wireguard:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-wireguard', info.name, info.icon_filename,
+                              info.tags, 'wireguard:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-wireguard', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
-            description=info.description, manual_page=info.manual_page,
+            'shortcut-wireguard', info.name, icon=info.icon_filename,
+            tags=info.tags, description=info.description,
+            manual_page=info.manual_page,
             configure_url=reverse_lazy('wireguard:index'), login_required=True,
             clients=info.clients)
         self.add(shortcut)

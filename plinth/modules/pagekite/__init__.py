@@ -61,8 +61,7 @@ class PagekiteApp(app_module.App):
             donation_url='https://pagekite.net/support/faq/#donate')
         self.add(info)
 
-        menu_item = menu.Menu('menu-pagekite', info.name,
-                              info.short_description, info.icon,
+        menu_item = menu.Menu('menu-pagekite', info.name, info.icon, info.tags,
                               'pagekite:index',
                               parent_url_name='system:visibility', order=40)
         self.add(menu_item)

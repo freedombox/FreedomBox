@@ -30,27 +30,27 @@ class HelpApp(app_module.App):
                                is_essential=True)
         self.add(info)
 
-        menu_item = menu.Menu('menu-help', _('Help'), None, 'fa-book',
+        menu_item = menu.Menu('menu-help', _('Help'), 'fa-book', None,
                               'help:index', parent_url_name='index')
         self.add(menu_item)
         menu_item = menu.Menu('menu-help-manual',
-                              pgettext_lazy('User guide', 'Manual'), None,
-                              'fa-info-circle', 'help:manual',
+                              pgettext_lazy('User guide', 'Manual'),
+                              'fa-info-circle', None, 'help:manual',
                               parent_url_name='help:index', order=10)
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-support', _('Get Support'), None,
-                              'fa-life-ring', 'help:support',
+        menu_item = menu.Menu('menu-help-support', _('Get Support'),
+                              'fa-life-ring', None, 'help:support',
                               parent_url_name='help:index', order=20)
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-feedback', _('Submit Feedback'), None,
-                              'fa-comments', 'help:feedback',
+        menu_item = menu.Menu('menu-help-feedback', _('Submit Feedback'),
+                              'fa-comments', None, 'help:feedback',
                               parent_url_name='help:index', order=25)
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-contribute', _('Contribute'), None,
-                              'fa-wrench', 'help:contribute',
+        menu_item = menu.Menu('menu-help-contribute', _('Contribute'),
+                              'fa-wrench', None, 'help:contribute',
                               parent_url_name='help:index', order=30)
         self.add(menu_item)
-        menu_item = menu.Menu('menu-help-about', _('About'), None, 'fa-star',
+        menu_item = menu.Menu('menu-help-about', _('About'), 'fa-star', None,
                               'help:about', parent_url_name='help:index',
                               order=100)
         self.add(menu_item)

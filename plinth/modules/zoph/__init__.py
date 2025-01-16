@@ -58,15 +58,13 @@ class ZophApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-zoph', info.name, info.short_description,
-                              info.icon_filename, 'zoph:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-zoph', info.name, info.icon_filename,
+                              info.tags, 'zoph:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-zoph', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename, url='/zoph/',
-                                      clients=info.clients,
+                                      clients=info.clients, tags=info.tags,
                                       login_required=True)
         self.add(shortcut)
 

@@ -3,7 +3,6 @@
 Main FreedomBox views.
 """
 
-import datetime
 import random
 import time
 import traceback
@@ -68,7 +67,7 @@ def get_breadcrumbs(request: HttpRequest) -> dict[str, dict[str, str | bool]]:
     """Return all the URL ancestors that can be show as breadcrumbs."""
     breadcrumbs = {}
 
-    def _add(url: str, name: str, url_name: str | None = None):
+    def _add(url: str, name: str | None, url_name: str | None = None):
         """Add item into the breadcrumb dictionary."""
         breadcrumbs[url] = {
             'name': name,
@@ -191,7 +190,7 @@ class AppsIndexView(TemplateView):
             A mismatch is when a selected tag is *not* present in the list of
             tags for menu item.
             """
-            menu_tags = set(menu_item.app.info.tags)
+            menu_tags = set(menu_item.tags)
             return [tag not in menu_tags for tag in selected_tags]
 
         def _sort_key(menu_item):
@@ -226,8 +225,11 @@ class AppsIndexView(TemplateView):
 
         context['tags'] = tags
         # Sorted tags by localized string
-        context['all_tags'] = sorted(app_module.Info.list_tags(),
-                                     key=lambda tag: _(tag))
+        all_tags = set()
+        for menu_item in menu_items:
+            all_tags.update(menu_item.tags or [])
+
+        context['all_tags'] = sorted(all_tags, key=lambda tag: _(tag))
         context['menu_items'] = self._pick_menu_items(menu_items, tags)
 
         return context
@@ -604,10 +606,9 @@ class UninstallView(FormView):
             if repository.flags.get('mountable'):
                 repository.mount()
 
-            name = datetime.datetime.now().strftime(
-                '%Y-%m-%d:%H:%M:%S') + ' ' + str(
-                    _('before uninstall of {app_id}')).format(
-                        app_id=self.app.app_id)
+            name = repository.generate_archive_name() + ' ' + str(
+                _('before uninstall of {app_id}')).format(
+                    app_id=self.app.app_id)
             repository.create_archive(name, [self.app.app_id])
 
         # Uninstall

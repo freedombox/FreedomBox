@@ -274,12 +274,14 @@ class Schedule:
         logger.info('Running backup for repository %s, periods %s',
                     self.repository_uuid, periods)
 
+        repository = self._get_repository()
+
         from . import api
         periods = list(periods)
         periods.sort()
-        name = 'scheduled: {periods}: {datetime}'.format(
+        name = 'scheduled: {periods}: {name}'.format(
             periods=', '.join(periods),
-            datetime=datetime.now().strftime('%Y-%m-%d:%H:%M'))
+            name=repository.generate_archive_name())
         comment = self._serialize_comment({
             'type': 'scheduled',
             'periods': periods
@@ -290,7 +292,6 @@ class Schedule:
             if component.app_id not in self.unselected_apps
         ]
 
-        repository = self._get_repository()
         repository.create_archive(name, app_ids, archive_comment=comment)
 
     def _run_cleanup(self, repository):

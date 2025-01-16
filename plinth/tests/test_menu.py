@@ -27,8 +27,8 @@ def build_menu(size=5):
         kwargs = {
             'component_id': f'menu-test-{index}',
             'name': f'Name{index}',
-            'short_description': f'ShortDescription{index}',
             'icon': f'Icon{index}',
+            'tags': ['tag1', 'tag2'],
             'url_name': f'test{index}',
             'url_kwargs': {
                 'a': index,
@@ -73,8 +73,8 @@ def test_menu_creation_without_arguments():
     menu = Menu('menu-index', url_name='index')
     assert menu.component_id == 'menu-index'
     assert menu.name is None
-    assert menu.short_description is None
     assert menu.icon is None
+    assert menu.tags is None
     assert menu.url == '/'
     assert menu.order == 50
     assert not menu.advanced
@@ -84,23 +84,23 @@ def test_menu_creation_without_arguments():
 def test_menu_creation_with_arguments():
     """Verify the Menu state with initialization parameters."""
     expected_name = 'Name'
-    expected_short_description = 'ShortDescription'
     expected_icon = 'Icon'
+    expected_tags = ['tag1', 'tag2']
     url_name = 'test'
     url_kwargs = {'a': 1, 'b': 2, 'c': 3}
     expected_url = reverse(url_name, kwargs=url_kwargs)
     expected_order = 42
     parent_menu = Menu('menu-index', url_name='index')
-    menu = Menu('menu-test', expected_name, expected_short_description,
-                expected_icon, url_name, url_kwargs=url_kwargs,
-                parent_url_name='index', order=expected_order, advanced=True)
+    menu = Menu('menu-test', expected_name, expected_icon, expected_tags,
+                url_name, url_kwargs=url_kwargs, parent_url_name='index',
+                order=expected_order, advanced=True)
 
     assert menu.parent_url_name == 'index'
     assert len(parent_menu.items) == 1
     assert parent_menu.items[0] == menu
     assert expected_name == menu.name
-    assert expected_short_description == menu.short_description
     assert expected_icon == menu.icon
+    assert expected_tags == menu.tags
     assert expected_url == menu.url
     assert expected_order == menu.order
     assert menu.advanced

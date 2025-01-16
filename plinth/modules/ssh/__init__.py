@@ -44,7 +44,7 @@ class SSHApp(app_module.App):
                                manual_page='SecureShell', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-ssh', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-ssh', info.name, info.icon, info.tags,
                               'ssh:index',
                               parent_url_name='system:administration',
                               order=10)

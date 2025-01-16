@@ -7,6 +7,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'tor/tor.js' %}"
+          defer></script>
+{% endblock %}
+
 {% block status %}
   {{ block.super }}
 
@@ -36,8 +41,4 @@
 
 {% block internal_zone %}
   {{ block.super }}
-{% endblock %}
-
-{% block page_js %}
-  <script type="text/javascript" src="{% static 'tor/tor.js' %}"></script>
 {% endblock %}

@@ -53,16 +53,15 @@ class RoundcubeApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-roundcube', info.name,
-                              info.short_description, info.icon_filename,
-                              'roundcube:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-roundcube', info.name, info.icon_filename,
+                              info.tags, 'roundcube:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-roundcube', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url='/roundcube/', clients=info.clients,
-                                      login_required=True)
+                                      tags=info.tags, login_required=True)
         self.add(shortcut)
 
         packages = Packages(

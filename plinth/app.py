@@ -431,10 +431,14 @@ class LeaderComponent(Component):
 class Info(FollowerComponent):
     """Component to capture basic information about an app."""
 
-    def __init__(self, app_id, version, is_essential=False, depends=None,
-                 name=None, icon=None, icon_filename=None,
-                 short_description=None, description=None, manual_page=None,
-                 clients=None, donation_url=None, tags=None):
+    def __init__(self, app_id: str, version: int, is_essential: bool = False,
+                 depends: list[str] | None = None, name: str | None = None,
+                 icon: str | None = None, icon_filename: str | None = None,
+                 description: list[str] | None = None,
+                 manual_page: str | None = None,
+                 clients: list[dict] | None = None,
+                 donation_url: str | None = None,
+                 tags: list[str] | None = None):
         """Store the basic properties of an app as a component.
 
         Each app must contain at least one component of this type to provide
@@ -480,12 +484,6 @@ class Info(FollowerComponent):
         used in the primary app page and on the app listing page. Each app
         typically has either an 'icon' or 'icon_filename' property set.
 
-        'short_description' is the user visible generic name of the app. For
-        example, for the 'Tor' app the short description is 'Anonymity
-        Network'. It is shown along with the name of the app in the list of
-        apps and when viewing the app's main page. It should be a lazily
-        translated Django string.
-
         'description' is the user visible full description of the app. It is
         shown along in the app page along with other app details. It should be
         a list of lazily translated Django strings. Each string is rendered as
@@ -516,7 +514,6 @@ class Info(FollowerComponent):
         self.name = name
         self.icon = icon
         self.icon_filename = icon_filename
-        self.short_description = short_description
         self.description = description
         self.manual_page = manual_page
         self.clients = clients
@@ -532,20 +529,19 @@ class Info(FollowerComponent):
         These can only be retrieved after Django has been configured.
         """
         # Store untranslated original strings instead of proxy objects
+        from django.core.exceptions import ImproperlyConfigured
+        from django.utils.functional import Promise
         from django.utils.translation import override
-        with override(language=None):
-            return [str(tag) for tag in self._tags]
-
-    @classmethod
-    def list_tags(self) -> list[str]:
-        """Return a list of untranslated tags."""
-        tags: set[str] = set()
-        from django.utils.translation import override
-        with override(language=None):
-            for app in App.list():
-                tags.update((str(tag) for tag in app.info.tags))
-
-        return list(tags)
+        try:
+            with override(language=None):
+                return [str(tag) for tag in self._tags]
+        except ImproperlyConfigured:
+            # Hack to allow apps to be instantiated without Django
+            # initialization as required by privileged process.
+            return [
+                tag._proxy____args[0] if isinstance(tag, Promise) else tag
+                for tag in self._tags
+            ]
 
 
 class EnableState(LeaderComponent):

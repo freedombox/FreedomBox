@@ -57,16 +57,16 @@ class PrivoxyApp(app_module.App):
             tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-privoxy', info.name,
-                              info.short_description, info.icon_filename,
-                              'privoxy:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-privoxy', info.name, info.icon_filename,
+                              info.tags, 'privoxy:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-privoxy', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-privoxy', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            configure_url=reverse_lazy('privoxy:index'), login_required=True)
+            configure_url=reverse_lazy('privoxy:index'), tags=info.tags,
+            login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-privoxy', ['privoxy'])

@@ -7,7 +7,6 @@ import contextlib
 import logging
 import os
 import subprocess
-from datetime import datetime
 from urllib.parse import unquote
 
 from django.contrib import messages
@@ -141,8 +140,7 @@ class CreateArchiveView(FormView):
 
         name = form.cleaned_data['name']
         if not name:
-            name = datetime.now().astimezone().replace(
-                microsecond=0).isoformat()
+            name = repository.generate_archive_name()
 
         selected_apps = form.cleaned_data['selected_apps']
         with handle_common_errors(self.request):

@@ -45,7 +45,7 @@ a link in FreedomBox web interface. Let us add a link in the apps list. In
           ...
 
           menu_item = menu.Menu('menu-transmission', 'Transmission',
-                                'BitTorrrent Web Client', 'transmission',
+                                'transmission', info.tags,
                                 'transmission:index', parent_url_name='apps')
           self.add(menu_item)
 
@@ -61,11 +61,11 @@ menu item we want to present.
 * The second parameter is the display name to use for our menu item which
   happens to be the name of the app as well.
 
-* The third parameter is a short description for the menu item.
-
-* The fourth parameter is the name of the icon to use when showing the menu
+* The third parameter is the name of the icon to use when showing the menu
   item. An SVG file and a PNG should be created in the
   ``plinth/modules/transmission/static/icons/`` directory.
+
+* The fourth parameter is the list of tags to show on the menu item.
 
 * The fifth parameter is the URL that the user should be directed to when the
   menu item is clicked. This is a Django URL name and we have already created a

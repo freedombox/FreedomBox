@@ -54,15 +54,14 @@ class ShadowsocksApp(app_module.App):
         self.add(info)
 
         menu_item = menu.Menu('menu-shadowsocks', info.name,
-                              info.short_description, info.icon_filename,
+                              info.icon_filename, info.tags,
                               'shadowsocks:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-shadowsocks', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-shadowsocks', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            configure_url=reverse_lazy('shadowsocks:index'),
+            configure_url=reverse_lazy('shadowsocks:index'), tags=info.tags,
             login_required=True)
         self.add(shortcut)
 

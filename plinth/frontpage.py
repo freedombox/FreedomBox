@@ -17,10 +17,14 @@ class Shortcut(app.FollowerComponent):
 
     _all_shortcuts: ClassVar[dict[str, 'Shortcut']] = {}
 
-    def __init__(self, component_id, name, short_description=None, icon=None,
-                 url=None, description=None, manual_page=None,
-                 configure_url=None, clients=None, login_required=False,
-                 allowed_groups=None):
+    def __init__(self, component_id: str, name: str | None,
+                 icon: str | None = None, url: str | None = None,
+                 description: list[str] | None = None,
+                 manual_page: str | None = None,
+                 configure_url: str | None = None,
+                 clients: list[dict] | None = None,
+                 tags: list[str] | None = None, login_required: bool = False,
+                 allowed_groups: list[str] | None = None):
         """Initialize the frontpage shortcut component for an app.
 
         When a user visits this web interface, they are first shown the
@@ -33,8 +37,6 @@ class Shortcut(app.FollowerComponent):
         of a app. Conventionally starts with 'shortcut-'.
 
         'name' is the mandatory title for the shortcut.
-
-        'short_description' is an optional secondary title for the shortcut.
 
         'icon' is used to find a suitable image to represent the shortcut.
 
@@ -60,6 +62,9 @@ class Shortcut(app.FollowerComponent):
         service offered by the shortcut. This should be a valid client
         information structure as validated by clients.py:validate().
 
+        'tags' is a list of tags that describe the app. Tags help users to find
+        similar apps or alternatives and discover use cases.
+
         If 'login_required' is true, only logged-in users will be shown this
         shortcut. Anonymous users visiting the frontpage won't be shown this
         shortcut.
@@ -77,13 +82,13 @@ class Shortcut(app.FollowerComponent):
             url = '?selected={id}'.format(id=component_id)
 
         self.name = name
-        self.short_description = short_description
         self.url = url
         self.icon = icon
         self.description = description
         self.manual_page = manual_page
         self.configure_url = configure_url
         self.clients = clients
+        self.tags = tags
         self.login_required = login_required
         self.allowed_groups = set(allowed_groups) if allowed_groups else None
 
@@ -140,9 +145,10 @@ def add_custom_shortcuts():
 
         shortcut_id = shortcut.get('id', shortcut['name'])
         component_id = 'shortcut-custom-' + shortcut_id
+        tags = shortcut.get('tags', [])
         component = Shortcut(component_id, shortcut['name'],
-                             shortcut['short_description'],
-                             icon=shortcut['icon_url'], url=web_app_url)
+                             icon=shortcut['icon_url'], tags=tags,
+                             url=web_app_url)
         component.set_enabled(True)
 
 

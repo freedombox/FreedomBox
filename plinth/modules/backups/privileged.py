@@ -87,6 +87,11 @@ KNOWN_ERRORS = [
         'message': _('Backup system is busy with another operation.'),
         'raise_as': errors.BorgBusy,
     },
+    {
+        'errors': ['No space left on device'],
+        'message': _('Not enough space left on the disk or remote location.'),
+        'raise_as': errors.BorgNoSpace,
+    },
 ]
 
 

@@ -6,6 +6,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'matrixsynapse/matrixsynapse.js' %}"
+          defer></script>
+{% endblock %}
+
 {% block status %}
   {{ block.super }}
 
@@ -86,9 +91,4 @@
       </div>
     </div>
   {% endif %}
-{% endblock %}
-
-{% block page_js %}
-  <script type="text/javascript"
-          src="{% static 'matrixsynapse/matrixsynapse.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,80 @@
+== FreedomBox Customization ==
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+Though !FreedomBox's philosophy is to have the user make as few decisions as possible about the !FreedomBox itself, a few options for customization have been provided to facilitate some advanced use cases. 
+
+
+=== Change Default App ===
+
+''Available since version:'' 0.36.0 <<BR>>
+''Skill level:'' Basic
+
+''Use Case'': A !FreedomBox that primarily runs only one public-facing application whose web application is set as the landing page when someone visits the domain name of the !FreedomBox over the internet. <<BR>>
+e.g. A university using !MediaWiki running on !FreedomBox as a course wiki wants its students typing in the domain name into their browser to directly go to the wiki bypassing the !FreedomBox home page.
+
+''Configuration:'' Change the [[FreedomBox/Manual/Configure#Default_App|Default App]] in the configure page to whichever app you want to be served as default.
+
+=== Custom Shortcuts ===
+
+''Available since version:'' 0.40.0 <<BR>>
+''Skill level:'' Advanced
+
+''Use Case:'' The administrator of a community deployment of !FreedomBox manually installs a few additional unsupported applications on the !FreedomBox and wants users to be able to transparently access them through the web and mobile applications of !FreedomBox.
+
+''Note:'' This feature is meant to be used with applications that are end-user facing, i.e have a web or mobile client.
+
+'''Configuration:'''
+
+Create a file called `custom-shortcuts.json` in Plinth's configuration directory `/etc/plinth` and add additional shortcuts in JSON format. The file should have follow the same JSON schema as the Plinth API. You can refer to the JSON schema by visiting https://<my-freedombox-url>/plinth/api/1/shortcuts.
+
+An example file adding one additional shortcut for [[https://nextcloud.com|NextCloud]].
+
+{{{#!highlight json
+{
+    "shortcuts": [{
+        "name": "NextCloud",
+        "description": ["Nextcloud is a suite of client-server software for creating and using file hosting services."],
+        "icon_url": "/plinth/custom/static/icons/nextcloud.png",
+        "clients": [{
+            "name": "nextcloud",
+            "platforms": [{
+                "type": "web",
+                "url": "/nextcloud"
+            }]
+        }],
+        "tags" : ["Groupware", "File sync"]
+    }]
+}
+}}}
+
+The corresponding icons for the shortcuts listed in the above file should be placed in the directory `/var/www/plinth/custom/static/icons/`. The file names of the icons should match with those provided in `/etc/plinth/custom-shortcuts.json`.
+
+After adding an entry for !NextCloud in custom-shortcuts.json and an icon, restart Plinth by executing the command {{{ systemctl restart plinth }}} on the !FreedomBox. You can also restart the !FreedomBox from the web interface.
+
+After restart the Plinth home page will display an additional shortcut for !NextCloud as shown below: <<BR>>
+{{attachment:nextcloud-frontpage-shortcut.png|NextCloud custom shortcut on the Plinth home page}}
+
+The same shortcut will also be displayed in any Android apps connected to the !FreedomBox. <<BR>>
+
+{{attachment:android-app-custom-shortcut.jpg|NextCloud custom shortcut in the Android app}}
+
+=== Custom Styling ===
+
+''Available since version:'' 24.25 <<BR>>
+''Skill level:'' Advanced
+
+''Use Case:'' The administrator of a community or home deployment of !FreedomBox wants to customize the web page styling of !FreedomBox.
+
+''Configuration'': Create a file in the path `/var/www/plinth/custom/static/css/user.css` and write [[https://developer.mozilla.org/en-US/docs/Web/CSS|CSS]] styling rules. This 
+file has the highest priority as per the [[https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade|cascading rules]]. Use the web browser's developer console to understand which rules to override and how much [[https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity|specificity]] is needed.
+
+{{attachment:customization_styling.png|Home page with customized styling}}
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

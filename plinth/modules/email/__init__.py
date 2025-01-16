@@ -18,7 +18,7 @@ from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
 from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
-from plinth.utils import format_lazy
+from plinth.utils import format_lazy, gettext_noop
 
 from . import aliases, manifest, privileged
 
@@ -66,24 +66,23 @@ class EmailApp(plinth.app.App):
                                donation_url='https://rspamd.com/support.html')
         self.add(info)
 
-        menu_item = menu.Menu('menu-email', info.name, info.short_description,
-                              info.icon_filename, 'email:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-email', info.name, info.icon_filename,
+                              info.tags, 'email:index', parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-email', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-email', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('email:index'), clients=info.clients,
-            login_required=True)
+            tags=info.tags, login_required=True)
         self.add(shortcut)
 
-        shortcut = frontpage.Shortcut(
-            'shortcut-email-aliases', _('My Email Aliases'),
-            short_description=_('Manage Aliases for Mailbox'),
-            icon=info.icon_filename, url=reverse_lazy('email:aliases'),
-            login_required=True)
+        tags = [gettext_noop('More emails'), gettext_noop('Same mailbox')]
+        shortcut = frontpage.Shortcut('shortcut-email-aliases',
+                                      _('My Email Aliases'),
+                                      icon=info.icon_filename, tags=tags,
+                                      url=reverse_lazy('email:aliases'),
+                                      login_required=True)
         self.add(shortcut)
 
         # Other likely install conflicts have been discarded:

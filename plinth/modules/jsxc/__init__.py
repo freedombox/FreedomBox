@@ -40,19 +40,17 @@ class JSXCApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-jsxc', info.name, info.short_description,
-                              info.icon_filename, 'jsxc:index',
-                              parent_url_name='apps')
+        menu_item = menu.Menu('menu-jsxc', info.name, info.icon_filename,
+                              info.tags, 'jsxc:index', parent_url_name='apps')
         self.add(menu_item)
 
         enable_state = app_module.EnableState('enable-state-jsxc')
         self.add(enable_state)
 
         shortcut = frontpage.Shortcut('shortcut-jsxc', name=info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url=reverse_lazy('jsxc:jsxc'),
-                                      clients=info.clients)
+                                      clients=info.clients, tags=info.tags)
         self.add(shortcut)
 
         packages = Packages('packages-jsxc', ['libjs-jsxc'])

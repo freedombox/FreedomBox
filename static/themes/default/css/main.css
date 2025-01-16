@@ -8,6 +8,12 @@
     --progress-color: #3498db; /* Blue */
     --freedombox-form-disabled-bg-color: #e9ecef; /* Grey */
     --freedombox-navbar-color: white;
+
+    /* Missing variables in Bootstrap 5.2 copied from Bootstrap 5.3 */
+    --bs-secondary-bg: #e9ecef;
+    --bs-form-invalid-color: #dc3545;
+    --bs-form-invalid-border-color: #dc3545;
+    --bs-secondary-border-subtle: #c4c8cb;
 }
 
 @font-face {
@@ -586,10 +592,9 @@ footer {
 
 .card-section-title, .system-section-title {
     display: flex;
-    font-weight: 800;
-    font-size: 1.25rem;
+    font-weight: 600;
+    font-size: 1.5rem;
     margin: 1.25rem 0;
-    border-bottom: var(--bs-secondary-border-subtle) solid 2px;
 }
 
 .card {
@@ -685,23 +690,6 @@ footer {
     grid-column: 2;
     padding: 0;
     min-height: 1.125rem;
-}
-
-/* Button table - Tables with a list of actions as buttons on top */
-.index-page .card-list:before,
-.apps-page .card-list:before,
-.system-page .system-section-title:first-child:before {
-    position: relative;
-    width: 25rem;
-    height: 25rem;
-    margin-left: -25rem;
-    margin-bottom: -25rem;
-    left: 18.75rem;
-    top: -1.25rem;
-    content: " ";
-    background-size: 100%;
-    background-repeat: no-repeat;
-    z-index: -1;
 }
 
 .names-table {

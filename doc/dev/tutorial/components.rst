@@ -30,23 +30,21 @@ function normally.
       def __init__(self):
         ...
 
-        info = app_module.Info(app_id=self.app_id, version=1,
-                               name=_('Transmission'),
-                               icon_filename='transmission',
-                               short_description=_('BitTorrent Web Client'),
-                               description=description,
-                               manual_page='Transmission',
-                               clients=manifest.clients,
-                               donation_url='https://transmissionbt.com/donate/')
+        info = app_module.Info(
+            app_id=self.app_id, version=1, name=_('Transmission'),
+            icon_filename='transmission', description=_description,
+            manual_page='Transmission', clients=manifest.clients,
+            donation_url='https://transmissionbt.com/donate/',
+            tags=manifest.tags)
         self.add(info)
 
 The first argument is app_id that is same as the ID for the app. The version is
 the version number for this app that must be incremented whenever setup() method
-needs to be called again. name, icon_filename, short_description, description,
-manual_page and clients provide information that is shown on the app's main
-page. The donation_url encourages our users to contribute to upstream projects
-in order ensure their long term sustainability. More information about the
-parameters is available in :class:`~plinth.app.Info` class documentation.
+needs to be called again. name, icon_filename, description, manual_page,
+clients, and tags provide information that is shown on the app's main page. The
+donation_url encourages our users to contribute to upstream projects in order
+ensure their long term sustainability. More information about the parameters is
+available in :class:`~plinth.app.Info` class documentation.
 
 The description of app should provide basic information on what the app is about
 and how to use it. It is impractical, however, to explain everything about the
@@ -322,22 +320,24 @@ when they visit FreedomBox. To provide this shortcut, a
       def __init__(self):
           ...
 
-          shortcut = frontpage.Shortcut(
-              'shortcut-transmission', name, short_description=short_description,
-              icon='transmission', url='/transmission', clients=clients,
-              login_required=True, allowed_groups=[group[0]])
+          shortcut = frontpage.Shortcut('shortcut-transmission', info.name,
+                                        icon=info.icon_filename,
+                                        url='/transmission',
+                                        clients=info.clients, tags=info.tags,
+                                        login_required=True,
+                                        allowed_groups=list(groups))
           self.add(shortcut)
 
-The first parameter, as usual, is a unique ID. The next three parameters are
-basic information about the app similar to the menu item. The URL parameter
-specifies the URL that the user should be directed to when the shortcut is
-clicked. This is the web interface provided by our app. The next parameter
-provides a list of clients. This is useful for the FreedomBox mobile app when
-the information is used to suggest installing mobile apps. This is described in
-a later section of this tutorial. The next parameter specifies whether anonymous
-users who are not logged into FreedomBox should be shown this shortcut. The
-final parameter further restricts to which group of users this shortcut must be
-shown.
+The first parameter, as usual, is a unique ID. The next two parameters are basic
+information about the app similar to the menu item. The URL parameter specifies
+the URL that the user should be directed to when the shortcut is clicked. This
+is the web interface provided by our app. The next parameter provides a list of
+clients. This is useful for the FreedomBox mobile app when the information is
+used to suggest installing mobile apps. This is described in a later section of
+this tutorial. The next parameter specifies the list of tags to show on the
+shortcut. The next parameter specifies whether anonymous users who are not
+logged into FreedomBox should be shown this shortcut. The final parameter
+further restricts to which group of users this shortcut must be shown.
 
 Adding backup/restore functionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

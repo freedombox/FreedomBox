@@ -54,8 +54,8 @@ class CoturnApp(app_module.App):
                                tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-coturn', info.name, info.short_description,
-                              info.icon_filename, 'coturn:index',
+        menu_item = menu.Menu('menu-coturn', info.name, info.icon_filename,
+                              info.tags, 'coturn:index',
                               parent_url_name='apps')
         self.add(menu_item)
 

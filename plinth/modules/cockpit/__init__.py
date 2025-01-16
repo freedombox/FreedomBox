@@ -56,18 +56,16 @@ class CockpitApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-cockpit', info.name,
-                              info.short_description, info.icon,
+        menu_item = menu.Menu('menu-cockpit', info.name, info.icon, info.tags,
                               'cockpit:index',
                               parent_url_name='system:administration',
                               order=20)
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-cockpit', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
                                       url='/_cockpit/', clients=info.clients,
-                                      login_required=True,
+                                      tags=info.tags, login_required=True,
                                       allowed_groups=['admin'])
         self.add(shortcut)
 

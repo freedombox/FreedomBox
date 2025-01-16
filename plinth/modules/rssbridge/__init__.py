@@ -54,15 +54,15 @@ class RSSBridgeApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-rssbridge', info.name,
-                              info.short_description, info.icon_filename,
-                              'rssbridge:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-rssbridge', info.name, info.icon_filename,
+                              info.tags, 'rssbridge:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-rssbridge', name=info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename,
-                                      url='/rss-bridge/', login_required=True,
+                                      url='/rss-bridge/', tags=info.tags,
+                                      login_required=True,
                                       allowed_groups=list(groups))
         self.add(shortcut)
 

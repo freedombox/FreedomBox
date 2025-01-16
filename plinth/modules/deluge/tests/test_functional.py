@@ -83,7 +83,6 @@ def _ensure_logged_in(browser):
 
     def logged_in():
         active_window_title = _get_active_window_title(browser)
-
         # Change Default Password window appears once.
         if active_window_title == 'Change Default Password':
             _click_active_window_button(browser, 'No')
@@ -92,7 +91,8 @@ def _ensure_logged_in(browser):
             browser.find_by_id('_password').first.fill('deluge')
             _click_active_window_button(browser, 'Login')
 
-        return browser.is_element_not_present_by_css('#add .x-item-disabled')
+        return browser.is_element_present_by_css(
+            '.x-deluge-statusbar.x-connected')
 
     functional.eventually(logged_in)
 

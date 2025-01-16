@@ -196,6 +196,9 @@ class BaseBorgRepository(abc.ABC):
                 """Override to call read() instead of readline()."""
                 chunk = self.read(io.DEFAULT_BUFFER_SIZE)
                 if not chunk:
+                    if getattr(self, 'cleanup_func'):
+                        self.cleanup_func()
+
                     raise StopIteration
 
                 return chunk
@@ -204,12 +207,27 @@ class BaseBorgRepository(abc.ABC):
             self._get_archive_path(archive_name),
             self._get_encryption_passpharse(), _raw_output=True)
 
-        os.close(read_fd)  # Don't use the pipe for communication, just stdout
+        # Write the method request with args to the process
         proc.stdin.write(input_)
         proc.stdin.close()
-        proc.stderr.close()  # writing to stderr in child will cause SIGPIPE
 
-        return BufferedReader(proc.stdout)
+        def _cleanup_func():
+            """After the process has been read from, cleanup the process."""
+            try:
+                if proc.stdout:
+                    proc.stdout.close()
+
+                if proc.stderr:
+                    proc.stderr.close()
+
+                proc.wait(30)
+                os.close(read_fd)
+            except Exception:
+                logger.exception('Closing process failed after download')
+
+        reader = BufferedReader(proc.stdout)
+        reader.cleanup_func = _cleanup_func
+        return reader
 
     def _get_archive_path(self, archive_name):
         """Return full borg path for an archive."""
@@ -222,6 +240,11 @@ class BaseBorgRepository(abc.ABC):
                 return archive
 
         return None
+
+    def generate_archive_name(self):
+        """Return a name to create a backup archive with using time."""
+        return datetime.datetime.now().astimezone().replace(
+            microsecond=0).isoformat()
 
     def get_archive_apps(self, archive_name):
         """Get list of apps included in an archive."""

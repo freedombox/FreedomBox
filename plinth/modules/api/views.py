@@ -48,10 +48,10 @@ def _get_shortcut_data(shortcut):
     """Return detailed information about a shortcut."""
     shortcut_data = {
         'name': shortcut.name,
-        'short_description': shortcut.short_description,
         'description': shortcut.description,
         'icon_url': _get_icon_url(shortcut.app_id, shortcut.icon),
         'clients': copy.deepcopy(shortcut.clients),
+        'tags': copy.deepcopy(shortcut.tags),
     }
     # XXX: Fix the hardcoding
     if shortcut.name.startswith('shortcut-ikiwiki-'):

@@ -7,9 +7,16 @@ See: https://dmarcguide.globalcyberalliance.org/
 See: https://support.google.com/a/answer/2466580
 See: https://datatracker.ietf.org/doc/html/rfc6186
 See: https://rspamd.com/doc/modules/dkim_signing.html
+See: https://en.wikipedia.org/wiki/Reverse_DNS_lookup
 """
 
+import ipaddress
+import typing
 from dataclasses import dataclass
+
+from plinth.modules.privacy import lookup_public_address
+
+from . import privileged
 
 
 @dataclass
@@ -39,11 +46,8 @@ class Entry:  # pylint: disable=too-many-instance-attributes
         return ' '.join(pieces)
 
 
-def get_entries():
-    """Return the list of DNS entries to make."""
-    from . import privileged
-
-    domain = privileged.domain.get_domains()['primary_domain']
+def get_entries(domain: str) -> list[Entry]:
+    """Return the list of DNS entries to be set in DNS server for domain."""
     mx_spam_entries = [
         Entry(type_='MX', value=f'{domain}.'),
         Entry(type_='TXT', value='v=spf1 mx a ~all'),
@@ -70,3 +74,20 @@ def get_entries():
               port=995, value=f'{domain}.'),
     ]
     return mx_spam_entries + dkim_entries + autoconfig_entries
+
+
+def get_reverse_entries(domain: str) -> list[Entry]:
+    """Return the list of reverse DNS entries to make."""
+    entries = []
+    for ip_type in typing.get_args(typing.Literal['ipv4', 'ipv6']):
+        try:
+            ip_address = lookup_public_address(ip_type)
+            reverse_pointer = ipaddress.ip_address(ip_address).reverse_pointer
+        except Exception as exception:
+            reverse_pointer = \
+                f'Error querying external {ip_type} address: {exception}'
+
+        entry = Entry(domain=reverse_pointer, type_='PTR', value=f'{domain}.')
+        entries.append(entry)
+
+    return entries

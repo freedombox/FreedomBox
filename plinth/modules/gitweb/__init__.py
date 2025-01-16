@@ -50,15 +50,14 @@ class GitwebApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-gitweb', info.name, info.short_description,
-                              info.icon_filename, 'gitweb:index',
+        menu_item = menu.Menu('menu-gitweb', info.name, info.icon_filename,
+                              info.tags, 'gitweb:index',
                               parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-gitweb', info.name,
-                                      short_description=info.short_description,
                                       icon=info.icon_filename, url='/gitweb/',
-                                      clients=info.clients,
+                                      clients=info.clients, tags=info.tags,
                                       login_required=True,
                                       allowed_groups=list(groups))
         self.add(shortcut)

@@ -48,21 +48,17 @@ class MiniDLNAApp(app_module.App):
                                clients=manifest.clients, tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu(
-            'menu-minidlna',
-            name=info.name,
-            short_description=info.short_description,
-            url_name='minidlna:index',
-            parent_url_name='apps',
-            icon=info.icon_filename,
-        )
+        menu_item = menu.Menu('menu-minidlna', name=info.name,
+                              icon=info.icon_filename, tags=info.tags,
+                              url_name='minidlna:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-minidlna', info.name,
-            short_description=info.short_description,
-            description=info.description, icon=info.icon_filename,
-            configure_url=reverse_lazy('minidlna:index'), login_required=True)
+            'shortcut-minidlna', info.name, description=info.description,
+            icon=info.icon_filename,
+            configure_url=reverse_lazy('minidlna:index'), tags=info.tags,
+            login_required=True)
         self.add(shortcut)
 
         packages = Packages('packages-minidlna', ['minidlna'])

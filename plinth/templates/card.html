@@ -20,7 +20,7 @@
     </div>
     <div class="card-title">{{ item.name }}</div>
     <div class="card-tags">
-      {% for tag in item.app.info.tags|slice:":3" %}{% trans tag %}{% if not forloop.last %}・{% endif %}{% endfor %}
+      {% for tag in item.tags|slice:":3" %}{% trans tag %}{% if not forloop.last %}・{% endif %}{% endfor %}
     </div>
   </a>
 </div>

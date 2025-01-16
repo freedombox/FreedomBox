@@ -64,6 +64,8 @@
   <script type="text/javascript" src="{% static '/javascript/bootstrap5/js/bootstrap.bundle.min.js' %}" defer></script>
 
   <script type="text/javascript" src="{% static 'theme/js/main.js' %}" defer></script>
+  {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
+  {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 
   {% if refresh_page_sec is not None %}
     <noscript>
@@ -272,7 +274,5 @@
     </div>
   </footer><!--/.footer-->
 </div><!--/#container-->
-  {% block app_js %}<!-- placeholder for app-specific js files -->{% endblock %}
-  {% block page_js %}<!-- placeholder for page-specific js files -->{% endblock %}
 </body>
 </html>

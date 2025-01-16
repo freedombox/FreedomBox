@@ -19,7 +19,6 @@ _configs = {
         'domain': 'freedombox.example.com',
         'username': 'tester',
         'password': 'testingtesting',
-        'ip_lookup_url': 'https://ddns.freedombox.org/ip/',
     },
     'gnudip2': {
         'service_type': 'gnudip',
@@ -27,7 +26,6 @@ _configs = {
         'domain': 'freedombox2.example.com',
         'username': 'tester2',
         'password': 'testingtesting2',
-        'ip_lookup_url': 'https://ddns2.freedombox.org/ip/',
     },
     'noip.com': {
         'service_type': 'noip.com',
@@ -37,7 +35,6 @@ _configs = {
         'domain': 'freedombox3.example.com',
         'username': 'tester3',
         'password': 'testingtesting3',
-        'ip_lookup_url': 'https://ddns3.freedombox.org/ip/',
         'use_ipv6': True,
     },
     'freedns.afraid.org': {
@@ -48,7 +45,6 @@ _configs = {
         'domain': 'freedombox5.example.com',
         'username': '',
         'password': '',
-        'ip_lookup_url': '',
         'use_ipv6': False,
     },
     'other': {
@@ -59,7 +55,6 @@ _configs = {
         'domain': 'freedombox6.example.com',
         'username': 'tester6',
         'password': 'testingtesting6',
-        'ip_lookup_url': 'https://ddns6.freedombox.org/ip/',
         'use_ipv6': False,
     },
 }

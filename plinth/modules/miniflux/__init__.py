@@ -47,15 +47,14 @@ class MinifluxApp(app_module.App):
                                donation_url='https://miniflux.app/#donations')
         self.add(info)
 
-        menu_item = menu.Menu('menu-miniflux', info.name,
-                              info.short_description, info.icon_filename,
-                              'miniflux:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-miniflux', info.name, info.icon_filename,
+                              info.tags, 'miniflux:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut('shortcut-miniflux', info.name,
-                                      info.short_description,
                                       info.icon_filename, url='/miniflux',
-                                      clients=manifest.clients,
+                                      clients=manifest.clients, tags=info.tags,
                                       login_required=True)
         self.add(shortcut)
 

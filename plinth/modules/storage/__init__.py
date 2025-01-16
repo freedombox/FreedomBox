@@ -49,7 +49,7 @@ class StorageApp(app_module.App):
                                manual_page='Storage', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-storage', info.name, None, info.icon,
+        menu_item = menu.Menu('menu-storage', info.name, info.icon, info.tags,
                               'storage:index', parent_url_name='system:data',
                               order=30)
         self.add(menu_item)

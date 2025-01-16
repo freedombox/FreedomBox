@@ -55,8 +55,8 @@ class DiagnosticsApp(app_module.App):
                                manual_page='Diagnostics', tags=manifest.tags)
         self.add(info)
 
-        menu_item = menu.Menu('menu-diagnostics', info.name, None, info.icon,
-                              'diagnostics:index',
+        menu_item = menu.Menu('menu-diagnostics', info.name, info.icon,
+                              info.tags, 'diagnostics:index',
                               parent_url_name='system:administration',
                               order=30)
         self.add(menu_item)

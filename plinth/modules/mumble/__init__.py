@@ -50,15 +50,16 @@ class MumbleApp(app_module.App):
             donation_url='https://wiki.mumble.info/wiki/Donate')
         self.add(info)
 
-        menu_item = menu.Menu('menu-mumble', info.name, info.short_description,
-                              'mumble', 'mumble:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-mumble', info.name, info.icon_filename,
+                              info.tags, 'mumble:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-mumble', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-mumble', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
-            configure_url=reverse_lazy('mumble:index'), clients=info.clients)
+            configure_url=reverse_lazy('mumble:index'), clients=info.clients,
+            tags=info.tags)
         self.add(shortcut)
 
         packages = Packages('packages-mumble', ['mumble-server'])

@@ -38,7 +38,8 @@ def set_all_domains(primary_domain=None):
 
     # Update configuration and don't restart daemons
     set_domains(primary_domain, list(all_domains))
-    dkim.setup_dkim(primary_domain)
+    for domain in all_domains:
+        dkim.setup_dkim(domain)
 
     # Copy certificates (self-signed if needed) and restart daemons
     app = App.get('email')

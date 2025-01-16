@@ -60,17 +60,16 @@ class MinetestApp(app_module.App):
             donation_url='https://www.minetest.net/get-involved/#donate')
         self.add(info)
 
-        menu_item = menu.Menu('menu-minetest', info.name,
-                              info.short_description, info.icon_filename,
-                              'minetest:index', parent_url_name='apps')
+        menu_item = menu.Menu('menu-minetest', info.name, info.icon_filename,
+                              info.tags, 'minetest:index',
+                              parent_url_name='apps')
         self.add(menu_item)
 
         shortcut = frontpage.Shortcut(
-            'shortcut-minetest', info.name,
-            short_description=info.short_description, icon=info.icon_filename,
+            'shortcut-minetest', info.name, icon=info.icon_filename,
             description=info.description, manual_page=info.manual_page,
             configure_url=reverse_lazy('minetest:index'), clients=info.clients,
-            login_required=False)
+            tags=info.tags, login_required=False)
         self.add(shortcut)
 
         packages = Packages('packages-minetest', ['minetest-server'] + _mods)
