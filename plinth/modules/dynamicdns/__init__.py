@@ -240,6 +240,20 @@ def get_status():
     status = kvstore.get_default('dynamicdns_status', '{}')
     status = json.loads(status)
     status.setdefault('domains', {})
+
+    domains = get_config()['domains']
+    for domain in domains:
+        if domain not in status['domains']:
+            # No status available for newly configured domain
+            status['domains'][domain] = {
+                'domain': domain,
+                'result': False,
+                'ip_address': None,
+                'error_code': None,
+                'error_message': None,
+                'timestamp': 0,
+            }
+
     return status
 
 

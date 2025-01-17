@@ -40,12 +40,20 @@
                   {{ domain.domain }}
                 </a>
               </td>
-              <td>{{ domain.timestamp|timesince }}</td>
+              <td>
+                {% if domain.timestamp %}
+                  {{ domain.timestamp|timesince }}
+                {% else %}
+                  {% trans "Not yet" %}
+                {% endif %}
+              </td>
               <td>
                 {% if domain.result %}
                   <span class="badge text-bg-success">
                     {% trans "Success" %}
                   </span>
+                {% elif not domain.timestamp %}
+                  -
                 {% else %}
                   <span class="badge text-bg-warning">
                     {% trans "Failed" %}

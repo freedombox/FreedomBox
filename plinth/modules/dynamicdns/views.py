@@ -44,7 +44,7 @@ class DynamicDNSAppView(views.AppView):
 
             # Create naive datetime object in local timezone
             domain['timestamp'] = datetime.datetime.fromtimestamp(
-                domain['timestamp'])
+                domain['timestamp']) if domain['timestamp'] else None
             domains_status[domain_name] = domain
             if domain['error_code'] in self._error_messages:
                 domain['error_message'] = self._error_messages[
