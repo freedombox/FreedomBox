@@ -16,6 +16,8 @@ source_fallback_conf = pathlib.Path(
     '/usr/share/freedombox'
     '/etc/systemd/resolved.conf.d/freedombox-fallback.conf')
 
+HOSTS_LOCAL_IP = '127.0.1.1'
+
 
 @privileged
 def set_hostname(hostname: str):
@@ -26,30 +28,97 @@ def set_hostname(hostname: str):
     action_utils.service_restart('avahi-daemon')
 
 
+def _load_augeas_hosts():
+    """Initialize Augeas for editing /etc/hosts."""
+    hosts_file = '/etc/hosts'
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('hosts', hosts_file)
+    aug.set('/augeas/context', '/files' + hosts_file)
+    aug.load()
+    return aug
+
+
+def get_domains(aug=None) -> list[str]:
+    """Return the list of domains."""
+    if not aug:
+        aug = _load_augeas_hosts()
+
+    domains = {}  # Maintain order of entries
+    for match in aug.match('*'):
+        if aug.get(match + '/ipaddr') != HOSTS_LOCAL_IP:
+            continue
+
+        domain = aug.get(match + '/canonical')
+        aliases = []
+        for alias_match in aug.match(match + '/alias'):
+            aliases.append(aug.get(alias_match))
+
+        # Read old style domains too.
+        if aliases and '.' not in aliases[-1]:
+            hostname = aliases[-1]
+            if domain.startswith(hostname + '.'):
+                domain = domain.partition('.')[2]
+                aliases = aliases[:-1]
+
+        for value in [domain] + aliases:
+            if value:
+                domains[domain] = True
+
+    return list(domains.keys())
+
+
 @privileged
-def set_domain_name(domain_name: str | None = None):
+def domain_add(domain_name: str | None = None):
     """Set system's static domain name in /etc/hosts."""
-    hostname = subprocess.check_output(['hostname']).decode().strip()
-    hosts_path = pathlib.Path('/etc/hosts')
-    if domain_name:
-        insert_line = f'127.0.1.1 {hostname}.{domain_name} {hostname}\n'
-    else:
-        insert_line = f'127.0.1.1 {hostname}\n'
+    aug = _load_augeas_hosts()
+    domains = get_domains(aug)
+    if domain_name in domains:
+        return  # Domain already present in /etc/hosts
 
-    lines = hosts_path.read_text(encoding='utf-8').splitlines(keepends=True)
-    new_lines = []
-    found = False
-    for line in lines:
-        if '127.0.1.1' in line:
-            new_lines.append(insert_line)
-            found = True
-        else:
-            new_lines.append(line)
+    aug.set('./01/ipaddr', HOSTS_LOCAL_IP)
+    aug.set('./01/canonical', domain_name)
+    aug.save()
 
-    if not found:
-        new_lines.append(insert_line)
 
-    hosts_path.write_text(''.join(new_lines), encoding='utf-8')
+@privileged
+def domain_delete(domain_name: str | None = None):
+    """Set system's static domain name in /etc/hosts."""
+    aug = _load_augeas_hosts()
+    domains = get_domains(aug)
+    if domain_name not in domains:
+        return  # Domain already not present in /etc/hosts
+
+    for match in aug.match('*'):
+        if aug.get(match + '/ipaddr') == HOSTS_LOCAL_IP and \
+           aug.get(match + '/canonical') == domain_name:
+            aug.remove(match)
+
+    aug.save()
+
+
+@privileged
+def domains_migrate() -> None:
+    """Convert old style of adding domain names to /etc/hosts to new.
+
+    Old format:
+        127.0.1.1 <hostname>.<domain> <hostname>
+
+    New format:
+        127.0.1.1 <domain1>
+        127.0.1.1 <domain2>
+    """
+    aug = _load_augeas_hosts()
+    domains = get_domains(aug)
+    for match in aug.match('*'):
+        if aug.get(match + '/ipaddr') == HOSTS_LOCAL_IP:
+            aug.remove(match)
+
+    for number, domain in enumerate(domains):
+        aug.set(f'./0{number}/ipaddr', HOSTS_LOCAL_IP)
+        aug.set(f'./0{number}/canonical', domain)
+
+    aug.save()
 
 
 @privileged

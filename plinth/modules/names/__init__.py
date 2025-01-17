@@ -5,7 +5,6 @@ FreedomBox app to configure name services.
 
 import logging
 import pathlib
-import socket
 import subprocess
 
 from django.utils.translation import gettext_lazy as _
@@ -43,7 +42,7 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
-    _version = 2
+    _version = 3
 
     can_be_disabled = False
 
@@ -66,7 +65,8 @@ class NamesApp(app_module.App):
         self.add(packages)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
-                                 configuration_url='names:domains',
+                                 delete_url='names:domain-delete',
+                                 add_url='names:domain-add',
                                  can_have_certificate=True)
         self.add(domain_type)
 
@@ -84,11 +84,10 @@ class NamesApp(app_module.App):
         domain_removed.connect(on_domain_removed)
 
         # Register domain with Name Services module.
-        domain_name = get_domain_name()
-        if domain_name:
+        for domain in privileged.get_domains():
             domain_added.send_robust(sender='names',
                                      domain_type='domain-type-static',
-                                     name=domain_name, services='__all__')
+                                     name=domain, services='__all__')
 
         # Schedule installation of systemd-resolved if not already installed.
         if not is_resolved_installed():
@@ -114,6 +113,9 @@ class NamesApp(app_module.App):
                 privileged.set_resolved_configuration(dns_fallback=True)
             except Exception:
                 pass
+
+        if old_version < 3:
+            privileged.domains_migrate()
 
         if is_resolved_installed():
             # Fresh install or upgrading to version 2
@@ -235,10 +237,10 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 ######################################################
 
 
-def get_domain_name():
+def get_domain_name() -> str | None:
     """Return the currently set static domain name."""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
+    domains = privileged.get_domains()
+    return domains[0] if domains else ''
 
 
 def get_hostname():
@@ -251,20 +253,12 @@ def get_hostname():
 def set_hostname(hostname):
     """Set machine hostname and send signals before and after."""
     old_hostname = get_hostname()
-    domain_name = get_domain_name()
-
-    # Hostname should be ASCII. If it's unicode but passed our
-    # valid_hostname check, convert
-    hostname = str(hostname)
 
     pre_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
                                     new_hostname=hostname)
 
     logger.info('Changing hostname to - %s', hostname)
     privileged.set_hostname(hostname)
-
-    logger.info('Setting domain name after hostname change - %s', domain_name)
-    privileged.set_domain_name(domain_name)
 
     post_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
                                      new_hostname=hostname)
