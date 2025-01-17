@@ -98,6 +98,21 @@ class DynamicDNSApp(app_module.App):
         # Check every 5 minutes to perform dynamic DNS updates.
         glib.schedule(300, update_dns)
 
+    def enable(self):
+        """Send domain signals after enabling the app."""
+        super().enable()
+        config = get_config()
+        for domain_name in config['domains']:
+            notify_domain_added(domain_name)
+
+    def disable(self):
+        """Send domain signals before disabling the app."""
+        config = get_config()
+        for domain_name in config['domains']:
+            notify_domain_removed(domain_name)
+
+        super().disable()
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
@@ -269,13 +284,15 @@ def set_config(config):
 
 def notify_domain_added(domain_name):
     """Send a signal that domain has been added."""
-    domain_added.send_robust(sender='dynamicdns',
-                             domain_type='domain-type-dynamic',
-                             name=domain_name, services='__all__')
+    if app_module.App.get('dynamicdns').is_enabled():
+        domain_added.send_robust(sender='dynamicdns',
+                                 domain_type='domain-type-dynamic',
+                                 name=domain_name, services='__all__')
 
 
 def notify_domain_removed(domain_name):
     """Send a signal that domain has been removed."""
-    domain_removed.send_robust(sender='dynamicdns',
-                               domain_type='domain-type-dynamic',
-                               name=domain_name)
+    if app_module.App.get('dynamicdns').is_enabled():
+        domain_removed.send_robust(sender='dynamicdns',
+                                   domain_type='domain-type-dynamic',
+                                   name=domain_name)
