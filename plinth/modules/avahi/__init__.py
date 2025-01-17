@@ -59,7 +59,8 @@ class AvahiApp(app_module.App):
         self.add(packages)
 
         domain_type = DomainType('domain-type-local',
-                                 _('Local Network Domain'), 'names:hostname',
+                                 _('Local Network Domain'),
+                                 configuration_url='names:hostname',
                                  can_have_certificate=False)
         self.add(domain_type)
 

@@ -66,7 +66,8 @@ class NamesApp(app_module.App):
         self.add(packages)
 
         domain_type = DomainType('domain-type-static', _('Domain Name'),
-                                 'names:domains', can_have_certificate=True)
+                                 configuration_url='names:domains',
+                                 can_have_certificate=True)
         self.add(domain_type)
 
         daemon = ResolvedDaemon('daemon-names', 'systemd-resolved')
