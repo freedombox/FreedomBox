@@ -43,8 +43,11 @@ class DomainType(app.FollowerComponent):
 
     _all: ClassVar[dict[str, 'DomainType']] = {}
 
-    def __init__(self, component_id, display_name, configuration_url,
-                 can_have_certificate=True):
+    def __init__(self, component_id: str, display_name: str,
+                 configuration_url: str | None = None,
+                 edit_url: str | None = None, delete_url: str | None = None,
+                 add_url: str | None = None,
+                 can_have_certificate: bool = True):
         """Initialize the domain type component.
 
         component_id should be a unique ID across all components of an app and
@@ -57,25 +60,38 @@ class DomainType(app.FollowerComponent):
         configuration_url is the Django URL to which a user is redirected to in
         order to create or manage a domain of this type.
 
+        edit_url is the Django URL to which a user is redirected to in order to
+        edit a particular domain of this type. A keyword argument 'domain' is
+        passed when reversing this URL.
+
+        delete_url is the Django URL to which a user is redirected to in order
+        to delete a particular domain of this type. A keyword argument 'domain'
+        is passed when reversing this URL.
+
+        add_url is the Django URL to which a user is redirected to in order to
+        add a particular domain of this type.
+
         can_have_certificate indicates if this type of domain can have a TLS
         certificate that can be validated by a typical browser.
-
         """
         super().__init__(component_id)
 
         self.display_name = display_name
         self.configuration_url = configuration_url
+        self.edit_url = edit_url
+        self.delete_url = delete_url
+        self.add_url = add_url
         self.can_have_certificate = can_have_certificate
 
         self._all[component_id] = self
 
     @classmethod
-    def get(cls, component_id):
+    def get(cls, component_id: str) -> 'DomainType':
         """Return a component of given ID."""
         return cls._all[component_id]
 
     @classmethod
-    def list(cls):
+    def list(cls) -> dict[str, 'DomainType']:
         """Return a list of all domain types."""
         return dict(cls._all)
 

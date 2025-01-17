@@ -12,7 +12,7 @@ from ..components import DomainName, DomainType
 def fixture_domain_type():
     """Fixture to create a domain type after clearing all existing ones."""
     DomainType._all = {}
-    return DomainType('test-domain-type', 'x-display-name', 'config_url')
+    return DomainType('test-domain-type', 'x-display-name')
 
 
 @pytest.fixture(name='domain_name')
@@ -24,16 +24,25 @@ def fixture_domain_name(domain_type):
 
 def test_domain_type_init():
     """Test initialization of domain type object."""
-    component = DomainType('test-component', 'x-display-name', 'config_url')
+    component = DomainType('test-component', 'x-display-name',
+                           configuration_url='config_url', edit_url='edit_url',
+                           delete_url='delete_url', add_url='add_url')
     assert component.component_id == 'test-component'
     assert component.display_name == 'x-display-name'
     assert component.configuration_url == 'config_url'
+    assert component.edit_url == 'edit_url'
+    assert component.delete_url == 'delete_url'
+    assert component.add_url == 'add_url'
     assert component.can_have_certificate
     assert len(DomainType._all)
     assert DomainType._all['test-component'] == component
 
-    component = DomainType('test-component', 'x-display-name', 'config_url',
+    component = DomainType('test-component', 'x-display-name',
                            can_have_certificate=False)
+    assert component.configuration_url is None
+    assert component.edit_url is None
+    assert component.delete_url is None
+    assert component.add_url is None
     assert not component.can_have_certificate
 
 
