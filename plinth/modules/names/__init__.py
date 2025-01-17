@@ -64,7 +64,7 @@ class NamesApp(app_module.App):
         packages = Packages('packages-names', ['iproute2'])
         self.add(packages)
 
-        domain_type = DomainType('domain-type-static', _('Domain Name'),
+        domain_type = DomainType('domain-type-static', _('Domain (regular)'),
                                  delete_url='names:domain-delete',
                                  add_url='names:domain-add',
                                  can_have_certificate=True)
