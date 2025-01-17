@@ -76,7 +76,9 @@ class DynamicDNSApp(app_module.App):
 
         domain_type = DomainType('domain-type-dynamic',
                                  _('Dynamic Domain Name'),
-                                 configuration_url='dynamicdns:index',
+                                 edit_url='dynamicdns:domain-edit',
+                                 delete_url='dynamicdns:domain-delete',
+                                 add_url='dynamicdns:domain-add',
                                  can_have_certificate=True)
         self.add(domain_type)
 
