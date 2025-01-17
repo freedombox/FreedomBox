@@ -28,29 +28,60 @@
             <td class="names-domain-column">{{ domain.name }}</td>
             <td>{{ domain.get_readable_services|join:', ' }}</td>
             <td>
-              <a href="{% url domain.domain_type.configuration_url %}"
-                 role="button" class="btn btn-md btn-default">
-                {% trans "Configure" %}
-              </a>
-            </td>
-          </tr>
-        {% endfor %}
-
-        {% for domain_type in status.unused_domain_types %}
-          <tr>
-            <td>{{ domain_type.display_name }}</td>
-            <td>-</td>
-            <td>-</td>
-            <td>
-              <a href="{% url domain_type.configuration_url %}"
-                 role="button" class="btn btn-md btn-default">
-                {% trans "Configure" %}
-              </a>
+              {% if domain.domain_type.configuration_url %}
+                <a href="{% url domain.domain_type.configuration_url %}"
+                   role="button" class="btn btn-md btn-default">
+                  <span class="fa fa-wrench" aria-hidden="true"></span>
+                  {% trans "Configure" %}
+                </a>
+              {% endif %}
+              {% if domain.domain_type.edit_url %}
+                <a href="{% url domain.domain_type.edit_url domain.name %}"
+                   role="button" class="btn btn-md btn-default"
+                   title="{% trans 'Edit' %}">
+                  <span class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                </a>
+              {% endif %}
+              {% if domain.domain_type.delete_url %}
+                <a href="{% url domain.domain_type.delete_url domain.name %}"
+                   role="button" class="btn btn-md btn-default"
+                   title="{% trans 'Delete' %}">
+                  <span class="fa fa-trash-o" aria-hidden="true"></span>
+                </a>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+  </div>
+
+  <h4>{% trans "Add Domains" %}</h4>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div id="domains-add" class="list-group list-group-two-column">
+        {% for domain_type in status.unused_domain_types %}
+          <div class="list-group-item d-flex justify-content-between">
+            <div>{{ domain_type.display_name }}</div>
+            {% if domain_type.configuration_url %}
+              <a href="{% url domain_type.configuration_url %}"
+                 role="button" class="btn btn-md btn-default">
+                <span class="fa fa-wrench" aria-hidden="true"></span>
+                {% trans "Configure" %}
+              </a>
+            {% endif %}
+            {% if domain_type.add_url %}
+              <a href="{% url domain_type.add_url %}"
+                 role="button" class="btn btn-md btn-default">
+                <span class="fa fa-plus" aria-hidden="true"></span>
+                {% trans "Add" %}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 
   <h3>{% trans "Resolver Status" %}</h3>

@@ -142,7 +142,7 @@ def get_status():
     used_domain_types = {domain.domain_type for domain in domains}
     unused_domain_types = [
         domain_type for domain_type in components.DomainType.list().values()
-        if domain_type not in used_domain_types
+        if domain_type not in used_domain_types or domain_type.add_url
     ]
 
     return {'domains': domains, 'unused_domain_types': unused_domain_types}
