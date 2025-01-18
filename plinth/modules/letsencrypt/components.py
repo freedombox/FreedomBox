@@ -14,6 +14,8 @@ from . import privileged
 
 logger = logging.getLogger(__name__)
 
+_list_type = list
+
 
 class LetsEncrypt(app.FollowerComponent):
     """Component to receive Let's Encrypt renewal hooks.
@@ -129,7 +131,7 @@ class LetsEncrypt(app.FollowerComponent):
         self._all[component_id] = self
 
     @property
-    def domains(self):
+    def domains(self) -> list[str] | str:
         """Return a list of domains this component's app is interested in."""
         if callable(self._domains):
             return self._domains()
@@ -141,7 +143,8 @@ class LetsEncrypt(app.FollowerComponent):
         """Return a list of all Let's Encrypt components."""
         return cls._all.values()
 
-    def setup_certificates(self, app_domains=None):
+    def setup_certificates(
+            self, app_domains: str | _list_type[str] | None = None) -> None:
         """Setup app certificates for all interested domains.
 
         For every domain, a certificate is copied. If a valid certificate is
@@ -151,7 +154,6 @@ class LetsEncrypt(app.FollowerComponent):
         app_domains is the list of domains for which certificates must be
         copied. If it is not provided, the component's list of domains (which
         may be acquired by a callable) is used.
-
         """
         if not app_domains:
             app_domains = self.domains

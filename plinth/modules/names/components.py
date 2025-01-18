@@ -28,6 +28,8 @@ _SERVICES = {
     },
 }
 
+list_type = list
+
 
 class DomainType(app.FollowerComponent):
     """Component to create a new type of domain.
@@ -98,7 +100,10 @@ class DomainType(app.FollowerComponent):
     @classmethod
     def list(cls) -> dict[str, 'DomainType']:
         """Return a list of all domain types."""
-        return dict(cls._all)
+        sorted_items = sorted(cls._all.items(),
+                              key=lambda item: item[1].priority, reverse=True)
+        domain_types = {key: value for key, value in sorted_items}
+        return domain_types
 
 
 class DomainName(app.FollowerComponent):
@@ -115,7 +120,8 @@ class DomainName(app.FollowerComponent):
     """
     _all: ClassVar[dict[str, 'DomainName']] = {}
 
-    def __init__(self, component_id, name, domain_type, services):
+    def __init__(self, component_id: str, name: str, domain_type: str,
+                 services: list[str] | str):
         """Initialize a domain name.
 
         component_id should be a unique ID across all components of an app and
@@ -172,7 +178,6 @@ class DomainName(app.FollowerComponent):
         """Return the service ID for a given port number.
 
         XXX: Eliminate this and use a generalized approach eventually.
-
         """
         if isinstance(service, str):
             return service
@@ -186,7 +191,7 @@ class DomainName(app.FollowerComponent):
 
         return str(service)
 
-    def get_readable_services(self):
+    def get_readable_services(self) -> set[str]:
         """Return list of unique service strings that can be shown to user."""
         services = self.services
         if self.services == '__all__':
@@ -197,16 +202,15 @@ class DomainName(app.FollowerComponent):
             for service in services
         }
 
-    def has_service(self, service):
+    def has_service(self, service: str | None) -> bool:
         """Return whether a service is available for this domain name."""
         return (service is None or self.services == '__all__'
                 or service in self.services)
 
-    def remove(self):
+    def remove(self) -> None:
         """Remove the domain name from global list of domains.
 
         It is acceptable to call remove() multiple times.
-
         """
         try:
             del self._all[self.component_id]
@@ -219,24 +223,35 @@ class DomainName(app.FollowerComponent):
         return cls._all[component_id]
 
     @classmethod
-    def list(cls, filter_for_service=None):
-        """Return list of domains."""
-        return [
+    def list(cls,
+             filter_for_service: str | None = None) -> list_type['DomainName']:
+        """Return list of domains sorted by importance.
+
+        Domains are first sorted by priority with higher values showing up
+        first and then by their domain name.
+        """
+        domains = [
             domain for domain in cls._all.values()
             if domain.has_service(filter_for_service)
         ]
+        return sorted(
+            domains, key=lambda domain:
+            (-domain.domain_type.priority, domain.name))
 
     @classmethod
-    def list_names(cls, filter_for_service=None):
+    def list_names(cls,
+                   filter_for_service: str | None = None) -> list_type[str]:
         """Return a set of unique domain names.
+
+        Domains are first sorted by priority with higher values showing up
+        first and then by their domain name.
 
         Multiple different components may provide the same domain name. This
         method could be used to retrieve a list of all domain names without
         duplication.
-
         """
-        return {
-            domain.name
-            for domain in cls._all.values()
-            if domain.has_service(filter_for_service)
-        }
+        domain_names: dict[str, bool] = {}
+        for domain in cls.list(filter_for_service):
+            domain_names[domain.name] = True
+
+        return list(domain_names.keys())

@@ -6,6 +6,7 @@ FreedomBox app to configure name services.
 import logging
 import pathlib
 import subprocess
+from typing import Iterator
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
@@ -200,8 +201,9 @@ def diagnose_resolution(domain: str) -> DiagnosticCheck:
     return DiagnosticCheck('names-resolve', description, result, parameters)
 
 
-def on_domain_added(sender, domain_type, name='', description='',
-                    services=None, **kwargs):
+def on_domain_added(sender: str, domain_type: str, name: str = '',
+                    description: str = '',
+                    services: str | list[str] | None = None, **kwargs):
     """Add domain to global list."""
     if not domain_type:
         return
@@ -217,7 +219,7 @@ def on_domain_added(sender, domain_type, name='', description='',
                 domain_type, str(services))
 
 
-def on_domain_removed(sender, domain_type, name='', **kwargs):
+def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
     """Remove domain from global list."""
     if name:
         component_id = 'domain-' + sender + '-' + name
@@ -264,7 +266,7 @@ def set_hostname(hostname):
                                      new_hostname=hostname)
 
 
-def get_available_tls_domains():
+def get_available_tls_domains() -> Iterator[str]:
     """Return an iterator with all domains able to have a certificate."""
     return (domain.name for domain in components.DomainName.list()
             if domain.domain_type.can_have_certificate)

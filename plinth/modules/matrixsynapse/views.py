@@ -31,7 +31,7 @@ class SetupView(FormView):
         matrixsynapse.setup_domain(form.cleaned_data['domain_name'])
         return super().form_valid(form)
 
-    def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs) -> dict[str, object]:
         """Provide context data to the template."""
         context = super().get_context_data(**kwargs)
         app = app_module.App.get('matrixsynapse')

@@ -7,14 +7,14 @@ import copy
 import json
 
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.templatetags.static import static
 
 from plinth import frontpage
 from plinth.modules import names
 
 
-def access_info(request, **kwargs):
+def access_info(request: HttpRequest, **kwargs) -> HttpResponse:
     """API view to return a list of domains and types."""
     domains = [{
         'domain': domain.name,

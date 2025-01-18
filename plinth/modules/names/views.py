@@ -144,7 +144,7 @@ class DomainDeleteView(TemplateView):
         return redirect('names:index')
 
 
-def get_status():
+def get_status() -> dict[str, object]:
     """Get configured services per name."""
     domains = components.DomainName.list()
     used_domain_types = {domain.domain_type for domain in domains}

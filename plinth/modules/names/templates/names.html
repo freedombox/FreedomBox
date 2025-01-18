@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for domain in status.domains|dictsort:"domain_type.display_name" %}
+        {% for domain in status.domains %}
           <tr>
             <td>{{ domain.domain_type.display_name }}</td>
             <td class="names-domain-column">{{ domain.name }}</td>

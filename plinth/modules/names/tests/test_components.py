@@ -141,10 +141,10 @@ def test_domain_name_list_names(domain_name):
     DomainName('test-domain-name3', 'test3.example.com', 'test-domain-type',
                '__all__')
     domains = DomainName.list_names()
-    assert domains == {'test.example.com', 'test3.example.com'}
+    assert domains == ['test.example.com', 'test3.example.com']
 
     domains = DomainName.list_names('http')
-    assert domains == {'test.example.com', 'test3.example.com'}
+    assert domains == ['test.example.com', 'test3.example.com']
 
     domains = DomainName.list_names('unknown')
-    assert domains == {'test3.example.com'}
+    assert domains == ['test3.example.com']
