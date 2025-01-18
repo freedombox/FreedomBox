@@ -78,7 +78,7 @@ class DynamicDNSApp(app_module.App):
                                  edit_url='dynamicdns:domain-edit',
                                  delete_url='dynamicdns:domain-delete',
                                  add_url='dynamicdns:domain-add',
-                                 can_have_certificate=True)
+                                 can_have_certificate=True, priority=70)
         self.add(domain_type)
 
         users_and_groups = UsersAndGroups('users-and-groups-dynamicdns',

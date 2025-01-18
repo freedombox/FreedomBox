@@ -71,7 +71,7 @@ class PagekiteApp(app_module.App):
 
         domain_type = DomainType('domain-type-pagekite', _('PageKite Domain'),
                                  configuration_url='pagekite:index',
-                                 can_have_certificate=True)
+                                 can_have_certificate=True, priority=40)
         self.add(domain_type)
 
         daemon = Daemon('daemon-pagekite', self.DAEMON)

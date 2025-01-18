@@ -46,8 +46,8 @@ class DomainType(app.FollowerComponent):
     def __init__(self, component_id: str, display_name: str,
                  configuration_url: str | None = None,
                  edit_url: str | None = None, delete_url: str | None = None,
-                 add_url: str | None = None,
-                 can_have_certificate: bool = True):
+                 add_url: str | None = None, can_have_certificate: bool = True,
+                 priority: int = 50):
         """Initialize the domain type component.
 
         component_id should be a unique ID across all components of an app and
@@ -73,6 +73,10 @@ class DomainType(app.FollowerComponent):
 
         can_have_certificate indicates if this type of domain can have a TLS
         certificate that can be validated by a typical browser.
+
+        priority decides which domain will be used (by default) when an app can
+        only deal with a single domain. The domain with highest value will be
+        chosen by the app by default.
         """
         super().__init__(component_id)
 
@@ -82,6 +86,7 @@ class DomainType(app.FollowerComponent):
         self.delete_url = delete_url
         self.add_url = add_url
         self.can_have_certificate = can_have_certificate
+        self.priority = priority
 
         self._all[component_id] = self
 

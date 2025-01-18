@@ -26,13 +26,15 @@ def test_domain_type_init():
     """Test initialization of domain type object."""
     component = DomainType('test-component', 'x-display-name',
                            configuration_url='config_url', edit_url='edit_url',
-                           delete_url='delete_url', add_url='add_url')
+                           delete_url='delete_url', add_url='add_url',
+                           priority=80)
     assert component.component_id == 'test-component'
     assert component.display_name == 'x-display-name'
     assert component.configuration_url == 'config_url'
     assert component.edit_url == 'edit_url'
     assert component.delete_url == 'delete_url'
     assert component.add_url == 'add_url'
+    assert component.priority == 80
     assert component.can_have_certificate
     assert len(DomainType._all)
     assert DomainType._all['test-component'] == component
@@ -43,6 +45,7 @@ def test_domain_type_init():
     assert component.edit_url is None
     assert component.delete_url is None
     assert component.add_url is None
+    assert component.priority == 50
     assert not component.can_have_certificate
 
 

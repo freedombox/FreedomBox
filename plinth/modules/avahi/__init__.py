@@ -61,7 +61,7 @@ class AvahiApp(app_module.App):
         domain_type = DomainType('domain-type-local',
                                  _('Local Network Domain'),
                                  configuration_url='names:hostname',
-                                 can_have_certificate=False)
+                                 can_have_certificate=False, priority=10)
         self.add(domain_type)
 
         firewall = Firewall('firewall-avahi', info.name, ports=['mdns'],
