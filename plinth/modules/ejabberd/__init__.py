@@ -11,12 +11,12 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import Daemon
-from plinth.modules import names
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.coturn.components import TurnConfiguration, TurnConsumer
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
+from plinth.modules.names.components import DomainName
 from plinth.modules.users.components import UsersAndGroups
 from plinth.package import Packages
 from plinth.signals import (domain_added, post_hostname_change,
@@ -136,7 +136,7 @@ class EjabberdApp(app_module.App):
 
     def setup(self, old_version):
         """Install and configure the app."""
-        domain_name = names.get_domain_name()
+        domain_name = DomainName.list_names()[0]
         logger.info('ejabberd service domain name - %s', domain_name)
 
         privileged.pre_install(domain_name)

@@ -239,12 +239,6 @@ def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
 ######################################################
 
 
-def get_domain_name() -> str | None:
-    """Return the currently set static domain name."""
-    domains = privileged.get_domains()
-    return domains[0] if domains else ''
-
-
 def get_hostname():
     """Return the hostname."""
     process = subprocess.run(['hostnamectl', 'hostname', '--static'],

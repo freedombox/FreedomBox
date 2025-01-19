@@ -5,7 +5,7 @@ import logging
 
 from django.http import HttpResponse
 
-from plinth.modules import names
+from plinth.modules.names.components import DomainName
 from plinth.views import AppView
 
 from . import privileged
@@ -23,10 +23,7 @@ class OpenVPNAppView(AppView):
 def profile(request):
     """Provide the user's profile for download."""
     username = request.user.username
-    domain_name = names.get_domain_name()
-
-    if not domain_name:
-        domain_name = names.get_hostname()
+    domain_name = DomainName.list_names()[0]
 
     profile_string = privileged.get_profile(username, domain_name)
     response = HttpResponse(profile_string,

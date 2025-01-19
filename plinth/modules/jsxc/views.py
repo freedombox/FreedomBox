@@ -5,7 +5,7 @@ from django.http import Http404
 from django.views.generic import TemplateView
 
 import plinth.app as app_module
-from plinth.modules import names
+from plinth.modules.names.components import DomainName
 
 
 class JsxcView(TemplateView):
@@ -21,8 +21,8 @@ class JsxcView(TemplateView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs) -> dict[str, object]:
         """Add domain information to view context."""
         context = super().get_context_data(*args, **kwargs)
-        context['domain_name'] = names.get_domain_name()
+        context['domain_name'] = DomainName.list_names()[0]
         return context
