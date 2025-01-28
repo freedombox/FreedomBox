@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
 "PO-Revision-Date: 2025-01-15 04:00+0000\n"
-"Last-Translator: 大王叫我来巡山 "
-"<hamburger2048@users.noreply.hosted.weblate.org>\n"
+"Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
+"org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/freedombox/freedombox/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -98,15 +98,15 @@ msgstr "此 web 管理界面的语言"
 msgid "Use the language preference set in the browser"
 msgstr "使用浏览器中设置的语言首选项"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr "主页"
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "应用程序"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "系统"
 
@@ -1105,8 +1105,9 @@ msgstr "刷新 IP 地址和域"
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "配置已更新"
 
@@ -1887,7 +1888,7 @@ msgstr ""
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "域名"
 
@@ -2167,7 +2168,7 @@ msgstr "我的邮箱别名"
 msgid "Primary domain"
 msgstr "主域名"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2203,7 +2204,7 @@ msgid "Thunderbird"
 msgstr ""
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
+msgid "Thunderbird Mobile"
 msgstr ""
 
 #: modules/email/manifest.py:52
@@ -2867,6 +2868,66 @@ msgstr "已编辑储存库。"
 msgid "Edit repository"
 msgstr "编辑存储库"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+
+#: modules/gnome/__init__.py:48
+msgid "GNOME"
+msgstr ""
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "桌面端"
+
+#: modules/gnome/manifest.py:10
+#, fuzzy
+#| msgid "Tor Browser"
+msgid "Browser"
+msgstr "洋葱浏览器"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr ""
+
+#: modules/gnome/manifest.py:12
+#, fuzzy
+#| msgid "Software Update"
+msgid "Software store"
+msgstr "软件更新"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr ""
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr ""
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -2896,7 +2957,7 @@ msgstr ""
 msgid "Contribute"
 msgstr "贡献"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3382,7 +3443,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr ""
 
@@ -4872,7 +4933,7 @@ msgstr "编辑连接"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "編輯"
 
@@ -5567,7 +5628,7 @@ msgstr "连接 {name} 已删除。"
 msgid "Failed to delete connection: Connection not found."
 msgstr "删除连接失败: 找不到连接。"
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -5576,11 +5637,11 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -5589,7 +5650,7 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr ""
@@ -5639,7 +5700,7 @@ msgstr "文件同步"
 msgid "Sharing"
 msgstr "共享"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 msgid "Groupware"
 msgstr "群组软件"
 
@@ -5953,8 +6014,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "关闭"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "重新启动"
 
@@ -6184,7 +6245,7 @@ msgstr "任何有 {box_name} 登录的用户都可以查看和修改任何日历
 msgid "Access rights"
 msgstr "访问权"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr ""
 
@@ -6195,7 +6256,7 @@ msgid ""
 "address books and you can create new."
 msgstr ""
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr ""
 
@@ -6225,11 +6286,11 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr ""
 
@@ -7103,6 +7164,51 @@ msgstr "系统需要重启以完成完全回滚。"
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "回滚到快照"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr ""
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr ""
+
+#: modules/sogo/manifest.py:71
+msgid "Webmail"
+msgstr ""
+
+#: modules/sogo/manifest.py:73
+msgid "Calender"
+msgstr ""
+
+#: modules/sogo/manifest.py:74
+#, fuzzy
+#| msgid "Address"
+msgid "Address book"
+msgstr "地址"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -8936,35 +9042,35 @@ msgid ""
 "is free software that lets you install and manage server apps with ease."
 msgstr ""
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " 主页"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " 应用程序"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " 系统"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "更改密码"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "关闭"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "登出"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "选择语言"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "登录"
 
@@ -8983,10 +9089,6 @@ msgstr ""
 #: templates/clients.html:28
 msgid "Launch"
 msgstr ""
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "桌面端"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
 "PO-Revision-Date: 2024-12-26 01:00+0000\n"
 "Last-Translator: Joseph Nuthalapati <njoseph@riseup.net>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -101,15 +101,15 @@ msgstr "ఈ జాల అంతరవర్తి కోసం వాడాల�
 msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్లో ఉన్న భాషాప్రాధాన్యతనే ఉపయోగించు"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr "ముంగిలి"
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "అనువర్తనాలు"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "వ్యవస్థ"
 
@@ -1147,8 +1147,9 @@ msgstr "IP చిరునామా మరియు డొమైన్‌లన�
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "ఆకృతీకరణ నవీకరించబడింది"
 
@@ -1980,7 +1981,7 @@ msgstr "ఇది అవసరమేయిన్న క్షేత్రం."
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "డొమైన్"
 
@@ -2292,7 +2293,7 @@ msgstr "మై ఇమెయిల్ అలియాసిస్"
 msgid "Primary domain"
 msgstr "ప్రాథమిక అనుసంధానం"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2328,8 +2329,10 @@ msgid "Thunderbird"
 msgstr "మొజిల్లా థండర్ బర్డ్"
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
-msgstr "K-9 మెయిల్"
+#, fuzzy
+#| msgid "Thunderbird"
+msgid "Thunderbird Mobile"
+msgstr "మొజిల్లా థండర్ బర్డ్"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -3060,6 +3063,68 @@ msgstr "రిపోజిటరీ సవరించబడింది."
 msgid "Edit repository"
 msgstr "రిపోజిటరీని సవరించండి"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+
+#: modules/gnome/__init__.py:48
+#, fuzzy
+#| msgid "GNOME Files"
+msgid "GNOME"
+msgstr "GNOME దస్త్రం"
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "రంగస్థలం"
+
+#: modules/gnome/manifest.py:10
+#, fuzzy
+#| msgid "Tor Browser"
+msgid "Browser"
+msgstr "టార్ బ్రౌజర్"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr ""
+
+#: modules/gnome/manifest.py:12
+#, fuzzy
+#| msgid "Software Update"
+msgid "Software store"
+msgstr "సాఫ్ట్‌వేర్ నవీకరణ"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr ""
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr ""
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -3089,7 +3154,7 @@ msgstr "అభిప్రాయాన్ని సమర్పించండ�
 msgid "Contribute"
 msgstr "దోహదం చేయండి"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3632,7 +3697,7 @@ msgid "Web conference"
 msgstr ""
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr "జావాస్క్రిప్ట్ లైసెన్స్ సమాచరం"
 
@@ -5352,7 +5417,7 @@ msgstr "అనుసంధానాన్ని సవరించు"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "సవరించు"
 
@@ -6092,7 +6157,7 @@ msgstr "{name} అనుసంధానం తొలగించబడింద�
 msgid "Failed to delete connection: Connection not found."
 msgstr "అనుసంధానం తొలగించడం విఫలమైంది: అనుసంధానం దొరకలేదు."
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6101,11 +6166,11 @@ msgid ""
 "interface."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6114,7 +6179,7 @@ msgid ""
 "performed following an independent cycle."
 msgstr ""
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 #, fuzzy
 #| msgid "Next"
@@ -6191,7 +6256,7 @@ msgstr "వ్యవస్థ"
 msgid "Sharing"
 msgstr "భాగస్వామ్యం"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 #, fuzzy
 #| msgid "Group Share"
 msgid "Groupware"
@@ -6535,8 +6600,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "మూసివేయి"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "పునఃప్రారంభించండి"
 
@@ -6803,7 +6868,7 @@ msgstr ""
 msgid "Access rights"
 msgstr "సాంగత్యం హక్కులు"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr "DAVx5"
 
@@ -6817,7 +6882,7 @@ msgstr ""
 "పేరును నమోదు చేయండి. DAVx5 ఇప్పటికే ఉన్న అన్ని క్యాలెండర్‌లు మరియు చిరునామా పుస్తకాలను చూపుతుంది "
 "మరియు మీరు కొత్తదాన్ని సృష్టించవచ్చు </your.freedombox.address>."
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr "కేలండర్"
 
@@ -6855,11 +6920,11 @@ msgstr "కేలండర్"
 msgid "Contacts"
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr ""
 
@@ -7861,6 +7926,55 @@ msgstr "రొల్ల్బచ్క్ ని పూర్తి చేయడ
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "చాయాచిత్రం కు రొల్ల్బచ్క్ చేయండి"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr ""
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr ""
+
+#: modules/sogo/manifest.py:71
+#, fuzzy
+#| msgid "FairEmail"
+msgid "Webmail"
+msgstr "ఫెయిర్ఇమెయిల్"
+
+#: modules/sogo/manifest.py:73
+#, fuzzy
+#| msgid "GNOME Calendar"
+msgid "Calender"
+msgstr "కేలండర్"
+
+#: modules/sogo/manifest.py:74
+#, fuzzy
+#| msgid "Address"
+msgid "Address book"
+msgstr "చిరునామా"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -9908,35 +10022,35 @@ msgstr ""
 "FreedomBox అనేది గోప్యత మరియు డేటా యాజమాన్యం కోసం రూపొందించబడిన వ్యక్తిగత సర్వర్. ఇది సర్వర్ యాప్‌లను "
 "సులభంగా ఇన్‌స్టాల్ చేయడానికి మరియు నిర్వహించడానికి మిమ్మల్ని అనుమతించే ఉచిత సాఫ్ట్‌వేర్."
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " నివాసం"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " కార్యక్షేత్రం"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " కార్యవ్యవస్థ"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "రహస్యపదాన్ని మార్చు"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "మూసివేయి"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "నిష్క్రమించు"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "బాషను ఎంచుకోండి"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "లోనికి ప్రవేశించండి"
 
@@ -9955,10 +10069,6 @@ msgstr "వెబ్"
 #: templates/clients.html:28
 msgid "Launch"
 msgstr "ప్రారంభించు"
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "రంగస్థలం"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"
@@ -10175,6 +10285,9 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #, fuzzy
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid "K-9 Mail"
+#~ msgstr "K-9 మెయిల్"
 
 #~ msgid "In 24 hour format."
 #~ msgstr "24 గంటల ఆకృతిలో."
