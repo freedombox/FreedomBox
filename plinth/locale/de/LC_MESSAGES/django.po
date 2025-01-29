@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-27 20:25-0500\n"
-"PO-Revision-Date: 2025-01-15 04:00+0000\n"
+"PO-Revision-Date: 2025-01-30 05:01+0000\n"
 "Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
@@ -2366,10 +2366,8 @@ msgid "Thunderbird"
 msgstr "Thunderbird"
 
 #: modules/email/manifest.py:37
-#, fuzzy
-#| msgid "Thunderbird"
 msgid "Thunderbird Mobile"
-msgstr "Thunderbird"
+msgstr "Thunderbird Mobile"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -2459,12 +2457,25 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Wenn Ihr %(box_name)s auf einer Cloud-Service-Infrastruktur läuft, sollten "
+"Sie <a href=\"„https://de.wikipedia.org/wiki/Reverse_DNS“\">Reverse DNS</a> "
+"konfigurieren. Dies ist nicht zwingend erforderlich, verbessert aber die "
+"Zustellbarkeit von E-Mails erheblich. Reverse DNS ist nicht dort "
+"konfiguriert, wo Ihr regulärer DNS ist. Sie sollten es in den Einstellungen "
+"Ihres VPS/ISP suchen. Bei einigen Providern ist der IP-Adressen-Teil für Sie "
+"vorkonfiguriert, und Sie müssen nur den Domain-Teil einstellen. Nur für eine "
+"Ihrer Domains kann Revese DNS lookup konfiguriert werden, es sei denn, Sie "
+"haben mehrere öffentliche IP-Adressen."
 
 #: modules/email/templates/email-dns.html:66
+#, fuzzy
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"Ein externer Dienst wird für die Suche nach der öffentlichen IP-Adresse "
+"verwendet, die im folgenden Abschnitt angezeigt wird. Dies kann in der "
+"Datenschutz-App konfiguriert werden."
 
 #: modules/email/templates/email-dns.html:76
 #, fuzzy
@@ -3102,6 +3113,8 @@ msgstr "Archiv bearbeiten"
 msgid ""
 "GNOME is a desktop environment that focuses on simplicity and ease of use."
 msgstr ""
+"GNOME ist eine Desktop-Umgebung, die sich auf Einfachheit und "
+"Benutzerfreundlichkeit konzentriert."
 
 #: modules/gnome/__init__.py:21
 #, python-brace-format
@@ -3111,12 +3124,20 @@ msgid ""
 "suite, and other basic utilities are available. You may install further "
 "graphical applications using the software center provided within."
 msgstr ""
+"Diese App verwandelt Ihre {box_name} in einen Desktop-Computer, wenn Sie "
+"einen Monitor, eine Tastatur und eine Maus daran anschließen. Ein Browser, "
+"ein Office-Paket und andere grundlegende Dienstprogramme sind verfügbar. Sie "
+"können weitere grafische Anwendungen über das mitgelieferte Software-Center "
+"installieren."
 
 #: modules/gnome/__init__.py:26
 msgid ""
 "This app is not suitable for low-end hardware. It requires at least 4GiB of "
 "RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
 msgstr ""
+"Diese Anwendung ist nicht für Low-End-Hardware geeignet. Sie benötigt "
+"mindestens 4 GB RAM, 4 GB Festplattenspeicher und einen Grafikprozessor, der "
+"die grundlegende 3D-Beschleunigung beherrscht."
 
 #: modules/gnome/__init__.py:30
 #, python-brace-format
@@ -3125,22 +3146,21 @@ msgid ""
 "need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
 "effect."
 msgstr ""
+"Nach der Installation, Aktivierung, Deaktivierung oder Deinstallation der "
+"Anwendung müssen Sie den <a href=\"„{power_url}“\">Neustart</a> des "
+"Computers durchführen, damit die Änderungen wirksam werden."
 
 #: modules/gnome/__init__.py:48
-#, fuzzy
-#| msgid "GNOME Files"
 msgid "GNOME"
-msgstr "GNOME-Dateinen"
+msgstr "GNOME"
 
 #: modules/gnome/manifest.py:9 templates/clients.html:42
 msgid "Desktop"
 msgstr "Desktop"
 
 #: modules/gnome/manifest.py:10
-#, fuzzy
-#| msgid "Tor Browser"
 msgid "Browser"
-msgstr "Tor Browser"
+msgstr "Browser"
 
 #: modules/gnome/manifest.py:11
 msgid "Office suite"
@@ -3150,7 +3170,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Software Update"
 msgid "Software store"
-msgstr "Software-Aktualisierung"
+msgstr "Software store"
 
 #: modules/gnome/manifest.py:13
 msgid "GUI"
@@ -6748,6 +6768,12 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"Optionaler Wert. Diese URL wird verwendet, um die öffentlich sichtbare IP-"
+"Adresse Ihrer {box_name} zu ermitteln. Die URL sollte einfach die IPv4- oder "
+"IPv6-Adresse zurückgeben, von der die Client-Anfrage kommt. Standardmäßig "
+"wird der von der FreedomBox Foundation unter https://ddns.freedombox.org/ip/ "
+"bereitgestellte Dienst verwendet. Wenn der Wert leer ist, sind die Abfragen "
+"deaktiviert und einige Funktionen werden nicht ausgeführt."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -8017,6 +8043,10 @@ msgid ""
 "accessed with various mobile and desktop applications using the CalDAV and "
 "CardDAV standards."
 msgstr ""
+"SOGo ist ein Groupware-Server, der eine umfangreiche Webschnittstelle für E-"
+"Mail, Kalender, Aufgaben und Kontakte bietet. Auf Kalender, Aufgaben und "
+"Kontakte kann auch mit verschiedenen mobilen und Desktop-Anwendungen unter "
+"Verwendung der Standards CalDAV und CardDAV zugegriffen werden."
 
 #: modules/sogo/__init__.py:26
 #, python-brace-format
@@ -8024,6 +8054,8 @@ msgid ""
 "Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
 "server app to retrieve, manage, and send email."
 msgstr ""
+"Webmail arbeitet mit der <a href=\"„{email_url}“\">Postfix/Dovecot</a> E"
+"-Mail-Server-Anwendung, um E-Mails abzurufen, zu verwalten und zu versenden."
 
 #: modules/sogo/__init__.py:30
 #, python-brace-format
@@ -8032,20 +8064,21 @@ msgid ""
 "their mailboxes by the email server app can be read and new mail can be sent "
 "out."
 msgstr ""
+"Alle Benutzer von {box_name} können sich bei SOGo anmelden und es nutzen. E-"
+"Mails, die von der E-Mail-Server-App an ihre Postfächer geliefert werden, "
+"können gelesen und neue E-Mails können versendet werden."
 
 #: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
 msgid "SOGo"
-msgstr ""
+msgstr "SOGo"
 
 #: modules/sogo/manifest.py:19
 msgid "Thunderbird + SOGo connector"
 msgstr ""
 
 #: modules/sogo/manifest.py:71
-#, fuzzy
-#| msgid "Email"
 msgid "Webmail"
-msgstr "E-Mail"
+msgstr "Webmail"
 
 #: modules/sogo/manifest.py:73
 #, fuzzy
@@ -8054,10 +8087,8 @@ msgid "Calender"
 msgstr "Kalender"
 
 #: modules/sogo/manifest.py:74
-#, fuzzy
-#| msgid "Address"
 msgid "Address book"
-msgstr "Adresse"
+msgstr "Adressbuch"
 
 #: modules/ssh/__init__.py:22
 msgid ""
