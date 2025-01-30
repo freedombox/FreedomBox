@@ -109,7 +109,6 @@ class EmailApp(plinth.app.App):
             '/etc/dovecot/conf.d/90-freedombox-mailboxes.conf',
             '/etc/dovecot/conf.d/90-freedombox-master.conf',
             '/etc/dovecot/conf.d/90-freedombox-tls.conf',
-            '/etc/dovecot/conf.d/95-freedombox-sieve.conf',
             '/etc/dovecot/conf.d/freedombox-ldap.conf.ext',
             '/etc/fail2ban/jail.d/dovecot-freedombox.conf',
             '/etc/postfix/freedombox-aliases.cf',
@@ -123,6 +122,7 @@ class EmailApp(plinth.app.App):
             '/etc/dovecot/freedombox-sieve/learn-ham.sieve',
             '/etc/dovecot/freedombox-sieve/learn-spam.sieve',
             '/etc/dovecot/freedombox-sieve-after/sort-spam.sieve',
+            '/etc/dovecot/conf.d/95-freedombox-sieve.conf'
         ])
         self.add(dropin_configs_sieve)
 
@@ -212,6 +212,7 @@ class EmailApp(plinth.app.App):
         # Enable drop-in configuration files component for sieve (temporarily)
         # to ensure that sievec can compile.
         self.get_component('dropin-configs-email-sieve').enable()
+        service_privileged.try_restart('dovecot')
         privileged.setup_spam()
 
         # Restart daemons
