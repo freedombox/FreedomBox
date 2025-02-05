@@ -75,7 +75,8 @@ Description=Upgrade to new stable Debian release
 
 [Service]
 Type=oneshot
-ExecStart=/usr/share/plinth/actions/actions upgrades dist_upgrade --no-args
+ExecStart=systemd-inhibit /usr/share/plinth/actions/actions \
+    upgrades dist_upgrade --no-args
 KillMode=process
 TimeoutSec=12hr
 '''
