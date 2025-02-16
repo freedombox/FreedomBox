@@ -20,7 +20,7 @@ class TestMatrixSynapseApp(functional.BaseAppTests):
     def fixture_setup(self, session_browser):
         """Setup the app."""
         functional.login(session_browser)
-        functional.set_domain_name(session_browser, 'mydomain.example')
+        functional.domain_add(session_browser, 'mydomain.example')
 
     def install_and_setup(self, session_browser):
         """Install the app and run setup."""
