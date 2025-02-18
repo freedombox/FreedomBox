@@ -23,8 +23,10 @@ class TestNextcloudApp(functional.BaseAppTests):
         super().install_and_setup(session_browser)
         functional.app_enable(session_browser, self.app_name)
         default_url = functional.config['DEFAULT']['url']
-        hostname = urllib.parse.urlparse(default_url).hostname
-        session_browser.find_by_id('id_override_domain').fill(hostname)
+        parse_result = urllib.parse.urlparse(default_url)
+        override_domain = parse_result.hostname
+        override_domain += f':{parse_result.port}' if parse_result.port else ''
+        session_browser.find_by_id('id_override_domain').fill(override_domain)
         session_browser.find_by_id('id_admin_password').fill(PASSWORD)
         functional.submit(session_browser, form_class='form-configuration')
 
@@ -110,7 +112,8 @@ def _class(klass):
 def _create_folder(browser, folder_name):
     """Create a folder in the Nextcloud files app."""
     # Click on the '+ New' button in the header
-    xpath = f'//div[{_class("action-item")} and @menu-title="New"]//button'
+    xpath = f'//div[{_class("action-item")}]' \
+        '//button[.//*[contains(text(),"New")]]'
     browser.find_by_xpath(xpath).first.click()
 
     # Click on the 'New folder' pop down menu item

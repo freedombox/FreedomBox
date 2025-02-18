@@ -21,15 +21,6 @@ from plinth.utils import format_lazy
 
 from . import manifest, privileged
 
-_alert = '''
-<div class="alert alert-warning d-flex align-items-center" role="alert">
-  <div class="me-2">
-    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-    <span class="visually-hidden">{}</span>
-  </div>
-  <div>{}</div>
-</div>
-'''
 _description = [
     _('Nextcloud is a self-hosted productivity platform which provides '
       'private and secure functions for file sharing, collaborative work, '

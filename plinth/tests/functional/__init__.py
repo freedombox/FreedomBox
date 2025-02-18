@@ -53,6 +53,7 @@ _site_url = {
     'syncthing': '/syncthing/',
     'rssbridge': '/rss-bridge/',
     'ttrss': '/tt-rss/',
+    'sogo': '/SOGo/',
 }
 
 _sys_modules = [

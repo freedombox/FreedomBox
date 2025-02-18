@@ -165,6 +165,21 @@ form .alert .close {
     flex-wrap: wrap;
 }
 
+/* In Bootstrap 5, drop down fields are meant to be to be styled with the
+   form-select class. Needs updated django-bootstrap-form */
+select.form-control {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-image: var(--bs-form-select-bg-img),var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.25rem;  /* Don't overall text on the drop down arrow */
+}
+
+[data-bs-theme="dark"] select.form-control {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
 /* In Bootstrap 5, instead of styling .col-* to 100% width by default, .row > *
    is styled as .form-group has been removed. Needs updated
    django-bootstrap-form */
@@ -643,6 +658,15 @@ footer {
     height: 6.25rem;
     font-size: 5rem;
     margin: 0.5rem 0;
+}
+
+.card .tag-separator {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'>%3ccircle style='fill:%236c757d' cx='8' cy='8' r='8'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 0.1875rem;
+    height: 0.375rem;
+    margin: 0 0.5rem;
 }
 
 /* System page - special card styling */

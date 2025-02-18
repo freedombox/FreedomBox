@@ -76,7 +76,7 @@
                           {{ shortcut.name }}
                         </div>
                         <div class="card-tags">
-                          {% for tag in shortcut.tags|slice:":3" %}{% trans tag %}{% if not forloop.last %}・{% endif %}{% endfor %}
+                          {% for tag in shortcut.tags|slice:":3" %}<span class="tag">{% trans tag %}</span>{% if not forloop.last %}<span class="tag-separator"></span>{% endif %}{% endfor %}
                         </div>
                     </a>
                 </div>

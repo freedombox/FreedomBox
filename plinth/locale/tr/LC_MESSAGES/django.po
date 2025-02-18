@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-01 08:00+0000\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
+"PO-Revision-Date: 2025-01-29 04:01+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/tr/>\n"
@@ -101,15 +101,15 @@ msgstr "Bu web arayüzünü sunmak için kullanılacak dil"
 msgid "Use the language preference set in the browser"
 msgstr "Tarayıcıda ayarlanan dil tercihini kullan"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr "Giriş"
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "Uygulamalar"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "Sistem"
 
@@ -312,6 +312,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"24 saat biçiminde. Günün bu saatinde yedekleme işlemi çalıştırılırken "
+"hizmetler geçici olarak kullanılamayabilir."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -541,7 +543,7 @@ msgstr "Yedekleme sistemi başka bir işlemle meşgul."
 
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
-msgstr ""
+msgstr "Diskte veya uzak konumda yeterli alan kalmadı."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1142,8 +1144,9 @@ msgstr "IP adresi ve etki alanlarını yenile"
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Yapılandırma güncellendi"
 
@@ -1838,6 +1841,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Bu hizmet, dış IP adresini aramak için harici bir hizmet kullanır. Bu, "
+"gizlilik uygulamasında yapılandırılabilir."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1966,7 +1971,7 @@ msgstr "Bu alan gereklidir."
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "Etki alanı"
 
@@ -2262,11 +2267,11 @@ msgstr "Postfix/Dovecot"
 
 #: modules/email/__init__.py:80
 msgid "More emails"
-msgstr ""
+msgstr "Daha fazla e-posta"
 
 #: modules/email/__init__.py:80
 msgid "Same mailbox"
-msgstr ""
+msgstr "Aynı posta kutusu"
 
 #: modules/email/__init__.py:82
 msgid "My Email Aliases"
@@ -2276,7 +2281,7 @@ msgstr "E-posta Kod Adlarım"
 msgid "Primary domain"
 msgstr "Birincil etki alanı"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2314,8 +2319,8 @@ msgid "Thunderbird"
 msgstr "Thunderbird"
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
-msgstr "K-9 Mail"
+msgid "Thunderbird Mobile"
+msgstr "Thunderbird Mobil"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -2351,22 +2356,16 @@ msgid "Add"
 msgstr "Ekle"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "DNS Kayıtları"
+msgstr "Etki alanı için DNS Kayıtları:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Posta sunucusunun düzgün çalışması için aşağıdaki DNS kayıtları birincil "
-"etki alanınıza el ile eklenmek zorundadır."
+"Bu etki alanı için posta sunucusunun düzgün çalışması amacıyla aşağıdaki DNS "
+"kayıtları bu etki alanına el ile eklenmek zorundadır."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2396,10 +2395,8 @@ msgid "Host/Target/Value"
 msgstr "Anamakine/Hedef/Değer"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Sunucu anamakine adı veya IP adresi"
+msgstr "IP Adresleri için Ters DNS Kayıtları"
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2413,18 +2410,27 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Eğer %(box_name)s cihazınız bir bulut hizmeti altyapısında çalışıyorsa, <a "
+"href=\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\">Ters DNS "
+"aramasını</a> yapılandırmanız gerekir. Bu zorunlu değildir, ancak e-posta "
+"teslim edilebilirliğini büyük ölçüde artırır. Ters DNS, normal DNS'nizin "
+"olduğu yerde yapılandırılmamıştır. Bunu VPS/ISP'nizin ayarlarında "
+"aramalısınız. Bazı sağlayıcılar IP adresi bölümünü sizin için önceden "
+"yapılandırır ve sadece etki alanı bölümünü ayarlamak zorundasınız. Birden "
+"çok dış IP adresiniz olmadığı sürece, etki alanlarınızdan sadece birinde "
+"Ters DNS araması yapılandırılmış olabilir."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"Aşağıdaki bölümde gösterilecek ortak IP adresini aramak için harici bir "
+"hizmet kullanılır. Bu, gizlilik uygulamasında yapılandırılabilir."
 
 #: modules/email/templates/email-dns.html:76
-#, fuzzy
-#| msgid "Hostname"
 msgid "Host"
-msgstr "Anamakine Adı"
+msgstr "Anamakine"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2440,12 +2446,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Aşağıdaki etki alanları yapılandırıldı. Etki alanı için yapılacak DNS "
+"girişlerinin listesini görmek için ayrıntıları görüntüleyin."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Etki alanı adını çözümle: {domain}"
+msgstr "Etki alanını görüntüle: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -3044,6 +3051,73 @@ msgstr "Depo düzenlendi."
 msgid "Edit repository"
 msgstr "Depoyu düzenle"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+"GNOME, basitlik ve kullanım kolaylığına odaklanan bir masaüstü ortamıdır."
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+"Bu uygulama, bir monitör, bir klavye ve bir fareyi fiziksel olarak "
+"bağlarsanız, {box_name} 'ınızı bir masaüstü bilgisayara dönüştürür. Bir "
+"tarayıcı, bir ofis paketi ve diğer temel yardımcı programlar mevcuttur. "
+"İçeride sağlanan yazılım merkezini kullanarak daha fazla grafik uygulaması "
+"yükleyebilirsiniz."
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+"Bu uygulama düşük seviyeli donanım için uygun değildir. En az 4GiB RAM, 4GiB "
+"disk alanı ve temel 3D hızlandırma yeteneğine sahip bir GPU gerektirir."
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+"Uygulamayı yükledikten, etkinleştirdikten, etkisizleştirdikten veya "
+"kaldırdıktan sonra, değişikliklerin etkili olması için makineye <a href="
+"\"{power_url}\">yeniden başlatmanız</a> gerekir."
+
+#: modules/gnome/__init__.py:48
+msgid "GNOME"
+msgstr "GNOME"
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "Masaüstü"
+
+#: modules/gnome/manifest.py:10
+msgid "Browser"
+msgstr "Tarayıcı"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr "Office paketi"
+
+#: modules/gnome/manifest.py:12
+msgid "Software store"
+msgstr "Yazılım mağazası"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr "GKA"
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr "Grafik uygulamaları"
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -3073,7 +3147,7 @@ msgstr "Geri Bildirim Gönder"
 msgid "Contribute"
 msgstr "Katkıda Bulun"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3620,7 +3694,7 @@ msgid "Web conference"
 msgstr "Web görüşme"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr "JavaScript lisans bilgileri"
 
@@ -4602,10 +4676,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "Mumble server is running"
 msgid "Mumble server is configured"
-msgstr "Mumble sunucusu çalışmaktadır"
+msgstr "Mumble sunucusu yapılandırıldı"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -5343,7 +5415,7 @@ msgstr "Bağlantıyı düzenle"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -6081,7 +6153,7 @@ msgstr "{name} bağlantısı silindi."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Bağlantının silinmesi başarısız oldu: Bağlantı bulunamadı."
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6095,13 +6167,13 @@ msgstr ""
 "istemci uygulamalarını ve mobil istemcileri içerir. Nextcloud sunucusu iyi "
 "bütünleştirilmiş bir web arayüzü sağlar."
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 "FreedomBox'ın tüm kullanıcıları Nextcloud'u kullanabilir. Yönetimsel "
 "işlemleri gerçekleştirmek için "
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6115,7 +6187,7 @@ msgstr ""
 "yöndeki proje tarafından yapılır. Güncellemeler bağımsız bir döngünün "
 "ardından gerçekleştirilir."
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
@@ -6175,7 +6247,7 @@ msgstr "Dosya eşitleme"
 msgid "Sharing"
 msgstr "Paylaşım"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 msgid "Groupware"
 msgstr "Grup yazılımı"
 
@@ -6512,8 +6584,8 @@ msgstr "Baştan başlat"
 msgid "Shutdown"
 msgstr "Kapat"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "Yeniden başlat"
 
@@ -6576,6 +6648,12 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"İsteğe Bağlı Değer. Bu URL, {box_name}'ınızın herkese açık olarak "
+"görülebilen IP adresini belirlemek için kullanılır. URL, istemci isteğinin "
+"geldiği IPv4 veya IPv6 adresini döndürmelidir. Varsayılanı, FreedomBox Vakfı "
+"tarafından https://ddns.freedombox.org/ip/ adresinde sağlanan hizmetin "
+"kullanılmasıdır. Eğer boşsa, aramalar etkisizleştirilir ve bazı işlevler "
+"başarısız olacaktır."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6617,20 +6695,16 @@ msgstr ""
 "çoğu durumda etkisizleştirilebilir."
 
 #: modules/privacy/forms.py:45
-#, fuzzy
-#| msgid "URL to look up public IP"
 msgid "URL to look up public IP address"
-msgstr "Dış IP'yi aramak için URL"
+msgstr "Dış IP adresi aramak için URL"
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
 msgstr "Kullanım raporlama"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Enable repro service"
 msgid "External services"
-msgstr "repro servisini etkinleştir"
+msgstr "Harici hizmetler"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
@@ -6780,7 +6854,7 @@ msgstr ""
 msgid "Access rights"
 msgstr "Erişim hakları"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr "DAVx5"
 
@@ -6794,7 +6868,7 @@ msgstr ""
 "kullanıcı adınızı girin. DAVx5, varolan tüm takvimleri ve adres defterlerini "
 "gösterecek ve yenilerini oluşturabilirsiniz."
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr "GNOME Takvim"
 
@@ -6830,11 +6904,11 @@ msgstr "Takvim"
 msgid "Contacts"
 msgstr "Kişiler"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr "CalDAV"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr "CardDAV"
 
@@ -7825,6 +7899,58 @@ msgstr ""
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "Anlık Görüntüye Geri Al"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+"SOGo, e -posta, takvim, görevler ve kişiler için zengin bir web arayüzü "
+"sağlayan bir grup yazılım sunucusudur. Takvim, görevler ve kişilere, Caldav "
+"ve Carddav standartlarını kullanan çeşitli mobil ve masaüstü uygulamalarıyla "
+"da erişilebilir."
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+"Web posta, e -posta almak, yönetmek ve göndermek için <a href=\"{email_url}\""
+">Postfix/Dovecot</a> e-posta sunucusu uygulamasıyla çalışır."
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+"{box_name} üzerindeki tüm kullanıcılar SOGo'ya oturum açabilir ve "
+"kullanabilir. Posta kutularına e -posta sunucusu uygulaması tarafından "
+"teslim edilen postalar okunabilir ve yeni posta gönderilebilir."
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr "SOGo"
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr "Thunderbird + SOGo bağlayıcı"
+
+#: modules/sogo/manifest.py:71
+msgid "Webmail"
+msgstr "Web posta"
+
+#: modules/sogo/manifest.py:73
+msgid "Calender"
+msgstr "Takvim"
+
+#: modules/sogo/manifest.py:74
+msgid "Address book"
+msgstr "Adres defteri"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -9886,35 +10012,35 @@ msgstr ""
 "sunucudur. Sunucu uygulamalarını kolaylıkla yüklemenizi ve yönetmenizi "
 "sağlayan özgür bir yazılımdır."
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " Giriş"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " Uygulamalar"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " Sistem"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "Parolayı değiştir"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "Kapat"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "Oturumu kapat"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "Dil seçin"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "Oturum aç"
 
@@ -9933,10 +10059,6 @@ msgstr "Web"
 #: templates/clients.html:28
 msgid "Launch"
 msgstr "Başlat"
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "Masaüstü"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"
@@ -10149,6 +10271,9 @@ msgstr "{app_id} kaldırılmadan önce"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "K-9 Mail"
+#~ msgstr "K-9 Mail"
 
 #~ msgid "In 24 hour format."
 #~ msgstr "24 saat biçiminde."

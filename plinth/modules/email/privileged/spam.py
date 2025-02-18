@@ -31,8 +31,10 @@ def setup_spam():
 
 def _compile_sieve():
     """Compile all .sieve script to binary format for performance."""
-    sieve_dir = '/etc/dovecot/freedombox-sieve-after/'
-    subprocess.run(['sievec', sieve_dir], check=True)
+    sieve_dirs = ['/etc/dovecot/freedombox-sieve-after/',
+                  '/etc/dovecot/freedombox-sieve']
+    for sieve_dir in sieve_dirs:
+        subprocess.run(['sievec', sieve_dir], check=True)
 
 
 def _setup_rspamd():

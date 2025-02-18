@@ -1,0 +1,95 @@
+#language es
+
+<<Include(FreedomBox/Customization, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+== Personalización de FreedomBox ==
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+Pese a que la filosofía de !FreedomBox es minimizar las decisiones del usuario, se han habilitado unas pocas para facilitar algunos casos de uso avanzados. 
+
+
+=== Cambio de la App por omisión ===
+
+'''Disponible desde''': versión 0.36.0
+
+'''Dificultad:''' Básica
+
+'''Caso de Uso''': Una !FreedomBox que expone al público una única aplicación cuya app está configurada como página principal al acceder desde internet.
+
+Por ej: Una universidad que use !MediaWiki sobre !FreedomBox como wiki de un curso y quiera que al teclear sus estudiantes el nombre de dominio en sus navegadores accedan directamente al wiki sin pasar por la página principal de la !FreedomBox.
+
+'''Configuración:'''
+
+Cambiar la [[es/FreedomBox/Manual/Configure#Página_Principal_(home)_del_Servidor Web|App por omisión]] en la página de Configuración a la app que quieras servir por omisión.
+
+
+=== Accesos directos personalizados ===
+
+'''Disponible desde''': versión 0.40.0
+
+'''Dificultad:''' Avanzada
+
+'''Caso de Uso''': El administrador de una !FreedomBox comunitaria instala manualmente algunas aplicaciones no soportadas en la !FreedomBox y quiere que sus usuarios puedan acceder del modo habitual.
+
+''Nota:'' Esta funcionalidad es para uso con aplicaciones de interacción con el usuario final (que tengan cliente web o móvil).
+
+'''Configuración:'''
+
+Crea un fichero llamado `custom-shortcuts.json` en el directorio de configuración de Plinth `/etc/plinth` y añade accesos directos en formato JSON siguiendo el esquema publicado en https://<mi-freedombox>/plinth/api/1/shortcuts.
+
+Un ejemplo de fichero añadiendo un acceso directo a [[https://nextcloud.com|NextCloud]].
+
+{{{#!highlight json
+{
+    "shortcuts": [{
+        "name": "NextCloud",
+        "description": ["Nextcloud es un conjunto de software cliente-servidor para crear y usar servicios de alojamiento de archivos."],
+        "icon_url": "/plinth/custom/static/icons/nextcloud.png",
+        "clients": [{
+            "name": "nextcloud",
+            "platforms": [{
+                "type": "web",
+                "url": "/nextcloud"
+            }]
+        }],
+        "tags" : ["Groupware", "File sync"]
+    }]
+}
+}}}
+
+Los iconos correspondientes a los accesos directos listados en el fichero anterior deben estar en el directorio `/var/www/plinth/custom/static/icons/` con los nombres declarados en `/etc/plinth/custom-shortcuts.json`.
+
+Tras añadir a !NextCloud en `custom-shortcuts.json` y su icono, reinicia el interfaz web de !FreedomBox. Puedes hacerlo desde el propio interfaz o con la orden {{{ systemctl restart plinth }}}.
+
+Tras el reinicio, la página principal de !FreedomBox ofrecerá el acceso directo nuevo a !NextCloud como se muestra aquí:
+
+{{attachment:FreedomBox/Customization/nextcloud-frontpage-shortcut.png|Acceso directo a NextCloud en la página principal}}
+
+El mismo acceso directo se mostrará también en cualquier app cliente de !FreedomBox para Android conectada a esta !FreedomBox.
+
+{{attachment:FreedomBox/Customization/android-app-custom-shortcut.jpg|Acceso directo a NextCloud en la app para Android}}
+
+=== Estilos ===
+
+'''Disponible desde''': versión 24.25
+
+'''Dificultad:''' Avanzada
+
+'''Caso de Uso''': El administrador de una !FreedomBox quiere personalizar el estilo visual que muestra la !FreedomBox.
+
+
+'''Configuración:'''
+Crea un fichero en `/var/www/plinth/custom/static/css/user.css` y escribe las reglas de estilo en [[https://developer.mozilla.org/en-US/docs/Web/CSS|CSS]].
+Este fichero tendrá máxima prioridad en las [[https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade|reglas en cascada]].
+Usa la consola para desarrollo del navegador web para comprender qué reglas sobreescribir así como cuanta [[https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity|especificidad]] se necesita.
+
+{{attachment:FreedomBox/Customization/customization_styling.png|Página principal con estilo personalizado}}
+
+## END_INCLUDE
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

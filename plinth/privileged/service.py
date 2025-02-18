@@ -9,6 +9,15 @@ from plinth.daemon import Daemon, RelatedDaemon
 
 
 @privileged
+def systemd_set_default(target: str):
+    """Set the default target that systemd will boot into."""
+    if target not in ['graphical.target', 'multi-user.target']:
+        raise ValueError('Invalid target')
+
+    action_utils.systemd_set_default(target)
+
+
+@privileged
 def start(service: str):
     """Start a service."""
     _assert_service_is_managed_by_plinth(service)

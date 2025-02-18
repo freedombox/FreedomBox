@@ -52,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 5
+    _version = 6
 
     def __init__(self) -> None:
         """Initialize the email app."""
@@ -104,11 +104,11 @@ class EmailApp(plinth.app.App):
             '/etc/dovecot/conf.d/05-freedombox-userdb.conf',
             '/etc/dovecot/conf.d/15-freedombox-auth.conf',
             '/etc/dovecot/conf.d/15-freedombox-mail.conf',
+            '/etc/dovecot/conf.d/90-freedombox-imap.conf',
             '/etc/dovecot/conf.d/90-freedombox-lmtp.conf',
             '/etc/dovecot/conf.d/90-freedombox-mailboxes.conf',
             '/etc/dovecot/conf.d/90-freedombox-master.conf',
             '/etc/dovecot/conf.d/90-freedombox-tls.conf',
-            '/etc/dovecot/conf.d/95-freedombox-sieve.conf',
             '/etc/dovecot/conf.d/freedombox-ldap.conf.ext',
             '/etc/fail2ban/jail.d/dovecot-freedombox.conf',
             '/etc/postfix/freedombox-aliases.cf',
@@ -118,9 +118,12 @@ class EmailApp(plinth.app.App):
             '/etc/rspamd/local.d/freedombox-dkim-signing.conf'
         ])
         self.add(dropin_configs)
-        dropin_configs_sieve = DropinConfigs(
-            'dropin-configs-email-sieve',
-            ['/etc/dovecot/freedombox-sieve-after/sort-spam.sieve'])
+        dropin_configs_sieve = DropinConfigs('dropin-configs-email-sieve', [
+            '/etc/dovecot/freedombox-sieve/learn-ham.sieve',
+            '/etc/dovecot/freedombox-sieve/learn-spam.sieve',
+            '/etc/dovecot/freedombox-sieve-after/sort-spam.sieve',
+            '/etc/dovecot/conf.d/95-freedombox-sieve.conf'
+        ])
         self.add(dropin_configs_sieve)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
@@ -209,6 +212,7 @@ class EmailApp(plinth.app.App):
         # Enable drop-in configuration files component for sieve (temporarily)
         # to ensure that sievec can compile.
         self.get_component('dropin-configs-email-sieve').enable()
+        service_privileged.try_restart('dovecot')
         privileged.setup_spam()
 
         # Restart daemons

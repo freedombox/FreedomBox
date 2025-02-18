@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-02 09:00+0000\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
+"PO-Revision-Date: 2025-01-29 04:02+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -101,15 +101,15 @@ msgstr "Jazyk pro toto webové rozhraní"
 msgid "Use the language preference set in the browser"
 msgstr "Použít upřednostňovaný jazyk nastavený ve webovém prohlížeči"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr "Domů"
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "Aplikace"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "Systém"
 
@@ -313,6 +313,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"Ve 24-hodinovém formátu. Při zálohování v tuto denní dobu mohou být služby "
+"dočasně nedostupné."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -543,7 +545,7 @@ msgstr "Zálohovací systém je zaneprázdněn jinou operací."
 
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
-msgstr ""
+msgstr "Na disku nebo ve vzdáleném umístění nezbývá dostatek místa."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1140,8 +1142,9 @@ msgstr "Obnovení IP adresy a domén"
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Nastavení aktualizováno"
 
@@ -1832,6 +1835,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Tato služba používá externí službu k vyhledávání veřejné IP adresy. To lze "
+"nakonfigurovat v aplikaci pro ochranu soukromí."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -1962,7 +1967,7 @@ msgstr "Toto pole je povinné."
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "Doména"
 
@@ -2255,11 +2260,11 @@ msgstr "Postfix / Dovecot"
 
 #: modules/email/__init__.py:80
 msgid "More emails"
-msgstr ""
+msgstr "Další e-maily"
 
 #: modules/email/__init__.py:80
 msgid "Same mailbox"
-msgstr ""
+msgstr "Stejná poštovní schránka"
 
 #: modules/email/__init__.py:82
 msgid "My Email Aliases"
@@ -2269,7 +2274,7 @@ msgstr "Moje e-mailové aliasy"
 msgid "Primary domain"
 msgstr "Primární doména"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2307,8 +2312,8 @@ msgid "Thunderbird"
 msgstr "Thunderbird"
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
-msgstr "K-9 Mail"
+msgid "Thunderbird Mobile"
+msgstr "Thunderbird Mobile"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -2344,22 +2349,16 @@ msgid "Add"
 msgstr "Přidat"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "Záznamy DNS"
+msgstr "Záznamy DNS pro doménu:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Pro správnou funkci poštovního serveru je třeba na primární doméně ručně "
-"přidat následující záznamy DNS."
+"Pro správnou funkci poštovního serveru na této doméně je třeba ručně přidat "
+"následující záznamy DNS."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2389,10 +2388,8 @@ msgid "Host/Target/Value"
 msgstr "Hostitel / cíl / hodnota"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Název nebo IP adresa serveru"
+msgstr "Reverzní záznamy DNS pro IP adresy"
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2406,18 +2403,28 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Pokud vaše %(box_name)s běží na infrastruktuře cloudové služby, měli byste "
+"nakonfigurovat <a href=\"https://en.wikipedia.org/wiki/"
+"Reverse_DNS_lookup\">Reverzní vyhledávání DNS</a>. Není to povinné, nicméně "
+"to výrazně zlepšuje doručitelnost e-mailů. Reverzní DNS se nekonfiguruje "
+"tam, kde je váš běžný DNS. Měli byste jej hledat v nastavení svého VPS/ISP. "
+"Někteří poskytovatelé za vás předkonfigurují část s IP adresou a vy musíte "
+"nastavit pouze část s doménou. Reverzní vyhledávání DNS může být "
+"nakonfigurováno pouze u jedné z vašich domén, pokud nemáte více veřejných IP "
+"adres."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"K vyhledání veřejné IP adresy, která se zobrazí v následující části, se "
+"používá externí služba. To lze nakonfigurovat v aplikaci pro ochranu "
+"soukromí."
 
 #: modules/email/templates/email-dns.html:76
-#, fuzzy
-#| msgid "Hostname"
 msgid "Host"
-msgstr "Název stroje"
+msgstr "Hostitel"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2433,12 +2440,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Jsou nakonfigurovány následující domény. Zobrazením podrobností zobrazíte "
+"seznam záznamů DNS, které mají být pro danou doménu vytvořeny."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Vyřešit název domény: {domain}"
+msgstr "Zobrazit doménu: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -3032,6 +3040,72 @@ msgstr "Repozitář upraven."
 msgid "Edit repository"
 msgstr "Upravit repozitář"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+"GNOME je prostředí, které se zaměřuje na jednoduchost a snadné používání."
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+"Tato aplikace promění vaši {box_name} ve stolní počítač, pokud k němu "
+"fyzicky připojíte monitor, klávesnici a myš. K dispozici je prohlížeč, "
+"kancelářský balík a další základní nástroje. Další grafické aplikace můžete "
+"nainstalovat pomocí centra softwaru, které je k dispozici uvnitř."
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+"Tato aplikace není vhodná pro hardware nižší třídy. Vyžaduje alespoň 4 GB "
+"paměti RAM, 4 GB místa na disku a grafický procesor schopný základní 3D "
+"akcelerace."
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+"Po instalaci, povolení, zakázání nebo odinstalování aplikace je třeba <a "
+"href=\"{power_url}\">restartovat</a> počítač, aby se změny projevily."
+
+#: modules/gnome/__init__.py:48
+msgid "GNOME"
+msgstr "GNOME"
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "Desktop"
+
+#: modules/gnome/manifest.py:10
+msgid "Browser"
+msgstr "Prohlížeč"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr "Kancelářský balík"
+
+#: modules/gnome/manifest.py:12
+msgid "Software store"
+msgstr "Obchod se softwarem"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr "GUI"
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr "Grafické aplikace"
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -3061,7 +3135,7 @@ msgstr "Odeslat zpětnou vazbu"
 msgid "Contribute"
 msgstr "Zapojit se"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3605,7 +3679,7 @@ msgid "Web conference"
 msgstr "Webové konference"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr "Licenční informace o JavaScriptu"
 
@@ -4578,10 +4652,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "grub package is configured"
 msgid "Mumble server is configured"
-msgstr "balíček grub je nakonfigurován"
+msgstr "Server Mumble je nakonfigurován"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -5316,7 +5388,7 @@ msgstr "Upravit připojení"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "Upravit"
 
@@ -6059,7 +6131,7 @@ msgstr "Připojení {name} smazáno."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Smazání připojení se nezdařilo: Připojení nenalezeno."
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6073,13 +6145,13 @@ msgstr ""
 "počítače a mobilní klienty. Server Nextcloud poskytuje dobře integrované "
 "webové rozhraní."
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 "Nextcloud mohou používat všichni uživatelé služby FreedomBox. Chcete-li "
 "provést správu "
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6092,7 +6164,7 @@ msgstr ""
 "právní kontrolu provádí projekt upstream, nikoli Debian/{box_name}. "
 "Aktualizace jsou prováděny podle nezávislého cyklu."
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
@@ -6150,7 +6222,7 @@ msgstr "Synchronizace souborů"
 msgid "Sharing"
 msgstr "Sdílení"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 msgid "Groupware"
 msgstr "Groupware"
 
@@ -6487,8 +6559,8 @@ msgstr "Restart"
 msgid "Shutdown"
 msgstr "Vypnout"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "Restartovat"
 
@@ -6552,6 +6624,11 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"Volitelná hodnota. Tato adresa URL slouží k určení veřejně viditelné IP "
+"adresy vašeho {box_name}. Adresa URL by měla jednoduše vrátit adresu IPv4 "
+"nebo IPv6, odkud přichází požadavek klienta. Výchozí nastavení je použití "
+"služby poskytované nadací FreedomBox na adrese https://ddns.freedombox.org/"
+"ip/. Pokud je prázdná, vyhledávání je zakázáno a některé funkce selžou."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6591,20 +6668,16 @@ msgstr ""
 "připojení stabilní a spolehlivé."
 
 #: modules/privacy/forms.py:45
-#, fuzzy
-#| msgid "URL to look up public IP"
 msgid "URL to look up public IP address"
-msgstr "URL adresa na které hledat veřejnou IP adresu"
+msgstr "URL pro vyhledání veřejné IP adresy"
 
 #: modules/privacy/manifest.py:10
 msgid "Usage reporting"
 msgstr "Hlášení o použití"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Standard Services"
 msgid "External services"
-msgstr "Standardní služby"
+msgstr "Externí služby"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
@@ -6752,7 +6825,7 @@ msgstr ""
 msgid "Access rights"
 msgstr "Přístupová práva"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr "DAVx5"
 
@@ -6766,7 +6839,7 @@ msgstr ""
 "adresa&gt;) a své uživatelské jméno. DAVx5 zobrazí všechny existující "
 "kalendáře a adresáře a vy můžete vytvořit nové."
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr "Kalendář GNOME"
 
@@ -6802,11 +6875,11 @@ msgstr "Kalendář"
 msgid "Contacts"
 msgstr "Kontakty"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr "CalDAV"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr "CardDAV"
 
@@ -7792,6 +7865,58 @@ msgstr "Pro dokončení obnovy ze zálohy je třeba systém restartovat."
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "Vrátit do podoby zachyceného stavu"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+"SOGo je groupwarový server, který poskytuje bohaté webové rozhraní pro e-"
+"mail, kalendář, úkoly a kontakty. Ke kalendáři, úkolům a kontaktům lze "
+"přistupovat také pomocí různých mobilních a desktopových aplikací "
+"využívajících standardy CalDAV a CardDAV."
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+"Webmail spolupracuje s aplikací <a href=\"{email_url}\">Postfix/Dovecot</a> "
+"e-mailového serveru pro načítání, správu a odesílání e-mailů."
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+"Všichni uživatelé na {box_name} se mohou přihlásit a používat SOGo. Poštu "
+"doručenou do jejich schránek aplikací e-mailového serveru lze číst a novou "
+"poštu odesílat."
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr "SOGo"
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr "Thunderbird + SOGo konektor"
+
+#: modules/sogo/manifest.py:71
+msgid "Webmail"
+msgstr "Webmail"
+
+#: modules/sogo/manifest.py:73
+msgid "Calender"
+msgstr "Kalendář"
+
+#: modules/sogo/manifest.py:74
+msgid "Address book"
+msgstr "Záznamník adres"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -9832,35 +9957,35 @@ msgstr ""
 "Jedná se o bezplatný software, který umožňuje snadnou instalaci a správu "
 "serverových aplikací."
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " Domů"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " Aplikace"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " Systém"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "Vypnout"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "Odhlásit"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "Vyberte jazyk"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "Přihlásit"
 
@@ -9879,10 +10004,6 @@ msgstr "Web"
 #: templates/clients.html:28
 msgid "Launch"
 msgstr "Spustit"
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "Desktop"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"
@@ -10097,6 +10218,9 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "K-9 Mail"
+#~ msgstr "K-9 Mail"
 
 #~ msgid "In 24 hour format."
 #~ msgstr "Ve 24hodinovém formátu."

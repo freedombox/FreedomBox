@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
-"PO-Revision-Date: 2025-01-09 07:38+0000\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
+"PO-Revision-Date: 2025-01-30 05:01+0000\n"
 "Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
@@ -104,15 +104,15 @@ msgstr "Sprache für die Darstellung dieser Weboberfläche"
 msgid "Use the language preference set in the browser"
 msgstr "Die im Browser festgelegte Sprache verwenden"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr "Startseite"
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "Apps"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "System"
 
@@ -321,6 +321,8 @@ msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"Im 24-Stunden-Format. Die Dienste können vorübergehend nicht verfügbar sein, "
+"wenn zu dieser Zeit eine Datensicherung durchgeführt wird."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -556,6 +558,8 @@ msgstr "Das Backup-System ist mit einem anderen Vorgang beschäftigt."
 #: modules/backups/privileged.py:92
 msgid "Not enough space left on the disk or remote location."
 msgstr ""
+"Nicht genügend Speicherplatz auf dem Datenträger oder an einem entfernten "
+"Ort."
 
 #: modules/backups/repository.py:94
 msgid "Existing repository is not encrypted."
@@ -1173,8 +1177,9 @@ msgstr "IP-Adresse und Domänen aktualisieren"
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "Konfiguration aktualisiert"
 
@@ -1880,6 +1885,8 @@ msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
+"Dieser Dienst verwendet einen externen Dienst, um die öffentliche IP-Adresse "
+"zu ermitteln. Dies kann in der Datenschutz-App konfiguriert werden."
 
 #: modules/dynamicdns/__init__.py:64
 msgid "Dynamic DNS Client"
@@ -2010,7 +2017,7 @@ msgstr "Dieses Feld ist erforderlich."
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "Domain"
 
@@ -2321,7 +2328,7 @@ msgstr "Meine E-Mail-Aliase"
 msgid "Primary domain"
 msgstr "Primäre Domain"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2359,8 +2366,8 @@ msgid "Thunderbird"
 msgstr "Thunderbird"
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
-msgstr "K-9 Mail"
+msgid "Thunderbird Mobile"
+msgstr "Thunderbird Mobile"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -2396,22 +2403,16 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 #: modules/email/templates/email-dns.html:9
-#, fuzzy
-#| msgid "DNS Records"
 msgid "DNS Records for domain:"
-msgstr "DNS-Einträge"
+msgstr "DNS-Einträge für die Domain:"
 
 #: modules/email/templates/email-dns.html:12
-#, fuzzy
-#| msgid ""
-#| "The following DNS records must be added manually on your primary domain "
-#| "for the mail server to work properly."
 msgid ""
 "The following DNS records must be added manually on this domain for the mail "
 "server to work properly for this domain."
 msgstr ""
-"Die folgenden DNS-Einträge müssen manuell zu Ihrer primären Domain "
-"hinzugefügt werden, damit der Mailserver korrekt funktioniert."
+"Die folgenden DNS-Einträge müssen manuell zu dieser Domäne hinzugefügt "
+"werden, damit der E-Mail-Server für diese Domäne ordnungsgemäß funktioniert."
 
 #: modules/email/templates/email-dns.html:23
 #: modules/email/templates/email-dns.html:77
@@ -2441,10 +2442,8 @@ msgid "Host/Target/Value"
 msgstr "Host/Ziel/Wert"
 
 #: modules/email/templates/email-dns.html:50
-#, fuzzy
-#| msgid "Server hostname or IP address"
 msgid "Reverse DNS Records for IP Addresses"
-msgstr "Servername oder IP-Adresse"
+msgstr ""
 
 #: modules/email/templates/email-dns.html:53
 #, python-format
@@ -2458,18 +2457,31 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
+"Wenn Ihr %(box_name)s auf einer Cloud-Service-Infrastruktur läuft, sollten "
+"Sie <a href=\"„https://de.wikipedia.org/wiki/Reverse_DNS“\">Reverse DNS</a> "
+"konfigurieren. Dies ist nicht zwingend erforderlich, verbessert aber die "
+"Zustellbarkeit von E-Mails erheblich. Reverse DNS ist nicht dort "
+"konfiguriert, wo Ihr regulärer DNS ist. Sie sollten es in den Einstellungen "
+"Ihres VPS/ISP suchen. Bei einigen Providern ist der IP-Adressen-Teil für Sie "
+"vorkonfiguriert, und Sie müssen nur den Domain-Teil einstellen. Nur für eine "
+"Ihrer Domains kann Revese DNS lookup konfiguriert werden, es sei denn, Sie "
+"haben mehrere öffentliche IP-Adressen."
 
 #: modules/email/templates/email-dns.html:66
+#, fuzzy
 msgid ""
 "An external service is used to lookup public IP address to show in the "
 "following section. This can be configured in the privacy app."
 msgstr ""
+"Ein externer Dienst wird für die Suche nach der öffentlichen IP-Adresse "
+"verwendet, die im folgenden Abschnitt angezeigt wird. Dies kann in der "
+"Datenschutz-App konfiguriert werden."
 
 #: modules/email/templates/email-dns.html:76
 #, fuzzy
 #| msgid "Hostname"
 msgid "Host"
-msgstr "Hostname"
+msgstr "Host"
 
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
@@ -2485,12 +2497,13 @@ msgid ""
 "The following domains are configured. View details to see the list of DNS "
 "entries to be made for the domain."
 msgstr ""
+"Die folgenden Domänen sind konfiguriert. Unter Details finden Sie die Liste "
+"der DNS-Einträge, die für die Domäne erstellt werden müssen."
 
 #: modules/email/templates/email.html:35
-#, fuzzy, python-format
-#| msgid "Resolve domain name: {domain}"
+#, python-format
 msgid "View domain: %(domain)s"
-msgstr "Domainname auflösen: {domain}"
+msgstr "Domäne anzeigen: %(domain)s"
 
 #: modules/featherwiki/__init__.py:25
 #, python-brace-format
@@ -3096,6 +3109,77 @@ msgstr "Archiv bearbeitet."
 msgid "Edit repository"
 msgstr "Archiv bearbeiten"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+"GNOME ist eine Desktop-Umgebung, die sich auf Einfachheit und "
+"Benutzerfreundlichkeit konzentriert."
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+"Diese App verwandelt Ihre {box_name} in einen Desktop-Computer, wenn Sie "
+"einen Monitor, eine Tastatur und eine Maus daran anschließen. Ein Browser, "
+"ein Office-Paket und andere grundlegende Dienstprogramme sind verfügbar. Sie "
+"können weitere grafische Anwendungen über das mitgelieferte Software-Center "
+"installieren."
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+"Diese Anwendung ist nicht für Low-End-Hardware geeignet. Sie benötigt "
+"mindestens 4 GB RAM, 4 GB Festplattenspeicher und einen Grafikprozessor, der "
+"die grundlegende 3D-Beschleunigung beherrscht."
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+"Nach der Installation, Aktivierung, Deaktivierung oder Deinstallation der "
+"Anwendung müssen Sie den <a href=\"„{power_url}“\">Neustart</a> des "
+"Computers durchführen, damit die Änderungen wirksam werden."
+
+#: modules/gnome/__init__.py:48
+msgid "GNOME"
+msgstr "GNOME"
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "Desktop"
+
+#: modules/gnome/manifest.py:10
+msgid "Browser"
+msgstr "Browser"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr ""
+
+#: modules/gnome/manifest.py:12
+#, fuzzy
+#| msgid "Software Update"
+msgid "Software store"
+msgstr "Software store"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr ""
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr ""
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -3125,7 +3209,7 @@ msgstr "Feedback geben"
 msgid "Contribute"
 msgstr "Mitwirken"
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3682,7 +3766,7 @@ msgid "Web conference"
 msgstr "Web-Konferenz"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr "JavaScript-Lizenzinformation"
 
@@ -4682,10 +4766,8 @@ msgid "Mumble"
 msgstr "Mumble"
 
 #: modules/mumble/__init__.py:158
-#, fuzzy
-#| msgid "Mumble server is running"
 msgid "Mumble server is configured"
-msgstr "Mumble Server läuft"
+msgstr "Mumble-Server ist konfiguriert"
 
 #: modules/mumble/forms.py:30
 msgid "Set SuperUser Password"
@@ -5433,7 +5515,7 @@ msgstr "Verbindung bearbeiten"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -6181,7 +6263,7 @@ msgstr "Verbindung {name} gelöscht."
 msgid "Failed to delete connection: Connection not found."
 msgstr "Konnte Verbindung nicht löschen: Verbindung nicht gefunden."
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 #, fuzzy
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
@@ -6196,13 +6278,13 @@ msgstr ""
 "Computer und mobile Clients. Der Nextcloud Server bietet eine gut "
 "integrierte Web-Schnittstelle."
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 "Alle Nutzer von FreedomBox können Nextcloud nutzen. Zur Durchführung von "
 "administrativen "
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6216,7 +6298,7 @@ msgstr ""
 "Projekt und nicht von Debian/{box_name} durchgeführt. Aktualisierungen "
 "werden in einem unabhängigen Zyklus durchgeführt."
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "Nextcloud"
@@ -6276,7 +6358,7 @@ msgstr "Dateisynchronisierung"
 msgid "Sharing"
 msgstr "Sharing"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 msgid "Groupware"
 msgstr "Groupware"
 
@@ -6620,8 +6702,8 @@ msgstr "Neustart"
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "Neu starten"
 
@@ -6686,6 +6768,12 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
+"Optionaler Wert. Diese URL wird verwendet, um die öffentlich sichtbare IP-"
+"Adresse Ihrer {box_name} zu ermitteln. Die URL sollte einfach die IPv4- oder "
+"IPv6-Adresse zurückgeben, von der die Client-Anfrage kommt. Standardmäßig "
+"wird der von der FreedomBox Foundation unter https://ddns.freedombox.org/ip/ "
+"bereitgestellte Dienst verwendet. Wenn der Wert leer ist, sind die Abfragen "
+"deaktiviert und einige Funktionen werden nicht ausgeführt."
 
 #: modules/privacy/forms.py:25
 msgid "Periodically submit a list of apps used (suggested)"
@@ -6737,10 +6825,8 @@ msgid "Usage reporting"
 msgstr "Nutzungsberichte"
 
 #: modules/privacy/manifest.py:10
-#, fuzzy
-#| msgid "Enable repro service"
 msgid "External services"
-msgstr "repro Dienst einschalten"
+msgstr "Externe Dienste"
 
 #: modules/privacy/manifest.py:10
 msgid "Fallback DNS"
@@ -6891,7 +6977,7 @@ msgstr ""
 msgid "Access rights"
 msgstr "Zugriffsrechte"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr "DAVx5"
 
@@ -6905,7 +6991,7 @@ msgstr ""
 "adresse>) und ihren Benutzernamen. DAVx5 wird Ihre gesamten vorhandenen "
 "Kalender und Adressbücher anzeigen, und Sie können neue anlegen."
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr "GNOME Kalender"
 
@@ -6941,11 +7027,11 @@ msgstr "Kalender"
 msgid "Contacts"
 msgstr "Kontakte"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr "CalDAV"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr "CardDAV"
 
@@ -7949,6 +8035,60 @@ msgstr ""
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "Zurücksetzen auf Speicherauszug"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+"SOGo ist ein Groupware-Server, der eine umfangreiche Webschnittstelle für E-"
+"Mail, Kalender, Aufgaben und Kontakte bietet. Auf Kalender, Aufgaben und "
+"Kontakte kann auch mit verschiedenen mobilen und Desktop-Anwendungen unter "
+"Verwendung der Standards CalDAV und CardDAV zugegriffen werden."
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+"Webmail arbeitet mit der <a href=\"„{email_url}“\">Postfix/Dovecot</a> E"
+"-Mail-Server-Anwendung, um E-Mails abzurufen, zu verwalten und zu versenden."
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+"Alle Benutzer von {box_name} können sich bei SOGo anmelden und es nutzen. E-"
+"Mails, die von der E-Mail-Server-App an ihre Postfächer geliefert werden, "
+"können gelesen und neue E-Mails können versendet werden."
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr "SOGo"
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr ""
+
+#: modules/sogo/manifest.py:71
+msgid "Webmail"
+msgstr "Webmail"
+
+#: modules/sogo/manifest.py:73
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calender"
+msgstr "Kalender"
+
+#: modules/sogo/manifest.py:74
+msgid "Address book"
+msgstr "Adressbuch"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -9800,7 +9940,7 @@ msgid ""
 "Zoph. For additional users, accounts must be created both in {box_name} and "
 "in Zoph with the same user name."
 msgstr ""
-"Der Benutzer {box_name}, der Zoph eingerichtet hat, wird auch der "
+"Der {box_name} Benutzer, der Zoph eingerichtet hat, wird auch der "
 "Administrator in Zoph. Für zusätzliche Benutzer müssen Konten sowohl in "
 "{box_name} als auch in Zoph mit demselben Benutzernamen erstellt werden."
 
@@ -10051,35 +10191,35 @@ msgstr ""
 "und Datenschutz entwickelt wurde. Es ist freie Software, mit der Sie Server-"
 "Apps einfach installieren und verwalten können."
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " Startseite"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " Apps"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " System"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "Herunterfahren"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "Abmelden"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "Sprache wählen"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -10098,10 +10238,6 @@ msgstr "Web"
 #: templates/clients.html:28
 msgid "Launch"
 msgstr "Starten"
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "Desktop"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"
@@ -10315,6 +10451,9 @@ msgstr "vor der Deinstallation von {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "K-9 Mail"
+#~ msgstr "K-9 Mail"
 
 #~ msgid "In 24 hour format."
 #~ msgstr "Im 24-Stunden-Format."

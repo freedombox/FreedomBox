@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 20:33-0500\n"
+"POT-Creation-Date: 2025-01-27 20:25-0500\n"
 "PO-Revision-Date: 2024-12-27 01:03+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -99,15 +99,15 @@ msgstr "இந்த வலை இடைமுகத்தை வழங்க �
 msgid "Use the language preference set in the browser"
 msgstr "உலாவியில் உள்ள மொழி விருப்பத்தேர்வைப் பயன்படுத்தவும்"
 
-#: menu.py:116 templates/base.html:121
+#: menu.py:116 templates/base.html:120
 msgid "Home"
 msgstr ""
 
-#: menu.py:117 templates/base.html:130
+#: menu.py:117 templates/base.html:129
 msgid "Apps"
 msgstr "பயன்பாடுகள்"
 
-#: menu.py:119 menu.py:126 templates/base.html:139
+#: menu.py:119 menu.py:126 templates/base.html:138
 msgid "System"
 msgstr "மண்டலம்"
 
@@ -1161,8 +1161,9 @@ msgstr "ஐபி முகவரி மற்றும் களங்களை
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
-#: modules/ssh/views.py:62 modules/transmission/views.py:43
-#: modules/ttrss/views.py:31 modules/wordpress/views.py:31
+#: modules/sogo/views.py:32 modules/ssh/views.py:62
+#: modules/transmission/views.py:43 modules/ttrss/views.py:31
+#: modules/wordpress/views.py:31
 msgid "Configuration updated"
 msgstr "உள்ளமைவு புதுப்பிக்கப்பட்டது"
 
@@ -1989,7 +1990,7 @@ msgstr "இந்த புலம் தேவை."
 #: modules/dynamicdns/templates/dynamicdns.html:23
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
-#: modules/mediawiki/forms.py:64
+#: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
 msgid "Domain"
 msgstr "டொமைன்"
 
@@ -2295,7 +2296,7 @@ msgstr "எனது மின்னஞ்சல் மாற்றுப்ப�
 msgid "Primary domain"
 msgstr "முதன்மை களம்"
 
-#: modules/email/forms.py:27
+#: modules/email/forms.py:27 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2333,8 +2334,10 @@ msgid "Thunderbird"
 msgstr "தண்டர்பேர்ட்"
 
 #: modules/email/manifest.py:37
-msgid "K-9 Mail"
-msgstr "கே -9 மே மாதம்"
+#, fuzzy
+#| msgid "Thunderbird"
+msgid "Thunderbird Mobile"
+msgstr "தண்டர்பேர்ட்"
 
 #: modules/email/manifest.py:52
 msgid "FairEmail"
@@ -3053,6 +3056,68 @@ msgstr "களஞ்சியம் திருத்தப்பட்டத�
 msgid "Edit repository"
 msgstr "களஞ்சியத்தைத் திருத்தவும்"
 
+#: modules/gnome/__init__.py:18
+msgid ""
+"GNOME is a desktop environment that focuses on simplicity and ease of use."
+msgstr ""
+
+#: modules/gnome/__init__.py:21
+#, python-brace-format
+msgid ""
+"This app turns your {box_name} into a desktop computer if you physically "
+"connect a monitor, a keyboard, and a mouse to it. A browser, an office "
+"suite, and other basic utilities are available. You may install further "
+"graphical applications using the software center provided within."
+msgstr ""
+
+#: modules/gnome/__init__.py:26
+msgid ""
+"This app is not suitable for low-end hardware. It requires at least 4GiB of "
+"RAM, 4GiB of disk space and a GPU capable of basic 3D acceleration."
+msgstr ""
+
+#: modules/gnome/__init__.py:30
+#, python-brace-format
+msgid ""
+"After installing, enabling, disabling, or uninstalling the app, you will "
+"need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
+"effect."
+msgstr ""
+
+#: modules/gnome/__init__.py:48
+#, fuzzy
+#| msgid "GNOME Files"
+msgid "GNOME"
+msgstr "சினோம் கோப்புகள்"
+
+#: modules/gnome/manifest.py:9 templates/clients.html:42
+msgid "Desktop"
+msgstr "டெச்க்டாப்"
+
+#: modules/gnome/manifest.py:10
+#, fuzzy
+#| msgid "Tor Browser"
+msgid "Browser"
+msgstr "டோர் உலாவி"
+
+#: modules/gnome/manifest.py:11
+msgid "Office suite"
+msgstr ""
+
+#: modules/gnome/manifest.py:12
+#, fuzzy
+#| msgid "Software Update"
+msgid "Software store"
+msgstr "மென்பொருள் புதுப்பிப்பு"
+
+#: modules/gnome/manifest.py:13
+msgid "GUI"
+msgstr ""
+
+#: modules/gnome/manifest.py:14
+msgid "Graphical apps"
+msgstr ""
+
 #: modules/help/__init__.py:33 modules/help/templates/help_index.html:14
 #: templates/help-menu.html:8 templates/help-menu.html:14
 msgid "Help"
@@ -3082,7 +3147,7 @@ msgstr "கருத்துக்களை சமர்ப்பிக்க�
 msgid "Contribute"
 msgstr ""
 
-#: modules/help/__init__.py:53 templates/base.html:217 templates/base.html:220
+#: modules/help/__init__.py:53 templates/base.html:216 templates/base.html:219
 #: templates/help-menu.html:46 templates/help-menu.html:47
 #: templates/index.html:96
 msgid "About"
@@ -3622,7 +3687,7 @@ msgid "Web conference"
 msgstr "வலை மாநாடு"
 
 #: modules/janus/templates/janus_video_room.html:205
-#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:273
+#: modules/jsxc/templates/jsxc_launch.html:117 templates/base.html:272
 msgid "JavaScript license information"
 msgstr "சாவாச்கிரிப்ட் உரிம செய்தி"
 
@@ -5319,7 +5384,7 @@ msgstr "இணைப்பைத் திருத்து"
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
 #: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:167 templates/base.html:168
+#: templates/base.html:166 templates/base.html:167
 msgid "Edit"
 msgstr "தொகு"
 
@@ -6053,7 +6118,7 @@ msgstr "இணைப்பு {name} நீக்கப்பட்டது."
 msgid "Failed to delete connection: Connection not found."
 msgstr "இணைப்பை நீக்குவதில் தோல்வி: இணைப்பு கிடைக்கவில்லை."
 
-#: modules/nextcloud/__init__.py:34
+#: modules/nextcloud/__init__.py:25
 msgid ""
 "Nextcloud is a self-hosted productivity platform which provides private and "
 "secure functions for file sharing, collaborative work, and more. Nextcloud "
@@ -6067,12 +6132,12 @@ msgstr ""
 "பயன்பாடுகள் மற்றும் மொபைல் கிளையண்டுகள் ஆகியவை அடங்கும். நெக்ச்ட் முகில் சேவையகம் நன்கு "
 "ஒருங்கிணைந்த வலை இடைமுகத்தை வழங்குகிறது."
 
-#: modules/nextcloud/__init__.py:39
+#: modules/nextcloud/__init__.py:30
 msgid "All users of FreedomBox can use Nextcloud. To perform administrative "
 msgstr ""
 "ஃப்ரீடோம்பாக்சின் அனைத்து பயனர்களும் நெக்ச்ட் கிளவுட்டைப் பயன்படுத்தலாம். நிர்வாகம் செய்ய "
 
-#: modules/nextcloud/__init__.py:43
+#: modules/nextcloud/__init__.py:34
 #, python-brace-format
 msgid ""
 "Please note that Nextcloud is installed and run inside a container provided "
@@ -6085,7 +6150,7 @@ msgstr ""
 "திட்டத்தால் செய்யப்படுகின்றன, ஆனால் டெபியன்/{box_name} ஆல் அல்ல. சுயாதீன சுழற்சியைத் "
 "தொடர்ந்து புதுப்பிப்புகள் செய்யப்படுகின்றன."
 
-#: modules/nextcloud/__init__.py:65 modules/nextcloud/manifest.py:11
+#: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
 msgid "Nextcloud"
 msgstr "அடுத்த முகில்"
@@ -6145,7 +6210,7 @@ msgstr "கோப்பு ஒத்திசைவு"
 msgid "Sharing"
 msgstr "பகிர்வு"
 
-#: modules/nextcloud/manifest.py:56
+#: modules/nextcloud/manifest.py:56 modules/sogo/manifest.py:72
 msgid "Groupware"
 msgstr "குழுக்கள்"
 
@@ -6485,8 +6550,8 @@ msgstr ""
 msgid "Shutdown"
 msgstr "மூடு"
 
-#: modules/power/templates/power.html:15 templates/base.html:182
-#: templates/base.html:183
+#: modules/power/templates/power.html:15 templates/base.html:181
+#: templates/base.html:182
 msgid "Restart"
 msgstr "மறுதொடக்கம்"
 
@@ -6749,7 +6814,7 @@ msgstr ""
 msgid "Access rights"
 msgstr "அணுகல் உரிமைகள்"
 
-#: modules/radicale/manifest.py:9
+#: modules/radicale/manifest.py:9 modules/sogo/manifest.py:36
 msgid "DAVx5"
 msgstr "டேவ்எக்ச் 5"
 
@@ -6762,7 +6827,7 @@ msgstr ""
 "ரேடிகல் சேவையகத்தின் முகவரி ஐ உள்ளிடவும் (எ.கா. DAVX5 தற்போதுள்ள அனைத்து "
 "காலெண்டர்களையும் முகவரி புத்தகங்களையும் காண்பிக்கும், மேலும் நீங்கள் புதியதாக உருவாக்கலாம்."
 
-#: modules/radicale/manifest.py:28
+#: modules/radicale/manifest.py:28 modules/sogo/manifest.py:51
 msgid "GNOME Calendar"
 msgstr "க்னோம் காலண்டர்"
 
@@ -6797,11 +6862,11 @@ msgstr "நாட்காட்டி"
 msgid "Contacts"
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:75
 msgid "CalDAV"
 msgstr "கால்டாவ்"
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:76
 msgid "CardDAV"
 msgstr "கார்டாவ்"
 
@@ -7783,6 +7848,53 @@ msgstr "ரோல்பேக்கை முடிக்க கணினி ம
 #: modules/snapshot/views.py:221
 msgid "Rollback to Snapshot"
 msgstr "ச்னாப்சாட்டுக்கு ரோல்பேக்"
+
+#: modules/sogo/__init__.py:21
+msgid ""
+"SOGo is a groupware server that provides a rich web interface for email, "
+"calendar, tasks, and contacts. Calendar, tasks, and contacts can also be "
+"accessed with various mobile and desktop applications using the CalDAV and "
+"CardDAV standards."
+msgstr ""
+
+#: modules/sogo/__init__.py:26
+#, python-brace-format
+msgid ""
+"Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
+"server app to retrieve, manage, and send email."
+msgstr ""
+
+#: modules/sogo/__init__.py:30
+#, python-brace-format
+msgid ""
+"All users on {box_name} can login into and use SOGo. Mails delivered to "
+"their mailboxes by the email server app can be read and new mail can be sent "
+"out."
+msgstr ""
+
+#: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
+msgid "SOGo"
+msgstr ""
+
+#: modules/sogo/manifest.py:19
+msgid "Thunderbird + SOGo connector"
+msgstr ""
+
+#: modules/sogo/manifest.py:71
+msgid "Webmail"
+msgstr ""
+
+#: modules/sogo/manifest.py:73
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calender"
+msgstr "நாட்காட்டி"
+
+#: modules/sogo/manifest.py:74
+#, fuzzy
+#| msgid "Address"
+msgid "Address book"
+msgstr "முகவரி"
 
 #: modules/ssh/__init__.py:22
 msgid ""
@@ -9834,35 +9946,35 @@ msgstr ""
 "சேவையகமாகும். இது இலவச மென்பொருளாகும், இது சேவையக பயன்பாடுகளை எளிதாக நிறுவவும் "
 "நிர்வகிக்கவும் உங்களை அனுமதிக்கிறது."
 
-#: templates/base.html:118
+#: templates/base.html:117
 msgid " Home"
 msgstr " வீடு"
 
-#: templates/base.html:126
+#: templates/base.html:125
 msgid " Apps"
 msgstr " பயன்பாடுகள்"
 
-#: templates/base.html:135
+#: templates/base.html:134
 msgid " System"
 msgstr " அமைப்பு"
 
-#: templates/base.html:174 templates/base.html:175
+#: templates/base.html:173 templates/base.html:174
 msgid "Change password"
 msgstr "கடவுச்சொல்லை மாற்றவும்"
 
-#: templates/base.html:188 templates/base.html:189
+#: templates/base.html:187 templates/base.html:188
 msgid "Shut down"
 msgstr "மூடு"
 
-#: templates/base.html:199 templates/base.html:237
+#: templates/base.html:198 templates/base.html:236
 msgid "Log out"
 msgstr "விடுபதிகை"
 
-#: templates/base.html:208 templates/base.html:211
+#: templates/base.html:207 templates/base.html:210
 msgid "Select language"
 msgstr "மொழியைத் தேர்ந்தெடுக்கவும்"
 
-#: templates/base.html:226 templates/base.html:228
+#: templates/base.html:225 templates/base.html:227
 msgid "Log in"
 msgstr "புகுபதிகை"
 
@@ -9881,10 +9993,6 @@ msgstr "விரலிடைத் தோல்"
 #: templates/clients.html:28
 msgid "Launch"
 msgstr ""
-
-#: templates/clients.html:42
-msgid "Desktop"
-msgstr "டெச்க்டாப்"
 
 #: templates/clients.html:53
 msgid "GNU/Linux"
@@ -10095,6 +10203,9 @@ msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு 
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "குசராத்தி"
+
+#~ msgid "K-9 Mail"
+#~ msgstr "கே -9 மே மாதம்"
 
 #~ msgid "In 24 hour format."
 #~ msgstr "24 மணி நேர வடிவத்தில்."

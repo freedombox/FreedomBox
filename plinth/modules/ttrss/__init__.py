@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
-from plinth.daemon import Daemon
+from plinth.daemon import Daemon, SharedDaemon
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -38,7 +38,7 @@ class TTRSSApp(app_module.App):
 
     app_id = 'ttrss'
 
-    _version = 6
+    _version = 7
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -85,8 +85,11 @@ class TTRSSApp(app_module.App):
                               last_updated_version=5)
         self.add(webserver)
 
-        daemon = Daemon('daemon-ttrss', 'tt-rss')
-        self.add(daemon)
+        daemon1 = SharedDaemon('shared-daemon-ttrss-postgresql', 'postgresql')
+        self.add(daemon1)
+
+        daemon2 = Daemon('daemon-ttrss', 'tt-rss')
+        self.add(daemon2)
 
         users_and_groups = UsersAndGroups('users-and-groups-ttrss',
                                           groups=groups)
@@ -98,6 +101,7 @@ class TTRSSApp(app_module.App):
 
     def enable(self):
         """Enable components and API access."""
+        super().enable()
         privileged.enable_api_access()
 
         # Try to set the domain to one of the available TLS domains
@@ -106,8 +110,6 @@ class TTRSSApp(app_module.App):
             from plinth.modules import names
             domain = next(names.get_available_tls_domains(), None)
             privileged.set_domain(domain)
-
-        super().enable()
 
     def setup(self, old_version):
         """Install and configure the app."""

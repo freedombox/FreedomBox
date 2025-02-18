@@ -88,6 +88,7 @@ def setup(old_version: int):
         webserver.enable('proxy_html', kind='module')
         webserver.enable('rewrite', kind='module')
         webserver.enable('macro', kind='module')
+        webserver.enable('expires', kind='module')
 
         # Disable logging into files, use FreedomBox configured systemd logging
         webserver.disable('other-vhosts-access-log', kind='config')
