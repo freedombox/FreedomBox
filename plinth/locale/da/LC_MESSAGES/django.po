@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 20:25-0500\n"
+"POT-Creation-Date: 2025-02-24 20:13-0500\n"
 "PO-Revision-Date: 2022-09-14 17:19+0000\n"
 "Last-Translator: ikmaak <info@ikmaak.nl>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/freedombox/"
@@ -611,7 +611,7 @@ msgstr "Eksisterende sikkerhedskopier"
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
-#: modules/names/templates/names.html:128
+#: modules/names/templates/names.html:159
 #: modules/networks/templates/connection_show.html:24
 #: modules/pagekite/templates/pagekite_custom_services.html:16
 #: modules/power/templates/power_busy_warning.html:11
@@ -1013,7 +1013,7 @@ msgstr "Tilføj kodeord"
 msgid "No passwords currently configured."
 msgstr "Endnu ingen kodeord konfigureret."
 
-#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:83
+#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:85
 #: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
@@ -1045,9 +1045,13 @@ msgstr "Opret"
 msgid "List"
 msgstr "Oplist"
 
-#: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/bepasty/views.py:50
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:22
+#: modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
+#: modules/names/templates/names-domain-delete.html:22
+#: modules/names/templates/names.html:48
 #: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
@@ -1172,11 +1176,11 @@ msgstr "Opfrisk IP-adresse og domæner"
 
 #: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
-#: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
+#: modules/dynamicdns/views.py:100 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:66 modules/names/views.py:95
-#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/names/views.py:68 modules/names/views.py:97
+#: modules/names/views.py:123 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1420,8 +1424,8 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Generel Konfiguration"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:33
-#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Konfigurer"
@@ -1527,7 +1531,7 @@ msgstr "Viser avancerede applikationer og funktionalitet"
 msgid "Hiding advanced apps and features"
 msgstr "Skjuler avancerede applikationer og funktionalitet"
 
-#: modules/coturn/__init__.py:25
+#: modules/coturn/__init__.py:26
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1539,7 +1543,7 @@ msgstr ""
 "WebRTC, SIP og andre kommunikationsservere kan bruge dette til at oprette et "
 "opkald mellem parter der ellers ikke kan oprette forbindelse til hinanden."
 
-#: modules/coturn/__init__.py:30
+#: modules/coturn/__init__.py:31
 #, fuzzy, python-brace-format
 #| msgid ""
 #| "It is not meant to be used directly by users. Servers such as matrix-"
@@ -1552,7 +1556,7 @@ msgstr ""
 "Den er ikke beregnet til at blive anvendt direkte af brugerne. Servere såsom "
 "matrix-synapse skal konfigureres med detaljerne som er angivet her."
 
-#: modules/coturn/__init__.py:52
+#: modules/coturn/__init__.py:53
 msgid "Coturn"
 msgstr "Coturn"
 
@@ -1865,7 +1869,7 @@ msgid "Test"
 msgstr "Test"
 
 #: modules/diagnostics/templates/diagnostics_results.html:12
-#: modules/dynamicdns/templates/dynamicdns.html:25
+#: modules/dynamicdns/templates/dynamicdns.html:27
 msgid "Result"
 msgstr "Resultat"
 
@@ -1935,11 +1939,13 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "Dynamisk DNS Klient"
 
-#: modules/dynamicdns/__init__.py:78
-msgid "Dynamic Domain Name"
+#: modules/dynamicdns/__init__.py:77
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Dynamic Domain"
 msgstr "Dynamisk domænenavn"
 
-#: modules/dynamicdns/forms.py:18
+#: modules/dynamicdns/forms.py:20
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1949,7 +1955,7 @@ msgstr ""
 "bruges i URL'en. For flere detaljer se skabelonerne for opdaterings-URL'er i "
 "eksemplernes tjenester."
 
-#: modules/dynamicdns/forms.py:22
+#: modules/dynamicdns/forms.py:24
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1959,7 +1965,7 @@ msgstr ""
 "udbyderen ikke understøtter GnuDIP-protokollen eller ikke er prædefineret, "
 "kan en opdaterings-URL fra din udbyder angives direkte."
 
-#: modules/dynamicdns/forms.py:27
+#: modules/dynamicdns/forms.py:29
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1967,16 +1973,16 @@ msgstr ""
 "Her skal ikke angives en URL (såsom \"https://example.com/\"), men blot "
 "værtsnavnet for GnuDIP-serveren (såsom \"example.com\")."
 
-#: modules/dynamicdns/forms.py:31
+#: modules/dynamicdns/forms.py:33
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "Det offentlige domænenavn du vil bruge til at nå din {box_name}."
 
-#: modules/dynamicdns/forms.py:34
+#: modules/dynamicdns/forms.py:36
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "Aktiver dette hvis din udbyder bruger selvunderskrevne certifikater."
 
-#: modules/dynamicdns/forms.py:37
+#: modules/dynamicdns/forms.py:39
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1984,77 +1990,83 @@ msgstr ""
 "Hvis denne option er aktiveret vil dit brugernavn og kodeord blive anvendt "
 "til basal (\"basic\") HTTP-autentifikation."
 
-#: modules/dynamicdns/forms.py:40
+#: modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Lad dette felt stå tomt hvis du vil beholde dit nuværende kodeord."
 
-#: modules/dynamicdns/forms.py:43
+#: modules/dynamicdns/forms.py:45
 msgid "The username that was used when the account was created."
 msgstr "Brugernavnet der blev brugt ved kontooprettelse."
 
-#: modules/dynamicdns/forms.py:46
+#: modules/dynamicdns/forms.py:48
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: modules/dynamicdns/forms.py:49
+#: modules/dynamicdns/forms.py:51
 #, fuzzy
 #| msgid "other update URL"
 msgid "Other update URL"
 msgstr "anden opdaterings-URL"
 
-#: modules/dynamicdns/forms.py:51
+#: modules/dynamicdns/forms.py:53
 msgid "Service Type"
 msgstr "Servicetype"
 
-#: modules/dynamicdns/forms.py:56
+#: modules/dynamicdns/forms.py:58
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP Serveradresse"
 
-#: modules/dynamicdns/forms.py:59
+#: modules/dynamicdns/forms.py:61
 msgid "Invalid server name"
 msgstr "Ugyldigt servernavn"
 
-#: modules/dynamicdns/forms.py:62
+#: modules/dynamicdns/forms.py:64
 msgid "Update URL"
 msgstr "Opdaterings-URL"
 
-#: modules/dynamicdns/forms.py:66
+#: modules/dynamicdns/forms.py:68
 msgid "Accept all SSL certificates"
 msgstr "Accepter alle SSL-certifikater"
 
-#: modules/dynamicdns/forms.py:70
+#: modules/dynamicdns/forms.py:72
 msgid "Use HTTP basic authentication"
 msgstr "Brug basal (\"basic\") HTTP-autentifikation"
 
-#: modules/dynamicdns/forms.py:74 modules/names/__init__.py:68
-#: modules/names/forms.py:106 modules/names/templates/names.html:19
+#: modules/dynamicdns/forms.py:76 modules/names/forms.py:108
+#: modules/names/templates/names.html:19
 msgid "Domain Name"
 msgstr "Domænenavn"
 
-#: modules/dynamicdns/forms.py:77 modules/names/forms.py:99
-#: modules/names/forms.py:117
+#: modules/dynamicdns/forms.py:79 modules/names/forms.py:101
+#: modules/names/forms.py:119
 msgid "Invalid domain name"
 msgstr "Ugyldigt domænenavn"
 
-#: modules/dynamicdns/forms.py:80 modules/miniflux/forms.py:11
+#: modules/dynamicdns/forms.py:82 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Brugernavn"
 
-#: modules/dynamicdns/forms.py:87 modules/networks/forms.py:284
+#: modules/dynamicdns/forms.py:89 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Vis kodeord"
 
-#: modules/dynamicdns/forms.py:91
+#: modules/dynamicdns/forms.py:93
 msgid "Use IPv6 instead of IPv4"
 msgstr ""
 
-#: modules/dynamicdns/forms.py:110
+#: modules/dynamicdns/forms.py:108
 msgid "This field is required."
 msgstr ""
 
+#: modules/dynamicdns/forms.py:138 modules/names/forms.py:126
+#, fuzzy
+#| msgid "This service already exists"
+msgid "Domain already exists."
+msgstr "Denne tjeneste eksisterer allerede"
+
 #: modules/dynamicdns/manifest.py:17
-#: modules/dynamicdns/templates/dynamicdns.html:23
+#: modules/dynamicdns/templates/dynamicdns.html:25
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
 #: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
@@ -2071,69 +2083,122 @@ msgstr ""
 msgid "Needs public IP"
 msgstr "Serverport"
 
-#: modules/dynamicdns/templates/dynamicdns.html:16
-#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
-#: modules/firewall/templates/firewall.html:16
-#: modules/firewall/templates/firewall.html:22
-#: modules/letsencrypt/templates/letsencrypt.html:17
-#: modules/matrixsynapse/templates/matrix-synapse.html:17
-#: modules/networks/templates/connection_show.html:258
-#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
-#: modules/wireguard/templates/wireguard_show_client.html:48
-#: modules/wireguard/templates/wireguard_show_server.html:47
-msgid "Status"
-msgstr "Status"
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:13
+#: modules/names/templates/names-domain-delete.html:13
+#, fuzzy
+#| msgid "Tor configuration is being updated"
+msgid "App configurations will be updated."
+msgstr "Tor-konfiguration opdateres"
 
-#: modules/dynamicdns/templates/dynamicdns.html:24
+#: modules/dynamicdns/templates/dynamicdns.html:10
+#: modules/email/templates/email.html:20 modules/names/manifest.py:11
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domæner"
+
+#: modules/dynamicdns/templates/dynamicdns.html:14
+#: modules/dynamicdns/templates/dynamicdns.html:16
+#, fuzzy
+#| msgid "Add Domains"
+msgid "Add Domain"
+msgstr "Tilføj Domæner"
+
+#: modules/dynamicdns/templates/dynamicdns.html:26
 msgid "Last update"
 msgstr "Seneste opdatering"
 
-#: modules/dynamicdns/templates/dynamicdns.html:26
+#: modules/dynamicdns/templates/dynamicdns.html:28
 #, fuzzy
 #| msgid "IP address"
 msgid "IP Address"
 msgstr "IP-adresse"
 
+#: modules/dynamicdns/templates/dynamicdns.html:29
+#: modules/letsencrypt/templates/letsencrypt.html:27
+#: modules/storage/templates/storage.html:28
+msgid "Actions"
+msgstr "Handlinger"
+
 #: modules/dynamicdns/templates/dynamicdns.html:37
+#: modules/dynamicdns/templates/dynamicdns.html:72
+#, python-format
+msgid "Edit domain %(domain)s"
+msgstr ""
+
+#: modules/dynamicdns/templates/dynamicdns.html:47
+#, fuzzy
+#| msgid "Hostname set"
+msgid "Not yet"
+msgstr "Værtsnavn gemt"
+
+#: modules/dynamicdns/templates/dynamicdns.html:53
 #, fuzzy
 #| msgid "Access"
 msgid "Success"
 msgstr "Adgang"
 
-#: modules/dynamicdns/templates/dynamicdns.html:41
+#: modules/dynamicdns/templates/dynamicdns.html:59
 #, fuzzy
 #| msgid "failed"
 msgid "Failed"
 msgstr "mislykkedes"
 
-#: modules/dynamicdns/templates/dynamicdns.html:57
-#, fuzzy
-#| msgid "No libraries available."
-msgid "No status available."
-msgstr "Ingen samlinger tilgængelige."
+#: modules/dynamicdns/templates/dynamicdns.html:79
+#, fuzzy, python-format
+#| msgid "Delete connection %(name)s"
+msgid "Delete domain %(domain)s"
+msgstr "Slet forbindelse %(name)s"
 
-#: modules/dynamicdns/views.py:24 modules/dynamicdns/views.py:26
+#: modules/dynamicdns/templates/dynamicdns.html:91
+#, fuzzy
+#| msgid "Error setting domain name: {exception}"
+msgid "No domains configured."
+msgstr "Kunne ikke sætte domænenavn: {exception}"
+
+#: modules/dynamicdns/views.py:26 modules/dynamicdns/views.py:28
 #, fuzzy
 #| msgid "Connection Name"
 msgid "Connection timed out"
 msgstr "Forbindelsesnavn"
 
-#: modules/dynamicdns/views.py:25
+#: modules/dynamicdns/views.py:27
 msgid "Could not find server"
 msgstr ""
 
-#: modules/dynamicdns/views.py:27
+#: modules/dynamicdns/views.py:29
 #, fuzzy
 #| msgid "Delete connection"
 msgid "Server refused connection"
 msgstr "Slet forbindelse"
 
-#: modules/dynamicdns/views.py:28
+#: modules/dynamicdns/views.py:30
 #, fuzzy
 #| msgid "Last update"
 msgid "Already up-to-date"
 msgstr "Seneste opdatering"
+
+#: modules/dynamicdns/views.py:70
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Add Dynamic Domain"
+msgstr "Dynamisk domænenavn"
+
+#: modules/dynamicdns/views.py:72
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Edit Dynamic Domain"
+msgstr "Dynamisk domænenavn"
+
+#: modules/dynamicdns/views.py:138 modules/names/views.py:137
+#, python-brace-format
+msgid "Delete Domain {domain}?"
+msgstr ""
+
+#: modules/dynamicdns/views.py:145 modules/names/views.py:143
+#, fuzzy
+#| msgid "{name} deleted."
+msgid "Domain deleted."
+msgstr "{name} slettet."
 
 #: modules/ejabberd/__init__.py:29
 msgid ""
@@ -2168,23 +2233,23 @@ msgstr ""
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: modules/ejabberd/forms.py:19
+#: modules/ejabberd/forms.py:20
 #, fuzzy
 #| msgid "Domain Names"
 msgid "Domain names"
 msgstr "Domænenavne"
 
-#: modules/ejabberd/forms.py:21
+#: modules/ejabberd/forms.py:22
 msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
 
-#: modules/ejabberd/forms.py:26
+#: modules/ejabberd/forms.py:27
 msgid "Enable Message Archive Management"
 msgstr "Aktivér håndtering af beskedarkiver"
 
-#: modules/ejabberd/forms.py:28
+#: modules/ejabberd/forms.py:29
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -2198,11 +2263,11 @@ msgstr ""
 "beskedhistorikken gemmes som klartekst eller krypteret afhænger af klientens "
 "indstillinger."
 
-#: modules/ejabberd/forms.py:35 modules/matrixsynapse/forms.py:38
+#: modules/ejabberd/forms.py:36 modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr ""
 
-#: modules/ejabberd/forms.py:37
+#: modules/ejabberd/forms.py:38
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -2210,21 +2275,21 @@ msgid ""
 "server."
 msgstr ""
 
-#: modules/ejabberd/forms.py:44 modules/matrixsynapse/forms.py:47
+#: modules/ejabberd/forms.py:45 modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr ""
 
-#: modules/ejabberd/forms.py:46 modules/matrixsynapse/forms.py:49
+#: modules/ejabberd/forms.py:47 modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 
-#: modules/ejabberd/forms.py:50 modules/matrixsynapse/forms.py:53
+#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:53
 #, fuzzy
 #| msgid "Authentication Mode"
 msgid "Shared Authentication Secret"
 msgstr "Autentificeringstilstand"
 
-#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:54
+#: modules/ejabberd/forms.py:52 modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -2282,6 +2347,19 @@ msgstr ""
 #: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
 msgid "XMPP"
 msgstr ""
+
+#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
+#: modules/firewall/templates/firewall.html:16
+#: modules/firewall/templates/firewall.html:22
+#: modules/letsencrypt/templates/letsencrypt.html:17
+#: modules/matrixsynapse/templates/matrix-synapse.html:17
+#: modules/networks/templates/connection_show.html:258
+#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
+#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/wireguard/templates/wireguard_show_client.html:48
+#: modules/wireguard/templates/wireguard_show_server.html:47
+msgid "Status"
+msgstr "Status"
 
 #: modules/ejabberd/templates/ejabberd.html:23
 #, fuzzy, python-format
@@ -2367,35 +2445,35 @@ msgstr ""
 msgid "My Email Aliases"
 msgstr "Håndter samlinger"
 
-#: modules/email/forms.py:25
+#: modules/email/forms.py:24
 #, fuzzy
 #| msgid "Primary connection"
 msgid "Primary domain"
 msgstr "Primær forbindelse"
 
-#: modules/email/forms.py:27 modules/sogo/forms.py:20
+#: modules/email/forms.py:26 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: modules/email/forms.py:35
+#: modules/email/forms.py:34
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: modules/email/forms.py:42
+#: modules/email/forms.py:41
 msgid "Contains illegal characters"
 msgstr ""
 
-#: modules/email/forms.py:45
+#: modules/email/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: modules/email/forms.py:49
+#: modules/email/forms.py:48
 msgid "Cannot be a number"
 msgstr ""
 
-#: modules/email/forms.py:59
+#: modules/email/forms.py:58
 #, fuzzy
 #| msgid "Manage Libraries"
 msgid "Aliases"
@@ -2452,6 +2530,7 @@ msgid "Create a new email alias"
 msgstr "Opret en ny sikkerhedskopi"
 
 #: modules/email/templates/email-aliases.html:34
+#: modules/names/templates/names.html:78
 #, fuzzy
 #| msgid "Address"
 msgid "Add"
@@ -2530,11 +2609,6 @@ msgstr "Værtsnavn"
 #| msgid "Create User"
 msgid "Manage Spam"
 msgstr "Opret Bruger"
-
-#: modules/email/templates/email.html:20 modules/names/manifest.py:11
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domæner"
 
 #: modules/email/templates/email.html:23
 msgid ""
@@ -4039,11 +4113,6 @@ msgstr "Certifikat Status"
 msgid "Website Security"
 msgstr "Webside-sikkerhed"
 
-#: modules/letsencrypt/templates/letsencrypt.html:27
-#: modules/storage/templates/storage.html:28
-msgid "Actions"
-msgstr "Handlinger"
-
 #: modules/letsencrypt/templates/letsencrypt.html:37
 #, fuzzy, python-format
 #| msgid "Expires on %(expiry_date)s"
@@ -4775,7 +4844,7 @@ msgstr "Ugyldigt brugernavn: {username}"
 msgid "An error occurred during password reset: {error}."
 msgstr "Der opstod en fejl under konfigurationen."
 
-#: modules/mumble/__init__.py:27
+#: modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -4783,7 +4852,7 @@ msgstr ""
 "Mumble er open source software der tilbyder en højkvalitets tale-tjeneste "
 "med lav forsinkelse og kryptering."
 
-#: modules/mumble/__init__.py:29
+#: modules/mumble/__init__.py:28
 #, fuzzy
 #| msgid ""
 #| "You can connect to your Mumble server on the regular Mumble port 64738. "
@@ -4798,11 +4867,11 @@ msgstr ""
 "<a href=\"http://mumble.info\">Klienter</a> til computere og Android-enheder "
 "er tilgængelige."
 
-#: modules/mumble/__init__.py:47 modules/mumble/manifest.py:9
+#: modules/mumble/__init__.py:46 modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr ""
 
-#: modules/mumble/__init__.py:158
+#: modules/mumble/__init__.py:157
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "Mumble server is configured"
@@ -4887,11 +4956,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "Navnetjenester"
 
-#: modules/names/__init__.py:171
+#: modules/names/__init__.py:68
+msgid "Domain (regular)"
+msgstr ""
+
+#: modules/names/__init__.py:175
 msgid "Package systemd-resolved is installed"
 msgstr ""
 
-#: modules/names/__init__.py:195
+#: modules/names/__init__.py:199
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4908,19 +4981,19 @@ msgstr ""
 msgid "Secure Shell"
 msgstr "Secure Shell"
 
-#: modules/names/forms.py:21
+#: modules/names/forms.py:23
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:49
+#: modules/names/forms.py:51
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84 modules/names/manifest.py:12
+#: modules/names/forms.py:86 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Værtsnavn"
 
-#: modules/names/forms.py:85
+#: modules/names/forms.py:87
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -4933,11 +5006,11 @@ msgstr ""
 "derimellem må kun være bogstaver, tal og bindestreger. Den samlede længde "
 "skal være 63 tegn eller derunder."
 
-#: modules/names/forms.py:91
+#: modules/names/forms.py:93
 msgid "Invalid hostname"
 msgstr "Ugyldigt værtsnavn"
 
-#: modules/names/forms.py:107
+#: modules/names/forms.py:109
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -4990,84 +5063,91 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
-#: modules/names/templates/names.html:56
+#: modules/names/templates/names.html:41
+#: modules/networks/templates/connection_show.html:40
+#: modules/wireguard/templates/wireguard_show_client.html:72
+#: modules/wireguard/templates/wireguard_show_server.html:73
+#: templates/base.html:166 templates/base.html:167
+msgid "Edit"
+msgstr "Rediger"
+
+#: modules/names/templates/names.html:59
+msgid "Add Domains"
+msgstr "Tilføj Domæner"
+
+#: modules/names/templates/names.html:87
 msgid "Resolver Status"
 msgstr ""
 
-#: modules/names/templates/names.html:66
+#: modules/names/templates/names.html:97
 msgid "Global"
 msgstr ""
 
-#: modules/names/templates/names.html:68
+#: modules/names/templates/names.html:99
 msgid "Link"
 msgstr ""
 
-#: modules/names/templates/names.html:73
+#: modules/names/templates/names.html:104
 #: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
-#: modules/names/templates/names.html:77
+#: modules/names/templates/names.html:108
 #, fuzzy
 #| msgid "Enable DNSSEC"
 msgid "DNSSEC"
 msgstr "Aktivér DNSSEC"
 
-#: modules/names/templates/names.html:82
+#: modules/names/templates/names.html:113
 #, fuzzy
 #| msgid "Second DNS Server"
 msgid "Current DNS Server"
 msgstr "Sekundær DNS-server"
 
-#: modules/names/templates/names.html:88
+#: modules/names/templates/names.html:119
 #, fuzzy
 #| msgid "DNS Server"
 msgid "DNS Servers"
 msgstr "DNS-server"
 
-#: modules/names/templates/names.html:98
+#: modules/names/templates/names.html:129
 #, fuzzy
 #| msgid "DNS Server"
 msgid "Fallback DNS Servers"
 msgstr "DNS-server"
 
-#: modules/names/templates/names.html:112
+#: modules/names/templates/names.html:143
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:78
 msgid "Install"
 msgstr "Installer"
 
-#: modules/names/templates/names.html:131
+#: modules/names/templates/names.html:162
 #, fuzzy
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
 msgstr "Fejl under installation"
 
-#: modules/names/views.py:81
+#: modules/names/views.py:83
 #, fuzzy
 #| msgid "Hostname"
 msgid "Set Hostname"
 msgstr "Værtsnavn"
 
-#: modules/names/views.py:99
+#: modules/names/views.py:101
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Kunne ikke sætte værtsnavn: {exception}"
 
-#: modules/names/views.py:115
+#: modules/names/views.py:117
 #, fuzzy
 #| msgid "Domain Name"
-msgid "Set Domain Name"
+msgid "Add Domain Name"
 msgstr "Domænenavn"
-
-#: modules/names/views.py:133
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Kunne ikke sætte domænenavn: {exception}"
 
 #: modules/networks/__init__.py:19
 msgid ""
@@ -5500,13 +5580,6 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "Rediger Forbindelse"
-
-#: modules/networks/templates/connection_show.html:40
-#: modules/wireguard/templates/wireguard_show_client.html:72
-#: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:166 templates/base.html:167
-msgid "Edit"
-msgstr "Rediger"
 
 #: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
@@ -8631,23 +8704,23 @@ msgstr ""
 msgid "Tor Onion Service"
 msgstr "Tor Skjult Tjeneste"
 
-#: modules/tor/__init__.py:81
+#: modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
 msgstr "Tor Bridge Relay"
 
-#: modules/tor/__init__.py:139
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor videresendelsesport tilgængelig"
 
-#: modules/tor/__init__.py:151
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport registreret"
 
-#: modules/tor/__init__.py:162
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport registreret"
 
-#: modules/tor/__init__.py:175
+#: modules/tor/__init__.py:176
 #, fuzzy
 #| msgid "Hidden Service"
 msgid "Onion service is version 3"
@@ -10466,6 +10539,20 @@ msgstr ""
 msgid "Gujarati"
 msgstr ""
 
+#, fuzzy
+#~| msgid "No libraries available."
+#~ msgid "No status available."
+#~ msgstr "Ingen samlinger tilgængelige."
+
+#, fuzzy
+#~| msgid "Domain Name"
+#~ msgid "Set Domain Name"
+#~ msgstr "Domænenavn"
+
+#, python-brace-format
+#~ msgid "Error setting domain name: {exception}"
+#~ msgstr "Kunne ikke sætte domænenavn: {exception}"
+
 #~ msgid "K-9 Mail"
 #~ msgstr "K-9 Mail"
 
@@ -10831,9 +10918,6 @@ msgstr ""
 #~ msgid "Enable Tor"
 #~ msgstr "Aktiver Tor"
 
-#~ msgid "Tor configuration is being updated"
-#~ msgstr "Tor-konfiguration opdateres"
-
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
 #~ msgstr "Bruger DNSSEC på IPv{kind}"
@@ -11159,9 +11243,6 @@ msgstr ""
 #~ msgid "Publish Key"
 #~ msgstr "Distribuer Nøgle"
 
-#~ msgid "Add Domains"
-#~ msgstr "Tilføj Domæner"
-
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP-bruger-id'er"
 
@@ -11219,11 +11300,6 @@ msgstr ""
 #~| msgid "Name"
 #~ msgid "Pet Name"
 #~ msgstr "Navn"
-
-#, fuzzy
-#~| msgid "Error setting domain name: {exception}"
-#~ msgid "Postfix domain name config"
-#~ msgstr "Kunne ikke sætte domænenavn: {exception}"
 
 #, fuzzy
 #~| msgid "Disabled"

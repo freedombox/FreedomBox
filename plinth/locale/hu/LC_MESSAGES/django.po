@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 20:25-0500\n"
+"POT-Creation-Date: 2025-02-24 20:13-0500\n"
 "PO-Revision-Date: 2022-10-24 18:39+0000\n"
 "Last-Translator: Sunil Mohan Adapa <sunil@medhas.org>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/freedombox/"
@@ -618,7 +618,7 @@ msgstr "Meglévő biztonsági mentések"
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
-#: modules/names/templates/names.html:128
+#: modules/names/templates/names.html:159
 #: modules/networks/templates/connection_show.html:24
 #: modules/pagekite/templates/pagekite_custom_services.html:16
 #: modules/power/templates/power_busy_warning.html:11
@@ -1014,7 +1014,7 @@ msgstr "Jelszó hozzáadása"
 msgid "No passwords currently configured."
 msgstr "Jelenleg nincs beállítva jelszó."
 
-#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:83
+#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:85
 #: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
@@ -1044,9 +1044,13 @@ msgstr "Létrehoz"
 msgid "List"
 msgstr "Listáz"
 
-#: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/bepasty/views.py:50
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:22
+#: modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
+#: modules/names/templates/names-domain-delete.html:22
+#: modules/names/templates/names.html:48
 #: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
@@ -1170,11 +1174,11 @@ msgstr "IP-címek és tartományok frissítése"
 
 #: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
-#: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
+#: modules/dynamicdns/views.py:100 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:66 modules/names/views.py:95
-#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/names/views.py:68 modules/names/views.py:97
+#: modules/names/views.py:123 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1421,8 +1425,8 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Általános beállítások"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:33
-#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Beállítások"
@@ -1529,7 +1533,7 @@ msgstr "Haladó szintű alkalmazások és funkciók megjelenítése"
 msgid "Hiding advanced apps and features"
 msgstr "Haladó szintű alkalmazások és funkciók elrejtése"
 
-#: modules/coturn/__init__.py:25
+#: modules/coturn/__init__.py:26
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1541,7 +1545,7 @@ msgstr ""
 "más kommunikációs szerverek használhatják arra, hogy hívást hozzanak létre "
 "olyan felek között, akik egyébként nem tudnának kapcsolódni egymáshoz."
 
-#: modules/coturn/__init__.py:30
+#: modules/coturn/__init__.py:31
 #, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a "
@@ -1553,7 +1557,7 @@ msgstr ""
 "href=\"{e_url}\">ejabberd</a>, az itt megadott részletekkel kell "
 "konfigurálni."
 
-#: modules/coturn/__init__.py:52
+#: modules/coturn/__init__.py:53
 msgid "Coturn"
 msgstr "Coturn"
 
@@ -1867,7 +1871,7 @@ msgid "Test"
 msgstr "Teszt"
 
 #: modules/diagnostics/templates/diagnostics_results.html:12
-#: modules/dynamicdns/templates/dynamicdns.html:25
+#: modules/dynamicdns/templates/dynamicdns.html:27
 msgid "Result"
 msgstr "Eredmény"
 
@@ -1933,11 +1937,13 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "Dinamikus DNS ügyfél"
 
-#: modules/dynamicdns/__init__.py:78
-msgid "Dynamic Domain Name"
+#: modules/dynamicdns/__init__.py:77
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Dynamic Domain"
 msgstr "Dinamikus domainnév"
 
-#: modules/dynamicdns/forms.py:18
+#: modules/dynamicdns/forms.py:20
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1947,7 +1953,7 @@ msgstr ""
 "használhatók az URL-ben. Részletekért tekintsd meg a példa szolgáltatók "
 "frissítési URL-sablonjait."
 
-#: modules/dynamicdns/forms.py:22
+#: modules/dynamicdns/forms.py:24
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1957,7 +1963,7 @@ msgstr ""
 "protokollt. Ha nem támogatja a GnuDIP-et, vagy nem található a listán, akkor "
 "használhatod a szolgáltató frissítési URL-jét."
 
-#: modules/dynamicdns/forms.py:27
+#: modules/dynamicdns/forms.py:29
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1965,19 +1971,19 @@ msgstr ""
 "Kérlek, ide ne írj be URL-t (mint pl. „https://pelda.com/”), csak a GnuDIP-"
 "szerver állomásnevét (mint pl. „pelda.com”)."
 
-#: modules/dynamicdns/forms.py:31
+#: modules/dynamicdns/forms.py:33
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "A nyilvános domainnév, amellyel el szeretnéd érni a {box_name} eszközödet."
 
-#: modules/dynamicdns/forms.py:34
+#: modules/dynamicdns/forms.py:36
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Használd ezt az opciót, ha a szolgáltatód saját aláírású (self signed) "
 "tanúsítványokat használ."
 
-#: modules/dynamicdns/forms.py:37
+#: modules/dynamicdns/forms.py:39
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1985,76 +1991,82 @@ msgstr ""
 "Ha ez az opció ki van választva, a te felhasználóneved és jelszavad lesz "
 "használva HTTP alap hitelesítéshez."
 
-#: modules/dynamicdns/forms.py:40
+#: modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
 msgstr ""
 "Hagyd ezt a mezőt üresen, ha szeretnéd megtartani a jelenlegi jelszavad."
 
-#: modules/dynamicdns/forms.py:43
+#: modules/dynamicdns/forms.py:45
 msgid "The username that was used when the account was created."
 msgstr "A felhasználónév, amely a fiók létrehozása során lett megadva."
 
-#: modules/dynamicdns/forms.py:46
+#: modules/dynamicdns/forms.py:48
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: modules/dynamicdns/forms.py:49
+#: modules/dynamicdns/forms.py:51
 msgid "Other update URL"
 msgstr "Egyéb frissítési URL"
 
-#: modules/dynamicdns/forms.py:51
+#: modules/dynamicdns/forms.py:53
 msgid "Service Type"
 msgstr "Szolgáltatás típusa"
 
-#: modules/dynamicdns/forms.py:56
+#: modules/dynamicdns/forms.py:58
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP-szerver címe"
 
-#: modules/dynamicdns/forms.py:59
+#: modules/dynamicdns/forms.py:61
 msgid "Invalid server name"
 msgstr "Érvénytelen szervernév"
 
-#: modules/dynamicdns/forms.py:62
+#: modules/dynamicdns/forms.py:64
 msgid "Update URL"
 msgstr "Frissítési URL"
 
-#: modules/dynamicdns/forms.py:66
+#: modules/dynamicdns/forms.py:68
 msgid "Accept all SSL certificates"
 msgstr "Minden SSL-tanúsítvány elfogadása"
 
-#: modules/dynamicdns/forms.py:70
+#: modules/dynamicdns/forms.py:72
 msgid "Use HTTP basic authentication"
 msgstr "HTTP alap hitelesítés használata"
 
-#: modules/dynamicdns/forms.py:74 modules/names/__init__.py:68
-#: modules/names/forms.py:106 modules/names/templates/names.html:19
+#: modules/dynamicdns/forms.py:76 modules/names/forms.py:108
+#: modules/names/templates/names.html:19
 msgid "Domain Name"
 msgstr "Domainnév"
 
-#: modules/dynamicdns/forms.py:77 modules/names/forms.py:99
-#: modules/names/forms.py:117
+#: modules/dynamicdns/forms.py:79 modules/names/forms.py:101
+#: modules/names/forms.py:119
 msgid "Invalid domain name"
 msgstr "Érvénytelen domainnév"
 
-#: modules/dynamicdns/forms.py:80 modules/miniflux/forms.py:11
+#: modules/dynamicdns/forms.py:82 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Felhasználónév"
 
-#: modules/dynamicdns/forms.py:87 modules/networks/forms.py:284
+#: modules/dynamicdns/forms.py:89 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Jelszó mutatása"
 
-#: modules/dynamicdns/forms.py:91
+#: modules/dynamicdns/forms.py:93
 msgid "Use IPv6 instead of IPv4"
 msgstr "IPv6 használata IPv4 helyett"
 
-#: modules/dynamicdns/forms.py:110
+#: modules/dynamicdns/forms.py:108
 msgid "This field is required."
 msgstr "Ezt a mezőt ki kell tölteni."
 
+#: modules/dynamicdns/forms.py:138 modules/names/forms.py:126
+#, fuzzy
+#| msgid "Client with public key already exists"
+msgid "Domain already exists."
+msgstr "Ezzel a nyilvános kulccsal már létezik kliens"
+
 #: modules/dynamicdns/manifest.py:17
-#: modules/dynamicdns/templates/dynamicdns.html:23
+#: modules/dynamicdns/templates/dynamicdns.html:25
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
 #: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
@@ -2071,55 +2083,110 @@ msgstr ""
 msgid "Needs public IP"
 msgstr "Szerver nyilvános kulcsa:"
 
-#: modules/dynamicdns/templates/dynamicdns.html:16
-#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
-#: modules/firewall/templates/firewall.html:16
-#: modules/firewall/templates/firewall.html:22
-#: modules/letsencrypt/templates/letsencrypt.html:17
-#: modules/matrixsynapse/templates/matrix-synapse.html:17
-#: modules/networks/templates/connection_show.html:258
-#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
-#: modules/wireguard/templates/wireguard_show_client.html:48
-#: modules/wireguard/templates/wireguard_show_server.html:47
-msgid "Status"
-msgstr "Állapot"
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:13
+#: modules/names/templates/names-domain-delete.html:13
+#, fuzzy
+#| msgid "Tor configuration is being updated"
+msgid "App configurations will be updated."
+msgstr "A Tor beállításainak frissítése folyamatban"
 
-#: modules/dynamicdns/templates/dynamicdns.html:24
+#: modules/dynamicdns/templates/dynamicdns.html:10
+#: modules/email/templates/email.html:20 modules/names/manifest.py:11
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domainek"
+
+#: modules/dynamicdns/templates/dynamicdns.html:14
+#: modules/dynamicdns/templates/dynamicdns.html:16
+#, fuzzy
+#| msgid "Add Domains"
+msgid "Add Domain"
+msgstr "Domainek hozzáadása"
+
+#: modules/dynamicdns/templates/dynamicdns.html:26
 msgid "Last update"
 msgstr "Legutolsó frissítés"
 
-#: modules/dynamicdns/templates/dynamicdns.html:26
+#: modules/dynamicdns/templates/dynamicdns.html:28
 msgid "IP Address"
 msgstr "IP-cím"
 
+#: modules/dynamicdns/templates/dynamicdns.html:29
+#: modules/letsencrypt/templates/letsencrypt.html:27
+#: modules/storage/templates/storage.html:28
+msgid "Actions"
+msgstr "Műveletek"
+
 #: modules/dynamicdns/templates/dynamicdns.html:37
+#: modules/dynamicdns/templates/dynamicdns.html:72
+#, python-format
+msgid "Edit domain %(domain)s"
+msgstr ""
+
+#: modules/dynamicdns/templates/dynamicdns.html:47
+#, fuzzy
+#| msgid "Hostname set"
+msgid "Not yet"
+msgstr "Állomásnév beállítva"
+
+#: modules/dynamicdns/templates/dynamicdns.html:53
 msgid "Success"
 msgstr "Rendben"
 
-#: modules/dynamicdns/templates/dynamicdns.html:41
+#: modules/dynamicdns/templates/dynamicdns.html:59
 msgid "Failed"
 msgstr "Sikertelen"
 
-#: modules/dynamicdns/templates/dynamicdns.html:57
-msgid "No status available."
-msgstr "Nincs elérhető állapot."
+#: modules/dynamicdns/templates/dynamicdns.html:79
+#, fuzzy, python-format
+#| msgid "Delete connection %(name)s"
+msgid "Delete domain %(domain)s"
+msgstr "%(name)s kapcsolat törlése"
 
-#: modules/dynamicdns/views.py:24 modules/dynamicdns/views.py:26
+#: modules/dynamicdns/templates/dynamicdns.html:91
+#, fuzzy
+#| msgid "Cannot test: No domains are configured."
+msgid "No domains configured."
+msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
+
+#: modules/dynamicdns/views.py:26 modules/dynamicdns/views.py:28
 msgid "Connection timed out"
 msgstr "A kapcsolat ideje lejárt"
 
-#: modules/dynamicdns/views.py:25
+#: modules/dynamicdns/views.py:27
 msgid "Could not find server"
 msgstr "Szerver nem található"
 
-#: modules/dynamicdns/views.py:27
+#: modules/dynamicdns/views.py:29
 msgid "Server refused connection"
 msgstr "A szerver visszautasította a kapcsolatot"
 
-#: modules/dynamicdns/views.py:28
+#: modules/dynamicdns/views.py:30
 msgid "Already up-to-date"
 msgstr "Már frissítve"
+
+#: modules/dynamicdns/views.py:70
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Add Dynamic Domain"
+msgstr "Dinamikus domainnév"
+
+#: modules/dynamicdns/views.py:72
+#, fuzzy
+#| msgid "Dynamic Domain Name"
+msgid "Edit Dynamic Domain"
+msgstr "Dinamikus domainnév"
+
+#: modules/dynamicdns/views.py:138 modules/names/views.py:137
+#, python-brace-format
+msgid "Delete Domain {domain}?"
+msgstr ""
+
+#: modules/dynamicdns/views.py:145 modules/names/views.py:143
+#, fuzzy
+#| msgid "Client deleted."
+msgid "Domain deleted."
+msgstr "Ügyfél törölve."
 
 #: modules/ejabberd/__init__.py:29
 msgid ""
@@ -2157,13 +2224,13 @@ msgstr ""
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: modules/ejabberd/forms.py:19
+#: modules/ejabberd/forms.py:20
 #, fuzzy
 #| msgid "Domain Names"
 msgid "Domain names"
 msgstr "Domainnevek"
 
-#: modules/ejabberd/forms.py:21
+#: modules/ejabberd/forms.py:22
 msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
@@ -2172,11 +2239,11 @@ msgstr ""
 "felhasználói fiókok egyedien kötődnek egy-egy domainhez és a felhasználói "
 "fiókok átköltöztetése egyik domainről a másikra jelenleg még nem lehetséges."
 
-#: modules/ejabberd/forms.py:26
+#: modules/ejabberd/forms.py:27
 msgid "Enable Message Archive Management"
 msgstr "Üzenetarchívum kezelésének engedélyezése"
 
-#: modules/ejabberd/forms.py:28
+#: modules/ejabberd/forms.py:29
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -2190,11 +2257,11 @@ msgstr ""
 "kliens beállításaitól függ, hogy az előzmények egyszerű szövegként vagy "
 "titkosítva lesznek eltárolva."
 
-#: modules/ejabberd/forms.py:35 modules/matrixsynapse/forms.py:38
+#: modules/ejabberd/forms.py:36 modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr "Automatikusan kezelje az audió/videóhívás beállítását"
 
-#: modules/ejabberd/forms.py:37
+#: modules/ejabberd/forms.py:38
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -2205,20 +2272,20 @@ msgstr ""
 "ejabberd STUN/TURN-szervereként. Kapcsold ki, ha más STUN/TURN-szervert "
 "szeretnél használni."
 
-#: modules/ejabberd/forms.py:44 modules/matrixsynapse/forms.py:47
+#: modules/ejabberd/forms.py:45 modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr "STUN/TURN-szerver URI-k"
 
-#: modules/ejabberd/forms.py:46 modules/matrixsynapse/forms.py:49
+#: modules/ejabberd/forms.py:47 modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr ""
 "A STUN/TURN-szerver nyilvános URI-információinak listája, minden sorban egy."
 
-#: modules/ejabberd/forms.py:50 modules/matrixsynapse/forms.py:53
+#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
 msgstr "Nyilvános hitelesítési titkosítás"
 
-#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:54
+#: modules/ejabberd/forms.py:52 modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 "A TURN-szerver jelszavainak kiszámításához használt nyilvános titkosítás."
@@ -2279,6 +2346,19 @@ msgstr "Videószoba"
 #: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
 msgid "XMPP"
 msgstr ""
+
+#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
+#: modules/firewall/templates/firewall.html:16
+#: modules/firewall/templates/firewall.html:22
+#: modules/letsencrypt/templates/letsencrypt.html:17
+#: modules/matrixsynapse/templates/matrix-synapse.html:17
+#: modules/networks/templates/connection_show.html:258
+#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
+#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/wireguard/templates/wireguard_show_client.html:48
+#: modules/wireguard/templates/wireguard_show_server.html:47
+msgid "Status"
+msgstr "Állapot"
 
 #: modules/ejabberd/templates/ejabberd.html:23
 #, fuzzy, python-format
@@ -2380,11 +2460,11 @@ msgstr ""
 msgid "My Email Aliases"
 msgstr "E-mail álneveim"
 
-#: modules/email/forms.py:25
+#: modules/email/forms.py:24
 msgid "Primary domain"
 msgstr "Elsődleges domain"
 
-#: modules/email/forms.py:27 modules/sogo/forms.py:20
+#: modules/email/forms.py:26 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2392,23 +2472,23 @@ msgstr ""
 "A rendszerben konfigurált összes domain számára érkeznek levelek. Ezek közül "
 "válaszd ki a legfontosabbat."
 
-#: modules/email/forms.py:35
+#: modules/email/forms.py:34
 msgid "New alias (without @domain)"
 msgstr "Új álnév (@domain nélkül)"
 
-#: modules/email/forms.py:42
+#: modules/email/forms.py:41
 msgid "Contains illegal characters"
 msgstr "Nem megengedett karaktereket tartalmaz"
 
-#: modules/email/forms.py:45
+#: modules/email/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr "A-z vagy 0-9 karakterekkel kell kezdődnie és végződnie"
 
-#: modules/email/forms.py:49
+#: modules/email/forms.py:48
 msgid "Cannot be a number"
 msgstr "Nem lehet szám"
 
-#: modules/email/forms.py:59
+#: modules/email/forms.py:58
 msgid "Aliases"
 msgstr "Álnevek"
 
@@ -2459,6 +2539,7 @@ msgid "Create a new email alias"
 msgstr "Új e-mail álnév létrehozása"
 
 #: modules/email/templates/email-aliases.html:34
+#: modules/names/templates/names.html:78
 msgid "Add"
 msgstr "Hozzáadás"
 
@@ -2541,11 +2622,6 @@ msgstr "Állomásnév"
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "Spam kezelése"
-
-#: modules/email/templates/email.html:20 modules/names/manifest.py:11
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domainek"
 
 #: modules/email/templates/email.html:23
 msgid ""
@@ -4048,11 +4124,6 @@ msgstr "Tanúsítvány állapot"
 msgid "Website Security"
 msgstr "Webhelybiztonság"
 
-#: modules/letsencrypt/templates/letsencrypt.html:27
-#: modules/storage/templates/storage.html:28
-msgid "Actions"
-msgstr "Műveletek"
-
 #: modules/letsencrypt/templates/letsencrypt.html:37
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
@@ -4834,7 +4905,7 @@ msgstr "Érvénytelen felhasználónév: {username}"
 msgid "An error occurred during password reset: {error}."
 msgstr "Hiba történt a beállítás során."
 
-#: modules/mumble/__init__.py:27
+#: modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -4842,7 +4913,7 @@ msgstr ""
 "A Mumble egy nyílt forráskódú, alacsony késéssel működő, titkosított, magas "
 "hangminőségű audiókonferencia-szoftver."
 
-#: modules/mumble/__init__.py:29
+#: modules/mumble/__init__.py:28
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -4852,11 +4923,11 @@ msgstr ""
 "kapcsolódhatsz. A <a href=\"http://mumble.info\">Mumble-kliensek</a> "
 "elérhetők az asztali és mobil eszközökhöz."
 
-#: modules/mumble/__init__.py:47 modules/mumble/manifest.py:9
+#: modules/mumble/__init__.py:46 modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:158
+#: modules/mumble/__init__.py:157
 msgid "Mumble server is configured"
 msgstr ""
 
@@ -4939,11 +5010,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "Névszolgáltatások"
 
-#: modules/names/__init__.py:171
+#: modules/names/__init__.py:68
+msgid "Domain (regular)"
+msgstr ""
+
+#: modules/names/__init__.py:175
 msgid "Package systemd-resolved is installed"
 msgstr ""
 
-#: modules/names/__init__.py:195
+#: modules/names/__init__.py:199
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4960,19 +5035,19 @@ msgstr "Összes webalkalmazás"
 msgid "Secure Shell"
 msgstr "Secure Shell (Biztonságos parancsértelmező)"
 
-#: modules/names/forms.py:21
+#: modules/names/forms.py:23
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:49
+#: modules/names/forms.py:51
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84 modules/names/manifest.py:12
+#: modules/names/forms.py:86 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Állomásnév"
 
-#: modules/names/forms.py:85
+#: modules/names/forms.py:87
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -4985,11 +5060,11 @@ msgstr ""
 "végződnie, továbbá csak betűket, számokat és kötőjeleket tartalmazhat. "
 "Teljes hossza nem lehet több 63 karakternél."
 
-#: modules/names/forms.py:91
+#: modules/names/forms.py:93
 msgid "Invalid hostname"
 msgstr "Érvénytelen állomásnév"
 
-#: modules/names/forms.py:107
+#: modules/names/forms.py:109
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -5047,84 +5122,91 @@ msgstr "Támogatás kérése"
 msgid "unsupported"
 msgstr ""
 
-#: modules/names/templates/names.html:56
+#: modules/names/templates/names.html:41
+#: modules/networks/templates/connection_show.html:40
+#: modules/wireguard/templates/wireguard_show_client.html:72
+#: modules/wireguard/templates/wireguard_show_server.html:73
+#: templates/base.html:166 templates/base.html:167
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: modules/names/templates/names.html:59
+msgid "Add Domains"
+msgstr "Domainek hozzáadása"
+
+#: modules/names/templates/names.html:87
 msgid "Resolver Status"
 msgstr ""
 
-#: modules/names/templates/names.html:66
+#: modules/names/templates/names.html:97
 msgid "Global"
 msgstr ""
 
-#: modules/names/templates/names.html:68
+#: modules/names/templates/names.html:99
 msgid "Link"
 msgstr ""
 
-#: modules/names/templates/names.html:73
+#: modules/names/templates/names.html:104
 #: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
-#: modules/names/templates/names.html:77
+#: modules/names/templates/names.html:108
 #, fuzzy
 #| msgid "Enable DNSSEC"
 msgid "DNSSEC"
 msgstr "DNSSEC engedélyezése"
 
-#: modules/names/templates/names.html:82
+#: modules/names/templates/names.html:113
 #, fuzzy
 #| msgid "Second DNS Server"
 msgid "Current DNS Server"
 msgstr "Másodlagos DNS-szerver"
 
-#: modules/names/templates/names.html:88
+#: modules/names/templates/names.html:119
 #, fuzzy
 #| msgid "DNS Server"
 msgid "DNS Servers"
 msgstr "DNS-szerver"
 
-#: modules/names/templates/names.html:98
+#: modules/names/templates/names.html:129
 #, fuzzy
 #| msgid "DNS Server"
 msgid "Fallback DNS Servers"
 msgstr "DNS-szerver"
 
-#: modules/names/templates/names.html:112
+#: modules/names/templates/names.html:143
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:78
 msgid "Install"
 msgstr "Telepítés"
 
-#: modules/names/templates/names.html:131
+#: modules/names/templates/names.html:162
 #, fuzzy
 #| msgid "Error during installation"
 msgid "Error retrieving status:"
 msgstr "Hiba lépett fel a telepítés során"
 
-#: modules/names/views.py:81
+#: modules/names/views.py:83
 #, fuzzy
 #| msgid "Hostname"
 msgid "Set Hostname"
 msgstr "Állomásnév"
 
-#: modules/names/views.py:99
+#: modules/names/views.py:101
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Hiba az állomásnév beállítása közben: {exception}"
 
-#: modules/names/views.py:115
+#: modules/names/views.py:117
 #, fuzzy
 #| msgid "Domain Name"
-msgid "Set Domain Name"
+msgid "Add Domain Name"
 msgstr "Domainnév"
-
-#: modules/names/views.py:133
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Hiba a domainnév beállítása közben: {exception}"
 
 #: modules/networks/__init__.py:19
 msgid ""
@@ -5619,13 +5701,6 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "Kapcsolat szerkesztése"
-
-#: modules/networks/templates/connection_show.html:40
-#: modules/wireguard/templates/wireguard_show_client.html:72
-#: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:166 templates/base.html:167
-msgid "Edit"
-msgstr "Szerkesztés"
 
 #: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
@@ -8786,23 +8861,23 @@ msgstr "Tor"
 msgid "Tor Onion Service"
 msgstr "Tor Onion szolgáltatás"
 
-#: modules/tor/__init__.py:81
+#: modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
 msgstr "Tor híd relay"
 
-#: modules/tor/__init__.py:139
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor relay port elérhető"
 
-#: modules/tor/__init__.py:151
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 átvitel regisztrálva"
 
-#: modules/tor/__init__.py:162
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 átvitel regisztrálva"
 
-#: modules/tor/__init__.py:175
+#: modules/tor/__init__.py:176
 #, fuzzy
 #| msgid "Onion Service"
 msgid "Onion service is version 3"
@@ -10656,6 +10731,18 @@ msgstr ""
 msgid "Gujarati"
 msgstr "Gudzsaráti"
 
+#~ msgid "No status available."
+#~ msgstr "Nincs elérhető állapot."
+
+#, fuzzy
+#~| msgid "Domain Name"
+#~ msgid "Set Domain Name"
+#~ msgstr "Domainnév"
+
+#, python-brace-format
+#~ msgid "Error setting domain name: {exception}"
+#~ msgstr "Hiba a domainnév beállítása közben: {exception}"
+
 #~ msgid "K-9 Mail"
 #~ msgstr "K-9 Mail"
 
@@ -10975,9 +11062,6 @@ msgstr "Gudzsaráti"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (Fork)"
 
-#~ msgid "Cannot test: No domains are configured."
-#~ msgstr "Sikertelen tesztelés: Nincsenek konfigurált domainek."
-
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
 #~ "of this will be also scanned for media files. If you change the default "
@@ -11167,9 +11251,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Enable Tor"
 #~ msgstr "Tor engedélyezése"
-
-#~ msgid "Tor configuration is being updated"
-#~ msgstr "A Tor beállításainak frissítése folyamatban"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -11520,9 +11601,6 @@ msgstr "Gudzsaráti"
 
 #~ msgid "Publish Key"
 #~ msgstr "Kulcs közzététele"
-
-#~ msgid "Add Domains"
-#~ msgstr "Domainek hozzáadása"
 
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP felhasználói azonosítók"
