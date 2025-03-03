@@ -171,6 +171,40 @@ def index(request):
         })
 
 
+def _pick_menu_items(menu_items, selected_tags):
+    """Return a sorted list of menu items filtered by tags."""
+
+    def _mismatch_map(menu_item) -> list[bool]:
+        """Return a list of mismatches for selected tags.
+
+        A mismatch is when a selected tag is *not* present in the list of
+        tags for menu item.
+        """
+        menu_tags = set(menu_item.tags)
+        return [tag not in menu_tags for tag in selected_tags]
+
+    def _sort_key(menu_item):
+        """Returns a comparable tuple to sort menu items.
+
+        Sort items by tag match count first, then by the order of matched
+        tags in user specified order, then by the order set by menu item,
+        and then by the name of the menu item in current locale (by
+        configured collation order).
+        """
+        return (_mismatch_map(menu_item).count(True), _mismatch_map(menu_item),
+                menu_item.order, menu_item.name.lower())
+
+    # Filter out menu items that don't match any of the selected tags. If
+    # no tags are selected, return all menu items. Otherwise, return all
+    # menu items that have at least one matching tag.
+    filtered_menu_items = [
+        menu_item for menu_item in menu_items
+        if (not selected_tags) or (not all(_mismatch_map(menu_item)))
+    ]
+
+    return sorted(filtered_menu_items, key=_sort_key)
+
+
 class AppsIndexView(TemplateView):
     """View for apps index.
 
@@ -179,41 +213,6 @@ class AppsIndexView(TemplateView):
     it will select apps matching any of the provided tags.
     """
     template_name = 'apps.html'
-
-    @staticmethod
-    def _pick_menu_items(menu_items, selected_tags):
-        """Return a sorted list of menu items filtered by tags."""
-
-        def _mismatch_map(menu_item) -> list[bool]:
-            """Return a list of mismatches for selected tags.
-
-            A mismatch is when a selected tag is *not* present in the list of
-            tags for menu item.
-            """
-            menu_tags = set(menu_item.tags)
-            return [tag not in menu_tags for tag in selected_tags]
-
-        def _sort_key(menu_item):
-            """Returns a comparable tuple to sort menu items.
-
-            Sort items by tag match count first, then by the order of matched
-            tags in user specified order, then by the order set by menu item,
-            and then by the name of the menu item in current locale (by
-            configured collation order).
-            """
-            return (_mismatch_map(menu_item).count(True),
-                    _mismatch_map(menu_item), menu_item.order,
-                    menu_item.name.lower())
-
-        # Filter out menu items that don't match any of the selected tags. If
-        # no tags are selected, return all menu items. Otherwise, return all
-        # menu items that have at least one matching tag.
-        filtered_menu_items = [
-            menu_item for menu_item in menu_items
-            if (not selected_tags) or (not all(_mismatch_map(menu_item)))
-        ]
-
-        return sorted(filtered_menu_items, key=_sort_key)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -229,8 +228,8 @@ class AppsIndexView(TemplateView):
         for menu_item in menu_items:
             all_tags.update(menu_item.tags or [])
 
-        context['all_tags'] = sorted(all_tags, key=lambda tag: _(tag))
-        context['menu_items'] = self._pick_menu_items(menu_items, tags)
+        context['all_tags'] = sorted(all_tags, key=_)
+        context['menu_items'] = _pick_menu_items(menu_items, tags)
 
         return context
 
