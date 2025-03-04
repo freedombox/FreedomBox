@@ -109,7 +109,8 @@ class MiniDLNAApp(app_module.App):
         if 'minidlna' not in packages:
             return False
 
-        # Allow upgrade from 1.2.1+dfsg-1+b1 to 1.3.x
+        # Allow upgrade from 1.3.0 (bookworm) to 1.3.3 (trixie) and beyond
+        # 1.3.x.
         package = packages['minidlna']
         if Version(package['new_version']) > Version('1.4~'):
             return False

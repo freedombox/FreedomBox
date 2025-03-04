@@ -72,5 +72,6 @@ class BindApp(app_module.App):
 
     def force_upgrade(self, _packages):
         """Force upgrade the managed packages to resolve conffile prompt."""
+        # Allow upgrades nay new version by keeping old configuration files
         install(['bind9'], force_configuration='old')
         return True

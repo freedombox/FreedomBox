@@ -17,10 +17,7 @@ SOURCES_LIST = '/etc/apt/sources.list'
 
 DIST_UPGRADE_OBSOLETE_PACKAGES: list[str] = []
 
-DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
-    'bind9', 'firewalld', 'janus', 'minetest-server', 'minidlna',
-    'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
-]
+DIST_UPGRADE_PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale']
 
 DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.

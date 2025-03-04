@@ -110,7 +110,7 @@ class RadicaleApp(app_module.App):
         if 'radicale' not in packages:
             return False
 
-        # Allow upgrade from 2.* to newer 2.* and 3.*
+        # Allow upgrade from 3.1.8 (bookworm) to 3.4.1 (trixie) and beyond 3.x.
         package = packages['radicale']
         if Version(package['new_version']) > Version('4~'):
             return False
