@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Perform distribution upgrade."""
 
+import contextlib
 import logging
 import pathlib
 import subprocess
 import time
+from typing import Generator
 
 from plinth.action_utils import (apt_hold, apt_hold_freedombox,
                                  debconf_set_selections, run_apt_command,
@@ -123,12 +125,21 @@ def check(test_upgrade=False) -> tuple[bool, str]:
     return (True, 'started-dist-upgrade')
 
 
-def _take_snapshot_and_disable() -> bool:
+@contextlib.contextmanager
+def _snapshot_run_and_disable() -> Generator[None, None, None]:
     """Take a snapshot if supported and enabled, then disable snapshots.
 
-    Return whether snapshots shall be re-enabled at the end.
+    Snapshots shall be re-enabled, if originally enabled, on exiting this
+    context manager..
     """
-    if snapshot_module.is_supported():
+    if not snapshot_module.is_supported():
+        print('Snapshots are not supported, skipping taking a snapshot.',
+              flush=True)
+        yield
+        return
+
+    reenable = False
+    try:
         print('Taking a snapshot before dist upgrade...', flush=True)
         subprocess.run([
             '/usr/share/plinth/actions/actions', 'snapshot', 'create',
@@ -136,36 +147,31 @@ def _take_snapshot_and_disable() -> bool:
         ], check=True)
         aug = snapshot_module.load_augeas()
         if snapshot_module.is_apt_snapshots_enabled(aug):
-            print('Disable apt snapshots during dist upgrade...', flush=True)
+            print('Disabling apt snapshots during dist upgrade...', flush=True)
             subprocess.run([
                 '/usr/share/plinth/actions/actions',
                 'snapshot',
                 'disable_apt_snapshot',
             ], input='{"args": ["yes"], "kwargs": {}}'.encode(), check=True)
-            return True
+            reenable = True
         else:
             print('Apt snapshots already disabled.', flush=True)
-    else:
-        print('Snapshots are not supported, skip taking a snapshot.',
-              flush=True)
 
-    return False
-
-
-def _restore_snapshots_config(reenable=False):
-    """Restore original snapshots configuration."""
-    if reenable:
-        print('Re-enable apt snapshots...', flush=True)
-        subprocess.run([
-            '/usr/share/plinth/actions/actions', 'snapshot',
-            'disable_apt_snapshot'
-        ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
+        yield
+    finally:
+        if reenable:
+            print('Re-enabling apt snapshots...', flush=True)
+            subprocess.run([
+                '/usr/share/plinth/actions/actions', 'snapshot',
+                'disable_apt_snapshot'
+            ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
+        else:
+            print('Not re-enabling apt snapshots, as they were disabled '
+                  'before dist upgrade.')
 
 
 def perform():
     """Perform upgrade to next release of Debian."""
-    reenable_snapshots = _take_snapshot_and_disable()
-
     # If quassel is running during dist upgrade, it may be restarted
     # several times. This causes IRC users to rapidly leave/join
     # channels. Stop quassel for the duration of the dist upgrade.
@@ -177,7 +183,7 @@ def perform():
 
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
-    with apt_hold_freedombox():
+    with apt_hold_freedombox(), _snapshot_run_and_disable():
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
@@ -223,8 +229,6 @@ def perform():
     # freedombox package.
     print('Running unattended-upgrade...', flush=True)
     subprocess.run(['unattended-upgrade', '--verbose'], check=False)
-
-    _restore_snapshots_config(reenable_snapshots)
 
     # Restart FreedomBox service to ensure it is using the latest
     # dependencies.
