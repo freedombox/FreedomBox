@@ -8,10 +8,10 @@ import subprocess
 import time
 from typing import Generator
 
+from plinth import action_utils
 from plinth.action_utils import (apt_hold, apt_hold_freedombox,
                                  debconf_set_selections, run_apt_command,
-                                 service_daemon_reload, service_is_running,
-                                 service_restart, service_start, service_stop)
+                                 service_daemon_reload, service_restart)
 from plinth.modules import snapshot as snapshot_module
 
 from . import utils
@@ -170,20 +170,25 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
                   'before dist upgrade.')
 
 
-def perform():
-    """Perform upgrade to next release of Debian."""
+@contextlib.contextmanager
+def _services_disable():
+    """Disable services that are seriously impacted by the upgrade."""
     # If quassel is running during dist upgrade, it may be restarted
     # several times. This causes IRC users to rapidly leave/join
     # channels. Stop quassel for the duration of the dist upgrade.
-    quassel_service = 'quasselcore'
-    quassel_was_running = service_is_running(quassel_service)
-    if quassel_was_running:
-        print('Stopping quassel service before dist upgrade...', flush=True)
-        service_stop(quassel_service)
+    print('Stopping quassel service during dist upgrade...', flush=True)
+    with action_utils.service_ensure_stopped('quasselcore'):
+        yield
+        print('Re-enabling quassel service if previously enabled...',
+              flush=True)
 
+
+def perform():
+    """Perform upgrade to next release of Debian."""
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
-    with apt_hold_freedombox(), _snapshot_run_and_disable():
+    with (apt_hold_freedombox(), _snapshot_run_and_disable(),
+          _services_disable()):
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
@@ -216,11 +221,6 @@ def perform():
             raise RuntimeError(
                 'Apt full-upgrade was not successful. Distribution upgrade '
                 'will be retried at a later time.')
-
-        if quassel_was_running:
-            print('Re-starting quassel service after dist upgrade...',
-                  flush=True)
-            service_start(quassel_service)
 
         print('Running apt autoremove...', flush=True)
         run_apt_command(['autoremove'])
