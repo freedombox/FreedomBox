@@ -30,21 +30,6 @@ DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
     'grub-pc grub-pc/install_devices_empty boolean true'
 ]
 
-DIST_UPGRADE_SERVICE = '''
-[Unit]
-Description=Upgrade to new stable Debian release
-
-[Service]
-Type=oneshot
-ExecStart=systemd-inhibit /usr/share/plinth/actions/actions \
-    upgrades dist_upgrade --no-args
-KillMode=process
-TimeoutSec=12hr
-'''
-
-DIST_UPGRADE_SERVICE_PATH = \
-    '/run/systemd/system/freedombox-dist-upgrade.service'
-
 dist_upgrade_flag = pathlib.Path(
     '/var/lib/freedombox/dist-upgrade-in-progress')
 
@@ -248,12 +233,19 @@ def perform():
 
 def start_service():
     """Create dist upgrade service and start it."""
-    with open(DIST_UPGRADE_SERVICE_PATH, 'w',
-              encoding='utf-8') as service_file:
-        service_file.write(DIST_UPGRADE_SERVICE)
+    old_service_path = pathlib.Path(
+        '/run/systemd/system/freedombox-dist-upgrade.service')
+    if old_service_path.exists():
+        old_service_path.unlink(missing_ok=True)
+        service_daemon_reload()
 
-    service_daemon_reload()
-    subprocess.Popen(['systemctl', 'start', 'freedombox-dist-upgrade'],
-                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                     stderr=subprocess.DEVNULL, close_fds=True,
-                     start_new_session=True)
+    args = [
+        '--unit=freedombox-dist-upgrade',
+        '--description=Upgrade to new stable Debian release',
+        '--property=KillMode=process',
+        '--property=TimeoutSec=12hr',
+    ]
+    subprocess.run(['systemd-run'] + args + [
+        'systemd-inhibit', '/usr/share/plinth/actions/actions', 'upgrades',
+        'dist_upgrade', '--no-args'
+    ], check=True)
