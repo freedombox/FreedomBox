@@ -162,43 +162,9 @@ def _restore_snapshots_config(reenable=False):
         ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
 
 
-def _disable_searx() -> bool:
-    """If searx is enabled, disable it until we can upgrade it properly.
-
-    Return whether searx was originally enabled.
-    """
-    searx_is_enabled = pathlib.Path(
-        '/etc/uwsgi/apps-enabled/searx.ini').exists()
-    if searx_is_enabled:
-        print('Disabling searx...', flush=True)
-        subprocess.run(
-            ['/usr/share/plinth/actions/actions', 'apache', 'uwsgi_disable'],
-            input='{"args": ["searx"], "kwargs": {}}'.encode(), check=True)
-
-    return searx_is_enabled
-
-
-def _update_searx(reenable=False):
-    """If searx is installed, update search engines list.
-
-    Re-enable if previously enabled.
-    """
-    if pathlib.Path('/etc/searx/settings.yml').exists():
-        print('Updating searx search engines list...', flush=True)
-        subprocess.run([
-            '/usr/share/plinth/actions/actions', 'searx', 'setup', '--no-args'
-        ], check=True)
-        if reenable:
-            print('Re-enabling searx after upgrade...', flush=True)
-            subprocess.run([
-                '/usr/share/plinth/actions/actions', 'apache', 'uwsgi_enable'
-            ], input='{"args": ["searx"], "kwargs": {}}'.encode(), check=True)
-
-
 def perform():
     """Perform upgrade to next release of Debian."""
     reenable_snapshots = _take_snapshot_and_disable()
-    reenable_searx = _disable_searx()
 
     # If quassel is running during dist upgrade, it may be restarted
     # several times. This causes IRC users to rapidly leave/join
@@ -244,8 +210,6 @@ def perform():
             raise RuntimeError(
                 'Apt full-upgrade was not successful. Distribution upgrade '
                 'will be retried at a later time.')
-
-        _update_searx(reenable_searx)
 
         if quassel_was_running:
             print('Re-starting quassel service after dist upgrade...',
