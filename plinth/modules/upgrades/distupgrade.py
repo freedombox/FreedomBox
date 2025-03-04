@@ -9,8 +9,6 @@ import time
 from typing import Generator
 
 from plinth import action_utils
-from plinth.action_utils import (debconf_set_selections, run_apt_command,
-                                 service_daemon_reload, service_restart)
 from plinth.modules import snapshot as snapshot_module
 
 from . import utils
@@ -189,58 +187,97 @@ def _apt_hold_packages():
         print('Releasing hold on freedombox package...')
 
 
-def perform():
-    """Perform upgrade to next release of Debian."""
-    with (_snapshot_run_and_disable(), _services_disable(),
-          _apt_hold_packages()):
-        print('Updating Apt cache...', flush=True)
-        run_apt_command(['update'])
+def _debconf_set_selections() -> None:
+    """Pre-set debconf selections if they are needed for dist upgrade."""
+    if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
+        print(
+            f'Setting debconf selections: '
+            f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
+        action_utils.debconf_set_selections(
+            DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
-        # Pre-set debconf selections if they are required during the
-        # dist upgrade.
-        if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
-            print(
-                f'Setting debconf selections: '
-                f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
-            debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
 
-        # Remove obsolete packages that may prevent other packages from
-        # upgrading.
-        if DIST_UPGRADE_OBSOLETE_PACKAGES:
-            print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
-                  flush=True)
-            run_apt_command(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
+def _packages_remove_obsolete() -> None:
+    """Remove obsolete packages.
 
-        # Run and check if apt upgrade was successful.
-        print('Running apt full-upgrade...', flush=True)
-        returncode = run_apt_command(['full-upgrade'])
-        if returncode:
-            raise RuntimeError(
-                'Apt full-upgrade was not successful. Distribution upgrade '
-                'will be retried at a later time.')
+    These may prevent other packages from upgrading.
+    """
+    if DIST_UPGRADE_OBSOLETE_PACKAGES:
+        print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
+              flush=True)
+        action_utils.run_apt_command(['remove'] +
+                                     DIST_UPGRADE_OBSOLETE_PACKAGES)
 
-        print('Running apt autoremove...', flush=True)
-        run_apt_command(['autoremove'])
 
-    # Run unattended-upgrade once more to handle upgrading the
-    # freedombox package.
+def _apt_update():
+    """Run 'apt update'."""
+    print('Updating Apt cache...', flush=True)
+    action_utils.run_apt_command(['update'])
+
+
+def _apt_autoremove():
+    """Run 'apt autoremove'."""
+    print('Running apt autoremove...', flush=True)
+    action_utils.run_apt_command(['autoremove'])
+
+
+def _apt_full_upgrade():
+    """Run and check if apt upgrade was successful."""
+    print('Running apt full-upgrade...', flush=True)
+    returncode = action_utils.run_apt_command(['full-upgrade'])
+    if returncode:
+        raise RuntimeError(
+            'Apt full-upgrade was not successful. Distribution upgrade '
+            'will be retried at a later time.')
+
+
+def _unattended_upgrades_run():
+    """Run unattended-upgrade once more.
+
+    To handle upgrading the freedombox package.
+    """
     print('Running unattended-upgrade...', flush=True)
     subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
-    # Restart FreedomBox service to ensure it is using the latest
-    # dependencies.
-    print('Restarting FreedomBox service...', flush=True)
-    service_restart('plinth')
 
-    # After 10 minutes, update apt cache again to trigger force_upgrades.
+def _freedombox_restart():
+    """Restart FreedomBox service.
+
+    To ensure it is using the latest dependencies.
+    """
+    print('Restarting FreedomBox service...', flush=True)
+    action_utils.service_restart('plinth')
+
+
+def _wait():
+    """Wait for 10 minutes before performing remaining actions."""
     print('Waiting for 10 minutes...', flush=True)
     time.sleep(10 * 60)
-    print('Updating Apt cache...', flush=True)
-    run_apt_command(['update'])
 
+
+def _flag_remove():
+    """Remove the flag that mark that dist upgrade is running."""
     print('Dist upgrade complete. Removing flag.', flush=True)
     if dist_upgrade_flag.exists():
         dist_upgrade_flag.unlink()
+
+
+def perform():
+    """Perform upgrade to next release of Debian."""
+    with _snapshot_run_and_disable(), \
+         _services_disable(), \
+         _apt_hold_packages():
+        _apt_update()
+        _debconf_set_selections()
+        _packages_remove_obsolete()
+        _apt_full_upgrade()
+        _apt_autoremove()
+
+    _unattended_upgrades_run()
+    _freedombox_restart()
+    _wait()
+    _apt_update()
+    _flag_remove()
 
 
 def start_service():
@@ -249,7 +286,7 @@ def start_service():
         '/run/systemd/system/freedombox-dist-upgrade.service')
     if old_service_path.exists():
         old_service_path.unlink(missing_ok=True)
-        service_daemon_reload()
+        action_utils.service_daemon_reload()
 
     args = [
         '--unit=freedombox-dist-upgrade',
