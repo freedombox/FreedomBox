@@ -9,8 +9,7 @@ import time
 from typing import Generator
 
 from plinth import action_utils
-from plinth.action_utils import (apt_hold, apt_hold_freedombox,
-                                 debconf_set_selections, run_apt_command,
+from plinth.action_utils import (debconf_set_selections, run_apt_command,
                                  service_daemon_reload, service_restart)
 from plinth.modules import snapshot as snapshot_module
 
@@ -168,12 +167,32 @@ def _services_disable():
               flush=True)
 
 
-def perform():
-    """Perform upgrade to next release of Debian."""
+@contextlib.contextmanager
+def _apt_hold_packages():
+    """Apt hold some packages during dist upgrade."""
+    packages = DIST_UPGRADE_PACKAGES_WITH_PROMPTS
+    packages_string = ', '.join(packages)
+
     # Hold freedombox package during entire dist upgrade.
     print('Holding freedombox package...', flush=True)
-    with (apt_hold_freedombox(), _snapshot_run_and_disable(),
-          _services_disable()):
+    with action_utils.apt_hold_freedombox():
+        # Hold packages known to have conffile prompts. FreedomBox service
+        # will handle their upgrade later.
+        print(f'Holding packages with conffile prompts: {packages_string}...',
+              flush=True)
+        with action_utils.apt_hold(packages):
+            yield
+            print(
+                'Releasing holds on packages with conffile prompts: '
+                f'{packages_string}...', flush=True)
+
+        print('Releasing hold on freedombox package...')
+
+
+def perform():
+    """Perform upgrade to next release of Debian."""
+    with (_snapshot_run_and_disable(), _services_disable(),
+          _apt_hold_packages()):
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
@@ -192,16 +211,9 @@ def perform():
                   flush=True)
             run_apt_command(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
 
-        # Hold packages known to have conffile prompts. FreedomBox service
-        # will handle their upgrade later.
-        print(
-            'Holding packages with conffile prompts: ' +
-            ', '.join(DIST_UPGRADE_PACKAGES_WITH_PROMPTS) + '...', flush=True)
-        with apt_hold(DIST_UPGRADE_PACKAGES_WITH_PROMPTS):
-            print('Running apt full-upgrade...', flush=True)
-            returncode = run_apt_command(['full-upgrade'])
-
-        # Check if apt upgrade was successful.
+        # Run and check if apt upgrade was successful.
+        print('Running apt full-upgrade...', flush=True)
+        returncode = run_apt_command(['full-upgrade'])
         if returncode:
             raise RuntimeError(
                 'Apt full-upgrade was not successful. Distribution upgrade '
