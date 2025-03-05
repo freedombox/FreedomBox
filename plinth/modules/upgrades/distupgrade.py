@@ -8,6 +8,8 @@ import subprocess
 import time
 from typing import Generator
 
+import augeas
+
 from plinth import action_utils
 from plinth.modules import snapshot as snapshot_module
 
@@ -26,6 +28,28 @@ DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
 
 dist_upgrade_flag = pathlib.Path(
     '/var/lib/freedombox/dist-upgrade-in-progress')
+
+
+def _sources_list_update(old_codename: str, new_codename: str):
+    """Change the distribution in /etc/apt/sources.list."""
+    logging.info('Upgrading from %s to %s...', old_codename, new_codename)
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('aptsources', SOURCES_LIST)
+    aug.set('/augeas/context', '/files' + SOURCES_LIST)
+    aug.load()
+
+    for match_ in aug.match('*'):
+        dist_path = match_ + '/distribution'
+        dist = aug.get(dist_path)
+        if dist in (old_codename, 'stable'):
+            aug.set(dist_path, new_codename)
+        elif dist and (dist.startswith(old_codename + '-')
+                       or dist.startswith('stable' + '-')):
+            new_value = new_codename + '-' + dist.partition('-')[2]
+            aug.set(dist_path, new_value)
+
+    aug.save()
 
 
 def check(test_upgrade=False) -> tuple[bool, str]:
@@ -85,19 +109,7 @@ def check(test_upgrade=False) -> tuple[bool, str]:
     if not utils.is_sufficient_free_space():
         return (False, 'not-enough-free-space')
 
-    logging.info('Upgrading from %s to %s...', dist, codename)
-    with open(SOURCES_LIST, 'r', encoding='utf-8') as sources_list:
-        lines = sources_list.readlines()
-
-    with open(SOURCES_LIST, 'w', encoding='utf-8') as sources_list:
-        for line in lines:
-            # E.g. replace 'bullseye' with 'bookworm'.
-            new_line = line.replace(dist, codename)
-            if check_dist == 'testing':
-                # E.g. replace 'stable' with 'bookworm'.
-                new_line = new_line.replace('stable', codename)
-
-            sources_list.write(new_line)
+    _sources_list_update(dist, codename)
 
     logging.info('Dist upgrade in progress. Setting flag.')
     dist_upgrade_flag.touch(mode=0o660)
