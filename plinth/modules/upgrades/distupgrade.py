@@ -75,7 +75,7 @@ def _get_new_codename(test_upgrade: bool) -> str | None:
     return None
 
 
-def check(test_upgrade=False) -> tuple[bool, str]:
+def check(test_upgrade=False):
     """Check if a distribution upgrade be performed.
 
     Check for new stable release, if updates are enabled, and if there is
@@ -87,29 +87,27 @@ def check(test_upgrade=False) -> tuple[bool, str]:
     if not.
     """
     if action_utils.service_is_running('freedombox-dist-upgrade'):
-        return (True, 'found-previous')
+        raise RuntimeError('found-previous')
 
     from plinth.modules.upgrades import get_current_release
     release, dist = get_current_release()
     if release in ['unstable', 'testing', 'n/a']:
-        return (False, f'already-{release}')
+        raise RuntimeError(f'already-{release}')
 
     codename = _get_new_codename(test_upgrade)
     if not codename:
-        return (False, 'codename-not-found')
+        raise RuntimeError('codename-not-found')
 
     if codename == dist:
-        return (False, f'already-{dist}')
+        raise RuntimeError(f'already-{dist}')
 
     if not utils.check_auto():
-        return (False, 'upgrades-not-enabled')
+        raise RuntimeError('upgrades-not-enabled')
 
     if not utils.is_sufficient_free_space():
-        return (False, 'not-enough-free-space')
+        raise RuntimeError('not-enough-free-space')
 
     _sources_list_update(dist, codename)
-
-    return (True, 'started-dist-upgrade')
 
 
 @contextlib.contextmanager

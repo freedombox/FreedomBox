@@ -236,7 +236,7 @@ def activate_backports(develop: bool = False):
 
 
 @privileged
-def start_dist_upgrade(test: bool = False) -> dict[str, str | bool]:
+def start_dist_upgrade(test: bool = False):
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process
@@ -244,11 +244,8 @@ def start_dist_upgrade(test: bool = False) -> dict[str, str | bool]:
     """
     _release_held_freedombox()
 
-    upgrade_ready, reason = distupgrade.check(test)
-    if upgrade_ready:
-        distupgrade.start_service()
-
-    return {'dist_upgrade_started': upgrade_ready, 'reason': reason}
+    distupgrade.check(test)
+    distupgrade.start_service()
 
 
 @privileged
