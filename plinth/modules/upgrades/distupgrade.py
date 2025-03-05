@@ -27,6 +27,11 @@ DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
 ]
 
 
+def _apt_run(arguments):
+    """Run an apt command and ensure that output is written to stdout."""
+    return action_utils.run_apt_command(arguments, stdout=None)
+
+
 def _sources_list_update(old_codename: str, new_codename: str):
     """Change the distribution in /etc/apt/sources.list."""
     logging.info('Upgrading from %s to %s...', old_codename, new_codename)
@@ -208,26 +213,25 @@ def _packages_remove_obsolete() -> None:
     if DIST_UPGRADE_OBSOLETE_PACKAGES:
         print(f'Removing packages: {DIST_UPGRADE_OBSOLETE_PACKAGES}...',
               flush=True)
-        action_utils.run_apt_command(['remove'] +
-                                     DIST_UPGRADE_OBSOLETE_PACKAGES)
+        _apt_run(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
 
 
 def _apt_update():
     """Run 'apt update'."""
     print('Updating Apt cache...', flush=True)
-    action_utils.run_apt_command(['update'])
+    _apt_run(['update'])
 
 
 def _apt_autoremove():
     """Run 'apt autoremove'."""
     print('Running apt autoremove...', flush=True)
-    action_utils.run_apt_command(['autoremove'])
+    _apt_run(['autoremove'])
 
 
 def _apt_full_upgrade():
     """Run and check if apt upgrade was successful."""
     print('Running apt full-upgrade...', flush=True)
-    returncode = action_utils.run_apt_command(['full-upgrade'])
+    returncode = _apt_run(['full-upgrade'])
     if returncode:
         raise RuntimeError(
             'Apt full-upgrade was not successful. Distribution upgrade '
