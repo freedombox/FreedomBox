@@ -52,6 +52,32 @@ def _sources_list_update(old_codename: str, new_codename: str):
     aug.save()
 
 
+def _get_new_codename(test_upgrade: bool) -> str | None:
+    """Return the codename for the next release."""
+    release_file_dist = 'stable'
+    if test_upgrade:
+        release_file_dist = 'testing'
+
+    url = utils.RELEASE_FILE_URL.format(release_file_dist)
+    command = ['curl', '--silent', '--location', '--fail', url]
+    protocol = utils.get_http_protocol()
+    if protocol == 'tor+http':
+        command.insert(0, 'torsocks')
+        logging.info('Package download over Tor is enabled.')
+
+    try:
+        output = subprocess.check_output(command).decode()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        logging.warning('Error while checking for new %s release',
+                        release_file_dist)
+    else:
+        for line in output.split('\n'):
+            if line.startswith('Codename:'):
+                return line.split()[1]
+
+    return None
+
+
 def check(test_upgrade=False) -> tuple[bool, str]:
     """Check if a distribution upgrade be performed.
 
@@ -71,29 +97,7 @@ def check(test_upgrade=False) -> tuple[bool, str]:
     if release in ['unstable', 'testing', 'n/a']:
         return (False, f'already-{release}')
 
-    check_dists = ['stable']
-    if test_upgrade:
-        check_dists.append('testing')
-
-    codename = None
-    for check_dist in check_dists:
-        url = utils.RELEASE_FILE_URL.format(check_dist)
-        command = ['curl', '--silent', '--location', '--fail', url]
-        protocol = utils.get_http_protocol()
-        if protocol == 'tor+http':
-            command.insert(0, 'torsocks')
-            logging.info('Package download over Tor is enabled.')
-
-        try:
-            output = subprocess.check_output(command).decode()
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            logging.warning('Error while checking for new %s release',
-                            check_dist)
-        else:
-            for line in output.split('\n'):
-                if line.startswith('Codename:'):
-                    codename = line.split()[1]
-
+    codename = _get_new_codename(test_upgrade)
     if not codename:
         return (False, 'codename-not-found')
 
@@ -102,9 +106,6 @@ def check(test_upgrade=False) -> tuple[bool, str]:
 
     if not utils.check_auto():
         return (False, 'upgrades-not-enabled')
-
-    if check_dist == 'testing' and not test_upgrade:
-        return (False, 'test-not-set')
 
     if not utils.is_sufficient_free_space():
         return (False, 'not-enough-free-space')
