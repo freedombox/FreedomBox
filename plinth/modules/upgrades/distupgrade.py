@@ -26,9 +26,6 @@ DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
     'grub-pc grub-pc/install_devices_empty boolean true'
 ]
 
-dist_upgrade_flag = pathlib.Path(
-    '/var/lib/freedombox/dist-upgrade-in-progress')
-
 
 def _sources_list_update(old_codename: str, new_codename: str):
     """Change the distribution in /etc/apt/sources.list."""
@@ -89,7 +86,7 @@ def check(test_upgrade=False) -> tuple[bool, str]:
     Return (boolean, string) indicating if the upgrade is ready, and a reason
     if not.
     """
-    if dist_upgrade_flag.exists():
+    if action_utils.service_is_running('freedombox-dist-upgrade'):
         return (True, 'found-previous')
 
     from plinth.modules.upgrades import get_current_release
@@ -112,8 +109,6 @@ def check(test_upgrade=False) -> tuple[bool, str]:
 
     _sources_list_update(dist, codename)
 
-    logging.info('Dist upgrade in progress. Setting flag.')
-    dist_upgrade_flag.touch(mode=0o660)
     return (True, 'started-dist-upgrade')
 
 
@@ -265,13 +260,6 @@ def _wait():
     time.sleep(10 * 60)
 
 
-def _flag_remove():
-    """Remove the flag that mark that dist upgrade is running."""
-    print('Dist upgrade complete. Removing flag.', flush=True)
-    if dist_upgrade_flag.exists():
-        dist_upgrade_flag.unlink()
-
-
 def perform():
     """Perform upgrade to next release of Debian."""
     with _snapshot_run_and_disable(), \
@@ -287,7 +275,6 @@ def perform():
     _freedombox_restart()
     _wait()
     _apt_update()
-    _flag_remove()
 
 
 def start_service():
