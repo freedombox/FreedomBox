@@ -475,19 +475,20 @@ def apt_hold(packages):
 
     """
     held_packages = []
-    for package in packages:
-        current_hold = subprocess.check_output(
-            ['apt-mark', 'showhold', package])
-        if not current_hold:
-            process = subprocess.run(['apt-mark', 'hold', package],
-                                     check=False)
-            if process.returncode == 0:  # success
-                held_packages.append(package)
+    try:
+        for package in packages:
+            current_hold = subprocess.check_output(
+                ['apt-mark', 'showhold', package])
+            if not current_hold:
+                process = subprocess.run(['apt-mark', 'hold', package],
+                                         check=False)
+                if process.returncode == 0:  # success
+                    held_packages.append(package)
 
-    yield held_packages
-
-    for package in held_packages:
-        subprocess.check_call(['apt-mark', 'unhold', package])
+        yield held_packages
+    finally:
+        for package in held_packages:
+            subprocess.check_call(['apt-mark', 'unhold', package])
 
 
 @contextmanager
