@@ -93,6 +93,12 @@ def check(test_upgrade=False):
     Return (boolean, string) indicating if the upgrade is ready, and a reason
     if not.
     """
+    if not utils.check_auto():
+        raise RuntimeError('upgrades-not-enabled')
+
+    if not utils.is_sufficient_free_space():
+        raise RuntimeError('not-enough-free-space')
+
     if action_utils.service_is_running('freedombox-dist-upgrade'):
         raise RuntimeError('found-previous')
 
@@ -107,12 +113,6 @@ def check(test_upgrade=False):
 
     if codename == dist:
         raise RuntimeError(f'already-{dist}')
-
-    if not utils.check_auto():
-        raise RuntimeError('upgrades-not-enabled')
-
-    if not utils.is_sufficient_free_space():
-        raise RuntimeError('not-enough-free-space')
 
     _sources_list_update(dist, codename)
 
