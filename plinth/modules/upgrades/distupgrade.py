@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 
 SOURCES_LIST = '/etc/apt/sources.list'
 
-DIST_UPGRADE_OBSOLETE_PACKAGES: list[str] = []
+OBSOLETE_PACKAGES: list[str] = []
 
-DIST_UPGRADE_PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale']
+PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale']
 
-DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
+PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.
     'grub-pc grub-pc/install_devices_empty boolean true'
 ]
@@ -176,7 +176,7 @@ def _services_disable():
 @contextlib.contextmanager
 def _apt_hold_packages():
     """Apt hold some packages during dist upgrade."""
-    packages = DIST_UPGRADE_PACKAGES_WITH_PROMPTS
+    packages = PACKAGES_WITH_PROMPTS
     packages_string = ', '.join(packages)
 
     # Hold freedombox package during entire dist upgrade.
@@ -197,11 +197,9 @@ def _apt_hold_packages():
 
 def _debconf_set_selections() -> None:
     """Pre-set debconf selections if they are needed for dist upgrade."""
-    if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
-        logger.info('Setting debconf selections: %s',
-                    DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
-        action_utils.debconf_set_selections(
-            DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
+    if PRE_DEBCONF_SELECTIONS:
+        logger.info('Setting debconf selections: %s', PRE_DEBCONF_SELECTIONS)
+        action_utils.debconf_set_selections(PRE_DEBCONF_SELECTIONS)
 
 
 def _packages_remove_obsolete() -> None:
@@ -209,9 +207,9 @@ def _packages_remove_obsolete() -> None:
 
     These may prevent other packages from upgrading.
     """
-    if DIST_UPGRADE_OBSOLETE_PACKAGES:
-        logger.info('Removing packages: %s...', DIST_UPGRADE_OBSOLETE_PACKAGES)
-        _apt_run(['remove'] + DIST_UPGRADE_OBSOLETE_PACKAGES)
+    if OBSOLETE_PACKAGES:
+        logger.info('Removing packages: %s...', OBSOLETE_PACKAGES)
+        _apt_run(['remove'] + OBSOLETE_PACKAGES)
 
 
 def _apt_update():
