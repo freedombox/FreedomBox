@@ -99,46 +99,49 @@ Description: Debian Testing distribution
     assert not distupgrade._get_new_codename(True)
 
 
-@patch('plinth.modules.upgrades.distupgrade._sources_list_update')
 @patch('plinth.modules.upgrades.distupgrade._get_new_codename')
 @patch('plinth.modules.upgrades.get_current_release')
 @patch('plinth.action_utils.service_is_running')
 @patch('plinth.modules.upgrades.utils.is_sufficient_free_space')
 @patch('plinth.modules.upgrades.utils.check_auto')
 def test_check(check_auto, is_sufficient_free_space, service_is_running,
-               get_current_release, get_new_codename, sources_list_update):
+               get_current_release, get_new_codename):
     """Test checking for available dist upgrade."""
     check_auto.return_value = False
     with pytest.raises(RuntimeError, match='upgrades-not-enabled'):
-        distupgrade.check()
+        distupgrade._check()
 
     check_auto.return_value = True
     is_sufficient_free_space.return_value = False
     with pytest.raises(RuntimeError, match='not-enough-free-space'):
-        distupgrade.check()
+        distupgrade._check()
 
     is_sufficient_free_space.return_value = True
     service_is_running.return_value = True
     with pytest.raises(RuntimeError, match='found-previous'):
-        distupgrade.check()
+        distupgrade._check()
 
     service_is_running.return_value = False
     for release in ['unstable', 'testing', 'n/a']:
         get_current_release.return_value = (release, release)
         with pytest.raises(RuntimeError, match=f'already-{release}'):
-            distupgrade.check()
+            distupgrade._check()
 
     get_current_release.return_value = ('12', 'bookworm')
     get_new_codename.return_value = None
     with pytest.raises(RuntimeError, match='codename-not-found'):
-        distupgrade.check()
+        distupgrade._check()
+        get_new_codename.assert_called_with(False)
+
+        distupgrade._check(True)
+        get_new_codename.assert_called_with(True)
 
     get_new_codename.return_value = 'bookworm'
     with pytest.raises(RuntimeError, match='already-bookworm'):
-        distupgrade.check()
+        distupgrade._check()
 
     get_new_codename.return_value = 'trixie'
-    sources_list_update.call_args_list = [call('bookworm', 'trixie')]
+    assert distupgrade._check() == ('bookworm', 'trixie')
 
 
 @patch('subprocess.run')

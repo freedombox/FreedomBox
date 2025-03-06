@@ -244,8 +244,7 @@ def start_dist_upgrade(test: bool = False):
     """
     _release_held_freedombox()
 
-    distupgrade.check(test)
-    distupgrade.start_service()
+    distupgrade.start_service(test)
 
 
 @privileged

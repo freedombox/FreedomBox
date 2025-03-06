@@ -82,7 +82,7 @@ def _get_new_codename(test_upgrade: bool) -> str | None:
     return None
 
 
-def check(test_upgrade=False):
+def _check(test_upgrade: bool = False) -> tuple[str, str]:
     """Check if a distribution upgrade be performed.
 
     Check for new stable release, if updates are enabled, and if there is
@@ -103,18 +103,18 @@ def check(test_upgrade=False):
         raise RuntimeError('found-previous')
 
     from plinth.modules.upgrades import get_current_release
-    release, dist = get_current_release()
+    release, old_codename = get_current_release()
     if release in ['unstable', 'testing', 'n/a']:
         raise RuntimeError(f'already-{release}')
 
-    codename = _get_new_codename(test_upgrade)
-    if not codename:
+    new_codename = _get_new_codename(test_upgrade)
+    if not new_codename:
         raise RuntimeError('codename-not-found')
 
-    if codename == dist:
-        raise RuntimeError(f'already-{dist}')
+    if new_codename == old_codename:
+        raise RuntimeError(f'already-{old_codename}')
 
-    _sources_list_update(dist, codename)
+    return old_codename, new_codename
 
 
 @contextlib.contextmanager
@@ -289,8 +289,12 @@ def perform():
     _apt_update()
 
 
-def start_service():
+def start_service(test_upgrade: bool):
     """Create dist upgrade service and start it."""
+    old_codename, new_codename = _check(test_upgrade)
+
+    _sources_list_update(old_codename, new_codename)
+
     old_service_path = pathlib.Path(
         '/run/systemd/system/freedombox-dist-upgrade.service')
     if old_service_path.exists():
