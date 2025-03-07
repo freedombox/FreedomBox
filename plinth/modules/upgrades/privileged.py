@@ -251,3 +251,9 @@ def start_dist_upgrade(test: bool = False):
 def dist_upgrade():
     """Perform major distribution upgrade."""
     distupgrade.perform()
+
+
+@privileged
+def dist_upgrade_on_complete():
+    """Perform cleanup operations after distribution upgrade."""
+    distupgrade.on_complete()

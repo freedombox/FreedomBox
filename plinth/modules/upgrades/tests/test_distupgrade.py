@@ -57,20 +57,21 @@ deb https://deb.debian.org/debian bookwormish main
 '''  # noqa: E501
 
     sources_list = tmp_path / 'sources.list'
-    sources_list.write_text(original)
-    with patch('plinth.modules.upgrades.distupgrade.SOURCES_LIST',
-               str(sources_list)):
+    temp_sources_list = tmp_path / 'sources.list.fbx-dist-upgrade'
+
+    module = 'plinth.modules.upgrades.distupgrade'
+    with patch(f'{module}.sources_list', sources_list), \
+         patch(f'{module}.temp_sources_list', temp_sources_list):
+        sources_list.write_text(original)
         distupgrade._sources_list_update('bookworm', 'trixie')
 
-    assert sources_list.read_text() == modified
+        assert temp_sources_list.read_text() == modified
 
-    original = re.sub(r'bookworm([ -])', r'stable\1', original)
-    sources_list.write_text(original)
-    with patch('plinth.modules.upgrades.distupgrade.SOURCES_LIST',
-               str(sources_list)):
+        original = re.sub(r'bookworm([ -])', r'stable\1', original)
+        sources_list.write_text(original)
         distupgrade._sources_list_update('bookworm', 'trixie')
 
-    assert sources_list.read_text() == modified
+        assert temp_sources_list.read_text() == modified
 
 
 @patch('plinth.modules.upgrades.utils.get_http_protocol')
@@ -320,3 +321,30 @@ def test_wait(sleep):
     """Test that sleeping works."""
     distupgrade._wait()
     sleep.assert_called_with(600)
+
+
+@patch('subprocess.run')
+def test_trigger_on_complete(run):
+    """Test triggering post completion process."""
+    distupgrade._trigger_on_complete()
+    run.assert_called_with([
+        'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
+        '--description=Finish up upgrade to new stable Debian release',
+        '/usr/share/plinth/actions/actions', 'upgrades',
+        'dist_upgrade_on_complete', '--no-args'
+    ], check=True)
+
+
+def test_on_complete(tmp_path):
+    """Test that /etc/apt/sources.list is committed."""
+    sources_list = tmp_path / 'sources.list'
+    sources_list.write_text('before')
+    temp_sources_list = tmp_path / 'sources.list.fbx-dist-upgrade'
+    temp_sources_list.write_text('after')
+
+    module = 'plinth.modules.upgrades.distupgrade'
+    with patch(f'{module}.sources_list', sources_list), \
+         patch(f'{module}.temp_sources_list', temp_sources_list):
+        distupgrade.on_complete()
+        assert sources_list.read_text() == 'after'
+        assert not temp_sources_list.exists()

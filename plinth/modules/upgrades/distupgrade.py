@@ -17,8 +17,6 @@ from . import utils
 
 logger = logging.getLogger(__name__)
 
-SOURCES_LIST = '/etc/apt/sources.list'
-
 OBSOLETE_PACKAGES: list[str] = []
 
 PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale']
@@ -27,6 +25,9 @@ PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.
     'grub-pc grub-pc/install_devices_empty boolean true'
 ]
+
+sources_list = pathlib.Path('/etc/apt/sources.list')
+temp_sources_list = pathlib.Path('/etc/apt/sources.list.fbx-dist-upgrade')
 
 
 def _apt_run(arguments):
@@ -39,8 +40,9 @@ def _sources_list_update(old_codename: str, new_codename: str):
     logger.info('Upgrading from %s to %s...', old_codename, new_codename)
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.transform('aptsources', SOURCES_LIST)
-    aug.set('/augeas/context', '/files' + SOURCES_LIST)
+    aug.transform('aptsources', str(sources_list))
+    aug.set('/augeas/context', '/files' + str(sources_list))
+    aug.set('/augeas/save', 'newfile')  # Save to a new file
     aug.load()
 
     for match_ in aug.match('*'):
@@ -54,6 +56,9 @@ def _sources_list_update(old_codename: str, new_codename: str):
             aug.set(dist_path, new_value)
 
     aug.save()
+
+    aug_path = sources_list.with_suffix('.list.augnew')
+    aug_path.rename(temp_sources_list)
 
 
 def _get_new_codename(test_upgrade: bool) -> str | None:
@@ -258,6 +263,21 @@ def _wait():
     time.sleep(10 * 60)
 
 
+def _trigger_on_complete():
+    """Trigger the on complete step in a separate service."""
+    # The dist-upgrade process will be run /etc/apt/sources.list file bind
+    # mounted on with a modified file. So, moving modified file to the original
+    # file will not be possible. For that, we need to launch a new process with
+    # a different systemd service (which does not have the bind mounts).
+    logger.info('Triggering on-complete to commit sources.lists')
+    subprocess.run([
+        'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
+        '--description=Finish up upgrade to new stable Debian release',
+        '/usr/share/plinth/actions/actions', 'upgrades',
+        'dist_upgrade_on_complete', '--no-args'
+    ], check=True)
+
+
 def _logging_setup():
     """Log to journal via console logging.
 
@@ -287,27 +307,37 @@ def perform():
     _freedombox_restart()
     _wait()
     _apt_update()
+    _trigger_on_complete()
 
 
 def start_service(test_upgrade: bool):
     """Create dist upgrade service and start it."""
-    old_codename, new_codename = _check(test_upgrade)
-
-    _sources_list_update(old_codename, new_codename)
-
+    # Cleanup old service
     old_service_path = pathlib.Path(
         '/run/systemd/system/freedombox-dist-upgrade.service')
     if old_service_path.exists():
         old_service_path.unlink(missing_ok=True)
         action_utils.service_daemon_reload()
 
+    old_codename, new_codename = _check(test_upgrade)
+
+    _sources_list_update(old_codename, new_codename)
+
     args = [
         '--unit=freedombox-dist-upgrade',
         '--description=Upgrade to new stable Debian release',
-        '--property=KillMode=process',
-        '--property=TimeoutSec=12hr',
+        '--property=KillMode=process', '--property=TimeoutSec=12hr',
+        f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
     subprocess.run(['systemd-run'] + args + [
         'systemd-inhibit', '/usr/share/plinth/actions/actions', 'upgrades',
         'dist_upgrade', '--no-args'
     ], check=True)
+
+
+def on_complete():
+    """Perform cleanup operations."""
+    _logging_setup()
+    logger.info('Dist upgrade complete.')
+    logger.info('Committing changes to /etc/apt/sources.list')
+    temp_sources_list.rename(sources_list)
