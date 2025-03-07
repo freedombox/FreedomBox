@@ -117,7 +117,7 @@ def setup(old_version: int):
 
 
 @privileged
-def get_status() -> dict[str, Any]:
+def get_status() -> dict[str, dict]:
     """Return a dictionary of currently configured domains."""
     domain_status = _get_status()
     return {'domains': domain_status}

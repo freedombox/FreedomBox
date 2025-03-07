@@ -211,7 +211,7 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
         return False
 
 
-def get_status():
+def get_status() -> dict[str, dict]:
     """Get the current settings."""
     status = privileged.get_status()
 

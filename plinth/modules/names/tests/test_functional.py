@@ -30,14 +30,11 @@ def _get_hostname(browser):
 
 def test_change_domain_name(session_browser):
     """Test changing the domain name."""
-    functional.set_domain_name(session_browser, 'mydomain.example')
-    assert _get_domain_name(session_browser) == 'mydomain.example'
+    functional.domain_remove(session_browser, 'mydomain.example')
+    functional.domain_add(session_browser, 'mydomain.example')
+    assert 'mydomain.example' in functional.domain_list(session_browser)
 
     # Capitalization is ignored.
-    functional.set_domain_name(session_browser, 'Mydomain.example')
-    assert _get_domain_name(session_browser) == 'mydomain.example'
-
-
-def _get_domain_name(browser):
-    functional.visit(browser, '/plinth/sys/names/domains/')
-    return browser.find_by_id('id_domain-name-domain_name').value
+    functional.domain_remove(session_browser, 'mydomain2.example')
+    functional.domain_add(session_browser, 'Mydomain2.example')
+    assert 'mydomain2.example' in functional.domain_list(session_browser)

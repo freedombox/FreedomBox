@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <h3>{{ title }}</h3>
+
+  <p>
+    {% blocktrans trimmed %}
+      App configurations will be updated.
+    {% endblocktrans %}
+  </p>
+
+  <form class="form form-delete" method="post">
+    {% csrf_token %}
+
+    <input type="submit" class="btn btn-md btn-danger"
+           value="{% blocktrans %}Delete{% endblocktrans %}"/>
+  </form>
+
+{% endblock %}

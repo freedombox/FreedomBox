@@ -1139,7 +1139,7 @@ class Machine:
     def terminate(self) -> None:
         """Terminate, i.e., force stop the machine."""
 
-    def destory(self) -> None:
+    def destroy(self) -> None:
         """Remove all traces of the machine from the host."""
 
     def get_ip_address(self) -> str | None:
@@ -1192,7 +1192,7 @@ class Container(Machine):
         subprocess.run(['sudo', 'machinectl', 'terminate', self.machine_name],
                        check=False)
 
-    def destory(self) -> None:
+    def destroy(self) -> None:
         """Remove all traces of the machine from the host."""
         image_link = pathlib.Path(f'/var/lib/machines/{self.machine_name}.raw')
 
@@ -1391,7 +1391,7 @@ class VM(Machine):
         logger.info('Running `virsh destroy %s`', self.machine_name)
         self._virsh(['destroy', self.machine_name], stdout=subprocess.DEVNULL)
 
-    def destory(self) -> None:
+    def destroy(self) -> None:
         """Remove all traces of the VM from the host."""
         logger.info('Running `virsh undefine %s`', self.machine_name)
         self._virsh(['undefine', self.machine_name], stdout=subprocess.DEVNULL)
@@ -1497,7 +1497,7 @@ def subcommand_destroy(arguments: argparse.Namespace):
     machine.terminate()
     _wait_for(lambda: not machine.get_status())
 
-    machine.destory()
+    machine.destroy()
     _destroy_image(arguments.distribution)
 
 

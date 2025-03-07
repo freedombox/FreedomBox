@@ -5,15 +5,17 @@ Forms for the dynamicsdns module.
 
 from django import forms
 from django.core import validators
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from plinth import cfg
+from plinth.modules.dynamicdns import get_config
 from plinth.utils import format_lazy
 
 
-class ConfigureForm(forms.Form):
-    """Form to configure the Dynamic DNS client."""
+class DomainForm(forms.Form):
+    """Form to add/edit a domain in the Dynamic DNS client."""
     help_update_url = \
         gettext_lazy('The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, '
                      '&lt;Domain&gt; may be used within the URL. For details '
@@ -94,10 +96,6 @@ class ConfigureForm(forms.Form):
         """Further validate and transform field data."""
         cleaned_data = super().clean()
 
-        # Domain name is not case sensitive, but Let's Encrypt
-        # certificate paths use lower-case domain name.
-        cleaned_data['domain'] = cleaned_data['domain'].lower()
-
         update_url = cleaned_data.get('update_url')
         password = cleaned_data.get('password')
         service_type = cleaned_data.get('service_type')
@@ -129,3 +127,14 @@ class ConfigureForm(forms.Form):
 
         del cleaned_data['show_password']
         return cleaned_data
+
+    def clean_domain(self):
+        """Validate the domain field."""
+        # Domain name is not case sensitive, but Let's Encrypt
+        # certificate paths use lower-case domain name.
+        domain = self.cleaned_data['domain'].lower()
+        initial_domain = self.initial.get('domain')
+        if initial_domain != domain and domain in get_config()['domains']:
+            raise ValidationError(_('Domain already exists.'))
+
+        return domain

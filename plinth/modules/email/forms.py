@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Forms for the email app.
-"""
+"""Forms for the email app."""
 
 import re
+from typing import Iterator
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -14,7 +13,7 @@ from plinth.modules.names.components import DomainName
 from . import aliases as aliases_module
 
 
-def _get_domain_choices():
+def _get_domain_choices() -> Iterator[tuple[str, str]]:
     """Double domain entries for inclusion in the choice field."""
     return ((domain.name, domain.name) for domain in DomainName.list())
 

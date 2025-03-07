@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-FreedomBox app to configure Mumble server.
-"""
+"""FreedomBox app to configure Mumble server."""
 
 import pathlib
+from typing import Iterator
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -123,7 +122,7 @@ class MumbleApp(app_module.App):
         return results
 
 
-def get_available_domains():
+def get_available_domains() -> Iterator[str]:
     """Return an iterator with all domains able to have a certificate."""
     return (domain.name for domain in names.components.DomainName.list()
             if domain.domain_type.can_have_certificate)

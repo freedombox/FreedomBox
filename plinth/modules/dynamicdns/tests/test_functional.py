@@ -76,8 +76,8 @@ class TestDynamicDNSApp(functional.BaseAppTests):
     @staticmethod
     def test_capitalized_domain_name(session_browser):
         """Test handling of capitalized domain name."""
-        _configure(session_browser, _configs['gnudip1'])
-        _configure(session_browser, {'domain': 'FreedomBox.example.com'})
+        config = dict(_configs['gnudip1'], domain='FreedomBox.example.com')
+        _configure(session_browser, config)
         _assert_has_config(session_browser,
                            {'domain': 'freedombox.example.com'})
 
@@ -105,32 +105,54 @@ class TestDynamicDNSApp(functional.BaseAppTests):
 
 def _configure(browser, config):
     functional.nav_to_module(browser, 'dynamicdns')
+    current_domains = _get_domains(browser)
+    for domain in current_domains:
+        if domain.endswith('.example.com'):
+            _delete_domain(browser, domain)
+
+    functional.nav_to_module(browser, 'dynamicdns')
+    functional.click_link_by_href(browser,
+                                  '/plinth/sys/dynamicdns/domain/add/')
     for key, value in config.items():
+        field_id = f'id_domain-{key}'
         if key == 'service_type':
-            browser.find_by_id(f'id_{key}').select(value)
+            browser.find_by_id(field_id).select(value)
         elif isinstance(value, bool):
             if value:
-                browser.find_by_id(f'id_{key}').check()
+                browser.find_by_id(field_id).check()
             else:
-                browser.find_by_id(f'id_{key}').uncheck()
+                browser.find_by_id(field_id).uncheck()
         else:
-            browser.find_by_id(f'id_{key}').fill(value)
+            browser.find_by_id(field_id).fill(value)
 
-    functional.submit(browser, form_class='form-configuration')
+    functional.submit(browser, form_class='form-domain')
 
 
 def _assert_has_config(browser, config):
     functional.nav_to_module(browser, 'dynamicdns')
+    link = f'/plinth/sys/dynamicdns/domain/{config["domain"]}/edit/'
+    functional.click_link_by_href(browser, link)
     for key, value in config.items():
         if key == 'password':
             continue
 
+        field_id = f'id_domain-{key}'
         if isinstance(value, bool):
-            assert browser.find_by_id(f'id_{key}').checked == value
+            assert browser.find_by_id(field_id).checked == value
         else:
-            assert value == browser.find_by_id(f'id_{key}').value
+            assert value == browser.find_by_id(field_id).value
 
 
-def _get_domain(browser):
+def _get_domains(browser):
+    """Return the list of configured domains."""
     functional.nav_to_module(browser, 'dynamicdns')
-    return browser.find_by_id('id_domain').value
+    elements = browser.find_by_css('.domains-status .domain-name a')
+    return [element.text.strip() for element in elements]
+
+
+def _delete_domain(browser, domain):
+    """Delete a given domain."""
+    functional.nav_to_module(browser, 'dynamicdns')
+    link = f'/plinth/sys/dynamicdns/domain/{domain}/delete/'
+    functional.click_link_by_href(browser, link)
+    functional.submit(browser, form_class='form-delete')

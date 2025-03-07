@@ -11,6 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from plinth import cfg
 from plinth.utils import format_lazy
 
+from . import privileged
+
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 
 
@@ -99,8 +101,8 @@ def _domain_label_validator(domain_name):
             raise ValidationError(_('Invalid domain name'))
 
 
-class DomainNameForm(forms.Form):
-    """Form to update system's static domain name."""
+class DomainAddForm(forms.Form):
+    """Form to add a static domain name."""
 
     domain_name = forms.CharField(
         label=_('Domain Name'), help_text=format_lazy(
@@ -111,8 +113,16 @@ class DomainNameForm(forms.Form):
               'only alphabets, digits and hyphens.  Length of each label '
               'must be 63 characters or less.  Total length of domain name '
               'must be 253 characters or less.'), box_name=_(cfg.box_name)),
-        required=False, validators=[
+        required=True, validators=[
             validators.RegexValidator(
                 r'^[a-zA-Z0-9]([-a-zA-Z0-9.]{,251}[a-zA-Z0-9])?$',
                 _('Invalid domain name')), _domain_label_validator
         ], strip=True)
+
+    def clean_domain_name(self):
+        """Check if the name is valid."""
+        domain_name = self.cleaned_data['domain_name']
+        if domain_name in privileged.get_domains():
+            raise ValidationError(_('Domain already exists.'))
+
+        return domain_name

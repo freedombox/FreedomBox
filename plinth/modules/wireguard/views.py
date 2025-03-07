@@ -65,7 +65,7 @@ class ShowClientView(SuccessMessageMixin, TemplateView):
     """View to show a client's details."""
     template_name = 'wireguard_show_client.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict[str, object]:
         """Return additional context data for rendering the template."""
         context = super().get_context_data(**kwargs)
         context['title'] = _('Allowed Client')

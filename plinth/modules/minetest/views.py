@@ -24,7 +24,7 @@ class MinetestAppView(AppView):  # pylint: disable=too-many-ancestors
         initial.update(get_configuration())
         return initial
 
-    def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs) -> dict[str, object]:
         """Add service to the context data."""
         context = super().get_context_data(*args, **kwargs)
         context['domains'] = names.components.DomainName.list_names(

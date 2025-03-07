@@ -75,7 +75,8 @@ class TorApp(app_module.App):
         self.add(packages)
 
         domain_type = DomainType('domain-type-tor', _('Tor Onion Service'),
-                                 'tor:index', can_have_certificate=False)
+                                 configuration_url='tor:index',
+                                 can_have_certificate=False, priority=30)
         self.add(domain_type)
 
         firewall = Firewall('firewall-tor-relay', _('Tor Bridge Relay'),

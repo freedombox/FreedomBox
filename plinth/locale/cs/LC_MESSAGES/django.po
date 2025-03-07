@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 20:25-0500\n"
-"PO-Revision-Date: 2025-01-29 04:02+0000\n"
+"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"PO-Revision-Date: 2025-02-27 05:06+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.2-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -601,7 +601,7 @@ msgstr "Existující zálohy"
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
-#: modules/names/templates/names.html:128
+#: modules/names/templates/names.html:159
 #: modules/networks/templates/connection_show.html:24
 #: modules/pagekite/templates/pagekite_custom_services.html:16
 #: modules/power/templates/power_busy_warning.html:11
@@ -982,7 +982,7 @@ msgstr "Přidat heslo"
 msgid "No passwords currently configured."
 msgstr "V současné době nejsou nakonfigurována žádná hesla."
 
-#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:83
+#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:85
 #: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
@@ -1012,9 +1012,13 @@ msgstr "Vytvořit"
 msgid "List"
 msgstr "Výpis"
 
-#: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/bepasty/views.py:50
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:22
+#: modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
+#: modules/names/templates/names-domain-delete.html:22
+#: modules/names/templates/names.html:48
 #: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
@@ -1134,11 +1138,11 @@ msgstr "Obnovení IP adresy a domén"
 
 #: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
-#: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
+#: modules/dynamicdns/views.py:100 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:66 modules/names/views.py:95
-#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/names/views.py:68 modules/names/views.py:97
+#: modules/names/views.py:123 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1366,8 +1370,8 @@ msgstr ""
 msgid "General Configuration"
 msgstr "Obecná nastavení"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:33
-#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "Nastavit"
@@ -1471,7 +1475,7 @@ msgstr "Jsou zobrazovány pokročilé aplikace a funkce"
 msgid "Hiding advanced apps and features"
 msgstr "Jsou skryté pokročilé aplikace a funkce"
 
-#: modules/coturn/__init__.py:25
+#: modules/coturn/__init__.py:26
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1483,7 +1487,7 @@ msgstr ""
 "komunikační servery jej mohou používat k navázání hovoru mezi stranami, "
 "které se jinak nemohou vzájemně spojit."
 
-#: modules/coturn/__init__.py:30
+#: modules/coturn/__init__.py:31
 #, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a "
@@ -1494,7 +1498,7 @@ msgstr ""
 "href=\"{ms_url}\">Matrix Synapse</a> nebo <a href=\"{e_url}\">ejabberd</a> "
 "je třeba nakonfigurovat pomocí zde uvedených údajů."
 
-#: modules/coturn/__init__.py:52
+#: modules/coturn/__init__.py:53
 msgid "Coturn"
 msgstr "Coturn"
 
@@ -1776,7 +1780,7 @@ msgid "Test"
 msgstr "Vyzkoušet"
 
 #: modules/diagnostics/templates/diagnostics_results.html:12
-#: modules/dynamicdns/templates/dynamicdns.html:25
+#: modules/dynamicdns/templates/dynamicdns.html:27
 msgid "Result"
 msgstr "Výsledek"
 
@@ -1842,11 +1846,11 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "Klient dynamické DNS"
 
-#: modules/dynamicdns/__init__.py:78
-msgid "Dynamic Domain Name"
-msgstr "Název dynamické domény"
+#: modules/dynamicdns/__init__.py:77
+msgid "Dynamic Domain"
+msgstr "Dynamická doména"
 
-#: modules/dynamicdns/forms.py:18
+#: modules/dynamicdns/forms.py:20
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1857,7 +1861,7 @@ msgstr ""
 "podrobnosti naleznete v šablonách aktualizačních URL adres některých "
 "poskytovatelů, poskytovaných pro ukázku."
 
-#: modules/dynamicdns/forms.py:22
+#: modules/dynamicdns/forms.py:24
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1867,7 +1871,7 @@ msgstr ""
 "Pokud nepodporuje GnuDIP nebo není na seznamu, můžete použít URL adresu, "
 "poskytnutou vaším poskytovatelem."
 
-#: modules/dynamicdns/forms.py:27
+#: modules/dynamicdns/forms.py:29
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1875,20 +1879,20 @@ msgstr ""
 "Nezadávejte sem URL adresu (jako třeba „https://example.com/“) ale pouze "
 "doménu, mířící na GnuDIP server (jako například „example.com“)."
 
-#: modules/dynamicdns/forms.py:31
+#: modules/dynamicdns/forms.py:33
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr ""
 "Veřejný doménový název který chcete používat pro dosažitelnost svého "
 "{box_name}."
 
-#: modules/dynamicdns/forms.py:34
+#: modules/dynamicdns/forms.py:36
 msgid "Use this option if your provider uses self signed certificates."
 msgstr ""
 "Tuto předvolbu použijte pokud váš poskytovatel používá samy sebou podepsané "
 "certifikáty."
 
-#: modules/dynamicdns/forms.py:37
+#: modules/dynamicdns/forms.py:39
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
@@ -1896,75 +1900,79 @@ msgstr ""
 "Pokud je vybrána tato předvolba, pro základní HTTP ověření bude použito vaše "
 "uživatelské jméno a heslo ."
 
-#: modules/dynamicdns/forms.py:40
+#: modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "Pokud chcete zachovat stávající heslo, tuto kolonku nevyplňujte."
 
-#: modules/dynamicdns/forms.py:43
+#: modules/dynamicdns/forms.py:45
 msgid "The username that was used when the account was created."
 msgstr "Uživatelské jméno které bylo použito pro vytvoření účtu."
 
-#: modules/dynamicdns/forms.py:46
+#: modules/dynamicdns/forms.py:48
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: modules/dynamicdns/forms.py:49
+#: modules/dynamicdns/forms.py:51
 msgid "Other update URL"
 msgstr "Další aktualizace URL"
 
-#: modules/dynamicdns/forms.py:51
+#: modules/dynamicdns/forms.py:53
 msgid "Service Type"
 msgstr "Typ služby"
 
-#: modules/dynamicdns/forms.py:56
+#: modules/dynamicdns/forms.py:58
 msgid "GnuDIP Server Address"
 msgstr "Adresa GnuDIP serveru"
 
-#: modules/dynamicdns/forms.py:59
+#: modules/dynamicdns/forms.py:61
 msgid "Invalid server name"
 msgstr "Neplatný název serveru"
 
-#: modules/dynamicdns/forms.py:62
+#: modules/dynamicdns/forms.py:64
 msgid "Update URL"
 msgstr "URL adresa aktualizace"
 
-#: modules/dynamicdns/forms.py:66
+#: modules/dynamicdns/forms.py:68
 msgid "Accept all SSL certificates"
 msgstr "Přijímat veškeré SSL certifikáty"
 
-#: modules/dynamicdns/forms.py:70
+#: modules/dynamicdns/forms.py:72
 msgid "Use HTTP basic authentication"
 msgstr "Použít základní HTTP ověřování"
 
-#: modules/dynamicdns/forms.py:74 modules/names/__init__.py:68
-#: modules/names/forms.py:106 modules/names/templates/names.html:19
+#: modules/dynamicdns/forms.py:76 modules/names/forms.py:108
+#: modules/names/templates/names.html:19
 msgid "Domain Name"
 msgstr "Doménový název"
 
-#: modules/dynamicdns/forms.py:77 modules/names/forms.py:99
-#: modules/names/forms.py:117
+#: modules/dynamicdns/forms.py:79 modules/names/forms.py:101
+#: modules/names/forms.py:119
 msgid "Invalid domain name"
 msgstr "Neplatný doménový název"
 
-#: modules/dynamicdns/forms.py:80 modules/miniflux/forms.py:11
+#: modules/dynamicdns/forms.py:82 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: modules/dynamicdns/forms.py:87 modules/networks/forms.py:284
+#: modules/dynamicdns/forms.py:89 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "Zobrazit heslo"
 
-#: modules/dynamicdns/forms.py:91
+#: modules/dynamicdns/forms.py:93
 msgid "Use IPv6 instead of IPv4"
 msgstr "Použijte IPv6 místo IPv4"
 
-#: modules/dynamicdns/forms.py:110
+#: modules/dynamicdns/forms.py:108
 msgid "This field is required."
 msgstr "Toto pole je povinné."
 
+#: modules/dynamicdns/forms.py:138 modules/names/forms.py:126
+msgid "Domain already exists."
+msgstr "Doména již existuje."
+
 #: modules/dynamicdns/manifest.py:17
-#: modules/dynamicdns/templates/dynamicdns.html:23
+#: modules/dynamicdns/templates/dynamicdns.html:25
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
 #: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
@@ -1979,55 +1987,95 @@ msgstr "Zdarma"
 msgid "Needs public IP"
 msgstr "Potřebuje veřejnou IP"
 
-#: modules/dynamicdns/templates/dynamicdns.html:16
-#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
-#: modules/firewall/templates/firewall.html:16
-#: modules/firewall/templates/firewall.html:22
-#: modules/letsencrypt/templates/letsencrypt.html:17
-#: modules/matrixsynapse/templates/matrix-synapse.html:17
-#: modules/networks/templates/connection_show.html:258
-#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
-#: modules/wireguard/templates/wireguard_show_client.html:48
-#: modules/wireguard/templates/wireguard_show_server.html:47
-msgid "Status"
-msgstr "Stav"
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:13
+#: modules/names/templates/names-domain-delete.html:13
+msgid "App configurations will be updated."
+msgstr "Konfigurace aplikace budou aktualizovány."
 
-#: modules/dynamicdns/templates/dynamicdns.html:24
+#: modules/dynamicdns/templates/dynamicdns.html:10
+#: modules/email/templates/email.html:20 modules/names/manifest.py:11
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "Domény"
+
+#: modules/dynamicdns/templates/dynamicdns.html:14
+#: modules/dynamicdns/templates/dynamicdns.html:16
+msgid "Add Domain"
+msgstr "Přidat doménu"
+
+#: modules/dynamicdns/templates/dynamicdns.html:26
 msgid "Last update"
 msgstr "Minulá aktualizace"
 
-#: modules/dynamicdns/templates/dynamicdns.html:26
+#: modules/dynamicdns/templates/dynamicdns.html:28
 msgid "IP Address"
 msgstr "IP adresa"
 
+#: modules/dynamicdns/templates/dynamicdns.html:29
+#: modules/letsencrypt/templates/letsencrypt.html:27
+#: modules/storage/templates/storage.html:28
+msgid "Actions"
+msgstr "Akce"
+
 #: modules/dynamicdns/templates/dynamicdns.html:37
+#: modules/dynamicdns/templates/dynamicdns.html:72
+#, python-format
+msgid "Edit domain %(domain)s"
+msgstr "Upravit doménu %(domain)s"
+
+#: modules/dynamicdns/templates/dynamicdns.html:47
+msgid "Not yet"
+msgstr "Ještě ne"
+
+#: modules/dynamicdns/templates/dynamicdns.html:53
 msgid "Success"
 msgstr "Úspěšné"
 
-#: modules/dynamicdns/templates/dynamicdns.html:41
+#: modules/dynamicdns/templates/dynamicdns.html:59
 msgid "Failed"
 msgstr "Selhalo"
 
-#: modules/dynamicdns/templates/dynamicdns.html:57
-msgid "No status available."
-msgstr "Stav není k dispozici."
+#: modules/dynamicdns/templates/dynamicdns.html:79
+#, python-format
+msgid "Delete domain %(domain)s"
+msgstr "Smazat doménu %(domain)s"
 
-#: modules/dynamicdns/views.py:24 modules/dynamicdns/views.py:26
+#: modules/dynamicdns/templates/dynamicdns.html:91
+msgid "No domains configured."
+msgstr "Nejsou nakonfigurovány žádné domény."
+
+#: modules/dynamicdns/views.py:26 modules/dynamicdns/views.py:28
 msgid "Connection timed out"
 msgstr "Vypršel časový limit připojení"
 
-#: modules/dynamicdns/views.py:25
+#: modules/dynamicdns/views.py:27
 msgid "Could not find server"
 msgstr "Nelze nalézt server"
 
-#: modules/dynamicdns/views.py:27
+#: modules/dynamicdns/views.py:29
 msgid "Server refused connection"
 msgstr "Server odmítl připojení"
 
-#: modules/dynamicdns/views.py:28
+#: modules/dynamicdns/views.py:30
 msgid "Already up-to-date"
 msgstr "Již aktualizováno"
+
+#: modules/dynamicdns/views.py:70
+msgid "Add Dynamic Domain"
+msgstr "Přidat dynamickou doménu"
+
+#: modules/dynamicdns/views.py:72
+msgid "Edit Dynamic Domain"
+msgstr "Upravit dynamickou doménu"
+
+#: modules/dynamicdns/views.py:138 modules/names/views.py:137
+#, python-brace-format
+msgid "Delete Domain {domain}?"
+msgstr "Smazat doménu {domain}?"
+
+#: modules/dynamicdns/views.py:145 modules/names/views.py:143
+msgid "Domain deleted."
+msgstr "Doména smazána."
 
 #: modules/ejabberd/__init__.py:29
 msgid ""
@@ -2065,11 +2113,11 @@ msgstr ""
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: modules/ejabberd/forms.py:19
+#: modules/ejabberd/forms.py:20
 msgid "Domain names"
 msgstr "Názvy domén"
 
-#: modules/ejabberd/forms.py:21
+#: modules/ejabberd/forms.py:22
 msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
@@ -2078,11 +2126,11 @@ msgstr ""
 "pro každou doménu jedinečné a migrace uživatelů na nový název domény zatím "
 "není implementována."
 
-#: modules/ejabberd/forms.py:26
+#: modules/ejabberd/forms.py:27
 msgid "Enable Message Archive Management"
 msgstr "Zapnout správu archivu zpráv"
 
-#: modules/ejabberd/forms.py:28
+#: modules/ejabberd/forms.py:29
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -2095,11 +2143,11 @@ msgstr ""
 "místnosti více uživatelů. Závisí na nastavení klienta, zda bude historie "
 "ukládána jako čitelný text nebo zašifrovaně."
 
-#: modules/ejabberd/forms.py:35 modules/matrixsynapse/forms.py:38
+#: modules/ejabberd/forms.py:36 modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr "Automatická správa nastavení audio/video hovorů"
 
-#: modules/ejabberd/forms.py:37
+#: modules/ejabberd/forms.py:38
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -2110,19 +2158,19 @@ msgstr ""
 "STUN/TURN pro ejabberd. Pokud chcete používat jiný server STUN/TURN, zakažte "
 "tuto funkci."
 
-#: modules/ejabberd/forms.py:44 modules/matrixsynapse/forms.py:47
+#: modules/ejabberd/forms.py:45 modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr "URI serveru STUN/TURN"
 
-#: modules/ejabberd/forms.py:46 modules/matrixsynapse/forms.py:49
+#: modules/ejabberd/forms.py:47 modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "Seznam veřejných URI serveru STUN/TURN, na každém řádku jeden."
 
-#: modules/ejabberd/forms.py:50 modules/matrixsynapse/forms.py:53
+#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
 msgstr "Sdílené ověřovací tajemství"
 
-#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:54
+#: modules/ejabberd/forms.py:52 modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr "Sdílené tajemství používané k výpočtu hesel pro server TURN."
 
@@ -2178,6 +2226,19 @@ msgstr "Video chat"
 #: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
 msgid "XMPP"
 msgstr "XMPP"
+
+#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
+#: modules/firewall/templates/firewall.html:16
+#: modules/firewall/templates/firewall.html:22
+#: modules/letsencrypt/templates/letsencrypt.html:17
+#: modules/matrixsynapse/templates/matrix-synapse.html:17
+#: modules/networks/templates/connection_show.html:258
+#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
+#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/wireguard/templates/wireguard_show_client.html:48
+#: modules/wireguard/templates/wireguard_show_server.html:47
+msgid "Status"
+msgstr "Stav"
 
 #: modules/ejabberd/templates/ejabberd.html:23
 #, python-format
@@ -2270,11 +2331,11 @@ msgstr "Stejná poštovní schránka"
 msgid "My Email Aliases"
 msgstr "Moje e-mailové aliasy"
 
-#: modules/email/forms.py:25
+#: modules/email/forms.py:24
 msgid "Primary domain"
 msgstr "Primární doména"
 
-#: modules/email/forms.py:27 modules/sogo/forms.py:20
+#: modules/email/forms.py:26 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
@@ -2282,23 +2343,23 @@ msgstr ""
 "Maily jsou přijímány pro všechny domény nakonfigurované v systému. Z nich "
 "vyberte tu nejdůležitější."
 
-#: modules/email/forms.py:35
+#: modules/email/forms.py:34
 msgid "New alias (without @domain)"
 msgstr "Nový alias (bez @domain)"
 
-#: modules/email/forms.py:42
+#: modules/email/forms.py:41
 msgid "Contains illegal characters"
 msgstr "Obsahuje nepovolené znaky"
 
-#: modules/email/forms.py:45
+#: modules/email/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr "Musí začínat a končit písmeny a-z nebo 0-9"
 
-#: modules/email/forms.py:49
+#: modules/email/forms.py:48
 msgid "Cannot be a number"
 msgstr "Nemůže být číslo"
 
-#: modules/email/forms.py:59
+#: modules/email/forms.py:58
 msgid "Aliases"
 msgstr "Aliasy"
 
@@ -2345,6 +2406,7 @@ msgid "Create a new email alias"
 msgstr "Vytvořit nový e-mailový alias"
 
 #: modules/email/templates/email-aliases.html:34
+#: modules/names/templates/names.html:78
 msgid "Add"
 msgstr "Přidat"
 
@@ -2429,11 +2491,6 @@ msgstr "Hostitel"
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "Správa spamu"
-
-#: modules/email/templates/email.html:20 modules/names/manifest.py:11
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "Domény"
 
 #: modules/email/templates/email.html:23
 msgid ""
@@ -3899,11 +3956,6 @@ msgstr "Stav certifikátu"
 msgid "Website Security"
 msgstr "Zabezpečení webové stránky"
 
-#: modules/letsencrypt/templates/letsencrypt.html:27
-#: modules/storage/templates/storage.html:28
-msgid "Actions"
-msgstr "Akce"
-
 #: modules/letsencrypt/templates/letsencrypt.html:37
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
@@ -4629,7 +4681,7 @@ msgstr "Obnovení hesla pro uživatele: {username}"
 msgid "An error occurred during password reset: {error}."
 msgstr "Při obnovování hesla došlo k chybě: {error}."
 
-#: modules/mumble/__init__.py:27
+#: modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
@@ -4637,7 +4689,7 @@ msgstr ""
 "Mumble je open source šifrovaný software pro hlasový chat s nízkou latencí a "
 "vysokou kvalitou."
 
-#: modules/mumble/__init__.py:29
+#: modules/mumble/__init__.py:28
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -4647,11 +4699,11 @@ msgstr ""
 "dispozici jsou <a href=\"http://mumble.info\">Klienti</a> pro připojení k "
 "Mumble z vašeho počítače a mobilních zařízení."
 
-#: modules/mumble/__init__.py:47 modules/mumble/manifest.py:9
+#: modules/mumble/__init__.py:46 modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:158
+#: modules/mumble/__init__.py:157
 msgid "Mumble server is configured"
 msgstr "Server Mumble je nakonfigurován"
 
@@ -4732,11 +4784,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "Jmenné služby"
 
-#: modules/names/__init__.py:171
+#: modules/names/__init__.py:68
+msgid "Domain (regular)"
+msgstr "Doména (běžná)"
+
+#: modules/names/__init__.py:175
 msgid "Package systemd-resolved is installed"
 msgstr "Balíček systemd-resolved je nainstalován"
 
-#: modules/names/__init__.py:195
+#: modules/names/__init__.py:199
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr "Vyřešit název domény: {domain}"
@@ -4753,19 +4809,19 @@ msgstr "Všechny webové aplikace"
 msgid "Secure Shell"
 msgstr "Zabezpečený shell"
 
-#: modules/names/forms.py:21
+#: modules/names/forms.py:23
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr "Použít DNS-over-TLS pro překlad domén (globální předvolba)"
 
-#: modules/names/forms.py:49
+#: modules/names/forms.py:51
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr "Použít DNSSEC při překladu domén (globální předvolba)"
 
-#: modules/names/forms.py:84 modules/names/manifest.py:12
+#: modules/names/forms.py:86 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "Název stroje"
 
-#: modules/names/forms.py:85
+#: modules/names/forms.py:87
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -4778,11 +4834,11 @@ msgstr ""
 "písmeno nebo číslici a obsahoval pouze písmena, číslice a spojovníky. "
 "Celková délka může být nejvýše 63 znaků."
 
-#: modules/names/forms.py:91
+#: modules/names/forms.py:93
 msgid "Invalid hostname"
 msgstr "Neplatný název stroje"
 
-#: modules/names/forms.py:107
+#: modules/names/forms.py:109
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -4834,40 +4890,52 @@ msgstr "podporováno"
 msgid "unsupported"
 msgstr "nepodporováno"
 
-#: modules/names/templates/names.html:56
+#: modules/names/templates/names.html:41
+#: modules/networks/templates/connection_show.html:40
+#: modules/wireguard/templates/wireguard_show_client.html:72
+#: modules/wireguard/templates/wireguard_show_server.html:73
+#: templates/base.html:166 templates/base.html:167
+msgid "Edit"
+msgstr "Upravit"
+
+#: modules/names/templates/names.html:59
+msgid "Add Domains"
+msgstr "Přidat domény"
+
+#: modules/names/templates/names.html:87
 msgid "Resolver Status"
 msgstr "Stav řešitele"
 
-#: modules/names/templates/names.html:66
+#: modules/names/templates/names.html:97
 msgid "Global"
 msgstr "Globální"
 
-#: modules/names/templates/names.html:68
+#: modules/names/templates/names.html:99
 msgid "Link"
 msgstr "Odkaz"
 
-#: modules/names/templates/names.html:73
+#: modules/names/templates/names.html:104
 #: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr "DNS-over-TLS"
 
-#: modules/names/templates/names.html:77
+#: modules/names/templates/names.html:108
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
-#: modules/names/templates/names.html:82
+#: modules/names/templates/names.html:113
 msgid "Current DNS Server"
 msgstr "Aktuální server DNS"
 
-#: modules/names/templates/names.html:88
+#: modules/names/templates/names.html:119
 msgid "DNS Servers"
 msgstr "DNS servery"
 
-#: modules/names/templates/names.html:98
+#: modules/names/templates/names.html:129
 msgid "Fallback DNS Servers"
 msgstr "Záložní servery DNS"
 
-#: modules/names/templates/names.html:112
+#: modules/names/templates/names.html:143
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
@@ -4875,31 +4943,26 @@ msgstr ""
 "balíček systemd-resolved není nainstalován. Nainstalujte jej, abyste získali "
 "další funkce."
 
-#: modules/names/templates/names.html:121 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:78
 msgid "Install"
 msgstr "Instalace"
 
-#: modules/names/templates/names.html:131
+#: modules/names/templates/names.html:162
 msgid "Error retrieving status:"
 msgstr "Chyba při instalaci:"
 
-#: modules/names/views.py:81
+#: modules/names/views.py:83
 msgid "Set Hostname"
 msgstr "Nastavit název hostitele"
 
-#: modules/names/views.py:99
+#: modules/names/views.py:101
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "Chyba při nastavování názvu stroje: {exception}"
 
-#: modules/names/views.py:115
-msgid "Set Domain Name"
-msgstr "Nastavte název domény"
-
-#: modules/names/views.py:133
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "Chyba při nastavování doménového názvu: {exception}"
+#: modules/names/views.py:117
+msgid "Add Domain Name"
+msgstr "Přidat název domény"
 
 #: modules/networks/__init__.py:19
 msgid ""
@@ -5384,13 +5447,6 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "Upravit připojení"
-
-#: modules/networks/templates/connection_show.html:40
-#: modules/wireguard/templates/wireguard_show_client.html:72
-#: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:166 templates/base.html:167
-msgid "Edit"
-msgstr "Upravit"
 
 #: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
@@ -8439,23 +8495,23 @@ msgstr "Tor"
 msgid "Tor Onion Service"
 msgstr "Tor Onion Service"
 
-#: modules/tor/__init__.py:81
+#: modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
 msgstr "Předávájící Tor most"
 
-#: modules/tor/__init__.py:139
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Port Tor předávání k dispozici"
 
-#: modules/tor/__init__.py:151
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "Obfs3 transport zaregistrován"
 
-#: modules/tor/__init__.py:162
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "Obfs4 transport zaregistrován"
 
-#: modules/tor/__init__.py:175
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion service je verze 3"
 
@@ -10219,6 +10275,16 @@ msgstr "před odinstalací {app_id}"
 msgid "Gujarati"
 msgstr "gudžarátština"
 
+#~ msgid "No status available."
+#~ msgstr "Stav není k dispozici."
+
+#~ msgid "Set Domain Name"
+#~ msgstr "Nastavte název domény"
+
+#, python-brace-format
+#~ msgid "Error setting domain name: {exception}"
+#~ msgstr "Chyba při nastavování doménového názvu: {exception}"
+
 #~ msgid "K-9 Mail"
 #~ msgstr "K-9 Mail"
 
@@ -10548,9 +10614,6 @@ msgstr "gudžarátština"
 #~ msgid "Tiny Tiny RSS (TTTRSS)"
 #~ msgstr "Tiny Tiny RSS (TTTRSS)"
 
-#~ msgid "Cannot test: No domains are configured."
-#~ msgstr "Nelze testovat: Nejsou nakonfigurovány žádné domény."
-
 #~ msgid ""
 #~ "Directory that MiniDLNA Server will read for content. All sub-directories "
 #~ "of this will be also scanned for media files. If you change the default "
@@ -10742,9 +10805,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Enable Tor"
 #~ msgstr "Zapnout Tor"
-
-#~ msgid "Tor configuration is being updated"
-#~ msgstr "Nastavení Tor jsou aktualizována"
 
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
@@ -11094,9 +11154,6 @@ msgstr "gudžarátština"
 
 #~ msgid "Publish Key"
 #~ msgstr "Zveřejnit klíč"
-
-#~ msgid "Add Domains"
-#~ msgstr "Přidat domény"
 
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP identifikátory uživatele"

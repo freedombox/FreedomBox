@@ -80,7 +80,6 @@ Depends:
  bind9-dnsutils,
  curl,
  debconf,
- e2fsprogs,
  fonts-fork-awesome,
  fonts-lato,
 # sgdisk is used in storage app to expand GPT disks
@@ -127,6 +126,8 @@ Depends:
 # Ensure fuse gets replaced by fuse3 on upgrades from buster s.t. sshfs can be installed.
  fuse3,
 Recommends:
+# Temporarily moved from Depends due to piuparts bug #1010967.
+ e2fsprogs,
 # Wifi firmware
  firmware-ath9k-htc,
 # FreedomBox documentation

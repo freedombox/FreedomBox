@@ -133,7 +133,8 @@ def _jsxc_login(browser):
 
 def _jsxc_add_contact(browser):
     """Add a contact to JSXC user's roster."""
-    functional.set_domain_name(browser, 'localhost')
+    # Configure a static domain
+    functional.domain_add(browser, 'mydomain.example')
     functional.install(browser, 'jsxc')
     _jsxc_login(browser)
     functional.eventually(_is_jsxc_buddy_list_loaded, args=[browser])

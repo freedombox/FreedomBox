@@ -241,11 +241,11 @@ def _on_domain_removed(sender, domain_type, name='', **kwargs):
     _set_trusted_domains()
 
 
-def _set_trusted_domains():
+def _set_trusted_domains() -> None:
     """Set the list of trusted domains."""
     all_domains = DomainName.list_names()
     with _ensure_nextcloud_running():
-        privileged.set_trusted_domains(list(all_domains))
+        privileged.set_trusted_domains(all_domains)
 
 
 @contextlib.contextmanager

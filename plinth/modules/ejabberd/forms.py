@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from plinth import cfg
 from plinth.modules import ejabberd
 from plinth.modules.coturn.forms import turn_uris_validator
+from plinth.modules.names.components import DomainName
 from plinth.utils import format_lazy
 
 
@@ -51,15 +52,16 @@ class EjabberdForm(forms.Form):
         help_text=_('Shared secret used to compute passwords for the '
                     'TURN server.'))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
         # Start with any existing domains from ejabberd configuration.
-        domains = set(ejabberd.get_domains())
+        domains = ejabberd.get_domains()
 
         # Add other domains that can be configured.
-        from plinth.modules.names.components import DomainName
-        domains |= DomainName.list_names()
+        for domain in DomainName.list_names():
+            if domain not in domains:
+                domains.append(domain)
 
         self.fields['domain_names'].choices = zip(domains, domains)
 

@@ -592,16 +592,40 @@ def running_inside_container():
 #############################
 # System -> Names utilities #
 #############################
-def set_hostname(browser, hostname):
+def set_hostname(browser, hostname: str):
+    """Configure the system hostname."""
     visit(browser, '/plinth/sys/names/hostname/')
     browser.find_by_id('id_hostname-hostname').fill(hostname)
     submit(browser, form_class='form-hostname')
 
 
-def set_domain_name(browser, domain_name):
-    visit(browser, '/plinth/sys/names/domains/')
-    browser.find_by_id('id_domain-name-domain_name').fill(domain_name)
-    submit(browser, form_class='form-domain-name')
+def domain_add(browser, domain_name: str):
+    """Add a domain to list of domains."""
+    if domain_name in domain_list(browser):
+        return
+
+    visit(browser, '/plinth/sys/names/')
+    click_link_by_href(browser, '/plinth/sys/names/domains/')
+    browser.find_by_id('id_domain-add-domain_name').fill(domain_name)
+    submit(browser, form_class='form-domain-add')
+
+
+def domain_remove(browser, domain_name: str):
+    """Remove a domain from list of domains."""
+    if domain_name not in domain_list(browser):
+        return
+
+    visit(browser, '/plinth/sys/names/')
+    click_link_by_href(browser,
+                       f'/plinth/sys/names/domains/{domain_name}/delete/')
+    submit(browser, form_class='form-delete')
+
+
+def domain_list(browser) -> list[str]:
+    """Return a list of domains configured."""
+    visit(browser, '/plinth/sys/names/')
+    elements = browser.find_by_css('td.names-domain-column')
+    return [element.text for element in elements]
 
 
 ##############################

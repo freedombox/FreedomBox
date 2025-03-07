@@ -5,8 +5,8 @@ FreedomBox app to configure name services.
 
 import logging
 import pathlib
-import socket
 import subprocess
+from typing import Iterator
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
@@ -43,7 +43,7 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
-    _version = 2
+    _version = 3
 
     can_be_disabled = False
 
@@ -65,8 +65,10 @@ class NamesApp(app_module.App):
         packages = Packages('packages-names', ['iproute2'])
         self.add(packages)
 
-        domain_type = DomainType('domain-type-static', _('Domain Name'),
-                                 'names:domains', can_have_certificate=True)
+        domain_type = DomainType('domain-type-static', _('Domain (regular)'),
+                                 delete_url='names:domain-delete',
+                                 add_url='names:domain-add',
+                                 can_have_certificate=True, priority=100)
         self.add(domain_type)
 
         daemon = ResolvedDaemon('daemon-names', 'systemd-resolved')
@@ -83,11 +85,10 @@ class NamesApp(app_module.App):
         domain_removed.connect(on_domain_removed)
 
         # Register domain with Name Services module.
-        domain_name = get_domain_name()
-        if domain_name:
+        for domain in privileged.get_domains():
             domain_added.send_robust(sender='names',
                                      domain_type='domain-type-static',
-                                     name=domain_name, services='__all__')
+                                     name=domain, services='__all__')
 
         # Schedule installation of systemd-resolved if not already installed.
         if not is_resolved_installed():
@@ -113,6 +114,9 @@ class NamesApp(app_module.App):
                 privileged.set_resolved_configuration(dns_fallback=True)
             except Exception:
                 pass
+
+        if old_version < 3:
+            privileged.domains_migrate()
 
         if is_resolved_installed():
             # Fresh install or upgrading to version 2
@@ -197,8 +201,9 @@ def diagnose_resolution(domain: str) -> DiagnosticCheck:
     return DiagnosticCheck('names-resolve', description, result, parameters)
 
 
-def on_domain_added(sender, domain_type, name='', description='',
-                    services=None, **kwargs):
+def on_domain_added(sender: str, domain_type: str, name: str = '',
+                    description: str = '',
+                    services: str | list[str] | None = None, **kwargs):
     """Add domain to global list."""
     if not domain_type:
         return
@@ -214,7 +219,7 @@ def on_domain_added(sender, domain_type, name='', description='',
                 domain_type, str(services))
 
 
-def on_domain_removed(sender, domain_type, name='', **kwargs):
+def on_domain_removed(sender: str, domain_type: str, name: str = '', **kwargs):
     """Remove domain from global list."""
     if name:
         component_id = 'domain-' + sender + '-' + name
@@ -234,25 +239,16 @@ def on_domain_removed(sender, domain_type, name='', **kwargs):
 ######################################################
 
 
-def get_domain_name():
-    """Return the currently set static domain name."""
-    fqdn = socket.getfqdn()
-    return '.'.join(fqdn.split('.')[1:])
-
-
 def get_hostname():
     """Return the hostname."""
-    return socket.gethostname()
+    process = subprocess.run(['hostnamectl', 'hostname', '--static'],
+                             stdout=subprocess.PIPE, check=True)
+    return process.stdout.decode().strip()
 
 
 def set_hostname(hostname):
     """Set machine hostname and send signals before and after."""
     old_hostname = get_hostname()
-    domain_name = get_domain_name()
-
-    # Hostname should be ASCII. If it's unicode but passed our
-    # valid_hostname check, convert
-    hostname = str(hostname)
 
     pre_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
                                     new_hostname=hostname)
@@ -260,14 +256,11 @@ def set_hostname(hostname):
     logger.info('Changing hostname to - %s', hostname)
     privileged.set_hostname(hostname)
 
-    logger.info('Setting domain name after hostname change - %s', domain_name)
-    privileged.set_domain_name(domain_name)
-
     post_hostname_change.send_robust(sender='names', old_hostname=old_hostname,
                                      new_hostname=hostname)
 
 
-def get_available_tls_domains():
+def get_available_tls_domains() -> Iterator[str]:
     """Return an iterator with all domains able to have a certificate."""
     return (domain.name for domain in components.DomainName.list()
             if domain.domain_type.can_have_certificate)

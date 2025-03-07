@@ -60,8 +60,6 @@ DIST_UPGRADE_PACKAGES_WITH_PROMPTS = [
     'mumble-server', 'radicale', 'roundcube-core', 'tt-rss'
 ]
 
-DIST_UPGRADE_PRE_INSTALL_PACKAGES = ['base-files']
-
 DIST_UPGRADE_PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.
     'grub-pc grub-pc/install_devices_empty boolean true'
@@ -75,7 +73,8 @@ Description=Upgrade to new stable Debian release
 
 [Service]
 Type=oneshot
-ExecStart=/usr/share/plinth/actions/actions upgrades dist_upgrade --no-args
+ExecStart=systemd-inhibit /usr/share/plinth/actions/actions \
+    upgrades dist_upgrade --no-args
 KillMode=process
 TimeoutSec=12hr
 '''
@@ -478,12 +477,6 @@ def _perform_dist_upgrade():
         print('Updating Apt cache...', flush=True)
         run_apt_command(['update'])
 
-        # Install packages that are necessary for unattended-upgrades
-        # to start the dist upgrade.
-        print(f'Upgrading packages: {DIST_UPGRADE_PRE_INSTALL_PACKAGES}...',
-              flush=True)
-        run_apt_command(['install'] + DIST_UPGRADE_PRE_INSTALL_PACKAGES)
-
         # Pre-set debconf selections if they are required during the
         # dist upgrade.
         if DIST_UPGRADE_PRE_DEBCONF_SELECTIONS:
@@ -491,13 +484,6 @@ def _perform_dist_upgrade():
                 f'Setting debconf selections: '
                 f'{DIST_UPGRADE_PRE_DEBCONF_SELECTIONS}', flush=True)
             debconf_set_selections(DIST_UPGRADE_PRE_DEBCONF_SELECTIONS)
-
-        # This will upgrade most of the packages.
-        # Previously, when dist-upgrading from bullseye to bookworm, there was
-        # an issue where unattended-upgrade gets stuck. See #2266.  However, it
-        # does not get stuck when dist-upgrading from bookworm to trixie.
-        print('Running unattended-upgrade...', flush=True)
-        subprocess.run(['unattended-upgrade', '--verbose'], check=False)
 
         # Remove obsolete packages that may prevent other packages from
         # upgrading.

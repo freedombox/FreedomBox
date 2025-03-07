@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-27 20:25-0500\n"
-"PO-Revision-Date: 2025-01-29 04:02+0000\n"
+"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"PO-Revision-Date: 2025-02-25 09:20+0000\n"
 "Last-Translator: 大王叫我来巡山 "
 "<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.2-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -576,7 +576,7 @@ msgstr "现有的备份"
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
-#: modules/names/templates/names.html:128
+#: modules/names/templates/names.html:159
 #: modules/networks/templates/connection_show.html:24
 #: modules/pagekite/templates/pagekite_custom_services.html:16
 #: modules/power/templates/power_busy_warning.html:11
@@ -947,7 +947,7 @@ msgstr "添加密码"
 msgid "No passwords currently configured."
 msgstr "目前没有配置密码。"
 
-#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:83
+#: modules/bepasty/templates/bepasty.html:29 modules/dynamicdns/forms.py:85
 #: modules/miniflux/forms.py:14 modules/networks/forms.py:282
 #: modules/shadowsocks/forms.py:32 modules/shadowsocksserver/forms.py:37
 msgid "Password"
@@ -977,9 +977,13 @@ msgstr "创建"
 msgid "List"
 msgstr "列表"
 
-#: modules/bepasty/views.py:50 modules/email/templates/email-aliases.html:24
+#: modules/bepasty/views.py:50
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:22
+#: modules/email/templates/email-aliases.html:24
 #: modules/featherwiki/templates/featherwiki_delete.html:34
 #: modules/letsencrypt/templates/letsencrypt.html:86
+#: modules/names/templates/names-domain-delete.html:22
+#: modules/names/templates/names.html:48
 #: modules/networks/templates/connection_show.html:60
 #: modules/samba/templates/samba.html:154
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:34
@@ -1097,11 +1101,11 @@ msgstr "刷新 IP 地址和域"
 
 #: modules/bind/views.py:61 modules/config/views.py:67
 #: modules/coturn/views.py:40 modules/deluge/views.py:35
-#: modules/dynamicdns/views.py:78 modules/ejabberd/views.py:95
+#: modules/dynamicdns/views.py:100 modules/ejabberd/views.py:95
 #: modules/email/views.py:45 modules/matrixsynapse/views.py:149
 #: modules/minetest/views.py:55 modules/mumble/views.py:37
-#: modules/names/views.py:66 modules/names/views.py:95
-#: modules/names/views.py:129 modules/pagekite/forms.py:74
+#: modules/names/views.py:68 modules/names/views.py:97
+#: modules/names/views.py:123 modules/pagekite/forms.py:74
 #: modules/privacy/views.py:55 modules/quassel/views.py:29
 #: modules/roundcube/views.py:32 modules/rssbridge/views.py:31
 #: modules/shadowsocks/views.py:52 modules/shadowsocksserver/views.py:48
@@ -1316,8 +1320,8 @@ msgstr "在这里你可以设置一些常规配置选项，如网络服务器主
 msgid "General Configuration"
 msgstr "常规配置"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:33
-#: modules/names/templates/names.html:47 modules/snapshot/views.py:32
+#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
 msgstr "配置"
@@ -1417,7 +1421,7 @@ msgstr "展现先进的应用和特征"
 msgid "Hiding advanced apps and features"
 msgstr "隐藏先进的应用和特征"
 
-#: modules/coturn/__init__.py:25
+#: modules/coturn/__init__.py:26
 msgid ""
 "Coturn is a server to facilitate audio/video calls and conferences by "
 "providing an implementation of TURN and STUN protocols. WebRTC, SIP and "
@@ -1427,7 +1431,7 @@ msgstr ""
 "Coturn是一个服务器，通过提供TURN和STUN协议的实现来促进音频/视频通话和会议。"
 "WebRTC、SIP和其他通信服务器可以使用它在无法相互连接的各方之间建立通话。"
 
-#: modules/coturn/__init__.py:30
+#: modules/coturn/__init__.py:31
 #, python-brace-format
 msgid ""
 "It is not meant to be used directly by users. Servers such as <a "
@@ -1437,7 +1441,7 @@ msgstr ""
 "它并不意味着可以被用户直接使用。诸如<a href=\"{ms_url}\">Matrix Synapse</a>或"
 "<a href=\"{e_url}\">ejabberd</a>等服务器需要用这里提供的细节进行配置。"
 
-#: modules/coturn/__init__.py:52
+#: modules/coturn/__init__.py:53
 msgid "Coturn"
 msgstr "Coturn"
 
@@ -1711,7 +1715,7 @@ msgid "Test"
 msgstr "测试"
 
 #: modules/diagnostics/templates/diagnostics_results.html:12
-#: modules/dynamicdns/templates/dynamicdns.html:25
+#: modules/dynamicdns/templates/dynamicdns.html:27
 msgid "Result"
 msgstr "结果"
 
@@ -1772,11 +1776,11 @@ msgstr ""
 msgid "Dynamic DNS Client"
 msgstr "动态 DNS 客户端"
 
-#: modules/dynamicdns/__init__.py:78
-msgid "Dynamic Domain Name"
+#: modules/dynamicdns/__init__.py:77
+msgid "Dynamic Domain"
 msgstr "动态域名"
 
-#: modules/dynamicdns/forms.py:18
+#: modules/dynamicdns/forms.py:20
 msgid ""
 "The Variables &lt;User&gt;, &lt;Pass&gt;, &lt;Ip&gt;, &lt;Domain&gt; may be "
 "used within the URL. For details see the update URL templates of the example "
@@ -1785,7 +1789,7 @@ msgstr ""
 "变量 &lt; 用户 &gt; &lt; 传递 &gt; &lt; Ip &gt; &lt; 域 &gt; 可能在 URL 内使"
 "用。详细信息请参见更新 URL 模板的示例提供程序。"
 
-#: modules/dynamicdns/forms.py:22
+#: modules/dynamicdns/forms.py:24
 msgid ""
 "Please choose an update protocol according to your provider. If your "
 "provider does not support the GnuDIP protocol or your provider is not listed "
@@ -1794,7 +1798,7 @@ msgstr ""
 "请选择您的提供商更新协议。如果您的提供商不支持 GnuDIP 协议或未列出您的提供商"
 "可能会使用您的提供商的更新 URL。"
 
-#: modules/dynamicdns/forms.py:27
+#: modules/dynamicdns/forms.py:29
 msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
@@ -1802,90 +1806,94 @@ msgstr ""
 "请不要在此输入 URL（如\"https://example.com/\"），只输入 GnuDIP 服务器的主机"
 "名（例如“example.com”）。"
 
-#: modules/dynamicdns/forms.py:31
+#: modules/dynamicdns/forms.py:33
 #, python-brace-format
 msgid "The public domain name you want to use to reach your {box_name}."
 msgstr "你访问你的 {box_name} 时想使用的公开域名。"
 
-#: modules/dynamicdns/forms.py:34
+#: modules/dynamicdns/forms.py:36
 msgid "Use this option if your provider uses self signed certificates."
 msgstr "如果您的提供商使用自签名的证书，请使用此选项。"
 
-#: modules/dynamicdns/forms.py:37
+#: modules/dynamicdns/forms.py:39
 msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
 msgstr "如果选择了此选项，您的用户名和密码将用于 HTTP 基本身份验证。"
 
-#: modules/dynamicdns/forms.py:40
+#: modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
 msgstr "如果你想保持你的当前密码，请将此字段留空。"
 
-#: modules/dynamicdns/forms.py:43
+#: modules/dynamicdns/forms.py:45
 msgid "The username that was used when the account was created."
 msgstr "创建账户时使用的用户名。"
 
-#: modules/dynamicdns/forms.py:46
+#: modules/dynamicdns/forms.py:48
 msgid "GnuDIP"
 msgstr "GnuDIP"
 
-#: modules/dynamicdns/forms.py:49
+#: modules/dynamicdns/forms.py:51
 msgid "Other update URL"
 msgstr "其他更新 URL"
 
-#: modules/dynamicdns/forms.py:51
+#: modules/dynamicdns/forms.py:53
 msgid "Service Type"
 msgstr "服务类型"
 
-#: modules/dynamicdns/forms.py:56
+#: modules/dynamicdns/forms.py:58
 msgid "GnuDIP Server Address"
 msgstr "GnuDIP 服务器地址"
 
-#: modules/dynamicdns/forms.py:59
+#: modules/dynamicdns/forms.py:61
 msgid "Invalid server name"
 msgstr "服务器名称无效"
 
-#: modules/dynamicdns/forms.py:62
+#: modules/dynamicdns/forms.py:64
 msgid "Update URL"
 msgstr "更新 URL"
 
-#: modules/dynamicdns/forms.py:66
+#: modules/dynamicdns/forms.py:68
 msgid "Accept all SSL certificates"
 msgstr "接受所有 SSL 证书"
 
-#: modules/dynamicdns/forms.py:70
+#: modules/dynamicdns/forms.py:72
 msgid "Use HTTP basic authentication"
 msgstr "使用 HTTP 基本身份验证"
 
-#: modules/dynamicdns/forms.py:74 modules/names/__init__.py:68
-#: modules/names/forms.py:106 modules/names/templates/names.html:19
+#: modules/dynamicdns/forms.py:76 modules/names/forms.py:108
+#: modules/names/templates/names.html:19
 msgid "Domain Name"
 msgstr "域名"
 
-#: modules/dynamicdns/forms.py:77 modules/names/forms.py:99
-#: modules/names/forms.py:117
+#: modules/dynamicdns/forms.py:79 modules/names/forms.py:101
+#: modules/names/forms.py:119
 msgid "Invalid domain name"
 msgstr "无效的域名"
 
-#: modules/dynamicdns/forms.py:80 modules/miniflux/forms.py:11
+#: modules/dynamicdns/forms.py:82 modules/miniflux/forms.py:11
 #: modules/networks/forms.py:281 modules/users/forms.py:130
 msgid "Username"
 msgstr "用户名"
 
-#: modules/dynamicdns/forms.py:87 modules/networks/forms.py:284
+#: modules/dynamicdns/forms.py:89 modules/networks/forms.py:284
 msgid "Show password"
 msgstr "显示密码"
 
-#: modules/dynamicdns/forms.py:91
+#: modules/dynamicdns/forms.py:93
 msgid "Use IPv6 instead of IPv4"
 msgstr "使用IPv6而不是IPv4"
 
-#: modules/dynamicdns/forms.py:110
+#: modules/dynamicdns/forms.py:108
 msgid "This field is required."
 msgstr ""
 
+#: modules/dynamicdns/forms.py:138 modules/names/forms.py:126
+msgid "Domain already exists."
+msgstr "域名已存在。"
+
 #: modules/dynamicdns/manifest.py:17
-#: modules/dynamicdns/templates/dynamicdns.html:23
+#: modules/dynamicdns/templates/dynamicdns.html:25
 #: modules/email/templates/email-dns.html:22
 #: modules/letsencrypt/templates/letsencrypt.html:24
 #: modules/mediawiki/forms.py:64 modules/sogo/forms.py:18
@@ -1900,55 +1908,95 @@ msgstr ""
 msgid "Needs public IP"
 msgstr "需要公共 IP"
 
-#: modules/dynamicdns/templates/dynamicdns.html:16
-#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
-#: modules/firewall/templates/firewall.html:16
-#: modules/firewall/templates/firewall.html:22
-#: modules/letsencrypt/templates/letsencrypt.html:17
-#: modules/matrixsynapse/templates/matrix-synapse.html:17
-#: modules/networks/templates/connection_show.html:258
-#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
-#: modules/wireguard/templates/wireguard_show_client.html:48
-#: modules/wireguard/templates/wireguard_show_server.html:47
-msgid "Status"
-msgstr "状态"
+#: modules/dynamicdns/templates/dynamicdns-domain-delete.html:13
+#: modules/names/templates/names-domain-delete.html:13
+msgid "App configurations will be updated."
+msgstr "程序配置将被更新。"
 
-#: modules/dynamicdns/templates/dynamicdns.html:24
+#: modules/dynamicdns/templates/dynamicdns.html:10
+#: modules/email/templates/email.html:20 modules/names/manifest.py:11
+#: modules/names/templates/names.html:12
+msgid "Domains"
+msgstr "域名"
+
+#: modules/dynamicdns/templates/dynamicdns.html:14
+#: modules/dynamicdns/templates/dynamicdns.html:16
+msgid "Add Domain"
+msgstr "添加域名"
+
+#: modules/dynamicdns/templates/dynamicdns.html:26
 msgid "Last update"
 msgstr "最后一次更新"
 
-#: modules/dynamicdns/templates/dynamicdns.html:26
+#: modules/dynamicdns/templates/dynamicdns.html:28
 msgid "IP Address"
 msgstr "IP 地址"
 
+#: modules/dynamicdns/templates/dynamicdns.html:29
+#: modules/letsencrypt/templates/letsencrypt.html:27
+#: modules/storage/templates/storage.html:28
+msgid "Actions"
+msgstr "行动"
+
 #: modules/dynamicdns/templates/dynamicdns.html:37
+#: modules/dynamicdns/templates/dynamicdns.html:72
+#, python-format
+msgid "Edit domain %(domain)s"
+msgstr ""
+
+#: modules/dynamicdns/templates/dynamicdns.html:47
+msgid "Not yet"
+msgstr "还没有"
+
+#: modules/dynamicdns/templates/dynamicdns.html:53
 msgid "Success"
 msgstr "成功"
 
-#: modules/dynamicdns/templates/dynamicdns.html:41
+#: modules/dynamicdns/templates/dynamicdns.html:59
 msgid "Failed"
 msgstr "失败"
 
-#: modules/dynamicdns/templates/dynamicdns.html:57
-msgid "No status available."
-msgstr "无状态可用。"
+#: modules/dynamicdns/templates/dynamicdns.html:79
+#, python-format
+msgid "Delete domain %(domain)s"
+msgstr "删除域名 %(domain)s"
 
-#: modules/dynamicdns/views.py:24 modules/dynamicdns/views.py:26
+#: modules/dynamicdns/templates/dynamicdns.html:91
+msgid "No domains configured."
+msgstr "没有配置域名。"
+
+#: modules/dynamicdns/views.py:26 modules/dynamicdns/views.py:28
 msgid "Connection timed out"
 msgstr "连接超时"
 
-#: modules/dynamicdns/views.py:25
+#: modules/dynamicdns/views.py:27
 msgid "Could not find server"
 msgstr ""
 
-#: modules/dynamicdns/views.py:27
+#: modules/dynamicdns/views.py:29
 msgid "Server refused connection"
 msgstr "服务器拒绝连接"
 
-#: modules/dynamicdns/views.py:28
+#: modules/dynamicdns/views.py:30
 msgid "Already up-to-date"
 msgstr "已是最新"
+
+#: modules/dynamicdns/views.py:70
+msgid "Add Dynamic Domain"
+msgstr "添加动态域名"
+
+#: modules/dynamicdns/views.py:72
+msgid "Edit Dynamic Domain"
+msgstr "编辑动态域名"
+
+#: modules/dynamicdns/views.py:138 modules/names/views.py:137
+#, python-brace-format
+msgid "Delete Domain {domain}?"
+msgstr ""
+
+#: modules/dynamicdns/views.py:145 modules/names/views.py:143
+msgid "Domain deleted."
+msgstr "已删除域名。"
 
 #: modules/ejabberd/__init__.py:29
 msgid ""
@@ -1984,21 +2032,21 @@ msgstr ""
 msgid "ejabberd"
 msgstr "ejabberd"
 
-#: modules/ejabberd/forms.py:19
+#: modules/ejabberd/forms.py:20
 msgid "Domain names"
 msgstr "域名"
 
-#: modules/ejabberd/forms.py:21
+#: modules/ejabberd/forms.py:22
 msgid ""
 "Domains to be used by ejabberd. Note that user accounts are unique for each "
 "domain, and migrating users to a new domain name is not yet implemented."
 msgstr ""
 
-#: modules/ejabberd/forms.py:26
+#: modules/ejabberd/forms.py:27
 msgid "Enable Message Archive Management"
 msgstr "启用消息存档管理"
 
-#: modules/ejabberd/forms.py:28
+#: modules/ejabberd/forms.py:29
 #, python-brace-format
 msgid ""
 "If enabled, your {box_name} will store chat message histories. This allows "
@@ -2010,11 +2058,11 @@ msgstr ""
 "并读取多用户聊天室的历史。聊天记录是以纯文本还是加密形式存储，这取决于客户端"
 "的设置。"
 
-#: modules/ejabberd/forms.py:35 modules/matrixsynapse/forms.py:38
+#: modules/ejabberd/forms.py:36 modules/matrixsynapse/forms.py:38
 msgid "Automatically manage audio/video call setup"
 msgstr "自动管理音频/视频通话设置"
 
-#: modules/ejabberd/forms.py:37
+#: modules/ejabberd/forms.py:38
 #, python-brace-format
 msgid ""
 "Configures the local <a href={coturn_url}>coturn</a> app as the STUN/TURN "
@@ -2024,19 +2072,19 @@ msgstr ""
 "将本地<a href=\"{coturn_url}\">coturn</a>应用程序配置为ejabberd的STUN/TURN服"
 "务器。如果你想使用一个不同的STUN/TURN服务器，请禁用此功能。"
 
-#: modules/ejabberd/forms.py:44 modules/matrixsynapse/forms.py:47
+#: modules/ejabberd/forms.py:45 modules/matrixsynapse/forms.py:47
 msgid "STUN/TURN Server URIs"
 msgstr "STUN/TURN服务器URI"
 
-#: modules/ejabberd/forms.py:46 modules/matrixsynapse/forms.py:49
+#: modules/ejabberd/forms.py:47 modules/matrixsynapse/forms.py:49
 msgid "List of public URIs of the STUN/TURN server, one on each line."
 msgstr "STUN/TURN服务器的公共URI列表，每行一个。"
 
-#: modules/ejabberd/forms.py:50 modules/matrixsynapse/forms.py:53
+#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:53
 msgid "Shared Authentication Secret"
 msgstr "共享的身份验证 Secret"
 
-#: modules/ejabberd/forms.py:51 modules/matrixsynapse/forms.py:54
+#: modules/ejabberd/forms.py:52 modules/matrixsynapse/forms.py:54
 msgid "Shared secret used to compute passwords for the TURN server."
 msgstr ""
 
@@ -2090,6 +2138,19 @@ msgstr ""
 #: modules/ejabberd/manifest.py:127 modules/jsxc/manifest.py:16
 msgid "XMPP"
 msgstr ""
+
+#: modules/ejabberd/templates/ejabberd.html:18 modules/firewall/manifest.py:10
+#: modules/firewall/templates/firewall.html:16
+#: modules/firewall/templates/firewall.html:22
+#: modules/letsencrypt/templates/letsencrypt.html:17
+#: modules/matrixsynapse/templates/matrix-synapse.html:17
+#: modules/networks/templates/connection_show.html:258
+#: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
+#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/wireguard/templates/wireguard_show_client.html:48
+#: modules/wireguard/templates/wireguard_show_server.html:47
+msgid "Status"
+msgstr "状态"
 
 #: modules/ejabberd/templates/ejabberd.html:23
 #, python-format
@@ -2164,33 +2225,33 @@ msgstr ""
 msgid "My Email Aliases"
 msgstr "我的邮箱别名"
 
-#: modules/email/forms.py:25
+#: modules/email/forms.py:24
 msgid "Primary domain"
 msgstr "主域名"
 
-#: modules/email/forms.py:27 modules/sogo/forms.py:20
+#: modules/email/forms.py:26 modules/sogo/forms.py:20
 msgid ""
 "Mails are received for all domains configured in the system. Among these, "
 "select the most important one."
 msgstr ""
 
-#: modules/email/forms.py:35
+#: modules/email/forms.py:34
 msgid "New alias (without @domain)"
 msgstr ""
 
-#: modules/email/forms.py:42
+#: modules/email/forms.py:41
 msgid "Contains illegal characters"
 msgstr ""
 
-#: modules/email/forms.py:45
+#: modules/email/forms.py:44
 msgid "Must start and end with a-z or 0-9"
 msgstr ""
 
-#: modules/email/forms.py:49
+#: modules/email/forms.py:48
 msgid "Cannot be a number"
 msgstr ""
 
-#: modules/email/forms.py:59
+#: modules/email/forms.py:58
 msgid "Aliases"
 msgstr "别名"
 
@@ -2237,6 +2298,7 @@ msgid "Create a new email alias"
 msgstr "创建新的电子邮件别名"
 
 #: modules/email/templates/email-aliases.html:34
+#: modules/names/templates/names.html:78
 msgid "Add"
 msgstr "添加"
 
@@ -2307,11 +2369,6 @@ msgstr "主机名"
 #: modules/email/templates/email.html:10
 msgid "Manage Spam"
 msgstr "管理垃圾邮件"
-
-#: modules/email/templates/email.html:20 modules/names/manifest.py:11
-#: modules/names/templates/names.html:12
-msgid "Domains"
-msgstr "域名"
 
 #: modules/email/templates/email.html:23
 msgid ""
@@ -3633,11 +3690,6 @@ msgstr "证书状态"
 msgid "Website Security"
 msgstr "网站安全"
 
-#: modules/letsencrypt/templates/letsencrypt.html:27
-#: modules/storage/templates/storage.html:28
-msgid "Actions"
-msgstr "行动"
-
 #: modules/letsencrypt/templates/letsencrypt.html:37
 #, python-format
 msgid "Valid, expires on %(expiry_date)s"
@@ -4269,13 +4321,13 @@ msgstr "已重置以下用户的密码：{username}"
 msgid "An error occurred during password reset: {error}."
 msgstr "密码重置过程中出错：{error}。"
 
-#: modules/mumble/__init__.py:27
+#: modules/mumble/__init__.py:26
 msgid ""
 "Mumble is an open source, low-latency, encrypted, high quality voice chat "
 "software."
 msgstr "Mumble 是一个开放源码的低延迟、 加密、 高品质语音聊天软件。"
 
-#: modules/mumble/__init__.py:29
+#: modules/mumble/__init__.py:28
 msgid ""
 "You can connect to your Mumble server on the regular Mumble port 64738. <a "
 "href=\"http://mumble.info\">Clients</a> to connect to Mumble from your "
@@ -4284,11 +4336,11 @@ msgstr ""
 "您可以使用常规端口 64738 连接到您的 Mumble 服务器。您可以从桌面和移动设备连"
 "接 Mumble <a href=\"http://mumble.info\">客户端</a>。"
 
-#: modules/mumble/__init__.py:47 modules/mumble/manifest.py:9
+#: modules/mumble/__init__.py:46 modules/mumble/manifest.py:9
 msgid "Mumble"
 msgstr ""
 
-#: modules/mumble/__init__.py:158
+#: modules/mumble/__init__.py:157
 msgid "Mumble server is configured"
 msgstr "Mumble 服务器已配置"
 
@@ -4359,11 +4411,15 @@ msgstr ""
 msgid "Name Services"
 msgstr "名称服务"
 
-#: modules/names/__init__.py:171
+#: modules/names/__init__.py:68
+msgid "Domain (regular)"
+msgstr ""
+
+#: modules/names/__init__.py:175
 msgid "Package systemd-resolved is installed"
 msgstr ""
 
-#: modules/names/__init__.py:195
+#: modules/names/__init__.py:199
 #, python-brace-format
 msgid "Resolve domain name: {domain}"
 msgstr ""
@@ -4380,19 +4436,19 @@ msgstr ""
 msgid "Secure Shell"
 msgstr "安全 Shell"
 
-#: modules/names/forms.py:21
+#: modules/names/forms.py:23
 msgid "Use DNS-over-TLS for resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:49
+#: modules/names/forms.py:51
 msgid "Use DNSSEC when resolving domains (global preference)"
 msgstr ""
 
-#: modules/names/forms.py:84 modules/names/manifest.py:12
+#: modules/names/forms.py:86 modules/names/manifest.py:12
 msgid "Hostname"
 msgstr "主机名"
 
-#: modules/names/forms.py:85
+#: modules/names/forms.py:87
 #, python-brace-format
 msgid ""
 "Hostname is the local name by which other devices on the local network can "
@@ -4404,11 +4460,11 @@ msgstr ""
 "数字结束和开始作为内部字符只有字母、数字和连字符。总长度必须为 63 个字符或更"
 "少。"
 
-#: modules/names/forms.py:91
+#: modules/names/forms.py:93
 msgid "Invalid hostname"
 msgstr "无效的主机名"
 
-#: modules/names/forms.py:107
+#: modules/names/forms.py:109
 #, python-brace-format
 msgid ""
 "Domain name is the global name by which other devices on the Internet can "
@@ -4458,70 +4514,77 @@ msgstr "受支持"
 msgid "unsupported"
 msgstr ""
 
-#: modules/names/templates/names.html:56
+#: modules/names/templates/names.html:41
+#: modules/networks/templates/connection_show.html:40
+#: modules/wireguard/templates/wireguard_show_client.html:72
+#: modules/wireguard/templates/wireguard_show_server.html:73
+#: templates/base.html:166 templates/base.html:167
+msgid "Edit"
+msgstr "編輯"
+
+#: modules/names/templates/names.html:59
+msgid "Add Domains"
+msgstr "添加域名"
+
+#: modules/names/templates/names.html:87
 msgid "Resolver Status"
 msgstr ""
 
-#: modules/names/templates/names.html:66
+#: modules/names/templates/names.html:97
 msgid "Global"
 msgstr ""
 
-#: modules/names/templates/names.html:68
+#: modules/names/templates/names.html:99
 msgid "Link"
 msgstr ""
 
-#: modules/names/templates/names.html:73
+#: modules/names/templates/names.html:104
 #: modules/networks/templates/connection_show.html:268
 msgid "DNS-over-TLS"
 msgstr ""
 
-#: modules/names/templates/names.html:77
+#: modules/names/templates/names.html:108
 msgid "DNSSEC"
 msgstr "DNSSEC"
 
-#: modules/names/templates/names.html:82
+#: modules/names/templates/names.html:113
 msgid "Current DNS Server"
 msgstr "当前 DNS 服务器"
 
-#: modules/names/templates/names.html:88
+#: modules/names/templates/names.html:119
 msgid "DNS Servers"
 msgstr "DNS 服务器"
 
-#: modules/names/templates/names.html:98
+#: modules/names/templates/names.html:129
 msgid "Fallback DNS Servers"
 msgstr "备选 DNS 服务器"
 
-#: modules/names/templates/names.html:112
+#: modules/names/templates/names.html:143
 msgid ""
 "systemd-resolved package is not installed. Install it for additional "
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:121 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:78
 msgid "Install"
 msgstr "安装"
 
-#: modules/names/templates/names.html:131
+#: modules/names/templates/names.html:162
 msgid "Error retrieving status:"
 msgstr "获取状态出错："
 
-#: modules/names/views.py:81
+#: modules/names/views.py:83
 msgid "Set Hostname"
 msgstr "设置主机名"
 
-#: modules/names/views.py:99
+#: modules/names/views.py:101
 #, python-brace-format
 msgid "Error setting hostname: {exception}"
 msgstr "设置主机名错误：{exception}"
 
-#: modules/names/views.py:115
-msgid "Set Domain Name"
-msgstr "设置域名"
-
-#: modules/names/views.py:133
-#, python-brace-format
-msgid "Error setting domain name: {exception}"
-msgstr "设置域名错误：{exception}"
+#: modules/names/views.py:117
+msgid "Add Domain Name"
+msgstr "添加域名"
 
 #: modules/networks/__init__.py:19
 msgid ""
@@ -4925,13 +4988,6 @@ msgstr ""
 #: modules/networks/templates/connection_show.html:40
 msgid "Edit connection"
 msgstr "编辑连接"
-
-#: modules/networks/templates/connection_show.html:40
-#: modules/wireguard/templates/wireguard_show_client.html:72
-#: modules/wireguard/templates/wireguard_show_server.html:73
-#: templates/base.html:166 templates/base.html:167
-msgid "Edit"
-msgstr "編輯"
 
 #: modules/networks/templates/connection_show.html:47
 #: modules/networks/templates/connections_list.html:61
@@ -7670,23 +7726,23 @@ msgstr ""
 msgid "Tor Onion Service"
 msgstr "Tor 洋葱服务"
 
-#: modules/tor/__init__.py:81
+#: modules/tor/__init__.py:82
 msgid "Tor Bridge Relay"
 msgstr "Tor 网桥中继"
 
-#: modules/tor/__init__.py:139
+#: modules/tor/__init__.py:140
 msgid "Tor relay port available"
 msgstr "Tor 中继端口可用"
 
-#: modules/tor/__init__.py:151
+#: modules/tor/__init__.py:152
 msgid "Obfs3 transport registered"
 msgstr "已注册 Obfs3 传输"
 
-#: modules/tor/__init__.py:162
+#: modules/tor/__init__.py:163
 msgid "Obfs4 transport registered"
 msgstr "已注册 Obfs4 传输"
 
-#: modules/tor/__init__.py:175
+#: modules/tor/__init__.py:176
 msgid "Onion service is version 3"
 msgstr "Onion 服务版本为 3"
 
@@ -9280,6 +9336,16 @@ msgstr ""
 msgid "Gujarati"
 msgstr "古吉拉特语"
 
+#~ msgid "No status available."
+#~ msgstr "无状态可用。"
+
+#~ msgid "Set Domain Name"
+#~ msgstr "设置域名"
+
+#, python-brace-format
+#~ msgid "Error setting domain name: {exception}"
+#~ msgstr "设置域名错误：{exception}"
+
 #~ msgid "In 24 hour format."
 #~ msgstr "24小时制。"
 
@@ -9568,9 +9634,6 @@ msgstr "古吉拉特语"
 #~ msgid "Enable Tor"
 #~ msgstr "启用 Tor"
 
-#~ msgid "Tor configuration is being updated"
-#~ msgstr "Tor 配置已更新"
-
 #, python-brace-format
 #~ msgid "Using DNSSEC on IPv{kind}"
 #~ msgstr "在 IPv{kind} 上使用 DNSSEC"
@@ -9836,9 +9899,6 @@ msgstr "古吉拉特语"
 #~ msgid "Publish Key"
 #~ msgstr "发布密钥"
 
-#~ msgid "Add Domains"
-#~ msgstr "添加域名"
-
 #~ msgid "OpenPGP User IDs"
 #~ msgstr "OpenPGP 用户ID"
 
@@ -9893,11 +9953,6 @@ msgstr "古吉拉特语"
 
 #~ msgid "Pet Name"
 #~ msgstr "Pet 名称"
-
-#, fuzzy
-#~| msgid "Error setting domain name: {exception}"
-#~ msgid "Postfix domain name config"
-#~ msgstr "设置域名错误：{exception}"
 
 #, fuzzy
 #~| msgid "Disabled"
