@@ -223,6 +223,13 @@ def _apt_update():
     _apt_run(['update'])
 
 
+def _apt_fix():
+    """Try to fix any problems with apt/dpkg before the upgrade."""
+    logger.info('Fixing any broken apt/dpkg states...')
+    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    _apt_run(['--fix-broken', 'install'])
+
+
 def _apt_autoremove():
     """Run 'apt autoremove'."""
     logger.info('Running apt autoremove...')
@@ -298,6 +305,7 @@ def perform():
          _services_disable(), \
          _apt_hold_packages():
         _apt_update()
+        _apt_fix()
         _debconf_set_selections()
         _packages_remove_obsolete()
         _apt_full_upgrade()

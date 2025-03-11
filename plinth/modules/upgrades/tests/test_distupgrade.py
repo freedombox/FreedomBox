@@ -284,6 +284,17 @@ def test_apt_update(apt_run):
 
 
 @patch('plinth.modules.upgrades.distupgrade._apt_run')
+@patch('subprocess.run')
+def test_apt_fix(run, apt_run):
+    """Test that apt fixes work."""
+    distupgrade._apt_fix()
+    assert run.call_args_list == [
+        call(['dpkg', '--configure', '-a'], check=False)
+    ]
+    assert apt_run.call_args_list == [call(['--fix-broken', 'install'])]
+
+
+@patch('plinth.modules.upgrades.distupgrade._apt_run')
 def test_apt_autoremove(apt_run):
     """Test that apt autoremove works."""
     distupgrade._apt_autoremove()
