@@ -647,8 +647,7 @@ class ForceUpgrader():
                 # App does not implement force upgrade
                 continue
 
-            if (app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP
-                ):
+            if app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP:
                 # If an app is not installed don't considered it. If an app
                 # needs an update, it may have to do a force upgrade before
                 # running app version update. This is because the app version
