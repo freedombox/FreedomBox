@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-27 05:06+0000\n"
 "Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
@@ -2856,7 +2856,7 @@ msgstr "Aktiviert"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Deaktiviert"
 
@@ -4819,7 +4819,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 msgid "Mumble server is configured"
 msgstr "Mumble-Server ist konfiguriert"
 
@@ -7077,7 +7077,7 @@ msgstr ""
 "freedombox.adresse>) und ihren Benutzernamen. Wenn Sie auf den Suchen-Knopf "
 "drücken, werden die bestehenden Kalender und Adressbücher aufgelistet."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -8138,10 +8138,6 @@ msgstr ""
 msgid "Webmail"
 msgstr "Webmail"
 
-#: modules/sogo/manifest.py:73
-msgid "Calender"
-msgstr "Kalender"
-
 #: modules/sogo/manifest.py:74
 msgid "Address book"
 msgstr "Adressbuch"
@@ -9026,11 +9022,22 @@ msgstr ""
 "Die automatische Software-Aktualisierung wird standardmäßig täglich "
 "ausgeführt. Führen Sie es jetzt zum ersten Mal manuell aus."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Distributions-Upgrade gestartet"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Das Update auf die nächste stabile Version wurde gestartet. Dies kann eine "
+"lange Zeit in Anspruch nehmen."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Distributions-Update konnte nicht gestartet werden"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -9041,18 +9048,7 @@ msgstr ""
 "mindestens 5 GB frei sind. Das Distributions-Update wird nach 24 Stunden "
 "erneut versucht, falls aktiviert."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Distributions-Upgrade gestartet"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Das Update auf die nächste stabile Version wurde gestartet. Dies kann eine "
-"lange Zeit in Anspruch nehmen."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Auf Paket-Sperren überprüfen"
 
@@ -10230,14 +10226,6 @@ msgstr "Installation"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Dienst <em>%(service_name)s</em> läuft nicht."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Suche mit Schlagwörtern"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Alle Schlagwörter löschen"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10465,6 +10453,14 @@ msgstr ""
 msgid "Update"
 msgstr "Aktualisieren"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Suche mit Schlagwörtern"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Alle Schlagwörter löschen"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Sicherungskopie"
@@ -10495,11 +10491,11 @@ msgstr ""
 msgid "Here"
 msgstr "Hier"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Einstellung unverändert"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "vor der Deinstallation von {app_id}"
@@ -10507,6 +10503,9 @@ msgstr "vor der Deinstallation von {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Calender"
+#~ msgstr "Kalender"
 
 #~ msgid "No status available."
 #~ msgstr "Kein Status verfügbar."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-25 06:15+0000\n"
 "Last-Translator: Burak Yavuz <hitowerdigit@hotmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/freedombox/"
@@ -2800,7 +2800,7 @@ msgstr "Etkinleştirildi"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Etkisizleştirildi"
 
@@ -4727,7 +4727,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 msgid "Mumble server is configured"
 msgstr "Mumble sunucusu yapılandırıldı"
 
@@ -6952,7 +6952,7 @@ msgstr ""
 "kullanıcı adınızı girin. Ara düğmesine tıklamak, varolan takvimleri ve adres "
 "defterlerini listeleyecektir."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "Takvim"
 
@@ -8001,10 +8001,6 @@ msgstr "Thunderbird + SOGo bağlayıcı"
 msgid "Webmail"
 msgstr "Web posta"
 
-#: modules/sogo/manifest.py:73
-msgid "Calender"
-msgstr "Takvim"
-
 #: modules/sogo/manifest.py:74
 msgid "Address book"
 msgstr "Adres defteri"
@@ -8872,11 +8868,22 @@ msgstr ""
 "Otomatik yazılım güncellemesi varsayılan olarak günlük çalışır. Şimdi ilk "
 "kez el ile çalıştırın."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Dağıtım güncellemesi başlatıldı"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Bir sonraki kararlı yayıma güncelleme başlatıldı. Bunun tamamlanması uzun "
+"zaman alabilir."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Dağıtım güncellemesi başlatılamadı"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8886,18 +8893,7 @@ msgstr ""
 "Lütfen en az 5 GB boş alan olduğundan emin olun. Dağıtım güncellemesi, "
 "etkinleştirildiyse 24 saat sonra yeniden denenecektir."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Dağıtım güncellemesi başlatıldı"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Bir sonraki kararlı yayıma güncelleme başlatıldı. Bunun tamamlanması uzun "
-"zaman alabilir."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Paket bekletmelerini denetle"
 
@@ -10052,14 +10048,6 @@ msgstr "Kurulum"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "<em>%(service_name)s</em> hizmeti çalışmıyor."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Etiketler ile ara"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Tüm etiketleri temizle"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10286,6 +10274,14 @@ msgstr ""
 msgid "Update"
 msgstr "Güncelle"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Etiketler ile ara"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Tüm etiketleri temizle"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Yedekle"
@@ -10316,11 +10312,11 @@ msgstr ""
 msgid "Here"
 msgstr "Burada"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Ayar değişmedi"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} kaldırılmadan önce"
@@ -10328,6 +10324,9 @@ msgstr "{app_id} kaldırılmadan önce"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid "Calender"
+#~ msgstr "Takvim"
 
 #~ msgid "No status available."
 #~ msgstr "Mevcut durum yok."

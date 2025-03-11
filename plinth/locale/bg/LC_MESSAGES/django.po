@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-25 21:04+0000\n"
-"Last-Translator: 109247019824 <109247019824@users.noreply.hosted.weblate.org>"
-"\n"
+"Last-Translator: 109247019824 <109247019824@users.noreply.hosted.weblate."
+"org>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/bg/>\n"
 "Language: bg\n"
@@ -2670,7 +2670,7 @@ msgstr "Включено"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Изключено"
 
@@ -4391,7 +4391,7 @@ msgstr ""
 msgid "Mumble"
 msgstr ""
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 msgid "Mumble server is configured"
 msgstr "Сървърът на Mumble е настроен"
 
@@ -6430,7 +6430,7 @@ msgid ""
 "existing calendars and address books."
 msgstr ""
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr ""
 
@@ -7366,10 +7366,6 @@ msgstr ""
 msgid "Webmail"
 msgstr "Webmail"
 
-#: modules/sogo/manifest.py:73
-msgid "Calender"
-msgstr "Календар"
-
 #: modules/sogo/manifest.py:74
 msgid "Address book"
 msgstr "Адресна книга"
@@ -8201,11 +8197,22 @@ msgstr ""
 "Автоматичното обновяване, по подразбиране, се извършва всеки ден. Извършете "
 "го за първи път ръчно сега."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Започнато е обновяване на дистрибуцията"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Започнато е обновяване до следващото стабилно издание. То може да отнеме "
+"дълго време."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Обновяването на дистрибуцията не може да бъде стартирано"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8216,18 +8223,7 @@ msgstr ""
 "включено нов опит за обновяване на дистрибуцията ще бъде направен отново "
 "след 24 часа."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Започнато е обновяване на дистрибуцията"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Започнато е обновяване до следващото стабилно издание. То може да отнеме "
-"дълго време."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Проверка за задържани от обновяване пакети"
 
@@ -9312,14 +9308,6 @@ msgstr ""
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Услугата <em>%(service_name)s</em> не работи."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Търсене по етикети"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Изчистване на всички етикети"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -9532,6 +9520,14 @@ msgstr ""
 msgid "Update"
 msgstr "Обновяване"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Търсене по етикети"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Изчистване на всички етикети"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Резервно копие"
@@ -9562,11 +9558,11 @@ msgstr ""
 msgid "Here"
 msgstr "Тук"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Настройките не са променени"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "преди премахване на {app_id}"
@@ -9574,6 +9570,9 @@ msgstr "преди премахване на {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#~ msgid "Calender"
+#~ msgstr "Календар"
 
 #~ msgid "Set Domain Name"
 #~ msgstr "Име на домейн"

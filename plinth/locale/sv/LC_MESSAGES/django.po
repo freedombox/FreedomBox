@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2024-07-30 01:31+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/freedombox/"
@@ -2898,7 +2898,7 @@ msgstr "Aktiverad"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Inaktiverad"
 
@@ -4868,7 +4868,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "Mumble server is configured"
@@ -7154,7 +7154,7 @@ msgstr ""
 "address>) och ditt användarnamn. Om du klickar på sökknappen visas en lista "
 "över befintliga kalendrar och adressböcker."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 #, fuzzy
 #| msgid "GNOME Calendar"
 msgid "Calendar"
@@ -8218,12 +8218,6 @@ msgstr ""
 msgid "Webmail"
 msgstr "FairEmail"
 
-#: modules/sogo/manifest.py:73
-#, fuzzy
-#| msgid "GNOME Calendar"
-msgid "Calender"
-msgstr "GNOME-kalender"
-
 #: modules/sogo/manifest.py:74
 #, fuzzy
 #| msgid "Address"
@@ -9093,11 +9087,22 @@ msgid ""
 "manually run it now."
 msgstr ""
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Distributionsuppdateringen har startats"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Startade uppdateringen till nästa stabila utgåva. Det kan ta lång tid att "
+"slutföra."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Det gick inte att starta distributionsuppdatering"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -9108,18 +9113,7 @@ msgstr ""
 "Distributionsuppdateringen kommer att göras ett nytt behov efter 24 timmar, "
 "om det är aktiverat."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Distributionsuppdateringen har startats"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Startade uppdateringen till nästa stabila utgåva. Det kan ta lång tid att "
-"slutföra."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr ""
 
@@ -10288,18 +10282,6 @@ msgstr "Installation"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Tjänsten <em> %(service_name)s </em> körs inte."
 
-#: templates/apps.html:33
-#, fuzzy
-#| msgid "Search the web"
-msgid "Search with tags"
-msgstr "Sök på webben"
-
-#: templates/apps.html:46
-#, fuzzy
-#| msgid "Search the web"
-msgid "Clear all tags"
-msgstr "Sök på webben"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10529,6 +10511,18 @@ msgstr ""
 msgid "Update"
 msgstr "Uppdatera"
 
+#: templates/tags.html:24
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "Sök på webben"
+
+#: templates/tags.html:37
+#, fuzzy
+#| msgid "Search the web"
+msgid "Clear all tags"
+msgstr "Sök på webben"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Säkerhetskopia"
@@ -10559,11 +10553,11 @@ msgstr ""
 msgid "Here"
 msgstr ""
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Instänllningar oförändrade"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "innan du avinstallerar {app_id}"
@@ -10571,6 +10565,11 @@ msgstr "innan du avinstallerar {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#, fuzzy
+#~| msgid "GNOME Calendar"
+#~ msgid "Calender"
+#~ msgstr "GNOME-kalender"
 
 #~ msgid "No status available."
 #~ msgstr "Ingen status tillgänglig."
