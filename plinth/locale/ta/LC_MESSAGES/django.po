@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2024-12-27 01:03+0000\n"
 "Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -2836,7 +2836,7 @@ msgstr "இயக்கப்பட்டது"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "முடக்கப்பட்டது"
 
@@ -4725,7 +4725,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "முணுமுணுப்பு"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 #, fuzzy
 #| msgid "grub package is configured"
 msgid "Mumble server is configured"
@@ -6935,7 +6935,7 @@ msgstr ""
 "புத்தகத்தைச் சேர்க்கவும். ரேடிகல் சேவையகத்தின் முகவரி ஐ உள்ளிடவும் (எ.கா. தேடல் பொத்தானைக் "
 "சொடுக்கு செய்தால், தற்போதுள்ள காலெண்டர்கள் மற்றும் முகவரி புத்தகங்களை பட்டியலிடும்."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "நாட்காட்டி"
 
@@ -7965,12 +7965,6 @@ msgstr ""
 msgid "Webmail"
 msgstr ""
 
-#: modules/sogo/manifest.py:73
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calender"
-msgstr "நாட்காட்டி"
-
 #: modules/sogo/manifest.py:74
 #, fuzzy
 #| msgid "Address"
@@ -8842,11 +8836,21 @@ msgstr ""
 "தானியங்கி மென்பொருள் புதுப்பிப்பு முன்னிருப்பாக தினமும் இயங்குகிறது. முதல் முறையாக, "
 "இப்போது அதை கைமுறையாக இயக்கவும்."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "விநியோக புதுப்பிப்பு தொடங்கியது"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"அடுத்த நிலையான வெளியீட்டிற்கு புதுப்பிப்பு தொடங்கியது. இது முடிக்க நீண்ட நேரம் ஆகலாம்."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "விநியோக புதுப்பிப்பை தொடங்க முடியவில்லை"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8856,17 +8860,7 @@ msgstr ""
 "இலவசம் என்பதை உறுதிப்படுத்தவும். இயக்கப்பட்டால், 24 மணி நேரத்திற்குப் பிறகு விநியோக "
 "புதுப்பிப்பு மீண்டும் முயற்சிக்கப்படும்."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "விநியோக புதுப்பிப்பு தொடங்கியது"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"அடுத்த நிலையான வெளியீட்டிற்கு புதுப்பிப்பு தொடங்கியது. இது முடிக்க நீண்ட நேரம் ஆகலாம்."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "தொகுப்பு வைத்திருக்கும் சரிபார்க்கவும்"
 
@@ -10008,16 +10002,6 @@ msgstr "நிறுவல்"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "பணி <em>%(service_name)s </em> இயங்கவில்லை."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "குறிச்சொற்களுடன் தேடுங்கள்"
-
-#: templates/apps.html:46
-#, fuzzy
-#| msgid "Search with tags"
-msgid "Clear all tags"
-msgstr "குறிச்சொற்களுடன் தேடுங்கள்"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10242,6 +10226,16 @@ msgstr ""
 msgid "Update"
 msgstr "புதுப்பிப்பு"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "குறிச்சொற்களுடன் தேடுங்கள்"
+
+#: templates/tags.html:37
+#, fuzzy
+#| msgid "Search with tags"
+msgid "Clear all tags"
+msgstr "குறிச்சொற்களுடன் தேடுங்கள்"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "காப்புப்பிரதி"
@@ -10272,11 +10266,11 @@ msgstr ""
 msgid "Here"
 msgstr ""
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "மாறாமல் அமைத்தல்"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு முன்"
@@ -10284,6 +10278,11 @@ msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு 
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "குசராத்தி"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calender"
+#~ msgstr "நாட்காட்டி"
 
 #~ msgid "No status available."
 #~ msgstr "நிலை எதுவும் கிடைக்கவில்லை."

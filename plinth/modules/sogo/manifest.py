@@ -70,7 +70,7 @@ backup = {
 tags = [
     _('Webmail'),
     _('Groupware'),
-    _('Calender'),
+    _('Calendar'),
     _('Address book'),
     _('CalDAV'),
     _('CardDAV')

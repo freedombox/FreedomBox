@@ -171,6 +171,79 @@ def index(request):
         })
 
 
+def _pick_menu_items(menu_items, selected_tags):
+    """Return a sorted list of menu items filtered by tags."""
+
+    class MenuProxy:
+        """A proxy for the menu item to hold filtered children."""
+
+        def __init__(self, menu_item: menu.Menu):
+            """Initialize a menu proxy object."""
+            self.menu_item = menu_item
+            self.items: list[menu.Menu] = []
+            tags = menu_item.tags or []
+            for item in menu_item.items:
+                tags += item.tags or []
+
+            self.tags = list(tags)
+
+        def __getattr__(self, name: str):
+            """Return attributed from proxied object."""
+            return getattr(self.menu_item, name)
+
+    def _mismatch_map(menu_item) -> list[bool]:
+        """Return a list of mismatches for selected tags.
+
+        A mismatch is when a selected tag is *not* present in the list of
+        tags for menu item.
+        """
+        menu_tags = set(menu_item.tags or [])
+        return [tag not in menu_tags for tag in selected_tags]
+
+    def _sort_key(menu_item):
+        """Returns a comparable tuple to sort menu items.
+
+        Sort items by tag match count first, then by the order of matched
+        tags in user specified order, then by the order set by menu item,
+        and then by the name of the menu item in current locale (by
+        configured collation order).
+        """
+        return (_mismatch_map(menu_item).count(True), _mismatch_map(menu_item),
+                menu_item.order, menu_item.name.lower())
+
+    proxied_menu_items = []
+    for menu_item in menu_items:
+        proxied_item = MenuProxy(menu_item)
+        proxied_item.items = _pick_menu_items(menu_item.items, selected_tags)
+        proxied_menu_items.append(proxied_item)
+
+    # Filter out menu items that don't match any of the selected tags. If
+    # no tags are selected, return all menu items. Otherwise, return all
+    # menu items that have at least one matching tag.
+    filtered_menu_items = [
+        menu_item for menu_item in proxied_menu_items
+        if (not selected_tags) or (not all(_mismatch_map(menu_item)))
+    ]
+
+    return sorted(filtered_menu_items, key=_sort_key)
+
+
+def _get_all_tags(menu_items: list[menu.Menu]) -> list[str]:
+    """Return a sorted list of all tags present in the given menu items."""
+
+    def get_tags(menu_items: list[menu.Menu]) -> set[str]:
+        """Return a list of tags, unsorted."""
+        all_tags = set()
+        for menu_item in menu_items:
+            all_tags.update(menu_item.tags or [])
+            all_tags |= get_tags(menu_item.items)
+
+        return all_tags
+
+    # Sort tags by localized string
+    return sorted(get_tags(menu_items), key=_)
+
+
 class AppsIndexView(TemplateView):
     """View for apps index.
 
@@ -179,41 +252,6 @@ class AppsIndexView(TemplateView):
     it will select apps matching any of the provided tags.
     """
     template_name = 'apps.html'
-
-    @staticmethod
-    def _pick_menu_items(menu_items, selected_tags):
-        """Return a sorted list of menu items filtered by tags."""
-
-        def _mismatch_map(menu_item) -> list[bool]:
-            """Return a list of mismatches for selected tags.
-
-            A mismatch is when a selected tag is *not* present in the list of
-            tags for menu item.
-            """
-            menu_tags = set(menu_item.tags)
-            return [tag not in menu_tags for tag in selected_tags]
-
-        def _sort_key(menu_item):
-            """Returns a comparable tuple to sort menu items.
-
-            Sort items by tag match count first, then by the order of matched
-            tags in user specified order, then by the order set by menu item,
-            and then by the name of the menu item in current locale (by
-            configured collation order).
-            """
-            return (_mismatch_map(menu_item).count(True),
-                    _mismatch_map(menu_item), menu_item.order,
-                    menu_item.name.lower())
-
-        # Filter out menu items that don't match any of the selected tags. If
-        # no tags are selected, return all menu items. Otherwise, return all
-        # menu items that have at least one matching tag.
-        filtered_menu_items = [
-            menu_item for menu_item in menu_items
-            if (not selected_tags) or (not all(_mismatch_map(menu_item)))
-        ]
-
-        return sorted(filtered_menu_items, key=_sort_key)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -224,24 +262,24 @@ class AppsIndexView(TemplateView):
         menu_items = menu.main_menu.active_item(self.request).items
 
         context['tags'] = tags
-        # Sorted tags by localized string
-        all_tags = set()
-        for menu_item in menu_items:
-            all_tags.update(menu_item.tags or [])
-
-        context['all_tags'] = sorted(all_tags, key=lambda tag: _(tag))
-        context['menu_items'] = self._pick_menu_items(menu_items, tags)
+        context['all_tags'] = _get_all_tags(menu_items)
+        context['menu_items'] = _pick_menu_items(menu_items, tags)
 
         return context
 
 
 def system_index(request):
     """Serve the system index page."""
-    menu_items = menu.main_menu.active_item(request).sorted_items()
-    return TemplateResponse(request, 'system.html', {
-        'advanced_mode': get_advanced_mode(),
-        'menu_items': menu_items
-    })
+    tags = request.GET.getlist('tag', [])
+    menu_items = menu.main_menu.active_item(request).items
+
+    return TemplateResponse(
+        request, 'system.html', {
+            'advanced_mode': get_advanced_mode(),
+            'menu_items': _pick_menu_items(menu_items, tags),
+            'tags': tags,
+            'all_tags': _get_all_tags(menu_items)
+        })
 
 
 class LanguageSelectionView(FormView):
@@ -472,9 +510,8 @@ class SetupView(TemplateView):
         context['setup_state'] = setup_state
         context['operations'] = operation.manager.filter(app.app_id)
         context['show_rerun_setup'] = False
-        context['show_uninstall'] = (
-            not app.info.is_essential
-            and setup_state != app_module.App.SetupState.NEEDS_SETUP)
+        context['show_uninstall'] = (not app.info.is_essential and setup_state
+                                     != app_module.App.SetupState.NEEDS_SETUP)
 
         # Perform expensive operation only if needed.
         if not context['operations']:

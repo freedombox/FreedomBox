@@ -111,7 +111,8 @@ class RoundcubeApp(app_module.App):
             return False
 
         # Allow roundcube any version to upgrade to any version. This is okay
-        # because there will no longer be conflicting file changes.
+        # because there will no longer be conflicting file changes after
+        # upgrade from bullseye to bookworm.
         install(['roundcube-core'], force_configuration='new')
         if self.get_component('webserver-roundcube').is_enabled():
             self.get_component('webserver-roundcube-freedombox').enable()

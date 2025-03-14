@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-01-14 01:32+0000\n"
 "Last-Translator: gfbdrgng <hnaofegnp@hldrive.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/freedombox/"
@@ -2844,7 +2844,7 @@ msgstr "Включено"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Выключено"
 
@@ -4777,7 +4777,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "Mumble server is configured"
@@ -7022,7 +7022,7 @@ msgstr ""
 "получите список существующих календарей и адресных книг.</your.freedombox."
 "address>."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "Календарь"
 
@@ -8066,12 +8066,6 @@ msgstr ""
 msgid "Webmail"
 msgstr "Email"
 
-#: modules/sogo/manifest.py:73
-#, fuzzy
-#| msgid "Calendar"
-msgid "Calender"
-msgstr "Календарь"
-
 #: modules/sogo/manifest.py:74
 #, fuzzy
 #| msgid "Address"
@@ -8949,11 +8943,22 @@ msgstr ""
 "По умолчанию автоматическое обновление программного обеспечения выполняется "
 "ежедневно. В первый раз запустите его вручную."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Началось обновление дистрибутива"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Начато обновление до следующего стабильного выпуска. Это может занять много "
+"времени."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Не удалось запустить обновление дистрибутива"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8963,18 +8968,7 @@ msgstr ""
 "дистрибутива. Пожалуйста, убедитесь, что свободно не менее 5 ГБ. Обновление "
 "дистрибутива будет повторно запущено через 24 часа, если это включено."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Началось обновление дистрибутива"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Начато обновление до следующего стабильного выпуска. Это может занять много "
-"времени."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Проверьте, не задерживается ли посылка"
 
@@ -10132,14 +10126,6 @@ msgstr "Установка"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Служба <em>%(service_name)s</em> не запущена."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Поиск по тегам"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Очистить все теги"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10369,6 +10355,14 @@ msgstr ""
 msgid "Update"
 msgstr "Обновление"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Поиск по тегам"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Очистить все теги"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Резервное копирование"
@@ -10399,11 +10393,11 @@ msgstr ""
 msgid "Here"
 msgstr "Вот здесь"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Настройки без изменений"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "перед удалением {app_id}"
@@ -10411,6 +10405,11 @@ msgstr "перед удалением {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Гуджарати"
+
+#, fuzzy
+#~| msgid "Calendar"
+#~ msgid "Calender"
+#~ msgstr "Календарь"
 
 #~ msgid "No status available."
 #~ msgstr "Статус недоступен."

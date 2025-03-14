@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-25 09:20+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/freedombox/"
@@ -2819,7 +2819,7 @@ msgstr "E aktivizuar"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "E çaktivizuar"
 
@@ -4758,7 +4758,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 msgid "Mumble server is configured"
 msgstr "Shërbyesi Mumble është formësuar"
 
@@ -6996,7 +6996,7 @@ msgstr ""
 "e_freedombox-it.tuaj&gt;) dhe emrin tuaj të përdoruesit. Klikimi mbi butonin "
 "e kërkimit do të shfaqë kalendarët dhe librat ekzistues të adresave."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "Kalendar"
 
@@ -8049,10 +8049,6 @@ msgstr "Lidhës Thunderbird + SOGo"
 msgid "Webmail"
 msgstr "Webmail"
 
-#: modules/sogo/manifest.py:73
-msgid "Calender"
-msgstr ""
-
 #: modules/sogo/manifest.py:74
 msgid "Address book"
 msgstr "Libër adresash"
@@ -8923,11 +8919,22 @@ msgstr ""
 "Përditësimi i automatizuar i software-it, si parazgjedhje, kryhet një herë "
 "në ditë. Për herën e parë, kryejeni dorazi tani."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Përditësimi i shpërndarjes filloi"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Filloi përditësimi me hedhjen e re të qëndrueshme në qarkullim. Ky mund të "
+"dojë një kohë të gjatë për t’u plotësuar."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "S’u fillua dot përditësim shpërndarjeje"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8938,18 +8945,7 @@ msgstr ""
 "Përditësimi i shpërndarjes do të riprovohet pas 24 orësh, nëse kjo është "
 "aktivizuar."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Përditësimi i shpërndarjes filloi"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Filloi përditësimi me hedhjen e re të qëndrueshme në qarkullim. Ky mund të "
-"dojë një kohë të gjatë për t’u plotësuar."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Kontrolloni për mbajtje paketash"
 
@@ -10112,14 +10108,6 @@ msgstr "Instalim"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Shërbimi <em>%(service_name)s</em> s’po xhiron."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Kërkoni me etiketa"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Spastroji krejt etiketat"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10347,6 +10335,14 @@ msgstr ""
 msgid "Update"
 msgstr "Përditësoje"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Kërkoni me etiketa"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Spastroji krejt etiketat"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Kopjeruajtje"
@@ -10377,11 +10373,11 @@ msgstr ""
 msgid "Here"
 msgstr "Këtu"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Rregullim i pandryshuar"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "para çinstalimit të {app_id}"

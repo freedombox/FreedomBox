@@ -106,7 +106,8 @@ class MumbleApp(app_module.App):
         if 'mumble-server' not in packages:
             return False
 
-        # Allow upgrades within 1.3.*
+        # Allow upgrades from 1.3.4-1 (bullseye) to 1.3.4-4 (bookworm) but not
+        # to 1.5.735 (trixie) and beyond.
         package = packages['mumble-server']
         if Version(package['new_version']) > Version('1.4~'):
             return False

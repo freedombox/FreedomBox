@@ -647,9 +647,13 @@ class ForceUpgrader():
                 # App does not implement force upgrade
                 continue
 
-            if (app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
-                # App is not installed.
-                # Or needs an update, let it update first.
+            if (app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP
+                ):
+                # If an app is not installed don't considered it. If an app
+                # needs an update, it may have to do a force upgrade before
+                # running app version update. This is because the app version
+                # update process will include installing packages that will
+                # fail due to pending configuration file updates.
                 continue
 
             for component in app.get_components_of_type(Packages):

@@ -6,6 +6,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block page_js %}
+  <script type="text/javascript" src="{% static 'tags.js' %}" defer></script>
+{% endblock %}
+
 {% block body_class %}system-page{% endblock %}
 
 {% block container %}
@@ -17,12 +21,16 @@
     </div>
   </div>
 
+  {% block tags %}
+    {% include "tags.html" %}
+  {% endblock %}
+
   <div class="container card-container">
     {% for section_item in menu_items %}
       <div class="system-section-title">{{ section_item.name }}</div>
       <div class="row">
         <div class="card-list card-list-primary">
-          {% for item in section_item.sorted_items %}
+          {% for item in section_item.items %}
             {% if advanced_mode or not item.advanced %}
               {% include "card.html" %}
             {% endif %}

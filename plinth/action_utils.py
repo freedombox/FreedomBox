@@ -449,14 +449,14 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments):
+def run_apt_command(arguments, stdout=subprocess.DEVNULL):
     """Run apt-get with provided arguments."""
     command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
-    process = subprocess.run(command, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.DEVNULL, env=env, check=False)
+    process = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=stdout,
+                             env=env, check=False)
     return process.returncode
 
 
@@ -475,19 +475,20 @@ def apt_hold(packages):
 
     """
     held_packages = []
-    for package in packages:
-        current_hold = subprocess.check_output(
-            ['apt-mark', 'showhold', package])
-        if not current_hold:
-            process = subprocess.run(['apt-mark', 'hold', package],
-                                     check=False)
-            if process.returncode == 0:  # success
-                held_packages.append(package)
+    try:
+        for package in packages:
+            current_hold = subprocess.check_output(
+                ['apt-mark', 'showhold', package])
+            if not current_hold:
+                process = subprocess.run(['apt-mark', 'hold', package],
+                                         check=False)
+                if process.returncode == 0:  # success
+                    held_packages.append(package)
 
-    yield held_packages
-
-    for package in held_packages:
-        subprocess.check_call(['apt-mark', 'unhold', package])
+        yield held_packages
+    finally:
+        for package in held_packages:
+            subprocess.check_call(['apt-mark', 'unhold', package])
 
 
 @contextmanager

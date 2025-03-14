@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-27 05:06+0000\n"
 "Last-Translator: Jiří Podhorecký <j.podhorecky@volny.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/freedombox/"
@@ -2793,7 +2793,7 @@ msgstr "Zapnuto"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "Vypnuto"
 
@@ -4703,7 +4703,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "Mumble"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 msgid "Mumble server is configured"
 msgstr "Server Mumble je nakonfigurován"
 
@@ -6923,7 +6923,7 @@ msgstr ""
 "své uživatelské jméno. Po kliknutí na tlačítko vyhledávání se zobrazí seznam "
 "existujících kalendářů a adresářů."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
 msgstr "Kalendář"
 
@@ -7966,10 +7966,6 @@ msgstr "Thunderbird + SOGo konektor"
 msgid "Webmail"
 msgstr "Webmail"
 
-#: modules/sogo/manifest.py:73
-msgid "Calender"
-msgstr "Kalendář"
-
 #: modules/sogo/manifest.py:74
 msgid "Address book"
 msgstr "Záznamník adres"
@@ -8829,11 +8825,21 @@ msgstr ""
 "Automatická aktualizace softwaru probíhá ve výchozím nastavení denně. Poprvé "
 "ji nyní spusťte ručně."
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "Zahájena aktualizace distribuce"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr ""
+"Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "Nelze spustit aktualizaci distribuce"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8843,17 +8849,7 @@ msgstr ""
 "distribuce. Zajistěte, aby bylo volných alespoň 5 GB. Aktualizace distribuce "
 "se bude opakovat po 24 hodinách, pokud je povolena."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "Zahájena aktualizace distribuce"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"Zahájena aktualizace na další stabilní verzi. Dokončení může trvat dlouho."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr "Kontrola zadržení balíčku"
 
@@ -9996,14 +9992,6 @@ msgstr "Instalace"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "Služba <em>%(service_name)s</em> není spuštěná."
 
-#: templates/apps.html:33
-msgid "Search with tags"
-msgstr "Hledání pomocí štítků"
-
-#: templates/apps.html:46
-msgid "Clear all tags"
-msgstr "Vymazat všechny štítky"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10232,6 +10220,14 @@ msgstr ""
 msgid "Update"
 msgstr "Aktualizovat"
 
+#: templates/tags.html:24
+msgid "Search with tags"
+msgstr "Hledání pomocí štítků"
+
+#: templates/tags.html:37
+msgid "Clear all tags"
+msgstr "Vymazat všechny štítky"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 msgid "Backup"
 msgstr "Záloha"
@@ -10262,11 +10258,11 @@ msgstr ""
 msgid "Here"
 msgstr "Zde"
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "Nastavení se nezměnila"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "před odinstalací {app_id}"
@@ -10274,6 +10270,9 @@ msgstr "před odinstalací {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "gudžarátština"
+
+#~ msgid "Calender"
+#~ msgstr "Kalendář"
 
 #~ msgid "No status available."
 #~ msgstr "Stav není k dispozici."

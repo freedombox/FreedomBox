@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:13-0500\n"
+"POT-Creation-Date: 2025-03-10 20:08-0400\n"
 "PO-Revision-Date: 2025-02-22 10:04+0000\n"
 "Last-Translator: sai <phanindragvs2002@gmail.com>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -2844,7 +2844,7 @@ msgstr "క్రియాశీలం"
 #: modules/firewall/templates/firewall.html:43
 #: modules/letsencrypt/templates/letsencrypt.html:71
 #: modules/snapshot/forms.py:23 modules/snapshot/forms.py:29
-#: templates/cards.html:36
+#: templates/cards.html:38
 msgid "Disabled"
 msgstr "నిలిపివేయబడింది"
 
@@ -4758,7 +4758,7 @@ msgstr ""
 msgid "Mumble"
 msgstr "మంబుల్"
 
-#: modules/mumble/__init__.py:157
+#: modules/mumble/__init__.py:158
 #, fuzzy
 #| msgid "Mumble server is running"
 msgid "Mumble server is configured"
@@ -6985,7 +6985,7 @@ msgstr ""
 "శోధన బటన్‌పై క్లిక్ చేయడం ద్వారా ఇప్పటికే ఉన్న క్యాలెండర్‌లు మరియు చిరునామా పుస్తకాలు జాబితా చేయబడతాయి </"
 "your.freedombox.address>."
 
-#: modules/radicale/manifest.py:91
+#: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 #, fuzzy
 #| msgid "GNOME Calendar"
 msgid "Calendar"
@@ -8039,12 +8039,6 @@ msgstr ""
 msgid "Webmail"
 msgstr "ఫెయిర్ఇమెయిల్"
 
-#: modules/sogo/manifest.py:73
-#, fuzzy
-#| msgid "GNOME Calendar"
-msgid "Calender"
-msgstr "కేలండర్"
-
 #: modules/sogo/manifest.py:74
 #, fuzzy
 #| msgid "Address"
@@ -8892,11 +8886,20 @@ msgid ""
 "manually run it now."
 msgstr ""
 
-#: modules/upgrades/__init__.py:242
+#: modules/upgrades/__init__.py:230
+msgid "Distribution update started"
+msgstr "పంపిణీ నవీకరణ ప్రారంభమైంది"
+
+#: modules/upgrades/__init__.py:232
+msgid ""
+"Started update to next stable release. This may take a long time to complete."
+msgstr "తదుపరి స్థిరమైన విడుదలకు నవీకరణ ప్రారంభించబడింది. ఇది పూర్తి కావడానికి చాలా సమయం పట్టవచ్చు."
+
+#: modules/upgrades/__init__.py:256
 msgid "Could not start distribution update"
 msgstr "పంపిణీ నవీకరణను ప్రారంభించడం సాధ్యపడలేదు"
 
-#: modules/upgrades/__init__.py:244
+#: modules/upgrades/__init__.py:258
 msgid ""
 "There is not enough free space in the root partition to start the "
 "distribution update. Please ensure at least 5 GB is free. Distribution "
@@ -8905,16 +8908,7 @@ msgstr ""
 "పంపిణీ నవీకరణను ప్రారంభించడానికి రూట్ విభజనలో తగినంత ఖాళీ స్థలం లేదు. దయచేసి కనీసం 5 GB ఉచితంగా "
 "ఉండేలా చూసుకోండి. ప్రారంభించబడితే, పంపిణీ నవీకరణ 24 గంటల తర్వాత మళ్లీ ప్రయత్నించబడుతుంది."
 
-#: modules/upgrades/__init__.py:255
-msgid "Distribution update started"
-msgstr "పంపిణీ నవీకరణ ప్రారంభమైంది"
-
-#: modules/upgrades/__init__.py:257
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr "తదుపరి స్థిరమైన విడుదలకు నవీకరణ ప్రారంభించబడింది. ఇది పూర్తి కావడానికి చాలా సమయం పట్టవచ్చు."
-
-#: modules/upgrades/__init__.py:350
+#: modules/upgrades/__init__.py:352
 msgid "Check for package holds"
 msgstr ""
 
@@ -10077,18 +10071,6 @@ msgstr "నిక్షిప్తం"
 msgid "Service <em>%(service_name)s</em> is not running."
 msgstr "<em>%(service_name)s</em> సేవ నడవడం లేదు."
 
-#: templates/apps.html:33
-#, fuzzy
-#| msgid "Search the web"
-msgid "Search with tags"
-msgstr "అంతర్జాలమును శోధింపుము"
-
-#: templates/apps.html:46
-#, fuzzy
-#| msgid "Search the web"
-msgid "Clear all tags"
-msgstr "అంతర్జాలమును శోధింపుము"
-
 #: templates/base.html:31
 msgid ""
 "FreedomBox is a personal server designed for privacy and data ownership. It "
@@ -10315,6 +10297,18 @@ msgstr ""
 msgid "Update"
 msgstr "నవీకరణ"
 
+#: templates/tags.html:24
+#, fuzzy
+#| msgid "Search the web"
+msgid "Search with tags"
+msgstr "అంతర్జాలమును శోధింపుము"
+
+#: templates/tags.html:37
+#, fuzzy
+#| msgid "Search the web"
+msgid "Clear all tags"
+msgstr "అంతర్జాలమును శోధింపుము"
+
 #: templates/toolbar.html:39 templates/toolbar.html:40
 #, fuzzy
 #| msgid "Backups"
@@ -10347,11 +10341,11 @@ msgstr "మొత్తం యాప్ డేటా మరియు కాన�
 msgid "Here"
 msgstr ""
 
-#: views.py:376
+#: views.py:414
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
-#: views.py:610
+#: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడానికి ముందు"
@@ -10360,6 +10354,11 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #, fuzzy
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#, fuzzy
+#~| msgid "GNOME Calendar"
+#~ msgid "Calender"
+#~ msgstr "కేలండర్"
 
 #~ msgid "No status available."
 #~ msgstr "స్థితి అందుబాటులో లేదు."

@@ -1,0 +1,42 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+
+{% if tags %}
+  <div class="container">
+    <div class="dropdown searchable-dropdown">
+      <div class="tag-input">
+        <div id="selected-tags">
+          {% for tag in tags %}
+            <span class="btn btn-light rounded-pill tag"
+                  data-tag="{{ tag }}">
+              {% trans tag %}
+              <button class="btn btn-sm btn-light remove-tag">
+                <i class="fa fa-times"></i>
+              </button>
+            </span>
+          {% endfor %}
+        </div>
+        <input id="add-tag-input" type="search" class="form-control dropdown-toggle"
+               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               autocomplete="off" placeholder="{% trans "Search with tags" %}">
+        <div class="dropdown-menu" aria-labelledby="add-tag-input">
+          <ul class="dropdown-items">
+            {% for tag in all_tags %}
+              {% if tag not in tags %}
+                <li class="dropdown-item" data-tag="{{ tag }}"
+                    data-tag_l10n="{% trans tag %}">
+                  {% trans tag %}
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        <a href="{{ active_section_url }}" aria-label="{% trans 'Clear all tags' %}"
+           class="btn-close" type="button"></a>
+      </div>
+    </div>
+  </div>
+{% endif %}

@@ -221,9 +221,23 @@ def try_start_dist_upgrade(test=False):
     """Try to start dist upgrade."""
     from plinth.notification import Notification
 
-    result = privileged.start_dist_upgrade(test)
-    dist_upgrade_started = result['dist_upgrade_started']
-    reason = result['reason']
+    try:
+        privileged.start_dist_upgrade(test, _log_error=False)
+    except RuntimeError as exception:
+        reason = exception.args[0]
+    else:
+        logger.info('Started dist upgrade.')
+        title = gettext_noop('Distribution update started')
+        message = gettext_noop(
+            'Started update to next stable release. This may take a long '
+            'time to complete.')
+        Notification.update_or_create(id='upgrades-dist-upgrade-started',
+                                      app_id='upgrades', severity='info',
+                                      title=title, message=message, actions=[{
+                                          'type': 'dismiss'
+                                      }], group='admin')
+        return
+
     if 'found-previous' in reason:
         logger.info(
             'Found previous dist-upgrade. If it was interrupted, it will '
@@ -250,20 +264,8 @@ def try_start_dist_upgrade(test=False):
                                       title=title, message=message, actions=[{
                                           'type': 'dismiss'
                                       }], group='admin')
-    elif 'started-dist-upgrade' in reason:
-        logger.info('Started dist upgrade.')
-        title = gettext_noop('Distribution update started')
-        message = gettext_noop(
-            'Started update to next stable release. This may take a long '
-            'time to complete.')
-        Notification.update_or_create(id='upgrades-dist-upgrade-started',
-                                      app_id='upgrades', severity='info',
-                                      title=title, message=message, actions=[{
-                                          'type': 'dismiss'
-                                      }], group='admin')
     else:
-        logger.warning('Unhandled result of start-dist-upgrade: %s, %s',
-                       dist_upgrade_started, reason)
+        logger.warning('Unhandled result of start-dist-upgrade: %s', reason)
 
 
 def is_backports_requested():

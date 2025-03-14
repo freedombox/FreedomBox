@@ -26,15 +26,15 @@
 /**
  * Update the URL path based on the selected tags.
  *
- * If no tags are selected, redirects to the base apps path. Otherwise,
+ * If no tags are selected, redirects to the base section path. Otherwise,
  * constructs a new URL with query parameters for each tag.
  *
  * @param {string[]} tags - An array of selected tag names.
  */
 function updatePathWithTags(tags) {
-    const appsPath = window.location.pathname;
+    const sectionPath = window.location.pathname;
     if (tags.length === 0) {
-        this.location.assign(appsPath);
+        this.location.assign(sectionPath);
     } else {
         const urlParams = new URLSearchParams();
         tags.forEach(tag => urlParams.append('tag', tag));
