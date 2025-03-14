@@ -70,7 +70,8 @@ Normalmente cualquier sistema Unix, incluyendo a Linux en (casi) todos sus sabor
 Ejemplos:
 
 Conectar con !FreedomBox mediante SSH:
- 1. (reemplazando `usuario` por un nombre de usuario válido en !FreedomBox y `freedombox.local` por el nombre de dominio o la IP de tu !FreedomBox): {{{
+ 1. (reemplazando `usuario` por un nombre de usuario válido en !FreedomBox y `freedombox.local` por el nombre de dominio o la IP de tu !FreedomBox):
+ {{{
 $ ssh usuario@freedombox.local
 }}}
  1. Si tus datos son correctos y tu !FreedomBox está accesible la primera vez se te pedirá confirmar su identificación.
@@ -79,15 +80,18 @@ $ ssh usuario@freedombox.local
  1. El prompt cambia a `usuario@freedombox:~$`.
 
 Una vez conectado crea la carpeta de tu sitio web mediante:
- {{{
+{{{
 usuario@freedombox:~$ mkdir ~/public_html
 }}}
 
 ...o crea la del sitio de otro usuario:
- 1. Usa el prefijo `sudo` así: {{{
+ 1. Usa el prefijo `sudo` así:
+ {{{
 usuario@freedombox:~$ sudo mkdir /home/<el_otro_usuario>/public_html
-}}}, e introduce tu contraseña.
- 1. Al crear una carpeta, por defecto te pertenece a tí la crees donde la crées. Por tanto, necesitarás poner como dueño al otro usuario: {{{
+}}}
+ e introduce tu contraseña.
+ 1. Al crear una carpeta, por defecto te pertenece a tí la crees donde la crées. Por tanto, necesitarás poner como dueño al otro usuario:
+ {{{
 usuario@freedombox:~$ sudo chown <el_otro_usuario>:<el_otro_usuario> /home/<el_otro_usuario>/public_htm
 }}}
  1. Antes de desconectar mejor verificas que `public_html' se muestra entre los contenidos de la carpeta `home` del otro usuario.
@@ -96,19 +100,21 @@ usuario@freedombox:~$ ls -l /home/<el_otro_usuario>
 ...
 drwxr-xr-x  2 <el_otro_usuario> <el_otro_usuario>   4096 jan 29 17:39  public_html
 ...
-}}}. El nombre del otro usuario tiene que aparecer '''por duplicado''' en la línea de `public_html` y sus permisos deben ser '''`drwxr-xr-x`'''.
+}}}
+ El nombre del otro usuario tiene que aparecer '''por duplicado''' en la línea de `public_html` y sus permisos deben ser '''`drwxr-xr-x`'''.
 
 Ahora el otro usuario puede subir sus archivos con cualquiera de los clientes gráficos. Pídeles que lo comprueben.
 
 Es una buena práctica de seguridad salir en vez de esperar simplemente a que la conexión caduque:
- {{{
+{{{
 usuario@freedombox:~$ exit
 }}}
 
 Si quieres emplear la linea de órdenes también para subir contenido puedes
 {{{
 $ scp ruta/a/los/archivos usuario@freedombox.local:public_html/
-}}}. Te pedirá tu contraseña en !FreedomBox. A continuación deberías poder ir con tu navegador a la URL correspondiente y ver tus archivos.
+}}}
+Te pedirá tu contraseña en !FreedomBox. A continuación deberías poder ir con tu navegador a la URL correspondiente y ver tus archivos.
 
 Más acerca de ssh, scp y sftp con `$ man ssh`, `$ man scp` y `$ man sftp`.
 
