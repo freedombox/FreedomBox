@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Set FREEDOMBOX_URL to the URL of the FreedomBox on which
+# all apps will be enabled.
+
+from splinter import Browser
+
+from plinth import app as app_module, module_loader
+from plinth.tests.functional import app_enable, install, login
+
+module_loader.load_modules()
+app_module.apps_init()
+
+browser = Browser('firefox')
+login(browser)
+
+for app in app_module.App.list():
+    app_name = app.app_id
+    try:
+        # Some apps cannot be installed.
+        install(browser, app_name)
+    except:
+        pass
+
+    try:
+        app_enable(browser, app_name)
+    except:
+        # Some apps cannot be enabled.
+        pass

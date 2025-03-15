@@ -112,7 +112,12 @@ version = {attr = "plinth.__version__"}
 include = ["plinth", "plinth.*"]
 
 [tool.setuptools.package-data]
-"*" = ["templates/*", "static/**", "locale/*/LC_MESSAGES/*.mo"]
+"*" = [
+    "templates/*",
+    "static/**",
+    "locale/*/LC_MESSAGES/*.mo",
+    "tests/functional/config.ini"
+]
 
 [tool.setuptools.exclude-package-data]
 "*" = ["*/data/*"]
