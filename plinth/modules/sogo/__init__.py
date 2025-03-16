@@ -60,8 +60,11 @@ class SOGoApp(app_module.App):
                                       clients=info.clients, tags=info.tags)
         self.add(shortcut)
 
+        # dpkg-dev is needed because plget command, part of
+        # gnustep-base-runtime package, uses dpkg-architecture command but
+        # there is no dependency on dpkg-dev.
         packages = Packages('packages-sogo',
-                            ['sogo', 'postgresql', 'memcached'])
+                            ['sogo', 'postgresql', 'memcached', 'dpkg-dev'])
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-sogo', [
