@@ -73,16 +73,35 @@ def setup_config():
 
     # disable authentication missing notification as FreedomBox itself
     # provides authentication
-    auth_conf = ('/configuration/options/unackedNotificationID'
-                 '[#text="authenticationUserAndPassword"]')
-    conf_changed = bool(aug.remove('/files' + conf_file_in_use + auth_conf))
+    # also make sure no authentication is required on top of FreedomBox's
+    configs_to_remove = (
+        'options/unackedNotificationID[#text="authenticationUserAndPassword"]',
+        'gui/user/#text', 'gui/password/#text')
+    conf_changed = False
+    for config in configs_to_remove:
+        removed = bool(
+            aug.remove('/files' + conf_file_in_use +
+                       f'/configuration/{config}'))
+        if removed:
+            conf_changed = True
 
-    # disable usage reporting notification by declining reporting
-    # if the user has not made a choice yet
-    usage_conf = '/configuration/options/urAccepted/#text'
-    if aug.get('/files' + conf_file_in_use + usage_conf) == '0':
-        aug.set('/files' + conf_file_in_use + usage_conf, '-1')
-        conf_changed = True
+    configs = {
+        # disable usage reporting notification by declining reporting
+        # if the user has not made a choice yet
+        'options/urAccepted/#text': '-1',
+        # Set all the values that, misconfigured from the Syncthing UI,
+        # can make the UI inaccessible. Such misconfigurations can be
+        # corrected if the user re-runs the setup.
+        # https://discuss.freedombox.org/t/solved-cant-access-syncthing-administration-panel/2137
+        'gui/#attribute/tls': 'false',
+        'gui/#attribute/enabled': 'true',
+        'gui/address/#text': '127.0.0.1:8384'
+    }
+    for key, value in configs.items():
+        config = f'/configuration/{key}'
+        if aug.get('/files' + conf_file_in_use + config) != value:
+            aug.set('/files' + conf_file_in_use + config, value)
+            conf_changed = True
 
     aug.save()
 
