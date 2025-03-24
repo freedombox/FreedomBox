@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h3>{% trans "Distribution Update" %}</h3>
+
+  {% if status.running %}
+    <div class="upgrades-dist-upgrade clearfix">
+      <div class="upgrades-dist-upgrade-running-icon pull-left">
+        <span class="fa fa-refresh fa-spin fa-3x fa-pull-left text-info"></span>
+      </div>
+      <p>
+        {% blocktrans trimmed %}
+          Distribution update is currently running. This operation may take
+          several hours. Most apps will be unavailable during this period.
+        {% endblocktrans %}
+      </p>
+    </div>
+  {% else %}
+    {% if not status.updates_enabled or not status.dist_upgrade_enabled or not status.has_free_space or not status.current_codename %}
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <div class="me-2">
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Caution:" %}</span>
+        </div>
+
+        <div>
+          {% if not status.updates_enabled %}
+            {% trans "Automatic updates are disabled." %}
+          {% endif %}
+
+          {% if not status.dist_upgrade_enabled %}
+            {% trans "Distribution upgrades are disabled." %}
+          {% endif %}
+
+          {% if not status.has_free_space %}
+            {% blocktrans trimmed %}
+              You need to have at least 5 GB of free space available on primary disk
+              to perform a distribution update.
+            {% endblocktrans %}
+          {% endif %}
+
+          {% if not status.current_codename %}
+            {% trans "Your current distribution is mixed or not understood." %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <p>
+      {% trans "Current Distribution:" %} <strong>
+      {% if not status.current_codename %}
+        {% trans "Unknown or mixed" %}
+      {% elif status.current_codename == "testing" and status.current_codename == "unstable" %}
+        {{ status.current_codename }}
+        ({% trans "Rolling release distribution" %})
+      {% else %}
+        {{ status.current_version }}
+        ({{ status.current_codename }})
+      {% endif %}
+      </strong>
+      {% if status.current_release_date %}
+        {% blocktrans trimmed with date=status.current_release_date|date %}
+          Released: {{ date }}.
+        {% endblocktrans %}
+      {% endif %}
+    </p>
+
+    <p>
+      {% trans "Next Stable Distribution:" %} <strong>
+      {% if not status.next_codename %}
+        {% trans "Unknown" %}
+      {% else %}
+        {{ status.next_version }} ({{ status.next_codename }})
+      {% endif %}
+      </strong>
+      {% if status.next_release_date %}
+        {% blocktrans trimmed with date=status.next_release_date|date %}
+          Likely release: {{ date }}.
+        {% endblocktrans %}
+      {% endif %}
+    </p>
+
+    <p>
+      {% if status.next_codename and not status.next_release_date %}
+        {% blocktrans trimmed %}
+          Next stable distribution is not available yet.
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if status.current_codename == "testing" or status.current_codename == "unstable" %}
+        {% blocktrans trimmed %}
+          You are on a rolling release distribution. No distribution update
+          is necessary. Thank you for helping test the {{ box_name }} project.
+          Please report any problems you notice.
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if status.next_action == "continue" %}
+        {% blocktrans trimmed %}
+          A previous run of distribution update may have been interrupted. Please
+          re-run the distribution update.
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if status.next_action == "wait_or_manual" %}
+        {% blocktrans trimmed with period=status.next_action_date|timeuntil %}
+          A new stable distribution is available. Your {{ box_name }} will be
+          updated automatically in {{ period }}. You may choose to update
+          manually now, if you wish.
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if status.next_action == "ready" %}
+        {% blocktrans trimmed %}
+          A new stable distribution is available. Your {{ box_name }} will be
+          updated automatically soon. You may choose to update manually now, if
+          you wish.
+        {% endblocktrans %}
+      {% endif %}
+
+      {% if status.next_action == "manual" %}
+        {% blocktrans trimmed %}
+          You are on the latest stable distribution. This is recommended.
+          However, if you wish to help beta test {{ box_name }} functionality,
+          you may update to next distribution manually. This setup may
+          experience occational app failures until the next stable release.
+        {% endblocktrans %}
+      {% endif %}
+    </p>
+
+    <p>
+      {% if status.next_action == "ready" or status.next_action == "wait_or_manual" %}
+        <a role="button" class="btn btn-primary"
+           href="{% url 'upgrades:dist-upgrade-confirm' %}">
+          {% trans "Start Distribution Update" %}
+        </a>
+      {% elif status.next_action == "continue" %}
+        <a role="button" class="btn btn-warning"
+           href="{% url 'upgrades:dist-upgrade-confirm' %}">
+          {% trans "Continue Distribution Update" %}
+        </a>
+      {% elif status.next_action == "manual" %}
+        <a role="button" class="btn btn-danger"
+           href="{% url 'upgrades:dist-upgrade-confirm' %}">
+          {% trans "Start Distribution Update (for testing)" %}
+        </a>
+      {% else %}
+        <a role="button" class="btn btn-primary disabled"
+           href="{% url 'upgrades:dist-upgrade-confirm' %}">
+          {% trans "Start Distribution Update" %}
+        </a>
+      {% endif %}
+    </p>
+  {% endif %}
+{% endblock %}

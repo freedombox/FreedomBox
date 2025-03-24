@@ -236,7 +236,7 @@ def activate_backports(develop: bool = False):
 
 
 @privileged
-def start_dist_upgrade(test: bool = False):
+def start_dist_upgrade():
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process
@@ -244,7 +244,7 @@ def start_dist_upgrade(test: bool = False):
     """
     _release_held_freedombox()
 
-    distupgrade.start_service(test)
+    distupgrade.start_service()
 
 
 @privileged
