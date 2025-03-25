@@ -17,9 +17,9 @@ except ImportError:
     _functional_libs_available = False
 
 
-def pytest_ignore_collect(path, config):
+def pytest_ignore_collect(collection_path, config):
     """Ignore functional tests when splinter is not available."""
-    if path.basename == 'test_functional.py':
+    if collection_path.name == 'test_functional.py':
         return not _functional_libs_available
 
 
