@@ -375,7 +375,16 @@ def test_validate_directory_creatable(path, error):
 @patch('psutil.disk_partitions')
 def test_is_partition_read_only(disk_partitions):
     """Test whether checking for ro partition works."""
-    partition = psutil._common.sdiskpart  # pylint: disable=protected-access
+
+    def partition(*args):
+        try:
+            # psutil <= 5.9.8
+            # pylint: disable=protected-access
+            return psutil._common.sdiskpart(*args)
+        except TypeError:
+            # psutil >= 7.0
+            return psutil._common.sdiskpart(*args[:-2])
+
     disk_partitions.return_value = [
         partition('/dev/root', '/', 'btrfs', 'rw,nosuid', 42, 42),
         partition('/dev/root', '/foo', 'btrfs', 'rw', 321, 321),
