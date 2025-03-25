@@ -20,9 +20,9 @@ class Operation:
     class State(enum.Enum):
         """Various states of an operation."""
 
-        WAITING: str = 'waiting'
-        RUNNING: str = 'running'
-        COMPLETED: str = 'completed'
+        WAITING = 'waiting'
+        RUNNING = 'running'
+        COMPLETED = 'completed'
 
     def __init__(self, op_id: str, app_id: str, name: str, target: Callable,
                  args: list | None = None, kwargs: dict | None = None,
