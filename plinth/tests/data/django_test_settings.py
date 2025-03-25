@@ -56,3 +56,7 @@ TEMPLATES = [{
     'APP_DIRS': True,
     'DIRS': ['plinth/tests/data/templates/'],
 }]
+
+TIME_ZONE = 'UTC'
+
+USE_TZ = True
