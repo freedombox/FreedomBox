@@ -21,8 +21,10 @@ def fixture_backup_restore():
     value = {'files': ['a', 'b'], 'directories': ['a', 'b']}
     services = ['service-1', {'type': 'system', 'name': 'service-2'}]
     settings = ['setting-1', 'setting-2']
+    delete_before_restore = ['path1', 'path2']
     return BackupRestore('test-backup-restore', config=value, data=value,
-                         secrets=value, services=services, settings=settings)
+                         secrets=value, services=services, settings=settings,
+                         delete_before_restore=delete_before_restore)
 
 
 @pytest.mark.parametrize('section', [
@@ -156,6 +158,20 @@ def test_invalid_services(services):
         components._validate_services(services)
 
 
+@pytest.mark.parametrize('paths', [
+    10,
+    'invalid',
+    [None],
+    [10],
+    [[]],
+    [{}],
+])
+def test_invalid_paths(paths):
+    """Test invalid values for paths."""
+    with pytest.raises(AssertionError):
+        components._validate_paths(paths)
+
+
 def test_backup_restore_init_default_arguments():
     """Test initialization of the backup restore object."""
     component = BackupRestore('test-backup-restore')
@@ -230,7 +246,6 @@ def test_backup_restore_hooks(backup_restore):
     """Test running hooks on backup restore object."""
     packet = None
     backup_restore.backup_post(packet)
-    backup_restore.restore_pre(packet)
 
 
 @pytest.mark.django_db
@@ -247,6 +262,20 @@ def test_backup_restore_backup_pre(dump_settings, backup_restore):
 
     backup_restore.backup_pre(packet)
     dump_settings.assert_has_calls([call('testapp', {'setting-1': 'value-1'})])
+
+
+@patch('plinth.modules.backups.privileged.delete_before_restore')
+def test_backup_restore_restore_pre(delete_before_restore, backup_restore):
+    """Test running restore-pre hook."""
+    packet = None
+    backup_restore.app_id = 'testapp'
+
+    component = BackupRestore('test-backup-restore')
+    component.restore_pre(packet)
+    delete_before_restore.assert_has_calls([])
+
+    backup_restore.restore_pre(packet)
+    delete_before_restore.assert_has_calls([call('testapp')])
 
 
 @pytest.mark.django_db

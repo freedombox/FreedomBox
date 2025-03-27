@@ -57,11 +57,21 @@ def _validate_settings(settings):
         assert isinstance(setting, str)
 
 
+def _validate_paths(paths):
+    """Validate a list of files or directories."""
+    if not paths:
+        return
+
+    assert isinstance(paths, list)
+    for path in paths:
+        assert isinstance(path, str)
+
+
 class BackupRestore(app.FollowerComponent):
     """Component to backup/restore an app."""
 
     def __init__(self, component_id, config=None, data=None, secrets=None,
-                 services=None, settings=None):
+                 services=None, settings=None, delete_before_restore=None):
         """Initialize the backup/restore component."""
         super().__init__(component_id)
 
@@ -75,6 +85,8 @@ class BackupRestore(app.FollowerComponent):
         self.services = services or []
         _validate_settings(settings)
         self.settings = settings or []
+        _validate_paths(delete_before_restore)
+        self.delete_before_restore = delete_before_restore or []
 
         self.has_data = (bool(config) or bool(data) or bool(secrets)
                          or bool(settings))
@@ -112,6 +124,9 @@ class BackupRestore(app.FollowerComponent):
         if self.settings:
             manifest['settings'] = self.settings
 
+        if self.delete_before_restore:
+            manifest['delete_before_restore'] = self.delete_before_restore
+
         return manifest
 
     def backup_pre(self, packet):
@@ -123,6 +138,7 @@ class BackupRestore(app.FollowerComponent):
 
     def restore_pre(self, packet):
         """Perform any special operations before restore."""
+        self._files_restore_pre()
 
     def restore_post(self, packet):
         """Perform any special operations after restore."""
@@ -150,6 +166,13 @@ class BackupRestore(app.FollowerComponent):
                 pass
 
         privileged.dump_settings(self.app_id, data)
+
+    def _files_restore_pre(self):
+        """Delete some files and directories before restoring."""
+        if not self.delete_before_restore:
+            return
+
+        privileged.delete_before_restore(self.app_id)
 
     def _settings_restore_post(self):
         """Read from a file and restore keys to kvstore."""

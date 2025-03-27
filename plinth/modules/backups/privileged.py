@@ -6,12 +6,15 @@ import json
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import tarfile
 
 from django.utils.translation import gettext_lazy as _
 
 from plinth import action_utils
+from plinth import app as app_module
+from plinth import module_loader
 from plinth.actions import privileged, secret_str
 from plinth.utils import Version
 
@@ -479,6 +482,20 @@ def load_settings(app_id: str) -> dict[str, int | float | bool | str]:
         return json.loads(settings_path.read_text())
     except FileNotFoundError:
         return {}
+
+
+@privileged
+def delete_before_restore(app_id: str):
+    """Delete some paths before restoring an app."""
+    module_loader.load_modules()
+    app_module.apps_init()
+    app = app_module.App.get(app_id)
+
+    from plinth.modules.backups.components import BackupRestore
+    components = app.get_components_of_type(BackupRestore)
+    for component in components:
+        for path in component.delete_before_restore:
+            shutil.rmtree(path, ignore_errors=True)
 
 
 def _get_env(encryption_passphrase: str | None = None):
