@@ -113,7 +113,8 @@ class Packages(app_module.FollowerComponent):
                  packages: list[str | PackageExpression],
                  skip_recommends: bool = False,
                  conflicts: list[str] | None = None,
-                 conflicts_action: ConflictsAction | None = None):
+                 conflicts_action: ConflictsAction | None = None,
+                 rerun_setup_on_upgrade: bool = False):
         """Initialize a new packages component.
 
         'component_id' should be a unique ID across all components of an app
@@ -131,6 +132,10 @@ class Packages(app_module.FollowerComponent):
         'conflicts_action' is a string representing the action to take when it
         is found that conflicting Debian packages are installed on the system.
         None if there are no known conflicting packages.
+
+        'rerun_setup_on_upgrade' is a boolean to specify whether app's setup
+        process should be rerun if a .deb package is upgraded (by someone other
+        than FreedomBox process).
         """
         super().__init__(component_id)
 
@@ -145,6 +150,7 @@ class Packages(app_module.FollowerComponent):
         self.skip_recommends = skip_recommends
         self.conflicts = conflicts or []
         self.conflicts_action = conflicts_action
+        self.rerun_setup_on_upgrade = rerun_setup_on_upgrade
 
     @property
     def package_expressions(self) -> list[PackageExpression]:
