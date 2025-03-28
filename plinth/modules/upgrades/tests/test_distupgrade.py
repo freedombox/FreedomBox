@@ -280,7 +280,11 @@ def test_packages_remove_obsolete(apt_run):
 def test_apt_update(apt_run):
     """Test that apt update works."""
     distupgrade._apt_update()
-    apt_run.assert_called_with(['update'])
+    apt_run.assert_called_with(['update'], enable_triggers=False)
+
+    apt_run.reset_mock()
+    distupgrade._apt_update(enable_triggers=True)
+    apt_run.assert_called_with(['update'], enable_triggers=True)
 
 
 @patch('plinth.modules.upgrades.distupgrade._apt_run')

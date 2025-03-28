@@ -30,9 +30,10 @@ sources_list = pathlib.Path('/etc/apt/sources.list')
 temp_sources_list = pathlib.Path('/etc/apt/sources.list.fbx-dist-upgrade')
 
 
-def _apt_run(arguments):
+def _apt_run(arguments: list[str], enable_triggers: bool = False):
     """Run an apt command and ensure that output is written to stdout."""
-    return action_utils.run_apt_command(arguments, stdout=None)
+    return action_utils.run_apt_command(arguments, stdout=None,
+                                        enable_triggers=enable_triggers)
 
 
 def _sources_list_update(old_codename: str, new_codename: str):
@@ -217,10 +218,10 @@ def _packages_remove_obsolete() -> None:
         _apt_run(['remove'] + OBSOLETE_PACKAGES)
 
 
-def _apt_update():
+def _apt_update(enable_triggers: bool = False):
     """Run 'apt update'."""
     logger.info('Updating Apt cache...')
-    _apt_run(['update'])
+    _apt_run(['update'], enable_triggers=enable_triggers)
 
 
 def _apt_fix():
@@ -314,7 +315,7 @@ def perform():
     _unattended_upgrades_run()
     _freedombox_restart()
     _wait()
-    _apt_update()
+    _apt_update(enable_triggers=True)
     _trigger_on_complete()
 
 

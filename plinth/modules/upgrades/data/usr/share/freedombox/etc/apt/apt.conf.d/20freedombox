@@ -4,7 +4,7 @@
 // via it's D-Bus API. FreedomBox may then handle upgrade of some packages.
 //
 APT::Update::Post-Invoke-Success {
-    "/usr/bin/test -S /var/run/dbus/system_bus_socket && /usr/bin/gdbus call --system --dest org.freedombox.Service --object-path /org/freedombox/Service/PackageHandler --timeout 10 --method org.freedombox.Service.PackageHandler.CacheUpdated 2> /dev/null > /dev/null; /bin/echo > /dev/null";
+    "/usr/bin/test x$FREEDOMBOX_INVOKED != 'xtrue' && /usr/bin/test -S /var/run/dbus/system_bus_socket && /usr/bin/gdbus call --system --dest org.freedombox.Service --object-path /org/freedombox/Service/PackageHandler --timeout 10 --method org.freedombox.Service.PackageHandler.CacheUpdated 2> /dev/null > /dev/null; /bin/echo > /dev/null";
 };
 
 // Clean apt cache every 7 days

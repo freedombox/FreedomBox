@@ -449,12 +449,15 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments, stdout=subprocess.DEVNULL):
+def run_apt_command(arguments, stdout=subprocess.DEVNULL,
+                    enable_triggers: bool = False):
     """Run apt-get with provided arguments."""
     command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
+    if not enable_triggers:
+        env['FREEDOMBOX_INVOKED'] = 'true'
     process = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=stdout,
                              env=env, check=False)
     return process.returncode
