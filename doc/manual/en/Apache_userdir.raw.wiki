@@ -76,7 +76,8 @@ Usually any Unix system, including Linux in all (most) of its flavours and Mac, 
 Examples:
 
 Connect to !FreedomBox via SSH:
- 1. (replacing `username` with a valid !FreedomBox user name and `freedombox.local` with your !FreedomBox's domain name or IP): {{{
+ 1. (replacing `username` with a valid !FreedomBox user name and `freedombox.local` with your !FreedomBox's domain name or IP):
+ {{{
 $ ssh username@freedombox.local
 }}}
  1. If your data is ok and your !FreedomBox reachable, the first time you'll be asked to confirm its signature.
@@ -85,36 +86,41 @@ $ ssh username@freedombox.local
  1. The prompt changes to `username@freedombox:~$`.
 
 Once connected create your website folder with:
- {{{
+{{{
 username@freedombox:~$ mkdir ~/public_html
 }}}
 
 ...or one for another user:
- 1. use the `sudo` prefix like {{{
+ 1. use the `sudo` prefix like
+ {{{
 username@freedombox:~$ sudo mkdir /home/<the_other_user>/public_html
-}}}, and introduce your password.
- 1. When you create a folder, by default it belongs to you no matter where it is created. Thus you'll then need to set its ownership to the other user: {{{
-username@freedombox:~$ sudo chown <the_other_user>:<the_other_user> /home/<the_other_user>/public_htm
 }}}
- 1. Better check it before you disconnect that `public_html' is listed among the contents of the other user's home folder.
+ and introduce your password.
+ 1. When you create a folder, by default it belongs to you no matter where it is created. Thus you'll then need to set its ownership to the other user:
+ {{{
+username@freedombox:~$ sudo chown <the_other_user>:<the_other_user> /home/<the_other_user>/public_html
+}}}
+ 1. Better check it before you disconnect that `public_html` is listed among the contents of the other user's home folder.
  {{{
 username@freedombox:~$ ls -l /home/<the_other_user>
 ...
 drwxr-xr-x  2 <the_other_user> <the_other_user>   4096 jan 29 17:39  public_html
 ...
-}}}. The name of the other user must appear '''twice''' in the `public_html` line and its permissions should be '''`drwxr-xr-x`'''.
+}}}
+ The name of the other user must appear '''twice''' in the `public_html` line and its permissions should be '''`drwxr-xr-x`'''.
 
 Then any user can upload their files to their respective folders with any of the graphical clients. Ask them to check it.
 
 It is a good security practice to exit instead of to just wait for the connection to time out:
- {{{
+{{{
 username@freedombox:~$ exit
 }}}
 
 If then you want to also upload the web content through the command line you can
 {{{
 $ scp path/to/files username@freedombox.local:public_html/
-}}}. It will ask your password in !FreedomBox. You should then be able to navigate your browser to the corresponding url and see the files.
+}}}
+It will ask your password in !FreedomBox. You should then be able to navigate your browser to the corresponding url and see the files.
 
 Learn more about ssh, scp and sftp with `$ man ssh`, `$ man scp` and `$ man sftp`.
 

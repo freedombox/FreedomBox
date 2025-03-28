@@ -9,9 +9,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from plinth import cfg
+from plinth.modules import names
 from plinth.utils import format_lazy
-
-from . import privileged
 
 HOSTNAME_REGEX = r'^[a-zA-Z0-9]([-a-zA-Z0-9]{,61}[a-zA-Z0-9])?$'
 
@@ -122,7 +121,7 @@ class DomainAddForm(forms.Form):
     def clean_domain_name(self):
         """Check if the name is valid."""
         domain_name = self.cleaned_data['domain_name']
-        if domain_name in privileged.get_domains():
+        if domain_name in names.domains_list():
             raise ValidationError(_('Domain already exists.'))
 
         return domain_name

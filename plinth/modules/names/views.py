@@ -163,7 +163,7 @@ def _domain_add(domain_name: str):
     domain_name = domain_name.lower()
 
     logger.info('Adding domain name - %s', domain_name)
-    privileged.domain_add(domain_name)
+    names.domain_add(domain_name)
 
     domain_added.send_robust(sender='names', domain_type='domain-type-static',
                              name=domain_name, services='__all__')
@@ -176,7 +176,7 @@ def _domain_delete(domain_name: str):
     domain_name = domain_name.lower()
 
     logger.info('Removing domain name - %s', domain_name)
-    privileged.domain_delete(domain_name)
+    names.domain_delete(domain_name)
 
     # Update domain registered with Name Services module.
     domain_removed.send_robust(sender='names',

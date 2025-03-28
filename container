@@ -318,7 +318,7 @@ LIBVIRT_DOMAIN_XML_TEMPLATE = '''<domain type="kvm">
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="file" device="disk">
-      <driver name="qemu" type="raw"/>
+      <driver name="qemu" type="qcow2"/>
       <source file="{image_file}"/>
       <target dev="vda" bus="virtio"/>
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
@@ -1356,10 +1356,10 @@ class VM(Machine):
         except subprocess.CalledProcessError:
             pass
 
-        image_file = _get_image_file(self.distribution)
+        qcow_image = self._create_qcow_image()
         domain_xml = LIBVIRT_DOMAIN_XML_TEMPLATE.format(
             domain_name=self.machine_name, memory_mib='2048', cpus='4',
-            image_file=image_file, source_dir=_get_project_folder())
+            image_file=qcow_image, source_dir=_get_project_folder())
 
         with tempfile.NamedTemporaryFile() as file_handle:
             file_handle.write(domain_xml.encode())
@@ -1389,12 +1389,22 @@ class VM(Machine):
             return
 
         logger.info('Running `virsh destroy %s`', self.machine_name)
-        self._virsh(['destroy', self.machine_name], stdout=subprocess.DEVNULL)
+        try:
+            self._virsh(['undefine', self.machine_name],
+                        stdout=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:
+            pass
 
     def destroy(self) -> None:
         """Remove all traces of the VM from the host."""
         logger.info('Running `virsh undefine %s`', self.machine_name)
-        self._virsh(['undefine', self.machine_name], stdout=subprocess.DEVNULL)
+        try:
+            self._virsh(['undefine', self.machine_name],
+                        stdout=subprocess.DEVNULL)
+        except subprocess.CalledProcessError:
+            pass
+
+        self._destroy_qcow_image()
 
     def get_ip_address(self) -> str | None:
         """Return the IP address assigned to the VM."""
@@ -1425,6 +1435,27 @@ class VM(Machine):
     def _virsh(self, args: list[str], check=True, **kwargs):
         """Run virsh to control the virtual machine."""
         return subprocess.run(['sudo', 'virsh'] + args, check=check, **kwargs)
+
+    def _create_qcow_image(self) -> pathlib.Path:
+        """Convert raw image into qcow2 image.
+
+        qcow2 image format allows snapshots of VM.
+        """
+        image_file = _get_image_file(self.distribution)
+        qcow_image = image_file.with_suffix('.qcow2')
+        logger.info('Creating qcow2 image: %s', qcow_image)
+        subprocess.run([
+            'sudo', 'qemu-img', 'convert', '-f', 'raw', '-O', 'qcow2',
+            image_file, qcow_image
+        ], check=True)
+        return qcow_image
+
+    def _destroy_qcow_image(self) -> None:
+        """Delete the qcow image."""
+        image_file = _get_image_file(self.distribution)
+        qcow_image = image_file.with_suffix('.qcow2')
+        logger.info('Removing qcow2 image: %s', qcow_image)
+        qcow_image.unlink(missing_ok=True)
 
 
 def subcommand_up(arguments: argparse.Namespace):

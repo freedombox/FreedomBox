@@ -39,8 +39,8 @@ def _load_augeas_hosts():
     return aug
 
 
-def get_domains(aug=None) -> list[str]:
-    """Return the list of domains."""
+def get_old_domains(aug=None) -> list[str]:
+    """Return the list of domains store in old /etc/hosts format."""
     if not aug:
         aug = _load_augeas_hosts()
 
@@ -69,54 +69,12 @@ def get_domains(aug=None) -> list[str]:
 
 
 @privileged
-def domain_add(domain_name: str | None = None):
-    """Set system's static domain name in /etc/hosts."""
+def domain_delete_all():
+    """Remove all static domain names from /etc/hosts."""
     aug = _load_augeas_hosts()
-    domains = get_domains(aug)
-    if domain_name in domains:
-        return  # Domain already present in /etc/hosts
-
-    aug.set('./01/ipaddr', HOSTS_LOCAL_IP)
-    aug.set('./01/canonical', domain_name)
-    aug.save()
-
-
-@privileged
-def domain_delete(domain_name: str | None = None):
-    """Set system's static domain name in /etc/hosts."""
-    aug = _load_augeas_hosts()
-    domains = get_domains(aug)
-    if domain_name not in domains:
-        return  # Domain already not present in /etc/hosts
-
-    for match in aug.match('*'):
-        if aug.get(match + '/ipaddr') == HOSTS_LOCAL_IP and \
-           aug.get(match + '/canonical') == domain_name:
-            aug.remove(match)
-
-    aug.save()
-
-
-@privileged
-def domains_migrate() -> None:
-    """Convert old style of adding domain names to /etc/hosts to new.
-
-    Old format:
-        127.0.1.1 <hostname>.<domain> <hostname>
-
-    New format:
-        127.0.1.1 <domain1>
-        127.0.1.1 <domain2>
-    """
-    aug = _load_augeas_hosts()
-    domains = get_domains(aug)
     for match in aug.match('*'):
         if aug.get(match + '/ipaddr') == HOSTS_LOCAL_IP:
             aug.remove(match)
-
-    for number, domain in enumerate(domains):
-        aug.set(f'./0{number}/ipaddr', HOSTS_LOCAL_IP)
-        aug.set(f'./0{number}/canonical', domain)
 
     aug.save()
 

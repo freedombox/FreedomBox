@@ -589,6 +589,19 @@ installed.
 $ py.test-3 -n 4 --dist=loadfile --include-functional -m essential
 ```
 
+#### Enabling all apps
+
+When testing distribution upgrades from a stable release to next stable release
+or testing, it is beneficial to install all available FreedomBox applications.
+There is a script available to perform operation.
+
+In the VM or container, run the following command:
+
+```
+guest$ cd /freedombox
+guest$ sudo make build install
+guest$ plinth/tests/functional/enable-all-apps
+```
 
 [back to index](#hacking)
 

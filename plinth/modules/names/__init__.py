@@ -3,6 +3,7 @@
 FreedomBox app to configure name services.
 """
 
+import json
 import logging
 import pathlib
 import subprocess
@@ -12,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
 from plinth import app as app_module
-from plinth import cfg, glib, menu, network, setup
+from plinth import cfg, glib, kvstore, menu, network, setup
 from plinth.daemon import Daemon
 from plinth.diagnostic_check import (DiagnosticCheck,
                                      DiagnosticCheckParameters, Result)
@@ -43,7 +44,7 @@ class NamesApp(app_module.App):
 
     app_id = 'names'
 
-    _version = 3
+    _version = 4
 
     can_be_disabled = False
 
@@ -85,7 +86,7 @@ class NamesApp(app_module.App):
         domain_removed.connect(on_domain_removed)
 
         # Register domain with Name Services module.
-        for domain in privileged.get_domains():
+        for domain in domains_list() + privileged.get_old_domains():
             domain_added.send_robust(sender='names',
                                      domain_type='domain-type-static',
                                      name=domain, services='__all__')
@@ -115,8 +116,10 @@ class NamesApp(app_module.App):
             except Exception:
                 pass
 
-        if old_version < 3:
-            privileged.domains_migrate()
+        if old_version < 4:
+            domains = domains_list() + privileged.get_old_domains()
+            _domains_set(domains)
+            privileged.domain_delete_all()
 
         if is_resolved_installed():
             # Fresh install or upgrading to version 2
@@ -177,6 +180,36 @@ class ResolvedDaemon(Daemon):
             ]
 
         return super().diagnose()
+
+
+def domains_list() -> list[str]:
+    """Return a list of domains from configuration."""
+    return json.loads(kvstore.get_default('domains', '[]'))
+
+
+def domain_add(domain_name: str):
+    """Add a domain to configuration."""
+    domains = domains_list()
+    if domain_name in domains:
+        return
+
+    domains.append(domain_name)
+    _domains_set(domains)
+
+
+def domain_delete(domain_name: str):
+    """Remove a domain from configuration."""
+    domains = domains_list()
+    if domain_name not in domains:
+        return
+
+    domains.remove(domain_name)
+    _domains_set(domains)
+
+
+def _domains_set(domains: list[str]):
+    """Set the full list of domains in the configuration."""
+    kvstore.set('domains', json.dumps(domains))
 
 
 def install_systemd_resolved(_data):
