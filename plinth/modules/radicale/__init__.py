@@ -67,7 +67,8 @@ class RadicaleApp(app_module.App):
                                       tags=info.tags, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-radicale', ['radicale'])
+        packages = Packages('packages-radicale', ['radicale'],
+                            rerun_setup_on_upgrade=True)
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-radicale', [
