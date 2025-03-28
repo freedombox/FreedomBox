@@ -3,10 +3,12 @@
 Utilities for performing application setup operations.
 """
 
+import itertools
 import logging
 import threading
 import time
 from collections import defaultdict
+from typing import Union
 
 import apt
 from django.utils.translation import gettext_noop
@@ -14,6 +16,7 @@ from django.utils.translation import gettext_noop
 import plinth
 from plinth import app as app_module
 from plinth.diagnostic_check import Result
+from plinth.errors import MissingPackageError
 from plinth.package import Packages
 from plinth.signals import post_setup
 
@@ -234,6 +237,9 @@ def stop():
     force_upgrader = ForceUpgrader.get_instance()
     force_upgrader.shutdown()
 
+    dpkg_handler = DpkgHandler.get_instance()
+    dpkg_handler.shutdown()
+
 
 def setup_apps(app_ids=None, essential=False, allow_install=True):
     """Run setup on selected or essential apps."""
@@ -317,8 +323,8 @@ def _get_apps_for_regular_setup():
         1. essential apps that are not up-to-date
         2. non-essential app that are installed and need updates
         """
-        if (app.info.is_essential and
-                app.get_setup_state() != app_module.App.SetupState.UP_TO_DATE):
+        if (app.info.is_essential and app.get_setup_state()
+                != app_module.App.SetupState.UP_TO_DATE):
             return True
 
         if app.get_setup_state() == app_module.App.SetupState.NEEDS_UPDATE:
@@ -483,6 +489,7 @@ class ForceUpgrader():
             try:
                 logger.info('Attempting to perform upgrade')
                 self._attempt_upgrade()
+                logger.info('Completed upgrade')
                 return
             except self.TemporaryFailure as exception:
                 logger.info('Cannot perform upgrade now: %s', exception)
@@ -669,6 +676,200 @@ def on_package_cache_updated():
     """Called by D-Bus service when apt package cache is updated."""
     force_upgrader = ForceUpgrader.get_instance()
     force_upgrader.on_package_cache_updated()
+
+
+class DpkgHandler:
+    """Find and rerun setup for apps after a dpkg operation is completed.
+
+    This is needed in a couple of situations:
+
+    1) Some Debian packages don't manage the database used by the package. When
+    these packages are updated, their database schema is left at an older
+    version and service might become unavailable. FreedomBox can perform the
+    database schema upgrade. However, FreedomBox needs to know when a package
+    has been updated so that database schema can be upgraded.
+
+    2) A package is installed but FreedomBox has not modified its
+    configuration. Newer version of package becomes available with a new
+    configuration file. Since the original configuration file has not changed
+    at all, the new configuration file overwrites the old one and
+    unattended-upgrades deals with this case. Now, say, the configuration file
+    modifies some defaults that FreedomBox expects things might break. In this
+    case, FreedomBox can apply the require configuration changes but it needs
+    to notified as soon as the package has been updated.
+
+    When apt runs dpkg, after the operation is completed it triggers commands
+    listed under the configuration 'Dpkg::Post-Invoke'. This in turn calls this
+    class via a DBus notification. Here, we iterate through all the apps. If an
+    app is currently installed and interested in rerunning setup after dpkg
+    operations, then its setup is rerun. Interest is expressed using the
+    'rerun_setup_on_upgrade' flag on the Package() component. If all packages
+    of the app have not be upgraded since the last check, we skip the
+    operation.
+    """
+
+    _instance: Union['DpkgHandler', None] = None
+    _run_lock = threading.Lock()
+    _wait_event = threading.Event()
+
+    HANDLE_ATTEMPTS: int = 12
+
+    HANDLE_ATTEMPT_WAIT_SECONDS: int = 30 * 60
+
+    class TemporaryFailure(Exception):
+        """Raised when post-dpkg operations fails but can be tried again."""
+
+    class PermanentFailure(Exception):
+        """Raised when post-dpkg operations fails.
+
+        And there is nothing more we wish to do.
+        """
+
+    @classmethod
+    def get_instance(cls) -> 'DpkgHandler':
+        """Return a single instance of a the class."""
+        if not cls._instance:
+            cls._instance = DpkgHandler()
+
+        return cls._instance
+
+    def __init__(self) -> None:
+        """Initialize the dpkg handler."""
+        if plinth.cfg.develop:
+            self.HANDLE_ATTEMPT_WAIT_SECONDS = 10
+
+    def on_dpkg_invoked(self) -> None:
+        """Trigger post-dpkg operations when notified about dpkg invocation.
+
+        Call the post-dpkg operations guaranteeing that it will not run more
+        than once simultaneously.
+        """
+        if not self._run_lock.acquire(blocking=False):
+            logger.info('Post dpkg operations already in process')
+            return
+
+        try:
+            self._on_dpkg_invoked()
+        finally:
+            self._run_lock.release()
+
+    def _on_dpkg_invoked(self) -> None:
+        """Attempt the post-dpkg operations multiple times.
+
+        This method is guaranteed to not to run more than once simultaneously.
+        """
+        for _ in range(self.HANDLE_ATTEMPTS):
+            logger.info(
+                'Waiting for %s seconds before attempting post-dpkg '
+                'operations', self.HANDLE_ATTEMPT_WAIT_SECONDS)
+            if self._wait_event.wait(self.HANDLE_ATTEMPT_WAIT_SECONDS):
+                logger.info(
+                    'Stopping post-dpkg operation attempts due to shutdown')
+                return
+
+            try:
+                logger.info('Attempting to perform post-dpkg operations')
+                self._attempt_post_invoke()
+                logger.info('Completed post-dpkg operations')
+                return
+            except self.TemporaryFailure as exception:
+                logger.info('Cannot perform post-dpkg operations now: %s',
+                            exception)
+            except self.PermanentFailure as exception:
+                logger.error('Post-dpkg operations failed: %s', exception)
+                return
+            except Exception as exception:
+                # Assume all other errors are temporary
+                logger.exception('Unknown exception: %s', exception)
+
+        logger.info('Giving up on post-dpkg operations after too many retries')
+
+    def _attempt_post_invoke(self) -> None:
+        """Run post-dpkg invoke operations on all interested app."""
+        if _is_shutting_down:
+            raise self.PermanentFailure('Service is shutting down')
+
+        if packages_privileged.is_package_manager_busy():
+            raise self.TemporaryFailure('Package manager is busy')
+
+        for app in app_module.App.list():
+            self._post_invoke_on_app(app)
+
+    def _post_invoke_on_app(self, app: app_module.App) -> None:
+        """Run post-dpkg invoke operations on a single app."""
+        components = list(app.get_components_of_type(Packages))
+        app_interested = any(
+            (component.rerun_setup_on_upgrade for component in components))
+        if not app_interested:
+            # App is not interested in re-running setup after a package has
+            # been updated.
+            return
+
+        if app.get_setup_state() == app_module.App.SetupState.NEEDS_SETUP:
+            # The app is not installed. Don't try to set it up.
+            return
+
+        try:
+            packages = list(
+                itertools.chain.from_iterable(component.get_actual_packages()
+                                              for component in components))
+        except MissingPackageError:
+            # If there are some packages needed by this app that are missing,
+            # there is no way we can rerun setup for this app. Give up, don't
+            # retry.
+            return
+
+        if not self._app_needs_setup_rerun(app, packages):
+            # App does not need a setup rerun
+            return
+
+        operation = run_setup_on_app(app.app_id, rerun=True)
+        if operation:
+            operation.join()
+
+    def _app_needs_setup_rerun(self, app: app_module.App,
+                               packages: list[str]) -> bool:
+        """Return whether an app needs an rerun."""
+        packages_known = package.get_known()
+        cache = apt.Cache()
+        for package_ in packages:
+            try:
+                cache_package = cache[package_]
+            except KeyError:
+                logger.warning('For installed app %s, package %s is not known',
+                               app.app_id, package_)
+                return False
+
+            if not cache_package.installed:
+                # App is installed but one of the needed packages is not
+                # installed. Don't know what to do. Don't rerun.
+                logger.warning(
+                    'For installed app %s, package %s is not installed',
+                    app.app_id, package_)
+                return False
+
+            installed_version = cache_package.installed.version
+            package_known = packages_known.get(package_, {})
+            version_known = package_known.get('version')
+            if installed_version != version_known:
+                return True
+
+        # Latest versions of all packages of the app have already been
+        # processed (and thus known).
+        return False
+
+    def shutdown(self) -> None:
+        """If we are sleeping for next attempt, cancel it.
+
+        If we are actually performing operations, do nothing.
+        """
+        self._wait_event.set()
+
+
+def on_dpkg_invoked():
+    """Called by D-Bus service when dpkg has been invoked."""
+    dpkg_handler = DpkgHandler.get_instance()
+    dpkg_handler.on_dpkg_invoked()
 
 
 def store_error_message(error_message: str):
