@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-25 09:08-0400\n"
-"PO-Revision-Date: 2025-04-01 03:34+0000\n"
-"Last-Translator: MohammedSaalif <2300031323@kluniversity.in>\n"
+"PO-Revision-Date: 2025-04-01 11:43+0000\n"
+"Last-Translator: James Valleroy <jvalleroy@mailbox.org>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hi/>\n"
 "Language: hi\n"
@@ -373,18 +373,18 @@ msgstr "रिपोजिटरी पथ प्रारूप ग़लत �
 #, fuzzy, python-brace-format
 #| msgid "Invalid server name"
 msgid "Invalid username: {username}"
-msgstr "सर्वर नाम अमान्य है"
+msgstr "सर्वर नाम अमान्य है {username}"
 
 #: modules/backups/forms.py:171
 #, fuzzy, python-brace-format
 #| msgid "Invalid hostname"
 msgid "Invalid hostname: {hostname}"
-msgstr "अमान्य होस्टनाम"
+msgstr "अमान्य होस्टनाम {hostname}"
 
 #: modules/backups/forms.py:175
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "Invalid directory path: {dir_path}"
-msgstr "रिपॉजिटरी पथ गलत है।"
+msgstr "रिपॉजिटरी पथ गलत है।{dir_path}"
 
 #: modules/backups/forms.py:181 modules/letsencrypt/manifest.py:11
 #, fuzzy
@@ -1317,10 +1317,9 @@ msgid "Go to library %(library)s"
 msgstr ""
 
 #: modules/calibre/templates/calibre.html:37
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Delete library %(library)s"
-msgstr "साइट हटाएं %(site)s"
+msgstr "साइट हटाएं %(library)s"
 
 #: modules/calibre/views.py:39
 #, fuzzy
@@ -2166,7 +2165,7 @@ msgstr "सेटअप विफल."
 #, fuzzy, python-format
 #| msgid "Delete connection %(name)s"
 msgid "Delete domain %(domain)s"
-msgstr "कनेक्शन हटाइये %(name)s"
+msgstr "कनेक्शन हटाइये %(domain)s"
 
 #: modules/dynamicdns/templates/dynamicdns.html:91
 #, fuzzy
@@ -2393,9 +2392,9 @@ msgid ""
 "like <i>username@%(domain_name)s</i>. You can setup your domain on the "
 "system <a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"आपका एक्सएमपीपी सर्वर डोमेन <b>%(domainname)s</b> पर सेट है. यूसर आईडि इस तरह "
-"दिखेगा <i>username@%(domainname)s</i>. आपका डोमेन सिसटेम पर सेटअप कर सकता है <a "
-"href=\"%(index_url)s\"> कॉन्फ़िगर </a> पेजॅ."
+"आपका एक्सएमपीपी सर्वर डोमेन <b>%(domain_name)s</b> पर सेट है. यूसर आईडि इस तरह "
+"दिखेगा <i>username@%(domain_name)s</i>. आपका डोमेन सिसटेम पर सेटअप कर सकता है <a "
+"href=\"%(names_url)s\">कॉन्फ़िगर </a> पेजॅ।"
 
 #: modules/ejabberd/templates/ejabberd.html:30
 #, fuzzy, python-format
@@ -2407,9 +2406,8 @@ msgid ""
 "Your XMPP server domain is not set. You can setup your domain on the system "
 "<a href=\"%(names_url)s\">Name Services</a> page."
 msgstr ""
-"आपका एक्सएमपीपी सर्वर डोमेन <b>%(domainname)s</b> पर सेट है. यूसर आईडि इस तरह "
-"दिखेगा <i>username@%(domainname)s</i>. आपका डोमेन सिसटेम पर सेटअप कर सकता है <a "
-"href=\"%(index_url)s\"> कॉन्फ़िगर </a> पेजॅ."
+"आपका एक्सएमपीपी सर्वर डोमेन _ पर सेट है. यूसर आईडि इस तरह दिखेगा _. आपका डोमेन सिसटेम "
+"पर सेटअप कर सकता है <a href=\"%(names_url)s\">कॉन्फ़िगर </a> पेजॅ।"
 
 #: modules/email/__init__.py:26
 msgid ""
@@ -2783,7 +2781,7 @@ msgstr "टोर रीले पोर्ट उपलब्ध है"
 #, fuzzy, python-format
 #| msgid "Go to site %(site)s"
 msgid "Go to wiki %(wiki)s"
-msgstr "साइट पर जाएं %(site)s"
+msgstr "साइट पर जाएं %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_configure.html:43
 #: modules/tiddlywiki/templates/tiddlywiki_configure.html:43
@@ -2796,7 +2794,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Delete wiki %(wiki)s"
-msgstr "साइट हटाएं %(site)s"
+msgstr "साइट हटाएं %(wiki)s"
 
 #: modules/featherwiki/templates/featherwiki_delete.html:12
 #: modules/tiddlywiki/templates/tiddlywiki_delete.html:12
@@ -2876,10 +2874,9 @@ msgid "Failed to add wiki file."
 msgstr "समूह से यूसर को जोड़ने में विफल."
 
 #: modules/featherwiki/views.py:138 modules/tiddlywiki/views.py:139
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {name}"
-msgstr "{name} नहीं हटा गया है: {error}"
+msgstr "{name} नहीं हटा गया है"
 
 #: modules/firewall/__init__.py:25
 #, python-brace-format
@@ -2914,13 +2911,13 @@ msgstr ""
 #, fuzzy, python-brace-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid "Port {name} ({details}) available for internal networks"
-msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
+msgstr "{name} ({details}) सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
 
 #: modules/firewall/components.py:154
 #, fuzzy, python-brace-format
 #| msgid "<em>%(service_name)s</em> is available only on internal networks."
 msgid "Port {name} ({details}) available for external networks"
-msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
+msgstr "{name} ({details}) सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
 
 #: modules/firewall/components.py:160
 #, python-brace-format
@@ -3027,8 +3024,8 @@ msgid ""
 "also be obtained by running the command \"sudo cat /var/lib/plinth/firstboot-"
 "wizard-secret\" on your {box_name}"
 msgstr ""
-"फ्रीडमबॉक्स स्थापना के दौरान पर बनाया गया रहस्य दर्ज करें. यह रहस्य यह फाइल से भी "
-"प्राप्त किया जा सकता है /var/lib/plinth/firstboot-wizard-secret"
+"फ्रीडमबॉक्स स्थापना के दौरान पर बनाया गया रहस्य दर्ज करें. यह रहस्य यह फाइल से भी प्राप्"
+"त किया जा सकता है /var/lib/plinth/firstboot-wizard-secret {box_name}"
 
 #: modules/first_boot/forms.py:19
 msgid "Firstboot Wizard Secret"
@@ -3229,7 +3226,7 @@ msgstr "टोर रीले पोर्ट उपलब्ध है"
 #, fuzzy, python-format
 #| msgid "Go to site %(site)s"
 msgid "Go to repository %(repo.name)s"
-msgstr "साइट पर जाएं %(site)s"
+msgstr "साइट पर जाएं %(repo.name)s"
 
 #: modules/gitweb/templates/gitweb_configure.html:42
 msgid "Cloning…"
@@ -3239,7 +3236,7 @@ msgstr ""
 #, fuzzy, python-format
 #| msgid "Delete user %(username)s"
 msgid "Delete repository %(repo.name)s"
-msgstr "यूसर हटाइये %(username)s"
+msgstr "यूसर हटाइये %(repo.name)s"
 
 #: modules/gitweb/templates/gitweb_delete.html:12
 #, fuzzy, python-format
@@ -3386,12 +3383,11 @@ msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "आप %(os_release)s चल रहे है और %(box_name)s संस्करण %(version)s."
 
 #: modules/help/templates/help_about.html:35
-#, fuzzy, python-format
-#| msgid "There is a new %(box_name)s version available."
+#, python-format
 msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
-msgstr "एक नया %(box_name)s संस्करण उपलब्ध है."
+msgstr "एक नया %(box_name)s संस्करण <a href=\"%(upgrades_url)s\">उपलब्ध है</a>।"
 
 #: modules/help/templates/help_about.html:40
 #: modules/upgrades/templates/upgrades_configure.html:37
@@ -3400,7 +3396,7 @@ msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s उद्दिनांकित है."
 
 #: modules/help/templates/help_about.html:49
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "%(box_name)s is a community project to develop, design and promote personal "
 "servers running free software for private, personal communications.  It is a "
@@ -3410,11 +3406,11 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"%(box_name)s एक सामुदायिक प्रोजेक्ट है. यह मुफ्त सॉफ्टवेयर पर व्यक्तिगत सर्वर बनाने, "
-"डिज़ाइन और बढ़ावे का प्रोजेक्ट है  निजी और सार्वजनिक संचार के लिए. एक नेटवर्किंग उपलायंस है "
-"इंटरनेट पर इंटरफ़ेसिंग के लिये एकांत और डेटा सुरक्षा के साथ. %(box_name)s ब्लॉग, विकि, "
-"वेबसाइट, सामाजिक नेटवर्क, ईमेल, वेब प्रॉक्सी और एक टोर रिले के जैसे एप्लिकेशन होस्ट कर सकते "
-"है, एक वाई - फाई रूटर के जैसे डिवाइस पर ताकि आपना डेटा आपना साख रखेगें."
+"%(box_name)s एक सामुदायिक प्रोजेक्ट है. यह मुफ्त सॉफ्टवेयर पर व्यक्तिगत सर्वर बनाने, डिज़ा"
+"इन और बढ़ावे का प्रोजेक्ट है  निजी और सार्वजनिक संचार के लिए. एक नेटवर्किंग उपलायंस है इंटरने"
+"ट पर इंटरफ़ेसिंग के लिये एकांत और डेटा सुरक्षा के साथ. _ ब्लॉग, विकि, वेबसाइट, सामाजिक "
+"नेटवर्क, ईमेल, वेब प्रॉक्सी और एक टोर रिले के जैसे एप्लिकेशन होस्ट कर सकते है, एक वाई - फाई "
+"रूटर के जैसे डिवाइस पर ताकि आपना डेटा आपना साख रखेगें।"
 
 #: modules/help/templates/help_about.html:62
 msgid ""
@@ -3810,16 +3806,14 @@ msgid "Could not create blog: {error}"
 msgstr "ब्लॉग नहीं बना सकता है: {error}"
 
 #: modules/ikiwiki/views.py:98
-#, fuzzy, python-brace-format
-#| msgid "{name} deleted."
+#, python-brace-format
 msgid "{title} deleted."
-msgstr "{name} हटा गया है."
+msgstr "{title} हटा गया है।"
 
 #: modules/ikiwiki/views.py:102
-#, fuzzy, python-brace-format
-#| msgid "Could not delete {name}: {error}"
+#, python-brace-format
 msgid "Could not delete {title}: {error}"
-msgstr "{name} नहीं हटा गया है: {error}"
+msgstr "{title} नहीं हटा गया है"
 
 #: modules/infinoted/__init__.py:20
 msgid "infinoted is a server for Gobby, a collaborative text editor."
@@ -4039,7 +4033,7 @@ msgstr "टोर रीले पोर्ट उपलब्ध है"
 #, fuzzy, python-format
 #| msgid "Delete site %(site)s"
 msgid "Delete package %(title)s"
-msgstr "साइट हटाएं %(site)s"
+msgstr "साइट हटाएं %(title)s"
 
 #: modules/kiwix/views.py:49
 msgid "Content package added."
@@ -4064,7 +4058,7 @@ msgid "Failed to add content package."
 msgstr "समूह से यूसर को जोड़ने में विफल."
 
 #: modules/letsencrypt/__init__.py:27
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "A digital certificate allows users of a web service to verify the identity "
 "of the service and to securely communicate with it. {box_name} can "
@@ -4073,9 +4067,9 @@ msgid ""
 "Encrypt, a certificate authority (CA)."
 msgstr ""
 "डिजिटल प्रमाणपत्र वेब सिरविस यूसरसॅ को सिरविस की पहचान सत्यापित करने और इसके सात कि "
-"सुरक्षित से संचार करने अनपुमति देता है. {box_name} खुद ब खुद हर डोमेन पर डिजिटल "
-"प्रमाणपत्र सेटअप प्राप्त कर सकता है. {box_name} यह लेटस एंक्रिप्ट का डोमेन का एकमात्र "
-"मालिक सताबित करके एेसा करता है."
+"सुरक्षित से संचार करने अनपुमति देता है. {box_name} खुद ब खुद हर डोमेन पर डिजिटल प्रमाणपत्"
+"र सेटअप प्राप्त कर सकता है. _ यह लेटस एंक्रिप्ट का डोमेन का एकमात्र मालिक सताबित करके "
+"एेसा करता है।"
 
 #: modules/letsencrypt/__init__.py:33
 msgid ""
@@ -4155,16 +4149,13 @@ msgid "Obtain"
 msgstr "उबटैईन"
 
 #: modules/letsencrypt/templates/letsencrypt.html:112
-#, fuzzy, python-format
-#| msgid ""
-#| "No domains have been configured. Configure domains to be able to obtain "
-#| "certificates for them."
+#, python-format
 msgid ""
 "No domains have been configured. <a href=\"%(names_url)s\">Configure "
 "domains</a> to be able to obtain certificates for them."
 msgstr ""
-"कोई डोमेन कॉंफ़िगर नहीं किया गया है. डोमेन कॉंफ़िगर करें उंहें के लिए प्रमाणपत्र प्राप्त करने के "
-"लिये."
+"कोई डोमेन कॉंफ़िगर नहीं किया गया है. <a href=\"%(names_url)s\">डोमेन कॉंफ़िगर</a> करें "
+"उंहें के लिए प्रमाणपत्र प्राप्त करने के लिये।"
 
 #: modules/letsencrypt/views.py:40
 #, python-brace-format
@@ -4176,10 +4167,9 @@ msgstr ""
 "लिए ले सकता है."
 
 #: modules/letsencrypt/views.py:46
-#, fuzzy, python-brace-format
-#| msgid "Failed to revoke certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to revoke certificate for domain {domain}"
-msgstr "डोमेन पर प्रमाणपत्र कामयाबी से वापस नहीं ले लिया गया{domain}:{error}"
+msgstr "डोमेन पर प्रमाणपत्र कामयाबी से वापस नहीं ले लिया गया{domain}"
 
 #: modules/letsencrypt/views.py:59 modules/letsencrypt/views.py:77
 #, python-brace-format
@@ -4187,10 +4177,9 @@ msgid "Certificate successfully obtained for domain {domain}"
 msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से प्राप्त किया {domain}"
 
 #: modules/letsencrypt/views.py:64 modules/letsencrypt/views.py:82
-#, fuzzy, python-brace-format
-#| msgid "Failed to obtain certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to obtain certificate for domain {domain}"
-msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से नहीं प्राप्त किया {domain}:{error}"
+msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से नहीं प्राप्त किया {domain}"
 
 #: modules/letsencrypt/views.py:95
 #, python-brace-format
@@ -4198,10 +4187,9 @@ msgid "Certificate successfully deleted for domain {domain}"
 msgstr "डोमेन के लिए प्रमाणपत्र कामयाबी से हटाया गया {domain}"
 
 #: modules/letsencrypt/views.py:100
-#, fuzzy, python-brace-format
-#| msgid "Failed to delete certificate for domain {domain}: {error}"
+#, python-brace-format
 msgid "Failed to delete certificate for domain {domain}"
-msgstr "डोमेन के लिए प्रमाणपत्र नहीं हटाया गया {domain}:{error}"
+msgstr "डोमेन के लिए प्रमाणपत्र नहीं हटाया गया {domain}"
 
 #: modules/matrixsynapse/__init__.py:26
 msgid ""
@@ -4823,13 +4811,13 @@ msgstr "यूसर बनाये"
 #, fuzzy, python-brace-format
 #| msgid "Invalid server name"
 msgid "Created admin user: {username}"
-msgstr "सर्वर नाम अमान्य है"
+msgstr "सर्वर नाम अमान्य है {username}"
 
 #: modules/miniflux/views.py:53
 #, fuzzy, python-brace-format
 #| msgid "An error occurred during configuration."
 msgid "An error occurred while creating the user: {error}."
-msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
+msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई. {error}"
 
 #: modules/miniflux/views.py:70
 #, fuzzy
@@ -4841,13 +4829,13 @@ msgstr "पासवर्ड सहेजें"
 #, fuzzy, python-brace-format
 #| msgid "Invalid server name"
 msgid "Password reset for user: {username}"
-msgstr "सर्वर नाम अमान्य है"
+msgstr "सर्वर नाम अमान्य है {username}"
 
 #: modules/miniflux/views.py:85
 #, fuzzy, python-brace-format
 #| msgid "An error occurred during configuration."
 msgid "An error occurred during password reset: {error}."
-msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई."
+msgstr "कॉंफ़िगरेशन के दौरान कूछ त्रुटि हुई. {error}"
 
 #: modules/mumble/__init__.py:26
 msgid ""
@@ -5423,7 +5411,7 @@ msgstr "खुला"
 #, fuzzy, python-brace-format
 #| msgid "Use upstream bridges to connect to Tor network"
 msgid "Specify how your {box_name} is connected to your network"
-msgstr "अपस्ट्रीम ब्रिजस उपयोग करके टो नेटवर्क से कनेक्ट करें"
+msgstr "अपस्ट्रीम ब्रिजस उपयोग करके टो नेटवर्क से कनेक्ट करें {box_name}"
 
 #: modules/networks/forms.py:382
 #, python-brace-format
@@ -5907,7 +5895,7 @@ msgstr "जमा करें"
 #, fuzzy, python-format
 #| msgid "Direct connection to the Internet."
 msgid "How is Your %(box_name)s Connected to the Internet?"
-msgstr "इंटरनेट से सीधा कनेक्शन."
+msgstr "इंटरनेट से सीधा कनेक्शन. %(box_name)s"
 
 #: modules/networks/templates/network_topology_content.html:16
 #, python-format
@@ -6012,10 +6000,9 @@ msgid "No Wi-Fi device detected."
 msgstr ""
 
 #: modules/networks/templates/wifi_scan.html:21
-#, fuzzy, python-format
-#| msgid "Delete %(username)s"
+#, python-format
 msgid "Device: %(interface_name)s"
-msgstr "हटाइये %(username)s"
+msgstr "हटाइये %(interface_name)s"
 
 #: modules/networks/templates/wifi_scan.html:27
 #, fuzzy
@@ -6508,10 +6495,8 @@ msgid ""
 msgstr ""
 "%(box_name)s का वीपीएन से कनेक्ट करने के लिए, आपको एक प्रोफ़ाइल डाउनलोड करना चाहिये "
 "और मोबाइल या डेस्कटॉप मशीन पर इसको एक ओपनवीपीएन क्लाइंट में रखना चाहिये. ओपनवीपीएन "
-"क्लाइंट को सबसे प्लेटफार्मों के लिए उपलब्ध हैं, <a href=\"https://wiki.debian.org/"
-"FreedomBox/Manual/OpenVPN\" title=\"%(box_name)s Manual - "
-"OpenVPN\">documentation</a> देखें अनुशंसित क्लाइंट और उन्हें कॉन्फ़िगर करने के तरीके देखने के "
-"लिये."
+"क्लाइंट को सबसे प्लेटफार्मों के लिए उपलब्ध हैं, documentation देखें अनुशंसित क्लाइंट और उन्हें "
+"कॉन्फ़िगर करने के तरीके देखने के लिये।"
 
 #: modules/openvpn/templates/openvpn.html:24
 #, fuzzy, python-format
@@ -7212,9 +7197,8 @@ msgid ""
 "When enabled, RSS-Bridge can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"सक्षम होने से, टैनी टैनी आरएसएस  <a href=\"/tt-rss\">/tt-rss</a> पात वेब सर्वर से "
-"माैजूद होते है. यह <a href=\"{users_url}\">किसी </a> एक {box_name} के सात लॉग इन "
-"कर सकता है."
+"सक्षम होने से, टैनी टैनी आरएसएस  <a href=\"/tt-rss\">/tt-rss</a> पात वेब सर्वर से माैजू"
+"द होते है. यह <a href=\"{users_url}\">किसी </a> एक _ के सात लॉग इन कर सकता है।"
 
 #: modules/rssbridge/__init__.py:28
 #, python-brace-format
@@ -9014,9 +8998,8 @@ msgid ""
 "When enabled, Tiny Tiny RSS can be accessed by <a href=\"{users_url}\">any "
 "user</a> belonging to the feed-reader group."
 msgstr ""
-"सक्षम होने से, टैनी टैनी आरएसएस  <a href=\"/tt-rss\">/tt-rss</a> पात वेब सर्वर से "
-"माैजूद होते है. यह <a href=\"{users_url}\">किसी </a> एक {box_name} के सात लॉग इन "
-"कर सकता है."
+"सक्षम होने से, टैनी टैनी आरएसएस  <a href=\"/tt-rss\">/tt-rss</a> पात वेब सर्वर से माैजू"
+"द होते है. यह <a href=\"{users_url}\">किसी </a> एक _ के सात लॉग इन कर सकता है।"
 
 #: modules/ttrss/__init__.py:30
 #, fuzzy
@@ -9380,13 +9363,12 @@ msgstr "शो पासवर्ड"
 #, fuzzy, python-brace-format
 #| msgid "Creating LDAP user failed."
 msgid "Creating LDAP user failed: {error}"
-msgstr "एलडीएपी यूसर बनाना विफल रहा."
+msgstr "एलडीएपी यूसर बनाना विफल रहा. {error}"
 
 #: modules/users/forms.py:225
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to {group} group."
+#, python-brace-format
 msgid "Failed to add new user to {group} group: {error}"
-msgstr "{group} समूह में नया यूसर जोड़ने में विफल."
+msgstr "{group} समूह में नया यूसर जोड़ने में विफल. {error}"
 
 #: modules/users/forms.py:241
 msgid "Authorized SSH Keys"
@@ -9447,10 +9429,9 @@ msgid "Changing LDAP user password failed."
 msgstr "एलडीएपी यूसर का पासवर्ड बदलना विफल रहा."
 
 #: modules/users/forms.py:447
-#, fuzzy, python-brace-format
-#| msgid "Failed to add new user to admin group."
+#, python-brace-format
 msgid "Failed to add new user to admin group: {error}"
-msgstr "व्यवस्थापक समूह में नया यूसर जोड़ने में विफल."
+msgstr "व्यवस्थापक समूह में नया यूसर जोड़ने में विफल. {error}"
 
 #: modules/users/forms.py:470
 msgid "User account created, you are now logged in"
@@ -10094,7 +10075,7 @@ msgstr "जेनेरिक"
 #, fuzzy, python-brace-format
 #| msgid "Error setting hostname: {exception}"
 msgid "Error: {name}: {exception}"
-msgstr "{exception}: होस्ट नाम सेट करने में एरर"
+msgstr "{exception}: होस्ट नाम सेट करने में एरर {name}"
 
 #: operation.py:123
 #, python-brace-format
@@ -10149,22 +10130,19 @@ msgid "Updating app"
 msgstr ""
 
 #: setup.py:78
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error installing app: {exception}"
-msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {exception}"
 
 #: setup.py:80
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error repairing app: {exception}"
-msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {exception}"
 
 #: setup.py:82
-#, fuzzy, python-brace-format
-#| msgid "Error installing application: {error}"
+#, python-brace-format
 msgid "Error updating app: {exception}"
-msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {error}"
+msgstr "एप्लिकेशन नहीं इंस्टॉल जा सकता: {exception}"
 
 #: setup.py:85
 #, fuzzy
@@ -10425,7 +10403,8 @@ msgstr ""
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
 "client is connected to %(box_name)s through VPN."
-msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है."
+msgstr ""
+"<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है. %(box_name)s"
 
 #: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
@@ -10564,7 +10543,7 @@ msgstr "इंस्टॉल करें"
 #, fuzzy, python-format
 #| msgid "Edit user %(username)s"
 msgid "Uninstall App <em>%(app_name)s</em>?"
-msgstr "यूसर संपादित करें %(username)s"
+msgstr "यूसर संपादित करें <em>%(app_name)s</em>"
 
 #: templates/uninstall.html:17
 msgid ""
