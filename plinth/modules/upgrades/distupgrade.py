@@ -237,10 +237,8 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
     reenable = False
     try:
         logger.info('Taking a snapshot before dist upgrade...')
-        subprocess.run([
-            '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-            '--no-args'
-        ], check=True)
+        command = ['snapper', 'create', '--description', 'before dist-upgrade']
+        subprocess.run(command, check=True)
         aug = snapshot_module.load_augeas()
         if snapshot_module.is_apt_snapshots_enabled(aug):
             logger.info('Disabling apt snapshots during dist upgrade...')

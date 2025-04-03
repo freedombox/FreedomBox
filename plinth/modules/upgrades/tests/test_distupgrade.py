@@ -248,10 +248,8 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     is_apt_snapshots_enabled.return_value = False
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
-            call([
-                '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-                '--no-args'
-            ], check=True)
+            call(['snapper', 'create', '--description', 'before dist-upgrade'],
+                 check=True)
         ]
         run.reset_mock()
 
@@ -261,10 +259,8 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     is_apt_snapshots_enabled.return_value = True
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
-            call([
-                '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-                '--no-args'
-            ], check=True),
+            call(['snapper', 'create', '--description', 'before dist-upgrade'],
+                 check=True),
             call([
                 '/usr/share/plinth/actions/actions', 'snapshot',
                 'disable_apt_snapshot'
