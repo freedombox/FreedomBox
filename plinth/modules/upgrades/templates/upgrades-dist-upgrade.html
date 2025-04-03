@@ -10,6 +10,21 @@
 {% block content %}
   <h3>{% trans "Distribution Update" %}</h3>
 
+  <p>
+    {% url 'help:manual-page' lang='-' page='DebianUpgradeNotes' as dist_upgrade_url %}
+    {% blocktrans trimmed %}
+      Your {{ box_name }} will receive security updates, important fixes and
+      some selected features with regular software updates. However, to provide
+      a long software life cycle for {{ box_name }}, the entire operating system
+      will receive a major distribution update every two years or so. This will
+      bring in major features and changes. Sometimes, old features will stop
+      working. Please consult the <a href="{{ dist_upgrade_url }}">manual</a> for
+      expected changes and transitions during a distribution upgrade. If you
+      dislike these changes, you can keep each distribution for at least
+      <a href="https://wiki.debian.org/LTS">5 years</a> before updating.
+    {% endblocktrans %}
+  </p>
+
   {% if status.running %}
     <div class="upgrades-dist-upgrade clearfix">
       <div class="upgrades-dist-upgrade-running-icon pull-left">
