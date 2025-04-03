@@ -74,8 +74,11 @@ distribution_info: dict = {
 
 def _apt_run(arguments: list[str], enable_triggers: bool = False):
     """Run an apt command and ensure that output is written to stdout."""
-    return action_utils.run_apt_command(arguments, stdout=None,
-                                        enable_triggers=enable_triggers)
+    returncode = action_utils.run_apt_command(arguments, stdout=None,
+                                              enable_triggers=enable_triggers)
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
 
 
 def _sources_list_update(old_codename: str, new_codename: str):

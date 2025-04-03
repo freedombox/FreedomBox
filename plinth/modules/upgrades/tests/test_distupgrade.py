@@ -19,12 +19,16 @@ from plinth.modules.upgrades import distupgrade
 @patch('subprocess.run')
 def test_apt_run(run):
     """Test that running apt command logs properly."""
-    run.return_value.returncode = 10
+    run.return_value.returncode = 0
     args = ['command', 'arg1', 'arg2']
-    assert distupgrade._apt_run(args) == 10
+    distupgrade._apt_run(args)
     assert run.call_args.args == \
         (['apt-get', '--assume-yes', '--quiet=2'] + args,)
     assert not run.call_args.kwargs['stdout']
+
+    run.return_value.returncode = 10
+    with pytest.raises(RuntimeError):
+        distupgrade._apt_run(args)
 
 
 def test_sources_list_update(tmp_path):
