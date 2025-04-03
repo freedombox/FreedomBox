@@ -111,6 +111,8 @@ class DistUpgradeConfirmView(TemplateView):
 
     def post(self, request):
         """Start the distribution upgrade process."""
+        status = distupgrade.get_status()
+        upgrades.dist_upgrade_show_notification(status, starting=True)
         privileged.start_dist_upgrade()
         messages.success(request, _('Started distribution update.'))
         return redirect(reverse_lazy('upgrades:dist-upgrade'))

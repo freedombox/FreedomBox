@@ -1,0 +1,48 @@
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load i18n %}
+{% load static %}
+
+<div class="notification-title">
+  {% trans "Distribution Update" %}
+</div>
+
+<p>
+  {% url 'help:manual-page' lang='-' page='DebianUpgradeNotes' as dist_upgrade_url %}
+  {% if data.state == 'starting' %}
+    {% blocktrans trimmed %}
+      Distribution update has started. This operation may take several hours.
+      Most apps will be unavailable during this period. Don't interrupt the
+      process by shutting down or interrupting power to the machine.
+    {% endblocktrans %}
+  {% elif data.state == 'done' %}
+    {% blocktrans trimmed %}
+      Distribution update has completed. Reboot the machine, if necessary.
+    {% endblocktrans %}
+  {% elif data.for_days == 1 %}
+    {% blocktrans trimmed %}
+      Distribution update will start soon. Take a backup of apps and data before
+      then. See <a href="{{ dist_upgrade_url }}">manual</a> page for expected
+      changes and transitions during the distribution upgrade.
+    {% endblocktrans %}
+  {% elif data.for_days %}
+    {% blocktrans trimmed with in_days=data.in_days %}
+      Distribution update will start in {{ in_days }} days. Take a backup of
+      apps and data before then. See <a href="{{ dist_upgrade_url }}">manual</a>
+      page for expected changes and transitions during the distribution upgrade.
+    {% endblocktrans %}
+  {% endif %}
+</p>
+
+<p>
+  <a href="{% url 'upgrades:dist-upgrade' %}"
+     role="button" class="btn btn-primary">
+    {% trans "Go to Distribution Update" %}
+  </a>
+  <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
+     role="button" class="btn btn-default">
+    {% trans "Dismiss" %}
+  </a>
+</p>

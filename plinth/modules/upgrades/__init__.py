@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app for upgrades."""
 
+import datetime
 import logging
 import os
 import subprocess
@@ -215,10 +216,103 @@ def check_dist_upgrade(_):
     """Check for upgrade to new stable release."""
     if is_dist_upgrade_enabled():
         status = distupgrade.get_status()
-        if status['next_action'] in ('continue', 'ready'):
+        starting = status['next_action'] in ('continue', 'ready')
+        dist_upgrade_show_notification(status, starting)
+        if starting:
+            logger.info('Starting distribution upgrade - %s', status)
             privileged.start_dist_upgrade()
         else:
             logger.info('Not ready for distribution upgrade - %s', status)
+
+
+def dist_upgrade_show_notification(status: dict, starting: bool):
+    """Show various notifications regarding distribution upgrade.
+
+    - Show a notification 60 days, 30 days, 1 week, and 1 day before
+      distribution upgrade. If a notification is dismissed for any of these
+      periods don't show again until new period starts. Override any previous
+      notification.
+
+    - Show a notification just before the distribution upgrade showing that the
+      process has started. Override any previous notification.
+
+    - Show a notification after the distribution upgrade is completed that it
+      is done. Override any previous notification. Keep this until it is 60
+      days before next distribution upgrade. If user dismisses the
+      notification, don't show it again.
+    """
+    from plinth.notification import Notification
+
+    try:
+        note = Notification.get('upgrades-dist-upgrade')
+        data = note.data
+    except KeyError:
+        data = {}
+
+    in_days = None
+    if status['next_action_date']:
+        in_days = (status['next_action_date'] -
+                   datetime.datetime.now(tz=datetime.timezone.utc))
+
+    if in_days is None or in_days > datetime.timedelta(days=60):
+        for_days = None
+    elif in_days > datetime.timedelta(days=30):
+        for_days = 60  # 60 day notification
+    elif in_days > datetime.timedelta(days=7):
+        for_days = 30  # 30 day notification
+    elif in_days > datetime.timedelta(days=1):
+        for_days = 7  # 1 week notification
+    else:
+        for_days = 1  # 1 day notification, or overdue notification
+
+    if status['running']:
+        # Do nothing while the distribution upgrade is running.
+        return
+
+    state = 'starting' if starting else 'waiting'
+    if (not for_days and status['current_codename']
+            and data.get('next_codename') == status['current_codename']):
+        # Previously shown notification's codename is current codename.
+        # Distribution upgrade was successfully completed.
+        state = 'done'
+
+    if not status['next_action'] and state != 'done':
+        # There is no upgrade available, don't show any notification.
+        return
+
+    if not for_days and data.get('state') == 'done':
+        # Don't remove notification showing upgrade is complete until next
+        # distribution upgrade is coming up in 2 months or sooner.
+        return
+
+    if not for_days and state == 'waiting':
+        # More than 60 days to next distribution update. Don't show
+        # notification.
+        return
+
+    if (for_days == data.get('for_days') and state == data.get('state')
+            and status['next_codename'] == data.get('next_codename')):
+        # If the notification was shown for same distribution codename, same
+        # duration, and same state, then don't show it again.
+        return
+
+    data = {
+        'app_name': 'translate:' + gettext_noop('Software Update'),
+        'app_icon': 'fa-refresh',
+        'current_codename': status['current_codename'],
+        'current_version': status['current_version'],
+        'next_codename': status['next_codename'],
+        'next_version': status['next_version'],
+        'state': state,
+        'for_days': for_days,
+        'in_days': in_days.days if in_days else None,
+    }
+    title = gettext_noop('Distribution Update')
+    note = Notification.update_or_create(
+        id='upgrades-dist-upgrade', app_id='upgrades', severity='info',
+        title=title, body_template='upgrades-dist-upgrade-notification.html',
+        data=data, group='admin')
+    note.dismiss(should_dismiss=False)
 
 
 def is_backports_requested():
