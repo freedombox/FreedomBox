@@ -9,6 +9,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=notify
 ExecStart=/usr/bin/plinth
+TimeoutSec=300s
 Restart=on-failure
 RestartSec=5
 ExecReload=/bin/kill -HUP $MAINPID
