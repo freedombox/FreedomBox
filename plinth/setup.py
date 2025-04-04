@@ -26,7 +26,6 @@ from .privileged import packages as packages_privileged
 
 logger = logging.getLogger(__name__)
 
-_is_first_setup = False
 is_first_setup_running = False
 _is_shutting_down = False
 
@@ -273,18 +272,15 @@ def list_dependencies(app_ids=None, essential=False):
                 print(package_expression)
 
 
-def run_setup_in_background():
-    """Run setup in a background thread."""
-    _set_is_first_setup()
-    threading.Thread(target=_run_setup_on_startup).start()
-
-
-def _run_setup_on_startup():
+def run_setup_on_startup():
     """Run setup with retry till it succeeds."""
+    is_first_setup = any((app for app in app_module.App.list()
+                          if app.info.is_essential and app.needs_setup()))
+
     sleep_time = 10
     while True:
         try:
-            if _is_first_setup:
+            if is_first_setup:
                 logger.info('Running first setup.')
                 _run_first_setup()
                 break
@@ -299,7 +295,7 @@ def _run_setup_on_startup():
             if _is_shutting_down:
                 break
 
-    logger.info('Setup thread finished.')
+    logger.info('Setup finished.')
 
 
 def _run_first_setup():
@@ -335,13 +331,6 @@ def _get_apps_for_regular_setup():
     return [
         app.app_id for app in app_module.App.list() if is_setup_required(app)
     ]
-
-
-def _set_is_first_setup():
-    """Set whether all essential apps have been setup at least once."""
-    global _is_first_setup
-    _is_first_setup = any((app for app in app_module.App.list()
-                           if app.info.is_essential and app.needs_setup()))
 
 
 def run_setup_on_apps(app_ids, allow_install=True):

@@ -4,6 +4,7 @@
 import argparse
 import logging
 import sys
+import threading
 
 from . import __version__
 from . import app as app_module
@@ -95,6 +96,13 @@ def on_web_server_stop():
     glib.stop()
 
 
+def run_post_init_and_setup():
+    """Run post-init operations on the apps and setup operations."""
+    app_module.apps_post_init()
+    frontpage.add_custom_shortcuts()
+    setup.run_setup_on_startup()  # Long running, retrying
+
+
 def main():
     """Initialize and start the application"""
     arguments = parse_arguments()
@@ -134,16 +142,16 @@ def main():
 
     module_loader.load_modules()
     app_module.apps_init()
-    app_module.apps_post_init()
-    frontpage.add_custom_shortcuts()
 
     if arguments.setup is not False:
+        app_module.apps_post_init()
         run_setup_and_exit(arguments.setup, allow_install=True)
 
     if arguments.setup_no_install is not False:
+        app_module.apps_post_init()
         run_setup_and_exit(arguments.setup_no_install, allow_install=False)
 
-    setup.run_setup_in_background()
+    threading.Thread(target=run_post_init_and_setup).start()
 
     glib.run()
 
