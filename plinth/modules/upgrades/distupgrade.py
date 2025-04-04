@@ -335,7 +335,7 @@ def start_service(test_upgrade: bool):
     args = [
         '--unit=freedombox-dist-upgrade',
         '--description=Upgrade to new stable Debian release',
-        '--property=KillMode=process', '--property=TimeoutSec=12hr',
+        '--property=KillMode=process', '--property=TimeoutSec=72hr',
         f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
     subprocess.run(['systemd-run'] + args + [
