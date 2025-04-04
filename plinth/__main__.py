@@ -6,6 +6,8 @@ import logging
 import sys
 import threading
 
+import systemd.daemon
+
 from . import __version__
 from . import app as app_module
 from . import (cfg, frontpage, glib, log, menu, module_loader, setup,
@@ -157,6 +159,12 @@ def main():
 
     web_server.init()
     web_server.run(on_web_server_stop)
+
+    # systemd will wait until notification to proceed with other processes. We
+    # have service Type=notify.
+    systemd.daemon.notify('READY=1')
+
+    web_server.block()
 
 
 if __name__ == '__main__':

@@ -122,6 +122,10 @@ def run(on_web_server_stop):
         cherrypy.engine.start()
 
     cherrypy.engine.subscribe('stop', on_web_server_stop)
+
+
+def block():
+    """Block the calling thread until web server exits."""
     cherrypy.engine.block()
 
 

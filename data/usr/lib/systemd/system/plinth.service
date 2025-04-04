@@ -7,6 +7,7 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
+Type=notify
 ExecStart=/usr/bin/plinth
 Restart=on-failure
 RestartSec=5
@@ -15,6 +16,7 @@ User=plinth
 Group=plinth
 StandardOutput=null
 StandardError=null
+NotifyAccess=main
 PrivateTmp=yes
 
 [Install]
