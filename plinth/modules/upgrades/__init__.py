@@ -43,6 +43,8 @@ BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'
 
+DIST_UPGRADE_RUN_HOUR = 6  # 06:00 (morning)
+
 PKG_HOLD_DIAG_CHECK_ID = 'upgrades-package-holds'
 
 logger = logging.getLogger(__name__)
@@ -100,9 +102,9 @@ class UpgradesApp(app_module.App):
         # selected by user.
         glib.schedule(24 * 3600, setup_repositories)
 
-        # Check every day if new stable release becomes available, then perform
-        # dist-upgrade if updates are enabled
-        glib.schedule(24 * 3600, check_dist_upgrade)
+        # Check every day if new stable release becomes available and if we
+        # waited enough, then perform dist-upgrade if updates are enabled.
+        glib.schedule(3600, check_dist_upgrade)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -214,6 +216,12 @@ def setup_repositories(_):
 
 def check_dist_upgrade(_):
     """Check for upgrade to new stable release."""
+    # Run once a day at a desired hour even when triggered every hour. There is
+    # a small chance that this won't run in a given day.
+    now = datetime.datetime.now()  # Local timezone
+    if now.hour != DIST_UPGRADE_RUN_HOUR:
+        return
+
     if is_dist_upgrade_enabled():
         status = distupgrade.get_status()
         starting = status['next_action'] in ('continue', 'ready')
