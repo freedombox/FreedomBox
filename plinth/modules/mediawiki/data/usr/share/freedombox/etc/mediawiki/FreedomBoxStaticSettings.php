@@ -51,7 +51,9 @@ $wgLanguageCode = "en";
 wfLoadExtension( 'Cite' );
 wfLoadExtension( 'Interwiki' );
 wfLoadExtension( 'MultimediaViewer' );
-wfLoadExtension( 'Renameuser' );
+if (file_exists( '/usr/share/mediawiki/extensions/Renameuser/extension.json' )) {
+    wfLoadExtension( 'Renameuser' );
+}
 wfLoadExtension( 'VisualEditor' );
 wfLoadExtension( 'WikiEditor' );
 
