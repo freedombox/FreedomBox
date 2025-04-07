@@ -469,12 +469,6 @@ class ForceUpgrader():
 
         """
         for _ in range(self.UPGRADE_ATTEMPTS):
-            logger.info('Waiting for %s seconds before attempting upgrade',
-                        self.UPGRADE_ATTEMPT_WAIT_SECONDS)
-            if self._wait_event.wait(self.UPGRADE_ATTEMPT_WAIT_SECONDS):
-                logger.info('Stopping upgrade attempts due to shutdown')
-                return
-
             try:
                 logger.info('Attempting to perform upgrade')
                 self._attempt_upgrade()
@@ -488,6 +482,12 @@ class ForceUpgrader():
             except Exception as exception:
                 # Assume all other errors are temporary
                 logger.exception('Unknown exception: %s', exception)
+
+            logger.info('Waiting for %s seconds before attempting upgrade',
+                        self.UPGRADE_ATTEMPT_WAIT_SECONDS)
+            if self._wait_event.wait(self.UPGRADE_ATTEMPT_WAIT_SECONDS):
+                logger.info('Stopping upgrade attempts due to shutdown')
+                return
 
         logger.info('Giving up on upgrade after too many retries')
 
@@ -748,14 +748,6 @@ class DpkgHandler:
         This method is guaranteed to not to run more than once simultaneously.
         """
         for _ in range(self.HANDLE_ATTEMPTS):
-            logger.info(
-                'Waiting for %s seconds before attempting post-dpkg '
-                'operations', self.HANDLE_ATTEMPT_WAIT_SECONDS)
-            if self._wait_event.wait(self.HANDLE_ATTEMPT_WAIT_SECONDS):
-                logger.info(
-                    'Stopping post-dpkg operation attempts due to shutdown')
-                return
-
             try:
                 logger.info('Attempting to perform post-dpkg operations')
                 self._attempt_post_invoke()
@@ -770,6 +762,14 @@ class DpkgHandler:
             except Exception as exception:
                 # Assume all other errors are temporary
                 logger.exception('Unknown exception: %s', exception)
+
+            logger.info(
+                'Waiting for %s seconds before attempting post-dpkg '
+                'operations', self.HANDLE_ATTEMPT_WAIT_SECONDS)
+            if self._wait_event.wait(self.HANDLE_ATTEMPT_WAIT_SECONDS):
+                logger.info(
+                    'Stopping post-dpkg operation attempts due to shutdown')
+                return
 
         logger.info('Giving up on post-dpkg operations after too many retries')
 
