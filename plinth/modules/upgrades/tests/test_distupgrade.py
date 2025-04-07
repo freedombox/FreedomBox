@@ -368,11 +368,7 @@ def test_packages_remove_obsolete(apt_run):
 def test_apt_update(apt_run):
     """Test that apt update works."""
     distupgrade._apt_update()
-    apt_run.assert_called_with(['update'], enable_triggers=False)
-
-    apt_run.reset_mock()
-    distupgrade._apt_update(enable_triggers=True)
-    apt_run.assert_called_with(['update'], enable_triggers=True)
+    apt_run.assert_called_with(['update'])
 
 
 @patch('plinth.modules.upgrades.distupgrade._apt_run')
@@ -417,13 +413,6 @@ def test_freedombox_restart(service_restart):
     """Test that restarting freedombox service works."""
     distupgrade._freedombox_restart()
     service_restart.assert_called_with('plinth')
-
-
-@patch('time.sleep')
-def test_wait(sleep):
-    """Test that sleeping works."""
-    distupgrade._wait()
-    sleep.assert_called_with(600)
 
 
 @patch('subprocess.run')

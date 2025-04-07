@@ -72,10 +72,9 @@ distribution_info: dict = {
 }
 
 
-def _apt_run(arguments: list[str], enable_triggers: bool = False):
+def _apt_run(arguments: list[str]):
     """Run an apt command and ensure that output is written to stdout."""
-    returncode = action_utils.run_apt_command(arguments, stdout=None,
-                                              enable_triggers=enable_triggers)
+    returncode = action_utils.run_apt_command(arguments, stdout=None)
     if returncode:
         raise RuntimeError(
             f'Apt command failed with return code: {returncode}')
@@ -318,10 +317,10 @@ def _packages_remove_obsolete() -> None:
         _apt_run(['remove'] + OBSOLETE_PACKAGES)
 
 
-def _apt_update(enable_triggers: bool = False):
+def _apt_update():
     """Run 'apt update'."""
     logger.info('Updating Apt cache...')
-    _apt_run(['update'], enable_triggers=enable_triggers)
+    _apt_run(['update'])
 
 
 def _apt_fix():
@@ -363,12 +362,6 @@ def _freedombox_restart():
     """
     logger.info('Restarting FreedomBox service...')
     action_utils.service_restart('plinth')
-
-
-def _wait():
-    """Wait for 10 minutes before performing remaining actions."""
-    logger.info('Waiting for 10 minutes...')
-    time.sleep(10 * 60)
 
 
 def _trigger_on_complete():
@@ -414,8 +407,6 @@ def perform():
 
     _unattended_upgrades_run()
     _freedombox_restart()
-    _wait()
-    _apt_update(enable_triggers=True)
     _trigger_on_complete()
 
 
