@@ -102,7 +102,16 @@ def run_post_init_and_setup():
     """Run post-init operations on the apps and setup operations."""
     app_module.apps_post_init()
     frontpage.add_custom_shortcuts()
+
+    # Handle app version updates.
     setup.run_setup_on_startup()  # Long running, retrying
+
+    # Handle packages that have been updated else where that need a re-run of
+    # setup.
+    setup.on_dpkg_invoked()
+
+    # Handle packages that have a pending configuration file prompt.
+    setup.on_package_cache_updated()
 
 
 def main():
