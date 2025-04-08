@@ -44,7 +44,7 @@ class ZophApp(app_module.App):
 
     app_id = 'zoph'
 
-    _version = 2
+    _version = 3
 
     configure_when_disabled = False
 
