@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-07 21:06-0400\n"
-"PO-Revision-Date: 2025-03-11 00:06+0000\n"
+"PO-Revision-Date: 2025-04-09 13:07+0000\n"
 "Last-Translator: Максим Горпиніч <maksimgorpinic2005a@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/uk/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -8872,10 +8872,8 @@ msgstr ""
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:9
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:11
 #: modules/upgrades/templates/upgrades_configure.html:16
-#, fuzzy
-#| msgid "Distribution update started"
 msgid "Distribution Update"
-msgstr "Оновлення дистрибутиву розпочато"
+msgstr "Оновлення розповсюдження"
 
 #: modules/upgrades/__init__.py:396
 msgid "Check for package holds"
@@ -8935,10 +8933,8 @@ msgid "Next"
 msgstr "Далі"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:11
-#, fuzzy
-#| msgid "Could not start distribution update"
 msgid "Confirm Distribution Update?"
-msgstr "Не можливо запустити оновлення дистрибутиву"
+msgstr "Підтвердити оновлення розповсюдження?"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:21
 #, python-format
@@ -8947,34 +8943,39 @@ msgid ""
 "released. Proceed only if you wish to help with beta testing of %(box_name)s "
 "functionality."
 msgstr ""
+"Ви збираєтеся оновити до наступної версії розповсюдження, перш ніж вона буде "
+"випущена. Продовжуйте, лише якщо ви бажаєте допомогти з бета-тестуванням "
+"функцій %(box_name)s."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:32
 msgid ""
 "Take a full backup of all apps and data before performing a distribution "
 "update."
 msgstr ""
+"Зробіть повну резервну копію всіх програм і даних перед оновленням "
+"розповсюдження."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:38
 msgid ""
 "The process will take several hours. Most apps will be unavailable during "
 "this time."
 msgstr ""
+"Процес триватиме кілька годин. Протягом цього часу більшість програм будуть "
+"недоступні."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:44
 msgid ""
 "Don't interrupt the process by shutting down or interrupting power to the "
 "machine."
-msgstr ""
+msgstr "Не переривайте процес, вимикаючи чи припиняючи живлення машини."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:50
 msgid "If the process is interrupted, you should be able to continue it."
-msgstr ""
+msgstr "Якщо процес перервано, ви зможете продовжити його."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:66
-#, fuzzy
-#| msgid "Could not start distribution update"
 msgid "Confirm & Start Distribution Update"
-msgstr "Не можливо запустити оновлення дистрибутиву"
+msgstr "Підтвердити та розпочати оновлення розповсюдження"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:15
 msgid ""
@@ -8982,10 +8983,14 @@ msgid ""
 "apps will be unavailable during this period. Don't interrupt the process by "
 "shutting down or interrupting power to the machine."
 msgstr ""
+"Розпочато оновлення дистрибутиву. Ця операція може тривати кілька годин. "
+"Більшість програм будуть недоступні протягом цього періоду. Не переривайте "
+"процес вимиканням або відключенням живлення пристрою."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:21
 msgid "Distribution update has completed. Reboot the machine, if necessary."
 msgstr ""
+"Оновлення розповсюдження завершено. Перезавантажте машину, якщо необхідно."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:25
 #, python-format
@@ -8994,6 +8999,10 @@ msgid ""
 "then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page for expected "
 "changes and transitions during the distribution upgrade."
 msgstr ""
+"Оновлення розповсюдження розпочнеться незабаром. Перед цим зробіть резервну "
+"копію програм і даних. Перегляньте сторінку <a href=\"%(dist_upgrade_url)s\""
+">посібника</a> щодо очікуваних змін і переходів під час оновлення "
+"дистрибутива."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
 #, python-format
@@ -9002,12 +9011,13 @@ msgid ""
 "and data before then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page "
 "for expected changes and transitions during the distribution upgrade."
 msgstr ""
+"Оновлення розповсюдження розпочнеться через %(in_days)s днів. Перед цим "
+"зробіть резервну копію програм і даних. Див. <a href=\"%(dist_upgrade_url)s\""
+">посібник</a> для очікуваних змін і переходів під час оновлення дистрибутива."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:42
-#, fuzzy
-#| msgid "Test Distribution Upgrade"
 msgid "Go to Distribution Update"
-msgstr "Тест оновлення дистрибутиву"
+msgstr "Перейдіть до оновлення розповсюдження"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
@@ -9028,77 +9038,78 @@ msgid ""
 "changes, you can keep each distribution for at least <a href=\"https://wiki."
 "debian.org/LTS\">5 years</a> before updating."
 msgstr ""
+"Ваш %(box_name)s отримуватиме оновлення безпеки, важливі виправлення та "
+"деякі вибрані функції з регулярними оновленнями програмного забезпечення. "
+"Однак, щоб забезпечити тривалий життєвий цикл програмного забезпечення для "
+"%(box_name)s, уся операційна система отримуватиме велике оновлення "
+"розповсюдження приблизно кожні два роки. Це принесе основні функції та "
+"зміни. Іноді старі функції перестають працювати. Зверніться до <a href="
+"\"%(dist_upgrade_url)s\">посібника</a> щодо очікуваних змін і переходів під "
+"час оновлення дистрибутива. Якщо вам не подобаються ці зміни, ви можете "
+"зберігати кожен дистрибутив принаймні <a href=\"https://wiki.debian.org/LTS\""
+">5 років</a> перед оновленням."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:34
 msgid ""
 "Distribution update is currently running. This operation may take several "
 "hours. Most apps will be unavailable during this period."
 msgstr ""
+"Зараз виконується оновлення дистрибутива. Ця операція може тривати кілька "
+"годин. Протягом цього періоду більшість програм будуть недоступні."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:50
-#, fuzzy
-#| msgid "Automatic upgrades disabled"
 msgid "Automatic updates are disabled."
-msgstr "Вимкнено автоматичні оновлення"
+msgstr "Автоматичне оновлення вимкнено."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:54
-#, fuzzy
-#| msgid "Distribution upgrade disabled"
 msgid "Distribution upgrades are disabled."
-msgstr "Вимкнено оновлення дистрибутиву"
+msgstr "Оновлення дистрибутива вимкнено."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:58
 msgid ""
 "You need to have at least 5 GB of free space available on primary disk to "
 "perform a distribution update."
 msgstr ""
+"Щоб виконати оновлення розповсюдження, на основному диску потрібно мати "
+"принаймні 5 ГБ вільного місця."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:65
 msgid "Your current distribution is mixed or not understood."
-msgstr ""
+msgstr "Ваш поточний розподіл неоднозначний або незрозумілий."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:72
-#, fuzzy
-#| msgid "Test Distribution Upgrade"
 msgid "Current Distribution:"
-msgstr "Тест оновлення дистрибутиву"
+msgstr "Поточний розподіл:"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:74
-#, fuzzy
-#| msgid "unknown error"
 msgid "Unknown or mixed"
-msgstr "невідома помилка"
+msgstr "Невідомий або змішаний"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:77
 msgid "Rolling release distribution"
-msgstr ""
+msgstr "Розповсюдження поточного випуску"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:84
-#, fuzzy, python-format
-#| msgid "Delete site %(site)s"
+#, python-format
 msgid "Released: %(date)s."
-msgstr "Видалити сайт %(site)s"
+msgstr "Звільнений: %(date)s."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:91
-#, fuzzy
-#| msgid "Test Distribution Upgrade"
 msgid "Next Stable Distribution:"
-msgstr "Тест оновлення дистрибутиву"
+msgstr "Наступний стабільний розподіл:"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:93
-#, fuzzy
-#| msgid "unknown"
 msgid "Unknown"
-msgstr "невідомо"
+msgstr "Невідомий"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:99
 #, python-format
 msgid "Likely release: %(date)s."
-msgstr ""
+msgstr "Ймовірне звільнення: %(date)s."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:107
 msgid "Next stable distribution is not available yet."
-msgstr ""
+msgstr "Наступний стабільний дистрибутив ще не доступний."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:113
 #, python-format
@@ -9107,12 +9118,17 @@ msgid ""
 "necessary. Thank you for helping test the %(box_name)s project. Please "
 "report any problems you notice."
 msgstr ""
+"Ви розповсюджуєте постійний випуск. Оновлення дистрибутива не потрібне. "
+"Дякуємо за допомогу в тестуванні проекту %(box_name)s. Будь ласка, "
+"повідомляйте про будь-які проблеми, які ви помітили."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:121
 msgid ""
 "A previous run of distribution update may have been interrupted. Please re-"
 "run the distribution update."
 msgstr ""
+"Можливо, попередній запуск оновлення розповсюдження було перервано. Повторно "
+"запустіть оновлення розповсюдження."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:128
 #, python-format
@@ -9121,6 +9137,9 @@ msgid ""
 "automatically in %(period)s. You may choose to update manually now, if you "
 "wish."
 msgstr ""
+"Доступний новий стабільний дистрибутив. Ваш %(box_name)s буде автоматично "
+"оновлено через %(period)s. Ви можете вибрати оновлення вручну зараз, якщо "
+"хочете."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:136
 #, python-format
@@ -9128,6 +9147,8 @@ msgid ""
 "A new stable distribution is available. Your %(box_name)s will be updated "
 "automatically soon. You may choose to update manually now, if you wish."
 msgstr ""
+"Доступний новий стабільний дистрибутив. Ваш %(box_name)s незабаром буде "
+"оновлено автоматично. Ви можете вибрати оновлення вручну зараз, якщо хочете."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:144
 #, python-format
@@ -9137,25 +9158,24 @@ msgid ""
 "next distribution manually. This setup may experience occational app "
 "failures until the next stable release."
 msgstr ""
+"Ви використовуєте останній стабільний розподіл. Це рекомендовано. Однак, "
+"якщо ви бажаєте допомогти в бета-тестуванні функціональності %(box_name)s, "
+"ви можете оновити до наступного дистрибутива вручну. До наступного "
+"стабільного випуску в цьому налаштуванні час від часу можуть виникати збої "
+"програми."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:157
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:172
-#, fuzzy
-#| msgid "Test Distribution Upgrade"
 msgid "Start Distribution Update"
-msgstr "Тест оновлення дистрибутиву"
+msgstr "Розпочати оновлення розповсюдження"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:162
-#, fuzzy
-#| msgid "Test Distribution Upgrade"
 msgid "Continue Distribution Update"
-msgstr "Тест оновлення дистрибутиву"
+msgstr "Продовжити оновлення розповсюдження"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:167
-#, fuzzy
-#| msgid "Starting distribution upgrade test."
 msgid "Start Distribution Update (for testing)"
-msgstr "Запуск тесту оновлення дистрибутиву."
+msgstr "Розпочати оновлення розповсюдження (для тестування)"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -9233,10 +9253,8 @@ msgid "Error when configuring unattended-upgrades"
 msgstr "Помилка під час налаштування автоматичних оновлень"
 
 #: modules/upgrades/views.py:117
-#, fuzzy
-#| msgid "Starting distribution upgrade test."
 msgid "Started distribution update."
-msgstr "Запуск тесту оновлення дистрибутиву."
+msgstr "Розпочато оновлення розповсюдження."
 
 #: modules/upgrades/views.py:153
 msgid "Upgrade process started."
