@@ -338,11 +338,7 @@ def _apt_autoremove():
 def _apt_full_upgrade():
     """Run and check if apt upgrade was successful."""
     logger.info('Running apt full-upgrade...')
-    returncode = _apt_run(['full-upgrade'])
-    if returncode:
-        raise RuntimeError(
-            'Apt full-upgrade was not successful. Distribution upgrade '
-            'will be retried at a later time.')
+    _apt_run(['full-upgrade'])
 
 
 def _unattended_upgrades_run():

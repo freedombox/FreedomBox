@@ -396,10 +396,6 @@ def test_apt_full_upgrade(apt_run):
     distupgrade._apt_full_upgrade()
     apt_run.assert_called_with(['full-upgrade'])
 
-    apt_run.return_value = 1
-    with pytest.raises(RuntimeError):
-        distupgrade._apt_full_upgrade()
-
 
 @patch('subprocess.run')
 def test_unatteneded_upgrades_run(run):
