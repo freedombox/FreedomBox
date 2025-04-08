@@ -6,7 +6,6 @@ import datetime
 import logging
 import pathlib
 import subprocess
-import time
 from datetime import timezone
 from typing import Generator
 
