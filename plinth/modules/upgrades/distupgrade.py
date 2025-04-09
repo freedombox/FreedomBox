@@ -336,9 +336,25 @@ def _apt_autoremove():
 
 
 def _apt_full_upgrade():
-    """Run and check if apt upgrade was successful."""
+    """Run and check if apt upgrade was successful.
+
+    If the user has changed a configuration file of a package outside of
+    FreedomBox, the distribution upgrade process could face a configuration
+    file prompt and fail midway. When using unattended-upgrades, these packages
+    are not a problem as they would left untouched at an old version and the
+    rest of the system would be upgraded. In case of distribution upgrade,
+    these packages could cause the distribution upgrade to fail and leave the
+    system in an unusable state. Rather than halt distribution upgrade midway
+    due to a configuration file prompt, it is better to overwrite with the new
+    configuration. Backup copy of the old configuration will be available to
+    the user to later merge with the new configuration.
+
+    For packages managed by FreedomBox, packages with configuration file prompt
+    will be held back during upgrade and later carefully upgraded with merge.
+    These package are not subject to --force-confnew option.
+    """
     logger.info('Running apt full-upgrade...')
-    _apt_run(['full-upgrade'])
+    _apt_run(['full-upgrade', '-o', 'Dpkg::Options::=--force-confnew'])
 
 
 def _unattended_upgrades_run():

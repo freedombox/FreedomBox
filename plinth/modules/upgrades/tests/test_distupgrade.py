@@ -394,7 +394,8 @@ def test_apt_full_upgrade(apt_run):
     """Test that apt full upgrade works."""
     apt_run.return_value = 0
     distupgrade._apt_full_upgrade()
-    apt_run.assert_called_with(['full-upgrade'])
+    apt_run.assert_called_with(
+        ['full-upgrade', '-o', 'Dpkg::Options::=--force-confnew'])
 
 
 @patch('subprocess.run')
