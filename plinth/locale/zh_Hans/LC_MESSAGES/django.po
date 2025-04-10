@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plinth\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 09:08-0400\n"
+"POT-Creation-Date: 2025-04-07 21:06-0400\n"
 "PO-Revision-Date: 2025-02-25 09:20+0000\n"
 "Last-Translator: 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate."
 "org>\n"
@@ -223,7 +223,7 @@ msgstr "启用备份计划"
 
 #: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:84 modules/storage/__init__.py:326
-#: modules/upgrades/__init__.py:149
+#: modules/upgrades/__init__.py:152
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "转到 {app_name}"
@@ -480,45 +480,45 @@ msgstr "配置"
 msgid "Borg"
 msgstr ""
 
-#: modules/backups/privileged.py:31
+#: modules/backups/privileged.py:34
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
 msgstr "连接被拒绝——请确认您提供了正确的凭证并且服务器在运行。"
 
-#: modules/backups/privileged.py:38
+#: modules/backups/privileged.py:41
 msgid "Connection refused"
 msgstr "连接被拒绝"
 
-#: modules/backups/privileged.py:45
+#: modules/backups/privileged.py:48
 msgid "Repository not found"
 msgstr "找不到存储库"
 
-#: modules/backups/privileged.py:50
+#: modules/backups/privileged.py:53
 msgid "Incorrect encryption passphrase"
 msgstr "加密密码不正确"
 
-#: modules/backups/privileged.py:55
+#: modules/backups/privileged.py:58
 msgid "SSH access denied"
 msgstr "SSH 访问被拒绝"
 
-#: modules/backups/privileged.py:61
+#: modules/backups/privileged.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr "存储库的路径为空或已有备份。"
 
-#: modules/backups/privileged.py:74
+#: modules/backups/privileged.py:77
 msgid "An archive with given name already exists in the repository."
 msgstr "存储库中已存在同名存档。"
 
-#: modules/backups/privileged.py:81
+#: modules/backups/privileged.py:84
 msgid "Archive with given name was not found in the repository."
 msgstr ""
 
-#: modules/backups/privileged.py:87
+#: modules/backups/privileged.py:90
 msgid "Backup system is busy with another operation."
 msgstr ""
 
-#: modules/backups/privileged.py:92
+#: modules/backups/privileged.py:95
 msgid "Not enough space left on the disk or remote location."
 msgstr ""
 
@@ -582,7 +582,9 @@ msgstr "现有的备份"
 #: modules/power/templates/power_busy_warning.html:11
 #: modules/snapshot/templates/snapshot_not_supported.html:13
 #: modules/upgrades/templates/backports-firstboot.html:35
-#: modules/upgrades/templates/upgrades_configure.html:79
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:17
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:45
+#: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
 #: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
 msgid "Caution:"
@@ -1168,15 +1170,15 @@ msgstr ""
 msgid "A library with this name already exists."
 msgstr "已存在同名的库。"
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Ebook"
 msgstr ""
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Library"
 msgstr "库"
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Ebook reader"
 msgstr "电子书阅读器"
 
@@ -2146,7 +2148,7 @@ msgstr ""
 #: modules/matrixsynapse/templates/matrix-synapse.html:17
 #: modules/networks/templates/connection_show.html:258
 #: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/upgrades/templates/upgrades_configure.html:19
 #: modules/wireguard/templates/wireguard_show_client.html:48
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2735,7 +2737,7 @@ msgid ""
 msgstr ""
 
 #: modules/first_boot/templates/firstboot_complete.html:30
-#: modules/upgrades/templates/upgrades_configure.html:114
+#: modules/upgrades/templates/upgrades_configure.html:119
 msgid "Update now"
 msgstr "立即更新"
 
@@ -3021,7 +3023,7 @@ msgid "Success:"
 msgstr "成功："
 
 #: modules/help/templates/help_about.html:29
-#: modules/upgrades/templates/upgrades_configure.html:26
+#: modules/upgrades/templates/upgrades_configure.html:31
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr "您正在运行 %(os_release)s 和 %(version)s 版的 %(box_name)s。"
@@ -3034,7 +3036,7 @@ msgid ""
 msgstr "有新的 %(box_name)s 版本 <a href=\"%(upgrades_url)s\">可用</a>。"
 
 #: modules/help/templates/help_about.html:40
-#: modules/upgrades/templates/upgrades_configure.html:37
+#: modules/upgrades/templates/upgrades_configure.html:42
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "%(box_name)s 已是最新。"
@@ -3567,21 +3569,21 @@ msgid ""
 "to save disk space."
 msgstr ""
 
-#: modules/kiwix/manifest.py:23
+#: modules/kiwix/manifest.py:24
 msgid "Offline reader"
 msgstr ""
 
-#: modules/kiwix/manifest.py:24
+#: modules/kiwix/manifest.py:25
 msgid "Archival"
 msgstr "Archival"
 
-#: modules/kiwix/manifest.py:25 modules/shadowsocks/manifest.py:19
+#: modules/kiwix/manifest.py:26 modules/shadowsocks/manifest.py:19
 #: modules/shadowsocksserver/manifest.py:18 modules/tor/manifest.py:60
 #: modules/torproxy/manifest.py:57
 msgid "Censorship resistance"
 msgstr ""
 
-#: modules/kiwix/manifest.py:26
+#: modules/kiwix/manifest.py:27
 msgid "Wikipedia"
 msgstr "维基百科"
 
@@ -6680,18 +6682,18 @@ msgstr "显示安全报告"
 
 #: modules/security/templates/security.html:19
 #: modules/upgrades/templates/backports-firstboot.html:11
-#: modules/upgrades/templates/upgrades_configure.html:44
+#: modules/upgrades/templates/upgrades_configure.html:49
 msgid "Frequent Feature Updates"
 msgstr ""
 
 #: modules/security/templates/security.html:21
-#: modules/upgrades/templates/upgrades_configure.html:52
+#: modules/upgrades/templates/upgrades_configure.html:57
 msgid "Frequent feature updates are activated."
 msgstr ""
 
 #: modules/security/templates/security.html:26
 #: modules/upgrades/templates/backports-firstboot.html:14
-#: modules/upgrades/templates/upgrades_configure.html:64
+#: modules/upgrades/templates/upgrades_configure.html:69
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -7985,11 +7987,11 @@ msgstr ""
 msgid "Geekttrss"
 msgstr ""
 
-#: modules/upgrades/__init__.py:33
+#: modules/upgrades/__init__.py:34
 msgid "Check for and apply the latest software and security updates."
 msgstr "检查并应用最新软件和安全更新。"
 
-#: modules/upgrades/__init__.py:34
+#: modules/upgrades/__init__.py:35
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -7997,46 +7999,35 @@ msgid ""
 "automatically at 02:00 causing all apps to be unavailable briefly."
 msgstr ""
 
-#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
-#: modules/upgrades/__init__.py:143
+#: modules/upgrades/__init__.py:67 modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:146 modules/upgrades/__init__.py:308
 msgid "Software Update"
 msgstr "软件更新"
 
-#: modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox 已更新"
 
-#: modules/upgrades/__init__.py:138
+#: modules/upgrades/__init__.py:141
 msgid "Run software update manually"
 msgstr "手动运行软件更新"
 
-#: modules/upgrades/__init__.py:140
+#: modules/upgrades/__init__.py:143
 msgid ""
 "Automatic software update runs daily by default. For the first time, "
 "manually run it now."
 msgstr ""
 
-#: modules/upgrades/__init__.py:230
-msgid "Distribution update started"
+#: modules/upgrades/__init__.py:318
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:9
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:11
+#: modules/upgrades/templates/upgrades_configure.html:16
+#, fuzzy
+#| msgid "Distribution update started"
+msgid "Distribution Update"
 msgstr "已启动分发更新"
 
-#: modules/upgrades/__init__.py:232
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-
-#: modules/upgrades/__init__.py:256
-msgid "Could not start distribution update"
-msgstr ""
-
-#: modules/upgrades/__init__.py:258
-msgid ""
-"There is not enough free space in the root partition to start the "
-"distribution update. Please ensure at least 5 GB is free. Distribution "
-"update will be retried after 24 hours, if enabled."
-msgstr ""
-
-#: modules/upgrades/__init__.py:352
+#: modules/upgrades/__init__.py:396
 msgid "Check for package holds"
 msgstr ""
 
@@ -8059,7 +8050,7 @@ msgid ""
 msgstr ""
 
 #: modules/upgrades/forms.py:34
-#: modules/upgrades/templates/upgrades_configure.html:95
+#: modules/upgrades/templates/upgrades_configure.html:100
 msgid "Activate frequent feature updates (recommended)"
 msgstr ""
 
@@ -8087,6 +8078,225 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:11
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Confirm Distribution Update?"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:21
+#, python-format
+msgid ""
+"You are about to update to the next distribution version before it has been "
+"released. Proceed only if you wish to help with beta testing of %(box_name)s "
+"functionality."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:32
+msgid ""
+"Take a full backup of all apps and data before performing a distribution "
+"update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:38
+msgid ""
+"The process will take several hours. Most apps will be unavailable during "
+"this time."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:44
+msgid ""
+"Don't interrupt the process by shutting down or interrupting power to the "
+"machine."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:50
+msgid "If the process is interrupted, you should be able to continue it."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:66
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Confirm & Start Distribution Update"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:15
+msgid ""
+"Distribution update has started. This operation may take several hours. Most "
+"apps will be unavailable during this period. Don't interrupt the process by "
+"shutting down or interrupting power to the machine."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:21
+msgid "Distribution update has completed. Reboot the machine, if necessary."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:25
+#, python-format
+msgid ""
+"Distribution update will start soon. Take a backup of apps and data before "
+"then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page for expected "
+"changes and transitions during the distribution upgrade."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
+#, python-format
+msgid ""
+"Distribution update will start in %(in_days)s days. Take a backup of apps "
+"and data before then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page "
+"for expected changes and transitions during the distribution upgrade."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:42
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Go to Distribution Update"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
+#: modules/upgrades/templates/upgrades-new-release.html:22
+#: templates/notifications.html:50 templates/operation-notification.html:23
+msgid "Dismiss"
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:15
+#, python-format
+msgid ""
+"Your %(box_name)s will receive security updates, important fixes and some "
+"selected features with regular software updates. However, to provide a long "
+"software life cycle for %(box_name)s, the entire operating system will "
+"receive a major distribution update every two years or so. This will bring "
+"in major features and changes. Sometimes, old features will stop working. "
+"Please consult the <a href=\"%(dist_upgrade_url)s\">manual</a> for expected "
+"changes and transitions during a distribution upgrade. If you dislike these "
+"changes, you can keep each distribution for at least <a href=\"https://wiki."
+"debian.org/LTS\">5 years</a> before updating."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:34
+msgid ""
+"Distribution update is currently running. This operation may take several "
+"hours. Most apps will be unavailable during this period."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:50
+#, fuzzy
+#| msgid "Automatic upgrades disabled"
+msgid "Automatic updates are disabled."
+msgstr "已禁用自动升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:54
+#, fuzzy
+#| msgid "Distribution upgrade disabled"
+msgid "Distribution upgrades are disabled."
+msgstr "已禁用分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:58
+msgid ""
+"You need to have at least 5 GB of free space available on primary disk to "
+"perform a distribution update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:65
+msgid "Your current distribution is mixed or not understood."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:72
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Current Distribution:"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:74
+msgid "Unknown or mixed"
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:77
+msgid "Rolling release distribution"
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:84
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Released: %(date)s."
+msgstr "删除站点 %(site)s"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:91
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Next Stable Distribution:"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:93
+msgid "Unknown"
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:99
+#, python-format
+msgid "Likely release: %(date)s."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:107
+msgid "Next stable distribution is not available yet."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:113
+#, python-format
+msgid ""
+"You are on a rolling release distribution. No distribution update is "
+"necessary. Thank you for helping test the %(box_name)s project. Please "
+"report any problems you notice."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:121
+msgid ""
+"A previous run of distribution update may have been interrupted. Please re-"
+"run the distribution update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:128
+#, python-format
+msgid ""
+"A new stable distribution is available. Your %(box_name)s will be updated "
+"automatically in %(period)s. You may choose to update manually now, if you "
+"wish."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:136
+#, python-format
+msgid ""
+"A new stable distribution is available. Your %(box_name)s will be updated "
+"automatically soon. You may choose to update manually now, if you wish."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:144
+#, python-format
+msgid ""
+"You are on the latest stable distribution. This is recommended. However, if "
+"you wish to help beta test %(box_name)s functionality, you may update to "
+"next distribution manually. This setup may experience occational app "
+"failures until the next stable release."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:157
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:172
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Start Distribution Update"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:162
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Continue Distribution Update"
+msgstr "测试分发升级"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:167
+#, fuzzy
+#| msgid "Starting distribution upgrade test."
+msgid "Start Distribution Update (for testing)"
+msgstr "启动分发升级测试。"
+
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
 msgid "%(box_name)s updated"
@@ -8099,37 +8309,32 @@ msgid ""
 "href=\"%(url)s\">release announcement</a>."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
-msgid "Dismiss"
-msgstr ""
-
-#: modules/upgrades/templates/upgrades_configure.html:30
-#: modules/upgrades/templates/upgrades_configure.html:106
+#: modules/upgrades/templates/upgrades_configure.html:35
+#: modules/upgrades/templates/upgrades_configure.html:111
 msgid "Updating..."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:32
+#: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "有 %(box_name)s 的新版本而可用。"
 
-#: modules/upgrades/templates/upgrades_configure.html:35
+#: modules/upgrades/templates/upgrades_configure.html:40
 msgid "Your Freedombox needs an update!"
 msgstr "你的 Freedombox 需要更新！"
 
-#: modules/upgrades/templates/upgrades_configure.html:47
+#: modules/upgrades/templates/upgrades_configure.html:52
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:56
+#: modules/upgrades/templates/upgrades_configure.html:61
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:83
+#: modules/upgrades/templates/upgrades_configure.html:88
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -8137,11 +8342,11 @@ msgid ""
 "href=\"%(snapshot_url)s\">Storage Snapshots</a> before continuing."
 msgstr ""
 
-#: modules/upgrades/templates/upgrades_configure.html:100
+#: modules/upgrades/templates/upgrades_configure.html:105
 msgid "Manual Update"
 msgstr "手动更新"
 
-#: modules/upgrades/templates/upgrades_configure.html:120
+#: modules/upgrades/templates/upgrades_configure.html:125
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -8150,43 +8355,31 @@ msgstr ""
 "<strong>这可能需要很长时间才能完成。</strong>在更新期间，您无法安装应用。 此"
 "外，此 Web 界面可能暂时不可用并显示错误。 在这种情况下，刷新页面以继续。"
 
-#: modules/upgrades/templates/upgrades_configure.html:134
+#: modules/upgrades/templates/upgrades_configure.html:139
 msgid "Show recent update logs"
 msgstr ""
-
-#: modules/upgrades/templates/upgrades_configure.html:144
-msgid "Test Distribution Upgrade"
-msgstr "测试分发升级"
-
-#: modules/upgrades/templates/upgrades_configure.html:146
-msgid ""
-"This will attempt to upgrade the system from stable to testing. <strong>It "
-"is meant only for development use.</strong>"
-msgstr ""
-
-#: modules/upgrades/templates/upgrades_configure.html:156
-msgid "Test distribution upgrade now"
-msgstr "立即测试分发升级"
 
 #: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
 msgstr "配置无人参与升级时出错"
 
-#: modules/upgrades/views.py:119
+#: modules/upgrades/views.py:117
+#, fuzzy
+#| msgid "Starting distribution upgrade test."
+msgid "Started distribution update."
+msgstr "启动分发升级测试。"
+
+#: modules/upgrades/views.py:153
 msgid "Upgrade process started."
 msgstr "升级过程开始。"
 
-#: modules/upgrades/views.py:121
+#: modules/upgrades/views.py:155
 msgid "Starting upgrade failed."
 msgstr "开始升级失败。"
 
-#: modules/upgrades/views.py:131
+#: modules/upgrades/views.py:165
 msgid "Frequent feature updates activated."
 msgstr ""
-
-#: modules/upgrades/views.py:176
-msgid "Starting distribution upgrade test."
-msgstr "启动分发升级测试。"
 
 #: modules/users/__init__.py:33
 msgid ""
@@ -8906,112 +9099,112 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "已完成：{name}"
 
-#: package.py:206
+#: package.py:213
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:226
+#: package.py:233
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:420
+#: package.py:427
 msgid "installing"
 msgstr "安装"
 
-#: package.py:422
+#: package.py:429
 msgid "downloading"
 msgstr "下载中"
 
-#: package.py:424
+#: package.py:431
 msgid "media change"
 msgstr "媒体改变"
 
-#: package.py:426
+#: package.py:433
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "配置文件：{file}"
 
-#: package.py:454 package.py:479
+#: package.py:461 package.py:487
 msgid "Timeout waiting for package manager"
 msgstr ""
 
-#: setup.py:42
+#: setup.py:44
 msgid "Installing app"
 msgstr "安装应用中"
 
-#: setup.py:44
+#: setup.py:46
 msgid "Updating app"
 msgstr ""
 
-#: setup.py:78
+#: setup.py:80
 #, python-brace-format
 msgid "Error installing app: {exception}"
 msgstr "安装应用出错：{exception}"
 
-#: setup.py:80
+#: setup.py:82
 #, python-brace-format
 msgid "Error repairing app: {exception}"
 msgstr "修复应用出错：{exception}"
 
-#: setup.py:82
+#: setup.py:84
 #, python-brace-format
 msgid "Error updating app: {exception}"
 msgstr "更新应用出错：{exception}"
 
-#: setup.py:85
+#: setup.py:87
 msgid "App installed."
 msgstr "应用已安装。"
 
-#: setup.py:89
+#: setup.py:91
 msgid "App updated"
 msgstr "应用已更新"
 
-#: setup.py:112
+#: setup.py:114
 msgid "Repairing app"
 msgstr "正在修复应用"
 
-#: setup.py:143
+#: setup.py:145
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "运行诊断出错：{error}"
 
-#: setup.py:156
+#: setup.py:158
 msgid "Skipping repair, no failed checks"
 msgstr ""
 
-#: setup.py:164
+#: setup.py:166
 #, python-brace-format
 msgid "Error repairing app: {error}"
 msgstr "修复应用出错：{error}"
 
-#: setup.py:170
+#: setup.py:172
 msgid "Re-running setup to complete repairs"
 msgstr ""
 
-#: setup.py:178
+#: setup.py:180
 msgid "App repaired."
 msgstr "应用已修复。"
 
-#: setup.py:182
+#: setup.py:184
 msgid "App repair completed with errors:\n"
 msgstr ""
 
-#: setup.py:202
+#: setup.py:204
 msgid "Uninstalling app"
 msgstr "卸载应用"
 
-#: setup.py:218
+#: setup.py:220
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "卸载应用出错：{error}"
 
-#: setup.py:221
+#: setup.py:223
 msgid "App uninstalled."
 msgstr "应用已卸载。"
 
-#: setup.py:594
+#: setup.py:590
 msgid "Updating app packages"
 msgstr "更新软件包中"
 
@@ -9332,6 +9525,9 @@ msgstr ""
 msgid "Gujarati"
 msgstr "古吉拉特语"
 
+#~ msgid "Test distribution upgrade now"
+#~ msgstr "立即测试分发升级"
+
 #~ msgid "No status available."
 #~ msgstr "无状态可用。"
 
@@ -9543,14 +9739,8 @@ msgstr "古吉拉特语"
 #~ msgid "Automatic upgrades enabled"
 #~ msgstr "已启用自动升级"
 
-#~ msgid "Automatic upgrades disabled"
-#~ msgstr "已禁用自动升级"
-
 #~ msgid "Distribution upgrade enabled"
 #~ msgstr "已启用分发升级"
-
-#~ msgid "Distribution upgrade disabled"
-#~ msgstr "已禁用分发升级"
 
 #, python-brace-format
 #~ msgid "Error installing app: {string} {details}"

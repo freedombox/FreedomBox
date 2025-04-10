@@ -16,7 +16,8 @@ backup = {
     'data': {
         'directories': ['/var/lib/private/kiwix-server-freedombox/']
     },
-    'services': ['kiwix-server-freedombox']
+    'services': ['kiwix-server-freedombox'],
+    'delete_before_restore': ['/var/lib/private/kiwix-server-freedombox/']
 }
 
 tags = [

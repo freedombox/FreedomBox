@@ -13,6 +13,20 @@ LOG_PATH = '/var/log/radicale'
 
 
 @privileged
+def setup():
+    """Configure authentication to Apache remote user.
+
+    For radicale < 3.5 (bookworm), this was set by configuration shipped with
+    Debian. For radicale >= 3.5 (trixie), this needs to be explicitly. For
+    simplicity, set is unconditionally.
+    """
+    aug = load_augeas()
+    aug.set('auth/type', 'remote_user')
+    aug.save()
+    action_utils.service_try_restart('uwsgi')
+
+
+@privileged
 def configure(rights_type: str):
     """Set the radicale rights type to a particular value."""
     if rights_type == 'owner_only':
@@ -20,7 +34,7 @@ def configure(rights_type: str):
         rights_type = 'from_file'
 
     aug = load_augeas()
-    aug.set('/files' + CONFIG_FILE + '/rights/type', rights_type)
+    aug.set('rights/type', rights_type)
     aug.save()
 
     action_utils.service_try_restart('uwsgi')
@@ -38,10 +52,8 @@ def load_augeas():
     """Initialize Augeas."""
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
-
     # INI file lens
-    aug.set('/augeas/load/Puppet/lens', 'Puppet.lns')
-    aug.set('/augeas/load/Puppet/incl[last() + 1]', CONFIG_FILE)
-
+    aug.transform('Puppet', CONFIG_FILE)
+    aug.set('/augeas/context', '/files' + CONFIG_FILE)
     aug.load()
     return aug

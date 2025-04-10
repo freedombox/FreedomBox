@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from plinth import __version__
@@ -16,7 +17,7 @@ from plinth.modules import first_boot, upgrades
 from plinth.privileged import packages as packages_privileged
 from plinth.views import AppView, messages_error
 
-from . import privileged
+from . import distupgrade, privileged
 from .forms import BackportsFirstbootForm, ConfigureForm
 
 
@@ -47,7 +48,6 @@ class UpgradesConfigurationView(AppView):
         context['version'] = __version__
         context['new_version'] = is_newer_version_available()
         context['os_release'] = get_os_release()
-        context['can_test_dist_upgrade'] = upgrades.can_test_dist_upgrade()
         return context
 
     def form_valid(self, form):
@@ -82,6 +82,40 @@ class UpgradesConfigurationView(AppView):
             messages.success(self.request, _('Configuration updated.'))
 
         return super().form_valid(form)
+
+
+class DistUpgradeView(TemplateView):
+    """View to show status of distribution upgrade."""
+    template_name = 'upgrades-dist-upgrade.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['status'] = distupgrade.get_status()
+        context['refresh_page_sec'] = None
+        if context['status']['running']:
+            context['refresh_page_sec'] = 3
+
+        return context
+
+
+class DistUpgradeConfirmView(TemplateView):
+    """View to confirm and trigger trigger distribution upgrade."""
+    template_name = 'upgrades-dist-upgrade-confirm.html'
+
+    def get_context_data(self, **kwargs):
+        """Return additional context for rendering the template."""
+        context = super().get_context_data(**kwargs)
+        context['status'] = distupgrade.get_status()
+        return context
+
+    def post(self, request):
+        """Start the distribution upgrade process."""
+        status = distupgrade.get_status()
+        upgrades.dist_upgrade_show_notification(status, starting=True)
+        privileged.start_dist_upgrade()
+        messages.success(request, _('Started distribution update.'))
+        return redirect(reverse_lazy('upgrades:dist-upgrade'))
 
 
 def is_newer_version_available():
@@ -167,12 +201,3 @@ class BackportsFirstbootView(FormView):
         upgrades.setup_repositories(None)
         first_boot.mark_step_done('backports_wizard')
         return super().form_valid(form)
-
-
-def test_dist_upgrade(request):
-    """Test dist-upgrade from stable to testing."""
-    if request.method == 'POST':
-        upgrades.test_dist_upgrade()
-        messages.success(request, _('Starting distribution upgrade test.'))
-
-    return redirect(reverse_lazy('upgrades:index'))

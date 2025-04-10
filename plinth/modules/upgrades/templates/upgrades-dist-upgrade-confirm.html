@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h3>{% trans "Confirm Distribution Update?" %}</h3>
+
+  {% if status.next_action == "manual" %}
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+      <div class="me-2">
+        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Caution:" %}</span>
+      </div>
+
+      <div>
+        {% blocktrans trimmed %}
+          You are about to update to the next distribution version before it has
+          been released. Proceed only if you wish to help with beta testing
+          of {{ box_name }} functionality.
+        {% endblocktrans %}
+      </div>
+    </div>
+  {% endif %}
+
+  <ul>
+    <li>
+      {% blocktrans trimmed %}
+        Take a full backup of all apps and data before performing a distribution
+        update.
+      {% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        The process will take several hours. Most apps will be unavailable
+        during this time.
+      {% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        Don't interrupt the process by shutting down or interrupting power to
+        the machine.
+      {% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        If the process is interrupted, you should be able to continue it.
+      {% endblocktrans %}
+    </li>
+  </ul>
+
+  <p>
+    <form class="form form-dist-upgrade" method="post">
+      {% csrf_token %}
+
+      <input type="submit"
+        {% if status.next_action != "manual" %}
+          class="btn btn-primary"
+        {% else %}
+          class="btn btn-danger"
+        {% endif %}
+             value="{% trans "Confirm & Start Distribution Update" %}"/>
+    </form>
+  </p>
+{% endblock %}

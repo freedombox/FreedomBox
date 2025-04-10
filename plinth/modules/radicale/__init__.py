@@ -43,7 +43,7 @@ class RadicaleApp(app_module.App):
 
     app_id = 'radicale'
 
-    _version = 3
+    _version = 4
 
     def __init__(self) -> None:
         """Create components for the app."""
@@ -67,7 +67,8 @@ class RadicaleApp(app_module.App):
                                       tags=info.tags, login_required=True)
         self.add(shortcut)
 
-        packages = Packages('packages-radicale', ['radicale'])
+        packages = Packages('packages-radicale', ['radicale'],
+                            rerun_setup_on_upgrade=True)
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-radicale', [
@@ -102,6 +103,7 @@ class RadicaleApp(app_module.App):
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
+        privileged.setup()
         if not old_version:
             self.enable()
 
@@ -117,6 +119,7 @@ class RadicaleApp(app_module.App):
 
         rights = get_rights_value()
         install(['radicale'], force_configuration='new')
+        privileged.setup()
         privileged.configure(rights)
 
         return True

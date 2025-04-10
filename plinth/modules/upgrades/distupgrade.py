@@ -2,10 +2,11 @@
 """Perform distribution upgrade."""
 
 import contextlib
+import datetime
 import logging
 import pathlib
 import subprocess
-import time
+from datetime import timezone
 from typing import Generator
 
 import augeas
@@ -29,10 +30,53 @@ PRE_DEBCONF_SELECTIONS: list[str] = [
 sources_list = pathlib.Path('/etc/apt/sources.list')
 temp_sources_list = pathlib.Path('/etc/apt/sources.list.fbx-dist-upgrade')
 
+wait_period_after_release = datetime.timedelta(days=30)
 
-def _apt_run(arguments):
+distribution_info: dict = {
+    'bullseye': {
+        'version': 11,
+        'next': 'bookworm',
+        'release_date': datetime.datetime(2021, 8, 14, tzinfo=timezone.utc),
+    },
+    'bookworm': {
+        'version': 12,
+        'next': 'trixie',
+        'release_date': datetime.datetime(2023, 6, 10, tzinfo=timezone.utc),
+    },
+    'trixie': {
+        'version': 13,
+        'next': 'forky',
+        'release_date': datetime.datetime(2025, 8, 20, tzinfo=timezone.utc),
+    },
+    'forky': {
+        'version': 14,
+        'next': 'duke',
+        'release_date': None
+    },
+    'duke': {
+        'version': 15,
+        'next': None,
+        'release_date': None
+    },
+    'testing': {
+        'version': None,
+        'next': None,
+        'release_date': None
+    },
+    'unstable': {
+        'version': None,
+        'next': None,
+        'release_date': None
+    }
+}
+
+
+def _apt_run(arguments: list[str]):
     """Run an apt command and ensure that output is written to stdout."""
-    return action_utils.run_apt_command(arguments, stdout=None)
+    returncode = action_utils.run_apt_command(arguments, stdout=None)
+    if returncode:
+        raise RuntimeError(
+            f'Apt command failed with return code: {returncode}')
 
 
 def _sources_list_update(old_codename: str, new_codename: str):
@@ -61,65 +105,122 @@ def _sources_list_update(old_codename: str, new_codename: str):
     aug_path.rename(temp_sources_list)
 
 
-def _get_new_codename(test_upgrade: bool) -> str | None:
-    """Return the codename for the next release."""
-    release_file_dist = 'stable'
-    if test_upgrade:
-        release_file_dist = 'testing'
+def _get_sources_list_codename() -> str | None:
+    """Return the codename set in the /etc/apt/sources.list file."""
+    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
+                        augeas.Augeas.NO_MODL_AUTOLOAD)
+    aug.transform('aptsources', str(sources_list))
+    aug.set('/augeas/context', '/files' + str(sources_list))
+    aug.load()
 
-    url = utils.RELEASE_FILE_URL.format(release_file_dist)
-    command = ['curl', '--silent', '--location', '--fail', url]
-    protocol = utils.get_http_protocol()
-    if protocol == 'tor+http':
-        command.insert(0, 'torsocks')
-        logging.info('Package download over Tor is enabled.')
+    dists = set()
+    for match_ in aug.match('*'):
+        dist = aug.get(match_ + '/distribution')
+        dist = dist.removesuffix('-updates')
+        dist = dist.removesuffix('-security')
+        dists.add(dist)
 
-    try:
-        output = subprocess.check_output(command).decode()
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        logging.warning('Error while checking for new %s release',
-                        release_file_dist)
-    else:
-        for line in output.split('\n'):
-            if line.startswith('Codename:'):
-                return line.split()[1]
+    if len(dists) != 1:
+        return None
 
-    return None
+    return dists.pop()
 
 
-def _check(test_upgrade: bool = False) -> tuple[str, str]:
+def get_status() -> dict[str, bool | str | None]:
     """Check if a distribution upgrade be performed.
 
     Check for new stable release, if updates are enabled, and if there is
     enough free space for the dist upgrade.
 
-    If test_upgrade is True, also check for upgrade to testing.
+    Various outcomes:
 
-    Return (boolean, string) indicating if the upgrade is ready, and a reason
-    if not.
+    - Unattended upgrades are not enabled.
+    - Distribution upgrades are not enabled.
+    - Not enough free space on the disk to perform dist upgrade.
+    - Dist upgrade already running.
+    - Codename in base-files package more recent than codename in sources.list.
+      Previous run of dist upgrade was interrupted.
+    - Could not determine the distribution. Mixed or unknown distribution.
+    - On testing/unstable rolling distributions. Nothing to do.
+    - On latest stable, no dist upgrade is available. Can upgrade to testing
+      (with codename).
+    - On old stable, waiting for cool-off period before upgrade. Manual upgrade
+      possible.
+    - On old stable, ready to do dist upgrade. Manual upgrade possible.
+
     """
-    if not utils.check_auto():
-        raise RuntimeError('upgrades-not-enabled')
+    from plinth.modules import upgrades
+    updates_enabled = utils.check_auto()
+    dist_upgrade_enabled = upgrades.is_dist_upgrade_enabled()
+    has_free_space = utils.is_sufficient_free_space()
+    running = action_utils.service_is_running('freedombox-dist-upgrade')
 
-    if not utils.is_sufficient_free_space():
-        raise RuntimeError('not-enough-free-space')
+    current_codename = _get_sources_list_codename()
+    status = {
+        'updates_enabled': updates_enabled,
+        'dist_upgrade_enabled': dist_upgrade_enabled,
+        'has_free_space': has_free_space,
+        'running': running,
+        'current_codename': current_codename,
+        'current_version': None,
+        'current_release_date': None,
+        'next_codename': None,
+        'next_version': None,
+        'next_release_date': None,
+        'next_action': None,
+        'next_action_date': None
+    }
 
-    if action_utils.service_is_running('freedombox-dist-upgrade'):
-        raise RuntimeError('found-previous')
+    if current_codename in (None, 'testing', 'unstable'):
+        return status
 
-    from plinth.modules.upgrades import get_current_release
-    release, old_codename = get_current_release()
-    if release in ['unstable', 'testing', 'n/a']:
-        raise RuntimeError(f'already-{release}')
+    _, base_files_codename = upgrades.get_current_release()
+    if current_codename == 'stable':
+        current_codename = base_files_codename
 
-    new_codename = _get_new_codename(test_upgrade)
-    if not new_codename:
-        raise RuntimeError('codename-not-found')
+    if current_codename not in distribution_info:
+        return status
 
-    if new_codename == old_codename:
-        raise RuntimeError(f'already-{old_codename}')
+    current_version = distribution_info[current_codename]['version']
+    current_release_date = distribution_info[current_codename]['release_date']
+    next_codename = distribution_info[current_codename]['next']
+    next_version = None
+    next_release_date = None
+    if next_codename:
+        next_version = distribution_info[next_codename]['version']
+        next_release_date = distribution_info[next_codename]['release_date']
 
-    return old_codename, new_codename
+    next_action = None
+    now = datetime.datetime.now(tz=timezone.utc)
+    next_action_date = None
+    if next_release_date:
+        next_action_date = next_release_date + wait_period_after_release
+
+    if running:
+        next_action = None
+    elif base_files_codename == next_codename:
+        next_action = 'continue'  # Previous run was interrupted
+    elif (not next_release_date or not updates_enabled
+          or not dist_upgrade_enabled or not has_free_space):
+        next_action = None
+    elif now >= next_action_date:  # type: ignore
+        next_action = 'ready'
+    elif now < next_release_date:
+        next_action = 'manual'
+    else:
+        next_action = 'wait_or_manual'
+
+    status.update({
+        'current_codename': current_codename,
+        'current_version': current_version,
+        'current_release_date': current_release_date,
+        'next_codename': next_codename,
+        'next_version': next_version,
+        'next_release_date': next_release_date,
+        'next_action': next_action,
+        'next_action_date': next_action_date
+    })
+    return status
 
 
 @contextlib.contextmanager
@@ -137,10 +238,8 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
     reenable = False
     try:
         logger.info('Taking a snapshot before dist upgrade...')
-        subprocess.run([
-            '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-            '--no-args'
-        ], check=True)
+        command = ['snapper', 'create', '--description', 'before dist-upgrade']
+        subprocess.run(command, check=True)
         aug = snapshot_module.load_augeas()
         if snapshot_module.is_apt_snapshots_enabled(aug):
             logger.info('Disabling apt snapshots during dist upgrade...')
@@ -264,12 +363,6 @@ def _freedombox_restart():
     action_utils.service_restart('plinth')
 
 
-def _wait():
-    """Wait for 10 minutes before performing remaining actions."""
-    logger.info('Waiting for 10 minutes...')
-    time.sleep(10 * 60)
-
-
 def _trigger_on_complete():
     """Trigger the on complete step in a separate service."""
     # The dist-upgrade process will be run /etc/apt/sources.list file bind
@@ -313,12 +406,10 @@ def perform():
 
     _unattended_upgrades_run()
     _freedombox_restart()
-    _wait()
-    _apt_update()
     _trigger_on_complete()
 
 
-def start_service(test_upgrade: bool):
+def start_service():
     """Create dist upgrade service and start it."""
     # Cleanup old service
     old_service_path = pathlib.Path(
@@ -327,14 +418,13 @@ def start_service(test_upgrade: bool):
         old_service_path.unlink(missing_ok=True)
         action_utils.service_daemon_reload()
 
-    old_codename, new_codename = _check(test_upgrade)
-
-    _sources_list_update(old_codename, new_codename)
+    status = get_status()
+    _sources_list_update(status['current_codename'], status['next_codename'])
 
     args = [
         '--unit=freedombox-dist-upgrade',
         '--description=Upgrade to new stable Debian release',
-        '--property=KillMode=process', '--property=TimeoutSec=12hr',
+        '--property=KillMode=process', '--property=TimeoutSec=72hr',
         f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
     subprocess.run(['systemd-run'] + args + [

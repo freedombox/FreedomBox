@@ -5,6 +5,8 @@ Test various part of the dist upgrade process.
 
 import re
 import subprocess
+from datetime import datetime as datetime_original
+from datetime import timezone
 from unittest.mock import call, patch
 
 import pytest
@@ -17,12 +19,16 @@ from plinth.modules.upgrades import distupgrade
 @patch('subprocess.run')
 def test_apt_run(run):
     """Test that running apt command logs properly."""
-    run.return_value.returncode = 10
+    run.return_value.returncode = 0
     args = ['command', 'arg1', 'arg2']
-    assert distupgrade._apt_run(args) == 10
+    distupgrade._apt_run(args)
     assert run.call_args.args == \
         (['apt-get', '--assume-yes', '--quiet=2'] + args,)
     assert not run.call_args.kwargs['stdout']
+
+    run.return_value.returncode = 10
+    with pytest.raises(RuntimeError):
+        distupgrade._apt_run(args)
 
 
 def test_sources_list_update(tmp_path):
@@ -74,75 +80,161 @@ deb https://deb.debian.org/debian bookwormish main
         assert temp_sources_list.read_text() == modified
 
 
-@patch('plinth.modules.upgrades.utils.get_http_protocol')
-@patch('subprocess.check_output')
-def test_get_new_codename(check_output, get_http_protocol):
-    """Test that getting a new distro codename works."""
-    get_http_protocol.return_value = 'http'
-    check_output.return_value = b'''
-Suite: testing
-Codename: trixie
-Description: Debian Testing distribution
-'''
-    assert distupgrade._get_new_codename(False) == 'trixie'
-    check_output.assert_called_with([
-        'curl', '--silent', '--location', '--fail',
-        'https://deb.debian.org/debian/dists/stable/Release'
-    ])
+def test_get_sources_list_codename(tmp_path):
+    """Test retrieving codename from sources.list file."""
+    list1 = '''
+deb http://deb.debian.org/debian bookworm main non-free-firmware
+deb-src http://deb.debian.org/debian bookworm main non-free-firmware
 
-    assert distupgrade._get_new_codename(True) == 'trixie'
-    check_output.assert_called_with([
-        'curl', '--silent', '--location', '--fail',
-        'https://deb.debian.org/debian/dists/testing/Release'
-    ])
+deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
+deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
 
-    check_output.side_effect = FileNotFoundError('curl not found')
-    assert not distupgrade._get_new_codename(True)
+deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
+deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
+'''  # noqa: E501
+
+    list2 = '''
+deb http://deb.debian.org/debian stable main non-free-firmware
+deb-src http://deb.debian.org/debian stable main non-free-firmware
+
+deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
+deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
+
+deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
+deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
+'''  # noqa: E501
+
+    sources_list = tmp_path / 'sources.list'
+    module = 'plinth.modules.upgrades.distupgrade'
+    with patch(f'{module}.sources_list', sources_list):
+        sources_list.write_text(list1)
+        assert distupgrade._get_sources_list_codename() == 'bookworm'
+
+        sources_list.write_text(list2)
+        assert distupgrade._get_sources_list_codename() is None
 
 
-@patch('plinth.modules.upgrades.distupgrade._get_new_codename')
+@patch('datetime.datetime')
 @patch('plinth.modules.upgrades.get_current_release')
+@patch('plinth.modules.upgrades.distupgrade._get_sources_list_codename')
 @patch('plinth.action_utils.service_is_running')
 @patch('plinth.modules.upgrades.utils.is_sufficient_free_space')
+@patch('plinth.modules.upgrades.is_dist_upgrade_enabled')
 @patch('plinth.modules.upgrades.utils.check_auto')
-def test_check(check_auto, is_sufficient_free_space, service_is_running,
-               get_current_release, get_new_codename):
-    """Test checking for available dist upgrade."""
+def test_get_status(check_auto, is_dist_upgrade_enabled,
+                    is_sufficient_free_space, service_is_running,
+                    get_sources_list_codename, get_current_release, datetime):
+    """Test getting status of distribution upgrade."""
+    # All checks fail, sources.list has 'testing' value
     check_auto.return_value = False
-    with pytest.raises(RuntimeError, match='upgrades-not-enabled'):
-        distupgrade._check()
-
-    check_auto.return_value = True
+    is_dist_upgrade_enabled.return_value = False
     is_sufficient_free_space.return_value = False
-    with pytest.raises(RuntimeError, match='not-enough-free-space'):
-        distupgrade._check()
+    service_is_running.return_value = True
+    get_sources_list_codename.return_value = 'testing'
+    status = distupgrade.get_status()
+    assert not status['updates_enabled']
+    assert not status['dist_upgrade_enabled']
+    assert not status['has_free_space']
+    assert status['running']
+    assert status['current_codename'] == 'testing'
+    assert status['current_version'] is None
+    assert status['current_release_date'] is None
+    assert status['next_codename'] is None
+    assert status['next_version'] is None
+    assert status['next_release_date'] is None
+    assert status['next_action'] is None
 
+    # sources.list has mixed values
+    get_sources_list_codename.return_value = None
+    status = distupgrade.get_status()
+    assert status['current_codename'] is None
+    assert status['current_version'] is None
+
+    # sources.list has 'unstable' value
+    get_sources_list_codename.return_value = 'unstable'
+    status = distupgrade.get_status()
+    assert status['current_codename'] == 'unstable'
+    assert status['current_version'] is None
+
+    # sources.list has an unknown value
+    get_sources_list_codename.return_value = 'x-invalid'
+    get_current_release.return_value = (None, None)
+    status = distupgrade.get_status()
+    assert status['current_codename'] == 'x-invalid'
+    assert status['current_version'] is None
+
+    # sources.list has 'stable'
+    get_sources_list_codename.return_value = 'stable'
+    get_current_release.return_value = (None, 'bookworm')
+    status = distupgrade.get_status()
+    assert status['current_codename'] == 'bookworm'
+    assert status['current_version'] == 12
+
+    # All checks pass, next release not yet available
+    check_auto.return_value = True
+    is_dist_upgrade_enabled.return_value = True
+    is_sufficient_free_space.return_value = True
+    service_is_running.return_value = False
+    get_sources_list_codename.return_value = 'bookworm'
+    get_current_release.return_value = (None, 'bookworm')
+    datetime.now.return_value = datetime_original(2024, 8, 10,
+                                                  tzinfo=timezone.utc)
+    status = distupgrade.get_status()
+    assert status['updates_enabled']
+    assert status['dist_upgrade_enabled']
+    assert status['has_free_space']
+    assert not status['running']
+    assert status['current_codename'] == 'bookworm'
+    assert status['current_version'] == 12
+    current_date = datetime_original(2023, 6, 10, tzinfo=timezone.utc)
+    assert status['current_release_date'] == current_date
+    assert status['next_codename'] == 'trixie'
+    assert status['next_version'] == 13
+    next_date = datetime_original(2025, 8, 20, tzinfo=timezone.utc)
+    assert status['next_release_date'] == next_date
+    assert status['next_action'] == 'manual'
+
+    # Distribution upgrade interrupted
+    get_current_release.return_value = (None, 'trixie')
+    status = distupgrade.get_status()
+    assert status['next_action'] == 'continue'
+
+    # Less than 30 days after release
+    get_current_release.return_value = (None, 'bookworm')
+    datetime.now.return_value = datetime_original(2025, 8, 30,
+                                                  tzinfo=timezone.utc)
+    status = distupgrade.get_status()
+    assert status['next_action'] == 'wait_or_manual'
+
+    # More than 30 days after release
+    datetime.now.return_value = datetime_original(2025, 9, 30,
+                                                  tzinfo=timezone.utc)
+    status = distupgrade.get_status()
+    assert status['next_action'] == 'ready'
+
+    # Next release date not available
+    get_sources_list_codename.return_value = 'trixie'
+    assert distupgrade.get_status()['next_action'] is None
+
+    # Automatic updates not enabled
+    get_sources_list_codename.return_value = 'bookworm'
+    check_auto.return_value = False
+    assert distupgrade.get_status()['next_action'] is None
+
+    # Distribution updates not enabled
+    check_auto.return_value = True
+    is_dist_upgrade_enabled.return_value = False
+    assert distupgrade.get_status()['next_action'] is None
+
+    # Not enough free space
+    is_dist_upgrade_enabled.return_value = True
+    is_sufficient_free_space.return_value = False
+    assert distupgrade.get_status()['next_action'] is None
+
+    # Distribution upgrade running
     is_sufficient_free_space.return_value = True
     service_is_running.return_value = True
-    with pytest.raises(RuntimeError, match='found-previous'):
-        distupgrade._check()
-
-    service_is_running.return_value = False
-    for release in ['unstable', 'testing', 'n/a']:
-        get_current_release.return_value = (release, release)
-        with pytest.raises(RuntimeError, match=f'already-{release}'):
-            distupgrade._check()
-
-    get_current_release.return_value = ('12', 'bookworm')
-    get_new_codename.return_value = None
-    with pytest.raises(RuntimeError, match='codename-not-found'):
-        distupgrade._check()
-        get_new_codename.assert_called_with(False)
-
-        distupgrade._check(True)
-        get_new_codename.assert_called_with(True)
-
-    get_new_codename.return_value = 'bookworm'
-    with pytest.raises(RuntimeError, match='already-bookworm'):
-        distupgrade._check()
-
-    get_new_codename.return_value = 'trixie'
-    assert distupgrade._check() == ('bookworm', 'trixie')
+    assert distupgrade.get_status()['next_action'] is None
 
 
 @patch('subprocess.run')
@@ -160,10 +252,8 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     is_apt_snapshots_enabled.return_value = False
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
-            call([
-                '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-                '--no-args'
-            ], check=True)
+            call(['snapper', 'create', '--description', 'before dist-upgrade'],
+                 check=True)
         ]
         run.reset_mock()
 
@@ -173,10 +263,8 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     is_apt_snapshots_enabled.return_value = True
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
-            call([
-                '/usr/share/plinth/actions/actions', 'snapshot', 'create',
-                '--no-args'
-            ], check=True),
+            call(['snapper', 'create', '--description', 'before dist-upgrade'],
+                 check=True),
             call([
                 '/usr/share/plinth/actions/actions', 'snapshot',
                 'disable_apt_snapshot'
@@ -325,13 +413,6 @@ def test_freedombox_restart(service_restart):
     """Test that restarting freedombox service works."""
     distupgrade._freedombox_restart()
     service_restart.assert_called_with('plinth')
-
-
-@patch('time.sleep')
-def test_wait(sleep):
-    """Test that sleeping works."""
-    distupgrade._wait()
-    sleep.assert_called_with(600)
 
 
 @patch('subprocess.run')

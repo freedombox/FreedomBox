@@ -8,6 +8,45 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 25.7 (2025-04-07) ==
+
+=== Highlights ===
+
+ * calibre: Remove existing data directory before a restore operation
+ * kiwix: Remove existing data directory before a restore operation
+ * mediawiki: Run database upgrade after package upgrade
+ * power: Disable sleep and hibernate on the system
+ * upgrades: Revamp distribution upgrade UI
+
+=== Other Changes ===
+
+ * app: During startup, run post-init operation in background
+ * backups: Add ability to cleanup files before restoring a backup
+ * debian: Build depend on python3-systemd
+ * locale: Update translations for Bengali, French, Hindi, Russian, Telugu
+ * main: Run package operations immediately after startup
+ * mediawiki: Update configuration to work with version 1.4 (Trixie)
+ * mypy: Ignore missing type stubs for systemd.*
+ * package: Allow app to say it wants to rerun setup after updates
+ * packages: Don't run force upgrade hooks when freedombox performs ops
+ * radicale: Explicitly set the auth type to accommodate radicale 3.5
+ * radicale: Rerun setup when package updated
+ * service: Increase startup/shutdown timeout to 5 minutes
+ * service: Notify systemd when service starts up
+ * setup: Implement mechanism to rerun setup when apt is updated
+ * setup: Perform package operations immediately on trigger
+ * tests: Fix a warning with pytest setup
+ * tests: django: Fix a warning related to timezone settings
+ * upgrades: Add introduction to the distribution upgrade page
+ * upgrades: Don't ignore apt error during distribution upgrade
+ * upgrades: Increase distribution upgrade timeout to 3 days
+ * upgrades: Prevent installation of the Samba Active Directory service
+ * upgrades: Remove unused import
+ * upgrades: Run distribution upgrade around 06:00 everyday
+ * upgrades: Show notification before, during, and after a dist upgrade
+ * upgrades: Trigger special package operations in a simpler way
+ * upgrades: Use special desc. for snapshots take before dist upgrade
+
 == FreedomBox 25.6 (2025-03-25) ==
 
 === Highlight ===

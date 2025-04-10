@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app for upgrades."""
 
+import datetime
 import logging
 import os
 import subprocess
@@ -19,7 +20,7 @@ from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
-from . import manifest, privileged
+from . import distupgrade, manifest, privileged
 
 first_boot_steps = [
     {
@@ -42,6 +43,8 @@ BACKPORTS_REQUESTED_KEY = 'upgrades_backports_requested'
 
 DIST_UPGRADE_ENABLED_KEY = 'upgrades_dist_upgrade_enabled'
 
+DIST_UPGRADE_RUN_HOUR = 6  # 06:00 (morning)
+
 PKG_HOLD_DIAG_CHECK_ID = 'upgrades-package-holds'
 
 logger = logging.getLogger(__name__)
@@ -52,7 +55,7 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
-    _version = 18
+    _version = 19
 
     can_be_disabled = False
 
@@ -99,9 +102,9 @@ class UpgradesApp(app_module.App):
         # selected by user.
         glib.schedule(24 * 3600, setup_repositories)
 
-        # Check every day if new stable release becomes available, then perform
-        # dist-upgrade if updates are enabled
-        glib.schedule(24 * 3600, check_dist_upgrade)
+        # Check every day if new stable release becomes available and if we
+        # waited enough, then perform dist-upgrade if updates are enabled.
+        glib.schedule(3600, check_dist_upgrade)
 
     def _show_new_release_notification(self):
         """When upgraded to new release, show a notification."""
@@ -213,59 +216,111 @@ def setup_repositories(_):
 
 def check_dist_upgrade(_):
     """Check for upgrade to new stable release."""
+    # Run once a day at a desired hour even when triggered every hour. There is
+    # a small chance that this won't run in a given day.
+    now = datetime.datetime.now()  # Local timezone
+    if now.hour != DIST_UPGRADE_RUN_HOUR:
+        return
+
     if is_dist_upgrade_enabled():
-        try_start_dist_upgrade()
+        status = distupgrade.get_status()
+        starting = status['next_action'] in ('continue', 'ready')
+        dist_upgrade_show_notification(status, starting)
+        if starting:
+            logger.info('Starting distribution upgrade - %s', status)
+            privileged.start_dist_upgrade()
+        else:
+            logger.info('Not ready for distribution upgrade - %s', status)
 
 
-def try_start_dist_upgrade(test=False):
-    """Try to start dist upgrade."""
+def dist_upgrade_show_notification(status: dict, starting: bool):
+    """Show various notifications regarding distribution upgrade.
+
+    - Show a notification 60 days, 30 days, 1 week, and 1 day before
+      distribution upgrade. If a notification is dismissed for any of these
+      periods don't show again until new period starts. Override any previous
+      notification.
+
+    - Show a notification just before the distribution upgrade showing that the
+      process has started. Override any previous notification.
+
+    - Show a notification after the distribution upgrade is completed that it
+      is done. Override any previous notification. Keep this until it is 60
+      days before next distribution upgrade. If user dismisses the
+      notification, don't show it again.
+    """
     from plinth.notification import Notification
 
     try:
-        privileged.start_dist_upgrade(test, _log_error=False)
-    except RuntimeError as exception:
-        reason = exception.args[0]
+        note = Notification.get('upgrades-dist-upgrade')
+        data = note.data
+    except KeyError:
+        data = {}
+
+    in_days = None
+    if status['next_action_date']:
+        in_days = (status['next_action_date'] -
+                   datetime.datetime.now(tz=datetime.timezone.utc))
+
+    if in_days is None or in_days > datetime.timedelta(days=60):
+        for_days = None
+    elif in_days > datetime.timedelta(days=30):
+        for_days = 60  # 60 day notification
+    elif in_days > datetime.timedelta(days=7):
+        for_days = 30  # 30 day notification
+    elif in_days > datetime.timedelta(days=1):
+        for_days = 7  # 1 week notification
     else:
-        logger.info('Started dist upgrade.')
-        title = gettext_noop('Distribution update started')
-        message = gettext_noop(
-            'Started update to next stable release. This may take a long '
-            'time to complete.')
-        Notification.update_or_create(id='upgrades-dist-upgrade-started',
-                                      app_id='upgrades', severity='info',
-                                      title=title, message=message, actions=[{
-                                          'type': 'dismiss'
-                                      }], group='admin')
+        for_days = 1  # 1 day notification, or overdue notification
+
+    if status['running']:
+        # Do nothing while the distribution upgrade is running.
         return
 
-    if 'found-previous' in reason:
-        logger.info(
-            'Found previous dist-upgrade. If it was interrupted, it will '
-            'be restarted.')
-    elif 'already-' in reason:
-        logger.info('Skip dist upgrade: System is already up-to-date.')
-    elif 'codename-not-found' in reason:
-        logger.warning('Skip dist upgrade: Codename not found in release '
-                       'file.')
-    elif 'upgrades-not-enabled' in reason:
-        logger.info('Skip dist upgrade: Automatic updates are not enabled.')
-    elif 'test-not-set' in reason:
-        logger.info('Skip dist upgrade: --test is not set.')
-    elif 'not-enough-free-space' in reason:
-        logger.warning('Skip dist upgrade: Not enough free space in /.')
-        title = gettext_noop('Could not start distribution update')
-        message = gettext_noop(
-            'There is not enough free space in the root partition to '
-            'start the distribution update. Please ensure at least 5 GB '
-            'is free. Distribution update will be retried after 24 hours,'
-            ' if enabled.')
-        Notification.update_or_create(id='upgrades-dist-upgrade-free-space',
-                                      app_id='upgrades', severity='warning',
-                                      title=title, message=message, actions=[{
-                                          'type': 'dismiss'
-                                      }], group='admin')
-    else:
-        logger.warning('Unhandled result of start-dist-upgrade: %s', reason)
+    state = 'starting' if starting else 'waiting'
+    if (not for_days and status['current_codename']
+            and data.get('next_codename') == status['current_codename']):
+        # Previously shown notification's codename is current codename.
+        # Distribution upgrade was successfully completed.
+        state = 'done'
+
+    if not status['next_action'] and state != 'done':
+        # There is no upgrade available, don't show any notification.
+        return
+
+    if not for_days and data.get('state') == 'done':
+        # Don't remove notification showing upgrade is complete until next
+        # distribution upgrade is coming up in 2 months or sooner.
+        return
+
+    if not for_days and state == 'waiting':
+        # More than 60 days to next distribution update. Don't show
+        # notification.
+        return
+
+    if (for_days == data.get('for_days') and state == data.get('state')
+            and status['next_codename'] == data.get('next_codename')):
+        # If the notification was shown for same distribution codename, same
+        # duration, and same state, then don't show it again.
+        return
+
+    data = {
+        'app_name': 'translate:' + gettext_noop('Software Update'),
+        'app_icon': 'fa-refresh',
+        'current_codename': status['current_codename'],
+        'current_version': status['current_version'],
+        'next_codename': status['next_codename'],
+        'next_version': status['next_version'],
+        'state': state,
+        'for_days': for_days,
+        'in_days': in_days.days if in_days else None,
+    }
+    title = gettext_noop('Distribution Update')
+    note = Notification.update_or_create(
+        id='upgrades-dist-upgrade', app_id='upgrades', severity='info',
+        title=title, body_template='upgrades-dist-upgrade-notification.html',
+        data=data, group='admin')
+    note.dismiss(should_dismiss=False)
 
 
 def is_backports_requested():
@@ -333,17 +388,6 @@ def can_enable_dist_upgrade():
     """Return whether dist upgrade can be enabled."""
     release, _ = get_current_release()
     return release not in ['unstable', 'testing', 'n/a']
-
-
-def can_test_dist_upgrade():
-    """Return whether dist upgrade can be tested."""
-    return can_enable_dist_upgrade() and cfg.develop
-
-
-def test_dist_upgrade():
-    """Test dist-upgrade from stable to testing."""
-    if can_test_dist_upgrade():
-        try_start_dist_upgrade(test=True)
 
 
 def _diagnose_held_packages():

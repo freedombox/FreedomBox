@@ -14,7 +14,8 @@ backup = {
     'data': {
         'directories': ['/var/lib/private/calibre-server-freedombox/']
     },
-    'services': ['calibre-server-freedombox']
+    'services': ['calibre-server-freedombox'],
+    'delete_before_restore': ['/var/lib/private/calibre-server-freedombox/']
 }
 
 tags = [_('Ebook'), _('Library'), _('Ebook reader')]

@@ -43,6 +43,15 @@ Explanation: python3-canonicaljson >= 2.0.0~
 Package: python3-canonicaljson
 Pin: release n=bookworm-backports
 Pin-Priority: 500
+
+Explanation: Prevent installation of Samba Active Directory. AD package depends
+Explanation: on winbind, which breaks FreedomBox LDAP PAM configuration.
+Explanation: In Debian Trixie, AD server package is required by samba package,
+Explanation: but is not required to run Samba file server. See also Debian
+Explanation: bug report 1099755.
+Package: samba-ad-dc
+Pin: release *
+Pin-Priority: -1
 '''
 
 
@@ -236,7 +245,7 @@ def activate_backports(develop: bool = False):
 
 
 @privileged
-def start_dist_upgrade(test: bool = False):
+def start_dist_upgrade():
     """Start dist upgrade process.
 
     Check if a new stable release is available, and start dist-upgrade process
@@ -244,7 +253,7 @@ def start_dist_upgrade(test: bool = False):
     """
     _release_held_freedombox()
 
-    distupgrade.start_service(test)
+    distupgrade.start_service()
 
 
 @privileged

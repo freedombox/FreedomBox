@@ -386,7 +386,7 @@ def test_display_context(gettext, note, user, rf):
     assert context_note['actions'] == expected_actions
     assert context_note['data'] == expected_data
     assert note.data == data
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(datetime.timezone.utc)
     assert (now - context_note['created_time']).seconds < 60
     assert (now - context_note['last_update_time']).seconds < 60
     assert context_note['user'] == 'test-user'

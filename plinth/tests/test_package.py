@@ -63,17 +63,20 @@ def test_packages_init():
     assert not component.skip_recommends
     assert component.conflicts == []
     assert component.conflicts_action is None
+    assert not component.rerun_setup_on_upgrade
 
     with pytest.raises(ValueError):
         Packages(None, [])
 
     component = Packages('test-component', [], skip_recommends=True,
                          conflicts=['conflict1', 'conflict2'],
-                         conflicts_action=Packages.ConflictsAction.IGNORE)
+                         conflicts_action=Packages.ConflictsAction.IGNORE,
+                         rerun_setup_on_upgrade=True)
     assert component.possible_packages == []
     assert component.skip_recommends
     assert component.conflicts == ['conflict1', 'conflict2']
     assert component.conflicts_action == Packages.ConflictsAction.IGNORE
+    assert component.rerun_setup_on_upgrade
 
 
 def test_packages_get_actual_packages():

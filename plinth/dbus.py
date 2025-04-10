@@ -27,6 +27,7 @@ class PackageHandler():
 <node name="/org/freedombox/Service/PackageHandler">
   <interface name="org.freedombox.Service.PackageHandler">
     <method name="CacheUpdated"/>
+    <method name="DpkgInvoked"/>
   </interface>
 </node>
 '''
@@ -47,10 +48,13 @@ class PackageHandler():
 
         No need to check all the incoming parameters as D-Bus will validate all
         the incoming parameters using introspection data.
-
         """
         if method_name == 'CacheUpdated':
             self.on_cache_updated()
+            invocation.return_value()
+
+        if method_name == 'DpkgInvoked':
+            self.on_dpkg_invoked()
             invocation.return_value()
 
     @staticmethod
@@ -62,9 +66,19 @@ class PackageHandler():
         # Glib main loop.
         threading.Thread(target=setup.on_package_cache_updated).start()
 
+    @staticmethod
+    def on_dpkg_invoked():
+        """Called when dpkg has been invoked."""
+        logger.info('Dpkg invoked outside of FreedomBox.')
+
+        # Run in a new thread because we don't want to block the thread running
+        # Glib main loop.
+        threading.Thread(target=setup.on_dpkg_invoked).start()
+
 
 class DBusServer():
     """Abstraction over a connection to D-Bus."""
+
     def __init__(self):
         """Initialize the server object."""
         self.package_handler = None

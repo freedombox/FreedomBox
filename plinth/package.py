@@ -18,6 +18,7 @@ from plinth.diagnostic_check import (DiagnosticCheck,
 from plinth.errors import MissingPackageError
 from plinth.utils import format_lazy
 
+from . import kvstore
 from . import operation as operation_module
 from .errors import PackageNotInstalledError
 
@@ -113,7 +114,8 @@ class Packages(app_module.FollowerComponent):
                  packages: list[str | PackageExpression],
                  skip_recommends: bool = False,
                  conflicts: list[str] | None = None,
-                 conflicts_action: ConflictsAction | None = None):
+                 conflicts_action: ConflictsAction | None = None,
+                 rerun_setup_on_upgrade: bool = False):
         """Initialize a new packages component.
 
         'component_id' should be a unique ID across all components of an app
@@ -131,6 +133,10 @@ class Packages(app_module.FollowerComponent):
         'conflicts_action' is a string representing the action to take when it
         is found that conflicting Debian packages are installed on the system.
         None if there are no known conflicting packages.
+
+        'rerun_setup_on_upgrade' is a boolean to specify whether app's setup
+        process should be rerun if a .deb package is upgraded (by someone other
+        than FreedomBox process).
         """
         super().__init__(component_id)
 
@@ -145,6 +151,7 @@ class Packages(app_module.FollowerComponent):
         self.skip_recommends = skip_recommends
         self.conflicts = conflicts or []
         self.conflicts_action = conflicts_action
+        self.rerun_setup_on_upgrade = rerun_setup_on_upgrade
 
     @property
     def package_expressions(self) -> list[PackageExpression]:
@@ -463,6 +470,7 @@ def install(package_names, skip_recommends=False, force_configuration=None,
     operation.thread_data['transaction'] = transaction
     transaction.install(skip_recommends, force_configuration, reinstall,
                         force_missing_configuration)
+    mark_known(package_names)
 
 
 def uninstall(package_names, purge):
@@ -487,6 +495,7 @@ def uninstall(package_names, purge):
     transaction = package.Transaction(operation.app_id, package_names)
     operation.thread_data['transaction'] = transaction
     transaction.uninstall(purge)
+    unmark_known(package_names)
 
 
 def is_package_manager_busy():
@@ -529,3 +538,49 @@ def packages_installed(candidates: list | tuple) -> list:
             pass
 
     return installed_packages
+
+
+def get_known() -> dict[str, dict]:
+    """Return all the known packages and their versions.
+
+    If a package is not known or has a version lower than the currently
+    installed version, it means that the package has been installe or updated
+    outside of FreedomBox. Some app, may use this information to rerun the
+    setup on the app so that configuration is updated.
+    """
+    return kvstore.get_default('packages_known', {})
+
+
+def mark_known(packages: list[str]):
+    """Mark a given list of packages as known."""
+    packages_known = get_known()
+    cache = apt.Cache()
+    for package_ in packages:
+        try:
+            cache_package = cache[package_]
+        except KeyError:
+            logger.warn('Package %s is not found when marking known', package_)
+            continue
+
+        if not cache_package.installed:
+            logger.warn('Package %s is not installed when marking known',
+                        package_)
+            continue
+
+        installed_version = cache_package.installed.version
+        package_known = packages_known.setdefault(package_, {})
+        package_known['version'] = installed_version
+
+    kvstore.set('packages_known', packages_known)
+
+
+def unmark_known(packages: list[str]):
+    """Mark a give list of packages unknown."""
+    packages_known = get_known()
+    for package_ in packages:
+        try:
+            packages_known.pop(package_)
+        except KeyError:
+            pass
+
+    kvstore.set('packages_known', packages_known)

@@ -66,7 +66,8 @@ class MediaWikiApp(app_module.App):
         self.add(shortcut)
 
         packages = Packages('packages-mediawiki',
-                            ['mediawiki', 'imagemagick', 'php-sqlite3'])
+                            ['mediawiki', 'imagemagick', 'php-sqlite3'],
+                            rerun_setup_on_upgrade=True)
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-mediawiki', [

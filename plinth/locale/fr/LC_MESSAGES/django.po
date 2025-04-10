@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 09:08-0400\n"
-"PO-Revision-Date: 2025-01-05 16:52+0000\n"
-"Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
+"POT-Creation-Date: 2025-04-07 21:06-0400\n"
+"PO-Revision-Date: 2025-04-01 02:33+0000\n"
+"Last-Translator: Soumika Devarakonda <soumikadevarakonda@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -234,7 +234,7 @@ msgstr "Activer la planification des sauvegardes"
 
 #: modules/backups/__init__.py:181 modules/backups/__init__.py:228
 #: modules/privacy/__init__.py:84 modules/storage/__init__.py:326
-#: modules/upgrades/__init__.py:149
+#: modules/upgrades/__init__.py:152
 #, python-brace-format
 msgid "Go to {app_name}"
 msgstr "Aller à {app_name}"
@@ -315,10 +315,13 @@ msgid "Hour of the day to trigger backup operation"
 msgstr "Heure de déclenchement des opérations de sauvegarde"
 
 #: modules/backups/forms.py:81
+#, fuzzy
 msgid ""
 "In 24 hour format. Services may become temporarily unavailable while running "
 "backup operation at this time of the day."
 msgstr ""
+"Au format 24 heures. Les services peuvent être temporairement indisponibles "
+"pendant l'exécution des opérations de sauvegarde à cette heure de la journée."
 
 #: modules/backups/forms.py:85 modules/backups/forms.py:107
 msgid "Included apps"
@@ -510,7 +513,7 @@ msgstr "Configuration"
 msgid "Borg"
 msgstr "Borg"
 
-#: modules/backups/privileged.py:31
+#: modules/backups/privileged.py:34
 msgid ""
 "Connection refused - make sure you provided correct credentials and the "
 "server is running."
@@ -518,41 +521,41 @@ msgstr ""
 "Connexion refusée – assurez-vous d’avoir saisi les bonnes informations "
 "d’identification et que le serveur est démarré."
 
-#: modules/backups/privileged.py:38
+#: modules/backups/privileged.py:41
 msgid "Connection refused"
 msgstr "Connexion refusée"
 
-#: modules/backups/privileged.py:45
+#: modules/backups/privileged.py:48
 msgid "Repository not found"
 msgstr "Dépôt introuvable"
 
-#: modules/backups/privileged.py:50
+#: modules/backups/privileged.py:53
 msgid "Incorrect encryption passphrase"
 msgstr "Phrase secrète de chiffrement incorrecte"
 
-#: modules/backups/privileged.py:55
+#: modules/backups/privileged.py:58
 msgid "SSH access denied"
 msgstr "Accès SSH refusé"
 
-#: modules/backups/privileged.py:61
+#: modules/backups/privileged.py:64
 msgid "Repository path is neither empty nor is an existing backups repository."
 msgstr ""
 "Le chemin du dépôt n’est pas vide et n’est pas un dépôt de sauvegarde "
 "existant."
 
-#: modules/backups/privileged.py:74
+#: modules/backups/privileged.py:77
 msgid "An archive with given name already exists in the repository."
 msgstr "Une archive portant le même nom existe déjà dans le dépôt."
 
-#: modules/backups/privileged.py:81
+#: modules/backups/privileged.py:84
 msgid "Archive with given name was not found in the repository."
 msgstr "Aucune archive portant ce nom n’a pu être trouvée dans le dépôt."
 
-#: modules/backups/privileged.py:87
+#: modules/backups/privileged.py:90
 msgid "Backup system is busy with another operation."
 msgstr "Le système de sauvegarde est occupé à une autre opération."
 
-#: modules/backups/privileged.py:92
+#: modules/backups/privileged.py:95
 msgid "Not enough space left on the disk or remote location."
 msgstr ""
 
@@ -616,7 +619,9 @@ msgstr "Sauvegardes existantes"
 #: modules/power/templates/power_busy_warning.html:11
 #: modules/snapshot/templates/snapshot_not_supported.html:13
 #: modules/upgrades/templates/backports-firstboot.html:35
-#: modules/upgrades/templates/upgrades_configure.html:79
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:17
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:45
+#: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
 #: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
 msgid "Caution:"
@@ -1239,15 +1244,15 @@ msgstr ""
 msgid "A library with this name already exists."
 msgstr "Une collection portant ce nom existe déjà."
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Ebook"
 msgstr "Livre numérique"
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: modules/calibre/manifest.py:20
+#: modules/calibre/manifest.py:21
 msgid "Ebook reader"
 msgstr "Lecteur de livres numériques"
 
@@ -2305,7 +2310,7 @@ msgstr "XMPP"
 #: modules/matrixsynapse/templates/matrix-synapse.html:17
 #: modules/networks/templates/connection_show.html:258
 #: modules/samba/templates/samba.html:67 modules/tor/templates/tor.html:24
-#: modules/upgrades/templates/upgrades_configure.html:14
+#: modules/upgrades/templates/upgrades_configure.html:19
 #: modules/wireguard/templates/wireguard_show_client.html:48
 #: modules/wireguard/templates/wireguard_show_server.html:47
 msgid "Status"
@@ -2963,7 +2968,7 @@ msgstr ""
 "exécutez-la manuellement maintenant."
 
 #: modules/first_boot/templates/firstboot_complete.html:30
-#: modules/upgrades/templates/upgrades_configure.html:114
+#: modules/upgrades/templates/upgrades_configure.html:119
 msgid "Update now"
 msgstr "Lancer la mise à jour"
 
@@ -3276,7 +3281,7 @@ msgid "Success:"
 msgstr "Succès :"
 
 #: modules/help/templates/help_about.html:29
-#: modules/upgrades/templates/upgrades_configure.html:26
+#: modules/upgrades/templates/upgrades_configure.html:31
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
 msgstr ""
@@ -3292,7 +3297,7 @@ msgstr ""
 "href=\"%(upgrades_url)s\">disponible</a>."
 
 #: modules/help/templates/help_about.html:40
-#: modules/upgrades/templates/upgrades_configure.html:37
+#: modules/upgrades/templates/upgrades_configure.html:42
 #, python-format
 msgid "%(box_name)s is up to date."
 msgstr "Votre %(box_name)s est à jour."
@@ -3924,21 +3929,21 @@ msgstr ""
 "votre {box_name}. Si Kiwix échoue à ajouter le fichier, il sera "
 "immédiatement effacé pour économiser de l'espace disque."
 
-#: modules/kiwix/manifest.py:23
+#: modules/kiwix/manifest.py:24
 msgid "Offline reader"
 msgstr "Lecteur hors ligne"
 
-#: modules/kiwix/manifest.py:24
+#: modules/kiwix/manifest.py:25
 msgid "Archival"
 msgstr "Archivage"
 
-#: modules/kiwix/manifest.py:25 modules/shadowsocks/manifest.py:19
+#: modules/kiwix/manifest.py:26 modules/shadowsocks/manifest.py:19
 #: modules/shadowsocksserver/manifest.py:18 modules/tor/manifest.py:60
 #: modules/torproxy/manifest.py:57
 msgid "Censorship resistance"
 msgstr "Résistance à la censure"
 
-#: modules/kiwix/manifest.py:26
+#: modules/kiwix/manifest.py:27
 msgid "Wikipedia"
 msgstr "Wikipédia"
 
@@ -7501,18 +7506,18 @@ msgstr "Afficher le rapport de sécurité"
 
 #: modules/security/templates/security.html:19
 #: modules/upgrades/templates/backports-firstboot.html:11
-#: modules/upgrades/templates/upgrades_configure.html:44
+#: modules/upgrades/templates/upgrades_configure.html:49
 msgid "Frequent Feature Updates"
 msgstr "Mise à jour régulière des fonctionnalités"
 
 #: modules/security/templates/security.html:21
-#: modules/upgrades/templates/upgrades_configure.html:52
+#: modules/upgrades/templates/upgrades_configure.html:57
 msgid "Frequent feature updates are activated."
 msgstr "La mise à jour régulière des fonctionnalités est activée."
 
 #: modules/security/templates/security.html:26
 #: modules/upgrades/templates/backports-firstboot.html:14
-#: modules/upgrades/templates/upgrades_configure.html:64
+#: modules/upgrades/templates/upgrades_configure.html:69
 #, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
@@ -9007,13 +9012,13 @@ msgstr "Lecteur TTRSS"
 msgid "Geekttrss"
 msgstr "Geekttrss"
 
-#: modules/upgrades/__init__.py:33
+#: modules/upgrades/__init__.py:34
 msgid "Check for and apply the latest software and security updates."
 msgstr ""
 "Rechercher et installer les dernières mises à jour logicielles et les "
 "correctifs de sécurité."
 
-#: modules/upgrades/__init__.py:34
+#: modules/upgrades/__init__.py:35
 msgid ""
 "Updates are run at 06:00 everyday according to local time zone. Set your "
 "time zone in Date & Time app. Apps are restarted after update causing them "
@@ -9027,20 +9032,20 @@ msgstr ""
 "nécessaire, il est effectué à 2h00, rendant indisponible l’ensemble des "
 "applications pour une courte période."
 
-#: modules/upgrades/__init__.py:64 modules/upgrades/__init__.py:125
-#: modules/upgrades/__init__.py:143
+#: modules/upgrades/__init__.py:67 modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:146 modules/upgrades/__init__.py:308
 msgid "Software Update"
 msgstr "Mise à jour du système"
 
-#: modules/upgrades/__init__.py:128
+#: modules/upgrades/__init__.py:131
 msgid "FreedomBox Updated"
 msgstr "FreedomBox mise à jour"
 
-#: modules/upgrades/__init__.py:138
+#: modules/upgrades/__init__.py:141
 msgid "Run software update manually"
 msgstr "Exécuter la mise à jour logicielle manuellement"
 
-#: modules/upgrades/__init__.py:140
+#: modules/upgrades/__init__.py:143
 msgid ""
 "Automatic software update runs daily by default. For the first time, "
 "manually run it now."
@@ -9048,33 +9053,16 @@ msgstr ""
 "La mise à jour des logiciels s'exécute par défaut quotidiennement. Pour la "
 "première fois, exécutez-la manuellement maintenant."
 
-#: modules/upgrades/__init__.py:230
-msgid "Distribution update started"
+#: modules/upgrades/__init__.py:318
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:9
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:11
+#: modules/upgrades/templates/upgrades_configure.html:16
+#, fuzzy
+#| msgid "Distribution update started"
+msgid "Distribution Update"
 msgstr "Mise à niveau de la distribution démarrée"
 
-#: modules/upgrades/__init__.py:232
-msgid ""
-"Started update to next stable release. This may take a long time to complete."
-msgstr ""
-"La mise à niveau vers la nouvelle version stable a été lancée. Cette "
-"opération peut prendre beaucoup de temps."
-
-#: modules/upgrades/__init__.py:256
-msgid "Could not start distribution update"
-msgstr "Impossible de lancer la mise à niveau de la distribution"
-
-#: modules/upgrades/__init__.py:258
-msgid ""
-"There is not enough free space in the root partition to start the "
-"distribution update. Please ensure at least 5 GB is free. Distribution "
-"update will be retried after 24 hours, if enabled."
-msgstr ""
-"L’espace disponible sur la partition racine est insuffisant pour lancer la "
-"mise à niveau de la distribution. Veuillez vous assurer qu’au moins 5 Go "
-"sont disponibles. Si la mise à niveau automatique de la distribution est "
-"activée, elle sera retentée dans 24H."
-
-#: modules/upgrades/__init__.py:352
+#: modules/upgrades/__init__.py:396
 msgid "Check for package holds"
 msgstr "Vérifier la mise en attente des paquets"
 
@@ -9101,7 +9089,7 @@ msgstr ""
 "version stable majeure lorsque celle-ci sera publiée."
 
 #: modules/upgrades/forms.py:34
-#: modules/upgrades/templates/upgrades_configure.html:95
+#: modules/upgrades/templates/upgrades_configure.html:100
 msgid "Activate frequent feature updates (recommended)"
 msgstr "Activer la mise à jour régulière des fonctionnalités (recommandé)"
 
@@ -9134,6 +9122,229 @@ msgstr ""
 msgid "Next"
 msgstr "Suivant"
 
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:11
+#, fuzzy
+#| msgid "Could not start distribution update"
+msgid "Confirm Distribution Update?"
+msgstr "Impossible de lancer la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:21
+#, python-format
+msgid ""
+"You are about to update to the next distribution version before it has been "
+"released. Proceed only if you wish to help with beta testing of %(box_name)s "
+"functionality."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:32
+msgid ""
+"Take a full backup of all apps and data before performing a distribution "
+"update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:38
+msgid ""
+"The process will take several hours. Most apps will be unavailable during "
+"this time."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:44
+msgid ""
+"Don't interrupt the process by shutting down or interrupting power to the "
+"machine."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:50
+msgid "If the process is interrupted, you should be able to continue it."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:66
+#, fuzzy
+#| msgid "Could not start distribution update"
+msgid "Confirm & Start Distribution Update"
+msgstr "Impossible de lancer la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:15
+msgid ""
+"Distribution update has started. This operation may take several hours. Most "
+"apps will be unavailable during this period. Don't interrupt the process by "
+"shutting down or interrupting power to the machine."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:21
+msgid "Distribution update has completed. Reboot the machine, if necessary."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:25
+#, python-format
+msgid ""
+"Distribution update will start soon. Take a backup of apps and data before "
+"then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page for expected "
+"changes and transitions during the distribution upgrade."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
+#, python-format
+msgid ""
+"Distribution update will start in %(in_days)s days. Take a backup of apps "
+"and data before then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page "
+"for expected changes and transitions during the distribution upgrade."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:42
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Go to Distribution Update"
+msgstr "Tester la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
+#: modules/upgrades/templates/upgrades-new-release.html:22
+#: templates/notifications.html:50 templates/operation-notification.html:23
+msgid "Dismiss"
+msgstr "Fermer"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:15
+#, python-format
+msgid ""
+"Your %(box_name)s will receive security updates, important fixes and some "
+"selected features with regular software updates. However, to provide a long "
+"software life cycle for %(box_name)s, the entire operating system will "
+"receive a major distribution update every two years or so. This will bring "
+"in major features and changes. Sometimes, old features will stop working. "
+"Please consult the <a href=\"%(dist_upgrade_url)s\">manual</a> for expected "
+"changes and transitions during a distribution upgrade. If you dislike these "
+"changes, you can keep each distribution for at least <a href=\"https://wiki."
+"debian.org/LTS\">5 years</a> before updating."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:34
+msgid ""
+"Distribution update is currently running. This operation may take several "
+"hours. Most apps will be unavailable during this period."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:50
+#, fuzzy
+#| msgid "Automatic upgrades disabled"
+msgid "Automatic updates are disabled."
+msgstr "Mises à niveau automatiques désactivées"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:54
+#, fuzzy
+#| msgid "Distribution upgrade disabled"
+msgid "Distribution upgrades are disabled."
+msgstr "Mise à niveau de la distribution désactivée"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:58
+msgid ""
+"You need to have at least 5 GB of free space available on primary disk to "
+"perform a distribution update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:65
+msgid "Your current distribution is mixed or not understood."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:72
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Current Distribution:"
+msgstr "Tester la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:74
+#, fuzzy
+#| msgid "unknown error"
+msgid "Unknown or mixed"
+msgstr "erreur inconnue"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:77
+msgid "Rolling release distribution"
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:84
+#, fuzzy, python-format
+#| msgid "Delete site %(site)s"
+msgid "Released: %(date)s."
+msgstr "Supprimer le site %(site)s"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:91
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Next Stable Distribution:"
+msgstr "Tester la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:93
+#, fuzzy
+#| msgid "unknown"
+msgid "Unknown"
+msgstr "inconnu"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:99
+#, python-format
+msgid "Likely release: %(date)s."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:107
+msgid "Next stable distribution is not available yet."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:113
+#, python-format
+msgid ""
+"You are on a rolling release distribution. No distribution update is "
+"necessary. Thank you for helping test the %(box_name)s project. Please "
+"report any problems you notice."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:121
+msgid ""
+"A previous run of distribution update may have been interrupted. Please re-"
+"run the distribution update."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:128
+#, python-format
+msgid ""
+"A new stable distribution is available. Your %(box_name)s will be updated "
+"automatically in %(period)s. You may choose to update manually now, if you "
+"wish."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:136
+#, python-format
+msgid ""
+"A new stable distribution is available. Your %(box_name)s will be updated "
+"automatically soon. You may choose to update manually now, if you wish."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:144
+#, python-format
+msgid ""
+"You are on the latest stable distribution. This is recommended. However, if "
+"you wish to help beta test %(box_name)s functionality, you may update to "
+"next distribution manually. This setup may experience occational app "
+"failures until the next stable release."
+msgstr ""
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:157
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:172
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Start Distribution Update"
+msgstr "Tester la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:162
+#, fuzzy
+#| msgid "Test Distribution Upgrade"
+msgid "Continue Distribution Update"
+msgstr "Tester la mise à niveau de la distribution"
+
+#: modules/upgrades/templates/upgrades-dist-upgrade.html:167
+#, fuzzy
+#| msgid "Starting distribution upgrade test."
+msgid "Start Distribution Update (for testing)"
+msgstr "Démarrage du test de mise à niveau de la distribution."
+
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
 msgid "%(box_name)s updated"
@@ -9148,33 +9359,28 @@ msgstr ""
 "La %(box_name)s a été mise à jour vers la version %(version)s. Consultez "
 "l’<a href=\"%(url)s\">annonce de publication</a>."
 
-#: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
-msgid "Dismiss"
-msgstr "Fermer"
-
-#: modules/upgrades/templates/upgrades_configure.html:30
-#: modules/upgrades/templates/upgrades_configure.html:106
+#: modules/upgrades/templates/upgrades_configure.html:35
+#: modules/upgrades/templates/upgrades_configure.html:111
 msgid "Updating..."
 msgstr "Mise à jour en cours…"
 
-#: modules/upgrades/templates/upgrades_configure.html:32
+#: modules/upgrades/templates/upgrades_configure.html:37
 #, python-format
 msgid "There is a new %(box_name)s version available."
 msgstr "Une nouvelle version de %(box_name)s est disponible."
 
-#: modules/upgrades/templates/upgrades_configure.html:35
+#: modules/upgrades/templates/upgrades_configure.html:40
 msgid "Your Freedombox needs an update!"
 msgstr "Votre FreedomBox a besoin d’une mise à jour !"
 
-#: modules/upgrades/templates/upgrades_configure.html:47
+#: modules/upgrades/templates/upgrades_configure.html:52
 msgid ""
 "Frequent feature updates can be activated. Activating them is recommended."
 msgstr ""
 "Vous pouvez activer la mise à jour régulière des fonctionnalités. Cette "
 "option est recommandée."
 
-#: modules/upgrades/templates/upgrades_configure.html:56
+#: modules/upgrades/templates/upgrades_configure.html:61
 msgid ""
 "Frequent feature updates cannot be activated. They may not be necessary on "
 "your distribution."
@@ -9182,7 +9388,7 @@ msgstr ""
 "La mise à jour régulière des fonctionnalités n’est pas disponibles. Elle "
 "n’est sans doute pas nécessaire pour votre distribution."
 
-#: modules/upgrades/templates/upgrades_configure.html:83
+#: modules/upgrades/templates/upgrades_configure.html:88
 #, python-format
 msgid ""
 "<strong>Warning!</strong> Once frequent feature updates are activated, they "
@@ -9194,11 +9400,11 @@ msgstr ""
 "un instantané du système via la fonction d’<a "
 "href=\"%(snapshot_url)s\">Instantanés de disque</a> avant de poursuivre."
 
-#: modules/upgrades/templates/upgrades_configure.html:100
+#: modules/upgrades/templates/upgrades_configure.html:105
 msgid "Manual Update"
 msgstr "Mise à jour manuelle"
 
-#: modules/upgrades/templates/upgrades_configure.html:120
+#: modules/upgrades/templates/upgrades_configure.html:125
 msgid ""
 "<strong>This may take a long time to complete.</strong> During an update, "
 "you cannot install apps. Also, this web interface may be temporarily "
@@ -9209,26 +9415,9 @@ msgstr ""
 "risque aussi d’être temporairement indisponible ou d’afficher une erreur. Si "
 "cela se produit, actualisez la page pour continuer."
 
-#: modules/upgrades/templates/upgrades_configure.html:134
+#: modules/upgrades/templates/upgrades_configure.html:139
 msgid "Show recent update logs"
 msgstr "Afficher les derniers journaux de mises à jour"
-
-#: modules/upgrades/templates/upgrades_configure.html:144
-msgid "Test Distribution Upgrade"
-msgstr "Tester la mise à niveau de la distribution"
-
-#: modules/upgrades/templates/upgrades_configure.html:146
-msgid ""
-"This will attempt to upgrade the system from stable to testing. <strong>It "
-"is meant only for development use.</strong>"
-msgstr ""
-"Cette opération tentera une mise à niveau du système de la distribution "
-"« stable » vers la distribution « testing ». <strong>À n’utiliser que par "
-"les développeurs.</strong>"
-
-#: modules/upgrades/templates/upgrades_configure.html:156
-msgid "Test distribution upgrade now"
-msgstr "Lancer le test de mise à niveau de la distribution"
 
 #: modules/upgrades/views.py:72
 msgid "Error when configuring unattended-upgrades"
@@ -9236,21 +9425,23 @@ msgstr ""
 "Erreur lors de la configuration du système de mise à jour automatique "
 "« unattended-upgrades »"
 
-#: modules/upgrades/views.py:119
+#: modules/upgrades/views.py:117
+#, fuzzy
+#| msgid "Starting distribution upgrade test."
+msgid "Started distribution update."
+msgstr "Démarrage du test de mise à niveau de la distribution."
+
+#: modules/upgrades/views.py:153
 msgid "Upgrade process started."
 msgstr "Mise à jour lancée."
 
-#: modules/upgrades/views.py:121
+#: modules/upgrades/views.py:155
 msgid "Starting upgrade failed."
 msgstr "Le lancement de la mise à niveau a échoué."
 
-#: modules/upgrades/views.py:131
+#: modules/upgrades/views.py:165
 msgid "Frequent feature updates activated."
 msgstr "Mise à jour régulière des fonctionnalités activée."
-
-#: modules/upgrades/views.py:176
-msgid "Starting distribution upgrade test."
-msgstr "Démarrage du test de mise à niveau de la distribution."
 
 #: modules/users/__init__.py:33
 msgid ""
@@ -10083,112 +10274,112 @@ msgstr "Attente du démarrage de : {name}"
 msgid "Finished: {name}"
 msgstr "Terminé : {name}"
 
-#: package.py:206
+#: package.py:213
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr "Le paquet {package_expression} n’est pas disponible à l’installation"
 
-#: package.py:226
+#: package.py:233
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Le paquet {package_name} est à la dernière version ({latest_version})"
 
-#: package.py:420
+#: package.py:427
 msgid "installing"
 msgstr "installation en cours"
 
-#: package.py:422
+#: package.py:429
 msgid "downloading"
 msgstr "téléchargement en cours"
 
-#: package.py:424
+#: package.py:431
 msgid "media change"
 msgstr "changement de support"
 
-#: package.py:426
+#: package.py:433
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "fichier de configuration : {file}"
 
-#: package.py:454 package.py:479
+#: package.py:461 package.py:487
 msgid "Timeout waiting for package manager"
 msgstr "Aucune réponse du gestionnaire de paquets"
 
-#: setup.py:42
+#: setup.py:44
 msgid "Installing app"
 msgstr "Installation de l’application"
 
-#: setup.py:44
+#: setup.py:46
 msgid "Updating app"
 msgstr "Mise à jour de l’application"
 
-#: setup.py:78
+#: setup.py:80
 #, python-brace-format
 msgid "Error installing app: {exception}"
 msgstr "Erreur lors de l’installation de l’application : {exception}"
 
-#: setup.py:80
+#: setup.py:82
 #, python-brace-format
 msgid "Error repairing app: {exception}"
 msgstr "Erreur lors de la réparation de l’application : {exception}"
 
-#: setup.py:82
+#: setup.py:84
 #, python-brace-format
 msgid "Error updating app: {exception}"
 msgstr "Erreur lors de la mise à jour de l’application : {exception}"
 
-#: setup.py:85
+#: setup.py:87
 msgid "App installed."
 msgstr "Application installée."
 
-#: setup.py:89
+#: setup.py:91
 msgid "App updated"
 msgstr "Application mise à jour"
 
-#: setup.py:112
+#: setup.py:114
 msgid "Repairing app"
 msgstr "Réparation de l’application"
 
-#: setup.py:143
+#: setup.py:145
 #, python-brace-format
 msgid "Error running diagnostics: {error}"
 msgstr "Erreur lors de l'exécution des diagnostics : {error}"
 
-#: setup.py:156
+#: setup.py:158
 msgid "Skipping repair, no failed checks"
 msgstr "Réparation ignorée, aucune vérification n'a échoué"
 
-#: setup.py:164
+#: setup.py:166
 #, python-brace-format
 msgid "Error repairing app: {error}"
 msgstr "Erreur lors de la réparation de l’application : {error}"
 
-#: setup.py:170
+#: setup.py:172
 msgid "Re-running setup to complete repairs"
 msgstr "Ré-exécution de la configuration pour terminer les réparations"
 
-#: setup.py:178
+#: setup.py:180
 msgid "App repaired."
 msgstr "Application réparée."
 
-#: setup.py:182
+#: setup.py:184
 msgid "App repair completed with errors:\n"
 msgstr "Réparation de l'application terminée avec des erreurs :\n"
 
-#: setup.py:202
+#: setup.py:204
 msgid "Uninstalling app"
 msgstr "Désinstallation de l’application"
 
-#: setup.py:218
+#: setup.py:220
 #, python-brace-format
 msgid "Error uninstalling app: {error}"
 msgstr "Erreur lors de la désinstallation de l’appli : {error}"
 
-#: setup.py:221
+#: setup.py:223
 msgid "App uninstalled."
 msgstr "Application désinstallée."
 
-#: setup.py:594
+#: setup.py:590
 msgid "Updating app packages"
 msgstr "Mise à jour des paquets de l’application"
 
@@ -10535,6 +10726,34 @@ msgstr "avant la désinstallation de {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "Started update to next stable release. This may take a long time to "
+#~ "complete."
+#~ msgstr ""
+#~ "La mise à niveau vers la nouvelle version stable a été lancée. Cette "
+#~ "opération peut prendre beaucoup de temps."
+
+#~ msgid ""
+#~ "There is not enough free space in the root partition to start the "
+#~ "distribution update. Please ensure at least 5 GB is free. Distribution "
+#~ "update will be retried after 24 hours, if enabled."
+#~ msgstr ""
+#~ "L’espace disponible sur la partition racine est insuffisant pour lancer "
+#~ "la mise à niveau de la distribution. Veuillez vous assurer qu’au moins 5 "
+#~ "Go sont disponibles. Si la mise à niveau automatique de la distribution "
+#~ "est activée, elle sera retentée dans 24H."
+
+#~ msgid ""
+#~ "This will attempt to upgrade the system from stable to testing. "
+#~ "<strong>It is meant only for development use.</strong>"
+#~ msgstr ""
+#~ "Cette opération tentera une mise à niveau du système de la distribution "
+#~ "« stable » vers la distribution « testing ». <strong>À n’utiliser que par "
+#~ "les développeurs.</strong>"
+
+#~ msgid "Test distribution upgrade now"
+#~ msgstr "Lancer le test de mise à niveau de la distribution"
 
 #, fuzzy
 #~| msgid "Calendar"
@@ -10914,14 +11133,8 @@ msgstr "Gujarati"
 #~ msgid "Automatic upgrades enabled"
 #~ msgstr "Mises à niveau automatiques activées"
 
-#~ msgid "Automatic upgrades disabled"
-#~ msgstr "Mises à niveau automatiques désactivées"
-
 #~ msgid "Distribution upgrade enabled"
 #~ msgstr "Mise à niveau de la distribution activée"
-
-#~ msgid "Distribution upgrade disabled"
-#~ msgstr "Mise à niveau de la distribution désactivée"
 
 #, python-brace-format
 #~ msgid "Error installing app: {string} {details}"

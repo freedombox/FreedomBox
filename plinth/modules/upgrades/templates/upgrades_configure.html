@@ -10,6 +10,11 @@
 {% block status %}
   {{ block.super}}  {% comment %} To extend instead of overwrite {% endcomment %}
 
+  <div class="btn-toolbar">
+    <a class="btn btn-default btn-md" href="{% url 'upgrades:dist-upgrade' %}">
+      {% trans "Distribution Update" %}</a>
+  </div>
+
   <h3>{% trans "Status" %}</h3>
   <div class="upgrades-status-frame clearfix">
     <div class="upgrade-status-icon pull-left">
@@ -137,23 +142,5 @@
         <pre>{{ log }}</pre>
       </div>
     </p>
-  {% endif %}
-
-  {% if can_test_dist_upgrade %}
-    <h3>{% trans "Test Distribution Upgrade" %}</h3>
-    <p>
-      {% blocktrans trimmed %}
-        This will attempt to upgrade the system from stable to
-        testing. <strong>It is meant only for development use.</strong>
-      {% endblocktrans %}
-    </p>
-    <div class="btn-toolbar">
-      <form class="form" method="post"
-            action="{% url 'upgrades:test-dist-upgrade' %}">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger"
-               value="{% trans "Test distribution upgrade now" %}"/>
-      </form>
-    </div>
   {% endif %}
 {% endblock %}
