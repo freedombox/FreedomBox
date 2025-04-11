@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 OBSOLETE_PACKAGES: list[str] = []
 
-PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale']
+PACKAGES_WITH_PROMPTS = ['firewalld', 'minidlna', 'radicale', 'bind9']
 
 PRE_DEBCONF_SELECTIONS: list[str] = [
     # Tell grub-pc to continue without installing grub again.
