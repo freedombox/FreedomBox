@@ -12,6 +12,7 @@ Unattended-Upgrade::Remove-Unused-Dependencies "true";
 // ignored. Only packages that have higher priority set explicitly will get
 // upgraded. Only selected FreedomBox packages have high priority set on them.
 Unattended-Upgrade::Origins-Pattern {
+        "origin=Debian,codename=${distro_codename}-updates";
         "o=Debian Backports,n=${distro_codename}-backports,l=Debian Backports";
 };
 
