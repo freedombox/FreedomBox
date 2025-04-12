@@ -249,7 +249,7 @@ then
     else
         echo -n "> In machine: Starting plinth ... "
         sudo -u plinth /freedombox/run --develop > plinth.log 2>&1 &
-        while ! grep -q "Setup thread finished" plinth.log
+        while ! grep -q "Setup finished" plinth.log
         do
             sleep 1
             echo -n .
