@@ -113,11 +113,10 @@ document.addEventListener('DOMContentLoaded', function(event) {
     }
 });
 
-// When using back/forward browser's bfcache is used and pages won't receive
-// 'load' events. Instead a 'pageshow' event is available. When a user does
-// back/forward we want them to be able to submit the forms again. So clear all
-// the button disabling.
-window.addEventListener('pageshow', function(event) {
+/*
+ * Clear button disabling on the page.
+ */
+function clearButtonDisabling(event) {
     for (const button of getSubmitButtons()) {
         button.classList.remove('running-status-button');
         if (button.classList.contains('temporarily-disabled')) {
@@ -131,7 +130,13 @@ window.addEventListener('pageshow', function(event) {
     for (const element of beforeElements) {
         element.remove();
     }
-});
+};
+
+// When using back/forward browser's bfcache is used and pages won't receive
+// 'load' events. Instead a 'pageshow' event is available. When a user does
+// back/forward we want them to be able to submit the forms again. So clear all
+// the button disabling.
+window.addEventListener('pageshow', clearButtonDisabling);
 
 /*
  * Select all option for multiple checkboxes.

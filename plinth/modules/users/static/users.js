@@ -33,7 +33,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     var deleteConfirmed = false;
-    const modal = new bootstrap.Modal('#user-delete-confirm-dialog');
+    const modalEl = document.querySelector('#user-delete-confirm-dialog');
+    const modal = new bootstrap.Modal(modalEl);
+
+    // Make the user edit submit button clickable again when closing modal
+    modalEl.addEventListener('hide.bs.modal', clearButtonDisabling);
 
     // Show the confirmation dialog if the delete checkbox is selected
     function onUserUpdateSubmit(event) {
