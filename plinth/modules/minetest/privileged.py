@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure Minetest server."""
 
+import pathlib
+
 import augeas
 
 from plinth import action_utils
@@ -15,6 +17,7 @@ def configure(max_players: int | None = None, enable_pvp: bool | None = None,
               creative_mode: bool | None = None,
               enable_damage: bool | None = None):
     """Update configuration file and restart daemon if necessary."""
+    pathlib.Path(CONFIG_FILE).parent.mkdir(exist_ok=True)
     aug = load_augeas()
     if max_players is not None:
         aug.set(AUG_PATH + '/max_users', str(max_players))
