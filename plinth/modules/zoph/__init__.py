@@ -9,6 +9,7 @@ from plinth import app as app_module
 from plinth import cfg, frontpage, menu
 from plinth.config import DropinConfigs
 from plinth.daemon import SharedDaemon
+from plinth.modules.apache import privileged as apache_privileged
 from plinth.modules.apache.components import Webserver
 from plinth.modules.backups.components import BackupRestore
 from plinth.modules.firewall.components import Firewall
@@ -44,7 +45,7 @@ class ZophApp(app_module.App):
 
     app_id = 'zoph'
 
-    _version = 2
+    _version = 3
 
     configure_when_disabled = False
 
@@ -103,6 +104,12 @@ class ZophApp(app_module.App):
             # Database needs to be running for successful initialization or
             # upgrade of zoph database.
             super().setup(old_version)
+
+        # Zoph brings mod-php as dependency and enables it. Re-run apache setup
+        # to correct it. Disable mod-php, switch back to mpm-event, restart
+        # apache2 if needed. Set old_version to an non-zero value so that
+        # Snakeoil certificate is not regnerated.
+        apache_privileged.setup(old_version=1)
 
         privileged.setup()
         if not old_version:
