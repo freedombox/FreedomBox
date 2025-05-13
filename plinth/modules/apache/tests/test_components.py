@@ -4,14 +4,14 @@ Test module for webserver components.
 """
 
 import subprocess
-from unittest.mock import call, patch
+from unittest.mock import Mock, PropertyMock, call, patch
 
 import pytest
 
-from plinth import app
+from plinth import app, kvstore
 from plinth.diagnostic_check import DiagnosticCheck, Result
-from plinth.modules.apache.components import (Uwsgi, Webserver, check_url,
-                                              diagnose_url,
+from plinth.modules.apache.components import (Uwsgi, Webserver, WebserverRoot,
+                                              check_url, diagnose_url,
                                               diagnose_url_on_all)
 
 
@@ -162,6 +162,168 @@ def test_webserver_setup(service_reload, service_restart):
     webserver4.setup(old_version=3)
     service_restart.assert_has_calls([call('apache2')])
     service_reload.assert_not_called()
+
+
+def test_webserver_root_init():
+    """Test that webserver root component can be initialized."""
+    with pytest.raises(ValueError):
+        WebserverRoot(None, None)
+
+    webserver = WebserverRoot('test-webserverroot', 'test-config',
+                              expect_redirects=True, last_updated_version=10)
+    assert webserver.component_id == 'test-webserverroot'
+    assert webserver.web_name == 'test-config'
+    assert webserver.expect_redirects
+    assert webserver.last_updated_version == 10
+
+    webserver = WebserverRoot('test-webserverroot', None)
+    assert not webserver.expect_redirects
+    assert webserver.last_updated_version == 0
+
+
+@patch('plinth.modules.apache.privileged.link_root')
+def test_webserver_root_enable(link_root):
+    """Test that enabling webserver root works."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    with patch('plinth.modules.apache.components.WebserverRoot.domain_get'
+               ) as get:
+        get.return_value = None
+        webserver.enable()
+        link_root.assert_not_called()
+
+        get.return_value = 'x-domain'
+        webserver.enable()
+        link_root.assert_has_calls([call('x-domain', 'test-config')])
+
+
+@patch('plinth.modules.apache.privileged.unlink_root')
+def test_webserver_root_disable(unlink_root):
+    """Test that disabling webserver root works."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    with patch('plinth.modules.apache.components.WebserverRoot.domain_get'
+               ) as get:
+        get.return_value = None
+        webserver.disable()
+        unlink_root.assert_not_called()
+
+        get.return_value = 'x-domain'
+        webserver.disable()
+        unlink_root.assert_has_calls([call('x-domain')])
+
+
+@pytest.mark.django_db
+def test_webserver_root_domain_get():
+    """Test retrieving webserver root's domain."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+
+    assert webserver.domain_get() is None
+    kvstore.set('test-webserver_domain', 'test-domain')
+    assert webserver.domain_get() == 'test-domain'
+
+
+@pytest.mark.django_db
+@patch('plinth.modules.apache.privileged.unlink_root')
+@patch('plinth.modules.apache.privileged.link_root')
+@patch('plinth.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_domain_set(component_app, link_root, unlink_root):
+    """Test setting webserver root's domain."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    assert webserver.domain_get() is None
+
+    app = Mock()
+    component_app.return_value = app
+    app.is_enabled.return_value = True
+    webserver.domain_set('test-domain')
+    assert unlink_root.mock_calls == []
+    assert webserver.domain_get() == 'test-domain'
+    assert link_root.mock_calls == [call('test-domain', 'test-config')]
+    link_root.reset_mock()
+
+    app.is_enabled.return_value = False
+    assert not webserver.app.is_enabled()
+    webserver.domain_set('test-domain2')
+    assert unlink_root.mock_calls == [call('test-domain')]
+    assert webserver.domain_get() == 'test-domain2'
+    assert link_root.mock_calls == []
+
+    webserver.domain_set(None)
+    assert webserver.domain_get() is None
+
+
+@pytest.mark.django_db
+@patch('plinth.modules.apache.components.WebserverRoot.disable')
+@patch('plinth.modules.apache.components.WebserverRoot.enable')
+@patch('plinth.modules.apache.components.diagnose_url')
+@patch('plinth.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_diagnose(component_app, diagnose_url, enable, disable):
+    """Test running diagnostics on webserver root component."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    assert webserver.diagnose() == []
+
+    webserver.domain_set('test-domain')
+    result = DiagnosticCheck('test-all-id', 'test-result', 'success', {},
+                             'message')
+    diagnose_url.return_value = result
+    assert webserver.diagnose() == [result]
+
+
+@patch('plinth.privileged.service.reload')
+def test_webserver_root_setup(service_reload):
+    """Test that component reloads web server during app upgrades."""
+
+    class AppTest(app.App):
+        app_id = 'testapp'
+        enabled = False
+
+        def is_enabled(self):
+            return self.enabled
+
+    app1 = AppTest()
+
+    # Don't fail when last_updated_version is not provided.
+    webserver1 = WebserverRoot('test-webserverroot1', 'test-config')
+    assert webserver1.last_updated_version == 0
+    webserver1.setup(old_version=10)
+    service_reload.assert_not_called()
+
+    webserver1 = WebserverRoot('test-webserverroot1', 'test-config',
+                               last_updated_version=5)
+    for version in (0, 5, 6):
+        webserver1.setup(old_version=version)
+        service_reload.assert_not_called()
+
+    app1.enabled = False
+    webserver2 = WebserverRoot('test-webserver2', 'test-config',
+                               last_updated_version=5)
+    app1.add(webserver2)
+    webserver2.setup(old_version=3)
+    service_reload.assert_not_called()
+
+    app1.enabled = True
+    webserver3 = WebserverRoot('test-webserver3', 'test-config',
+                               last_updated_version=5)
+    app1.add(webserver3)
+    webserver3.setup(old_version=3)
+    service_reload.assert_has_calls([call('apache2')])
+    service_reload.reset_mock()
+
+
+@pytest.mark.django_db
+@patch('plinth.modules.apache.components.WebserverRoot.disable')
+@patch('plinth.modules.apache.components.WebserverRoot.enable')
+@patch('plinth.app.Component.app', new_callable=PropertyMock)
+def test_webserver_root_uninstall(component_app, enable, disable):
+    """Test that component removes the DB key during uninstall."""
+    webserver = WebserverRoot('test-webserver', 'test-config')
+    webserver.uninstall()
+    assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
+
+    webserver.domain_set('test-domain')
+    assert kvstore.get('test-webserver_domain') == 'test-domain'
+    webserver.uninstall()
+    assert kvstore.get_default('test-webserver_domain', 'x-value') == 'x-value'
 
 
 def test_uwsgi_init():

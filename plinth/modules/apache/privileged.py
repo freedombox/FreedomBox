@@ -3,6 +3,7 @@
 
 import glob
 import os
+import pathlib
 import re
 import subprocess
 
@@ -171,6 +172,36 @@ def _assert_kind(kind: str):
     """Raise and exception if kind parameter has an unexpected value."""
     if kind not in ('site', 'config', 'module'):
         raise ValueError('Invalid value for parameter kind')
+
+
+@privileged
+def link_root(domain: str, name: str):
+    """Link the Apache site root configuration to app configuration."""
+    if '/' in domain or '/' in name:
+        raise ValueError('Invalid domain or name')
+
+    target_config = f'{name}.conf'
+
+    include_root = pathlib.Path('/etc/apache2/includes/')
+    config = include_root / f'{domain}-include-freedombox.conf'
+    config.unlink(missing_ok=True)
+    config.symlink_to(target_config)
+    action_utils.service_reload('apache2')
+
+
+@privileged
+def unlink_root(domain: str):
+    """Unlink the Apache site root configuration from app configuration."""
+    if '/' in domain:
+        raise ValueError('Invalid domain')
+
+    include_root = pathlib.Path('/etc/apache2/includes/')
+    config = include_root / f'{domain}-include-freedombox.conf'
+    if not config.is_symlink():
+        return  # Does not exist or not a symlink
+
+    config.unlink()
+    action_utils.service_reload('apache2')
 
 
 @privileged
