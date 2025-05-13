@@ -538,7 +538,8 @@ def is_package_manager_busy():
 def podman_create(container_name: str, image_name: str, volume_name: str,
                   volume_path: str, volumes: dict[str, str] | None = None,
                   env: dict[str, str] | None = None,
-                  binds_to: list[str] | None = None):
+                  binds_to: list[str] | None = None,
+                  devices: dict[str, str] | None = None):
     """Remove and recreate a podman container."""
     service_stop(f'{volume_name}-volume.service')
     service_stop(container_name)
@@ -573,6 +574,9 @@ Options=bind
         [f'Environment={key}={value}' for key, value in (env or {}).items()])
     bind_lines = '\n'.join(f'BindsTo={service}\nAfter={service}'
                            for service in (binds_to or []))
+    devices_lines = '\n'.join(f'AddDevice={source}:{dest}'
+                              for source, dest in (devices or {}).items()
+                              if pathlib.Path(source).exists())
     contents = f'''[Unit]
 Requires={volume_name}-volume.service
 After={volume_name}-volume.service
@@ -585,6 +589,7 @@ ContainerName=%N
 Image={image_name}
 Network=host
 {volume_lines}
+{devices_lines}
 
 [Service]
 Restart=always
@@ -598,16 +603,16 @@ WantedBy=default.target
     # Re-running setup should be sufficient.
     _podman_create_fallback_service_file(container_name, image_name,
                                          volume_name, volume_path, volumes,
-                                         env, binds_to)
+                                         env, binds_to, devices)
 
     service_daemon_reload()
 
 
-def _podman_create_fallback_service_file(container_name: str, image_name: str,
-                                         volume_name: str, volume_path: str,
-                                         volumes: dict[str, str] | None = None,
-                                         env: dict[str, str] | None = None,
-                                         binds_to: list[str] | None = None):
+def _podman_create_fallback_service_file(
+        container_name: str, image_name: str, volume_name: str,
+        volume_path: str, volumes: dict[str, str] | None = None,
+        env: dict[str, str] | None = None, binds_to: list[str] | None = None,
+        devices: dict[str, str] | None = None):
     """Create a systemd unit file if systemd generator is not available."""
     service_file = pathlib.Path(
         f'/etc/systemd/system/{container_name}.service')
@@ -630,6 +635,10 @@ def _podman_create_fallback_service_file(container_name: str, image_name: str,
     volume_args = ' '.join(
         (f'-v {host_path}:{container_path}'
          for host_path, container_path in (volumes or {}).items()))
+    devices_args = ' '.join(
+        (f'-d {host_path}:{container_path}'
+         for host_path, container_path in (devices or {}).items()
+         if pathlib.Path(host_path).exists()))
 
     # Similar to the file quadlet systemd generator produces but with volume
     # related commands merged.
@@ -651,7 +660,7 @@ SyslogIdentifier=%N
 ExecStartPre=/usr/bin/rm -f %t/%N.cid
 ExecStartPre=/usr/bin/podman volume rm --force {volume_name}
 ExecStartPre=/usr/bin/podman volume create --driver=local --opt device={volume_path} --opt o=bind {volume_name}
-ExecStart=/usr/bin/podman run --name=%N --cidfile=%t/%N.cid --replace --rm --cgroups=split --network=host --sdnotify=conmon --detach --label io.containers.autoupdate=registry {volume_args} {env_args} {image_name}
+ExecStart=/usr/bin/podman run --name=%N --cidfile=%t/%N.cid --replace --rm --cgroups=split --network=host --sdnotify=conmon --detach --label io.containers.autoupdate=registry {volume_args} {env_args} {devices_args} {image_name}
 
 [Install]
 WantedBy=default.target
