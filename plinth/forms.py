@@ -49,9 +49,7 @@ class UninstallForm(forms.Form):
 
 
 class DomainSelectionForm(forms.Form):
-    """Form for selecting a domain name to be used for
-    distributed federated applications
-    """
+    """Form for selecting a domain name."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,10 +59,7 @@ class DomainSelectionForm(forms.Form):
         self.fields['domain_name'].choices = zip(domains, domains)
 
     domain_name = forms.ChoiceField(
-        label=_('Select a domain name to be used with this application'),
-        help_text=_(
-            'Warning! The application may not work properly if domain name is '
-            'changed later.'), choices=[])
+        label=_('Select a domain name to be used with this application'))
 
 
 def _get_domain_choices():
