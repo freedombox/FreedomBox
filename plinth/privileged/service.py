@@ -106,6 +106,8 @@ def is_running(service: str) -> bool:
 
 def _get_managed_services():
     """Get a set of all services managed by FreedomBox."""
+    from plinth.container import Container
+
     services = set()
     module_loader.load_modules()
     app_module.apps_init()
@@ -119,6 +121,10 @@ def _get_managed_services():
         components = app.get_components_of_type(RelatedDaemon)
         for component in components:
             services.add(component.unit)
+
+        components = app.get_components_of_type(Container)
+        for component in components:
+            services.add(component.name)
 
     return services
 

@@ -22,6 +22,7 @@ Components
    staticfiles
    backups
    coturn
+   container
 
 Base Classes
 ^^^^^^^^^^^^
