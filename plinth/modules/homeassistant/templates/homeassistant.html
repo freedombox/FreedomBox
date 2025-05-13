@@ -1,0 +1,43 @@
+{% extends "app.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block configuration %}
+  {% if form %}
+    <h3>{% trans "Configuration" %}</h3>
+
+    <form id="app-form" class="form form-configuration" method="post">
+      {% csrf_token %}
+
+      <p>
+        {% blocktrans trimmed %}
+          Home Assistant requires a dedicated domain to work with and cannot
+          work on a URL path. Please select the domain on which Home Assistant
+          will be available. Home Assistant will not be available on other
+          domains.
+        {% endblocktrans %}
+      </p>
+
+      <p>
+        {% url 'names:domain-add' as names_url %}
+        {% url 'dynamicdns:index' as dynamic_dns_url %}
+        {% blocktrans trimmed %}
+          A separate domain can be made available for Home Assistant by
+          configurating a subdomain such as homeassistant.mydomain.example. See
+          <a href="{{ names_url }}">Names</a> app and
+          <a href="{{ dynamic_dns_url }}">Dynamic DNS</a> app for configuring
+          subdomains.
+        {% endblocktrans %}
+      </p>
+
+      {{ form|bootstrap }}
+
+      <input type="submit" class="btn btn-primary"
+             value="{% trans "Update setup" %}"/>
+    </form>
+  {% endif %}
+{% endblock %}
