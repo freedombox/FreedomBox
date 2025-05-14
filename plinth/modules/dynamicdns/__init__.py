@@ -40,8 +40,12 @@ _description = [
       'name, they will get a response with your current IP address.'),
     _('If you are looking for a free dynamic DNS account, you may find a free '
       'GnuDIP service at <a href=\'https://ddns.freedombox.org\' '
-      'target=\'_blank\'>ddns.freedombox.org</a> or you may find free update '
-      'URL based services at <a href=\'http://freedns.afraid.org/\' '
+      'target=\'_blank\'>ddns.freedombox.org</a>. With this service, you also '
+      'get unlimited subdomains (with wildcards option enabled in account '
+      'settings). To use a subdomain, add it as a static domain in the Names '
+      'app.'),
+    _('Alternatively, you may find a free update URL based service at '
+      '<a href=\'http://freedns.afraid.org/\' '
       'target=\'_blank\'>freedns.afraid.org</a>.'),
     _('This service uses an external service to lookup public IP address. '
       'This can be configured in the privacy app.'),
