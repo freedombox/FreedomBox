@@ -1,0 +1,25 @@
+{% extends "form.html" %}
+{% comment %}
+# SPDX-License-Identifier: AGPL-3.0-or-later
+{% endcomment %}
+
+{% load bootstrap %}
+{% load i18n %}
+
+{% block form_description %}
+  <p>
+    {% blocktrans trimmed %}
+      If you purchased a domain name from a domain registrar, you can configure
+      it here. The name servers responsible for the domain must be pointing (A
+      and AAAA records) to the public IP addresses of the {{ box_name }}.
+    {% endblocktrans %}
+  </p>
+  <p>
+    {% blocktrans trimmed %}
+      If you wish to also use a subdomian of an already configured domain, add
+      another entry for it here. Ensure that the subdomain is configured to
+      point to {{ box_name }}. Subdomains are useful for hosting multiple
+      applications that each require a dedicted domain for themselves.
+    {% endblocktrans %}
+  </p>
+{% endblock %}

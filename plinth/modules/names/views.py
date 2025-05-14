@@ -106,7 +106,7 @@ class HostnameView(FormView):
 
 class DomainAddView(FormView):
     """View to update system's static domain name."""
-    template_name = 'form.html'
+    template_name = 'names-domain-add.html'
     form_class = DomainAddForm
     prefix = 'domain-add'
     success_url = reverse_lazy('names:index')
