@@ -64,12 +64,14 @@ def set_logging_mode(mode: str):
 
 
 @privileged
-def set_home_page(homepage: str):
+def set_home_page(homepage: str | None):
     """Set the default app for this FreedomBox."""
     conf_file_path = os.path.join('/etc/apache2/conf-available',
                                   APACHE_HOMEPAGE_CONF_FILE_NAME)
 
-    redirect_rule = 'RedirectMatch "^/$" "{}"\n'.format(homepage)
+    redirect_rule = ''
+    if homepage:
+        redirect_rule = 'RedirectMatch "^/$" "{}"\n'.format(homepage)
 
     with open(conf_file_path, 'w', encoding='utf-8') as conf_file:
         conf_file.write(redirect_rule)

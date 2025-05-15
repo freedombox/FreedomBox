@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app for basic system configuration."""
 
+import pathlib
+
 import augeas
 from django.utils.translation import gettext_lazy as _
 
@@ -27,7 +29,7 @@ class ConfigApp(app_module.App):
 
     app_id = 'config'
 
-    _version = 5
+    _version = 6
 
     can_be_disabled = False
 
@@ -65,6 +67,12 @@ class ConfigApp(app_module.App):
         elif old_version == 4:
             privileged.set_logging_mode(privileged.get_logging_mode())
 
+        if old_version <= 5:
+            # Update the style of Apache home page redirection.
+            home_page = get_home_page()
+            if home_page == 'apache-default':
+                change_home_page(home_page)
+
         # systemd-journald is socket activated, it may not be running and it
         # does not support reload.
         service_privileged.try_restart('systemd-journald')
@@ -77,19 +85,16 @@ class ConfigApp(app_module.App):
         service_privileged.mask('rsyslog')
 
 
-def home_page_url2scid(url):
+def home_page_url2scid(url: str | None):
     """Return the shortcut ID of the given home page url."""
-    # url is None when the freedombox-apache-homepage configuration file does
-    # not exist. In this case, the default redirect in /plinth from the shipped
-    # configuration file is effective.
-    if url is None:
-        return 'plinth'
-
-    if url in ('/plinth/', '/plinth', 'plinth'):
-        return 'plinth'
-
-    if url == '/index.html':
+    # url is None when the freedombox-apache-homepage configuration file exists
+    # but is empty. In this case, no redirect is effective.
+    if url in ('/index.html', None):
         return 'apache-default'
+
+    if url in ('/plinth/', '/plinth', 'plinth', '/freedombox/', '/freedombox',
+               'freedombox'):
+        return 'plinth'
 
     if url and url.startswith('/~'):
         return 'uws-{}'.format(user_of_uws_url(url))
@@ -102,14 +107,12 @@ def home_page_url2scid(url):
     return None
 
 
-def _home_page_scid2url(shortcut_id):
+def _home_page_scid2url(shortcut_id: str) -> str | None:
     """Return the url for the given home page shortcut ID."""
-    if shortcut_id is None:
-        url = None
-    elif shortcut_id == 'plinth':
+    if shortcut_id == 'plinth':
         url = '/plinth/'
     elif shortcut_id == 'apache-default':
-        url = '/index.html'
+        url = None
     elif shortcut_id.startswith('uws-'):
         user = shortcut_id[4:]
         if user in get_users_with_website():
@@ -127,9 +130,12 @@ def _home_page_scid2url(shortcut_id):
     return url
 
 
-def _get_home_page_url():
+def _get_home_page_url() -> str | None:
     """Get the default application for the domain."""
     conf_file = privileged.APACHE_HOMEPAGE_CONFIG
+    if not pathlib.Path(conf_file).exists():
+        return '/plinth/'
+
     aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
                         augeas.Augeas.NO_MODL_AUTOLOAD)
     aug.set('/augeas/load/Httpd/lens', 'Httpd.lns')
@@ -152,14 +158,14 @@ def get_home_page():
     return home_page_url2scid(url)
 
 
-def change_home_page(shortcut_id):
+def change_home_page(shortcut_id: str):
     """Change the FreedomBox's default redirect to URL of a shortcut."""
     url = _home_page_scid2url(shortcut_id)
-    if url is None:
-        url = '/plinth/'  # fall back to default url if scid is unknown.
+    if url:
+        url = str(url)
 
     # URL may be a reverse_lazy() proxy
-    privileged.set_home_page(str(url))
+    privileged.set_home_page(url)
 
 
 def get_advanced_mode():

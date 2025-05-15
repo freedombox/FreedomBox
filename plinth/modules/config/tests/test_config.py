@@ -17,7 +17,7 @@ from plinth.modules.config import (_home_page_scid2url, change_home_page,
 def test_homepage_mapping():
     """Basic tests for homepage functions."""
     func = home_page_url2scid
-    assert func(None) == 'plinth'
+    assert func(None) == 'apache-default'
     assert func('/unknown/url') is None
     assert func('/plinth/') == 'plinth'
     assert func('/plinth') == 'plinth'
@@ -27,9 +27,8 @@ def test_homepage_mapping():
     assert func('/~user/whatever/else') == 'uws-user'
 
     func = _home_page_scid2url
-    assert func(None) is None
     assert func('plinth') == '/plinth/'
-    assert func('apache-default') == '/index.html'
+    assert func('apache-default') is None
 
 
 def test_homepage_mapping_skip_ci():
