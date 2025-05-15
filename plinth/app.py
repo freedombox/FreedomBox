@@ -147,7 +147,9 @@ class App:
 
     def uninstall(self):
         """De-configure and uninstall the app."""
-        for component in self.components.values():
+        # Remove components in the reverse order so that dependencies among
+        # components is properly satisfied.
+        for component in reversed(self.components.values()):
             component.uninstall()
 
     def get_setup_state(self) -> SetupState:

@@ -264,8 +264,8 @@ def test_packages_uninstall_exclusion(cache, uninstall,
     TestApp3()
     app1.uninstall()
     uninstall.assert_has_calls([
-        call(['package11', 'package3', 'dep6'], purge=True),
-        call(['package12', 'package3'], purge=True)
+        call(['package12', 'package3'], purge=True),
+        call(['package11', 'package3', 'dep6'], purge=True)
     ])
 
 
