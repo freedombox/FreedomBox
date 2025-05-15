@@ -61,10 +61,18 @@ def lookup(dictionary, key):
     return dictionary[key]
 
 
-def _is_relative_url(url):
-    """Check if the given link is relative or not."""
+def _is_internal_url(url):
+    """Check if the given link is internal or not.
+
+    A URL is internal if it is relative URL or points to one of the domains
+    managed by FreedomBox.
+    """
     parsed_url = urlparse(str(url))
-    return not parsed_url.netloc
+    if not parsed_url.netloc:
+        return True
+
+    from plinth.modules.names.components import DomainName
+    return parsed_url.netloc in DomainName.list_names()
 
 
 @register.filter(name='clients_get_platforms')
@@ -74,7 +82,7 @@ def clients_get_platforms(clients):
     web = []
     for client in clients:
         for platform in client['platforms']:
-            if platform['type'] == 'web' and _is_relative_url(platform['url']):
+            if platform['type'] == 'web' and _is_internal_url(platform['url']):
                 web.append(platform)
             else:
                 other.append(platform)
