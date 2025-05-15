@@ -2,7 +2,6 @@
 """Configure Let's Encrypt."""
 
 import filecmp
-import glob
 import importlib
 import inspect
 import os
@@ -24,10 +23,6 @@ LE_DIRECTORY = '/etc/letsencrypt/'
 ETC_SSL_DIRECTORY = '/etc/ssl/'
 AUTHENTICATOR = 'webroot'
 WEB_ROOT_PATH = '/var/www/html'
-APACHE_PREFIX = '/etc/apache2/sites-available/'
-APACHE_CONFIGURATION = '''
-Use FreedomBoxTLSSiteMacro {domain}
-'''
 
 
 def _get_certificate_expiry(domain: str) -> str:
@@ -138,9 +133,6 @@ def obtain(domain: str):
         command.append('--staging')
 
     subprocess.run(command, check=True)
-
-    with action_utils.WebserverChange() as webserver_change:
-        _setup_webserver_config(domain, webserver_change)
 
 
 @privileged
@@ -259,19 +251,3 @@ def delete(domain: str):
     command = ['certbot', 'delete', '--non-interactive', '--cert-name', domain]
     subprocess.run(command, check=True)
     action_utils.webserver_disable(domain, kind='site')
-
-
-def _setup_webserver_config(domain, webserver_change):
-    """Create SSL web server configuration for a domain.
-
-    Do so only if there is no configuration existing.
-    """
-    file_name = os.path.join(APACHE_PREFIX, domain + '.conf')
-    if os.path.isfile(file_name):
-        os.rename(file_name, file_name + '.fbx-bak')
-
-    with open(file_name, 'w', encoding='utf-8') as file_handle:
-        file_handle.write(APACHE_CONFIGURATION.format(domain=domain))
-
-    webserver_change.enable('freedombox-tls-site-macro', kind='config')
-    webserver_change.enable(domain, kind='site')

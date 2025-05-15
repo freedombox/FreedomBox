@@ -214,3 +214,36 @@ def uwsgi_enable(name: str):
 def uwsgi_disable(name: str):
     """Disable uWSGI configuration and reload."""
     action_utils.uwsgi_disable(name)
+
+
+@privileged
+def domain_setup(domain: str):
+    """Add site specific configuration for a domain."""
+    if '/' in domain:
+        raise ValueError('Invalid domain')
+
+    path = pathlib.Path('/etc/apache2/sites-available/')
+    path = path / (domain + '.conf')
+    configuration = 'Use FreedomBoxTLSSiteMacro {domain}\n'
+    if path.is_file():
+        return  # File already exists. Assume it to be correct one.
+
+    path.write_text(configuration.format(domain=domain))
+
+    with action_utils.WebserverChange() as webserver:
+        webserver.enable('freedombox-tls-site-macro', kind='config')
+        webserver.enable(domain, kind='site')
+
+
+@privileged
+def domain_remove(domain: str):
+    """Remove site specific configuration for a domain."""
+    if '/' in domain:
+        raise ValueError('Invalid domain')
+
+    with action_utils.WebserverChange() as webserver:
+        webserver.disable(domain, kind='site')
+
+    path = pathlib.Path('/etc/apache2/sites-available/')
+    path = path / (domain + '.conf')
+    path.unlink(missing_ok=True)

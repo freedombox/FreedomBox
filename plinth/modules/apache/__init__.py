@@ -12,6 +12,7 @@ from plinth.daemon import Daemon, RelatedDaemon
 from plinth.modules.firewall.components import Firewall
 from plinth.modules.letsencrypt.components import LetsEncrypt
 from plinth.package import Packages
+from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy, is_valid_user_name
 
 from . import privileged
@@ -64,11 +65,30 @@ class ApacheApp(app_module.App):
         related_daemon = RelatedDaemon('related-daemon-apache', 'uwsgi')
         self.add(related_daemon)
 
+    @staticmethod
+    def post_init():
+        """Perform post initialization operations."""
+        domain_added.connect(_on_domain_added)
+        domain_removed.connect(_on_domain_removed)
+
     def setup(self, old_version):
         """Install and configure the app."""
         super().setup(old_version)
         privileged.setup(old_version)
         self.enable()
+
+
+def _on_domain_added(sender, domain_type, name='', description='',
+                     services=None, **kwargs):
+    """Add site specific configuration for a domain."""
+    if name:
+        privileged.domain_setup(name)
+
+
+def _on_domain_removed(sender, domain_type, name='', **kwargs):
+    """Remove site specific configuration for a domain."""
+    if name:
+        privileged.domain_remove(name)
 
 
 # (U)ser (W)eb (S)ites
