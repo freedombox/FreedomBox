@@ -111,73 +111,73 @@ def service_is_enabled(service_name, strict_check=False):
         return False
 
 
-def service_enable(service_name):
+def service_enable(service_name: str, check: bool = False):
     """Enable and start a service in systemd."""
-    subprocess.call(['systemctl', 'enable', service_name])
-    service_start(service_name)
+    subprocess.run(['systemctl', 'enable', service_name], check=check)
+    service_start(service_name, check=check)
 
 
-def service_disable(service_name):
+def service_disable(service_name: str, check: bool = False):
     """Disable and stop service in systemd."""
-    subprocess.call(['systemctl', 'disable', service_name])
+    subprocess.run(['systemctl', 'disable', service_name], check=check)
     try:
-        service_stop(service_name)
+        service_stop(service_name, check=check)
     except subprocess.CalledProcessError:
         pass
 
 
-def service_mask(service_name):
+def service_mask(service_name: str, check: bool = False):
     """Mask a service"""
-    subprocess.call(['systemctl', 'mask', service_name])
+    subprocess.run(['systemctl', 'mask', service_name], check=check)
 
 
-def service_unmask(service_name):
+def service_unmask(service_name: str, check: bool = False):
     """Unmask a service"""
-    subprocess.call(['systemctl', 'unmask', service_name])
+    subprocess.run(['systemctl', 'unmask', service_name], check=check)
 
 
-def service_start(service_name):
+def service_start(service_name: str, check: bool = False):
     """Start a service with systemd."""
-    service_action(service_name, 'start')
+    service_action(service_name, 'start', check=check)
 
 
-def service_stop(service_name):
+def service_stop(service_name: str, check: bool = False):
     """Stop a service with systemd."""
-    service_action(service_name, 'stop')
+    service_action(service_name, 'stop', check=check)
 
 
-def service_restart(service_name):
+def service_restart(service_name: str, check: bool = False):
     """Restart a service with systemd."""
-    service_action(service_name, 'restart')
+    service_action(service_name, 'restart', check=check)
 
 
-def service_try_restart(service_name):
+def service_try_restart(service_name: str, check: bool = False):
     """Try to restart a service with systemd."""
-    service_action(service_name, 'try-restart')
+    service_action(service_name, 'try-restart', check=check)
 
 
-def service_reload(service_name):
+def service_reload(service_name: str, check: bool = False):
     """Reload a service with systemd."""
-    service_action(service_name, 'reload')
+    service_action(service_name, 'reload', check=check)
 
 
-def service_try_reload_or_restart(service_name):
+def service_try_reload_or_restart(service_name: str, check: bool = False):
     """Reload a service if it supports reloading, otherwise restart.
 
     Do nothing if service is not running.
     """
-    service_action(service_name, 'try-reload-or-restart')
+    service_action(service_name, 'try-reload-or-restart', check=check)
 
 
-def service_reset_failed(service_name):
+def service_reset_failed(service_name: str, check: bool = False):
     """Reset the 'failed' state of units."""
-    service_action(service_name, 'reset-failed')
+    service_action(service_name, 'reset-failed', check=check)
 
 
-def service_action(service_name, action):
+def service_action(service_name: str, action: str, check: bool = False):
     """Perform the given action on the service_name."""
     subprocess.run(['systemctl', action, service_name],
-                   stdout=subprocess.DEVNULL, check=False)
+                   stdout=subprocess.DEVNULL, check=check)
 
 
 def webserver_is_enabled(name, kind='config'):

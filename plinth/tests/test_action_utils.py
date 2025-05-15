@@ -78,17 +78,17 @@ def test_service_enable_and_disable():
 def test_service_actions(mock):
     """Trivial white box test for trivial implementations."""
     service_start(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'start')
+    mock.assert_called_with(UNKNOWN, 'start', check=False)
     service_stop(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'stop')
+    mock.assert_called_with(UNKNOWN, 'stop', check=False)
     service_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'restart')
+    mock.assert_called_with(UNKNOWN, 'restart', check=False)
     service_try_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'try-restart')
+    mock.assert_called_with(UNKNOWN, 'try-restart', check=False)
     service_reload(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'reload')
+    mock.assert_called_with(UNKNOWN, 'reload', check=False)
     service_try_reload_or_restart(UNKNOWN)
-    mock.assert_called_with(UNKNOWN, 'try-reload-or-restart')
+    mock.assert_called_with(UNKNOWN, 'try-reload-or-restart', check=False)
 
 
 @pytest.mark.usefixtures('needs_root')

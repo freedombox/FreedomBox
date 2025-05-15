@@ -79,22 +79,24 @@ def test_is_enabled(service_is_enabled, daemon):
 
 @patch('plinth.app.apps_init')
 @patch('subprocess.run')
-@patch('subprocess.call')
-def test_enable(subprocess_call, subprocess_run, apps_init, app_list,
-                mock_privileged, daemon):
+def test_enable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that enabling the daemon works."""
     daemon.enable()
-    subprocess_call.assert_has_calls(
-        [call(['systemctl', 'enable', 'test-unit'])])
+    subprocess_run.assert_has_calls(
+        [call(['systemctl', 'enable', 'test-unit'], check=False)])
     subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
                                    stdout=subprocess.DEVNULL, check=False)
 
-    subprocess_call.reset_mock()
+    subprocess_run.reset_mock()
     daemon.alias = 'test-unit-2'
     daemon.enable()
-    subprocess_call.assert_has_calls([
-        call(['systemctl', 'enable', 'test-unit']),
-        call(['systemctl', 'enable', 'test-unit-2'])
+    subprocess_run.assert_has_calls([
+        call(['systemctl', 'enable', 'test-unit'], check=False),
+        call(['systemctl', 'start', 'test-unit'], stdout=subprocess.DEVNULL,
+             check=False),
+        call(['systemctl', 'enable', 'test-unit-2'], check=False),
+        call(['systemctl', 'start', 'test-unit-2'], stdout=subprocess.DEVNULL,
+             check=False),
     ])
     subprocess_run.assert_any_call(['systemctl', 'start', 'test-unit'],
                                    stdout=subprocess.DEVNULL, check=False)
@@ -104,22 +106,24 @@ def test_enable(subprocess_call, subprocess_run, apps_init, app_list,
 
 @patch('plinth.app.apps_init')
 @patch('subprocess.run')
-@patch('subprocess.call')
-def test_disable(subprocess_call, subprocess_run, apps_init, app_list,
-                 mock_privileged, daemon):
+def test_disable(subprocess_run, apps_init, app_list, mock_privileged, daemon):
     """Test that disabling the daemon works."""
     daemon.disable()
-    subprocess_call.assert_has_calls(
-        [call(['systemctl', 'disable', 'test-unit'])])
+    subprocess_run.assert_has_calls(
+        [call(['systemctl', 'disable', 'test-unit'], check=False)])
     subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
                                    stdout=subprocess.DEVNULL, check=False)
 
-    subprocess_call.reset_mock()
+    subprocess_run.reset_mock()
     daemon.alias = 'test-unit-2'
     daemon.disable()
-    subprocess_call.assert_has_calls([
-        call(['systemctl', 'disable', 'test-unit']),
-        call(['systemctl', 'disable', 'test-unit-2'])
+    subprocess_run.assert_has_calls([
+        call(['systemctl', 'disable', 'test-unit'], check=False),
+        call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
+             check=False),
+        call(['systemctl', 'disable', 'test-unit-2'], check=False),
+        call(['systemctl', 'stop', 'test-unit-2'], stdout=subprocess.DEVNULL,
+             check=False),
     ])
     subprocess_run.assert_any_call(['systemctl', 'stop', 'test-unit'],
                                    stdout=subprocess.DEVNULL, check=False)
@@ -141,38 +145,30 @@ def test_is_running(service_is_running, daemon):
 @patch('plinth.app.apps_init')
 @patch('plinth.action_utils.service_is_running')
 @patch('subprocess.run')
-@patch('subprocess.call')
-def test_ensure_running(subprocess_call, subprocess_run, service_is_running,
-                        apps_init, app_list, mock_privileged, daemon):
+def test_ensure_running(subprocess_run, service_is_running, apps_init,
+                        app_list, mock_privileged, daemon):
     """Test that checking that the daemon is running works."""
     service_is_running.return_value = True
     with daemon.ensure_running() as starting_state:
         assert starting_state
-        assert not subprocess_call.called
         assert not subprocess_run.called
 
-    assert not subprocess_call.called
     assert not subprocess_run.called
 
     service_is_running.return_value = False
     with daemon.ensure_running() as starting_state:
         assert not starting_state
         assert subprocess_run.mock_calls == [
+            call(['systemctl', 'enable', 'test-unit'], check=False),
             call(['systemctl', 'start', 'test-unit'],
-                 stdout=subprocess.DEVNULL, check=False)
-        ]
-        assert subprocess_call.mock_calls == [
-            call(['systemctl', 'enable', 'test-unit'])
+                 stdout=subprocess.DEVNULL, check=False),
         ]
         subprocess_run.reset_mock()
-        subprocess_call.reset_mock()
 
     assert subprocess_run.mock_calls == [
+        call(['systemctl', 'disable', 'test-unit'], check=False),
         call(['systemctl', 'stop', 'test-unit'], stdout=subprocess.DEVNULL,
-             check=False)
-    ]
-    assert subprocess_call.mock_calls == [
-        call(['systemctl', 'disable', 'test-unit'])
+             check=False),
     ]
 
 
