@@ -13,8 +13,6 @@ import subprocess
 import sys
 from typing import Any
 
-import configobj
-
 from plinth import action_utils
 from plinth import app as app_module
 from plinth import module_loader
@@ -24,7 +22,6 @@ from plinth.modules import letsencrypt as le
 TEST_MODE = False
 LE_DIRECTORY = '/etc/letsencrypt/'
 ETC_SSL_DIRECTORY = '/etc/ssl/'
-RENEWAL_DIRECTORY = '/etc/letsencrypt/renewal/'
 AUTHENTICATOR = 'webroot'
 WEB_ROOT_PATH = '/var/www/html'
 APACHE_PREFIX = '/etc/apache2/sites-available/'
@@ -98,25 +95,6 @@ def _get_status() -> dict[str, Any]:
 
 
 @privileged
-def setup(old_version: int):
-    """Upgrade old site configuration to new macro based style.
-
-    Nothing to do for first time setup and for newer versions.
-    """
-    if old_version == 2:
-        _remove_old_hooks()
-        return
-
-    if old_version != 1:
-        return
-
-    domain_status = _get_status()
-    with action_utils.WebserverChange() as webserver_change:
-        for domain in domain_status:
-            _setup_webserver_config(domain, webserver_change)
-
-
-@privileged
 def get_status() -> dict[str, dict]:
     """Return a dictionary of currently configured domains."""
     domain_status = _get_status()
@@ -163,47 +141,6 @@ def obtain(domain: str):
 
     with action_utils.WebserverChange() as webserver_change:
         _setup_webserver_config(domain, webserver_change)
-
-
-def _remove_old_hooks():
-    """Remove old style renewal hooks from individual configuration files.
-
-    This has been replaced with global hooks by adding script files in
-    directory /etc/letsencrypt/renewal-hooks/{pre,post,deploy}/.
-    """
-    for file_path in glob.glob(RENEWAL_DIRECTORY + '*.conf'):
-        try:
-            _remove_old_hooks_from_file(file_path)
-        except Exception as exception:
-            print('Error removing hooks from file:', file_path, exception)
-
-
-def _remove_old_hooks_from_file(file_path: str):
-    """Remove old style hooks from a single configuration file."""
-    config = configobj.ConfigObj(file_path)
-    edited = False
-    for line in config.initial_comment:
-        if 'edited by plinth' in line.lower():
-            edited = True
-
-    if not edited:
-        return
-
-    config.initial_comment = [
-        line for line in config.initial_comment
-        if 'edited by plinth' not in line.lower()
-    ]
-
-    if 'pre_hook' in config['renewalparams']:
-        del config['renewalparams']['pre_hook']
-
-    if 'renew_hook' in config['renewalparams']:
-        del config['renewalparams']['renew_hook']
-
-    if 'post_hook' in config['renewalparams']:
-        del config['renewalparams']['post_hook']
-
-    config.write()
 
 
 @privileged

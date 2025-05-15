@@ -126,11 +126,6 @@ class LetsEncryptApp(app_module.App):
 
         return super().repair(remaining_checks)
 
-    def setup(self, old_version):
-        """Install and configure the app."""
-        super().setup(old_version)
-        privileged.setup(old_version)
-
 
 def certificate_obtain(domain):
     """Obtain a certificate for a domain and notify handlers."""
