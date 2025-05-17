@@ -51,12 +51,18 @@ class UninstallForm(forms.Form):
 class DomainSelectionForm(forms.Form):
     """Form for selecting a domain name."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, show_none=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         from plinth.modules.names.components import DomainName
         domains = list(DomainName.list_names())
-        self.fields['domain_name'].choices = zip(domains, domains)
+
+        choices = list(zip(domains, domains))
+        if show_none:
+            choices = [('', _('(None)'))] + choices
+            self.fields['domain_name'].required = False
+
+        self.fields['domain_name'].choices = choices
 
     domain_name = forms.ChoiceField(
         label=_('Select a domain name to be used with this application'))
