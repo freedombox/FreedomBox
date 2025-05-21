@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-21 20:08-0400\n"
-"PO-Revision-Date: 2025-04-16 04:54+0000\n"
-"Last-Translator: Aryan Raj <aaryanraj2120@gmail.com>\n"
+"PO-Revision-Date: 2025-04-29 16:30+0000\n"
+"Last-Translator: Thulasi Edhala <thulasiedhala@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/hi/>\n"
 "Language: hi\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: config.py:103
 #, python-brace-format
@@ -1756,7 +1756,7 @@ msgstr ""
 
 #: modules/diagnostics/__init__.py:222
 msgid "You should not install any new apps on this system."
-msgstr ""
+msgstr "आपको इस सिस्टम पर कोई नया ऐप इंस्टॉल नहीं करना चाहिए।"
 
 #: modules/diagnostics/__init__.py:234
 #, no-python-format, python-brace-format
@@ -1764,10 +1764,12 @@ msgid ""
 "System is low on memory: {percent_used}% used, {memory_available} "
 "{memory_available_unit} free. {advice_message}"
 msgstr ""
+"सिस्टम में मेमोरी कम है: {percent_used}% उपयोग हो चुकी है, {memory_available} "
+"{memory_available_unit} खाली है। {advice_message}"
 
 #: modules/diagnostics/__init__.py:236
 msgid "Low Memory"
-msgstr ""
+msgstr "कम मेमोरी"
 
 #: modules/diagnostics/__init__.py:267
 #, fuzzy
@@ -9845,6 +9847,8 @@ msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: MConEJFIg6+"
+"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:82
 #, fuzzy
@@ -9857,10 +9861,12 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
+"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: MConEJFIg6+"
+"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:89
 msgid "Private key of this machine"
-msgstr ""
+msgstr "इस मशीन की निजी कुंजी"
 
 #: modules/wireguard/forms.py:90
 msgid ""
@@ -9869,10 +9875,14 @@ msgid ""
 "some server operators insist on providing this. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
+"वैकल्पिक। यदि खाली छोड़ दिया जाए तो नई सार्वजनिक/निजी कुंजियाँ उत्पन्न होती हैं। फिर "
+"सार्वजनिक कुंजी सर्वर को प्रदान की जा सकती है। यह अनुशंसित तरीका है। हालाँकि, कुछ सर्वर "
+"ऑपरेटर इसे प्रदान करने पर जोर देते हैं। उदाहरण: MConEJFIg6+"
+"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:98
 msgid "Pre-shared key"
-msgstr ""
+msgstr "गुप्त कुंजी"
 
 #: modules/wireguard/forms.py:99
 msgid ""
@@ -9880,10 +9890,13 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
+"वैकल्पिक। सुरक्षा की एक अतिरिक्त परत जोड़ने के लिए सर्वर द्वारा प्रदान की गई एक साझा गुप्"
+"त कुंजी। केवल तभी भरें जब प्रदान की गई हो। उदाहरण: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=।"
 
 #: modules/wireguard/forms.py:105
 msgid "Use this connection to send all outgoing traffic"
-msgstr ""
+msgstr "सभी आउटगोइंग ट्रैफ़िक भेजने के लिए इस कनेक्शन का उपयोग करें"
 
 #: modules/wireguard/forms.py:107
 msgid "Typically checked for a VPN service through which all traffic is sent."
@@ -10595,12 +10608,13 @@ msgstr ""
 "कुछ<a href=\"%(apps_url)s\">एप्लिकेशनस</a> सक्षम करें, इस पेज पर शॉर्टकटस जोड़ने के लिए."
 
 #: templates/internal-zone.html:17
-#, fuzzy, python-format
-#| msgid "<em>%(service_name)s</em> is available only on internal networks."
+#, python-format
 msgid ""
 "<em>%(service_name)s</em> is available only on internal networks or when the "
 "client is connected to %(box_name)s through VPN."
-msgstr "<em>%(service_name)s</em> सिर्फ आंतरिक नेटवर्क्स पर उपलब्ध है. %(box_name)s"
+msgstr ""
+"<em>%(service_name)s</em> केवल आंतरिक नेटवर्क पर उपलब्ध है या जब क्लाइंट VPN के माध्यम "
+"से %(box_name)s से जुड़ा होता है।"
 
 #: templates/internal-zone.html:25
 msgid "Currently there are no network interfaces configured as internal."
@@ -10614,26 +10628,21 @@ msgid ""
 msgstr "अभी यह नेटवर्क इंटरफ़ेसस आंतरिक के रूप में कॉंफ़िगर किया गया है:%(interface_list)s"
 
 #: templates/notifications-dropdown.html:11
-#, fuzzy
-#| msgid "No certificate"
 msgid "Notifications"
-msgstr "कोई प्रमाणपत्र नहीं"
+msgstr "सूचनाएं"
 
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
-msgstr ""
+msgstr "अग्रेषण पोर्ट"
 
 #: templates/port-forwarding-info.html:13
-#, fuzzy, python-format
-#| msgid ""
-#| "You may want to check the <a href=\"%(networks_url)s\">network setup</a> "
-#| "and modify it if necessary."
+#, python-format
 msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
-"आप <a href=\"%(networks_url)s\"> नेटवर्क सेटअप </a> जांचना चाह सकते है और अगर जरुरत "
-"हू, इससे बदलें."
+"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे नहीं है</a>। कोई कार्रवा"
+"ई आवश्यक नहीं है।"
 
 #: templates/port-forwarding-info.html:21
 #, python-format
@@ -10650,6 +10659,9 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
+"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे</a> है और आप DMZ सुविधा"
+" का उपयोग नहीं कर रहे हैं। आपको अपने राउटर पर पोर्ट फ़ॉरवर्डिंग सेट अप करना होगा। आपको "
+"%(service_name)s के लिए निम्नलिखित पोर्ट फ़ॉरवर्ड करने चाहिए:"
 
 #: templates/port-forwarding-info.html:42
 #, fuzzy
@@ -10665,7 +10677,7 @@ msgstr "प्रोटोकॉल"
 
 #: templates/port-forwarding-info.html:44
 msgid "From Router/WAN Ports"
-msgstr ""
+msgstr "राउटर/WAN पोर्ट से"
 
 #: templates/port-forwarding-info.html:45
 #, fuzzy, python-format
@@ -10691,7 +10703,7 @@ msgstr "यह एप्लिकेशन अभी अापका वित�
 
 #: templates/setup.html:50
 msgid "Check again"
-msgstr ""
+msgstr "फिर से जाँचो"
 
 #: templates/setup.html:61
 msgid ""
@@ -10699,6 +10711,8 @@ msgid ""
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
+"<strong>विरोधी पैकेज:</strong> सिस्टम पर इंस्टॉल किए गए कुछ पैकेज इस ऐप की स्थापना के "
+"साथ संघर्ष करते हैं। यदि आप आगे बढ़ते हैं तो निम्नलिखित पैकेज हटा दिए जाएँगे:"
 
 #: templates/setup.html:80
 msgid "Update"
@@ -10746,10 +10760,12 @@ msgid ""
 "All app data and configuration will be permanently lost. App may be "
 "installed freshly again."
 msgstr ""
+"सभी ऐप डेटा और कॉन्फ़िगरेशन हमेशा के लिए खो जाएंगे। ऐप को फिर से नए सिरे से इंस्टॉल किया "
+"जा सकता है।"
 
 #: views.py:84
 msgid "Here"
-msgstr ""
+msgstr "यहाँ"
 
 #: views.py:414
 msgid "Setting unchanged"
@@ -10758,7 +10774,7 @@ msgstr "सेटिंग स्थिर है"
 #: views.py:647
 #, python-brace-format
 msgid "before uninstall of {app_id}"
-msgstr ""
+msgstr "{app_id} को अनइंस्टॉल करने से पहले"
 
 #: web_framework.py:122
 msgid "Gujarati"
