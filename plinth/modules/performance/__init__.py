@@ -9,7 +9,7 @@ from plinth import app as app_module
 from plinth import menu
 from plinth.daemon import Daemon
 from plinth.modules.backups.components import BackupRestore
-from plinth.package import Packages
+from plinth.package import Package, Packages
 
 from . import manifest
 
@@ -49,7 +49,15 @@ class PerformanceApp(app_module.App):
                               order=40)
         self.add(menu_item)
 
-        packages = Packages('packages-performance', ['cockpit-pcp'])
+        packages = Packages('packages-performance', [
+            # For bookworm, we need cockpit-pcp (which depends on
+            # cockpit-bridge and pcp). For trixie, cockpit-pcp is
+            # replaced by cockpit-bridge, and we need to specify a
+            # dependency on pcp. There is some issue with having a
+            # virtual package specified, see #2475.
+            Package('cockpit-pcp') | Package('cockpit-bridge'),
+            'cockpit-bridge', 'pcp'
+        ])
         self.add(packages)
 
         backup_restore = BackupRestore('backup-restore-performance',
