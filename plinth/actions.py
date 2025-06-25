@@ -9,6 +9,7 @@ import json
 import logging
 import os
 import pathlib
+import socket
 import subprocess
 import sys
 import threading
@@ -22,6 +23,8 @@ EXIT_SYNTAX = 10
 EXIT_PERM = 20
 
 logger = logging.getLogger(__name__)
+
+socket_path = '/run/freedombox/privileged.socket'
 
 
 # An alias for 'str' to mark some strings as sensitive. Sensitive strings are
@@ -70,10 +73,133 @@ def privileged(func):
     def wrapper(*args, **kwargs):
         module_name = _get_privileged_action_module_name(func)
         action_name = func.__name__
+        return _run_privileged_method(func, module_name, action_name, args,
+                                      kwargs)
+
+    return wrapper
+
+
+def _run_privileged_method(func, module_name, action_name, args, kwargs):
+    """Execute a privileged method either using a server or sudo."""
+    try:
+        return _run_privileged_method_on_server(func, module_name, action_name,
+                                                list(args), dict(kwargs))
+    except (
+            NotImplementedError,  # For raw_output and run_as_user flags
+            FileNotFoundError,  # When the .socket file is not present
+            ConnectionRefusedError,  # When is daemon not running
+            ConnectionResetError  # When daemon fails permission check
+    ):
         return _run_privileged_method_as_process(func, module_name,
                                                  action_name, args, kwargs)
 
-    return wrapper
+
+def _read_from_server(client_socket: socket.socket) -> bytes:
+    """Read everything from a socket and return the data."""
+    response = b''
+    while True:
+        chunk = client_socket.recv(4096)
+        if not chunk:
+            break
+
+        response += chunk
+
+    return json.loads(response)
+
+
+def _request_to_server(request: dict) -> socket.socket:
+    """Connect to the server and make a request."""
+    request_string = json.dumps(request)
+    client_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    try:
+        client_socket.connect(socket_path)
+        client_socket.sendall(request_string.encode('utf-8'))
+        # Close the write end of the socket signaling an EOF and no more data
+        # will be sent.
+        client_socket.shutdown(socket.SHUT_WR)
+    except Exception:
+        client_socket.close()
+        raise
+
+    return client_socket
+
+
+def _run_privileged_method_on_server(func, module_name, action_name, args,
+                                     kwargs):
+    """Execute a privileged method using a server."""
+    run_as_user = kwargs.pop('_run_as_user', None)
+    run_in_background = kwargs.pop('_run_in_background', False)
+    raw_output = kwargs.pop('_raw_output', False)
+    log_error = kwargs.pop('_log_error', True)
+
+    if raw_output or run_as_user:
+        raise NotImplementedError('Not yet implemented')
+
+    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+                run_in_background, is_server=True)
+
+    request = {
+        'module': module_name,
+        'action': action_name,
+        'args': args,
+        'kwargs': kwargs
+    }
+    client_socket = _request_to_server(request)
+
+    args = (func, module_name, action_name, args, kwargs, log_error,
+            client_socket)
+    if not run_in_background:
+        return _wait_for_server_response(*args)
+
+    read_thread = threading.Thread(target=_wait_for_server_response, args=args)
+    read_thread.start()
+
+
+def _wait_for_server_response(func, module_name, action_name, args, kwargs,
+                              log_error, client_socket):
+    """Wait for the server to respond and process the response."""
+    try:
+        return_value = _read_from_server(client_socket)
+    except json.JSONDecodeError:
+        logger.error('Error decoding action return value %s..%s(*%s, **%s)',
+                     module_name, action_name, args, kwargs)
+        raise
+    finally:
+        client_socket.close()
+
+    if return_value['result'] == 'success':
+        return return_value['return']
+
+    module = importlib.import_module(return_value['exception']['module'])
+    exception_class = getattr(module, return_value['exception']['name'])
+    exception = exception_class(*return_value['exception']['args'])
+    exception.stdout = b''
+    exception.stderr = b''
+
+    def _get_html_message():
+        """Return an HTML format error that can be shown in messages."""
+        from django.utils.html import format_html
+
+        formatted_args = _format_args(func, args, kwargs)
+        exception_args, stdout, stderr, traceback = _format_error(
+            exception, return_value)
+        return format_html('Error running action: {}..{}({}): {}({})\n{}{}{}',
+                           module_name, action_name, formatted_args,
+                           return_value['exception']['name'], exception_args,
+                           stdout, stderr, traceback)
+
+    exception.get_html_message = _get_html_message
+
+    if log_error:
+        formatted_args = _format_args(func, args, kwargs)
+        exception_args, stdout, stderr, traceback = _format_error(
+            exception, return_value)
+        logger.error('Error running action %s..%s(%s): %s(%s)\n'
+                     '%s%s%s', module_name, action_name, formatted_args,
+                     return_value['exception']['name'], exception_args, stdout,
+                     stderr, traceback)
+
+    raise exception
 
 
 def _run_privileged_method_as_process(func, module_name, action_name, args,
