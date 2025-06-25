@@ -98,6 +98,7 @@ install:
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/COPYING.md && \
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
+	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-privileged
 
 	# Actions
 	$(INSTALL) -D -t $(DESTDIR)/usr/share/plinth/actions actions/actions
