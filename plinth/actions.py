@@ -113,7 +113,7 @@ def _run_privileged_method_as_process(func, module_name, action_name, args,
         proc_kwargs['env'] = {'PYTHONPATH': cfg.file_root}
 
     _log_action(func, module_name, action_name, args, kwargs, run_as_user,
-                run_in_background)
+                run_in_background, is_server=False)
 
     proc = subprocess.Popen(command, **proc_kwargs)
     os.close(write_fd)
@@ -297,9 +297,13 @@ def _get_privileged_action_module_name(func):
 
 
 def _log_action(func, module_name, action_name, args, kwargs, run_as_user,
-                run_in_background):
+                run_in_background, is_server):
     """Log an action in a compact format."""
-    prompt = f'({run_as_user})$' if run_as_user else '#'
+    if is_server:
+        prompt = '»'
+    else:
+        prompt = f'({run_as_user})$' if run_as_user else '#'
+
     suffix = '&' if run_in_background else ''
     formatted_args = _format_args(func, args, kwargs)
     logger.info('%s %s..%s(%s) %s', prompt, module_name, action_name,
