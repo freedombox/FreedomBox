@@ -596,6 +596,9 @@ class EnableState(LeaderComponent):
 
 def apps_init():
     """Create apps by constructing them with components."""
+    if App.list():
+        return  # Apps have already been initialized
+
     from . import module_loader  # noqa  # Avoid circular import
     for module_name, module in module_loader.loaded_modules.items():
         _initialize_module(module_name, module)
