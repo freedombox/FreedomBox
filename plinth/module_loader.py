@@ -7,6 +7,7 @@ import importlib
 import logging
 import pathlib
 import re
+import types
 
 import django
 
@@ -15,7 +16,7 @@ from plinth.signals import pre_module_loading
 
 logger = logging.getLogger(__name__)
 
-loaded_modules = dict()
+loaded_modules: dict[str, types.ModuleType] = dict()
 _modules_to_load = None
 
 
@@ -31,6 +32,9 @@ def load_modules():
     Read names of enabled modules in modules/enabled directory and
     import them from modules directory.
     """
+    if loaded_modules:
+        return  # Modules have already been loaded
+
     pre_module_loading.send_robust(sender="module_loader")
     for module_import_path in get_modules_to_load():
         module_name = module_import_path.split('.')[-1]
