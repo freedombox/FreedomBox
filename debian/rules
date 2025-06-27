@@ -34,4 +34,5 @@ override_dh_installsystemd:
 	# (as of debhelper 13.5.2) that still has hardcoded search path of
 	# /lib/systemd/system for searching systemd services. See #987989 and
 	# reversion of its changes.
-	dh_installsystemd --tmpdir=debian/tmp/usr --package=freedombox plinth.service
+	dh_installsystemd --tmpdir=debian/tmp/usr --package=freedombox \
+		plinth.service freedombox-privileged.socket

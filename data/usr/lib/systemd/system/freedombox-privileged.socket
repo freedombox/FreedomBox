@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[Unit]
+Description=FreedomBox Privileged Service Socket
+Documentation=https://wiki.debian.org/FreedomBox/
+
+[Socket]
+Accept=no
+ListenStream=/run/freedombox/privileged.socket
+SocketUser=root
+SocketGroup=root
+SocketMode=0666
+DirectoryMode=755
+
+[Install]
+WantedBy=sockets.target

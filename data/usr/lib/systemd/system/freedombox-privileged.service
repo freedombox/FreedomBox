@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[Unit]
+Description=FreedomBox Privileged Service
+Documentation=https://wiki.debian.org/FreedomBox/
+# Don't hit the start rate limiting.
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/freedombox-privileged
+TimeoutSec=300s
+User=root
+Group=root
+NotifyAccess=main
+PrivateTmp=yes
+Restart=on-failure
+# Don't restart too fast
+RestartSec=1
+RestartSteps=3
+RestartMaxDelaySec=5
