@@ -5,6 +5,7 @@ import argparse
 import functools
 import importlib
 import inspect
+import io
 import json
 import logging
 import os
@@ -201,6 +202,51 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
     raise exception
 
 
+class ProcessBufferedReader(io.BufferedReader):
+    """Improve performance of buffered binary streaming.
+
+    Read from the stdout of a process and close the process after reading is
+    completed.
+
+    Iteration calls __next__ over the BufferedReader holding process.stdout.
+    However, this seems to call readline() which looks for \n in binary data
+    which leads to short unpredictably sized chunks which in turn lead to
+    severe performance degradation. So, overwrite this and call read() which is
+    better geared for handling binary data.
+    """
+
+    def __init__(self, process, extra_cleanup_func=None, *args, **kwargs):
+        """Store the process object."""
+        super().__init__(process.stdout, *args, **kwargs)
+        self.process = process
+        self.extra_cleanup_func = extra_cleanup_func
+
+    def __next__(self):
+        """Override to call read() instead of readline()."""
+        chunk = self.read(io.DEFAULT_BUFFER_SIZE)
+        if not chunk:
+            self._cleanup_func()
+
+            raise StopIteration
+
+        return chunk
+
+    def _cleanup_func(self):
+        """After the process has been read from, cleanup the process."""
+        try:
+            if self.process.stdout:
+                self.process.stdout.close()
+
+            if self.process.stderr:
+                self.process.stderr.close()
+
+            self.process.wait(30)
+            if self.extra_cleanup_func:
+                self.extra_cleanup_func()
+        except Exception:
+            logger.exception('Closing process failed after raw output')
+
+
 def _run_privileged_method_as_process(func, module_name, action_name, args,
                                       kwargs):
     """Execute the privileged method in a sub-process with sudo."""
@@ -241,8 +287,12 @@ def _run_privileged_method_as_process(func, module_name, action_name, args,
     os.close(write_fd)
 
     if raw_output:
+        # Write the method request with args to the process
         input_ = json.dumps({'args': args, 'kwargs': kwargs}).encode()
-        return proc, read_fd, input_
+        proc.stdin.write(input_)
+        proc.stdin.close()
+
+        return ProcessBufferedReader(proc, lambda: os.close(read_fd))
 
     buffers = []
     # XXX: Use async to avoid creating a thread.
