@@ -151,6 +151,13 @@ clean:
 	rm -rf Plinth.egg-info
 	find plinth/locale -name *.mo -delete
 
+define DEVELOP_SERVICE_CONF
+[Service]
+Environment=FREEDOMBOX_DEVELOP=1
+Environment=PYTHONPATH=/freedombox/
+endef
+export DEVELOP_SERVICE_CONF
+
 # Run basic setup for a developer environment (VM or container)
 provision-dev:
 	# Install newer build dependencies if any
@@ -160,8 +167,18 @@ provision-dev:
 	# Install latest code over .deb
 	$(MAKE) build install
 
+	# Configure privileged daemon for development setup
+	mkdir -p /etc/systemd/system/freedombox-privileged.service.d/
+	echo "$$DEVELOP_SERVICE_CONF" > /etc/systemd/system/freedombox-privileged.service.d/develop.conf
+
 	# Reload newer systemd units, ignore failure
 	-systemctl daemon-reload
+
+	# Enable privileged daemon
+	-systemctl stop freedombox-privileged.service
+
+	-test -d /run/systemd/system && \
+		systemctl enable --now freedombox-privileged.socket
 
 	# Stop any ongoing upgrade, ignore failure
 	-killall -9 unattended-upgr
