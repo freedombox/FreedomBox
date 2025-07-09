@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.template.exceptions import TemplateDoesNotExist
 from django.template.response import SimpleTemplateResponse
+from django.utils import timezone
 from django.utils.translation import gettext
 
 from plinth import cfg
@@ -229,9 +230,11 @@ class Notification(models.StoredNotification):
 
         """
         id = kwargs.pop('id')
+        fields_to_update = kwargs.copy()
+        fields_to_update['last_update_time'] = timezone.now()
         with db.lock:
             return Notification.objects.update_or_create(
-                defaults=kwargs, id=id)[0]
+                defaults=fields_to_update, id=id)[0]
 
     @staticmethod
     def get(key):  # pylint: disable=redefined-builtin

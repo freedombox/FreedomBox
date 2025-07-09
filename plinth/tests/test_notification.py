@@ -413,3 +413,28 @@ def test_display_context_body_template(note, user, load_cfg, rf):
     context_note = context['notifications'][0]
     assert context_note['body'].content == \
         b'Test notification body /plinth/help/about/\n'
+
+
+@pytest.mark.django_db
+def test_last_update_time_updates_on_modify():
+    """Test that last_update_time is updated on modify via update_or_create."""
+    # Given a notification is created at time t1
+    t1 = datetime.datetime(2025, 1, 1, tzinfo=datetime.timezone.utc)
+    with patch('django.utils.timezone.now', return_value=t1):
+        Notification.update_or_create(id='timestamp-test', app_id='app',
+                                      severity='info', title='Title')
+
+    first_note = Notification.get('timestamp-test')
+    assert first_note.last_update_time == t1
+
+    # When the same notification is updated at later time t2
+    t2 = t1 + datetime.timedelta(minutes=5)
+    with patch('django.utils.timezone.now', return_value=t2):
+        Notification.update_or_create(id='timestamp-test', app_id='app',
+                                      severity='warning', title='Title2')
+
+    second_note = Notification.get('timestamp-test')
+
+    # Then the last_update_time should be t2
+    assert second_note.last_update_time == t2
+    assert second_note.last_update_time > first_note.last_update_time
