@@ -17,10 +17,10 @@
 </p>
 
 {% if data.state == "completed" %}
-  <p>
+  <div class="btn-toolbar">
     <a href="{% url 'notification_dismiss' id=id %}?next={{ request.path|iriencode }}"
        role="button" class="btn btn-default">
       {% trans "Dismiss" %}
     </a>
-  </p>
+  </div>
 {% endif %}
