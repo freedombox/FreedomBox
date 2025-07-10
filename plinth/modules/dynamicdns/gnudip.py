@@ -46,7 +46,7 @@ def _check_required_keys(dictionary: dict[str, str], keys: list[str]) -> None:
 
 
 def update(server: str, domain: str, username: str,
-           password: str) -> tuple[str, str]:
+           password: str) -> tuple[bool, str | None]:
     """Update Dynamic DNS record using GnuDIP protocol.
 
     Protocol documentation:
