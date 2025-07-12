@@ -10,6 +10,7 @@ See: https://doc.dovecot.org/configuration_manual/dovecot_ssl_configuration/
 import pathlib
 
 from .. import postfix
+from ..dovecot import is_version_24
 
 # Mozilla Guideline v5.6, Postfix 1.17.7, OpenSSL 1.1.1d, intermediate
 # Generated 2021-08
@@ -68,15 +69,27 @@ def set_postfix_config(primary_domain, all_domains):
 
 def set_dovecot_config(primary_domain, all_domains):
     """Set dovecot configuration for TLS certificates."""
+    is_new_version = is_version_24()
+
+    # Determine whether to prefix file paths with '<' based on version
+    prefix = ''
+    cert_naming = 'ssl_server_cert_file'
+    key_naming = 'ssl_server_key_file'
+    if not is_new_version:
+        prefix = '<'
+        cert_naming = 'ssl_cert'
+        key_naming = 'ssl_key'
+
     content = f'''# This file is managed by FreedomBox
-ssl_cert = </etc/dovecot/letsencrypt/{primary_domain}/cert.pem
-ssl_key = </etc/dovecot/letsencrypt/{primary_domain}/privkey.pem
+{cert_naming} = {prefix}/etc/dovecot/letsencrypt/{primary_domain}/cert.pem
+{key_naming} = {prefix}/etc/dovecot/letsencrypt/{primary_domain}/privkey.pem
 '''
+
     for domain in all_domains:
         content += f'''
 local_name {domain} {{
-  ssl_cert = </etc/dovecot/letsencrypt/{domain}/cert.pem
-  ssl_key = </etc/dovecot/letsencrypt/{domain}/privkey.pem
+  {cert_naming} = {prefix}/etc/dovecot/letsencrypt/{domain}/cert.pem
+  {key_naming} = {prefix}/etc/dovecot/letsencrypt/{domain}/privkey.pem
 }}
 '''
     cert_config = pathlib.Path('/etc/dovecot/conf.d/91-freedombox-tls.conf')
