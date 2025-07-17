@@ -108,14 +108,12 @@ class DropinConfigs(app_module.FollowerComponent):
 
         return results
 
-    @staticmethod
-    def get_target_path(path):
+    def get_target_path(self, path):
         """Return Path object for a target path."""
-        target = pathlib.Path(DropinConfigs.ROOT)
-        target /= DropinConfigs.DROPIN_CONFIG_ROOT.lstrip('/')
+        target = pathlib.Path(self.ROOT)
+        target /= self.DROPIN_CONFIG_ROOT.lstrip('/')
         return target / path.lstrip('/')
 
-    @staticmethod
-    def get_etc_path(path):
+    def get_etc_path(self, path):
         """Return Path object for etc path."""
-        return pathlib.Path(DropinConfigs.ROOT) / path.lstrip('/')
+        return pathlib.Path(self.ROOT) / path.lstrip('/')
