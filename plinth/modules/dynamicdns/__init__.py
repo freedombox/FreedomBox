@@ -271,8 +271,8 @@ def set_status(domain, result, ip_address, error=None):
         'domain': domain['domain'],
         'result': result,
         'ip_address': ip_address,
-        'error_code': error.__class__.__name__ if error else None,
-        'error_message': error.args[0] if error and error.args else None,
+        'error_code': str(error.__class__.__name__) if error else None,
+        'error_message': str(error.args[0]) if error and error.args else None,
         'timestamp': int(time.time()),
     }
     kvstore.set('dynamicdns_status', json.dumps(status))
