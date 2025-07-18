@@ -222,9 +222,10 @@ class EmailApp(plinth.app.App):
         privileged.setup_spam()
 
         # Restart daemons
-        service_privileged.try_restart('postfix')
-        service_privileged.try_restart('dovecot')
-        service_privileged.try_restart('rspamd')
+        if self.is_enabled():
+            service_privileged.restart('postfix')
+            service_privileged.restart('dovecot')
+            service_privileged.restart('rspamd')
 
         # Expose to public internet
         if old_version == 0:
