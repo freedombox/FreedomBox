@@ -52,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 7
+    _version = 8
 
     def __init__(self) -> None:
         """Initialize the email app."""
@@ -93,7 +93,7 @@ class EmailApp(plinth.app.App):
             'packages-email', [
                 'postfix', 'postfix-sqlite', 'dovecot-pop3d', 'dovecot-imapd',
                 'dovecot-lmtpd', 'dovecot-managesieved', 'dovecot-ldap',
-                'rspamd', 'redis-server', 'openssl'
+                'dovecot-fts-xapian', 'rspamd', 'redis-server', 'openssl'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
             conflicts_action=Packages.ConflictsAction.REMOVE,
             rerun_setup_on_upgrade=True)
@@ -127,6 +127,7 @@ class EmailApp(plinth.app.App):
                 '/etc/dovecot/conf.d/90-freedombox-master.conf',
                 '/etc/dovecot/conf.d/90-freedombox-tls.conf',
                 '/etc/dovecot/conf.d/95-freedombox-sieve.conf',
+                '/etc/dovecot/conf.d/95-freedombox-fts.conf',
                 '/etc/dovecot/conf.d/freedombox-ldap.conf.ext'
             ])
         self.add(dropin_configs_dovecot)
