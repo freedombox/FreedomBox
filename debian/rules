@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/pkg-info.mk
+
 export DH_VERBOSE=1
 export PYBUILD_DESTDIR=debian/tmp
 export PYBUILD_SYSTEM=custom
@@ -8,6 +10,8 @@ export PYBUILD_BUILD_ARGS=make PYTHON={interpreter} build
 export PYBUILD_INSTALL_ARGS=make PYTHON={interpreter} DESTDIR={destdir} install
 export PYBUILD_CLEAN_ARGS=make clean
 export PYBUILD_TEST_ARGS=make PYTHON={interpreter} check-tests
+
+FBX_VERSION := $(shell ./run --develop --version | awk 'NF{ print $$NF }')
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
@@ -18,6 +22,11 @@ override_dh_auto_install-indep:
 		sed -e 's/^/freedombox:Depends=/' >> debian/freedombox.substvars
 	# Ensure the list of dependencies is not empty.
 	test -s debian/freedombox.substvars || exit 1
+
+	# Check that FreedomBox version number is matching.
+ifneq ($(FBX_VERSION),$(DEB_VERSION))
+	>&2 echo "WARNING: FreedomBox version $(FBX_VERSION) does not match package version $(DEB_VERSION)."
+endif
 
 override_dh_installsystemd:
 	# Do not enable or start any service other than FreedomBox service. Use
