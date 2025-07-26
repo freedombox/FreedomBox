@@ -31,9 +31,10 @@ def fixture_dropin_configs():
 
 
 @pytest.fixture(autouse=True)
-def fixture_assert_dropin_config():
+def fixture_assert_dropin_config(dropin_configs):
     """Mock asserting dropin config path."""
-    with patch('plinth.privileged.config._assert_managed_dropin_config'):
+    with patch('plinth.privileged.config._get_managed_dropin_config') as mock:
+        mock.return_value = dropin_configs
         yield
 
 
@@ -95,7 +96,7 @@ def test_dropin_configs_enable_disable_symlinks(dropin_configs, tmp_path):
 
         # Enable when a file already exists
         dropin_configs.disable()
-        etc_path = DropinConfigs.get_etc_path('/etc/test/path1')
+        etc_path = dropin_configs.get_etc_path('/etc/test/path1')
         etc_path.touch()
         dropin_configs.enable()
         _assert_symlinks(dropin_configs, tmp_path, should_exist=True)
@@ -108,7 +109,7 @@ def test_dropin_configs_enable_disable_symlinks(dropin_configs, tmp_path):
 
         # When symlink already exists to correct location
         dropin_configs.disable()
-        target_path = DropinConfigs.get_target_path('/etc/test/path1')
+        target_path = dropin_configs.get_target_path('/etc/test/path1')
         etc_path.symlink_to(target_path)
         dropin_configs.enable()
         _assert_symlinks(dropin_configs, tmp_path, should_exist=True)
@@ -119,7 +120,7 @@ def test_dropin_configs_enable_disable_copy_only(dropin_configs, tmp_path):
     with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
         dropin_configs.copy_only = True
         for path in ['/etc/test/path1', '/etc/path2']:
-            target = DropinConfigs.get_target_path(path)
+            target = dropin_configs.get_target_path(path)
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text('test-config-content')
 
@@ -135,7 +136,7 @@ def test_dropin_configs_enable_disable_copy_only(dropin_configs, tmp_path):
 
         # Enable when a file already exists with wrong content
         dropin_configs.disable()
-        etc_path = DropinConfigs.get_etc_path('/etc/test/path1')
+        etc_path = dropin_configs.get_etc_path('/etc/test/path1')
         etc_path.write_text('x-invalid-content')
         dropin_configs.enable()
         _assert_symlinks(dropin_configs, tmp_path, should_exist=True,
@@ -182,7 +183,7 @@ def test_dropin_config_diagnose_symlinks(dropin_configs, tmp_path):
 
         # A file exists instead of symlink
         dropin_configs.disable()
-        etc_path = DropinConfigs.get_etc_path('/etc/test/path1')
+        etc_path = dropin_configs.get_etc_path('/etc/test/path1')
         etc_path.touch()
         results = dropin_configs.diagnose()
         assert results[0].result == 'failed'
@@ -204,7 +205,7 @@ def test_dropin_config_diagnose_copy_only(dropin_configs, tmp_path):
     with patch('plinth.config.DropinConfigs.ROOT', new=tmp_path):
         dropin_configs.copy_only = True
         for path in ['/etc/test/path1', '/etc/path2']:
-            target = DropinConfigs.get_target_path(path)
+            target = dropin_configs.get_target_path(path)
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text('test-config-content')
 
@@ -221,7 +222,7 @@ def test_dropin_config_diagnose_copy_only(dropin_configs, tmp_path):
 
         # A symlink exists instead of a copied file
         dropin_configs.disable()
-        etc_path = DropinConfigs.get_etc_path('/etc/test/path1')
+        etc_path = dropin_configs.get_etc_path('/etc/test/path1')
         etc_path.symlink_to('/blah')
         results = dropin_configs.diagnose()
         assert results[0].result == 'failed'

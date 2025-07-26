@@ -20,7 +20,7 @@ from plinth.privileged import service as service_privileged
 from plinth.signals import domain_added, domain_removed
 from plinth.utils import format_lazy, gettext_noop
 
-from . import aliases, manifest, privileged
+from . import aliases, dovecot, manifest, privileged
 
 _description = [
     _('This is a complete email server solution using Postfix, Dovecot, '
@@ -52,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 6
+    _version = 7
 
     def __init__(self) -> None:
         """Initialize the email app."""
@@ -95,21 +95,12 @@ class EmailApp(plinth.app.App):
                 'dovecot-lmtpd', 'dovecot-managesieved', 'dovecot-ldap',
                 'rspamd', 'redis-server', 'openssl'
             ], conflicts=['exim4-base', 'exim4-config', 'exim4-daemon-light'],
-            conflicts_action=Packages.ConflictsAction.REMOVE)
+            conflicts_action=Packages.ConflictsAction.REMOVE,
+            rerun_setup_on_upgrade=True)
         self.add(packages)
 
         dropin_configs = DropinConfigs('dropin-configs-email', [
             '/etc/apache2/conf-available/email-freedombox.conf',
-            '/etc/dovecot/conf.d/05-freedombox-passdb.conf',
-            '/etc/dovecot/conf.d/05-freedombox-userdb.conf',
-            '/etc/dovecot/conf.d/15-freedombox-auth.conf',
-            '/etc/dovecot/conf.d/15-freedombox-mail.conf',
-            '/etc/dovecot/conf.d/90-freedombox-imap.conf',
-            '/etc/dovecot/conf.d/90-freedombox-lmtp.conf',
-            '/etc/dovecot/conf.d/90-freedombox-mailboxes.conf',
-            '/etc/dovecot/conf.d/90-freedombox-master.conf',
-            '/etc/dovecot/conf.d/90-freedombox-tls.conf',
-            '/etc/dovecot/conf.d/freedombox-ldap.conf.ext',
             '/etc/fail2ban/jail.d/dovecot-freedombox.conf',
             '/etc/postfix/freedombox-aliases.cf',
             '/etc/rspamd/local.d/freedombox-logging.inc',
@@ -121,10 +112,24 @@ class EmailApp(plinth.app.App):
         dropin_configs_sieve = DropinConfigs('dropin-configs-email-sieve', [
             '/etc/dovecot/freedombox-sieve/learn-ham.sieve',
             '/etc/dovecot/freedombox-sieve/learn-spam.sieve',
-            '/etc/dovecot/freedombox-sieve-after/sort-spam.sieve',
-            '/etc/dovecot/conf.d/95-freedombox-sieve.conf'
+            '/etc/dovecot/freedombox-sieve-after/sort-spam.sieve'
         ])
         self.add(dropin_configs_sieve)
+        dropin_configs_dovecot = DovecotDropinConfigs(
+            'dropin-configs-email-dovecot', [
+                '/etc/dovecot/conf.d/05-freedombox-passdb.conf',
+                '/etc/dovecot/conf.d/05-freedombox-userdb.conf',
+                '/etc/dovecot/conf.d/15-freedombox-auth.conf',
+                '/etc/dovecot/conf.d/15-freedombox-mail.conf',
+                '/etc/dovecot/conf.d/90-freedombox-imap.conf',
+                '/etc/dovecot/conf.d/90-freedombox-lmtp.conf',
+                '/etc/dovecot/conf.d/90-freedombox-mailboxes.conf',
+                '/etc/dovecot/conf.d/90-freedombox-master.conf',
+                '/etc/dovecot/conf.d/90-freedombox-tls.conf',
+                '/etc/dovecot/conf.d/95-freedombox-sieve.conf',
+                '/etc/dovecot/conf.d/freedombox-ldap.conf.ext'
+            ])
+        self.add(dropin_configs_dovecot)
 
         listen_ports = [(25, 'tcp4'), (25, 'tcp6'), (465, 'tcp4'),
                         (465, 'tcp6'), (587, 'tcp4'), (587, 'tcp6')]
@@ -212,13 +217,15 @@ class EmailApp(plinth.app.App):
         # Enable drop-in configuration files component for sieve (temporarily)
         # to ensure that sievec can compile.
         self.get_component('dropin-configs-email-sieve').enable()
+        self.get_component('dropin-configs-email-dovecot').enable()
         service_privileged.try_restart('dovecot')
         privileged.setup_spam()
 
         # Restart daemons
-        service_privileged.try_restart('postfix')
-        service_privileged.try_restart('dovecot')
-        service_privileged.try_restart('rspamd')
+        if self.is_enabled():
+            service_privileged.restart('postfix')
+            service_privileged.restart('dovecot')
+            service_privileged.restart('rspamd')
 
         # Expose to public internet
         if old_version == 0:
@@ -226,6 +233,20 @@ class EmailApp(plinth.app.App):
         elif old_version < 5:
             privileged.fix_incorrect_key_ownership()
             service_privileged.try_restart('rspamd')
+
+
+class DovecotDropinConfigs(DropinConfigs):
+    """Configure dovecot based on its package version."""
+
+    def get_target_path(self, path):
+        """Return Path object for a target path."""
+        version = '2.3'
+        if dovecot.is_version_24():
+            version = '2.4'
+
+        target_path = super().get_target_path(path)
+        target_path = target_path.parent / version / target_path.name
+        return target_path
 
 
 def _get_first_admin():

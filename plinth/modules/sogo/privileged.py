@@ -81,7 +81,7 @@ def _create_config(db_password: str):
   SOGoTrashFolderName = "Trash";
   SOGoJunkFolderName = "Junk";
   SOGoIMAPServer = "imap://127.0.0.1:143/?tls=YES&tlsVerifyMode=allowInsecureLocalhost";
-  SOGoSieveServer = "sieve://127.0.0.14190/?tls=YES&tlsVerifyMode=allowInsecureLocalhost";
+  SOGoSieveServer = "sieve://127.0.0.1:4190/?tls=YES&tlsVerifyMode=allowInsecureLocalhost";
 
   /* LDAP */
   SOGoUserSources = ({{

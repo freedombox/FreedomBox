@@ -38,7 +38,7 @@ class SOGoApp(app_module.App):
 
     app_id = 'sogo'
 
-    _version = 1
+    _version = 2
 
     def __init__(self) -> None:
         """Create components for the app."""
