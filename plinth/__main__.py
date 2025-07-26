@@ -39,6 +39,8 @@ def parse_arguments():
                         help='list package dependencies for essential modules')
     parser.add_argument('--list-apps', default=False, nargs='*',
                         help='list apps')
+    parser.add_argument('--version', action='store_true', default=None,
+                        help='show version and exit')
 
     return parser.parse_args()
 
@@ -124,6 +126,10 @@ def main():
         cfg.read_file(cfg.get_develop_config_path())
 
     adapt_config(arguments)
+
+    if arguments.version:
+        print(f'FreedomBox {__version__}')
+        sys.exit(0)
 
     if arguments.list_dependencies is not False:
         log.default_level = 'ERROR'
