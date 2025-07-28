@@ -1,9 +1,9 @@
 # License to Copy FreedomBox Service (Plinth)
 
 FreedomBox Service (Plinth) is Copyright 2011, 2012, 2013, 2014, 2015, 2016,
-2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 FreedomBox Authors. See Git log
-in the source repository for a full list of authors. It is distributed under the
-GNU Affero General Public License, Version 3 or later. A copy of AGPLv3 is
+2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 FreedomBox Authors. See Git
+log in the source repository for a full list of authors. It is distributed under
+the GNU Affero General Public License, Version 3 or later. A copy of AGPLv3 is
 available [from the Free Software
 Foundation](http://www.gnu.org/licenses/agpl.html).
 
