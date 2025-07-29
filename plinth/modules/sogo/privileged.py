@@ -51,6 +51,10 @@ def _create_config(db_password: str):
   SOGoCalendarDefaultRoles = ("PublicViewer", "ConfidentialDAndTViewer");
   SOGoAppointmentSendEMailNotifications = YES;
   SOGoRefreshViewCheck = "every_minute";
+  /* Allow users to add their own additional IMAP accounts */
+  SOGoMailAuxiliaryUserAccountsEnabled = YES;
+  /* Allow users to change their full name in default account */
+  SOGoMailCustomFromEnabled = YES;
 
   /* Authentication */
   SOGoMaximumFailedLoginCount = "10";
