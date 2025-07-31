@@ -210,7 +210,7 @@ function setSelectAllValue(parent) {
 /*
  * Check whether an app is available on its setup page.
  */
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', async () => {
     const checkingElement = document.querySelector('.app-checking-availability');
     if (!checkingElement)
         return;
@@ -225,11 +225,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     function setInstallButtonState(enable) {
         const installButton = document.querySelector('.install-button');
-        if (enable) {
-            installButton.removeAttribute('disabled');
-        } else {
-            installButton.setAttribute('disabled', 'disabled');
-        }
+        installButton?.setAttribute('disabled', !enable);
     }
 
     function unavailable() {
@@ -241,37 +237,30 @@ document.addEventListener('DOMContentLoaded', function(event) {
         const element = document.querySelector('.app-checking-availability-error');
         element.classList.remove('d-none');
         checkingElement.classList.add('d-none');
-        setInstallButtonState(true);  // Allow trying installation
+        setInstallButtonState(true); // Allow trying installation
     }
 
-    let request = new XMLHttpRequest();
-    request.timeout = 2 * 60 * 1000;  // 2 minutes
-    request.onload = function() {
-        // Remove the progress spinner
+    try {
+        setInstallButtonState(false);
+        const response = await fetch(`/plinth/is-available/${appId}/`, {
+            timeout: 2 * 60 * 1000  // 2 minutes
+        });
+
         checkingElement.classList.add('d-none');
 
-        let available = false;
-        if (this.status === 200) {
-            try {
-                const response = JSON.parse(this.responseText);
-                if (response.is_available === true) {
-                    setInstallButtonState(true);
-                } else if (response.is_available === false) {
-                    unavailable();
-                } else {
-                    error();
-                }
-            } catch (e) {
+        if (response.ok) {
+            const data = await response.json();
+            if (data.is_available === true) {
+                setInstallButtonState(true);
+            } else if (data.is_available === false) {
+                unavailable();
+            } else {
                 error();
             }
         } else {
             error();
         }
-    };
-    request.onerror = error;
-    request.ontimeout = error;
-
-    request.open('GET', `/plinth/is-available/${appId}/`, true);
-    setInstallButtonState(false);
-    request.send();
+    } catch {
+        error();
+    }
 });

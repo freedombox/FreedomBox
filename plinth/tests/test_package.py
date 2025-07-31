@@ -3,6 +3,7 @@
 Test module for package module.
 """
 
+import time
 import unittest
 from unittest.mock import Mock, call, patch
 
@@ -338,23 +339,46 @@ def test_packages_find_conflicts(packages_installed_):
     assert component.find_conflicts() == ['package1', 'package2']
 
 
+@patch('plinth.package.refresh_package_lists')
 @patch('apt.Cache')
 @patch('pathlib.Path')
-def test_packages_is_available(path_class, cache):
+def test_packages_is_available(path_class, cache, refresh_package_lists):
     """Test checking for available packages."""
     path = Mock()
     path_class.return_value = path
-    path.iterdir.return_value = [Mock()]
 
+    # Packages found in cache
     component = Packages('test-component', ['package1', 'package2'])
-    assert component.is_available()
-
-    path.iterdir.return_value = [Mock(), Mock()]
     cache.return_value = ['package1', 'package2']
     assert component.is_available()
+    path_class.assert_not_called()
+    refresh_package_lists.assert_not_called()
 
+    # Packages not found, cache exists and is fresh
     cache.return_value = ['package1']
+    path.exists.return_value = True
+    path.stat.return_value.st_mtime = time.time()
     assert not component.is_available()
+    refresh_package_lists.assert_not_called()
+
+    # Packages not found, cache does not exist
+    cache.return_value = ['package1']
+    path.exists.return_value = False
+    assert not component.is_available()
+    refresh_package_lists.assert_called_once()
+
+    # Packages not found, cache is stale
+    cache.return_value = ['package1']
+    refresh_package_lists.reset_mock()
+    path.exists.return_value = True
+    path.stat.return_value.st_mtime = time.time() - 7200
+    assert not component.is_available()
+    refresh_package_lists.assert_called_once()
+
+    # Packages not found, cache is stale, but packages found after refresh
+    cache.side_effect = [['package1'], ['package1', 'package2']]
+    refresh_package_lists.reset_mock()
+    assert component.is_available()
 
 
 def test_packages_installed():

@@ -255,14 +255,26 @@ class Packages(app_module.FollowerComponent):
         Returns True if all of the packages are available in the user's Debian
         distribution or False otherwise. Returns True if it cannot be reliably
         determined whether the packages are available or not.
-        """
-        apt_lists_dir = pathlib.Path('/var/lib/apt/lists/')
-        num_files = len(
-            [child for child in apt_lists_dir.iterdir() if child.is_file()])
-        if num_files < 2:  # not counting the lock file
-            return True  # Don't know, package cache is not available
 
-        # List of all packages from all Package components
+        This operation can run for a long time as package cache may be
+        refreshed.
+        """
+        try:
+            self.get_actual_packages()
+            return True  # All packages were found in the cache
+        except MissingPackageError:
+            pass  # We will retry after refreshing package list
+
+        # If the package cache is new, then package is really not available.
+        package_cache = pathlib.Path('/var/cache/apt/pkgcache.bin')
+        if (package_cache.exists()
+                and time.time() - package_cache.stat().st_mtime < 3600):
+            return False
+
+        # Perform 'apt-get update'
+        refresh_package_lists()
+
+        # Check again for all the packages
         try:
             self.get_actual_packages()
         except MissingPackageError:
