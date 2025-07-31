@@ -206,3 +206,72 @@ function setSelectAllValue(parent) {
 
     parent.querySelector('.select-all').checked = enableSelectAll;
 }
+
+/*
+ * Check whether an app is available on its setup page.
+ */
+document.addEventListener('DOMContentLoaded', function(event) {
+    const checkingElement = document.querySelector('.app-checking-availability');
+    if (!checkingElement)
+        return;
+
+    // App does not need setup, it likely needs upgrade
+    const setupState = checkingElement.getAttribute('data-setup-state');
+    if (setupState !== 'needs-setup')
+        return;
+
+    const appId = checkingElement.getAttribute('data-app-id');
+    checkingElement.classList.remove('d-none');
+
+    function setInstallButtonState(enable) {
+        const installButton = document.querySelector('.install-button');
+        if (enable) {
+            installButton.removeAttribute('disabled');
+        } else {
+            installButton.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    function unavailable() {
+        document.querySelector('.app-unavailable').classList.remove('d-none');
+        setInstallButtonState(false);
+    }
+
+    function error() {
+        const element = document.querySelector('.app-checking-availability-error');
+        element.classList.remove('d-none');
+        checkingElement.classList.add('d-none');
+        setInstallButtonState(true);  // Allow trying installation
+    }
+
+    let request = new XMLHttpRequest();
+    request.timeout = 2 * 60 * 1000;  // 2 minutes
+    request.onload = function() {
+        // Remove the progress spinner
+        checkingElement.classList.add('d-none');
+
+        let available = false;
+        if (this.status === 200) {
+            try {
+                const response = JSON.parse(this.responseText);
+                if (response.is_available === true) {
+                    setInstallButtonState(true);
+                } else if (response.is_available === false) {
+                    unavailable();
+                } else {
+                    error();
+                }
+            } catch (e) {
+                error();
+            }
+        } else {
+            error();
+        }
+    };
+    request.onerror = error;
+    request.ontimeout = error;
+
+    request.open('GET', `/plinth/is-available/${appId}/`, true);
+    setInstallButtonState(false);
+    request.send();
+});

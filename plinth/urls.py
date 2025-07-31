@@ -26,6 +26,8 @@ urlpatterns = [
     re_path(r'', include((system_urlpatterns, 'system'))),
     re_path(r'^uninstall/(?P<app_id>[1-9a-z\-_]+)/$',
             views.UninstallView.as_view(), name='uninstall'),
+    re_path(r'^is-available/(?P<app_id>[1-9a-z\-_]+)/$',
+            views.is_available_view, name='is-available'),
     re_path(r'^rerun-setup/(?P<app_id>[1-9a-z\-_]+)/$', views.rerun_setup_view,
             name='rerun-setup'),
 

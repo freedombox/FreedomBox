@@ -249,27 +249,26 @@ class Packages(app_module.FollowerComponent):
 
         return packages_installed(self.conflicts)
 
-    def has_unavailable_packages(self) -> bool | None:
-        """Return whether any of the packages are not available.
+    def is_available(self) -> bool:
+        """Return whether all of the packages are available.
 
-        Returns True if one or more of the packages is not available in the
-        user's Debian distribution or False otherwise. Returns None if it
-        cannot be reliably determined whether the packages are available or
-        not.
+        Returns True if all of the packages are available in the user's Debian
+        distribution or False otherwise. Returns True if it cannot be reliably
+        determined whether the packages are available or not.
         """
         apt_lists_dir = pathlib.Path('/var/lib/apt/lists/')
         num_files = len(
             [child for child in apt_lists_dir.iterdir() if child.is_file()])
         if num_files < 2:  # not counting the lock file
-            return None
+            return True  # Don't know, package cache is not available
 
         # List of all packages from all Package components
         try:
             self.get_actual_packages()
         except MissingPackageError:
-            return True
+            return False
 
-        return False
+        return True
 
     def _filter_packages_to_keep(self, packages: list[str]) -> list[str]:
         """Filter out the list of packages to keep from given list.

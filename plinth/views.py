@@ -12,7 +12,7 @@ from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from django.forms import Form
 from django.http import (Http404, HttpRequest, HttpResponseBadRequest,
-                         HttpResponseRedirect)
+                         HttpResponseRedirect, JsonResponse)
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -513,12 +513,6 @@ class SetupView(TemplateView):
         context['show_uninstall'] = (not app.info.is_essential and setup_state
                                      != app_module.App.SetupState.NEEDS_SETUP)
 
-        # Perform expensive operation only if needed.
-        if not context['operations']:
-            context[
-                'has_unavailable_packages'] = self._has_unavailable_packages(
-                    app)
-
         context['refresh_page_sec'] = None
         if context['setup_state'] == app_module.App.SetupState.UP_TO_DATE:
             context['refresh_page_sec'] = 0
@@ -565,12 +559,16 @@ class SetupView(TemplateView):
 
         return conflicts, conflicts_action
 
-    @staticmethod
-    def _has_unavailable_packages(app_):
-        """Return whether the app has unavailable packages."""
-        components = app_.get_components_of_type(Packages)
-        return any(component for component in components
-                   if component.has_unavailable_packages())
+
+def is_available_view(request, app_id):
+    """Return whether an app is available.
+
+    This check may take quite some time, so don't perform this check when
+    loading the app's setup page.
+    """
+    app = app_module.App.get(app_id)
+    data = {'is_available': app.is_available()}
+    return JsonResponse(data)
 
 
 @require_POST

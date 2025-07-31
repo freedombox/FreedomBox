@@ -140,6 +140,14 @@ class App:
         """
         return self.get_component(self.app_id + '-info')
 
+    def is_available(self) -> bool:
+        """Return whether the app is available to install."""
+        for component in self.components.values():
+            if not component.is_available():
+                return False
+
+        return True
+
     def setup(self, old_version):
         """Install and configure the app and its components."""
         for component in self.components.values():
@@ -329,6 +337,10 @@ class Component:
 
         """
         return App.get(self.app_id)
+
+    def is_available(self) -> bool:
+        """Return whether the app is available to install."""
+        return True
 
     def setup(self, old_version):
         """Run operations to install and configure the component."""

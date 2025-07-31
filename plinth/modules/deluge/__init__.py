@@ -34,11 +34,11 @@ class DelugePackages(Packages):
     https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1031593
     """
 
-    def has_unavailable_packages(self) -> bool | None:
+    def is_available(self) -> bool:
         if get_current_release()[1] == 'bookworm':
-            return True
+            return False
 
-        return super().has_unavailable_packages()
+        return super().is_available()
 
 
 class DelugeApp(app_module.App):

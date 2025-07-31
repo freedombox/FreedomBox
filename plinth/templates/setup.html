@@ -33,24 +33,36 @@
       {% endif %}
     </p>
 
+    <div class="app-unavailable d-none">
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <div class="me-2">
+          <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Caution:" %}</span>
+        </div>
+        <div>
+          {% blocktrans trimmed %}
+            This application is currently not available in your distribution.
+          {% endblocktrans %}
+        </div>
+      </div>
+    </div>
+    <p class="app-checking-availability d-none" data-app-id="{{ app_id }}"
+       data-setup-state="{{ setup_state.value }}">
+      {% blocktrans trimmed %}
+        Checking app availability...
+      {% endblocktrans %}
+      <span class="spinner-border spinner-border-sm" role="status"></span>
+    </p>
+    <p class="app-checking-availability-error d-none">
+      {% blocktrans trimmed %}
+        Error checking app availability. Please refresh page.
+      {% endblocktrans %}
+    </p>
+
     <form class="form-install" action="" method="post">
       {% csrf_token %}
 
       {% if has_unavailable_packages %}
-        <div class="alert alert-warning d-flex align-items-center" role="alert">
-          <div class="me-2">
-            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-            <span class="visually-hidden">{% trans "Caution:" %}</span>
-          </div>
-          <div>
-            {% blocktrans trimmed %}
-              This application is currently not available in your distribution.
-            {% endblocktrans %}
-            <button type="submit" class="btn btn-default btn-sm" name="refresh-packages">
-              <span class="fa fa-refresh"></span> {% trans "Check again" %}
-            </button>
-          </div>
-        </div>
       {% elif package_conflicts and package_conflicts_action.value != 'ignore' %}
         <div class="alert alert-warning d-flex align-items-center" role="alert">
           <div class="me-2">
@@ -70,10 +82,8 @@
         </div>
       {% endif %}
 
-      <input type="submit" class="btn btn-md btn-primary" name="install"
-             {% if has_unavailable_packages %}
-             disabled="disabled"
-             {% endif %}
+      <input type="submit" class="btn btn-md btn-primary install-button"
+             name="install"
              {% if setup_state.value == 'needs-setup' %}
              value="{% trans "Install" %}"
              {% elif setup_state.value == 'needs-update' %}

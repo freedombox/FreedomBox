@@ -340,21 +340,21 @@ def test_packages_find_conflicts(packages_installed_):
 
 @patch('apt.Cache')
 @patch('pathlib.Path')
-def test_packages_has_unavailable_packages(path_class, cache):
-    """Test checking for unavailable packages."""
+def test_packages_is_available(path_class, cache):
+    """Test checking for available packages."""
     path = Mock()
     path_class.return_value = path
     path.iterdir.return_value = [Mock()]
 
     component = Packages('test-component', ['package1', 'package2'])
-    assert component.has_unavailable_packages() is None
+    assert component.is_available()
 
     path.iterdir.return_value = [Mock(), Mock()]
     cache.return_value = ['package1', 'package2']
-    assert not component.has_unavailable_packages()
+    assert component.is_available()
 
     cache.return_value = ['package1']
-    assert component.has_unavailable_packages()
+    assert not component.is_available()
 
 
 def test_packages_installed():

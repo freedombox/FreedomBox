@@ -132,6 +132,20 @@ def test_get_components_of_type(app_with_components):
     assert list(components) == leader_components
 
 
+def test_app_is_available(app_with_components):
+    """Test checking if an app is available for setup."""
+    for component in app_with_components.components.values():
+        component.is_available = Mock(return_value=True)
+
+    assert app_with_components.is_available()
+    for component in app_with_components.components.values():
+        component.is_available.assert_has_calls([call()])
+
+    component = list(app_with_components.components.values())[0]
+    component.is_available.return_value = False
+    assert not app_with_components.is_available()
+
+
 def test_app_setup(app_with_components):
     """Test that running setup on an app runs setup on components."""
     for component in app_with_components.components.values():
@@ -331,6 +345,12 @@ def test_component_app_property():
     app = AppTest()
     app.add(component)
     assert component.app == app
+
+
+def test_component_is_available():
+    """Test checking if a component is available for setup."""
+    component = Component('test-component')
+    assert component.is_available()
 
 
 def test_component_setup():
