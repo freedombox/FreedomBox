@@ -46,7 +46,7 @@ distribution_info: dict = {
     'trixie': {
         'version': 13,
         'next': 'forky',
-        'release_date': datetime.datetime(2025, 8, 20, tzinfo=timezone.utc),
+        'release_date': datetime.datetime(2025, 8, 9, tzinfo=timezone.utc),
     },
     'forky': {
         'version': 14,
