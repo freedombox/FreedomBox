@@ -190,7 +190,7 @@ def test_get_status(check_auto, is_dist_upgrade_enabled,
     assert status['current_release_date'] == current_date
     assert status['next_codename'] == 'trixie'
     assert status['next_version'] == 13
-    next_date = datetime_original(2025, 8, 20, tzinfo=timezone.utc)
+    next_date = datetime_original(2025, 8, 9, tzinfo=timezone.utc)
     assert status['next_release_date'] == next_date
     assert status['next_action'] == 'manual'
 

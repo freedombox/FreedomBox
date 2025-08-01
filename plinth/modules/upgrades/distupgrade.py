@@ -116,6 +116,9 @@ def _get_sources_list_codename() -> str | None:
     dists = set()
     for match_ in aug.match('*'):
         dist = aug.get(match_ + '/distribution')
+        if not dist:
+            continue
+
         dist = dist.removesuffix('-updates')
         dist = dist.removesuffix('-security')
         dists.add(dist)
