@@ -27,7 +27,7 @@
  * create different rules when Javascript is available and when it is not. This
  * functionality was provided by the Modernizr library earlier.
  */
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
     const html = document.querySelector('html');
     html.classList.remove('no-js');
     html.classList.add('js');
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 /*
  * Refresh page if marked for refresh.
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const body = document.querySelector('body');
     if (body.hasAttribute('data-refresh-page-sec')) {
         let seconds = body.getAttribute('data-refresh-page-sec');
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 /*
  * Return all submit buttons on the page
  */
-function getSubmitButtons(){
+function getSubmitButtons() {
     return document.querySelectorAll(
         "form input[type='submit'], form button[type='submit'].toggle-button");
 }
@@ -81,12 +81,12 @@ function onSubmitAddProgress(event) {
     // for the next event loop run which will happen after current event is
     // processed.
     window.setTimeout(() => {
-        if (button.tagName == "INPUT"){
+        if (button.tagName == "INPUT") {
             // For push buttons
             const beforeElement = document.createElement('div');
             beforeElement.classList.add('running-status-button-before');
             button.parentNode.insertBefore(beforeElement, button);
-        } else if (button.tagName == "BUTTON"){
+        } else if (button.tagName == "BUTTON") {
             // For toggle buttons
             button.classList.toggle('toggle-button--toggled');
         }
@@ -96,8 +96,8 @@ function onSubmitAddProgress(event) {
         // Disable all form submit buttons on the page
         for (const formbutton of getSubmitButtons()) {
             if (!(formbutton.classList.contains('btn-link') ||
-                  formbutton.classList.contains('no-running-status') ||
-                  formbutton.hasAttribute('disabled'))) {
+                formbutton.classList.contains('no-running-status') ||
+                formbutton.hasAttribute('disabled'))) {
                 formbutton.classList.add('temporarily-disabled');
                 formbutton.setAttribute('disabled', 'disabled');
             }
@@ -105,7 +105,7 @@ function onSubmitAddProgress(event) {
     }, 0);
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
     for (const button of getSubmitButtons()) {
         // Don't listen for 'click' event on buttons as they are triggered
         // even when the form is invalid.
@@ -141,7 +141,7 @@ window.addEventListener('pageshow', clearButtonDisabling);
 /*
  * Select all option for multiple checkboxes.
  */
-document.addEventListener('DOMContentLoaded', function(event) {
+document.addEventListener('DOMContentLoaded', function (event) {
     // Django < 4.0 generates <ul> and <li> where as Django >= 4.0 generates <div>s
     let parents = document.querySelectorAll('ul.has-select-all,div.has-select-all');
     for (const parent of parents) {
@@ -225,12 +225,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function setInstallButtonState(enable) {
         const installButton = document.querySelector('.install-button');
-        installButton?.setAttribute('disabled', !enable);
-    }
-
-    function unavailable() {
-        document.querySelector('.app-unavailable').classList.remove('d-none');
-        setInstallButtonState(false);
+        if (enable)
+            installButton?.removeAttribute('disabled')
+        else
+            installButton?.setAttribute('disabled', 'disabled');
     }
 
     function error() {
@@ -253,7 +251,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (data.is_available === true) {
                 setInstallButtonState(true);
             } else if (data.is_available === false) {
-                unavailable();
+                document.querySelector('.app-unavailable').classList.remove('d-none');
+                setInstallButtonState(false);
             } else {
                 error();
             }
