@@ -1,0 +1,55 @@
+#language en
+##TAG:TRANSLATION-HEADER-START
+Translations ~- [[DebianWiki/EditorGuide#translation|(+)]] - [[FreedomBox/Manual/Kiwix|English]] - [[es/FreedomBox/Manual/Kiwix|Español]] -~
+##TAG:TRANSLATION-HEADER-END
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+== Kiwix (Offline Wikipedia) ==
+'''Available since:''' version 23.19
+||<tablestyle="float: right;"> {{attachment:kiwix-tile.png|Kiwix icon}} ||
+
+[[https://en.wikipedia.org/wiki/Kiwix|Kiwix]] can serve archives of websites offline. It was originally created to serve an offline version of Wikipedia, the free encyclopedia.
+
+=== Use Cases ===
+
+[[https://en.wikibooks.org/wiki/FreedomBox_for_Communities|FreedomBox for Communities]] was already using Kiwix years before it was officially included as an app. Kiwix was used to serve content over community Wi-Fi networks in [[https://en.wikipedia.org/wiki/Gangadevipalli#Free_Community_WiFi|villages]] of India with unreliable or insufficient Internet access. In addition to an offline Wikipedia, Kiwix served
+ * the archive "Wikipedia for Schools" which was used by school teachers and students for homework assignments and as a teaching aid.
+ * the archive "!WikiSource (in Telugu)" which served as a digital library.
+
+Kiwix is also useful when you have reliable Internet access.
+ 1. Archival and preservation: Archives of websites can be created and preserved as ZIM files. These archives can be served using Kiwix.
+ 2. Fast access to slow websites: An offline archive can be faster to access than a website.
+ 3. Access to websites that can be temporarily unavailable. For example, the Low Tech Magazine is hosted on a solar-powered single-board computer and could go offline sometimes. There is a Kiwix archive available for it which can be hosted locally.
+
+=== Kiwix on FreedomBox ===
+
+!FreedomBox serves the Debian package called kiwix-tools which allows managing and serving content archives in ZIM file format. ZIM files can be added or removed by a !FreedomBox administrator or any user in the "kiwix" user group.
+
+Kiwix on !FreedomBox is available via web interface only. There are mobile and desktop clients for Kiwix, but they can only read local archives. They cannot pull content from Kiwix hosted on !FreedomBox.
+
+The web interface of Kiwix is available for public access by default. 
+
+=== Finding content archives ===
+
+To find content for Kiwix, go to [[https://library.kiwix.org|library.kiwix.org]]. You can download archives (called "books") using direct download or using BitTorrent. The website itself is a Kiwix installation, so you can have a preview of the content before downloading, to check that the archive is not broken.
+
+An alternative source of the same files is [[https://wiki.kiwix.org/wiki/Main_Page|wiki.kiwix.org]], a wiki with download links and more information about the Kiwix project.
+
+=== Creating content archives ===
+
+The [[https://openzim.org/|OpenZim]] project maintains tools to create ZIM files. The tool [[https://github.com/openzim/zimit|zimit]] is a complete solution that can scrape a website and create a ZIM file. You can also request a ZIM archive using the website [[https://youzim.it|youzim.it]].
+
+=== External links ===
+ * Upstream project: https://kiwix.org/
+ * Upstream documentation: https://kiwix.org/frequently-asked-questions/
+
+## END_INCLUDE
+
+Back to [[FreedomBox/Features|Features introduction]] or [[FreedomBox/Manual|manual]] pages.
+
+<<Include(FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox
