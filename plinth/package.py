@@ -194,8 +194,11 @@ class Packages(app_module.FollowerComponent):
         # Ensure package list is update-to-date before looking at dependencies.
         refresh_package_lists()
 
-        # List of packages to purge from the system
-        packages = self.get_actual_packages()
+        # List of packages to purge from the system. Be resilient to a package
+        # not being found in apt's cache by not using get_actual_packages(). If
+        # a package expression is listed as (package1 | package2) then try to
+        # remove both packages.
+        packages = self.possible_packages
         logger.info('App\'s list of packages to remove: %s', packages)
 
         packages = self._filter_packages_to_keep(packages)
@@ -304,7 +307,7 @@ class Packages(app_module.FollowerComponent):
 
             # Remove packages used by other installed apps
             for component in app.get_components_of_type(Packages):
-                keep_packages |= set(component.get_actual_packages())
+                keep_packages |= set(component.possible_packages)
 
         # Get list of all the dependencies of packages to keep.
         keep_packages_with_deps: set[str] = set()
