@@ -31,7 +31,7 @@ from plinth.modules.firewall.components import get_port_forwarding_info
 from plinth.package import Packages
 from plinth.translation import get_language_from_request, set_language
 
-from . import forms, frontpage, operation, package, setup
+from . import forms, frontpage, operation, setup
 
 REDIRECT_FIELD_NAME = 'next'
 
@@ -536,11 +536,6 @@ class SetupView(TemplateView):
                 # Post/Response/Get pattern for reloads
                 response.status_code = 303
                 return response
-
-            if 'refresh-packages' in request.POST:
-                # Refresh apt package lists
-                package.refresh_package_lists()
-                return self.render_to_response(self.get_context_data())
 
         return super().dispatch(request, *args, **kwargs)
 
