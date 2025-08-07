@@ -55,7 +55,7 @@ class UpgradesApp(app_module.App):
 
     app_id = 'upgrades'
 
-    _version = 19
+    _version = 20
 
     can_be_disabled = False
 
@@ -212,6 +212,7 @@ def setup_repositories(_):
     """Setup apt repositories for backports."""
     if is_backports_requested():
         privileged.activate_backports(cfg.develop)
+        privileged.activate_unstable()
 
 
 def check_dist_upgrade(_):
@@ -370,7 +371,7 @@ def can_activate_backports():
     if cfg.develop:
         return True
 
-    return not utils.is_distribution_rolling()
+    return not utils.is_distribution_unstable()
 
 
 def can_enable_dist_upgrade():
