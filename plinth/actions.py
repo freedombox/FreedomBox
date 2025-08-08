@@ -547,7 +547,10 @@ def _privileged_call(module_name, action_name, arguments):
     if module_name == 'plinth':
         import_path = 'plinth'
     else:
-        import_path = module_loader.get_module_import_path(module_name)
+        try:
+            import_path = module_loader.get_module_import_path(module_name)
+        except FileNotFoundError as exception:
+            raise SyntaxError('Specified module not found') from exception
 
     try:
         module = importlib.import_module(import_path + '.privileged')
