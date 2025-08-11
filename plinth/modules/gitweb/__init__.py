@@ -1,8 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """FreedomBox app to configure Gitweb."""
 
-import os
-
 from django.utils.translation import gettext_lazy as _
 
 from plinth import app as app_module
@@ -194,25 +192,23 @@ def create_repo(repo, repo_description, owner, is_private):
 def get_repo_list():
     """List all git repositories."""
     repos = []
-    if os.path.exists(GIT_REPO_PATH):
-        for repo in os.listdir(GIT_REPO_PATH):
-            if not repo.endswith('.git') or repo.startswith('.'):
+    if GIT_REPO_PATH.exists():
+        for repo in GIT_REPO_PATH.iterdir():
+            if not repo.name.endswith('.git') or repo.name.startswith('.'):
                 continue
 
             repo_info = {}
-            repo_info['name'] = repo[:-4]
+            repo_info['name'] = repo.name[:-4]
 
-            private_file = os.path.join(GIT_REPO_PATH, repo, 'private')
-            if os.path.exists(private_file):
+            private_file = repo / 'private'
+            if private_file.exists():
                 repo_info['access'] = 'private'
             else:
                 repo_info['access'] = 'public'
 
-            progress_file = os.path.join(GIT_REPO_PATH, repo, 'clone_progress')
-            if os.path.exists(progress_file):
-                with open(progress_file, encoding='utf-8') as file_handle:
-                    clone_progress = file_handle.read()
-                    repo_info['clone_progress'] = clone_progress
+            progress_file = repo / 'clone_progress'
+            if progress_file.exists():
+                repo_info['clone_progress'] = progress_file.read_text()
 
             repos.append(repo_info)
 

@@ -25,7 +25,7 @@ git_installed = pytest.mark.skipif(not pathlib.Path('/usr/bin/git').exists(),
 @pytest.fixture(autouse=True)
 def fixture_set_repo_path(tmpdir):
     """Set a repository path in the actions module."""
-    privileged.GIT_REPO_PATH = str(tmpdir)
+    privileged.GIT_REPO_PATH = tmpdir
 
 
 @pytest.fixture(name='existing_repo')
