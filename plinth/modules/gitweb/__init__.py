@@ -14,7 +14,7 @@ from plinth.package import Packages
 
 from . import manifest, privileged
 from .forms import is_repo_url
-from .manifest import GIT_REPO_PATH, REPO_DIR_OWNER
+from .manifest import GIT_REPO_PATH
 
 _description = [
     _('Git is a distributed version-control system for tracking changes in '
@@ -217,7 +217,7 @@ def get_repo_list():
 
 def repo_info(repo):
     """Get information about repository."""
-    info = privileged.repo_info(repo, _run_as_user=REPO_DIR_OWNER)
+    info = privileged.repo_info(repo)
     if info['access'] == 'private':
         info['is_private'] = True
     else:
@@ -248,5 +248,4 @@ def edit_repo(form_initial, form_cleaned):
             privileged.set_repo_access(repo, 'public')
 
     if form_cleaned['default_branch'] != form_initial['default_branch']:
-        privileged.set_default_branch(repo, form_cleaned['default_branch'],
-                                      _run_as_user=REPO_DIR_OWNER)
+        privileged.set_default_branch(repo, form_cleaned['default_branch'])

@@ -6,6 +6,7 @@ pytest configuration for all tests.
 import importlib
 import os
 import pathlib
+import subprocess
 from unittest.mock import patch
 
 import pytest
@@ -189,6 +190,18 @@ def fixture_mock_privileged(request):
                 continue
 
             module.__dict__[name] = wrapper
+
+
+@pytest.fixture(name='mock_run_as_user')
+def fixture_mock_run_as_user():
+    """A fixture to override action_utils.run_as_user."""
+
+    def _bypass_runuser(*args, username, **kwargs):
+        return subprocess.run(*args, **kwargs)
+
+    with patch('plinth.action_utils.run_as_user') as mock:
+        mock.side_effect = _bypass_runuser
+        yield
 
 
 @pytest.fixture(name='splinter_screenshot_dir', scope='session')

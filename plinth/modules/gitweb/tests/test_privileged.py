@@ -16,16 +16,16 @@ REPO_DATA = {
     'access': 'private',
 }
 
-pytestmark = pytest.mark.usefixtures('mock_privileged')
+pytestmark = pytest.mark.usefixtures('mock_privileged', 'mock_run_as_user')
 privileged_modules_to_mock = ['plinth.modules.gitweb.privileged']
 git_installed = pytest.mark.skipif(not pathlib.Path('/usr/bin/git').exists(),
                                    reason='git is not installed')
 
 
 @pytest.fixture(autouse=True)
-def fixture_set_repo_path(tmpdir):
+def fixture_set_repo_path(tmp_path):
     """Set a repository path in the actions module."""
-    privileged.GIT_REPO_PATH = tmpdir
+    privileged.GIT_REPO_PATH = tmp_path
 
 
 @pytest.fixture(name='existing_repo')

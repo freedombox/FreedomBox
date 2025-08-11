@@ -199,9 +199,11 @@ def _get_default_branch(repo):
     """Get default branch of the repository."""
     repo_path = GIT_REPO_PATH / repo
 
-    return subprocess.check_output(
+    return action_utils.run_as_user(
         ['git', '-C',
-         str(repo_path), 'symbolic-ref', '--short', 'HEAD']).decode().strip()
+         str(repo_path), 'symbolic-ref', '--short', 'HEAD'],
+        username=REPO_DIR_OWNER, check=True,
+        stdout=subprocess.PIPE).stdout.decode().strip()
 
 
 def _get_repo_description(repo):
@@ -267,11 +269,12 @@ def _set_access_status(repo, status):
 
 def _get_branches(repo):
     """Return list of the branches in the repository."""
-    output = subprocess.check_output(
+    process = action_utils.run_as_user(
         ['git', '-C', repo, 'branch', '--format=%(refname:short)'],
-        cwd=GIT_REPO_PATH)
+        cwd=GIT_REPO_PATH, username=REPO_DIR_OWNER, check=True,
+        stdout=subprocess.PIPE)
 
-    return output.decode().strip().split()
+    return process.stdout.decode().strip().split()
 
 
 @privileged
@@ -299,10 +302,9 @@ def set_default_branch(name: str, branch: str):
     if branch not in _get_branches(repo):
         raise ValueError('No such branch')
 
-    subprocess.check_call([
-        'git', '-C', repo, 'symbolic-ref', 'HEAD',
-        "refs/heads/{}".format(branch)
-    ], cwd=GIT_REPO_PATH)
+    action_utils.run_as_user(
+        ['git', '-C', repo, 'symbolic-ref', 'HEAD', f'refs/heads/{branch}'],
+        cwd=GIT_REPO_PATH, check=True, username=REPO_DIR_OWNER)
 
 
 @privileged
