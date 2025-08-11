@@ -788,3 +788,13 @@ def move_uploaded_file(source: str | pathlib.Path,
     shutil.move(source, destination)
     shutil.chown(destination, user, group)
     destination.chmod(permissions)
+
+
+def run_as_user(command, username, **kwargs):
+    """Run a command as another user.
+
+    Uses 'runuser' which is similar to 'su'. Creates PAM session unlike
+    setpriv. Sets real/effective uid/gid and resets the environment.
+    """
+    command = ['runuser', '--user', username, '--'] + command
+    return subprocess.run(command, **kwargs)

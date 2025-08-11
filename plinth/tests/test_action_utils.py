@@ -12,7 +12,7 @@ import pytest
 
 from plinth.action_utils import (get_addresses, get_hostname,
                                  is_systemd_running, move_uploaded_file,
-                                 service_action, service_disable,
+                                 run_as_user, service_action, service_disable,
                                  service_enable, service_is_enabled,
                                  service_is_running, service_reload,
                                  service_restart, service_start, service_stop,
@@ -229,3 +229,18 @@ def test_move_uploaded_file(tmp_path, upload_dir):
         assert destination_file.stat().st_mode & 0o777 == 0o600
         assert destination_file.read_text() == 'x-contents-2'
         assert not source.exists()
+
+
+@patch('subprocess.run')
+def test_run_as_user(run):
+    """Test running a command as another user works."""
+    run.return_value = 'test-return-value'
+    return_value = run_as_user(['command', 'arg1', '--foo'],
+                               username='foouser', stdout=subprocess.PIPE,
+                               check=True)
+    assert return_value == 'test-return-value'
+    assert run.mock_calls == [
+        call(
+            ['runuser', '--user', 'foouser', '--', 'command', 'arg1', '--foo'],
+            stdout=subprocess.PIPE, check=True)
+    ]
