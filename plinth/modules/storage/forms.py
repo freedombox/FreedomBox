@@ -68,7 +68,7 @@ class DirectoryValidator:
 
             privileged.validate_directory(value, self.check_creatable,
                                           self.check_writable,
-                                          _run_as_user=self.username)
+                                          for_user=self.username)
         except FileNotFoundError:
             raise ValidationError(_('Directory does not exist.'), 'invalid')
         except NotADirectoryError:

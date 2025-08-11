@@ -6,7 +6,7 @@ import re
 import stat
 import subprocess
 
-from plinth import utils
+from plinth import action_utils, utils
 from plinth.actions import privileged
 
 
@@ -330,10 +330,8 @@ def usage_info() -> str:
 
 @privileged
 def validate_directory(directory: str, check_creatable: bool,
-                       check_writable: bool):
+                       check_writable: bool, for_user: str):
     """Validate a directory."""
-    if os.geteuid() == 0:
-        raise RuntimeError('You must not be root to run this command')
 
     def part_exists(path):
         """Return part of the path that exists."""
@@ -352,9 +350,15 @@ def validate_directory(directory: str, check_creatable: bool,
     if not os.path.isdir(directory):
         raise NotADirectoryError
 
-    if not os.access(directory, os.R_OK):
+    try:
+        action_utils.run_as_user(['test', '-r', directory], username=for_user,
+                                 check=True)
+    except subprocess.CalledProcessError:
         raise PermissionError('read')
 
     if check_writable or check_creatable:
-        if not os.access(directory, os.W_OK):
+        try:
+            action_utils.run_as_user(['test', '-w', directory],
+                                     username=for_user, check=True)
+        except subprocess.CalledProcessError:
             raise PermissionError('write')
