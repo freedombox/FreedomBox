@@ -85,7 +85,7 @@ def _run_privileged_method(func, module_name, action_name, args, kwargs):
         return _run_privileged_method_on_server(func, module_name, action_name,
                                                 list(args), dict(kwargs))
     except (
-            NotImplementedError,  # For raw_output and run_as_user flags
+            NotImplementedError,  # For raw_output flag
             FileNotFoundError,  # When the .socket file is not present
             ConnectionRefusedError,  # When is daemon not running
             ConnectionResetError  # When daemon fails permission check
@@ -127,15 +127,14 @@ def _request_to_server(request: dict) -> socket.socket:
 def _run_privileged_method_on_server(func, module_name, action_name, args,
                                      kwargs):
     """Execute a privileged method using a server."""
-    run_as_user = kwargs.pop('_run_as_user', None)
     run_in_background = kwargs.pop('_run_in_background', False)
     raw_output = kwargs.pop('_raw_output', False)
     log_error = kwargs.pop('_log_error', True)
 
-    if raw_output or run_as_user:
+    if raw_output:
         raise NotImplementedError('Not yet implemented')
 
-    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+    _log_action(func, module_name, action_name, args, kwargs,
                 run_in_background, is_server=True)
 
     request = {
@@ -205,7 +204,6 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
 def _run_privileged_method_as_process(func, module_name, action_name, args,
                                       kwargs):
     """Execute the privileged method in a sub-process with sudo."""
-    run_as_user = kwargs.pop('_run_as_user', None)
     run_in_background = kwargs.pop('_run_in_background', False)
     raw_output = kwargs.pop('_raw_output', False)
     log_error = kwargs.pop('_log_error', True)
@@ -215,8 +213,6 @@ def _run_privileged_method_as_process(func, module_name, action_name, args,
 
     # Prepare the command
     command = ['sudo', '--non-interactive', '--close-from', str(write_fd + 1)]
-    if run_as_user:
-        command += ['--user', run_as_user]
 
     if cfg.develop:
         command += [f'PYTHONPATH={cfg.file_root}']
@@ -238,7 +234,7 @@ def _run_privileged_method_as_process(func, module_name, action_name, args,
         # In development mode pass on local pythonpath to access Plinth
         proc_kwargs['env'] = {'PYTHONPATH': cfg.file_root}
 
-    _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+    _log_action(func, module_name, action_name, args, kwargs,
                 run_in_background, is_server=False)
 
     proc = subprocess.Popen(command, **proc_kwargs)
@@ -422,13 +418,13 @@ def _get_privileged_action_module_name(func):
     return module_name.rpartition('.')[2]
 
 
-def _log_action(func, module_name, action_name, args, kwargs, run_as_user,
+def _log_action(func, module_name, action_name, args, kwargs,
                 run_in_background, is_server):
     """Log an action in a compact format."""
     if is_server:
         prompt = '»'
     else:
-        prompt = f'({run_as_user})$' if run_as_user else '#'
+        prompt = '#'
 
     suffix = '&' if run_in_background else ''
     formatted_args = _format_args(func, args, kwargs)
