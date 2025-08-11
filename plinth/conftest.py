@@ -6,6 +6,7 @@ pytest configuration for all tests.
 import importlib
 import os
 import pathlib
+from unittest.mock import patch
 
 import pytest
 
@@ -107,6 +108,17 @@ def fixture_needs_sudo():
     """Skip test if sudo command is not available."""
     if not os.path.isfile('/usr/bin/sudo'):
         pytest.skip('Needs sudo command installed.')
+
+
+@pytest.fixture(name='no_privileged_server', scope='module')
+def fixture_no_privileged__server():
+    """Don't setup for and run privileged methods on server.
+
+    Tests on using privileged daemon are not yet implemented.
+    """
+    with patch('plinth.actions._run_privileged_method_on_server') as mock:
+        mock.side_effect = NotImplementedError
+        yield
 
 
 @pytest.fixture(scope='session')

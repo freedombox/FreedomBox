@@ -20,6 +20,8 @@ from plinth.actions import privileged, secret_str
 
 actions_name = 'actions'
 
+pytestmark = pytest.mark.usefixtures('no_privileged_server')
+
 
 @pytest.fixture(name='popen')
 def fixture_popen():
