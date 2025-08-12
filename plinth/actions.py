@@ -86,7 +86,6 @@ def _run_privileged_method(func, module_name, action_name, args, kwargs):
         return _run_privileged_method_on_server(func, module_name, action_name,
                                                 list(args), dict(kwargs))
     except (
-            NotImplementedError,  # For raw_output flag
             FileNotFoundError,  # When the .socket file is not present
             ConnectionRefusedError,  # When is daemon not running
             ConnectionResetError  # When daemon fails permission check
@@ -132,9 +131,6 @@ def _run_privileged_method_on_server(func, module_name, action_name, args,
     raw_output = kwargs.pop('_raw_output', False)
     log_error = kwargs.pop('_log_error', True)
 
-    if raw_output:
-        raise NotImplementedError('Not yet implemented')
-
     _log_action(func, module_name, action_name, args, kwargs,
                 run_in_background, is_server=True)
 
@@ -142,9 +138,26 @@ def _run_privileged_method_on_server(func, module_name, action_name, args,
         'module': module_name,
         'action': action_name,
         'args': args,
-        'kwargs': kwargs
+        'kwargs': kwargs,
     }
+    if raw_output:
+        request['raw_output'] = raw_output
+
     client_socket = _request_to_server(request)
+
+    if raw_output:
+
+        def _reader_func():
+            while True:
+                chunk = client_socket.recv(4096)
+                if chunk:
+                    yield chunk
+                else:
+                    break
+
+            client_socket.close()
+
+        return _reader_func()
 
     args = (func, module_name, action_name, args, kwargs, log_error,
             client_socket)
@@ -535,7 +548,8 @@ def privileged_main():
         sys.exit(1)
 
 
-def privileged_handle_json_request(request_string: str) -> str:
+def privileged_handle_json_request(
+        request_string: str) -> str | io.BufferedReader:
     """Parse arguments for the program spawned as a privileged action."""
 
     def _parse_request() -> dict:
@@ -555,6 +569,10 @@ def privileged_handle_json_request(request_string: str) -> str:
                 raise TypeError(f'Parameter "{parameter}" must be of type'
                                 f'{expected_type.__name__}')
 
+        if 'raw_output' in request and not isinstance(request['raw_output'],
+                                                      bool):
+            raise TypeError('Incorrect "raw_output" parameter')
+
         return request
 
     try:
@@ -564,6 +582,13 @@ def privileged_handle_json_request(request_string: str) -> str:
         arguments = {'args': request['args'], 'kwargs': request['kwargs']}
         return_value = _privileged_call(request['module'], request['action'],
                                         arguments)
+
+        if isinstance(return_value, io.BufferedReader):
+            raw_output = request.get('raw_output', False)
+            if not raw_output:
+                raise TypeError('Invalid call to raw output API.')
+
+            return return_value
     except (PermissionError, SyntaxError, TypeError, Exception) as exception:
         if isinstance(exception, (PermissionError, SyntaxError, TypeError)):
             logger.error(exception.args[0])
@@ -623,6 +648,9 @@ def _privileged_call(module_name, action_name, arguments):
 
     try:
         return_values = func(*arguments['args'], **arguments['kwargs'])
+        if isinstance(return_values, io.BufferedReader):
+            return return_values
+
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
         return_value = {

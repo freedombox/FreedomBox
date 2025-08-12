@@ -12,7 +12,7 @@ import tarfile
 
 from django.utils.translation import gettext_lazy as _
 
-from plinth import action_utils
+from plinth import action_utils, actions
 from plinth import app as app_module
 from plinth import module_loader
 from plinth.actions import privileged, secret_str
@@ -340,8 +340,11 @@ def _extract(archive_path, destination, encryption_passphrase, locations=None):
 @privileged
 def export_tar(path: str, encryption_passphrase: secret_str | None = None):
     """Export archive contents as tar stream on stdout."""
-    _run(['borg', 'export-tar', path, '-', '--tar-filter=gzip'],
-         encryption_passphrase)
+    env = _get_env(encryption_passphrase)
+    process = subprocess.Popen(
+        ['borg', 'export-tar', path, '-', '--tar-filter=gzip'], env=env,
+        stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+    return actions.ProcessBufferedReader(process)
 
 
 def _read_archive_file(archive, filepath, encryption_passphrase):

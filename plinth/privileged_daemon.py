@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """The main method for a daemon that runs privileged methods."""
 
+import io
 import json
 import logging
 import os
@@ -52,9 +53,13 @@ class RequestHandler(socketserver.StreamRequestHandler):
 
         return request
 
-    def _write_response(self, response: str):
+    def _write_response(self, response: str | io.BufferedReader):
         """Write a single response to the client."""
-        self.wfile.write(response.encode('utf-8'))
+        if isinstance(response, str):
+            self.wfile.write(response.encode('utf-8'))
+        else:
+            for chunk in response:
+                self.wfile.write(chunk)
 
     def handle(self) -> None:
         """Handle a new connection from a client."""
