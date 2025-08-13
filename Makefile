@@ -103,9 +103,6 @@ install:
 	rm -f $(DESTDIR)$${lib_dir}/plinth*.dist-info/direct_url.json && \
         $(INSTALL) -D -t $(BIN_DIR) bin/plinth
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-privileged
-
-	# Actions
-	$(INSTALL) -D -t $(DESTDIR)/usr/share/plinth/actions actions/actions
 	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
 
 	# Static web server files
@@ -141,7 +138,7 @@ check-tests-cov:
 
 # Code quality checking using flake8
 check-code:
-	$(PYTHON) -m flake8 plinth actions/actions container
+	$(PYTHON) -m flake8 plinth container
 
 # Static type checking using mypy
 check-type:

@@ -927,11 +927,7 @@ def _setup_users(image_file: pathlib.Path):
            str(gid), 'plinth'], stdout=subprocess.DEVNULL)
 
     logger.info('In image: Setting up sudo for users "fbx" and "plinth"')
-    sudo_config = 'Cmnd_Alias FREEDOMBOX_ACTION_DEV = /usr/share/plinth/' \
-        'actions/actions, /freedombox/actions/actions\n' \
-        'Defaults!FREEDOMBOX_ACTION_DEV closefrom_override\n' \
-        'plinth    ALL=(ALL:ALL) NOPASSWD:SETENV : FREEDOMBOX_ACTION_DEV\n' \
-        'fbx    ALL=(ALL:ALL) NOPASSWD : ALL\n'
+    sudo_config = 'fbx    ALL=(ALL:ALL) NOPASSWD : ALL\n'
     _runc(image_file, ['tee', '/etc/sudoers.d/01-freedombox-development'],
           input=sudo_config.encode(), stdout=subprocess.DEVNULL)
 
