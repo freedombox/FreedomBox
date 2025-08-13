@@ -117,7 +117,7 @@ def fixture_no_privileged__server():
 
     Tests on using privileged daemon are not yet implemented.
     """
-    with patch('plinth.actions._run_privileged_method_on_server') as mock:
+    with patch('plinth.actions.run_privileged_method_on_server') as mock:
         mock.side_effect = NotImplementedError
         yield
 

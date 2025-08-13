@@ -56,9 +56,9 @@
       {% blocktrans trimmed %}
         Delete these accounts from command line and refresh the page to create
         an account that is usable with {{ box_name }}. On the command line run
-        the command "echo '{"args": ["USERNAME", "PASSWORD"], "kwargs": {}}' |
-        sudo /usr/share/plinth/actions/actions users remove_user". If an
-        account is already usable with {{ box_name }}, skip this step.
+        the command "echo '{"args": ["USERNAME", "AUTH_USER", "AUTH_PASSWORD"],
+        "kwargs": {}}' | sudo freedombox-cmd users remove_user". If an account
+        is already usable with {{ box_name }}, skip this step.
       {% endblocktrans %}
     </p>
 

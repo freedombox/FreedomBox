@@ -146,12 +146,12 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
     # 'reconnect', 'ServerAliveInternal' and 'ServerAliveCountMax' allow the
     # client (FreedomBox) to keep control of the SSH connection even when the
     # SSH server misbehaves. Without these options, other commands such as
-    # '/usr/share/plinth/actions/actions storage usage_info --no-args', 'df',
-    # '/usr/share/plinth/actions/actions sshfs is_mounted --no-args', or
-    # 'mountpoint' might block indefinitely (even when manually invoked from
-    # the command line). This situation has some lateral effects, causing major
-    # system instability in the course of ~11 days, and leaving the system in
-    # such state that the only solution is a reboot.
+    # 'freedombox-cmd storage usage_info --no-args', 'df', 'freedombox-cmd
+    # sshfs is_mounted --no-args', or 'mountpoint' might block indefinitely
+    # (even when manually invoked from the command line). This situation has
+    # some lateral effects, causing major system instability in the course of
+    # ~11 days, and leaving the system in such state that the only solution is
+    # a reboot.
     cmd = [
         'sshfs', remote_path, mountpoint, '-o',
         f'UserKnownHostsFile={user_known_hosts_file}', '-o',

@@ -225,7 +225,7 @@ mount -o remount /freedombox
 if [[ "{distribution}" == "stable"  && ! -e $BACKPORTS_SOURCES_LIST ]]
 then
     echo "> In machine: Enable backports"
-    /freedombox/actions/actions upgrades activate_backports --no-args
+    /freedombox/bin/freedombox-cmd upgrades activate_backports --no-args
 fi
 
 echo "> In machine: Upgrade packages"

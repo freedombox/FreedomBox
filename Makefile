@@ -106,6 +106,7 @@ install:
 
 	# Actions
 	$(INSTALL) -D -t $(DESTDIR)/usr/share/plinth/actions actions/actions
+	$(INSTALL) -D -t $(BIN_DIR) bin/freedombox-cmd
 
 	# Static web server files
 	rm -rf $(STATIC_FILES_DIRECTORY)

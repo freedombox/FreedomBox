@@ -83,8 +83,8 @@ def privileged(func):
 def _run_privileged_method(func, module_name, action_name, args, kwargs):
     """Execute a privileged method either using a server or sudo."""
     try:
-        return _run_privileged_method_on_server(func, module_name, action_name,
-                                                list(args), dict(kwargs))
+        return run_privileged_method_on_server(func, module_name, action_name,
+                                               list(args), dict(kwargs))
     except (
             FileNotFoundError,  # When the .socket file is not present
             ConnectionRefusedError,  # When is daemon not running
@@ -124,15 +124,16 @@ def _request_to_server(request: dict) -> socket.socket:
     return client_socket
 
 
-def _run_privileged_method_on_server(func, module_name, action_name, args,
-                                     kwargs):
+def run_privileged_method_on_server(func, module_name, action_name, args,
+                                    kwargs):
     """Execute a privileged method using a server."""
     run_in_background = kwargs.pop('_run_in_background', False)
     raw_output = kwargs.pop('_raw_output', False)
     log_error = kwargs.pop('_log_error', True)
 
-    _log_action(func, module_name, action_name, args, kwargs,
-                run_in_background, is_server=True)
+    if func:
+        _log_action(func, module_name, action_name, args, kwargs,
+                    run_in_background, is_server=True)
 
     request = {
         'module': module_name,
@@ -201,9 +202,10 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
                            return_value['exception']['name'], exception_args,
                            stdout, stderr, traceback)
 
-    exception.get_html_message = _get_html_message
+    if func:
+        exception.get_html_message = _get_html_message
 
-    if log_error:
+    if log_error and func:
         formatted_args = _format_args(func, args, kwargs)
         exception_args, stdout, stderr, traceback = _format_error(
             exception, return_value)

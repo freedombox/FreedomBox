@@ -266,17 +266,14 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
                  check=True),
             call([
-                '/usr/share/plinth/actions/actions', 'snapshot',
-                'disable_apt_snapshot'
+                '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
             ], input=b'{"args": ["yes"], "kwargs": {}}', check=True)
         ]
         run.reset_mock()
 
     assert run.call_args_list == [
-        call([
-            '/usr/share/plinth/actions/actions', 'snapshot',
-            'disable_apt_snapshot'
-        ], input=b'{"args": ["no"], "kwargs": {}}', check=True)
+        call(['/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'],
+             input=b'{"args": ["no"], "kwargs": {}}', check=True)
     ]
 
 
@@ -419,8 +416,8 @@ def test_trigger_on_complete(run):
     run.assert_called_with([
         'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
         '--description=Finish up upgrade to new stable Debian release',
-        '/usr/share/plinth/actions/actions', 'upgrades',
-        'dist_upgrade_on_complete', '--no-args'
+        '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
+        '--no-args'
     ], check=True)
 
 

@@ -247,7 +247,7 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
         if snapshot_module.is_apt_snapshots_enabled(aug):
             logger.info('Disabling apt snapshots during dist upgrade...')
             subprocess.run([
-                '/usr/share/plinth/actions/actions',
+                '/usr/bin/freedombox-cmd',
                 'snapshot',
                 'disable_apt_snapshot',
             ], input='{"args": ["yes"], "kwargs": {}}'.encode(), check=True)
@@ -260,8 +260,7 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
         if reenable:
             logger.info('Re-enabling apt snapshots...')
             subprocess.run([
-                '/usr/share/plinth/actions/actions', 'snapshot',
-                'disable_apt_snapshot'
+                '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
             ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
         else:
             logger.info('Not re-enabling apt snapshots, as they were disabled '
@@ -388,8 +387,8 @@ def _trigger_on_complete():
     subprocess.run([
         'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
         '--description=Finish up upgrade to new stable Debian release',
-        '/usr/share/plinth/actions/actions', 'upgrades',
-        'dist_upgrade_on_complete', '--no-args'
+        '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
+        '--no-args'
     ], check=True)
 
 
@@ -443,7 +442,7 @@ def start_service():
         f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
     subprocess.run(['systemd-run'] + args + [
-        'systemd-inhibit', '/usr/share/plinth/actions/actions', 'upgrades',
+        'systemd-inhibit', '/usr/bin/freedombox-cmd', 'upgrades',
         'dist_upgrade', '--no-args'
     ], check=True)
 
