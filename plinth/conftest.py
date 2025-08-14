@@ -111,17 +111,6 @@ def fixture_needs_sudo():
         pytest.skip('Needs sudo command installed.')
 
 
-@pytest.fixture(name='no_privileged_server', scope='module')
-def fixture_no_privileged__server():
-    """Don't setup for and run privileged methods on server.
-
-    Tests on using privileged daemon are not yet implemented.
-    """
-    with patch('plinth.actions.run_privileged_method_on_server') as mock:
-        mock.side_effect = NotImplementedError
-        yield
-
-
 @pytest.fixture(scope='session')
 def splinter_selenium_implicit_wait():
     """Disable implicit waiting."""
@@ -164,9 +153,10 @@ def fixture_mock_privileged(request):
         privileged_modules_to_mock = request.module.privileged_modules_to_mock
     except AttributeError:
         raise AttributeError(
-            'mock_privileged fixture requires "privileged_module_to_mock" '
+            'mock_privileged fixture requires "privileged_modules_to_mock" '
             'attribute at module level')
 
+    mocked_methods = []
     for module_name in privileged_modules_to_mock:
         module = importlib.import_module(module_name)
         for name, member in module.__dict__.items():
@@ -177,19 +167,20 @@ def fixture_mock_privileged(request):
             if not getattr(member, '_privileged', False):
                 continue
 
-            setattr(wrapped, '_original_wrapper', member)
-            module.__dict__[name] = wrapped
+            while getattr(wrapped, '__wrapped__', None) and getattr(
+                    wrapped, '_privileged', True):
+                wrapped = getattr(wrapped, '__wrapped__', None)
+
+            setattr(wrapped, '_skip_privileged_call', True)
+            mocked_methods.append(wrapped)
 
     yield
 
-    for module_name in privileged_modules_to_mock:
-        module = importlib.import_module(module_name)
-        for name, member in module.__dict__.items():
-            wrapper = getattr(member, '_original_wrapper', None)
-            if not callable(member) or not wrapper:
-                continue
-
-            module.__dict__[name] = wrapper
+    for mocked_method in mocked_methods:
+        try:
+            delattr(mocked_method, '_skip_privileged_call')
+        except AttributeError:
+            pass
 
 
 @pytest.fixture(name='mock_run_as_user')

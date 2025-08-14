@@ -67,6 +67,9 @@ def privileged(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+        if getattr(func, '_skip_privileged_call', False):
+            return func(*args, **kwargs)
+
         module_name = _get_privileged_action_module_name(func)
         action_name = func.__name__
         return run_privileged_method(func, module_name, action_name, args,

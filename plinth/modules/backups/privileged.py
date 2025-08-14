@@ -118,8 +118,8 @@ def reraise_known_errors(privileged_func):
 
 def _reraise_known_errors(err):
     """Look whether the caught error is known and reraise it accordingly"""
-    stdout = getattr(err, 'stdout', b'').decode()
-    stderr = getattr(err, 'stderr', b'').decode()
+    stdout = (getattr(err, 'stdout') or b'').decode()
+    stderr = (getattr(err, 'stderr') or b'').decode()
     caught_error = str((err, err.args, stdout, stderr))
     for known_error in KNOWN_ERRORS:
         for error in known_error['errors']:
@@ -166,14 +166,14 @@ def mount(mountpoint: str, remote_path: str, ssh_keyfile: str | None = None,
         cmd += ['-o', 'password_stdin']
         input_ = password.encode()
 
-    subprocess.run(cmd, check=True, timeout=TIMEOUT, input=input_)
+    action_utils.run(cmd, check=True, timeout=TIMEOUT, input=input_)
 
 
 @reraise_known_errors
 @privileged
 def umount(mountpoint: str):
     """Unmount a mountpoint."""
-    subprocess.run(['umount', mountpoint], check=True)
+    action_utils.run(['umount', mountpoint], check=True)
 
 
 def _validate_mountpoint(mountpoint):
@@ -515,4 +515,4 @@ def _get_env(encryption_passphrase: str | None = None):
 def _run(cmd, encryption_passphrase=None, check=True, **kwargs):
     """Wrap the command with extra encryption passphrase handling."""
     env = _get_env(encryption_passphrase)
-    return subprocess.run(cmd, check=check, env=env, **kwargs)
+    return action_utils.run(cmd, check=check, env=env, **kwargs)

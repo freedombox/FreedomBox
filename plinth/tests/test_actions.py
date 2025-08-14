@@ -7,20 +7,16 @@ description of the expectations.
 
 """
 
-import json
 import os
-import subprocess
 import typing
 from unittest.mock import Mock, call, patch
 
 import pytest
 
-from plinth import actions, cfg
+from plinth import actions
 from plinth.actions import privileged, secret_str
 
 actions_name = 'actions'
-
-pytestmark = pytest.mark.usefixtures('no_privileged_server')
 
 
 @pytest.fixture(name='popen')
@@ -104,8 +100,11 @@ def test_privileged_argument_annotation_check():
     privileged(func2_valid)
 
 
+@patch('plinth.actions._read_from_server')
+@patch('plinth.actions._request_to_server')
 @patch('plinth.actions._get_privileged_action_module_name')
-def test_privileged_method_call(get_module_name, popen):
+def test_privileged_method_call(get_module_name, request_to_server,
+                                read_from_server):
     """Test that privileged method calls the superuser action properly."""
 
     def func_with_args(_a: int, _b: str, _c: int = 1, _d: str = 'dval',
@@ -113,43 +112,45 @@ def test_privileged_method_call(get_module_name, popen):
         return
 
     get_module_name.return_value = 'tests'
-    popen.return_value = json.dumps({'result': 'success', 'return': 'bar'})
+    read_from_server.return_value = {"result": "success", "return": "bar"}
     wrapped_func = privileged(func_with_args)
     return_value = wrapped_func(1, 'bval', None, _d='dnewval')
     assert return_value == 'bar'
-
-    input_ = {'args': [1, 'bval', None], 'kwargs': {'_d': 'dnewval'}}
-    input_ = json.dumps(input_)
-    write_fd = popen.called_with_write_fd[0]
-    close_from_fd = str(write_fd + 1)
-    popen.assert_has_calls([
-        call([
-            'sudo', '--non-interactive', '--close-from', close_from_fd,
-            cfg.actions_dir + '/actions', 'tests', 'func_with_args',
-            '--write-fd',
-            str(write_fd)
-        ], stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-             stderr=subprocess.PIPE, shell=False, pass_fds=[write_fd])
-    ])
+    assert request_to_server.mock_calls == [
+        call({
+            'module': 'tests',
+            'action': 'func_with_args',
+            'args': (1, 'bval', None),
+            'kwargs': {
+                '_d': 'dnewval'
+            }
+        }),
+        call().close()
+    ]
 
 
+@patch('plinth.actions._read_from_server')
+@patch('plinth.actions._request_to_server')
 @patch('plinth.actions._get_privileged_action_module_name')
-def test_privileged_method_exceptions(get_module_name, popen):
+def test_privileged_method_exceptions(get_module_name, request_to_server,
+                                      read_from_server):
     """Test that exceptions on privileged methods are return properly."""
 
     def func_with_exception():
         raise TypeError('type error')
 
     get_module_name.return_value = 'tests'
-    popen.return_value = json.dumps({
+    read_from_server.return_value = {
         'result': 'exception',
         'exception': {
             'module': 'builtins',
             'name': 'TypeError',
             'args': ['type error'],
-            'traceback': ['']
+            'traceback': [''],
+            'stdout': '',
+            'stderr': ''
         }
-    })
+    }
     wrapped_func = privileged(func_with_exception)
     with pytest.raises(TypeError, match='type error'):
         wrapped_func()
