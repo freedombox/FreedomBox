@@ -6,12 +6,12 @@ Test module for key/value store.
 import json
 import pathlib
 import subprocess
-from unittest.mock import call, patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 
 from plinth.action_utils import (get_addresses, get_hostname,
-                                 is_systemd_running, move_uploaded_file,
+                                 is_systemd_running, move_uploaded_file, run,
                                  run_as_user, service_action, service_disable,
                                  service_enable, service_is_enabled,
                                  service_is_running, service_reload,
@@ -232,15 +232,69 @@ def test_move_uploaded_file(tmp_path, upload_dir):
 
 
 @patch('subprocess.run')
-def test_run_as_user(run):
+def test_run_as_user(subprocess_run):
     """Test running a command as another user works."""
-    run.return_value = 'test-return-value'
+    subprocess_run.return_value = 'test-return-value'
     return_value = run_as_user(['command', 'arg1', '--foo'],
                                username='foouser', stdout=subprocess.PIPE,
                                check=True)
     assert return_value == 'test-return-value'
-    assert run.mock_calls == [
+    assert subprocess_run.mock_calls == [
         call(
             ['runuser', '--user', 'foouser', '--', 'command', 'arg1', '--foo'],
-            stdout=subprocess.PIPE, check=True)
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     ]
+
+
+@patch('plinth.actions.thread_storage')
+@patch('subprocess.run')
+def test_run_capture(subprocess_run, thread_storage):
+    """Test running a command with stdin/stdout capture works."""
+    thread_storage.stdout = 'initial-stdout'
+    thread_storage.stderr = 'initial-stderr'
+
+    subprocess_run.return_value = Mock()
+    subprocess_run.return_value.stdout = 'test-stdout'
+    subprocess_run.return_value.stderr = 'test-stderr'
+
+    return_value = run(['command', 'arg1', '--foo'], check=True)
+    assert return_value == subprocess_run.return_value
+    assert subprocess_run.mock_calls == [
+        call(['command', 'arg1', '--foo'], stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=True)
+    ]
+    assert thread_storage.stdout == 'initial-stdouttest-stdout'
+    assert thread_storage.stderr == 'initial-stderrtest-stderr'
+
+
+@patch('plinth.actions.thread_storage')
+@patch('subprocess.run')
+def test_run_no_capture(subprocess_run, thread_storage):
+    """Test running a command without stdin/stdout capture works."""
+    thread_storage.stdout = 'initial-stdout'
+    thread_storage.stderr = 'initial-stderr'
+
+    subprocess_run.return_value = Mock()
+    subprocess_run.return_value.stdout = 'test-stdout'
+    subprocess_run.return_value.stderr = 'test-stderr'
+
+    return_value = run(['command', 'arg1', '--foo'], stdout=subprocess.PIPE,
+                       stderr=subprocess.PIPE, check=True)
+    assert return_value == subprocess_run.return_value
+    assert subprocess_run.mock_calls == [
+        call(['command', 'arg1', '--foo'], stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=True)
+    ]
+    assert thread_storage.stdout == 'initial-stdout'
+    assert thread_storage.stderr == 'initial-stderr'
+
+
+@patch('plinth.actions.thread_storage', None)
+@patch('subprocess.run')
+def test_run_no_storage(subprocess_run):
+    """Test running a command without thread storage."""
+    subprocess_run.return_value = Mock()
+    subprocess_run.return_value.stdout = 'test-stdout'
+    subprocess_run.return_value.stderr = 'test-stderr'
+
+    run(['command', 'arg1', '--foo'], check=True)

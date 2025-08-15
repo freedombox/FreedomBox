@@ -13,6 +13,8 @@ from contextlib import contextmanager
 
 import augeas
 
+from . import actions
+
 logger = logging.getLogger(__name__)
 
 UWSGI_ENABLED_PATH = '/etc/uwsgi/apps-enabled/{config_name}.ini'
@@ -797,4 +799,25 @@ def run_as_user(command, username, **kwargs):
     setpriv. Sets real/effective uid/gid and resets the environment.
     """
     command = ['runuser', '--user', username, '--'] + command
-    return subprocess.run(command, **kwargs)
+    return run(command, **kwargs)
+
+
+def run(command, **kwargs):
+    """Run subprocess.run but capture stdout and stderr in thread storage."""
+    collect_stdout = ('stdout' not in kwargs)
+    collect_stderr = ('stderr' not in kwargs)
+
+    if collect_stdout:
+        kwargs['stdout'] = subprocess.PIPE
+
+    if collect_stderr:
+        kwargs['stderr'] = subprocess.PIPE
+
+    process = subprocess.run(command, **kwargs)
+    if collect_stdout and actions.thread_storage:
+        actions.thread_storage.stdout += process.stdout
+
+    if collect_stderr and actions.thread_storage:
+        actions.thread_storage.stderr += process.stderr
+
+    return process

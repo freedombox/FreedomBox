@@ -20,6 +20,8 @@ logger = logging.getLogger(__name__)
 
 socket_path = '/run/freedombox/privileged.socket'
 
+thread_storage = None
+
 
 # An alias for 'str' to mark some strings as sensitive. Sensitive strings are
 # not logged. Use 'type secret_str = str' when Python 3.11 support is no longer
@@ -165,8 +167,8 @@ def _wait_for_server_response(func, module_name, action_name, args, kwargs,
     module = importlib.import_module(return_value['exception']['module'])
     exception_class = getattr(module, return_value['exception']['name'])
     exception = exception_class(*return_value['exception']['args'])
-    exception.stdout = b''
-    exception.stderr = b''
+    exception.stdout = return_value['exception']['stdout'].encode()
+    exception.stderr = return_value['exception']['stderr'].encode()
 
     def _get_html_message():
         """Return an HTML format error that can be shown in messages."""
@@ -356,6 +358,47 @@ class JSONEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
+def _setup_thread_storage():
+    """Setup collection of stdout/stderr from any process in this thread."""
+    global thread_storage
+    thread_storage = threading.local()
+    thread_storage.stdout = b''
+    thread_storage.stderr = b''
+
+
+def _clear_thread_storage():
+    """Cleanup memory used for stdout/stderr from processes in this thread.
+
+    Python documentation is silent on whether thread local storage will be
+    cleaned up after a thread terminates.
+    """
+    global thread_storage
+    if thread_storage:
+        thread_storage.stdout = None
+        thread_storage.stderr = None
+        thread_storage = None
+
+
+def get_return_value_from_exception(exception):
+    """Return the value to return from server when an exception is raised."""
+    return_value = {
+        'result': 'exception',
+        'exception': {
+            'module': type(exception).__module__,
+            'name': type(exception).__name__,
+            'args': exception.args,
+            'traceback': traceback.format_tb(exception.__traceback__),
+            'stdout': '',
+            'stderr': ''
+        }
+    }
+    if thread_storage:
+        return_value['exception']['stdout'] = thread_storage.stdout.decode()
+        return_value['exception']['stderr'] = thread_storage.stderr.decode()
+
+    return return_value
+
+
 def privileged_handle_json_request(
         request_string: str) -> str | io.BufferedReader:
     """Parse arguments for the program spawned as a privileged action."""
@@ -388,6 +431,7 @@ def privileged_handle_json_request(
         logger.info('Received request for %s..%s(..)', request['module'],
                     request['action'])
         arguments = {'args': request['args'], 'kwargs': request['kwargs']}
+        _setup_thread_storage()
         return_value = _privileged_call(request['module'], request['action'],
                                         arguments)
 
@@ -403,15 +447,9 @@ def privileged_handle_json_request(
         else:
             logger.exception(exception)
 
-        return_value = {
-            'result': 'exception',
-            'exception': {
-                'module': type(exception).__module__,
-                'name': type(exception).__name__,
-                'args': exception.args,
-                'traceback': traceback.format_tb(exception.__traceback__)
-            }
-        }
+        return_value = get_return_value_from_exception(exception)
+
+    _clear_thread_storage()
 
     return json.dumps(return_value, cls=JSONEncoder)
 
@@ -461,15 +499,7 @@ def _privileged_call(module_name, action_name, arguments):
 
         return_value = {'result': 'success', 'return': return_values}
     except Exception as exception:
-        return_value = {
-            'result': 'exception',
-            'exception': {
-                'module': type(exception).__module__,
-                'name': type(exception).__name__,
-                'args': exception.args,
-                'traceback': traceback.format_tb(exception.__traceback__)
-            }
-        }
+        return_value = get_return_value_from_exception(exception)
 
     return return_value
 

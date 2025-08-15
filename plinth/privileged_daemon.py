@@ -13,7 +13,6 @@ import socketserver
 import struct
 import sys
 import time
-import traceback
 
 import systemd.daemon
 
@@ -72,15 +71,7 @@ class RequestHandler(socketserver.StreamRequestHandler):
             response_string = actions.privileged_handle_json_request(request)
         except Exception as exception:
             logger.exception('Error running privileged request: %s', exception)
-            response = {
-                'result': 'exception',
-                'exception': {
-                    'module': type(exception).__module__,
-                    'name': type(exception).__name__,
-                    'args': exception.args,
-                    'traceback': traceback.format_tb(exception.__traceback__)
-                }
-            }
+            response = actions.get_return_value_from_exception(exception)
             response_string = json.dumps(response)
 
         self._write_response(response_string)
