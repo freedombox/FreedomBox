@@ -8,7 +8,6 @@ import pathlib
 import re
 import shutil
 import socket
-import subprocess
 import time
 from typing import Any
 
@@ -54,7 +53,7 @@ def _first_time_setup():
     """Setup Tor configuration for the first time setting defaults."""
     logger.info('Performing first time setup for Tor')
 
-    subprocess.run(['tor-instance-create', INSTANCE_NAME], check=True)
+    action_utils.run(['tor-instance-create', INSTANCE_NAME], check=True)
 
     # Remove line starting with +SocksPort, since our augeas lens
     # doesn't handle it correctly.

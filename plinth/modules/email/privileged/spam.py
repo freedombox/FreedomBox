@@ -10,8 +10,8 @@ For testing DKIM signatures: https://www.mail-tester.com/
 
 import pathlib
 import re
-import subprocess
 
+from plinth import action_utils
 from plinth.actions import privileged
 from plinth.modules.email import postfix
 
@@ -31,10 +31,11 @@ def setup_spam():
 
 def _compile_sieve():
     """Compile all .sieve script to binary format for performance."""
-    sieve_dirs = ['/etc/dovecot/freedombox-sieve-after/',
-                  '/etc/dovecot/freedombox-sieve']
+    sieve_dirs = [
+        '/etc/dovecot/freedombox-sieve-after/', '/etc/dovecot/freedombox-sieve'
+    ]
     for sieve_dir in sieve_dirs:
-        subprocess.run(['sievec', sieve_dir], check=True)
+        action_utils.run(['sievec', sieve_dir], check=True)
 
 
 def _setup_rspamd():

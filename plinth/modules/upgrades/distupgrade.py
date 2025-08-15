@@ -5,7 +5,6 @@ import contextlib
 import datetime
 import logging
 import pathlib
-import subprocess
 from datetime import timezone
 from typing import Generator
 
@@ -218,11 +217,11 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
     try:
         logger.info('Taking a snapshot before dist upgrade...')
         command = ['snapper', 'create', '--description', 'before dist-upgrade']
-        subprocess.run(command, check=True)
+        action_utils.run(command, check=True)
         aug = snapshot_module.load_augeas()
         if snapshot_module.is_apt_snapshots_enabled(aug):
             logger.info('Disabling apt snapshots during dist upgrade...')
-            subprocess.run([
+            action_utils.run([
                 '/usr/bin/freedombox-cmd',
                 'snapshot',
                 'disable_apt_snapshot',
@@ -235,7 +234,7 @@ def _snapshot_run_and_disable() -> Generator[None, None, None]:
     finally:
         if reenable:
             logger.info('Re-enabling apt snapshots...')
-            subprocess.run([
+            action_utils.run([
                 '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
             ], input='{"args": ["no"], "kwargs": {}}'.encode(), check=True)
         else:
@@ -303,7 +302,7 @@ def _apt_update():
 def _apt_fix():
     """Try to fix any problems with apt/dpkg before the upgrade."""
     logger.info('Fixing any broken apt/dpkg states...')
-    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    action_utils.run(['dpkg', '--configure', '-a'], check=False)
     _apt_run(['--fix-broken', 'install'])
 
 
@@ -341,7 +340,7 @@ def _unattended_upgrades_run():
     To handle upgrading the freedombox package.
     """
     logger.info('Running unattended-upgrade...')
-    subprocess.run(['unattended-upgrade', '--verbose'], check=False)
+    action_utils.run(['unattended-upgrade', '--verbose'], check=False)
 
 
 def _freedombox_restart():
@@ -360,7 +359,7 @@ def _trigger_on_complete():
     # file will not be possible. For that, we need to launch a new process with
     # a different systemd service (which does not have the bind mounts).
     logger.info('Triggering on-complete to commit sources.lists')
-    subprocess.run([
+    action_utils.run([
         'systemd-run', '--unit=freedombox-dist-upgrade-on-complete',
         '--description=Finish up upgrade to new stable Debian release',
         '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
@@ -417,7 +416,7 @@ def start_service():
         '--property=KillMode=process', '--property=TimeoutSec=72hr',
         f'--property=BindPaths={temp_sources_list}:{sources_list}'
     ]
-    subprocess.run(['systemd-run'] + args + [
+    action_utils.run(['systemd-run'] + args + [
         'systemd-inhibit', '/usr/bin/freedombox-cmd', 'upgrades',
         'dist_upgrade', '--no-args'
     ], check=True)

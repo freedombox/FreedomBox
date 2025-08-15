@@ -3,7 +3,6 @@
 
 import logging
 import os
-import subprocess
 from collections import defaultdict
 from typing import Any
 
@@ -14,7 +13,7 @@ import apt_pkg
 from plinth import action_utils
 from plinth import app as app_module
 from plinth import module_loader
-from plinth.action_utils import run_apt_command
+from plinth.action_utils import run, run_apt_command
 from plinth.actions import privileged
 
 logger = logging.getLogger(__name__)
@@ -61,7 +60,7 @@ def install(app_id: str, packages: list[str], skip_recommends: bool = False,
     if force_missing_configuration:
         extra_arguments += ['-o', 'Dpkg::Options::=--force-confmiss']
 
-    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    run(['dpkg', '--configure', '-a'], check=False)
     with action_utils.apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
         returncode = run_apt_command(['install'] + extra_arguments + packages)
@@ -79,7 +78,7 @@ def remove(app_id: str, packages: list[str], purge: bool):
     except Exception:
         raise PermissionError(f'Packages are not managed: {packages}')
 
-    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    run(['dpkg', '--configure', '-a'], check=False)
     with action_utils.apt_hold_freedombox():
         run_apt_command(['--fix-broken', 'install'])
         options = [] if not purge else ['--purge']

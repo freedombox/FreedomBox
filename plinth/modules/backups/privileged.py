@@ -194,7 +194,7 @@ def _is_mounted(mountpoint):
     cmd = ['mountpoint', '-q', mountpoint]
     # mountpoint exits with status non-zero if it didn't find a mountpoint
     try:
-        subprocess.run(cmd, check=True)
+        action_utils.run(cmd, check=True)
         return True
     except subprocess.CalledProcessError:
         return False

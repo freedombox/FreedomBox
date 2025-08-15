@@ -6,12 +6,14 @@ Uses utilities from 'mysql-client' package such as 'mysql' and 'mysqldump'.
 
 import subprocess
 
+from .. import action_utils
+
 
 def run_query(database_name: str, query: str) -> subprocess.CompletedProcess:
     """Run a database query using 'root' user.
 
     Does not ensure that the database server is running.
     """
-    return subprocess.run(
+    return action_utils.run(
         ['mysql', '--user=root', '--database', database_name],
         input=query.encode('utf-8'), check=True)

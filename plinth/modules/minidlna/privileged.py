@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configure minidlna server."""
 
-import subprocess
 from os import chmod, fdopen, remove, stat
 from shutil import move
 from tempfile import mkstemp
@@ -51,7 +50,7 @@ def setup():
               encoding='utf-8') as conf:
         conf.write(SYSCTL_CONF)
 
-    subprocess.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
+    action_utils.run(['systemctl', 'restart', 'systemd-sysctl'], check=True)
 
 
 @privileged

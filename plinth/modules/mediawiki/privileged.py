@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tempfile
 
+from plinth import action_utils
 from plinth.actions import privileged, secret_str
 from plinth.utils import generate_password
 
@@ -26,8 +27,8 @@ def get_php_command():
     version = ''
 
     try:
-        process = subprocess.run(['dpkg', '-s', 'php'], stdout=subprocess.PIPE,
-                                 check=True)
+        process = action_utils.run(['dpkg', '-s', 'php'],
+                                   stdout=subprocess.PIPE, check=True)
         for line in process.stdout.decode().splitlines():
             if line.startswith('Version:'):
                 version = line.split(':')[-1].split('+')[0].strip()
@@ -57,8 +58,9 @@ def setup():
                 '--scriptpath=/mediawiki', '--passfile',
                 password_file_handle.name, 'Wiki', 'admin'
             ])
-    subprocess.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
-    subprocess.run(['chown', '-R', 'www-data:www-data', data_dir], check=True)
+    action_utils.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
+    action_utils.run(['chown', '-R', 'www-data:www-data', data_dir],
+                     check=True)
 
     conf_file = pathlib.Path(CONF_FILE)
     if not conf_file.exists():

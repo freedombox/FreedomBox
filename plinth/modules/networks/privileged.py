@@ -52,7 +52,7 @@ def _add_connection(connection_name: str, interface: str,
         logging.info('Connection %s already exists for device %s, not adding.',
                      connection_name, interface)
     else:
-        subprocess.run([
+        action_utils.run([
             'nmcli', 'con', 'add', 'con-name', connection_name, 'ifname',
             interface
         ] + remaining_arguments, check=True)
@@ -108,8 +108,9 @@ def _set_connection_properties(connection_name: str, properties: dict[str,
                                                                       str]):
     """Configure property key/values on a connection."""
     for key, value in properties.items():
-        subprocess.run(['nmcli', 'con', 'modify', connection_name, key, value],
-                       check=True)
+        action_utils.run(
+            ['nmcli', 'con', 'modify', connection_name, key, value],
+            check=True)
 
 
 def _configure_wireless_interface(interface: str):

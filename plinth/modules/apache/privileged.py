@@ -5,7 +5,6 @@ import glob
 import os
 import pathlib
 import re
-import subprocess
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -62,14 +61,14 @@ def setup(old_version: int):
     # version of Apache FreedomBox app and setting up for the first time don't
     # regenerate.
     if action_utils.is_disk_image() and old_version == 0:
-        subprocess.run([
+        action_utils.run([
             'make-ssl-cert', 'generate-default-snakeoil', '--force-overwrite'
         ], check=True)
     # In case the certificate has been removed after ssl-cert is installed
     # on a fresh Debian machine.
     elif not os.path.exists('/etc/ssl/certs/ssl-cert-snakeoil.pem'):
-        subprocess.run(['make-ssl-cert', 'generate-default-snakeoil'],
-                       check=True)
+        action_utils.run(['make-ssl-cert', 'generate-default-snakeoil'],
+                         check=True)
 
     with action_utils.WebserverChange() as webserver:
         # Disable mod_php as we have switched to mod_fcgi + php-fpm. Disable

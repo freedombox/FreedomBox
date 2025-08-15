@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import time
 
+from plinth import action_utils
 from plinth.actions import privileged
 
 DATA_DIR = '/var/lib/infinoted'
@@ -105,7 +106,7 @@ def _kill_daemon():
     end_time = time.time() + 300
     while time.time() < end_time:
         try:
-            subprocess.run(['infinoted', '--kill-daemon'], check=True)
+            action_utils.run(['infinoted', '--kill-daemon'], check=True)
             break
         except subprocess.CalledProcessError:
             pass
@@ -129,13 +130,13 @@ def setup():
     try:
         grp.getgrnam('infinoted')
     except KeyError:
-        subprocess.run(['addgroup', '--system', 'infinoted'], check=True)
+        action_utils.run(['addgroup', '--system', 'infinoted'], check=True)
 
     # Create infinoted user if needed.
     try:
         pwd.getpwnam('infinoted')
     except KeyError:
-        subprocess.run([
+        action_utils.run([
             'adduser', '--system', '--ingroup', 'infinoted', '--home',
             DATA_DIR, '--gecos', 'Infinoted collaborative editing server',
             'infinoted'
@@ -151,7 +152,7 @@ def setup():
         try:
             # infinoted doesn't have a "create key and exit" mode. Run as
             # daemon so we can stop after.
-            subprocess.run([
+            action_utils.run([
                 'infinoted', '--create-key', '--create-certificate',
                 '--daemonize'
             ], check=True)

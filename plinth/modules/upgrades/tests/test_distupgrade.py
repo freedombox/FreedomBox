@@ -219,7 +219,7 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
-                 check=True)
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         ]
         run.reset_mock()
 
@@ -230,16 +230,18 @@ def test_snapshot_run_and_disable(is_supported, is_apt_snapshots_enabled, run):
     with distupgrade._snapshot_run_and_disable():
         assert run.call_args_list == [
             call(['snapper', 'create', '--description', 'before dist-upgrade'],
-                 check=True),
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True),
             call([
                 '/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'
-            ], input=b'{"args": ["yes"], "kwargs": {}}', check=True)
+            ], input=b'{"args": ["yes"], "kwargs": {}}',
+                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         ]
         run.reset_mock()
 
     assert run.call_args_list == [
         call(['/usr/bin/freedombox-cmd', 'snapshot', 'disable_apt_snapshot'],
-             input=b'{"args": ["no"], "kwargs": {}}', check=True)
+             input=b'{"args": ["no"], "kwargs": {}}', stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=True)
     ]
 
 
@@ -278,8 +280,10 @@ def test_apt_hold_packages(check_output, check_call, run, tmp_path):
             expected_call = [call(['apt-mark', 'hold', 'freedombox'])]
             assert check_call.call_args_list == expected_call
             expected_calls = [
-                call(['apt-mark', 'hold', 'package1'], check=False),
-                call(['apt-mark', 'hold', 'package2'], check=False)
+                call(['apt-mark', 'hold', 'package1'], stdout=subprocess.PIPE,
+                     stderr=subprocess.PIPE, check=False),
+                call(['apt-mark', 'hold', 'package2'], stdout=subprocess.PIPE,
+                     stderr=subprocess.PIPE, check=False)
             ]
             assert run.call_args_list == expected_calls
             check_call.reset_mock()
@@ -340,7 +344,8 @@ def test_apt_fix(run, apt_run):
     """Test that apt fixes work."""
     distupgrade._apt_fix()
     assert run.call_args_list == [
-        call(['dpkg', '--configure', '-a'], check=False)
+        call(['dpkg', '--configure', '-a'], stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE, check=False)
     ]
     assert apt_run.call_args_list == [call(['--fix-broken', 'install'])]
 
@@ -365,7 +370,9 @@ def test_apt_full_upgrade(apt_run):
 def test_unatteneded_upgrades_run(run):
     """Test that running unattended upgrades works."""
     distupgrade._unattended_upgrades_run()
-    run.assert_called_with(['unattended-upgrade', '--verbose'], check=False)
+    run.assert_called_with(['unattended-upgrade', '--verbose'],
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                           check=False)
 
 
 @patch('plinth.action_utils.service_restart')
@@ -384,7 +391,7 @@ def test_trigger_on_complete(run):
         '--description=Finish up upgrade to new stable Debian release',
         '/usr/bin/freedombox-cmd', 'upgrades', 'dist_upgrade_on_complete',
         '--no-args'
-    ], check=True)
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
 
 def test_on_complete(tmp_path):

@@ -6,7 +6,6 @@ import pathlib
 import random
 import shutil
 import string
-import subprocess
 
 import augeas
 
@@ -90,8 +89,8 @@ def _create_database(db_name):
     # Wordpress' install.php creates the tables.
     # SQL injection is avoided due to known input.
     query = f'''CREATE DATABASE {db_name};'''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    action_utils.run(['mysql', '--user', 'root'], input=query.encode(),
+                     check=True)
 
 
 def _set_privileges(db_host, db_name, db_user, db_password):
@@ -103,8 +102,8 @@ def _set_privileges(db_host, db_name, db_user, db_password):
   IDENTIFIED BY '{db_password}';
 FLUSH PRIVILEGES;
 '''
-    subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                   check=True)
+    action_utils.run(['mysql', '--user', 'root'], input=query.encode(),
+                     check=True)
 
 
 def _generate_secret_key(length=64, chars=None):
@@ -146,7 +145,7 @@ def dump_database():
     _db_backup_file.parent.mkdir(parents=True, exist_ok=True)
     with action_utils.service_ensure_running('mysql'):
         with _db_backup_file.open('w', encoding='utf-8') as file_handle:
-            subprocess.run([
+            action_utils.run([
                 'mysqldump', '--add-drop-database', '--add-drop-table',
                 '--add-drop-trigger', '--user', 'root', '--databases', DB_NAME
             ], stdout=file_handle, check=True)
@@ -157,8 +156,8 @@ def restore_database():
     """Restore database from file."""
     with action_utils.service_ensure_running('mysql'):
         with _db_backup_file.open('r', encoding='utf-8') as file_handle:
-            subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                           check=True)
+            action_utils.run(['mysql', '--user', 'root'], stdin=file_handle,
+                             check=True)
 
         _set_privileges(DB_HOST, DB_NAME, DB_USER, _read_db_password())
 
@@ -192,9 +191,9 @@ def _drop_database(db_host, db_name, db_user):
     """Drop the mysql database that was created during install."""
     with action_utils.service_ensure_running('mysql'):
         query = f"DROP DATABASE {db_name};"
-        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                       check=False)
+        action_utils.run(['mysql', '--user', 'root'], input=query.encode(),
+                         check=False)
 
         query = f"DROP USER IF EXISTS {db_user}@{db_host};"
-        subprocess.run(['mysql', '--user', 'root'], input=query.encode(),
-                       check=False)
+        action_utils.run(['mysql', '--user', 'root'], input=query.encode(),
+                         check=False)

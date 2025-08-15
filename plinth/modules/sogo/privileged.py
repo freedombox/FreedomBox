@@ -7,7 +7,7 @@ import shutil
 import subprocess
 import tempfile
 
-from plinth import utils
+from plinth import action_utils, utils
 from plinth.actions import privileged
 from plinth.db import postgres
 from plinth.modules.email.privileged.domain import \
@@ -144,8 +144,8 @@ def set_domain(domain: str):
 
 def _get_config_value(key: str) -> str:
     """Return the value of a property from the configuration file."""
-    process = subprocess.run(['plget', key], input=CONFIG_FILE.read_bytes(),
-                             stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(['plget', key], input=CONFIG_FILE.read_bytes(),
+                               stdout=subprocess.PIPE, check=True)
     return process.stdout.decode().strip()
 
 
@@ -154,7 +154,7 @@ def _set_config_value(key: str, value: str):
     with tempfile.NamedTemporaryFile(delete=False) as temp_file:
         temp_file.write(f'{{\n{key} = "{value}";\n}}'.encode('utf-8'))
         temp_file.close()
-        subprocess.run(['plmerge', CONFIG_FILE, temp_file.name], check=True)
+        action_utils.run(['plmerge', CONFIG_FILE, temp_file.name], check=True)
         pathlib.Path(temp_file.name).unlink()
 
 

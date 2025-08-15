@@ -6,7 +6,6 @@ Uses utilities from 'postgres' package such as 'psql' and 'pg_dump'.
 
 import os
 import pathlib
-import subprocess
 
 from plinth import action_utils
 
@@ -14,7 +13,7 @@ from plinth import action_utils
 def _run_as(command, **kwargs):
     """Run a command as 'postgres' user."""
     command = ['sudo', '--user', 'postgres'] + command
-    return subprocess.run(command, check=True, **kwargs)
+    return action_utils.run(command, check=True, **kwargs)
 
 
 def run_query(query):

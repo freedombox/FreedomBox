@@ -79,7 +79,8 @@ def _run_in_container(
     env_args = [f'--env={key}={value}' for key, value in (env or {}).items()]
     command = ['podman', 'exec', '--user', WWW_DATA_UID
                ] + env_args + [CONTAINER_NAME] + list(args)
-    return subprocess.run(command, capture_output=capture_output, check=check)
+    return action_utils.run(command, capture_output=capture_output,
+                            check=check)
 
 
 def _run_occ(*args, **kwargs) -> subprocess.CompletedProcess:
@@ -174,7 +175,7 @@ def set_default_phone_region(region: str):
 
 def _database_query(query: str):
     """Run a database query."""
-    subprocess.run(['mysql'], input=query.encode(), check=True)
+    action_utils.run(['mysql'], input=query.encode(), check=True)
 
 
 def _create_database():
@@ -239,7 +240,7 @@ def _nextcloud_wait_until_ready():
     # obtaining. We are unable to obtain the lock for 5 minutes, fail and stop
     # the setup process.
     lock_file = _data_path / 'nextcloud-init-sync.lock'
-    subprocess.run(
+    action_utils.run(
         ['flock', '--exclusive', '--wait', '300', lock_file, 'echo'],
         check=True)
 
@@ -362,7 +363,7 @@ def dump_database():
 
     with _maintenance_mode():
         with DB_BACKUP_FILE.open('w', encoding='utf-8') as file_handle:
-            subprocess.run([
+            action_utils.run([
                 'mysqldump', '--add-drop-database', '--add-drop-table',
                 '--add-drop-trigger', '--single-transaction',
                 '--default-character-set=utf8mb4', '--user', 'root',
@@ -374,11 +375,11 @@ def dump_database():
 def restore_database():
     """Restore database from file."""
     with DB_BACKUP_FILE.open('r', encoding='utf-8') as file_handle:
-        subprocess.run(['mysql', '--user', 'root'], stdin=file_handle,
-                       check=True)
+        action_utils.run(['mysql', '--user', 'root'], stdin=file_handle,
+                         check=True)
 
-    subprocess.run(['redis-cli', '-n',
-                    str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
+    action_utils.run(['redis-cli', '-n',
+                      str(REDIS_DB), 'FLUSHDB', 'SYNC'], check=False)
 
     _set_database_privileges(_get_database_password())
 

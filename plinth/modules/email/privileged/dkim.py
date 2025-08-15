@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 
+from plinth import action_utils
 from plinth.actions import privileged
 from plinth.privileged import service as service_privileged
 
@@ -54,7 +55,7 @@ def setup_dkim(domain: str):
 
     # Ed25519 is widely *not* accepted as of 2022-01. See:
     # https://serverfault.com/questions/1023674
-    subprocess.run([
+    action_utils.run([
         'rspamadm', 'dkim_keygen', '-t', 'rsa', '-b', '2048', '-s', 'dkim',
         '-d', domain, '-k', (str(key_file))
     ], check=True)

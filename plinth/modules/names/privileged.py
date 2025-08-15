@@ -2,7 +2,6 @@
 """Configure Names App."""
 
 import pathlib
-import subprocess
 
 import augeas
 
@@ -22,7 +21,7 @@ HOSTS_LOCAL_IP = '127.0.1.1'
 @privileged
 def set_hostname(hostname: str):
     """Set system hostname using hostnamectl."""
-    subprocess.run(
+    action_utils.run(
         ['hostnamectl', 'set-hostname', '--transient', '--static', hostname],
         check=True)
     action_utils.service_restart('avahi-daemon')
@@ -83,7 +82,7 @@ def domain_delete_all():
 def install_resolved():
     """Install systemd-resolved related packages."""
     packages = ['systemd-resolved', 'libnss-resolve']
-    subprocess.run(['dpkg', '--configure', '-a'], check=False)
+    action_utils.run(['dpkg', '--configure', '-a'], check=False)
     with action_utils.apt_hold_freedombox():
         action_utils.run_apt_command(['--fix-broken', 'install'])
         returncode = action_utils.run_apt_command(['install'] + packages)

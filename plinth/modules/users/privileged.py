@@ -68,7 +68,7 @@ def first_setup():
 def setup():
     """Setup LDAP."""
     # Update pam config for mkhomedir.
-    subprocess.run(['pam-auth-update', '--package'], check=True)
+    action_utils.run(['pam-auth-update', '--package'], check=True)
 
     _configure_ldapscripts()
 
@@ -145,7 +145,7 @@ def _create_organizational_unit(unit):
     """Create an organizational unit in LDAP."""
     distinguished_name = 'ou={unit},dc=thisbox'.format(unit=unit)
     try:
-        subprocess.run([
+        action_utils.run([
             'ldapsearch', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-s',
             'base', '-b', distinguished_name, '(objectclass=*)'
         ], stdout=subprocess.DEVNULL, check=True)
@@ -156,14 +156,14 @@ dn: ou={unit},dc=thisbox
 objectClass: top
 objectClass: organizationalUnit
 ou: {unit}'''.format(unit=unit)
-        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-                       input=input.encode(), stdout=subprocess.DEVNULL,
-                       check=True)
+        action_utils.run(
+            ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
+            input=input.encode(), stdout=subprocess.DEVNULL, check=True)
 
 
 def _setup_admin():
     """Remove LDAP admin password and Allow root to modify the users."""
-    process = subprocess.run([
+    process = action_utils.run([
         'ldapsearch', '-Q', '-L', '-L', '-L', '-Y', 'EXTERNAL', '-H',
         'ldapi:///', '-s', 'base', '-b', 'olcDatabase={1}mdb,cn=config',
         '(objectclass=*)', 'olcRootDN', 'olcRootPW'
@@ -175,7 +175,7 @@ def _setup_admin():
             ldap_object[line[0]] = line[1]
 
     if 'olcRootPW' in ldap_object:
-        subprocess.run(
+        action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
             check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
@@ -184,7 +184,7 @@ delete: olcRootPW''')
 
     root_dn = 'gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth'
     if ldap_object['olcRootDN'] != root_dn:
-        subprocess.run(
+        action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
             check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: olcDatabase={1}mdb,cn=config
@@ -205,7 +205,7 @@ def _setup_ldap_ppolicy() -> bool:
     """
     # Load ppolicy module
     try:
-        subprocess.run(
+        action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
             check=True, stdout=subprocess.DEVNULL, input=b'''
 dn: cn=module{0},cn=config
@@ -218,7 +218,7 @@ olcModuleLoad: ppolicy''')
 
     # Add namedobject schema needed for 'objectClass: namedPolicy'.
     try:
-        subprocess.run([
+        action_utils.run([
             'ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-f',
             '/etc/ldap/schema/namedobject.ldif'
         ], check=True, stdout=subprocess.DEVNULL)
@@ -228,8 +228,9 @@ olcModuleLoad: ppolicy''')
 
     # Set up default password policy
     try:
-        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-                       check=True, stdout=subprocess.DEVNULL, input=b'''
+        action_utils.run(
+            ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'], check=True,
+            stdout=subprocess.DEVNULL, input=b'''
 dn: cn=DefaultPPolicy,ou=policies,dc=thisbox
 cn: DefaultPPolicy
 objectClass: pwdPolicy
@@ -243,8 +244,9 @@ pwdLockout: TRUE''')
 
     # Make DefaultPPolicy as a default ppolicy overlay
     try:
-        subprocess.run(['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-                       check=True, stdout=subprocess.DEVNULL, input=b'''
+        action_utils.run(
+            ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'], check=True,
+            stdout=subprocess.DEVNULL, input=b'''
 dn: olcOverlay={0}ppolicy,olcDatabase={1}mdb,cn=config
 objectClass: olcOverlayConfig
 objectClass: olcPPolicyConfig
@@ -463,9 +465,9 @@ def _set_samba_user(username, password):
 
     If a user already exists, update password.
     """
-    proc = subprocess.run(['smbpasswd', '-a', '-s', username],
-                          input='{0}\n{0}\n'.format(password).encode(),
-                          stderr=subprocess.PIPE, check=False)
+    proc = action_utils.run(['smbpasswd', '-a', '-s', username],
+                            input='{0}\n{0}\n'.format(password).encode(),
+                            stderr=subprocess.PIPE, check=False)
     if proc.returncode != 0:
         raise RuntimeError('Unable to add Samba user: ', proc.stderr)
 
@@ -684,7 +686,7 @@ def set_user_status(username: str, status: str, auth_user: str,
     if status == 'inactive':
         # Kill all user processes. This includes disconnectiong ssh, samba and
         # cockpit sessions.
-        subprocess.run(['pkill', '--signal', 'KILL', '--uid', username])
+        action_utils.run(['pkill', '--signal', 'KILL', '--uid', username])
 
 
 def _upgrade_inactivate_users(usernames: list[str]):
@@ -695,7 +697,7 @@ def _upgrade_inactivate_users(usernames: list[str]):
     _flush_cache()
 
     for username in usernames:
-        subprocess.run(['pkill', '--signal', 'KILL', '--uid', username])
+        action_utils.run(['pkill', '--signal', 'KILL', '--uid', username])
 
 
 def _flush_cache():
@@ -708,4 +710,4 @@ def _run(arguments, check=True, **kwargs):
     env = dict(os.environ, LDAPSCRIPTS_CONF=LDAPSCRIPTS_CONF)
     kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
     kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
-    return subprocess.run(arguments, env=env, check=check, **kwargs)
+    return action_utils.run(arguments, env=env, check=check, **kwargs)

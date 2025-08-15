@@ -21,13 +21,13 @@ def setup(old_version: int):
     """Configure snapper."""
     # Check if root config exists.
     command = ['snapper', 'list-configs']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
     output = process.stdout.decode()
 
     # Create root config if needed.
     if 'root' not in output:
         command = ['snapper', 'create-config', '/']
-        subprocess.run(command, check=True)
+        action_utils.run(command, check=True)
 
     if old_version and old_version <= 4:
         _remove_fstab_entry('/')
@@ -76,7 +76,7 @@ def _migrate_config_from_version_3():
         'EMPTY_PRE_POST_MIN_AGE=0',
         'FREE_LIMIT=0.3',
     ]
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 def _set_default_config():
@@ -98,7 +98,7 @@ def _set_default_config():
         'EMPTY_PRE_POST_MIN_AGE=0',
         'FREE_LIMIT=0.3',
     ]
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 def _remove_fstab_entry(mount_point):
@@ -137,16 +137,17 @@ def _remove_fstab_entry(mount_point):
 
 def _systemd_path_escape(path):
     """Escape a string using systemd path rules."""
-    process = subprocess.run(['systemd-escape', '--path', path],
-                             stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(['systemd-escape', '--path', path],
+                               stdout=subprocess.PIPE, check=True)
     return process.stdout.decode().strip()
 
 
 def _get_subvolume_path(mount_point):
     """Return the subvolume path for .snapshots in a filesystem."""
     # -o causes the list of subvolumes directly under the given mount point
-    process = subprocess.run(['btrfs', 'subvolume', 'list', '-o', mount_point],
-                             stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(
+        ['btrfs', 'subvolume', 'list', '-o', mount_point],
+        stdout=subprocess.PIPE, check=True)
     for line in process.stdout.decode().splitlines():
         entry = line.split()
 
@@ -223,8 +224,8 @@ def _parse_number(number):
 @privileged
 def list_() -> list[dict[str, str]]:
     """List snapshots."""
-    process = subprocess.run(['snapper', 'list'], stdout=subprocess.PIPE,
-                             check=True)
+    process = action_utils.run(['snapper', 'list'], stdout=subprocess.PIPE,
+                               check=True)
     lines = process.stdout.decode().splitlines()
 
     keys = ('number', 'is_default', 'is_active', 'type', 'pre_number', 'date',
@@ -246,7 +247,7 @@ def list_() -> list[dict[str, str]]:
 def _get_default_snapshot():
     """Return the default snapshot by looking at default subvolume."""
     command = ['btrfs', 'subvolume', 'get-default', '/']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
     output = process.stdout.decode()
 
     output_parts = output.split()
@@ -277,26 +278,26 @@ def disable_apt_snapshot(state: str):
 def create():
     """Create snapshot."""
     command = ['snapper', 'create', '--description', 'manually created']
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 @privileged
 def delete(number: str):
     """Delete a snapshot by number."""
     command = ['snapper', 'delete', number]
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 @privileged
 def set_config(config: list[str]):
     """Set snapper configuration."""
     command = ['snapper', 'set-config'] + config
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 def _get_config():
     command = ['snapper', 'get-config']
-    process = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
     lines = process.stdout.decode().splitlines()
     config = {}
     for line in lines[2:]:
@@ -345,4 +346,4 @@ def rollback(number: str):
     # behavior when a snapshot number to rollback to is provided is the
     # behavior that we desire.
     command = ['snapper', '--ambit', 'classic', 'rollback', number]
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)

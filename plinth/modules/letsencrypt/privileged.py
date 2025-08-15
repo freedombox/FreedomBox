@@ -115,7 +115,7 @@ def revoke(domain: str):
         if TEST_MODE:
             command.append('--staging')
 
-        subprocess.run(command, check=True)
+        action_utils.run(command, check=True)
 
     action_utils.webserver_disable(domain, kind='site')
 
@@ -132,7 +132,7 @@ def obtain(domain: str):
     if TEST_MODE:
         command.append('--staging')
 
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
 
 
 @privileged
@@ -249,5 +249,5 @@ def _assert_managed_path(module, path):
 def delete(domain: str):
     """Disable a domain and delete the certificate."""
     command = ['certbot', 'delete', '--non-interactive', '--cert-name', domain]
-    subprocess.run(command, check=True)
+    action_utils.run(command, check=True)
     action_utils.webserver_disable(domain, kind='site')
