@@ -104,8 +104,8 @@ def _setup_firewall():
             'firewall-cmd', '--zone', 'internal',
             '--{}-interface'.format(operation), interface
         ]
-        subprocess.call(command)
-        subprocess.call(command + ['--permanent'])
+        action_utils.run(command, check=False)
+        action_utils.run(command + ['--permanent'], check=False)
 
     def _is_tunplus_enabled():
         """Return whether tun+ interface is already added."""
