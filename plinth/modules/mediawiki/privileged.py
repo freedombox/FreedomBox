@@ -52,12 +52,12 @@ def setup():
         with tempfile.NamedTemporaryFile() as password_file_handle:
             password_file_handle.write(password.encode())
             password_file_handle.flush()
-            subprocess.check_call([
+            action_utils.run([
                 get_php_command(), install_script, '--confpath=/etc/mediawiki',
                 '--dbtype=sqlite', '--dbpath=' + data_dir,
                 '--scriptpath=/mediawiki', '--passfile',
                 password_file_handle.name, 'Wiki', 'admin'
-            ])
+            ], check=True)
     action_utils.run(['chmod', '-R', 'o-rwx', data_dir], check=True)
     action_utils.run(['chown', '-R', 'www-data:www-data', data_dir],
                      check=True)
@@ -102,17 +102,17 @@ def change_password(username: str, password: secret_str):
     change_password_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                           'changePassword.php')
 
-    subprocess.check_call([
+    action_utils.run([
         get_php_command(), change_password_script, '--user', username,
         '--password', password
-    ])
+    ], check=True)
 
 
 @privileged
 def update():
     """Run update.php maintenance script when version upgrades happen."""
     update_script = os.path.join(MAINTENANCE_SCRIPTS_DIR, 'update.php')
-    subprocess.check_call([get_php_command(), update_script, '--quick'])
+    action_utils.run([get_php_command(), update_script, '--quick'], check=True)
 
 
 def _update_setting(setting_name, setting_line):
@@ -180,7 +180,7 @@ def set_default_language(language: str):
     # languages.
     rebuild_messages_script = os.path.join(MAINTENANCE_SCRIPTS_DIR,
                                            'rebuildmessages.php')
-    subprocess.check_call([get_php_command(), rebuild_messages_script])
+    action_utils.run([get_php_command(), rebuild_messages_script], check=True)
 
 
 @privileged

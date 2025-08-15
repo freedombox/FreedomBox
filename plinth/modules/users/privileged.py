@@ -339,14 +339,14 @@ def _get_samba_users():
 def _delete_samba_user(username):
     """Delete a Samba user."""
     if username in _get_samba_users():
-        subprocess.check_call(['smbpasswd', '-x', username])
+        action_utils.run(['smbpasswd', '-x', username], check=True)
         _disconnect_samba_user(username)
 
 
 def _disconnect_samba_user(username):
     """Disconnect a Samba user."""
     try:
-        subprocess.check_call(['pkill', '-U', username, 'smbd'])
+        action_utils.run(['pkill', '-U', username, 'smbd'], check=True)
     except subprocess.CalledProcessError as error:
         if error.returncode != 1:
             raise
@@ -679,7 +679,7 @@ def set_user_status(username: str, status: str, auth_user: str,
 
     # Set user status in Samba password database
     if username in _get_samba_users():
-        subprocess.check_call(['smbpasswd', smbpasswd_flag, username])
+        action_utils.run(['smbpasswd', smbpasswd_flag, username], check=True)
 
     _flush_cache()
 

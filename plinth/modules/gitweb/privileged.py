@@ -57,8 +57,8 @@ def _get_global_default_branch():
 
 def _set_global_default_branch(name):
     """Configure default branch name globally."""
-    subprocess.check_call(
-        ['git', 'config', '--global', 'init.defaultBranch', name])
+    action_utils.run(['git', 'config', '--global', 'init.defaultBranch', name],
+                     check=True)
 
 
 def _clone_with_progress_report(url, repo_dir):
@@ -166,9 +166,9 @@ def _clone_repo(url: str, description: str, owner: str, keep_ownership: bool):
 
     shutil.rmtree(repo_temp_path)
     if not keep_ownership:
-        subprocess.check_call(
+        action_utils.run(
             ['chown', '-R', f'{REPO_DIR_OWNER}:{REPO_DIR_OWNER}', repo],
-            cwd=GIT_REPO_PATH)
+            cwd=GIT_REPO_PATH, check=True)
 
     _set_repo_description(repo, description)
     _set_repo_owner(repo, owner)
@@ -178,12 +178,12 @@ def _create_repo(repo: str, description: str, owner: str, is_private: bool,
                  keep_ownership: bool):
     """Create an empty repository."""
     try:
-        subprocess.check_call(['git', 'init', '-q', '--bare', repo],
-                              cwd=GIT_REPO_PATH)
+        action_utils.run(['git', 'init', '-q', '--bare', repo],
+                         cwd=GIT_REPO_PATH, check=True)
         if not keep_ownership:
-            subprocess.check_call(
+            action_utils.run(
                 ['chown', '-R', f'{REPO_DIR_OWNER}:{REPO_DIR_OWNER}', repo],
-                cwd=GIT_REPO_PATH)
+                cwd=GIT_REPO_PATH, check=True)
         _set_repo_description(repo, description)
         _set_repo_owner(repo, owner)
         if is_private:
@@ -372,8 +372,8 @@ def repo_exists(url: str) -> bool:
     url = validate_repo_url(url)
     env = dict(os.environ, GIT_TERMINAL_PROMPT='0')
     try:
-        subprocess.check_call(['git', 'ls-remote', url, 'HEAD'], timeout=10,
-                              env=env)
+        action_utils.run(['git', 'ls-remote', url, 'HEAD'], timeout=10,
+                         env=env, check=True)
         return True
     except subprocess.CalledProcessError:
         return False

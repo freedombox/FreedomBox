@@ -511,7 +511,7 @@ def apt_hold(packages):
         yield held_packages
     finally:
         for package in held_packages:
-            subprocess.check_call(['apt-mark', 'unhold', package])
+            run(['apt-mark', 'unhold', package], check=True)
 
 
 @contextmanager
@@ -527,7 +527,7 @@ def apt_hold_freedombox():
             # Set the flag.
             apt_hold_flag.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
             apt_hold_flag.touch(mode=0o660)
-            yield subprocess.check_call(['apt-mark', 'hold', 'freedombox'])
+            yield run(['apt-mark', 'hold', 'freedombox'], check=True)
     finally:
         # Was the package held, either in this process or a previous one?
         if not current_hold or apt_hold_flag.exists():

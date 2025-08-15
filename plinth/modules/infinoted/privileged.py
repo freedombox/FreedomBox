@@ -124,7 +124,7 @@ def setup():
     with open(SYSTEMD_SERVICE_PATH, 'w', encoding='utf-8') as file_handle:
         file_handle.write(SYSTEMD_SERVICE)
 
-    subprocess.check_call(['systemctl', 'daemon-reload'])
+    action_utils.service_daemon_reload()
 
     # Create infinoted group if needed.
     try:
