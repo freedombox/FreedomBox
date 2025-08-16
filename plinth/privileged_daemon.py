@@ -84,8 +84,8 @@ class Server(socketserver.ThreadingUnixStreamServer):
     or root will be denied.
 
     If the server does not receive a request for idle_shutdown_time seconds and
-    no requests are being processed, then serve_forever() will raise TimeoutError
-    (so that the program can catch it and exit).
+    no requests are being processed, then serve_forever() will raise
+    TimeoutError (so that the program can catch it and exit).
 
     If the daemon is spawned by systemd socket activation, then systemd
     provided socket is re-used (no bind() and listen() calls are made on it)

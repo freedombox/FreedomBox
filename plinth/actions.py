@@ -506,9 +506,8 @@ def privileged_handle_json_request(request_string: str) -> str:
             if parameter not in request:
                 raise TypeError(f'Missing required parameter "{parameter}"')
             if not isinstance(request[parameter], expected_type):
-                raise TypeError(
-                    f'Parameter "{parameter}" must be of type {expected_type.__name__}'
-                )
+                raise TypeError(f'Parameter "{parameter}" must be of type'
+                                f'{expected_type.__name__}')
 
         return request
 
