@@ -825,8 +825,10 @@ def run_as_user(command, username, **kwargs):
 
 def run(command, **kwargs):
     """Run subprocess.run but capture stdout and stderr in thread storage."""
-    collect_stdout = ('stdout' not in kwargs)
-    collect_stderr = ('stderr' not in kwargs)
+    collect_stdout = ('stdout' not in kwargs
+                      and 'capture_output' not in kwargs)
+    collect_stderr = ('stderr' not in kwargs
+                      and 'capture_output' not in kwargs)
 
     if collect_stdout:
         kwargs['stdout'] = subprocess.PIPE
