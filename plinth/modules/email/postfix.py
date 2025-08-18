@@ -111,7 +111,7 @@ def _run(args):
     Raise a RuntimeError on non-zero exit codes.
     """
     try:
-        result = action_utils.run(args, check=True, capture_output=True)
+        result = action_utils.run(args, check=True)
         return result.stdout.decode()
     except subprocess.SubprocessError as subprocess_error:
         raise RuntimeError('Subprocess failed') from subprocess_error

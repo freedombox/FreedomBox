@@ -7,7 +7,6 @@ See: https://rspamd.com/doc/modules/dkim_signing.html
 import pathlib
 import re
 import shutil
-import subprocess
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -33,8 +32,7 @@ def get_dkim_public_key(domain: str) -> str:
     key_file = _keys_dir / f'{domain}.dkim.key'
     output = action_utils.run(
         ['openssl', 'rsa', '-in',
-         str(key_file), '-pubout'], stderr=subprocess.DEVNULL,
-        check=True).stdout
+         str(key_file), '-pubout'], check=True).stdout
     return ''.join(output.decode().splitlines()[1:-1])
 
 

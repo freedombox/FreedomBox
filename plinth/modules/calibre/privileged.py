@@ -3,7 +3,6 @@
 
 import pathlib
 import shutil
-import subprocess
 
 from plinth import action_utils
 from plinth.actions import privileged
@@ -30,7 +29,7 @@ def create_library(name: str):
     library.mkdir(mode=0o755)  # Raise exception if already exists
     action_utils.run(
         ['calibredb', '--with-library', library, 'list_categories'],
-        stdout=subprocess.DEVNULL, check=False)
+        check=False)
 
     # Force systemd StateDirectory= logic to assign proper ownership to the
     # DynamicUser=

@@ -4,7 +4,6 @@
 import pathlib
 import re
 import shutil
-import subprocess
 import tempfile
 
 from plinth import action_utils, utils
@@ -145,7 +144,7 @@ def set_domain(domain: str):
 def _get_config_value(key: str) -> str:
     """Return the value of a property from the configuration file."""
     process = action_utils.run(['plget', key], input=CONFIG_FILE.read_bytes(),
-                               stdout=subprocess.PIPE, check=True)
+                               check=True)
     return process.stdout.decode().strip()
 
 

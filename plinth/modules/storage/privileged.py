@@ -90,8 +90,7 @@ def _resize_ext4(device, requested_partition, _free_space, _mount_point):
                                              requested_partition['number'])
     try:
         command = ['resize2fs', partition_device]
-        action_utils.run(command, stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError as exception:
         raise RuntimeError(f'Error expanding filesystem: {exception}')
 
@@ -100,7 +99,7 @@ def _resize_btrfs(_device, _requested_partition, _free_space, mount_point='/'):
     """Resize a btrfs file system inside a partition."""
     try:
         command = ['btrfs', 'filesystem', 'resize', 'max', mount_point]
-        action_utils.run(command, stdout=subprocess.DEVNULL, check=True)
+        action_utils.run(command, check=True)
     except subprocess.CalledProcessError as exception:
         raise RuntimeError(f'Error expanding filesystem: {exception}')
 
@@ -167,7 +166,7 @@ def _get_partitions_and_free_spaces(device, partition_number):
     command = [
         'parted', '--machine', '--script', device, 'unit', 'B', 'print', 'free'
     ]
-    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, check=True)
 
     requested_partition = None
     free_spaces = []

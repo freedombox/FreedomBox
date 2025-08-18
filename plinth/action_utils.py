@@ -33,8 +33,7 @@ def is_systemd_running():
 
 def systemd_get_default() -> str:
     """Return the default target that systemd will boot into."""
-    process = run(['systemctl', 'get-default'], stdout=subprocess.PIPE,
-                  check=True)
+    process = run(['systemctl', 'get-default'], check=True)
     return process.stdout.decode().strip()
 
 
@@ -45,7 +44,7 @@ def systemd_set_default(target: str):
 
 def service_daemon_reload():
     """Reload systemd to ensure that newer unit files are read."""
-    run(['systemctl', 'daemon-reload'], check=True, stdout=subprocess.DEVNULL)
+    run(['systemctl', 'daemon-reload'], check=True)
 
 
 def service_is_running(servicename):
@@ -54,8 +53,7 @@ def service_is_running(servicename):
     Does not need to run as root.
     """
     try:
-        run(['systemctl', 'status', servicename], check=True,
-            stdout=subprocess.DEVNULL)
+        run(['systemctl', 'status', servicename], check=True)
         return True
     except subprocess.CalledProcessError:
         # If a service is not running we get a status code != 0 and
@@ -101,8 +99,7 @@ def service_is_enabled(service_name, strict_check=False):
 
     """
     try:
-        process = run(['systemctl', 'is-enabled', service_name], check=True,
-                      stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+        process = run(['systemctl', 'is-enabled', service_name], check=True)
         if not strict_check:
             return True
 
@@ -179,14 +176,14 @@ def service_get_logs(service_name: str) -> str:
     command = [
         'journalctl', '--no-pager', '--lines=200', '--unit', service_name
     ]
-    process = run(command, check=False, stdout=subprocess.PIPE)
+    process = run(command, check=False)
     return process.stdout.decode()
 
 
 def service_show(service_name: str) -> dict[str, str]:
     """Return the status of the service in dictionary format."""
     command = ['systemctl', 'show', service_name]
-    process = run(command, check=False, stdout=subprocess.PIPE)
+    process = run(command, check=False)
     status = {}
     for line in process.stdout.decode().splitlines():
         parts = line.partition('=')
@@ -197,8 +194,7 @@ def service_show(service_name: str) -> dict[str, str]:
 
 def service_action(service_name: str, action: str, check: bool = False):
     """Perform the given action on the service_name."""
-    run(['systemctl', action, service_name], stdout=subprocess.DEVNULL,
-        check=check)
+    run(['systemctl', action, service_name], check=check)
 
 
 def webserver_is_enabled(name, kind='config'):
@@ -469,8 +465,7 @@ def is_disk_image():
     return os.path.exists('/var/lib/freedombox/is-freedombox-disk-image')
 
 
-def run_apt_command(arguments, stdout=subprocess.DEVNULL,
-                    enable_triggers: bool = False):
+def run_apt_command(arguments, enable_triggers: bool = False):
     """Run apt-get with provided arguments."""
     command = ['apt-get', '--assume-yes', '--quiet=2'] + arguments
 
@@ -478,8 +473,7 @@ def run_apt_command(arguments, stdout=subprocess.DEVNULL,
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     if not enable_triggers:
         env['FREEDOMBOX_INVOKED'] = 'true'
-    process = run(command, stdin=subprocess.DEVNULL, stdout=stdout, env=env,
-                  check=False)
+    process = run(command, stdin=subprocess.DEVNULL, env=env, check=False)
     return process.returncode
 
 
@@ -535,8 +529,7 @@ def apt_hold_freedombox():
 
 def apt_unhold_freedombox():
     """Remove any hold on freedombox package, and clear flag."""
-    run(['apt-mark', 'unhold', 'freedombox'], stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL, check=False)
+    run(['apt-mark', 'unhold', 'freedombox'], check=False)
     if apt_hold_flag.exists():
         apt_hold_flag.unlink()
 

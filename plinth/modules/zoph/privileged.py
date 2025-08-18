@@ -33,15 +33,13 @@ def get_configuration() -> dict[str, str]:
     """Return the current configuration."""
     configuration = {}
     try:
-        process = action_utils.run(['zoph', '--dump-config'],
-                                   stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(['zoph', '--dump-config'], check=True)
     except subprocess.CalledProcessError as exception:
         if exception.returncode != 96:
             raise
 
         _zoph_setup_cli_user()
-        process = action_utils.run(['zoph', '--dump-config'],
-                                   stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(['zoph', '--dump-config'], check=True)
 
     for line in process.stdout.decode().splitlines():
         name, value = line.partition(':')[::2]
@@ -146,8 +144,7 @@ def is_configured() -> bool | None:
     """Return whether zoph app is configured."""
     try:
         process = action_utils.run(
-            ['zoph', '--get-config', 'interface.user.remote'],
-            stdout=subprocess.PIPE, check=True)
+            ['zoph', '--get-config', 'interface.user.remote'], check=True)
         return process.stdout.decode().strip() == 'true'
     except (FileNotFoundError, subprocess.CalledProcessError):
         return None

@@ -4,7 +4,6 @@
 import os
 import pathlib
 import signal
-import subprocess
 
 import augeas
 import dbus
@@ -21,7 +20,7 @@ def setup(old_version: int):
     """Configure snapper."""
     # Check if root config exists.
     command = ['snapper', 'list-configs']
-    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, check=True)
     output = process.stdout.decode()
 
     # Create root config if needed.
@@ -137,8 +136,7 @@ def _remove_fstab_entry(mount_point):
 
 def _systemd_path_escape(path):
     """Escape a string using systemd path rules."""
-    process = action_utils.run(['systemd-escape', '--path', path],
-                               stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(['systemd-escape', '--path', path], check=True)
     return process.stdout.decode().strip()
 
 
@@ -146,8 +144,7 @@ def _get_subvolume_path(mount_point):
     """Return the subvolume path for .snapshots in a filesystem."""
     # -o causes the list of subvolumes directly under the given mount point
     process = action_utils.run(
-        ['btrfs', 'subvolume', 'list', '-o', mount_point],
-        stdout=subprocess.PIPE, check=True)
+        ['btrfs', 'subvolume', 'list', '-o', mount_point], check=True)
     for line in process.stdout.decode().splitlines():
         entry = line.split()
 
@@ -224,8 +221,7 @@ def _parse_number(number):
 @privileged
 def list_() -> list[dict[str, str]]:
     """List snapshots."""
-    process = action_utils.run(['snapper', 'list'], stdout=subprocess.PIPE,
-                               check=True)
+    process = action_utils.run(['snapper', 'list'], check=True)
     lines = process.stdout.decode().splitlines()
 
     keys = ('number', 'is_default', 'is_active', 'type', 'pre_number', 'date',
@@ -247,7 +243,7 @@ def list_() -> list[dict[str, str]]:
 def _get_default_snapshot():
     """Return the default snapshot by looking at default subvolume."""
     command = ['btrfs', 'subvolume', 'get-default', '/']
-    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, check=True)
     output = process.stdout.decode()
 
     output_parts = output.split()
@@ -297,7 +293,7 @@ def set_config(config: list[str]):
 
 def _get_config():
     command = ['snapper', 'get-config']
-    process = action_utils.run(command, stdout=subprocess.PIPE, check=True)
+    process = action_utils.run(command, check=True)
     lines = process.stdout.decode().splitlines()
     config = {}
     for line in lines[2:]:

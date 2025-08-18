@@ -148,7 +148,7 @@ def _create_organizational_unit(unit):
         action_utils.run([
             'ldapsearch', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-s',
             'base', '-b', distinguished_name, '(objectclass=*)'
-        ], stdout=subprocess.DEVNULL, check=True)
+        ], check=True)
         return  # Already exists
     except subprocess.CalledProcessError:
         input = '''
@@ -158,7 +158,7 @@ objectClass: organizationalUnit
 ou: {unit}'''.format(unit=unit)
         action_utils.run(
             ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            input=input.encode(), stdout=subprocess.DEVNULL, check=True)
+            input=input.encode(), check=True)
 
 
 def _setup_admin():
@@ -167,7 +167,7 @@ def _setup_admin():
         'ldapsearch', '-Q', '-L', '-L', '-L', '-Y', 'EXTERNAL', '-H',
         'ldapi:///', '-s', 'base', '-b', 'olcDatabase={1}mdb,cn=config',
         '(objectclass=*)', 'olcRootDN', 'olcRootPW'
-    ], check=True, stdout=subprocess.PIPE)
+    ], check=True)
     ldap_object = {}
     for line in process.stdout.decode().splitlines():
         if line:
@@ -177,7 +177,7 @@ def _setup_admin():
     if 'olcRootPW' in ldap_object:
         action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            check=True, stdout=subprocess.DEVNULL, input=b'''
+            check=True, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 delete: olcRootPW''')
@@ -186,7 +186,7 @@ delete: olcRootPW''')
     if ldap_object['olcRootDN'] != root_dn:
         action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            check=True, stdout=subprocess.DEVNULL, input=b'''
+            check=True, input=b'''
 dn: olcDatabase={1}mdb,cn=config
 changetype: modify
 replace: olcRootDN
@@ -207,7 +207,7 @@ def _setup_ldap_ppolicy() -> bool:
     try:
         action_utils.run(
             ['ldapmodify', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'],
-            check=True, stdout=subprocess.DEVNULL, input=b'''
+            check=True, input=b'''
 dn: cn=module{0},cn=config
 changetype: modify
 add: olcModuleLoad
@@ -221,7 +221,7 @@ olcModuleLoad: ppolicy''')
         action_utils.run([
             'ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///', '-f',
             '/etc/ldap/schema/namedobject.ldif'
-        ], check=True, stdout=subprocess.DEVNULL)
+        ], check=True)
     except subprocess.CalledProcessError as error:
         if error.returncode != 80:  # Schema already added
             raise
@@ -230,7 +230,7 @@ olcModuleLoad: ppolicy''')
     try:
         action_utils.run(
             ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'], check=True,
-            stdout=subprocess.DEVNULL, input=b'''
+            input=b'''
 dn: cn=DefaultPPolicy,ou=policies,dc=thisbox
 cn: DefaultPPolicy
 objectClass: pwdPolicy
@@ -246,7 +246,7 @@ pwdLockout: TRUE''')
     try:
         action_utils.run(
             ['ldapadd', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///'], check=True,
-            stdout=subprocess.DEVNULL, input=b'''
+            input=b'''
 dn: olcOverlay={0}ppolicy,olcDatabase={1}mdb,cn=config
 objectClass: olcOverlayConfig
 objectClass: olcPPolicyConfig
@@ -456,7 +456,7 @@ def rename_user(old_username: str, new_username: str):
 
 def _set_user_password(username, password):
     """Set a user's password."""
-    process = _run(['slappasswd', '-s', password], stdout=subprocess.PIPE)
+    process = _run(['slappasswd', '-s', password])
     password = process.stdout.decode().strip()
     _run(['ldapsetpasswd', username, password])
 
@@ -468,7 +468,7 @@ def _set_samba_user(username, password):
     """
     proc = action_utils.run(['smbpasswd', '-a', '-s', username],
                             input='{0}\n{0}\n'.format(password).encode(),
-                            stderr=subprocess.PIPE, check=False)
+                            check=False)
     if proc.returncode != 0:
         raise RuntimeError('Unable to add Samba user: ', proc.stderr)
 
@@ -514,7 +514,7 @@ def _get_admin_users():
 def _get_user_ids(username: str) -> str | None:
     """Get user information in format like `id` command."""
     try:
-        process = _run(['ldapid', username], stdout=subprocess.PIPE)
+        process = _run(['ldapid', username])
     except subprocess.CalledProcessError as error:
         if error.returncode == 1:
             # User doesn't exist
@@ -533,7 +533,7 @@ def _user_exists(username):
 def _get_group_users(groupname):
     """Return list of members in the group."""
     try:
-        process = _run(['ldapgid', '-P', groupname], stdout=subprocess.PIPE)
+        process = _run(['ldapgid', '-P', groupname])
     except subprocess.CalledProcessError:
         return []  # Group does not exist
 
@@ -709,6 +709,4 @@ def _flush_cache():
 def _run(arguments, check=True, **kwargs):
     """Run a command. Check return code and suppress output by default."""
     env = dict(os.environ, LDAPSCRIPTS_CONF=LDAPSCRIPTS_CONF)
-    kwargs['stdout'] = kwargs.get('stdout', subprocess.DEVNULL)
-    kwargs['stderr'] = kwargs.get('stderr', subprocess.DEVNULL)
     return action_utils.run(arguments, env=env, check=check, **kwargs)

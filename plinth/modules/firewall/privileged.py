@@ -67,8 +67,7 @@ def set_firewall_backend(backend):
 
 def _run_firewall_cmd(args):
     """Run firewall-cmd command, discard output and check return value."""
-    action_utils.run(['firewall-cmd'] + args, stdout=subprocess.DEVNULL,
-                     stderr=subprocess.DEVNULL, check=True)
+    action_utils.run(['firewall-cmd'] + args, check=True)
 
 
 def _setup_local_service_protection():
@@ -161,7 +160,6 @@ def setup():
     """Perform basic firewalld setup."""
     action_utils.service_enable('firewalld')
     action_utils.run(['firewall-cmd', '--set-default-zone=external'],
-                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                      check=True)
     set_firewall_backend('nftables')
 

@@ -202,8 +202,7 @@ def _get_default_branch(repo):
     return action_utils.run_as_user(
         ['git', '-C',
          str(repo_path), 'symbolic-ref', '--short', 'HEAD'],
-        username=REPO_DIR_OWNER, check=True,
-        stdout=subprocess.PIPE).stdout.decode().strip()
+        username=REPO_DIR_OWNER, check=True).stdout.decode().strip()
 
 
 def _get_repo_description(repo):
@@ -271,8 +270,7 @@ def _get_branches(repo):
     """Return list of the branches in the repository."""
     process = action_utils.run_as_user(
         ['git', '-C', repo, 'branch', '--format=%(refname:short)'],
-        cwd=GIT_REPO_PATH, username=REPO_DIR_OWNER, check=True,
-        stdout=subprocess.PIPE)
+        cwd=GIT_REPO_PATH, username=REPO_DIR_OWNER, check=True)
 
     return process.stdout.decode().strip().split()
 

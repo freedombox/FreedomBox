@@ -105,7 +105,7 @@ def _create_share_name(mount_point):
 def _define_open_share(name, path, windows_filesystem=False):
     """Define an open samba share."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=y'])
@@ -117,7 +117,7 @@ def _define_open_share(name, path, windows_filesystem=False):
 def _define_group_share(name, path, windows_filesystem=False):
     """Define a group samba share."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     _conf_command(['addshare', name, path, 'writeable=y', 'guest_ok=n'])
@@ -130,7 +130,7 @@ def _define_group_share(name, path, windows_filesystem=False):
 def _define_homes_share(name, path):
     """Define a samba share for private homes."""
     try:
-        _conf_command(['delshare', name], stderr=subprocess.DEVNULL)
+        _conf_command(['delshare', name])
     except subprocess.CalledProcessError:
         pass
     userpath = os.path.join(path, '%u')

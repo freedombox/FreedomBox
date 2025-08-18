@@ -24,7 +24,7 @@ def test_apt_run(run):
     distupgrade._apt_run(args)
     assert run.call_args.args == \
         (['apt-get', '--assume-yes', '--quiet=2'] + args,)
-    assert not run.call_args.kwargs['stdout']
+    assert run.call_args.kwargs['stdout'] == subprocess.PIPE
 
     run.return_value.returncode = 10
     with pytest.raises(RuntimeError):
@@ -305,9 +305,8 @@ def test_apt_hold_packages(run, tmp_path):
                  stderr=subprocess.PIPE, check=True),
             call(['apt-mark', 'unhold', 'package2'], stdout=subprocess.PIPE,
                  stderr=subprocess.PIPE, check=True),
-            call(['apt-mark', 'unhold', 'freedombox'],
-                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                 check=False),
+            call(['apt-mark', 'unhold', 'freedombox'], stdout=subprocess.PIPE,
+                 stderr=subprocess.PIPE, check=False),
         ]
         assert run.call_args_list == expected_call
 

@@ -112,7 +112,7 @@ def _setup_firewall():
         try:
             process = action_utils.run(
                 ['firewall-cmd', '--zone', 'internal', '--list-interfaces'],
-                stdout=subprocess.PIPE, check=True)
+                check=True)
             return 'tun+' in process.stdout.decode().strip().split()
         except subprocess.CalledProcessError:
             return True  # Safer
@@ -164,7 +164,7 @@ def _is_renewable(cert_name):
 
     process = action_utils.run(
         ['openssl', 'x509', '-noout', '-enddate', '-in',
-         str(cert_path)], check=True, stdout=subprocess.PIPE)
+         str(cert_path)], check=True)
     date_string = process.stdout.decode().strip().partition('=')[2]
     cert_expiry_time = datetime.datetime.strptime(date_string,
                                                   '%b %d %H:%M:%S %Y GMT')

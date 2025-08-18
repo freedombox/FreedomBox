@@ -72,7 +72,7 @@ distribution_info: dict = {
 
 def _apt_run(arguments: list[str]):
     """Run an apt command and ensure that output is written to stdout."""
-    returncode = action_utils.run_apt_command(arguments, stdout=None)
+    returncode = action_utils.run_apt_command(arguments)
     if returncode:
         raise RuntimeError(
             f'Apt command failed with return code: {returncode}')

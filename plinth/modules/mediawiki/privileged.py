@@ -27,8 +27,7 @@ def get_php_command():
     version = ''
 
     try:
-        process = action_utils.run(['dpkg', '-s', 'php'],
-                                   stdout=subprocess.PIPE, check=True)
+        process = action_utils.run(['dpkg', '-s', 'php'], check=True)
         for line in process.stdout.decode().splitlines():
             if line.startswith('Version:'):
                 version = line.split(':')[-1].split('+')[0].strip()
