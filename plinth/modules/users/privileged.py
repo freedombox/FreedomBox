@@ -331,8 +331,8 @@ def get_nslcd_config() -> dict[str, str]:
 def _get_samba_users():
     """Get users from the Samba user database."""
     # 'pdbedit -L' is better for listing users but is installed only with samba
-    stdout = subprocess.check_output(
-        ['tdbdump', '/var/lib/samba/private/passdb.tdb']).decode()
+    stdout = action_utils.run(['tdbdump', '/var/lib/samba/private/passdb.tdb'],
+                              check=True).stdout.decode()
     return re.findall(r'USER_(.*)\\0', stdout)
 
 
@@ -354,7 +354,8 @@ def _disconnect_samba_user(username):
 
 def _get_user_home(username):
     """Return the user home directory."""
-    output = subprocess.check_output(['getent', 'passwd', username], text=True)
+    output = action_utils.run(['getent', 'passwd', username],
+                              check=True).stdout.decode()
     return pathlib.Path(output.split(':')[5])
 
 
@@ -491,11 +492,11 @@ def _get_admin_users():
     admin_users = []
 
     try:
-        output = subprocess.check_output([
+        output = action_utils.run([
             'ldapsearch', '-LLL', '-Q', '-Y', 'EXTERNAL', '-H', 'ldapi:///',
             '-o', 'ldif-wrap=no', '-s', 'base', '-b',
             'cn=admin,ou=groups,dc=thisbox', 'memberUid'
-        ]).decode()
+        ], check=True).stdout.decode()
     except subprocess.CalledProcessError as error:
         if error.returncode == 32:
             # no entries found

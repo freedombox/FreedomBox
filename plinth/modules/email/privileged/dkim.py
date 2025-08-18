@@ -31,9 +31,10 @@ def get_dkim_public_key(domain: str) -> str:
     """Privileged action to get the public key from DKIM key."""
     _validate_domain_name(domain)
     key_file = _keys_dir / f'{domain}.dkim.key'
-    output = subprocess.check_output(
+    output = action_utils.run(
         ['openssl', 'rsa', '-in',
-         str(key_file), '-pubout'], stderr=subprocess.DEVNULL)
+         str(key_file), '-pubout'], stderr=subprocess.DEVNULL,
+        check=True).stdout
     return ''.join(output.decode().splitlines()[1:-1])
 
 

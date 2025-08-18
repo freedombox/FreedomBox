@@ -7,7 +7,7 @@ import re
 import subprocess
 from datetime import datetime as datetime_original
 from datetime import timezone
-from unittest.mock import call, patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 
@@ -264,28 +264,40 @@ def test_services_disable(service_is_running, service_disable, service_enable):
 
 
 @patch('subprocess.run')
-@patch('subprocess.check_output')
-def test_apt_hold_packages(check_output, run, tmp_path):
+def test_apt_hold_packages(run, tmp_path):
     """Test that holding apt packages works."""
+
+    def _run(command, **kwargs):
+        if 'showhold' in command:
+            return Mock(stdout=False)
+
+        return Mock(returncode=0)
+
     hold_flag = tmp_path / 'flag'
-    run.return_value.returncode = 0
+    run.side_effect = _run
     with patch('plinth.action_utils.apt_hold_flag', hold_flag), \
          patch('plinth.modules.upgrades.distupgrade.PACKAGES_WITH_PROMPTS',
                ['package1', 'package2']):
-        check_output.return_value = False
         with distupgrade._apt_hold_packages():
             assert hold_flag.exists()
             assert hold_flag.stat().st_mode & 0o117 == 0
             expected_calls = [
-                call(['apt-mark', 'hold', 'freedombox'],
+                call(['apt-mark', 'showhold', 'freedombox'], check=True,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'hold', 'freedombox'], check=True,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'showhold', 'package1'],
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                      check=True),
-                call(['apt-mark', 'hold', 'package1'], stdout=subprocess.PIPE,
-                     stderr=subprocess.PIPE, check=False),
-                call(['apt-mark', 'hold', 'package2'], stdout=subprocess.PIPE,
-                     stderr=subprocess.PIPE, check=False)
+                call(['apt-mark', 'hold', 'package1'], check=False,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE),
+                call(['apt-mark', 'showhold', 'package2'],
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                     check=True),
+                call(['apt-mark', 'hold', 'package2'], check=False,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             ]
-            assert run.call_args_list == expected_calls
+            assert run.mock_calls == expected_calls
             run.reset_mock()
 
         expected_call = [

@@ -64,10 +64,10 @@ deb http://deb.debian.org/debian trixie main
         assert utils.get_sources_list_codename() == 'testing'
 
 
-@patch('subprocess.check_output')
-def test_get_current_release(check_output):
+@patch('subprocess.run')
+def test_get_current_release(run):
     """Test that getting current release works."""
-    check_output.return_value = b'test-release\ntest-codename\n\n'
+    run.return_value.stdout = b'test-release\ntest-codename\n\n'
     assert utils.get_current_release() == ('test-release', 'test-codename')
 
 

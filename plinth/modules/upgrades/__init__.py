@@ -351,6 +351,15 @@ def is_backports_enabled():
     return os.path.exists(privileged.BACKPORTS_SOURCES_LIST)
 
 
+def get_current_release():
+    """Return current release and codename as a tuple."""
+    output = action_utils.run(
+        ['lsb_release', '--release', '--codename', '--short'],
+        check=True).stdout.decode().strip()
+    lines = output.split('\n')
+    return lines[0], lines[1]
+
+
 def is_backports_current():
     """Return whether backports are enabled for the current release."""
     if not is_backports_enabled():

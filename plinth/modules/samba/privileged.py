@@ -155,7 +155,7 @@ def _get_mount_point(path):
 def _get_shares() -> list[dict[str, str]]:
     """Get shares."""
     shares = []
-    output = subprocess.check_output(['net', 'conf', 'list'])
+    output = action_utils.run(['net', 'conf', 'list'], check=True).stdout
     config = configparser.RawConfigParser()
     config.read_string(output.decode())
     for name in config.sections():
@@ -272,7 +272,7 @@ def get_shares() -> list[dict[str, str]]:
 @privileged
 def get_users() -> list[str]:
     """Get users from Samba database."""
-    output = subprocess.check_output(['pdbedit', '-L']).decode()
+    output = action_utils.run(['pdbedit', '-L'], check=True).stdout.decode()
     samba_users = [line.split(':')[0] for line in output.split()]
     return samba_users
 

@@ -89,7 +89,7 @@ def setup(domain_name: str):
     _upgrade_config(domain_name)
 
     try:
-        subprocess.check_output(['ejabberdctl', 'restart'])
+        action_utils.run(['ejabberdctl', 'restart'], check=True)
     except subprocess.CalledProcessError as err:
         logger.warn('Failed to restart ejabberd with new configuration: %s',
                     err)
@@ -146,10 +146,10 @@ def pre_change_hostname(old_hostname: str, new_hostname: str):
         return
 
     action_utils.run(['ejabberdctl', 'backup', EJABBERD_BACKUP], check=False)
-    subprocess.check_output([
+    action_utils.run([
         'ejabberdctl', 'mnesia-change-nodename', 'ejabberd@' + old_hostname,
         'ejabberd@' + new_hostname, EJABBERD_BACKUP, EJABBERD_BACKUP_NEW
-    ])
+    ], check=True)
     os.remove(EJABBERD_BACKUP)
 
 
@@ -172,8 +172,8 @@ def change_hostname():
     # restore backup database
     if os.path.exists(EJABBERD_BACKUP_NEW):
         try:
-            subprocess.check_output(
-                ['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW])
+            action_utils.run(['ejabberdctl', 'restore', EJABBERD_BACKUP_NEW],
+                             check=True)
             os.remove(EJABBERD_BACKUP_NEW)
         except subprocess.CalledProcessError as err:
             logger.error('Failed to restore ejabberd backup database: %s', err)
@@ -365,8 +365,8 @@ def configure_turn(turn_server_config: dict[str, Any], managed: bool):
 def _get_version():
     """Get the current ejabberd version."""
     try:
-        output = subprocess.check_output(['ejabberdctl',
-                                          'status']).decode('utf-8')
+        output = action_utils.run(['ejabberdctl', 'status'],
+                                  check=True).stdout.decode('utf-8')
     except subprocess.CalledProcessError:
         return None
 

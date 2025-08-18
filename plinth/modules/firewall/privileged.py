@@ -176,7 +176,8 @@ def get_config() -> FirewallConfig:
     config: FirewallConfig = {}
 
     # Get the default zone.
-    output = subprocess.check_output(['firewall-cmd', '--get-default-zone'])
+    output = action_utils.run(['firewall-cmd', '--get-default-zone'],
+                              check=True).stdout
     config['default_zone'] = output.decode().strip()
 
     # Load Augeas lens.
@@ -191,8 +192,9 @@ def get_config() -> FirewallConfig:
     config['backend'] = aug.get('FirewallBackend')
 
     # Get the list of direct passthroughs.
-    output = subprocess.check_output(
-        ['firewall-cmd', '--direct', '--get-all-passthroughs'])
+    output = action_utils.run(
+        ['firewall-cmd', '--direct', '--get-all-passthroughs'],
+        check=True).stdout
     config['passthroughs'] = output.decode().strip().split('\n')
 
     return config

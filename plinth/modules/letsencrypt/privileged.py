@@ -8,7 +8,6 @@ import os
 import pathlib
 import re
 import shutil
-import subprocess
 import sys
 from typing import Any
 
@@ -28,8 +27,9 @@ WEB_ROOT_PATH = '/var/www/html'
 def _get_certificate_expiry(domain: str) -> str:
     """Return the expiry date of a certificate."""
     certificate_file = os.path.join(le.LIVE_DIRECTORY, domain, 'cert.pem')
-    output = subprocess.check_output(
-        ['openssl', 'x509', '-enddate', '-noout', '-in', certificate_file])
+    output = action_utils.run(
+        ['openssl', 'x509', '-enddate', '-noout', '-in', certificate_file],
+        check=True).stdout
     return output.decode().strip().split('=')[1]
 
 
@@ -41,7 +41,8 @@ def _get_modified_time(domain: str) -> int:
 
 def _get_validity_status(domain: str) -> str:
     """Return validity status of a certificate; valid, revoked, expired."""
-    output = subprocess.check_output(['certbot', 'certificates', '-d', domain])
+    output = action_utils.run(['certbot', 'certificates', '-d', domain],
+                              check=True).stdout
     line = output.decode(sys.stdout.encoding)
 
     match = re.search(r'INVALID: (.*)\)', line)

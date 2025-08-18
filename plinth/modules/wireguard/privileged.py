@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Configuration helper for WireGuard."""
 
-import subprocess
-
+from plinth import action_utils
 from plinth.actions import privileged
 
 SERVER_INTERFACE = 'wg0'
@@ -11,8 +10,8 @@ SERVER_INTERFACE = 'wg0'
 @privileged
 def get_info() -> dict[str, dict]:
     """Return info for each configured interface."""
-    output = subprocess.check_output(['wg', 'show', 'all',
-                                      'dump']).decode().strip()
+    output = action_utils.run(['wg', 'show', 'all', 'dump'],
+                              check=True).stdout.decode().strip()
     lines = output.split('\n')
     interfaces: dict[str, dict] = {}
     for line in lines:

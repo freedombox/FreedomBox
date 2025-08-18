@@ -9,6 +9,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext_noop
 
+from plinth import action_utils
 from plinth import app as app_module
 from plinth import cfg, menu
 from plinth.config import DropinConfigs
@@ -127,8 +128,9 @@ def _diagnose_ldap_entry(search_item: str) -> DiagnosticCheck:
     result = Result.FAILED
 
     try:
-        output = subprocess.check_output(
-            ['ldapsearch', '-LLL', '-x', '-b', 'dc=thisbox', search_item])
+        output = action_utils.run(
+            ['ldapsearch', '-LLL', '-x', '-b', 'dc=thisbox', search_item],
+            check=True).stdout
         if search_item in output.decode():
             result = Result.PASSED
     except subprocess.CalledProcessError:

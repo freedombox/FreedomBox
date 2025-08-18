@@ -128,7 +128,8 @@ def release_held_packages():
                        'holds.')
         return
 
-    output = subprocess.check_output(['apt-mark', 'showhold']).decode().strip()
+    output = action_utils.run(['apt-mark', 'showhold'],
+                              check=True).stdout.decode().strip()
     holds = output.split('\n')
     logger.info('Releasing package holds: %s', holds)
     action_utils.run(['apt-mark', 'unhold', *holds], stdout=subprocess.DEVNULL,

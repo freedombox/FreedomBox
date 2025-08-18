@@ -209,8 +209,7 @@ def webserver_is_enabled(name, kind='config'):
     option_map = {'config': '-c', 'site': '-s', 'module': '-m'}
     try:
         # Don't print anything on the terminal
-        subprocess.check_output(['a2query', option_map[kind], name],
-                                stderr=subprocess.STDOUT)
+        run(['a2query', option_map[kind], name], check=True)
         return True
     except subprocess.CalledProcessError:
         return False
@@ -232,7 +231,7 @@ def webserver_enable(name, kind='config', apply_changes=True):
         'site': 'a2ensite',
         'module': 'a2enmod'
     }
-    subprocess.check_output([command_map[kind], name])
+    run([command_map[kind], name], check=True)
 
     action_required = 'restart' if kind == 'module' else 'reload'
 
@@ -261,7 +260,7 @@ def webserver_disable(name, kind='config', apply_changes=True):
         'site': 'a2dissite',
         'module': 'a2dismod'
     }
-    subprocess.check_output([command_map[kind], name])
+    run([command_map[kind], name], check=True)
 
     action_required = 'restart' if kind == 'module' else 'reload'
 
@@ -389,7 +388,7 @@ def get_ip_addresses() -> list[dict[str, str | bool]]:
     """Return a list of IP addresses assigned to the system."""
     addresses = []
 
-    output = subprocess.check_output(['ip', '-o', 'addr'])
+    output = run(['ip', '-o', 'addr'], check=True).stdout
     for line in output.decode().splitlines():
         parts = line.split()
         address: dict[str, str | bool] = {
@@ -415,7 +414,7 @@ def get_ip_addresses() -> list[dict[str, str | bool]]:
 
 def get_hostname():
     """Return the current hostname."""
-    return subprocess.check_output(['hostname']).decode().strip()
+    return run(['hostname'], check=True).stdout.decode().strip()
 
 
 def dpkg_reconfigure(package, config):
@@ -457,7 +456,7 @@ def debconf_set_selections(presets):
         pass
 
     presets = '\n'.join(presets)
-    subprocess.check_output(['debconf-set-selections'], input=presets.encode())
+    run(['debconf-set-selections'], input=presets.encode(), check=True)
 
 
 def is_disk_image():
@@ -501,8 +500,8 @@ def apt_hold(packages):
     held_packages = []
     try:
         for package in packages:
-            current_hold = subprocess.check_output(
-                ['apt-mark', 'showhold', package])
+            current_hold = run(['apt-mark', 'showhold', package],
+                               check=True).stdout
             if not current_hold:
                 process = run(['apt-mark', 'hold', package], check=False)
                 if process.returncode == 0:  # success
@@ -517,8 +516,8 @@ def apt_hold(packages):
 @contextmanager
 def apt_hold_freedombox():
     """Prevent freedombox package from being removed during apt operations."""
-    current_hold = subprocess.check_output(
-        ['apt-mark', 'showhold', 'freedombox'])
+    current_hold = run(['apt-mark', 'showhold', 'freedombox'],
+                       check=True).stdout
     try:
         if current_hold:
             # Package is already held, possibly by administrator.
@@ -548,7 +547,7 @@ def is_package_manager_busy():
     is open which indicates that the package manager is busy"""
     LOCK_FILE = '/var/lib/dpkg/lock'
     try:
-        subprocess.check_output(['lsof', LOCK_FILE])
+        run(['lsof', LOCK_FILE], check=True)
         return True
     except subprocess.CalledProcessError:
         return False

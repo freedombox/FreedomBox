@@ -6,10 +6,10 @@ from unittest.mock import patch
 from .. import privileged
 
 
-@patch('subprocess.check_output')
-def test_get_interfaces(check_output):
+@patch('subprocess.run')
+def test_get_interfaces(run):
     """Test returning list of network interfaces in sorted order."""
-    check_output.return_value = '\n'.join([
+    run.return_value.stdout = '\n'.join([
         'ethernet:ve-fbx-testing',
         'ethernet:enp39s0',
         'ethernet:enp32s1',

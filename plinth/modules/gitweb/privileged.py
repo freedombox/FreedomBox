@@ -44,9 +44,9 @@ def setup():
 def _get_global_default_branch():
     """Get globally configured default branch name."""
     try:
-        default_branch = subprocess.check_output(
-            ['git', 'config', '--global', '--get',
-             'init.defaultBranch']).decode().strip()
+        default_branch = action_utils.run(
+            ['git', 'config', '--global', '--get', 'init.defaultBranch'],
+            check=True).stdout.decode().strip()
     except subprocess.CalledProcessError as exception:
         if exception.returncode == 1:  # Default branch not configured
             return None
