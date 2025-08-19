@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 20:08-0400\n"
+"POT-Creation-Date: 2025-08-18 20:35-0400\n"
 "PO-Revision-Date: 2025-04-26 17:46+0000\n"
 "Last-Translator: John Doe <thraex@numericable.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
@@ -23,6 +23,12 @@ msgstr ""
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "La configuration statique {etc_path} est correctement configurée"
+
+#: container.py:137
+#, fuzzy, python-brace-format
+#| msgid "Service {service_name} is running"
+msgid "Container {container_name} is running"
+msgstr "Le service {service_name} est actif"
 
 #: context_processors.py:21 views.py:168
 msgid "FreedomBox"
@@ -67,23 +73,21 @@ msgstr ""
 msgid "Repository to backup to"
 msgstr "Dépôt cible de la sauvegarde"
 
-#: forms.py:64
+#: forms.py:62
+#, fuzzy
+#| msgid "None"
+msgid "(None)"
+msgstr "Aucun"
+
+#: forms.py:68
 msgid "Select a domain name to be used with this application"
 msgstr "Sélectionnez un nom de domaine à utiliser avec cette application"
 
-#: forms.py:66
-msgid ""
-"Warning! The application may not work properly if domain name is changed "
-"later."
-msgstr ""
-"Attention ! Cette application risque de ne pas fonctionner correctement si "
-"le nom de domaine est modifié ultérieurement."
-
-#: forms.py:80 modules/coturn/forms.py:31 modules/mumble/forms.py:21
+#: forms.py:81 modules/coturn/forms.py:31 modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "Domaine TLS"
 
-#: forms.py:82 modules/coturn/forms.py:33 modules/mumble/forms.py:23
+#: forms.py:83 modules/coturn/forms.py:33 modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -91,15 +95,15 @@ msgstr ""
 "Sélectionner le domaine à utiliser avec TLS. Si la liste est vide, il vous "
 "faudra configurer au moins un domaine avec des certificats."
 
-#: forms.py:92
+#: forms.py:93
 msgid "Language"
 msgstr "Langue"
 
-#: forms.py:93
+#: forms.py:94
 msgid "Language to use for presenting this web interface"
 msgstr "Langue de cette interface web"
 
-#: forms.py:100
+#: forms.py:101
 msgid "Use the language preference set in the browser"
 msgstr "Utiliser la langue du navigateur"
 
@@ -149,25 +153,25 @@ msgstr "Erreur d’exécution de l’opération."
 msgid "Error loading page."
 msgstr "Erreur lors du chargement de la page."
 
-#: modules/apache/__init__.py:32
+#: modules/apache/__init__.py:33
 msgid "Apache HTTP Server"
 msgstr "Serveur HTTP Apache"
 
-#: modules/apache/__init__.py:46
+#: modules/apache/__init__.py:47
 msgid "Web Server"
 msgstr "Serveur web"
 
-#: modules/apache/__init__.py:52
+#: modules/apache/__init__.py:53
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "Interface web de la {box_name} (Plinth)"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:270
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Accès à l’URL {url} via tcp{kind}"
 
-#: modules/apache/components.py:165
+#: modules/apache/components.py:273
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Accès à l’URL {url}"
@@ -502,6 +506,7 @@ msgid "App data"
 msgstr "Infos sur l’appli"
 
 #: modules/backups/manifest.py:20
+#: modules/homeassistant/templates/homeassistant.html:11
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
@@ -607,9 +612,10 @@ msgstr "Sauvegardes existantes"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/diagnostics/templates/diagnostics_full.html:102
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
+#: modules/homeassistant/__init__.py:48
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
@@ -623,7 +629,7 @@ msgstr "Sauvegardes existantes"
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
-#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+#: templates/messages.html:17 templates/setup.html:40 templates/setup.html:69
 msgid "Caution:"
 msgstr "Attention :"
 
@@ -1062,11 +1068,11 @@ msgid "Admin"
 msgstr "Admin"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
-#: modules/nextcloud/views.py:62 modules/searx/views.py:35
-#: modules/searx/views.py:46 modules/security/views.py:56
-#: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
-#: modules/zoph/views.py:74
+#: modules/homeassistant/views.py:53 modules/nextcloud/views.py:62
+#: modules/searx/views.py:35 modules/searx/views.py:46
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:82 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Configuration mise à jour."
 
@@ -1396,7 +1402,7 @@ msgstr "Journaux"
 msgid "Performance"
 msgstr "Performance"
 
-#: modules/config/__init__.py:18
+#: modules/config/__init__.py:20
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
@@ -1404,11 +1410,11 @@ msgstr ""
 "Cette page vous permet de modifier certains paramètres généraux comme la "
 "page d’accueil du serveur web, etc…"
 
-#: modules/config/__init__.py:40
+#: modules/config/__init__.py:42
 msgid "General Configuration"
 msgstr "Configuration générale"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/config/__init__.py:47 modules/names/templates/names.html:35
 #: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
@@ -1797,13 +1803,12 @@ msgid "Diagnostic Results"
 msgstr "Résultats des diagnostics"
 
 #: modules/diagnostics/templates/diagnostics_app.html:14
-#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Appli : %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:21
-#: modules/diagnostics/templates/diagnostics_full.html:49
+#: modules/diagnostics/templates/diagnostics_full.html:85
 msgid "Try to repair"
 msgstr "Essayer de réparer"
 
@@ -1826,6 +1831,37 @@ msgstr "Le test de diagnostic est en cours"
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "Résultats"
+
+#: modules/diagnostics/templates/diagnostics_full.html:53
+#, python-format
+msgid "%(number)s passed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:57
+#, python-format
+msgid "%(number)s failed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:61
+#, python-format
+msgid "%(number)s warnings"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:65
+#, python-format
+msgid "%(number)s errors"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:69
+#, python-format
+msgid "%(number)s skipped"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:111
+#, fuzzy
+#| msgid "is running"
+msgid "Running..."
+msgstr "est actif"
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1876,10 +1912,36 @@ msgstr ""
 "Internet demande votre nom DNS, il obtiendra bien votre adresse IP courante."
 
 #: modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
+"freedombox.org</a>. With this service, you also get unlimited subdomains "
+"(with wildcards option enabled in account settings). To use a subdomain, add "
+"it as a static domain in the Names app."
+msgstr ""
+"Si vous cherchez un compte DNS dynamique gratuit, vous pouvez chercher un "
+"service compatible GnuDIP sur <a href=\"https://ddns.freedombox.org\" "
+"target=\"_blank\">ddns.freedombox.org</a> ou un service à base d’URL "
+"d’actualisation sur <a href=\"http://freedns.afraid.org/\" "
+"target=\"_blank\">freedns.afraid.org</a>."
+
+#: modules/dynamicdns/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
+msgid ""
+"Alternatively, you may find a free update URL based service at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Si vous cherchez un compte DNS dynamique gratuit, vous pouvez chercher un "
@@ -1888,7 +1950,7 @@ msgstr ""
 "d’actualisation sur <a href=\"http://freedns.afraid.org/\" "
 "target=\"_blank\">freedns.afraid.org</a>."
 
-#: modules/dynamicdns/__init__.py:46
+#: modules/dynamicdns/__init__.py:50
 msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
@@ -1896,11 +1958,11 @@ msgstr ""
 "Ce service utilise un service externe pour rechercher une adresse IP "
 "publique. Cela peut être configuré dans l'application de confidentialité."
 
-#: modules/dynamicdns/__init__.py:64
+#: modules/dynamicdns/__init__.py:68
 msgid "Dynamic DNS Client"
 msgstr "Client DNS dynamique"
 
-#: modules/dynamicdns/__init__.py:77
+#: modules/dynamicdns/__init__.py:81
 msgid "Dynamic Domain"
 msgstr "Domaine dynamique"
 
@@ -2525,15 +2587,15 @@ msgid ""
 "you have multiple public IP addresses."
 msgstr ""
 "Si votre %(box_name)s fonctionne sur une infrastructure de service nuagique, "
-"vous devriez configurer <a href="
-"\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\">la recherche DNS "
-"inversée</a>. Ce n'est pas obligatoire, cependant, cela améliore "
-"considérablement la possibilité de livrer les courriels. Le DNS inversé "
-"n'est pas configuré là où votre DNS habituel l'est. Vous devriez le "
-"rechercher dans les réglages de votre VPS/FAI. Certains fournisseurs pré-"
-"configurent la partie adresse IP pour vous et vous n'avez qu'à régler la "
-"partie domaine. Seul un de vos domaines peut être configurée pour la "
-"recherche DNS inversée sauf si vous avez plusieurs adresses IP publiques."
+"vous devriez configurer <a href=\"https://en.wikipedia.org/wiki/"
+"Reverse_DNS_lookup\">la recherche DNS inversée</a>. Ce n'est pas "
+"obligatoire, cependant, cela améliore considérablement la possibilité de "
+"livrer les courriels. Le DNS inversé n'est pas configuré là où votre DNS "
+"habituel l'est. Vous devriez le rechercher dans les réglages de votre VPS/"
+"FAI. Certains fournisseurs pré-configurent la partie adresse IP pour vous et "
+"vous n'avez qu'à régler la partie domaine. Seul un de vos domaines peut être "
+"configurée pour la recherche DNS inversée sauf si vous avez plusieurs "
+"adresses IP publiques."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
@@ -2620,10 +2682,14 @@ msgid "Feather Wiki"
 msgstr "Feather Wiki"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Wiki files cannot be named \"index.html\"."
+msgstr ""
+
+#: modules/featherwiki/forms.py:20 modules/tiddlywiki/forms.py:20
 msgid "Name of the wiki file, with file extension \".html\""
 msgstr "Nom du fichier wiki, avec l'extension de fichier « .html »"
 
-#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+#: modules/featherwiki/forms.py:22 modules/tiddlywiki/forms.py:22
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
@@ -2631,24 +2697,24 @@ msgstr ""
 "Le titre du wiki et sa description peuvent être réglés depuis le wiki lui-"
 "même. Le nom du fichier est indépendant du titre du wiki."
 
-#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+#: modules/featherwiki/forms.py:30 modules/tiddlywiki/forms.py:30
 msgid "New name for the wiki file, with file extension \".html\""
 msgstr ""
 "Nouveau nom pour le fichier wiki, avec l'extension de fichier « .html »"
 
-#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+#: modules/featherwiki/forms.py:32 modules/tiddlywiki/forms.py:32
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr "Renommer le fichier n'a aucun effet sur le titre du wiki."
 
-#: modules/featherwiki/forms.py:32
+#: modules/featherwiki/forms.py:39
 msgid "A Feather Wiki file with .html file extension"
 msgstr "Un fichier Feather Wiki avec l'extension de fichier .html"
 
-#: modules/featherwiki/forms.py:35
+#: modules/featherwiki/forms.py:43
 msgid "Feather Wiki files must be in HTML format"
 msgstr "Les fichiers Feather Wiki doivent être au format HTML"
 
-#: modules/featherwiki/forms.py:37
+#: modules/featherwiki/forms.py:46
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Téléverser un fichier Feather Wiki existant depuis cet ordinateur."
 
@@ -3640,6 +3706,110 @@ msgstr "À propos de la {box_name}"
 msgid "{box_name} Manual"
 msgstr "Manuel {box_name}"
 
+#: modules/homeassistant/__init__.py:31
+msgid ""
+"Home Assistant is a home automation hub with emphasis on local control and "
+"privacy. It integrates with thousands of devices including smart bulbs, "
+"alarms, presense sensors, door bells, thermostats, irrigation timers, energy "
+"monitors, etc."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:35
+msgid ""
+"Home Assistant can detect, configure, and use various devices on the local "
+"network. For devices using other protocols such as ZigBee, it typically "
+"requires additional hardware such as a ZigBee USB dongle. You need to re-run "
+"setup if such hardware is added or removed."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:39
+msgid ""
+"Home Assistant web interface must be setup soon after the app is installed. "
+"An administrator account is created at this time. Home Assistant maintains "
+"its own user accounts."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:43
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Please note that Nextcloud is installed and run inside a container "
+#| "provided by the Nextcloud community. Security, quality, privacy and legal "
+#| "reviews are done by the upstream project and not by Debian/{box_name}. "
+#| "Updates are performed following an independent cycle."
+msgid ""
+"Please note that Home Assistant is installed and run inside a container "
+"provided by the Home Assistant project. Security, quality, privacy and legal "
+"reviews are done by the upstream project and not by Debian/{box_name}. "
+"Updates are performed following an independent cycle."
+msgstr ""
+"Veuillez noter que Nextcloud est installé et fonctionne au sein d'un "
+"conteneur fourni par la communauté Nextcloud. Les vérifications de sécurité, "
+"de qualité, de confidentialité et de légalité sont effectuées par le projet "
+"en amont et pas par Debian/{box_name}. Les mises à jour sont effectuées en "
+"fonction d'un cycle indépendant."
+
+#: modules/homeassistant/__init__.py:48
+msgid "This app is experimental."
+msgstr "Cette application est expérimentale."
+
+#: modules/homeassistant/__init__.py:64 modules/homeassistant/manifest.py:12
+#: modules/homeassistant/manifest.py:20
+msgid "Home Assistant"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:62
+#, fuzzy
+#| msgid "Automatic"
+msgid "Home Automation"
+msgstr "Automatique"
+
+#: modules/homeassistant/manifest.py:63
+msgid "IoT"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:64 modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/homeassistant/manifest.py:65
+msgid "ZigBee"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:66
+msgid "Z-Wave"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:67
+msgid "Thread"
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:17
+msgid ""
+"Home Assistant requires a dedicated domain to work with and cannot work on a "
+"URL path. Please select the domain on which Home Assistant will be "
+"available. Home Assistant will not be available on other domains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:28
+#, python-format
+msgid ""
+"A separate domain can be made available for Home Assistant by configurating "
+"a subdomain such as homeassistant.mydomain.example. See <a "
+"href=\"%(names_url)s\">Names</a> app and <a "
+"href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:40
+#: modules/ikiwiki/templates/ikiwiki_create.html:18
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
+msgid "Update setup"
+msgstr "Appliquer les changements"
+
 #: modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
@@ -3705,12 +3875,6 @@ msgstr "Aller au site %(site)s"
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "Supprimer le site %(site)s"
-
-#: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
-msgid "Update setup"
-msgstr "Appliquer les changements"
 
 #: modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
@@ -5010,6 +5174,23 @@ msgstr "pris en charge"
 msgid "unsupported"
 msgstr "non pris en charge"
 
+#: modules/names/templates/names-domain-add.html:11
+#, python-format
+msgid ""
+"If you purchased a domain name from a domain registrar, you can configure it "
+"here. The name servers responsible for the domain must be pointing (A and "
+"AAAA records) to the public IP addresses of the %(box_name)s."
+msgstr ""
+
+#: modules/names/templates/names-domain-add.html:18
+#, python-format
+msgid ""
+"If you wish to also use a subdomian of an already configured domain, add "
+"another entry for it here. Ensure that the subdomain is configured to point "
+"to %(box_name)s. Subdomains are useful for hosting multiple applications "
+"that each require a dedicted domain for themselves."
+msgstr ""
+
 #: modules/names/templates/names.html:41
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
@@ -5063,7 +5244,7 @@ msgstr ""
 "Le paquet systemd-resolved n'est pas installé. Installez-le pour des "
 "fonctionnalités supplémentaires."
 
-#: modules/names/templates/names.html:152 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:87
 msgid "Install"
 msgstr "Installer"
 
@@ -5548,14 +5729,6 @@ msgstr ""
 msgid "Internet"
 msgstr "Internet"
 
-#: modules/networks/manifest.py:8
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
-
 #: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
 #: modules/samba/manifest.py:90
 msgid "Local network"
@@ -5916,7 +6089,7 @@ msgstr "Modifier…"
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
 #: modules/pagekite/templates/pagekite_custom_services.html:33
-#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:19
+#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:22
 msgid "Submit"
 msgstr "Valider"
 
@@ -8135,9 +8308,9 @@ msgid ""
 "Webmail works with the <a href=\"{email_url}\">Postfix/Dovecot</a> email "
 "server app to retrieve, manage, and send email."
 msgstr ""
-"Le webmail fonctionne avec l'application serveur de courriels <a href="
-"\"{email_url}\">Postfix/Dovecot</a> pour récupérer, gérer et envoyer des "
-"courriels."
+"Le webmail fonctionne avec l'application serveur de courriels <a "
+"href=\"{email_url}\">Postfix/Dovecot</a> pour récupérer, gérer et envoyer "
+"des courriels."
 
 #: modules/sogo/__init__.py:30
 #, python-brace-format
@@ -8630,15 +8803,15 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "TiddlyWiki"
 
-#: modules/tiddlywiki/forms.py:32
+#: modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
 msgstr "Un fichier TiddlyWiki avec une extension de fichier .html"
 
-#: modules/tiddlywiki/forms.py:35
+#: modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
 msgstr "Les fichiers TiddlyWiki doivent être au format HTML"
 
-#: modules/tiddlywiki/forms.py:37
+#: modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "Téléverser un fichier TiddlyWiki existant depuis cet ordinateur."
 
@@ -9190,9 +9363,9 @@ msgid ""
 "changes and transitions during the distribution upgrade."
 msgstr ""
 "La mise à jour de la distribution va bientôt commencer. Prenez une "
-"sauvegarde des applications et données auparavant. Voyez la page du <a href="
-"\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et transitions "
-"attendues pendant la mise à niveau de la distribution."
+"sauvegarde des applications et données auparavant. Voyez la page du <a "
+"href=\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et "
+"transitions attendues pendant la mise à niveau de la distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
 #, python-format
@@ -9212,7 +9385,7 @@ msgstr "Aller à la mise à jour de la distribution"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
+#: templates/notifications.html:58 templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "Fermer"
 
@@ -9235,12 +9408,12 @@ msgstr ""
 "logiciel à %(box_name)s, le système d'exploitation entier recevra une mise à "
 "jour majeure de distribution environ tous les deux ans. Cela apportera des "
 "fonctionnalités et modifications majeures. Parfois, des fonctionnalités "
-"anciennes cesseront de fonctionner. Veuillez consulter le <a href="
-"\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et transitions "
-"attendues pendant une mise à niveau de la distribution. Si vous n'appréciez "
-"pas ces modifications, vous pouvez continuer à utiliser chaque distribution "
-"pour au moins <a href=\"https://wiki.debian.org/LTS\">5 ans</a> avant de "
-"mettre à jour."
+"anciennes cesseront de fonctionner. Veuillez consulter le <a "
+"href=\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et "
+"transitions attendues pendant une mise à niveau de la distribution. Si vous "
+"n'appréciez pas ces modifications, vous pouvez continuer à utiliser chaque "
+"distribution pour au moins <a href=\"https://wiki.debian.org/LTS\">5 ans</a> "
+"avant de mettre à jour."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:34
 msgid ""
@@ -10299,34 +10472,34 @@ msgstr "Attente du démarrage de : {name}"
 msgid "Finished: {name}"
 msgstr "Terminé : {name}"
 
-#: package.py:213
+#: package.py:216
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr "Le paquet {package_expression} n’est pas disponible à l’installation"
 
-#: package.py:233
+#: package.py:236
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "Le paquet {package_name} est à la dernière version ({latest_version})"
 
-#: package.py:427
+#: package.py:441
 msgid "installing"
 msgstr "installation en cours"
 
-#: package.py:429
+#: package.py:443
 msgid "downloading"
 msgstr "téléchargement en cours"
 
-#: package.py:431
+#: package.py:445
 msgid "media change"
 msgstr "changement de support"
 
-#: package.py:433
+#: package.py:447
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "fichier de configuration : {file}"
 
-#: package.py:461 package.py:487
+#: package.py:475 package.py:501
 msgid "Timeout waiting for package manager"
 msgstr "Aucune réponse du gestionnaire de paquets"
 
@@ -10612,6 +10785,11 @@ msgstr ""
 msgid "Notifications"
 msgstr "Notifications"
 
+#: templates/notifications.html:18
+#, python-format
+msgid "%(time_since)s ago"
+msgstr ""
+
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
 msgstr "Redirection de port"
@@ -10678,16 +10856,22 @@ msgid "This application needs an update. Update now?"
 msgstr ""
 "Cette application a besoin d’une mise à jour. Mettre à jour maintenant ?"
 
-#: templates/setup.html:46
+#: templates/setup.html:43
 msgid "This application is currently not available in your distribution."
 msgstr ""
 "Cette application n’est actuellement pas disponible dans votre distribution."
 
-#: templates/setup.html:50
-msgid "Check again"
-msgstr "Vérifier à nouveau"
+#: templates/setup.html:51
+#, fuzzy
+#| msgid "RoundCube availability"
+msgid "Checking app availability..."
+msgstr "Disponibilité de RoundCube"
 
-#: templates/setup.html:61
+#: templates/setup.html:57
+msgid "Error checking app availability. Please refresh page."
+msgstr ""
+
+#: templates/setup.html:72
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10697,7 +10881,7 @@ msgstr ""
 "système sont incompatibles avec l’installation de cette application. Si vous "
 "choisissez de continuer, les paquets suivants seront supprimés :"
 
-#: templates/setup.html:80
+#: templates/setup.html:89
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -10743,7 +10927,7 @@ msgstr "Ici"
 msgid "Setting unchanged"
 msgstr "Paramètre inchangé"
 
-#: views.py:647
+#: views.py:640
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "avant la désinstallation de {app_id}"
@@ -10751,6 +10935,16 @@ msgstr "avant la désinstallation de {app_id}"
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "Gujarati"
+
+#~ msgid ""
+#~ "Warning! The application may not work properly if domain name is changed "
+#~ "later."
+#~ msgstr ""
+#~ "Attention ! Cette application risque de ne pas fonctionner correctement "
+#~ "si le nom de domaine est modifié ultérieurement."
+
+#~ msgid "Check again"
+#~ msgstr "Vérifier à nouveau"
 
 #~ msgid ""
 #~ "Started update to next stable release. This may take a long time to "
@@ -10817,9 +11011,6 @@ msgstr "Gujarati"
 
 #~ msgid "Manage Aliases for Mailbox"
 #~ msgstr "Gérer les alias pour la boîte aux lettres"
-
-#~ msgid "This app is experimental."
-#~ msgstr "Cette application est expérimentale."
 
 #~ msgid "File & Snippet Sharing"
 #~ msgstr "Partage de fichiers et de bribes de texte"
@@ -11481,9 +11672,6 @@ msgstr "Gujarati"
 
 #~ msgid "Damage configuration updated"
 #~ msgstr "Configuration des blessures mise à jour"
-
-#~ msgid "RoundCube availability"
-#~ msgstr "Disponibilité de RoundCube"
 
 #~ msgid "RoundCube configured for FreedomBox email"
 #~ msgstr ""
@@ -13020,9 +13208,6 @@ msgstr "Gujarati"
 #~ "Plus d'informations concernant le projet %(box_name)s sur la <a "
 #~ "href=\"https://freedombox.org\">page principale</a> et sur le <a "
 #~ "href=\"https://wiki.debian.org/FreedomBox\">wiki</a>."
-
-#~ msgid "is running"
-#~ msgstr "est actif"
 
 #~ msgid "Anonymity Network (Tor)"
 #~ msgstr "Réseau Anonyme (Tor)"

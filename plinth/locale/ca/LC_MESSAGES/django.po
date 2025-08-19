@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 20:08-0400\n"
+"POT-Creation-Date: 2025-08-18 20:35-0400\n"
 "PO-Revision-Date: 2025-06-25 22:04+0000\n"
 "Last-Translator: kosagi <marti.torra@natana.cat>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/freedombox/"
@@ -23,6 +23,12 @@ msgstr ""
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "La configuració estàtica {etc_path} s'ha establert correctament"
+
+#: container.py:137
+#, fuzzy, python-brace-format
+#| msgid "Service {service_name} is running"
+msgid "Container {container_name} is running"
+msgstr "El servei {service_name} està en marxa"
 
 #: context_processors.py:21 views.py:168
 msgid "FreedomBox"
@@ -66,23 +72,21 @@ msgstr ""
 msgid "Repository to backup to"
 msgstr "Repositori des d'on recuperar"
 
-#: forms.py:64
+#: forms.py:62
+#, fuzzy
+#| msgid "None"
+msgid "(None)"
+msgstr "Cap"
+
+#: forms.py:68
 msgid "Select a domain name to be used with this application"
 msgstr "Selecciona un nom de domini per utilitzar-lo amb aquesta aplicació"
 
-#: forms.py:66
-msgid ""
-"Warning! The application may not work properly if domain name is changed "
-"later."
-msgstr ""
-"Compte! L'aplicació podria no funcionar correctament si el nom del domini es "
-"canvia més tard."
-
-#: forms.py:80 modules/coturn/forms.py:31 modules/mumble/forms.py:21
+#: forms.py:81 modules/coturn/forms.py:31 modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "Domini TLS"
 
-#: forms.py:82 modules/coturn/forms.py:33 modules/mumble/forms.py:23
+#: forms.py:83 modules/coturn/forms.py:33 modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -90,15 +94,15 @@ msgstr ""
 "Selecciona un domini amb el que utilitzar TLS. Si la llista és buida, "
 "configura com a mínim un domini amb certificats si us plau."
 
-#: forms.py:92
+#: forms.py:93
 msgid "Language"
 msgstr "Llengua"
 
-#: forms.py:93
+#: forms.py:94
 msgid "Language to use for presenting this web interface"
 msgstr "Llengua que s'utilitzarà per presentar aquesta interfície web"
 
-#: forms.py:100
+#: forms.py:101
 msgid "Use the language preference set in the browser"
 msgstr "Utilitza la configuració de llengua del navegador"
 
@@ -150,25 +154,25 @@ msgstr "Error al intentar la operació."
 msgid "Error loading page."
 msgstr "Error al carregar la pàgina."
 
-#: modules/apache/__init__.py:32
+#: modules/apache/__init__.py:33
 msgid "Apache HTTP Server"
 msgstr "Servidor HTTP d'Apache"
 
-#: modules/apache/__init__.py:46
+#: modules/apache/__init__.py:47
 msgid "Web Server"
 msgstr "Servidor Web"
 
-#: modules/apache/__init__.py:52
+#: modules/apache/__init__.py:53
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} Interfície Web (Plinth)"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:270
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Accedeix a l'URL {url} a tcp{kind}"
 
-#: modules/apache/components.py:165
+#: modules/apache/components.py:273
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "Accedeix a l'URL {url}"
@@ -280,9 +284,9 @@ msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every day."
 msgstr ""
-"Es conserven aquest nombre de còpies de seguretat més recents i la resta s’"
-"eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest tipus. "
-"Es duen a terme cada dia a l’hora especificada."
+"Es conserven aquest nombre de còpies de seguretat més recents i la resta "
+"s’eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest "
+"tipus. Es duen a terme cada dia a l’hora especificada."
 
 #: modules/backups/forms.py:65
 msgid "Number of weekly backups to keep"
@@ -293,9 +297,9 @@ msgid ""
 "This many latest backups are kept and the rest are removed. A value of \"0\" "
 "disables backups of this type. Triggered at specified hour every Sunday."
 msgstr ""
-"Es conserven aquest nombre de còpies de seguretat més recents i la resta s’"
-"eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest tipus. "
-"S’executa a l’hora especificada cada diumenge."
+"Es conserven aquest nombre de còpies de seguretat més recents i la resta "
+"s’eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest "
+"tipus. S’executa a l’hora especificada cada diumenge."
 
 #: modules/backups/forms.py:72
 msgid "Number of monthly backups to keep"
@@ -307,9 +311,9 @@ msgid ""
 "disables backups of this type. Triggered at specified hour first day of "
 "every month."
 msgstr ""
-"Es conserven aquest nombre de còpies de seguretat més recents i la resta s’"
-"eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest tipus. "
-"S’executa a l’hora especificada el primer dia de cada mes."
+"Es conserven aquest nombre de còpies de seguretat més recents i la resta "
+"s’eliminen. Un valor de «0» desactiva les còpies de seguretat d’aquest "
+"tipus. S’executa a l’hora especificada el primer dia de cada mes."
 
 #: modules/backups/forms.py:79
 msgid "Hour of the day to trigger backup operation"
@@ -368,8 +372,8 @@ msgid ""
 msgstr ""
 "Selecciona el fitxer de còpia de seguretat per pujar des de l'ordinador "
 "local. Aquest ha de ser un fitxer prèviament descarregat dels resultats "
-"d'una còpia de seguretat exitosa en un {box_name}. Ha de tenir l'extensió "
-".tar.gz."
+"d'una còpia de seguretat exitosa en un {box_name}. Ha de tenir l'extensió ."
+"tar.gz."
 
 #: modules/backups/forms.py:154
 msgid "Repository path format incorrect."
@@ -453,8 +457,8 @@ msgid ""
 "Path of a new or existing repository. Example: <i>user@host:~/path/to/repo/</"
 "i>"
 msgstr ""
-"Ruta d'un repositori nou o existent. Exemple: <i>user@host:~/path/to/repo/"
-"</i>"
+"Ruta d'un repositori nou o existent. Exemple: <i>user@host:~/path/to/repo/</"
+"i>"
 
 #: modules/backups/forms.py:255
 msgid "SSH server password"
@@ -501,6 +505,7 @@ msgid "App data"
 msgstr "Dades d'aplicació"
 
 #: modules/backups/manifest.py:20
+#: modules/homeassistant/templates/homeassistant.html:11
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
@@ -605,9 +610,10 @@ msgstr "Còpies de seguretat existents"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/diagnostics/templates/diagnostics_full.html:102
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
+#: modules/homeassistant/__init__.py:48
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
@@ -621,7 +627,7 @@ msgstr "Còpies de seguretat existents"
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
-#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+#: templates/messages.html:17 templates/setup.html:40 templates/setup.html:69
 msgid "Caution:"
 msgstr "Precaució:"
 
@@ -633,9 +639,9 @@ msgid ""
 "if chosen, the encryption passphrase."
 msgstr ""
 "Les credencials per a aquest repositori estan emmagatzemades al teu "
-"%(box_name)s. <br> Per restaurar una còpia de seguretat en un nou %(box_name)"
-"s necessites les credencials SSH i, si s'ha escollit, la frase de pas de "
-"xifratge."
+"%(box_name)s. <br> Per restaurar una còpia de seguretat en un nou "
+"%(box_name)s necessites les credencials SSH i, si s'ha escollit, la frase de "
+"pas de xifratge."
 
 #: modules/backups/templates/backups_add_remote_repository.html:34
 msgid "Create Location"
@@ -959,7 +965,8 @@ msgstr "Accés públic (permisos per defecte)"
 
 #: modules/bepasty/forms.py:18
 msgid "Permissions for anonymous users, who have not provided a password."
-msgstr "Permisos per a usuaris anònims que no han proporcionat cap contrasenya."
+msgstr ""
+"Permisos per a usuaris anònims que no han proporcionat cap contrasenya."
 
 #: modules/bepasty/forms.py:27 modules/bepasty/templates/bepasty.html:30
 #: modules/users/forms.py:104
@@ -1058,11 +1065,11 @@ msgid "Admin"
 msgstr "Administrador"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
-#: modules/nextcloud/views.py:62 modules/searx/views.py:35
-#: modules/searx/views.py:46 modules/security/views.py:56
-#: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
-#: modules/zoph/views.py:74
+#: modules/homeassistant/views.py:53 modules/nextcloud/views.py:62
+#: modules/searx/views.py:35 modules/searx/views.py:46
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:82 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "Configuració actualitzada."
 
@@ -1200,17 +1207,18 @@ msgstr ""
 "Pots organitzar els teus e-books, extreure i editar les seves metadades, i "
 "realitzar cerques avançades. calibre pot importar, exportar o convertir "
 "entre una gran varietat de formats per preparar els e-books per a la lectura "
-"en qualsevol dispositiu. També ofereix un lector web en línia. Recorda l’"
-"última ubicació llegida, els marcadors i el text ressaltat. Actualment no es "
-"suporta la distribució de contingut mitjançant OPDS."
+"en qualsevol dispositiu. També ofereix un lector web en línia. Recorda "
+"l’última ubicació llegida, els marcadors i el text ressaltat. Actualment no "
+"es suporta la distribució de contingut mitjançant OPDS."
 
 #: modules/calibre/__init__.py:33
 msgid ""
 "Only users belonging to <em>calibre</em> group will be able to access the "
 "app. All users with access can use all the libraries."
 msgstr ""
-"Només els usuaris que pertanyen al grup <em>calibre</em> podran accedir a l’"
-"aplicació. Tots els usuaris amb accés poden utilitzar totes les biblioteques."
+"Només els usuaris que pertanyen al grup <em>calibre</em> podran accedir a "
+"l’aplicació. Tots els usuaris amb accés poden utilitzar totes les "
+"biblioteques."
 
 #: modules/calibre/__init__.py:53
 msgid "Use calibre e-book libraries"
@@ -1337,8 +1345,8 @@ msgid ""
 msgstr ""
 "Cockpit es pot utilitzar per realitzar operacions avançades d’emmagatzematge "
 "com la partició de discos i la gestió de RAID. També es pot utilitzar per "
-"obrir ports personalitzats al tallafocs i per a xarxes avançades com l’"
-"enllaç, el pont i la gestió de VLAN."
+"obrir ports personalitzats al tallafocs i per a xarxes avançades com "
+"l’enllaç, el pont i la gestió de VLAN."
 
 #: modules/cockpit/__init__.py:34
 #, python-brace-format
@@ -1385,7 +1393,7 @@ msgstr "Registres"
 msgid "Performance"
 msgstr "Rendiment"
 
-#: modules/config/__init__.py:18
+#: modules/config/__init__.py:20
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
@@ -1393,11 +1401,11 @@ msgstr ""
 "Aquí pots configurar algunes opcions generals com la pàgina d’inici del "
 "servidor web, etc."
 
-#: modules/config/__init__.py:40
+#: modules/config/__init__.py:42
 msgid "General Configuration"
 msgstr "Configuració General"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/config/__init__.py:47 modules/names/templates/names.html:35
 #: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
@@ -1442,7 +1450,8 @@ msgstr "Mostra aplicacions i funcions avançades"
 
 #: modules/config/forms.py:50
 msgid "Show apps and features that require more technical knowledge."
-msgstr "Mostra aplicacions i funcions que requereixen més coneixements tècnics."
+msgstr ""
+"Mostra aplicacions i funcions que requereixen més coneixements tècnics."
 
 #: modules/config/forms.py:54
 msgid "System-wide logging"
@@ -1775,13 +1784,12 @@ msgid "Diagnostic Results"
 msgstr "Resultats de diagnòstic"
 
 #: modules/diagnostics/templates/diagnostics_app.html:14
-#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "Aplicació: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:21
-#: modules/diagnostics/templates/diagnostics_full.html:49
+#: modules/diagnostics/templates/diagnostics_full.html:85
 msgid "Try to repair"
 msgstr "Intenta reparar"
 
@@ -1804,6 +1812,35 @@ msgstr "El test de diagnòstic s'està executant"
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "Resultats"
+
+#: modules/diagnostics/templates/diagnostics_full.html:53
+#, python-format
+msgid "%(number)s passed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:57
+#, python-format
+msgid "%(number)s failed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:61
+#, python-format
+msgid "%(number)s warnings"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:65
+#, python-format
+msgid "%(number)s errors"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:69
+#, python-format
+msgid "%(number)s skipped"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:111
+msgid "Running..."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1849,24 +1886,48 @@ msgstr ""
 "DNS cada vegada que el teu proveïdor d’Internet canviï la teva IP. El DNS "
 "dinàmic et permet enviar la teva adreça IP pública actual a un servidor <a "
 "href=\"http://gnudip2.sourceforge.net/\" target=\"_blank\">GnuDIP</a>. "
-"Després, el servidor assignarà el teu nom DNS a la nova IP, i si algú des d’"
-"Internet sol·licita el teu nom DNS, rebrà una resposta amb la teva adreça IP "
-"actual."
+"Després, el servidor assignarà el teu nom DNS a la nova IP, i si algú des "
+"d’Internet sol·licita el teu nom DNS, rebrà una resposta amb la teva adreça "
+"IP actual."
 
 #: modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
+"freedombox.org</a>. With this service, you also get unlimited subdomains "
+"(with wildcards option enabled in account settings). To use a subdomain, add "
+"it as a static domain in the Names app."
+msgstr ""
+"Si busques un compte de DNS dinàmic gratuït, pots trobar un servei gratuït "
+"de GnuDIP a <a href=\"https://ddns.freedombox.org\" target=\"_blank\">ddns."
+"freedombox.org</a> o serveis gratuïts basats en URL d’actualització a <a "
+"href=\"http://freedns.afraid.org/\" target=\"_blank\">freedns.afraid.org</a>."
+
+#: modules/dynamicdns/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
+msgid ""
+"Alternatively, you may find a free update URL based service at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "Si busques un compte de DNS dinàmic gratuït, pots trobar un servei gratuït "
-"de GnuDIP a <a href=\"https://ddns.freedombox.org\" target=\"_blank\""
-">ddns.freedombox.org</a> o serveis gratuïts basats en URL d’actualització a "
-"<a href=\"http://freedns.afraid.org/\" target=\"_blank\""
-">freedns.afraid.org</a>."
+"de GnuDIP a <a href=\"https://ddns.freedombox.org\" target=\"_blank\">ddns."
+"freedombox.org</a> o serveis gratuïts basats en URL d’actualització a <a "
+"href=\"http://freedns.afraid.org/\" target=\"_blank\">freedns.afraid.org</a>."
 
-#: modules/dynamicdns/__init__.py:46
+#: modules/dynamicdns/__init__.py:50
 msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
@@ -1874,11 +1935,11 @@ msgstr ""
 "Aquest servei utilitza un servei extern per consultar l’adreça IP pública. "
 "Això es pot configurar a l’aplicació de privadesa."
 
-#: modules/dynamicdns/__init__.py:64
+#: modules/dynamicdns/__init__.py:68
 msgid "Dynamic DNS Client"
 msgstr "Client DNS Dinàmic"
 
-#: modules/dynamicdns/__init__.py:77
+#: modules/dynamicdns/__init__.py:81
 msgid "Dynamic Domain"
 msgstr "Domini Dinàmic"
 
@@ -1889,8 +1950,8 @@ msgid ""
 "providers."
 msgstr ""
 "Les variables &lt;User&gt;, &lt;Pass&gt;, &lt;&gt;, &lt;Domain&gt; es poden "
-"utilitzar dins de la URL. Per a més detalls, consulta les plantilles d’URL d’"
-"actualització dels proveïdors d’exemple."
+"utilitzar dins de la URL. Per a més detalls, consulta les plantilles d’URL "
+"d’actualització dels proveïdors d’exemple."
 
 #: modules/dynamicdns/forms.py:24
 msgid ""
@@ -1907,9 +1968,9 @@ msgid ""
 "Please do not enter a URL here (like \"https://example.com/\") but only the "
 "hostname of the GnuDIP server (like \"example.com\")."
 msgstr ""
-"Si us plau, no introdueixis aquí una URL (com "
-"\"[https://example.com/](https://example.com/)\"), sinó només el nom d’"
-"amfitrió del servidor GnuDIP (com \"example.com\")."
+"Si us plau, no introdueixis aquí una URL (com \"[https://example.com/]"
+"(https://example.com/)\"), sinó només el nom d’amfitrió del servidor GnuDIP "
+"(com \"example.com\")."
 
 #: modules/dynamicdns/forms.py:33
 #, python-brace-format
@@ -1927,8 +1988,8 @@ msgid ""
 "If this option is selected, your username and password will be used for HTTP "
 "basic authentication."
 msgstr ""
-"Si aquesta opció està seleccionada, el teu nom d’usuari i contrasenya s’"
-"utilitzaran per a l’autenticació bàsica HTTP."
+"Si aquesta opció està seleccionada, el teu nom d’usuari i contrasenya "
+"s’utilitzaran per a l’autenticació bàsica HTTP."
 
 #: modules/dynamicdns/forms.py:42
 msgid "Leave this field empty if you want to keep your current password."
@@ -2500,14 +2561,14 @@ msgid ""
 "you have multiple public IP addresses."
 msgstr ""
 "Si el teu %(box_name)s funciona en una infraestructura de servei al núvol, "
-"hauries de configurar la <a href="
-"\"https://en.wikipedia.org/wiki/Reverse_DNS_lookup\">consulta DNS inversa</"
-"a>. No és obligatori, però millora molt la entregabilitat del correu "
-"electrònic. El DNS invers no es configura on tens el DNS habitual. Hauries "
-"de buscar-ho a la configuració del teu VPS o ISP. Alguns proveïdors "
-"preconfiguren la part d’adreça IP per a tu i només has de configurar la part "
-"del domini. Només un dels teus dominis pot tenir configurada la consulta DNS "
-"inversa, tret que tinguis diverses adreces IP públiques."
+"hauries de configurar la <a href=\"https://en.wikipedia.org/wiki/"
+"Reverse_DNS_lookup\">consulta DNS inversa</a>. No és obligatori, però "
+"millora molt la entregabilitat del correu electrònic. El DNS invers no es "
+"configura on tens el DNS habitual. Hauries de buscar-ho a la configuració "
+"del teu VPS o ISP. Alguns proveïdors preconfiguren la part d’adreça IP per a "
+"tu i només has de configurar la part del domini. Només un dels teus dominis "
+"pot tenir configurada la consulta DNS inversa, tret que tinguis diverses "
+"adreces IP públiques."
 
 #: modules/email/templates/email-dns.html:66
 msgid ""
@@ -2577,9 +2638,9 @@ msgid ""
 "supported."
 msgstr ""
 "Els wikis no són públics per defecte, però es poden descarregar per "
-"compartir-los o publicar-los. Els pot editar <a href=\"{users_url}\""
-">qualsevol usuari</a> de {box_name} que pertanyi al grup del wiki. No es "
-"suporta l’edició simultània."
+"compartir-los o publicar-los. Els pot editar <a "
+"href=\"{users_url}\">qualsevol usuari</a> de {box_name} que pertanyi al grup "
+"del wiki. No es suporta l’edició simultània."
 
 #: modules/featherwiki/__init__.py:56 modules/ikiwiki/__init__.py:79
 #: modules/tiddlywiki/__init__.py:61
@@ -2591,10 +2652,14 @@ msgid "Feather Wiki"
 msgstr "Feather Wiki"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Wiki files cannot be named \"index.html\"."
+msgstr ""
+
+#: modules/featherwiki/forms.py:20 modules/tiddlywiki/forms.py:20
 msgid "Name of the wiki file, with file extension \".html\""
 msgstr "Nom del fitxer de la wiki, amb extensió \".html\""
 
-#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+#: modules/featherwiki/forms.py:22 modules/tiddlywiki/forms.py:22
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
@@ -2602,23 +2667,23 @@ msgstr ""
 "El títol i la descripció del wiki es poden establir des de dins del wiki. "
 "Aquest nom de fitxer és independent del títol del wiki."
 
-#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+#: modules/featherwiki/forms.py:30 modules/tiddlywiki/forms.py:30
 msgid "New name for the wiki file, with file extension \".html\""
 msgstr "Nou nom per al fitxer del wiki, amb l'extensió de fitxer \".html\""
 
-#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+#: modules/featherwiki/forms.py:32 modules/tiddlywiki/forms.py:32
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr "Canviar el nom del fitxer no té cap efecte sobre el títol del wiki."
 
-#: modules/featherwiki/forms.py:32
+#: modules/featherwiki/forms.py:39
 msgid "A Feather Wiki file with .html file extension"
 msgstr "Un fitxer Feather Wiki amb l'extensió de fitxer .html"
 
-#: modules/featherwiki/forms.py:35
+#: modules/featherwiki/forms.py:43
 msgid "Feather Wiki files must be in HTML format"
 msgstr "Els fitxers Feather Wiki han d'estar en format HTML"
 
-#: modules/featherwiki/forms.py:37
+#: modules/featherwiki/forms.py:46
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "Carrega un fitxer Feather Wiki existent des d'aquest ordinador."
 
@@ -2868,8 +2933,8 @@ msgid ""
 "the <a href=\"/_cockpit/network/firewall\">Cockpit</a> app."
 msgstr ""
 "Les operacions avançades del tallafocs, com ara obrir ports personalitzats, "
-"les proporciona l'aplicació <a href=\"/_cockpit/network/firewall\""
-">Cockpit</a>."
+"les proporciona l'aplicació <a href=\"/_cockpit/network/firewall\">Cockpit</"
+"a>."
 
 #: modules/first_boot/__init__.py:61
 msgid "Setup complete! Next steps:"
@@ -2900,8 +2965,8 @@ msgid ""
 "wizard-secret\" on your {box_name}"
 msgstr ""
 "Introdueix el secret generat durant la instal·lació de FreedomBox. Aquest "
-"secret també es pot obtenir executant la comanda "
-"\"sudo cat /var/lib/plinth/firstboot-wizard-secret\" al teu {box_name}"
+"secret també es pot obtenir executant la comanda \"sudo cat /var/lib/plinth/"
+"firstboot-wizard-secret\" al teu {box_name}"
 
 #: modules/first_boot/forms.py:19
 msgid "Firstboot Wizard Secret"
@@ -2940,9 +3005,9 @@ msgid ""
 "Review and setup <a href=\"%(networks_url)s\" target=\"_blank\">network "
 "connections</a>. Change the default Wi-Fi password, if applicable."
 msgstr ""
-"Revisa i configura les <a href=\"%(networks_url)s\" target=\"_blank\""
-">connexions de xarxa</a>. Canvia la contrasenya Wi-Fi per defecte, si "
-"s’escau."
+"Revisa i configura les <a href=\"%(networks_url)s\" "
+"target=\"_blank\">connexions de xarxa</a>. Canvia la contrasenya Wi-Fi per "
+"defecte, si s’escau."
 
 #: modules/first_boot/templates/firstboot_complete.html:60
 #, python-format
@@ -2957,8 +3022,8 @@ msgid ""
 "Configure and schedule remote <a href=\"%(backups_url)s\" "
 "target=\"_blank\">backups</a>."
 msgstr ""
-"Configura i programa còpies de seguretat <a href=\"%(backups_url)s\" target="
-"\"_blank\">remotes</a>."
+"Configura i programa còpies de seguretat <a href=\"%(backups_url)s\" "
+"target=\"_blank\">remotes</a>."
 
 #: modules/first_boot/templates/firstboot_complete.html:81
 #, python-format
@@ -3000,8 +3065,8 @@ msgid ""
 "To learn more on how to use Git visit <a href=\"https://git-scm.com/docs/"
 "gittutorial\">Git tutorial</a>."
 msgstr ""
-"Per aprendre més sobre com utilitzar Git, visita <a href="
-"\"https://git-scm.com/docs/gittutorial\">tutorial de Git</a>."
+"Per aprendre més sobre com utilitzar Git, visita <a href=\"https://git-scm."
+"com/docs/gittutorial\">tutorial de Git</a>."
 
 #: modules/gitweb/__init__.py:45
 msgid "Read-write access to Git repositories"
@@ -3243,7 +3308,8 @@ msgstr "Reeixit:"
 #: modules/upgrades/templates/upgrades_configure.html:31
 #, python-format
 msgid "You are running %(os_release)s and %(box_name)s version %(version)s."
-msgstr "Estàs executant %(os_release)s i la versió %(version)s de %(box_name)s."
+msgstr ""
+"Estàs executant %(os_release)s i la versió %(version)s de %(box_name)s."
 
 #: modules/help/templates/help_about.html:35
 #, python-format
@@ -3251,8 +3317,8 @@ msgid ""
 "There is a new %(box_name)s version <a href=\"%(upgrades_url)s\">available</"
 "a>."
 msgstr ""
-"Hi ha una nova versió de %(box_name)s <a href=\"%(upgrades_url)s\""
-">disponible</a>."
+"Hi ha una nova versió de %(box_name)s <a "
+"href=\"%(upgrades_url)s\">disponible</a>."
 
 #: modules/help/templates/help_about.html:40
 #: modules/upgrades/templates/upgrades_configure.html:42
@@ -3318,12 +3384,11 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 "%(box_name)s és programari lliure, llicenciat sota la GNU Affero General "
-"Public License. El codi font està disponible en línia al <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox\">repositori de "
-"%(box_name)s</a>. A més, el codi font de qualsevol paquet Debian es pot "
-"obtenir des del lloc <a href=\"https://sources.debian.org/\">Debian Sources</"
-"a>, o executant \"apt source <i>nom\\_paquet</i>\" en un terminal ("
-"utilitzant Cockpit o SSH)."
+"Public License. El codi font està disponible en línia al <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox\">repositori de %(box_name)s</"
+"a>. A més, el codi font de qualsevol paquet Debian es pot obtenir des del "
+"lloc <a href=\"https://sources.debian.org/\">Debian Sources</a>, o executant "
+"\"apt source <i>nom\\_paquet</i>\" en un terminal (utilitzant Cockpit o SSH)."
 
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
@@ -3391,14 +3456,14 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
-"També pots ajudar el projecte econòmicament <a href="
-"\"https://freedomboxfoundation.org/donate/\">fent una donació</a> a la "
-"FreedomBox Foundation, una organització sense ànim de lucre. Fundada el "
-"2011, la FreedomBox Foundation és una entitat sense ànim de lucre amb "
-"estatus 501(c)(3) amb seu a Nova York que existeix per donar suport a "
-"FreedomBox. Proporciona infraestructura tècnica i serveis legals pel "
-"projecte, cerca aliances i defensa FreedomBox arreu del món. La FreedomBox "
-"Foundation no existiria sense els seus col·laboradors."
+"També pots ajudar el projecte econòmicament <a href=\"https://"
+"freedomboxfoundation.org/donate/\">fent una donació</a> a la FreedomBox "
+"Foundation, una organització sense ànim de lucre. Fundada el 2011, la "
+"FreedomBox Foundation és una entitat sense ànim de lucre amb estatus 501(c)"
+"(3) amb seu a Nova York que existeix per donar suport a FreedomBox. "
+"Proporciona infraestructura tècnica i serveis legals pel projecte, cerca "
+"aliances i defensa FreedomBox arreu del món. La FreedomBox Foundation no "
+"existiria sense els seus col·laboradors."
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
@@ -3466,9 +3531,9 @@ msgid ""
 "tracker</a> to let our developers know. To report, first check if the issue "
 "is already reported and then use the \"New issue\" button."
 msgstr ""
-"Si trobes algun error o incidència, si us plau utilitza el <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\" target="
-"\"_blank\">seguiment d’incidències</a> per informar els nostres "
+"Si trobes algun error o incidència, si us plau utilitza el <a href=\"https://"
+"salsa.debian.org/freedombox-team/freedombox/issues\" "
+"target=\"_blank\">seguiment d’incidències</a> per informar els nostres "
 "desenvolupadors. Per informar, primer comprova si l’incidència ja està "
 "reportada i després utilitza el botó \"Nova incidència\"."
 
@@ -3503,10 +3568,10 @@ msgid ""
 "about problems faced by other users and possible solutions."
 msgstr ""
 "Per sol·licitar ajuda a la comunitat de %(box_name)s, es poden publicar "
-"consultes a la <a href="
-"\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\"> "
-"llista de correu</a>. Els arxius de la llista també contenen informació "
-"sobre problemes que han tingut altres usuaris i possibles solucions."
+"consultes a la <a href=\"https://lists.alioth.debian.org/mailman/listinfo/"
+"freedombox-discuss\"> llista de correu</a>. Els arxius de la llista també "
+"contenen informació sobre problemes que han tingut altres usuaris i "
+"possibles solucions."
 
 #: modules/help/templates/help_index.html:42
 #, python-format
@@ -3517,9 +3582,9 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "Molts contribuïdors i usuaris de %(box_name)s també estan disponibles a la "
-"xarxa IRC irc.oftc.net. Uneix-te i sol·licita ajuda al canal <a href=\"https"
-"://webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> "
-"#freedombox</a> mitjançant la interfície web IRC."
+"xarxa IRC irc.oftc.net. Uneix-te i sol·licita ajuda al canal <a "
+"href=\"https://webchat.oftc.net/?randomnick=1&amp;channels=freedombox&amp;"
+"prompt=1\"> #freedombox</a> mitjançant la interfície web IRC."
 
 #: modules/help/templates/help_manual.html:18
 msgid "Download as PDF"
@@ -3541,8 +3606,9 @@ msgid ""
 "Search for past discussions or post a new query on our <a href=\"https://"
 "discuss.freedombox.org\" target=\"_blank\">discussion forum</a>."
 msgstr ""
-"Cerca discussions passades o publica una nova consulta al nostre <a href="
-"\"https://discuss.freedombox.org\" target=\"_blank\">fòrum de discussió</a>."
+"Cerca discussions passades o publica una nova consulta al nostre <a "
+"href=\"https://discuss.freedombox.org\" target=\"_blank\">fòrum de "
+"discussió</a>."
 
 #: modules/help/templates/help_support.html:27
 msgid ""
@@ -3552,9 +3618,10 @@ msgid ""
 "debian.net\">mailing list</a>."
 msgstr ""
 "També pots xatejar amb nosaltres als nostres canals IRC i Matrix "
-"(connectats): <ul> <li>#freedombox a irc.oftc.net</li> <li>#freedombox\\"
-":matrix.org</li> </ul> O enviar un correu electrònic a la nostra <a href="
-"\"mailto:freedombox-discuss@alioth-lists.debian.net\">llista de correu</a>."
+"(connectats): <ul> <li>#freedombox a irc.oftc.net</li> <li>#freedombox\\:"
+"matrix.org</li> </ul> O enviar un correu electrònic a la nostra <a "
+"href=\"mailto:freedombox-discuss@alioth-lists.debian.net\">llista de correu</"
+"a>."
 
 #: modules/help/templates/statuslog.html:10
 msgid "Status Log"
@@ -3587,6 +3654,100 @@ msgstr ""
 #: modules/help/views.py:135
 #, python-brace-format
 msgid "{box_name} Manual"
+msgstr ""
+
+#: modules/homeassistant/__init__.py:31
+msgid ""
+"Home Assistant is a home automation hub with emphasis on local control and "
+"privacy. It integrates with thousands of devices including smart bulbs, "
+"alarms, presense sensors, door bells, thermostats, irrigation timers, energy "
+"monitors, etc."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:35
+msgid ""
+"Home Assistant can detect, configure, and use various devices on the local "
+"network. For devices using other protocols such as ZigBee, it typically "
+"requires additional hardware such as a ZigBee USB dongle. You need to re-run "
+"setup if such hardware is added or removed."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:39
+msgid ""
+"Home Assistant web interface must be setup soon after the app is installed. "
+"An administrator account is created at this time. Home Assistant maintains "
+"its own user accounts."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:43
+#, python-brace-format
+msgid ""
+"Please note that Home Assistant is installed and run inside a container "
+"provided by the Home Assistant project. Security, quality, privacy and legal "
+"reviews are done by the upstream project and not by Debian/{box_name}. "
+"Updates are performed following an independent cycle."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:48
+msgid "This app is experimental."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:64 modules/homeassistant/manifest.py:12
+#: modules/homeassistant/manifest.py:20
+msgid "Home Assistant"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:62
+#, fuzzy
+#| msgid "Automatic"
+msgid "Home Automation"
+msgstr "Automàtic"
+
+#: modules/homeassistant/manifest.py:63
+msgid "IoT"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:64 modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:65
+msgid "ZigBee"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:66
+msgid "Z-Wave"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:67
+msgid "Thread"
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:17
+msgid ""
+"Home Assistant requires a dedicated domain to work with and cannot work on a "
+"URL path. Please select the domain on which Home Assistant will be "
+"available. Home Assistant will not be available on other domains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:28
+#, python-format
+msgid ""
+"A separate domain can be made available for Home Assistant by configurating "
+"a subdomain such as homeassistant.mydomain.example. See <a "
+"href=\"%(names_url)s\">Names</a> app and <a "
+"href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:40
+#: modules/ikiwiki/templates/ikiwiki_create.html:18
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
+msgid "Update setup"
 msgstr ""
 
 #: modules/ikiwiki/__init__.py:20
@@ -3643,12 +3804,6 @@ msgstr ""
 #: modules/ikiwiki/templates/ikiwiki_configure.html:38
 #, python-format
 msgid "Delete site %(site)s"
-msgstr ""
-
-#: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
-msgid "Update setup"
 msgstr ""
 
 #: modules/ikiwiki/templates/ikiwiki_delete.html:12
@@ -4753,6 +4908,23 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
+#: modules/names/templates/names-domain-add.html:11
+#, python-format
+msgid ""
+"If you purchased a domain name from a domain registrar, you can configure it "
+"here. The name servers responsible for the domain must be pointing (A and "
+"AAAA records) to the public IP addresses of the %(box_name)s."
+msgstr ""
+
+#: modules/names/templates/names-domain-add.html:18
+#, python-format
+msgid ""
+"If you wish to also use a subdomian of an already configured domain, add "
+"another entry for it here. Ensure that the subdomain is configured to point "
+"to %(box_name)s. Subdomains are useful for hosting multiple applications "
+"that each require a dedicted domain for themselves."
+msgstr ""
+
 #: modules/names/templates/names.html:41
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
@@ -4804,7 +4976,7 @@ msgid ""
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:152 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:87
 msgid "Install"
 msgstr ""
 
@@ -5188,14 +5360,6 @@ msgstr ""
 msgid "Internet"
 msgstr ""
 
-#: modules/networks/manifest.py:8
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr ""
-
 #: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
 #: modules/samba/manifest.py:90
 msgid "Local network"
@@ -5533,7 +5697,7 @@ msgstr ""
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
 #: modules/pagekite/templates/pagekite_custom_services.html:33
-#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:19
+#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:22
 msgid "Submit"
 msgstr ""
 
@@ -7822,15 +7986,15 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "TiddlyWiki"
 
-#: modules/tiddlywiki/forms.py:32
+#: modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
 
-#: modules/tiddlywiki/forms.py:35
+#: modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
 msgstr ""
 
-#: modules/tiddlywiki/forms.py:37
+#: modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr ""
 
@@ -8293,7 +8457,7 @@ msgstr ""
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
+#: templates/notifications.html:58 templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr ""
 
@@ -9211,34 +9375,34 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr ""
 
-#: package.py:213
+#: package.py:216
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:233
+#: package.py:236
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:427
+#: package.py:441
 msgid "installing"
 msgstr ""
 
-#: package.py:429
+#: package.py:443
 msgid "downloading"
 msgstr ""
 
-#: package.py:431
+#: package.py:445
 msgid "media change"
 msgstr ""
 
-#: package.py:433
+#: package.py:447
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr ""
 
-#: package.py:461 package.py:487
+#: package.py:475 package.py:501
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -9503,6 +9667,11 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+#: templates/notifications.html:18
+#, python-format
+msgid "%(time_since)s ago"
+msgstr ""
+
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
 msgstr ""
@@ -9559,22 +9728,26 @@ msgstr ""
 msgid "This application needs an update. Update now?"
 msgstr ""
 
-#: templates/setup.html:46
+#: templates/setup.html:43
 msgid "This application is currently not available in your distribution."
 msgstr ""
 
-#: templates/setup.html:50
-msgid "Check again"
+#: templates/setup.html:51
+msgid "Checking app availability..."
 msgstr ""
 
-#: templates/setup.html:61
+#: templates/setup.html:57
+msgid "Error checking app availability. Please refresh page."
+msgstr ""
+
+#: templates/setup.html:72
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
 "removed if you proceed:"
 msgstr ""
 
-#: templates/setup.html:80
+#: templates/setup.html:89
 msgid "Update"
 msgstr ""
 
@@ -9618,7 +9791,7 @@ msgstr ""
 msgid "Setting unchanged"
 msgstr ""
 
-#: views.py:647
+#: views.py:640
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr ""
@@ -9626,3 +9799,10 @@ msgstr ""
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr ""
+
+#~ msgid ""
+#~ "Warning! The application may not work properly if domain name is changed "
+#~ "later."
+#~ msgstr ""
+#~ "Compte! L'aplicació podria no funcionar correctament si el nom del domini "
+#~ "es canvia més tard."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 20:08-0400\n"
+"POT-Creation-Date: 2025-08-18 20:35-0400\n"
 "PO-Revision-Date: 2025-05-14 17:03+0000\n"
 "Last-Translator: Sripath Roy Koganti <sripathroy@swecha.net>\n"
 "Language-Team: Telugu <https://hosted.weblate.org/projects/freedombox/"
@@ -25,6 +25,12 @@ msgstr ""
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "స్టాటిక్ కాన్ఫిగరేషన్ {etc_path} సరిగ్గా సెటప్ చేయబడింది"
+
+#: container.py:137
+#, fuzzy, python-brace-format
+#| msgid "Service {service_name} is running"
+msgid "Container {container_name} is running"
+msgstr "{service_name} సేవ అమలులో ఉంది"
 
 #: context_processors.py:21 views.py:168
 msgid "FreedomBox"
@@ -67,21 +73,21 @@ msgstr "బ్యాకప్ నుండి పునరుద్ధరిం�
 msgid "Repository to backup to"
 msgstr "బ్యాకప్ చేయడానికి రిపోజిటరీ"
 
-#: forms.py:64
+#: forms.py:62
+#, fuzzy
+#| msgid "None"
+msgid "(None)"
+msgstr "ఏమీ లేదు"
+
+#: forms.py:68
 msgid "Select a domain name to be used with this application"
 msgstr "ఈ అప్లికేషన్ తో ఉపయోగించడానికి ఒక డొమైన్ పేరును ఎంచుకోండి"
 
-#: forms.py:66
-msgid ""
-"Warning! The application may not work properly if domain name is changed "
-"later."
-msgstr "హెచ్చరిక! డొమైన్ పేరును తర్వాత మార్చినట్లయితే అప్లికేషన్ సరిగ్గా పనిచేయకపోవచ్చు."
-
-#: forms.py:80 modules/coturn/forms.py:31 modules/mumble/forms.py:21
+#: forms.py:81 modules/coturn/forms.py:31 modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "TLS డొమైన్"
 
-#: forms.py:82 modules/coturn/forms.py:33 modules/mumble/forms.py:23
+#: forms.py:83 modules/coturn/forms.py:33 modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -89,15 +95,15 @@ msgstr ""
 "TLS ఉపయోగించడానికి డొమైన్‌ను ఎంచుకోండి. జాబితా ఖాళీగా ఉంటే, దయచేసి సర్టిఫికెట్‌లతో కనీసం ఒక డొమైన్‌ను కాన్ఫిగర్ "
 "చేయండి."
 
-#: forms.py:92
+#: forms.py:93
 msgid "Language"
 msgstr "భాష"
 
-#: forms.py:93
+#: forms.py:94
 msgid "Language to use for presenting this web interface"
 msgstr "ఈ వెబ్ ఇంటర్‌ఫేస్‌ను ప్రదర్శించడానికి ఉపయోగించాల్సిన భాష"
 
-#: forms.py:100
+#: forms.py:101
 msgid "Use the language preference set in the browser"
 msgstr "బ్రౌజర్‌లో సెట్ చేయబడిన భాషా ప్రాధాన్యతను ఉపయోగించండి"
 
@@ -147,25 +153,25 @@ msgstr "ఆపరేషన్ అమలులో లోపం."
 msgid "Error loading page."
 msgstr "పేజీని లోడ్ చేయడంలో లోపం."
 
-#: modules/apache/__init__.py:32
+#: modules/apache/__init__.py:33
 msgid "Apache HTTP Server"
 msgstr "Apache HTTP సర్వర్"
 
-#: modules/apache/__init__.py:46
+#: modules/apache/__init__.py:47
 msgid "Web Server"
 msgstr "వెబ్ సర్వర్"
 
-#: modules/apache/__init__.py:52
+#: modules/apache/__init__.py:53
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} వెబ్ ఇంటర్‌ఫేస్ (ప్లింత్)"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:270
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "tcp{kind} లో URL {url} ని యాక్సెస్ చేయండి"
 
-#: modules/apache/components.py:165
+#: modules/apache/components.py:273
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "URL {url} ని యాక్సెస్ చేయండి"
@@ -484,6 +490,7 @@ msgid "App data"
 msgstr "యాప్ డేటా"
 
 #: modules/backups/manifest.py:20
+#: modules/homeassistant/templates/homeassistant.html:11
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
@@ -585,9 +592,10 @@ msgstr "ఇప్పటికే ఉన్న బ్యాకప్‌లు"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/diagnostics/templates/diagnostics_full.html:102
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
+#: modules/homeassistant/__init__.py:48
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
@@ -601,7 +609,7 @@ msgstr "ఇప్పటికే ఉన్న బ్యాకప్‌లు"
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
-#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+#: templates/messages.html:17 templates/setup.html:40 templates/setup.html:69
 msgid "Caution:"
 msgstr "జాగ్రత్త:"
 
@@ -1022,11 +1030,11 @@ msgid "Admin"
 msgstr "నిర్వాహకుడు"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
-#: modules/nextcloud/views.py:62 modules/searx/views.py:35
-#: modules/searx/views.py:46 modules/security/views.py:56
-#: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
-#: modules/zoph/views.py:74
+#: modules/homeassistant/views.py:53 modules/nextcloud/views.py:62
+#: modules/searx/views.py:35 modules/searx/views.py:46
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:82 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "ఆకృతీకరణ నవీకరించబడింది."
 
@@ -1339,17 +1347,17 @@ msgstr "లాగ్స్"
 msgid "Performance"
 msgstr "ప్రదర్శన"
 
-#: modules/config/__init__.py:18
+#: modules/config/__init__.py:20
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr "ఇక్కడ మీరు వెబ్ సర్వర్ హోమ్ పేజీ వంటి కొన్ని సాధారణ కాన్ఫిగరేషన్ ఎంపికలను సెట్ చేయవచ్చు."
 
-#: modules/config/__init__.py:40
+#: modules/config/__init__.py:42
 msgid "General Configuration"
 msgstr "సాధారణ ఆకృతీకరణ"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/config/__init__.py:47 modules/names/templates/names.html:35
 #: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
@@ -1719,13 +1727,12 @@ msgid "Diagnostic Results"
 msgstr "లక్షణములు ఫలితాలు"
 
 #: modules/diagnostics/templates/diagnostics_app.html:14
-#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "యాప్: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:21
-#: modules/diagnostics/templates/diagnostics_full.html:49
+#: modules/diagnostics/templates/diagnostics_full.html:85
 msgid "Try to repair"
 msgstr "మరమ్మతు చేయడానికి ప్రయత్నించండి"
 
@@ -1748,6 +1755,37 @@ msgstr "ప్రస్తుతం నిర్ధారణ పరీక్ష 
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "ఫలితాలు"
+
+#: modules/diagnostics/templates/diagnostics_full.html:53
+#, python-format
+msgid "%(number)s passed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:57
+#, python-format
+msgid "%(number)s failed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:61
+#, python-format
+msgid "%(number)s warnings"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:65
+#, python-format
+msgid "%(number)s errors"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:69
+#, python-format
+msgid "%(number)s skipped"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:111
+#, fuzzy
+#| msgid "is running"
+msgid "Running..."
+msgstr "డెల్యూజ్ నడుస్తోంది"
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1795,10 +1833,36 @@ msgstr ""
 "DNS పేరు అడుగుతాడు ఉంటే, వారు మీ ప్రస్తుత ఐ.పీ. చిరునామాతో సమాధానం పొందుతారు."
 
 #: modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
+"freedombox.org</a>. With this service, you also get unlimited subdomains "
+"(with wildcards option enabled in account settings). To use a subdomain, add "
+"it as a static domain in the Names app."
+msgstr ""
+"మీరు ఒక ఉచిత డైనమిక్ DNS ఖాతా కోసం చూస్తున్న ఉంటే, మీరు <a href=\"http://gnudip."
+"datasystems24.net\" target=\"_blank\"> 1gnudip.datasystems24.net </a> 2 వద్ద "
+"ఉచిత GnuDIP సేవ కనుగొనేందుకు ఉండవచ్చు లేదా మీరు <a href=\"http://freedns.afraid.org/"
+"\" target=\"_blank\"> 3 freedns.afraid.org </a> 4 ఉచిత నవీకరణ URL ఆధారిత సేవలు "
+"కనుగొనవచ్చు."
+
+#: modules/dynamicdns/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
+msgid ""
+"Alternatively, you may find a free update URL based service at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "మీరు ఒక ఉచిత డైనమిక్ DNS ఖాతా కోసం చూస్తున్న ఉంటే, మీరు <a href=\"http://gnudip."
@@ -1807,18 +1871,18 @@ msgstr ""
 "\" target=\"_blank\"> 3 freedns.afraid.org </a> 4 ఉచిత నవీకరణ URL ఆధారిత సేవలు "
 "కనుగొనవచ్చు."
 
-#: modules/dynamicdns/__init__.py:46
+#: modules/dynamicdns/__init__.py:50
 msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
 "ఈ సేవ పబ్లిక్ IP చిరునామాను చూసేందుకు బాహ్య సేవను ఉపయోగిస్తుంది. దీన్ని గోప్యతా యాప్‌లో కాన్ఫిగర్ చేయవచ్చు."
 
-#: modules/dynamicdns/__init__.py:64
+#: modules/dynamicdns/__init__.py:68
 msgid "Dynamic DNS Client"
 msgstr "గతిక DNS కక్షిదారు"
 
-#: modules/dynamicdns/__init__.py:77
+#: modules/dynamicdns/__init__.py:81
 msgid "Dynamic Domain"
 msgstr "డైనమిక్ డొమైన్"
 
@@ -2502,33 +2566,37 @@ msgid "Feather Wiki"
 msgstr "ఫెదర్ వికీ"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Wiki files cannot be named \"index.html\"."
+msgstr ""
+
+#: modules/featherwiki/forms.py:20 modules/tiddlywiki/forms.py:20
 msgid "Name of the wiki file, with file extension \".html\""
 msgstr "\".html\" ఫైల్ పొడిగింపుతో వికీ ఫైల్ పేరు"
 
-#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+#: modules/featherwiki/forms.py:22 modules/tiddlywiki/forms.py:22
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
 "వికీ శీర్షిక మరియు వివరణను వికీలోనే సెట్ చేయవచ్చు. ఈ ఫైల్ పేరు వికీ శీర్షికతో సంబంధం లేకుండా ఉంటుంది."
 
-#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+#: modules/featherwiki/forms.py:30 modules/tiddlywiki/forms.py:30
 msgid "New name for the wiki file, with file extension \".html\""
 msgstr "\".html\" ఫైల్ పొడిగింపుతో వికీ ఫైల్ కోసం కొత్త పేరు"
 
-#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+#: modules/featherwiki/forms.py:32 modules/tiddlywiki/forms.py:32
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr "ఫైల్ పేరు మార్చడం వల్ల వికీ శీర్షికపై ఎటువంటి ప్రభావం ఉండదు."
 
-#: modules/featherwiki/forms.py:32
+#: modules/featherwiki/forms.py:39
 msgid "A Feather Wiki file with .html file extension"
 msgstr ".html ఫైల్ పొడిగింపుతో ఫెదర్ వికీ ఫైల్"
 
-#: modules/featherwiki/forms.py:35
+#: modules/featherwiki/forms.py:43
 msgid "Feather Wiki files must be in HTML format"
 msgstr "ఫెదర్ వికీ ఫైల్స్ తప్పనిసరిగా HTML ఫార్మాట్‌లో ఉండాలి"
 
-#: modules/featherwiki/forms.py:37
+#: modules/featherwiki/forms.py:46
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "ఈ కంప్యూటర్ నుండి ఇప్పటికే ఉన్న ఫెదర్ వికీ ఫైల్‌ను అప్‌లోడ్ చేయండి."
 
@@ -3471,6 +3539,108 @@ msgstr "{box_name} గురించి"
 msgid "{box_name} Manual"
 msgstr "{box_name} కరదీపిక"
 
+#: modules/homeassistant/__init__.py:31
+msgid ""
+"Home Assistant is a home automation hub with emphasis on local control and "
+"privacy. It integrates with thousands of devices including smart bulbs, "
+"alarms, presense sensors, door bells, thermostats, irrigation timers, energy "
+"monitors, etc."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:35
+msgid ""
+"Home Assistant can detect, configure, and use various devices on the local "
+"network. For devices using other protocols such as ZigBee, it typically "
+"requires additional hardware such as a ZigBee USB dongle. You need to re-run "
+"setup if such hardware is added or removed."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:39
+msgid ""
+"Home Assistant web interface must be setup soon after the app is installed. "
+"An administrator account is created at this time. Home Assistant maintains "
+"its own user accounts."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:43
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Please note that Nextcloud is installed and run inside a container "
+#| "provided by the Nextcloud community. Security, quality, privacy and legal "
+#| "reviews are done by the upstream project and not by Debian/{box_name}. "
+#| "Updates are performed following an independent cycle."
+msgid ""
+"Please note that Home Assistant is installed and run inside a container "
+"provided by the Home Assistant project. Security, quality, privacy and legal "
+"reviews are done by the upstream project and not by Debian/{box_name}. "
+"Updates are performed following an independent cycle."
+msgstr ""
+"దయచేసి గమనించండి, Nextcloud అనేది Nextcloud కమ్యూనిటీ అందించిన కంటైనర్ లోపల ఇన్‌స్టాల్ చేయబడి "
+"అమలు చేయబడుతుంది. భద్రత, నాణ్యత, గోప్యత మరియు చట్టపరమైన సమీక్షలు Debian/{box_name} ద్వారా "
+"కాకుండా అప్‌స్ట్రీమ్ ప్రాజెక్ట్ ద్వారా చేయబడతాయి. నవీకరణలు స్వతంత్ర చక్రం తర్వాత నిర్వహించబడతాయి."
+
+#: modules/homeassistant/__init__.py:48
+msgid "This app is experimental."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:64 modules/homeassistant/manifest.py:12
+#: modules/homeassistant/manifest.py:20
+msgid "Home Assistant"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:62
+#, fuzzy
+#| msgid "Automatic"
+msgid "Home Automation"
+msgstr "స్వయంచాలక"
+
+#: modules/homeassistant/manifest.py:63
+msgid "IoT"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:64 modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "Wi-Fi"
+
+#: modules/homeassistant/manifest.py:65
+msgid "ZigBee"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:66
+msgid "Z-Wave"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:67
+msgid "Thread"
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:17
+msgid ""
+"Home Assistant requires a dedicated domain to work with and cannot work on a "
+"URL path. Please select the domain on which Home Assistant will be "
+"available. Home Assistant will not be available on other domains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:28
+#, python-format
+msgid ""
+"A separate domain can be made available for Home Assistant by configurating "
+"a subdomain such as homeassistant.mydomain.example. See <a "
+"href=\"%(names_url)s\">Names</a> app and <a "
+"href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:40
+#: modules/ikiwiki/templates/ikiwiki_create.html:18
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
+msgid "Update setup"
+msgstr "అమరికను నవీకరించు"
+
 #: modules/ikiwiki/__init__.py:20
 msgid ""
 "ikiwiki is a simple wiki and blog application. It supports several "
@@ -3532,12 +3702,6 @@ msgstr "ప్రదేశం కు వెళ్ళండి %(site)s"
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "ప్రదేశం తొలగించు %(site)s"
-
-#: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
-msgid "Update setup"
-msgstr "అమరికను నవీకరించు"
 
 #: modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
@@ -4764,6 +4928,23 @@ msgstr "మద్దతు ఇచ్చారు"
 msgid "unsupported"
 msgstr "మద్దతు లేదు"
 
+#: modules/names/templates/names-domain-add.html:11
+#, python-format
+msgid ""
+"If you purchased a domain name from a domain registrar, you can configure it "
+"here. The name servers responsible for the domain must be pointing (A and "
+"AAAA records) to the public IP addresses of the %(box_name)s."
+msgstr ""
+
+#: modules/names/templates/names-domain-add.html:18
+#, python-format
+msgid ""
+"If you wish to also use a subdomian of an already configured domain, add "
+"another entry for it here. Ensure that the subdomain is configured to point "
+"to %(box_name)s. Subdomains are useful for hosting multiple applications "
+"that each require a dedicted domain for themselves."
+msgstr ""
+
 #: modules/names/templates/names.html:41
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
@@ -4815,7 +4996,7 @@ msgid ""
 "functionality."
 msgstr "వ్యవస్థ-పరిష్కరించబడింది ప్యాకేజీ ఇన్‌స్టాల్ చేయబడలేదు. అదనపు కార్యాచరణ కోసం దీన్ని ఇన్‌స్టాల్ చేయండి."
 
-#: modules/names/templates/names.html:152 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:87
 msgid "Install"
 msgstr "నిక్షిప్తం చేయు"
 
@@ -5261,14 +5442,6 @@ msgstr ""
 msgid "Internet"
 msgstr "ఇంటర్ నెట్"
 
-#: modules/networks/manifest.py:8
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "Wi-Fi"
-
 #: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
 #: modules/samba/manifest.py:90
 msgid "Local network"
@@ -5620,7 +5793,7 @@ msgstr "నవీకరించు..."
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
 #: modules/pagekite/templates/pagekite_custom_services.html:33
-#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:19
+#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:22
 msgid "Submit"
 msgstr "సమర్పించు"
 
@@ -8171,15 +8344,15 @@ msgstr "ప్రారంభించడానికి కొత్త వి�
 msgid "TiddlyWiki"
 msgstr "టిడ్లీవికీ"
 
-#: modules/tiddlywiki/forms.py:32
+#: modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ".html ఫైల్ ఎక్స్‌టెన్షన్‌తో కూడిన TiddlyWiki ఫైల్"
 
-#: modules/tiddlywiki/forms.py:35
+#: modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
 msgstr "TiddlyWiki ఫైల్స్ తప్పనిసరిగా HTML ఫార్మాట్‌లో ఉండాలి"
 
-#: modules/tiddlywiki/forms.py:37
+#: modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "ఈ కంప్యూటర్ నుండి ఇప్పటికే ఉన్న TiddlyWiki ఫైల్‌ను అప్‌లోడ్ చేయండి."
 
@@ -8271,8 +8444,7 @@ msgstr ""
 
 #: modules/tor/forms.py:76
 msgid "Use upstream bridges to connect to Tor network"
-msgstr ""
-"టోర్ నెట్‌వర్క్‌కి కనెక్ట్ అవ్వడానికి అప్‌స్ట్రీమ్ బ్రిడ్జిలను ఉపయోగించండి"
+msgstr "టోర్ నెట్‌వర్క్‌కి కనెక్ట్ అవ్వడానికి అప్‌స్ట్రీమ్ బ్రిడ్జిలను ఉపయోగించండి"
 
 #: modules/tor/forms.py:78
 msgid ""
@@ -8280,8 +8452,8 @@ msgid ""
 "Tor network. Use this option if your Internet Service Provider (ISP) blocks "
 "or censors connections to the Tor Network. This will disable relay modes."
 msgstr ""
-"ప్రారంభించబడినప్పుడు, దిగువ కాన్ఫిగర్ చేయబడిన వంతెనలు Tor నెట్‌వర్క్‌కు కనెక్ట్ చేయడానికి ఉపయోగించబడతాయి. మీ"
-" ఇంటర్నెట్ సర్వీస్ ప్రొవైడర్ (ISP) Tor నెట్‌వర్క్‌కు కనెక్షన్‌లను బ్లాక్ చేస్తే లేదా సెన్సార్ చేస్తే ఈ ఎంపికను "
+"ప్రారంభించబడినప్పుడు, దిగువ కాన్ఫిగర్ చేయబడిన వంతెనలు Tor నెట్‌వర్క్‌కు కనెక్ట్ చేయడానికి ఉపయోగించబడతాయి. "
+"మీ ఇంటర్నెట్ సర్వీస్ ప్రొవైడర్ (ISP) Tor నెట్‌వర్క్‌కు కనెక్షన్‌లను బ్లాక్ చేస్తే లేదా సెన్సార్ చేస్తే ఈ ఎంపికను "
 "ఉపయోగించండి. ఇది రిలే మోడ్‌లను నిలిపివేస్తుంది."
 
 #: modules/tor/forms.py:83
@@ -8294,9 +8466,9 @@ msgid ""
 "\">https://bridges.torproject.org/</a> and copy/paste the bridge information "
 "here. Currently supported transports are none, obfs3, obfs4 and scamblesuit."
 msgstr ""
-"మీరు <a href=\"https://bridges.torproject.org/\">https://"
-"bridges.torproject.org/</a> నుండి కొన్ని బ్రిడ్జ్‌లను పొందవచ్చు మరియు బ్రిడ్జ్ సమాచారాన్ని ఇక్కడ "
-"కాపీ/పేస్ట్ చేయవచ్చు. ప్రస్తుతం మద్దతు ఉన్న రవాణాలు none, obfs3, obfs4 మరియు scamblesuit."
+"మీరు <a href=\"https://bridges.torproject.org/\">https://bridges.torproject."
+"org/</a> నుండి కొన్ని బ్రిడ్జ్‌లను పొందవచ్చు మరియు బ్రిడ్జ్ సమాచారాన్ని ఇక్కడ కాపీ/పేస్ట్ చేయవచ్చు. "
+"ప్రస్తుతం మద్దతు ఉన్న రవాణాలు none, obfs3, obfs4 మరియు scamblesuit."
 
 #: modules/tor/forms.py:95
 msgid "Enable Tor relay"
@@ -8712,7 +8884,7 @@ msgstr "డిస్ట్రిబ్యూషన్ అప్‌డేట్�
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
+#: templates/notifications.html:58 templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "రద్దుచేసే"
 
@@ -9732,34 +9904,34 @@ msgstr "ప్రారంభించడానికి వేచి ఉంద�
 msgid "Finished: {name}"
 msgstr "సేవ నిలిపివేయబడింది: {name}"
 
-#: package.py:213
+#: package.py:216
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr "ఇన్‌స్టాల్ చేయడానికి ప్యాకేజీ {package_expression} అందుబాటులో లేదు"
 
-#: package.py:233
+#: package.py:236
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "ప్యాకేజీ {package_name} తాజా వెర్షన్ ({latest_version})"
 
-#: package.py:427
+#: package.py:441
 msgid "installing"
 msgstr "వ్యవస్థాపిస్తోంది"
 
-#: package.py:429
+#: package.py:443
 msgid "downloading"
 msgstr "దిగుమతి అవుతోంది"
 
-#: package.py:431
+#: package.py:445
 msgid "media change"
 msgstr "ప్రసార మాధ్యమం మార్పు"
 
-#: package.py:433
+#: package.py:447
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "ఆకృతీకరణ ఫైలు: {file}"
 
-#: package.py:461 package.py:487
+#: package.py:475 package.py:501
 msgid "Timeout waiting for package manager"
 msgstr "ప్యాకేజీ మేనేజర్ కోసం వేచి ఉన్న సమయం ముగిసింది"
 
@@ -10038,6 +10210,11 @@ msgstr ""
 msgid "Notifications"
 msgstr "నోటిఫికేషన్లు"
 
+#: templates/notifications.html:18
+#, python-format
+msgid "%(time_since)s ago"
+msgstr ""
+
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
 msgstr "రేవు ఫార్వార్డింగ్"
@@ -10101,15 +10278,20 @@ msgstr "ఈ అనువర్తనాన్ని నిక్షిప్త�
 msgid "This application needs an update. Update now?"
 msgstr "ఈ అనువర్తనానికి నవీకరణ అవసరం. ఇప్పుడే నవీకరిస్తారా?"
 
-#: templates/setup.html:46
+#: templates/setup.html:43
 msgid "This application is currently not available in your distribution."
 msgstr "ప్రస్తుతం ఈ అనువర్తనం మీ పంపిణీకి అందుబాటులో లేదు."
 
-#: templates/setup.html:50
-msgid "Check again"
-msgstr "మళ్ళీ ప్రయత్నించు"
+#: templates/setup.html:51
+#, fuzzy
+msgid "Checking app availability..."
+msgstr "అందుబాటులో ఉన్న డొమైన్లు"
 
-#: templates/setup.html:61
+#: templates/setup.html:57
+msgid "Error checking app availability. Please refresh page."
+msgstr ""
+
+#: templates/setup.html:72
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10118,7 +10300,7 @@ msgstr ""
 "<strong>విరుద్ధమైన ప్యాకేజీలు:</strong> సిస్టమ్‌లో ఇన్‌స్టాల్ చేయబడిన కొన్ని ప్యాకేజీలు ఈ యాప్ ఇన్‌స్టాలేషన్‌తో "
 "విభేదిస్తున్నాయి. మీరు కొనసాగితే క్రింది ప్యాకేజీలు తీసివేయబడతాయి:"
 
-#: templates/setup.html:80
+#: templates/setup.html:89
 msgid "Update"
 msgstr "నవీకరణ"
 
@@ -10162,7 +10344,7 @@ msgstr "ఇక్కడ"
 msgid "Setting unchanged"
 msgstr "మారకుండా అమర్చుతోంది"
 
-#: views.py:647
+#: views.py:640
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడానికి ముందు"
@@ -10170,6 +10352,14 @@ msgstr "{app_id} ని అన్ఇన్‌స్టాల్ చేయడా�
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "గుజరాతీ"
+
+#~ msgid ""
+#~ "Warning! The application may not work properly if domain name is changed "
+#~ "later."
+#~ msgstr "హెచ్చరిక! డొమైన్ పేరును తర్వాత మార్చినట్లయితే అప్లికేషన్ సరిగ్గా పనిచేయకపోవచ్చు."
+
+#~ msgid "Check again"
+#~ msgstr "మళ్ళీ ప్రయత్నించు"
 
 #~ msgid ""
 #~ "Started update to next stable release. This may take a long time to "
@@ -10859,10 +11049,6 @@ msgstr "గుజరాతీ"
 #, fuzzy
 #~ msgid "Damage configuration updated"
 #~ msgstr "ఆకృతీకరణ నవీకరించబడింది"
-
-#, fuzzy
-#~ msgid "RoundCube availability"
-#~ msgstr "అందుబాటులో ఉన్న డొమైన్లు"
 
 #, fuzzy
 #~ msgid "Enter a valid domain"
@@ -12118,9 +12304,6 @@ msgstr "గుజరాతీ"
 #~ msgstr ""
 #~ "%(box_name)s  ప్రాజెక్ట్ కి సంబందించిన మరింత సమాచారం కోసం <a href=\"https://wiki."
 #~ "debian.org/FreedomBox\"> %(box_name)s వికీ </a> ను దర్శించండి."
-
-#~ msgid "is running"
-#~ msgstr "డెల్యూజ్ నడుస్తోంది"
 
 #~ msgid "Box it up!"
 #~ msgstr "ఇది పెట్టెపైకి!"

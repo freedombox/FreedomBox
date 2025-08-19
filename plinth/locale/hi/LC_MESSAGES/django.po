@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 20:08-0400\n"
+"POT-Creation-Date: 2025-08-18 20:35-0400\n"
 "PO-Revision-Date: 2025-04-29 16:30+0000\n"
 "Last-Translator: Thulasi Edhala <thulasiedhala@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/freedombox/"
@@ -23,6 +23,12 @@ msgstr ""
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "स्थैतिक कॉन्फ़िगरेशन {etc_path} ठीक से सेटअप किया गया है"
+
+#: container.py:137
+#, fuzzy, python-brace-format
+#| msgid "Service {service_name} is running"
+msgid "Container {container_name} is running"
+msgstr "सेवा {service_name} चल रहा है"
 
 #: context_processors.py:21 views.py:168
 msgid "FreedomBox"
@@ -65,22 +71,21 @@ msgstr "बैकअप से पुनर्स्थापित करने
 msgid "Repository to backup to"
 msgstr "बैकअप के लिए रिपॉजिटरी"
 
-#: forms.py:64
+#: forms.py:62
+#, fuzzy
+#| msgid "None"
+msgid "(None)"
+msgstr "कोई नहीं"
+
+#: forms.py:68
 msgid "Select a domain name to be used with this application"
 msgstr "इस एप्लिकेशन के साथ एक डोमेन का नाम चुने"
 
-#: forms.py:66
-msgid ""
-"Warning! The application may not work properly if domain name is changed "
-"later."
-msgstr ""
-"वर्णइंग! अगर डोमेन का नाम बाद में बदल गया, एप्लिकेशन शायद ठीक से नहीं कर सकता है."
-
-#: forms.py:80 modules/coturn/forms.py:31 modules/mumble/forms.py:21
+#: forms.py:81 modules/coturn/forms.py:31 modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "टीएलएस डोमेन"
 
-#: forms.py:82 modules/coturn/forms.py:33 modules/mumble/forms.py:23
+#: forms.py:83 modules/coturn/forms.py:33 modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -88,15 +93,15 @@ msgstr ""
 "TLS के साथ उपयोग करने के लिए एक डोमेन चुनें। यदि सूची खाली है, तो कृपया कम से कम एक "
 "डोमेन को प्रमाणपत्रों के साथ कॉन्फ़िगर करें।"
 
-#: forms.py:92
+#: forms.py:93
 msgid "Language"
 msgstr "भाषा"
 
-#: forms.py:93
+#: forms.py:94
 msgid "Language to use for presenting this web interface"
 msgstr "इस वेब इंटरफेस में इसतेमाल कि जाने वाली भाषा"
 
-#: forms.py:100
+#: forms.py:101
 msgid "Use the language preference set in the browser"
 msgstr "जो भाषा ब्राउज़र में हैं, वो भाषा उपयोग करें"
 
@@ -147,25 +152,25 @@ msgstr "ऑपरेशन चलाने में त्रुटि।"
 msgid "Error loading page."
 msgstr "पृष्ठ लोड करने में त्रुटि।"
 
-#: modules/apache/__init__.py:32
+#: modules/apache/__init__.py:33
 msgid "Apache HTTP Server"
 msgstr "अपाचे HTTP सर्वर"
 
-#: modules/apache/__init__.py:46
+#: modules/apache/__init__.py:47
 msgid "Web Server"
 msgstr "वेब सर्वर"
 
-#: modules/apache/__init__.py:52
+#: modules/apache/__init__.py:53
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} वेब इंटरफेस (प्लिंथ)"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:270
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "इस यूआरएल का अपयोग करें {url} टीसीपी पर {kind}"
 
-#: modules/apache/components.py:165
+#: modules/apache/components.py:273
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "इस यूआरएल का अपयोग करें {url}"
@@ -493,6 +498,7 @@ msgid "App data"
 msgstr "एप्लिकेशन आंकड़ा"
 
 #: modules/backups/manifest.py:20
+#: modules/homeassistant/templates/homeassistant.html:11
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
@@ -594,9 +600,10 @@ msgstr "मौजूदा कस्टम सर्विसस"
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/diagnostics/templates/diagnostics_full.html:102
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
+#: modules/homeassistant/__init__.py:48
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
@@ -610,7 +617,7 @@ msgstr "मौजूदा कस्टम सर्विसस"
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
-#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+#: templates/messages.html:17 templates/setup.html:40 templates/setup.html:69
 msgid "Caution:"
 msgstr "सावधान:"
 
@@ -1050,11 +1057,11 @@ msgid "Admin"
 msgstr "व्यवस्थापक"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
-#: modules/nextcloud/views.py:62 modules/searx/views.py:35
-#: modules/searx/views.py:46 modules/security/views.py:56
-#: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
-#: modules/zoph/views.py:74
+#: modules/homeassistant/views.py:53 modules/nextcloud/views.py:62
+#: modules/searx/views.py:35 modules/searx/views.py:46
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:82 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "कॉन्फ़िगरेशन अपडेट किया."
 
@@ -1417,18 +1424,18 @@ msgstr "लॉग्स"
 msgid "Performance"
 msgstr "प्रदर्शन"
 
-#: modules/config/__init__.py:18
+#: modules/config/__init__.py:20
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr ""
 "यहाँ आप कुछ सामान्य कॉन्फ़िगरेशन विकल्प सेट कर सकते हैं, जैसे कि वेब सर्वर का होम पेज आदि।"
 
-#: modules/config/__init__.py:40
+#: modules/config/__init__.py:42
 msgid "General Configuration"
 msgstr "सामान्य कॉन्फ़िगरेशन"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/config/__init__.py:47 modules/names/templates/names.html:35
 #: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
@@ -1849,13 +1856,12 @@ msgid "Diagnostic Results"
 msgstr "निदानिकी का परिणाम"
 
 #: modules/diagnostics/templates/diagnostics_app.html:14
-#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_app.html:21
-#: modules/diagnostics/templates/diagnostics_full.html:49
+#: modules/diagnostics/templates/diagnostics_full.html:85
 msgid "Try to repair"
 msgstr ""
 
@@ -1882,6 +1888,35 @@ msgstr "निदानिकी परिक्षा अभी चल रह�
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "परिणाम"
+
+#: modules/diagnostics/templates/diagnostics_full.html:53
+#, python-format
+msgid "%(number)s passed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:57
+#, python-format
+msgid "%(number)s failed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:61
+#, python-format
+msgid "%(number)s warnings"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:65
+#, python-format
+msgid "%(number)s errors"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:69
+#, python-format
+msgid "%(number)s skipped"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:111
+msgid "Running..."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1939,7 +1974,26 @@ msgstr ""
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
+"freedombox.org</a>. With this service, you also get unlimited subdomains "
+"(with wildcards option enabled in account settings). To use a subdomain, add "
+"it as a static domain in the Names app."
+msgstr ""
+"अबर आप एक मुक्त डायनेमिक डिएनएस अकाउंट के ढूंढ़ रहे है, शायद आपको एक मुक्त जीएनयूडीआईपी "
+"सर्विस यहाँ मिलें <a href='http://gnudip.datasystems24.net' "
+"target='_blank'>gnudip.datasystems24.net</a> या मुक्त अपडेट यूआरएल के जैसे सर्विस "
+"यहाँ मिलें <a href='http://freedns.afraid.org/' target='_blank'> freedns.afraid."
+"org</a>."
+
+#: modules/dynamicdns/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='http://gnudip.datasystems24.net' "
+#| "target='_blank'>gnudip.datasystems24.net</a> or you may find free update "
+#| "URL based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'> freedns.afraid.org</a>."
+msgid ""
+"Alternatively, you may find a free update URL based service at <a "
 "href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
 msgstr ""
 "अबर आप एक मुक्त डायनेमिक डिएनएस अकाउंट के ढूंढ़ रहे है, शायद आपको एक मुक्त जीएनयूडीआईपी "
@@ -1948,17 +2002,17 @@ msgstr ""
 "यहाँ मिलें <a href='http://freedns.afraid.org/' target='_blank'> freedns.afraid."
 "org</a>."
 
-#: modules/dynamicdns/__init__.py:46
+#: modules/dynamicdns/__init__.py:50
 msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
 msgstr ""
 
-#: modules/dynamicdns/__init__.py:64
+#: modules/dynamicdns/__init__.py:68
 msgid "Dynamic DNS Client"
 msgstr "डायनेमिक डिएनएस ग्राहक"
 
-#: modules/dynamicdns/__init__.py:77
+#: modules/dynamicdns/__init__.py:81
 #, fuzzy
 #| msgid "Domain Name"
 msgid "Dynamic Domain"
@@ -2701,32 +2755,36 @@ msgid "Feather Wiki"
 msgstr ""
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Wiki files cannot be named \"index.html\"."
+msgstr ""
+
+#: modules/featherwiki/forms.py:20 modules/tiddlywiki/forms.py:20
 msgid "Name of the wiki file, with file extension \".html\""
 msgstr ""
 
-#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+#: modules/featherwiki/forms.py:22 modules/tiddlywiki/forms.py:22
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
 msgstr ""
 
-#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+#: modules/featherwiki/forms.py:30 modules/tiddlywiki/forms.py:30
 msgid "New name for the wiki file, with file extension \".html\""
 msgstr ""
 
-#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+#: modules/featherwiki/forms.py:32 modules/tiddlywiki/forms.py:32
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr ""
 
-#: modules/featherwiki/forms.py:32
+#: modules/featherwiki/forms.py:39
 msgid "A Feather Wiki file with .html file extension"
 msgstr ""
 
-#: modules/featherwiki/forms.py:35
+#: modules/featherwiki/forms.py:43
 msgid "Feather Wiki files must be in HTML format"
 msgstr ""
 
-#: modules/featherwiki/forms.py:37
+#: modules/featherwiki/forms.py:46
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr ""
 
@@ -3713,6 +3771,100 @@ msgstr "{box_name} के बारे में"
 msgid "{box_name} Manual"
 msgstr "{box_name} मैनुअल"
 
+#: modules/homeassistant/__init__.py:31
+msgid ""
+"Home Assistant is a home automation hub with emphasis on local control and "
+"privacy. It integrates with thousands of devices including smart bulbs, "
+"alarms, presense sensors, door bells, thermostats, irrigation timers, energy "
+"monitors, etc."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:35
+msgid ""
+"Home Assistant can detect, configure, and use various devices on the local "
+"network. For devices using other protocols such as ZigBee, it typically "
+"requires additional hardware such as a ZigBee USB dongle. You need to re-run "
+"setup if such hardware is added or removed."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:39
+msgid ""
+"Home Assistant web interface must be setup soon after the app is installed. "
+"An administrator account is created at this time. Home Assistant maintains "
+"its own user accounts."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:43
+#, python-brace-format
+msgid ""
+"Please note that Home Assistant is installed and run inside a container "
+"provided by the Home Assistant project. Security, quality, privacy and legal "
+"reviews are done by the upstream project and not by Debian/{box_name}. "
+"Updates are performed following an independent cycle."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:48
+msgid "This app is experimental."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:64 modules/homeassistant/manifest.py:12
+#: modules/homeassistant/manifest.py:20
+msgid "Home Assistant"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:62
+#, fuzzy
+#| msgid "Automatic"
+msgid "Home Automation"
+msgstr "ऑटोमैटिक"
+
+#: modules/homeassistant/manifest.py:63
+msgid "IoT"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:64 modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "वाई-फ़ाई"
+
+#: modules/homeassistant/manifest.py:65
+msgid "ZigBee"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:66
+msgid "Z-Wave"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:67
+msgid "Thread"
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:17
+msgid ""
+"Home Assistant requires a dedicated domain to work with and cannot work on a "
+"URL path. Please select the domain on which Home Assistant will be "
+"available. Home Assistant will not be available on other domains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:28
+#, python-format
+msgid ""
+"A separate domain can be made available for Home Assistant by configurating "
+"a subdomain such as homeassistant.mydomain.example. See <a "
+"href=\"%(names_url)s\">Names</a> app and <a "
+"href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:40
+#: modules/ikiwiki/templates/ikiwiki_create.html:18
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
+msgid "Update setup"
+msgstr "सेटअप अपडेट"
+
 #: modules/ikiwiki/__init__.py:20
 #, fuzzy
 #| msgid ""
@@ -3783,12 +3935,6 @@ msgstr "साइट पर जाएं %(site)s"
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "साइट हटाएं %(site)s"
-
-#: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
-msgid "Update setup"
-msgstr "सेटअप अपडेट"
 
 #: modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
@@ -5070,6 +5216,23 @@ msgstr ""
 msgid "unsupported"
 msgstr ""
 
+#: modules/names/templates/names-domain-add.html:11
+#, python-format
+msgid ""
+"If you purchased a domain name from a domain registrar, you can configure it "
+"here. The name servers responsible for the domain must be pointing (A and "
+"AAAA records) to the public IP addresses of the %(box_name)s."
+msgstr ""
+
+#: modules/names/templates/names-domain-add.html:18
+#, python-format
+msgid ""
+"If you wish to also use a subdomian of an already configured domain, add "
+"another entry for it here. Ensure that the subdomain is configured to point "
+"to %(box_name)s. Subdomains are useful for hosting multiple applications "
+"that each require a dedicted domain for themselves."
+msgstr ""
+
 #: modules/names/templates/names.html:41
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
@@ -5129,7 +5292,7 @@ msgid ""
 "functionality."
 msgstr ""
 
-#: modules/names/templates/names.html:152 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:87
 msgid "Install"
 msgstr "इंस्टॉल करें"
 
@@ -5542,14 +5705,6 @@ msgstr ""
 msgid "Internet"
 msgstr "इंटरनेट"
 
-#: modules/networks/manifest.py:8
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "वाई-फ़ाई"
-
 #: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
 #: modules/samba/manifest.py:90
 #, fuzzy
@@ -5905,7 +6060,7 @@ msgstr "अपडेट"
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
 #: modules/pagekite/templates/pagekite_custom_services.html:33
-#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:19
+#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:22
 msgid "Submit"
 msgstr "जमा करें"
 
@@ -8657,15 +8812,15 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr ""
 
-#: modules/tiddlywiki/forms.py:32
+#: modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ""
 
-#: modules/tiddlywiki/forms.py:35
+#: modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
 msgstr ""
 
-#: modules/tiddlywiki/forms.py:37
+#: modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr ""
 
@@ -9222,7 +9377,7 @@ msgstr "ऑटोमेटिक अपग्रेडस सक्षम कि
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
+#: templates/notifications.html:58 templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr ""
 
@@ -9847,8 +10002,8 @@ msgid ""
 "Provided by the server operator, a long string of characters. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ."
 msgstr ""
-"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
+"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:82
 #, fuzzy
@@ -9861,8 +10016,8 @@ msgid ""
 "endpoint. This value is usually provided by the server operator. Example: "
 "192.168.0.10."
 msgstr ""
-"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
+"सर्वर ऑपरेटर द्वारा प्रदान की गई, वर्णों की एक लंबी स्ट्रिंग। उदाहरण: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:89
 msgid "Private key of this machine"
@@ -9877,8 +10032,8 @@ msgid ""
 msgstr ""
 "वैकल्पिक। यदि खाली छोड़ दिया जाए तो नई सार्वजनिक/निजी कुंजियाँ उत्पन्न होती हैं। फिर "
 "सार्वजनिक कुंजी सर्वर को प्रदान की जा सकती है। यह अनुशंसित तरीका है। हालाँकि, कुछ सर्वर "
-"ऑपरेटर इसे प्रदान करने पर जोर देते हैं। उदाहरण: MConEJFIg6+"
-"DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
+"ऑपरेटर इसे प्रदान करने पर जोर देते हैं। उदाहरण: "
+"MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs= ।"
 
 #: modules/wireguard/forms.py:98
 msgid "Pre-shared key"
@@ -9890,8 +10045,8 @@ msgid ""
 "layer of security. Fill in only if provided. Example: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=."
 msgstr ""
-"वैकल्पिक। सुरक्षा की एक अतिरिक्त परत जोड़ने के लिए सर्वर द्वारा प्रदान की गई एक साझा गुप्"
-"त कुंजी। केवल तभी भरें जब प्रदान की गई हो। उदाहरण: "
+"वैकल्पिक। सुरक्षा की एक अतिरिक्त परत जोड़ने के लिए सर्वर द्वारा प्रदान की गई एक साझा "
+"गुप्त कुंजी। केवल तभी भरें जब प्रदान की गई हो। उदाहरण: "
 "MConEJFIg6+DFHg2J1nn9SNLOSE9KR0ysdPgmPjibEs=।"
 
 #: modules/wireguard/forms.py:105
@@ -10298,34 +10453,34 @@ msgstr ""
 msgid "Finished: {name}"
 msgstr "सर्विस सक्षम किया गया:{name}"
 
-#: package.py:213
+#: package.py:216
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr ""
 
-#: package.py:233
+#: package.py:236
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr ""
 
-#: package.py:427
+#: package.py:441
 msgid "installing"
 msgstr "इंस्टॉलिंग"
 
-#: package.py:429
+#: package.py:443
 msgid "downloading"
 msgstr "डाउनलोडिंग"
 
-#: package.py:431
+#: package.py:445
 msgid "media change"
 msgstr "मीडिया बदलाव"
 
-#: package.py:433
+#: package.py:447
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "कॉंफ़िगरेशन फ़ाइल: {file}"
 
-#: package.py:461 package.py:487
+#: package.py:475 package.py:501
 msgid "Timeout waiting for package manager"
 msgstr ""
 
@@ -10631,6 +10786,11 @@ msgstr "अभी यह नेटवर्क इंटरफ़ेसस आ�
 msgid "Notifications"
 msgstr "सूचनाएं"
 
+#: templates/notifications.html:18
+#, python-format
+msgid "%(time_since)s ago"
+msgstr ""
+
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
 msgstr "अग्रेषण पोर्ट"
@@ -10641,8 +10801,8 @@ msgid ""
 "Your FreedomBox is <a href=\"%(networks_url)s\">not behind a router</a>. No "
 "action is necessary."
 msgstr ""
-"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे नहीं है</a>। कोई कार्रवा"
-"ई आवश्यक नहीं है।"
+"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे नहीं है</a>। कोई "
+"कार्रवाई आवश्यक नहीं है।"
 
 #: templates/port-forwarding-info.html:21
 #, python-format
@@ -10659,9 +10819,9 @@ msgid ""
 "are not using the DMZ feature. You will need to set up port forwarding on "
 "your router. You should forward the following ports for %(service_name)s:"
 msgstr ""
-"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे</a> है और आप DMZ सुविधा"
-" का उपयोग नहीं कर रहे हैं। आपको अपने राउटर पर पोर्ट फ़ॉरवर्डिंग सेट अप करना होगा। आपको "
-"%(service_name)s के लिए निम्नलिखित पोर्ट फ़ॉरवर्ड करने चाहिए:"
+"आपका फ्रीडमबॉक्स <a href=\"%(networks_url)s\">राउटर के पीछे</a> है और आप DMZ "
+"सुविधा का उपयोग नहीं कर रहे हैं। आपको अपने राउटर पर पोर्ट फ़ॉरवर्डिंग सेट अप करना होगा। "
+"आपको %(service_name)s के लिए निम्नलिखित पोर्ट फ़ॉरवर्ड करने चाहिए:"
 
 #: templates/port-forwarding-info.html:42
 #, fuzzy
@@ -10697,15 +10857,21 @@ msgstr "यह एप्लिकेशन इंस्टॉल करें?"
 msgid "This application needs an update. Update now?"
 msgstr "इस ऐप्लिकेशन को अप्डेट चाहिये. अभी अप्डेट करें?"
 
-#: templates/setup.html:46
+#: templates/setup.html:43
 msgid "This application is currently not available in your distribution."
 msgstr "यह एप्लिकेशन अभी अापका वितरण में उपलब्ध नहीं है."
 
-#: templates/setup.html:50
-msgid "Check again"
-msgstr "फिर से जाँचो"
+#: templates/setup.html:51
+#, fuzzy
+#| msgid "Available Domains"
+msgid "Checking app availability..."
+msgstr "उपलब्ध वाले डोमेन्स"
 
-#: templates/setup.html:61
+#: templates/setup.html:57
+msgid "Error checking app availability. Please refresh page."
+msgstr ""
+
+#: templates/setup.html:72
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10714,7 +10880,7 @@ msgstr ""
 "<strong>विरोधी पैकेज:</strong> सिस्टम पर इंस्टॉल किए गए कुछ पैकेज इस ऐप की स्थापना के "
 "साथ संघर्ष करते हैं। यदि आप आगे बढ़ते हैं तो निम्नलिखित पैकेज हटा दिए जाएँगे:"
 
-#: templates/setup.html:80
+#: templates/setup.html:89
 msgid "Update"
 msgstr "अपडेट"
 
@@ -10771,7 +10937,7 @@ msgstr "यहाँ"
 msgid "Setting unchanged"
 msgstr "सेटिंग स्थिर है"
 
-#: views.py:647
+#: views.py:640
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} को अनइंस्टॉल करने से पहले"
@@ -10779,6 +10945,15 @@ msgstr "{app_id} को अनइंस्टॉल करने से पह�
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "गुजराती"
+
+#~ msgid ""
+#~ "Warning! The application may not work properly if domain name is changed "
+#~ "later."
+#~ msgstr ""
+#~ "वर्णइंग! अगर डोमेन का नाम बाद में बदल गया, एप्लिकेशन शायद ठीक से नहीं कर सकता है."
+
+#~ msgid "Check again"
+#~ msgstr "फिर से जाँचो"
 
 #, fuzzy
 #~| msgid "Automatic upgrades enabled"
@@ -11302,11 +11477,6 @@ msgstr "गुजराती"
 
 #~ msgid "Damage configuration updated"
 #~ msgstr "क्षति कॉन्फ़िगरेशन अपडेट किया गया"
-
-#, fuzzy
-#~| msgid "Available Domains"
-#~ msgid "RoundCube availability"
-#~ msgstr "उपलब्ध वाले डोमेन्स"
 
 #, fuzzy
 #~| msgid "Invalid server name"

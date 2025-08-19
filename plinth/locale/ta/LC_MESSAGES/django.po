@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 20:08-0400\n"
+"POT-Creation-Date: 2025-08-18 20:35-0400\n"
 "PO-Revision-Date: 2025-08-17 08:02+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/freedombox/"
@@ -23,6 +23,12 @@ msgstr ""
 #, python-brace-format
 msgid "Static configuration {etc_path} is setup properly"
 msgstr "நிலையான உள்ளமைவு {etc_path} சரியாக அமைக்கப்படுகிறது"
+
+#: container.py:137
+#, fuzzy, python-brace-format
+#| msgid "Service {service_name} is running"
+msgid "Container {container_name} is running"
+msgstr "பணி {service_name} இயங்குகிறது"
 
 #: context_processors.py:21 views.py:168
 msgid "FreedomBox"
@@ -65,21 +71,21 @@ msgstr "காப்புப்பிரதியிலிருந்து �
 msgid "Repository to backup to"
 msgstr "காப்புப்பிரதிக்கு களஞ்சியம்"
 
-#: forms.py:64
+#: forms.py:62
+#, fuzzy
+#| msgid "None"
+msgid "(None)"
+msgstr "எதுவுமில்லை"
+
+#: forms.py:68
 msgid "Select a domain name to be used with this application"
 msgstr "இந்த பயன்பாட்டுடன் பயன்படுத்த ஒரு டொமைன் பெயரைத் தேர்ந்தெடுக்கவும்"
 
-#: forms.py:66
-msgid ""
-"Warning! The application may not work properly if domain name is changed "
-"later."
-msgstr "எச்சரிக்கை! டொமைன் பெயர் பின்னர் மாற்றப்பட்டால் பயன்பாடு சரியாக வேலை செய்யாது."
-
-#: forms.py:80 modules/coturn/forms.py:31 modules/mumble/forms.py:21
+#: forms.py:81 modules/coturn/forms.py:31 modules/mumble/forms.py:21
 msgid "TLS domain"
 msgstr "டி.எல்.எச் டொமைன்"
 
-#: forms.py:82 modules/coturn/forms.py:33 modules/mumble/forms.py:23
+#: forms.py:83 modules/coturn/forms.py:33 modules/mumble/forms.py:23
 msgid ""
 "Select a domain to use TLS with. If the list is empty, please configure at "
 "least one domain with certificates."
@@ -87,15 +93,15 @@ msgstr ""
 "உடன் TLS ஐப் பயன்படுத்த ஒரு டொமைனைத் தேர்ந்தெடுக்கவும். பட்டியல் காலியாக இருந்தால், "
 "தயவுசெய்து சான்றிதழ்களுடன் குறைந்தது ஒரு டொமைனை உள்ளமைக்கவும்."
 
-#: forms.py:92
+#: forms.py:93
 msgid "Language"
 msgstr "மொழி"
 
-#: forms.py:93
+#: forms.py:94
 msgid "Language to use for presenting this web interface"
 msgstr "இந்த வலை இடைமுகத்தை வழங்க பயன்படுத்த வேண்டிய மொழி"
 
-#: forms.py:100
+#: forms.py:101
 msgid "Use the language preference set in the browser"
 msgstr "உலாவியில் உள்ள மொழி விருப்பத்தேர்வைப் பயன்படுத்தவும்"
 
@@ -145,25 +151,25 @@ msgstr "இயங்கும் செயல்பாடு."
 msgid "Error loading page."
 msgstr "பிழை ஏற்றுதல் பக்கம்."
 
-#: modules/apache/__init__.py:32
+#: modules/apache/__init__.py:33
 msgid "Apache HTTP Server"
 msgstr "அப்பாச்சி HTTP சேவையகம்"
 
-#: modules/apache/__init__.py:46
+#: modules/apache/__init__.py:47
 msgid "Web Server"
 msgstr "வலை சேவையகம்"
 
-#: modules/apache/__init__.py:52
+#: modules/apache/__init__.py:53
 #, python-brace-format
 msgid "{box_name} Web Interface (Plinth)"
 msgstr "{box_name} வலை இடைமுகம் (அச்தி)"
 
-#: modules/apache/components.py:162
+#: modules/apache/components.py:270
 #, python-brace-format
 msgid "Access URL {url} on tcp{kind}"
 msgstr "Tcp {kind} on இல் முகவரி {url} access ஐ அணுகவும்"
 
-#: modules/apache/components.py:165
+#: modules/apache/components.py:273
 #, python-brace-format
 msgid "Access URL {url}"
 msgstr "முகவரி {url} ஐ அணுகவும்"
@@ -493,6 +499,7 @@ msgid "App data"
 msgstr "பயன்பாட்டு தரவு"
 
 #: modules/backups/manifest.py:20
+#: modules/homeassistant/templates/homeassistant.html:11
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:15
 #: modules/miniflux/templates/miniflux.html:12
 #: modules/snapshot/templates/snapshot.html:13 templates/app.html:52
@@ -595,9 +602,10 @@ msgstr "இருக்கும் காப்புப்பிரதிக�
 #: modules/backups/templates/backups_add_remote_repository.html:21
 #: modules/backups/templates/backups_upload.html:28
 #: modules/backups/templates/verify_ssh_hostkey.html:27
-#: modules/diagnostics/templates/diagnostics_full.html:60
+#: modules/diagnostics/templates/diagnostics_full.html:102
 #: modules/help/templates/help_about.html:22
 #: modules/help/templates/statuslog.html:24
+#: modules/homeassistant/__init__.py:48
 #: modules/kiwix/templates/kiwix-add-package.html:26
 #: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:28
 #: modules/matrixsynapse/templates/matrix-synapse.html:81
@@ -611,7 +619,7 @@ msgstr "இருக்கும் காப்புப்பிரதிக�
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:45
 #: modules/upgrades/templates/upgrades_configure.html:84
 #: modules/users/templates/users_firstboot.html:34 templates/app.html:31
-#: templates/messages.html:17 templates/setup.html:43 templates/setup.html:58
+#: templates/messages.html:17 templates/setup.html:40 templates/setup.html:69
 msgid "Caution:"
 msgstr "எச்சரிக்கை:"
 
@@ -1035,11 +1043,11 @@ msgid "Admin"
 msgstr "நிர்வாகி"
 
 #: modules/bepasty/views.py:88 modules/diagnostics/views.py:66
-#: modules/nextcloud/views.py:62 modules/searx/views.py:35
-#: modules/searx/views.py:46 modules/security/views.py:56
-#: modules/snapshot/views.py:158 modules/tor/views.py:73
-#: modules/torproxy/views.py:71 modules/upgrades/views.py:82
-#: modules/zoph/views.py:74
+#: modules/homeassistant/views.py:53 modules/nextcloud/views.py:62
+#: modules/searx/views.py:35 modules/searx/views.py:46
+#: modules/security/views.py:56 modules/snapshot/views.py:158
+#: modules/tor/views.py:73 modules/torproxy/views.py:71
+#: modules/upgrades/views.py:82 modules/zoph/views.py:74
 msgid "Configuration updated."
 msgstr "உள்ளமைவு புதுப்பிக்கப்பட்டது."
 
@@ -1359,17 +1367,17 @@ msgstr "பதிவுகள்"
 msgid "Performance"
 msgstr "செயல்திறன்"
 
-#: modules/config/__init__.py:18
+#: modules/config/__init__.py:20
 msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr "வெப்சர்வர் முகப்பு பக்கம் போன்ற சில பொதுவான உள்ளமைவு விருப்பங்களை இங்கே அமைக்கலாம்."
 
-#: modules/config/__init__.py:40
+#: modules/config/__init__.py:42
 msgid "General Configuration"
 msgstr "பொது உள்ளமைவு"
 
-#: modules/config/__init__.py:45 modules/names/templates/names.html:35
+#: modules/config/__init__.py:47 modules/names/templates/names.html:35
 #: modules/names/templates/names.html:71 modules/snapshot/views.py:32
 #: templates/index.html:38
 msgid "Configure"
@@ -1743,13 +1751,12 @@ msgid "Diagnostic Results"
 msgstr "கண்டறியும் முடிவுகள்"
 
 #: modules/diagnostics/templates/diagnostics_app.html:14
-#: modules/diagnostics/templates/diagnostics_full.html:39
 #, python-format
 msgid "App: %(app_name)s"
 msgstr "பயன்பாடு: %(app_name)s"
 
 #: modules/diagnostics/templates/diagnostics_app.html:21
-#: modules/diagnostics/templates/diagnostics_full.html:49
+#: modules/diagnostics/templates/diagnostics_full.html:85
 msgid "Try to repair"
 msgstr "சரிசெய்ய முயற்சி செய்யுங்கள்"
 
@@ -1772,6 +1779,35 @@ msgstr "கண்டறிதல் சோதனை தற்போது இய
 #: modules/diagnostics/templates/diagnostics_full.html:34
 msgid "Results"
 msgstr "முடிவுகள்"
+
+#: modules/diagnostics/templates/diagnostics_full.html:53
+#, python-format
+msgid "%(number)s passed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:57
+#, python-format
+msgid "%(number)s failed"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:61
+#, python-format
+msgid "%(number)s warnings"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:65
+#, python-format
+msgid "%(number)s errors"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:69
+#, python-format
+msgid "%(number)s skipped"
+msgstr ""
+
+#: modules/diagnostics/templates/diagnostics_full.html:111
+msgid "Running..."
+msgstr ""
 
 #: modules/diagnostics/templates/diagnostics_results.html:11
 msgid "Test"
@@ -1820,19 +1856,45 @@ msgstr ""
 "தற்போதைய ஐபி முகவரியுடன் பதிலைப் பெறுவார்கள்."
 
 #: modules/dynamicdns/__init__.py:41
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
 msgid ""
 "If you are looking for a free dynamic DNS account, you may find a free "
 "GnuDIP service at <a href='https://ddns.freedombox.org' target='_blank'>ddns."
-"freedombox.org</a> or you may find free update URL based services at <a "
-"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+"freedombox.org</a>. With this service, you also get unlimited subdomains "
+"(with wildcards option enabled in account settings). To use a subdomain, add "
+"it as a static domain in the Names app."
 msgstr ""
-"நீங்கள் ஒரு இலவச டைனமிக் DNS கணக்கைத் தேடுகிறீர்கள் என்றால், <a href="
-"\"https://ddns.freedombox.org\" target=\"_blank\">ddns.freedombox.org</a> இல் "
-"இலவச GnuDIP சேவையைக் காணலாம் அல்லது <a href=\"http://freedns.afraid.org/\" "
+"நீங்கள் ஒரு இலவச டைனமிக் DNS கணக்கைத் தேடுகிறீர்கள் என்றால், <a href=\"https://ddns."
+"freedombox.org\" target=\"_blank\">ddns.freedombox.org</a> இல் இலவச GnuDIP "
+"சேவையைக் காணலாம் அல்லது <a href=\"http://freedns.afraid.org/\" "
 "target=\"_blank\">freedns.afraid.org</a> இல் இலவச புதுப்பிப்பு URL அடிப்படையிலான "
 "சேவைகளைக் காணலாம்."
 
-#: modules/dynamicdns/__init__.py:46
+#: modules/dynamicdns/__init__.py:47
+#, fuzzy
+#| msgid ""
+#| "If you are looking for a free dynamic DNS account, you may find a free "
+#| "GnuDIP service at <a href='https://ddns.freedombox.org' "
+#| "target='_blank'>ddns.freedombox.org</a> or you may find free update URL "
+#| "based services at <a href='http://freedns.afraid.org/' "
+#| "target='_blank'>freedns.afraid.org</a>."
+msgid ""
+"Alternatively, you may find a free update URL based service at <a "
+"href='http://freedns.afraid.org/' target='_blank'>freedns.afraid.org</a>."
+msgstr ""
+"நீங்கள் ஒரு இலவச டைனமிக் DNS கணக்கைத் தேடுகிறீர்கள் என்றால், <a href=\"https://ddns."
+"freedombox.org\" target=\"_blank\">ddns.freedombox.org</a> இல் இலவச GnuDIP "
+"சேவையைக் காணலாம் அல்லது <a href=\"http://freedns.afraid.org/\" "
+"target=\"_blank\">freedns.afraid.org</a> இல் இலவச புதுப்பிப்பு URL அடிப்படையிலான "
+"சேவைகளைக் காணலாம்."
+
+#: modules/dynamicdns/__init__.py:50
 msgid ""
 "This service uses an external service to lookup public IP address. This can "
 "be configured in the privacy app."
@@ -1840,11 +1902,11 @@ msgstr ""
 "இந்த பணி பொது ஐபி முகவரியைப் பார்க்க வெளிப்புற சேவையைப் பயன்படுத்துகிறது. இதை "
 "தனியுரிமை பயன்பாட்டில் கட்டமைக்க முடியும்."
 
-#: modules/dynamicdns/__init__.py:64
+#: modules/dynamicdns/__init__.py:68
 msgid "Dynamic DNS Client"
 msgstr "மாறும் டிஎன்எச் கிளையன்ட்"
 
-#: modules/dynamicdns/__init__.py:77
+#: modules/dynamicdns/__init__.py:81
 msgid "Dynamic Domain"
 msgstr "மாறும் டொமைன்"
 
@@ -2458,9 +2520,9 @@ msgid ""
 "part. Only one of your domains can have Revese DNS lookup configured unless "
 "you have multiple public IP addresses."
 msgstr ""
-"உங்கள் %(box_name)s முகில் பணி உள்கட்டமைப்பில் இயங்கினால், நீங்கள் <a href="
-"\"https://en.wikipedia.org/wiki/reverse_dns_lookup\"> தலைகீழ் DNS தேடல் </a> ஐ "
-"உள்ளமைக்க வேண்டும். இது கட்டாயமில்லை, இருப்பினும், இது மின்னஞ்சல் வழங்கலை பெரிதும் "
+"உங்கள் %(box_name)s முகில் பணி உள்கட்டமைப்பில் இயங்கினால், நீங்கள் <a href=\"https://en."
+"wikipedia.org/wiki/reverse_dns_lookup\"> தலைகீழ் DNS தேடல் </a> ஐ உள்ளமைக்க "
+"வேண்டும். இது கட்டாயமில்லை, இருப்பினும், இது மின்னஞ்சல் வழங்கலை பெரிதும் "
 "மேம்படுத்துகிறது. உங்கள் வழக்கமான டி.என்.எச் இருக்கும் இடத்தில் தலைகீழ் டி.என்.எச் "
 "கட்டமைக்கப்படவில்லை. உங்கள் VPS/ISP இன் அமைப்புகளில் நீங்கள் அதைத் தேட வேண்டும். சில "
 "வழங்குநர்கள் உங்களுக்கான ஐபி முகவரி பகுதியை முன்கூட்டியே கட்டமைக்கிறார்கள், நீங்கள் டொமைன் "
@@ -2549,10 +2611,14 @@ msgid "Feather Wiki"
 msgstr "இறகு விக்கி"
 
 #: modules/featherwiki/forms.py:13 modules/tiddlywiki/forms.py:13
+msgid "Wiki files cannot be named \"index.html\"."
+msgstr ""
+
+#: modules/featherwiki/forms.py:20 modules/tiddlywiki/forms.py:20
 msgid "Name of the wiki file, with file extension \".html\""
 msgstr "கோப்பு நீட்டிப்புடன் விக்கி கோப்பின் பெயர் \".html\""
 
-#: modules/featherwiki/forms.py:15 modules/tiddlywiki/forms.py:15
+#: modules/featherwiki/forms.py:22 modules/tiddlywiki/forms.py:22
 msgid ""
 "Wiki title and description can be set from within the wiki. This file name "
 "is independent of the wiki title."
@@ -2560,23 +2626,23 @@ msgstr ""
 "விக்கிக்குள் இருந்து விக்கி தலைப்பு மற்றும் விளக்கத்தை அமைக்கலாம். இந்த கோப்பு பெயர் விக்கி "
 "தலைப்பிலிருந்து சுயாதீனமாக உள்ளது."
 
-#: modules/featherwiki/forms.py:23 modules/tiddlywiki/forms.py:23
+#: modules/featherwiki/forms.py:30 modules/tiddlywiki/forms.py:30
 msgid "New name for the wiki file, with file extension \".html\""
 msgstr "விக்கி கோப்பிற்கான புதிய பெயர், கோப்பு நீட்டிப்புடன் \".html\""
 
-#: modules/featherwiki/forms.py:25 modules/tiddlywiki/forms.py:25
+#: modules/featherwiki/forms.py:32 modules/tiddlywiki/forms.py:32
 msgid "Renaming the file has no effect on the title of the wiki."
 msgstr "கோப்பை மறுபெயரிடுவது விக்கியின் தலைப்பில் எந்த விளைவையும் ஏற்படுத்தாது."
 
-#: modules/featherwiki/forms.py:32
+#: modules/featherwiki/forms.py:39
 msgid "A Feather Wiki file with .html file extension"
 msgstr ".Html கோப்பு நீட்டிப்புடன் ஒரு இறகு விக்கி கோப்பு"
 
-#: modules/featherwiki/forms.py:35
+#: modules/featherwiki/forms.py:43
 msgid "Feather Wiki files must be in HTML format"
 msgstr "இறகு விக்கி கோப்புகள் உஉகுமொ வடிவத்தில் இருக்க வேண்டும்"
 
-#: modules/featherwiki/forms.py:37
+#: modules/featherwiki/forms.py:46
 msgid "Upload an existing Feather Wiki file from this computer."
 msgstr "இந்த கணினியிலிருந்து ஏற்கனவே உள்ள இறகு விக்கி கோப்பைப் பதிவேற்றவும்."
 
@@ -2872,8 +2938,8 @@ msgid ""
 "Automatic <a href=\"%(upgrades_url)s\" target=\"_blank\">software update</a> "
 "runs daily by default. For the first time, manually run it now."
 msgstr ""
-"தானியங்கி <a href=\"%(upgrades_url)s\"> மென்பொருள் புதுப்பிப்பு </a> இயல்பாக தினமும்"
-" இயங்குகிறது. முதல் முறையாக, இப்போது அதை கைமுறையாக இயக்கவும்."
+"தானியங்கி <a href=\"%(upgrades_url)s\"> மென்பொருள் புதுப்பிப்பு </a> இயல்பாக "
+"தினமும் இயங்குகிறது. முதல் முறையாக, இப்போது அதை கைமுறையாக இயக்கவும்."
 
 #: modules/first_boot/templates/firstboot_complete.html:30
 #: modules/upgrades/templates/upgrades_configure.html:119
@@ -3118,8 +3184,9 @@ msgid ""
 "need to <a href=\"{power_url}\">restart</a> the machine for changes to take "
 "effect."
 msgstr ""
-"பயன்பாட்டை நிறுவுதல், செயல்படுத்துதல், முடக்குதல் அல்லது நிறுவல் நீக்குதல் ஆகியவற்றின் பிறகு"
-", நீங்கள் <a href=\"{power_url}\"> மறுதொடக்கம் </a> மாற்றங்கள் நடைமுறைக்கு வர வேண்டும்."
+"பயன்பாட்டை நிறுவுதல், செயல்படுத்துதல், முடக்குதல் அல்லது நிறுவல் நீக்குதல் ஆகியவற்றின் "
+"பிறகு, நீங்கள் <a href=\"{power_url}\"> மறுதொடக்கம் </a> மாற்றங்கள் நடைமுறைக்கு வர "
+"வேண்டும்."
 
 #: modules/gnome/__init__.py:48
 msgid "GNOME"
@@ -3264,12 +3331,12 @@ msgid ""
 "\"apt source <i>package_name</i>\" in a terminal (using Cockpit or SSH)."
 msgstr ""
 "%(box_name)s இலவச மென்பொருள், குனு அஃபெரோ பொது பொதுமக்கள் உரிமத்தின் கீழ் உரிமம் "
-"பெற்றது. மூலக் குறியீடு ஆன்லைனில் <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox\"> %(box_name)s களஞ்சியம்"
-" </a> இல் கிடைக்கிறது. கூடுதலாக, எந்தவொரு டெபியன் தொகுப்பின் மூலக் குறியீட்டையும் <a "
-"href=\"https://sources.debian.org/\"> டெபியன் ஆதாரங்கள் </a> தளத்திலிருந்து பெறலாம்"
-", அல்லது \"பொருத்தமான மூல <i> தொகுப்பு_நேம் ஆகியவற்றை இயக்குவதன் மூலம் </i> \"ஒரு "
-"முனையத்தில் (காக்பிட் அல்லது பாஓடு ஐப் பயன்படுத்தி)."
+"பெற்றது. மூலக் குறியீடு ஆன்லைனில் <a href=\"https://salsa.debian.org/freedombox-"
+"team/freedombox\"> %(box_name)s களஞ்சியம் </a> இல் கிடைக்கிறது. கூடுதலாக, "
+"எந்தவொரு டெபியன் தொகுப்பின் மூலக் குறியீட்டையும் <a href=\"https://sources.debian."
+"org/\"> டெபியன் ஆதாரங்கள் </a> தளத்திலிருந்து பெறலாம், அல்லது \"பொருத்தமான மூல <i> "
+"தொகுப்பு_நேம் ஆகியவற்றை இயக்குவதன் மூலம் </i> \"ஒரு முனையத்தில் (காக்பிட் அல்லது பாஓடு "
+"ஐப் பயன்படுத்தி)."
 
 #: modules/help/templates/help_about.html:97
 msgid "Learn"
@@ -3321,11 +3388,11 @@ msgid ""
 "into your language, hosting hackathons or install fests, and by spreading "
 "the word."
 msgstr ""
-"குறியீட்டை எழுதுதல், பிழைகள் சோதனை செய்தல் மற்றும் புகாரளித்தல், புதிய பயன்பாட்டு வழக்குகள்"
-" மற்றும் பயன்பாடுகளைப் பற்றி விவாதித்தல், லோகோக்கள் மற்றும் கலைப்படைப்புகளை வடிவமைத்தல், "
-"உங்கள் தம பயனர்களுக்கு ஆதரவை வழங்குதல், கட்டற்றபெட்டி மற்றும் அதன் பயன்பாடுகளை உங்கள் "
-"மொழியில் மொழிபெயர்ப்பது, ஏக்கத்தான்களை புரவலன் செய்தல் அல்லது ஃபெச்ட்களை நிறுவுதல் மற்றும் "
-"பரப்புவதன் மூலம் நீங்கள் பங்களிக்கலாம் சொல்."
+"குறியீட்டை எழுதுதல், பிழைகள் சோதனை செய்தல் மற்றும் புகாரளித்தல், புதிய பயன்பாட்டு "
+"வழக்குகள் மற்றும் பயன்பாடுகளைப் பற்றி விவாதித்தல், லோகோக்கள் மற்றும் கலைப்படைப்புகளை "
+"வடிவமைத்தல், உங்கள் தம பயனர்களுக்கு ஆதரவை வழங்குதல், கட்டற்றபெட்டி மற்றும் அதன் பயன்பாடுகளை "
+"உங்கள் மொழியில் மொழிபெயர்ப்பது, ஏக்கத்தான்களை புரவலன் செய்தல் அல்லது ஃபெச்ட்களை நிறுவுதல் "
+"மற்றும் பரப்புவதன் மூலம் நீங்கள் பங்களிக்கலாம் சொல்."
 
 #: modules/help/templates/help_contribute.html:28
 msgid ""
@@ -3338,13 +3405,13 @@ msgid ""
 "throughout the world. The FreedomBox Foundation would not exist without its "
 "supporters."
 msgstr ""
-"<a href=\"https://freedomboxfoundation.org/donate/\"> நன்கொடை </a> இலாப நோக்கற்"
-"ற கட்டற்றபெட்டி அறக்கட்டளைக்கு நீங்கள் திட்டத்திற்கு பொருள் ரீதியாக உதவலாம். 2011 ஆம் ஆண்டில் "
-"நிறுவப்பட்ட, கட்டற்றபெட்டி அறக்கட்டளை என்பது நியூயார்க் நகரத்தைத் தளமாகக் கொண்ட 501 (சி) "
-"(3) அந்தச்தைக் கொண்ட ஒரு இலாப நோக்கற்ற அமைப்பாகும், இது கட்டற்றபெட்டியை ஆதரிக்க உள்ளது. "
-"இது திட்டத்திற்கான தொழில்நுட்ப உள்கட்டமைப்பு மற்றும் சட்ட சேவைகளை வழங்குகிறது, "
-"கூட்டாண்மைகளைத் தொடர்கிறது மற்றும் உலகம் முழுவதும் கட்டற்றபெட்டிக்கான வாதங்களை வழங்குகிறது"
-". கட்டற்றபெட்டி அறக்கட்டளை அதன் ஆதரவாளர்கள் இல்லாமல் இருக்காது."
+"<a href=\"https://freedomboxfoundation.org/donate/\"> நன்கொடை </a> இலாப "
+"நோக்கற்ற கட்டற்றபெட்டி அறக்கட்டளைக்கு நீங்கள் திட்டத்திற்கு பொருள் ரீதியாக உதவலாம். 2011 ஆம் "
+"ஆண்டில் நிறுவப்பட்ட, கட்டற்றபெட்டி அறக்கட்டளை என்பது நியூயார்க் நகரத்தைத் தளமாகக் கொண்ட 501 "
+"(சி) (3) அந்தச்தைக் கொண்ட ஒரு இலாப நோக்கற்ற அமைப்பாகும், இது கட்டற்றபெட்டியை ஆதரிக்க "
+"உள்ளது. இது திட்டத்திற்கான தொழில்நுட்ப உள்கட்டமைப்பு மற்றும் சட்ட சேவைகளை வழங்குகிறது, "
+"கூட்டாண்மைகளைத் தொடர்கிறது மற்றும் உலகம் முழுவதும் கட்டற்றபெட்டிக்கான வாதங்களை "
+"வழங்குகிறது. கட்டற்றபெட்டி அறக்கட்டளை அதன் ஆதரவாளர்கள் இல்லாமல் இருக்காது."
 
 #: modules/help/templates/help_contribute.html:42
 #: modules/power/templates/power_restart.html:27
@@ -3400,8 +3467,8 @@ msgid ""
 "improve them on our <a href=\"https://discuss.freedombox.org\" "
 "target=\"_blank\"> discussion forum</a>."
 msgstr ""
-"காணாமல் போன நற்பொருத்தங்கள், உங்களுக்குப் பிடித்த பயன்பாடுகள் மற்றும் அவற்றை எங்கள் <a href="
-"\"https://discuss.freedombox.org\"> கலந்துரையாடல் மன்றம் </a> இல் எவ்வாறு "
+"காணாமல் போன நற்பொருத்தங்கள், உங்களுக்குப் பிடித்த பயன்பாடுகள் மற்றும் அவற்றை எங்கள் <a "
+"href=\"https://discuss.freedombox.org\"> கலந்துரையாடல் மன்றம் </a> இல் எவ்வாறு "
 "மேம்படுத்தலாம் என்பதை எங்களுக்குத் தெரியப்படுத்துங்கள்."
 
 #: modules/help/templates/help_feedback.html:26
@@ -3446,10 +3513,10 @@ msgid ""
 "discuss\"> mailing list</a>.  The list archives also contain information "
 "about problems faced by other users and possible solutions."
 msgstr ""
-"%(box_name)sமூகத்தின் உதவியைப் பெற, வினவல்கள் <a href="
-"\"https://lists.alioth.debian.org/mailman/listinfo/freedombox-discuss\"> அஞ்சல்"
-" பட்டியல் </a> இல் வெளியிடப்படலாம். பட்டியல் காப்பகங்களில் பிற பயனர்கள் எதிர்கொள்ளும் "
-"சிக்கல்கள் மற்றும் சாத்தியமான தீர்வுகள்பற்றிய தகவல்களும் உள்ளன."
+"%(box_name)sமூகத்தின் உதவியைப் பெற, வினவல்கள் <a href=\"https://lists.alioth."
+"debian.org/mailman/listinfo/freedombox-discuss\"> அஞ்சல் பட்டியல் </a> இல் "
+"வெளியிடப்படலாம். பட்டியல் காப்பகங்களில் பிற பயனர்கள் எதிர்கொள்ளும் சிக்கல்கள் மற்றும் "
+"சாத்தியமான தீர்வுகள்பற்றிய தகவல்களும் உள்ளன."
 
 #: modules/help/templates/help_index.html:42
 #, python-format
@@ -3460,8 +3527,8 @@ msgid ""
 "channel using the IRC web interface."
 msgstr ""
 "irc.oftc.net IRC பிணையத்திலும் பல %(box_name)s இன் பங்களிப்பாளர்கள் மற்றும் பயனர்கள் "
-"உள்ளனர். IRC வலை இடைமுகத்தைப் பயன்படுத்தி <a href=\"https://webchat.oftc.net/"
-"?randomnick=1&amp;channels=freedombox&amp;prompt=1\"> #கட்டற்றபெட்டி</a> சேனலில் "
+"உள்ளனர். IRC வலை இடைமுகத்தைப் பயன்படுத்தி <a href=\"https://webchat.oftc.net/?"
+"randomnick=1&amp;channels=freedombox&amp;prompt=1\"> #கட்டற்றபெட்டி</a> சேனலில் "
 "சேர்ந்து உதவி கோருங்கள்."
 
 #: modules/help/templates/help_manual.html:18
@@ -3493,10 +3560,10 @@ msgid ""
 "Or send an email to our <a href=\"mailto:freedombox-discuss@alioth-lists."
 "debian.net\">mailing list</a>."
 msgstr ""
-"எங்கள் IRC மற்றும் Matrix சேனல்களிலும் (பிரிட்ஜ்) எங்களுடன் அரட்டை அடிக்கலாம்: <ul> <li>#"
-"freedombox on irc.oftc.net</li> <li>#freedombox:matrix.org</li> </ul> அல்லது "
-"எங்கள் <a href=\"mailto:freedombox-discuss@alioth-lists.debian.net\">அஞ்சல் "
-"பட்டியலுக்கு</a> மின்னஞ்சல் அனுப்பவும்."
+"எங்கள் IRC மற்றும் Matrix சேனல்களிலும் (பிரிட்ஜ்) எங்களுடன் அரட்டை அடிக்கலாம்: <ul> "
+"<li>#freedombox on irc.oftc.net</li> <li>#freedombox:matrix.org</li> </ul> "
+"அல்லது எங்கள் <a href=\"mailto:freedombox-discuss@alioth-lists.debian."
+"net\">அஞ்சல் பட்டியலுக்கு</a> மின்னஞ்சல் அனுப்பவும்."
 
 #: modules/help/templates/statuslog.html:10
 msgid "Status Log"
@@ -3511,9 +3578,9 @@ msgid ""
 "attach this status log to the bug report."
 msgstr ""
 "இந்த வலை இடைமுகத்திற்கான நிலை பதிவின் கடைசி %(num_lines)s வரிகள் இவை. நீங்கள் ஒரு "
-"பிழையைப் புகாரளிக்க விரும்பினால், தயவுசெய்து <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\"> பிழை டிராக்கர் "
-"</a> ஐப் பயன்படுத்தவும், இந்த நிலை உள்நுழைவு பிழை அறிக்கையில் இணைக்கவும்."
+"பிழையைப் புகாரளிக்க விரும்பினால், தயவுசெய்து <a href=\"https://salsa.debian.org/"
+"freedombox-team/freedombox/issues\"> பிழை டிராக்கர் </a> ஐப் பயன்படுத்தவும், இந்த "
+"நிலை உள்நுழைவு பிழை அறிக்கையில் இணைக்கவும்."
 
 #: modules/help/templates/statuslog.html:27
 msgid ""
@@ -3535,6 +3602,109 @@ msgstr "{box_name}"
 #, python-brace-format
 msgid "{box_name} Manual"
 msgstr "{box_name} கையேடு"
+
+#: modules/homeassistant/__init__.py:31
+msgid ""
+"Home Assistant is a home automation hub with emphasis on local control and "
+"privacy. It integrates with thousands of devices including smart bulbs, "
+"alarms, presense sensors, door bells, thermostats, irrigation timers, energy "
+"monitors, etc."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:35
+msgid ""
+"Home Assistant can detect, configure, and use various devices on the local "
+"network. For devices using other protocols such as ZigBee, it typically "
+"requires additional hardware such as a ZigBee USB dongle. You need to re-run "
+"setup if such hardware is added or removed."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:39
+msgid ""
+"Home Assistant web interface must be setup soon after the app is installed. "
+"An administrator account is created at this time. Home Assistant maintains "
+"its own user accounts."
+msgstr ""
+
+#: modules/homeassistant/__init__.py:43
+#, fuzzy, python-brace-format
+#| msgid ""
+#| "Please note that Nextcloud is installed and run inside a container "
+#| "provided by the Nextcloud community. Security, quality, privacy and legal "
+#| "reviews are done by the upstream project and not by Debian/{box_name}. "
+#| "Updates are performed following an independent cycle."
+msgid ""
+"Please note that Home Assistant is installed and run inside a container "
+"provided by the Home Assistant project. Security, quality, privacy and legal "
+"reviews are done by the upstream project and not by Debian/{box_name}. "
+"Updates are performed following an independent cycle."
+msgstr ""
+"நெக்ச்ட் முகில் நிறுவப்பட்டு, நெக்ச்ட் முகில் சமூகத்தால் வழங்கப்பட்ட கொள்கலனுக்குள் இயக்கவும் "
+"என்பதை நினைவில் கொள்க. பாதுகாப்பு, தகுதி, தனியுரிமை மற்றும் சட்ட மதிப்புரைகள் மேலோடை "
+"திட்டத்தால் செய்யப்படுகின்றன, ஆனால் டெபியன்/{box_name} ஆல் அல்ல. சுயாதீன சுழற்சியைத் "
+"தொடர்ந்து புதுப்பிப்புகள் செய்யப்படுகின்றன."
+
+#: modules/homeassistant/__init__.py:48
+msgid "This app is experimental."
+msgstr "இந்த பயன்பாடு சோதனை."
+
+#: modules/homeassistant/__init__.py:64 modules/homeassistant/manifest.py:12
+#: modules/homeassistant/manifest.py:20
+msgid "Home Assistant"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:62
+#, fuzzy
+#| msgid "Automatic"
+msgid "Home Automation"
+msgstr "தானியங்கி"
+
+#: modules/homeassistant/manifest.py:63
+msgid "IoT"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:64 modules/networks/manifest.py:8
+#: modules/networks/templates/connections_diagram.html:32
+#: modules/networks/templates/connections_diagram.html:62
+#: modules/networks/templates/connections_fields_wifi.html:15
+#: modules/networks/views.py:102 network.py:29
+msgid "Wi-Fi"
+msgstr "இல்"
+
+#: modules/homeassistant/manifest.py:65
+msgid "ZigBee"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:66
+msgid "Z-Wave"
+msgstr ""
+
+#: modules/homeassistant/manifest.py:67
+msgid "Thread"
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:17
+msgid ""
+"Home Assistant requires a dedicated domain to work with and cannot work on a "
+"URL path. Please select the domain on which Home Assistant will be "
+"available. Home Assistant will not be available on other domains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:28
+#, python-format
+msgid ""
+"A separate domain can be made available for Home Assistant by configurating "
+"a subdomain such as homeassistant.mydomain.example. See <a "
+"href=\"%(names_url)s\">Names</a> app and <a "
+"href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
+msgstr ""
+
+#: modules/homeassistant/templates/homeassistant.html:40
+#: modules/ikiwiki/templates/ikiwiki_create.html:18
+#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
+#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
+msgid "Update setup"
+msgstr "புதுப்பிப்பு அமைவு"
 
 #: modules/ikiwiki/__init__.py:20
 msgid ""
@@ -3598,12 +3768,6 @@ msgstr "தளம் %(site)s"
 #, python-format
 msgid "Delete site %(site)s"
 msgstr "தளத்தை நீக்கு %(site)s"
-
-#: modules/ikiwiki/templates/ikiwiki_create.html:18
-#: modules/matrixsynapse/templates/matrix-synapse-pre-setup.html:54
-#: modules/snapshot/templates/snapshot.html:16 templates/app.html:60
-msgid "Update setup"
-msgstr "புதுப்பிப்பு அமைவு"
 
 #: modules/ikiwiki/templates/ikiwiki_delete.html:12
 #, python-format
@@ -3910,8 +4074,8 @@ msgid ""
 msgstr ""
 "குறியாக்கம் செய்வோம் என்பது இணைய பாதுகாப்பு ஆராய்ச்சி குழுவால் (ISRG) பொதுமக்களின் "
 "நலனுக்காக இயக்கப்படும் ஒரு இலவச, தானியங்கி மற்றும் திறந்த சான்றிதழ் ஆணையமாகும். இந்தச் "
-"சேவையைப் பயன்படுத்துவதற்கு முன்பு <a href=\"https://letsencrypt.org/repository/\""
-">சந்தாதாரர் ஒப்பந்தத்தைக் குறியாக்கம் செய்வோம்</a>ஐ படித்து ஒப்புக்கொள்ளுங்கள்."
+"சேவையைப் பயன்படுத்துவதற்கு முன்பு <a href=\"https://letsencrypt.org/repository/"
+"\">சந்தாதாரர் ஒப்பந்தத்தைக் குறியாக்கம் செய்வோம்</a>ஐ படித்து ஒப்புக்கொள்ளுங்கள்."
 
 #: modules/letsencrypt/__init__.py:60
 msgid "Let's Encrypt"
@@ -4267,8 +4431,8 @@ msgid ""
 "onion\"."
 msgstr ""
 "அடிக்குறிப்பு, ஊட்டங்கள் மற்றும் மின்னஞ்சல்கள் போன்ற விக்கியைச் சுட்டிக்காட்டும் முகவரி களை "
-"உருவாக்க மீடியாவிகி பயன்படுத்துகிறது. எடுத்துக்காட்டுகள்: "
-"\"myfreedombox.example.org\" அல்லது \"example.onion\"."
+"உருவாக்க மீடியாவிகி பயன்படுத்துகிறது. எடுத்துக்காட்டுகள்: \"myfreedombox.example."
+"org\" அல்லது \"example.onion\"."
 
 #: modules/mediawiki/forms.py:71
 msgid "Site Name"
@@ -4864,6 +5028,23 @@ msgstr "ஆதரிக்கப்பட்டது"
 msgid "unsupported"
 msgstr "ஆதரிக்கப்படாதது"
 
+#: modules/names/templates/names-domain-add.html:11
+#, python-format
+msgid ""
+"If you purchased a domain name from a domain registrar, you can configure it "
+"here. The name servers responsible for the domain must be pointing (A and "
+"AAAA records) to the public IP addresses of the %(box_name)s."
+msgstr ""
+
+#: modules/names/templates/names-domain-add.html:18
+#, python-format
+msgid ""
+"If you wish to also use a subdomian of an already configured domain, add "
+"another entry for it here. Ensure that the subdomain is configured to point "
+"to %(box_name)s. Subdomains are useful for hosting multiple applications "
+"that each require a dedicted domain for themselves."
+msgstr ""
+
 #: modules/names/templates/names.html:41
 #: modules/networks/templates/connection_show.html:40
 #: modules/wireguard/templates/wireguard_show_client.html:72
@@ -4916,7 +5097,7 @@ msgid ""
 msgstr ""
 "SystemD- தீர்க்கப்பட்ட தொகுப்பு நிறுவப்படவில்லை. கூடுதல் செயல்பாட்டிற்கு இதை நிறுவவும்."
 
-#: modules/names/templates/names.html:152 templates/setup.html:78
+#: modules/names/templates/names.html:152 templates/setup.html:87
 msgid "Install"
 msgstr "நிறுவவும்"
 
@@ -5221,8 +5402,7 @@ msgstr "திற"
 #: modules/networks/forms.py:375
 #, python-brace-format
 msgid "Specify how your {box_name} is connected to your network"
-msgstr ""
-"உங்கள் {box_name} பிணையத்துடன் எவ்வாறு இணைக்கப்பட்டுள்ளது என்பதைக் குறிப்பிடவும்"
+msgstr "உங்கள் {box_name} பிணையத்துடன் எவ்வாறு இணைக்கப்பட்டுள்ளது என்பதைக் குறிப்பிடவும்"
 
 #: modules/networks/forms.py:382
 #, python-brace-format
@@ -5378,14 +5558,6 @@ msgstr ""
 #: modules/networks/templates/connections_diagram.html:11
 msgid "Internet"
 msgstr "இணையம்"
-
-#: modules/networks/manifest.py:8
-#: modules/networks/templates/connections_diagram.html:32
-#: modules/networks/templates/connections_diagram.html:62
-#: modules/networks/templates/connections_fields_wifi.html:15
-#: modules/networks/views.py:102 network.py:29
-msgid "Wi-Fi"
-msgstr "இல்"
 
 #: modules/networks/manifest.py:8 modules/privoxy/manifest.py:10
 #: modules/samba/manifest.py:90
@@ -5738,7 +5910,7 @@ msgstr "புதுப்பிப்பு ..."
 #: modules/networks/templates/network_topology_update.html:18
 #: modules/networks/templates/router_configuration_update.html:19
 #: modules/pagekite/templates/pagekite_custom_services.html:33
-#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:19
+#: modules/sharing/templates/sharing_add_edit.html:25 templates/form.html:22
 msgid "Submit"
 msgstr "சமர்ப்பிக்கவும்"
 
@@ -6194,8 +6366,8 @@ msgid ""
 "Nextcloud. Examples: \"myfreedombox.example.org\" or \"example.onion\"."
 msgstr ""
 "நெக்ச்ட் முகில் முகவரி களை உருவாக்க நிர்பந்திக்கப்பட வேண்டும் என்று டொமைன் அல்லது ஐபி "
-"முகவரிக்கு அமைக்கவும். அடுத்த கிளவுட்டை அணுக சரியான டொமைன் பயன்படுத்தப்பட்டால் தேவையில்லை"
-". எடுத்துக்காட்டுகள்: \"என்கட்டற்றபெட்டி.எடுத்துக்காட்டு.நிறுவனம்\" அல்லது "
+"முகவரிக்கு அமைக்கவும். அடுத்த கிளவுட்டை அணுக சரியான டொமைன் பயன்படுத்தப்பட்டால் "
+"தேவையில்லை. எடுத்துக்காட்டுகள்: \"என்கட்டற்றபெட்டி.எடுத்துக்காட்டு.நிறுவனம்\" அல்லது "
 "\"எடுத்துக்காட்டு.வெங்காயம்\"."
 
 #: modules/nextcloud/forms.py:33
@@ -6632,8 +6804,8 @@ msgid ""
 "provided by the FreedomBox Foundation at https://ddns.freedombox.org/ip/. If "
 "empty, lookups are disabled and some functionality will fail."
 msgstr ""
-"விருப்ப மதிப்பு. உங்கள் {box_name} இன் பொதுவில் காணக்கூடிய ஐபி முகவரியைத் தீர்மானிக்க இந்"
-"த முகவரி பயன்படுத்தப்படுகிறது. கிளையன்ட் கோரிக்கை வரும் IPv4 அல்லது IPv6 முகவரியை "
+"விருப்ப மதிப்பு. உங்கள் {box_name} இன் பொதுவில் காணக்கூடிய ஐபி முகவரியைத் தீர்மானிக்க "
+"இந்த முகவரி பயன்படுத்தப்படுகிறது. கிளையன்ட் கோரிக்கை வரும் IPv4 அல்லது IPv6 முகவரியை "
 "முகவரி வெறுமனே திருப்பித் தர வேண்டும். கட்டற்றபெட்டி அறக்கட்டளை வழங்கிய சேவையை https://"
 "ddns.freedombox.org/ip/ இல் பயன்படுத்துவதே இயல்புநிலை. காலியாக இருந்தால், தேடல்கள் "
 "முடக்கப்பட்டு, சில செயல்பாடுகள் தோல்வியடையும்."
@@ -6868,11 +7040,10 @@ msgid ""
 "address>) and your user name. Clicking on the search button will list the "
 "existing calendars and address books."
 msgstr ""
-"படிமலர்ச்சி வளர்ச்சியில் வெப்டாவுடன் முறையே ஒரு புதிய காலெண்டர் மற்றும் முகவரி புத்தகத்தைச்"
-" சேர்க்கவும். ரேடிகல் சேவையகத்தின் முகவரியை (எ.கா. "
-"https://&lt;உங்கள்.கட்டற்றபெட்டி.முகவரி&gt;) மற்றும் உங்கள் பயனர் பெயரை உள்ளிடவும். தேடல் "
-"பொத்தானைக் சொடுக்கு செய்தால் ஏற்கனவே உள்ள காலெண்டர்கள் மற்றும் முகவரி புத்தகங்கள் "
-"பட்டியலிடப்படும்."
+"படிமலர்ச்சி வளர்ச்சியில் வெப்டாவுடன் முறையே ஒரு புதிய காலெண்டர் மற்றும் முகவரி "
+"புத்தகத்தைச் சேர்க்கவும். ரேடிகல் சேவையகத்தின் முகவரியை (எ.கா. https://&lt;உங்கள்."
+"கட்டற்றபெட்டி.முகவரி&gt;) மற்றும் உங்கள் பயனர் பெயரை உள்ளிடவும். தேடல் பொத்தானைக் சொடுக்கு "
+"செய்தால் ஏற்கனவே உள்ள காலெண்டர்கள் மற்றும் முகவரி புத்தகங்கள் பட்டியலிடப்படும்."
 
 #: modules/radicale/manifest.py:91 modules/sogo/manifest.py:73
 msgid "Calendar"
@@ -6981,9 +7152,10 @@ msgid ""
 "href=\"{ttrss_url}\">Tiny Tiny RSS</a> to follow various websites. When "
 "adding a feed, enable authentication and use your {box_name} credentials."
 msgstr ""
-"நீங்கள் <a href=\"{miniflux_url}\"> மினிஃப்ளக்ச் </a> அல்லது <a href=\"{ttrss_url}\""
-">சின்னஞ்சிறிய RSS </a> உடன் RSS-BRIDGE ஐப் பயன்படுத்தலாம். ஒரு ஊட்டத்தைச் சேர்க்கும்போது, "
-"அங்கீகாரத்தை இயக்கவும், உங்கள் {box_name} நற்சான்றிதழ்களைப் பயன்படுத்தவும்."
+"நீங்கள் <a href=\"{miniflux_url}\"> மினிஃப்ளக்ச் </a> அல்லது <a "
+"href=\"{ttrss_url}\">சின்னஞ்சிறிய RSS </a> உடன் RSS-BRIDGE ஐப் பயன்படுத்தலாம். ஒரு "
+"ஊட்டத்தைச் சேர்க்கும்போது, அங்கீகாரத்தை இயக்கவும், உங்கள் {box_name} நற்சான்றிதழ்களைப் "
+"பயன்படுத்தவும்."
 
 #: modules/rssbridge/__init__.py:48 modules/ttrss/__init__.py:47
 msgid "Read and subscribe to news feeds"
@@ -7039,8 +7211,8 @@ msgid ""
 "Group share - accessible only to FreedomBox users who are in the freedombox-"
 "share group."
 msgstr ""
-"குழுப் பகிர்வு - கட்டற்றபெட்டி-பகிர்வு குழுவில் உள்ள கட்டற்றபெட்டி பயனர்களுக்கு மட்டுமே அணு"
-"க முடியும்."
+"குழுப் பகிர்வு - கட்டற்றபெட்டி-பகிர்வு குழுவில் உள்ள கட்டற்றபெட்டி பயனர்களுக்கு மட்டுமே "
+"அணுக முடியும்."
 
 #: modules/samba/__init__.py:34
 msgid ""
@@ -7440,8 +7612,8 @@ msgid ""
 "To use Shadowsocks after setup, set the SOCKS5 proxy URL in your device, "
 "browser or application to http://freedombox_address:1080/"
 msgstr ""
-"அமைப்புக்குப் பிறகு நிழல் பயன்படுத்த, உங்கள் சாதனம், உலாவி அல்லது பயன்பாட்டை "
-"http://கட்டற்றபெட்டி_முகவரி:1080/ க்கு SOCKS5 பதிலாள் முகவரி ஐ அமை"
+"அமைப்புக்குப் பிறகு நிழல் பயன்படுத்த, உங்கள் சாதனம், உலாவி அல்லது பயன்பாட்டை http://"
+"கட்டற்றபெட்டி_முகவரி:1080/ க்கு SOCKS5 பதிலாள் முகவரி ஐ அமை"
 
 #: modules/shadowsocks/__init__.py:50
 msgid "Shadowsocks Client"
@@ -7892,8 +8064,8 @@ msgid ""
 "their mailboxes by the email server app can be read and new mail can be sent "
 "out."
 msgstr ""
-"{box_name} இல் உள்ள அனைத்து பயனர்களும் SOGO இல் உள்நுழைந்து பயன்படுத்தலாம். மின்னஞ்சல் சேவை"
-"யக பயன்பாட்டின் மூலம் தங்கள் அஞ்சல் பெட்டிகளுக்கு வழங்கப்படும் அஞ்சல்களைப் படித்துப் புதிய "
+"{box_name} இல் உள்ள அனைத்து பயனர்களும் SOGO இல் உள்நுழைந்து பயன்படுத்தலாம். மின்னஞ்சல் "
+"சேவையக பயன்பாட்டின் மூலம் தங்கள் அஞ்சல் பெட்டிகளுக்கு வழங்கப்படும் அஞ்சல்களைப் படித்துப் புதிய "
 "அஞ்சலை அனுப்பலாம்."
 
 #: modules/sogo/__init__.py:48 modules/sogo/manifest.py:11
@@ -8357,15 +8529,15 @@ msgstr ""
 msgid "TiddlyWiki"
 msgstr "டிட்லிவிக்கி"
 
-#: modules/tiddlywiki/forms.py:32
+#: modules/tiddlywiki/forms.py:39
 msgid "A TiddlyWiki file with .html file extension"
 msgstr ".Html கோப்பு நீட்டிப்புடன் ஒரு டிட்லிவிக்கி கோப்பு"
 
-#: modules/tiddlywiki/forms.py:35
+#: modules/tiddlywiki/forms.py:43
 msgid "TiddlyWiki files must be in HTML format"
 msgstr "டிட்லிவிக்கி கோப்புகள் உஉகுமொ வடிவத்தில் இருக்க வேண்டும்"
 
-#: modules/tiddlywiki/forms.py:37
+#: modules/tiddlywiki/forms.py:46
 msgid "Upload an existing TiddlyWiki file from this computer."
 msgstr "இந்த கணினியிலிருந்து ஏற்கனவே உள்ள டிட்லிவிக்கி கோப்பைப் பதிவேற்றவும்."
 
@@ -8782,8 +8954,7 @@ msgstr "ஆட்டோ புதுப்பிப்பை இயக்கவ�
 
 #: modules/upgrades/forms.py:16
 msgid "When enabled, FreedomBox automatically updates once a day."
-msgstr ""
-"இயக்கப்பட்டால், கட்டற்றபெட்டி ஒரு நாளைக்கு ஒரு முறை தானாகவே புதுப்பிக்கும்."
+msgstr "இயக்கப்பட்டால், கட்டற்றபெட்டி ஒரு நாளைக்கு ஒரு முறை தானாகவே புதுப்பிக்கும்."
 
 #: modules/upgrades/forms.py:19
 msgid "Enable auto-update to next stable release"
@@ -8856,8 +9027,7 @@ msgstr ""
 msgid ""
 "The process will take several hours. Most apps will be unavailable during "
 "this time."
-msgstr ""
-"செயல்முறை பல மணி நேரம் ஆகும். இந்த நேரத்தில் பெரும்பாலான பயன்பாடுகள் கிடைக்காது."
+msgstr "செயல்முறை பல மணி நேரம் ஆகும். இந்த நேரத்தில் பெரும்பாலான பயன்பாடுகள் கிடைக்காது."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:44
 msgid ""
@@ -8887,8 +9057,7 @@ msgstr ""
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:21
 msgid "Distribution update has completed. Reboot the machine, if necessary."
-msgstr ""
-"விநியோக புதுப்பிப்பு முடிந்தது. தேவைப்பட்டால், இயந்திரத்தை மீண்டும் துவக்கவும்."
+msgstr "விநியோக புதுப்பிப்பு முடிந்தது. தேவைப்பட்டால், இயந்திரத்தை மீண்டும் துவக்கவும்."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:25
 #, python-format
@@ -8920,7 +9089,7 @@ msgstr "விநியோக புதுப்பிப்புக்கு�
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
-#: templates/notifications.html:50 templates/operation-notification.html:23
+#: templates/notifications.html:58 templates/operation-notification.html:23
 msgid "Dismiss"
 msgstr "தள்ளுபடி"
 
@@ -8941,11 +9110,11 @@ msgstr ""
 "மென்பொருள் புதுப்பிப்புகளுடன் தேர்ந்தெடுக்கப்பட்ட சில அம்சங்களைப் பெறும். இருப்பினும், "
 "%(box_name)s ஒரு நீண்ட மென்பொருள் வாழ்க்கைச் சுழற்சியை வழங்க, முழு இயக்க முறைமையும் "
 "ஒவ்வொரு இரண்டு வருடங்களுக்கும் மேலாக ஒரு பெரிய விநியோக புதுப்பிப்பைப் பெறும். இது "
-"முக்கிய அம்சங்களையும் மாற்றங்களையும் கொண்டு வரும். சில நேரங்களில், பழைய நற்பொருத்தங்கள் வேலை"
-" செய்வதை நிறுத்திவிடும். விநியோக மேம்படுத்தலின் போது எதிர்பார்க்கப்படும் மாற்றங்கள் மற்றும் "
-"மாற்றங்களுக்கு <a href=\"%(dist_upgrade_url)s\"> கையேடு </a> ஐ அணுகவும். இந்த "
-"மாற்றங்களை நீங்கள் விரும்பவில்லை என்றால், ஒவ்வொரு விநியோகத்தையும் குறைந்தபட்சம் <a href="
-"\"https://wiki.debian.org/lts\"> 5 ஆண்டுகள் </a> புதுப்பிப்பதற்கு முன் "
+"முக்கிய அம்சங்களையும் மாற்றங்களையும் கொண்டு வரும். சில நேரங்களில், பழைய நற்பொருத்தங்கள் "
+"வேலை செய்வதை நிறுத்திவிடும். விநியோக மேம்படுத்தலின் போது எதிர்பார்க்கப்படும் மாற்றங்கள் "
+"மற்றும் மாற்றங்களுக்கு <a href=\"%(dist_upgrade_url)s\"> கையேடு </a> ஐ அணுகவும். "
+"இந்த மாற்றங்களை நீங்கள் விரும்பவில்லை என்றால், ஒவ்வொரு விநியோகத்தையும் குறைந்தபட்சம் <a "
+"href=\"https://wiki.debian.org/lts\"> 5 ஆண்டுகள் </a> புதுப்பிப்பதற்கு முன் "
 "வைத்திருக்கலாம்."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:34
@@ -8953,8 +9122,8 @@ msgid ""
 "Distribution update is currently running. This operation may take several "
 "hours. Most apps will be unavailable during this period."
 msgstr ""
-"விநியோக புதுப்பிப்பு தற்போது இயங்குகிறது. இந்த அறுவை மருத்தீடு பல மணி நேரம் ஆகலாம். இந்"
-"த காலகட்டத்தில் பெரும்பாலான பயன்பாடுகள் கிடைக்காது."
+"விநியோக புதுப்பிப்பு தற்போது இயங்குகிறது. இந்த அறுவை மருத்தீடு பல மணி நேரம் ஆகலாம். "
+"இந்த காலகட்டத்தில் பெரும்பாலான பயன்பாடுகள் கிடைக்காது."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:50
 msgid "Automatic updates are disabled."
@@ -8973,8 +9142,7 @@ msgstr ""
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:65
 msgid "Your current distribution is mixed or not understood."
-msgstr ""
-"உங்கள் தற்போதைய வழங்கல் கலக்கப்படுகிறது அல்லது புரிந்து கொள்ளப்படவில்லை."
+msgstr "உங்கள் தற்போதைய வழங்கல் கலக்கப்படுகிறது அல்லது புரிந்து கொள்ளப்படவில்லை."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:72
 msgid "Current Distribution:"
@@ -9017,9 +9185,9 @@ msgid ""
 "necessary. Thank you for helping test the %(box_name)s project. Please "
 "report any problems you notice."
 msgstr ""
-"நீங்கள் ஒரு உருட்டல் வெளியீட்டு விநியோகத்தில் இருக்கிறீர்கள். விநியோக புதுப்பிப்பு தேவையில்லை"
-". %(box_name)s திட்டத்தைச் சோதிக்க உதவியதற்கு நன்றி. நீங்கள் கவனிக்கும் ஏதேனும் சிக்கல்களைப்"
-" புகாரளிக்கவும்."
+"நீங்கள் ஒரு உருட்டல் வெளியீட்டு விநியோகத்தில் இருக்கிறீர்கள். விநியோக புதுப்பிப்பு "
+"தேவையில்லை. %(box_name)s திட்டத்தைச் சோதிக்க உதவியதற்கு நன்றி. நீங்கள் கவனிக்கும் ஏதேனும் "
+"சிக்கல்களைப் புகாரளிக்கவும்."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:121
 msgid ""
@@ -9046,8 +9214,9 @@ msgid ""
 "A new stable distribution is available. Your %(box_name)s will be updated "
 "automatically soon. You may choose to update manually now, if you wish."
 msgstr ""
-"ஒரு புதிய நிலையான வழங்கல் கிடைக்கிறது. உங்கள் %(box_name)s தானாகவே புதுப்பிக்கப்படும்"
-". நீங்கள் விரும்பினால், இப்போது கைமுறையாக புதுப்பிக்க நீங்கள் தேர்வு செய்யலாம்."
+"ஒரு புதிய நிலையான வழங்கல் கிடைக்கிறது. உங்கள் %(box_name)s தானாகவே "
+"புதுப்பிக்கப்படும். நீங்கள் விரும்பினால், இப்போது கைமுறையாக புதுப்பிக்க நீங்கள் தேர்வு "
+"செய்யலாம்."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:144
 #, python-format
@@ -9229,10 +9398,10 @@ msgid ""
 "able to log in to all services. They can also log in to the system through "
 "SSH and have administrative privileges (sudo)."
 msgstr ""
-"புதிய பயனருக்கு எந்தச் சேவைகள் கிடைக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும். அவர்கள் பொருத்தமா"
-"ன குழுவில் இருந்தால், எல்.டி.ஏ.பி மூலம் ஒற்றை உள்நுழைவை ஆதரிக்கும் சேவைகளில் பயனர் "
-"உள்நுழைய முடியும். <br><br> நிர்வாகக் குழுவில் உள்ள பயனர்கள் அனைத்து சேவைகளிலும் உள்நுழை"
-"ய முடியும். அவர்கள் பாஓடு மூலம் கணினியில் உள்நுழைந்து நிர்வாகச் சலுகைகள் (SUDO) "
+"புதிய பயனருக்கு எந்தச் சேவைகள் கிடைக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும். அவர்கள் "
+"பொருத்தமான குழுவில் இருந்தால், எல்.டி.ஏ.பி மூலம் ஒற்றை உள்நுழைவை ஆதரிக்கும் சேவைகளில் "
+"பயனர் உள்நுழைய முடியும். <br><br> நிர்வாகக் குழுவில் உள்ள பயனர்கள் அனைத்து சேவைகளிலும் "
+"உள்நுழைய முடியும். அவர்கள் பாஓடு மூலம் கணினியில் உள்நுழைந்து நிர்வாகச் சலுகைகள் (SUDO) "
 "வைத்திருக்கலாம்."
 
 #: modules/users/forms.py:125
@@ -9967,34 +10136,34 @@ msgstr "தொடங்க காத்திருக்கிறது: {name}
 msgid "Finished: {name}"
 msgstr "முடிந்தது: {name}"
 
-#: package.py:213
+#: package.py:216
 #, python-brace-format
 msgid "Package {package_expression} is not available for install"
 msgstr "தொகுப்பு {package_expression} install நிறுவலுக்கு கிடைக்கவில்லை"
 
-#: package.py:233
+#: package.py:236
 #, python-brace-format
 msgid "Package {package_name} is the latest version ({latest_version})"
 msgstr "தொகுப்பு {package_name} என்பது அண்மைக் கால பதிப்பாகும் ({latest_version})"
 
-#: package.py:427
+#: package.py:441
 msgid "installing"
 msgstr "நிறுவுகிறது"
 
-#: package.py:429
+#: package.py:443
 msgid "downloading"
 msgstr "பதிவிறக்குகிறது"
 
-#: package.py:431
+#: package.py:445
 msgid "media change"
 msgstr "ஊடக மாற்றம்"
 
-#: package.py:433
+#: package.py:447
 #, python-brace-format
 msgid "configuration file: {file}"
 msgstr "உள்ளமைவு கோப்பு: {file}"
 
-#: package.py:461 package.py:487
+#: package.py:475 package.py:501
 msgid "Timeout waiting for package manager"
 msgstr "தொகுப்பு மேலாளருக்காக நேரம் காத்திருக்கிறது"
 
@@ -10106,9 +10275,8 @@ msgid ""
 "freedombox-team/freedombox/issues\">issue tracker</a>."
 msgstr ""
 "இந்தப் பக்கம் விடுபட்டிருக்க வேண்டும் என்று நீங்கள் நம்பினால், தயவுசெய்து கட்டற்றபெட்டி பணி "
-"(பிளவு) திட்டத்தில் <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\">பிழை "
-"கண்காணியில்</a> ஒரு பிழையைப் பதிவு செய்யவும்."
+"(பிளவு) திட்டத்தில் <a href=\"https://salsa.debian.org/freedombox-team/"
+"freedombox/issues\">பிழை கண்காணியில்</a> ஒரு பிழையைப் பதிவு செய்யவும்."
 
 #: templates/500.html:10
 msgid "500"
@@ -10122,11 +10290,11 @@ msgid ""
 "freedombox/issues\">bug tracker</a> so we can fix it. Also, please attach "
 "the <a href=\"%(status_log_url)s\">status log</a> to the bug report."
 msgstr ""
-"இது ஒரு உள் பிழை மற்றும் நீங்கள் ஏற்படுத்திய அல்லது சரிசெய்ய முடியாத ஒன்று அல்ல. <a href="
-"\"https://salsa.debian.org/freedombox-team/freedombox/issues\"> பிழை டிராக்கர் "
-"</a> இல் பிழையைப் புகாரளிக்கவும், எனவே நாங்கள் அதைச் சரிசெய்ய முடியும். மேலும், "
-"தயவுசெய்து <a href=\"%(status_log_url)s\"> நிலை பதிவு </a> பிழை அறிக்கையுடன் "
-"இணைக்கவும்."
+"இது ஒரு உள் பிழை மற்றும் நீங்கள் ஏற்படுத்திய அல்லது சரிசெய்ய முடியாத ஒன்று அல்ல. <a "
+"href=\"https://salsa.debian.org/freedombox-team/freedombox/issues\"> பிழை "
+"டிராக்கர் </a> இல் பிழையைப் புகாரளிக்கவும், எனவே நாங்கள் அதைச் சரிசெய்ய முடியும். "
+"மேலும், தயவுசெய்து <a href=\"%(status_log_url)s\"> நிலை பதிவு </a> பிழை "
+"அறிக்கையுடன் இணைக்கவும்."
 
 #: templates/app-header.html:26
 msgid "Installation"
@@ -10276,6 +10444,11 @@ msgstr ""
 msgid "Notifications"
 msgstr "அறிவிப்புகள்"
 
+#: templates/notifications.html:18
+#, python-format
+msgid "%(time_since)s ago"
+msgstr ""
+
 #: templates/port-forwarding-info.html:8
 msgid "Port Forwarding"
 msgstr "துறைமுகம் பகிர்தல்"
@@ -10340,15 +10513,19 @@ msgstr "இந்த பயன்பாட்டை நிறுவவா?"
 msgid "This application needs an update. Update now?"
 msgstr "இந்த பயன்பாட்டிற்கு புதுப்பிப்பு தேவை. இப்போது புதுப்பிக்கவா?"
 
-#: templates/setup.html:46
+#: templates/setup.html:43
 msgid "This application is currently not available in your distribution."
 msgstr "இந்த பயன்பாடு தற்போது உங்கள் விநியோகத்தில் கிடைக்கவில்லை."
 
-#: templates/setup.html:50
-msgid "Check again"
-msgstr "மீண்டும் சரிபார்க்கவும்"
+#: templates/setup.html:51
+msgid "Checking app availability..."
+msgstr ""
 
-#: templates/setup.html:61
+#: templates/setup.html:57
+msgid "Error checking app availability. Please refresh page."
+msgstr ""
+
+#: templates/setup.html:72
 msgid ""
 "<strong>Conflicting Packages:</strong> Some packages installed on the system "
 "conflict with the installation of this app. The following packages will be "
@@ -10357,7 +10534,7 @@ msgstr ""
 "<strong> முரண்பட்ட தொகுப்புகள்: </strong> கணினி மோதலில் நிறுவப்பட்ட சில தொகுப்புகள் "
 "இந்த பயன்பாட்டை நிறுவுவதன் மூலம் மோதல். நீங்கள் தொடர்ந்தால் பின்வரும் தொகுப்புகள் அகற்றப்படும்:"
 
-#: templates/setup.html:80
+#: templates/setup.html:89
 msgid "Update"
 msgstr "புதுப்பிப்பு"
 
@@ -10403,7 +10580,7 @@ msgstr "இங்கே"
 msgid "Setting unchanged"
 msgstr "மாறாமல் அமைத்தல்"
 
-#: views.py:647
+#: views.py:640
 #, python-brace-format
 msgid "before uninstall of {app_id}"
 msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு முன்"
@@ -10411,6 +10588,14 @@ msgstr "{app_id} ஐ நிறுவல் நீக்குவதற்கு 
 #: web_framework.py:122
 msgid "Gujarati"
 msgstr "குசராத்தி"
+
+#~ msgid ""
+#~ "Warning! The application may not work properly if domain name is changed "
+#~ "later."
+#~ msgstr "எச்சரிக்கை! டொமைன் பெயர் பின்னர் மாற்றப்பட்டால் பயன்பாடு சரியாக வேலை செய்யாது."
+
+#~ msgid "Check again"
+#~ msgstr "மீண்டும் சரிபார்க்கவும்"
 
 #~ msgid ""
 #~ "Started update to next stable release. This may take a long time to "
@@ -10472,9 +10657,6 @@ msgstr "குசராத்தி"
 
 #~ msgid "Manage Aliases for Mailbox"
 #~ msgstr "அஞ்சல் பெட்டிக்கான மாற்றுப்பெயர்களை நிர்வகிக்கவும்"
-
-#~ msgid "This app is experimental."
-#~ msgstr "இந்த பயன்பாடு சோதனை."
 
 #~ msgid "File & Snippet Sharing"
 #~ msgstr "கோப்பு மற்றும் துணுக்கை பகிர்வு"
