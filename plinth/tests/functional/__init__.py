@@ -464,6 +464,10 @@ def install(browser, app_name):
             browser.visit(browser.url)
         elif browser.is_element_present_by_css('.alert-danger'):
             break
+        elif (browser.is_element_present_by_css('.app-checking-availability')
+              and not browser.find_by_css(
+                  '.app-checking-availability').has_class('d-none')):
+            time.sleep(0.1)
         elif browser.is_element_present_by_css(install_button_css):
             install_button = browser.find_by_css(install_button_css).first
             if install_button['disabled']:
