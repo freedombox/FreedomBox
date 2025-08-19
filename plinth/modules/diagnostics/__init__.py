@@ -292,7 +292,8 @@ def _run_diagnostics():
                 severity = 'error'
             else:
                 for check in app_data['diagnosis']:
-                    if check.result != Result.PASSED:
+                    if check.result not in (Result.PASSED, Result.NOT_DONE,
+                                            Result.SKIPPED):
                         apps_with_issues.add(app_id)
                         issue_count += 1
                         if check.result != Result.WARNING:
