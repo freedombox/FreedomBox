@@ -52,7 +52,7 @@ class EmailApp(plinth.app.App):
 
     app_id = 'email'
 
-    _version = 8
+    _version = 9
 
     def __init__(self) -> None:
         """Initialize the email app."""
