@@ -16,5 +16,6 @@ urlpatterns = [
             name='dns'),
     path('apps/email/aliases/', non_admin_view(views.AliasView.as_view()),
          name='aliases'),
-    path('apps/email/config.xml', public(views.XmlView.as_view())),
+    path('apps/email/config.xml', public(views.XmlView.as_view()),
+         name='config-xml'),
 ]
