@@ -1,3 +1,169 @@
+freedombox (25.10) unstable; urgency=medium
+
+  [ kosagi ]
+  * Translated using Weblate (Catalan)
+
+  [ Sunil Mohan Adapa ]
+  * uninstall: Use reverse order when uninstalling components
+  * letsencrypt: Drop old app migration code
+  * names: Add information about adding static domains/subdomains
+  * dynamicdns: Add info about subdomains with Foundation's service
+  * action_utils: Add support for device mappings in podman containers
+  * action_utils: Allow checking result for service operations
+  * container: Add component for managing containers using podman
+  * matrixsynapse: Drop help text for domain selection dropdown
+  * forms: Allow showing a None option during domain selection
+  * apache: Allow customization to the root of a site
+  * apache: Generalize TLS config to use certificates only if available
+  * apache: Add component to host an app on a site's root
+  * apache, letsencrypt: Create a site specific config for all domains
+  * config: Allow better Apache default home page
+  * templates: Show Launch web client button for all FreedomBox URLs
+  * homeassistant: Add the most popular app for home automation
+  * dynamicdns: Fix a type check error
+  * notifications: Minor styling fix for operation notifications
+  * doc: Update man page with option --version
+  * *: Update copyright year
+  * pyproject: Add missing pytest marker for "tags"
+  * setup: Perform a check for app availability after the page loads
+  * package: Refresh apt cache if old and some packages are not found
+  * ui: Use system's UI fonts on all platforms instead of Lato
+  * module_loader: Don't load modules again
+  * app: Don't load apps again
+  * actions: Add method to handle privileged JSON request to a server
+  * privileged: Introduce a UNIX socket daemon for privileged calls
+  * privileged: Add /bin file for privileged daemon
+  * privileged: Add systemd units for socket activating the daemon
+  * Makefile: Developer setup for privileged daemon
+  * actions: Allow logging privileged calls to a server differently
+  * actions: Call to a privileged server if it is available
+  * tests: Ensure that privileged daemon is not used during tests
+  * actions: Raise a proper exception if privileged module is not found
+  * views: Remove unused code related to refresh packages button
+  * package: Uninstall packages even if they are not in apt cache
+  * d/control: Drop dependency on python3-setuptools-git
+  * ui: Fix user menu popup overflowing beyond the page
+  * sogo: Allow adding IMAP accounts and changing full name
+  * dovecot: Allow login using email address with dovecot version 2.4
+  * dovecot: Fix location of Inbox in dovecot 2.4
+  * email: Increment app version number to trigger dovecot restart
+
+  [ Priit Jõerüüt ]
+  * Translated using Weblate (Estonian)
+
+  [ ikmaak ]
+  * Translated using Weblate (Dutch)
+
+  [ James Valleroy ]
+  * plinth: Add --version flag to print version and exit
+  * debian: Print warning if version mismatch
+  * locale: Update translation strings
+  * doc: Fetch latest manual
+
+  [ தமிழ்நேரம் ]
+  * Translated using Weblate (Tamil)
+
+  [ Joseph Nuthalapati ]
+  * tiddlywiki: Don't allow index.html as a file name
+  * featherwiki: Don't allow index.html as a file name
+  * tiddlywiki: Avoid "412: Precondition failed" error
+  * featherwiki: Disable caching to avoid 412 errors
+  * diagnostics: Add collapsible sections for results
+  * dynamicdns: Switch update client to HTTP protocol
+  * notifications: Fix setting last_update_time
+  * notifications: Add datetime to each notification
+  * apache: Make all directory listings more mobile friendly
+  * apps: Fix regression in enabling install button
+  * actions:privileged: Fix flake8 errors
+
+  [ Benedek Nagy ]
+  * email: Add full text search capability
+
+  [ Alexandre Detiste ]
+  * debian, pyproject.toml: Remove ancient python3-tomli workaround
+    (Closes: #1105937)
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 18 Aug 2025 20:58:44 -0400
+
+freedombox (25.9.4) unstable; urgency=medium
+
+  [ Sunil Mohan Adapa ]
+  * distupgrade: Handle comments in sources.list file
+  * distupgrade: Update Trixie's release date as announced
+
+  [ James Valleroy ]
+  * doc: Fetch latest manual
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Sat, 02 Aug 2025 08:06:57 -0400
+
+freedombox (25.9.3) unstable; urgency=medium
+
+  [ J AK ]
+  * Translated using Weblate (Albanian)
+
+  [ Besnik Bleta ]
+  * Translated using Weblate (Albanian)
+
+  [ kosagi ]
+  * Translated using Weblate (Catalan)
+
+  [ தமிழ்நேரம் ]
+  * Translated using Weblate (Tamil)
+
+  [ Benedek Nagy ]
+  * sogo: Fix typo in configuration for sieve server
+  * email: Add support for Dovecot 2.4
+
+  [ Sunil Mohan Adapa ]
+  * config: Allow overriding target path in dropin config component
+  * email: Start servers during re-setup if they are not running
+
+  [ 109247019824 ]
+  * Translated using Weblate (Bulgarian)
+
+  [ Priit Jõerüüt ]
+  * Translated using Weblate (Estonian)
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 21 Jul 2025 19:29:32 -0400
+
+freedombox (25.9.2) unstable; urgency=medium
+
+  [ Priit Jõerüüt ]
+  * Added translation using Weblate (Estonian)
+  * Translated using Weblate (Estonian)
+
+  [ András Szűcs ]
+  * Translated using Weblate (Hungarian)
+
+  [ ikmaak ]
+  * Translated using Weblate (Dutch)
+  * Translated using Weblate (German)
+
+  [ James Valleroy ]
+  * debian: Update debconf Portuguese translation (Closes: #1107447)
+    - Thanks to Américo Monteiro for the patch.
+  * performance: Handle install for trixie
+  * debian: Set the branch for trixie
+  * doc: Fetch latest manual
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 23 Jun 2025 21:13:48 -0400
+
+freedombox (25.9.1) unstable; urgency=medium
+
+  [ Sripath Roy Koganti ]
+  * Translated using Weblate (Telugu)
+
+  [ kosagi ]
+  * Translated using Weblate (Catalan)
+
+  [ Максим Горпиніч ]
+  * Translated using Weblate (Ukrainian)
+
+  [ James Valleroy ]
+  * doc: Fetch latest manual
+
+ -- James Valleroy <jvalleroy@mailbox.org>  Mon, 02 Jun 2025 20:16:21 -0400
+
 freedombox (25.9) unstable; urgency=medium
 
   [ klu2300030052 ]
