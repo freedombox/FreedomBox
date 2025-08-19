@@ -10,7 +10,7 @@
 
 !FreedomBox can automatically install security updates.  On the ''Update'' page of the ''System'' section in !FreedomBox web interface you can turn on automatic updates. This feature is enabled by default and there is no manual action necessary.  It is strongly recommended that you have this option enabled to keep your !FreedomBox secure.
 
-Updates are performed every day at night according to you local time zone. You can set the time zone with [[FreedomBox/Manual/DateTime|Date & Time]].  If you wish to shutdown !FreedomBox every day after use, keep it running at night once a week or so to let the automatic updates happen.  Alternatively, you can perform manual updates as described below.
+Updates are performed every day at night according to the time zone you have set on your machine. You can set the time zone with [[FreedomBox/Manual/DateTime|Date & Time]].  If you wish to shutdown !FreedomBox every day after use, keep it running at night once a week or so as to allow automatic updates to happen.  Alternatively, you can perform manual updates as described below.
 
 Note that once the updates start, it may take a long time to complete. During automatic update process that runs every night or during manual update process, you will not be able to install apps from !FreedomBox web interface.
 
@@ -20,29 +20,21 @@ Note that once the updates start, it may take a long time to complete. During au
 
 Although updates are done every day for security reasons, latest features of !FreedomBox will not propagate to all the users. The following information should help you understand how new features become available to users.
 
-'''Stable Users''': This category of users include users who bought the [[FreedomBox/Hardware/PioneerEdition|FreedomBox Pioneer Edition]], installed !FreedomBox on a [[FreedomBox/Hardware/Debian|Debian]] stable distribution or users who downloaded the ''stable'' images from [[https://freedombox.org|freedombox.org]]. As a general rule, only security updates to various packages are provided to these users. One exception to this rule is where !FreedomBox service itself is updated when a release gains high confidence from developers. This means that latest !FreedomBox features may become available to these users although not as quickly or frequently as ''testing'' users. If an app is available only in ''testing'' distribution but not in ''stable'' distribution, then that app will show up in the web interface but will not be installable by ''stable'' users. Some apps are also provided an exception to the rule of "security updates only" when the app is severely broken otherwise. Every two years, a major release of Debian stable happens with the latest versions of all the software packages and !FreedomBox developers will attempt to upgrade these users to the new release without requiring manual intervention. 
+'''Stable Users''': This category of users include users who bought the [[FreedomBox/Hardware/PioneerEdition|FreedomBox Pioneer Edition]], installed !FreedomBox on a [[FreedomBox/Hardware/Debian|Debian]] stable distribution or users who downloaded the ''stable'' images from [[https://freedombox.org|freedombox.org]]. As a general rule, only security updates to various packages are provided to these users. One exception to this rule is where !FreedomBox service itself is updated when a release gains high confidence from developers. This means that latest !FreedomBox features may become available to these users although after a few days of delay compared to ''testing'' users. If an app is available only in ''testing'' distribution but not in ''stable'' distribution, then that app will show up in the web interface but will not be installable by ''stable'' users. Some apps are also provided an exception to the rule of "security updates only" when the app is severely broken otherwise. Every two years, a major release of Debian stable happens with the latest versions of all the software packages and !FreedomBox developers will attempt to upgrade these users to the new release without requiring manual intervention.  See the sections on upgrade to next stable release below.
 
 '''Testing Users''': This category of users include users who installed !FreedomBox on a [[FreedomBox/Hardware/Debian|Debian]] ''testing'' distribution or users who downloaded the ''testing'' images from [[https://freedombox.org|freedombox.org]]. Users who use Debian ''testing'' are likely to face occasional disruption in the services and may even need manual intervention to fix the issue. As a general rule, these users receive all the latest features and security updates to all the installed packages. Every two weeks, a new version of !FreedomBox is released with all the latest features and fixes. These releases will reach ''testing'' users approximately 2-3 days after the release.
 
-'''Unstable Users''': This category of users include users who installed !FreedomBox on a [[FreedomBox/Hardware/Debian|Debian]] ''unstable'' distribution or users who downloaded the ''unstable'' images from [[https://freedombox.org|freedombox.org]]. Users who use Debian ''unstable'' are likely to face occasional disruption in the services and may even need manual intervention to fix the issue. As a general rule, these users receive all the latest features to all the installed packages. Every two weeks, a new version of !FreedomBox is released with all the latest features and fixes. Theses releases will reach ''unstable'' users on the day of the release. Only developers, testers and other contributors to the !FreedomBox project should use the ''unstable'' distribution and end users and advised against using it.
+'''Unstable Users''': This category of users include users who installed !FreedomBox on a [[FreedomBox/Hardware/Debian|Debian]] ''unstable'' distribution or users who downloaded the ''unstable'' images from [[https://freedombox.org|freedombox.org]]. Users who use Debian ''unstable'' are likely to face occasional disruption in the services and may even need manual intervention to fix the issue. As a general rule, these users receive all the latest features to all the installed packages. Every two weeks, a new version of !FreedomBox is released with all the latest features and fixes. Theses releases will reach ''unstable'' users on the day of the release. Only developers, testers and other contributors to the !FreedomBox project should use the ''unstable'' distribution. End users are advised against using it.
 
 === Manual Updates from Web Interface ===
 
-To get updates immediately and not wait until the end of the day, you may want to trigger updates manually. You can do this by pressing the ''Update now'' button in ''Manual update'' tab for ''Update'' page in ''System'' section. Note that this step is not necessary if you have enabled ''Auto-updates'' as every night this operation is performed automatically.
-
-When installing apps you may receive an error message such as 
-
-{{{
-Error installing packages: E: dpkg was interrupted, you must manually run 'dpkg --configure -a' to correct the problem
-}}}
-
-This is typically caused by shutting down !FreedomBox while it is installing apps, while performing daily updates or during some other operations. This situation can be rectified immediately by running manual update.
+To get updates immediately and not wait until the end of the day, you may want to trigger updates manually. You can do this by pressing the ''Update now'' button under ''Manual update'' heading for ''Software Update'' page in ''System'' section. Note that this step is not necessary if you have enabled ''Auto-updates'' as every night this operation is performed automatically.
 
 === Manual Updates from Terminal ===
 
-Some software packages may require manual interaction for updating due to questions related to configuration. In such cases, !FreedomBox updates itself and brings in new knowledge necessary to update the package by answering configuration questions. After updating itself, !FreedomBox acts on behalf of the user and updates the packages by answering the questions. Until !FreedomBox has a chance to update the package, such packages should not be be updated manually. The manual update triggered from the web interface is already mindful of such packages and does not update them.
+Some software packages may require manual interaction for updating due to questions related to configuration. In such cases, !FreedomBox updates itself and brings in new knowledge necessary to update the package. Then, !FreedomBox acts on behalf of the user and updates the packages by answering the questions. Until !FreedomBox has a chance to update the package, such packages should not be be updated manually from the terminal. The manual update triggered from the web interface is already mindful of such packages and does not update them.
 
-In some rare situations, !FreedomBox itself might fail to update or the update mechanism might fall into a situation that might need manual intervention from a terminal. To perform manual upgrades on the terminal, login into !FreedomBox on a terminal (if you have monitor and keyboard connected), via a web terminal (using [[FreedomBox/Manual/Cockpit]]) or using a remote secure shell (see [[FreedomBox/Manual/SecureShell|Secure Shell]] section).  Then run the following commands:
+In some rare situations, !FreedomBox itself might fail to update or the update mechanism might fall into a situation that might need manual intervention from a terminal. To perform manual upgrades on the terminal, login into !FreedomBox on a terminal (if you have monitor and keyboard connected), via a web terminal (using [[FreedomBox/Manual/Cockpit|Cockpit]]) or using a remote secure shell (see [[FreedomBox/Manual/SecureShell|Secure Shell]] section).  Then run the following commands:
 
 {{{
 $ sudo su -
@@ -65,23 +57,42 @@ $ apt full-upgrade
 
 === Auto-Update to Next Stable Release ===
 
-!FreedomBox can automatically update itself when there is a new stable release of Debian. This update feature is recommended, and enabled by default for stable systems. Note that it also requires "Enable auto-update" to be enabled, and that there is 5 GB free space on the root partition.
+!FreedomBox can automatically update itself when there is a new stable release of Debian. This update feature is recommended, and enabled by default for ''stable'' systems. Note that it also requires "Enable auto-update" to be enabled, and there should be 5 GB of free space on the OS (root) partition.
 
-In some special cases, such as advanced customization made to the system, the automatic update could fail. If you wish, you can disable it on the System -> Update page, by clearing the “Enable auto-update to next stable release” checkbox.
+In some special cases, such as advanced customization made to the system, the automatic update could fail. If you wish, you can disable it on the ''System'' -> ''Software Update'' page, by clearing the “Enable auto-update to next stable release” checkbox.
 
-If you decide to stay on an older release, you should check DebianReleases#Production_Releases to see how long it will be supported by Debian security team. Note that older releases will not have new versions of !FreedomBox, even through backports.
+If you decide to stay on an older release, you should check [[https://www.debian.org/releases/|Debian  Releases]] and [[LTS|Long Term Support]] pages to see how long it will be supported by Debian security team. You stop using an older release if it stops receiving security updates. Note that older releases will not have new versions of !FreedomBox (unless there is a security update), even through backports.
 
 === Manual Update to Next Stable Release ===
 
-Auto-update is recommended for most users. However if you want to do the update manually, here are some tips:
+Thirty days after the release of a Debian stable release, all users will be upgraded to the next stable release. This behavior can be disabled as described above and users may choose to upgrade at a time for any the following reasons:
+ * If you don't want to wait 30 days and want to get the new stable release immediately.
+ * If you want to keep your working setup stable and not risk changing it (major OS upgrades are somewhat risky). You can potentially keep your distribution for years without change.
+ * If you want to minimize disruption during upgrade process by choosing a time convenient to you.
+ * If your favorite app is no longer supported in the new stable release and you will need time to migrate away to an alternative.
+ * If you want to take full backups before distribution upgrade happens and be on stand by to restore it if something goes wrong.
+ * If you want to test the upgrade process ahead of other users and report any problems to the development team.
 
- * Take backups of your apps' data before performing the update.
+Here are some tips before you begin manual update to next stable release:
+
+ * Take backups of your apps' data before performing the update. Making a copy of your entire disk using cloning software is even better.
  * Create a system snapshot before you begin.
- * General [[DebianUpgrade|instructions]] for upgrading Debian distribution are available.
- * Some packages are known to have prompts during upgrade, due to modified conffiles. It is recommended not to upgrade these packages manually, but rather to allow !FreedomBox to handle their upgrade automatically. For upgrade to Debian 13 "trixie", this applies to the following packages:
-   * firewalld
-   * minidlna
-   * radicale
+ * General [[DebianUpgrade|instructions]] for upgrading Debian distribution are available but this approach can't handle the configuration changes needed for the new versions of software.
+ * Some software requires additional update operations that !FreedomBox performs as soon as it starts up after the distribution update. Please allow some time for these operations to complete after a distribution update. These apps include:
+   * Postfix/Dovecot (requires a new configuration file format)
+   * !MediaWiki (requires database to be upgraded)
+ * Some packages are known to have prompts during upgrade, due to modified configuration files. It is recommended not to upgrade these packages manually, but rather to allow !FreedomBox to handle their upgrade automatically. For upgrade to Debian 13 "trixie", this applies to the following packages:
+   * Firewalld
+   * Minidlna
+   * Radicale
+ * Some packages may not be available after upgrade to next release. Please migrate to a similar application before or after the upgrade process. For upgrade to Debian 13 "trixie", the following apps are no longer available:
+   * Janus. Use audio/video calling over Matrix or XMPP or audio calling over Mumble. This app will likely become available in future again.
+   * TT-RSS. Migrate to Miniflux.
+   * Searx.
+
+To initiate the distribution update process, go to ''Software Update'' in ''System'' section. Then ''Enable auto-update'' and ''Enable auto-update to next stable release'' option. Then click on the ''Distribution Update'' button. Then click the ''Start Distribution Update'' button. The process may take several hours if your OS is on a slow disk such as an SD card. !FreedomBox web UI may not be available during upgrade. Refresh the page if the page errors out. Finally, allow more time for post-upgrade processes and restart the machine.
+
+{{attachment:distribution-update.png}}
 
 ## END_INCLUDE
 

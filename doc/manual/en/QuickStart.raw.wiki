@@ -56,8 +56,7 @@ Alternatively you may choose to build it yourself, by gathering all the componen
 
   1. On accessing !FreedomBox's web interface your browser will warn you that it communicates securely but that it regards the security certificate for doing so as invalid. This is a fact you need to accept because the certificate is auto generated on the box and therefore "self-signed" (the browser might also use words such as "untrusted", "not private", "privacy error" or "unknown issuer/authority"). Telling your browser that you are aware of this might involve pressing buttons such as "I understand the Risks", "proceed to ... (unsafe)" or "Add exception".  After installation this certificate can be changed to a normal one using the Let's Encrypt option.
 
-     . {{attachment:ui_insecure_connection.png|Self-signed certificate warning|width=600}}
-     . {{attachment:ui_add_security_exception.png|Add Security Exception|width=400}}
+     . {{attachment:ui_insecure_connection.png|Self-signed certificate warning|width=500}}
 
     If the domain name you are using already has a valid certificate from a recognised Certificate Authority, such as from Let's Encrypt, you may not be able to access the web interface. This means that the option to continue will not be offered. This might occur, for example, if you are reinstalling your !FreedomBox or are otherwise reusing a domain name that has an associated certificate.
 
@@ -74,8 +73,11 @@ Alternatively you may choose to build it yourself, by gathering all the componen
   1. The next page asks you to provide a user name and password. Fill in the form, and then click "Create Account."
      * Note: The user that you create here has ``Admin`` privileges and can also [[FreedomBox/Manual/SecureShell|log in using ssh]]. For additional security, you may want to use a separate account for administrative tasks and for your normal, daily use. You can add more users later.
      . {{attachment:ui_firstboot_account.png|Account|width=500}}
-  1. After completing the form, you will be logged in to !FreedomBox's web interface and able to access apps and configuration through the interface.
+  1. After completing the form, you will be logged in to !FreedomBox's web interface and asked if you wish to receive more frequent updates (recommended).
+     . {{attachment:ui_firstboot_feature_updates.png|Feature Updates|width=500}}
+  1. Setup is complete. Now you can examine and possibly update several key configuration items or see which apps are available.  Until you dismiss them, notifications accessible from the menu bar will remind you to review the key configuration items.  
      . {{attachment:ui_firstboot_complete.png|Complete|width=500}}
+     . {{attachment:ui_firstboot_complete_notification.png|Complete|width=500}}
 
 Now you can try [[FreedomBox/Features|any of the Apps]] that are available on !FreedomBox.
 
@@ -93,7 +95,7 @@ The front page includes shortcuts to apps that have been installed and are enabl
 
 === Apps menu ===
 
-The Apps menu can be accessed by clicking the grid icon, next to the !FreedomBox logo. This page lists all of the apps that are available for installing on !FreedomBox. Click the name of an app to visit its page, where you can install and configure it.
+The Apps menu can be accessed by clicking the grid icon, next to the !FreedomBox logo. This page lists all of the apps that are available for installing on !FreedomBox. Click the name of an app to visit its page, where you can install and configure it.  Currently installed and enabled apps are shown above the remaining available apps.
 
 {{attachment:ui_apps.png|Apps|width=600}}
 

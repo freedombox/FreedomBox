@@ -1,0 +1,154 @@
+#language es
+<<Include(FreedomBox/Guide/ExposeLocalService, ,from="^##TAG:TRANSLATION-HEADER-START",to="^##TAG:TRANSLATION-HEADER-END")>>
+
+<<TableOfContents()>>
+
+## BEGIN_INCLUDE
+
+== Exponer un Servicio Local a Internet usando FreedomBox ==
+
+Esta guía describe cómo exponer un servicio local de tu red local a internet usando una FreedomBox que ya está expuesta a internet.
+
+=== Escenario ===
+
+ * ''Tienes una !FreedomBox ejecutando'' con un dominio ya configurado y funcional. Puedes acceder a tu !FreedomBox usando una URL como `https://mi.sitio` .
+ * ''Tienes otro servidor proporcionando un servicio local'' a la LAN que quieres exponer a Internet en el mismo dominio de tu !FreedomBox. El servicio local tiene que ser de tipo web y usar el protocolo HTTP (también es posible configurar servicios no HTTP, pero eso es otro caso). Opcionalmente el servicio puede tener un dominio propio.
+ * Quieres que ''!FreedomBox maneje los certificados TLS'' para este dominio como suele hacer con los suyos. Tu servicio no necesitará configurarlos ni administrarlos.
+ * Opcionalmente, quizá quieras ''limitar el acceso al servicio local usando las credenciales de !FreedomBox''. Solo los usuarios con una cuenta en la !FreedomBox (que pertenezcan a un grupo específico) podrán acceder a este servicio. El servicio local no estará disponible a cualquiera en internet. De este modo puedes alojar servicios locales que no implementen su propia autenticación o servicios locales con sus mecanismos de autenticación deshabilitados.
+
+=== Exponer Servidores de la LAN ===
+
+ * Para exponer el servicio, crea un fichero de configuración de Apache en `/etc/apache2/conf-available/` y escribe una directiva `ProxyPass`. Suponiendo que tu servicio local está publicado en la dirección IP local `192.168.0.20` en el puerto `3000`, lo harías ejecutando la orden (como usuario root en la terminal):
+
+ {{{#!highlight bash
+cat > /etc/apache2/conf-available/mi-servicio-local.conf <<EOL
+ProxyPass /miservicio http://192.168.0.20:3000/
+EOL
+}}}
+
+ * A continuación, hablita la configuración de Apache con ésta orden:
+ {{{#!highlight bash
+a2enconf mi-servicio-local
+}}}
+ * Luego se inicia el servidor web Apache.
+ {{{#!highlight bash
+systemctl reload apache2
+}}}
+
+Ahora puedes acceder a tu servicio local en la URL `https://mi.sitio/miservicio/`. Observa que la URL usa el protocolo seguro `https://`. Los certificados se administrarán en FreedomBox/Let’s Encrypt. Todas tus apps y servicios de tu !FreedomBox funcionan como siempre. Puedes añadir así  cuantos servicios quieras.
+
+=== Ejecutar el servicio en tu FreedomBox ===
+
+Este método funciona también si el servicio se ejecuta en tu !FreedomBox, pero hay que modificar la directiva `ProxyPass` de la configuración así: `ProxyPass /miservicio http://127.0.0.1:3000/`.
+
+=== Deshabilitar el servicio ===
+
+Para deshabilitar la exposición externa del servicio local:
+
+ 1. Deshablita el fichero de configuración de Apache con ésta orden:
+ {{{#!highlight bash
+a2disconf mi-servicio-local
+}}}
+ 1. Luego se inicia el servidor web Apache.
+ {{{#!highlight bash
+systemctl reload apache2
+}}}
+
+=== Requerir Autenticación ===
+
+Puedes configurar el servicio restringiéndolo a usuarios con cuenta en la !FreedomBox. Esta opción es buena si:
+
+ * El servicio local que se publica en Internet no debe ser de acceso público. Y,
+ * El servicio local no implementa su propia autenticación. O,
+ * El servicio local implementa su propia autenticación pero no quieres mantener otro conjunto de cuentas de usuario para el servicio y prefieres administrar sus cuentas desde tu !FreedomBox.
+
+ 1. Actualiza tu fichero de configuración de Apache `/etc/apache2/conf-available/mi-servicio-local.conf` así:
+ {{{#!highlight apache
+<Location /myservice/>
+    Include includes/freedombox-single-sign-on.conf
+
+    ProxyPass http://192.168.0.20:3000/
+</Location>
+}}}
+ 1. Luego se inicia el servidor web Apache.
+ {{{#!highlight bash
+systemctl reload apache2
+}}}
+
+Si quieres restringir el acceso al servicio a solo algunos grupos de usuarios necesitas otro cambio más en la configuración. El siguiente ejemplo lo restringe a usuarios de los grupos “web-search” y “admin”. Se denegará el acceso a todos los demás usuarios aunque tengan una cuenta válida en tu !FreedomBox.
+
+{{{#!highlight apache
+<Location /myservice/>
+    Include includes/freedombox-single-sign-on.conf
+
+    <IfModule mod_auth_pubtkt.c>
+        TKTAuthToken "web-search" "admin"
+    </IfModule>
+
+    ProxyPass http://192.168.0.20:3000/
+</Location>
+}}}
+
+=== Alojar el servicio en otro dominio ===
+
+Algunos servicios y aplicaciones web no funcionan bien alojados bajo fragmentos de URL como `/miservicio/`. Requieren un dominio o subdominio entéramente dedicado a ellos. !FreedomBox también puede exponer estos servicios.
+
+ 1. Primero obtén un dominio o subdominio.
+  * Si el dominio es tuyo, ve a los ajustes de DNS de tu proveedor de dominios y añade un subdominio. Puedes crear un registro CNAME que simplemente apunte al dominio.
+  * Si estás usando el servicio !FreedomBox de DNS Dinámico ingresa a https://ddns.freedombox.org y habilita la opción “Comodín”. Con este cambio, todos los subdominios (como `mi.servicio.fbx.one`) de un mismo dominio (como `fbx.one`) apuntarán al dominio. 
+ 1. Añade el dominio nuevo a tu !FreedomBox en Sistema → Servicios de Nombre → Dominio (normal) → Añadir. Por ejemplo, añade `mi.sitio`.
+ 1. A continuación, crea un fichero de configuración de Apache en `/etc/apache2/includes/<nombre-del-dominio>-include.conf`. Para nuestro ejemplo, sería: `/etc/apache2/includes/miservicio.mi.sitio-include.conf`. El contenido del fichero debe ser:
+ {{{#!highlight apache
+ProxyPass / http://192.168.0.20:3000/
+}}}
+ 1. Si fuera necesario, modifica el fichero anterior para exigir autenticación añadiendo las directivas `Include` e `<IfModule>` como se muestra en a sección de autenticación.
+
+=== Problemas ===
+
+Para depurar cuando la configuración no funcione como se espera, ejecuta temporalmente un servicio web en tu !FreedomBox. 
+
+ 1. Crea un directorio temporal con una página index.html en la !FreedomBox.
+ {{{#!highlight bash
+mkdir temp
+cd temp
+cat > index.html <<EOL
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mi página de prueba</title>
+  </head>
+  <body>
+    <h1>Hola gente!</h1>
+  </body>
+</html>
+EOL
+}}}
+ 1. Ejecta un servidor web temporal (Control-C para pararlo):
+ {{{#!highlight bash
+python3 -m http.server 3000
+}}}
+ 1. Actualiza la configuración de Apache para apuntar al servicio temporal de la !FreedomBox.
+ {{{#!highlight apache
+ProxyPass /myservice http://127.0.0.1:3000/
+}}}
+
+=== Extras ===
+
+Apache puede proporcionar muchas otras funcionalidades para mejorar el servicio local. Mira la [[https://httpd.apache.org/docs/current/|documentación de Apache]]. Estas son algunas:
+
+ * Acelerar la respuesta del servicio sirviendo ficheros estáticos como JS, CSS, y audiovisuales desde un directorio local sin invocar al servicio.
+ * Acelerar la respuesta cacheando las respuestas del servicio.
+ * Inyectar cabeceras para seguridad, control de cache, etc.
+ * Modificar las cabeceras HTTP de las respuestas del serviciocuando no funciona bien alojado bajo fragmentos de URL como `/miservicio/`.
+ * Redireccionar desde URLs `http://` a `https://` y establecer cabeceras HSTS.
+ * Balancear carga entre varios servicios locales para alta disponibilidad, escalado, etc.
+ * Etc.
+
+## END_INCLUDE
+
+Volver a la [[es/FreedomBox/Features|descripción de Funcionalidades]] o a las páginas del [[es/FreedomBox/Manual|manual]].
+
+<<Include(es/FreedomBox/Portal)>>
+
+----
+CategoryFreedomBox

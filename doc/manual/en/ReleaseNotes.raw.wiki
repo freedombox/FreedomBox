@@ -8,6 +8,98 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 25.10 (2025-08-18) ==
+
+=== Highlights ===
+
+ * email: Add full text search capability
+ * homeassistant: Add the most popular app for home automation
+
+=== Other Changes ===
+
+ * *: Update copyright year
+ * action_utils: Add support for device mappings in podman containers
+ * action_utils: Allow checking result for service operations
+ * actions: Add method to handle privileged JSON request to a server
+ * actions: Allow logging privileged calls to a server differently
+ * actions: Call to a privileged server if it is available
+ * actions: Raise a proper exception if privileged module is not found
+ * actions:privileged: Fix flake8 errors
+ * apache, letsencrypt: Create a site specific config for all domains
+ * apache: Add component to host an app on a site's root
+ * apache: Allow customization to the root of a site
+ * apache: Generalize TLS config to use certificates only if available
+ * apache: Make all directory listings more mobile friendly
+ * app: Don't load apps again
+ * apps: Fix regression in enabling install button
+ * config: Allow better Apache default home page
+ * container: Add component for managing containers using podman
+ * d/control: Drop dependency on python3-setuptools-git
+ * debian, pyproject.toml: Remove ancient python3-tomli workaround
+ * debian: Print warning if version mismatch
+ * diagnostics: Add collapsible sections for results
+ * doc: Update man page with option --version
+ * dovecot: Allow login using email address with dovecot version 2.4
+ * dovecot: Fix location of Inbox in dovecot 2.4
+ * dynamicdns: Add info about subdomains with Foundation's service
+ * dynamicdns: Fix a type check error
+ * dynamicdns: Switch update client to HTTP protocol
+ * email: Increment app version number to trigger dovecot restart
+ * featherwiki: Disable caching to avoid 412 errors
+ * featherwiki: Don't allow index.html as a file name
+ * forms: Allow showing a None option during domain selection
+ * letsencrypt: Drop old app migration code
+ * locale: Update translations for Catalan, Dutch, Estonian, Tamil
+ * Makefile: Developer setup for privileged daemon
+ * matrixsynapse: Drop help text for domain selection dropdown
+ * module_loader: Don't load modules again
+ * names: Add information about adding static domains/subdomains
+ * notifications: Add datetime to each notification
+ * notifications: Fix setting last_update_time
+ * notifications: Minor styling fix for operation notifications
+ * package: Refresh apt cache if old and some packages are not found
+ * package: Uninstall packages even if they are not in apt cache
+ * plinth: Add --version flag to print version and exit
+ * privileged: Add /bin file for privileged daemon
+ * privileged: Add systemd units for socket activating the daemon
+ * privileged: Introduce a UNIX socket daemon for privileged calls
+ * pyproject: Add missing pytest marker for "tags"
+ * setup: Perform a check for app availability after the page loads
+ * sogo: Allow adding IMAP accounts and changing full name
+ * templates: Show Launch web client button for all !FreedomBox URLs
+ * tests: Ensure that privileged daemon is not used during tests
+ * tiddlywiki: Avoid "412: Precondition failed" error
+ * tiddlywiki: Don't allow index.html as a file name
+ * ui: Fix user menu popup overflowing beyond the page
+ * ui: Use system's UI fonts on all platforms instead of Lato
+ * uninstall: Use reverse order when uninstalling components
+ * views: Remove unused code related to refresh packages button
+
+== FreedomBox 25.9.4 (2025-08-02) ==
+
+ * distupgrade: Handle comments in sources.list file
+ * distupgrade: Update Trixie's release date as announced
+
+== FreedomBox 25.9.3 (2025-07-21) ==
+
+ * config: Allow overriding target path in dropin config component
+ * email: Add support for Dovecot 2.4
+ * email: Start servers during re-setup if they are not running
+ * locale: Update translations for Albanian, Bulgarian, Catalan, Estonian, Tamil
+ * sogo: Fix typo in configuration for sieve server
+
+== FreedomBox 25.9.2 (2025-06-23) ==
+
+  * debian: Set the branch for trixie
+  * debian: Update debconf Portuguese translation
+  * locale: Add new translation for Estonian
+  * locale: Update translations for Dutch, German, Hungarian
+  * performance: Handle install for trixie
+
+== FreedomBox 25.9.1 (2025-06-02) ==
+
+ * locale: Update translations for Catalan, Telugu, Ukrainian
+
 == FreedomBox 25.9 (2025-05-05) ==
 
   * locale: Add translation for Catalan
