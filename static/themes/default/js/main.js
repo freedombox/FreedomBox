@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function setInstallButtonState(enable) {
         const installButton = document.querySelector('.install-button');
         if (enable)
-            installButton?.removeAttribute('disabled')
+            installButton?.removeAttribute('disabled');
         else
             installButton?.setAttribute('disabled', 'disabled');
     }
