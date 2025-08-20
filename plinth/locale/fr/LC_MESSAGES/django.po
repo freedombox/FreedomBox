@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-18 20:35-0400\n"
-"PO-Revision-Date: 2025-08-20 04:01+0000\n"
+"PO-Revision-Date: 2025-08-21 09:02+0000\n"
 "Last-Translator: Coucouf <coucouf@coucouf.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/fr/>\n"
@@ -777,7 +777,7 @@ msgid ""
 msgstr ""
 "Lancez la commande suivante sur la machine hébergeant le serveur SSH. La "
 "sortie doit correspondre à l’une des valeurs affichées ci-dessus. Vous "
-"pouvez également utiliser DSA, ECDSA, Ed25519, etc. à la place de RSA en "
+"pouvez également utiliser DSA, ECDSA, Ed25519… à la place de RSA en "
 "indiquant le chemin du fichier correspondant dans la commande."
 
 #: modules/backups/templates/verify_ssh_hostkey.html:66
@@ -1404,8 +1404,8 @@ msgid ""
 "Here you can set some general configuration options like webserver home page "
 "etc."
 msgstr ""
-"Cette page vous permet de modifier certains paramètres généraux comme la "
-"page d’accueil du serveur web, etc…"
+"Cette page vous permet de modifier certains paramètres généraux tels que la "
+"page d’accueil du serveur web…"
 
 #: modules/config/__init__.py:42
 msgid "General Configuration"
@@ -3226,9 +3226,9 @@ msgid ""
 msgstr ""
 "Cette application transforme votre {box_name} en un ordinateur de bureau si "
 "vous y connectez physiquement un moniteur, un clavier et une souris. Un "
-"navigateur, une suite bureautique et d'autre utilitaires de base sont "
-"disponibles. Vous pouvez installer davantage d'applications graphiques en "
-"utilisant le centre de logiciels fourni avec."
+"navigateur, une suite bureautique et d’autres utilitaires de base sont "
+"fournis. Un catalogue de logiciels est mis à votre disposition pour vous "
+"permettre d’installer davantage d’applications graphiques."
 
 #: modules/gnome/__init__.py:26
 msgid ""
@@ -3350,15 +3350,15 @@ msgid ""
 "and a Tor relay, on a device that can replace your Wi-Fi router, so that "
 "your data stays with you."
 msgstr ""
-"%(box_name)s est un projet communautaire consacré au développement, à la "
-"conception et à la promotion de serveurs personnels utilisant des logiciels "
-"libres pour les communications privées. Il est pensé comme un appareil "
-"réseau faisant l’interface entre vous et le reste de l’Internet tout en "
-"protégeant votre vie privée et vos données. %(box_name)s intègre des "
-"applications permettant d’héberger par exemple un blogue, un wiki, un site "
-"web, un réseau social, de gérer des courriels, un serveur mandataire web ou "
-"un relais Tor, le tout sur une machine qui peut également remplacer votre "
-"routeur Wi-Fi. De cette manière vos données restent sous votre contrôle."
+"%(box_name)s est un projet communautaire consacré à la conception, au "
+"développement et à la promotion de serveurs personnels utilisant des "
+"logiciels libres pour les communications privées. Il est pensé comme un "
+"appareil réseau faisant l’interface entre vous et le reste de l’Internet "
+"tout en protégeant votre vie privée et vos données. Il permet d’héberger des "
+"applications telles qu’un blogue, un wiki, un site web, un réseau social, de "
+"gérer des courriels, un serveur mandataire web ou un relais Tor, le tout sur "
+"une machine qui peut également remplacer votre routeur Wi-Fi de manière à ce "
+"que vos données restent sous votre contrôle."
 
 #: modules/help/templates/help_about.html:62
 msgid ""
@@ -3718,9 +3718,9 @@ msgid ""
 "An administrator account is created at this time. Home Assistant maintains "
 "its own user accounts."
 msgstr ""
-"Il faut rapidement configurer l’interface Web de Home Assistant une fois que "
-"l’appli a été installée. Un compte administrateur sera créé à ce moment-là. "
-"Home Assistant maintient sa propre liste de comptes utilisateurs."
+"Il faut rapidement configurer l’interface Web de Home Assistant une fois l’"
+"appli installée. Un compte administrateur sera créé à ce moment-là. Home "
+"Assistant maintient sa propre liste de comptes utilisateurs."
 
 #: modules/homeassistant/__init__.py:43
 #, python-brace-format
@@ -3730,11 +3730,11 @@ msgid ""
 "reviews are done by the upstream project and not by Debian/{box_name}. "
 "Updates are performed following an independent cycle."
 msgstr ""
-"Veuillez noter que Nextcloud est installé et fonctionne au sein d’un "
-"conteneur fourni par la communauté Nextcloud. Les vérifications de sécurité, "
-"de qualité, de respect de la vie privée et de la réglementation sont "
-"effectuées par le projet en amont et pas par Debian/{box_name}. Les mises à "
-"jour sont effectuées selon un cycle indépendant."
+"Veuillez noter que Home Assistant est installé et fonctionne au sein d’un "
+"conteneur fourni par le projet Home Assistant. Les vérifications de "
+"sécurité, de qualité, de respect de la vie privée et de la réglementation "
+"sont réalisées par le projet en amont et pas par Debian/{box_name}. Les "
+"mises à jour sont publiées selon un cycle indépendant."
 
 #: modules/homeassistant/__init__.py:48
 msgid "This app is experimental."
@@ -3779,6 +3779,10 @@ msgid ""
 "URL path. Please select the domain on which Home Assistant will be "
 "available. Home Assistant will not be available on other domains."
 msgstr ""
+"Home Assistant nécessite un domaine dédié pour fonctionner et ne peut pas se "
+"contenter d’un chemin d’URL sous un domaine existant. Veuillez sélectionner "
+"le domaine par lequel Home Assistant sera accessible. C’est le seul domaine "
+"par lequel Home Assistant sera accessible."
 
 #: modules/homeassistant/templates/homeassistant.html:28
 #, python-format
@@ -3788,6 +3792,11 @@ msgid ""
 "href=\"%(names_url)s\">Names</a> app and <a "
 "href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
 msgstr ""
+"Un domaine dédié peut être mis à la disposition de Home Assistant en "
+"configurant un sous-domaine tel que homeassistant.mydomain.example. Veuillez "
+"consulter les applis <a href=\"%(names_url)s\">Services de nommage</a> et <a "
+"href=\"%(dynamic_dns_url)s\">Client DNS dynamique</a> pour la configuration "
+"de sous-domaines."
 
 #: modules/homeassistant/templates/homeassistant.html:40
 #: modules/ikiwiki/templates/ikiwiki_create.html:18
@@ -4792,7 +4801,7 @@ msgstr "DLNA"
 
 #: modules/minidlna/views.py:33
 msgid "Updated media directory"
-msgstr "Répertoire multimédia mis à jour"
+msgstr "Répertoire des fichiers multimédia mis à jour"
 
 #: modules/miniflux/__init__.py:18
 msgid ""
@@ -4816,12 +4825,12 @@ msgid ""
 "are several third-party <a href=\"https://miniflux.app/docs/apps."
 "html\">clients</a> as well."
 msgstr ""
-"Les fonctionnalités clefs comprennent des raccourcis clavier pour une "
+"Les fonctionnalités clé comprennent des raccourcis clavier pour une "
 "navigation rapide, une recherche en texte intégral, le filtrage des "
-"articles, des catégories et des favoris. Miniflux préserve la vie privée de "
-"l'utilisateur en enlevant les traceurs. L'interface principale est fondée "
-"sur le Web. Il existe également plusieurs <a href=\"https://miniflux.app/"
-"docs/apps.html\">clients</a> tiers."
+"articles, des catégories et des favoris. Miniflux préserve la vie privée des "
+"utilisateurs en supprimant les traceurs. L’interface principale est une "
+"interface Web. Il existe également plusieurs <a href="
+"\"https://miniflux.app/docs/apps.html\">clients</a> tiers."
 
 #: modules/miniflux/__init__.py:42 modules/miniflux/manifest.py:10
 msgid "Miniflux"
@@ -6272,7 +6281,7 @@ msgstr "lien local"
 
 #: modules/networks/views.py:32
 msgid "dhcp"
-msgstr "dhcp"
+msgstr "DHCP"
 
 #: modules/networks/views.py:33
 msgid "ignore"
@@ -6527,11 +6536,11 @@ msgid ""
 "done by the upstream project and not by Debian/{box_name}. Updates are "
 "performed following an independent cycle."
 msgstr ""
-"Veuillez noter que Nextcloud est installé et fonctionne au sein d'un "
+"Veuillez noter que Nextcloud est installé et fonctionne au sein d’un "
 "conteneur fourni par la communauté Nextcloud. Les vérifications de sécurité, "
-"de qualité, de confidentialité et de légalité sont effectuées par le projet "
-"en amont et pas par Debian/{box_name}. Les mises à jour sont effectuées en "
-"fonction d'un cycle indépendant."
+"de qualité, de respect de la vie privée et de la réglementation sont "
+"réalisées par le projet en amont et pas par Debian/{box_name}. Les mises à "
+"jour sont publiées selon un cycle indépendant."
 
 #: modules/nextcloud/__init__.py:56 modules/nextcloud/manifest.py:11
 #: modules/nextcloud/manifest.py:18
@@ -8444,10 +8453,10 @@ msgid ""
 "You can view the storage media currently in use, mount and unmount removable "
 "media, expand the root partition etc."
 msgstr ""
-"Ce module vous permet de gérer les médias de stockage connectés à votre "
-"{box_name}. Vous pouvez visualiser les médias de stockage en cours "
-"d’utilisation, monter et démonter des médias amovibles, étendre la partition "
-"racine, etc."
+"Ce module vous permet de gérer les périphériques de stockage connectés à "
+"votre {box_name}. Vous pouvez visualiser les périphériques de stockage en "
+"cours d’utilisation, monter et démonter des périphériques amovibles, étendre "
+"la partition racine…"
 
 #: modules/storage/__init__.py:227
 #, python-brace-format
@@ -8771,12 +8780,12 @@ msgid ""
 "TiddlyWiki. Encrypting individual tiddlers or password-protecting a wiki "
 "file is possible from within the application."
 msgstr ""
-"C'est une application versatile avec un large éventail de cas d'utilisation "
-"- carnet de notes non linéaire, site Web, base de connaissances personnelle, "
-"système de gestion de tâches et de projets, journal intime, etc. Les "
-"extension peuvent étendre les fonctionnalités de TiddlyWiki. Le chiffrement "
-"de tiddlers individuels ou la protection par mot de passe d'un fichier wiki "
-"est possible depuis l'application elle-même."
+"C'est une application versatile avec un large éventail de cas d’utilisation -"
+" carnet de notes non linéaire, site Web, base de connaissances personnelle, "
+"système de gestion de tâches et de projets, journal intime… Il est possible "
+"des fonctionnalités à TiddlyWiki via des extensions. Le chiffrement "
+"individuel d’unités d’information « tiddlers » ou la protection par mot de "
+"passe de fichiers wiki est possible depuis l'application elle-même."
 
 #: modules/tiddlywiki/__init__.py:37
 #, python-brace-format
@@ -9248,7 +9257,7 @@ msgid ""
 "When enabled, FreedomBox will update to the next stable distribution release "
 "when it is available."
 msgstr ""
-"En activant cette option, la FreedomBox se mettra à jour vers la prochaine "
+"En activant cette option, la FreedomBox se mettra à niveau vers la prochaine "
 "version stable majeure lorsque celle-ci sera publiée."
 
 #: modules/upgrades/forms.py:34
@@ -9287,7 +9296,7 @@ msgstr "Suivant"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:11
 msgid "Confirm Distribution Update?"
-msgstr "Confirmer la mise à jour de la distribution ?"
+msgstr "Confirmer la mise à niveau de la distribution ?"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:21
 #, python-format
@@ -9296,17 +9305,17 @@ msgid ""
 "released. Proceed only if you wish to help with beta testing of %(box_name)s "
 "functionality."
 msgstr ""
-"Vous êtes sur le point de mettre à jour vers la prochaine version de la "
-"distribution avant sa publication. Continuez seulement si vous souhaitez "
-"aider à tester les fonctionnalités bêtas de %(box_name)s."
+"Vous êtes sur le point de lancer la mise à niveau vers la prochaine version "
+"de la distribution avant sa publication. Ne continuez que si vous souhaitez "
+"aider à tester les fonctionnalités bêtas de la %(box_name)s."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:32
 msgid ""
 "Take a full backup of all apps and data before performing a distribution "
 "update."
 msgstr ""
-"Prenez une sauvegarde complète de toutes les applications et données avant "
-"d'effectuer une mise à jour de distribution."
+"Faites une sauvegarde complète de toutes les applications et données avant "
+"de lancer une mise à niveau de la distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:38
 msgid ""
@@ -9331,7 +9340,7 @@ msgstr ""
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-confirm.html:66
 msgid "Confirm & Start Distribution Update"
-msgstr "Confirmer et démarrer la mise à jour de la distribution"
+msgstr "Confirmer et démarrer la mise à niveau de la distribution"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:15
 msgid ""
@@ -9339,15 +9348,15 @@ msgid ""
 "apps will be unavailable during this period. Don't interrupt the process by "
 "shutting down or interrupting power to the machine."
 msgstr ""
-"La mise à jour de la distribution a démarré. Cette opération peut prendre "
+"La mise à niveau de la distribution a démarré. Cette opération peut prendre "
 "plusieurs heures. La plupart des applications seront indisponibles pendant "
-"cette période. N'interrompez pas le processus en éteignant la machine ou en "
-"coupant son alimentation."
+"cette période. Veillez à ne pas interrompre le processus en éteignant la "
+"machine ou en coupant son alimentation."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:21
 msgid "Distribution update has completed. Reboot the machine, if necessary."
 msgstr ""
-"La mise à jour de la distribution est terminée. Redémarrez la machine, si "
+"La mise à niveau de la distribution est terminée. Redémarrez la machine si "
 "nécessaire."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:25
@@ -9357,10 +9366,11 @@ msgid ""
 "then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page for expected "
 "changes and transitions during the distribution upgrade."
 msgstr ""
-"La mise à jour de la distribution va bientôt commencer. Prenez une "
-"sauvegarde des applications et données auparavant. Voyez la page du <a "
-"href=\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et "
-"transitions attendues pendant la mise à niveau de la distribution."
+"La mise à niveau de la distribution va bientôt commencer. Prenez soin de "
+"faire une sauvegarde des applications et données auparavant. Veuillez "
+"consulter la page du <a href=\"%(dist_upgrade_url)s\">manuel</a> pour vous "
+"renseigner sur les modifications et transitions attendues lors de la mise à "
+"niveau de la distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
 #, python-format
@@ -9369,14 +9379,15 @@ msgid ""
 "and data before then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page "
 "for expected changes and transitions during the distribution upgrade."
 msgstr ""
-"La mise à jour de la distribution va démarrer dans %(in_days)s jours. Prenez "
-"une sauvegarde des applications et données auparavant. Voyez la page du <a "
-"href=\"%(dist_upgrade_url)s\">manuel</a> pour les modifications et "
-"transitions attendues pendant la mise à niveau de la distribution."
+"La mise à niveau de la distribution est planifiée pour dans %(in_days)s "
+"jours. Prenez soin de faire une sauvegarde des applications et données "
+"auparavant. Veuillez consulter la page du <a href=\"%(dist_upgrade_url)s\""
+">manuel</a> pour vous renseigner sur les modifications et transitions "
+"attendues lors de la mise à niveau de la distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:42
 msgid "Go to Distribution Update"
-msgstr "Aller à la mise à jour de la distribution"
+msgstr "Aller à la mise à niveau de la distribution"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade-notification.html:46
 #: modules/upgrades/templates/upgrades-new-release.html:22
@@ -9400,23 +9411,24 @@ msgstr ""
 "Votre %(box_name)s reçoit les mises à jour de sécurité, les correctifs "
 "importants et certaines fonctionnalités via les mises à jour logicielles "
 "habituelles. Cependant, afin de fournir un cycle de vie logiciel durable aux "
-"%(box_name)s, le système d'exploitation doit subir une mise à niveau de la "
-"distribution environ tous les deux ans. Cette mise à niveau apporte des "
+"%(box_name)s, le système d’exploitation doit subir une mise à niveau de la "
+"distribution tous les deux ans environ. Cette mise à niveau apporte des "
 "fonctionnalités et modifications majeures, et il peut arriver que certaines "
 "anciennes fonctionnalités disparaissent. Veuillez consulter le <a href="
-"\"%(dist_upgrade_url)s\">manuel</a> pour vous renseigner sur modifications "
-"et transitions attendues lors des mises à niveau de la distribution. Si vous "
-"n’êtes pas intéressé pas ces modifications vous pouvez continuer à utiliser "
-"chaque distribution pendant au moins <a href=\"https://wiki.debian.org/LTS\""
-">5 ans</a> avant de devoir faire une mise à niveau."
+"\"%(dist_upgrade_url)s\">manuel</a> pour vous renseigner sur les "
+"modifications et transitions attendues lors des mises à niveau de la "
+"distribution. Si vous n’êtes pas intéressé pas ces changements vous pouvez "
+"continuer à utiliser chaque distribution pendant au moins <a href="
+"\"https://wiki.debian.org/LTS\">5 ans</a> avant de devoir passer par une "
+"mise à niveau."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:34
 msgid ""
 "Distribution update is currently running. This operation may take several "
 "hours. Most apps will be unavailable during this period."
 msgstr ""
-"La mise à jour de la distribution s'exécute en ce moment. Cette opération "
-"peut prendre plusieurs heures. La plupart des applications seront "
+"La mise à niveau de la distribution est en cours d’exécution. Cette "
+"opération peut prendre plusieurs heures. La plupart des applications seront "
 "indisponibles pendant cette période."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:50
@@ -9432,12 +9444,12 @@ msgid ""
 "You need to have at least 5 GB of free space available on primary disk to "
 "perform a distribution update."
 msgstr ""
-"Vous devez avoir au moins 5 Go d'espace libre disponible sur votre disque "
-"primaire pour effectuer une mise à jour de la distribution."
+"Vous devez disposer d’au moins 5 Go d’espace libre sur votre disque "
+"principal pour lancer une mise à niveau de la distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:65
 msgid "Your current distribution is mixed or not understood."
-msgstr "Votre distribution actuelle est mixte ou incomprise."
+msgstr "Votre distribution actuelle est mixte ou inconnue."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:72
 msgid "Current Distribution:"
@@ -9445,11 +9457,11 @@ msgstr "Distribution actuelle :"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:74
 msgid "Unknown or mixed"
-msgstr "Inconnue ou mixte"
+msgstr "Mixte ou inconnue"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:77
 msgid "Rolling release distribution"
-msgstr "Distribution rolling release"
+msgstr "Distribution de type « rolling release »"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:84
 #, python-format
@@ -9471,7 +9483,7 @@ msgstr "Date de publication probable : %(date)s."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:107
 msgid "Next stable distribution is not available yet."
-msgstr "La prochaine distribution stable n'est pas encore disponible."
+msgstr "La prochaine distribution stable n’est pas encore disponible."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:113
 #, python-format
@@ -9480,17 +9492,18 @@ msgid ""
 "necessary. Thank you for helping test the %(box_name)s project. Please "
 "report any problems you notice."
 msgstr ""
-"Vous êtes sur une distribution en rolling release. Aucune mise à jour de la "
-"distribution n'est nécessaire. Merci d'avoir aidé à tester le projet "
-"%(box_name)s. Veuillez signaler tout problème que vous remarquerez."
+"Vous êtes sur une distribution de type « rolling release ». Aucune mise à "
+"niveau de la distribution n’est nécessaire. Merci d’aider à tester le projet "
+"%(box_name)s ! Veuillez signaler tout problème que vous remarquerez."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:121
 msgid ""
 "A previous run of distribution update may have been interrupted. Please re-"
 "run the distribution update."
 msgstr ""
-"Une précédente exécution de la mise à jour de la distribution peut avoir été "
-"interrompu. Veuillez ré-exécuter la mise à jour de la distribution."
+"Il semblerait qu’une précédente exécution de la mise à niveau de la "
+"distribution a été interrompue. Veuillez relancer la mise à niveau de la "
+"distribution."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:128
 #, python-format
@@ -9500,8 +9513,8 @@ msgid ""
 "wish."
 msgstr ""
 "Une nouvelle distribution stable est disponible. Votre %(box_name)s sera "
-"mise à jour automatiquement dans %(period)s. Vous pouvez choisir de mettre à "
-"jour manuellement maintenant, si vous le souhaitez."
+"mise à jour automatiquement dans %(period)s. Vous pouvez aussi lancer la "
+"mise à niveau manuellement dès maintenant si vous le souhaitez."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:136
 #, python-format
@@ -9510,8 +9523,8 @@ msgid ""
 "automatically soon. You may choose to update manually now, if you wish."
 msgstr ""
 "Une nouvelle distribution stable est disponible. Votre %(box_name)s sera "
-"mise à jour automatiquement bientôt. Vous pouvez choisir de mettre à jour "
-"manuellement maintenant, si vous le souhaitez."
+"bientôt mise à jour automatiquement. Vous pouvez aussi lancer la mise à "
+"niveau manuellement dès maintenant si vous le souhaitez."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:144
 #, python-format
@@ -9521,24 +9534,25 @@ msgid ""
 "next distribution manually. This setup may experience occational app "
 "failures until the next stable release."
 msgstr ""
-"Vous êtes sur la distribution stable la plus récente. Cela est recommandé. "
-"Cependant, si vous souhaitez aider à tester les fonctionnalités bêtas de "
-"%(box_name)s, vous pouvez mettre à jour vers la prochaine distribution "
-"manuellement. Cette configuration peut subir des défaillances d'applications "
-"jusqu'à la publication de la prochaine version stable."
+"Vous êtes sur la distribution stable la plus récente. C’est l’option "
+"recommandée. Cependant, si vous souhaitez aider à tester les fonctionnalités "
+"bêtas de la %(box_name)s, vous pouvez mettre à niveau vers la prochaine "
+"distribution manuellement. Cette option peut vous exposer des défaillances "
+"ponctuelles d’applications jusqu’à la publication de la prochaine version "
+"stable."
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:157
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:172
 msgid "Start Distribution Update"
-msgstr "Démarrer la mise à jour de la distribution"
+msgstr "Démarrer la mise à niveau de la distribution"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:162
 msgid "Continue Distribution Update"
-msgstr "Poursuivre la mise à jour de la distribution"
+msgstr "Poursuivre la mise à niveau de la distribution"
 
 #: modules/upgrades/templates/upgrades-dist-upgrade.html:167
 msgid "Start Distribution Update (for testing)"
-msgstr "Démarrer la mise à jour de la distribution (pour les tests)"
+msgstr "Démarrer la mise à niveau de la distribution (pour les tests)"
 
 #: modules/upgrades/templates/upgrades-new-release.html:9
 #, python-format
@@ -9622,7 +9636,7 @@ msgstr ""
 
 #: modules/upgrades/views.py:117
 msgid "Started distribution update."
-msgstr "Mise à jour de la distribution démarrée."
+msgstr "Mise à niveau de la distribution démarrée."
 
 #: modules/upgrades/views.py:153
 msgid "Upgrade process started."
