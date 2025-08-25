@@ -160,8 +160,10 @@ from typing import Callable
 from urllib.request import urlopen
 
 URLS_AMD64 = {
+    'oldstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+                 'amd64/bookworm/freedombox-bookworm_all-amd64.img.xz',
     'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
-              'amd64/bookworm/freedombox-bookworm_all-amd64.img.xz',
+              'amd64/trixie/freedombox-trixie_all-amd64.img.xz',
     'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
                'amd64/testing/freedombox-testing_dev_all-amd64.img.xz',
     'unstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
@@ -169,8 +171,10 @@ URLS_AMD64 = {
 }
 
 URLS_ARM64 = {
+    'oldstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
+                 'arm64/bookworm/freedombox-bookworm_all-arm64.img.xz',
     'stable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
-              'arm64/bookworm/freedombox-bookworm_all-arm64.img.xz',
+              'arm64/trixie/freedombox-trixie_all-arm64.img.xz',
     'testing': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
                'arm64/testing/freedombox-testing_dev_all-arm64.img.xz',
     'unstable': 'https://ftp.freedombox.org/pub/freedombox/hardware/'
@@ -293,7 +297,7 @@ LIBVIRT_DOMAIN_XML_TEMPLATE = '''<domain type="kvm">
     <access mode="shared"/>
   </memoryBacking>
   <vcpu placement="static">{cpus}</vcpu>
-  <os>
+  <os {firmware}>
     <type arch="x86_64" machine="pc-q35-7.2">hvm</type>
     <boot dev="hd"/>
   </os>
@@ -777,7 +781,8 @@ def _get_partition_info(image_file: pathlib.Path) -> tuple[str, str]:
     return partition_table_type, last_partition_number
 
 
-def _resize_disk_image(image_file: pathlib.Path, new_size: str):
+def _resize_disk_image(image_file: pathlib.Path, new_size: str,
+                       distribution: str):
     """Resize the disk image if has not already been."""
     if new_size[-1] != 'G':
         raise ValueError(f'Invalid size: {new_size}')
@@ -820,10 +825,11 @@ def _resize_disk_image(image_file: pathlib.Path, new_size: str):
     with tempfile.TemporaryDirectory(
             dir=_get_work_directory().resolve()) as mount_point:
         subprocess.run(['sudo', 'mount', partition, mount_point], check=True)
+        time.sleep(2)  # Mount may trigger some re-balancing
         subprocess.run(
             ['sudo', 'btrfs', 'filesystem', 'resize', 'max', mount_point],
             check=True, stdout=subprocess.DEVNULL)
-        _update_fsid(mount_point, partition, old_fsid, new_fsid)
+        _update_fsid(mount_point, partition, old_fsid, new_fsid, distribution)
         subprocess.run(['sudo', 'umount', mount_point], check=True)
 
     subprocess.run(
@@ -841,17 +847,26 @@ def _get_fsid(partition: str) -> str:
 
 
 def _update_fsid(mount_point: str, partition: str, old_fsid: str,
-                 new_fsid: str):
+                 new_fsid: str, distribution: str):
     """After changing btrfs fsid, run grub-install to keep image bootable."""
+    is_efi = (platform.machine() in ('aarch64', 'arm64')
+              or distribution != 'oldstable')
+
     # Guess the loopback device for the filesystem
-    matches = re.match(r'^/dev/mapper/loop(\d+)p\d+$', partition)
+    matches = re.match(r'^/dev/mapper/loop(\d+)p(\d+)$', partition)
     assert matches
     loop_device = f'/dev/loop{matches[1]}'
+    if is_efi:
+        efi_device = f'/dev/mapper/loop{matches[1]}p{int(matches[2]) - 1}'
 
     # Mount /dev, /proc and run grub commands in chroot
     grub_args = []
     if platform.machine() in ('aarch64', 'arm64'):
         grub_args += ['--no-nvram']
+    elif distribution != 'oldstable':
+        grub_args += [
+            '--target=x86_64-efi', '--no-nvram', '--uefi-secure-boot'
+        ]
 
     subprocess.run(
         ['sudo', 'mount', '-o', 'bind', '/dev/', f'{mount_point}/dev'],
@@ -859,6 +874,11 @@ def _update_fsid(mount_point: str, partition: str, old_fsid: str,
     subprocess.run(
         ['sudo', 'mount', '-o', 'bind', '/proc/', f'{mount_point}/proc'],
         check=True)
+    if is_efi:
+        subprocess.run(
+            ['sudo', 'mount', efi_device, f'{mount_point}/boot/efi'],
+            check=True)
+
     subprocess.run(['sudo', 'chroot', mount_point, 'update-grub'], check=True)
     subprocess.run(
         ['sudo', 'chroot', mount_point, 'grub-install', loop_device] +
@@ -867,6 +887,10 @@ def _update_fsid(mount_point: str, partition: str, old_fsid: str,
         'sudo', 'chroot', mount_point, 'sed', '-ie',
         f's|UUID={old_fsid}|UUID={new_fsid}|', '/etc/fstab'
     ], check=True)
+    if is_efi:
+        subprocess.run(['sudo', 'umount', f'{mount_point}/boot/efi'],
+                       check=True)
+
     subprocess.run(['sudo', 'umount', f'{mount_point}/proc'], check=True)
     subprocess.run(['sudo', 'umount', f'{mount_point}/dev'], check=True)
 
@@ -1357,9 +1381,11 @@ class VM(Machine):
             pass
 
         qcow_image = self._create_qcow_image()
+        firmware = 'firmware="efi"' if self.distribution != 'oldstable' else ''
         domain_xml = LIBVIRT_DOMAIN_XML_TEMPLATE.format(
             domain_name=self.machine_name, memory_mib='2048', cpus='4',
-            image_file=qcow_image, source_dir=_get_project_folder())
+            firmware=firmware, image_file=qcow_image,
+            source_dir=_get_project_folder())
 
         with tempfile.NamedTemporaryFile() as file_handle:
             file_handle.write(domain_xml.encode())
@@ -1399,7 +1425,7 @@ class VM(Machine):
         """Remove all traces of the VM from the host."""
         logger.info('Running `virsh undefine %s`', self.machine_name)
         try:
-            self._virsh(['undefine', self.machine_name],
+            self._virsh(['undefine', '--nvram', self.machine_name],
                         stdout=subprocess.DEVNULL)
         except subprocess.CalledProcessError:
             pass
@@ -1470,7 +1496,8 @@ def subcommand_up(arguments: argparse.Namespace):
     _verify_dependencies()
     image_file = _download_disk_image(arguments.distribution,
                                       arguments.hkp_client)
-    _resize_disk_image(image_file, arguments.image_size)
+    _resize_disk_image(image_file, arguments.image_size,
+                       arguments.distribution)
     _setup_image(image_file)
     machine.setup()
     machine.launch()
