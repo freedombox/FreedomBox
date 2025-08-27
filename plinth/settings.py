@@ -135,6 +135,9 @@ IPWARE_META_PRECEDENCE_ORDER = ('REMOTE_ADDR', )
 # Overridden by get_languages()
 LANGUAGES = [('en', 'English')]
 
+# A list of directories where Django looks for translation files.
+LOCALE_PATHS = ['plinth/locale']
+
 # Overridden by log configuration in log.py
 LOGGING = {'version': 1}
 

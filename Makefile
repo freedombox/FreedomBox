@@ -58,7 +58,11 @@ ROOT_DATA_FILES := $(shell find data -type f $(FIND_ARGS))
 MODULE_DATA_FILES := $(shell find $(wildcard plinth/modules/*/data) -type f $(FIND_ARGS))
 
 update-translations:
-	cd plinth; $(DJANGO_ADMIN) makemessages --all --domain django --keep-pot --verbosity=1
+	$(DJANGO_ADMIN) makemessages --all --domain django --keep-pot \
+		--verbosity=1 --ignore conftest.py --ignore doc --ignore build \
+		--ignore htmlcov --ignore screenshots --ignore debian --ignore \
+		actions --ignore preseed --ignore static --ignore data \
+		--settings plinth.settings --pythonpath .
 
 configure:
 	# Nothing to do
