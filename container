@@ -1416,7 +1416,7 @@ class VM(Machine):
 
         logger.info('Running `virsh destroy %s`', self.machine_name)
         try:
-            self._virsh(['undefine', self.machine_name],
+            self._virsh(['undefine', '--nvram', self.machine_name],
                         stdout=subprocess.DEVNULL)
         except subprocess.CalledProcessError:
             pass
