@@ -9,16 +9,17 @@ from plinth.clients import store_url
 
 clients = [{
     'name':
-        _('Android Samba Client'),
+        _('SambaLite'),
     'platforms': [{
-        'type':
-            'store',
-        'os':
-            'android',
-        'store_name':
-            'f-droid',
-        'url':
-            store_url('f-droid', 'com.google.android.sambadocumentsprovider')
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'f-droid',
+        'url': store_url('f-droid', 'de.schliweb.sambalite')
+    }, {
+        'type': 'store',
+        'os': 'android',
+        'store_name': 'google-play',
+        'url': store_url('google-play', 'de.schliweb.sambalite')
     }]
 }, {
     'name':
@@ -28,15 +29,6 @@ clients = [{
         'os': 'android',
         'store_name': 'f-droid',
         'url': store_url('f-droid', 'com.ghostsq.commander')
-    }]
-}, {
-    'name':
-        _('Ghost Commander - Samba plugin'),
-    'platforms': [{
-        'type': 'store',
-        'os': 'android',
-        'store_name': 'google-play',
-        'url': store_url('google-play', 'com.ghostsq.commander.smb')
     }]
 }, {
     'name':
