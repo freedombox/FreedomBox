@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from plinth.clients import store_url
 
-_package_id = 'com.nutomic.syncthingandroid'
+_package_id = 'com.github.catfriend1.syncthingandroid'
 _download_url = 'https://syncthing.net/'
 
 clients = [{
