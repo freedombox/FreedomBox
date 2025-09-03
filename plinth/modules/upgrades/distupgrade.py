@@ -105,30 +105,6 @@ def _sources_list_update(old_codename: str, new_codename: str):
     aug_path.rename(temp_sources_list)
 
 
-def _get_sources_list_codename() -> str | None:
-    """Return the codename set in the /etc/apt/sources.list file."""
-    aug = augeas.Augeas(flags=augeas.Augeas.NO_LOAD +
-                        augeas.Augeas.NO_MODL_AUTOLOAD)
-    aug.transform('aptsources', str(sources_list))
-    aug.set('/augeas/context', '/files' + str(sources_list))
-    aug.load()
-
-    dists = set()
-    for match_ in aug.match('*'):
-        dist = aug.get(match_ + '/distribution')
-        if not dist:
-            continue
-
-        dist = dist.removesuffix('-updates')
-        dist = dist.removesuffix('-security')
-        dists.add(dist)
-
-    if len(dists) != 1:
-        return None
-
-    return dists.pop()
-
-
 def get_status() -> dict[str, bool | str | None]:
     """Check if a distribution upgrade be performed.
 
@@ -158,7 +134,7 @@ def get_status() -> dict[str, bool | str | None]:
     has_free_space = utils.is_sufficient_free_space()
     running = action_utils.service_is_running('freedombox-dist-upgrade')
 
-    current_codename = _get_sources_list_codename()
+    current_codename = utils.get_sources_list_codename()
     status = {
         'updates_enabled': updates_enabled,
         'dist_upgrade_enabled': dist_upgrade_enabled,
@@ -177,7 +153,7 @@ def get_status() -> dict[str, bool | str | None]:
     if current_codename in (None, 'testing', 'unstable'):
         return status
 
-    _, base_files_codename = upgrades.get_current_release()
+    _, base_files_codename = utils.get_current_release()
     if current_codename == 'stable':
         current_codename = base_files_codename
 

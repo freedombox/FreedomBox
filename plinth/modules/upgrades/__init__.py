@@ -20,7 +20,7 @@ from plinth.diagnostic_check import DiagnosticCheck, Result
 from plinth.modules.backups.components import BackupRestore
 from plinth.package import Packages
 
-from . import distupgrade, manifest, privileged
+from . import distupgrade, manifest, privileged, utils
 
 first_boot_steps = [
     {
@@ -350,21 +350,12 @@ def is_backports_enabled():
     return os.path.exists(privileged.BACKPORTS_SOURCES_LIST)
 
 
-def get_current_release():
-    """Return current release and codename as a tuple."""
-    output = subprocess.check_output(
-        ['lsb_release', '--release', '--codename',
-         '--short']).decode().strip()
-    lines = output.split('\n')
-    return lines[0], lines[1]
-
-
 def is_backports_current():
     """Return whether backports are enabled for the current release."""
     if not is_backports_enabled():
         return False
 
-    _, dist = get_current_release()
+    _, dist = utils.get_current_release()
     dist += '-backports'
     sources = sourceslist.SourcesList()
     for source in sources:
@@ -379,15 +370,12 @@ def can_activate_backports():
     if cfg.develop:
         return True
 
-    # Release will be 'n/a' in latest unstable and testing distributions.
-    release, _ = get_current_release()
-    return release not in ['unstable', 'testing', 'n/a']
+    return not utils.is_distribution_rolling()
 
 
 def can_enable_dist_upgrade():
     """Return whether dist upgrade can be enabled."""
-    release, _ = get_current_release()
-    return release not in ['unstable', 'testing', 'n/a']
+    return not utils.is_distribution_rolling()
 
 
 def _diagnose_held_packages():

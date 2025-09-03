@@ -80,43 +80,9 @@ deb https://deb.debian.org/debian bookwormish main
         assert temp_sources_list.read_text() == modified
 
 
-def test_get_sources_list_codename(tmp_path):
-    """Test retrieving codename from sources.list file."""
-    list1 = '''
-deb http://deb.debian.org/debian bookworm main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm main non-free-firmware
-
-deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
-
-deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-'''  # noqa: E501
-
-    list2 = '''
-deb http://deb.debian.org/debian stable main non-free-firmware
-deb-src http://deb.debian.org/debian stable main non-free-firmware
-
-deb http://deb.debian.org/debian bookworm-updates main non-free-firmware
-deb-src http://deb.debian.org/debian bookworm-updates main non-free-firmware
-
-deb http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-deb-src http://security.debian.org/debian-security/ bookworm-security main non-free-firmware
-'''  # noqa: E501
-
-    sources_list = tmp_path / 'sources.list'
-    module = 'plinth.modules.upgrades.distupgrade'
-    with patch(f'{module}.sources_list', sources_list):
-        sources_list.write_text(list1)
-        assert distupgrade._get_sources_list_codename() == 'bookworm'
-
-        sources_list.write_text(list2)
-        assert distupgrade._get_sources_list_codename() is None
-
-
 @patch('datetime.datetime')
-@patch('plinth.modules.upgrades.get_current_release')
-@patch('plinth.modules.upgrades.distupgrade._get_sources_list_codename')
+@patch('plinth.modules.upgrades.utils.get_current_release')
+@patch('plinth.modules.upgrades.distupgrade.utils.get_sources_list_codename')
 @patch('plinth.action_utils.service_is_running')
 @patch('plinth.modules.upgrades.utils.is_sufficient_free_space')
 @patch('plinth.modules.upgrades.is_dist_upgrade_enabled')

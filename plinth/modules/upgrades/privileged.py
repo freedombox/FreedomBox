@@ -158,8 +158,7 @@ def _check_and_backports_sources(develop=False):
     if os.path.exists(old_sources_list):
         os.remove(old_sources_list)
 
-    from plinth.modules.upgrades import (get_current_release,
-                                         is_backports_current)
+    from plinth.modules.upgrades import is_backports_current
     if is_backports_current():
         logging.info('Repositories list up-to-date. Skipping update.')
         return
@@ -181,15 +180,16 @@ def _check_and_backports_sources(develop=False):
                      'backports.')
         return
 
-    release, dist = get_current_release()
-    if release in ['unstable', 'testing', 'n/a'] and not develop:
-        logging.info(f'System release is {release}. Skip enabling backports.')
+    if utils.is_distribution_rolling() and not develop:
+        logging.info(
+            'System release is unstable/testing. Skip enabling backports.')
         return
 
     protocol = utils.get_http_protocol()
     if protocol == 'tor+http':
         logging.info('Package download over Tor is enabled.')
 
+    _, dist = utils.get_current_release()
     if not utils.is_release_file_available(protocol, dist, backports=True):
         logging.info(
             f'Release file for {dist}-backports is not available yet.')
@@ -212,13 +212,12 @@ def _add_apt_preferences():
     # Don't try to remove 50freedombox3.pref as this file is shipped with the
     # Debian package and is removed using maintainer scripts.
 
-    from plinth.modules.upgrades import get_current_release
-    _, dist = get_current_release()
-    if dist == 'sid':
+    if utils.is_distribution_unstable():
         logging.info(
-            f'System distribution is {dist}. Skip setting apt preferences '
+            'System distribution is "unstable". Skip setting apt preferences '
             'for backports.')
     else:
+        _, dist = utils.get_current_release()
         logging.info(f'Setting apt preferences for {dist}-backports.')
         with open(base_path / '50freedombox4.pref', 'w',
                   encoding='utf-8') as file_handle:
