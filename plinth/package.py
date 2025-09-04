@@ -69,8 +69,11 @@ class Package(PackageExpression):
 
     def actual(self) -> str:
         cache = apt.Cache()
-        if self.name in cache:
-            # TODO: Also return version and suite to install from
+        if self.name in cache and cache[self.name].candidate:
+            # cache[package].candidate returns installation candidate. If the
+            # package is not installable due to the available versions being of
+            # priority less than 0, then .candidate will be None. TODO: Also
+            # return version and suite to install from.
             return self.name
 
         raise MissingPackageError(self.name)
