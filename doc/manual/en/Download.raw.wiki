@@ -44,36 +44,11 @@ It is important to verify the images you have downloaded to ensure that the file
 
   * First open a terminal and import the public keys of the !FreedomBox developers who built the images:
   {{{
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
-# This is the FreedomBox CI server's key
-$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
 # This is the new FreedomBox CI server's key
 $ gpg --keyserver keyserver.ubuntu.com --recv-keys D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
 }}}
   * Next, verify the fingerprint of the public keys:
   {{{
-$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
-pub   4096R/0C9BC971 2011-11-12
-      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
-uid                  Sunil Mohan Adapa <sunil@medhas.org>
-sub   4096R/4C1D4B57 2011-11-12
-
-$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
-pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
-      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
-uid                  James Valleroy <jvalleroy@mailbox.org>
-uid                  James Valleroy <jvalleroy@freedombox.org>
-sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
-sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
-sub   2048R/2A624357 2015-12-22
-
-$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
-pub   rsa4096 2018-06-06 [SC]
-      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
-uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
-sub   rsa4096 2018-06-06 [E]
-
 $ gpg --fingerprint D4B069124FCF43AA1FCD7FBC2ACFC1E15AF82D8C
 pub   rsa4096 2022-03-09 [SC]
       D4B0 6912 4FCF 43AA 1FCD  7FBC 2ACF C1E1 5AF8 2D8C
@@ -249,6 +224,37 @@ dd if=temp/usr/lib/u-boot/A20-OLinuXino-Lime2/u-boot-sunxi-with-spl.bin of=<lime
 }}}
 
 The resulting image will have the modified u-boot in it. 
+
+=== Old Signing Keys ===
+
+Some very old disk images of !FreedomBox have been signed by different GPG keys than the one listed above. Those signatures are still valid and can be verified using the older keys.
+
+{{{
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys BCBEBD57A11F70B23782BC5736C361440C9BC971
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 7D6ADB750F91085589484BE677C0C75E7B650808
+# This is the FreedomBox CI server's key
+$ gpg --keyserver keyserver.ubuntu.com --recv-keys 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+$ gpg --fingerprint BCBEBD57A11F70B23782BC5736C361440C9BC971
+pub   4096R/0C9BC971 2011-11-12
+      Key fingerprint = BCBE BD57 A11F 70B2 3782  BC57 36C3 6144 0C9B C971
+uid                  Sunil Mohan Adapa <sunil@medhas.org>
+sub   4096R/4C1D4B57 2011-11-12
+
+$ gpg --fingerprint 7D6ADB750F91085589484BE677C0C75E7B650808
+pub   4096R/7B650808 2015-06-07 [expires: 2020-06-05]
+      Key fingerprint = 7D6A DB75 0F91 0855 8948  4BE6 77C0 C75E 7B65 0808
+uid                  James Valleroy <jvalleroy@mailbox.org>
+uid                  James Valleroy <jvalleroy@freedombox.org>
+sub   4096R/25D22BF4 2015-06-07 [expires: 2020-06-05]
+sub   4096R/DDA11207 2015-07-03 [expires: 2020-07-01]
+sub   2048R/2A624357 2015-12-22
+
+$ gpg --fingerprint 013D86D8BA32EAB4A6691BF85D4153D6FE188FC8
+pub   rsa4096 2018-06-06 [SC]
+      013D 86D8 BA32 EAB4 A669  1BF8 5D41 53D6 FE18 8FC8
+uid           [ unknown] FreedomBox CI (Continuous Integration server) <admin@freedombox.org>
+sub   rsa4096 2018-06-06 [E]
+}}}
 
 ## END_INCLUDE
 

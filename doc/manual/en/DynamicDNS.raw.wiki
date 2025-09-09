@@ -16,6 +16,12 @@ Dynamic DNS service providers assist in working around a problem.  First they pr
 
 For this to work, every time you connect to the Internet, you will have to tell your Dynamic DNS provider what your current IP address is.  Hence you need special software on your server to perform this operation. The Dynamic DNS function in !FreedomBox will allow users without a static public IP address to push the current public IP address to a Dynamic DNS Server.  This allows you to expose services on !FreedomBox, such as ownCloud, to the Internet.
 
+=== A Free Domain for your FreedomBox ===
+
+You can get a free domain name for your !FreedomBox using the free Dynamic DNS service provided by the !FreedomBox community at https://ddns.freedombox.org . With this service, your domain name will look like ''myaccount.fbx.one'' or ''myaccount.freedombox.rocks'' where ''myaccount'' is the account you created on the service.
+
+The service also provides you with free unlimited number of subdomains. For this, login to the account, go to ''Change Settings'', check the option ''Wild Card'', and click ''Save Changes''. After this you can add any number of subdomains like ''foo.myaccount.fbx.one'' to your !FreedomBox in ''System -> Names -> Add Domain (regular)''. TLS certificates (for HTTPS) will be automatically obtained by !FreedomBox using Let's Encrypt for these subdomains. Subdomains are especially useful for applications that require being hosted on a separate domain, such as [[FreedomBox/Manual/HomeAssistant|Home Assistant]].
+
 === GnuDIP vs. Update URL ===
 
 There are two main mechanism to notify the Dynamic DNS server of your new IP address; using the ''GnuDIP'' protocol and using the ''Update URL'' mechanism.
@@ -27,7 +33,6 @@ On the other hand, the GnuDIP protocol will only transport a salted MD5 value of
 === Using the GnuDIP protocol ===
 
  1. Register an account with any Dynamic DNS service provider.  A free service provided by the !FreedomBox community is available at https://ddns.freedombox.org .
-
  1. In !FreedomBox UI, enable the Dynamic DNS Service.
 
  1. Select ''GnuDIP'' as ''Service type'', enter your Dynamic DNS service provider address (for example, ddns.freedombox.org) into ''GnuDIP Server Address'' field.

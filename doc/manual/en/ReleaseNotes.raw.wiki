@@ -8,6 +8,52 @@ For more technical details, see the [[https://salsa.debian.org/freedombox-team/f
 
 The following are the release notes for each !FreedomBox version.
 
+== FreedomBox 25.11 (2025-09-08) ==
+
+=== Highlights ===
+
+ * email: Fix Thunderbird auto configuration failure
+ * matrixsynapse, upgrades: Install select packages from unstable
+
+=== Other Changes ===
+
+ * action_utils: Implement a utility to run a command as different user
+ * actions, backup: Implement raw output for privileged daemon
+ * actions, backups: Fix tests depending on sudo based actions
+ * actions: Drop feature to run privileged action as another user
+ * actions: Drop sudo based privileged actions
+ * actions: Framework for capturing stdout/stderr in privileged daemon
+ * actions: Simplify raw output code in privileged methods
+ * backups: Trim translatable string
+ * container: Add support for Trixie as stable distribution
+ * container: Pass --nvram option to virsh undefine
+ * d/control: Remove libpam-abl as a recommendation
+ * diagnostics: Fix notification severity when skipping tests
+ * dynamicdns: Handle showing errors from GnuDIP
+ * gitweb: Don't use privileged action feature to run as different user
+ * gitweb: Use pathlib API more
+ * HACKING.md: Mention using virtual machines instead of containers
+ * homeassistant: Fix typo in description
+ * l10n: Fix a broken string in Russian translation
+ * l10n: Fix broken Italian translation
+ * l10n: Fix formatted strings for errors/exceptions
+ * locale: Update translations for Bulgarian, Chinese (Simplified Han script), Czech, Dutch, French, German, Italian, Russian, Turkish, Ukrainian
+ * Makefile, settings: Use full paths in pot files
+ * package: Don't consider uninstalled packages as available
+ * package: Refresh apt cache if sources list is newer
+ * power: logind config to ignore laptop lid close
+ * privileged: Don't isolate /var/tmp/ for privileged daemon
+ * privileged_daemon: Introduce a command line client for the API
+ * privileged_daemon: Log only to journal and not console
+ * samba: Update client list
+ * storage: Don't use privileged action feature to run as different user
+ * syncthing: Update Android clients to Syncthing-Fork
+ * tests: functional: Fix incorrect skipping of install tests
+ * ui: Fix missing semicolon in JS file
+ * upgrades: Don't allow needs-restart to restart privileged daemon
+ * upgrades: Overhaul detection of distribution
+ * web_server: Restart in development mode only for source code changes
+
 == FreedomBox 25.10 (2025-08-18) ==
 
 === Highlights ===

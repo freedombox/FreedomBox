@@ -14,13 +14,15 @@
 
 === What is User Websites? ===
 
-User websites is a standard location for webservers to allow host users to expose static files on the filesystem as a website to the local network and/or the internet according to the network and firewall setup.
+User websites is a feature that allows any (even non-admin) user on a !FreedomBox to host their own website simply by copying files to well known location in their home directory on the !FreedomBox server. The URL for the website will look like `https://mydomain.example/~myusername/`. The website will be available on the local network and/or the internet according to the network and firewall setup. If the copied files are HTML pages, they will show up as a website. If they are other types of files such as photos or documents. A list of those files is shown and a visitor will be able to view or download them.
 
-The standard webserver in !FreedomBox is Apache and this is implemented by means of a specific Apache module.
+Apache is the web server used in !FreedomBox and this feature is implemented using an Apache module.
 
 === Screenshot ===
 
-/* Add when/if an interface is made for FreedomBox */
+{{attachment:user-websites-folder.png|User Website copied to FreedomBox using GNOME File Browser}}
+
+{{attachment:user-websites-browser.png|User Website accessed using a browser}}
 
 === Using User Websites ===
 
@@ -30,9 +32,8 @@ To serve documents, place the files in the designated directory in a !FreedomBox
 
 This directory is: '''public_html'''
 
-Thus the absolute path for the directory of a user named fbx with home directory in /home/fbx will be '''/home/fbx/public_html'''.
-User websites will serve documents placed in this directory when requests for documents with the URI path "~fbx" are received. For the the `example.org` domain thus a request for the document `example.org/~fbx/index.html` will transfer the file in `/home/fbx/public_html/index.html`.
-
+Thus, the absolute path for the directory of a user named ''fbx'' with home directory in ''/home/fbx'' will be '''/home/fbx/public_html'''.
+The User Websites feature will serve documents placed in this directory when requests for documents with the URI path ''~fbx'' are received. For example, if  `mydomain.example` is your domain then a request for the URL `https://mydomain.example/~fbx/photo.jpg` will display the file in `/home/fbx/public_html/photo.jpg`. If a file named ''index.html'' is placed in the directory, it will shown when no file name is provided in the URL. So, the URL `https://mydomain.example/~fbx/` will show the HTML page `/home/fbx/public_html/index.html`
 
 === Creating public_html folder and uploading documents ===
 
@@ -44,7 +45,7 @@ Linux standard desktop file managers use to support remote filesystem access thr
     * Gnome's Nautilus:
       1. To lauch Nautilus you can seek its archive icon, or search ether its name or the word "file".
       1. At the bottom of the left pane you'll find an option "+ Other locations".
-      1. It leads you to a list of locations. Find "`freedombox SFTP server`" (english literal for all desktop languages). Click on it.
+      1. It leads you to a list of locations. Find "`freedombox SFTP server`" (english literal for all desktop languages). Click on it. If you don't find this, you can instead type `sftp://username@freedombox.local` in the address bar.
       1. The first time you'll be asked for your user and password. Enter your !FreedomBox user and its password. The dialog will also offer you some options to remember it for some time.
     * Plasma file manager AKA Dolphin:
       1. Click on the location bar at the top of the window.
