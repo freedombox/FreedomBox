@@ -1,6 +1,6 @@
 (*
 Module: Aptsources822
-  Augeas module for souces list (Deb822 style) for Apt package manager
+  Augeas module for sources list (Deb822 style) for Apt package manager
 
 Authors:
   James Valleroy <jvalleroy@mailbox.org>
@@ -50,7 +50,7 @@ let field_value = /[!-Z\\^-~][!-Z\\^-~]*/
 (* Variable: empty_line
    Lens for an empty line separating two stanzas. It can't be a comment. Only
    tabs and spaces are allowed. *)
-let empty_line = Util.empty_generic /[ \t]*/
+let empty_line = Util.empty_generic_dos /[ \t]*/
 
 (* Variable: name_value_separator
    Lens for separating a name and value. Field name is followed by a ':' and
@@ -72,13 +72,13 @@ let field_value_with_separator = [seq "item" . store field_value . del Rx.space 
 (* Variable: field_value_with_eol
    Lens for value that followed by an end-of-line. This indicates that this is
    the last value for this field. *)
-let field_value_with_eol = [seq "item" . store field_value . Util.eol]
+let field_value_with_eol = [seq "item" . store field_value . Util.doseol]
 
 (* Variable: single_value_field
    Lens for a field (field name, separator and field value) with only a single
    value. *)
 let single_value_field = [ key single_value_field_name . name_value_separator .
-  store field_value . Util.eol ]
+  store field_value . Util.doseol ]
 
 (* Variable: multi_value_field
    Lens for a field (field name, separator and field value) with multiple values
@@ -94,7 +94,7 @@ let stanza = [ seq "source" . (single_value_field | multi_value_field |
 
 (* Variable: lns
    Lens for parsing the entire apt sources file in Deb822 format. *)
-let lns = stanza . (empty_line . stanza)*
+let lns = empty_line* . stanza . (empty_line+ . stanza)* . empty_line*
 
 (* Variable: filter
    All files in the sources.list.d directory are files describing sources.
