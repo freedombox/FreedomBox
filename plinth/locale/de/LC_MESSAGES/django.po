@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: FreedomBox UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-08 23:51+0000\n"
-"PO-Revision-Date: 2025-09-04 16:01+0000\n"
+"PO-Revision-Date: 2025-09-11 18:01+0000\n"
 "Last-Translator: Dietmar <sagen@permondes.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/freedombox/"
 "freedombox/de/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.1-rc\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 #: plinth/config.py:103
 #, python-brace-format
@@ -713,27 +713,15 @@ msgid "Restore data from"
 msgstr "Wiederherstellen von Daten aus"
 
 #: plinth/modules/backups/templates/backups_upload.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "      Upload a backup file downloaded from another %(box_name)s to "
-#| "restore its\n"
-#| "      contents. You can choose the apps you wish to restore after "
-#| "uploading a\n"
-#| "      backup file.\n"
-#| "    "
+#, python-format
 msgid ""
 "Upload a backup file downloaded from another %(box_name)s to restore its "
 "contents. You can choose the apps you wish to restore after uploading a "
 "backup file."
 msgstr ""
-"\n"
-"      Eine Sicherungs-Datei von einer anderen %(box_name)s hochladen, um "
-"deren Inhalt\n"
-"      wiederherzustellen. Sie können die Apps auswählen, die Sie nach dem "
-"Hochladen einer\n"
-"      Sicherung wieder herstellen möchten.\n"
-"    "
+"Eine Sicherungs-Datei von einer anderen %(box_name)s hochladen, um deren "
+"Inhalt wiederherzustellen. Sie können die Apps auswählen, die Sie nach dem "
+"Hochladen einer Sicherung wieder herstellen möchten."
 
 #: plinth/modules/backups/templates/backups_upload.html:31
 #, python-format
@@ -3841,6 +3829,11 @@ msgid ""
 "href=\"%(names_url)s\">Names</a> app and <a "
 "href=\"%(dynamic_dns_url)s\">Dynamic DNS</a> app for configuring subdomains."
 msgstr ""
+"Eine separate Domain kann für Home Assistant verfügbar gemacht werden, indem "
+"eine Subdomain wie homeassistant.mydomain.example konfiguriert wird. "
+"Informationen zum Konfigurieren von Subdomains finden Sie in der App <a href="
+"\"%(names_url)s\">Namen-Dienste</a> und der App <a href="
+"\"%(dynamic_dns_url)s\">Dynamischer DNS-Client</a>."
 
 #: plinth/modules/homeassistant/templates/homeassistant.html:40
 #: plinth/modules/ikiwiki/templates/ikiwiki_create.html:18
@@ -4377,6 +4370,10 @@ msgid ""
 "only be installed if frequent feature updates is enabled in the <a "
 "href=\"{upgrades_url}\">Software Update</a> app."
 msgstr ""
+"<strong>Hinweis:</strong> Diese App erhält regelmäßig Funktionsupdates. Sie "
+"kann nur installiert werden, wenn in der App <a href=\"{upgrades_url}\""
+">Software Aktualisierungen</a> die Option für regelmäßige Funktionsupdates "
+"aktiviert ist."
 
 #: plinth/modules/matrixsynapse/__init__.py:59
 msgid "Matrix Synapse"
@@ -7518,10 +7515,8 @@ msgid "Samba"
 msgstr "Samba"
 
 #: plinth/modules/samba/manifest.py:12
-#, fuzzy
-#| msgid "Samba"
 msgid "SambaLite"
-msgstr "Samba"
+msgstr "SambaLite"
 
 #: plinth/modules/samba/manifest.py:26
 msgid "Ghost Commander"
@@ -9326,15 +9321,7 @@ msgstr "Neue Funktionen"
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:14
 #: plinth/modules/upgrades/templates/upgrades_configure.html:69
-#, fuzzy, python-format
-#| msgid ""
-#| "Frequent feature updates allow the %(box_name)s Service, plus a very "
-#| "limited set of software, to receive new features more frequently (from "
-#| "the backports repository). This results in receiving some new features "
-#| "within weeks, instead of only once every 2 years or so. Note that "
-#| "software with frequent feature updates does not have support from the "
-#| "Debian Security Team. Instead, they are maintained by contributors to "
-#| "Debian and the %(box_name)s community."
+#, python-format
 msgid ""
 "Frequent feature updates allow the %(box_name)s Service, plus a very limited "
 "set of software, to receive new features more frequently (from the backports "
@@ -9346,11 +9333,11 @@ msgid ""
 msgstr ""
 "Durch häufige Funktions-Updates kann der %(box_name)s Service sowie eine "
 "sehr begrenzte Anzahl von Software häufiger neue Funktionen empfangen (aus "
-"dem Backports-Repository). Dies führt dazu, dass einige neue Funktionen "
-"innerhalb von Wochen statt nur etwa alle zwei Jahre erhalten werden. "
-"Beachten Sie, dass Software mit häufigen Funktionsaktualisierungen vom "
-"Debian-Sicherheitsteam nicht unterstützt wird. Stattdessen werden sie von "
-"Mitwirkenden an Debian und der %(box_name)s Gemeinschaft gepflegt."
+"dem Backports- oder Unstable-Repository). Dies führt dazu, dass einige neue "
+"Funktionen innerhalb von Wochen statt nur etwa alle zwei Jahre erhalten "
+"werden. Beachten Sie, dass Software mit häufigen Funktionsaktualisierungen "
+"vom Debian-Sicherheitsteam nicht unterstützt wird. Stattdessen werden sie "
+"von Mitwirkenden an Debian und der %(box_name)s Gemeinschaft gepflegt."
 
 #: plinth/modules/upgrades/templates/backports-firstboot.html:26
 msgid ""
@@ -9443,6 +9430,11 @@ msgid ""
 "then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page for expected "
 "changes and transitions during the distribution upgrade."
 msgstr ""
+"Die Aktualisierung der Distribution wird in Kürze beginnen. Erstellen Sie "
+"vorher eine Sicherungskopie Ihrer Apps und Daten. Auf der Seite <a href="
+"\"%(dist_upgrade_url)s\">Handbuch</a> finden Sie Informationen zu den zu "
+"erwartenden Änderungen und Umstellungen während der Aktualisierung der "
+"Distribution."
 
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade-notification.html:31
 #, python-format
@@ -9451,6 +9443,11 @@ msgid ""
 "and data before then. See <a href=\"%(dist_upgrade_url)s\">manual</a> page "
 "for expected changes and transitions during the distribution upgrade."
 msgstr ""
+"Die Aktualisierung der Distribution beginnt in %(in_days)s Tagen. Erstellen "
+"Sie vorher eine Sicherungskopie Ihrer Anwendungen und Daten. Informationen "
+"zu den zu erwartenden Änderungen und Umstellungen während der Aktualisierung "
+"der Distribution finden Sie auf der Seite <a href=\"%(dist_upgrade_url)s\""
+">Handbuch</a>."
 
 #: plinth/modules/upgrades/templates/upgrades-dist-upgrade-notification.html:42
 msgid "Go to Distribution Update"
@@ -9959,8 +9956,8 @@ msgstr ""
 "Löschen Sie diese Konten über die Kommandozeile und aktualisieren Sie die "
 "Seite, um ein Konto zu erstellen, das mit %(box_name)s verwendet werden "
 "kann. Führen Sie in der Kommandozeile den Befehl aus: \"echo '{\"args\": "
-"[\"BENUTZERNAME\", \"PASSWORT\"], \"kwargs\": {}}' | sudo /usr/share/plinth/"
-"actions/actions users remove_user\". Wenn ein Konto bereits mit %(box_name)s "
+"[\"USERNAME\", \"AUTH_USER\",\"AUTH_PASSWORD\"], \"kwargs\": {}}' | sudo "
+"freedombox-cmd users remove_user\". Wenn ein Konto bereits mit %(box_name)s "
 "nutzbar ist, überspringen Sie diesen Schritt."
 
 #: plinth/modules/users/templates/users_firstboot.html:69
